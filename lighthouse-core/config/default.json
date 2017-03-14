@@ -440,6 +440,10 @@
     "items": [{
       "name": "New JavaScript features",
       "audits": {
+        "emoji": {
+          "expectedValue": true,
+          "weight": 1
+        },
         "no-datenow": {
           "expectedValue": true,
           "weight": 1

@@ -7,6 +7,7 @@
     "gatherers": [
       "url",
       "image-usage",
+      "body-text",
       "content-width",
       "dobetterweb/domstats"
     ]
@@ -29,6 +30,7 @@
     "speed-index-metric",
     "estimated-input-latency",
     "time-to-interactive",
+    "emoji",
     "user-timings",
     "screenshots",
     "critical-request-chains",
@@ -72,6 +74,10 @@
     "categorizable": false,
     "items": [{
       "audits": {
+        "emoji": {
+          "expectedValue": true,
+          "weight": 1
+        },
         "unused-css-rules": {
           "expectedValue": true,
           "weight": 1
