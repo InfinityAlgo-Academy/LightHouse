@@ -19,6 +19,7 @@
 const Driver = require('./gather/driver.js');
 const GatherRunner = require('./gather/gather-runner');
 const Aggregate = require('./aggregator/aggregate');
+const ReportGeneratorV2 = require('./report/v2/report-generator');
 const Audit = require('./audits/audit');
 const emulation = require('./lib/emulation');
 const log = require('./lib/log');
@@ -92,7 +93,8 @@ class Runner {
 
       // Run each audit sequentially, the auditResults array has all our fine work
       const auditResults = [];
-      for (const audit of config.audits) {
+      for (let audit of config.audits) {
+        audit = audit.implementation || audit;
         run = run.then(artifacts => {
           return Runner._runAudit(audit, artifacts)
             .then(ret => auditResults.push(ret))
@@ -122,9 +124,9 @@ class Runner {
     // Format and aggregate results before returning.
     run = run
       .then(runResults => {
-        const formattedAudits = runResults.auditResults.reduce((formatted, audit) => {
-          formatted[audit.name] = audit;
-          return formatted;
+        const resultsById = runResults.auditResults.reduce((results, audit) => {
+          results[audit.name] = audit;
+          return results;
         }, {});
 
         // Only run aggregations if needed.
@@ -134,14 +136,21 @@ class Runner {
             a => Aggregate.aggregate(a, runResults.auditResults));
         }
 
+        let categories = [];
+        if (config.report) {
+          const reportGenerator = new ReportGeneratorV2();
+          categories = reportGenerator.generateReportJson(config, resultsById).categories;
+        }
+
         return {
           lighthouseVersion: require('../package').version,
           generatedTime: (new Date()).toJSON(),
           initialUrl: opts.initialUrl,
           url: opts.url,
-          audits: formattedAudits,
+          audits: resultsById,
           artifacts: runResults.artifacts,
           runtimeConfig: Runner.getRuntimeConfig(opts.flags),
+          categories,
           aggregations
         };
       });

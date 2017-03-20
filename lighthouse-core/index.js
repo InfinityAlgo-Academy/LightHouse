@@ -21,6 +21,7 @@ const Runner = require('./runner');
 const log = require('./lib/log.js');
 const ChromeProtocol = require('./gather/connections/cri.js');
 const Config = require('./config/config');
+const ConfigV2 = require('./config/v2/config');
 
 /**
  * The relationship between these root modules:
@@ -48,7 +49,9 @@ module.exports = function(url, flags = {}, configJSON) {
     log.setLevel(flags.logLevel);
 
     // Use ConfigParser to generate a valid config file
-    const config = new Config(configJSON, flags.configPath);
+    const config = configJSON && configJSON.version === 2 ?
+      new ConfigV2(configJSON, flags.configPath) :
+      new Config(configJSON, flags.configPath);
 
     const connection = new ChromeProtocol(flags.port);
 

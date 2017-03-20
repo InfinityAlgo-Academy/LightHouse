@@ -148,6 +148,29 @@ class ReportGenerator {
     });
   }
 
+  _getAggregations(results) {
+    if (results.aggregations.length) {
+      return results.aggregations;
+    }
+
+    return results.categories.map(category => {
+      const name = category.name;
+      const description = category.description;
+
+      return {
+        name, description,
+        categorizable: false,
+        scored: category.id === 'pwa',
+        total: category.score / 100,
+        score: [{
+          name, description,
+          overall: category.score / 100,
+          subItems: category.children.map(child => child.result),
+        }],
+      };
+    });
+  }
+
   /**
    * Generates the Lighthouse report HTML.
    * @param {!Object} results Lighthouse results.
@@ -176,7 +199,7 @@ class ReportGenerator {
       stylesheets: this.getReportCSS(),
       reportContext: reportContext,
       scripts: this.getReportJS(reportContext),
-      aggregations: results.aggregations,
+      aggregations: this._getAggregations(results),
       auditsByCategory: this._createPWAAuditsByCategory(results.aggregations),
       runtimeConfig: results.runtimeConfig,
       reportsCatalog

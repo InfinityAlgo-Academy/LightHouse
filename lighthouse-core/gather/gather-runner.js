@@ -431,6 +431,11 @@ class GatherRunner {
   static instantiateGatherers(passes, rootPath) {
     return passes.map(pass => {
       pass.gatherers = pass.gatherers.map(gatherer => {
+        if (gatherer.implementation) {
+          const GathererClass = gatherer.implementation;
+          return new GathererClass();
+        }
+
         // If this is already instantiated, don't do anything else.
         if (typeof gatherer !== 'string') {
           return gatherer;

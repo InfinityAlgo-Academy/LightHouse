@@ -1,0 +1,308 @@
+{
+  "version": 2,
+
+  "gatherers": {
+    "url": {},
+    "https": {},
+    "viewport": {},
+    "theme-color": {},
+    "manifest": {},
+    "accessibility": {},
+    "image-usage": {},
+    "content-width": {},
+    "service-worker": {},
+    "offline": {},
+    "http-redirect": {},
+    "html-without-javascript": {},
+    "chrome-console-messages": {},
+    "styles": {},
+    "css-usage": {},
+    "all-event-listeners": {
+      "path": "dobetterweb/all-event-listeners"
+    },
+    "anchors-with-no-rel-noopener": {
+      "path": "dobetterweb/anchors-with-no-rel-noopener"
+    },
+    "appcache": {
+      "path": "dobetterweb/appcache"
+    },
+    "console-time-usage": {
+      "path": "dobetterweb/console-time-usage"
+    },
+    "datenow": {
+      "path": "dobetterweb/datenow"
+    },
+    "document-write": {
+      "path": "dobetterweb/document-write"
+    },
+    "geolocation-on-start": {
+      "path": "dobetterweb/geolocation-on-start"
+    },
+    "notification-on-start": {
+      "path": "dobetterweb/notification-on-start"
+    },
+    "domstats": {
+      "path": "dobetterweb/domstats"
+    },
+    "optimized-images": {
+      "path": "dobetterweb/optimized-images"
+    },
+    "tags-blocking-first-paint": {
+      "path": "dobetterweb/tags-blocking-first-paint"
+    },
+    "websql": {
+      "path": "dobetterweb/websql"
+    }
+  },
+
+  "passes": {
+    "defaultPass": {
+      "order": 10,
+      "recordNetwork": true,
+      "recordTrace": true,
+      "pauseBeforeTraceEndMs": 500,
+      "useThrottling": true,
+      "gatherers": [
+        "url",
+        "https",
+        "viewport",
+        "theme-color",
+        "manifest",
+        "accessibility",
+        "image-usage",
+        "content-width"
+      ]
+    },
+    "offlinePass": {
+      "order": 20,
+      "recordNetwork": true,
+      "useThrottling": false,
+      "gatherers": [
+        "service-worker",
+        "offline"
+      ]
+    },
+    "redirectPass": {
+      "order": 30,
+      "useThrottling": false,
+      "gatherers": [
+        "http-redirect",
+        "html-without-javascript"
+      ]
+    },
+    "dbw": {
+      "order": 40,
+      "recordNetwork": true,
+      "useThrottling": false,
+      "gatherers": [
+        "chrome-console-messages",
+        "styles",
+        "css-usage",
+        "all-event-listeners",
+        "anchors-with-no-rel-noopener",
+        "appcache",
+        "console-time-usage",
+        "datenow",
+        "document-write",
+        "geolocation-on-start",
+        "notification-on-start",
+        "domstats",
+        "optimized-images",
+        "tags-blocking-first-paint",
+        "websql"
+      ]
+    }
+  },
+
+  "audits": {
+    "is-on-https": {},
+    "redirects-http": {},
+    "service-worker": {},
+    "works-offline": {},
+    "viewport": {},
+    "manifest-display": {},
+    "without-javascript": {},
+    "first-meaningful-paint": {},
+    "speed-index-metric": {},
+    "estimated-input-latency": {},
+    "time-to-interactive": {},
+    "user-timings": {},
+    "screenshots": {},
+    "critical-request-chains": {},
+    "manifest-exists": {},
+    "manifest-background-color": {},
+    "manifest-theme-color": {},
+    "manifest-icons-min-192": {},
+    "manifest-icons-min-144": {},
+    "manifest-name": {},
+    "manifest-short-name": {},
+    "manifest-short-name-length": {},
+    "manifest-start-url": {},
+    "theme-color-meta": {},
+    "content-width": {},
+    "deprecations": {},
+    "aria-allowed-attr": {
+      "path": "accessibility/aria-allowed-attr"
+    },
+    "aria-required-attr": {
+      "path": "accessibility/aria-required-attr"
+    },
+    "aria-valid-attr-value": {
+      "path": "accessibility/aria-valid-attr-value"
+    },
+    "aria-valid-attr": {
+      "path": "accessibility/aria-valid-attr"
+    },
+    "color-contrast": {
+      "path": "accessibility/color-contrast"
+    },
+    "image-alt": {
+      "path": "accessibility/image-alt"
+    },
+    "label": {
+      "path": "accessibility/label"
+    },
+    "tabindex": {
+      "path": "accessibility/tabindex"
+    },
+    "total-byte-weight": {
+      "path": "byte-efficiency/total-byte-weight"
+    },
+    "unused-css-rules": {
+      "path": "byte-efficiency/unused-css-rules"
+    },
+    "uses-optimized-images": {
+      "path": "byte-efficiency/uses-optimized-images"
+    },
+    "uses-responsive-images": {
+      "path": "byte-efficiency/uses-responsive-images"
+    },
+    "appcache-manifest": {
+      "path": "dobetterweb/appcache-manifest"
+    },
+    "dom-size": {
+      "path": "dobetterweb/dom-size"
+    },
+    "external-anchors-use-rel-noopener": {
+      "path": "dobetterweb/external-anchors-use-rel-noopener"
+    },
+    "geolocation-on-start": {
+      "path": "dobetterweb/geolocation-on-start"
+    },
+    "link-blocking-first-paint": {
+      "path": "dobetterweb/link-blocking-first-paint"
+    },
+    "no-console-time": {
+      "path": "dobetterweb/no-console-time"
+    },
+    "no-datenow": {
+      "path": "dobetterweb/no-datenow"
+    },
+    "no-document-write": {
+      "path": "dobetterweb/no-document-write"
+    },
+    "no-mutation-events": {
+      "path": "dobetterweb/no-mutation-events"
+    },
+    "no-old-flexbox": {
+      "path": "dobetterweb/no-old-flexbox"
+    },
+    "no-websql": {
+      "path": "dobetterweb/no-websql"
+    },
+    "notification-on-start": {
+      "path": "dobetterweb/notification-on-start"
+    },
+    "script-blocking-first-paint": {
+      "path": "dobetterweb/script-blocking-first-paint"
+    },
+    "uses-http2": {
+      "path": "dobetterweb/uses-http2"
+    },
+    "uses-passive-event-listeners": {
+      "path": "dobetterweb/uses-passive-event-listeners"
+    }
+  },
+
+  "report": {
+    "categories": {
+      "pwa": {
+        "name": "Progressive Web App",
+        "description": "",
+        "children": [
+          {"id": "service-worker", "weight": 1},
+          {"id": "works-offline", "weight": 1},
+          {"id": "without-javascript", "weight": 1},
+          {"id": "is-on-https", "weight": 1},
+          {"id": "redirects-http", "weight": 1},
+          {"id": "manifest-exists", "weight": 1},
+          {"id": "manifest-start-url", "weight": 1},
+          {"id": "manifest-icons-min-144", "weight": 1},
+          {"id": "manifest-short-name", "weight": 1},
+          {"id": "manifest-exists", "weight": 1},
+          {"id": "manifest-name", "weight": 1},
+          {"id": "manifest-background-color", "weight": 1},
+          {"id": "manifest-theme-color", "weight": 1},
+          {"id": "manifest-icons-min-192", "weight": 1},
+          {"id": "manifest-exists", "weight": 1},
+          {"id": "theme-color-meta", "weight": 1},
+          {"id": "viewport", "weight": 1},
+          {"id": "content-width", "weight": 1}
+        ]
+      },
+      "performance": {
+        "name": "Performance",
+        "description": "",
+        "children": [
+          {"id": "first-meaningful-paint", "weight": 5},
+          {"id": "speed-index-metric", "weight": 1},
+          {"id": "estimated-input-latency", "weight": 1},
+          {"id": "time-to-interactive", "weight": 5},
+          {"id": "link-blocking-first-paint", "weight": 0},
+          {"id": "script-blocking-first-paint", "weight": 0},
+          {"id": "unused-css-rules", "weight": 0},
+          {"id": "uses-optimized-images", "weight": 0},
+          {"id": "uses-responsive-images", "weight": 0},
+          {"id": "total-byte-weight", "weight": 0},
+          {"id": "dom-size", "weight": 0},
+          {"id": "critical-request-chains", "weight": 0},
+          {"id": "user-timings", "weight": 0}
+        ]
+      },
+      "accessibility": {
+        "name": "Accessibility",
+        "description": "",
+        "children": [
+          {"id": "aria-allowed-attr", "weight": 1},
+          {"id": "aria-required-attr", "weight": 1},
+          {"id": "aria-valid-attr", "weight": 1},
+          {"id": "aria-valid-attr-value", "weight": 1},
+          {"id": "color-contrast", "weight": 1},
+          {"id": "image-alt", "weight": 1},
+          {"id": "label", "weight": 1},
+          {"id": "tabindex", "weight": 1}
+        ]
+      },
+      "best-practices": {
+        "name": "Best Practices",
+        "description": "",
+        "children": [
+          {"id": "appcache-manifest", "weight": 1},
+          {"id": "no-websql", "weight": 1},
+          {"id": "is-on-https", "weight": 1},
+          {"id": "uses-http2", "weight": 1},
+          {"id": "no-old-flexbox", "weight": 1},
+          {"id": "uses-passive-event-listeners", "weight": 1},
+          {"id": "no-mutation-events", "weight": 1},
+          {"id": "no-document-write", "weight": 1},
+          {"id": "external-anchors-use-rel-noopener", "weight": 1},
+          {"id": "geolocation-on-start", "weight": 1},
+          {"id": "notification-on-start", "weight": 1},
+          {"id": "deprecations", "weight": 1},
+          {"id": "manifest-short-name-length", "weight": 1},
+          {"id": "manifest-display", "weight": 1}
+        ]
+      }
+    }
+  }
+}
