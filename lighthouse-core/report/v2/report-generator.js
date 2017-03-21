@@ -1,17 +1,9 @@
 const ConfigV2 = require('../../config/v2/config');
 
 class ReportGeneratorV2 {
-  _scoreOfItem(item) {
-    if (typeof item.numericScore === 'number') {
-      return item.numericScore;
-    }
-
-    return Number(item.score) || 0;
-  }
-
   _arithmeticMean(items) {
     const results = items.reduce((result, item) => {
-      const score = this._scoreOfItem(item);
+      const score = Number(item.score) || 0;
       const weight = Number(item.weight) || 0;
       return {
         weight: result.weight + weight,
@@ -24,7 +16,7 @@ class ReportGeneratorV2 {
 
   _geometricMean(items) {
     const results = items.reduce((result, item) => {
-      const score = this._scoreOfItem(item);
+      const score = Number(item.score) || 0;
       const weight = Number(item.weight) || 0;
       return {
         weight: result.weight + weight,
@@ -39,12 +31,12 @@ class ReportGeneratorV2 {
     const categories = ConfigV2.objectToList(config.report.categories).map(category => {
       const children = category.children.map(item => {
         const result = resultsByAuditId[item.id];
-        let numericScore = Number(result.score) || 0;
+        let score = Number(result.score) || 0;
         if (typeof result.score === 'boolean') {
-          numericScore = result.score ? 100 : 0;
+          score = result.score ? 100 : 0;
         }
 
-        return Object.assign({}, item, {result, numericScore});
+        return Object.assign({}, item, {result, score});
       });
 
       const score = this._arithmeticMean(children);
