@@ -15,12 +15,15 @@
  */
 'use strict';
 
+/* eslint-env mocha */
+
 const ConfigV2 = require('../../../config/v2/config.js');
 const assert = require('assert');
 
 let resets = [];
 
 function deepFreeze(obj) {
+  // eslint-disable-next-line guard-for-in
   for (const key in obj) {
     const value = obj[key];
     if (value && typeof value === 'object') {
@@ -35,10 +38,10 @@ function stub(object, property, retVal) {
   const args = [];
   const original = object[property];
   resets.push({object, property, original});
-  object[property] = function () {
-    args.push(arguments);
+  object[property] = function(...thisArgs) {
+    args.push(thisArgs);
     return typeof retVal === 'function' ?
-        retVal.apply(this, arguments) :
+        retVal.apply(this, thisArgs) :
         retVal;
   };
   return args;
@@ -62,7 +65,6 @@ function emptyConfig() {
 }
 
 describe('ConfigV2', () => {
-
   afterEach(reset);
 
   describe('#extendIfNecessary', () => {

@@ -1,3 +1,5 @@
+'use strict';
+
 class MyAudit {
   static get meta() {
     return {

@@ -1,3 +1,21 @@
+/**
+ * @license
+ * Copyright 2017 Google Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+'use strict';
+
 const path = require('path');
 const log = require('../../lib/log');
 
@@ -14,8 +32,7 @@ class ConfigV2 {
       configPath = path.resolve(__dirname, defaultConfigPath);
     }
 
-    const configDir = typeof configPath === 'string' ?
-        path.dirname(configPath) : process.cwd();
+    const configDir = typeof configPath === 'string' ? path.dirname(configPath) : process.cwd();
     if (!path.isAbsolute(configDir)) {
       throw new Error('Must pass an absolute path to config');
     }
@@ -144,7 +161,7 @@ class ConfigV2 {
         extendedConfigPath,
         path.resolve(configDir, extendedConfigPath),
         path.resolve(process.cwd(), extendedConfigPath),
-      ])
+      ]);
       extendedConfigJson = ConfigV2._require(extendedConfigPath);
     }
 
@@ -209,7 +226,7 @@ class ConfigV2 {
         implementation = ConfigV2._require(definition.path);
       }
 
-      return Object.assign({}, definition, {implementation})
+      return Object.assign({}, definition, {implementation});
     });
   }
 
@@ -225,7 +242,10 @@ class ConfigV2 {
     const gathererIds = new Set(gatherers.map(item => item.id));
     const usedGathererIds = new Set();
     const usedGathererNames = new Set(['traces', 'networkRecords']);
-    const requestedGathererNames = new Set(_flatten(audits.map(audit => audit.implementation.meta.requiredArtifacts)));
+
+    const allRequiredArtifacts = audits.map(audit => audit.implementation.meta.requiredArtifacts);
+    const requestedGathererNames = new Set(_flatten(allRequiredArtifacts));
+
     const passDefinitions = ConfigV2.objectToArray(passesObject);
     const passes = passDefinitions.map(definition => {
       const foundGatherers = definition.gatherers.map(id => {
@@ -247,14 +267,14 @@ class ConfigV2 {
       log.warn('config', `Gatherers are unused: ${unused.join(', ')}`);
     }
 
-    const usedButNotNeeded = _differenceAsArray(usedGathererNames, requestedGathererNames);
-    if (usedButNotNeeded.length) {
-      log.warn('config', `Gatherers were configured but not needed: ${usedButNotNeeded.join(', ')}`);
+    const usedNotNeeded = _differenceAsArray(usedGathererNames, requestedGathererNames);
+    if (usedNotNeeded.length) {
+      log.warn('config', `Gatherers were configured but not needed: ${usedNotNeeded.join(', ')}`);
     }
 
-    const neededButNotGathered = _differenceAsArray(requestedGathererNames, usedGathererNames);
-    if (neededButNotGathered.length) {
-      log.warn('config', `Gatherers were needed but not configured: ${neededButNotGathered.join(', ')}`);
+    const neededNotUsed = _differenceAsArray(requestedGathererNames, usedGathererNames);
+    if (neededNotUsed.length) {
+      log.warn('config', `Gatherers were needed but not configured: ${neededNotUsed.join(', ')}`);
     }
 
     return passes;
