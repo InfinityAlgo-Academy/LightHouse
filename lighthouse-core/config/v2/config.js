@@ -5,7 +5,7 @@ const defaultConfigPath = './default.json';
 const defaultConfigJson = require(defaultConfigPath);
 
 const _flatten = arr => [].concat(...arr);
-const _subtract = (setA, setB) => Array.from(setA).filter(x => !setB.has(x));
+const _differenceAsArray = (setA, setB) => Array.from(setA).filter(x => !setB.has(x));
 
 class ConfigV2 {
   constructor(configJson, configPath) {
@@ -128,7 +128,7 @@ class ConfigV2 {
     return Object.keys(object).reduce((list, id) => {
       list.push(Object.assign({id}, object[id]));
       return list;
-    }, []).sort((itemA, itemB) => itemA.order - itemB.order);
+    }, []);
   }
 
   static collectImplementations(definitionsObject) {
@@ -165,16 +165,16 @@ class ConfigV2 {
     });
 
     if (gathererIds.size !== usedGathererIds.size) {
-      const unused = _subtract(gathererIds, usedGathererIds);
+      const unused = _differenceAsArray(gathererIds, usedGathererIds);
       log.warn('config', `Gatherers are unused: ${unused.join(', ')}`);
     }
 
-    const usedButNotNeeded = _subtract(usedGathererNames, requestedGathererNames);
+    const usedButNotNeeded = _differenceAsArray(usedGathererNames, requestedGathererNames);
     if (usedButNotNeeded.length) {
       log.warn('config', `Gatherers were configured but not needed: ${usedButNotNeeded.join(', ')}`);
     }
 
-    const neededButNotGathered = _subtract(requestedGathererNames, usedGathererNames);
+    const neededButNotGathered = _differenceAsArray(requestedGathererNames, usedGathererNames);
     if (neededButNotGathered.length) {
       log.warn('config', `Gatherers were needed but not configured: ${neededButNotGathered.join(', ')}`);
     }

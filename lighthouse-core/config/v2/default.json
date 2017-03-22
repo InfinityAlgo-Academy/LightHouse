@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "configVersion": 2,
 
   "gatherers": {
     "url": {},
@@ -57,7 +57,6 @@
 
   "passes": {
     "defaultPass": {
-      "order": 10,
       "recordNetwork": true,
       "recordTrace": true,
       "pauseBeforeTraceEndMs": 500,
@@ -74,7 +73,6 @@
       ]
     },
     "offlinePass": {
-      "order": 20,
       "recordNetwork": true,
       "useThrottling": false,
       "gatherers": [
@@ -83,7 +81,6 @@
       ]
     },
     "redirectPass": {
-      "order": 30,
       "useThrottling": false,
       "gatherers": [
         "http-redirect",
@@ -91,7 +88,6 @@
       ]
     },
     "dbw": {
-      "order": 40,
       "recordNetwork": true,
       "useThrottling": false,
       "gatherers": [

@@ -148,12 +148,18 @@ class ReportGenerator {
     });
   }
 
+  /**
+   * Returns aggregations directly from results or maps Config v2 categories to equivalent Config
+   * v1 aggregations.
+   * @param {{aggregations: !Array<!Object>, reportCategories: !Array<!Object>}} results
+   * @return {!Array<!Aggregation>}
+   */
   _getAggregations(results) {
     if (results.aggregations.length) {
       return results.aggregations;
     }
 
-    return results.categories.map(category => {
+    return results.reportCategories.map(category => {
       const name = category.name;
       const description = category.description;
 

@@ -94,7 +94,9 @@ class Runner {
       // Run each audit sequentially, the auditResults array has all our fine work
       const auditResults = [];
       for (let audit of config.audits) {
+        // support config v2 audit objects
         audit = audit.implementation || audit;
+
         run = run.then(artifacts => {
           return Runner._runAudit(audit, artifacts)
             .then(ret => auditResults.push(ret))
@@ -136,10 +138,11 @@ class Runner {
             a => Aggregate.aggregate(a, runResults.auditResults));
         }
 
-        let categories = [];
+        // compute config v2 categories if available
+        let reportCategories = [];
         if (config.report) {
           const reportGenerator = new ReportGeneratorV2();
-          categories = reportGenerator.generateReportJson(config, resultsById).categories;
+          reportCategories = reportGenerator.generateReportJson(config, resultsById).categories;
         }
 
         return {
@@ -150,7 +153,7 @@ class Runner {
           audits: resultsById,
           artifacts: runResults.artifacts,
           runtimeConfig: Runner.getRuntimeConfig(opts.flags),
-          categories,
+          reportCategories,
           aggregations
         };
       });

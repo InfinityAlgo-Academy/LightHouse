@@ -49,7 +49,7 @@ module.exports = function(url, flags = {}, configJSON) {
     log.setLevel(flags.logLevel);
 
     // Use ConfigParser to generate a valid config file
-    const config = configJSON && configJSON.version === 2 ?
+    const config = configJSON && configJSON.configVersion === 2 ?
       new ConfigV2(configJSON, flags.configPath) :
       new Config(configJSON, flags.configPath);
 

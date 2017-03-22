@@ -431,6 +431,7 @@ class GatherRunner {
   static instantiateGatherers(passes, rootPath) {
     return passes.map(pass => {
       pass.gatherers = pass.gatherers.map(gatherer => {
+        // support config v2 gatherer objects
         if (gatherer.implementation) {
           const GathererClass = gatherer.implementation;
           return new GathererClass();
