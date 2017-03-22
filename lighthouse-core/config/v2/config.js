@@ -163,7 +163,7 @@ class ConfigV2 {
   static resolvePaths(object, configDir, searchPaths = []) {
     object = Object.assign({}, object);
     Object.keys(object).forEach(key => {
-      // We don't need to resolve objects that already have
+      // We don't need to resolve paths whose implementation we already have
       if (object[key].implementation) {
         return;
       }
