@@ -339,7 +339,7 @@ class GatherRunner {
             .then(passData => {
               // If requested by config, merge trace and network data for this
               // pass into tracingData.
-              const passName = config.passName || Audit.DEFAULT_PASS;
+              const passName = config.passName || config.id || Audit.DEFAULT_PASS;
               if (config.recordTrace) {
                 tracingData.traces[passName] = passData.trace;
                 tracingData.devtoolsLogs[passName] = passData.devtoolsLog;

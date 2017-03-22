@@ -14,35 +14,51 @@ class ConfigV2 {
       configPath = path.resolve(__dirname, defaultConfigPath);
     }
 
+    const configDir = typeof configPath === 'string' ?
+        path.dirname(configPath) : process.cwd();
+    if (!path.isAbsolute(configDir)) {
+      throw new Error('Must pass an absolute path to config');
+    }
+
     // Perform a shallow clone so we can adjust gatherers and audits
     configJson = Object.assign({}, configJson);
 
     // Resolve the paths of audits and gatherers
-    configJson.gatherers = ConfigV2.resolvePaths(configJson.gatherers, configPath, [
+    configJson.gatherers = ConfigV2.resolvePaths(configJson.gatherers, configDir, [
       path.join(__dirname, '../../gather/gatherers'),
     ]);
-    configJson.audits = ConfigV2.resolvePaths(configJson.audits, configPath, [
+    configJson.audits = ConfigV2.resolvePaths(configJson.audits, configDir, [
       path.join(__dirname, '../../audits'),
     ]);
 
     // Extend only after our paths have been resolved
-    configJson = ConfigV2.extendIfNecessary(configJson, configPath);
+    configJson = ConfigV2.extendIfNecessary(configJson, configDir);
 
     this._json = configJson;
     this._gatherers = ConfigV2.collectImplementations(configJson.gatherers);
     this._audits = ConfigV2.collectImplementations(configJson.audits);
-    this._passes = ConfigV2.computePasses(configJson, this._gatherers, this._audits);
+    this._passes = ConfigV2.computePasses(configJson.passes, this._gatherers, this._audits);
     this._report = configJson.report;
   }
 
+  /**
+   * Returns a deep clone of the final extended config JSON.
+   * @return {!Object}
+   */
   asJson() {
     return JSON.parse(JSON.stringify(this._json));
   }
 
+  /**
+   * @return {!Array<{id: string, implementation: !Audit}>}
+   */
   get audits() {
     return [...this._audits];
   }
 
+  /**
+   * @return {!Array<{id: string, gatherers: !Array<!Gatherer>}>}
+   */
   get passes() {
     return [...this._passes];
   }
@@ -51,6 +67,29 @@ class ConfigV2 {
     return this._report;
   }
 
+  /**
+   * Creates a new ConfigV2 object, used to stub for testing.
+   * @param {Object=} json
+   * @param {string=} path
+   */
+  static _createInstance(json, path) {
+    return new ConfigV2(json, path);
+  }
+
+  /**
+   * Requires the given file, used to stub for testing.
+   * @param {string} path
+   * @return {*}
+   */
+  static _require(path) {
+    return require(path);
+  }
+
+  /**
+   * Returns the first path that resolves via require.resolve or throws.
+   * @param {!Array<string>} paths
+   * @return {string}
+   */
   static _tryResolveUntilSuccess(paths) {
     for (const path of paths) {
       try {
@@ -61,6 +100,11 @@ class ConfigV2 {
     throw new Error(`Unable to locate ${paths[0]}`);
   }
 
+  /**
+   * Recursively merges all of the properties from extension into base.
+   * @param {*} base
+   * @param {*} extension
+   */
   static _mergeObjects(base, extension) {
     if (!base ||
         !extension ||
@@ -79,7 +123,13 @@ class ConfigV2 {
     return base;
   }
 
-  static extendIfNecessary(configJson, configPath) {
+  /**
+   * Computes the final extended JSON or returns the original if no extension was needed.
+   * @param {!Object} configJson
+   * @param {string} configDir
+   * @return {!Object}
+   */
+  static extendIfNecessary(configJson, configDir) {
     if (!configJson.extends) {
       return configJson;
     }
@@ -88,21 +138,29 @@ class ConfigV2 {
     let extendedConfigPath = configJson.extends;
     if (extendedConfigPath === 'lighthouse:default') {
       extendedConfigJson = defaultConfigJson;
-      extendedConfigPath = defaultConfigPath;
+      extendedConfigPath = path.resolve(__dirname, defaultConfigPath);
     } else {
       extendedConfigPath = ConfigV2._tryResolveUntilSuccess([
         extendedConfigPath,
-        path.resolve(configPath, extendedConfigPath),
+        path.resolve(configDir, extendedConfigPath),
         path.resolve(process.cwd(), extendedConfigPath),
       ])
-      extendedConfigJson = require(extendedConfigPath);
+      extendedConfigJson = ConfigV2._require(extendedConfigPath);
     }
 
-    const extendedConfig = new ConfigV2(extendedConfigJson, extendedConfigPath);
+    const extendedConfig = ConfigV2._createInstance(extendedConfigJson, extendedConfigPath);
     return ConfigV2._mergeObjects(extendedConfig.asJson(), configJson);
   }
 
-  static resolvePaths(object, configPath, searchPaths = []) {
+  /**
+   * Traverses all the keys in the object and sets the path property of the child object to the
+   * resolved path of the mentioned file. Throws if no file could be found for a child.
+   * @param {!Object} object
+   * @param {string} configDir
+   * @param {Array<string>=} searchPaths
+   * @return {!Object} A copy of the input object with path set for all children.
+   */
+  static resolvePaths(object, configDir, searchPaths = []) {
     object = Object.assign({}, object);
     Object.keys(object).forEach(key => {
       // We don't need to resolve objects that already have
@@ -115,7 +173,7 @@ class ConfigV2 {
         return path.resolve(searchPath, rawPath);
       }).concat([
         rawPath, // for npm plugins and absolute path usage
-        path.resolve(configPath, rawPath), // for relative config usage
+        path.resolve(configDir, rawPath), // for relative config usage
         path.resolve(process.cwd(), rawPath), // for node module usage
       ]);
       const resolvedPath = ConfigV2._tryResolveUntilSuccess(possiblePaths);
@@ -124,31 +182,51 @@ class ConfigV2 {
     return object;
   }
 
-  static objectToList(object) {
+  /**
+   * Converts an object to an array of objects, also sets the `id` property of each item to its
+   * key in the parent.
+   * @param {!Object<!Object>} object
+   * @return {!Array<!Object>}
+   */
+  static objectToArray(object) {
     return Object.keys(object).reduce((list, id) => {
       list.push(Object.assign({id}, object[id]));
       return list;
     }, []);
   }
 
+  /**
+   * Converts the object to an array, requires the files specified by `path`, and sets the
+   * `implementation` property of each item to the required value.
+   * @param {!Object<!Object>} definitionsObject
+   * @return {!Array<!Object>}
+   */
   static collectImplementations(definitionsObject) {
-    const definitions = ConfigV2.objectToList(definitionsObject);
+    const definitions = ConfigV2.objectToArray(definitionsObject);
     return definitions.map(definition => {
       let implementation = definition.implementation;
       if (!implementation) {
-        implementation = require(definition.path);
+        implementation = ConfigV2._require(definition.path);
       }
 
       return Object.assign({}, definition, {implementation})
     });
   }
 
-  static computePasses(configJson, gatherers, audits) {
+  /**
+   * Converts the object to an array, replaces the `gatherers` property of each pass to an array
+   * of the classes, and validates the usage of gatherers.
+   * @param {!Object} passesObject
+   * @param {!Array<{id: string, implementation: !Gatherer>} gatherers
+   * @param {!Array<{id: string, implementation: !Audit>} audits
+   * @return {!Array<{gatherers: !Array<!Gatherer>}>}
+   */
+  static computePasses(passesObject, gatherers, audits) {
     const gathererIds = new Set(gatherers.map(item => item.id));
     const usedGathererIds = new Set();
     const usedGathererNames = new Set(['traces', 'networkRecords']);
     const requestedGathererNames = new Set(_flatten(audits.map(audit => audit.implementation.meta.requiredArtifacts)));
-    const passDefinitions = ConfigV2.objectToList(configJson.passes);
+    const passDefinitions = ConfigV2.objectToArray(passesObject);
     const passes = passDefinitions.map(definition => {
       const foundGatherers = definition.gatherers.map(id => {
         const gatherer = gatherers.find(item => item.id === id);

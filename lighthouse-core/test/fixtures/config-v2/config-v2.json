@@ -1,0 +1,27 @@
+{
+  "gatherers": {
+    "my-gatherer": {
+      "path": "./my-gatherer.js"
+    }
+  },
+  "audits": {
+    "my-audit": {
+      "path": "./my-audit.js"
+    }
+  },
+  "passes": {
+    "first": {
+      "gatherers": ["my-gatherer"]
+    }
+  },
+  "report": {
+    "categories": {
+      "custom": {
+        "name": "Custom Category",
+        "children": [
+          {"id": "my-audit", "weight": 1}
+        ]
+      }
+    }
+  }
+}
