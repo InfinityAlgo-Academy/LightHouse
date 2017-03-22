@@ -1,4 +1,5 @@
 const path = require('path');
+const log = require('../../lib/log');
 
 const defaultConfigPath = './default.json';
 const defaultConfigJson = require(defaultConfigPath);
@@ -61,7 +62,8 @@ class ConfigV2 {
   }
 
   static _mergeObjects(base, extension) {
-    if (!extension ||
+    if (!base ||
+        !extension ||
         typeof extension !== 'object' ||
         typeof base !== 'object' ||
         Array.isArray(base)) {
@@ -70,7 +72,7 @@ class ConfigV2 {
 
     for (const key in extension) {
       if (key !== 'extends') {
-        base[key] = ConfigV2.mergeObjects(base[key], extension[key]);
+        base[key] = ConfigV2._mergeObjects(base[key], extension[key]);
       }
     }
 
@@ -149,13 +151,15 @@ class ConfigV2 {
         implementation = require(definition.path);
       }
 
-      return Object.assign({}, definition, {implementation})
+      return Object.assign({}, definition, {implementation});
     });
   }
 
   static computePasses(configJson, gatherers, audits) {
     const gathererIds = new Set(gatherers.map(item => item.id));
     const usedGathererIds = new Set();
+    const usedGathererNames = new Set(['traces', 'networkRecords']);
+    const requestedGathererNames = new Set(_flatten(audits.map(audit => audit.implementation.meta.requiredArtifacts)));
     const passDefinitions = ConfigV2.objectToList(configJson.passes);
     const passes = passDefinitions.map(definition => {
       const foundGatherers = definition.gatherers.map(id => {
@@ -165,16 +169,28 @@ class ConfigV2 {
         }
 
         usedGathererIds.add(id);
+        usedGathererNames.add(gatherer.implementation.name);
         return gatherer;
       });
 
       return Object.assign({}, definition, {gatherers: foundGatherers});
     });
 
-    if (gathererIds.size !== usedGathererIds) {
+    if (gathererIds.size !== usedGathererIds.size) {
       const unused = _subtract(gathererIds, usedGathererIds);
-      console.warn(`Gatherers are unused: ${unused.join(', ')}`);
+      log.warn('config', `Gatherers are unused: ${unused.join(', ')}`);
     }
+
+    const usedButNotNeeded = _subtract(usedGathererNames, requestedGathererNames);
+    if (usedButNotNeeded.length) {
+      log.warn('config', `Gatherers were configured but not needed: ${usedButNotNeeded.join(', ')}`);
+    }
+
+    const neededButNotGathered = _subtract(requestedGathererNames, usedGathererNames);
+    if (neededButNotGathered.length) {
+      log.warn('config', `Gatherers were needed but not configured: ${neededButNotGathered.join(', ')}`);
+    }
+
     return passes;
   }
 }
