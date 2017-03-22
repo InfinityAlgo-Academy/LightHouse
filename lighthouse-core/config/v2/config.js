@@ -29,8 +29,8 @@ class ConfigV2 {
     configJson = ConfigV2.extendIfNecessary(configJson, configPath);
 
     this._json = configJson;
-    this._gatherers = ConfigV2.getGathererImplementations(configJson.gatherers);
-    this._audits = ConfigV2.getAuditImplementations(configJson.audits);
+    this._gatherers = ConfigV2.collectImplementations(configJson.gatherers);
+    this._audits = ConfigV2.collectImplementations(configJson.audits);
     this._passes = ConfigV2.computePasses(configJson, this._gatherers, this._audits);
     this._report = configJson.report;
   }
@@ -131,27 +131,15 @@ class ConfigV2 {
     }, []).sort((itemA, itemB) => itemA.order - itemB.order);
   }
 
-  static getGathererImplementations(gatherersObject) {
-    const gathererDefinitions = ConfigV2.objectToList(gatherersObject);
-    return gathererDefinitions.map(definition => {
+  static collectImplementations(definitionsObject) {
+    const definitions = ConfigV2.objectToList(definitionsObject);
+    return definitions.map(definition => {
       let implementation = definition.implementation;
       if (!implementation) {
         implementation = require(definition.path);
       }
 
       return Object.assign({}, definition, {implementation})
-    });
-  }
-
-  static getAuditImplementations(auditsObject) {
-    const auditDefinitions = ConfigV2.objectToList(auditsObject);
-    return auditDefinitions.map(definition => {
-      let implementation = definition.implementation;
-      if (!implementation) {
-        implementation = require(definition.path);
-      }
-
-      return Object.assign({}, definition, {implementation});
     });
   }
 
