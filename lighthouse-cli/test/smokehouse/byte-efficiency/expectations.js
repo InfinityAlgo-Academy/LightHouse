@@ -24,16 +24,6 @@ module.exports = [
     initialUrl: 'http://localhost:10200/byte-efficiency/tester.html',
     url: 'http://localhost:10200/byte-efficiency/tester.html',
     audits: {
-      'unused-css-rules': {
-        score: false,
-        extendedInfo: {
-          value: {
-            results: {
-              length: 2
-            }
-          }
-        }
-      },
       'uses-optimized-images': {
         score: false,
         extendedInfo: {

@@ -91,7 +91,6 @@
     "accessibility/label",
     "accessibility/tabindex",
     "byte-efficiency/total-byte-weight",
-    "byte-efficiency/unused-css-rules",
     "byte-efficiency/uses-optimized-images",
     "byte-efficiency/uses-responsive-images",
     "dobetterweb/appcache-manifest",
@@ -389,10 +388,6 @@
     "categorizable": false,
     "items": [{
       "audits": {
-        "unused-css-rules": {
-          "expectedValue": true,
-          "weight": 1
-        },
         "uses-optimized-images": {
           "expectedValue": true,
           "weight": 1
