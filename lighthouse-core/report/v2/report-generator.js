@@ -21,9 +21,15 @@ const path = require('path');
 
 const REPORT_TEMPLATE = fs.readFileSync(path.join(__dirname, './report-template.html'), 'utf8');
 // TODO: Setup a gulp pipeline to concat and minify the renderer files?
-const REPORT_JAVASCRIPT = fs.readFileSync(path.join(__dirname, './report-renderer.js'), 'utf8');
+const REPORT_JAVASCRIPT = [
+  fs.readFileSync(path.join(__dirname, './scripts/polymer2.js'), 'utf8'),
+  fs.readFileSync(path.join(__dirname, './report-renderer.js'), 'utf8'),
+].join('\n');
+
+const REPORT_CSS = fs.readFileSync(path.join(__dirname, './styles/report.css'), 'utf8');
 
 class ReportGeneratorV2 {
+
   /**
    * Computes the weighted-average of the score of the list of items.
    * @param {!Array<{score: number|undefined, weight: number|undefined}} items
@@ -101,6 +107,7 @@ class ReportGeneratorV2 {
     return ReportGeneratorV2.replaceStrings(REPORT_TEMPLATE, [
       {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
       {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: sanitizedJavascript},
+      {search: '/*%%LIGHTHOUSE_STYLES%%*/', replacement: REPORT_CSS},
     ]);
   }
 }
