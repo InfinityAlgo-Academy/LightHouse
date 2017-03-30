@@ -42,6 +42,14 @@ describe('Trace of Tab computed artifact:', () => {
     assert.ok(firstEvt.pid === trace.firstMeaningfulPaintEvt.pid);
   });
 
+  it('computes timings of each event', () => {
+    const trace = traceOfTab.compute_(lateTracingStartedTrace);
+    assert.equal(Math.round(trace.timings.navigationStart), 0);
+    assert.equal(Math.round(trace.timings.firstPaint), 80);
+    assert.equal(Math.round(trace.timings.firstContentfulPaint), 80);
+    assert.equal(Math.round(trace.timings.firstMeaningfulPaint), 530);
+  });
+
   describe('finds correct FMP', () => {
     it('if there was a tracingStartedInPage after the frame\'s navStart', () => {
       const trace = traceOfTab.compute_(lateTracingStartedTrace);

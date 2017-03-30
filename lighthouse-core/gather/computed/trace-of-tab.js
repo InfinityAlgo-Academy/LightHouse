@@ -92,7 +92,16 @@ class TraceOfTab extends ComputedArtifact {
       .filter(e => e.pid === startedInPageEvt.pid)
       .sort((event0, event1) => event0.ts - event1.ts);
 
+    const metrics = {navigationStart, firstPaint, firstContentfulPaint, firstMeaningfulPaint};
+    const timings = {};
+
+    Object.keys(metrics).forEach(metric => {
+      timings[metric + 'Ts'] = metrics[metric] && metrics[metric].ts / 1000;
+      timings[metric] = timings[metric + 'Ts'] - timings.navigationStartTs;
+    });
+
     return {
+      timings,
       processEvents,
       startedInPageEvt: startedInPageEvt,
       navigationStartEvt: navigationStart,
