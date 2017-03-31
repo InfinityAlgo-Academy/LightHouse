@@ -32,10 +32,19 @@ class TTIMetric extends Audit {
           'enough to interact with. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive).',
       optimalValue: SCORING_TARGET.toLocaleString() + 'ms',
-      requiredArtifacts: ['traces', 'networkRecords']
+      requiredArtifacts: ['traces']
     };
   }
 
+  /**
+   *
+   * @param {number} minTime
+   * @param {number} maxTime
+   * @param {{model: !Object, trace: !Object}} data
+   * @param {number=} windowSize
+   * @param {number=} minimumWindowSize
+   * @return {{timeInMs: number|undefined, currentLatency: number, foundLatencies: !Array}}
+   */
   static _forwardWindowTTI(minTime, maxTime, data, windowSize = 500, minimumWindowSize = 500) {
     // Find first window where Est Input Latency is <50ms at the 90% percentile.
     let startTime = minTime - 50;
@@ -79,6 +88,11 @@ class TTIMetric extends Audit {
     };
   }
 
+  /**
+   * @param {{fmpTiming: number, visuallyReadyTiming: number, endOfTraceTime: number}} times
+   * @param {{model: !Object, trace: !Object}} data
+   * @return {{timeInMs: number|undefined, currentLatency: number, foundLatencies: !Array}}
+   */
   static findTTIAlpha(times, data) {
     return TTIMetric._forwardWindowTTI(
       Math.max(times.fmpTiming, times.visuallyReadyTiming),
@@ -88,6 +102,11 @@ class TTIMetric extends Audit {
     );
   }
 
+  /**
+   * @param {{fmpTiming: number, visuallyReadyTiming: number, endOfTraceTime: number}} times
+   * @param {{model: !Object, trace: !Object}} data
+   * @return {{timeInMs: number|undefined, currentLatency: number, foundLatencies: !Array}}
+   */
   static findTTIAlphaFMPOnly(times, data) {
     return TTIMetric._forwardWindowTTI(
       times.fmpTiming,
@@ -97,6 +116,11 @@ class TTIMetric extends Audit {
     );
   }
 
+  /**
+   * @param {{fmpTiming: number, visuallyReadyTiming: number, endOfTraceTime: number}} times
+   * @param {{model: !Object, trace: !Object}} data
+   * @return {{timeInMs: number|undefined, currentLatency: number, foundLatencies: !Array}}
+   */
   static findTTIAlphaFMPOnly5s(times, data) {
     return TTIMetric._forwardWindowTTI(
       times.fmpTiming,
