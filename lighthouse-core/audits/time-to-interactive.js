@@ -63,9 +63,6 @@ class TTIMetric extends Audit {
         return {currentLatency, foundLatencies};
       }
 
-      // Clip to the trace end
-      endTime = Math.min(endTime, maxTime);
-
       // Get our expected latency for the time window
       const latencies = TracingProcessor.getRiskToResponsiveness(
         data.model, data.trace, startTime, endTime, percentiles);
