@@ -229,6 +229,7 @@ class TTIMetric extends Audit {
           timeToInteractiveB: timeToInteractiveB.foundLatencies,
           timeToInteractiveC: timeToInteractiveC.foundLatencies,
         },
+        foundLatencies: timeToInteractive.foundLatencies,
         expectedLatencyAtTTI: parseFloat(timeToInteractive.currentLatency.toFixed(3))
       };
 
