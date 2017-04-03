@@ -42,10 +42,9 @@ class TTIMetric extends Audit {
    * @param {number} maxTime
    * @param {{model: !Object, trace: !Object}} data
    * @param {number=} windowSize
-   * @param {number=} minimumWindowSize
    * @return {{timeInMs: number|undefined, currentLatency: number, foundLatencies: !Array}}
    */
-  static _forwardWindowTTI(minTime, maxTime, data, windowSize = 500, minimumWindowSize = 500) {
+  static _forwardWindowTTI(minTime, maxTime, data, windowSize = 500) {
     // Find first window where Est Input Latency is <50ms at the 90% percentile.
     let startTime = minTime - 50;
     let endTime;
@@ -60,7 +59,7 @@ class TTIMetric extends Audit {
       startTime += 50;
       endTime = startTime + windowSize;
       // If there's no more room in the trace to look, we're done.
-      if (maxTime - startTime < minimumWindowSize) {
+      if (endTime > maxTime) {
         return {currentLatency, foundLatencies};
       }
 
@@ -126,8 +125,7 @@ class TTIMetric extends Audit {
       times.fmpTiming,
       times.endOfTraceTime,
       data,
-      5000,
-      1000
+      5000
     );
   }
 
