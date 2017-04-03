@@ -88,42 +88,43 @@ class TTIMetric extends Audit {
   }
 
   /**
-   * @param {{fmpTiming: number, visuallyReadyTiming: number, endOfTraceTime: number}} times
+   * @param {{fmpTiming: number, visuallyReadyTiming: number, traceEndTiming: number}} times
    * @param {{model: !Object, trace: !Object}} data
    * @return {{timeInMs: number|undefined, currentLatency: number, foundLatencies: !Array}}
    */
   static findTTIAlpha(times, data) {
     return TTIMetric._forwardWindowTTI(
+      // when screenshots are not available, visuallyReady is 0 and this falls back to fMP
       Math.max(times.fmpTiming, times.visuallyReadyTiming),
-      times.endOfTraceTime,
+      times.traceEndTiming,
       data,
       500
     );
   }
 
   /**
-   * @param {{fmpTiming: number, visuallyReadyTiming: number, endOfTraceTime: number}} times
+   * @param {{fmpTiming: number, visuallyReadyTiming: number, traceEndTiming: number}} times
    * @param {{model: !Object, trace: !Object}} data
    * @return {{timeInMs: number|undefined, currentLatency: number, foundLatencies: !Array}}
    */
   static findTTIAlphaFMPOnly(times, data) {
     return TTIMetric._forwardWindowTTI(
       times.fmpTiming,
-      times.endOfTraceTime,
+      times.traceEndTiming,
       data,
       500
     );
   }
 
   /**
-   * @param {{fmpTiming: number, visuallyReadyTiming: number, endOfTraceTime: number}} times
+   * @param {{fmpTiming: number, visuallyReadyTiming: number, traceEndTiming: number}} times
    * @param {{model: !Object, trace: !Object}} data
    * @return {{timeInMs: number|undefined, currentLatency: number, foundLatencies: !Array}}
    */
   static findTTIAlphaFMPOnly5s(times, data) {
     return TTIMetric._forwardWindowTTI(
       times.fmpTiming,
-      times.endOfTraceTime,
+      times.traceEndTiming,
       data,
       5000
     );
@@ -167,14 +168,13 @@ class TTIMetric extends Audit {
       artifacts.requestTracingModel(trace)
     ];
     return Promise.all(pending).then(([speedline, tabTrace, model]) => {
-      const endOfTraceTime = model.bounds.max;
-
       // frame monotonic timestamps from speedline are in ms (ts / 1000), so we'll match
       //   https://github.com/pmdartus/speedline/blob/123f512632a/src/frame.js#L86
-      const fMPtsInMS = tabTrace.firstMeaningfulPaintEvt.ts / 1000;
-      const navStartTsInMS = tabTrace.navigationStartEvt.ts / 1000;
+      const fMPtsInMS = tabTrace.timestamps.firstMeaningfulPaint;
+      const navStartTsInMS = tabTrace.timestamps.navigationStart;
 
-      const fmpTiming = fMPtsInMS - navStartTsInMS;
+      const fmpTiming = tabTrace.timings.firstMeaningfulPaint;
+      const traceEndTiming = tabTrace.timings.traceEnd;
 
       // look at speedline results for 85% starting at FMP
       let visuallyReadyTiming = 0;
@@ -187,7 +187,7 @@ class TTIMetric extends Audit {
         }
       }
 
-      const times = {fmpTiming, visuallyReadyTiming, endOfTraceTime};
+      const times = {fmpTiming, visuallyReadyTiming, traceEndTiming};
       const data = {tabTrace, model, trace};
       const timeToInteractive = TTIMetric.findTTIAlpha(times, data);
       const timeToInteractiveB = TTIMetric.findTTIAlphaFMPOnly(times, data);
@@ -217,7 +217,7 @@ class TTIMetric extends Audit {
           timeToInteractive: parseFloat(timeToInteractive.timeInMs.toFixed(3)),
           timeToInteractiveB: timeToInteractiveB.timeInMs,
           timeToInteractiveC: timeToInteractiveC.timeInMs,
-          endOfTrace: endOfTraceTime,
+          endOfTrace: traceEndTiming,
         },
         timestamps: {
           fMP: fMPtsInMS * 1000,
@@ -225,7 +225,7 @@ class TTIMetric extends Audit {
           timeToInteractive: (timeToInteractive.timeInMs + navStartTsInMS) * 1000,
           timeToInteractiveB: (timeToInteractiveB.timeInMs + navStartTsInMS) * 1000,
           timeToInteractiveC: (timeToInteractiveC.timeInMs + navStartTsInMS) * 1000,
-          endOfTrace: (endOfTraceTime + navStartTsInMS) * 1000,
+          endOfTrace: (traceEndTiming + navStartTsInMS) * 1000,
         },
         latencies: {
           timeToInteractive: timeToInteractive.foundLatencies,

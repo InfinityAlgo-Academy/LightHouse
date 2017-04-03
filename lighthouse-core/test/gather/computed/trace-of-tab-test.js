@@ -48,6 +48,16 @@ describe('Trace of Tab computed artifact:', () => {
     assert.equal(Math.round(trace.timings.firstPaint), 80);
     assert.equal(Math.round(trace.timings.firstContentfulPaint), 80);
     assert.equal(Math.round(trace.timings.firstMeaningfulPaint), 530);
+    assert.equal(Math.round(trace.timings.traceEnd), 649);
+  });
+
+  it('computes timestamps of each event', () => {
+    const trace = traceOfTab.compute_(lateTracingStartedTrace);
+    assert.equal(Math.round(trace.timestamps.navigationStart), 29343541);
+    assert.equal(Math.round(trace.timestamps.firstPaint), 29343621);
+    assert.equal(Math.round(trace.timestamps.firstContentfulPaint), 29343621);
+    assert.equal(Math.round(trace.timestamps.firstMeaningfulPaint), 29344071);
+    assert.equal(Math.round(trace.timestamps.traceEnd), 29344190);
   });
 
   describe('finds correct FMP', () => {

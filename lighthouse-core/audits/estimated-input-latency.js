@@ -45,7 +45,6 @@ class EstimatedInputLatency extends Audit {
   }
 
   static calculate(tabTrace, model, trace) {
-    // Use speedline's first paint as start of range for input latency check.
     const startTime = tabTrace.timings.firstMeaningfulPaint;
 
     const latencyPercentiles = TracingProcessor.getRiskToResponsiveness(model, trace, startTime);
