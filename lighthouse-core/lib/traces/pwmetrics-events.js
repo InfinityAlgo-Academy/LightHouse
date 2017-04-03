@@ -94,6 +94,22 @@ class Metrics {
           return ttiExt.value.timestamps.timeToInteractive;
         },
       },
+      {
+        name: 'Time to Interactive (fMP Only)',
+        id: 'tti-fmp-only',
+        getTs: auditResults => {
+          const ttiExt = auditResults['time-to-interactive'].extendedInfo;
+          return ttiExt.value.timestamps.timeToInteractiveB;
+        },
+      },
+      {
+        name: 'Time to Interactive (fMP Only - 5s)',
+        id: 'tti-fmp-only-5s',
+        getTs: auditResults => {
+          const ttiExt = auditResults['time-to-interactive'].extendedInfo;
+          return ttiExt.value.timestamps.timeToInteractiveC;
+        },
+      },
     ];
   }
 
