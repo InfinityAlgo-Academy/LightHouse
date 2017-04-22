@@ -25,7 +25,6 @@ module.exports = {
     recordTrace: true,
     gatherers: [
       'url',
-      'https',
       'manifest',
       // https://github.com/GoogleChrome/lighthouse/issues/566
       // 'cache-contents'

@@ -7,7 +7,6 @@
     "useThrottling": true,
     "gatherers": [
       "url",
-      "https",
       "viewport",
       "theme-color",
       "manifest",

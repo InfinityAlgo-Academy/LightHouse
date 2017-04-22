@@ -30,10 +30,10 @@ describe('Runner', () => {
     const url = 'https://example.com';
     const config = new Config({
       passes: [{
-        gatherers: ['https']
+        gatherers: ['viewport']
       }],
       audits: [
-        'is-on-https'
+        'viewport'
       ]
     });
 
@@ -46,7 +46,7 @@ describe('Runner', () => {
     const url = 'https://example.com';
     const config = new Config({
       audits: [
-        'is-on-https'
+        'viewport'
       ]
     });
 
@@ -62,20 +62,18 @@ describe('Runner', () => {
     const url = 'https://example.com';
     const config = new Config({
       audits: [
-        'is-on-https'
+        'viewport'
       ],
 
       artifacts: {
-        HTTPS: {
-          value: true
-        }
+        Viewport: {}
       }
     });
 
     return Runner.run({}, {url, config}).then(results => {
       // Mostly checking that this did not throw, but check representative values.
       assert.equal(results.initialUrl, url);
-      assert.strictEqual(results.audits['is-on-https'].rawValue, true);
+      assert.strictEqual(results.audits['viewport'].rawValue, false);
     });
   });
 
@@ -152,18 +150,18 @@ describe('Runner', () => {
       const url = 'https://example.com';
       const config = new Config({
         audits: [
-          // requires the HTTPS artifact
-          'is-on-https'
+          // requires the Viewport artifact
+          'viewport'
         ],
 
         artifacts: {}
       });
 
       return Runner.run({}, {url, config}).then(results => {
-        const auditResult = results.audits['is-on-https'];
+        const auditResult = results.audits['viewport'];
         assert.strictEqual(auditResult.rawValue, null);
         assert.strictEqual(auditResult.error, true);
-        assert.ok(auditResult.debugString.includes('HTTPS'));
+        assert.ok(auditResult.debugString.includes('Viewport gatherer'));
       });
     });
 
@@ -174,22 +172,22 @@ describe('Runner', () => {
       const url = 'https://example.com';
       const config = new Config({
         audits: [
-          'is-on-https'
+          'viewport'
         ],
 
         artifacts: {
           // Error objects don't make it through the Config constructor due to
           // JSON.stringify/parse step, so populate with test error below.
-          HTTPS: null
+          Viewport: null
         }
       });
-      config.artifacts.HTTPS = artifactError;
+      config.artifacts.Viewport = artifactError;
 
       return Runner.run({}, {url, config}).then(results => {
-        const auditResult = results.audits['is-on-https'];
+        const auditResult = results.audits['viewport'];
         assert.strictEqual(auditResult.rawValue, null);
         assert.strictEqual(auditResult.error, true);
-        assert.ok(auditResult.debugString.includes(errorMessage));
+        assert.ok(auditResult.debugString.includes(errorMessage), auditResult.debugString);
       });
     });
   });
@@ -277,7 +275,7 @@ describe('Runner', () => {
     const url = 'https://example.com';
     const config = new Config({
       passes: [{
-        gatherers: ['https']
+        gatherers: ['viewport']
       }]
     });
 
@@ -293,7 +291,7 @@ describe('Runner', () => {
     const url = 'https://example.com';
     const config = new Config({
       auditResults: [{
-        name: 'is-on-https',
+        name: 'viewport',
         rawValue: true,
         score: true,
         displayValue: ''
@@ -308,7 +306,7 @@ describe('Runner', () => {
           name: 'name',
           description: 'description',
           audits: {
-            'is-on-https': {
+            'viewport': {
               expectedValue: true,
               weight: 1
             }
@@ -320,7 +318,7 @@ describe('Runner', () => {
     return Runner.run(null, {url, config, driverMock}).then(results => {
       // Mostly checking that this did not throw, but check representative values.
       assert.equal(results.initialUrl, url);
-      assert.strictEqual(results.audits['is-on-https'].rawValue, true);
+      assert.strictEqual(results.audits['viewport'].rawValue, true);
     });
   });
 
@@ -328,7 +326,7 @@ describe('Runner', () => {
     const url = 'https://example.com';
     const config = new Config({
       auditResults: [{
-        name: 'is-on-https',
+        name: 'viewport',
         rawValue: true,
         score: true,
         displayValue: ''
@@ -343,7 +341,7 @@ describe('Runner', () => {
           name: 'name',
           description: 'description',
           audits: {
-            'is-on-https': {
+            'viewport': {
               expectedValue: true,
               weight: 1
             }
@@ -356,9 +354,9 @@ describe('Runner', () => {
       assert.ok(results.lighthouseVersion);
       assert.ok(results.generatedTime);
       assert.equal(results.initialUrl, url);
-      assert.equal(results.audits['is-on-https'].name, 'is-on-https');
+      assert.equal(results.audits['viewport'].name, 'viewport');
       assert.equal(results.aggregations[0].score[0].overall, 1);
-      assert.equal(results.aggregations[0].score[0].subItems[0], 'is-on-https');
+      assert.equal(results.aggregations[0].score[0].subItems[0], 'viewport');
     });
   });
 
@@ -390,20 +388,17 @@ describe('Runner', () => {
 
   it('results include artifacts when given artifacts and audits', () => {
     const url = 'https://example.com';
+    const Viewport = {innerHeight: 10, innerWidth: 10};
     const config = new Config({
       audits: [
-        'is-on-https'
+        'viewport'
       ],
 
-      artifacts: {
-        HTTPS: {
-          value: true
-        }
-      }
+      artifacts: {Viewport}
     });
 
     return Runner.run({}, {url, config}).then(results => {
-      assert.strictEqual(results.artifacts.HTTPS.value, true);
+      assert.deepEqual(results.artifacts.Viewport, Viewport);
 
       for (const method of Object.keys(computedArtifacts)) {
         assert.ok(results.artifacts.hasOwnProperty(method));
@@ -415,17 +410,17 @@ describe('Runner', () => {
     const url = 'https://example.com';
     const config = new Config({
       passes: [{
-        gatherers: ['https']
+        gatherers: ['viewport']
       }],
 
       audits: [
-        'is-on-https'
+        'viewport'
       ]
     });
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
       // Check whether non-computedArtifacts attributes are returned
-      assert.ok(results.artifacts.HTTPS);
+      assert.ok(results.artifacts.Viewport);
 
       for (const method of Object.keys(computedArtifacts)) {
         assert.ok(results.artifacts.hasOwnProperty(method));

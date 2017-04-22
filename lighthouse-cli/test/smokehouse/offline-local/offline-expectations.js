@@ -27,7 +27,7 @@ module.exports = [
     url: 'http://localhost:10200/online-only.html',
     audits: {
       'is-on-https': {
-        score: false
+        score: true
       },
       'redirects-http': {
         score: false
@@ -114,7 +114,7 @@ module.exports = [
     url: 'http://localhost:10503/offline-ready.html',
     audits: {
       'is-on-https': {
-        score: false
+        score: true
       },
       'redirects-http': {
         score: false
