@@ -26,6 +26,7 @@ script:
   - npm run lint
   - npm run unit
   - npm run smoke
+  - npm run fast -- --quiet "chrome://version"
   - npm run smokehouse
 after_success:
   - npm run coveralls
