@@ -70,7 +70,7 @@ class HTTPS extends Audit {
       rawValue: insecureRecords.length === 0,
       displayValue,
       extendedInfo: {
-        formatter: Formatter.SUPPORTED_FORMATS.URL_LIST,
+        formatter: Formatter.SUPPORTED_FORMATS.URLLIST,
         value: insecureRecords
       }
     });
