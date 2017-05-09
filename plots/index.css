@@ -33,11 +33,15 @@ h1 {
   margin: 20px auto;
   border-radius: 5px;
   padding: 16px;
-  max-width: 80vw;
+  max-width: 60vw;
   border: 2px solid rgba(0,0,0,0.2);
   background-color: #fff;
 }
 
+li {
+  padding: 4px 0;
+}
+
 a {
-  color: #555
+  color: #3949AB;
 }
