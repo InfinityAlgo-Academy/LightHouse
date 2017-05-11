@@ -90,7 +90,7 @@ describe('Trace of Tab computed artifact:', () => {
       assert.equal(trace.startedInPageEvt.ts, 2146735802456);
       assert.equal(trace.navigationStartEvt.ts, 2146735807738);
       assert.equal(trace.firstContentfulPaintEvt.ts, 2146737302468);
-      assert.equal(trace.firstMeaningfulPaintEvt.ts, 2146740268666);
+      assert.equal(trace.firstMeaningfulPaintEvt, undefined);
     });
   });
 
@@ -99,7 +99,7 @@ describe('Trace of Tab computed artifact:', () => {
     assert.equal(trace.startedInPageEvt.ts, 2149509117532, 'bad tracingstartedInPage');
     assert.equal(trace.navigationStartEvt.ts, 2149509122585, 'bad navStart');
     assert.equal(trace.firstContentfulPaintEvt, undefined, 'bad fcp');
-    assert.equal(trace.firstMeaningfulPaintEvt.ts, 2149509604903, 'bad fmp');
+    assert.equal(trace.firstMeaningfulPaintEvt, undefined, 'bad fmp');
   });
 
   it('handles traces missing a paints (captured in background tab)', () => {

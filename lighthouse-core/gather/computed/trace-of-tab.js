@@ -29,7 +29,6 @@
  */
 
 const ComputedArtifact = require('./computed-artifact');
-const log = require('../../lib/log');
 
 class TraceOfTab extends ComputedArtifact {
   get name() {
@@ -70,23 +69,9 @@ class TraceOfTab extends ComputedArtifact {
     );
 
     // fMP will follow at/after the FP
-    let firstMeaningfulPaint = frameEvents.find(
+    const firstMeaningfulPaint = frameEvents.find(
       e => e.name === 'firstMeaningfulPaint' && e.ts > navigationStart.ts
     );
-
-    // If there was no firstMeaningfulPaint event found in the trace, the network idle detection
-    // may have not been triggered before Lighthouse finished tracing.
-    // In this case, we'll use the last firstMeaningfulPaintCandidate we can find.
-    // However, if no candidates were found (a bogus trace, likely), we fail.
-    if (!firstMeaningfulPaint) {
-      const fmpCand = 'firstMeaningfulPaintCandidate';
-      log.verbose('trace-of-tab', `No firstMeaningfulPaint found, falling back to last ${fmpCand}`);
-      const lastCandidate = frameEvents.filter(e => e.name === fmpCand).pop();
-      if (!lastCandidate) {
-        log.verbose('trace-of-tab', 'No `firstMeaningfulPaintCandidate` events found in trace');
-      }
-      firstMeaningfulPaint = lastCandidate;
-    }
 
     const onLoad = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > navigationStart.ts);
     const domContentLoaded = frameEvents.find(
