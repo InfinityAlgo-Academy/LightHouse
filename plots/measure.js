@@ -289,7 +289,7 @@ function singleRunAnalysis(url, id, {ignoreRun}) {
   console.log('Measuring site:', url, 'run:', id);
   const parsedURL = parseURL(url);
   const urlBasedFilename = sanitizeURL(`${parsedURL.host}-${parsedURL.pathname}`);
-  const runPath = path.resolve(constants.OUT_PATH, urlBasedFilename, id);
+  const runPath = path.resolve(args.outputPath || constants.OUT_PATH, urlBasedFilename, id);
   if (!ignoreRun) {
     mkdirp.sync(runPath);
   }
