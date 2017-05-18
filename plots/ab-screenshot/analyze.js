@@ -22,6 +22,8 @@ const path = require('path');
 const opn = require('opn');
 const args = require('yargs').argv;
 
+const RUNS = args.runs || 1;
+
 const Metrics = require('../../lighthouse-core/lib/traces/pwmetrics-events');
 
 const constants = require('../constants');
@@ -84,25 +86,47 @@ function aggregate(outPathA, outPathB) {
     if (!utils.isDir(sitePathB)) {
       return;
     }
-    const siteScreenshotsComparison = {
-      siteName: siteDir,
-      runA: analyzeSingleRunScreenshots(sitePathA),
-      runB: analyzeSingleRunScreenshots(sitePathB)
-    };
-    results.push(siteScreenshotsComparison);
+
+    for (let i = 0; i < RUNS; i++) {
+      const runDirA = getRunDir(sitePathA, i);
+      const runDirB = getRunDir(sitePathB, i);
+
+      const runPathA = path.resolve(sitePathA, runDirA);
+      const runPathB = path.resolve(sitePathB, runDirB);
+
+      const lighthouseFileA = path.resolve(runPathA, constants.LIGHTHOUSE_RESULTS_FILENAME);
+      const lighthouseFileB = path.resolve(runPathB, constants.LIGHTHOUSE_RESULTS_FILENAME);
+
+      if (!utils.isFile(lighthouseFileA) || !utils.isFile(lighthouseFileB)) {
+        continue;
+      }
+
+      const siteScreenshotsComparison = {
+        siteName: `${siteDir} runA: ${runDirA} runB: ${runDirB}`,
+        runA: analyzeSingleRunScreenshots(runPathA),
+        runB: analyzeSingleRunScreenshots(runPathB),
+      };
+      results.push(siteScreenshotsComparison);
+    }
   });
 
   return results;
 }
 
 /**
- * Analyzes the screenshots for the first run of a particular site.
  * @param {string} sitePath
+ * @param {number} runIndex
+ */
+function getRunDir(sitePath, runIndex) {
+  return sortAndFilterRunFolders(fs.readdirSync(sitePath))[runIndex];
+}
+
+/**
+ * Analyzes the screenshots for the first run of a particular site.
+ * @param {string} runPath
  * @return {!SingleRunScreenshots}
  */
-function analyzeSingleRunScreenshots(sitePath) {
-  const runDir = sortAndFilterRunFolders(fs.readdirSync(sitePath))[0];
-  const runPath = path.resolve(sitePath, runDir);
+function analyzeSingleRunScreenshots(runPath) {
   const lighthouseResultsPath = path.resolve(runPath, constants.LIGHTHOUSE_RESULTS_FILENAME);
   const lighthouseResults = JSON.parse(fs.readFileSync(lighthouseResultsPath));
 
