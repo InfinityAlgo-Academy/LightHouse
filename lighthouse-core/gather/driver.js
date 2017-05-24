@@ -25,7 +25,7 @@ const _uniq = arr => Array.from(new Set(arr));
 
 class Driver {
   static get MAX_WAIT_FOR_FULLY_LOADED() {
-    return 30 * 1000;
+    return 60 * 1000;
   }
 
   /**
