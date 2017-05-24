@@ -189,7 +189,7 @@ class Runner {
           log.warn('Runner', `${artifactName} gatherer, required by audit ${audit.meta.name},` +
             ` encountered an error: ${artifactError.message}`);
           throw new Error(
-              `Required ${artifactName} gatherer encountered an error: ${artifactError.message}`);
+              `${artifactName} gatherer encountered an error: ${artifactError.message}`);
         }
       }
       // all required artifacts are in good shape, so we proceed

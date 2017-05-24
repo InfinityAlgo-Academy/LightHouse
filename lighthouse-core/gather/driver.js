@@ -267,9 +267,17 @@ class Driver {
   getAppManifest() {
     return this.sendCommand('Page.getAppManifest')
       .then(response => {
-        // We're not reading `response.errors` however it may contain critical and noncritical
-        // errors from Blink's manifest parser:
-        //   https://chromedevtools.github.io/debugger-protocol-viewer/tot/Page/#type-AppManifestError
+        // handle errors
+        if (response.errors) {
+          response.errors.forEach(error => {
+            log.warn('driver', 'Manifest error', error.message);
+          });
+          const criticalError = response.errors.find(error => error.critical);
+          if (criticalError) {
+            return Promise.reject(new Error(`Manifest error: ${criticalError.message}`));
+          }
+        }
+        // handle failed manifest request or 404
         if (!response.data) {
           // If the data is empty, the page had no manifest.
           return null;
