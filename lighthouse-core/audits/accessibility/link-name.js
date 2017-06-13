@@ -20,7 +20,7 @@ class LinkName extends AxeAudit {
     return {
       category: 'Accessibility',
       name: 'link-name',
-      description: 'Links have a discernable name.',
+      description: 'Links have a discernible name.',
       helpText: 'Link text (and alternate text for images, when used as links) that is ' +
           'discernible, unique, and focusable improves the navigation experience for ' +
           'screen reader users. ' +
