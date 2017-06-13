@@ -34,6 +34,9 @@ function main() {
     GENERATED_RESULTS_PATH,
     `var generatedResults = ${JSON.stringify(generatedResults)}`
   );
+  if (process.env.CI) {
+    return;
+  }
   console.log('Opening the charts web page...');  // eslint-disable-line no-console
   opn(path.resolve(__dirname, 'index.html'));
 }

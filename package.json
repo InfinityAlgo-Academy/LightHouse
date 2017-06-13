@@ -50,7 +50,8 @@
     "chrome": "node chrome-launcher/manual-chrome-launcher.js",
     "fast": "yarn start -- --disable-device-emulation --disable-cpu-throttling --disable-network-throttling",
     "smokehouse": "node lighthouse-cli/test/smokehouse/smokehouse.js",
-    "deploy-viewer": "cd lighthouse-viewer && gulp deploy"
+    "deploy-viewer": "cd lighthouse-viewer && gulp deploy",
+    "plots-smoke": "bash plots/test/smoke.sh"
   },
   "devDependencies": {
     "@types/node": "^6.0.45",

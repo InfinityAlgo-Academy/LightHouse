@@ -38,6 +38,7 @@ script:
   - yarn smoke
   - yarn smokehouse
   - yarn compile-devtools
+  - yarn plots-smoke
 after_success:
   - yarn coveralls
 after_failure:
