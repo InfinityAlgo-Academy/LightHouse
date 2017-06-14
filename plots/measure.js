@@ -18,6 +18,7 @@ const args = require('yargs')
   .example('node $0 --site https://google.com/')
   .example('node $0 --subset')
   .describe({
+    'out': 'Custom out path',
     'n': 'Number of runs per site',
     'reuse-chrome': 'Reuse the same Chrome instance across all site runs',
     'keep-first-run': 'If you use --reuse-chrome, by default the first run results are discarded',
@@ -43,13 +44,25 @@ const args = require('yargs')
 
 const constants = require('./constants.js');
 const utils = require('./utils.js');
-const config = require('../lighthouse-core/config/plots.json');
+const config = require('../lighthouse-core/config/plots-config.js');
 const lighthouse = require('../lighthouse-core/index.js');
 const ChromeLauncher = require('../chrome-launcher/chrome-launcher.js');
 const Printer = require('../lighthouse-cli/printer');
 const assetSaver = require('../lighthouse-core/lib/asset-saver.js');
 
 const keepFirstRun = args.keepFirstRun || !args.reuseChrome;
+const outPath = generateOutPath();
+
+/**
+ * @return {string}
+ */
+function generateOutPath() {
+  if (args.out) {
+    return path.resolve(__dirname, args.out);
+  }
+  const date = new Date().toISOString();
+  return path.resolve(__dirname, `out-${sanitize(date)}`);
+}
 
 function getUrls() {
   if (args.site) {
@@ -72,11 +85,7 @@ function main() {
     return;
   }
 
-  if (utils.isDir(constants.OUT_PATH)) {
-    console.log('ERROR: Found output from previous run at: ', constants.OUT_PATH);
-    console.log('Please run: npm run clean');
-    return;
-  }
+  console.log('Using out folder:', path.basename(outPath));
 
   if (args.reuseChrome) {
     ChromeLauncher.launch().then(launcher => {
@@ -103,13 +112,12 @@ function runAnalysisWithNewChromeInstances() {
     // Averages out any order-dependent effects such as memory pressure
     utils.shuffle(URLS);
 
-    const id = i.toString();
     const isFirstRun = i === 0;
     const ignoreRun = keepFirstRun ? false : isFirstRun;
     for (const url of URLS) {
       promise = promise.then(() => {
         return ChromeLauncher.launch().then(launcher => {
-          return singleRunAnalysis(url, id, launcher, {ignoreRun})
+          return singleRunAnalysis(url, launcher, {ignoreRun})
             .catch(handleError)
             .then(() => launcher.kill());
         })
@@ -143,11 +151,10 @@ function runAnalysisWithExistingChromeInstances(launcher) {
     // Averages out any order-dependent effects such as memory pressure
     utils.shuffle(URLS);
 
-    const id = i.toString();
     const isFirstRun = i === 0;
     const ignoreRun = keepFirstRun ? false : isFirstRun;
     for (const url of URLS) {
-      promise = promise.then(() => singleRunAnalysis(url, id, launcher, {ignoreRun}));
+      promise = promise.then(() => singleRunAnalysis(url, launcher, {ignoreRun}));
     }
   }
   return promise;
@@ -156,16 +163,16 @@ function runAnalysisWithExistingChromeInstances(launcher) {
 /**
  * Analyzes a site a single time using lighthouse.
  * @param {string} url
- * @param {string} id
  * @param {!Launcher} launcher
  * @param {{ignoreRun: boolean}} options
  * @return {!Promise}
  */
-function singleRunAnalysis(url, id, launcher, {ignoreRun}) {
+function singleRunAnalysis(url, launcher, {ignoreRun}) {
+  const id = sanitize(new Date().toISOString());
   console.log('Measuring site:', url, 'run:', id);
   const parsedURL = parseURL(url);
-  const urlBasedFilename = sanitizeURL(`${parsedURL.host}-${parsedURL.pathname}`);
-  const runPath = path.resolve(constants.OUT_PATH, urlBasedFilename, id);
+  const urlBasedFilename = sanitize(`${parsedURL.host}-${parsedURL.pathname}`);
+  const runPath = path.resolve(outPath, urlBasedFilename, id);
   if (!ignoreRun) {
     mkdirp.sync(runPath);
   }
@@ -213,7 +220,7 @@ function analyzeWithLighthouse(launcher, url, outputPath, assetsPath, {ignoreRun
  * @param {string} string
  * @return {string}
  */
-function sanitizeURL(string) {
+function sanitize(string) {
   const illegalRe = /[\/\?<>\\:\*\|":]/g;
   const controlRe = /[\x00-\x1f\x80-\x9f]/g; // eslint-disable-line no-control-regex
   const reservedRe = /^\.+$/;

@@ -6,6 +6,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 
 /**
  * @param {string} path
@@ -41,8 +42,22 @@ function shuffle(array) {
   }
 }
 
+/**
+ * @param {string} src
+ * @param {string} dest
+ */
+function copy(src, dest) {
+  try {
+    const targetFilePath = path.resolve(dest, path.basename(src));
+    fs.writeFileSync(targetFilePath, fs.readFileSync(src));
+  } catch (error) {
+    throw new Error(`Received an error: [${error}] while trying to copy: ${src} -> ${dest}`);
+  }
+}
+
 module.exports = {
   isDir,
   isFile,
   shuffle,
+  copy,
 };

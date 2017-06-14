@@ -28,8 +28,8 @@ if [ -d "$out_path" ]; then
   echo "Moved existing plots/out folder to plots/$out_backup_folder"
 fi
 
-node $measure_script --site https://google.com/ -n 2 --disable-network-throttling --disable-cpu-throttling
-node $analyze_script
+node $measure_script --site https://google.com/ -n 2 --disable-network-throttling --disable-cpu-throttling --out $out_path
+node $analyze_script $out_path
 node $clean_script
 
 echo "Finished plots smoke test without errors"

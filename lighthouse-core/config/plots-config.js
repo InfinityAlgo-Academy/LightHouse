@@ -5,8 +5,19 @@
  */
 'use strict';
 
-const path = require('path');
+module.exports = {
+  passes: [{
+    recordTrace: true,
+    pauseBeforeTraceEndMs: 5000,
+    useThrottling: true,
+    gatherers: []
+  }],
 
-const opn = require('opn');
-
-opn(path.resolve(__dirname, 'index.html'));
+  audits: [
+    'first-meaningful-paint',
+    'speed-index-metric',
+    'estimated-input-latency',
+    'first-interactive',
+    'consistently-interactive'
+  ]
+};
