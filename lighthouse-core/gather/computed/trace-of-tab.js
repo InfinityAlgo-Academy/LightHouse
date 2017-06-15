@@ -25,6 +25,8 @@ class TraceOfTab extends ComputedArtifact {
   }
 
   /**
+   * Finds key trace events, identifies main process/thread, and returns timings of trace events
+   * in milliseconds since navigation start in addition to the standard microsecond monotonic timestamps.
    * @param {{traceEvents: !Array}} trace
    * @return {!TraceOfTabArtifact}
   */

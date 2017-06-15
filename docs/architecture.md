@@ -31,6 +31,51 @@ driver.sendCommand('Security.enable');
 
 * _Debugging the protocol_: Read [Better debugging of the Protocol](https://github.com/GoogleChrome/lighthouse/issues/184).
 
+## Understanding a Trace
+
+`lighthouse-core/gather/computed/trace-of-tab.js` and `lighthouse-core/lib/traces/tracing-processor.js` provide the core transformation of a trace into more meaningful objects. Each raw trace event has a monotonically increasing timestamp in microseconds, a thread ID, a process ID, a duration in microseconds (potentially), and other applicable metadata properties such as the event type, the task name, the frame, etc. [Learn more about trace events](https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview).
+
+### Example Trace Event
+```js
+{
+  'pid': 41904, // process ID
+  'tid': 1295, // thread ID
+  'ts': 1676836141, // timestamp in microseconds
+  'ph': 'X', // trace event type
+  'cat': 'toplevel', // trace category from which this event came
+  'name': 'MessageLoop::RunTask', // relatively human-readable description of the trace event
+  'dur': 64, // duration of the task in microseconds
+  'args': {}, // contains additional data such as frame when applicable
+}
+```
+
+### Trace-of-Tab
+
+Trace-of-tab identifies trace events for key moments (navigation start, first meaningful paint, DOM content loaded, trace end, etc) and provides filtered views of just the main process and the main thread events. Because the timestamps are not necessarily interesting in isolation, trace-of-tab also calculates the times in milliseconds of key moments relative to navigation start, thus providing the typical interpretation of first meaningful paint in ms.
+
+```js
+{
+  processEvents: [/* all trace events in the main process */],
+  mainThreadEvents: [/* all trace events on the main thread */],
+  timings: {
+    navigationStart: 0,
+    firstPaint: 150, // firstPaint time in ms after nav start
+    /* other key moments */
+    traceEnd: 16420, // traceEnd time in ms after nav start
+  },
+  timestamps: {
+    navigationStart: 623000000, // navigationStart timestamp in microseconds
+    firstPaint: 623150000, // firstPaint timestamp in microseconds
+    /* other key moments */
+    traceEnd: 639420000, // traceEnd timestamp in microseconds
+  },
+}
+```
+
+### Tracing Processor
+
+Tracing processor takes the output of trace of tab and identifies the top-level main thread tasks, their durations, and corresponding impact on page responsiveness. Tracing processor also translates task timestamps to milliseconds since navigation start for easier interpretation in computed gatherers and audits.
+
 ## Audits
 
 The return value of each audit [takes this shape](https://github.com/GoogleChrome/lighthouse/blob/b354890076f2c077c5460b2fa56ded546cca72ee/lighthouse-core/closure/typedefs/AuditResult.js#L23-L55).
