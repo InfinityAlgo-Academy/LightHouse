@@ -116,8 +116,9 @@ echo "Inform various peoples"
 cd chrome-launcher
 echo "build the launcher source code"
 yarn build
-yarn --no-git-tag-version version
-echo "version bump will be committed (but without a tag, as it gets mixed up with LH rls tags)"
+yarn version --no-git-tag-version
+git commit -am "launcher to 0.x.x"
+echo "commit (but without a tag, as it gets mixed up with LH rls tags)"
 npm publish
 ```
 
