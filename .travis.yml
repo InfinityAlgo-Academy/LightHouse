@@ -46,6 +46,6 @@ before_cache:
   - rm -rf ./node_modules/temp-devtoolsfrontend/
   - rm -rf ./node_modules/temp-devtoolsprotocol/
 after_success:
-  - yarn coveralls
+  - ./lighthouse-core/scripts/generate-combined-coverage.sh
 after_failure:
   - grep 'No screenshots' perf.json && travis-artifacts upload --path perf-0.trace.json

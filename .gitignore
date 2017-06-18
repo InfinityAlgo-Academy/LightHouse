@@ -7,6 +7,8 @@ lighthouse-extension/dist
 lighthouse-core/third_party/src
 **/pages/scripts/lighthouse-report.js
 coverage
+lcov.info
+.nyc_output
 
 lighthouse-cli/results
 lighthouse-cli/performance-experiment/experiment-database/experiment-data*

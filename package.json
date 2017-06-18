@@ -29,7 +29,6 @@
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
     "smoke": "bash lighthouse-cli/test/smokehouse/offline-local/run-tests.sh && bash lighthouse-cli/test/smokehouse/perf/run-tests.sh && bash lighthouse-cli/test/smokehouse/dobetterweb/run-tests.sh && bash lighthouse-cli/test/smokehouse/byte-efficiency/run-tests.sh",
     "coverage": "node $(yarn bin)/istanbul cover -x \"**/third_party/**\" _mocha -- $(find */test -name '*-test.js') --timeout 10000 --reporter progress",
-    "coveralls": "yarn coverage && cat ./coverage/lcov.info | coveralls",
     "start": "gulp && node ./lighthouse-cli/index.js",
     "test": "yarn lint --silent && gulp && yarn unit && yarn closure && yarn test-cli-formatting && yarn test-launcher-formatting",
     "unit-core": "bash lighthouse-core/scripts/run-mocha.sh --core",
@@ -69,6 +68,7 @@
     "gulp-util": "^3.0.7",
     "istanbul": "^0.4.3",
     "jsdom": "^9.12.0",
+    "lcov-result-merger": "^1.2.0",
     "mocha": "^3.2.0",
     "npm-run-posix-or-windows": "^2.0.2",
     "zone.js": "^0.7.3"
