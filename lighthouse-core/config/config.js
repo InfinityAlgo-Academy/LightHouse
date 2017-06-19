@@ -293,10 +293,13 @@ class Config {
     // Generate a limited config if specified
     if (configJSON.settings &&
         (Array.isArray(configJSON.settings.onlyCategories) ||
-        Array.isArray(configJSON.settings.onlyAudits))) {
+        Array.isArray(configJSON.settings.onlyAudits) ||
+        Array.isArray(configJSON.settings.skipAudits))) {
       const categoryIds = configJSON.settings.onlyCategories;
       const auditIds = configJSON.settings.onlyAudits;
-      configJSON = Config.generateNewFilteredConfig(configJSON, categoryIds, auditIds);
+      const skipAuditIds = configJSON.settings.skipAudits;
+      configJSON = Config.generateNewFilteredConfig(configJSON, categoryIds, auditIds,
+          skipAuditIds);
     }
 
     // Store the directory of the config path, if one was provided.
@@ -345,13 +348,15 @@ class Config {
    * @param {!Object} oldConfig Lighthouse config object
    * @param {!Array<string>=} categoryIds ID values of categories to include
    * @param {!Array<string>=} auditIds ID values of categories to include
+   * @param {!Array<string>=} skipAuditIds ID values of categories to exclude
    * @return {!Object} A new config
    */
-  static generateNewFilteredConfig(oldConfig, categoryIds, auditIds) {
+  static generateNewFilteredConfig(oldConfig, categoryIds, auditIds, skipAuditIds) {
     // 0. Clone config to avoid mutating it
     const config = deepClone(oldConfig);
     // 1. Filter to just the chosen categories
-    config.categories = Config.filterCategoriesAndAudits(config.categories, categoryIds, auditIds);
+    config.categories = Config.filterCategoriesAndAudits(config.categories, categoryIds, auditIds,
+        skipAuditIds);
 
     // 2. Resolve which audits will need to run
     const requestedAuditNames = Config.getAuditIdsInCategories(config.categories);
@@ -373,9 +378,11 @@ class Config {
    * @param {!Object<string, {audits: !Array<{id: string}>}>} categories
    * @param {!Array<string>=} categoryIds
    * @param {!Array<string>=} auditIds
+   * @param {!Array<string>=} skipAuditIds
    * @return {!Object<string, {audits: !Array<{id: string}>}>}
    */
-  static filterCategoriesAndAudits(oldCategories, categoryIds = [], auditIds = []) {
+  static filterCategoriesAndAudits(oldCategories, categoryIds = [], auditIds = [],
+      skipAuditIds = []) {
     const categories = {};
 
     // warn if the category is not found
@@ -385,32 +392,42 @@ class Config {
       }
     });
 
-    // warn if the audit is not found in a category
-    auditIds.forEach(auditId => {
+    // warn if the audit is not found in a category or there are overlaps
+    const auditsToValidate = new Set(auditIds.concat(skipAuditIds));
+    for (const auditId of auditsToValidate) {
       const foundCategory = Object.keys(oldCategories).find(categoryId => {
         const audits = oldCategories[categoryId].audits;
         return audits.find(candidate => candidate.id === auditId);
       });
 
-      if (!foundCategory) {
-        log.warn('config', `unrecognized audit in 'onlyAudits': ${auditId}`);
+      if (skipAuditIds.includes(auditId) && auditIds.includes(auditId)) {
+        log.warn('config', `audit '${auditId}' in 'onlyAudits' was also found in 'skipAudits'`);
       }
 
-      if (categoryIds.includes(foundCategory)) {
+      if (!foundCategory) {
+        const parentKeyName = skipAuditIds.includes(auditId) ? 'skipAudits' : 'onlyAudits';
+        log.warn('config', `unrecognized audit in '${parentKeyName}': ${auditId}`);
+      }
+
+      if (auditIds.includes(auditId) && categoryIds.includes(foundCategory)) {
         log.warn('config', `${auditId} in 'onlyAudits' is already included by ` +
             `${foundCategory} in 'onlyCategories'`);
       }
-    });
+    }
 
     Object.keys(oldCategories).forEach(categoryId => {
-      if (categoryIds.includes(categoryId)) {
-        categories[categoryId] = oldCategories[categoryId];
-      } else {
-        const newCategory = deepClone(oldCategories[categoryId]);
-        newCategory.audits = newCategory.audits.filter(audit => auditIds.includes(audit.id));
-        if (newCategory.audits.length) {
-          categories[categoryId] = newCategory;
-        }
+      const category = deepClone(oldCategories[categoryId]);
+
+      // filter to the audit whitelist if we didn't include the whole category
+      if (!categoryIds.includes(categoryId)) {
+        category.audits = category.audits.filter(audit => auditIds.includes(audit.id));
+      }
+
+      // always filter to the audit blacklist
+      category.audits = category.audits.filter(audit => !skipAuditIds.includes(audit.id));
+
+      if (category.audits.length) {
+        categories[categoryId] = category;
       }
     });
 
