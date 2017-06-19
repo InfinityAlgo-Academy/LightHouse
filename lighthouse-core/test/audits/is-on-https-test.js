@@ -67,6 +67,7 @@ describe('Security: HTTPS audit', () => {
       assert.strictEqual(Audit.isSecureRecord({scheme: 'wss', domain: 'my-service.com'}), true);
       assert.strictEqual(Audit.isSecureRecord({scheme: 'data', domain: ''}), true);
       assert.strictEqual(Audit.isSecureRecord({scheme: 'blob', domain: ''}), true);
+      assert.strictEqual(Audit.isSecureRecord({scheme: '', protocol: 'blob', domain: ''}), true);
       assert.strictEqual(Audit.isSecureRecord({scheme: 'chrome', domain: ''}), true);
       assert.strictEqual(Audit.isSecureRecord({scheme: 'chrome-extension', domain: ''}), true);
     });

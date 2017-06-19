@@ -35,7 +35,9 @@ class HTTPS extends Audit {
    * @return {boolean}
    */
   static isSecureRecord(record) {
-    return SECURE_SCHEMES.includes(record.scheme) || SECURE_DOMAINS.includes(record.domain);
+    return SECURE_SCHEMES.includes(record.scheme) ||
+           SECURE_SCHEMES.includes(record.protocol) ||
+           SECURE_DOMAINS.includes(record.domain);
   }
 
   /**

@@ -14,7 +14,12 @@ module.exports = [
     url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
     audits: {
       'is-on-https': {
-        score: false
+        score: false,
+        extendedInfo: {
+          value: {
+            length: 1
+          }
+        }
       },
       'uses-http2': {
         score: false,

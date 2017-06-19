@@ -316,6 +316,13 @@ function deprecationsTest() {
   window.webkitStorageInfo.PERSISTENT // FAIL
 }
 
+function isOnHttps() {
+  // Check blob URL.
+  const img = document.createElement('img');
+  img.src = URL.createObjectURL(blob);
+  document.body.appendChild(img); // PASS
+}
+
 // Figure out which tests to fun.
 const params = new URLSearchParams(location.search);
 if (location.search === '') {
@@ -332,6 +339,7 @@ if (location.search === '') {
   // oldCSSFlexboxTest();
   deprecationsTest();
   passwordInputsCanBePastedIntoTest();
+  isOnHttps();
 } else {
   if (params.has('documentWrite')) {
     documentWriteTest();
@@ -371,6 +379,9 @@ if (location.search === '') {
   }
   if (params.has('passwordinputs')) {
     passwordInputsCanBePastedIntoTest();
+  }
+  if (params.has('isonhttps')) {
+    isOnHttps();
   }
 }
 </script>
