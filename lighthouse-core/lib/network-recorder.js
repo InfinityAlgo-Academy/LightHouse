@@ -46,7 +46,7 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
-   * Listener for the NetworkManager's RequestStarted event, which includes both
+   * Listener for the DevTools SDK NetworkManager's RequestStarted event, which includes both
    * web socket and normal request creation.
    * @private
    */
@@ -71,9 +71,8 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
-   * Listener for the NetworkManager's RequestFinished event, which includes
-   * request finish, failure, and redirect, as well as the closing of web
-   * sockets.
+   * Listener for the DevTools SDK NetworkManager's RequestFinished event, which includes
+   * request finish, failure, and redirect, as well as the closing of web sockets.
    * @param {!WebInspector.NetworkRequest} request
    * @private
    */
@@ -96,6 +95,7 @@ class NetworkRecorder extends EventEmitter {
     }
   }
 
+  // The below methods proxy network data into the DevTools SDK network layer.
   // There are a few differences between the debugging protocol naming and
   // the parameter naming used in NetworkManager. These are noted below.
 
