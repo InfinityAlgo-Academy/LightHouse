@@ -9,17 +9,18 @@ assumes you've installed Lighthouse as a dependency (`yarn add --dev lighthouse`
 
 ```javascript
 const lighthouse = require('lighthouse');
-const chromeLauncher = require('lighthouse/chrome-launcher');
+const chromeLauncher = require('lighthouse/chrome-launcher/chrome-launcher');
 
-function launchChromeAndRunLighthouse(url, flags = {}, config = null) {
+function launchChromeAndRunLighthouse(url, flags, config = null) {
   return chromeLauncher.launch().then(chrome => {
     flags.port = chrome.port;
     return lighthouse(url, flags, config).then(results =>
-      chrome.kill().then(() => results));
+      chrome.kill().then(() => results)
+    );
   });
 }
 
-const flags = {};
+const flags = {output: 'json'};
 
 // Usage:
 launchChromeAndRunLighthouse('https://example.com', flags).then(results => {
