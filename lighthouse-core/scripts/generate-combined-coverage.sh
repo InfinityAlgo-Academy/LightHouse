@@ -9,6 +9,7 @@
 # run tests with coverage in both root and launcher
 yarn run coverage
 cd chrome-launcher && yarn run coverage && cd ..
+cd lighthouse-cli && yarn run coverage && cd ..
 
 # report to coveralls
 ./node_modules/.bin/lcov-result-merger '**/lcov.info' | ./node_modules/.bin/coveralls

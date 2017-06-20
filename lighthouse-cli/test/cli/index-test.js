@@ -10,23 +10,33 @@ const assert = require('assert');
 const childProcess = require('child_process');
 const path = require('path');
 const indexPath = path.resolve(__dirname, '../../index.js');
+const spawnSync = childProcess.spawnSync;
 
 describe('CLI Tests', function() {
   it('fails if a url is not provided', () => {
-    assert.throws(() => childProcess.execSync(`node ${indexPath}`, {stdio: 'pipe'}),
-          /Please provide a url/);
+    const ret = spawnSync('node', [indexPath], {encoding: 'utf8'});
+    assert.ok(ret.stderr.includes('Please provide a url'));
+    assert.equal(ret.status, 1);
+  });
+
+  it('should list options via --help', () => {
+    const ret = spawnSync('node', [indexPath, '--help'], {encoding: 'utf8'});
+    assert.ok(ret.stdout.includes('lighthouse <url>'));
+    assert.ok(ret.stdout.includes('For more information on Lighthouse'));
   });
 
   it('should list all audits without a url and exit immediately after', () => {
-    const output = JSON.parse(childProcess.execSync(
-          `node ${indexPath} --list-all-audits`).toString());
+    const ret = spawnSync('node', [indexPath, '--list-all-audits'], {encoding: 'utf8'});
+
+    const output = JSON.parse(ret.stdout);
     assert.ok(Array.isArray(output.audits));
     assert.ok(output.audits.length > 0);
   });
 
   it('accepts just the list-trace-categories flag and exit immediately after', () => {
-    const output = JSON.parse(childProcess.execSync(
-          `node ${indexPath} --list-trace-categories`).toString());
+    const ret = spawnSync('node', [indexPath, '--list-trace-categories'], {encoding: 'utf8'});
+
+    const output = JSON.parse(ret.stdout);
     assert.ok(Array.isArray(output.traceCategories));
     assert.ok(output.traceCategories.length > 0);
   });

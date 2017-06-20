@@ -6,12 +6,14 @@
     "build": "tsc",
     "dev": "tsc -w",
     "test": "mocha --reporter dot test/**/*-test.js",
+    "coverage": "nyc yarn test && nyc report --reporter=text-lcov > lcov.info",
     "test-formatting": "./test/check-formatting.sh",
     "format": "clang-format -i -style=file *.ts **/*.ts"
   },
   "devDependencies": {
     "clang-format": "^1.0.50",
     "mocha": "^3.2.0",
+    "nyc": "^11.0.2",
     "typescript": "2.2.1"
   },
   "dependencies": {
