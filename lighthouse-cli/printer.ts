@@ -23,7 +23,7 @@ import {Results} from './types/types';
 
 const fs = require('fs');
 const ReportGeneratorV2 = require('../lighthouse-core/report/v2/report-generator');
-const log = require('../lighthouse-core/lib/log');
+const log = require('lighthouse-logger');
 
 
 /**

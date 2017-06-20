@@ -7,7 +7,7 @@
 
 /* eslint-disable no-console */
 
-const log = require('./log.js');
+const log = require('lighthouse-logger');
 
 class ConsoleQuieter {
 

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const log = require('../lib/log.js');
+const log = require('lighthouse-logger');
 const Audit = require('../audits/audit');
 const URL = require('../lib/url-shim');
 const NetworkRecorder = require('../lib/network-recorder.js');

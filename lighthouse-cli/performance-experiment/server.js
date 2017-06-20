@@ -19,7 +19,7 @@
 const http = require('http');
 const parse = require('url').parse;
 
-const log = require('../../lighthouse-core/lib/log');
+const log = require('lighthouse-logger');
 const lighthouse = require('../../lighthouse-core');
 const ExperimentDatabase = require('./experiment-database/database');
 const PerfXReportGenerator = require('./report/perf-x-report-generator');

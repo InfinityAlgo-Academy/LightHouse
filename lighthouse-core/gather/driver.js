@@ -11,7 +11,7 @@ const Element = require('../lib/element');
 const EventEmitter = require('events').EventEmitter;
 const URL = require('../lib/url-shim');
 
-const log = require('../lib/log.js');
+const log = require('lighthouse-logger');
 const DevtoolsLog = require('./devtools-log');
 
 // Controls how long to wait after onLoad before continuing

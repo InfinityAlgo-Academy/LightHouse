@@ -6,7 +6,7 @@
 'use strict';
 
 const EventEmitter = require('events').EventEmitter;
-const log = require('../../lib/log.js');
+const log = require('lighthouse-logger');
 
 class Connection {
 

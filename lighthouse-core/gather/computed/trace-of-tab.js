@@ -17,7 +17,7 @@
  */
 
 const ComputedArtifact = require('./computed-artifact');
-const log = require('../../lib/log');
+const log = require('lighthouse-logger');
 
 class TraceOfTab extends ComputedArtifact {
   get name() {

@@ -11,7 +11,7 @@
 const path = require('path');
 const spawnSync = require('child_process').spawnSync;
 const yargs = require('yargs');
-const log = require('../../../lighthouse-core/lib/log');
+const log = require('lighthouse-logger');
 
 const DEFAULT_CONFIG_PATH = 'pwa-config';
 const DEFAULT_EXPECTATIONS_PATH = 'pwa-expectations';

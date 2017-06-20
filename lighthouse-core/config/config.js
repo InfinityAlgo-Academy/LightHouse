@@ -9,7 +9,7 @@ const defaultConfigPath = './default.js';
 const defaultConfig = require('./default.js');
 
 const GatherRunner = require('../gather/gather-runner');
-const log = require('../lib/log');
+const log = require('lighthouse-logger');
 const path = require('path');
 const Audit = require('../audits/audit');
 const Runner = require('../runner');

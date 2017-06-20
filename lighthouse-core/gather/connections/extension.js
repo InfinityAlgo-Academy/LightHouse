@@ -6,7 +6,7 @@
 'use strict';
 
 const Connection = require('./connection.js');
-const log = require('../../lib/log.js');
+const log = require('lighthouse-logger');
 
 /* globals chrome */
 

@@ -7,7 +7,7 @@
 
 const NetworkManager = require('./web-inspector').NetworkManager;
 const EventEmitter = require('events').EventEmitter;
-const log = require('../lib/log.js');
+const log = require('lighthouse-logger');
 
 class NetworkRecorder extends EventEmitter {
   /**

@@ -10,7 +10,7 @@ const RawProtocol = require('../../../lighthouse-core/gather/connections/raw');
 const Runner = require('../../../lighthouse-core/runner');
 const Config = require('../../../lighthouse-core/config/config');
 const defaultConfig = require('../../../lighthouse-core/config/default.js');
-const log = require('../../../lighthouse-core/lib/log');
+const log = require('lighthouse-logger');
 
 const ReportGeneratorV2 = require('../../../lighthouse-core/report/v2/report-generator');
 

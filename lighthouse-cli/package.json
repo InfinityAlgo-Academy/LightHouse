@@ -10,11 +10,12 @@
     "format": "clang-format -i -style=file *.ts **/*.ts"
   },
   "devDependencies": {
+    "clang-format": "^1.0.50",
     "mocha": "^3.2.0",
-    "typescript": "2.2.1",
-    "clang-format": "^1.0.50"
+    "typescript": "2.2.1"
   },
   "dependencies": {
-    "@types/node": "6.0.66"
+    "@types/node": "6.0.66",
+    "lighthouse-logger": "^1.0.0"
   }
 }

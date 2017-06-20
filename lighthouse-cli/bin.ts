@@ -14,7 +14,7 @@ import {launch, LaunchedChrome} from '../chrome-launcher/chrome-launcher';
 import * as Commands from './commands/commands';
 import {getFlags, Flags} from './cli-flags';
 const lighthouse = require('../lighthouse-core');
-const log = require('../lighthouse-core/lib/log');
+const log = require('lighthouse-logger');
 import * as path from 'path';
 const perfOnlyConfig = require('../lighthouse-core/config/perf.json');
 const performanceXServer = require('./performance-experiment/server');

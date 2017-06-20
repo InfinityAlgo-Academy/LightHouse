@@ -6,7 +6,7 @@
 'use strict';
 
 const fs = require('fs');
-const log = require('../../lighthouse-core/lib/log.js');
+const log = require('lighthouse-logger');
 const stringifySafe = require('json-stringify-safe');
 const Metrics = require('./traces/pwmetrics-events');
 

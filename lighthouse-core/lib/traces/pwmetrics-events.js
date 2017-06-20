@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const log = require('../../../lighthouse-core/lib/log.js');
+const log = require('lighthouse-logger');
 
 /**
  * @param {!Object} object

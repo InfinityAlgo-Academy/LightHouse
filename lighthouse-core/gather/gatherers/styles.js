@@ -14,7 +14,7 @@
 
 const WebInspector = require('../../lib/web-inspector');
 const Gatherer = require('./gatherer');
-const log = require('../../lib/log.js');
+const log = require('lighthouse-logger');
 
 /**
  * @param {!gonzales.AST} parseTree
