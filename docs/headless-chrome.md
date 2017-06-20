@@ -1,28 +1,62 @@
-# Running headless Chrome for Lighthouse
+# Running Lighthouse using headless Chrome
 
-The headless_shell still has a few bugs to work out. Until then, Chrome + xvfb is a stable solution.
-These steps mostly worked on Debian Jessie. Also, worth a look: both `.travis.yml` and `launch-chrome.sh`.
+### CLI
+
+Setup:
 
 ```sh
 # get node 6
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - &&\
 sudo apt-get install -y nodejs
 
-# get chromium (stable) and Xvfb
-apt-get install chromium-browser xvfb
+# get chromium (stable)
+apt-get install chromium-browser
 
 # install lighthouse
-git clone https://github.com/GoogleChrome/lighthouse
-cd lighthouse && npm i && npm link
+npm i -g lighthouse
 ```
+
+Kick off run of Lighthouse using headless Chrome:
 
 ```sh
-export DISPLAY=:1.5
-TMP_PROFILE_DIR=$(mktemp -d -t lighthouse.XXXXXXXXXX)
-
-# start up chromium inside xvfb
-xvfb-run --server-args='-screen 0, 1024x768x16' chromium-browser --user-data-dir=$TMP_PROFILE_DIR --start-maximized --no-first-run --remote-debugging-port=9222 "about:blank"
-
-# kick off your lighthouse run, saving assets to verify for later
-lighthouse http://github.com --save-assets
+lighthouse --chrome-flags="--headless" https://github.com
 ```
+
+### Node
+
+Install:
+
+```sh
+yarn add lighthouse
+```
+
+Run it:
+
+```javascript
+const lighthouse = require('lighthouse');
+const chromeLauncher = require('lighthouse/chrome-launcher');
+
+function launchChromeAndRunLighthouse(url, flags = {}, config = null) {
+  return chromeLauncher.launch().then(chrome => {
+    flags.port = chrome.port;
+    return lighthouse(url, flags, config).then(results =>
+      chrome.kill().then(() => results));
+  });
+}
+
+const flags = {
+  chromeFlags: ['--headless']
+};
+
+launchChromeAndRunLighthouse('https://github.com', flags).then(results => {
+  // Use results!
+});
+```
+
+### Also worth a look
+
+Other resources you might find helpful:
+
+- [Getting Started with Headless Chrome](https://developers.google.com/web/updates/2017/04/headless-chrome)
+- Example [Dockerfile](https://github.com/ebidel/lighthouse-ci/blob/master/builder/Dockerfile.headless)
+- Lighthouse's [`.travis.yml`](https://github.com/GoogleChrome/lighthouse/blob/master/.travis.yml)
