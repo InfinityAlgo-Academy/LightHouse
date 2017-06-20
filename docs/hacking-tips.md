@@ -64,3 +64,20 @@ const html = reportGenerator.generateHTML(results, 'devtools');
 console.log(html);
 ```
 
+## Debugging Travis via docker image
+
+You can do a local docker image install of Travis to better inspect a travis build:
+
+* [How to run travis-ci locally - Stack Overflow](https://stackoverflow.com/questions/21053657/how-to-run-travis-ci-locally)
+* [Common Build Problems - Travis CI](https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image)
+
+```sh
+docker run -it quay.io/travisci/travis-node-js /bin/bash
+```
+
+FWIW, the non-quay images mentioned in the official docs may be more recent. YMMV!
+
+You can then run the travis commands (e.g. `travis compile`) to install an environment and run the build script:
+
+[travis-ci/travis-build: .travis.yml =&gt; build.sh converter](https://github.com/travis-ci/travis-build#invocation)
+
