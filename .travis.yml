@@ -15,7 +15,6 @@ cache:
   yarn: true
   directories:
     - node_modules
-    - chrome-linux
     - chrome-launcher/node_modules
     - lighthouse-cli/node_modules
     - lighthouse-extension/node_modules
@@ -30,7 +29,7 @@ before_script:
   - export DISPLAY=:99.0
   - export LIGHTHOUSE_CHROMIUM_PATH="$(pwd)/chrome-linux/chrome"
   - sh -e /etc/init.d/xvfb start
-  - ./lighthouse-core/scripts/download-chrome.sh
+  - sleep 3 # wait for xvfb to boot
   - yarn build-all
 script:
   - yarn test-cli-formatting
@@ -50,3 +49,5 @@ after_success:
   - ./lighthouse-core/scripts/generate-combined-coverage.sh
 after_failure:
   - grep 'No screenshots' perf.json && travis-artifacts upload --path perf-0.trace.json
+addons:
+  chrome: stable
