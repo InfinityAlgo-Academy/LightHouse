@@ -318,6 +318,7 @@ function deprecationsTest() {
 
 function isOnHttps() {
   // Check blob URL.
+  const blob = new Blob(['fake'])
   const img = document.createElement('img');
   img.src = URL.createObjectURL(blob);
   document.body.appendChild(img); // PASS
