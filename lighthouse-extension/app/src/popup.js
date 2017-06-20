@@ -21,7 +21,9 @@ const NON_BUG_ERROR_MESSAGES = {
       'Chrome-specific urls. If necessary, use the Lighthouse CLI to do so.',
   // The user tries to review an error page or has network issues
   'Unable to load the page': 'Unable to load the page. Please verify the url you ' +
-      'are trying to review.'
+      'are trying to review.',
+  'Cannot access contents of the page': 'Lighthouse can only audit URLs that start' +
+      ' with http:// or https://.',
 };
 
 const MAX_ISSUE_ERROR_LENGTH = 60;
