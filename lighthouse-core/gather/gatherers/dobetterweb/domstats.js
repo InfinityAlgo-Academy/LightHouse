@@ -48,9 +48,12 @@ function createSelectorsLabel(element) {
  */
 /* istanbul ignore next */
 function elementPathInDOM(element) {
+  const visited = new Set();
   const path = [createSelectorsLabel(element)];
   let node = element;
   while (node) {
+    visited.add(node);
+
     // Anchor elements have a .host property. Be sure we've found a shadow root
     // host and not an anchor.
     if (ShadowRoot.prototype.isPrototypeOf(node)) {
@@ -60,6 +63,10 @@ function elementPathInDOM(element) {
       const isShadowHost = node.parentNode && node.parentNode.host &&
                            node.parentNode.localName !== 'a';
       node = isShadowHost ? node.parentNode.host : node.parentElement;
+    }
+
+    if (visited.has(node)) {
+      node = null;
     }
 
     if (node) {
