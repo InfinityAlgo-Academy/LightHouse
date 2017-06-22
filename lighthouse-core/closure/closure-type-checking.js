@@ -21,9 +21,11 @@ gulp.task('compile-report', () => {
   return gulp.src([
     // externs
     'closure/third_party/commonjs.js',
+    'closure/typedefs/viewer-externs.js',
 
     'lib/file-namer.js',
     'report/v2/renderer/*.js',
+    '../lighthouse-viewer/app/src/viewer-ui-features.js',
   ])
 
   // Ignore `module.exports` and `self.ClassName = ClassName` statements.

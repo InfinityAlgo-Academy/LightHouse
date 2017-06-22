@@ -18,17 +18,14 @@ class ReportRenderer {
   /**
    * @param {!DOM} dom
    * @param {!CategoryRenderer} categoryRenderer
-   * @param {?ReportUIFeatures=} uiFeatures
    */
-  constructor(dom, categoryRenderer, uiFeatures = null) {
+  constructor(dom, categoryRenderer) {
     /** @private {!DOM} */
     this._dom = dom;
     /** @private {!CategoryRenderer} */
     this._categoryRenderer = categoryRenderer;
     /** @private {!Document|!Element} */
     this._templateContext = this._dom.document();
-    /** @private {ReportUIFeatures} */
-    this._uiFeatures = uiFeatures;
   }
 
   /**
@@ -38,12 +35,6 @@ class ReportRenderer {
   renderReport(report, container) {
     container.textContent = ''; // Remove previous report.
     const element = container.appendChild(this._renderReport(report));
-
-    // Hook in JS features and page-level event listeners after the report
-    // is in the document.
-    if (this._uiFeatures) {
-      this._uiFeatures.initFeatures(report);
-    }
 
     return /** @type {!Element} **/ (element);
   }

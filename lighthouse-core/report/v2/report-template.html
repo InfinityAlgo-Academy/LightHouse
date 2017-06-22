@@ -27,11 +27,15 @@ Unless required by applicable law or agreed to in writing, software distributed 
       const dom = new DOM(document);
       const detailsRenderer = new DetailsRenderer(dom);
       const categoryRenderer = new CategoryRenderer(dom, detailsRenderer);
-      const features = new ReportUIFeatures(dom);
-      const renderer = new ReportRenderer(dom, categoryRenderer, features);
+      const renderer = new ReportRenderer(dom, categoryRenderer);
 
       const container = document.querySelector('main');
       renderer.renderReport(window.__LIGHTHOUSE_JSON__, container);
+
+      // Hook in JS features and page-level event listeners after the report
+      // is in the document.
+      const features = new ReportUIFeatures(dom);
+      features.initFeatures(window.__LIGHTHOUSE_JSON__);
     });
 
     document.addEventListener('lh-analytics', e => {

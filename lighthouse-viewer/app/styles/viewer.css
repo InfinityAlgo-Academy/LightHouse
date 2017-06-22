@@ -112,5 +112,15 @@
 
 /* app z-indexes */
 .drop_zone {
-  z-index: 2;
+  z-index: 3;
+}
+
+/* open-in-viewer option hidden in Viewer */
+.lh-export__dropdown .lh-export--viewer {
+  display: none;
+}
+
+/* open-in-gist option visible in Viewer */
+.lh-export__dropdown .lh-export--gist {
+  display: block;
 }

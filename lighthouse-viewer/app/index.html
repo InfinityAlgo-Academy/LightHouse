@@ -5,7 +5,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 -->
 
 <!doctype html>
-<html data-report-context="viewer">
+<html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
@@ -15,11 +15,12 @@ Unless required by applicable law or agreed to in writing, software distributed 
   <meta name="theme-color" content="#304ffe">
   <link rel="stylesheet" href="styles/viewer.css">
 </head>
-<body>
+<body class="lh-root lh-vars">
+<div hidden>%%LIGHTHOUSE_TEMPLATES%%</div>
 
 <div class="drop_zone"></div>
 
-<output></output>
+<main><!-- report populated here --></main>
 
 <div class="viewer-placeholder">
   <div class="viewer-placeholder-inner">
@@ -36,11 +37,13 @@ Unless required by applicable law or agreed to in writing, software distributed 
   </div>
 </div>
 
-<div class="log-wrapper">
-  <div id="log"></div>
-</div>
+<div id="lh-log"></div>
 
-<script src="src/main.js" async></script>
+<input id="hidden-file-input" type="file" hidden accept="application/json">
+
+<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-auth.js"></script>
+<script src="src/viewer.js"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

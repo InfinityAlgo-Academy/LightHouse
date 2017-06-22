@@ -214,6 +214,10 @@
       background-size: 16px;
       background-position: 9px 50%;
     }
+    /* save-as-gist option hidden in report */
+    .lh-export--gist {
+      display: none;
+    }
     .lh-config {
       display: flex;
     }
@@ -321,6 +325,8 @@
         <a href="#" class="report-icon report-icon--copy" data-action="copy">Copy JSON</a>
         <a href="#" class="report-icon report-icon--download" data-action="save-html">Save as HTML</a>
         <a href="#" class="report-icon report-icon--download" data-action="save-json">Save as JSON</a>
+        <a href="#" class="report-icon report-icon--open lh-export--viewer" data-action="open-viewer">Open in Viewer</a>
+        <a href="#" class="report-icon report-icon--open lh-export--gist" data-action="save-gist">Save as Gist</a>
       </div>
     </div>
   </div>

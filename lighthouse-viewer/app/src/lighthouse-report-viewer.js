@@ -1,104 +1,89 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 Google Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-/* global ga, logger */
-
-const FileUploader = require('./fileuploader');
-const GithubAPI = require('./github');
-const idb = require('idb-keyval');
-const ReportGenerator = require('../../../lighthouse-core/report/report-generator');
-const LighthouseReport = require('../../../lighthouse-core/report/scripts/lighthouse-report');
-
-const LH_CURRENT_VERSION = require('../../../package.json').version;
-const APP_URL = `${location.origin}${location.pathname}`;
+/* global DOM, CategoryRenderer, DetailsRenderer, ViewerUIFeatures, ReportRenderer, DragAndDrop, GithubApi, logger */
 
 /**
- * Class to handle dynamic changes to the page when users view new reports.
- * @class
+ * Class that manages viewing Lighthouse reports.
  */
-class LighthouseViewerReport extends LighthouseReport {
-
+class LighthouseReportViewer {
   constructor() {
-    super();
+    this._onPaste = this._onPaste.bind(this);
+    this._onSaveJson = this._onSaveJson.bind(this);
+    this._onFileLoad = this._onFileLoad.bind(this);
+    this._onUrlInputChange = this._onUrlInputChange.bind(this);
 
-    this.onPaste = this.onPaste.bind(this);
-    this.onShare = this.onShare.bind(this);
-    this.onFileUpload = this.onFileUpload.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
+    this._dragAndDropper = new DragAndDrop(this._onFileLoad);
+    this._github = new GithubApi();
 
-    this.fileUploader = new FileUploader(this.onFileUpload);
-    this.github = new GithubAPI();
-
-    this._isNewReport = true;
+    /**
+     * Used for tracking whether to offer to upload as a gist.
+     * @private {boolean}
+     */
+    this._reportIsFromGist = false;
 
     this._addEventListeners();
-    this.loadFromDeepLink();
-    this.listenForMessages();
+    this._loadFromDeepLink();
+    this._listenForMessages();
   }
 
+  static get APP_URL() {
+    return `${location.origin}${location.pathname}`;
+  }
+
+  /**
+   * Initialize event listeners.
+   * @private
+   */
   _addEventListeners() {
-    super._addEventListeners();
+    document.addEventListener('paste', this._onPaste);
 
-    this.shareButton = document.querySelector('.js-share');
-    if (this.shareButton) {
-      this.shareButton.addEventListener('click', this.onShare);
+    const gistUrlInput = document.querySelector('.js-gist-url');
+    gistUrlInput.addEventListener('change', this._onUrlInputChange);
 
-      // Disable the share button after the user shares the gist or if we're loading
-      // a gist from GitHub. In both cases, the gist is already shared :)
-      if (this._isNewReport) {
-        this.enableButton(this.shareButton);
-      } else {
-        this.disableButton(this.shareButton);
+    // Hidden file input to trigger manual file selector.
+    const fileInput = document.querySelector('#hidden-file-input');
+    fileInput.addEventListener('change', e => {
+      this._onFileLoad(e.target.files[0]);
+      e.target.value = null;
+    });
+
+    // A click on the visual placeholder will trigger the hidden file input.
+    const placeholderTarget = document.querySelector('.viewer-placeholder-inner');
+    placeholderTarget.addEventListener('click', e => {
+      if (e.target.localName !== 'input') {
+        fileInput.click();
       }
-    }
-
-    document.addEventListener('paste', this.onPaste);
-
-    const gistURLInput = document.querySelector('.js-gist-url');
-    if (gistURLInput) {
-      gistURLInput.addEventListener('change', this.onInputChange);
-    }
+    });
   }
 
-  enableButton(button) {
-    if (button) {
-      button.disabled = false;
-    }
-  }
-
-  disableButton(button) {
-    if (button) {
-      button.disabled = true;
-    }
-  }
-
-  loadFromDeepLink() {
-    // Pull gist id from URL and render it.
+  /**
+   * Attempts to pull gist id from URL and render report from it.
+   * @return {!Promise<undefined>}
+   * @private
+   */
+  _loadFromDeepLink() {
     const params = new URLSearchParams(location.search);
     const gistId = params.get('gist');
-    if (gistId) {
-      logger.log('Fetching report from GitHub...', false);
-
-      this.github.auth.ready.then(_ => {
-        this.github.getGistFileContentAsJson(gistId).then(json => {
-          logger.hide();
-
-          this._isNewReport = false;
-          this.replaceReportHTML(json.content);
-
-          // Save fetched json and etag to IDB so we can use it later for 304
-          // requests. This is done after replaceReportHTML, so we don't save
-          // unrecognized JSON to IDB. replaceReportHTML will throw in that case.
-          return idb.set(gistId, {etag: json.etag, content: json.content});
-        }).catch(err => logger.error(err.message));
-      });
+    if (!gistId) {
+      return Promise.resolve();
     }
+
+    return this._github.getGistFileContentAsJson(gistId).then(reportJson => {
+      this._reportIsFromGist = true;
+      this._replaceReportHtml(reportJson);
+    }).catch(err => logger.error(err.message));
   }
 
+  /**
+   * Basic Lighthouse report JSON validation.
+   * @param {!ReportRenderer.ReportJSON} reportJson
+   * @private
+   */
   _validateReportJson(reportJson) {
     if (!reportJson.lighthouseVersion) {
       throw new Error('JSON file was not generated by Lighthouse');
@@ -107,7 +92,7 @@ class LighthouseViewerReport extends LighthouseReport {
     // Leave off patch version in the comparison.
     const semverRe = new RegExp(/^(\d+)?\.(\d+)?\.(\d+)$/);
     const reportVersion = reportJson.lighthouseVersion.replace(semverRe, '$1.$2');
-    const lhVersion = LH_CURRENT_VERSION.replace(semverRe, '$1.$2');
+    const lhVersion = window.LH_CURRENT_VERSION.replace(semverRe, '$1.$2');
 
     if (reportVersion < lhVersion) {
       // TODO: figure out how to handler older reports. All permalinks to older
@@ -117,51 +102,64 @@ class LighthouseViewerReport extends LighthouseReport {
       logger.warn('Results may not display properly.\n' +
                   'Report was created with an earlier version of ' +
                   `Lighthouse (${reportJson.lighthouseVersion}). The latest ` +
-                  `version is ${LH_CURRENT_VERSION}.`);
+                  `version is ${window.LH_CURRENT_VERSION}.`);
     }
   }
 
-  replaceReportHTML(json) {
+  /**
+   * @param {!ReportRenderer.ReportJSON} json
+   * @private
+   */
+  _replaceReportHtml(json) {
     this._validateReportJson(json);
 
-    const reportGenerator = new ReportGenerator();
+    const dom = new DOM(document);
+    const detailsRenderer = new DetailsRenderer(dom);
+    const categoryRenderer = new CategoryRenderer(dom, detailsRenderer);
+    const renderer = new ReportRenderer(dom, categoryRenderer);
 
-    let html;
+    const container = document.querySelector('main');
     try {
-      html = reportGenerator.generateHTML(json, 'viewer');
-    } catch (err) {
-      html = reportGenerator.renderException(err, json);
+      renderer.renderReport(json, container);
+
+      // Only give gist-saving callback (and clear gist from query string) if
+      // current report isn't from a gist.
+      let saveCallback = null;
+      if (!this._reportIsFromGist) {
+        saveCallback = this._onSaveJson;
+        history.pushState({}, null, LighthouseReportViewer.APP_URL);
+      }
+
+      const features = new ViewerUIFeatures(dom, saveCallback);
+      features.initFeatures(json);
+    } catch(e) {
+      logger.error(`Error rendering report: ${e.message}`);
+      dom.resetTemplates(); // TODO(bckenny): hack
+      container.textContent = '';
+      throw e;
     }
 
-    // Use only the results section of the full HTML page.
-    const div = document.createElement('div');
-    div.innerHTML = html;
+    // Remove the placeholder UI once the user has loaded a report.
+    const placeholder = document.querySelector('.viewer-placeholder');
+    if (placeholder) {
+      placeholder.remove();
+    }
 
-    document.title = div.querySelector('title').textContent;
-
-    html = div.querySelector('.js-report').outerHTML;
-
-    this.json = json;
-
-    // Remove the placeholder drop area UI once the user has interacted.
-    this.fileUploader.removeDropzonePlaceholder();
-
-    // Replace the HTML and hook up event listeners to the new DOM.
-    document.querySelector('output').innerHTML = html;
-    this._addEventListeners();
-
-    ga('send', 'event', 'report', 'view');
+    if (window.ga) {
+      window.ga('send', 'event', 'report', 'view');
+    }
   }
 
   /**
    * Updates the page's HTML with contents of the JSON file passed in.
    * @param {!File} file
-   * @return {!Promise<string>}
+   * @return {!Promise<undefined>}
    * @throws file was not valid JSON generated by Lighthouse or an unknown file
-   *     type of used.
+   *     type was used.
+   * @private
    */
-  onFileUpload(file) {
-    return FileUploader.readFile(file).then(str => {
+  _onFileLoad(file) {
+    return this._readFile(file).then(str => {
       let json;
       try {
         json = JSON.parse(str);
@@ -169,34 +167,57 @@ class LighthouseViewerReport extends LighthouseReport {
         throw new Error('Could not parse JSON file.');
       }
 
-      this._isNewReport = true;
-
-      this.replaceReportHTML(json);
+      this._reportIsFromGist = false;
+      this._replaceReportHtml(json);
     }).catch(err => logger.error(err.message));
   }
 
   /**
-   * Shares the current report by creating a gist on GitHub.
-   * @return {!Promise<string>} id of the created gist.
+   * Reads a file and returns its content as a string.
+   * @param {!File} file
+   * @return {!Promise<string>}
+   * @private
    */
-  onShare() {
-    ga('send', 'event', 'report', 'share');
+  _readFile(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new window.FileReader();
+      reader.onload = function(e) {
+        resolve(e.target.result);
+      };
+      reader.onerror = reject;
+      reader.readAsText(file);
+    });
+  }
+
+  /**
+   * Saves the current report by creating a gist on GitHub.
+   * @param {!ReportRenderer.ReportJSON} reportJson
+   * @return {!Promise<string>} id of the created gist.
+   * @private
+   */
+  _onSaveJson(reportJson) {
+    if (window.ga) {
+      window.ga('send', 'event', 'report', 'share');
+    }
 
     // TODO: find and reuse existing json gist if one exists.
-    return this.github.createGist(this.json).then(id => {
-      ga('send', 'event', 'report', 'created');
+    return this._github.createGist(reportJson).then(id => {
+      if (window.ga) {
+        window.ga('send', 'event', 'report', 'created');
+      }
 
-      this.disableButton(this.shareButton);
-      history.pushState({}, null, `${APP_URL}?gist=${id}`);
+      this._reportIsFromGist = true;
+      history.pushState({}, null, `${LighthouseReportViewer.APP_URL}?gist=${id}`);
 
       return id;
     }).catch(err => logger.log(err.message));
   }
 
   /**
-   * Enables pasting a JSON report on the page.
+   * Enables pasting a JSON report or gist URL on the page.
+   * @private
    */
-  onPaste(e) {
+  _onPaste(e) {
     e.preventDefault();
 
     // Try paste as gist URL.
@@ -204,7 +225,9 @@ class LighthouseViewerReport extends LighthouseReport {
       const url = new URL(e.clipboardData.getData('text'));
       this._loadFromGistURL(url);
 
-      ga('send', 'event', 'report', 'paste-link');
+      if (window.ga) {
+        window.ga('send', 'event', 'report', 'paste-link');
+      }
     } catch (err) {
       // noop
     }
@@ -212,9 +235,12 @@ class LighthouseViewerReport extends LighthouseReport {
     // Try paste as json content.
     try {
       const json = JSON.parse(e.clipboardData.getData('text'));
-      this.replaceReportHTML(json);
+      this._reportIsFromGist = false;
+      this._replaceReportHTML(json);
 
-      ga('send', 'event', 'report', 'paste');
+      if (window.ga) {
+        window.ga('send', 'event', 'report', 'paste');
+      }
     } catch (err) {
       // noop
     }
@@ -222,8 +248,9 @@ class LighthouseViewerReport extends LighthouseReport {
 
   /**
    * Handles changes to the gist url input.
+   * @private
    */
-  onInputChange(e) {
+  _onUrlInputChange(e) {
     e.stopPropagation();
 
     if (!e.target.value) {
@@ -238,8 +265,10 @@ class LighthouseViewerReport extends LighthouseReport {
   }
 
   /**
-   * Updates URL with user's gist and loads from github.
+   * Loads report json from gist URL, if valid. Updates page URL with gist ID
+   * and loads from github.
    * @param {string} url Gist URL.
+   * @private
    */
   _loadFromGistURL(url) {
     try {
@@ -252,22 +281,26 @@ class LighthouseViewerReport extends LighthouseReport {
 
       const match = url.pathname.match(/[a-f0-9]{5,}/);
       if (match) {
-        history.pushState({}, null, `${APP_URL}?gist=${match[0]}`);
-        this.loadFromDeepLink();
+        history.pushState({}, null, `${LighthouseReportViewer.APP_URL}?gist=${match[0]}`);
+        this._loadFromDeepLink();
       }
     } catch (err) {
       logger.error('Invalid URL');
     }
   }
 
-  /*
+  /**
    * Initializes of a `message` listener to respond to postMessage events.
+   * @private
    */
-  listenForMessages() {
+  _listenForMessages() {
     window.addEventListener('message', e => {
       if (e.source === self.opener && e.data.lhresults) {
-        this.replaceReportHTML(e.data.lhresults);
-        ga('send', 'event', 'report', 'open in viewer');
+        this._reportIsFromGist = false;
+        this._replaceReportHtml(e.data.lhresults);
+        if (window.ga) {
+          window.ga('send', 'event', 'report', 'open in viewer');
+        }
       }
     });
 
@@ -278,4 +311,6 @@ class LighthouseViewerReport extends LighthouseReport {
   }
 }
 
-module.exports = LighthouseViewerReport;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = LighthouseReportViewer;
+}

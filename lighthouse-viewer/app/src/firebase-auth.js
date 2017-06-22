@@ -5,21 +5,21 @@
  */
 'use strict';
 
-const firebase = require('firebase/app');
-require('firebase/auth');
-const idb = require('idb-keyval');
+/* global firebase, idbKeyval */
 
 /**
- * Wrapper for Firebase Authentication
- * @class
+ * Wrapper for Firebase authentication.
  */
 class FirebaseAuth {
   constructor() {
-    this.accessToken = null;
-    this.user = null;
+    /** @private {?string} */
+    this._accessToken = null;
+    /** @private {Object} */
+    this._firebaseUser = null;
 
-    this.provider = new firebase.auth.GithubAuthProvider();
-    this.provider.addScope('gist');
+    /** @private {!Object} */
+    this._provider = new firebase.auth.GithubAuthProvider();
+    this._provider.addScope('gist');
 
     firebase.initializeApp({
       apiKey: 'AIzaSyApMz8FHTyJNqqUtA51tik5Mro8j-2qMcM',
@@ -29,23 +29,37 @@ class FirebaseAuth {
       messagingSenderId: '962507201498'
     });
 
-    // Wrap auth state callback in a promise so other parts of the app that
-    // require login can hook into the changes.
-    this.ready = new Promise((resolve, reject) => {
-      firebase.auth().onAuthStateChanged(user => {
-        idb.get('accessToken').then(token => {
-          if (user && token) {
-            this.accessToken = token;
-            this.user = user;
-          }
-          resolve(user);
-        });
-      });
+    /**
+     * Promise which resolves after the first check of auth state. After this,
+     * _accessToken will be set if user is logged in and has access token.
+     * @private {!Promise<undefined>}
+     */
+    this._ready = Promise.all([
+      new Promise(resolve => firebase.auth().onAuthStateChanged(resolve)),
+      idbKeyval.get('accessToken')
+    ]).then(([user, token]) => {
+      if (user && token) {
+        this._accessToken = token;
+        this._firebaseUser = user;
+      }
     });
   }
 
+  /**
+   * Returns the GitHub access token if already logged in. If not logged in,
+   * returns null (and will not trigger sign in).
+   * @return {!Promise<?string>}
+   */
+  getAccessTokenIfLoggedIn() {
+    return this._ready.then(_ => this._accessToken);
+  }
+
+  /**
+   * Returns the GitHub access token, triggering sign in if needed.
+   * @return {!Promise<string>}
+   */
   getAccessToken() {
-    return this.accessToken ? Promise.resolve(this.accessToken) : this.signIn();
+    return this._ready.then(_ => this._accessToken ? this._accessToken : this.signIn());
   }
 
   /**
@@ -53,28 +67,28 @@ class FirebaseAuth {
    * @return {!Promise<string>} The logged in user.
    */
   signIn() {
-    return firebase.auth().signInWithPopup(this.provider).then(result => {
-      this.accessToken = result.credential.accessToken;
-      this.user = result.user;
+    return firebase.auth().signInWithPopup(this._provider).then(result => {
+      this._accessToken = result.credential.accessToken;
+      this._firebaseUser = result.user;
       // A limitation of firebase auth is that it doesn't return an oauth token
       // after a page refresh. We'll get a firebase token, but not an oauth token
       // for GitHub. Since GitHub's tokens never expire, stash the access token in IDB.
-      return idb.set('accessToken', this.accessToken).then(_ => {
-        return this.accessToken;
-      });
+      return idbKeyval.set('accessToken', this._accessToken).then(_ => this._accessToken);
     });
   }
 
   /**
    * Signs the user out.
-   * @return {!Promise}
+   * @return {!Promise<undefined>}
    */
   signOut() {
     return firebase.auth().signOut().then(_ => {
-      this.accessToken = null;
-      return idb.delete('accessToken');
+      this._accessToken = null;
+      return idbKeyval.delete('accessToken');
     });
   }
 }
 
-module.exports = FirebaseAuth;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = FirebaseAuth;
+}

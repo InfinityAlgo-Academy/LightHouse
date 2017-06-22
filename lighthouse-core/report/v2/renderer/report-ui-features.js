@@ -10,7 +10,7 @@
  * the report.
  */
 
-/* globals self URL Blob CustomEvent getFilenamePrefix */
+/* globals self URL Blob CustomEvent getFilenamePrefix window */
 
 class ReportUIFeatures {
 
@@ -20,9 +20,9 @@ class ReportUIFeatures {
   constructor(dom) {
     /** @type {!ReportRenderer.ReportJSON} */
     this.json; // eslint-disable-line no-unused-expressions
-    /** @private {!DOM} */
+    /** @protected {!DOM} */
     this._dom = dom;
-    /** @private {!Document} */
+    /** @protected {!Document} */
     this._document = this._dom.document();
     /** @private {boolean} */
     this._copyAttempt = false;
@@ -188,9 +188,7 @@ class ReportUIFeatures {
         break;
       }
       case 'save-html': {
-        this._resetUIState();
-
-        const htmlStr = this._document.documentElement.outerHTML;
+        const htmlStr = this.getReportHtml();
         try {
           this._saveFile(new Blob([htmlStr], {type: 'text/html'}));
         } catch (/** @type {!Error} */ e) {
@@ -198,6 +196,14 @@ class ReportUIFeatures {
             cmd: 'error', msg: 'Could not export as HTML. ' + e.message
           });
         }
+        break;
+      }
+      case 'open-viewer': {
+        this.sendJsonReport();
+        break;
+      }
+      case 'save-gist': {
+        this.saveAsGist();
         break;
       }
     }
@@ -214,6 +220,34 @@ class ReportUIFeatures {
     if (e.keyCode === 27) { // ESC
       this.closeExportDropdown();
     }
+  }
+
+  /**
+   * Opens a new tab to the online viewer and sends the local page's JSON results
+   * to the online viewer using postMessage.
+   * @protected
+   */
+  sendJsonReport() {
+    const VIEWER_ORIGIN = 'https://googlechrome.github.io';
+    const VIEWER_URL = `${VIEWER_ORIGIN}/lighthouse/viewer/`;
+
+    // Chrome doesn't allow us to immediately postMessage to a popup right
+    // after it's created. Normally, we could also listen for the popup window's
+    // load event, however it is cross-domain and won't fire. Instead, listen
+    // for a message from the target app saying "I'm open".
+    window.addEventListener('message', function msgHandler(/** @type {!Event} */ e) {
+      const messageEvent = /** @type {!MessageEvent<{opened: boolean}>} */ (e);
+      if (messageEvent.origin !== VIEWER_ORIGIN) {
+        return;
+      }
+
+      if (messageEvent.data.opened) {
+        popup.postMessage({lhresults: this.json}, VIEWER_ORIGIN);
+        window.removeEventListener('message', msgHandler);
+      }
+    }.bind(this));
+
+    const popup = /** @type {!Window} */ (window.open(VIEWER_URL, '_blank'));
   }
 
   /**
@@ -265,9 +299,29 @@ class ReportUIFeatures {
       });
     }
   }
+
+  /**
+   * Returns the html that recreates this report.
+   * @return {string}
+   * @protected
+   */
+  getReportHtml() {
+    this._resetUIState();
+    return this._document.documentElement.outerHTML;
+  }
+
+  /**
+   * Save json as a gist. Unimplemented in base UI features.
+   * @protected
+   */
+  saveAsGist() {
+    throw new Error('Cannot save as gist from base report');
+  }
+
   /**
    * Downloads a file (blob) using a[download].
    * @param {!Blob|!File} blob The file to save.
+   * @private
    */
   _saveFile(blob) {
     const filename = getFilenamePrefix({

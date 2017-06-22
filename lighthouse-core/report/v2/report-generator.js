@@ -24,6 +24,27 @@ const REPORT_TEMPLATES = fs.readFileSync(__dirname + '/templates.html', 'utf8');
 
 class ReportGeneratorV2 {
   /**
+   * @return {string}
+   */
+  static get reportJs() {
+    return REPORT_JAVASCRIPT;
+  }
+
+  /**
+   * @return {string}
+   */
+  static get reportCss() {
+    return REPORT_CSS;
+  }
+
+  /**
+   * @return {string}
+   */
+  static get reportTemplates() {
+    return REPORT_TEMPLATES;
+  }
+
+  /**
    * Computes the weighted-average of the score of the list of items.
    * @param {!Array<{score: number|undefined, weight: number|undefined}} items
    * @return {number}

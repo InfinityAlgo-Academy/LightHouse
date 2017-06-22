@@ -5,20 +5,14 @@
  */
 'use strict';
 
-/* global logger */
-
-const idb = require('idb-keyval');
-const FirebaseAuth = require('./firebase-auth');
-const getFilenamePrefix = require('../../../lighthouse-core/lib/file-namer').getFilenamePrefix;
+/* global logger, FirebaseAuth, idbKeyval, getFilenamePrefix */
 
 /**
  * Wrapper around the GitHub API for reading/writing gists.
- * @class
  */
-class GithubAPI {
+class GithubApi {
   constructor() {
-    // this.CLIENT_ID = '48e4c3145c4978268ecb';
-    this.auth = new FirebaseAuth();
+    this._auth = new FirebaseAuth();
     this._saving = false;
   }
 
@@ -28,7 +22,7 @@ class GithubAPI {
 
   /**
    * Creates a gist under the users account.
-   * @param{{url: string, generatedTime: string}} jsonFile The gist file body.
+   * @param {!ReportRenderer.ReportJSON} jsonFile The gist file body.
    * @return {!Promise<string>} id of the created gist.
    */
   createGist(jsonFile) {
@@ -39,7 +33,7 @@ class GithubAPI {
     logger.log('Saving report to GitHub...', false);
     this._saving = true;
 
-    return this.auth.getAccessToken()
+    return this._auth.getAccessToken()
       .then(accessToken => {
         const filename = getFilenamePrefix({
           url: jsonFile.url,
@@ -49,7 +43,7 @@ class GithubAPI {
           description: 'Lighthouse json report',
           public: false,
           files: {
-            [`${filename}${GithubAPI.LH_JSON_EXT}`]: {
+            [`${filename}${GithubApi.LH_JSON_EXT}`]: {
               content: JSON.stringify(jsonFile)
             }
           }
@@ -75,21 +69,23 @@ class GithubAPI {
   }
 
   /**
-   * Fetches the body content of a gist.
-   * @param {!string} id The id of a gist.
-   * @return {!Promise<{etag: string, content: !Object}>} parsed json content of the gist.
+   * Fetches a Lighthouse report from a gist.
+   * @param {string} id The id of a gist.
+   * @return {!Promise<!ReportRenderer.ReportJSON>}
    */
   getGistFileContentAsJson(id) {
-    return this.auth.ready.then(user => {
+    logger.log('Fetching report from GitHub...', false);
+
+    return this._auth.getAccessTokenIfLoggedIn().then(accessToken => {
       const headers = new Headers();
 
-      // If there's an authenticated user, include an Authorization header to
+      // If there's an authenticated token, include an Authorization header to
       // have higher rate limits with the GitHub API. Otherwise, rely on ETags.
-      if (user) {
-        headers.set('Authorization', `token ${this.auth.accessToken}`);
+      if (accessToken) {
+        headers.set('Authorization', `token ${accessToken}`);
       }
 
-      return idb.get(id).then(cachedGist => {
+      return idbKeyval.get(id).then(cachedGist => {
         if (cachedGist && cachedGist.etag) {
           headers.set('If-None-Match', cachedGist.etag);
         }
@@ -104,45 +100,46 @@ class GithubAPI {
                         'in to increase this limit.');
           }
 
-          const etag = resp.headers.get('ETag');
-
           if (!resp.ok) {
             if (resp.status === 304) {
               return cachedGist;
             } else if (resp.status === 404) {
               // Delete the entry from IDB if it no longer exists on the server.
-              idb.delete(id); // Note: async.
+              idbKeyval.delete(id); // Note: async.
             }
             throw new Error(`${resp.status} fetching gist`);
           }
 
+          const etag = resp.headers.get('ETag');
           return resp.json().then(json => {
-            const fileName = Object.keys(json.files)[0]; // Attempt to use first file in gist.
-            const f = json.files[fileName];
+            // Attempt to use first file in gist with report extension.
+            const filename = Object.keys(json.files)
+                .find(filename => filename.endsWith(GithubApi.LH_JSON_EXT));
+            if (!filename) {
+              throw new Error(`gist ${id} does not contain a Lighthouse report`);
+            }
+            const f = json.files[filename];
             if (f.truncated) {
-              return fetch(f.raw_url).then(resp => resp.json())
-                  .then(json => ({etag, content: json}));
+              return fetch(f.raw_url)
+                .then(resp => resp.json())
+                .then(content => ({etag, content}));
             }
             return {etag, content: JSON.parse(f.content)};
           });
         });
       });
+    }).then(response => {
+      // Cache the contents to speed up future lookups, even if an invalid
+      // report. Future requests for the id will either still be invalid or will
+      // not return a 304 and so will be overwritten.
+      return idbKeyval.set(id, response).then(_ => {
+        logger.hide();
+        return response.content;
+      });
     });
-  }
-
-  /**
-   * Fetches the user's gists.
-   * @param {!string} username
-   * @return {!Promise<Array>} List of user's gists.
-   */
-  getGists(username) {
-    return fetch(`https://api.github.com/users/${username}/gists`, {
-      headers: new Headers({
-        Authorization: `token ${this.auth.accessToken}`
-      })
-    })
-    .then(resp => resp.json());
   }
 }
 
-module.exports = GithubAPI;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = GithubApi;
+}
