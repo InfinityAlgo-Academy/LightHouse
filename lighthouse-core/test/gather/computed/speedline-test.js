@@ -8,6 +8,7 @@
 /* eslint-env mocha */
 
 const assert = require('assert');
+const fs = require('fs');
 const pwaTrace = require('../../fixtures/traces/progressive-app.json');
 const threeFrameTrace = require('../../fixtures/traces/threeframes-blank_content_more.json');
 const Runner = require('../../../runner.js');
@@ -59,6 +60,22 @@ describe('Speedline gatherer', () => {
         assert.equal(firstResult, speedline, 'Cache match matches');
 
         return assert.equal(Math.floor(speedline.speedIndex), 561);
+      });
+  });
+
+  it('does not change order of events in traces', () => {
+    // Use fresh trace in case it has been altered by other require()s.
+    const pwaJson = fs.readFileSync(__dirname +
+        '/../../fixtures/traces/progressive-app.json', 'utf8');
+    const pwaTrace = JSON.parse(pwaJson);
+    return computedArtifacts.requestSpeedline({traceEvents: pwaTrace})
+      .then(_ => {
+        // assert.deepEqual has issue with diffing large array, so manually loop.
+        const freshTrace = JSON.parse(pwaJson);
+        assert.strictEqual(pwaTrace.length, freshTrace.length);
+        for (let i = 0; i < pwaTrace.length; i++) {
+          assert.deepStrictEqual(pwaTrace[i], freshTrace[i]);
+        }
       });
   });
 });

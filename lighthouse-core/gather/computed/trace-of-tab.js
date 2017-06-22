@@ -19,6 +19,11 @@
 const ComputedArtifact = require('./computed-artifact');
 const log = require('lighthouse-logger');
 
+// Bring in web-inspector for side effect of adding [].stableSort
+// See https://github.com/GoogleChrome/lighthouse/pull/2415
+// eslint-disable-next-line no-unused-vars
+const WebInspector = require('../../lib/web-inspector');
+
 class TraceOfTab extends ComputedArtifact {
   get name() {
     return 'TraceOfTab';
@@ -31,7 +36,8 @@ class TraceOfTab extends ComputedArtifact {
    * @return {!TraceOfTabArtifact}
   */
   compute_(trace) {
-    // Parse the trace for our key events and sort them by timestamp.
+    // Parse the trace for our key events and sort them by timestamp. Note: sort
+    // *must* be stable to keep events correctly nested.
     const keyEvents = trace.traceEvents
       .filter(e => {
         return e.cat.includes('blink.user_timing') ||
@@ -39,7 +45,7 @@ class TraceOfTab extends ComputedArtifact {
           e.cat.includes('devtools.timeline') ||
           e.name === 'TracingStartedInPage';
       })
-      .sort((event0, event1) => event0.ts - event1.ts);
+      .stableSort((event0, event1) => event0.ts - event1.ts);
 
     // The first TracingStartedInPage in the trace is definitely our renderer thread of interest
     // Beware: the tracingStartedInPage event can appear slightly after a navigationStart
@@ -84,9 +90,10 @@ class TraceOfTab extends ComputedArtifact {
     );
 
     // subset all trace events to just our tab's process (incl threads other than main)
+    // stable-sort events to keep them correctly nested.
     const processEvents = trace.traceEvents
       .filter(e => e.pid === startedInPageEvt.pid)
-      .sort((event0, event1) => event0.ts - event1.ts);
+      .stableSort((event0, event1) => event0.ts - event1.ts);
 
     const mainThreadEvents = processEvents
       .filter(e => e.tid === startedInPageEvt.tid);

@@ -9,6 +9,7 @@ const TraceOfTab = require('../../../gather/computed/trace-of-tab');
 const traceOfTab = new TraceOfTab();
 
 const assert = require('assert');
+const fs = require('fs');
 const badNavStartTrace = require('../../fixtures/traces/bad-nav-start-ts.json');
 const lateTracingStartedTrace = require('../../fixtures/traces/tracingstarted-after-navstart.json');
 const preactTrace = require('../../fixtures/traces/preactjs.com_ts_of_undefined.json');
@@ -104,5 +105,35 @@ describe('Trace of Tab computed artifact:', () => {
     );
     assert.equal(trace.firstContentfulPaintEvt, undefined, 'bad fcp');
     assert.equal(trace.firstMeaningfulPaintEvt, undefined, 'bad fmp');
+  });
+
+  it('stably sorts events', () => {
+    const traceJson = fs.readFileSync(__dirname +
+        '/../../fixtures/traces/tracingstarted-after-navstart.json', 'utf8');
+    const trace = traceOfTab.compute_(JSON.parse(traceJson));
+    const mainPid = trace.mainThreadEvents[0].pid;
+
+    const freshProcessEvents = JSON.parse(traceJson).traceEvents
+        .filter(e => e.pid === mainPid);
+
+    // Group all events with the same timestamp in original trace order.
+    const tsMap = new Map();
+    for (const event of freshProcessEvents) {
+      const tsGroup = tsMap.get(event.ts) || [];
+      tsGroup.push(event);
+      tsMap.set(event.ts, tsGroup);
+    }
+
+    // Assert that groups of same-timestamped events are in the same order in
+    // processed events.
+    for (const [ts, tsGroup] of tsMap) {
+      if (tsGroup.length === 1) {
+        continue;
+      }
+
+      // .filter overhead could be slow, but only a handful of tsGroups.
+      const sortedEvents = trace.processEvents.filter(e => e.ts === ts);
+      assert.deepStrictEqual(sortedEvents, tsGroup);
+    }
   });
 });
