@@ -13,6 +13,8 @@ const fs = require('fs');
 const parseQueryString = require('querystring').parse;
 const parseURL = require('url').parse;
 
+const lhRootDirPath = path.join(__dirname, '../../../');
+
 function requestHandler(request, response) {
   const requestUrl = parseURL(request.url);
   const filePath = requestUrl.pathname;
@@ -24,6 +26,11 @@ function requestHandler(request, response) {
     // We bring in an aggressive Promise polyfill (zone) to ensure we don't still fail.
     const zonePath = '../../../node_modules/zone.js';
     absoluteFilePath = path.join(__dirname, `${zonePath}/dist/zone.js`);
+  }
+
+  // Disallow file requests outside of LH folder
+  if (!path.parse(absoluteFilePath).dir.startsWith(lhRootDirPath)) {
+    return readFileCallback(new Error('Disallowed path'));
   }
 
   fs.exists(absoluteFilePath, fsExistsCallback);
@@ -76,5 +83,5 @@ serverForOnline.on('error', e => console.error(e.code, e));
 serverForOffline.on('error', e => console.error(e.code, e));
 
 // Listen
-serverForOnline.listen(10200);
-serverForOffline.listen(10503);
+serverForOnline.listen(10200, 'localhost');
+serverForOffline.listen(10503, 'localhost');

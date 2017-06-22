@@ -45,7 +45,7 @@ function hostExperiment(params, results) {
     fallbackReportId = id;
 
     const server = http.createServer(requestHandler);
-    server.listen(0);
+    server.listen(0, 'localhost');
     server.on('listening', () => opn(`http://localhost:${server.address().port}/?id=${id}`));
     server.on('error', err => log.error('PerformanceXServer', err.code, err));
     server.on('close', resolve);
