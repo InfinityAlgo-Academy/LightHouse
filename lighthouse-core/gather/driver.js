@@ -10,6 +10,7 @@ const emulation = require('../lib/emulation');
 const Element = require('../lib/element');
 const EventEmitter = require('events').EventEmitter;
 const URL = require('../lib/url-shim');
+const TraceParser = require('../lib/traces/trace-parser');
 
 const log = require('lighthouse-logger');
 const DevtoolsLog = require('./devtools-log');
@@ -25,7 +26,7 @@ const _uniq = arr => Array.from(new Set(arr));
 
 class Driver {
   static get MAX_WAIT_FOR_FULLY_LOADED() {
-    return 60 * 1000;
+    return 30 * 1000;
   }
 
   /**
@@ -801,7 +802,7 @@ class Driver {
   _readTraceFromStream(streamHandle) {
     return new Promise((resolve, reject) => {
       let isEOF = false;
-      let result = '';
+      const parser = new TraceParser();
 
       const readArguments = {
         handle: streamHandle.stream
@@ -812,11 +813,11 @@ class Driver {
           return;
         }
 
-        result += response.data;
+        parser.parseChunk(response.data);
 
         if (response.eof) {
           isEOF = true;
-          return resolve(JSON.parse(result));
+          return resolve(parser.getTrace());
         }
 
         return this.sendCommand('IO.read', readArguments).then(onChunkRead);

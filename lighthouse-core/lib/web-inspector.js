@@ -176,6 +176,11 @@ module.exports = (function() {
   require('chrome-devtools-frontend/front_end/timeline_model/TimelineModel.js');
   require('chrome-devtools-frontend/front_end/ui_lazy/SortableDataGrid.js');
   require('chrome-devtools-frontend/front_end/timeline/TimelineTreeView.js');
+
+  // used for streaming json parsing
+  require('chrome-devtools-frontend/front_end/common/TextUtils.js');
+  require('chrome-devtools-frontend/front_end/timeline/TimelineLoader.js');
+
   require('chrome-devtools-frontend/front_end/timeline_model/TimelineProfileTree.js');
   require('chrome-devtools-frontend/front_end/components_lazy/FilmStripModel.js');
   require('chrome-devtools-frontend/front_end/timeline_model/TimelineIRModel.js');
