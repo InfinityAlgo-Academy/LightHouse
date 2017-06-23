@@ -27,7 +27,7 @@ class ThemedOmnibox extends MultiCheckAudit {
     return {
       category: 'PWA',
       name: 'themed-omnibox',
-      description: 'Address bar matches brand colors',
+      description: 'Address bar has been themed',
       helpText: 'The browser address bar can be themed to match your site. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/address-bar).',
       requiredArtifacts: ['Manifest', 'ThemeColor']
