@@ -235,6 +235,7 @@ class ReportUIFeatures {
     // after it's created. Normally, we could also listen for the popup window's
     // load event, however it is cross-domain and won't fire. Instead, listen
     // for a message from the target app saying "I'm open".
+    const json = this.json;
     window.addEventListener('message', function msgHandler(/** @type {!Event} */ e) {
       const messageEvent = /** @type {!MessageEvent<{opened: boolean}>} */ (e);
       if (messageEvent.origin !== VIEWER_ORIGIN) {
@@ -242,10 +243,10 @@ class ReportUIFeatures {
       }
 
       if (messageEvent.data.opened) {
-        popup.postMessage({lhresults: this.json}, VIEWER_ORIGIN);
+        popup.postMessage({lhresults: json}, VIEWER_ORIGIN);
         window.removeEventListener('message', msgHandler);
       }
-    }.bind(this));
+    });
 
     const popup = /** @type {!Window} */ (window.open(VIEWER_URL, '_blank'));
   }

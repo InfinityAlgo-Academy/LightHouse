@@ -122,5 +122,5 @@
 
 /* open-in-gist option visible in Viewer */
 .lh-export__dropdown .lh-export--gist {
-  display: block;
+  display: block !important;
 }
