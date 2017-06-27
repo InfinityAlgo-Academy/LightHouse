@@ -40,7 +40,6 @@ script:
   - yarn smoke
   - yarn smokehouse
   - yarn compile-devtools
-  - yarn plots-smoke
 before_cache:
   # the `yarn compile-devtools` task adds these to node_modules, which slows down caching
   - rm -rf ./node_modules/temp-devtoolsfrontend/
