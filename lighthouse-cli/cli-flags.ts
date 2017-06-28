@@ -14,11 +14,13 @@ import {GetValidOutputOptions, OutputMode} from './printer';
 export interface Flags {
   skipAutolaunch: boolean, port: number, selectChrome: boolean, chromeFlags: string, output: any,
       outputPath: string, interactive: boolean, saveArtifacts: boolean, saveAssets: boolean,
-      view: boolean, maxWaitForLoad: number
+      view: boolean, maxWaitForLoad: number, logLevel: string
 }
 
-export function getFlags() {
-  return yargs.help('help')
+export function getFlags(manualArgv?: string) {
+  const y = manualArgv ? yargs(manualArgv) : yargs;
+
+  return y.help('help')
       .version(() => pkg.version)
       .showHelpOnFail(false, 'Specify --help for available options')
 
