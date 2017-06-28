@@ -35,10 +35,11 @@ class Util {
   /**
    * Format number.
    * @param {number} number
+   * @param {number=} decimalPlaces Number of decimal places to include. Defaults to 1.
    * @return {string}
    */
-  static formatNumber(number) {
-    return number.toLocaleString(undefined, {maximumFractionDigits: 1});
+  static formatNumber(number, decimalPlaces = 1) {
+    return number.toLocaleString(undefined, {maximumFractionDigits: decimalPlaces});
   }
 
   /**
@@ -46,8 +47,9 @@ class Util {
    * @param {number=} decimalPlaces Number of decimal places to include. Defaults to 2.
    * @return {string}
    */
-  static formateBytesToKB(size, decimalPlaces = 2) {
-    return (size / 1024).toLocaleString(undefined, {maximumFractionDigits: decimalPlaces});
+  static formatBytesToKB(size, decimalPlaces = 2) {
+    const kbs = (size / 1024).toLocaleString(undefined, {maximumFractionDigits: decimalPlaces});
+    return `${kbs}${NBSP}KB`;
   }
 
   /**

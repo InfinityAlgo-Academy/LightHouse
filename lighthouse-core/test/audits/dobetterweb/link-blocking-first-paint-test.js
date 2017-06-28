@@ -8,6 +8,7 @@
 const LinkBlockingFirstPaintAudit =
     require('../../../audits/dobetterweb/link-blocking-first-paint.js');
 const assert = require('assert');
+const NBSP = '\xa0';
 
 /* eslint-env mocha */
 
@@ -64,12 +65,14 @@ describe('Link Block First Paint audit', () => {
       ]
     }).then(auditResult => {
       assert.equal(auditResult.rawValue, 500);
-      assert.ok(auditResult.displayValue.match('2 resources delayed first paint by 500ms'));
+      assert.equal(auditResult.displayValue, `2 resources delayed first paint by 500${NBSP}ms`);
       const results = auditResult.extendedInfo.value.results;
       assert.equal(results.length, 2);
       assert.ok(results[0].url.includes('css/style.css'), 'has a url');
-      assert.equal(results[0].totalMs, '500ms');
-      assert.equal(results[1].totalMs, '200ms');
+      assert.equal(results[0].totalKb, `0.1${NBSP}KB`);
+      assert.equal(results[1].totalKb, `0.1${NBSP}KB`);
+      assert.equal(results[0].totalMs, `500${NBSP}ms`);
+      assert.equal(results[1].totalMs, `200${NBSP}ms`);
     });
   });
 

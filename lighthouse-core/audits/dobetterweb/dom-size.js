@@ -15,6 +15,7 @@
 const Audit = require('../audit');
 const statistics = require('../../lib/statistics');
 const Formatter = require('../../report/formatter');
+const Util = require('../../report/v2/renderer/util.js');
 
 const MAX_DOM_NODES = 1500;
 const MAX_DOM_TREE_WIDTH = 60;
@@ -37,10 +38,10 @@ class DOMSize extends Audit {
       category: 'Performance',
       name: 'dom-size',
       description: 'Avoids an excessive DOM size',
-      optimalValue: `< ${DOMSize.MAX_DOM_NODES.toLocaleString()} nodes`,
+      optimalValue: `< ${Util.formatNumber(DOMSize.MAX_DOM_NODES)} nodes`,
       helpText: 'Browser engineers recommend pages contain fewer than ' +
-        `~${DOMSize.MAX_DOM_NODES.toLocaleString()} DOM nodes. The sweet spot is a tree depth < ` +
-        `${MAX_DOM_TREE_DEPTH} elements and fewer than ${MAX_DOM_TREE_WIDTH} ` +
+        `~${Util.formatNumber(DOMSize.MAX_DOM_NODES)} DOM nodes. The sweet spot is a tree ` +
+        `depth < ${MAX_DOM_TREE_DEPTH} elements and fewer than ${MAX_DOM_TREE_WIDTH} ` +
         'children/parent element. A large DOM can increase memory usage, cause longer ' +
         '[style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), ' +
         'and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/fundamentals/performance/rendering/).',
@@ -81,25 +82,25 @@ class DOMSize extends Audit {
 
     const cards = [{
       title: 'Total DOM Nodes',
-      value: stats.totalDOMNodes.toLocaleString(),
-      target: `< ${MAX_DOM_NODES.toLocaleString()} nodes`
+      value: Util.formatNumber(stats.totalDOMNodes),
+      target: `< ${Util.formatNumber(MAX_DOM_NODES)} nodes`
     }, {
       title: 'DOM Depth',
-      value: stats.depth.max.toLocaleString(),
+      value: Util.formatNumber(stats.depth.max),
       snippet: depthSnippet,
-      target: `< ${MAX_DOM_TREE_DEPTH.toLocaleString()}`
+      target: `< ${Util.formatNumber(MAX_DOM_TREE_DEPTH)}`
     }, {
       title: 'Maximum Children',
-      value: stats.width.max.toLocaleString(),
+      value: Util.formatNumber(stats.width.max),
       snippet: widthSnippet,
-      target: `< ${MAX_DOM_TREE_WIDTH.toLocaleString()} nodes`
+      target: `< ${Util.formatNumber(MAX_DOM_TREE_WIDTH)} nodes`
     }];
 
     return {
       rawValue: stats.totalDOMNodes,
       optimalValue: this.meta.optimalValue,
       score: Math.round(score),
-      displayValue: `${stats.totalDOMNodes.toLocaleString()} nodes`,
+      displayValue: `${Util.formatNumber(stats.totalDOMNodes)} nodes`,
       extendedInfo: {
         formatter: Formatter.SUPPORTED_FORMATS.CARDS,
         value: cards

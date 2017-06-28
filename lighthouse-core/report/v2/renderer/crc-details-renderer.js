@@ -118,7 +118,7 @@ class CriticalRequestChainRenderer {
       span.textContent = ' - ' + Util.chainDuration(
           segment.node.request.startTime, segment.node.request.endTime) + 'ms, ';
       const span2 = dom.createElement('span', 'crc-node__chain-duration');
-      span2.textContent = Util.formateBytesToKB(details.longestChain.transferSize) + 'KB';
+      span2.textContent = Util.formatBytesToKB(details.longestChain.transferSize);
 
       treevalEl.appendChild(span);
       treevalEl.appendChild(span2);
@@ -160,7 +160,7 @@ class CriticalRequestChainRenderer {
         Util.formatNumber(details.longestChain.duration) + 'ms';
     dom.find('.lh-crc__longest_length', tmpl).textContent = details.longestChain.length;
     dom.find('.lh-crc__longest_transfersize', tmpl).textContent =
-        Util.formateBytesToKB(details.longestChain.transferSize) + 'KB';
+        Util.formatBytesToKB(details.longestChain.transferSize);
 
     const detailsEl = dom.find('.lh-details', tmpl);
 

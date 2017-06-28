@@ -7,6 +7,7 @@
 
 const Audit = require('./audit');
 const Formatter = require('../report/formatter');
+const Util = require('../report/v2/renderer/util');
 
 class CriticalRequestChains extends Audit {
   /**
@@ -115,7 +116,7 @@ class CriticalRequestChains extends Audit {
 
       return {
         rawValue: chainCount <= this.meta.optimalValue,
-        displayValue: chainCount,
+        displayValue: Util.formatNumber(chainCount),
         optimalValue: this.meta.optimalValue,
         extendedInfo: {
           formatter: Formatter.SUPPORTED_FORMATS.CRITICAL_REQUEST_CHAINS,

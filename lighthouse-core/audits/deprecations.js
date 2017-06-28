@@ -13,6 +13,7 @@
 
 const Audit = require('./audit');
 const Formatter = require('../report/formatter');
+const Util = require('../report/v2/renderer/util');
 
 class Deprecations extends Audit {
   /**
@@ -67,7 +68,7 @@ class Deprecations extends Audit {
 
     let displayValue = '';
     if (deprecations.length > 1) {
-      displayValue = `${deprecations.length} warnings found`;
+      displayValue = `${Util.formatNumber(deprecations.length)} warnings found`;
     } else if (deprecations.length === 1) {
       displayValue = `${deprecations.length} warning found`;
     }

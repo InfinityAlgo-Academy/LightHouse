@@ -12,6 +12,8 @@ const traceEvents = require('../fixtures/traces/trace-user-timings.json');
 const Runner = require('../../runner.js');
 const computedArtifacts = Runner.instantiateComputedArtifacts();
 
+const NBSP = '\xa0';
+
 function generateArtifactsWithTrace(trace) {
   return Object.assign({
     traces: {
@@ -44,7 +46,7 @@ describe('Performance: user-timings audit', () => {
 
       assert.equal(auditResult.details.items[0][0].text, 'measure_test');
       assert.equal(auditResult.details.items[0][1].text, 'Measure');
-      assert.equal(auditResult.details.items[0][2].text, '1,000.965 ms');
+      assert.equal(auditResult.details.items[0][2].text, `1,000.965${NBSP}ms`);
     });
   });
 

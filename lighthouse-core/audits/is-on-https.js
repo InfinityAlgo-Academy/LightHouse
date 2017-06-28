@@ -8,6 +8,7 @@
 const Audit = require('./audit');
 const Formatter = require('../report/formatter');
 const URL = require('../lib/url-shim');
+const Util = require('../report/v2/renderer/util');
 
 const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extension'];
 const SECURE_DOMAINS = ['localhost', '127.0.0.1'];
@@ -53,7 +54,7 @@ class HTTPS extends Audit {
 
       let displayValue = '';
       if (insecureRecords.length > 1) {
-        displayValue = `${insecureRecords.length} insecure requests found`;
+        displayValue = `${Util.formatNumber(insecureRecords.length)} insecure requests found`;
       } else if (insecureRecords.length === 1) {
         displayValue = `${insecureRecords.length} insecure request found`;
       }

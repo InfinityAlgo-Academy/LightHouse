@@ -14,6 +14,7 @@
 const URL = require('../../lib/url-shim');
 const Audit = require('../audit');
 const Formatter = require('../../report/formatter');
+const Util = require('../../report/v2/renderer/util.js');
 
 class UsesHTTP2Audit extends Audit {
 
@@ -55,9 +56,10 @@ class UsesHTTP2Audit extends Audit {
 
       let displayValue = '';
       if (resources.length > 1) {
-        displayValue = `${resources.length} requests were not handled over h2`;
+        displayValue =
+          `${Util.formatNumber(resources.length)} requests were not handled over HTTP/2`;
       } else if (resources.length === 1) {
-        displayValue = `${resources.length} request was not handled over h2`;
+        displayValue = `${resources.length} request was not handled over HTTP/2`;
       }
 
       const headings = [

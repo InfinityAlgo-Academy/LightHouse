@@ -7,6 +7,7 @@
 
 const ByteEfficiencyAudit = require('../../../audits/byte-efficiency/byte-efficiency-audit');
 const assert = require('assert');
+const NBSP = '\xa0';
 
 /* eslint-env mocha */
 
@@ -66,24 +67,37 @@ describe('Byte efficiency base audit', () => {
     });
   });
 
-  it('should populate Kb', () => {
+  it('should populate KB', () => {
     const result = ByteEfficiencyAudit.createAuditResult({
       headings: [{key: 'value', text: 'Label'}],
-      results: [{wastedBytes: 2048, totalBytes: 4096, wastedPercent: 50}],
+      results: [
+        {wastedBytes: 2048, totalBytes: 4096, wastedPercent: 50},
+        {wastedBytes: 1986, totalBytes: 5436}
+      ],
     }, 1000);
 
-    assert.equal(result.extendedInfo.value.results[0].wastedKb, '2 KB');
-    assert.equal(result.extendedInfo.value.results[0].totalKb, '4 KB');
+    assert.equal(result.extendedInfo.value.results[0].wastedKb, `2${NBSP}KB`);
+    assert.equal(result.extendedInfo.value.results[0].totalKb, `4${NBSP}KB`);
+    assert.equal(result.extendedInfo.value.results[1].wastedKb, `2${NBSP}KB`);
+    assert.equal(result.extendedInfo.value.results[1].totalKb, `5${NBSP}KB`);
   });
 
   it('should populate Ms', () => {
     const result = ByteEfficiencyAudit.createAuditResult({
       headings: [{key: 'value', text: 'Label'}],
-      results: [{wastedBytes: 350, totalBytes: 700, wastedPercent: 50}],
+      results: [
+        {wastedBytes: 350, totalBytes: 700, wastedPercent: 50},
+        {wastedBytes: 326, totalBytes: 1954},
+        {wastedBytes: 251, totalBytes: 899}
+      ],
     }, 1000);
 
-    assert.equal(result.extendedInfo.value.results[0].wastedMs, '350ms');
-    assert.equal(result.extendedInfo.value.results[0].totalMs, '700ms');
+    assert.equal(result.extendedInfo.value.results[0].wastedMs, `350${NBSP}ms`);
+    assert.equal(result.extendedInfo.value.results[0].totalMs, `700${NBSP}ms`);
+    assert.equal(result.extendedInfo.value.results[1].wastedMs, `330${NBSP}ms`);
+    assert.equal(result.extendedInfo.value.results[1].totalMs, `1,950${NBSP}ms`);
+    assert.equal(result.extendedInfo.value.results[2].wastedMs, `250${NBSP}ms`);
+    assert.equal(result.extendedInfo.value.results[2].totalMs, `900${NBSP}ms`);
   });
 
   it('should sort on wastedBytes', () => {
@@ -111,7 +125,22 @@ describe('Byte efficiency base audit', () => {
       ],
     }, 4096);
 
-    assert.ok(result.displayValue.includes('2 KB'), 'contains correct bytes');
-    assert.ok(result.displayValue.includes('500ms'), 'contains correct timing');
+    assert.ok(result.displayValue.includes(`2${NBSP}KB`), 'contains correct bytes');
+    assert.ok(result.displayValue.includes(`500${NBSP}ms`), 'contains correct timing');
+  });
+
+  it('should populate potential savings', () => {
+    const result = ByteEfficiencyAudit.createAuditResult({
+      headings: [{key: 'value', text: 'Label'}],
+      results: [
+        {wastedBytes: 22416, totalBytes: 104330},
+        {wastedBytes: 512, totalBytes: 1024},
+        {wastedBytes: 341, totalBytes: 1024}
+      ]
+    }, 2048);
+
+    assert.equal(result.extendedInfo.value.results[0].potentialSavings, `22${NBSP}KB (21%)`);
+    assert.equal(result.extendedInfo.value.results[1].potentialSavings, `1${NBSP}KB (50%)`);
+    assert.equal(result.extendedInfo.value.results[2].potentialSavings, `0${NBSP}KB (33%)`);
   });
 });

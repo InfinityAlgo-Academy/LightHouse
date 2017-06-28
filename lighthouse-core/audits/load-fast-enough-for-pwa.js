@@ -83,7 +83,7 @@ class LoadFastEnough4Pwa extends Audit {
       const areLatenciesAll3G = firstRequestLatencies.every(val => val.latency > latency3gMin);
       firstRequestLatencies = firstRequestLatencies.map(item => ({
         url: item.url,
-        latency: item.latency.toLocaleString(undefined, {maximumFractionDigits: 2})
+        latency: Util.formatNumber(item.latency, 2)
       }));
 
       const trace = artifacts.traces[Audit.DEFAULT_PASS];

@@ -25,7 +25,7 @@ class FirstMeaningfulPaint extends Audit {
       category: 'Performance',
       name: 'first-meaningful-paint',
       description: 'First meaningful paint',
-      optimalValue: `< ${SCORING_POINT_OF_DIMINISHING_RETURNS.toLocaleString()} ms`,
+      optimalValue: `< ${Util.formatMilliseconds(SCORING_POINT_OF_DIMINISHING_RETURNS, 1)}`,
       helpText: 'First meaningful paint measures when the primary content of a page is visible. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint).',
       scoringMode: Audit.SCORING_MODES.NUMERIC,

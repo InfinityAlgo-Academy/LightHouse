@@ -228,7 +228,7 @@ class DetailsRenderer {
     for (const thumbnail of details.items) {
       const frameEl = this._dom.createChildOf(filmstripEl, 'div', 'lh-filmstrip__frame');
 
-      let timing = thumbnail.timing.toLocaleString() + ' ms';
+      let timing = Util.formatMilliseconds(thumbnail.timing, 1);
       if (thumbnail.timing > 1000) {
         timing = Util.formatNumber(thumbnail.timing / 1000) + ' s';
       }

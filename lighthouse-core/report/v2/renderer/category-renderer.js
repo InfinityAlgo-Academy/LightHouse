@@ -187,7 +187,7 @@ class CategoryRenderer {
 
     if (extendedInfo.value.wastedKb) {
       const statsKbEl = this._dom.createChildOf(statsEl, 'div', 'lh-perf-hint__secondary-stat');
-      statsKbEl.textContent = extendedInfo.value.wastedKb.toLocaleString() + ' KB';
+      statsKbEl.textContent = Util.formatNumber(extendedInfo.value.wastedKb) + ' KB';
     }
 
     const descriptionEl = this._dom.createChildOf(element, 'div', 'lh-perf-hint__description');

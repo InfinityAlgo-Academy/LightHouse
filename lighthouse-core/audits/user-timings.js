@@ -7,6 +7,7 @@
 
 const Audit = require('./audit');
 const Formatter = require('../report/formatter');
+const Util = require('../report/v2/renderer/util');
 
 class UserTimings extends Audit {
   /**
@@ -116,7 +117,7 @@ class UserTimings extends Audit {
         return {
           name: item.name,
           timingType: item.isMark ? 'Mark' : 'Measure',
-          time: time.toLocaleString() + ' ms',
+          time: Util.formatMilliseconds(time, 0.001),
           timeAsNumber: time,
         };
       }).sort((itemA, itemB) => {
