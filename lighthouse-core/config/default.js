@@ -13,8 +13,8 @@ module.exports = {
     passName: 'defaultPass',
     recordTrace: true,
     pauseAfterLoadMs: 5250,
-    networkQuietThresholdMs: 5000,
-    pauseAfterNetworkQuietMs: 2500,
+    networkQuietThresholdMs: 5250,
+    cpuQuietThresholdMs: 5250,
     useThrottling: true,
     gatherers: [
       'url',
