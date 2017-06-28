@@ -11,7 +11,7 @@ require('../../compiled-check.js')('printer.js');
 const Printer = require('../../printer.js');
 const assert = require('assert');
 const fs = require('fs');
-const sampleResults = require('../../../lighthouse-core/test/results/sample.json');
+const sampleResults = require('../../../lighthouse-core/test/results/sample_v2.json');
 
 describe('Printer', () => {
   it('accepts valid output paths', () => {

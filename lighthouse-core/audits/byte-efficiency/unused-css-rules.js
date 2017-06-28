@@ -115,7 +115,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
   /**
    * @param {!Object} stylesheetInfo The stylesheetInfo object.
    * @param {string} pageUrl The URL of the page, used to identify inline styles.
-   * @return {!{url: string, label: string, code: string}} The result for the URLLIST formatter.
+   * @return {{url: string, label: string, code: string}} The result for the details object.
    */
   static mapSheetToResult(stylesheetInfo, pageUrl) {
     const numUsed = stylesheetInfo.used.length;

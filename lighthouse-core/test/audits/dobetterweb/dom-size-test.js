@@ -31,13 +31,13 @@ describe('Num DOM nodes audit', () => {
     assert.equal(auditResult.rawValue, numNodes);
     assert.equal(auditResult.optimalValue, `< ${DOMSize.MAX_DOM_NODES.toLocaleString()} nodes`);
     assert.equal(auditResult.displayValue, `${numNodes.toLocaleString()} nodes`);
-    assert.equal(auditResult.extendedInfo.value[0].title, 'Total DOM Nodes');
-    assert.equal(auditResult.extendedInfo.value[0].value, numNodes.toLocaleString());
-    assert.equal(auditResult.extendedInfo.value[1].title, 'DOM Depth');
-    assert.equal(auditResult.extendedInfo.value[1].value, 1);
-    assert.equal(auditResult.extendedInfo.value[1].snippet, snippet, 'generates snippet');
-    assert.equal(auditResult.extendedInfo.value[2].title, 'Maximum Children');
-    assert.equal(auditResult.extendedInfo.value[2].value, 2);
+    assert.equal(auditResult.details.items[0].title, 'Total DOM Nodes');
+    assert.equal(auditResult.details.items[0].value, numNodes.toLocaleString());
+    assert.equal(auditResult.details.items[1].title, 'DOM Depth');
+    assert.equal(auditResult.details.items[1].value, 1);
+    assert.equal(auditResult.details.items[1].snippet, snippet, 'generates snippet');
+    assert.equal(auditResult.details.items[2].title, 'Maximum Children');
+    assert.equal(auditResult.details.items[2].value, 2);
   });
 
   it('calculates score hitting mid distribution', () => {

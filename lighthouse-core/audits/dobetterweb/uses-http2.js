@@ -13,7 +13,6 @@
 
 const URL = require('../../lib/url-shim');
 const Audit = require('../audit');
-const Formatter = require('../../report/formatter');
 const Util = require('../../report/v2/renderer/util.js');
 
 class UsesHTTP2Audit extends Audit {
@@ -66,16 +65,14 @@ class UsesHTTP2Audit extends Audit {
         {key: 'url', itemType: 'url', text: 'URL'},
         {key: 'protocol', itemType: 'text', text: 'Protocol'},
       ];
-      const details = Audit.makeV2TableDetails(headings, resources);
+      const details = Audit.makeTableDetails(headings, resources);
 
       return {
         rawValue: resources.length === 0,
         displayValue: displayValue,
         extendedInfo: {
-          formatter: Formatter.SUPPORTED_FORMATS.TABLE,
           value: {
             results: resources,
-            tableHeadings: {url: 'URL', protocol: 'Protocol'}
           }
         },
         details,

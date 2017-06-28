@@ -10,7 +10,6 @@
       "displayValue": "1 insecure request found",
       "rawValue": false,
       "extendedInfo": {
-        "formatter": "url-list",
         "value": [
           {
             "url": "ajax.googleapis.com/…3.2.1/jquery.min.js"
@@ -104,8 +103,7 @@
             "fCP": 1422.417,
             "fMP": 1422.428
           }
-        },
-        "formatter": "null"
+        }
       },
       "scoringMode": "numeric",
       "name": "first-meaningful-paint",
@@ -118,7 +116,6 @@
       "displayValue": "",
       "rawValue": true,
       "extendedInfo": {
-        "formatter": "null",
         "value": {
           "areLatenciesAll3G": true,
           "allRequestLatencies": [
@@ -200,7 +197,6 @@
       "rawValue": 1433,
       "optimalValue": "< 1,250",
       "extendedInfo": {
-        "formatter": "speedline",
         "value": {
           "timings": {
             "firstVisualChange": 1433,
@@ -267,8 +263,7 @@
             "percentile": 1,
             "time": 156.88399999999183
           }
-        ],
-        "formatter": "null"
+        ]
       },
       "scoringMode": "numeric",
       "name": "estimated-input-latency",
@@ -284,8 +279,7 @@
         "value": {
           "timeInMs": 1735.8040000166893,
           "timestamp": 482338879354.00006
-        },
-        "formatter": "null"
+        }
       },
       "scoringMode": "numeric",
       "name": "first-interactive",
@@ -321,8 +315,7 @@
           ],
           "timestamp": 482338879354.00006,
           "timeInMs": 1735.8040000610351
-        },
-        "formatter": "null"
+        }
       },
       "scoringMode": "numeric",
       "name": "consistently-interactive",
@@ -416,8 +409,7 @@
             ]
           },
           "expectedLatencyAtTTI": 19.121
-        },
-        "formatter": "null"
+        }
       },
       "scoringMode": "numeric",
       "name": "time-to-interactive",
@@ -430,7 +422,6 @@
       "displayValue": "0",
       "rawValue": true,
       "extendedInfo": {
-        "formatter": "user-timings",
         "value": []
       },
       "scoringMode": "binary",
@@ -468,7 +459,6 @@
       "rawValue": false,
       "optimalValue": 0,
       "extendedInfo": {
-        "formatter": "critical-request-chains",
         "value": {
           "chains": {
             "68289.1": {
@@ -799,8 +789,7 @@
             "parseFailureReason": "No manifest was fetched",
             "allChecks": []
           }
-        },
-        "formatter": "null"
+        }
       },
       "scoringMode": "binary",
       "name": "webapp-install-banner",
@@ -823,8 +812,7 @@
             "parseFailureReason": "No manifest was fetched",
             "allChecks": []
           }
-        },
-        "formatter": "null"
+        }
       },
       "scoringMode": "binary",
       "name": "splash-screen",
@@ -849,8 +837,7 @@
             "allChecks": []
           },
           "themeColor": null
-        },
-        "formatter": "null"
+        }
       },
       "scoringMode": "binary",
       "name": "themed-omnibox",
@@ -884,7 +871,6 @@
       "displayValue": "4 warnings found",
       "rawValue": false,
       "extendedInfo": {
-        "formatter": "url-list",
         "value": [
           {
             "label": "line: 45",
@@ -1105,9 +1091,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "accesskeys",
       "category": "Accessibility",
@@ -1118,9 +1102,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "aria-allowed-attr",
       "category": "Accessibility",
@@ -1131,9 +1113,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "aria-required-attr",
       "category": "Accessibility",
@@ -1144,9 +1124,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "aria-required-children",
       "category": "Accessibility",
@@ -1157,9 +1135,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "aria-required-parent",
       "category": "Accessibility",
@@ -1170,9 +1146,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "aria-roles",
       "category": "Accessibility",
@@ -1183,9 +1157,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "aria-valid-attr-value",
       "category": "Accessibility",
@@ -1196,9 +1168,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "aria-valid-attr",
       "category": "Accessibility",
@@ -1209,9 +1179,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "audio-caption",
       "category": "Accessibility",
@@ -1222,9 +1190,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "button-name",
       "category": "Accessibility",
@@ -1235,9 +1201,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "bypass",
       "category": "Accessibility",
@@ -1249,7 +1213,6 @@
       "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
-        "formatter": "accessibility",
         "value": {
           "id": "color-contrast",
           "impact": "critical",
@@ -1341,9 +1304,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "definition-list",
       "category": "Accessibility",
@@ -1354,9 +1315,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "dlitem",
       "category": "Accessibility",
@@ -1367,9 +1326,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "document-title",
       "category": "Accessibility",
@@ -1380,9 +1337,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "duplicate-id",
       "category": "Accessibility",
@@ -1393,9 +1348,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "frame-title",
       "category": "Accessibility",
@@ -1407,7 +1360,6 @@
       "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
-        "formatter": "accessibility",
         "value": {
           "id": "html-has-lang",
           "impact": "serious",
@@ -1452,9 +1404,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "html-lang-valid",
       "category": "Accessibility",
@@ -1465,9 +1415,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "image-alt",
       "category": "Accessibility",
@@ -1478,9 +1426,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "input-image-alt",
       "category": "Accessibility",
@@ -1491,9 +1437,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "label",
       "category": "Accessibility",
@@ -1504,9 +1448,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "layout-table",
       "category": "Accessibility",
@@ -1517,9 +1459,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "link-name",
       "category": "Accessibility",
@@ -1530,9 +1470,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "list",
       "category": "Accessibility",
@@ -1543,9 +1481,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "listitem",
       "category": "Accessibility",
@@ -1556,9 +1492,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "meta-refresh",
       "category": "Accessibility",
@@ -1569,9 +1503,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "meta-viewport",
       "category": "Accessibility",
@@ -1582,9 +1514,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "object-alt",
       "category": "Accessibility",
@@ -1595,9 +1525,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "tabindex",
       "category": "Accessibility",
@@ -1608,9 +1536,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "td-headers-attr",
       "category": "Accessibility",
@@ -1621,9 +1547,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "th-has-data-cells",
       "category": "Accessibility",
@@ -1634,9 +1558,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "valid-lang",
       "category": "Accessibility",
@@ -1647,9 +1569,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "video-caption",
       "category": "Accessibility",
@@ -1660,9 +1580,7 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {
-        "formatter": "accessibility"
-      },
+      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "video-description",
       "category": "Accessibility",
@@ -1675,7 +1593,6 @@
       "rawValue": 52569,
       "optimalValue": "< 1,600 KB",
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "results": [
             {
@@ -1920,7 +1837,6 @@
       "displayValue": "",
       "rawValue": 0,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "wastedMs": 0,
           "wastedKb": 0,
@@ -1972,7 +1888,6 @@
       "displayValue": "",
       "rawValue": 0,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "wastedMs": 0,
           "wastedKb": 0,
@@ -2030,7 +1945,6 @@
       "displayValue": "Potential savings of 7 KB (~30ms)",
       "rawValue": 30,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "wastedMs": 30,
           "wastedKb": 7,
@@ -2103,7 +2017,6 @@
       "displayValue": "",
       "rawValue": 0,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "wastedMs": 0,
           "wastedKb": 0,
@@ -2167,7 +2080,6 @@
       "rawValue": 35,
       "optimalValue": "< 1,500 nodes",
       "extendedInfo": {
-        "formatter": "cards",
         "value": [
           {
             "title": "Total DOM Nodes",
@@ -2226,7 +2138,6 @@
       "rawValue": false,
       "debugString": "Lighthouse was unable to determine the destination of some anchor tags. If they are not used as hyperlinks, consider removing the _blank target.",
       "extendedInfo": {
-        "formatter": "url-list",
         "value": [
           {
             "href": "https://www.google.com/",
@@ -2324,7 +2235,6 @@
       "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
-        "formatter": "url-list",
         "value": [
           {
             "label": "line: 254",
@@ -2431,7 +2341,6 @@
       "displayValue": "3 resources delayed first paint by 180ms",
       "rawValue": 180,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "wastedMs": 180,
           "results": [
@@ -2535,7 +2444,6 @@
       "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
-        "formatter": "url-list",
         "value": [
           {
             "label": "line: 155",
@@ -2679,7 +2587,6 @@
       "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "results": [
             {
@@ -2761,7 +2668,6 @@
       "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
-        "formatter": "url-list",
         "value": [
           {
             "label": "line: 264",
@@ -2831,7 +2737,6 @@
       "displayValue": "1 resource delayed first paint by 318ms",
       "rawValue": 318,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "wastedMs": 318,
           "results": [
@@ -2897,7 +2802,6 @@
       "displayValue": "14 requests were not handled over h2",
       "rawValue": false,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "results": [
             {
@@ -3132,7 +3036,6 @@
       "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
-        "formatter": "url-list",
         "value": [
           {
             "label": "line: 37",
@@ -3389,7 +3292,6 @@
             "displayValue": "1 insecure request found",
             "rawValue": false,
             "extendedInfo": {
-              "formatter": "url-list",
               "value": [
                 {
                   "url": "ajax.googleapis.com/…3.2.1/jquery.min.js"
@@ -3440,7 +3342,6 @@
             "displayValue": "",
             "rawValue": true,
             "extendedInfo": {
-              "formatter": "null",
               "value": {
                 "areLatenciesAll3G": true,
                 "allRequestLatencies": [
@@ -3538,8 +3439,7 @@
                   "parseFailureReason": "No manifest was fetched",
                   "allChecks": []
                 }
-              },
-              "formatter": "null"
+              }
             },
             "scoringMode": "binary",
             "name": "webapp-install-banner",
@@ -3567,8 +3467,7 @@
                   "parseFailureReason": "No manifest was fetched",
                   "allChecks": []
                 }
-              },
-              "formatter": "null"
+              }
             },
             "scoringMode": "binary",
             "name": "splash-screen",
@@ -3598,8 +3497,7 @@
                   "allChecks": []
                 },
                 "themeColor": null
-              },
-              "formatter": "null"
+              }
             },
             "scoringMode": "binary",
             "name": "themed-omnibox",
@@ -3724,8 +3622,7 @@
                   "fCP": 1422.417,
                   "fMP": 1422.428
                 }
-              },
-              "formatter": "null"
+              }
             },
             "scoringMode": "numeric",
             "name": "first-meaningful-paint",
@@ -3745,7 +3642,6 @@
             "rawValue": 1433,
             "optimalValue": "< 1,250",
             "extendedInfo": {
-              "formatter": "speedline",
               "value": {
                 "timings": {
                   "firstVisualChange": 1433,
@@ -3818,8 +3714,7 @@
                   "percentile": 1,
                   "time": 156.88399999999183
                 }
-              ],
-              "formatter": "null"
+              ]
             },
             "scoringMode": "numeric",
             "name": "estimated-input-latency",
@@ -3919,8 +3814,7 @@
                   ]
                 },
                 "expectedLatencyAtTTI": 19.121
-              },
-              "formatter": "null"
+              }
             },
             "scoringMode": "numeric",
             "name": "time-to-interactive",
@@ -3942,8 +3836,7 @@
               "value": {
                 "timeInMs": 1735.8040000166893,
                 "timestamp": 482338879354.00006
-              },
-              "formatter": "null"
+              }
             },
             "scoringMode": "numeric",
             "name": "first-interactive",
@@ -3985,8 +3878,7 @@
                 ],
                 "timestamp": 482338879354.00006,
                 "timeInMs": 1735.8040000610351
-              },
-              "formatter": "null"
+              }
             },
             "scoringMode": "numeric",
             "name": "consistently-interactive",
@@ -4005,7 +3897,6 @@
             "displayValue": "3 resources delayed first paint by 180ms",
             "rawValue": 180,
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "wastedMs": 180,
                 "results": [
@@ -4115,7 +4006,6 @@
             "displayValue": "1 resource delayed first paint by 318ms",
             "rawValue": 318,
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "wastedMs": 318,
                 "results": [
@@ -4187,7 +4077,6 @@
             "displayValue": "",
             "rawValue": 0,
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "wastedMs": 0,
                 "wastedKb": 0,
@@ -4251,7 +4140,6 @@
             "displayValue": "Potential savings of 7 KB (~30ms)",
             "rawValue": 30,
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "wastedMs": 30,
                 "wastedKb": 7,
@@ -4330,7 +4218,6 @@
             "displayValue": "",
             "rawValue": 0,
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "wastedMs": 0,
                 "wastedKb": 0,
@@ -4389,7 +4276,6 @@
             "rawValue": 52569,
             "optimalValue": "< 1,600 KB",
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "results": [
                   {
@@ -4641,7 +4527,6 @@
             "rawValue": 35,
             "optimalValue": "< 1,500 nodes",
             "extendedInfo": {
-              "formatter": "cards",
               "value": [
                 {
                   "title": "Total DOM Nodes",
@@ -4706,7 +4591,6 @@
             "rawValue": false,
             "optimalValue": 0,
             "extendedInfo": {
-              "formatter": "critical-request-chains",
               "value": {
                 "chains": {
                   "68289.1": {
@@ -5031,7 +4915,6 @@
             "displayValue": "0",
             "rawValue": true,
             "extendedInfo": {
-              "formatter": "user-timings",
               "value": []
             },
             "scoringMode": "binary",
@@ -5081,9 +4964,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "accesskeys",
             "category": "Accessibility",
@@ -5100,9 +4981,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "aria-allowed-attr",
             "category": "Accessibility",
@@ -5119,9 +4998,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "aria-required-attr",
             "category": "Accessibility",
@@ -5138,9 +5015,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "aria-required-children",
             "category": "Accessibility",
@@ -5157,9 +5032,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "aria-required-parent",
             "category": "Accessibility",
@@ -5176,9 +5049,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "aria-roles",
             "category": "Accessibility",
@@ -5195,9 +5066,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "aria-valid-attr-value",
             "category": "Accessibility",
@@ -5214,9 +5083,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "aria-valid-attr",
             "category": "Accessibility",
@@ -5233,9 +5100,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "audio-caption",
             "category": "Accessibility",
@@ -5252,9 +5117,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "button-name",
             "category": "Accessibility",
@@ -5271,9 +5134,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "bypass",
             "category": "Accessibility",
@@ -5291,7 +5152,6 @@
             "displayValue": "",
             "rawValue": false,
             "extendedInfo": {
-              "formatter": "accessibility",
               "value": {
                 "id": "color-contrast",
                 "impact": "critical",
@@ -5389,9 +5249,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "definition-list",
             "category": "Accessibility",
@@ -5408,9 +5266,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "dlitem",
             "category": "Accessibility",
@@ -5427,9 +5283,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "document-title",
             "category": "Accessibility",
@@ -5446,9 +5300,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "duplicate-id",
             "category": "Accessibility",
@@ -5465,9 +5317,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "frame-title",
             "category": "Accessibility",
@@ -5485,7 +5335,6 @@
             "displayValue": "",
             "rawValue": false,
             "extendedInfo": {
-              "formatter": "accessibility",
               "value": {
                 "id": "html-has-lang",
                 "impact": "serious",
@@ -5536,9 +5385,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "html-lang-valid",
             "category": "Accessibility",
@@ -5555,9 +5402,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "image-alt",
             "category": "Accessibility",
@@ -5574,9 +5419,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "input-image-alt",
             "category": "Accessibility",
@@ -5593,9 +5436,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "label",
             "category": "Accessibility",
@@ -5612,9 +5453,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "layout-table",
             "category": "Accessibility",
@@ -5631,9 +5470,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "link-name",
             "category": "Accessibility",
@@ -5650,9 +5487,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "list",
             "category": "Accessibility",
@@ -5669,9 +5504,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "listitem",
             "category": "Accessibility",
@@ -5688,9 +5521,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "meta-refresh",
             "category": "Accessibility",
@@ -5707,9 +5538,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "meta-viewport",
             "category": "Accessibility",
@@ -5726,9 +5555,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "object-alt",
             "category": "Accessibility",
@@ -5745,9 +5572,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "tabindex",
             "category": "Accessibility",
@@ -5764,9 +5589,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "td-headers-attr",
             "category": "Accessibility",
@@ -5783,9 +5606,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "th-has-data-cells",
             "category": "Accessibility",
@@ -5802,9 +5623,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "valid-lang",
             "category": "Accessibility",
@@ -5821,9 +5640,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "video-caption",
             "category": "Accessibility",
@@ -5840,9 +5657,7 @@
             "score": true,
             "displayValue": "",
             "rawValue": true,
-            "extendedInfo": {
-              "formatter": "accessibility"
-            },
+            "extendedInfo": {},
             "scoringMode": "binary",
             "name": "video-description",
             "category": "Accessibility",
@@ -5899,7 +5714,6 @@
             "displayValue": "1 insecure request found",
             "rawValue": false,
             "extendedInfo": {
-              "formatter": "url-list",
               "value": [
                 {
                   "url": "ajax.googleapis.com/…3.2.1/jquery.min.js"
@@ -5935,7 +5749,6 @@
             "displayValue": "14 requests were not handled over h2",
             "rawValue": false,
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "results": [
                   {
@@ -6175,7 +5988,6 @@
             "displayValue": "",
             "rawValue": false,
             "extendedInfo": {
-              "formatter": "url-list",
               "value": [
                 {
                   "label": "line: 37",
@@ -6361,7 +6173,6 @@
             "displayValue": "",
             "rawValue": false,
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "results": [
                   {
@@ -6437,7 +6248,6 @@
             "displayValue": "",
             "rawValue": false,
             "extendedInfo": {
-              "formatter": "url-list",
               "value": [
                 {
                   "label": "line: 155",
@@ -6587,7 +6397,6 @@
             "rawValue": false,
             "debugString": "Lighthouse was unable to determine the destination of some anchor tags. If they are not used as hyperlinks, consider removing the _blank target.",
             "extendedInfo": {
-              "formatter": "url-list",
               "value": [
                 {
                   "href": "https://www.google.com/",
@@ -6690,7 +6499,6 @@
             "displayValue": "",
             "rawValue": false,
             "extendedInfo": {
-              "formatter": "url-list",
               "value": [
                 {
                   "label": "line: 254",
@@ -6802,7 +6610,6 @@
             "displayValue": "",
             "rawValue": false,
             "extendedInfo": {
-              "formatter": "url-list",
               "value": [
                 {
                   "label": "line: 264",
@@ -6877,7 +6684,6 @@
             "displayValue": "4 warnings found",
             "rawValue": false,
             "extendedInfo": {
-              "formatter": "url-list",
               "value": [
                 {
                   "label": "line: 45",

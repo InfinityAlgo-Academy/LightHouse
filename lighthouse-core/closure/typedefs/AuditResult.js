@@ -101,9 +101,6 @@ AuditFullResult.prototype.details;
  */
 function AuditExtendedInfo() {}
 
-/** @type {string} */
-AuditExtendedInfo.prototype.formatter;
-
 /** @type {(Object|Array<UserTimingsExtendedInfo>|FirstMeaningfulPaintExtendedInfo|undefined)} */
 AuditExtendedInfo.prototype.value;
 

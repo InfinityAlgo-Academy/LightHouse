@@ -6,7 +6,6 @@
 'use strict';
 
 const Audit = require('./audit');
-const Formatter = require('../report/formatter');
 const Util = require('../report/v2/renderer/util');
 const URL = require('../lib/url-shim');
 
@@ -83,7 +82,6 @@ class TTFBMetric extends Audit {
         rawValue: recordsOverBudget.length === 0,
         displayValue,
         extendedInfo: {
-          formatter: Formatter.SUPPORTED_FORMATS.TABLE,
           value: {
             results,
             tableHeadings: {

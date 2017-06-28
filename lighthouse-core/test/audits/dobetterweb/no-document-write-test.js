@@ -19,7 +19,6 @@ describe('Page does not use document.write()', () => {
       URL: {finalUrl: URL},
     });
     assert.equal(auditResult.rawValue, true);
-    assert.equal(auditResult.extendedInfo.value.length, 0);
     assert.equal(auditResult.details.items.length, 0);
   });
 
@@ -35,7 +34,6 @@ describe('Page does not use document.write()', () => {
       ],
     });
     assert.equal(auditResult.rawValue, false);
-    assert.equal(auditResult.extendedInfo.value.length, 2);
     assert.equal(auditResult.details.items.length, 2);
   });
 });

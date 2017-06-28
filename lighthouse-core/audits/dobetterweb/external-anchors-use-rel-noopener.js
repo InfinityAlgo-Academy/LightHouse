@@ -7,7 +7,6 @@
 
 const URL = require('../../lib/url-shim');
 const Audit = require('../audit');
-const Formatter = require('../../report/formatter');
 
 class ExternalAnchorsUseRelNoopenerAudit extends Audit {
   /**
@@ -65,12 +64,11 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
       {key: 'rel', itemType: 'text', text: 'Rel'},
     ];
 
-    const details = Audit.makeV2TableDetails(headings, failingAnchors);
+    const details = Audit.makeTableDetails(headings, failingAnchors);
 
     return {
       rawValue: failingAnchors.length === 0,
       extendedInfo: {
-        formatter: Formatter.SUPPORTED_FORMATS.URL_LIST,
         value: failingAnchors
       },
       details,

@@ -4,7 +4,6 @@
 .vscode/
 assets/
 coverage/
-gulp/
 
 lighthouse-core/scripts/
 lighthouse-core/test/
@@ -50,4 +49,3 @@ results.html
 .eslintignore
 .eslintrc.js
 .travis.yml
-gulpfile.js

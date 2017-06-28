@@ -22,7 +22,7 @@ const parse = require('url').parse;
 const log = require('lighthouse-logger');
 const lighthouse = require('../../lighthouse-core');
 const ExperimentDatabase = require('./experiment-database/database');
-const PerfXReportGenerator = require('./report/perf-x-report-generator');
+// const PerfXReportGenerator = require('./report/perf-x-report-generator');
 const opn = require('../shim-modules').opn;
 
 let database;
@@ -89,7 +89,7 @@ function requestHandler(request, response) {
 
 function reportRequestHandler(request, response) {
   try {
-    const id = request.parsedUrl.query.id || fallbackReportId;
+    // const id = request.parsedUrl.query.id || fallbackReportId;
 
     const reportsMetadata = Object.keys(database.timeStamps).map(key => {
       const generatedTime = database.timeStamps[key];
@@ -98,13 +98,14 @@ function reportRequestHandler(request, response) {
     reportsMetadata.sort((metadata1, metadata2) => {
       return new Date(metadata1.generatedTime) - new Date(metadata2.generatedTime);
     });
-    const reportsCatalog = {reportsMetadata, selectedReportHref: `/?id=${id}`};
+    // const reportsCatalog = {reportsMetadata, selectedReportHref: `/?id=${id}`};
 
-    const results = database.getResults(id);
-    const perfXReportGenerator = new PerfXReportGenerator();
+    // const results = database.getResults(id);
+    // const perfXReportGenerator = new PerfXReportGenerator();
 
     response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end(perfXReportGenerator.generateHTML(results, 'perf-x', reportsCatalog));
+    // response.end(perfXReportGenerator.generateHTML(results, 'perf-x', reportsCatalog));
+    response.end('Report not generated.');
   } catch (err) {
     throw new HTTPError(404);
   }

@@ -46,24 +46,6 @@ const html = new ReportGeneratorV2().generateReportHtml(results);
 console.log(html);
 ```
 
-## Iterating on the v1 report
-
-```sh
-node generate_report.js > temp.report.html; open temp.report.html
-```
-
-```js
-// generate_report.js
-'use strict';
-
-const ReportGenerator = require('./lighthouse-core/report/report-generator');
-const results = require('./lighthouse-core/test/results/sample.json');
-const reportGenerator = new ReportGenerator();
-const html = reportGenerator.generateHTML(results, 'devtools');
-
-console.log(html);
-```
-
 ## Debugging Travis via docker image
 
 You can do a local docker image install of Travis to better inspect a travis build:

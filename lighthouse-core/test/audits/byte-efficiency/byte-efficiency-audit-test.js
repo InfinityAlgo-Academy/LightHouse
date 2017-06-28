@@ -19,7 +19,6 @@ describe('Byte efficiency base audit', () => {
     });
 
     assert.deepEqual(result.extendedInfo.value.results, []);
-    assert.deepEqual(result.extendedInfo.value.tableHeadings, {value: 'Label'});
   });
 
   it('should set the rawValue', () => {

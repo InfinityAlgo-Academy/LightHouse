@@ -14,7 +14,6 @@
 const URL = require('../../lib/url-shim');
 const Audit = require('../audit');
 const EventHelpers = require('../../lib/event-helpers');
-const Formatter = require('../../report/formatter');
 
 class NoMutationEventsAudit extends Audit {
 
@@ -75,15 +74,13 @@ class NoMutationEventsAudit extends Audit {
       {key: 'col', itemType: 'text', text: 'Col'},
       {key: 'pre', itemType: 'code', text: 'Snippet'}
     ];
-    const details = NoMutationEventsAudit.makeV2TableDetails(headings, groupedResults);
+    const details = NoMutationEventsAudit.makeTableDetails(headings, groupedResults);
 
     return {
       rawValue: groupedResults.length === 0,
       extendedInfo: {
-        formatter: Formatter.SUPPORTED_FORMATS.TABLE,
         value: {
           results: groupedResults,
-          tableHeadings: {url: 'URL', lineCol: 'Line/Col', type: 'Event', code: 'Snippet'}
         }
       },
       details,

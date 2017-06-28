@@ -7,6 +7,7 @@
 
 const TotalByteWeight = require('../../../audits/byte-efficiency/total-byte-weight.js');
 const assert = require('assert');
+const NBSP = '\xa0';
 
 /* eslint-env mocha */
 
@@ -42,9 +43,9 @@ describe('Total byte weight audit', () => {
     return TotalByteWeight.audit(artifacts).then(result => {
       assert.strictEqual(result.rawValue, 150 * 1024);
       assert.strictEqual(result.score, 100);
-      const results = result.extendedInfo.value.results;
+      const results = result.details.items;
       assert.strictEqual(results.length, 3);
-      assert.strictEqual(results[0].totalBytes, 70 * 1024, 'results are sorted');
+      assert.strictEqual(results[0][1].text, `70${NBSP}KB`, 'results are sorted');
     });
   });
 
@@ -66,7 +67,7 @@ describe('Total byte weight audit', () => {
     return TotalByteWeight.audit(artifacts).then(result => {
       assert.ok(40 < result.score && result.score < 60, 'score is around 50');
       assert.strictEqual(result.rawValue, 4180 * 1024);
-      const results = result.extendedInfo.value.results;
+      const results = result.details.items;
       assert.strictEqual(results.length, 10, 'results are clipped at top 10');
     });
   });

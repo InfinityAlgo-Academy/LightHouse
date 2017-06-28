@@ -8,7 +8,6 @@
 const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util.js');
 const statistics = require('../lib/statistics');
-const Formatter = require('../report/formatter');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 //   https://www.desmos.com/calculator/rjp0lbit8y
@@ -59,7 +58,6 @@ class FirstInteractiveMetric extends Audit {
           displayValue: Util.formatMilliseconds(firstInteractive.timeInMs),
           extendedInfo: {
             value: firstInteractive,
-            formatter: Formatter.SUPPORTED_FORMATS.NULL,
           }
         };
       });

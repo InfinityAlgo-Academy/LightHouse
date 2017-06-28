@@ -6,7 +6,6 @@
 'use strict';
 
 const Audit = require('./audit');
-const Formatter = require('../report/formatter');
 const URL = require('../lib/url-shim');
 const Util = require('../report/v2/renderer/util');
 
@@ -63,7 +62,6 @@ class HTTPS extends Audit {
         rawValue: insecureRecords.length === 0,
         displayValue,
         extendedInfo: {
-          formatter: Formatter.SUPPORTED_FORMATS.URL_LIST,
           value: insecureRecords
         },
         details: {

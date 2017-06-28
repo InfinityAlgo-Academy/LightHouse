@@ -12,7 +12,6 @@
 'use strict';
 
 const ViolationAudit = require('../violation-audit');
-const Formatter = require('../../report/formatter');
 
 class NotificationOnStart extends ViolationAudit {
   /**
@@ -41,12 +40,11 @@ class NotificationOnStart extends ViolationAudit {
       {key: 'url', itemType: 'url', text: 'URL'},
       {key: 'label', itemType: 'text', text: 'Location'},
     ];
-    const details = ViolationAudit.makeV2TableDetails(headings, results);
+    const details = ViolationAudit.makeTableDetails(headings, results);
 
     return {
       rawValue: results.length === 0,
       extendedInfo: {
-        formatter: Formatter.SUPPORTED_FORMATS.URL_LIST,
         value: results
       },
       details,

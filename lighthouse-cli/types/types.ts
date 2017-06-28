@@ -4,7 +4,7 @@ interface AuditResult {
   debugString?: string;
   score?: boolean|number;
   optimalValue: number|string;
-  extendedInfo?: {value: string; formatter: string;};
+  extendedInfo?: {value: string;};
 }
 
 interface AuditResults {
@@ -22,7 +22,7 @@ interface AuditFullResult {
   name: string;
   category: string;
   helpText?: string;
-  extendedInfo?: {value: string; formatter: string;};
+  extendedInfo?: {value: string};
 }
 
 interface AuditFullResults {

@@ -29,7 +29,7 @@
 <!-- Note: these will only fail when using the static-server.js, which supports the ?delay=true param.
      If you're using your own server, the resource will load instantly and the
      stylesheets will be ignored for being below the threshold. -->
-<!-- we use a relative protocol url to test that `new URL(resource)` in the critical-request-chains.js formatter can handle it -->
+<!-- we use a relative protocol url to test that `new URL(resource)` in the critical-request-chains.js audit can handle it -->
 <link rel="stylesheet" href="//localhost:10200/dobetterweb/dbw_tester.css?delay=100"> <!-- FAIL, when run under smokehouse -->
 <link rel="stylesheet" href="./unknown404.css?delay=200"> <!-- FAIL -->
 <link rel="stylesheet" href="./dbw_tester.css?delay=2200"> <!-- FAIL -->

@@ -6,7 +6,6 @@
 'use strict';
 
 const Audit = require('../audit');
-const Formatter = require('../../report/formatter');
 const Util = require('../../report/v2/renderer/util');
 
 const KB_IN_BYTES = 1024;
@@ -106,8 +105,7 @@ class UnusedBytes extends Audit {
       displayValue = `Potential savings of ${wastedKbDisplay} (~${wastedMsDisplay})`;
     }
 
-    const v1TableHeadings = Audit.makeV1TableHeadings(result.headings);
-    const v2TableDetails = Audit.makeV2TableDetails(result.headings, results);
+    const tableDetails = Audit.makeTableDetails(result.headings, results);
 
     return {
       debugString,
@@ -115,15 +113,13 @@ class UnusedBytes extends Audit {
       rawValue: wastedMs,
       score: UnusedBytes.scoreForWastedMs(wastedMs),
       extendedInfo: {
-        formatter: Formatter.SUPPORTED_FORMATS.TABLE,
         value: {
           wastedMs,
           wastedKb,
           results,
-          tableHeadings: v1TableHeadings,
         },
       },
-      details: v2TableDetails
+      details: tableDetails
     };
   }
 

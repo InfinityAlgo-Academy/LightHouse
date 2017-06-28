@@ -126,9 +126,8 @@ describe('Config', () => {
       rawValue: 1.0,
       optimalValue: 1.0,
       name: 'Test Audit',
-      extendedInfo: {
-        formatter: 'Supported formatter',
-        value: {
+      details: {
+        items: {
           a: 1
         }
       }

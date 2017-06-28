@@ -7,7 +7,6 @@
 
 const Audit = require('./audit');
 const statistics = require('../lib/statistics');
-const Formatter = require('../report/formatter');
 const Util = require('../report/v2/renderer/util');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
@@ -103,7 +102,6 @@ class SpeedIndexMetric extends Audit {
         displayValue: Util.formatNumber(rawValue),
         optimalValue: this.meta.optimalValue,
         extendedInfo: {
-          formatter: Formatter.SUPPORTED_FORMATS.SPEEDLINE,
           value: extendedInfo
         }
       };

@@ -9,7 +9,6 @@ const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util.js');
 const TracingProcessor = require('../lib/traces/tracing-processor');
 const statistics = require('../lib/statistics');
-const Formatter = require('../report/formatter');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 //   https://www.desmos.com/calculator/uti67afozh
@@ -248,7 +247,6 @@ class ConsistentlyInteractiveMetric extends Audit {
           optimalValue: this.meta.optimalValue,
           extendedInfo: {
             value: extendedInfo,
-            formatter: Formatter.SUPPORTED_FORMATS.NULL,
           }
         };
       });

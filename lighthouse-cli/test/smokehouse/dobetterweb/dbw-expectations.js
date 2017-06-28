@@ -29,6 +29,11 @@ module.exports = [
               length: 14
             }
           }
+        },
+        details: {
+          items: {
+            length: 14
+          }
         }
       },
       'external-anchors-use-rel-noopener': {
@@ -37,6 +42,11 @@ module.exports = [
                      'If they are not used as hyperlinks, consider removing the _blank target.',
         extendedInfo: {
           value: {
+            length: 3
+          }
+        },
+        details: {
+          items: {
             length: 3
           }
         }
@@ -56,12 +66,22 @@ module.exports = [
               length: 4
             }
           }
+        },
+        details: {
+          items: {
+            length: 4
+          }
         }
       },
       'no-document-write': {
         score: false,
         extendedInfo: {
           value: {
+            length: 3
+          }
+        },
+        details: {
+          items: {
             length: 3
           }
         }
@@ -73,6 +93,11 @@ module.exports = [
             results: {
               length: 6
             }
+          }
+        },
+        details: {
+          items: {
+            length: 6
           }
         }
       },
@@ -102,6 +127,11 @@ module.exports = [
               length: 1
             }
           }
+        },
+        details: {
+          items: {
+            length: 1
+          }
         }
       },
       'uses-passive-event-listeners': {
@@ -118,6 +148,11 @@ module.exports = [
         score: false,
         extendedInfo: {
           value: {
+            length: 4
+          }
+        },
+        details: {
+          items: {
             length: 4
           }
         }
@@ -143,6 +178,13 @@ module.exports = [
             1: {value: '7'},
             2: {value: '1,303'}
           }
+        },
+        details: {
+          items: {
+            0: {value: '1,324'},
+            1: {value: '7'},
+            2: {value: '1,303'}
+          }
         }
       }
     }
@@ -154,6 +196,13 @@ module.exports = [
         score: 0,
         extendedInfo: {
           value: {
+            0: {value: '6,025'},
+            1: {value: '9'},
+            2: {value: '6,003'}
+          }
+        },
+        details: {
+          items: {
             0: {value: '6,025'},
             1: {value: '9'},
             2: {value: '6,003'}
@@ -173,6 +222,13 @@ module.exports = [
             1: {value: '9'},
             2: {value: '9'}
           }
+        },
+        details: {
+          items: {
+            0: {value: '25'},
+            1: {value: '9'},
+            2: {value: '9'}
+          }
         }
       }
     }
@@ -184,6 +240,13 @@ module.exports = [
         score: 100,
         extendedInfo: {
           value: {
+            0: {value: '24'},
+            1: {value: '7'},
+            2: {value: '9'}
+          }
+        },
+        details: {
+          items: {
             0: {value: '24'},
             1: {value: '7'},
             2: {value: '9'}

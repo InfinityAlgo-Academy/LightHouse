@@ -9,7 +9,6 @@ const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util.js');
 const TracingProcessor = require('../lib/traces/tracing-processor');
 const statistics = require('../lib/statistics');
-const Formatter = require('../report/formatter');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 // https://www.desmos.com/calculator/srv0hqhf7d
@@ -63,7 +62,6 @@ class EstimatedInputLatency extends Audit {
       displayValue: Util.formatMilliseconds(rawValue, 1),
       extendedInfo: {
         value: latencyPercentiles,
-        formatter: Formatter.SUPPORTED_FORMATS.NULL
       }
     };
   }

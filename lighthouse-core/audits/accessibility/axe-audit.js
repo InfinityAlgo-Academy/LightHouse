@@ -11,7 +11,6 @@
  */
 
 const Audit = require('../audit');
-const Formatter = require('../../report/formatter');
 
 class AxeAudit extends Audit {
   /**
@@ -36,7 +35,6 @@ class AxeAudit extends Audit {
     return {
       rawValue: typeof rule === 'undefined',
       extendedInfo: {
-        formatter: Formatter.SUPPORTED_FORMATS.ACCESSIBILITY,
         value: rule
       },
       details: {

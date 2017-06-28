@@ -26,8 +26,7 @@
             "onLoad": 3404.212,
             "endOfTrace": 13590.588
           }
-        },
-        "formatter": "null"
+        }
       },
       "scoringMode": "numeric",
       "name": "first-meaningful-paint",
@@ -41,7 +40,6 @@
       "rawValue": 3226,
       "optimalValue": "< 1,250",
       "extendedInfo": {
-        "formatter": "speedline",
         "value": {
           "timings": {
             "firstVisualChange": 3226,
@@ -106,8 +104,7 @@
             "percentile": 1,
             "time": 193.1729999999934
           }
-        ],
-        "formatter": "null"
+        ]
       },
       "scoringMode": "numeric",
       "name": "estimated-input-latency",
@@ -123,8 +120,7 @@
         "value": {
           "timeInMs": 3402.6619999628065,
           "timestamp": 360906538220.99994
-        },
-        "formatter": "null"
+        }
       },
       "scoringMode": "numeric",
       "name": "first-interactive",
@@ -160,8 +156,7 @@
           ],
           "timestamp": 360906538220.99994,
           "timeInMs": 3402.661999938965
-        },
-        "formatter": "null"
+        }
       },
       "scoringMode": "numeric",
       "name": "consistently-interactive",
@@ -235,8 +230,7 @@
             ]
           },
           "expectedLatencyAtTTI": 42.54
-        },
-        "formatter": "null"
+        }
       },
       "scoringMode": "numeric",
       "name": "time-to-interactive",
@@ -249,7 +243,6 @@
       "displayValue": "0",
       "rawValue": true,
       "extendedInfo": {
-        "formatter": "user-timings",
         "value": []
       },
       "scoringMode": "binary",
@@ -265,7 +258,6 @@
       "rawValue": false,
       "optimalValue": 0,
       "extendedInfo": {
-        "formatter": "critical-request-chains",
         "value": {
           "chains": {
             "53431.1": {
@@ -420,7 +412,6 @@
       "rawValue": 133319,
       "optimalValue": "< 1,600 KB",
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "results": [
             {
@@ -665,7 +656,6 @@
       "displayValue": "",
       "rawValue": 0,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "wastedMs": 0,
           "wastedKb": 0,
@@ -723,7 +713,6 @@
       "displayValue": "Potential savings of 62 KB (~290ms)",
       "rawValue": 290,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "wastedMs": 290,
           "wastedKb": 62,
@@ -821,7 +810,6 @@
       "displayValue": "",
       "rawValue": 0,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "wastedMs": 0,
           "wastedKb": 0,
@@ -874,7 +862,6 @@
       "rawValue": 35,
       "optimalValue": "< 1,500 nodes",
       "extendedInfo": {
-        "formatter": "cards",
         "value": [
           {
             "title": "Total DOM Nodes",
@@ -932,7 +919,6 @@
       "displayValue": "4 resources delayed first paint by 2236ms",
       "rawValue": 2236,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "wastedMs": 2236,
           "results": [
@@ -1055,7 +1041,6 @@
       "displayValue": "1 resource delayed first paint by 409ms",
       "rawValue": 409,
       "extendedInfo": {
-        "formatter": "table",
         "value": {
           "wastedMs": 409,
           "results": [
@@ -1168,8 +1153,7 @@
                   "onLoad": 3404.212,
                   "endOfTrace": 13590.588
                 }
-              },
-              "formatter": "null"
+              }
             },
             "scoringMode": "numeric",
             "name": "first-meaningful-paint",
@@ -1189,7 +1173,6 @@
             "rawValue": 3226,
             "optimalValue": "< 1,250",
             "extendedInfo": {
-              "formatter": "speedline",
               "value": {
                 "timings": {
                   "firstVisualChange": 3226,
@@ -1260,8 +1243,7 @@
                   "percentile": 1,
                   "time": 193.1729999999934
                 }
-              ],
-              "formatter": "null"
+              ]
             },
             "scoringMode": "numeric",
             "name": "estimated-input-latency",
@@ -1341,8 +1323,7 @@
                   ]
                 },
                 "expectedLatencyAtTTI": 42.54
-              },
-              "formatter": "null"
+              }
             },
             "scoringMode": "numeric",
             "name": "time-to-interactive",
@@ -1364,8 +1345,7 @@
               "value": {
                 "timeInMs": 3402.6619999628065,
                 "timestamp": 360906538220.99994
-              },
-              "formatter": "null"
+              }
             },
             "scoringMode": "numeric",
             "name": "first-interactive",
@@ -1407,8 +1387,7 @@
                 ],
                 "timestamp": 360906538220.99994,
                 "timeInMs": 3402.661999938965
-              },
-              "formatter": "null"
+              }
             },
             "scoringMode": "numeric",
             "name": "consistently-interactive",
@@ -1427,7 +1406,6 @@
             "displayValue": "4 resources delayed first paint by 2236ms",
             "rawValue": 2236,
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "wastedMs": 2236,
                 "results": [
@@ -1556,7 +1534,6 @@
             "displayValue": "1 resource delayed first paint by 409ms",
             "rawValue": 409,
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "wastedMs": 409,
                 "results": [
@@ -1628,7 +1605,6 @@
             "displayValue": "",
             "rawValue": 0,
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "wastedMs": 0,
                 "wastedKb": 0,
@@ -1692,7 +1668,6 @@
             "displayValue": "Potential savings of 62 KB (~290ms)",
             "rawValue": 290,
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "wastedMs": 290,
                 "wastedKb": 62,
@@ -1796,7 +1771,6 @@
             "displayValue": "",
             "rawValue": 0,
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "wastedMs": 0,
                 "wastedKb": 0,
@@ -1855,7 +1829,6 @@
             "rawValue": 133319,
             "optimalValue": "< 1,600 KB",
             "extendedInfo": {
-              "formatter": "table",
               "value": {
                 "results": [
                   {
@@ -2107,7 +2080,6 @@
             "rawValue": 35,
             "optimalValue": "< 1,500 nodes",
             "extendedInfo": {
-              "formatter": "cards",
               "value": [
                 {
                   "title": "Total DOM Nodes",
@@ -2172,7 +2144,6 @@
             "rawValue": false,
             "optimalValue": 0,
             "extendedInfo": {
-              "formatter": "critical-request-chains",
               "value": {
                 "chains": {
                   "53431.1": {
@@ -2332,7 +2303,6 @@
             "displayValue": "0",
             "rawValue": true,
             "extendedInfo": {
-              "formatter": "user-timings",
               "value": []
             },
             "scoringMode": "binary",

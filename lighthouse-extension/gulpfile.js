@@ -17,8 +17,7 @@ const tap = require('gulp-tap');
 const zip = require('gulp-zip');
 const LighthouseRunner = require('../lighthouse-core/runner');
 
-const compile = require('../gulp/compile');
-const config = require('../gulp/config');
+const distDir = 'dist';
 
 const audits = LighthouseRunner.getAuditList()
     .map(f => '../lighthouse-core/audits/' + f.replace(/\.js$/, ''));
@@ -30,10 +29,6 @@ const computedArtifacts = fs.readdirSync(
     path.join(__dirname, '../lighthouse-core/gather/computed/'))
     .filter(f => /\.js$/.test(f))
     .map(f => '../lighthouse-core/gather/computed/' + f.replace(/\.js$/, ''));
-
-
-gulp.task('compileReport', compile.compileReport);
-gulp.task('compilePartials', compile.compilePartials);
 
 gulp.task('extras', () => {
   return gulp.src([
@@ -49,7 +44,7 @@ gulp.task('extras', () => {
     dot: true
   })
   .pipe(debug({title: 'copying to dist:'}))
-  .pipe(gulp.dest(config.dist));
+  .pipe(gulp.dest(distDir));
 });
 
 gulp.task('lint', () => {
@@ -64,17 +59,17 @@ gulp.task('lint', () => {
 
 gulp.task('images', () => {
   return gulp.src('app/images/**/*')
-  .pipe(gulp.dest(`${config.dist}/images`));
+  .pipe(gulp.dest(`${distDir}/images`));
 });
 
 gulp.task('css', () => {
   return gulp.src('app/styles/**/*.css')
-  .pipe(gulp.dest(`${config.dist}/styles`));
+  .pipe(gulp.dest(`${distDir}/styles`));
 });
 
 gulp.task('html', () => {
   return gulp.src('app/*.html')
-  .pipe(gulp.dest(config.dist));
+  .pipe(gulp.dest(distDir));
 });
 
 gulp.task('chromeManifest', () => {
@@ -89,7 +84,7 @@ gulp.task('chromeManifest', () => {
   };
   return gulp.src('app/manifest.json')
   .pipe(chromeManifest(manifestOpts))
-  .pipe(gulp.dest(config.dist));
+  .pipe(gulp.dest(distDir));
 });
 
 function applyBrowserifyTransforms(bundle) {
@@ -153,7 +148,7 @@ gulp.task('browserify-other', () => {
       file.contents = bundle.bundle();
     }))
     .pipe(gulp.dest('app/scripts'))
-    .pipe(gulp.dest(`${config.dist}/scripts`));
+    .pipe(gulp.dest(`${distDir}/scripts`));
 });
 
 gulp.task('browserify', cb => {
@@ -178,13 +173,13 @@ gulp.task('compilejs', () => {
 });
 
 gulp.task('clean', () => {
-  return del(['.tmp', config.dist, 'app/scripts']).then(paths =>
+  return del(['.tmp', distDir, 'app/scripts']).then(paths =>
     paths.forEach(path => gutil.log('deleted:', gutil.colors.blue(path)))
   );
 });
 
 
-gulp.task('watch', ['compileReport', 'compilePartials', 'browserify', 'html'], () => {
+gulp.task('watch', ['browserify', 'html'], () => {
   livereload.listen();
 
   gulp.watch([
@@ -201,28 +196,18 @@ gulp.task('watch', ['compileReport', 'compilePartials', 'browserify', 'html'], (
     'app/src/**/*.js',
     '../lighthouse-core/**/*.js'
   ], ['browserify']);
-
-  gulp.watch([
-    `../${config.report}`
-  ], ['compileReport']);
-
-  gulp.watch([
-    `../${config.partials}`
-  ], ['compilePartials']);
 });
 
 gulp.task('package', function() {
-  const manifest = require(`./${config.dist}/manifest.json`);
-  return gulp.src(`${config.dist}/**`)
+  const manifest = require(`./${distDir}/manifest.json`);
+  return gulp.src(`${distDir}/**`)
   .pipe(zip(`lighthouse-${manifest.version}.zip`))
   .pipe(gulp.dest('package'));
 });
 
-gulp.task('compile-templates', ['compileReport', 'compilePartials']);
-
 gulp.task('build', cb => {
   runSequence(
-    'lint', 'compile-templates', 'browserify', 'chromeManifest',
+    'lint', 'browserify', 'chromeManifest',
     ['html', 'images', 'css', 'extras'], cb);
 });
 

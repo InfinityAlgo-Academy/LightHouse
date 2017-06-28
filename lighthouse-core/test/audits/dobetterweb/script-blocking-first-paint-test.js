@@ -42,10 +42,11 @@ describe('Script Block First Paint audit', () => {
     });
     assert.equal(auditResult.rawValue, 150);
     assert.equal(auditResult.displayValue, `2 resources delayed first paint by 150${NBSP}ms`);
-    assert.equal(auditResult.extendedInfo.value.results.length, 2);
-    assert.ok(auditResult.extendedInfo.value.results[0].url.includes('js/app.js'), 'has a url');
-    assert.equal(auditResult.extendedInfo.value.results[0].totalMs, `150${NBSP}ms`);
-    assert.equal(auditResult.extendedInfo.value.results[1].totalMs, `50${NBSP}ms`);
+    const results = auditResult.details.items;
+    assert.equal(results.length, 2);
+    assert.ok(results[0][0].text.includes('js/app.js'), 'has a url');
+    assert.equal(results[0][2].text, `150${NBSP}ms`);
+    assert.equal(results[1][2].text, `50${NBSP}ms`);
   });
 
   it('passes when there are no scripts found which block first paint', () => {
@@ -53,6 +54,6 @@ describe('Script Block First Paint audit', () => {
       TagsBlockingFirstPaint: []
     });
     assert.equal(auditResult.rawValue, 0);
-    assert.equal(auditResult.extendedInfo.value.results.length, 0);
+    assert.equal(auditResult.details.items.length, 0);
   });
 });
