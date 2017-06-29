@@ -436,6 +436,37 @@ describe('Config', () => {
     });
   });
 
+  it('extends the full config', () => {
+    class CustomAudit extends Audit {
+      static get meta() {
+        return {
+          name: 'custom-audit',
+          category: 'none',
+          description: 'none',
+          helpText: 'none',
+          requiredArtifacts: [],
+        };
+      }
+
+      static audit() {
+        throw new Error('Unimplemented');
+      }
+    }
+
+    const config = new Config({
+      extends: 'lighthouse:full',
+      audits: [
+        CustomAudit,
+      ],
+    });
+
+    const auditNames = new Set(config.audits.map(audit => audit.meta.name));
+    assert.ok(config, 'failed to generate config');
+    assert.ok(auditNames.has('custom-audit'), 'did not include custom audit');
+    assert.ok(auditNames.has('no-old-flexbox'), 'did not include full audits');
+    assert.ok(auditNames.has('first-meaningful-paint'), 'did not include default audits');
+  });
+
   describe('artifact loading', () => {
     it('expands artifacts', () => {
       const config = new Config({
