@@ -114,13 +114,16 @@ class EventListeners extends Gatherer {
   afterPass(options) {
     this.driver = options.driver;
     this._parsedScripts = new Map();
-    return Promise.resolve()
+    return options.driver.sendCommand('DOM.enable')
       .then(() => this.listenForScriptParsedEvents())
       .then(() => this.unlistenForScriptParsedEvents())
-      .then(_ => options.driver.getElementsInDocument())
+      .then(() => options.driver.getElementsInDocument())
       .then(nodes => {
         nodes.push('document', 'window');
         return this.collectListeners(nodes);
+      }).then(listeners => {
+        return options.driver.sendCommand('DOM.disable')
+          .then(() => listeners);
       });
   }
 }
