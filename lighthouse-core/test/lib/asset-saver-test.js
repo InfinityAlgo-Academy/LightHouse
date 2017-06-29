@@ -15,6 +15,7 @@ const traceEvents = require('../fixtures/traces/progressive-app.json');
 const dbwTrace = require('../fixtures/traces/dbw_tester.json');
 const dbwResults = require('../fixtures/dbw_tester-perf-results.json');
 const Audit = require('../../audits/audit.js');
+const fullTraceObj = require('../fixtures/traces/progressive-app-m60.json');
 
 /* eslint-env mocha */
 describe('asset-saver helper', () => {
@@ -34,24 +35,26 @@ describe('asset-saver helper', () => {
   });
 
   describe('saves files', function() {
-    const artifacts = {
-      devtoolsLogs: {
-        [Audit.DEFAULT_PASS]: [{message: 'first'}, {message: 'second'}]
-      },
-      traces: {
-        [Audit.DEFAULT_PASS]: {
-          traceEvents
-        }
-      },
-      requestScreenshots: () => Promise.resolve(screenshotFilmstrip)
-    };
+    before(() => {
+      const artifacts = {
+        devtoolsLogs: {
+          [Audit.DEFAULT_PASS]: [{message: 'first'}, {message: 'second'}]
+        },
+        traces: {
+          [Audit.DEFAULT_PASS]: {
+            traceEvents
+          }
+        },
+        requestScreenshots: () => Promise.resolve(screenshotFilmstrip)
+      };
 
-    assetSaver.saveAssets(artifacts, dbwResults.audits, process.cwd() + '/the_file');
+      return assetSaver.saveAssets(artifacts, dbwResults.audits, process.cwd() + '/the_file');
+    });
 
-    it('trace file saved to disk with data', () => {
+    it('trace file saved to disk with only trace events', () => {
       const traceFilename = 'the_file-0.trace.json';
       const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
-      assert.ok(traceFileContents.length > 3000000);
+      assert.deepStrictEqual(JSON.parse(traceFileContents), {traceEvents});
       fs.unlinkSync(traceFilename);
     });
 
@@ -95,6 +98,83 @@ describe('asset-saver helper', () => {
         const metricsSansNavStart = Metrics.metricsDefinitions.length - 1;
         assert.equal(afterCount, beforeCount + (2 * metricsSansNavStart), 'unexpected event count');
       });
+    });
+  });
+
+  describe('saveTrace', () => {
+    const traceFilename = 'test-trace-0.json';
+
+    afterEach(() => {
+      fs.unlinkSync(traceFilename);
+    });
+
+    it('correctly saves a trace with metadata to disk', () => {
+      return assetSaver.saveTrace(fullTraceObj, traceFilename)
+        .then(_ => {
+          const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
+          assert.deepStrictEqual(JSON.parse(traceFileContents), fullTraceObj);
+        });
+    });
+
+    it('correctly saves a trace with no trace events to disk', () => {
+      const trace = {
+        traceEvents: [],
+        metadata: {
+          'clock-domain': 'MAC_MACH_ABSOLUTE_TIME',
+          'cpu-family': 6,
+          'cpu-model': 70,
+          'cpu-stepping': 1,
+          'field-trials': [],
+        }
+      };
+
+      return assetSaver.saveTrace(trace, traceFilename)
+        .then(_ => {
+          const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
+          assert.deepStrictEqual(JSON.parse(traceFileContents), trace);
+        });
+    });
+
+    it('correctly saves a trace with multiple extra properties to disk', () => {
+      const trace = {
+        traceEvents,
+        metadata: fullTraceObj.metadata,
+        someProp: 555,
+        anotherProp: {
+          unlikely: {
+            nested: [
+              'value'
+            ]
+          }
+        },
+      };
+
+      return assetSaver.saveTrace(trace, traceFilename)
+        .then(_ => {
+          const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
+          assert.deepStrictEqual(JSON.parse(traceFileContents), trace);
+        });
+    });
+
+    it('can save traces over 256MB (slow)', () => {
+      // Create a trace that wil be longer than 256MB when stringified, the hard
+      // limit of a string in v8.
+      // https://mobile.twitter.com/bmeurer/status/879276976523157505
+      const baseEventsLength = JSON.stringify(traceEvents).length;
+      const countNeeded = Math.ceil(Math.pow(2, 28) / baseEventsLength);
+      let longTraceEvents = [];
+      for (let i = 0; i < countNeeded; i++) {
+        longTraceEvents = longTraceEvents.concat(traceEvents);
+      }
+      const trace = {
+        traceEvents: longTraceEvents
+      };
+
+      return assetSaver.saveTrace(trace, traceFilename)
+        .then(_ => {
+          const fileStats = fs.lstatSync(traceFilename);
+          assert.ok(fileStats.size > Math.pow(2, 28));
+        });
     });
   });
 });
