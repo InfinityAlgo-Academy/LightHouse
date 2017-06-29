@@ -54,10 +54,21 @@ You can do a local docker image install of Travis to better inspect a travis bui
 * [Common Build Problems - Travis CI](https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image)
 
 ```sh
-docker run -it quay.io/travisci/travis-node-js /bin/bash
+docker run --name travis-debug -dit travisci/ci-garnet:packer-1496954857 /sbin/init
+docker exec -it travis-debug bash -l
+
+# once inside, change to travis user, rather than root
+su - travis
+
+# once on the travis user, make a clone of lighthouse and play around
 ```
 
-FWIW, the non-quay images mentioned in the official docs may be more recent. YMMV!
+```sh
+# you may also want to mount a local folder into your docker instance. 
+# This will mount your local machines's ~/temp/trav folder into the container's /home/travis/mountpoint folder
+docker run -v $HOME/temp/trav:/home/travis/mountpoint --name travis-debug -dit travisci/ci-garnet:packer-1496954857 /sbin/init
+
+```
 
 You can then run the travis commands (e.g. `travis compile`) to install an environment and run the build script:
 
