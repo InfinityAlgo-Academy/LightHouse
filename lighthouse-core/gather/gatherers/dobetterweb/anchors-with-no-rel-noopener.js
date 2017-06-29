@@ -6,6 +6,7 @@
 'use strict';
 
 const Gatherer = require('../gatherer');
+const DOMHelpers = require('../../../lib/dom-helpers.js');
 
 class AnchorsWithNoRelNoopener extends Gatherer {
   /**
@@ -13,27 +14,18 @@ class AnchorsWithNoRelNoopener extends Gatherer {
    * @return {!Promise<!Array<{href: string, rel: string, target: string}>>}
    */
   afterPass(options) {
-    const driver = options.driver;
-    return driver.querySelectorAll('a[target="_blank"]:not([rel~="noopener"])')
-      .then(failingNodeList => {
-        const failingNodes = failingNodeList.map(node => {
-          return Promise.all([
-            node.getAttribute('href'),
-            node.getAttribute('rel'),
-            node.getAttribute('target')
-          ]);
-        });
-        return Promise.all(failingNodes);
-      })
-      .then(failingNodes => {
-        return failingNodes.map(node => {
-          return {
-            href: node[0],
-            rel: node[1],
-            target: node[2]
-          };
-        });
-      });
+    const expression = `(function() {
+      ${DOMHelpers.getElementsInDocumentFnString}; // define function on page
+      const selector = 'a[target="_blank"]:not([rel~="noopener"])';
+      const elements = getElementsInDocument(selector);
+      return elements.map(node => ({
+        href: node.getAttribute('href'),
+        rel: node.getAttribute('rel'),
+        target: node.getAttribute('target')
+      }));
+    })()`;
+
+    return options.driver.evaluateAsync(expression);
   }
 }
 

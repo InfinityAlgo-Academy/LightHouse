@@ -9,7 +9,7 @@
  * and total number of nodes used on the page.
  */
 
-/* global document ShadowRoot */
+/* global ShadowRoot */
 
 'use strict';
 
@@ -115,7 +115,6 @@ function getDOMStats(element, deep=true) {
   const result = _calcDOMWidthAndHeight(element);
 
   return {
-    totalDOMNodes: document.querySelectorAll('html, html /deep/ *').length,
     depth: {
       max: result.maxDepth,
       pathToElement: elementPathInDOM(deepestNode),
@@ -138,7 +137,11 @@ class DOMStats extends Gatherer {
       ${elementPathInDOM.toString()};
       return (${getDOMStats.toString()}(document.documentElement));
     })()`;
-    return options.driver.evaluateAsync(expression);
+    return options.driver.evaluateAsync(expression)
+      .then(results => options.driver.getElementsInDocument().then(allNodes => {
+        results.totalDOMNodes = allNodes.length;
+        return results;
+      }));
   }
 }
 
