@@ -30,7 +30,9 @@ class SplashScreen extends MultiCheckAudit {
       category: 'PWA',
       name: 'splash-screen',
       description: 'Configured for a custom splash screen',
-      helpText: 'A default splash screen will be constructed for your app, but satisfying these requirements guarantee a high-quality [splash screen](https://developers.google.com/web/updates/2015/10/splashscreen) that transitions the user from tapping the home screen icon to your app\'s first paint',
+      helpText: 'A custom splash screen creates a higher-quality user experience and makes your ' +
+          'Progressive Web App feel more like a native app. ' +
+          '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/custom-splash-screen).',
       requiredArtifacts: ['Manifest']
     };
   }
