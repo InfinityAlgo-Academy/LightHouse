@@ -207,7 +207,7 @@ class Driver {
    * @param {string} scriptSource
    * @return {!Promise<string>} Identifier of the added script.
    */
-  evaluateScriptOnLoad(scriptSource) {
+  evaluteScriptOnNewDocument(scriptSource) {
     return this.sendCommand('Page.addScriptToEvaluateOnLoad', {
       scriptSource
     });
@@ -465,8 +465,6 @@ class Driver {
         });
     }
 
-    log.verbose('Driver', `Installing longtask listener for CPU idle.`);
-    this.evaluateScriptOnLoad(`(${installPerformanceObserver.toString()})()`);
     let cancel;
     const promise = new Promise((resolve, reject) => {
       checkForQuiet(this, resolve);
@@ -936,10 +934,19 @@ class Driver {
   /**
    * Cache native functions/objects inside window
    * so we are sure polyfills do not overwrite the native implementations
+   * @return {!Promise}
    */
   cacheNatives() {
-    return this.evaluateScriptOnLoad(`window.__nativePromise = Promise;
+    return this.evaluteScriptOnNewDocument(`window.__nativePromise = Promise;
         window.__nativeError = Error;`);
+  }
+
+  /**
+   * Install a performance observer that watches longtask timestamps for waitForCPUIdle.
+   * @return {!Promise}
+   */
+  registerPerformanceObserver() {
+    return this.evaluteScriptOnNewDocument(`(${registerPerformanceObserverInPage.toString()})()`);
   }
 
   /**
@@ -967,7 +974,7 @@ class Driver {
 
     const funcBody = captureJSCallUsage.toString();
 
-    this.evaluateScriptOnLoad(`
+    this.evaluteScriptOnNewDocument(`
         ${globalVarToPopulate} = new Set();
         (${funcName} = ${funcBody}(${funcName}, ${globalVarToPopulate}))`);
 
@@ -1096,7 +1103,7 @@ function wrapRuntimeEvalErrorInBrowser(err) {
  * property on window to the end time of the last long task.
  * instanbul ignore next
  */
-function installPerformanceObserver() {
+function registerPerformanceObserverInPage() {
   window.____lastLongTask = window.performance.now();
   const observer = new window.PerformanceObserver(entryList => {
     const entries = entryList.getEntries();
