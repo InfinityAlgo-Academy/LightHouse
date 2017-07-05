@@ -137,10 +137,11 @@ class DOMStats extends Gatherer {
       ${elementPathInDOM.toString()};
       return (${getDOMStats.toString()}(document.documentElement));
     })()`;
-    return options.driver.evaluateAsync(expression)
+    return options.driver.sendCommand('DOM.enable')
+      .then(() => options.driver.evaluateAsync(expression))
       .then(results => options.driver.getElementsInDocument().then(allNodes => {
         results.totalDOMNodes = allNodes.length;
-        return results;
+        return options.driver.sendCommand('DOM.disable').then(() => results);
       }));
   }
 }
