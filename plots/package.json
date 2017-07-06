@@ -1,7 +1,0 @@
-{
-  "main": "index.js",
-  "scripts": {
-    "measure": "node measure.js",
-    "analyze": "node analyze.js"
-  }
-}

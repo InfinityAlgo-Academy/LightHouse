@@ -24,6 +24,14 @@ $ node measure.js --out out-123
 # This will launch the charts web page in the browser
 # node analyze.js {out_directory}
 $ node analyze.js ./out-hello
+
+# Generate dashboard using a parent folder with multiple batch results
+$ node generate-dashboard.js out-parent-folder
+
+# Or you can specify each batch result explicitly
+$ node generate-dashboard.js out-1 out-2 out-3
+
+
 ```
 
 ### Advanced usage
