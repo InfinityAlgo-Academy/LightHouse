@@ -21,6 +21,8 @@ class HTMLLangValid extends AxeAudit {
       category: 'Accessibility',
       name: 'html-lang-valid',
       description: '`<html>` element has a valid value for its `[lang]` attribute.',
+      failureDescription: '`<html>` element does not have a valid value for ' +
+          'its `[lang]` attribute.',
       helpText: 'Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) ' +
           'helps screen readers announce text properly. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/1.1/valid-lang).',

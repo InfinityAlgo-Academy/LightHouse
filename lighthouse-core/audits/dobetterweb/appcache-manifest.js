@@ -22,6 +22,7 @@ class AppCacheManifestAttr extends Audit {
       category: 'Offline',
       name: 'appcache-manifest',
       description: 'Avoids Application Cache',
+      failureDescription: 'Uses Application Cache',
       helpText: 'Application Cache is deprecated. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/appcache).',
       requiredArtifacts: ['AppCacheManifest']

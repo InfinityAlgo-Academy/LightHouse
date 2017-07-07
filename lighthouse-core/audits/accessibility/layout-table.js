@@ -23,6 +23,8 @@ class LayoutTable extends AxeAudit {
       name: 'layout-table',
       description: 'Presentational `<table>` elements avoid using `<th>`, `<caption>` or the ' +
           '`[summary]` attribute.',
+      failureDescription: 'Presentational `<table>` elements do not avoid using `<th>`, ' +
+          '`<caption>` or the `[summary]` attribute.',
       helpText: 'A table being used for layout purposes should not include data elements, ' +
           'such as the th or caption elements or the summary attribute, because this can ' +
           'create a confusing experience for screen reader users. ' +

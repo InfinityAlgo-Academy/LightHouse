@@ -21,6 +21,8 @@ class ListItem extends AxeAudit {
       category: 'Accessibility',
       name: 'listitem',
       description: 'List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements.',
+      failureDescription: 'List items (`<li>`) are not contained within `<ul>` ' +
+          'or `<ol>` parent elements.',
       helpText: 'Screen readers require list items (`<li>`) to be contained within a ' +
           'parent `<ul>` or `<ol>` to be announced properly. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/1.1/listitem).',

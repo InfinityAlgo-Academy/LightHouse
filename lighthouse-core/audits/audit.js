@@ -115,7 +115,12 @@ class Audit {
     if (displayValue === score) {
       displayValue = '';
     }
-
+    let auditDescription = audit.meta.description;
+    if (audit.meta.failureDescription) {
+      if (!score || (typeof score === 'number' && score < 100)) {
+        auditDescription = audit.meta.failureDescription;
+      }
+    }
     return {
       score,
       displayValue: `${displayValue}`,
@@ -129,7 +134,7 @@ class Audit {
       manual: audit.meta.manual,
       name: audit.meta.name,
       category: audit.meta.category,
-      description: audit.meta.description,
+      description: auditDescription,
       helpText: audit.meta.helpText,
       details: result.details,
     };

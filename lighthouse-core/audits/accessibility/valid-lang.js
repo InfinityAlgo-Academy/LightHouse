@@ -21,6 +21,7 @@ class ValidLang extends AxeAudit {
       category: 'Accessibility',
       name: 'valid-lang',
       description: '`[lang]` attributes have a valid value.',
+      failureDescription: '`[lang]` attributes do not have a valid value.',
       helpText: 'Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) ' +
           'on elements helps ensure that text is pronounced correctly by a screen reader. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/1.1/valid-lang).',

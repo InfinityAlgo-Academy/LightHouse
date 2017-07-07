@@ -189,6 +189,13 @@ function assertValidAudit(auditDefinition, auditPath) {
     );
   }
 
+  // If it'll have a ✔ or ✖ displayed alongside the result, it should have failureDescription
+  if (typeof auditDefinition.meta.failureDescription !== 'string' &&
+    auditDefinition.meta.informative !== true &&
+    auditDefinition.meta.scoringMode !== Audit.SCORING_MODES.NUMERIC) {
+    log.warn('config', `${auditName} has no failureDescription and should.`);
+  }
+
   if (typeof auditDefinition.meta.helpText !== 'string') {
     throw new Error(
       `${auditName} has no meta.helpText property, or the property is not a string.`

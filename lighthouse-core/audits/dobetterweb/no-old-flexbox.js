@@ -25,6 +25,7 @@ class NoOldFlexboxAudit extends Audit {
       category: 'CSS',
       name: 'no-old-flexbox',
       description: 'Avoids old CSS flexbox',
+      failureDescription: 'Uses old CSS flexbox',
       helpText: 'The 2009 spec of Flexbox is deprecated and is 2.3x slower than the latest ' +
           'spec. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/old-flexbox).',
       requiredArtifacts: ['Styles', 'URL']

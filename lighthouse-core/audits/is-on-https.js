@@ -21,6 +21,7 @@ class HTTPS extends Audit {
       category: 'Security',
       name: 'is-on-https',
       description: 'Uses HTTPS',
+      failureDescription: 'Does not use HTTPS',
       helpText: 'All sites should be protected with HTTPS, even ones that don\'t handle ' +
           'sensitive data. HTTPS prevents intruders from tampering with or passively listening ' +
           'in on the communications between your app and your users, and is a prerequisite for ' +

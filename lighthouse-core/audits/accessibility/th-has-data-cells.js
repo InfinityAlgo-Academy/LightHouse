@@ -22,6 +22,8 @@ class THHasDataCells extends AxeAudit {
       name: 'th-has-data-cells',
       description: '`<th>` elements and elements with `[role="columnheader"/"rowheader"]` have ' +
           'data cells they describe.',
+      failureDescription: '`<th>` elements and elements with ' +
+          '`[role="columnheader"/"rowheader"]` do not have data cells they describe.',
       helpText: 'Screen readers have features to make navigating tables easier. Ensuring table ' +
           'headers always refer to some set of cells may improve the experience for screen ' +
           'reader users. ' +

@@ -39,6 +39,7 @@ class NoMutationEventsAudit extends Audit {
       category: 'JavaScript',
       name: 'no-mutation-events',
       description: 'Avoids Mutation Events in its own scripts',
+      failureDescription: 'Uses Mutation Events in its own scripts',
       helpText: 'Mutation Events are deprecated and harm performance. Consider using Mutation ' +
           'Observers instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/mutation-events).',
       requiredArtifacts: ['URL', 'EventListeners']

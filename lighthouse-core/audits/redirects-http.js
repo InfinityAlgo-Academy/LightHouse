@@ -16,6 +16,7 @@ class RedirectsHTTP extends Audit {
       category: 'Security',
       name: 'redirects-http',
       description: 'Redirects HTTP traffic to HTTPS',
+      failureDescription: 'Does not redirect HTTP traffic to HTTPS',
       helpText: 'If you\'ve already set up HTTPS, make sure that you redirect all HTTP traffic ' +
          'to HTTPS. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https).',
       requiredArtifacts: ['HTTPRedirect']

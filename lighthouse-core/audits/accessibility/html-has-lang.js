@@ -21,6 +21,7 @@ class HTMLHasLang extends AxeAudit {
       category: 'Accessibility',
       name: 'html-has-lang',
       description: '`<html>` element has a `[lang]` attribute.',
+      failureDescription: '`<html>` element does not have a `[lang]` attribute.',
       helpText: 'If a page doesn\'t specify a lang attribute, a screen reader assumes ' +
           'that the page is in the default language that the user chose when setting up the ' +
           'screen reader. If the page isn\'t actually in the default language, then the screen ' +

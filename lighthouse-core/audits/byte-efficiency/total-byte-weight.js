@@ -27,6 +27,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       name: 'total-byte-weight',
       optimalValue: `< ${this.bytesToKbString(OPTIMAL_VALUE)}`,
       description: 'Avoids enormous network payloads',
+      failureDescription: 'Has enormous network payloads',
       helpText:
           'Network transfer size [costs users real money](https://whatdoesmysitecost.com/) ' +
           'and is [highly correlated](http://httparchive.org/interesting.php#onLoad) with long load times. ' +

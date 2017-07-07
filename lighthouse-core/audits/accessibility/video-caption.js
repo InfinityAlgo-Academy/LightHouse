@@ -21,6 +21,8 @@ class VideoCaption extends AxeAudit {
       category: 'Accessibility',
       name: 'video-caption',
       description: '`<video>` elements contain a `<track>` element with `[kind="captions"]`.',
+      failureDescription: '`<video>` elements do not contain a `<track>` element ' +
+          'with `[kind="captions"]`.',
       helpText: 'When a video provides a caption it is easier for deaf and hearing impaired ' +
           'users to access its information. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/1.1/video-caption).',

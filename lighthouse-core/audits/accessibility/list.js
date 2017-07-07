@@ -22,6 +22,8 @@ class List extends AxeAudit {
       name: 'list',
       description: 'Lists contain only `<li>` elements and script supporting elements ' +
           '(`<script>` and `<template>`).',
+      failureDescription: 'Lists do not contain only `<li>` elements and script ' +
+          'supporting elements (`<script>` and `<template>`).',
       helpText: 'Screen readers have a specific way of announcing lists. Ensuring proper list ' +
           'structure aids screen reader output. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/1.1/list).',

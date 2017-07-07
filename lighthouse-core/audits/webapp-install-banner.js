@@ -38,6 +38,7 @@ class WebappInstallBanner extends MultiCheckAudit {
       category: 'PWA',
       name: 'webapp-install-banner',
       description: 'User can be prompted to Install the Web App',
+      failureDescription: 'User will not be prompted to Install the Web App',
       helpText: 'While users can manually add your site to their homescreen, the [prompt (aka app install banner)](https://developers.google.com/web/fundamentals/engage-and-retain/app-install-banners/) will proactively prompt the user to install the app if the various requirements are met and the user has moderate engagement with your site.',
       requiredArtifacts: ['URL', 'ServiceWorker', 'Manifest', 'StartUrl']
     };

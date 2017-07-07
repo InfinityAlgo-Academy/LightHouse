@@ -22,6 +22,7 @@ class NoDocWriteAudit extends ViolationAudit {
       category: 'Performance',
       name: 'no-document-write',
       description: 'Avoids `document.write()`',
+      failureDescription: 'Uses `document.write()`',
       helpText: 'For users on slow connections, external scripts dynamically injected via ' +
           '`document.write()` can delay page load by tens of seconds. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/document-write).',
