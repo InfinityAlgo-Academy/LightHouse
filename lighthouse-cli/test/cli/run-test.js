@@ -25,11 +25,21 @@ describe('CLI run', function() {
     const url = 'chrome://version';
     const filename = path.join(process.cwd(), 'run.ts.results.json');
     const flags = getFlags(`--output=json --output-path=${filename} ${url}`);
-    return run.runLighthouse(url, flags, fastConfig).then(_ => {
+    return run.runLighthouse(url, flags, fastConfig).then(passedResults => {
       assert.ok(fs.existsSync(filename));
       const results = JSON.parse(fs.readFileSync(filename, 'utf-8'));
       assert.equal(results.audits.viewport.rawValue, false);
+
+      // passed results match saved results
+      assert.strictEqual(results.generatedTime, passedResults.generatedTime);
+      assert.strictEqual(results.url, passedResults.url);
+      assert.strictEqual(results.audits.viewport.rawValue, passedResults.audits.viewport.rawValue);
+      assert.strictEqual(
+          Object.keys(results.audits).length,
+          Object.keys(passedResults.audits).length);
+      assert.deepStrictEqual(results.timing, passedResults.timing);
+
       fs.unlinkSync(filename);
     });
-  });
+  }).timeout(60000);
 });

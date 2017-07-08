@@ -138,7 +138,9 @@ export async function runLighthouse(
       await performanceXServer.hostExperiment({url, flags, config}, results);
     }
 
-    return await launchedChrome.kill();
+    await launchedChrome.kill();
+
+    return results;
   } catch (err) {
     if (typeof launchedChrome !== 'undefined') {
       await launchedChrome!.kill();
