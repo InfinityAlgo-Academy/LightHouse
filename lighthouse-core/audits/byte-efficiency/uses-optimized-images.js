@@ -24,9 +24,8 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
       name: 'uses-optimized-images',
       description: 'Optimize images',
       informative: true,
-      helpText: 'Optimized images take less time to download and save cellular data. ' +
-        'The identified images could have smaller file sizes when compressed as JPEG (q=85). ' +
-        '[Learn more about image optimization](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization).',
+      helpText: 'Optimized images load faster and consume less cellular data. ' +
+        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/optimize-images).',
       requiredArtifacts: ['OptimizedImages', 'devtoolsLogs']
     };
   }
