@@ -90,8 +90,10 @@ describe('Start-url gatherer', () => {
       startUrlGathererWithQueryString.pass(optionsWithQueryString)
         .then(_ => startUrlGathererWithQueryString.afterPass(optionsWithQueryString, tracingData))
     ]).then(([artifact, artifactWithQueryString]) => {
-      assert.strictEqual(artifact, -1);
-      assert.strictEqual(artifactWithQueryString, -1);
+      assert.equal(artifact.statusCode, -1);
+      assert.ok(artifact.debugString, 'did not set debug string');
+      assert.equal(artifactWithQueryString.statusCode, -1);
+      assert.ok(artifactWithQueryString.debugString, 'did not set debug string');
     });
   });
 
@@ -113,25 +115,22 @@ describe('Start-url gatherer', () => {
       startUrlGathererWithFragment.pass(optionsWithQueryString)
         .then(_ => startUrlGathererWithFragment.afterPass(optionsWithQueryString, tracingData))
     ]).then(([artifact, artifactWithFragment]) => {
-      assert.strictEqual(artifact, 200);
-      assert.strictEqual(artifactWithFragment, 200);
+      assert.equal(artifact.statusCode, 200);
+      assert.equal(artifactWithFragment.statusCode, 200);
     });
   });
 
-  it('returns an error when manifest cannot be found', () => {
+  it('returns a debugString when manifest cannot be found', () => {
     const startUrlGatherer = new StartUrlGatherer();
     const options = {
       url: 'https://ifixit-pwa.appspot.com/',
       driver: wrapSendCommand(mockDriver, '')
     };
 
-    startUrlGatherer.pass(options)
+    return startUrlGatherer.pass(options)
       .then(_ => startUrlGatherer.afterPass(options, tracingData))
-      .then(_ => {
-        assert.ok(false, 'should fail because manifest is empty');
-      })
-      .catch(err => {
-        assert.strictEqual(err.message, `No web app manifest found on page ${options.url}`);
+      .then(artifact => {
+        assert.equal(artifact.debugString, 'ERROR: start_url string empty');
       });
   });
 
@@ -142,13 +141,10 @@ describe('Start-url gatherer', () => {
       driver: wrapSendCommand(mockDriver, 'https://not-same-origin.com/')
     };
 
-    startUrlGatherer.pass(options)
+    return startUrlGatherer.pass(options)
       .then(_ => startUrlGatherer.afterPass(options, tracingData))
-      .then(_ => {
-        assert.ok(false, 'should fail because origin is not the same');
-      })
-      .catch(err => {
-        assert.strictEqual(err.message, 'ERROR: start_url must be same-origin as document');
+      .then(artifact => {
+        assert.equal(artifact.debugString, 'ERROR: start_url must be same-origin as document');
       });
   });
 });

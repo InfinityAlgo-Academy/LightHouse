@@ -46,7 +46,8 @@ class WebappInstallBanner extends MultiCheckAudit {
     };
   }
 
-  static assessManifest(manifestValues, failures) {
+  static assessManifest(artifacts, result) {
+    const {manifestValues, failures} = result;
     if (manifestValues.isParseFailure) {
       failures.push(manifestValues.parseFailureReason);
       return;
@@ -69,32 +70,36 @@ class WebappInstallBanner extends MultiCheckAudit {
   }
 
 
-  static assessServiceWorker(artifacts, failures) {
+  static assessServiceWorker(artifacts, result) {
     const hasServiceWorker = SWAudit.audit(artifacts).rawValue;
     if (!hasServiceWorker) {
-      failures.push('Site does not register a Service Worker');
+      result.failures.push('Site does not register a Service Worker');
     }
   }
 
-  static assessOfflineStartUrl(artifacts, failures) {
-    const hasOfflineStartUrl = artifacts.StartUrl === 200;
+  static assessOfflineStartUrl(artifacts, result) {
+    const hasOfflineStartUrl = artifacts.StartUrl.statusCode === 200;
+
     if (!hasOfflineStartUrl) {
-      failures.push('Manifest start_url is not cached by a Service Worker');
+      result.failures.push('Manifest start_url is not cached by a Service Worker');
+    }
+
+    if (artifacts.StartUrl.debugString) {
+      result.warnings.push(artifacts.StartUrl.debugString);
     }
   }
 
   static audit_(artifacts) {
     const failures = [];
+    const warnings = [];
 
     return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {
-      WebappInstallBanner.assessManifest(manifestValues, failures);
-      WebappInstallBanner.assessServiceWorker(artifacts, failures);
-      WebappInstallBanner.assessOfflineStartUrl(artifacts, failures);
+      const result = {warnings, failures, manifestValues};
+      WebappInstallBanner.assessManifest(artifacts, result);
+      WebappInstallBanner.assessServiceWorker(artifacts, result);
+      WebappInstallBanner.assessOfflineStartUrl(artifacts, result);
 
-      return {
-        failures,
-        manifestValues
-      };
+      return result;
     });
   }
 }

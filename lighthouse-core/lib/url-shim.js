@@ -103,7 +103,7 @@ URL.elideDataURI = function elideDataURI(url) {
 // Why? Special handling was added by Chrome team to allow a pushState transition between chrome:// pages.
 // As a result, the network URL (chrome://chrome/settings/) doesn't match the final document URL (chrome://settings/).
 function rewriteChromeInternalUrl(url) {
-  if (!url.startsWith('chrome://')) return url;
+  if (!url || !url.startsWith('chrome://')) return url;
   return url.replace(/^chrome:\/\/chrome\//, 'chrome://');
 }
 

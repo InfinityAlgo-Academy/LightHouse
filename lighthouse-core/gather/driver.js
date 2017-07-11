@@ -265,25 +265,18 @@ class Driver {
   }
 
   getAppManifest() {
-    return new Promise((resolve, reject) => {
-      this.sendCommand('Page.getAppManifest')
-        .then(response => {
-          // We're not reading `response.errors` however it may contain critical and noncritical
-          // errors from Blink's manifest parser:
-          //   https://chromedevtools.github.io/debugger-protocol-viewer/tot/Page/#type-AppManifestError
-          if (!response.data) {
-            if (response.url) {
-              return reject(new Error(`Unable to retrieve manifest at ${response.url}.`));
-            }
+    return this.sendCommand('Page.getAppManifest')
+      .then(response => {
+        // We're not reading `response.errors` however it may contain critical and noncritical
+        // errors from Blink's manifest parser:
+        //   https://chromedevtools.github.io/debugger-protocol-viewer/tot/Page/#type-AppManifestError
+        if (!response.data) {
+          // If the data is empty, the page had no manifest.
+          return null;
+        }
 
-            // If both the data and the url are empty strings, the page had no manifest.
-            return reject('No web app manifest found.');
-          }
-
-          resolve(response);
-        })
-        .catch(err => reject(err));
-    });
+        return response;
+      });
   }
 
   getSecurityState() {

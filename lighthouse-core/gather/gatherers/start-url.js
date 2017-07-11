@@ -49,26 +49,29 @@ class StartUrl extends Gatherer {
   pass(options) {
     return options.driver.getAppManifest()
       .then(response => {
-        return manifestParser(response.data, response.url, options.url);
+        return response && manifestParser(response.data, response.url, options.url);
       })
       .then(manifest => {
-        if (!manifest.value.start_url || !manifest.value.start_url.raw) {
-          return Promise.reject(new Error(`No web app manifest found on page ${options.url}`));
+        if (!manifest || !manifest.value) {
+          const detailedMsg = manifest && manifest.debugString;
+          this.debugString = detailedMsg ?
+              `Error fetching web app manifest: ${detailedMsg}` :
+              `No usable web app manifest found on page ${options.url}`;
+          return;
         }
 
         if (manifest.value.start_url.debugString) {
-          return Promise.reject(new Error(manifest.value.start_url.debugString));
+          // Even if the start URL had an error, the browser will still supply a fallback URL.
+          // Therefore, we only set the debugString here and continue with the fetch.
+          this.debugString = manifest.value.start_url.debugString;
         }
 
         this.startUrl = manifest.value.start_url.value;
-      }).then(_ => this.executeFetchRequest(options.driver, this.startUrl));
+        return this.executeFetchRequest(options.driver, this.startUrl);
+      });
   }
 
   afterPass(options, tracingData) {
-    if (!this.startUrl) {
-      return Promise.reject(new Error('No start_url found inside the manifest'));
-    }
-
     const networkRecords = tracingData.networkRecords;
     const navigationRecord = networkRecords.filter(record => {
       return URL.equalWithExcludedFragments(record._url, this.startUrl) &&
@@ -76,7 +79,24 @@ class StartUrl extends Gatherer {
     }).pop(); // Take the last record that matches.
 
     return options.driver.goOnline(options)
-      .then(_ => navigationRecord ? navigationRecord.statusCode : -1);
+      .then(_ => {
+        if (!this.startUrl) {
+          return {
+            statusCode: -1,
+            debugString: this.debugString || 'No start URL to fetch',
+          };
+        } else if (!navigationRecord) {
+          return {
+            statusCode: -1,
+            debugString: this.debugString || 'Did not fetch start URL from service worker',
+          };
+        } else {
+          return {
+            statusCode: navigationRecord.statusCode,
+            debugString: this.debugString,
+          };
+        }
+      });
   }
 }
 
