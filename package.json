@@ -50,11 +50,13 @@
     "fast": "yarn start -- --disable-device-emulation --disable-cpu-throttling --disable-network-throttling",
     "smokehouse": "node lighthouse-cli/test/smokehouse/smokehouse.js",
     "deploy-viewer": "cd lighthouse-viewer && gulp deploy",
+    "bundlesize": "bundlesize",
     "plots-smoke": "bash plots/test/smoke.sh"
   },
   "devDependencies": {
     "@types/node": "^6.0.45",
     "babel-core": "^6.16.0",
+    "bundlesize": "^0.6.1",
     "codecov": "^2.2.0",
     "coveralls": "^2.11.9",
     "eslint": "^3.12.0",
@@ -98,5 +100,15 @@
   "bugs": {
     "url": "https://github.com/GoogleChrome/lighthouse/issues"
   },
+  "bundlesize": [
+    {
+      "path": "./lighthouse-extension/dist/scripts/lighthouse-background.js",
+      "threshold": "400 Kb"
+    },
+    {
+      "path": "./lighthouse-viewer/dist/src/viewer.js",
+      "threshold": "60 Kb"
+    }
+  ],
   "homepage": "https://github.com/GoogleChrome/lighthouse#readme"
 }
