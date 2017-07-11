@@ -29,8 +29,7 @@ interface LighthouseError extends Error {
 
 /**
  * Attempts to connect to an instance of Chrome with an open remote-debugging
- * port. If none is found and the `skipAutolaunch` flag is not true, launches
- * a debuggable instance.
+ * port. If none is found, launches a debuggable instance.
  */
 async function getDebuggableChrome(flags: Flags) {
   return await launch(
@@ -39,9 +38,6 @@ async function getDebuggableChrome(flags: Flags) {
 
 function showConnectionError() {
   console.error('Unable to connect to Chrome');
-  console.error(
-      'If you\'re using lighthouse with --skip-autolaunch, ' +
-      'make sure you\'re running some other Chrome with a debugger.');
   process.exit(_RUNTIME_ERROR_CODE);
 }
 

@@ -77,8 +77,6 @@ Options:
   --disable-device-emulation    Disable Nexus 5X emulation                                                                                 [boolean]
   --disable-cpu-throttling      Disable CPU throttling                                                                    [boolean] [default: false]
   --disable-network-throttling  Disable network throttling                                                                                 [boolean]
-  --skip-autolaunch             Skip autolaunch of Chrome when already running instance is not found                                       [boolean]
-  --select-chrome               Interactively choose version of Chrome to use when multiple installations are found                        [boolean]
   --interactive                 Open Lighthouse in interactive mode                                                                        [boolean]
 
 Examples:

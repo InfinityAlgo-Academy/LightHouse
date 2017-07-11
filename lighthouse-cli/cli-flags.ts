@@ -12,9 +12,9 @@ const Driver = require('../lighthouse-core/gather/driver.js');
 import {GetValidOutputOptions, OutputMode} from './printer';
 
 export interface Flags {
-  skipAutolaunch: boolean, port: number, selectChrome: boolean, chromeFlags: string, output: any,
-      outputPath: string, interactive: boolean, saveArtifacts: boolean, saveAssets: boolean,
-      view: boolean, maxWaitForLoad: number, logLevel: string
+  port: number, chromeFlags: string, output: any, outputPath: string, interactive: boolean,
+      saveArtifacts: boolean, saveAssets: boolean, view: boolean, maxWaitForLoad: number,
+      logLevel: string
 }
 
 export function getFlags(manualArgv?: string) {
@@ -71,14 +71,15 @@ export function getFlags(manualArgv?: string) {
             'Additional categories to capture with the trace (comma-delimited).',
         'config-path': 'The path to the config JSON.',
         'chrome-flags':
-            'Custom flags to pass to Chrome (space-delimited). For a full list of flags, see http://peter.sh/experiments/chromium-command-line-switches/.',
+            `Custom flags to pass to Chrome (space-delimited). For a full list of flags, see http://peter.sh/experiments/chromium-command-line-switches/.
+
+            Environment variables:
+            CHROME_PATH: Explicit path of intended Chrome binary. If set must point to an executable of a build of Chromium version 54.0 or later. By default, any detected Chrome Canary or Chrome (stable) will be launched.
+            `,
         'perf': 'Use a performance-test-only configuration',
         'port': 'The port to use for the debugging protocol. Use 0 for a random port',
         'max-wait-for-load':
             'The timeout (in milliseconds) to wait before the page is considered done loading and the run should continue. WARNING: Very high values can lead to large traces and instability',
-        'skip-autolaunch': 'Skip autolaunch of Chrome when already running instance is not found',
-        'select-chrome':
-            'Interactively choose version of Chrome to use when multiple installations are found',
         'interactive': 'Open Lighthouse in interactive mode'
       })
 
@@ -97,8 +98,7 @@ Example: --output-path=./lighthouse-results.html`,
       .boolean([
         'disable-storage-reset', 'disable-device-emulation', 'disable-cpu-throttling',
         'disable-network-throttling', 'save-assets', 'save-artifacts', 'list-all-audits',
-        'list-trace-categories', 'perf', 'view', 'skip-autolaunch', 'select-chrome', 'verbose',
-        'quiet', 'help', 'interactive'
+        'list-trace-categories', 'perf', 'view', 'verbose', 'quiet', 'help', 'interactive'
       ])
       .choices('output', GetValidOutputOptions())
 
