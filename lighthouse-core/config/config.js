@@ -540,6 +540,8 @@ class Config {
     }).filter(pass => {
       // remove any passes lacking concrete gatherers, unless they are dependent on the trace
       if (pass.recordTrace) return true;
+      // Always keep defaultPass
+      if (pass.passName === 'defaultPass') return true;
       return pass.gatherers.length > 0;
     });
     return filteredPasses;
