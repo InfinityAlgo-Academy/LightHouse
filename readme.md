@@ -253,6 +253,10 @@ yarn compile-devtools
 
 See [Lighthouse Architecture](./docs/architecture.md).
 
+### Can I configure the lighthouse run?
+
+Yes! Details in [Lighthouse configuration](./docs/configuration.md).
+
 ### What is "Do Better Web"?
 
 **Do Better Web** is an initiative within Lighthouse to help web developers modernize their existing
