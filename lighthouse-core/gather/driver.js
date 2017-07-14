@@ -436,8 +436,11 @@ class Driver {
     }
 
     let lastTimeout;
+    let cancelled = false;
     let isResolvable = false;
     function checkForQuiet(driver, resolve) {
+      if (cancelled) return;
+
       const tryLater = timeToWait => {
         lastTimeout = setTimeout(() => checkForQuiet(driver, resolve), timeToWait);
       };
@@ -448,6 +451,8 @@ class Driver {
 
       return driver.evaluateAsync(`(${checkTimeSinceLastLongTask.toString()})()`)
         .then(timeSinceLongTask => {
+          if (cancelled) return;
+
           if (typeof timeSinceLongTask === 'number' && timeSinceLongTask >= waitForCPUQuiet) {
             log.verbose('Driver', `CPU has been idle for ${timeSinceLongTask} ms`);
             resolve();
@@ -462,6 +467,7 @@ class Driver {
     const promise = new Promise((resolve, reject) => {
       checkForQuiet(this, resolve);
       cancel = () => {
+        cancelled = true;
         if (lastTimeout) clearTimeout(lastTimeout);
         reject(new Error('Wait for CPU idle cancelled'));
       };
@@ -1107,7 +1113,12 @@ function registerPerformanceObserverInPage() {
       }
     }
   });
+
   observer.observe({entryTypes: ['longtask']});
+  // HACK: A PerformanceObserver will be GC'd if there are no more references to it, so attach it to
+  // window to ensure we still receive longtask notifications. See https://crbug.com/742530.
+  // For an example test of this behavior see https://gist.github.com/patrickhulce/69d8bed1807e762218994b121d06fea6.
+  window.____lhPerformanceObserver = observer;
 }
 
 
