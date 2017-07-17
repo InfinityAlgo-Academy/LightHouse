@@ -121,7 +121,7 @@ Each `passes` entry defines basic settings such as how long to wait for the page
 | networkQuietThresholdMs | `number` | The number of milliseconds since the last network request to wait before the page should be considered to have reached 'network quiet'. Used to ensure the page has had time for the full waterfall of network requests to complete before ending a trace. (Default: 5000) |
 | pauseAfterNetworkQuietMs | `number` | The number of milliseconds to wait after 'network quiet' before the pass can continue. Used to ensure the page has had time for post-network-quiet JavaScript to execute before ending a trace. (Default: 0) |
 | blockedUrlPatterns | `string[]` | URLs of requests to block while loading the page. Basic wildcard support using `*`.  |
-| gatherers | `string[]` | The list of gatherers to run on this pass. |
+| gatherers | `string[]` | The list of gatherers to run on this pass. This property is required and on extension will be concatenated with the existing set of gatherers. |
 
 ### `audits: string[]`
 

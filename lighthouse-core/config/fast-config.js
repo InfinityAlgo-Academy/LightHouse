@@ -26,10 +26,12 @@ module.exports = {
   passes: [
     {
       passName: 'defaultPass',
+      // overwrite the throttling and load wait parameters
       useThrottling: false,
       pauseAfterLoadMs: 0,
       networkQuietThresholdMs: 500,
       cpuQuietThresholdMs: 500,
+      // no need to add any gatherers yet, but this property is required
       gatherers: [],
     },
   ],
