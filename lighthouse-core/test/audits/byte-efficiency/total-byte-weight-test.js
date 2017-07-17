@@ -45,6 +45,7 @@ describe('Total byte weight audit', () => {
       assert.strictEqual(result.score, 100);
       const results = result.details.items;
       assert.strictEqual(results.length, 3);
+      assert.strictEqual(result.extendedInfo.value.totalCompletedRequests, 3);
       assert.strictEqual(results[0][1].text, `70${NBSP}KB`, 'results are sorted');
     });
   });
@@ -69,6 +70,7 @@ describe('Total byte weight audit', () => {
       assert.strictEqual(result.rawValue, 4180 * 1024);
       const results = result.details.items;
       assert.strictEqual(results.length, 10, 'results are clipped at top 10');
+      assert.strictEqual(result.extendedInfo.value.totalCompletedRequests, 11);
     });
   });
 

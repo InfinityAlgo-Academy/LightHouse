@@ -64,6 +64,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
         totalBytes += result.totalBytes;
         results.push(result);
       });
+      const totalCompletedRequests = results.length;
       results = results.sort((itemA, itemB) => itemB.totalBytes - itemA.totalBytes).slice(0, 10);
 
 
@@ -91,6 +92,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
         extendedInfo: {
           value: {
             results,
+            totalCompletedRequests
           }
         },
         details: tableDetails
