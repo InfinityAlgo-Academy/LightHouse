@@ -28,10 +28,6 @@ const Config = require('./config/config');
 module.exports = function(url, flags = {}, configJSON) {
   const startTime = Date.now();
   return Promise.resolve().then(_ => {
-    if (!url) {
-      throw new Error('Lighthouse requires a URL');
-    }
-
     // set logging preferences, assume quiet
     flags.logLevel = flags.logLevel || 'error';
     log.setLevel(flags.logLevel);
