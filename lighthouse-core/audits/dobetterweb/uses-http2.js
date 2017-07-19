@@ -43,10 +43,11 @@ class UsesHTTP2Audit extends Audit {
 
       // Filter requests that are on the same host as the page and not over h2.
       const resources = networkRecords.filter(record => {
+        // test the protocol first to avoid (potentially) expensive URL parsing
+        const isOldHttp = /HTTP\/[01][\.\d]?/i.test(record.protocol);
+        if (!isOldHttp) return false;
         const requestHost = new URL(record._url).host;
-        const sameHost = requestHost === finalHost;
-        const notH2 = /HTTP\/[01][\.\d]?/i.test(record.protocol);
-        return sameHost && notH2;
+        return requestHost === finalHost;
       }).map(record => {
         return {
           protocol: record.protocol,
