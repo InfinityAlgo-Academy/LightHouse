@@ -12,9 +12,10 @@ const assert = require('assert');
 const ComputedArtifact = require('../../../gather/computed/computed-artifact');
 
 class TestComputedArtifact extends ComputedArtifact {
-  constructor() {
-    super();
+  constructor(...args) {
+    super(...args);
 
+    this.lastArguments = [];
     this.computeCounter = 0;
   }
 
@@ -22,12 +23,30 @@ class TestComputedArtifact extends ComputedArtifact {
     return 'TestComputedArtifact';
   }
 
-  compute_(_) {
+  compute_(...args) {
+    this.lastArguments = args;
     return this.computeCounter++;
   }
 }
 
+class MultipleInputArtifact extends TestComputedArtifact {
+  get requiredNumberOfArtifacts() {
+    return 2;
+  }
+}
+
 describe('ComputedArtifact base class', () => {
+  it('tests correct number of inputs', () => {
+    const singleInputArtifact = new TestComputedArtifact();
+    const multiInputArtifact = new MultipleInputArtifact();
+
+    return Promise.resolve()
+      .then(_ => singleInputArtifact.request(1))
+      .then(_ => multiInputArtifact.request(1, 2))
+      .then(_ => assert.throws(() => singleInputArtifact.request(1, 2)))
+      .then(_ => assert.throws(() => multiInputArtifact.request(1)));
+  });
+
   it('caches computed artifacts', () => {
     const testComputedArtifact = new TestComputedArtifact();
 
@@ -43,5 +62,24 @@ describe('ComputedArtifact base class', () => {
     }).then(_ => testComputedArtifact.request(obj1)).then(result => {
       assert.equal(result, 1);
     });
+  });
+
+  it('caches multiple input arguments', () => {
+    const mockComputed = {computed: true};
+    const computedArtifact = new MultipleInputArtifact(mockComputed);
+
+    const obj0 = {value: 1};
+    const obj1 = {value: 2};
+    const obj2 = {value: 3};
+
+    return computedArtifact.request(obj0, obj1)
+      .then(result => assert.equal(result, 0))
+      .then(_ => assert.deepEqual(computedArtifact.lastArguments, [obj0, obj1, mockComputed]))
+      .then(_ => computedArtifact.request(obj1, obj2))
+      .then(result => assert.equal(result, 1))
+      .then(_ => assert.deepEqual(computedArtifact.lastArguments, [obj1, obj2, mockComputed]))
+      .then(_ => computedArtifact.request(obj0, obj1))
+      .then(result => assert.equal(result, 0))
+      .then(_ => assert.deepEqual(computedArtifact.lastArguments, [obj1, obj2, mockComputed]));
   });
 });
