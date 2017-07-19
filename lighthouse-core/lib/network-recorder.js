@@ -81,6 +81,7 @@ class NetworkRecorder extends EventEmitter {
     this.emit('requestloaded', request.data);
 
     const activeCount = this.activeRequestCount();
+    global.activeCount = activeCount;
     log.verbose('NetworkRecorder', `Request finished. ${activeCount} requests in progress` +
         ` (${this.startedRequestCount} started and ${this.finishedRequestCount} finished).`);
 

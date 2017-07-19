@@ -435,6 +435,7 @@ class Driver {
       };
     }
 
+    global.lastTask = 0;
     let lastTimeout;
     let cancelled = false;
     let isResolvable = false;
@@ -452,6 +453,8 @@ class Driver {
       return driver.evaluateAsync(`(${checkTimeSinceLastLongTask.toString()})()`)
         .then(timeSinceLongTask => {
           if (cancelled) return;
+
+          global.lastTask = timeSinceLongTask;
 
           if (typeof timeSinceLongTask === 'number' && timeSinceLongTask >= waitForCPUQuiet) {
             log.verbose('Driver', `CPU has been idle for ${timeSinceLongTask} ms`);
@@ -492,14 +495,19 @@ class Driver {
   _waitForLoadEvent(pauseAfterLoadMs) {
     let loadListener;
     let loadTimeout;
+    global.loadEventFired = '✗';
 
     const promise = new Promise((resolve, reject) => {
       loadListener = function() {
         loadTimeout = setTimeout(resolve, pauseAfterLoadMs);
       };
-      this.once('Page.loadEventFired', loadListener);
+      this.once('Page.loadEventFired', _ => {
+        global.loadEventFired = '✓';
+        loadListener();
+      });
     });
     const cancel = () => {
+      global.loadEventFired = 'canceled';
       this.off('Page.loadEventFired', loadListener);
       clearTimeout(loadTimeout);
     };
@@ -537,6 +545,24 @@ class Driver {
     // CPU listener. Resolves when the CPU has been idle for cpuQuietThresholdMs after network idle.
     const waitForCPUIdle = this._waitForCPUIdle(cpuQuietThresholdMs);
 
+    let loadEventGood = false;
+    let networkGood = false;
+    let cpuGood = false;
+    const logCheck = bool => bool ? '✓' : '✗';
+
+    waitForLoadEvent.promise.then(_ => loadEventGood = true);
+    waitForNetworkIdle.promise.then(_ => networkGood = true);
+    waitForCPUIdle.promise.then(_ => cpuGood = true);
+
+    const cId = setInterval(_ => {
+      log.log('status', `Loading page & waiting for onload:
+         ${logCheck(networkGood)} Active requests: ${global.activeCount}
+         ${logCheck(cpuGood)} Last CPU activity: ${global.lastTask.toLocaleString()}ms ago
+         ${logCheck(loadEventGood)} Load event fired: ${global.loadEventFired}
+      `);
+    }, 100);
+
+
     // Wait for both load promises. Resolves on cleanup function the clears load
     // timeout timer.
     const loadPromise = Promise.all([
@@ -544,6 +570,7 @@ class Driver {
       waitForNetworkIdle.promise.then(waitForCPUIdle.markAsResolvable),
       waitForCPUIdle.promise,
     ]).then(() => {
+      clearInterval(cId);
       return function() {
         log.verbose('Driver', 'loadEventFired and network considered idle');
         clearTimeout(maxTimeoutHandle);
