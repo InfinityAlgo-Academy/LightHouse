@@ -381,6 +381,11 @@ class Driver {
       const onIdle = () => {
         // eslint-disable-next-line no-use-before-define
         this._networkStatusMonitor.once('network-2-busy', onBusy);
+        const beginning = Date.now();
+        global.pauseAfterIdle = function() {
+          const duration = Date.now() - beginning;
+          return `networkQuiet: ${Math.min(duration, networkQuietThresholdMs).toLocaleString()} / ${networkQuietThresholdMs}`;
+        };
         idleTimeout = setTimeout(_ => {
           cancel();
           resolve();
@@ -409,6 +414,11 @@ class Driver {
       };
     }).then(() => {
       // Once idle has been determined wait another pauseAfterLoadMs
+      const beginning = Date.now();
+      global.pauseAfter = function() {
+        const duration = Date.now() - beginning;
+        return `pauseAfterNetworkQuiet: ${duration.toLocaleString()} / ${pauseAfterNetworkQuietMs}`;
+      };
       return new Promise(resolve => setTimeout(resolve, pauseAfterNetworkQuietMs));
     });
 
@@ -499,6 +509,11 @@ class Driver {
 
     const promise = new Promise((resolve, reject) => {
       loadListener = function() {
+        const beginning = Date.now();
+        global.pauseAfterLoad = function() {
+          const duration = Date.now() - beginning;
+          return `pauseAfterLoadMs: ${Math.min(duration, pauseAfterLoadMs).toLocaleString()} / ${pauseAfterLoadMs}`;
+        };
         loadTimeout = setTimeout(resolve, pauseAfterLoadMs);
       };
       this.once('Page.loadEventFired', _ => {
@@ -556,9 +571,13 @@ class Driver {
 
     const cId = setInterval(_ => {
       log.log('status', `Loading page & waiting for onload:
-         ${logCheck(networkGood)} Active requests: ${global.activeCount}
-         ${logCheck(cpuGood)} Last CPU activity: ${global.lastTask.toLocaleString()}ms ago
+      ${logCheck(cpuGood)} Last CPU activity: ${global.lastTask.toLocaleString()}ms ago
+      ${logCheck(networkGood)} Active requests: ${global.activeCount}
+                      ${global.pauseAfterIdle ? global.pauseAfterIdle() : ''}
+                      ${global.pauseAfter ? global.pauseAfter() : ''}
          ${logCheck(loadEventGood)} Load event fired: ${global.loadEventFired}
+                      ${global.pauseAfterLoad ? global.pauseAfterLoad() : ''}
+
       `);
     }, 100);
 
