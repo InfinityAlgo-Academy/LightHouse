@@ -94,9 +94,7 @@ describe('CategoryRenderer', () => {
     assert.equal(title.textContent, category.name, 'title is set');
     assert.ok(description.querySelector('a'), 'description contains converted markdown links');
 
-    const audits = categoryDOM.querySelectorAll('.lh-category > .lh-audit, ' +
-        '.lh-category > .lh-passed-audits > .lh-audit, ' +
-        '.lh-audit-group--manual .lh-audit');
+    const audits = categoryDOM.querySelectorAll('.lh-audit');
     assert.equal(audits.length, category.audits.length, 'renders correct number of audits');
   });
 
@@ -110,7 +108,9 @@ describe('CategoryRenderer', () => {
     const audit = {result: auditResult, score: 100};
     const category = {name: 'Fake', description: '', score: 100, audits: [audit]};
     const categoryDOM = renderer.render(category, sampleResults.reportGroups);
-    assert.ok(categoryDOM.querySelector('.lh-category > .lh-audit'), 'did not render as failed');
+    assert.ok(categoryDOM.querySelector(
+        '.lh-category > .lh-audit-group:not(.lh-passed-audits) > .lh-audit'),
+        'did not render as failed');
     assert.ok(categoryDOM.querySelector('.lh-debug'), 'did not render debug message');
   });
 
@@ -145,7 +145,7 @@ describe('CategoryRenderer', () => {
     it('renders the sections', () => {
       const categoryDOM = renderer.render(category, sampleResults.reportGroups);
       const sections = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group');
-      assert.equal(sections.length, 3);
+      assert.equal(sections.length, 4);
     });
 
     it('renders the metrics', () => {
@@ -250,7 +250,7 @@ describe('CategoryRenderer', () => {
       const failedAuditTags = new Set(failedAudits.map(audit => audit.group));
 
       const failedAuditGroups = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group');
-      assert.equal(failedAuditGroups.length, failedAuditTags.size);
+      assert.equal(failedAuditGroups.length, failedAuditTags.size+1);
     });
 
     it('renders the passed audits grouped by group', () => {
@@ -276,11 +276,10 @@ describe('CategoryRenderer', () => {
       const category = sampleResults.reportCategories[0];
       const elem = renderer.render(category, sampleResults.reportGroups);
       const passedAudits = elem.querySelectorAll('.lh-category > .lh-passed-audits > .lh-audit');
-      const failedAudits = elem.querySelectorAll('.lh-category > .lh-audit');
+      const failedAudits = elem.querySelectorAll(
+          '.lh-category > .lh-audit-group:first-of-type > .lh-audit');
       const manualAudits = elem.querySelectorAll('.lh-audit-group--manual .lh-audit');
 
-      assert.equal(passedAudits.length + failedAudits.length + manualAudits.length,
-                   category.audits.length);
       assert.equal(passedAudits.length, 4);
       assert.equal(failedAudits.length, 7);
       assert.equal(manualAudits.length, 3);
@@ -291,7 +290,8 @@ describe('CategoryRenderer', () => {
       category.audits.forEach(audit => audit.score = 0);
       const elem = renderer.render(category, sampleResults.reportGroups);
       const passedAudits = elem.querySelectorAll('.lh-category > .lh-passed-audits > .lh-audit');
-      const failedAudits = elem.querySelectorAll('.lh-category > .lh-audit');
+      const failedAudits = elem.querySelectorAll(
+          '.lh-category > .lh-audit-group:first-of-type > .lh-audit');
 
       assert.equal(passedAudits.length, 0);
       assert.equal(failedAudits.length, 11);

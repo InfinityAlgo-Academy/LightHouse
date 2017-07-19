@@ -26,12 +26,31 @@
   </div>
 </template>
 
+<!-- Lighthouse timeline metric -->
+<template id="tmpl-lh-timeline-metric">
+  <div class="lh-timeline-metric">
+    <div class="lh-timeline-metric__sparkline">
+      <div class="lh-sparkline__bar"></div>
+    </div>
+    <div class="lh-timeline-metric__header">
+      <div class="lh-timeline-metric__value"><!-- fill me --></div>
+      <details class="lh-timeline-metric__details lh-expandable-details">
+        <summary class="lh-timeline-metric__summary lh-expandable-details__summary">
+          <span class="lh-timeline-metric__title"><!-- fill me --></span>
+          <div class="lh-toggle-arrow" title="See audits"></div>
+        </summary>
+        <div class="lh-timeline-metric__description"><!-- fill me --></div>
+      </details>
+    </div>
+  </div>
+</template>
+
 <!-- Lighthouse left nav -->
 <template id="tmpl-lh-leftnav">
   <style>
     .lh-leftnav {
       width: var(--report-menu-width);
-      border-right: 1px solid var(--report-secondary-border-color);
+      border-right: 1px solid var(--report-border-color);
       position: fixed;
       height: 100%;
       background: #fff;
@@ -39,9 +58,10 @@
       z-index: 2;
     }
     .lh-leftnav__item {
-      padding: var(--default-padding);
+      padding: var(--navitem-vpadding) var(--navitem-hpadding);
       color: var(--secondary-text-color);
-      font-size: 16px;
+      font-size: var(--navitem-font-size);
+      line-height: var(--navitem-line-height);
       display: flex;
       justify-content: space-between;
       text-decoration: none;
@@ -64,6 +84,7 @@
     }
     .leftnav__header {
       padding: 0 20px;
+      margin-bottom: var(--navitem-vpadding);
       height: 115px;
       font-size: 18px;
       display: flex;
@@ -76,19 +97,20 @@
     }
     .leftnav__header__title {
       font-family: var(--text-font-family);
+      font-size: var(--title-font-size);
+      line-height: var(--title-line-height);
       font-weight: 300;
       color: #fff;
       margin: 0;
       padding: 0;
-      line-height: 1.5;
     }
     .leftnav__header__version {
       color: #aab3ed;
       font-family: var(--text-font-family);
-      font-size: 14px;
-      line-height: 1.5;
+      font-size: var(--body-font-size);
+      line-height: var(--body-line-height);
     }
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 720px) {
       .lh-leftnav {
         display: none;
       }
@@ -265,14 +287,14 @@
     .lh-config__settings-toggle summary::-webkit-details-marker {
       display: none;
     }
-    @media screen and (min-width: 1130px) {
+    @media screen and (min-width: 960px) {
       .lh-header {
         width: var(--report-width);
         right: initial;
         left: initial;
       }
     }
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 720px) {
       .lh-export__dropdown {
         right: 0;
         left: initial;
@@ -361,11 +383,11 @@
 <template id="tmpl-lh-gauge">
   <style>
     .lh-gauge {
-      --circle-size: 80px;
+      --circle-size: calc(2.5 * var(--header-font-size));
       --circle-size-half: calc(var(--circle-size) / 2);
-      --circle-background: #eee;
-      --circle-border-width: 8px;
-      --inset-size: calc(var(--circle-size) - var(--circle-border-width));
+      --circle-background: #ccc;
+      --circle-border-width: 2px;
+      --inset-size: calc(var(--circle-size) - 2 * var(--circle-border-width));
       --inset-color: #fff;
       --transition-length: 1s;
       width: var(--circle-size);
@@ -413,7 +435,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: calc(var(--circle-size) / 3);
+      font-size: var(--header-font-size);
     }
     .lh-gauge__wrapper {
       display: inline-flex;
@@ -425,15 +447,15 @@
       min-width: auto;
       position: relative;
     }
-    .lh-gauge__label {
-      font-size: 16px;
-      margin-top: var(--default-padding);
-      text-align: center;
+    .lh-scores-header .lh-gauge__wrapper {
+      width: calc(10.5 * var(--body-font-size));
     }
-    @media screen and (max-width: 767px) {
-      .lh-gauge__label {
-        font-size: 12px;
-      }
+    .lh-gauge__label {
+      font-size: var(--body-font-size);
+      line-height: var(--body-line-height);
+      margin-top: calc(0.5 * var(--body-line-height));
+    }
+    @media screen and (max-width: 720px) {
     }
   </style>
   <a href="#" class="lh-gauge__wrapper">

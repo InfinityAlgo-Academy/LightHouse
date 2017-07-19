@@ -117,16 +117,18 @@ class CategoryRenderer {
    * @return {!Element}
    */
   _renderTimelineMetricAudit(audit, scale) {
-    const element = this._dom.createElement('div',
-        `lh-timeline-metric lh-timeline-metric--${Util.calculateRating(audit.score)}`);
+    const tmpl = this._dom.cloneTemplate('#tmpl-lh-timeline-metric', this._templateContext);
+    const element = this._dom.find('.lh-timeline-metric', tmpl);
+    element.classList.add(`lh-timeline-metric--${Util.calculateRating(audit.score)}`);
 
-    const sparklineContainerEl = this._dom.createChildOf(element, 'div',
-        'lh-timeline-metric__sparkline');
-    const titleEl = this._dom.createChildOf(element, 'div', 'lh-timeline-metric__title');
-    const titleNameEl = this._dom.createChildOf(titleEl, 'span', 'lh-timeline-metric__name');
-    const titleValueEl = this._dom.createChildOf(titleEl, 'span', 'lh-timeline-metric__value');
-    titleNameEl.textContent = audit.result.description;
-    titleValueEl.textContent = audit.result.displayValue;
+    const titleEl = this._dom.find('.lh-timeline-metric__title', tmpl);
+    titleEl.textContent = audit.result.description;
+
+    const valueEl = this._dom.find('.lh-timeline-metric__value', tmpl);
+    valueEl.textContent = audit.result.displayValue;
+
+    const descriptionEl = this._dom.find('.lh-timeline-metric__description', tmpl);
+    descriptionEl.appendChild(this._dom.convertMarkdownLinkSnippets(audit.result.helpText));
 
     if (typeof audit.result.rawValue !== 'number') {
       const debugStrEl = this._dom.createChildOf(element, 'div', 'lh-debug');
@@ -134,14 +136,8 @@ class CategoryRenderer {
       return element;
     }
 
-    const sparklineEl = this._dom.createChildOf(sparklineContainerEl, 'div',
-        'lh-sparkline lh-sparkline--thin');
-    const sparklineBarEl = this._dom.createChildOf(sparklineEl, 'div', 'lh-sparkline__bar');
+    const sparklineBarEl = this._dom.find('.lh-sparkline__bar', tmpl);
     sparklineBarEl.style.width = `${audit.result.rawValue / scale * 100}%`;
-
-    const descriptionEl = this._dom.createChildOf(element, 'div',
-        'lh-timeline-metric__description');
-    descriptionEl.appendChild(this._dom.convertMarkdownLinkSnippets(audit.result.helpText));
 
     return element;
   }
@@ -219,9 +215,6 @@ class CategoryRenderer {
           'lh-audit-group__header lh-expandable-details__header');
     auditGroupHeader.textContent = group.title;
 
-    const auditGroupDescription = this._dom.createElement('div', 'lh-audit-group__description');
-    auditGroupDescription.appendChild(this._dom.convertMarkdownLinkSnippets(group.description));
-
     const auditGroupSummary = this._dom.createElement('summary',
           'lh-audit-group__summary lh-expandable-details__summary');
     const auditGroupArrow = this._dom.createElement('div', 'lh-toggle-arrow', {
@@ -229,9 +222,14 @@ class CategoryRenderer {
     });
     auditGroupSummary.appendChild(auditGroupHeader);
     auditGroupSummary.appendChild(auditGroupArrow);
-
     auditGroupElem.appendChild(auditGroupSummary);
-    auditGroupElem.appendChild(auditGroupDescription);
+
+    if (group.description) {
+      const auditGroupDescription = this._dom.createElement('div', 'lh-audit-group__description');
+      auditGroupDescription.appendChild(this._dom.convertMarkdownLinkSnippets(group.description));
+      auditGroupElem.appendChild(auditGroupDescription);
+    }
+
     return auditGroupElem;
   }
 
@@ -240,10 +238,10 @@ class CategoryRenderer {
    * @return {!Element}
    */
   _renderPassedAuditsSection(elements) {
-    const passedElem = this._dom.createElement('details', 'lh-passed-audits');
-    const passedSummary = this._dom.createElement('summary', 'lh-passed-audits-summary');
-    passedElem.appendChild(passedSummary);
-    passedSummary.textContent = `View ${elements.length} passed items`;
+    const passedElem = this._renderAuditGroup({
+      title: `${elements.length} Passed Audits`,
+    });
+    passedElem.classList.add('lh-passed-audits');
     elements.forEach(elem => passedElem.appendChild(elem));
     return passedElem;
   }
@@ -344,14 +342,18 @@ class CategoryRenderer {
         !audit.result.debugString);
     const nonPassedAudits = nonManualAudits.filter(audit => !passedAudits.includes(audit));
 
-    for (const audit of nonPassedAudits) {
-      element.appendChild(this._renderAudit(audit));
-    }
+    const nonPassedElem = this._renderAuditGroup({
+      title: `${nonPassedAudits.length} failed audits`,
+    });
+    nonPassedElem.open = true;
+    nonPassedAudits.forEach(audit => nonPassedElem.appendChild(this._renderAudit(audit)));
+    element.appendChild(nonPassedElem);
 
     // Create a passed section if there are passing audits.
     if (passedAudits.length) {
-      const passedElements = passedAudits.map(audit => this._renderAudit(audit));
-      const passedElem = this._renderPassedAuditsSection(passedElements);
+      const passedElem = this._renderPassedAuditsSection(
+        passedAudits.map(audit => this._renderAudit(audit))
+      );
       element.appendChild(passedElem);
     }
 
