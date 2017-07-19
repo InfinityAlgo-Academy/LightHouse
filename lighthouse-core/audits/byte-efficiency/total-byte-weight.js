@@ -9,7 +9,6 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const statistics = require('../../lib/statistics');
 
 // Parameters for log-normal CDF scoring. See https://www.desmos.com/calculator/gpmjeykbwr
 // ~75th and ~90th percentiles http://httparchive.org/interesting.php?a=All&l=Feb%201%202017&s=All#bytesTotal
@@ -72,9 +71,11 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       //   <= 1600KB: score≈100
       //   4000KB: score=50
       //   >= 9000KB: score≈0
-      const distribution = statistics.getLogNormalDistribution(
-        SCORING_MEDIAN, SCORING_POINT_OF_DIMINISHING_RETURNS);
-      const score = 100 * distribution.computeComplementaryPercentile(totalBytes);
+      const score = ByteEfficiencyAudit.computeLogNormalScore(
+        totalBytes,
+        SCORING_POINT_OF_DIMINISHING_RETURNS,
+        SCORING_MEDIAN
+      );
 
       const headings = [
         {key: 'url', itemType: 'url', text: 'URL'},
@@ -85,10 +86,10 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       const tableDetails = ByteEfficiencyAudit.makeTableDetails(headings, results);
 
       return {
+        score,
         rawValue: totalBytes,
         optimalValue: this.meta.optimalValue,
         displayValue: `Total size was ${ByteEfficiencyAudit.bytesToKbString(totalBytes)}`,
-        score: Math.round(Math.max(0, Math.min(score, 100))),
         extendedInfo: {
           value: {
             results,

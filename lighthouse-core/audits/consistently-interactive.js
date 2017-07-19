@@ -8,7 +8,6 @@
 const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util.js');
 const TracingProcessor = require('../lib/traces/tracing-processor');
-const statistics = require('../lib/statistics');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 //   https://www.desmos.com/calculator/uti67afozh
@@ -18,11 +17,6 @@ const SCORING_MEDIAN = 10000;
 const REQUIRED_QUIET_WINDOW = 5000;
 const ALLOWED_CONCURRENT_REQUESTS = 2;
 const IGNORED_NETWORK_SCHEMES = ['data', 'ws'];
-
-const distribution = statistics.getLogNormalDistribution(
-  SCORING_MEDIAN,
-  SCORING_POINT_OF_DIMINISHING_RETURNS
-);
 
 /**
  * @fileoverview This audit identifies the time the page is "consistently interactive".
@@ -234,14 +228,12 @@ class ConsistentlyInteractiveMetric extends Audit {
         const timeInMs = (timestamp - traceOfTab.timestamps.navigationStart) / 1000;
         const extendedInfo = Object.assign(quietPeriodInfo, {timestamp, timeInMs});
 
-        let score = 100 * distribution.computeComplementaryPercentile(timeInMs);
-        // Clamp the score to 0 <= x <= 100.
-        score = Math.min(100, score);
-        score = Math.max(0, score);
-        score = Math.round(score);
-
         return {
-          score,
+          score: Audit.computeLogNormalScore(
+            timeInMs,
+            SCORING_POINT_OF_DIMINISHING_RETURNS,
+            SCORING_MEDIAN
+          ),
           rawValue: timeInMs,
           displayValue: Util.formatMilliseconds(timeInMs),
           optimalValue: this.meta.optimalValue,

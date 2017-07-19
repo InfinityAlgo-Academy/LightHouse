@@ -6,7 +6,6 @@
 'use strict';
 
 const Audit = require('./audit');
-const statistics = require('../lib/statistics');
 const Util = require('../report/v2/renderer/util');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
@@ -63,13 +62,11 @@ class SpeedIndexMetric extends Audit {
       //  Median = 5,500
       //  75th Percentile = 8,820
       //  95th Percentile = 17,400
-      const distribution = statistics.getLogNormalDistribution(SCORING_MEDIAN,
-        SCORING_POINT_OF_DIMINISHING_RETURNS);
-      let score = 100 * distribution.computeComplementaryPercentile(speedline.perceptualSpeedIndex);
-
-      // Clamp the score to 0 <= x <= 100.
-      score = Math.min(100, score);
-      score = Math.max(0, score);
+      const score = Audit.computeLogNormalScore(
+        speedline.perceptualSpeedIndex,
+        SCORING_POINT_OF_DIMINISHING_RETURNS,
+        SCORING_MEDIAN
+      );
 
       const extendedInfo = {
         timings: {
@@ -97,7 +94,7 @@ class SpeedIndexMetric extends Audit {
       const rawValue = Math.round(speedline.perceptualSpeedIndex);
 
       return {
-        score: Math.round(score),
+        score,
         rawValue,
         displayValue: Util.formatNumber(rawValue),
         optimalValue: this.meta.optimalValue,

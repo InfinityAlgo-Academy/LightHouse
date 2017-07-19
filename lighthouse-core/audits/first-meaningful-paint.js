@@ -7,7 +7,6 @@
 
 const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util.js');
-const statistics = require('../lib/statistics');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 // https://www.desmos.com/calculator/joz3pqttdq
@@ -101,17 +100,15 @@ class FirstMeaningfulPaint extends Audit {
     //   4000ms: score=50
     //   >= 14000ms: score≈0
     const firstMeaningfulPaint = traceOfTab.timings.firstMeaningfulPaint;
-    const distribution = statistics.getLogNormalDistribution(SCORING_MEDIAN,
-        SCORING_POINT_OF_DIMINISHING_RETURNS);
-    let score = 100 * distribution.computeComplementaryPercentile(firstMeaningfulPaint);
-
-    // Clamp the score to 0 <= x <= 100.
-    score = Math.min(100, score);
-    score = Math.max(0, score);
+    const score = Audit.computeLogNormalScore(
+      firstMeaningfulPaint,
+      SCORING_POINT_OF_DIMINISHING_RETURNS,
+      SCORING_MEDIAN
+    );
 
     return {
+      score,
       duration: firstMeaningfulPaint.toFixed(1),
-      score: Math.round(score),
       rawValue: firstMeaningfulPaint,
       extendedInfo
     };

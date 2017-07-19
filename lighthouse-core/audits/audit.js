@@ -5,6 +5,8 @@
  */
 'use strict';
 
+const statistics = require('../lib/statistics');
+
 const DEFAULT_PASS = 'defaultPass';
 
 class Audit {
@@ -30,6 +32,28 @@ class Audit {
    */
   static get meta() {
     throw new Error('Audit meta information must be overridden.');
+  }
+
+  /**
+   * Computes a clamped score between 0 and 100 based on the measured value. Score is determined by
+   * considering a log-normal distribution governed by the two control points, point of diminishing
+   * returns and the median value, and returning the percentage of sites that have higher value.
+   *
+   * @param {number} measuredValue
+   * @param {number} diminishingReturnsValue
+   * @param {number} medianValue
+   * @return {number}
+   */
+  static computeLogNormalScore(measuredValue, diminishingReturnsValue, medianValue) {
+    const distribution = statistics.getLogNormalDistribution(
+      medianValue,
+      diminishingReturnsValue
+    );
+
+    let score = 100 * distribution.computeComplementaryPercentile(measuredValue);
+    score = Math.min(100, score);
+    score = Math.max(0, score);
+    return Math.round(score);
   }
 
   /**

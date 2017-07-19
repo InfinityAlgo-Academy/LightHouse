@@ -13,7 +13,6 @@
 'use strict';
 
 const Audit = require('../audit');
-const statistics = require('../../lib/statistics');
 const Util = require('../../report/v2/renderer/util.js');
 
 const MAX_DOM_NODES = 1500;
@@ -73,12 +72,11 @@ class DOMSize extends Audit {
     //   <= 1500: score≈100
     //   3000: score=50
     //   >= 5970: score≈0
-    const distribution = statistics.getLogNormalDistribution(
-        SCORING_MEDIAN, SCORING_POINT_OF_DIMINISHING_RETURNS);
-    let score = 100 * distribution.computeComplementaryPercentile(stats.totalDOMNodes);
-
-    // Clamp the score to 0 <= x <= 100.
-    score = Math.max(0, Math.min(100, score));
+    const score = Audit.computeLogNormalScore(
+      stats.totalDOMNodes,
+      SCORING_POINT_OF_DIMINISHING_RETURNS,
+      SCORING_MEDIAN
+    );
 
     const cards = [{
       title: 'Total DOM Nodes',
@@ -97,9 +95,9 @@ class DOMSize extends Audit {
     }];
 
     return {
+      score,
       rawValue: stats.totalDOMNodes,
       optimalValue: this.meta.optimalValue,
-      score: Math.round(score),
       displayValue: `${Util.formatNumber(stats.totalDOMNodes)} nodes`,
       extendedInfo: {
         value: cards
