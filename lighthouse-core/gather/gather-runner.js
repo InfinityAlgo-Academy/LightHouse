@@ -27,8 +27,9 @@ let GathererResults; // eslint-disable-line no-unused-vars
  *     ii. beginEmulation
  *     iii. enableRuntimeEvents
  *     iv. evaluateScriptOnLoad rescue native Promise from potential polyfill
- *     v. cleanBrowserCaches
- *     vi. clearDataForOrigin
+ *     v. register a performance observer
+ *     vi. register dialog dismisser
+ *     vii. clearDataForOrigin
  *
  * 2. For each pass in the config:
  *   A. GatherRunner.beforePass()
@@ -98,13 +99,13 @@ class GatherRunner {
     const resetStorage = !options.flags.disableStorageReset;
     // Enable emulation based on flags
     return driver.assertNoSameOriginServiceWorkerClients(options.url)
+      .then(_ => gathererResults.UserAgent = [driver.getUserAgent()])
       .then(_ => driver.beginEmulation(options.flags))
       .then(_ => driver.enableRuntimeEvents())
       .then(_ => driver.cacheNatives())
       .then(_ => driver.registerPerformanceObserver())
       .then(_ => driver.dismissJavaScriptDialogs())
-      .then(_ => resetStorage && driver.clearDataForOrigin(options.url))
-      .then(_ => gathererResults.UserAgent = [driver.getUserAgent()]);
+      .then(_ => resetStorage && driver.clearDataForOrigin(options.url));
   }
 
   static disposeDriver(driver) {
