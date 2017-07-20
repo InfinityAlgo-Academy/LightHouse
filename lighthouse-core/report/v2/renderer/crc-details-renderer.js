@@ -161,6 +161,7 @@ class CriticalRequestChainRenderer {
         Util.formatBytesToKB(details.longestChain.transferSize);
 
     const detailsEl = dom.find('.lh-details', tmpl);
+    detailsEl.open = true;
 
     dom.find('.lh-details > summary', tmpl).textContent = details.header.text;
 

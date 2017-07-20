@@ -110,7 +110,7 @@
       font-size: var(--body-font-size);
       line-height: var(--body-line-height);
     }
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 964px) {
       .lh-leftnav {
         display: none;
       }
@@ -287,14 +287,14 @@
     .lh-config__settings-toggle summary::-webkit-details-marker {
       display: none;
     }
-    @media screen and (min-width: 960px) {
+    @media screen and (min-width: 965px) {
       .lh-header {
         width: var(--report-width);
         right: initial;
         left: initial;
       }
     }
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 964px) {
       .lh-export__dropdown {
         right: 0;
         left: initial;
@@ -306,7 +306,7 @@
     }
     @media print {
       .lh-header {
-        display: none;
+        position: static;
         margin-left: 0;
       }
     }
@@ -454,8 +454,6 @@
       font-size: var(--body-font-size);
       line-height: var(--body-line-height);
       margin-top: calc(0.5 * var(--body-line-height));
-    }
-    @media screen and (max-width: 720px) {
     }
   </style>
   <a href="#" class="lh-gauge__wrapper">
