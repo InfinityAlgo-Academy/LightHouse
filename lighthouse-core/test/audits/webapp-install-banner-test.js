@@ -132,7 +132,7 @@ describe('PWA: webapp install banner audit', () => {
 
     return WebappInstallBannerAudit.audit(artifacts).then(result => {
       assert.strictEqual(result.rawValue, false);
-      assert.ok(result.debugString.includes('Service Worker'), result.debugString);
+      assert.ok(result.debugString.includes('service worker'), result.debugString);
       const failures = result.extendedInfo.value.failures;
       // start url will be -1 as well so failures will be 2
       assert.strictEqual(failures.length, 2, failures);

@@ -11,7 +11,7 @@ const ServiceWorkerGather = require('../../../gather/gatherers/service-worker');
 const assert = require('assert');
 let serviceWorkerGatherer;
 
-describe('Service Worker gatherer', () => {
+describe('service worker gatherer', () => {
   // Reset the Gatherer before each test.
   beforeEach(() => {
     serviceWorkerGatherer = new ServiceWorkerGather();

@@ -73,7 +73,7 @@ class WebappInstallBanner extends MultiCheckAudit {
   static assessServiceWorker(artifacts, result) {
     const hasServiceWorker = SWAudit.audit(artifacts).rawValue;
     if (!hasServiceWorker) {
-      result.failures.push('Site does not register a Service Worker');
+      result.failures.push('Site does not register a service worker');
     }
   }
 
@@ -81,7 +81,7 @@ class WebappInstallBanner extends MultiCheckAudit {
     const hasOfflineStartUrl = artifacts.StartUrl.statusCode === 200;
 
     if (!hasOfflineStartUrl) {
-      result.failures.push('Manifest start_url is not cached by a Service Worker');
+      result.failures.push('Manifest start_url is not cached by a service worker');
     }
 
     if (artifacts.StartUrl.debugString) {

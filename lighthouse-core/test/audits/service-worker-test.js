@@ -10,8 +10,8 @@ const assert = require('assert');
 
 /* eslint-env mocha */
 
-describe('Offline: Service Worker audit', () => {
-  it('passes when given a matching Service Worker version', () => {
+describe('Offline: service worker audit', () => {
+  it('passes when given a matching service worker version', () => {
     const output = Audit.audit({
       ServiceWorker: {
         versions: [{
