@@ -116,7 +116,9 @@ class GithubApi {
             const filename = Object.keys(json.files)
                 .find(filename => filename.endsWith(GithubApi.LH_JSON_EXT));
             if (!filename) {
-              throw new Error(`Failed to find a Lighthouse report (*${GithubApi.LH_JSON_EXT}) in gist ${id}`);
+              throw new Error(
+                `Failed to find a Lighthouse report (*${GithubApi.LH_JSON_EXT}) in gist ${id}`
+              );
             }
             const f = json.files[filename];
             if (f.truncated) {
