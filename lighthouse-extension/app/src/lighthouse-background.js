@@ -129,7 +129,7 @@ window.runLighthouseInExtension = function(options, categoryIDs) {
       filterOutArtifacts(results);
       // return enableOtherChromeExtensions(true).then(_ => {
       const blobURL = window.createReportPageAsBlob(results, 'extension');
-      chrome.tabs.create({url: blobURL});
+      chrome.windows.create({url: blobURL});
       // });
     }).catch(err => {
       // return enableOtherChromeExtensions(true).then(_ => {
