@@ -116,6 +116,43 @@ describe('Optimized responses', () => {
       });
   });
 
+  it('ignores responses from installed Chrome extensions', () => {
+    const traceData = {
+      networkRecords: [
+        {
+          _url: 'chrome-extension://index.css',
+          _mimeType: 'text/css',
+          _requestId: 1,
+          _resourceSize: 10,
+          _resourceType: {
+            _isTextType: true,
+          },
+          _responseHeaders: [],
+          content: 'aaaaaaaaaa',
+          finished: true,
+        },
+        {
+          _url: 'http://google.com/chrome-extension.css',
+          _mimeType: 'text/css',
+          _requestId: 1,
+          _resourceSize: 123,
+          _resourceType: {
+            _isTextType: true,
+          },
+          _responseHeaders: [],
+          content: 'aaaaaaaaaa',
+          finished: true,
+        }
+      ]
+    };
+
+    return responseCompression.afterPass(options, createNetworkRequests(traceData))
+      .then(artifact => {
+        assert.equal(artifact.length, 1);
+        assert.equal(artifact[0].resourceSize, 123);
+      });
+  });
+
   // Change into SDK.networkRequest when examples are ready
   function createNetworkRequests(traceData) {
     traceData.networkRecords = traceData.networkRecords.map(record => {

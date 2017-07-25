@@ -14,6 +14,7 @@ const Gatherer = require('../gatherer');
 const gzip = require('zlib').gzip;
 
 const compressionTypes = ['gzip', 'br', 'deflate'];
+const CHROME_EXTENSION_PROTOCOL = 'chrome-extension:';
 
 class ResponseCompression extends Gatherer {
   /**
@@ -25,7 +26,10 @@ class ResponseCompression extends Gatherer {
 
     networkRecords.forEach(record => {
       const isTextBasedResource = record.resourceType() && record.resourceType().isTextType();
-      if (!isTextBasedResource || !record.resourceSize || !record.finished) {
+      const isChromeExtensionResource = record.url.startsWith(CHROME_EXTENSION_PROTOCOL);
+
+      if (!isTextBasedResource || !record.resourceSize || !record.finished ||
+        isChromeExtensionResource) {
         return;
       }
 
