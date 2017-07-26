@@ -368,6 +368,7 @@ span.lh-node:hover {
   margin-left: calc(0px - var(--expandable-indent));
 }
 
+.lh-audit-group[open] > .lh-audit-group__summary > .lh-toggle-arrow,
 .lh-expandable-details[open] > .lh-expandable-details__summary > .lh-toggle-arrow {
   background-image: var(--expanded-icon-url);
 }
