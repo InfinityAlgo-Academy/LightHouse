@@ -163,7 +163,7 @@ function findDifference(path, actual, expected) {
     const expectedValue = expected[key];
 
     if (!(key in actual)) {
-      return {keyPath, undefined, expectedValue};
+      return {path: keyPath, actual: undefined, expected: expectedValue};
     }
 
     const actualValue = actual[key];

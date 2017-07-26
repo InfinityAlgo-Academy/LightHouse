@@ -42,12 +42,12 @@ module.exports = [
                      'If they are not used as hyperlinks, consider removing the _blank target.',
         extendedInfo: {
           value: {
-            length: 3
+            length: 2
           }
         },
         details: {
           items: {
-            length: 3
+            length: 2
           }
         }
       },

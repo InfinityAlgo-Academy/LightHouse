@@ -19,7 +19,7 @@ class AnchorsWithNoRelNoopener extends Gatherer {
       const selector = 'a[target="_blank"]:not([rel~="noopener"])';
       const elements = getElementsInDocument(selector);
       return elements.map(node => ({
-        href: node.getAttribute('href'),
+        href: node.href,
         rel: node.getAttribute('rel'),
         target: node.getAttribute('target')
       }));
