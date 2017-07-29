@@ -647,7 +647,7 @@ describe('GatherRunner', function() {
       const records = [];
       assert.throws(() => {
         GatherRunner.assertPageLoaded(url, {online: true}, records);
-      }, /Unable.*timeout/);
+      }, /Unable.*no document request/);
     });
   });
 
