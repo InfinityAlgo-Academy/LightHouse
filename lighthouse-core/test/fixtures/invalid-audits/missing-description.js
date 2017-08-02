@@ -24,7 +24,7 @@ class MissingRequiredArtifacts extends LighthouseAudit {
     return {
       name: 'missing-description',
       category: 'Custom',
-      helpText: '',
+      helpText: 'This is missing required description (and failure description)',
       requiredArtifacts: ['HTML']
     };
   }

@@ -25,7 +25,7 @@ class RequireErrorAudit extends LighthouseAudit {
       name: 'require-error',
       category: 'Custom',
       description: 'Require Error',
-      helpText: '',
+      helpText: 'This one has a bad require()',
       requiredArtifacts: ['HTML']
     };
   }

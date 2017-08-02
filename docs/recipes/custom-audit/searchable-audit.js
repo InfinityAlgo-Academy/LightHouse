@@ -20,6 +20,7 @@ class LoadAudit extends Audit {
       category: 'MyCustomCategory',
       name: 'searchable-audit',
       description: 'Search box initialized and ready',
+      failureDescription: 'Search box slow to initialize',
       helpText: 'Used to measure time from navigationStart to when the search' +
           ' box is initialized and ready to search.',
 

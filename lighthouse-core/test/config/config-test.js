@@ -38,7 +38,8 @@ describe('Config', () => {
           name: 'MyAudit',
           category: 'mine',
           description: 'My audit',
-          helpText: '',
+          failureDescription: 'My failing audit',
+          helpText: '.',
           requiredArtifacts: []
         };
       }
@@ -443,6 +444,7 @@ describe('Config', () => {
           name: 'custom-audit',
           category: 'none',
           description: 'none',
+          failureDescription: 'none',
           helpText: 'none',
           requiredArtifacts: [],
         };

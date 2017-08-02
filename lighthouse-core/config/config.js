@@ -193,12 +193,16 @@ function assertValidAudit(auditDefinition, auditPath) {
   if (typeof auditDefinition.meta.failureDescription !== 'string' &&
     auditDefinition.meta.informative !== true &&
     auditDefinition.meta.scoringMode !== Audit.SCORING_MODES.NUMERIC) {
-    log.warn('config', `${auditName} has no failureDescription and should.`);
+    throw new Error(`${auditName} has no failureDescription and should.`);
   }
 
   if (typeof auditDefinition.meta.helpText !== 'string') {
     throw new Error(
       `${auditName} has no meta.helpText property, or the property is not a string.`
+    );
+  } else if (auditDefinition.meta.helpText === '') {
+    throw new Error(
+      `${auditName} has an empty meta.helpText string. Please add a description for the UI.`
     );
   }
 

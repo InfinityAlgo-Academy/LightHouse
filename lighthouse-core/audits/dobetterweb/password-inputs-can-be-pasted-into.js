@@ -17,7 +17,8 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
       name: 'password-inputs-can-be-pasted-into',
       description: 'Allows users to paste into password fields',
       failureDescription: 'Prevents users to paste into password fields',
-      helpText: '',
+      helpText: 'Preventing password pasting undermines good security policy. ' +
+          '[Learn more](https://www.ncsc.gov.uk/blog-post/let-them-paste-passwords)',
       requiredArtifacts: ['PasswordInputsWithPreventedPaste']
     };
   }

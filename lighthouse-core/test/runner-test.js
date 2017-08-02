@@ -187,6 +187,7 @@ describe('Runner', () => {
       category: 'ThrowThrow',
       name: 'throwy-audit',
       description: 'Always throws',
+      failureDescription: 'Always throws is failing, natch',
       helpText: 'Test for always throwing',
       requiredArtifacts: []
     };
