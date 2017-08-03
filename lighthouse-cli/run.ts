@@ -11,6 +11,8 @@ import * as Printer from './printer';
 import {Results} from './types/types';
 import {Flags} from './cli-flags';
 import {launch, LaunchedChrome} from '../chrome-launcher/chrome-launcher';
+
+const yargs = require('yargs');
 const lighthouse = require('../lighthouse-core');
 const log = require('lighthouse-logger');
 const getFilenamePrefix = require('../lighthouse-core/lib/file-namer.js').getFilenamePrefix;
@@ -27,13 +29,40 @@ interface LighthouseError extends Error {
   code?: string
 }
 
+// Boolean values that are true are rendered without a value (--debug vs. --debug=true)
+function formatArg(arg: string, value: any): string {
+  if (value === true) {
+    return `--${arg}`
+  }
+
+  // Only quote the value if it contains spaces
+  if (value.indexOf(' ') !== -1) {
+    value = `"${value}"`
+  }
+
+  return `--${arg}=${value}`
+}
+
+// exported for testing
+export function parseChromeFlags(flags: string) {
+  let args = yargs(flags).argv;
+  const allKeys = Object.keys(args);
+
+  // Remove unneeded arguments (yargs includes a _ arg, $-prefixed args, and camelCase dupes)
+  return allKeys.filter(k => k !== '_' && !k.startsWith('$') && !/[A-Z]/.test(k))
+      .map(k => formatArg(k, args[k]));
+}
+
 /**
  * Attempts to connect to an instance of Chrome with an open remote-debugging
  * port. If none is found, launches a debuggable instance.
  */
 async function getDebuggableChrome(flags: Flags) {
-  return await launch(
-      {port: flags.port, chromeFlags: flags.chromeFlags.split(' '), logLevel: flags.logLevel});
+  return await launch({
+    port: flags.port,
+    chromeFlags: parseChromeFlags(flags.chromeFlags),
+    logLevel: flags.logLevel
+  });
 }
 
 function showConnectionError() {

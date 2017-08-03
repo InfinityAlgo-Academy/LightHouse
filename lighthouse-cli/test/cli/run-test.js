@@ -11,6 +11,7 @@ const path = require('path');
 const fs = require('fs');
 
 const run = require('../../run');
+const parseChromeFlags = require('../../run').parseChromeFlags;
 const fastConfig = {
   'extends': 'lighthouse:default',
   'settings': {
@@ -42,4 +43,32 @@ describe('CLI run', function() {
       fs.unlinkSync(filename);
     });
   }).timeout(60000);
+});
+
+describe('Parsing --chrome-flags', () => {
+  it('returns boolean flags that are true as a bare flag', () => {
+    assert.deepStrictEqual(['--debug'], parseChromeFlags('--debug'));
+  });
+
+  it('returns boolean flags that are false with value', () => {
+    assert.deepStrictEqual(['--debug=false'], parseChromeFlags('--debug=false'));
+  });
+
+  it('returns boolean flags that empty when passed undefined', () => {
+    assert.deepStrictEqual([], parseChromeFlags());
+  });
+
+  it('returns flags correctly for issue 2817', () => {
+    assert.deepStrictEqual(
+      ['--host-resolver-rules="MAP www.example.org:443 127.0.0.1:8443"'],
+      parseChromeFlags('--host-resolver-rules="MAP www.example.org:443 127.0.0.1:8443"')
+    );
+  });
+
+  it('returns all flags as provided', () => {
+    assert.deepStrictEqual(
+      ['--spaces="1 2 3 4"', '--debug=false', '--verbose', '--more-spaces="9 9 9"'],
+      parseChromeFlags('--spaces="1 2 3 4" --debug=false --verbose --more-spaces="9 9 9"')
+    );
+  });
 });
