@@ -22,8 +22,9 @@ class FirstInteractiveMetric extends Audit {
       category: 'Performance',
       name: 'first-interactive',
       description: 'First Interactive (beta)',
-      helpText: 'The first point at which necessary scripts of the page have loaded ' +
-          'and the CPU is idle enough to handle most user input.',
+      helpText: 'First Interactive marks the time at which the page is ' +
+          'minimally interactive. ' +
+          '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive).',
       scoringMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces']
     };
