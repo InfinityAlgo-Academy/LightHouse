@@ -33,8 +33,9 @@ class ConsistentlyInteractiveMetric extends Audit {
       category: 'Performance',
       name: 'consistently-interactive',
       description: 'Consistently Interactive (beta)',
-      helpText: 'The point at which most network resources have finished loading and the ' +
-          'CPU is idle for a prolonged period.',
+      helpText: 'Consistently Interactive marks the time at which the page is ' +
+          'fully interactive. ' +
+          '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).',
       scoringMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs']
     };
