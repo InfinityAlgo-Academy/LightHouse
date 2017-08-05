@@ -69,6 +69,7 @@ class TraceOfTab extends ComputedArtifact {
     let firstMeaningfulPaint = frameEvents.find(
       e => e.name === 'firstMeaningfulPaint' && e.ts > navigationStart.ts
     );
+    let fmpFellBack = false;
 
     // If there was no firstMeaningfulPaint event found in the trace, the network idle detection
     // may have not been triggered before Lighthouse finished tracing.
@@ -76,6 +77,7 @@ class TraceOfTab extends ComputedArtifact {
     // However, if no candidates were found (a bogus trace, likely), we fail.
     if (!firstMeaningfulPaint) {
       const fmpCand = 'firstMeaningfulPaintCandidate';
+      fmpFellBack = true;
       log.verbose('trace-of-tab', `No firstMeaningfulPaint found, falling back to last ${fmpCand}`);
       const lastCandidate = frameEvents.filter(e => e.name === fmpCand).pop();
       if (!lastCandidate) {
@@ -131,6 +133,7 @@ class TraceOfTab extends ComputedArtifact {
       firstContentfulPaintEvt: firstContentfulPaint,
       firstMeaningfulPaintEvt: firstMeaningfulPaint,
       onLoadEvt: onLoad,
+      fmpFellBack,
     };
   }
 }

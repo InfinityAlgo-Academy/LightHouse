@@ -58,6 +58,7 @@ describe('Trace of Tab computed artifact:', () => {
       assert.equal(trace.navigationStartEvt.ts, 29343540951);
       assert.equal(trace.firstContentfulPaintEvt.ts, 29343621005);
       assert.equal(trace.firstMeaningfulPaintEvt.ts, 29344070867);
+      assert.ok(!trace.fmpFellBack);
     });
 
     it('if there was a tracingStartedInPage after the frame\'s navStart #2', () => {
@@ -66,6 +67,7 @@ describe('Trace of Tab computed artifact:', () => {
       assert.equal(trace.navigationStartEvt.ts, 8885424467);
       assert.equal(trace.firstContentfulPaintEvt.ts, 8886056886);
       assert.equal(trace.firstMeaningfulPaintEvt.ts, 8886056891);
+      assert.ok(!trace.fmpFellBack);
     });
 
     it('if it appears slightly before the fCP', () => {
@@ -74,6 +76,7 @@ describe('Trace of Tab computed artifact:', () => {
       assert.equal(trace.navigationStartEvt.ts, 1805796384607);
       assert.equal(trace.firstContentfulPaintEvt.ts, 1805797263653);
       assert.equal(trace.firstMeaningfulPaintEvt.ts, 1805797262960);
+      assert.ok(!trace.fmpFellBack);
     });
 
     it('from candidates if no defined FMP exists', () => {
@@ -82,6 +85,7 @@ describe('Trace of Tab computed artifact:', () => {
       assert.equal(trace.navigationStartEvt.ts, 2146735807738);
       assert.equal(trace.firstContentfulPaintEvt.ts, 2146737302468);
       assert.equal(trace.firstMeaningfulPaintEvt.ts, 2146740268666);
+      assert.ok(trace.fmpFellBack);
     });
   });
 
@@ -91,6 +95,7 @@ describe('Trace of Tab computed artifact:', () => {
     assert.equal(trace.navigationStartEvt.ts, 2149509122585, 'bad navStart');
     assert.equal(trace.firstContentfulPaintEvt, undefined, 'bad fcp');
     assert.equal(trace.firstMeaningfulPaintEvt.ts, 2149509604903, 'bad fmp');
+    assert.ok(trace.fmpFellBack);
   });
 
   it('handles traces missing a paints (captured in background tab)', () => {
