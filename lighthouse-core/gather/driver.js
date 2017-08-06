@@ -369,11 +369,10 @@ class Driver {
    * Returns a promise that resolves when the network has been idle (after DCL) for
    * `networkQuietThresholdMs` ms and a method to cancel internal network listeners/timeout.
    * @param {number} networkQuietThresholdMs
-   * @param {number} pauseAfterNetworkQuietMs
    * @return {{promise: !Promise, cancel: function()}}
    * @private
    */
-  _waitForNetworkIdle(networkQuietThresholdMs, pauseAfterNetworkQuietMs) {
+  _waitForNetworkIdle(networkQuietThresholdMs) {
     let idleTimeout;
     let cancel;
 
@@ -407,9 +406,6 @@ class Driver {
         this._networkStatusMonitor.removeListener('network-2-busy', onBusy);
         this._networkStatusMonitor.removeListener('network-2-idle', onIdle);
       };
-    }).then(() => {
-      // Once idle has been determined wait another pauseAfterLoadMs
-      return new Promise(resolve => setTimeout(resolve, pauseAfterNetworkQuietMs));
     });
 
     return {
@@ -419,17 +415,13 @@ class Driver {
   }
 
   /**
-   * Installs a PerformanceObserver in the page to monitor for longtasks and resolves when there have
-   * been no long tasks for at least waitForCPUQuiet ms. The promise will not resolve until the
-   * `markAsResolvable` function on the return object has been called. This is to prevent promise resolution
-   * before some important point in time such as network quiet or document load.
+   * Resolves when there have been no long tasks for at least waitForCPUQuiet ms.
    * @param {number} waitForCPUQuiet
-   * @return {{promise: !Promise, cancel: function(), markAsResolvable: function()}}
+   * @return {{promise: !Promise, cancel: function()}}
    */
   _waitForCPUIdle(waitForCPUQuiet) {
     if (!waitForCPUQuiet) {
       return {
-        markAsResolvable: () => undefined,
         promise: Promise.resolve(),
         cancel: () => undefined,
       };
@@ -437,17 +429,8 @@ class Driver {
 
     let lastTimeout;
     let cancelled = false;
-    let isResolvable = false;
     function checkForQuiet(driver, resolve) {
       if (cancelled) return;
-
-      const tryLater = timeToWait => {
-        lastTimeout = setTimeout(() => checkForQuiet(driver, resolve), timeToWait);
-      };
-
-      if (!isResolvable) {
-        return tryLater(1000);
-      }
 
       return driver.evaluateAsync(`(${checkTimeSinceLastLongTask.toString()})()`)
         .then(timeSinceLongTask => {
@@ -458,7 +441,8 @@ class Driver {
             resolve();
           } else {
             log.verbose('Driver', `CPU has been idle for ${timeSinceLongTask} ms`);
-            tryLater(waitForCPUQuiet - timeSinceLongTask);
+            const timeToWait = waitForCPUQuiet - timeSinceLongTask;
+            lastTimeout = setTimeout(() => checkForQuiet(driver, resolve), timeToWait);
           }
         });
     }
@@ -474,9 +458,6 @@ class Driver {
     });
 
     return {
-      markAsResolvable: () => {
-        isResolvable = true;
-      },
       promise,
       cancel,
     };
@@ -535,15 +516,17 @@ class Driver {
     // Network listener. Resolves when the network has been idle for networkQuietThresholdMs.
     const waitForNetworkIdle = this._waitForNetworkIdle(networkQuietThresholdMs);
     // CPU listener. Resolves when the CPU has been idle for cpuQuietThresholdMs after network idle.
-    const waitForCPUIdle = this._waitForCPUIdle(cpuQuietThresholdMs);
+    let waitForCPUIdle = null;
 
     // Wait for both load promises. Resolves on cleanup function the clears load
     // timeout timer.
     const loadPromise = Promise.all([
       waitForLoadEvent.promise,
-      waitForNetworkIdle.promise.then(waitForCPUIdle.markAsResolvable),
-      waitForCPUIdle.promise,
+      waitForNetworkIdle.promise,
     ]).then(() => {
+      waitForCPUIdle = this._waitForCPUIdle(cpuQuietThresholdMs);
+      return waitForCPUIdle.promise;
+    }).then(() => {
       return function() {
         log.verbose('Driver', 'loadEventFired and network considered idle');
         clearTimeout(maxTimeoutHandle);
@@ -559,7 +542,7 @@ class Driver {
         log.warn('Driver', 'Timed out waiting for page load. Moving on...');
         waitForLoadEvent.cancel();
         waitForNetworkIdle.cancel();
-        waitForCPUIdle.cancel();
+        waitForCPUIdle && waitForCPUIdle.cancel();
       };
     });
 
