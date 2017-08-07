@@ -2235,9 +2235,9 @@ merge-stream@^1.0.0:
   dependencies:
     readable-stream "^2.0.1"
 
-metaviewport-parser@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/metaviewport-parser/-/metaviewport-parser-0.0.1.tgz#9b28179659b76ff9d21de84ae25583257909b206"
+metaviewport-parser@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/metaviewport-parser/-/metaviewport-parser-0.1.0.tgz#97fa67ea4bbf640f4fd59010f88f10cea7d5accc"
 
 micromatch@^2.3.7:
   version "2.3.11"

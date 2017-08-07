@@ -79,7 +79,7 @@
     "jpeg-js": "0.1.2",
     "json-stringify-safe": "5.0.1",
     "lighthouse-logger": "^1.0.0",
-    "metaviewport-parser": "0.0.1",
+    "metaviewport-parser": "0.1.0",
     "mkdirp": "0.5.1",
     "opn": "4.0.2",
     "rimraf": "^2.6.1",
