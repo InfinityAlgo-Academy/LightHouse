@@ -43,12 +43,12 @@ You can also craft your own config (e.g. [plots-config.js](https://github.com/Go
 
 ### Turn on logging
 
-If you want to see log output as Lighthouse runs, include the `log` module
+If you want to see log output as Lighthouse runs, include the `lighthouse-logger` module
 and set an appropriate logging level in your code. You'll also need to pass
 the `logLevel` flag when calling `lighthouse`.
 
 ```javascript
-const log = require('lighthouse/lighthouse-core/lib/log');
+const log = require('lighthouse-logger');
 
 const flags = {logLevel: 'info', output: 'json'};
 log.setLevel(flags.logLevel);
