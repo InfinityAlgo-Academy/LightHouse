@@ -180,6 +180,7 @@ class ReportUIFeatures {
         break;
       case 'print':
         this.expandAllDetails();
+        this.closeExportDropdown();
         self.print();
         break;
       case 'save-json': {
@@ -258,6 +259,7 @@ class ReportUIFeatures {
   printShortCutDetect(e) {
     if ((e.ctrlKey || e.metaKey) && e.keyCode === 80) { // Ctrl+P
       this.expandAllDetails();
+      this.closeExportDropdown();
     }
   }
 
