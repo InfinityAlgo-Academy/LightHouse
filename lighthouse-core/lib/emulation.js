@@ -75,6 +75,11 @@ const CPU_THROTTLE_METRICS = {
 };
 
 function enableNexus5X(driver) {
+  // COMPAT FIMXE
+  // Injecting this function clientside is no longer neccessary as of m62. This is done
+  // on the backend when `Emulation.setTouchEmulationEnabled` is set.
+  //   https://bugs.chromium.org/p/chromium/issues/detail?id=133915#c63
+  // Once m62 hits stable (~Oct 20th) we can nuke this entirely
   /**
    * Finalizes touch emulation by enabling `"ontouchstart" in window` feature detect
    * to work. Messy hack, though copied verbatim from DevTools' emulation/TouchModel.js
