@@ -81,7 +81,7 @@ class WebappInstallBanner extends MultiCheckAudit {
     const hasOfflineStartUrl = artifacts.StartUrl.statusCode === 200;
 
     if (!hasOfflineStartUrl) {
-      result.failures.push('Manifest start_url is not cached by a service worker');
+      result.failures.push('Service worker does not successfully serve the manifest\'s start_url');
     }
 
     if (artifacts.StartUrl.debugString) {
