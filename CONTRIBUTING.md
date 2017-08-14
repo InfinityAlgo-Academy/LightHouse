@@ -60,20 +60,26 @@ both why the audit is important and how to fix it.
 # * Install the latest. This also builds the cli, extension, and viewer *
 yarn
 yarn install-all
-yarn build-all
 
 # * Bump it *
-echo "Bump the versions in extension/app/manifest.json and package.json"
+yarn version --no-git-tag-version
+# then manually bump extension v in extension/app/manifest.json
+
+# * Build it *
+yarn build-all
 
 # * Test err'thing *
 echo "Test the CLI."
 lighthouse --perf "chrome://version"
 yarn smoke
+
 echo "Test the extension"
+# ...
 
 echo "Test a fresh local install"
 # (starting from lighthouse root...)
-# cd ..; mkdir tmp; cd tmp
+# cd ..; trash tmp; mkdir tmp; cd tmp
+# npm init -y
 # npm install ../lighthouse
 # npm explore lighthouse -- npm run smoke
 # npm explore lighthouse -- npm run smokehouse
@@ -89,10 +95,13 @@ echo "Test the lighthouse-viewer build"
 
 # * Put up the PR *
 echo "Branch and commit the version bump."
+git co -b bumpv240
+git c "2.4.0"
+git tag -a v2.4.0 -m "v2.4.0"
 echo "Generate a PR and get it merged."
 
 # * Deploy-time *
-cd lighthouse-extension; yarn build; gulp package; cd ..
+cd lighthouse-extension; gulp package; cd ..
 echo "Upload the package zip to CWS dev dashboard"
 
 echo "Verify the npm package won't include unncessary files"
