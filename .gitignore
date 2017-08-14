@@ -35,6 +35,7 @@ lighthouse-cli/*.js
 !chrome-launcher/compiled-check.js
 chrome-launcher/*.map
 chrome-launcher/*.js
+chrome-launcher/*.d.ts
 
 lighthouse-cli/commands/*.map
 lighthouse-cli/commands/*.js
