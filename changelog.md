@@ -1,4 +1,60 @@
 
+<a name="2.4.0"></a>
+# 2.4.0 (2017-08-14)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v2.3.0...v2.4.0)
+
+## Core
+* Refactor error throwing from assertPageLoaded (#2785) ([07817f9](https://github.com/GoogleChrome/lighthouse/commit/07817f9))
+* refactor: cleanup unused waitFor properties (#2716) ([9d8a32f](https://github.com/GoogleChrome/lighthouse/commit/9d8a32f))
+* All audits must specify helpText and failureDescription (#2737) ([db3f324](https://github.com/GoogleChrome/lighthouse/commit/db3f324))
+*  "shrink-to-fit" property in "viewport" meta is no longer invalid (#2863) ([e1a04dd](https://github.com/GoogleChrome/lighthouse/commit/e1a04dd))
+* driver: add compat comment on PerfObserver GC bug ([d7ffec1](https://github.com/GoogleChrome/lighthouse/commit/d7ffec1))
+* emulation comment: can remove injectedTouchEventsFunction in October (#2889) ([a6b71c9](https://github.com/GoogleChrome/lighthouse/commit/a6b71c9))
+* Ignoring other extension assets in request compression audit (#2733) ([428f637](https://github.com/GoogleChrome/lighthouse/commit/428f637))
+* fix(anchors-with-no-rel): ignore same origin links (#2749) ([78ec647](https://github.com/GoogleChrome/lighthouse/commit/78ec647))
+* add flag to FMP to indicate if it fell back to FMP candidate (#2851) ([46d9ba7](https://github.com/GoogleChrome/lighthouse/commit/46d9ba7))
+* fix(script-blocking-first-paint): ignore latent resources (#2721) ([ac99084](https://github.com/GoogleChrome/lighthouse/commit/ac99084))
+* Include version and commit in lighthouse-background.js bundle (#2236) ([7fe3574](https://github.com/GoogleChrome/lighthouse/commit/7fe3574))
+
+
+## Report
+* link all a11y audits to 2.2 aXe docs (#2709) ([924e1f1](https://github.com/GoogleChrome/lighthouse/commit/924e1f1))
+* Update consistently-interactive.js helpText (#2740) ([6f7bf29](https://github.com/GoogleChrome/lighthouse/commit/6f7bf29))
+* Update first-interactive.js helpText (#2739) ([a829811](https://github.com/GoogleChrome/lighthouse/commit/a829811))
+* Report: add lighthouse query param to axe helpText links (#2767) ([4b9cbb5](https://github.com/GoogleChrome/lighthouse/commit/4b9cbb5))
+* Report: Close export dropdown when printing (#2914) ([a45ece8](https://github.com/GoogleChrome/lighthouse/commit/a45ece8)), closes [#2914](https://github.com/GoogleChrome/lighthouse/issues/2914)
+* report: draw metric lines over the screenshots. (#2848) ([5832761](https://github.com/GoogleChrome/lighthouse/commit/5832761))
+* fix(report): proper arrow state and consistent capitalization (#2750) ([7c461bf](https://github.com/GoogleChrome/lighthouse/commit/7c461bf))
+
+## Testing
+* testing: prune smokehouse configs to improve testing perf (#2732) ([e72483b](https://github.com/GoogleChrome/lighthouse/commit/e72483b))
+
+## CLI
+* Fix: Basic chrome-flags parsing for embedded quotes (#2754) ([78a8bd7](https://github.com/GoogleChrome/lighthouse/commit/78a8bd7))
+* Add hostname CLI flag and option for CriConnection (#2728) ([0455283](https://github.com/GoogleChrome/lighthouse/commit/0455283)), closes [GoogleChrome/lighthouse#2727](https://github.com/GoogleChrome/lighthouse/issues/2727)
+
+## Chrome launcher
+* launcher: clarify priority of chromePath options ([494f991](https://github.com/GoogleChrome/lighthouse/commit/494f991))
+* chrome-launcher: add support for finding Chromium on Linux (#2950) ([1c11021](https://github.com/GoogleChrome/lighthouse/commit/1c11021))
+* launcher: support enabling extension loading (#2650) ([c942d17](https://github.com/GoogleChrome/lighthouse/commit/c942d17))
+* [chrome-launcher] Publish type definitions instead of source TypeScript files (#2898) ([391e204](https://github.com/GoogleChrome/lighthouse/commit/391e204))
+
+## Misc
+* Lowercase fix for "service worker" (#2729) ([15068bd](https://github.com/GoogleChrome/lighthouse/commit/15068bd)), closes [#2729](https://github.com/GoogleChrome/lighthouse/issues/2729)
+* open extension's report in new window. (fix for incognito) (#2734) ([934aa42](https://github.com/GoogleChrome/lighthouse/commit/934aa42)), closes [#2734](https://github.com/GoogleChrome/lighthouse/issues/2734)
+* pass --enable-extensions on from manual-chrome-launcher (#2735) ([37fd38c](https://github.com/GoogleChrome/lighthouse/commit/37fd38c))
+* Update lighthouse-logger location in readme (#2867) ([1347b15](https://github.com/GoogleChrome/lighthouse/commit/1347b15))
+* readme: added CHROME_PATH description from CLI help (#2757) ([af003d4](https://github.com/GoogleChrome/lighthouse/commit/af003d4))
+* readme: update example using deprecated `LIGHTHOUSE_CHROMIUM_PATH` (#2929) ([de408ad](https://github.com/GoogleChrome/lighthouse/commit/de408ad))
+* docs: Add a changelog.md (#2986) ([626ce68](https://github.com/GoogleChrome/lighthouse/commit/626ce68))
+* Viewer: log expected URL (#2724) ([6478f15](https://github.com/GoogleChrome/lighthouse/commit/6478f15))
+* Fix eslint max length in github-api.js (#2730) ([1ca40de](https://github.com/GoogleChrome/lighthouse/commit/1ca40de)), closes [#2730](https://github.com/GoogleChrome/lighthouse/issues/2730)
+* add license file to launcher package. (#2849) ([8bc6d18](https://github.com/GoogleChrome/lighthouse/commit/8bc6d18))
+* Add license to lighthouse-logger. (#2846) ([367ea7a](https://github.com/GoogleChrome/lighthouse/commit/367ea7a))
+* Clarification of hasOfflineStartUrl rule (#2775) ([7097d5c](https://github.com/GoogleChrome/lighthouse/commit/7097d5c))
+* gulpfile. add commented out lines for sourcemap generation. ([6f53ab9](https://github.com/GoogleChrome/lighthouse/commit/6f53ab9))
+
+
 <a name="2.3.0"></a>
 # 2.3.0 (2017-07-20)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v2.2.0...v2.3.0)
