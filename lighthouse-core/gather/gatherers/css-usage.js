@@ -14,15 +14,7 @@ class CSSUsage extends Gatherer {
   beforePass(options) {
     return options.driver.sendCommand('DOM.enable')
       .then(_ => options.driver.sendCommand('CSS.enable'))
-      .then(_ => options.driver.sendCommand('CSS.startRuleUsageTracking'))
-      .catch(err => {
-        // TODO(phulce): Remove this once CSS usage hits stable
-        if (/startRuleUsageTracking/.test(err.message)) {
-          throw new Error('CSS Usage tracking requires Chrome \u2265 56');
-        }
-
-        throw err;
-      });
+      .then(_ => options.driver.sendCommand('CSS.startRuleUsageTracking'));
   }
 
   afterPass(options) {

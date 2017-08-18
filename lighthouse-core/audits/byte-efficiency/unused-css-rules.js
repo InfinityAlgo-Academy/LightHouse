@@ -6,7 +6,6 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const URL = require('../../lib/url-shim');
 
 const PREVIEW_LENGTH = 100;
 
@@ -34,15 +33,14 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
    */
   static indexStylesheetsById(styles, networkRecords) {
     const indexedNetworkRecords = networkRecords
-        .filter(record => record._resourceType && record._resourceType._name === 'stylesheet')
         .reduce((indexed, record) => {
           indexed[record.url] = record;
           return indexed;
         }, {});
+
     return styles.reduce((indexed, stylesheet) => {
       indexed[stylesheet.header.styleSheetId] = Object.assign({
-        used: [],
-        unused: [],
+        usedRules: [],
         networkRecord: indexedNetworkRecords[stylesheet.header.sourceURL],
       }, stylesheet);
       return indexed;
@@ -50,14 +48,11 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
   }
 
   /**
-   * Counts the number of unused rules and adds count information to sheets.
+   * Adds used rules to their corresponding stylesheet.
    * @param {!Array.<{styleSheetId: string, used: boolean}>} rules The output of the CSSUsage gatherer.
    * @param {!Object} indexedStylesheets Stylesheet information indexed by id.
-   * @return {number} The number of unused rules.
    */
-  static countUnusedRules(rules, indexedStylesheets) {
-    let unused = 0;
-
+  static indexUsedRules(rules, indexedStylesheets) {
     rules.forEach(rule => {
       const stylesheetInfo = indexedStylesheets[rule.styleSheetId];
 
@@ -66,14 +61,48 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
       }
 
       if (rule.used) {
-        stylesheetInfo.used.push(rule);
-      } else {
-        unused++;
-        stylesheetInfo.unused.push(rule);
+        stylesheetInfo.usedRules.push(rule);
       }
     });
+  }
 
-    return unused;
+  /**
+   * @param {!Object} stylesheetInfo
+   * @return {{wastedBytes: number, totalBytes: number, wastedPercent: number}}
+   */
+  static computeUsage(stylesheetInfo) {
+    let usedUncompressedBytes = 0;
+    const totalUncompressedBytes = stylesheetInfo.content.length;
+
+    for (const usedRule of stylesheetInfo.usedRules) {
+      usedUncompressedBytes += usedRule.endOffset - usedRule.startOffset;
+    }
+
+    const networkRecord = stylesheetInfo.networkRecord;
+    let totalTransferredBytes;
+    if (!networkRecord) {
+      // We don't know how many bytes this sheet used on the network, but we can guess it was
+      // roughly the size of the content gzipped.
+      // See https://discuss.httparchive.org/t/file-size-and-compression-savings/145 for multipliers
+      totalTransferredBytes = Math.round(totalUncompressedBytes * .5);
+    } else if (networkRecord._resourceType && networkRecord._resourceType._name === 'stylesheet') {
+      // This was a regular standalone stylesheet, just use the transfer size.
+      totalTransferredBytes = networkRecord.transferSize;
+    } else {
+      // This was a stylesheet that was inlined in a different resource type (e.g. HTML document).
+      // Use the compression ratio of the resource to estimate the total transferred bytes.
+      const compressionRatio = (networkRecord._transferSize / networkRecord._resourceSize) || 1;
+      totalTransferredBytes = Math.round(compressionRatio * totalUncompressedBytes);
+    }
+
+    const percentUnused = (totalUncompressedBytes - usedUncompressedBytes) / totalUncompressedBytes;
+    const wastedBytes = Math.round(percentUnused * totalTransferredBytes);
+
+    return {
+      wastedBytes,
+      wastedPercent: percentUnused * 100,
+      totalBytes: totalTransferredBytes,
+    };
   }
 
   /**
@@ -115,40 +144,21 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
   /**
    * @param {!Object} stylesheetInfo The stylesheetInfo object.
    * @param {string} pageUrl The URL of the page, used to identify inline styles.
-   * @return {{url: string, label: string, code: string}} The result for the details object.
+   * @return {?{url: string, wastedBytes: number, totalBytes: number}}
    */
   static mapSheetToResult(stylesheetInfo, pageUrl) {
-    const numUsed = stylesheetInfo.used.length;
-    const numUnused = stylesheetInfo.unused.length;
-
-    if ((numUsed === 0 && numUnused === 0) || stylesheetInfo.isDuplicate) {
+    if (stylesheetInfo.isDuplicate) {
       return null;
     }
 
     let url = stylesheetInfo.header.sourceURL;
     if (!url || url === pageUrl) {
       const contentPreview = UnusedCSSRules.determineContentPreview(stylesheetInfo.content);
-      url = '*inline*```' + contentPreview + '```';
-    } else {
-      url = URL.getURLDisplayName(url);
+      url = {type: 'code', text: contentPreview};
     }
 
-    // If we don't know for sure how many bytes this sheet used on the network,
-    // we can guess it was roughly the size of the content gzipped.
-    const totalBytes = stylesheetInfo.networkRecord ?
-        stylesheetInfo.networkRecord.transferSize :
-        Math.round(stylesheetInfo.content.length / 3);
-
-    const percentUnused = numUnused / (numUsed + numUnused);
-    const wastedBytes = Math.round(percentUnused * totalBytes);
-
-    return {
-      url,
-      numUnused,
-      wastedBytes,
-      wastedPercent: percentUnused * 100,
-      totalBytes,
-    };
+    const usage = UnusedCSSRules.computeUsage(stylesheetInfo);
+    return Object.assign({url}, usage);
   }
 
   /**
@@ -163,21 +173,21 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
     const devtoolsLogs = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
     return artifacts.requestNetworkRecords(devtoolsLogs).then(networkRecords => {
       const indexedSheets = UnusedCSSRules.indexStylesheetsById(styles, networkRecords);
-      UnusedCSSRules.countUnusedRules(usage, indexedSheets);
-      const results = Object.keys(indexedSheets).map(sheetId => {
-        return UnusedCSSRules.mapSheetToResult(indexedSheets[sheetId], pageUrl);
-      }).filter(sheet => sheet && sheet.wastedBytes > 1024);
+      UnusedCSSRules.indexUsedRules(usage, indexedSheets);
+
+      const results = Object.keys(indexedSheets)
+          .map(sheetId => UnusedCSSRules.mapSheetToResult(indexedSheets[sheetId], pageUrl))
+          .filter(sheet => sheet && sheet.wastedBytes > 1024);
 
       const headings = [
         {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'numUnused', itemType: 'url', text: 'Unused Rules'},
         {key: 'totalKb', itemType: 'text', text: 'Original'},
         {key: 'potentialSavings', itemType: 'text', text: 'Potential Savings'},
       ];
 
       return {
         results,
-        headings
+        headings,
       };
     });
   }

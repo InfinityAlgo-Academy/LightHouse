@@ -9,13 +9,14 @@
  * Config file for running PWA smokehouse audits.
  */
 module.exports = {
-  extends: 'lighthouse:default',
+  extends: 'lighthouse:full',
   settings: {
     onlyAudits: [
       'offscreen-images',
       'uses-webp-images',
       'uses-optimized-images',
       'uses-responsive-images',
+      'unused-css-rules',
     ]
   }
 };
