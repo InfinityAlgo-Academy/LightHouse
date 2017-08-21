@@ -91,6 +91,7 @@ class Estimator {
 
     for (const [connectionId, records] of recordsByConnection.entries()) {
       const isTLS = TLS_SCHEMES.includes(records[0].parsedURL.scheme);
+      const isH2 = records[0].protocol === 'h2';
 
       // We'll approximate how much time the server for a connection took to respond after receiving
       // the request by computing the minimum TTFB time for requests on that connection.
@@ -109,7 +110,8 @@ class Estimator {
         this._rtt,
         this._throughput,
         estimatedResponseTime,
-        isTLS
+        isTLS,
+        isH2
       );
 
       connections.set(connectionId, connection);
@@ -307,6 +309,7 @@ class Estimator {
     );
 
     connection.setCongestionWindow(calculation.congestionWindow);
+    connection.setExtraBytesDownloaded(calculation.extraBytesDownloaded);
 
     if (isFinished) {
       connection.setWarmed(true);
