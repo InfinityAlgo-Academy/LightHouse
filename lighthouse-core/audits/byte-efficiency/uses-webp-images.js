@@ -53,6 +53,7 @@ class UsesWebPImages extends ByteEfficiencyAudit {
 
       results.push({
         url,
+        fromProtocol: image.fromProtocol,
         isCrossOrigin: !image.isSameOrigin,
         preview: {url: image.url, mimeType: image.mimeType, type: 'thumbnail'},
         totalBytes: image.originalSize,

@@ -22,49 +22,49 @@ const traceData = {
     {
       _url: 'http://google.com/image.jpg',
       _mimeType: 'image/jpeg',
-      _resourceSize: 10,
+      _resourceSize: 10000,
       finished: true,
     },
     {
       _url: 'http://google.com/transparent.png',
       _mimeType: 'image/png',
-      _resourceSize: 11,
+      _resourceSize: 11000,
       finished: true,
     },
     {
       _url: 'http://google.com/image.bmp',
       _mimeType: 'image/bmp',
-      _resourceSize: 12,
+      _resourceSize: 12000,
       finished: true,
     },
     {
       _url: 'http://google.com/image.bmp',
       _mimeType: 'image/bmp',
-      _resourceSize: 12,
+      _resourceSize: 12000,
       finished: true,
     },
     {
       _url: 'http://google.com/vector.svg',
       _mimeType: 'image/svg+xml',
-      _resourceSize: 13,
+      _resourceSize: 13000,
       finished: true,
     },
     {
       _url: 'http://gmail.com/image.jpg',
       _mimeType: 'image/jpeg',
-      _resourceSize: 15,
+      _resourceSize: 15000,
       finished: true,
     },
     {
       _url: 'data: image/jpeg ; base64 ,SgVcAT32587935321...',
       _mimeType: 'image/jpeg',
-      _resourceSize: 14,
+      _resourceSize: 14000,
       finished: true,
     },
     {
       _url: 'http://google.com/big-image.bmp',
       _mimeType: 'image/bmp',
-      _resourceSize: 12,
+      _resourceSize: 12000,
       finished: false, // ignore for not finishing
     },
   ]
@@ -81,7 +81,7 @@ describe('Optimized images', () => {
           return Promise.resolve(fakeImageStats);
         },
         sendCommand: function() {
-          return Promise.resolve({base64Encoded: true, body: 'mydata'});
+          return Promise.reject(new Error('wasn\'t found'));
         },
       }
     };
@@ -108,11 +108,11 @@ describe('Optimized images', () => {
 
     return optimizedImages.afterPass(options, traceData).then(artifact => {
       assert.equal(artifact.length, 4);
-      checkSizes(artifact[0], 10, 60, 80);
-      checkSizes(artifact[1], 11, 60, 80);
-      checkSizes(artifact[2], 12, 60, 80);
+      checkSizes(artifact[0], 10000, 60, 80);
+      checkSizes(artifact[1], 11000, 60, 80);
+      checkSizes(artifact[2], 12000, 60, 80);
       // skip cross-origin for now
-      // checkSizes(artifact[3], 15, 60, 80);
+      // checkSizes(artifact[3], 15000, 60, 80);
       checkSizes(artifact[3], 20, 80, 100); // uses base64 data
     });
   });
@@ -134,6 +134,22 @@ describe('Optimized images', () => {
       assert.equal(artifact.length, 4);
       assert.ok(failed, 'passed along failure');
       assert.ok(/whoops/.test(failed.err.message), 'passed along error message');
+    });
+  });
+
+  it('supports Audits.getEncodedResponse', () => {
+    options.driver.sendCommand = (method, params) => {
+      const encodedSize = params.encoding === 'webp' ? 60 : 80;
+      return Promise.resolve({encodedSize});
+    };
+
+    return optimizedImages.afterPass(options, traceData).then(artifact => {
+      assert.equal(artifact.length, 5);
+      assert.equal(artifact[0].originalSize, 10000);
+      assert.equal(artifact[0].webpSize, 60);
+      assert.equal(artifact[0].jpegSize, 80);
+      // supports cross-origin
+      assert.ok(/gmail.*image.jpg/.test(artifact[3].url));
     });
   });
 });
