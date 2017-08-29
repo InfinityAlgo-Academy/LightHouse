@@ -183,5 +183,48 @@ describe('DetailsRenderer', () => {
       assert.equal(el.querySelectorAll('.lh-table-column--thumbnail').length, 3,
           '--thumbnail not set');
     });
+
+    it('renders links', () => {
+      const linkText = 'Example Site';
+      const linkUrl = 'https://example.com/';
+      const el = renderer.render({
+        type: 'link',
+        text: linkText,
+        url: linkUrl
+      });
+
+      assert.equal(el.localName, 'a');
+      assert.equal(el.textContent, linkText);
+      assert.equal(el.href, linkUrl);
+      assert.equal(el.rel, 'noopener');
+      assert.equal(el.target, '_blank');
+    });
+
+    it('renders link as text if URL is not allowed', () => {
+      const linkText = 'Evil Link';
+      const linkUrl = 'javascript:alert(5)';
+      const el = renderer.render({
+        type: 'link',
+        text: linkText,
+        url: linkUrl
+      });
+
+      assert.equal(el.localName, 'div');
+      assert.equal(el.textContent, linkText);
+      assert.ok(el.classList.contains('lh-text'), 'adds classes');
+    });
+
+    it('renders text URLs', () => {
+      const urlText = 'https://example.com/';
+      const displayUrlText = '/';
+      const el = renderer.render({
+        type: 'url',
+        text: urlText,
+      });
+
+      assert.equal(el.localName, 'div');
+      assert.equal(el.textContent, displayUrlText);
+      assert.ok(el.classList.contains('lh-text'), 'adds classes');
+    });
   });
 });
