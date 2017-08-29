@@ -79,6 +79,7 @@ Output:
 Options:
   --help                        Show help                                                                                                  [boolean]
   --version                     Show version number                                                                                        [boolean]
+  --blocked-url-patterns        Block any network requests to the specified URL patterns                                                     [array]
   --disable-storage-reset       Disable clearing the browser cache and other storage APIs before a run                                     [boolean]
   --disable-device-emulation    Disable Nexus 5X emulation                                                                                 [boolean]
   --disable-cpu-throttling      Disable CPU throttling                                                                    [boolean] [default: false]

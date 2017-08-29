@@ -14,7 +14,7 @@ import {GetValidOutputOptions, OutputMode} from './printer';
 export interface Flags {
   port: number, chromeFlags: string, output: any, outputPath: string, interactive: boolean,
       saveArtifacts: boolean, saveAssets: boolean, view: boolean, maxWaitForLoad: number,
-      logLevel: string, hostname: string
+      logLevel: string, hostname: string, blockedUrlPatterns: string[]
 }
 
 export function getFlags(manualArgv?: string) {
@@ -58,6 +58,7 @@ export function getFlags(manualArgv?: string) {
           ],
           'Configuration:')
       .describe({
+        'blocked-url-patterns': 'Block any network requests to the specified URL patterns',
         'disable-storage-reset':
             'Disable clearing the browser cache and other storage APIs before a run',
         'disable-device-emulation': 'Disable Nexus 5X emulation',
@@ -102,6 +103,8 @@ Example: --output-path=./lighthouse-results.html`,
         'list-trace-categories', 'perf', 'view', 'verbose', 'quiet', 'help', 'interactive'
       ])
       .choices('output', GetValidOutputOptions())
+      // force as an array
+      .array('blocked-url-patterns')
 
       // default values
       .default('chrome-flags', '')
