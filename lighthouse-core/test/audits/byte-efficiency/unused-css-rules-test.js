@@ -122,7 +122,7 @@ describe('Best Practices: unused css rules audit', () => {
       return Promise.resolve([
         {
           url: 'file://a.css',
-          transferSize: 10 * 1024,
+          _transferSize: 10 * 1024,
           _resourceType: {_name: 'stylesheet'}
         },
       ]);

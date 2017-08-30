@@ -24,6 +24,18 @@ module.exports = [
           }
         }
       },
+      'unused-javascript': {
+        score: '<100',
+        extendedInfo: {
+          value: {
+            // TODO(phulce): Update this to =32 once block-level coverage tracking hits stable
+            wastedKb: '>=18',
+            results: {
+              length: 2,
+            },
+          },
+        },
+      },
       'offscreen-images': {
         score: '<100',
         extendedInfo: {

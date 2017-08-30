@@ -12,6 +12,33 @@ const NBSP = '\xa0';
 /* eslint-env mocha */
 
 describe('Byte efficiency base audit', () => {
+  describe('#estimateTransferSize', () => {
+    const estimate = ByteEfficiencyAudit.estimateTransferSize;
+
+    it('should estimate by compression ratio when no network record available', () => {
+      const result = estimate(undefined, 1000, '', .345);
+      assert.equal(result, 345);
+    });
+
+    it('should return transferSize when asset matches', () => {
+      const _resourceType = {_name: 'stylesheet'};
+      const result = estimate({_transferSize: 1234, _resourceType}, 10000, 'stylesheet');
+      assert.equal(result, 1234);
+    });
+
+    it('should estimate by network compression ratio when asset does not match', () => {
+      const _resourceType = {_name: 'other'};
+      const result = estimate({_resourceSize: 2000, _transferSize: 1000, _resourceType}, 100);
+      assert.equal(result, 50);
+    });
+
+    it('should not error when missing resource size', () => {
+      const _resourceType = {_name: 'other'};
+      const result = estimate({_transferSize: 1000, _resourceType}, 100);
+      assert.equal(result, 100);
+    });
+  });
+
   it('should format as extendedInfo', () => {
     const result = ByteEfficiencyAudit.createAuditResult({
       headings: [{key: 'value', text: 'Label'}],

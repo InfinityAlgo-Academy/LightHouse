@@ -58,6 +58,33 @@ class UnusedBytes extends Audit {
   }
 
   /**
+   * Estimates the number of bytes this network record would have consumed on the network based on the
+   * uncompressed size (totalBytes), uses the actual transfer size from the network record if applicable.
+   *
+   * @param {!WebInspector.NetworkRequest} networkRecord
+   * @param {number} totalBytes Uncompressed size of the resource
+   * @param {string=} resourceType
+   * @param {number=} compressionRatio
+   * @return {number}
+   */
+  static estimateTransferSize(networkRecord, totalBytes, resourceType, compressionRatio = 0.5) {
+    if (!networkRecord) {
+      // We don't know how many bytes this asset used on the network, but we can guess it was
+      // roughly the size of the content gzipped.
+      // See https://discuss.httparchive.org/t/file-size-and-compression-savings/145 for multipliers
+      return Math.round(totalBytes * compressionRatio);
+    } else if (networkRecord._resourceType && networkRecord._resourceType._name === resourceType) {
+      // This was a regular standalone asset, just use the transfer size.
+      return networkRecord._transferSize;
+    } else {
+      // This was an asset that was inlined in a different resource type (e.g. HTML document).
+      // Use the compression ratio of the resource to estimate the total transferred bytes.
+      const compressionRatio = (networkRecord._transferSize / networkRecord._resourceSize) || 1;
+      return Math.round(totalBytes * compressionRatio);
+    }
+  }
+
+  /**
    * @param {!Artifacts} artifacts
    * @return {!Promise<!AuditResult>}
    */
@@ -125,8 +152,7 @@ class UnusedBytes extends Audit {
 
   /**
    * @param {!Artifacts} artifacts
-   * @return {{results: !Array<Object>, tableHeadings: Object,
-   *     passes: boolean=, debugString: string=}}
+   * @return {!Audit.HeadingsResult}
    */
   static audit_() {
     throw new Error('audit_ unimplemented');

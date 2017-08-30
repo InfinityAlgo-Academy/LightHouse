@@ -17,6 +17,7 @@ module.exports = {
       'uses-optimized-images',
       'uses-responsive-images',
       'unused-css-rules',
+      'unused-javascript',
     ]
   }
 };
