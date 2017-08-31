@@ -82,6 +82,7 @@ module.exports = {
     'themed-omnibox',
     'manifest-short-name-length',
     'content-width',
+    'image-aspect-ratio',
     'deprecations',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
@@ -299,6 +300,7 @@ module.exports = {
         {id: 'deprecations', weight: 1},
         {id: 'manifest-short-name-length', weight: 1},
         {id: 'password-inputs-can-be-pasted-into', weight: 1},
+        {id: 'image-aspect-ratio', weight: 1},
       ]
     }
   }
