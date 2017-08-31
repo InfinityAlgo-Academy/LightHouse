@@ -63,9 +63,6 @@ function collectImageElementInfo() {
     const imageMatch = style.backgroundImage.match(CSS_URL_REGEX);
     const url = imageMatch[1];
 
-    // Heuristic to filter out sprite sheets
-    const differentImages = images.filter(image => image.src !== url);
-
     images.push({
       src: url,
       clientWidth: element.clientWidth,
@@ -76,11 +73,15 @@ function collectImageElementInfo() {
       naturalHeight: Number.MAX_VALUE,
       isCss: true,
       isPicture: false,
-      isLikelySprite: images.length - differentImages.length > 2,
     });
 
     return images;
   }, []);
+
+  // Find likely sprite sheets in css image usage records
+  for (const image of cssImages) {
+    image.isLikelySprite = cssImages.filter(candidate => candidate.src === image.src).length > 2;
+  }
 
   return htmlImages.concat(cssImages);
 }
