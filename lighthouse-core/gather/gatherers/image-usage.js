@@ -42,6 +42,7 @@ function collectImageElementInfo() {
       naturalWidth: element.naturalWidth,
       naturalHeight: element.naturalHeight,
       isCss: false,
+      isLikelySprite: false,
       isPicture: element.parentElement.tagName === 'PICTURE',
     };
   });
@@ -64,9 +65,6 @@ function collectImageElementInfo() {
 
     // Heuristic to filter out sprite sheets
     const differentImages = images.filter(image => image.src !== url);
-    if (images.length - differentImages.length > 2) {
-      return differentImages;
-    }
 
     images.push({
       src: url,
@@ -78,6 +76,7 @@ function collectImageElementInfo() {
       naturalHeight: Number.MAX_VALUE,
       isCss: true,
       isPicture: false,
+      isLikelySprite: images.length - differentImages.length > 2,
     });
 
     return images;
@@ -116,22 +115,131 @@ class ImageUsage extends Gatherer {
       });
   }
 
-  afterPass(options, traceData) {
-    const driver = this.driver = options.driver;
-    const indexedNetworkRecords = traceData.networkRecords.reduce((map, record) => {
+  /**
+   * @param {{driver: !Driver}} options
+   * @param {{trace: !Trace, networkRecords: !Array<!WebInspector.NetworkRequest>}} passData
+   * @return {!Promise<!Array<ImageUsageRecord>>}
+   */
+  afterPass(options, passData) {
+    const traceResults = this._traceMethod(options, passData);
+    if (traceResults.length) return traceResults;
+    return this._fallbackMethod(options, passData);
+  }
+
+  /**
+   * @param {!Trace} trace
+   * @return {!Array<!ImageUsageRecord>}
+   */
+  _findPaintImagesInTrace(trace) {
+    const imageSizes = trace.traceEvents
+      .filter(e => e.name === 'PaintImage')
+      .map(e => e.args.data)
+      .filter(image => image && image.url && image.srcWidth);
+
+    const imagesByUrl = new Map();
+    for (const image of imageSizes) {
+      const images = imagesByUrl.get(image.url) || [];
+      images.push(image);
+      imagesByUrl.set(image.url, images);
+    }
+
+    let outputImages = [];
+    for (const [url, images] of imagesByUrl.entries()) {
+      const imagesBySize = new Map();
+
+      for (const image of images) {
+        const key = [
+          image.x,
+          image.y,
+          image.width,
+          image.height,
+          image.srcWidth,
+          image.srcHeight
+        ].map(n => Math.round(n / 10) * 10).join(',');
+
+        if (imagesBySize.has(key)) continue;
+
+        imagesBySize.set(key, {
+          src: url,
+          naturalWidth: image.srcWidth,
+          naturalHeight: image.srcHeight,
+          clientWidth: image.width,
+          clientHeight: image.height,
+          clientRect: {
+            top: image.y,
+            bottom: image.y + image.height,
+            left: image.x,
+            right: image.x + image.width,
+          },
+        });
+      }
+
+      const uniqueImagesForUrl = Array.from(imagesBySize.values());
+      for (const image of uniqueImagesForUrl) {
+        image.isLikelySprite = uniqueImagesForUrl.length > 2;
+      }
+
+      outputImages = outputImages.concat(uniqueImagesForUrl);
+    }
+
+    return outputImages;
+  }
+
+  /**
+   * @param {{trace: !Trace, networkRecords: !Array<!WebInspector.NetworkRequest>}} passData
+   * @return {!Map<string, !WebInspector.NetworkRequest>}
+   */
+  _indexNetworkRecords(passData) {
+    return passData.networkRecords.reduce((map, record) => {
       if (/^image/.test(record._mimeType) && record.finished) {
-        map[record._url] = {
+        map.set(record._url, {
           url: record.url,
           resourceSize: record.resourceSize,
           startTime: record.startTime,
           endTime: record.endTime,
           responseReceivedTime: record.responseReceivedTime,
           mimeType: record._mimeType
-        };
+        });
       }
 
       return map;
-    }, {});
+    }, new Map());
+  }
+
+  /**
+   * @param {{driver: !Driver}} options
+   * @param {{trace: !Trace, networkRecords: !Array<!WebInspector.NetworkRequest>}} passData
+   * @return {!Promise<!Array<ImageUsageRecord>>}
+   */
+  _traceMethod(options, passData) {
+    const usedUrls = new Set();
+    const networkRecordsByUrl = this._indexNetworkRecords(passData);
+    const images = this._findPaintImagesInTrace(passData.trace).map(image => {
+      usedUrls.add(image.src);
+      image.networkRecord = networkRecordsByUrl.get(image.src);
+      return image;
+    });
+
+    // short-circuit if we couldn't find any PaintImage events at all
+    if (!images.length) return [];
+
+    const unusedImages = [];
+    for (const networkRecord of networkRecordsByUrl.values()) {
+      if (usedUrls.has(networkRecord.url)) continue;
+      unusedImages.push({networkRecord, src: networkRecord.url});
+    }
+
+    return images.concat(unusedImages);
+  }
+
+  /**
+   * @param {{driver: !Driver}} options
+   * @param {{trace: !Trace, networkRecords: !Array<!WebInspector.NetworkRequest>}} passData
+   * @return {!Promise<!Array<ImageUsageRecord>>}
+   */
+  _fallbackMethod(options, passData) {
+    const driver = this.driver = options.driver;
+    const indexedNetworkRecords = this._indexNetworkRecords(passData);
 
     const expression = `(function() {
       ${DOMHelpers.getElementsInDocumentFnString}; // define function on page
@@ -143,7 +251,7 @@ class ImageUsage extends Gatherer {
         return elements.reduce((promise, element) => {
           return promise.then(collector => {
             // link up the image with its network record
-            element.networkRecord = indexedNetworkRecords[element.src];
+            element.networkRecord = indexedNetworkRecords.get(element.src);
 
             // Images within `picture` behave strangely and natural size information isn't accurate,
             // CSS images have no natural size information at all.
@@ -163,3 +271,14 @@ class ImageUsage extends Gatherer {
 }
 
 module.exports = ImageUsage;
+
+/** @typedef {{
+ *    src: string,
+ *    networkRecord: ?WebInspector.NetworkRequest,
+ *    naturalWidth: ?number,
+ *    naturalHeight: ?number,
+ *    clientWidth: ?number,
+ *    clientHeight: ?number,
+ *    clientRect: ?BoundingRect,
+ *  }} */
+ImageUsage.ImageUsageRecord; // eslint-disable-line no-unused-expressions

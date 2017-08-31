@@ -17,7 +17,6 @@ const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const URL = require('../../lib/url-shim');
 
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
-const WASTEFUL_THRESHOLD_IN_BYTES = 25 * 1024;
 
 class UsesResponsiveImages extends ByteEfficiencyAudit {
   /**
@@ -33,7 +32,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
         'Serve images that are appropriately-sized to save cellular data ' +
         'and improve load time. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/oversized-images).',
-      requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'devtoolsLogs']
+      requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'devtoolsLogs', 'traces']
     };
   }
 
@@ -64,7 +63,6 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
       totalBytes,
       wastedBytes,
       wastedPercent: 100 * wastedRatio,
-      isWasteful: wastedBytes > WASTEFUL_THRESHOLD_IN_BYTES,
     };
   }
 
@@ -80,7 +78,10 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     const resultsMap = new Map();
     images.forEach(image => {
       // TODO: give SVG a free pass until a detail per pixel metric is available
-      if (!image.networkRecord || image.networkRecord.mimeType === 'image/svg+xml') {
+      if (!image.networkRecord ||
+          image.networkRecord.mimeType === 'image/svg+xml' ||
+          image.isLikelySprite ||
+          typeof image.naturalWidth !== 'number') {
         return;
       }
 
