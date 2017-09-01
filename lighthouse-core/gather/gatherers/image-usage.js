@@ -123,7 +123,7 @@ class ImageUsage extends Gatherer {
    */
   afterPass(options, passData) {
     const traceResults = this._traceMethod(options, passData);
-    if (traceResults.length) return traceResults;
+    if (traceResults.length) return Promise.resolve(traceResults);
     return this._fallbackMethod(options, passData);
   }
 
@@ -193,7 +193,7 @@ class ImageUsage extends Gatherer {
   _indexNetworkRecords(passData) {
     return passData.networkRecords.reduce((map, record) => {
       if (/^image/.test(record._mimeType) && record.finished) {
-        map.set(record._url, {
+        map.set(record.url, {
           url: record.url,
           resourceSize: record.resourceSize,
           startTime: record.startTime,
