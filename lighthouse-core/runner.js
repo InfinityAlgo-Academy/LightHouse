@@ -256,9 +256,13 @@ class Runner {
    */
   static instantiateComputedArtifacts() {
     const computedArtifacts = {};
+    const filenamesToSkip = [
+      'computed-artifact.js', // the base class which other artifacts inherit
+      'dependency-graph', // a folder containing dependencies, not an artifact
+    ];
+
     require('fs').readdirSync(__dirname + '/gather/computed').forEach(function(filename) {
-      // Skip base class.
-      if (filename === 'computed-artifact.js') return;
+      if (filenamesToSkip.includes(filename)) return;
 
       // Drop `.js` suffix to keep browserify import happy.
       filename = filename.replace(/\.js$/, '');
