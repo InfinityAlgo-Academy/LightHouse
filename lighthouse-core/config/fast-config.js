@@ -11,17 +11,19 @@ module.exports = {
     skipAudits: [
       // disabled for now because they are too slow
       'no-mutation-events',
-      'uses-optimized-images',
-      'uses-webp-images',
-      'speed-index-metric',
       'screenshot-thumbnails',
 
       // disabled for now because their results are not meaningful/cannot be computed anymore
+      'first-meaningful-paint',
       'first-interactive',
       'consistently-interactive',
+      'estimated-input-latency',
+      'speed-index-metric',
       'offscreen-images',
       'load-fast-enough-for-pwa',
     ],
+    // skip a11y for now because it's too slow and not in PSI-parity set
+    onlyCategories: ['performance', 'pwa', 'best-practices'],
   },
   passes: [
     {
