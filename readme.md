@@ -262,15 +262,14 @@ See [Lighthouse Architecture](./docs/architecture.md).
 
 Yes! Details in [Lighthouse configuration](./docs/configuration.md).
 
-### What is "Do Better Web"?
+### How does Lighthouse use network throttling, and how can I make it better?
 
-**Do Better Web** is an initiative within Lighthouse to help web developers modernize their existing
-web applications. By running a set of tests, developers can discover new web platform APIs, become
-aware of performance pitfalls, and learn (newer) best practices. In other words, do better on the web!
+Good question. Network and CPU throttling are applied by default in a Lighthouse run. The network
+attempts to emulate 3G and the CPU is slowed down 4x from your machine's default speed. If you
+prefer to run Lighthouse without throttling, you'll have to use the CLI and disable it with the
+`--disable-*` flags mentioned above.
 
-DBW is implemented as a set of standalone [gatherers](https://github.com/GoogleChrome/lighthouse/tree/master/lighthouse-core/gather/gatherers/dobetterweb) and [audits](https://github.com/GoogleChrome/lighthouse/tree/master/lighthouse-core/audits/dobetterweb) that are run alongside the core Lighthouse tests. The tests show up under "Best Practices" in the report.
-
-If you'd like to contribute, check the [list of issues](https://github.com/GoogleChrome/lighthouse/issues?q=is%3Aissue+is%3Aopen+label%3ADoBetterWeb) or propose a new audit by filing an issue.
+Read more in our [guide to network throttling](./docs/throttling.md).
 
 ### Are results sent to a remote server?
 
