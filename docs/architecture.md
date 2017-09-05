@@ -9,9 +9,14 @@ _Some incomplete notes_
 * **Driver** - Interfaces with [Chrome Debugging Protocol](https://developer.chrome.com/devtools/docs/debugger-protocol)  ([API viewer](https://chromedevtools.github.io/debugger-protocol-viewer/))
 * **Gatherers** - Uses Driver to collect information about the page. Minimal post-processing.
   * **Artifacts** - output of a gatherer
-* **Audits** - Using the Artifacts as input, Audits evaluate a test and assign pass/fail/scoring.
+* **Audit** - Tests for a single feature/optimization/metric. Using the Artifacts as input, an audit evaluates a test and  resolves to a score which may be pass/fail/numeric. Formatting note: The meta description may contain markdown links and meta title may contain markdown code.
   * **Computed Artifacts** - Generated on-demand from artifacts, these add additional meaning, and are often shared amongst multiple audits.
-* **Categories** - Grouping audit results into a user-facing section of the report (eg. `Best Practices`). Applies weighting and overall scoring to the section.
+  
+### Audit/Report terminology
+* **Category** - Roll-up collection of audits and audit groups into a user-facing section of the report (eg. `Best Practices`). Applies weighting and overall scoring to the section. Examples: PWA, Accessibility, Best Practices.
+* **Audit description** - Short user-visible title for the successful audit. eg. “All image elements have `[alt]` attributes.”
+* **Audit failure description** - Short user-visible title for a failing  audit. eg. “Some image elements do not have `[alt]` attributes.”
+* **Audit help text** - Explanation of why the user should care about the audit. Not necessarily how to fix it, unless there is no external link that explains it. ([See helpText guidelines](CONTRIBUTING.md#helptext-guidelines)). eg. “Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more].”
 
 ## Protocol
 
