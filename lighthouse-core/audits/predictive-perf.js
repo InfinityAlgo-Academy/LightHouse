@@ -8,6 +8,7 @@
 const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util.js');
 const PageDependencyGraph = require('../gather/computed/page-dependency-graph.js');
+const Node = require('../gather/computed/dependency-graph/node.js');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 //   https://www.desmos.com/calculator/rjp0lbit8y
@@ -31,24 +32,88 @@ class PredictivePerf extends Audit {
   }
 
   /**
+   * @param {!Node} dependencyGraph
+   * @param {!TraceOfTabArtifact} traceOfTab
+   * @return {!Node}
+   */
+  static getOptimisticFMPGraph(dependencyGraph, traceOfTab) {
+    const fmp = traceOfTab.timestamps.firstMeaningfulPaint;
+    return dependencyGraph.cloneWithRelationships(node => {
+      if (node.endTime > fmp) return false;
+      if (node.type !== Node.TYPES.NETWORK) return true;
+      return node.record.priority() === 'VeryHigh'; // proxy for render-blocking
+    });
+  }
+
+  /**
+   * @param {!Node} dependencyGraph
+   * @param {!TraceOfTabArtifact} traceOfTab
+   * @return {!Node}
+   */
+  static getPessimisticFMPGraph(dependencyGraph, traceOfTab) {
+    const fmp = traceOfTab.timestamps.firstMeaningfulPaint;
+    return dependencyGraph.cloneWithRelationships(node => {
+      return node.endTime <= fmp;
+    });
+  }
+
+  /**
+   * @param {!Node} dependencyGraph
+   * @return {!Node}
+   */
+  static getOptimisticTTCIGraph(dependencyGraph) {
+    return dependencyGraph.cloneWithRelationships(node => {
+      return node.record._resourceType && node.record._resourceType._name === 'script' ||
+          node.record.priority() === 'High' ||
+          node.record.priority() === 'VeryHigh';
+    });
+  }
+
+  /**
+   * @param {!Node} dependencyGraph
+   * @return {!Node}
+   */
+  static getPessimisticTTCIGraph(dependencyGraph) {
+    return dependencyGraph;
+  }
+
+  /**
    * @param {!Artifacts} artifacts
    * @return {!AuditResult}
    */
   static audit(artifacts) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    return artifacts.requestPageDependencyGraph(trace, devtoolsLogs).then(graph => {
-      const rawValue = PageDependencyGraph.computeGraphDuration(graph);
+    return Promise.all([
+      artifacts.requestPageDependencyGraph(trace, devtoolsLogs),
+      artifacts.requestTraceOfTab(trace),
+    ]).then(([graph, traceOfTab]) => {
+      const graphs = {
+        optimisticFMP: PredictivePerf.getOptimisticFMPGraph(graph, traceOfTab),
+        pessimisticFMP: PredictivePerf.getPessimisticFMPGraph(graph, traceOfTab),
+        optimisticTTCI: PredictivePerf.getOptimisticTTCIGraph(graph, traceOfTab),
+        pessimisticTTCI: PredictivePerf.getPessimisticTTCIGraph(graph, traceOfTab),
+      };
+
+      let sum = 0;
+      const values = {};
+      Object.keys(graphs).forEach(key => {
+        values[key] = PageDependencyGraph.computeGraphDuration(graphs[key]);
+        sum += values[key];
+      });
+
+      const meanDuration = sum / Object.keys(values).length;
       const score = Audit.computeLogNormalScore(
-        rawValue,
+        meanDuration,
         SCORING_POINT_OF_DIMINISHING_RETURNS,
         SCORING_MEDIAN
       );
 
       return {
         score,
-        rawValue,
-        displayValue: Util.formatMilliseconds(rawValue),
+        rawValue: meanDuration,
+        displayValue: Util.formatMilliseconds(meanDuration),
+        extendedInfo: {value: values},
       };
     });
   }

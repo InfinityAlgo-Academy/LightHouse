@@ -80,35 +80,4 @@ describe('PageDependencyGraph computed artifact:', () => {
       assert.deepEqual(nodes[3].getDependencies(), [nodes[0]]); // should depend on rootNode instead
     });
   });
-
-  describe('#computeGraphDuration', () => {
-    it('should compute graph duration', () => {
-      //   B - C - D - E - F
-      //  /               / \
-      // A - * - * - * - *   G - H
-
-      const nodeA = new Node('A');
-      const nodeB = new Node('B');
-      const nodeC = new Node('C');
-      const nodeD = new Node('D');
-      const nodeE = new Node('E');
-      const nodeF = new Node('F');
-      const nodeG = new Node('G');
-      const nodeH = new Node('H');
-
-      nodeA.addDependent(nodeB);
-      nodeA.addDependent(nodeE);
-
-      nodeB.addDependent(nodeC);
-      nodeC.addDependent(nodeD);
-      nodeD.addDependent(nodeE);
-      nodeE.addDependent(nodeF);
-      nodeF.addDependent(nodeG);
-
-      nodeG.addDependent(nodeH);
-
-      const result = PageDependencyGraph.computeGraphDuration(nodeA);
-      assert.equal(result, 4500); // 7 hops * ~560ms latency/hop
-    });
-  });
 });

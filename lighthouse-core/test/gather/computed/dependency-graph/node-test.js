@@ -147,6 +147,32 @@ describe('DependencyGraph/Node', () => {
       });
     });
 
+    it('should create a copy of a graph with long dependency chains', () => {
+      //   C - D - E - F
+      //  /             \
+      // A - - - - - - - B
+      const nodeA = new Node('A');
+      const nodeB = new Node('B');
+      const nodeC = new Node('C');
+      const nodeD = new Node('D');
+      const nodeE = new Node('E');
+      const nodeF = new Node('F');
+
+      nodeA.addDependent(nodeB);
+      nodeF.addDependent(nodeB);
+
+      nodeA.addDependent(nodeC);
+      nodeC.addDependent(nodeD);
+      nodeD.addDependent(nodeE);
+      nodeE.addDependent(nodeF);
+
+      const clone = nodeA.cloneWithRelationships();
+
+      const clonedIdMap = new Map();
+      clone.traverse(node => clonedIdMap.set(node.id, node));
+      assert.equal(clonedIdMap.size, 6);
+    });
+
     it('should create a copy when not starting at root node', () => {
       const graph = createComplexGraph();
       const cloneD = graph.nodeD.cloneWithRelationships();

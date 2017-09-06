@@ -18,7 +18,6 @@
  * these methods are called and we can always start traversal at the root node.
  */
 class Node {
-
   /**
    * @param {string|number} id
    */
@@ -33,6 +32,27 @@ class Node {
    */
   get id() {
     return this._id;
+  }
+
+  /**
+   * @return {string}
+   */
+  get type() {
+    throw new Error('Unimplemented');
+  }
+
+  /**
+   * @return {number}
+   */
+  get startTime() {
+    throw new Error('Unimplemented');
+  }
+
+  /**
+   * @return {number}
+   */
+  get endTime() {
+    throw new Error('Unimplemented');
   }
 
   /**
@@ -56,8 +76,14 @@ class Node {
    */
   getRootNode() {
     let rootNode = this;
-    while (rootNode._dependencies.length) {
+    let maxDepth = 1000;
+    while (rootNode._dependencies.length && maxDepth) {
       rootNode = rootNode._dependencies[0];
+      maxDepth--;
+    }
+
+    if (!maxDepth) {
+      throw new Error('Maximum depth exceeded: getRootNode');
     }
 
     return rootNode;
@@ -121,6 +147,11 @@ class Node {
       if (!shouldIncludeNode(originalNode)) return;
       const clonedNode = originalNode.cloneWithoutRelationships();
       idToNodeMap.set(clonedNode.id, clonedNode);
+    });
+
+    rootNode.traverse(originalNode => {
+      if (!shouldIncludeNode(originalNode)) return;
+      const clonedNode = idToNodeMap.get(originalNode.id);
 
       for (const dependency of originalNode._dependencies) {
         const clonedDependency = idToNodeMap.get(dependency.id);
@@ -176,5 +207,9 @@ class Node {
     this._traversePaths(iterator, getNext);
   }
 }
+
+Node.TYPES = {
+  NETWORK: 'network',
+};
 
 module.exports = Node;

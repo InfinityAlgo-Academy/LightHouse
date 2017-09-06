@@ -6,8 +6,8 @@
 'use strict';
 
 const ComputedArtifact = require('./computed-artifact');
-const Node = require('./dependency-graph/node');
-const Emulation = require('../../lib/emulation');
+const NetworkNode = require('./dependency-graph/network-node');
+const GraphEstimator = require('./dependency-graph/estimator/estimator');
 
 class PageDependencyGraphArtifact extends ComputedArtifact {
   get name() {
@@ -43,7 +43,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
     const urlToNodeMap = new Map();
 
     networkRecords.forEach(record => {
-      const node = new Node(record.requestId);
+      const node = new NetworkNode(record);
       idToNodeMap.set(record.requestId, node);
 
       if (urlToNodeMap.has(record.url)) {
@@ -79,26 +79,34 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
    * @return {number}
    */
   static computeGraphDuration(rootNode) {
-    const depthByNodeId = new Map();
-    const getMax = arr => Array.from(arr).reduce((max, next) => Math.max(max, next), 0);
+    return new GraphEstimator(rootNode).estimate();
+  }
 
-    let startingMax = Infinity;
-    let endingMax = Infinity;
-    while (endingMax === Infinity || startingMax > endingMax) {
-      startingMax = endingMax;
-      endingMax = 0;
-
-      rootNode.traverse(node => {
-        const dependencies = node.getDependencies();
-        const dependencyDepths = dependencies.map(node => depthByNodeId.get(node.id) || Infinity);
-        const maxDepth = getMax(dependencyDepths);
-        endingMax = Math.max(endingMax, maxDepth);
-        depthByNodeId.set(node.id, maxDepth + 1);
-      });
+  /**
+   *
+   * @param {!Node} rootNode
+   */
+  static printGraph(rootNode, widthInCharacters = 100) {
+    function padRight(str, target, padChar = ' ') {
+      return str + padChar.repeat(Math.max(target - str.length, 0));
     }
 
-    const maxDepth = getMax(depthByNodeId.values());
-    return maxDepth * Emulation.settings.TYPICAL_MOBILE_THROTTLING_METRICS.latency;
+    const nodes = [];
+    rootNode.traverse(node => nodes.push(node));
+    nodes.sort((a, b) => a.startTime - b.startTime);
+
+    const min = nodes[0].startTime;
+    const max = nodes.reduce((max, node) => Math.max(max, node.endTime), 0);
+
+    const totalTime = max - min;
+    const timePerCharacter = totalTime / widthInCharacters;
+    nodes.forEach(node => {
+      const offset = Math.round((node.startTime - min) / timePerCharacter);
+      const length = Math.ceil((node.endTime - node.startTime) / timePerCharacter);
+      const bar = padRight('', offset) + padRight('', length, '=');
+      // eslint-disable-next-line
+      console.log(padRight(bar, widthInCharacters), `| ${node.record._url.slice(0, 30)}`);
+    });
   }
 
   /**
