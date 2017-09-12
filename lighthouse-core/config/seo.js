@@ -36,7 +36,7 @@ module.exports = {
       name: 'SEO',
       description: 'These ensure your app is able to be understood by search engine crawlers.',
       audits: [
-        {id: 'meta-viewport', weight: 1, group: 'seo-mobile'},
+        {id: 'viewport', weight: 1, group: 'seo-mobile'},
         {id: 'document-title', weight: 1, group: 'seo-content'},
         {id: 'meta-description', weight: 1, group: 'seo-content'},
       ]
