@@ -2,8 +2,6 @@
 
 > Lighthouse analyzes web apps and web pages, collecting modern performance metrics and insights on developer best practices.
 
-_Lighthouse requires Chrome [60 or later](https://googlechrome.github.io/current-versions/)._
-
 ## Using Lighthouse in Chrome DevTools
 
 Lighthouse is integrated directly into the Chrome Developer Tools, under the "Audits" panel.
