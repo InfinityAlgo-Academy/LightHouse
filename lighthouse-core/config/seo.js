@@ -7,6 +7,15 @@
 
 module.exports = {
   extends: 'lighthouse:default',
+  passes: [{
+    passName: 'defaultPass',
+    gatherers: [
+      'seo/meta-description',
+    ]
+  }],
+  audits: [
+    'seo/meta-description',
+  ],
   groups: {
     'seo-mobile': {
       title: 'Mobile Friendly',
@@ -28,7 +37,8 @@ module.exports = {
       description: 'These ensure your app is able to be understood by search engine crawlers.',
       audits: [
         {id: 'meta-viewport', weight: 1, group: 'seo-mobile'},
-        {id: 'document-title', weight: 1, group: 'seo-content'}
+        {id: 'document-title', weight: 1, group: 'seo-content'},
+        {id: 'meta-description', weight: 1, group: 'seo-content'},
       ]
     }
   }
