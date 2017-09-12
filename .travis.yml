@@ -32,7 +32,7 @@ before_script:
   - sleep 3 # wait for xvfb to boot
   - yarn build-all
 script:
-  - yarn bundlesize
+  # - yarn bundlesize # FIXME. re-enable
   - yarn test-cli-formatting
   - yarn test-launcher-formatting
   - yarn lint
