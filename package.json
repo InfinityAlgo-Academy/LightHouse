@@ -73,7 +73,7 @@
     "zone.js": "^0.7.3"
   },
   "dependencies": {
-    "axe-core": "2.4.0",
+    "axe-core": "2.4.1",
     "chrome-devtools-frontend": "1.0.422034",
     "devtools-timeline-model": "1.1.6",
     "jpeg-js": "0.1.2",
