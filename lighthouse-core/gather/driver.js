@@ -87,6 +87,7 @@ class Driver {
    * @return {!Promise<string>}
    */
   getUserAgent() {
+    // FIXME: use Browser.getVersion instead
     return this.evaluateAsync('navigator.userAgent');
   }
 
