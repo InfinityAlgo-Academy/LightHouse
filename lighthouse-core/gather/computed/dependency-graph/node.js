@@ -56,12 +56,18 @@ class Node {
   }
 
   /**
+   * @return {boolean}
+   */
+  isRenderBlocking() {
+    return false;
+  }
+
+  /**
    * @return {!Array<!Node>}
    */
   getDependents() {
     return this._dependents.slice();
   }
-
 
   /**
    * @return {!Array<!Node>}
@@ -70,6 +76,12 @@ class Node {
     return this._dependencies.slice();
   }
 
+  /**
+   * @return {number}
+   */
+  getNumberOfDependencies() {
+    return this._dependencies.length;
+  }
 
   /**
    * @return {!Node}
@@ -210,6 +222,7 @@ class Node {
 
 Node.TYPES = {
   NETWORK: 'network',
+  CPU: 'cpu',
 };
 
 module.exports = Node;

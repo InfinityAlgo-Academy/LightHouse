@@ -168,4 +168,6 @@ class TraceProcessor {
   }
 }
 
+TraceProcessor.SCHEDULABLE_TASK_TITLE = SCHEDULABLE_TASK_TITLE;
+
 module.exports = TraceProcessor;

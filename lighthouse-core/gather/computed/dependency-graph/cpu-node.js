@@ -7,64 +7,67 @@
 
 const Node = require('./node');
 
-class NetworkNode extends Node {
+class CPUNode extends Node {
   /**
-   * @param {!WebInspector.NetworkRequest} networkRecord
+   * @param {!TraceEvent} parentEvent
+   * @param {!Array<TraceEvent>=} childEvents
    */
-  constructor(networkRecord) {
-    super(networkRecord.requestId);
-    this._record = networkRecord;
+  constructor(parentEvent, childEvents = []) {
+    const nodeId = `${parentEvent.tid}.${parentEvent.ts}`;
+    super(nodeId);
+
+    this._event = parentEvent;
+    this._childEvents = childEvents;
   }
 
   /**
    * @return {string}
    */
   get type() {
-    return Node.TYPES.NETWORK;
+    return Node.TYPES.CPU;
   }
 
   /**
    * @return {number}
    */
   get startTime() {
-    return this._record.startTime * 1000 * 1000;
+    return this._event.ts;
   }
 
   /**
    * @return {number}
    */
   get endTime() {
-    return this._record.endTime * 1000 * 1000;
+    return this._event.ts + this._event.dur;
   }
 
   /**
-   * @return {!WebInspector.NetworkRequest}
+   * @return {!TraceEvent}
    */
-  get record() {
-    return this._record;
+  get event() {
+    return this._event;
   }
 
   /**
-   * @return {string}
+   * @return {!TraceEvent}
    */
-  get resourceType() {
-    return this._record._resourceType && this._record._resourceType._name;
+  get childEvents() {
+    return this._childEvents;
   }
 
   /**
    * @return {boolean}
    */
-  isRenderBlocking() {
-    const priority = this._record.priority();
-    return priority === 'VeryHigh' || (priority === 'High' && this.resourceType === 'script');
+  didPerformLayout() {
+    return this._childEvents.some(evt => evt.name === 'Layout');
   }
 
   /**
-   * @return {!NetworkNode}
+   * @return {!CPUNode}
    */
   cloneWithoutRelationships() {
-    return new NetworkNode(this._record);
+    return new CPUNode(this._event, this._childEvents);
   }
 }
 
-module.exports = NetworkNode;
+module.exports = CPUNode;

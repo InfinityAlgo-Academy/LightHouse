@@ -14,6 +14,7 @@ const DEFAULT_MAXIMUM_CONCURRENT_REQUESTS = 10;
 const DEFAULT_FALLBACK_TTFB = 30;
 const DEFAULT_RTT = emulation.TYPICAL_MOBILE_THROTTLING_METRICS.targetLatency;
 const DEFAULT_THROUGHPUT = emulation.TYPICAL_MOBILE_THROTTLING_METRICS.targetDownloadThroughput * 8;
+const DEFAULT_CPU_MULTIPLIER = 5;
 
 const TLS_SCHEMES = ['https', 'wss'];
 
@@ -43,6 +44,7 @@ class Estimator {
         throughput: DEFAULT_THROUGHPUT,
         fallbackTTFB: DEFAULT_FALLBACK_TTFB,
         maximumConcurrentRequests: DEFAULT_MAXIMUM_CONCURRENT_REQUESTS,
+        cpuMultiplier: DEFAULT_CPU_MULTIPLIER,
       },
       options
     );
@@ -54,6 +56,7 @@ class Estimator {
       TcpConnection.maximumSaturatedConnections(this._rtt, this._throughput),
       this._options.maximumConcurrentRequests
     );
+    this._cpuMultiplier = this._options.cpuMultiplier;
   }
 
   /**
@@ -84,10 +87,7 @@ class Estimator {
    */
   _initializeNetworkConnections() {
     const connections = new Map();
-    const recordsByConnection = groupBy(
-      this._networkRecords,
-      record => record.connectionId
-    );
+    const recordsByConnection = groupBy(this._networkRecords, record => record.connectionId);
 
     for (const [connectionId, records] of recordsByConnection.entries()) {
       const isTLS = TLS_SCHEMES.includes(records[0].parsedURL.scheme);
@@ -124,22 +124,71 @@ class Estimator {
    */
   _initializeAuxiliaryData() {
     this._nodeTiming = new Map();
+    this._nodesUnprocessed = new Set();
     this._nodesCompleted = new Set();
     this._nodesInProgress = new Set();
     this._nodesInQueue = new Set(); // TODO: replace this with priority queue
     this._connectionsInUse = new Set();
+    this._numberInProgressByType = new Map();
+  }
+
+  /**
+   * @param {string} type
+   * @return {number}
+   */
+  _numberInProgress(type) {
+    return this._numberInProgressByType.get(type) || 0;
   }
 
   /**
    * @param {!Node} node
+   * @param {!NodeTimingData} values
    */
-  _enqueueNodeIfPossible(node) {
-    const dependencies = node.getDependencies();
-    if (
-      !this._nodesCompleted.has(node) &&
-      dependencies.every(dependency => this._nodesCompleted.has(dependency))
-    ) {
-      this._nodesInQueue.add(node);
+  _setTimingData(node, values) {
+    const timingData = this._nodeTiming.get(node) || {};
+    Object.assign(timingData, values);
+    this._nodeTiming.set(node, timingData);
+  }
+
+  /**
+   * @param {!Node} node
+   * @param {number} queuedTime
+   */
+  _markNodeAsInQueue(node, queuedTime) {
+    this._nodesInQueue.add(node);
+    this._nodesUnprocessed.delete(node);
+    this._setTimingData(node, {queuedTime});
+  }
+
+  /**
+   * @param {!Node} node
+   * @param {number} startTime
+   */
+  _markNodeAsInProgress(node, startTime) {
+    this._nodesInQueue.delete(node);
+    this._nodesInProgress.add(node);
+    this._numberInProgressByType.set(node.type, this._numberInProgress(node.type) + 1);
+    this._setTimingData(node, {startTime});
+  }
+
+  /**
+   * @param {!Node} node
+   * @param {number} endTime
+   */
+  _markNodeAsComplete(node, endTime) {
+    this._nodesCompleted.add(node);
+    this._nodesInProgress.delete(node);
+    this._numberInProgressByType.set(node.type, this._numberInProgress(node.type) - 1);
+    this._setTimingData(node, {endTime});
+
+    // Try to add all its dependents to the queue
+    for (const dependent of node.getDependents()) {
+      // Skip dependent node if one of its dependencies hasn't finished yet
+      const dependencies = dependent.getDependencies();
+      if (dependencies.some(dependency => !this._nodesCompleted.has(dependency))) continue;
+
+      // Otherwise add it to the queue
+      this._markNodeAsInQueue(dependent, endTime);
     }
   }
 
@@ -148,21 +197,31 @@ class Estimator {
    * @param {number} totalElapsedTime
    */
   _startNodeIfPossible(node, totalElapsedTime) {
-    if (node.type !== Node.TYPES.NETWORK) return;
+    if (node.type === Node.TYPES.CPU) {
+      // Start a CPU task if there's no other CPU task in process
+      if (this._numberInProgress(node.type) === 0) {
+        this._markNodeAsInProgress(node, totalElapsedTime);
+        this._setTimingData(node, {timeElapsed: 0});
+      }
+
+      return;
+    }
+
+    if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
     const connection = this._connections.get(node.record.connectionId);
+    const numberOfActiveRequests = this._numberInProgress(node.type);
 
+    // Start a network request if the connection isn't in use and we're not at max requests
     if (
-      this._nodesInProgress.size >= this._maximumConcurrentRequests ||
+      numberOfActiveRequests >= this._maximumConcurrentRequests ||
       this._connectionsInUse.has(connection)
     ) {
       return;
     }
 
-    this._nodesInQueue.delete(node);
-    this._nodesInProgress.add(node);
-    this._nodeTiming.set(node, {
-      startTime: totalElapsedTime,
+    this._markNodeAsInProgress(node, totalElapsedTime);
+    this._setTimingData(node, {
       timeElapsed: 0,
       timeElapsedOvershoot: 0,
       bytesDownloaded: 0,
@@ -187,6 +246,14 @@ class Estimator {
    * @return {number}
    */
   _estimateTimeRemaining(node) {
+    if (node.type === Node.TYPES.CPU) {
+      const timingData = this._nodeTiming.get(node);
+      const totalDuration = Math.round(node.event.dur / 1000 * this._cpuMultiplier);
+      const estimatedTimeElapsed = totalDuration - timingData.timeElapsed;
+      this._setTimingData(node, {estimatedTimeElapsed});
+      return estimatedTimeElapsed;
+    }
+
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
     const timingData = this._nodeTiming.get(node);
@@ -196,9 +263,9 @@ class Estimator {
       timingData.timeElapsed
     );
 
-    const estimate = calculation.timeElapsed + timingData.timeElapsedOvershoot;
-    timingData.estimatedTimeElapsed = estimate;
-    return estimate;
+    const estimatedTimeElapsed = calculation.timeElapsed + timingData.timeElapsedOvershoot;
+    this._setTimingData(node, {estimatedTimeElapsed});
+    return estimatedTimeElapsed;
   }
 
   /**
@@ -221,9 +288,17 @@ class Estimator {
    * @param {number} totalElapsedTime
    */
   _updateProgressMadeInTimePeriod(node, timePeriodLength, totalElapsedTime) {
+    const timingData = this._nodeTiming.get(node);
+    const isFinished = timingData.estimatedTimeElapsed === timePeriodLength;
+
+    if (node.type === Node.TYPES.CPU) {
+      return isFinished
+        ? this._markNodeAsComplete(node, totalElapsedTime)
+        : (timingData.timeElapsed += timePeriodLength);
+    }
+
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
-    const timingData = this._nodeTiming.get(node);
     const connection = this._connections.get(node.record.connectionId);
     const calculation = connection.simulateDownloadUntil(
       node.record.transferSize - timingData.bytesDownloaded,
@@ -233,18 +308,10 @@ class Estimator {
 
     connection.setCongestionWindow(calculation.congestionWindow);
 
-    if (timingData.estimatedTimeElapsed === timePeriodLength) {
-      timingData.endTime = totalElapsedTime;
-
+    if (isFinished) {
       connection.setWarmed(true);
       this._connectionsInUse.delete(connection);
-
-      this._nodesCompleted.add(node);
-      this._nodesInProgress.delete(node);
-
-      for (const dependent of node.getDependents()) {
-        this._enqueueNodeIfPossible(dependent);
-      }
+      this._markNodeAsComplete(node, totalElapsedTime);
     } else {
       timingData.timeElapsed += calculation.timeElapsed;
       timingData.timeElapsedOvershoot += calculation.timeElapsed - timePeriodLength;
@@ -254,22 +321,28 @@ class Estimator {
 
   /**
    * Estimates the time taken to process all of the graph's nodes.
-   * @return {number}
+   * @return {{timeInMs: number, nodeTiming: !Map<!Node, !NodeTimingData>}}
    */
-  estimate() {
+  estimateWithDetails() {
     // initialize all the necessary data containers
     this._initializeNetworkRecords();
     this._initializeNetworkConnections();
     this._initializeAuxiliaryData();
 
+    const nodesUnprocessed = this._nodesUnprocessed;
     const nodesInQueue = this._nodesInQueue;
     const nodesInProgress = this._nodesInProgress;
 
-    // add root node to queue
-    nodesInQueue.add(this._graph.getRootNode());
+    const rootNode = this._graph.getRootNode();
+    rootNode.traverse(node => nodesUnprocessed.add(node));
 
     let depth = 0;
     let totalElapsedTime = 0;
+
+    // add root node to queue
+    this._markNodeAsInQueue(rootNode, totalElapsedTime);
+
+    // loop as long as we have nodes in the queue or currently in progress
     while (nodesInQueue.size || nodesInProgress.size) {
       depth++;
 
@@ -287,11 +360,7 @@ class Estimator {
 
       // update how far each node will progress until that point
       for (const node of nodesInProgress) {
-        this._updateProgressMadeInTimePeriod(
-          node,
-          minimumTime,
-          totalElapsedTime
-        );
+        this._updateProgressMadeInTimePeriod(node, minimumTime, totalElapsedTime);
       }
 
       if (depth > 10000) {
@@ -299,8 +368,32 @@ class Estimator {
       }
     }
 
-    return totalElapsedTime;
+    if (nodesUnprocessed.size !== 0) {
+      throw new Error(`Cycle detected: ${nodesUnprocessed.size} unused nodes`);
+    }
+
+    return {
+      timeInMs: totalElapsedTime,
+      nodeTiming: this._nodeTiming,
+    };
+  }
+
+  /**
+   * @return {number}
+   */
+  estimate() {
+    return this.estimateWithDetails().timeInMs;
   }
 }
 
 module.exports = Estimator;
+
+/**
+ * @typedef {{
+ *    estimatedTimeElapsed: number|undefined,
+ *    timeElapsed: number|undefined,
+ *    timeElapsedOvershoot: number|undefined,
+ *    bytesDownloaded: number|undefined,
+ * }}
+ */
+Estimator.NodeTimingData; // eslint-disable-line no-unused-expressions

@@ -7,7 +7,12 @@
 
 const ComputedArtifact = require('./computed-artifact');
 const NetworkNode = require('./dependency-graph/network-node');
+const CPUNode = require('./dependency-graph/cpu-node');
 const GraphEstimator = require('./dependency-graph/estimator/estimator');
+const TracingProcessor = require('../../lib/traces/tracing-processor');
+
+// Tasks smaller than 10 ms have minimal impact on simulation
+const MINIMUM_TASK_DURATION_OF_INTEREST = 10;
 
 class PageDependencyGraphArtifact extends ComputedArtifact {
   get name() {
@@ -34,52 +39,203 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {!TraceOfTabArtifact} traceOfTab
    * @param {!Array<!WebInspector.NetworkRequest>} networkRecords
-   * @return {!Node}
+   * @return {!NetworkNodeOutput}
    */
-  static createGraph(traceOfTab, networkRecords) {
+  static getNetworkNodeOutput(networkRecords) {
+    const nodes = [];
     const idToNodeMap = new Map();
     const urlToNodeMap = new Map();
 
     networkRecords.forEach(record => {
       const node = new NetworkNode(record);
-      idToNodeMap.set(record.requestId, node);
+      nodes.push(node);
 
-      if (urlToNodeMap.has(record.url)) {
-        // If duplicate requests have been made to this URL we can't be certain which node is being
-        // referenced, so act like we don't know the URL at all.
-        urlToNodeMap.set(record.url, undefined);
-      } else {
-        urlToNodeMap.set(record.url, node);
-      }
+      const list = urlToNodeMap.get(record.url) || [];
+      list.push(node);
+
+      idToNodeMap.set(record.requestId, node);
+      urlToNodeMap.set(record.url, list);
     });
 
-    const rootRequest = networkRecords
-        .reduce((min, next) => min.startTime < next.startTime ? min : next);
-    const rootNode = idToNodeMap.get(rootRequest.requestId);
-    networkRecords.forEach(record => {
-      const initiators = PageDependencyGraphArtifact.getNetworkInitiators(record);
-      const node = idToNodeMap.get(record.requestId);
+    return {nodes, idToNodeMap, urlToNodeMap};
+  }
+
+  /**
+   * @param {!TraceOfTabArtifact} traceOfTab
+   * @return {!Array<!CPUNode>}
+   */
+  static getCPUNodes(traceOfTab) {
+    const nodes = [];
+    let i = 0;
+
+    const minimumEvtDur = MINIMUM_TASK_DURATION_OF_INTEREST * 1000;
+    while (i < traceOfTab.mainThreadEvents.length) {
+      const evt = traceOfTab.mainThreadEvents[i];
+
+      // Skip all trace events that aren't schedulable tasks with sizable duration
+      if (
+        evt.name !== TracingProcessor.SCHEDULABLE_TASK_TITLE ||
+        !evt.dur ||
+        evt.dur < minimumEvtDur
+      ) {
+        i++;
+        continue;
+      }
+
+      // Capture all events that occurred within the task
+      const children = [];
+      i++; // Start examining events after this one
+      for (
+        const endTime = evt.ts + evt.dur;
+        i < traceOfTab.mainThreadEvents.length && traceOfTab.mainThreadEvents[i].ts < endTime;
+        i++
+      ) {
+        children.push(traceOfTab.mainThreadEvents[i]);
+      }
+
+      nodes.push(new CPUNode(evt, children));
+    }
+
+    return nodes;
+  }
+
+  /**
+   * @param {!Node} rootNode
+   * @param {!NetworkNodeOutput} networkNodeOutput
+   */
+  static linkNetworkNodes(rootNode, networkNodeOutput) {
+    networkNodeOutput.nodes.forEach(node => {
+      const initiators = PageDependencyGraphArtifact.getNetworkInitiators(node.record);
       if (initiators.length) {
         initiators.forEach(initiator => {
-          const parent = urlToNodeMap.get(initiator) || rootNode;
-          parent.addDependent(node);
+          const parentCandidates = networkNodeOutput.urlToNodeMap.get(initiator) || [rootNode];
+          // Only add the initiator relationship if the initiator is unambiguous
+          const parent = parentCandidates.length === 1 ? parentCandidates[0] : rootNode;
+          node.addDependency(parent);
         });
-      } else if (record !== rootRequest) {
+      } else if (node !== rootNode) {
         rootNode.addDependent(node);
       }
     });
+  }
+
+  /**
+   * @param {!Node} rootNode
+   * @param {!NetworkNodeOutput} networkNodeOutput
+   * @param {!Array<!CPUNode>} cpuNodes
+   */
+  static linkCPUNodes(rootNode, networkNodeOutput, cpuNodes) {
+    function addDependentNetworkRequest(cpuNode, reqId) {
+      const networkNode = networkNodeOutput.idToNodeMap.get(reqId);
+      if (!networkNode || networkNode.resourceType !== 'xhr') return;
+      cpuNode.addDependent(networkNode);
+    }
+
+    function addDependencyOnUrl(cpuNode, url) {
+      if (!url) return;
+      const candidates = networkNodeOutput.urlToNodeMap.get(url) || [];
+
+      let minCandidate = null;
+      let minDistance = Infinity;
+      // Find the closest request that finished before this CPU task started
+      candidates.forEach(candidate => {
+        const distance = cpuNode.startTime - candidate.endTime;
+        if (distance > 0 && distance < minDistance) {
+          minCandidate = candidate;
+          minDistance = distance;
+        }
+      });
+
+      if (!minCandidate) return;
+      cpuNode.addDependency(minCandidate);
+    }
+
+    const timers = new Map();
+    for (const node of cpuNodes) {
+      for (const evt of node.childEvents) {
+        if (!evt.args.data) continue;
+
+        const url = evt.args.data.url;
+        const stackTraceUrls = (evt.args.data.stackTrace || []).map(l => l.url).filter(Boolean);
+
+        switch (evt.name) {
+          case 'TimerInstall':
+            timers.set(evt.args.data.timerId, node);
+            stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
+            break;
+          case 'TimerFire': {
+            const installer = timers.get(evt.args.data.timerId);
+            if (!installer) break;
+            installer.addDependent(node);
+            break;
+          }
+
+          case 'InvalidateLayout':
+          case 'ScheduleStyleRecalculation':
+            stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
+            break;
+
+          case 'EvaluateScript':
+            addDependencyOnUrl(node, url);
+            stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
+            break;
+
+          case 'XHRReadyStateChange':
+            // Only create the dependency if the request was completed
+            if (evt.args.data.readyState !== 4) break;
+
+            addDependencyOnUrl(node, url);
+            stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
+            break;
+
+          case 'FunctionCall':
+          case 'v8.compile':
+            addDependencyOnUrl(node, url);
+            break;
+
+          case 'ParseAuthorStyleSheet':
+            addDependencyOnUrl(node, evt.args.data.styleSheetUrl);
+            break;
+
+          case 'ResourceSendRequest':
+            addDependentNetworkRequest(node, evt.args.data.requestId, evt);
+            stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
+            break;
+        }
+      }
+
+      if (node.getNumberOfDependencies() === 0) {
+        node.addDependency(rootNode);
+      }
+    }
+  }
+
+  /**
+   * @param {!TraceOfTabArtifact} traceOfTab
+   * @param {!Array<!WebInspector.NetworkRequest>} networkRecords
+   * @return {!Node}
+   */
+  static createGraph(traceOfTab, networkRecords) {
+    const networkNodeOutput = PageDependencyGraphArtifact.getNetworkNodeOutput(networkRecords);
+    const cpuNodes = PageDependencyGraphArtifact.getCPUNodes(traceOfTab);
+
+    const rootRequest = networkRecords.reduce((min, r) => (min.startTime < r.startTime ? min : r));
+    const rootNode = networkNodeOutput.idToNodeMap.get(rootRequest.requestId);
+
+    PageDependencyGraphArtifact.linkNetworkNodes(rootNode, networkNodeOutput, networkRecords);
+    PageDependencyGraphArtifact.linkCPUNodes(rootNode, networkNodeOutput, cpuNodes);
 
     return rootNode;
   }
 
   /**
+   * Estimates the duration of the graph and returns individual node timing information.
    * @param {!Node} rootNode
-   * @return {number}
+   * @return {{timeInMs: number, nodeTiming: !Map<!Node, !NodeTimingData>}}
    */
-  static computeGraphDuration(rootNode) {
-    return new GraphEstimator(rootNode).estimate();
+  static estimateGraph(rootNode) {
+    return new GraphEstimator(rootNode).estimateWithDetails();
   }
 
   /**
@@ -104,8 +260,10 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
       const offset = Math.round((node.startTime - min) / timePerCharacter);
       const length = Math.ceil((node.endTime - node.startTime) / timePerCharacter);
       const bar = padRight('', offset) + padRight('', length, '=');
+
+      const displayName = node.record ? node.record._url : node.type;
       // eslint-disable-next-line
-      console.log(padRight(bar, widthInCharacters), `| ${node.record._url.slice(0, 30)}`);
+      console.log(padRight(bar, widthInCharacters), `| ${displayName.slice(0, 30)}`);
     });
   }
 
@@ -128,3 +286,12 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
 }
 
 module.exports = PageDependencyGraphArtifact;
+
+/**
+ * @typedef {{
+ *    nodes: !Array<!NetworkNode>,
+ *    idToNodeMap: !Map<string, !NetworkNode>,
+ *    urlToNodeMap: !Map<string, !Array<!NetworkNode>
+ * }}
+ */
+PageDependencyGraphArtifact.NetworkNodeOutput; // eslint-disable-line no-unused-expressions
