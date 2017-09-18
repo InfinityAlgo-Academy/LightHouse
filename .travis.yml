@@ -40,6 +40,8 @@ script:
   - yarn closure
   - yarn smoke
   - yarn smokehouse
+  # _JAVA_OPTIONS is breaking parsing of compiler output. See #3338.
+  - unset _JAVA_OPTIONS
   - yarn compile-devtools
 before_cache:
   # the `yarn compile-devtools` task adds these to node_modules, which slows down caching
