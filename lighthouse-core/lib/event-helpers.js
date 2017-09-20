@@ -19,7 +19,7 @@ function addFormattedCodeSnippet(listener) {
   const objectName = listener.objectName.toLowerCase().replace('#document', 'document');
   return Object.assign({
     label: `line: ${listener.line}, col: ${listener.col}`,
-    pre: `${objectName}.addEventListener('${listener.type}', ${handler})`
+    pre: `${objectName}.addEventListener('${listener.type}', ${handler})`,
   }, listener);
 }
 
@@ -69,5 +69,5 @@ function groupCodeSnippetsByLocation(listeners) {
 
 module.exports = {
   addFormattedCodeSnippet,
-  groupCodeSnippetsByLocation
+  groupCodeSnippetsByLocation,
 };

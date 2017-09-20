@@ -20,7 +20,7 @@ function getFilenamePrefix(results) {
 
   const timeStr = date.toLocaleTimeString('en-US', {hour12: false});
   const dateParts = date.toLocaleDateString('en-US', {
-    year: 'numeric', month: '2-digit', day: '2-digit'
+    year: 'numeric', month: '2-digit', day: '2-digit',
   }).split('/');
   dateParts.unshift(dateParts.pop());
   const dateStr = dateParts.join('-');

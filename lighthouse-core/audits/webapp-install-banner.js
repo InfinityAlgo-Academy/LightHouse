@@ -42,7 +42,7 @@ class WebappInstallBanner extends MultiCheckAudit {
       helpText: 'Browsers can proactively prompt users to add your app to their homescreen, ' +
           'which can lead to higher engagement. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/install-prompt).',
-      requiredArtifacts: ['URL', 'ServiceWorker', 'Manifest', 'StartUrl']
+      requiredArtifacts: ['URL', 'ServiceWorker', 'Manifest', 'StartUrl'],
     };
   }
 
@@ -58,7 +58,7 @@ class WebappInstallBanner extends MultiCheckAudit {
       'hasShortName',
       'hasStartUrl',
       'hasPWADisplayValue',
-      'hasIconsAtLeast192px'
+      'hasIconsAtLeast192px',
     ];
     manifestValues.allChecks
       .filter(item => bannerCheckIds.includes(item.id))

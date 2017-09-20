@@ -16,7 +16,7 @@ class URL extends Gatherer {
     // post-redirect URL (which is here at options.url)
     return {
       initialUrl: options.initialUrl,
-      finalUrl: options.url
+      finalUrl: options.url,
     };
   }
 }

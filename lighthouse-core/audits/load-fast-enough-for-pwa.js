@@ -34,7 +34,7 @@ class LoadFastEnough4Pwa extends Audit {
       failureDescription: 'Page load is not fast enough on 3G',
       helpText: 'A fast page load over a 3G network ensures a good mobile user experience. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g).',
-      requiredArtifacts: ['traces', 'devtoolsLogs']
+      requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
   }
 
@@ -84,7 +84,7 @@ class LoadFastEnough4Pwa extends Audit {
       const areLatenciesAll3G = firstRequestLatencies.every(val => val.latency > latency3gMin);
       firstRequestLatencies = firstRequestLatencies.map(item => ({
         url: item.url,
-        latency: Util.formatNumber(item.latency, 2)
+        latency: Util.formatNumber(item.latency, 2),
       }));
 
       const trace = artifacts.traces[Audit.DEFAULT_PASS];
@@ -93,7 +93,7 @@ class LoadFastEnough4Pwa extends Audit {
         const isFast = timeToFirstInteractive < MAXIMUM_TTFI;
 
         const extendedInfo = {
-          value: {areLatenciesAll3G, firstRequestLatencies, isFast, timeToFirstInteractive}
+          value: {areLatenciesAll3G, firstRequestLatencies, isFast, timeToFirstInteractive},
         };
 
         const details = Audit.makeTableDetails([
@@ -106,7 +106,7 @@ class LoadFastEnough4Pwa extends Audit {
             rawValue: false,
             // eslint-disable-next-line max-len
             debugString: `First Interactive was at ${Util.formatMilliseconds(timeToFirstInteractive)}. More details in the "Performance" section.`,
-            extendedInfo
+            extendedInfo,
           };
         }
 
@@ -116,13 +116,13 @@ class LoadFastEnough4Pwa extends Audit {
             // eslint-disable-next-line max-len
             debugString: `First Interactive was found at ${Util.formatMilliseconds(timeToFirstInteractive)}, however, the network request latencies were not sufficiently realistic, so the performance measurements cannot be trusted.`,
             extendedInfo,
-            details
+            details,
           };
         }
 
         return {
           rawValue: true,
-          extendedInfo
+          extendedInfo,
         };
       });
     });

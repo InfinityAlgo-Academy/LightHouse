@@ -37,7 +37,7 @@ class HTMLWithoutJavaScript extends Gatherer {
         }
 
         return {
-          value: result
+          value: result,
         };
       });
   }

@@ -16,8 +16,8 @@ const computedArtifacts = Runner.instantiateComputedArtifacts();
 function generateArtifactsWithTrace(trace) {
   return Object.assign({
     traces: {
-      [Audit.DEFAULT_PASS]: trace
-    }
+      [Audit.DEFAULT_PASS]: trace,
+    },
   }, computedArtifacts);
 }
 /* eslint-env mocha */

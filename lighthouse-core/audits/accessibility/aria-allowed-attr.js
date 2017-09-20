@@ -25,7 +25,7 @@ class ARIAAllowedAttr extends AxeAudit {
       helpText: 'Each ARIA `role` supports a specific subset of `aria-*` attributes. ' +
           'Mismatching these invalidates the `aria-*` attributes. [Learn ' +
           'more](https://dequeuniversity.com/rules/axe/2.2/aria-allowed-attr?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

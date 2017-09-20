@@ -26,7 +26,7 @@ class Deprecations extends Audit {
       failureDescription: 'Uses deprecated API\'s',
       helpText: 'Deprecated APIs will eventually be removed from the browser. ' +
           '[Learn more](https://www.chromestatus.com/features#deprecated).',
-      requiredArtifacts: ['ChromeConsoleMessages']
+      requiredArtifacts: ['ChromeConsoleMessages'],
     };
   }
 
@@ -43,7 +43,7 @@ class Deprecations extends Audit {
         text: log.entry.text,
         url: log.entry.url,
         source: log.entry.source,
-        lineNumber: log.entry.lineNumber
+        lineNumber: log.entry.lineNumber,
       };
     });
 
@@ -65,9 +65,9 @@ class Deprecations extends Audit {
       rawValue: deprecations.length === 0,
       displayValue,
       extendedInfo: {
-        value: deprecations
+        value: deprecations,
       },
-      details
+      details,
     };
   }
 }

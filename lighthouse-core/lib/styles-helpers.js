@@ -92,7 +92,7 @@ function getFormattedStyleRule(content, parsedContent) {
   return {
     styleRule: block.trim(),
     startLine,
-    location: `${start}:${end}`
+    location: `${start}:${end}`,
   };
 }
 
@@ -117,5 +117,5 @@ function addVendorPrefixes(propsNames) {
 module.exports = {
   filterStylesheetsByUsage,
   getFormattedStyleRule,
-  addVendorPrefixes
+  addVendorPrefixes,
 };

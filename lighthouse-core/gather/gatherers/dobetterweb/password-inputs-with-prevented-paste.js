@@ -30,7 +30,7 @@ function findPasswordInputsWithPreventedPaste() {
       )
     )
     .map(passwordInput => ({
-      snippet: getOuterHTMLSnippet(passwordInput)
+      snippet: getOuterHTMLSnippet(passwordInput),
     }));
 }
 

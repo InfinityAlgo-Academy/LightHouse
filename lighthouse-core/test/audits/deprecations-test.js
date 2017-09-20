@@ -13,7 +13,7 @@ const assert = require('assert');
 describe('Console deprecations audit', () => {
   it('passes when no console messages were found', () => {
     const auditResult = DeprecationsAudit.audit({
-      ChromeConsoleMessages: []
+      ChromeConsoleMessages: [],
     });
     assert.equal(auditResult.rawValue, true);
     assert.ok(!auditResult.debugString);
@@ -26,10 +26,10 @@ describe('Console deprecations audit', () => {
         {
           entry: {
             source: 'deprecation',
-            text: 'Deprecation message'
-          }
-        }
-      ]
+            text: 'Deprecation message',
+          },
+        },
+      ],
     });
     assert.equal(auditResult.rawValue, false);
     assert.equal(auditResult.displayValue, '1 warning found');
@@ -49,24 +49,24 @@ describe('Console deprecations audit', () => {
             source: 'deprecation',
             lineNumber: 123,
             url: URL,
-            text: 'Deprecation message 123'
-          }
+            text: 'Deprecation message 123',
+          },
         }, {
           entry: {
             source: 'deprecation',
             lineNumber: 456,
             url: 'http://example2.com',
-            text: 'Deprecation message 456'
-          }
+            text: 'Deprecation message 456',
+          },
         }, {
           entry: {
             source: 'somethingelse',
             lineNumber: 789,
             url: 'http://example3.com',
-            text: 'Not a deprecation message 456'
-          }
-        }
-      ]
+            text: 'Not a deprecation message 456',
+          },
+        },
+      ],
     });
     assert.equal(auditResult.rawValue, false);
     assert.equal(auditResult.displayValue, '2 warnings found');

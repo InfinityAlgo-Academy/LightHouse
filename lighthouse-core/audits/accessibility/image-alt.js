@@ -25,7 +25,7 @@ class ImageAlt extends AxeAudit {
       helpText: 'Informative elements should aim for short, descriptive alternate text. ' +
           'Decorative elements can be ignored with an empty alt attribute.' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/image-alt?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

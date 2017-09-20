@@ -16,62 +16,62 @@ module.exports = [
     url: 'http://localhost:10200/online-only.html',
     audits: {
       'is-on-https': {
-        score: true
+        score: true,
       },
       'redirects-http': {
-        score: false
+        score: false,
       },
       'service-worker': {
-        score: false
+        score: false,
       },
       'works-offline': {
-        score: false
+        score: false,
       },
       'viewport': {
-        score: true
+        score: true,
       },
       'without-javascript': {
-        score: true
+        score: true,
       },
       'user-timings': {
         score: true,
-        displayValue: '0'
+        displayValue: '0',
       },
       'critical-request-chains': {
         score: true,
-        displayValue: '0'
+        displayValue: '0',
       },
       'webapp-install-banner': {
-        score: false
+        score: false,
       },
       'splash-screen': {
-        score: false
+        score: false,
       },
       'themed-omnibox': {
-        score: false
+        score: false,
       },
       'aria-valid-attr': {
-        score: true
+        score: true,
       },
       'aria-allowed-attr': {
-        score: true
+        score: true,
       },
       'color-contrast': {
-        score: true
+        score: true,
       },
       'image-alt': {
-        score: true
+        score: true,
       },
       'label': {
-        score: true
+        score: true,
       },
       'tabindex': {
-        score: true
+        score: true,
       },
       'content-width': {
-        score: true
-      }
-    }
+        score: true,
+      },
+    },
   },
 
   {
@@ -79,61 +79,61 @@ module.exports = [
     url: 'http://localhost:10503/offline-ready.html',
     audits: {
       'is-on-https': {
-        score: true
+        score: true,
       },
       'redirects-http': {
-        score: false
+        score: false,
       },
       'service-worker': {
-        score: true
+        score: true,
       },
       'works-offline': {
-        score: true
+        score: true,
       },
       'viewport': {
-        score: true
+        score: true,
       },
       'without-javascript': {
-        score: true
+        score: true,
       },
       'user-timings': {
         score: true,
-        displayValue: '0'
+        displayValue: '0',
       },
       'critical-request-chains': {
         score: true,
-        displayValue: '0'
+        displayValue: '0',
       },
       'webapp-install-banner': {
-        score: false
+        score: false,
       },
       'splash-screen': {
-        score: false
+        score: false,
       },
       'themed-omnibox': {
-        score: false
+        score: false,
       },
       'aria-valid-attr': {
-        score: true
+        score: true,
       },
       'aria-allowed-attr': {
-        score: true
+        score: true,
       },
       'color-contrast': {
-        score: true
+        score: true,
       },
       'image-alt': {
-        score: false
+        score: false,
       },
       'label': {
-        score: true
+        score: true,
       },
       'tabindex': {
-        score: true
+        score: true,
       },
       'content-width': {
-        score: true
-      }
-    }
-  }
+        score: true,
+      },
+    },
+  },
 ];

@@ -71,7 +71,8 @@ class TraceProcessor {
       // Negative results are within idle time (0ms wait by definition), so clamp at zero.
       results.push({
         percentile,
-        time: Math.max(0, (percentileTime - completedTime) / remainingCount) + BASE_RESPONSE_LATENCY
+        time: Math.max(0, (percentileTime - completedTime) / remainingCount) +
+          BASE_RESPONSE_LATENCY,
       });
     }
 
@@ -136,7 +137,7 @@ class TraceProcessor {
 
     return {
       durations,
-      clippedLength
+      clippedLength,
     };
   }
 

@@ -14,7 +14,7 @@ const assert = require('assert');
 describe('Password inputs can be pasted into', () => {
   it('passes when there are no password inputs preventing paste', () => {
     const auditResult = PasswordInputsCanBePastedIntoAudit.audit({
-      PasswordInputsWithPreventedPaste: []
+      PasswordInputsWithPreventedPaste: [],
     });
     assert.equal(auditResult.rawValue, true);
     assert.equal(auditResult.extendedInfo.value.length, 0);
@@ -23,7 +23,7 @@ describe('Password inputs can be pasted into', () => {
 
   it('fails when there are password inputs preventing paste', () => {
     const auditResult = PasswordInputsCanBePastedIntoAudit.audit({
-      PasswordInputsWithPreventedPaste: [{snippet: ''}, {snippet: ''}]
+      PasswordInputsWithPreventedPaste: [{snippet: ''}, {snippet: ''}],
     });
     assert.equal(auditResult.rawValue, false);
     assert.equal(auditResult.extendedInfo.value.length, 2);

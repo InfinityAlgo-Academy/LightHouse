@@ -27,7 +27,7 @@ class MetaViewport extends AxeAudit {
       helpText: 'Disabling zooming is problematic for users with low vision who rely on screen ' +
           'magnification to properly see the contents of a web page. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/meta-viewport?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

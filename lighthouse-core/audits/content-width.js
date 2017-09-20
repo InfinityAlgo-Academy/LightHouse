@@ -20,7 +20,7 @@ class ContentWidth extends Audit {
       helpText: 'If the width of your app\'s content doesn\'t match the width ' +
           'of the viewport, your app might not be optimized for mobile screens. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/content-sized-correctly-for-viewport).',
-      requiredArtifacts: ['ViewportDimensions']
+      requiredArtifacts: ['ViewportDimensions'],
     };
   }
 
@@ -35,7 +35,7 @@ class ContentWidth extends Audit {
 
     return {
       rawValue: widthsMatch,
-      debugString: this.createDebugString(widthsMatch, artifacts.ViewportDimensions)
+      debugString: this.createDebugString(widthsMatch, artifacts.ViewportDimensions),
     };
   }
 

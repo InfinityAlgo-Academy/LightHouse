@@ -45,7 +45,7 @@ class DOMSize extends Audit {
         '[style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), ' +
         'and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/fundamentals/performance/rendering/).',
       scoringMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['DOMStats']
+      requiredArtifacts: ['DOMStats'],
     };
   }
 
@@ -81,17 +81,17 @@ class DOMSize extends Audit {
     const cards = [{
       title: 'Total DOM Nodes',
       value: Util.formatNumber(stats.totalDOMNodes),
-      target: `< ${Util.formatNumber(MAX_DOM_NODES)} nodes`
+      target: `< ${Util.formatNumber(MAX_DOM_NODES)} nodes`,
     }, {
       title: 'DOM Depth',
       value: Util.formatNumber(stats.depth.max),
       snippet: depthSnippet,
-      target: `< ${Util.formatNumber(MAX_DOM_TREE_DEPTH)}`
+      target: `< ${Util.formatNumber(MAX_DOM_TREE_DEPTH)}`,
     }, {
       title: 'Maximum Children',
       value: Util.formatNumber(stats.width.max),
       snippet: widthSnippet,
-      target: `< ${Util.formatNumber(MAX_DOM_TREE_WIDTH)} nodes`
+      target: `< ${Util.formatNumber(MAX_DOM_TREE_WIDTH)} nodes`,
     }];
 
     return {
@@ -100,13 +100,13 @@ class DOMSize extends Audit {
       optimalValue: this.meta.optimalValue,
       displayValue: `${Util.formatNumber(stats.totalDOMNodes)} nodes`,
       extendedInfo: {
-        value: cards
+        value: cards,
       },
       details: {
         type: 'cards',
         header: {type: 'text', text: 'View details'},
-        items: cards
-      }
+        items: cards,
+      },
     };
   }
 

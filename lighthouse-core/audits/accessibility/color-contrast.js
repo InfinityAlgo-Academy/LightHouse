@@ -26,7 +26,7 @@ class ColorContrast extends AxeAudit {
           'sufficient contrast ratio.',
       helpText: 'Low-contrast text is difficult or impossible for many users to read. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

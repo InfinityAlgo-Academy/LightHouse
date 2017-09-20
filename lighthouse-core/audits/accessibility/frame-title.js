@@ -24,7 +24,7 @@ class FrameTitle extends AxeAudit {
       failureDescription: '`<frame>` or `<iframe>` elements do not have a title.',
       helpText: 'Screen reader users rely on frame titles to describe the contents of frames. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/frame-title?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

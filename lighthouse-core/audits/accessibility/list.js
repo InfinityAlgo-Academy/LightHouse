@@ -27,7 +27,7 @@ class List extends AxeAudit {
       helpText: 'Screen readers have a specific way of announcing lists. Ensuring proper list ' +
           'structure aids screen reader output. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/list?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

@@ -61,10 +61,10 @@ module.exports = {
   },
   getSecurityState() {
     return Promise.resolve({
-      schemeIsCryptographic: true
+      schemeIsCryptographic: true,
     });
   },
   blockUrlPatterns() {
     return Promise.resolve();
-  }
+  },
 };

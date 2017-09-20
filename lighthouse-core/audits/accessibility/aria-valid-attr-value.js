@@ -25,7 +25,7 @@ class ARIAValidAttr extends AxeAudit {
       helpText: 'Assistive technologies, like screen readers, can\'t interpret ARIA ' +
           'attributes with invalid values. [Learn ' +
           'more](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr-value?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

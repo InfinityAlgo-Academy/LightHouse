@@ -65,7 +65,7 @@ class Audit {
     return Audit.generateAuditResult(audit, {
       rawValue: null,
       error: true,
-      debugString
+      debugString,
     });
   }
 
@@ -84,7 +84,7 @@ class Audit {
 
         return {
           type: heading.itemType,
-          text: value
+          text: value,
         };
       });
     });
@@ -99,7 +99,7 @@ class Audit {
     return headings.map(heading => ({
       type: 'text',
       itemType: heading.itemType,
-      text: heading.text
+      text: heading.text,
     }));
   }
 
@@ -115,7 +115,7 @@ class Audit {
       type: 'table',
       header: 'View Details',
       itemHeaders: tableHeaders,
-      items: tableRows
+      items: tableRows,
     };
   }
 

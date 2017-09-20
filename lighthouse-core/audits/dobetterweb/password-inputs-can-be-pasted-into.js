@@ -19,7 +19,7 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
       failureDescription: 'Prevents users to paste into password fields',
       helpText: 'Preventing password pasting undermines good security policy. ' +
           '[Learn more](https://www.ncsc.gov.uk/blog-post/let-them-paste-passwords)',
-      requiredArtifacts: ['PasswordInputsWithPreventedPaste']
+      requiredArtifacts: ['PasswordInputsWithPreventedPaste'],
     };
   }
 
@@ -33,19 +33,19 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
     return {
       rawValue: passwordInputsWithPreventedPaste.length === 0,
       extendedInfo: {
-        value: passwordInputsWithPreventedPaste
+        value: passwordInputsWithPreventedPaste,
       },
       details: {
         type: 'list',
         header: {
           type: 'text',
-          text: 'Password inputs that prevent pasting into'
+          text: 'Password inputs that prevent pasting into',
         },
         items: passwordInputsWithPreventedPaste.map(input => ({
           type: 'text',
-          text: input.snippet
-        }))
-      }
+          text: input.snippet,
+        })),
+      },
     };
   }
 }

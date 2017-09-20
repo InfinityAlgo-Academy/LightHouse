@@ -22,8 +22,8 @@ describe('Accessibility gatherer', () => {
       driver: {
         evaluateAsync() {
           return Promise.resolve();
-        }
-      }
+        },
+      },
     }).then(
       _ => assert.ok(false),
       _ => assert.ok(true));
@@ -34,10 +34,10 @@ describe('Accessibility gatherer', () => {
       driver: {
         evaluateAsync() {
           return Promise.resolve({
-            url: 'https://example.com'
+            url: 'https://example.com',
           });
-        }
-      }
+        },
+      },
     }).then(
       _ => assert.ok(false),
       _ => assert.ok(true));
@@ -49,8 +49,8 @@ describe('Accessibility gatherer', () => {
       driver: {
         evaluateAsync() {
           return Promise.reject(new Error(error));
-        }
-      }
+        },
+      },
     }).then(
       _ => assert.ok(false),
       err => assert.ok(err.message.includes(error)));

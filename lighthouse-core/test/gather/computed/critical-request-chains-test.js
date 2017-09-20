@@ -21,11 +21,11 @@ function mockTracingData(prioritiesList, edges) {
   const networkRecords = prioritiesList.map((priority, index) =>
       ({requestId: index.toString(),
         _resourceType: {
-          _category: 'fake'
+          _category: 'fake',
         },
         finished: true,
         priority: () => priority,
-        initiatorRequest: () => null
+        initiatorRequest: () => null,
       }));
 
   // add mock initiator information
@@ -79,15 +79,15 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
                   children: {
                     3: {
                       request: constructEmptyRequest(),
-                      children: {}
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+                      children: {},
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     }));
 
   it('returns correct data for chain interleaved with non-critical requests',
@@ -100,11 +100,11 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
           children: {
             1: {
               request: constructEmptyRequest(),
-              children: {}
-            }
-          }
-        }
-      }
+              children: {},
+            },
+          },
+        },
+      },
     }));
 
   it('returns correct data for two parallel chains', () =>
@@ -117,20 +117,20 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
           children: {
             2: {
               request: constructEmptyRequest(),
-              children: {}
-            }
-          }
+              children: {},
+            },
+          },
         },
         1: {
           request: constructEmptyRequest(),
           children: {
             3: {
               request: constructEmptyRequest(),
-              children: {}
-            }
-          }
-        }
-      }
+              children: {},
+            },
+          },
+        },
+      },
     }));
 
   it('returns correct data for fork at root', () =>
@@ -143,15 +143,15 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
           children: {
             1: {
               request: constructEmptyRequest(),
-              children: {}
+              children: {},
             },
             2: {
               request: constructEmptyRequest(),
-              children: {}
-            }
-          }
-        }
-      }
+              children: {},
+            },
+          },
+        },
+      },
     }));
 
   it('returns correct data for fork at non root', () =>
@@ -167,31 +167,31 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
               children: {
                 2: {
                   request: constructEmptyRequest(),
-                  children: {}
+                  children: {},
                 },
                 3: {
                   request: constructEmptyRequest(),
-                  children: {}
-                }
-              }
-            }
-          }
-        }
-      }
+                  children: {},
+                },
+              },
+            },
+          },
+        },
+      },
     }));
 
   it('returns empty chain list when no critical request', () =>
     testGetCriticalChain({
       priorityList: [LOW, LOW],
       edges: [[0, 1]],
-      expected: {}
+      expected: {},
     }));
 
   it('returns empty chain list when no request whatsoever', () =>
     testGetCriticalChain({
       priorityList: [],
       edges: [],
-      expected: {}
+      expected: {},
     }));
 
   it('returns two single node chains for two independent requests', () =>
@@ -201,13 +201,13 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
       expected: {
         0: {
           request: constructEmptyRequest(),
-          children: {}
+          children: {},
         },
         1: {
           request: constructEmptyRequest(),
-          children: {}
-        }
-      }
+          children: {},
+        },
+      },
     }));
 
   it('returns correct data on a random big graph', () =>
@@ -223,15 +223,15 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
               children: {
                 2: {
                   request: constructEmptyRequest(),
-                  children: {}
+                  children: {},
                 },
                 3: {
                   request: constructEmptyRequest(),
-                  children: {}
-                }
-              }
-            }
-          }
+                  children: {},
+                },
+              },
+            },
+          },
         },
         4: {
           request: constructEmptyRequest(),
@@ -244,19 +244,19 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
                   children: {
                     8: {
                       request: constructEmptyRequest(),
-                      children: {}
-                    }
-                  }
+                      children: {},
+                    },
+                  },
                 },
                 6: {
                   request: constructEmptyRequest(),
-                  children: {}
-                }
-              }
-            }
-          }
-        }
-      }
+                  children: {},
+                },
+              },
+            },
+          },
+        },
+      },
     }));
 
   it('handles redirects', () => {
@@ -276,12 +276,12 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
             children: {
               1: {
                 request: constructEmptyRequest(),
-                children: {}
-              }
-            }
-          }
-        }
-      }
+                children: {},
+              },
+            },
+          },
+        },
+      },
     });
   });
 
@@ -292,27 +292,27 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
     networkRecords[1].url = 'https://example.com/favicon.ico';
     networkRecords[1].mimeType = 'image/x-icon';
     networkRecords[1].parsedURL = {
-      lastPathComponent: 'favicon.ico'
+      lastPathComponent: 'favicon.ico',
     };
     // 3rd record is a favicon
     networkRecords[2].url = 'https://example.com/favicon-32x32.png';
     networkRecords[2].mimeType = 'image/png';
     networkRecords[2].parsedURL = {
-      lastPathComponent: 'favicon-32x32.png'
+      lastPathComponent: 'favicon-32x32.png',
     };
     // 4th record is a favicon
     networkRecords[3].url = 'https://example.com/android-chrome-192x192.png';
     networkRecords[3].mimeType = 'image/png';
     networkRecords[3].parsedURL = {
-      lastPathComponent: 'android-chrome-192x192.png'
+      lastPathComponent: 'android-chrome-192x192.png',
     };
 
     const criticalChains = CriticalRequestChains.extractChain(networkRecords);
     assert.deepEqual(criticalChains, {
       0: {
         request: constructEmptyRequest(),
-        children: {}
-      }
+        children: {},
+      },
     });
   });
 
@@ -328,10 +328,10 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
         children: {
           1: {
             request: constructEmptyRequest(),
-            children: {}
-          }
-        }
-      }
+            children: {},
+          },
+        },
+      },
     });
   });
 });

@@ -31,10 +31,10 @@ describe('Performance: consistently-interactive audit', () => {
   it('should compute consistently interactive', () => {
     const artifacts = Object.assign({
       traces: {
-        [ConsistentlyInteractive.DEFAULT_PASS]: acceptableTrace
+        [ConsistentlyInteractive.DEFAULT_PASS]: acceptableTrace,
       },
       devtoolsLogs: {
-        [ConsistentlyInteractive.DEFAULT_PASS]: acceptableDevToolsLog
+        [ConsistentlyInteractive.DEFAULT_PASS]: acceptableDevToolsLog,
       },
     }, Runner.instantiateComputedArtifacts());
 
@@ -48,10 +48,10 @@ describe('Performance: consistently-interactive audit', () => {
   it('should compute consistently interactive on pages with redirect', () => {
     const artifacts = Object.assign({
       traces: {
-        [ConsistentlyInteractive.DEFAULT_PASS]: redirectTrace
+        [ConsistentlyInteractive.DEFAULT_PASS]: redirectTrace,
       },
       devtoolsLogs: {
-        [ConsistentlyInteractive.DEFAULT_PASS]: redirectDevToolsLog
+        [ConsistentlyInteractive.DEFAULT_PASS]: redirectDevToolsLog,
       },
     }, Runner.instantiateComputedArtifacts());
 

@@ -37,10 +37,10 @@ function cleanTrace(trace) {
       name: 'TracingStartedInPage',
       args: {
         data: {
-          page: evt.frame
-        }
+          page: evt.frame,
+        },
       },
-      s: 't'
+      s: 't',
     };
   };
 
@@ -70,7 +70,7 @@ function cleanTrace(trace) {
         pid: evt.pid,
         tid: evt.tid,
         frame: frame,
-        count: 0
+        count: 0,
       };
       countsByThread[name] = counter;
       threads.push(counter);
@@ -227,7 +227,7 @@ function expandArtifacts(artifacts) {
       // traceEvents property. Normalize to new format.
       if (Array.isArray(trace)) {
         trace = {
-          traceEvents: trace
+          traceEvents: trace,
         };
       }
       trace = cleanTrace(trace);

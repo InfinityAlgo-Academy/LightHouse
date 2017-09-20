@@ -16,7 +16,7 @@ const FAILING_REQUEST_CHAIN = {
       endTime: 1,
       responseReceivedTime: 5,
       startTime: 0,
-      url: 'https://example.com/'
+      url: 'https://example.com/',
     },
     children: {
       1: {
@@ -24,22 +24,22 @@ const FAILING_REQUEST_CHAIN = {
           endTime: 16,
           responseReceivedTime: 14,
           startTime: 11,
-          url: 'https://example.com/b.js'
+          url: 'https://example.com/b.js',
         },
         children: {
-        }
+        },
       },
       2: {
         request: {
           endTime: 17,
           responseReceivedTime: 15,
           startTime: 12,
-          url: 'https://example.com/c.js'
+          url: 'https://example.com/c.js',
         },
-        children: {}
-      }
-    }
-  }
+        children: {},
+      },
+    },
+  },
 };
 
 const PASSING_REQUEST_CHAIN = {
@@ -48,7 +48,7 @@ const PASSING_REQUEST_CHAIN = {
       endTime: 1,
       responseReceivedTime: 5,
       startTime: 0,
-      url: 'https://example.com/'
+      url: 'https://example.com/',
     },
     children: {},
   },
@@ -61,10 +61,10 @@ const PASSING_REQUEST_CHAIN_2 = {
       startTime: 33552.036878,
       endTime: 33552.285438,
       responseReceivedTime: 33552.275677,
-      transferSize: 1849
+      transferSize: 1849,
     },
-    children: {}
-  }
+    children: {},
+  },
 };
 
 const EMPTY_REQUEST_CHAIN = {};
@@ -72,14 +72,14 @@ const EMPTY_REQUEST_CHAIN = {};
 const mockArtifacts = (mockChain) => {
   return {
     devtoolsLogs: {
-      [CriticalRequestChains.DEFAULT_PASS]: []
+      [CriticalRequestChains.DEFAULT_PASS]: [],
     },
     requestNetworkRecords: () => {
       return Promise.resolve([]);
     },
     requestCriticalRequestChains: function() {
       return Promise.resolve(mockChain);
-    }
+    },
   };
 };
 

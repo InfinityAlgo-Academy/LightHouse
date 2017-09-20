@@ -26,7 +26,7 @@ class SpeedIndexMetric extends Audit {
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index).',
       optimalValue: `< ${Util.formatNumber(SCORING_POINT_OF_DIMINISHING_RETURNS)}`,
       scoringMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces']
+      requiredArtifacts: ['traces'],
     };
   }
 
@@ -74,21 +74,21 @@ class SpeedIndexMetric extends Audit {
           visuallyReady: visuallyReadyInMs,
           visuallyComplete: speedline.complete,
           speedIndex: speedline.speedIndex,
-          perceptualSpeedIndex: speedline.perceptualSpeedIndex
+          perceptualSpeedIndex: speedline.perceptualSpeedIndex,
         },
         timestamps: {
           firstVisualChange: (speedline.first + speedline.beginning) * 1000,
           visuallyReady: (visuallyReadyInMs + speedline.beginning) * 1000,
           visuallyComplete: (speedline.complete + speedline.beginning) * 1000,
           speedIndex: (speedline.speedIndex + speedline.beginning) * 1000,
-          perceptualSpeedIndex: (speedline.perceptualSpeedIndex + speedline.beginning) * 1000
+          perceptualSpeedIndex: (speedline.perceptualSpeedIndex + speedline.beginning) * 1000,
         },
         frames: speedline.frames.map(frame => {
           return {
             timestamp: frame.getTimeStamp(),
-            progress: frame.getPerceptualProgress()
+            progress: frame.getPerceptualProgress(),
           };
-        })
+        }),
       };
 
       const rawValue = Math.round(speedline.perceptualSpeedIndex);
@@ -99,8 +99,8 @@ class SpeedIndexMetric extends Audit {
         displayValue: Util.formatNumber(rawValue),
         optimalValue: this.meta.optimalValue,
         extendedInfo: {
-          value: extendedInfo
-        }
+          value: extendedInfo,
+        },
       };
     });
   }

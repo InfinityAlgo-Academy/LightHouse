@@ -20,7 +20,7 @@ describe('Link Block First Paint audit', () => {
       url: 'http://google.com/css/style.css',
       disabled: false,
       media: '',
-      rel: 'stylesheet'
+      rel: 'stylesheet',
     };
     const timestamps = {firstContentfulPaint: 5600 * 1000};
     return LinkBlockingFirstPaintAudit.audit({
@@ -61,8 +61,8 @@ describe('Link Block First Paint audit', () => {
           tag: {tagName: 'SCRIPT'},
           transferSize: 20,
           spendTime: 20,
-        }
-      ]
+        },
+      ],
     }).then(auditResult => {
       assert.equal(auditResult.rawValue, 500);
       assert.equal(auditResult.displayValue, `2 resources delayed first paint by 500${NBSP}ms`);
@@ -80,7 +80,7 @@ describe('Link Block First Paint audit', () => {
     return LinkBlockingFirstPaintAudit.audit({
       traces: {},
       requestTraceOfTab: () => Promise.resolve({timestamps: {}}),
-      TagsBlockingFirstPaint: []
+      TagsBlockingFirstPaint: [],
     }).then(auditResult => {
       assert.equal(auditResult.rawValue, 0);
       assert.equal(auditResult.details.items.length, 0);

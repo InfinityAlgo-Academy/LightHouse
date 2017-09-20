@@ -19,7 +19,7 @@ describe('HTTP Redirect gatherer', () => {
 
   it('sets the URL to HTTP', () => {
     const opts = {
-      url: 'https://example.com'
+      url: 'https://example.com',
     };
     httpRedirectGather.beforePass(opts);
     return assert.equal(opts.url, 'http://example.com');
@@ -31,10 +31,10 @@ describe('HTTP Redirect gatherer', () => {
       driver: {
         getSecurityState() {
           return Promise.resolve({
-            schemeIsCryptographic: true
+            schemeIsCryptographic: true,
           });
-        }
-      }
+        },
+      },
     };
 
     httpRedirectGather.beforePass(opts);
@@ -50,10 +50,10 @@ describe('HTTP Redirect gatherer', () => {
       driver: {
         getSecurityState() {
           return Promise.resolve({
-            schemeIsCryptographic: true
+            schemeIsCryptographic: true,
           });
-        }
-      }
+        },
+      },
     }).then(artifact => {
       assert.ok(artifact.value);
     });
@@ -64,8 +64,8 @@ describe('HTTP Redirect gatherer', () => {
       driver: {
         getSecurityState() {
           return Promise.reject('such a fail');
-        }
-      }
+        },
+      },
     }).then(
       _ => assert.ok(false),
       _ => assert.ok(true));
@@ -82,13 +82,13 @@ describe('HTTP Redirect gatherer', () => {
             // Resolve slowly, after the timeout for waiting on the security
             // state has fired.
             setTimeout(_ => resolve({
-              schemeIsCryptographic: true
+              schemeIsCryptographic: true,
             }), slowResolve);
           });
-        }
+        },
       },
 
-      _testTimeout: fastTimeout
+      _testTimeout: fastTimeout,
     }).then(
       _ => assert.ok(false),
       _ => assert.ok(true));

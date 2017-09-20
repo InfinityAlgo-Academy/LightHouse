@@ -14,7 +14,7 @@ class ServiceWorker extends Gatherer {
       .getServiceWorkerVersions()
       .then(data => {
         return {
-          versions: data.versions
+          versions: data.versions,
         };
       });
   }

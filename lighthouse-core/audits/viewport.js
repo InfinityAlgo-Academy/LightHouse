@@ -21,7 +21,7 @@ class Viewport extends Audit {
           'or `initial-scale`',
       helpText: 'Add a viewport meta tag to optimize your app for mobile screens. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/has-viewport-meta-tag).',
-      requiredArtifacts: ['Viewport']
+      requiredArtifacts: ['Viewport'],
     };
   }
 
@@ -33,7 +33,7 @@ class Viewport extends Audit {
     if (artifacts.Viewport === null) {
       return {
         debugString: 'No viewport meta tag found',
-        rawValue: false
+        rawValue: false,
       };
     }
 
@@ -53,7 +53,7 @@ class Viewport extends Audit {
 
     return {
       rawValue: !!hasMobileViewport,
-      debugString
+      debugString,
     };
   }
 }

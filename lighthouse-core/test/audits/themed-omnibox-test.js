@@ -20,7 +20,7 @@ function generateMockArtifacts() {
   const computedArtifacts = Runner.instantiateComputedArtifacts();
   const mockArtifacts = Object.assign({}, computedArtifacts, {
     Manifest: exampleManifest,
-    ThemeColor: '#bada55'
+    ThemeColor: '#bada55',
   });
   return mockArtifacts;
 }
@@ -52,7 +52,7 @@ describe('PWA: themed omnibox audit', () => {
   it('fails when a minimal manifest contains no theme_color', () => {
     const artifacts = generateMockArtifacts();
     artifacts.Manifest = noUrlManifestParser(JSON.stringify({
-      start_url: '/'
+      start_url: '/',
     }));
 
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
@@ -64,7 +64,7 @@ describe('PWA: themed omnibox audit', () => {
   it('succeeds when a minimal manifest contains a theme_color', () => {
     const artifacts = generateMockArtifacts();
     artifacts.Manifest = noUrlManifestParser(JSON.stringify({
-      theme_color: '#bada55'
+      theme_color: '#bada55',
     }));
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, true);
@@ -121,7 +121,7 @@ describe('PWA: themed omnibox audit', () => {
   it('fails if HTML theme color is good, but manifest themecolor is bad', () => {
     const artifacts = generateMockArtifacts();
     artifacts.Manifest = noUrlManifestParser(JSON.stringify({
-      start_url: '/'
+      start_url: '/',
     }));
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, false);

@@ -21,7 +21,7 @@ class ManualAudit extends Audit {
     return {
       informative: true,
       manual: true,
-      requiredArtifacts: []
+      requiredArtifacts: [],
     };
   }
 

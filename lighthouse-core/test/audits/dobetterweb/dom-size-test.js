@@ -16,8 +16,8 @@ describe('Num DOM nodes audit', () => {
     DOMStats: {
       totalDOMNodes: numNodes,
       depth: {max: 1, pathToElement: ['html', 'body', 'div', 'span']},
-      width: {max: 2, pathToElement: ['html', 'body']}
-    }
+      width: {max: 2, pathToElement: ['html', 'body']},
+    },
   };
 
   const snippet = 'html >\n' +

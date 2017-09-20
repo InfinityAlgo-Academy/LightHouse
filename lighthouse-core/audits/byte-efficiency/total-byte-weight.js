@@ -32,7 +32,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
           'and is [highly correlated](http://httparchive.org/interesting.php#onLoad) with long load times. ' +
           'Try to find ways to reduce the size of required files.',
       scoringMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['devtoolsLogs']
+      requiredArtifacts: ['devtoolsLogs'],
     };
   }
 
@@ -44,7 +44,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
     const devtoolsLogs = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
     return Promise.all([
       artifacts.requestNetworkRecords(devtoolsLogs),
-      artifacts.requestNetworkThroughput(devtoolsLogs)
+      artifacts.requestNetworkThroughput(devtoolsLogs),
     ]).then(([networkRecords, networkThroughput]) => {
       let totalBytes = 0;
       let results = [];
@@ -93,10 +93,10 @@ class TotalByteWeight extends ByteEfficiencyAudit {
         extendedInfo: {
           value: {
             results,
-            totalCompletedRequests
-          }
+            totalCompletedRequests,
+          },
         },
-        details: tableDetails
+        details: tableDetails,
       };
     });
   }

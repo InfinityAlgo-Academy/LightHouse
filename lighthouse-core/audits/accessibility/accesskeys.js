@@ -25,7 +25,7 @@ class Accesskeys extends AxeAudit {
       helpText: 'Access keys let users quickly focus a part of the page. For proper ' +
           'navigation, each access key must be unique. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/accesskeys?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

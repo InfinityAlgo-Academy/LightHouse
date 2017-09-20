@@ -20,11 +20,11 @@ describe('Runner', () => {
     const url = 'https://example.com';
     const config = new Config({
       passes: [{
-        gatherers: ['viewport-dimensions']
+        gatherers: ['viewport-dimensions'],
       }],
       audits: [
-        'content-width'
-      ]
+        'content-width',
+      ],
     });
 
     return Runner.run(null, {url, config, driverMock}).then(_ => {
@@ -36,8 +36,8 @@ describe('Runner', () => {
     const url = 'https://example.com';
     const config = new Config({
       audits: [
-        'content-width'
-      ]
+        'content-width',
+      ],
     });
 
     return Runner.run(null, {url, config, driverMock})
@@ -52,12 +52,12 @@ describe('Runner', () => {
     const url = 'https://example.com';
     const config = new Config({
       audits: [
-        'content-width'
+        'content-width',
       ],
 
       artifacts: {
-        ViewportDimensions: {}
-      }
+        ViewportDimensions: {},
+      },
     });
 
     return Runner.run({}, {url, config}).then(results => {
@@ -72,14 +72,14 @@ describe('Runner', () => {
 
     const config = new Config({
       audits: [
-        'user-timings'
+        'user-timings',
       ],
 
       artifacts: {
         traces: {
-          [Audit.DEFAULT_PASS]: path.join(__dirname, '/fixtures/traces/trace-user-timings.json')
-        }
-      }
+          [Audit.DEFAULT_PASS]: path.join(__dirname, '/fixtures/traces/trace-user-timings.json'),
+        },
+      },
     });
 
     return Runner.run({}, {url, config}).then(results => {
@@ -94,7 +94,7 @@ describe('Runner', () => {
     const config = new Config({
       passes: [{
         recordTrace: true,
-        gatherers: []
+        gatherers: [],
       }],
     });
 
@@ -102,9 +102,9 @@ describe('Runner', () => {
     const badTraceDriver = Object.assign({}, driverMock, {
       endTrace() {
         return Promise.resolve({
-          traceEvents: 'not an array'
+          traceEvents: 'not an array',
         });
-      }
+      },
     });
 
     return Runner.run({}, {url, config, driverMock: badTraceDriver})
@@ -121,11 +121,11 @@ describe('Runner', () => {
       const config = new Config({
         audits: [
           // requires traces[Audit.DEFAULT_PASS]
-          'user-timings'
+          'user-timings',
         ],
         artifacts: {
-          traces: {}
-        }
+          traces: {},
+        },
       });
 
       return Runner.run({}, {url, config}).then(results => {
@@ -141,10 +141,10 @@ describe('Runner', () => {
       const config = new Config({
         audits: [
           // requires the ViewportDimensions artifact
-          'content-width'
+          'content-width',
         ],
 
-        artifacts: {}
+        artifacts: {},
       });
 
       return Runner.run({}, {url, config}).then(results => {
@@ -162,14 +162,14 @@ describe('Runner', () => {
       const url = 'https://example.com';
       const config = new Config({
         audits: [
-          'content-width'
+          'content-width',
         ],
 
         artifacts: {
           // Error objects don't make it through the Config constructor due to
           // JSON.stringify/parse step, so populate with test error below.
-          ViewportDimensions: null
-        }
+          ViewportDimensions: null,
+        },
       });
       config.artifacts.ViewportDimensions = artifactError;
 
@@ -189,7 +189,7 @@ describe('Runner', () => {
       description: 'Always throws',
       failureDescription: 'Always throws is failing, natch',
       helpText: 'Test for always throwing',
-      requiredArtifacts: []
+      requiredArtifacts: [],
     };
 
     it('produces an error audit result when an audit throws a non-fatal Error', () => {
@@ -204,10 +204,10 @@ describe('Runner', () => {
             static audit() {
               throw new Error(errorMessage);
             }
-          }
+          },
         ],
 
-        artifacts: {}
+        artifacts: {},
       });
 
       return Runner.run({}, {url, config}).then(results => {
@@ -232,10 +232,10 @@ describe('Runner', () => {
               fatalError.fatal = true;
               throw fatalError;
             }
-          }
+          },
         ],
 
-        artifacts: {}
+        artifacts: {},
       });
 
       return Runner.run({}, {url, config}).then(
@@ -248,14 +248,14 @@ describe('Runner', () => {
     const url = 'https://example.com';
     const config = new Config({
       audits: [
-        'critical-request-chains'
+        'critical-request-chains',
       ],
 
       artifacts: {
         devtoolsLogs: {
-          defaultPass: path.join(__dirname, '/fixtures/perflog.json')
-        }
-      }
+          defaultPass: path.join(__dirname, '/fixtures/perflog.json'),
+        },
+      },
     });
 
     return Runner.run({}, {url, config}).then(results => {
@@ -269,8 +269,8 @@ describe('Runner', () => {
     const url = 'https://example.com';
     const config = new Config({
       passes: [{
-        gatherers: ['viewport-dimensions']
-      }]
+        gatherers: ['viewport-dimensions'],
+      }],
     });
 
     return Runner.run(null, {url, config, driverMock})
@@ -288,7 +288,7 @@ describe('Runner', () => {
         name: 'content-width',
         rawValue: true,
         score: true,
-        displayValue: ''
+        displayValue: '',
       }],
 
       categories: {
@@ -296,10 +296,10 @@ describe('Runner', () => {
           name: 'Category',
           description: '',
           audits: [
-            {id: 'content-width', weight: 1}
-          ]
-        }
-      }
+            {id: 'content-width', weight: 1},
+          ],
+        },
+      },
     });
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
@@ -316,17 +316,17 @@ describe('Runner', () => {
         name: 'content-width',
         rawValue: true,
         score: true,
-        displayValue: 'display'
+        displayValue: 'display',
       }],
       categories: {
         category: {
           name: 'Category',
           description: '',
           audits: [
-            {id: 'content-width', weight: 1}
-          ]
-        }
-      }
+            {id: 'content-width', weight: 1},
+          ],
+        },
+      },
     });
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
@@ -380,10 +380,10 @@ describe('Runner', () => {
     const ViewportDimensions = {innerHeight: 10, innerWidth: 10};
     const config = new Config({
       audits: [
-        'content-width'
+        'content-width',
       ],
 
-      artifacts: {ViewportDimensions}
+      artifacts: {ViewportDimensions},
     });
 
     return Runner.run({}, {url, config}).then(results => {
@@ -400,12 +400,12 @@ describe('Runner', () => {
     const config = new Config({
       passes: [{
         passName: 'firstPass',
-        gatherers: ['viewport-dimensions']
+        gatherers: ['viewport-dimensions'],
       }],
 
       audits: [
-        'content-width'
-      ]
+        'content-width',
+      ],
     });
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
@@ -436,14 +436,14 @@ describe('Runner', () => {
         name: 'is-on-https',
         rawValue: true,
         score: true,
-        displayValue: ''
+        displayValue: '',
       }],
 
       artifacts: {
         HTTPS: {
-          value: true
-        }
-      }
+          value: true,
+        },
+      },
     });
 
     return Runner.run(null, {url, config, driverMock}).then(results => {

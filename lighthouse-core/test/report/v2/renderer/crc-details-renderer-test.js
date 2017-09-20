@@ -30,7 +30,7 @@ const DETAILS = {
         responseReceivedTime: 5,
         startTime: 0,
         url: 'https://example.com/',
-        transferSize: 1000
+        transferSize: 1000,
       },
       children: {
         1: {
@@ -39,9 +39,9 @@ const DETAILS = {
             responseReceivedTime: 14,
             startTime: 11,
             url: 'https://example.com/b.js',
-            transferSize: 2000
+            transferSize: 2000,
           },
-          children: {}
+          children: {},
         },
         2: {
           request: {
@@ -49,9 +49,9 @@ const DETAILS = {
             responseReceivedTime: 15,
             startTime: 12,
             url: superLongURL,
-            transferSize: 3000
+            transferSize: 3000,
           },
-          children: {}
+          children: {},
         },
         3: {
           request: {
@@ -59,18 +59,18 @@ const DETAILS = {
             responseReceivedTime: 16,
             startTime: 13,
             url: 'about:blank',
-            transferSize: 4000
+            transferSize: 4000,
           },
-          children: {}
-        }
-      }
-    }
+          children: {},
+        },
+      },
+    },
   },
   longestChain: {
     duration: 7000,
     length: 2,
-    transferSize: 1
-  }
+    transferSize: 1,
+  },
 };
 
 describe('DetailsRenderer', () => {

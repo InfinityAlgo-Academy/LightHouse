@@ -27,7 +27,7 @@ class DefinitionList extends AxeAudit {
       helpText: 'When definition lists are not properly marked up, screen readers may produce ' +
           'confusing or inaccurate output. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/definition-list?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

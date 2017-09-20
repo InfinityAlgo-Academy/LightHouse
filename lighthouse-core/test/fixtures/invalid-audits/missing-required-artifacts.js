@@ -21,7 +21,7 @@ class MissingRequiredArtifacts extends LighthouseAudit {
 
   static audit(_) {
     return {
-      rawValue: true
+      rawValue: true,
     };
   }
 }

@@ -27,7 +27,7 @@ class HTTPS extends Audit {
           'in on the communications between your app and your users, and is a prerequisite for ' +
           'HTTP/2 and many new web platform APIs. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/https).',
-      requiredArtifacts: ['devtoolsLogs']
+      requiredArtifacts: ['devtoolsLogs'],
     };
   }
 
@@ -63,13 +63,13 @@ class HTTPS extends Audit {
         rawValue: insecureRecords.length === 0,
         displayValue,
         extendedInfo: {
-          value: insecureRecords
+          value: insecureRecords,
         },
         details: {
           type: 'list',
           header: {type: 'text', text: 'Insecure URLs:'},
           items: insecureRecords.map(record => ({type: 'url', text: record.url})),
-        }
+        },
       };
     });
   }

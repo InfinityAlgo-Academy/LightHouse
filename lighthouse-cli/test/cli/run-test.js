@@ -15,8 +15,8 @@ const parseChromeFlags = require('../../run').parseChromeFlags;
 const fastConfig = {
   'extends': 'lighthouse:default',
   'settings': {
-    'onlyAudits': ['viewport']
-  }
+    'onlyAudits': ['viewport'],
+  },
 };
 
 const getFlags = require('../../cli-flags').getFlags;

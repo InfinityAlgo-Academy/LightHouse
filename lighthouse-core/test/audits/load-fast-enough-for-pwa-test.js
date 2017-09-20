@@ -12,13 +12,13 @@ const assert = require('assert');
 function generateArtifacts(firstInteractiveValue, networkRecords = []) {
   return {
     devtoolsLogs: {
-      [Audit.DEFAULT_PASS]: []
+      [Audit.DEFAULT_PASS]: [],
     },
     requestNetworkRecords: () => {
       return Promise.resolve(networkRecords);
     },
     traces: {
-      [Audit.DEFAULT_PASS]: {traceEvents: []}
+      [Audit.DEFAULT_PASS]: {traceEvents: []},
     },
     requestFirstInteractive: () => Promise.resolve({
       timeInMs: firstInteractiveValue,

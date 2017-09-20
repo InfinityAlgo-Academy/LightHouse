@@ -21,7 +21,7 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
       helpText: 'Open new tabs using `rel="noopener"` to improve performance and ' +
           'prevent security vulnerabilities. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/noopener).',
-      requiredArtifacts: ['URL', 'AnchorsWithNoRelNoopener']
+      requiredArtifacts: ['URL', 'AnchorsWithNoRelNoopener'],
     };
   }
 
@@ -55,7 +55,7 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
           url: '<a' +
               (anchor.href ? ` href="${anchor.href}"` : '') +
               (anchor.target ? ` target="${anchor.target}"` : '') +
-              (anchor.rel ? ` rel="${anchor.rel}"` : '') + '>'
+              (anchor.rel ? ` rel="${anchor.rel}"` : '') + '>',
         };
       });
 
@@ -70,10 +70,10 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
     return {
       rawValue: failingAnchors.length === 0,
       extendedInfo: {
-        value: failingAnchors
+        value: failingAnchors,
       },
       details,
-      debugString
+      debugString,
     };
   }
 }

@@ -92,7 +92,7 @@ function analyzeInputPaths(inputPaths) {
   for (const inputPath of inputPaths) {
     // Prevent analyze script from opening the results in browser
     childProcess.execSync(`node analyze.js ${inputPath}`, {
-      env: Object.assign({}, process.env, {CI: '1'})
+      env: Object.assign({}, process.env, {CI: '1'}),
     });
   }
 }

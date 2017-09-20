@@ -17,7 +17,7 @@ const Runner = require('../../runner.js');
 function generateMockArtifacts() {
   const computedArtifacts = Runner.instantiateComputedArtifacts();
   const mockArtifacts = Object.assign({}, computedArtifacts, {
-    Manifest: null
+    Manifest: null,
   });
   return mockArtifacts;
 }
@@ -47,7 +47,7 @@ describe('Manifest: short_name_length audit', () => {
   it('fails when a manifest contains no short_name and too long name', () => {
     const artifacts = generateMockArtifacts();
     const manifestSrc = JSON.stringify({
-      name: 'i\'m much longer than the recommended size'
+      name: 'i\'m much longer than the recommended size',
     });
     artifacts.Manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
     return ManifestShortNameLengthAudit.audit(artifacts).then(result => {
@@ -61,7 +61,7 @@ describe('Manifest: short_name_length audit', () => {
   it('fails when a manifest contains a too long short_name', () => {
     const artifacts = generateMockArtifacts();
     const manifestSrc = JSON.stringify({
-      short_name: 'i\'m much longer than the recommended size'
+      short_name: 'i\'m much longer than the recommended size',
     });
     artifacts.Manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
     return ManifestShortNameLengthAudit.audit(artifacts).then(result => {
@@ -72,7 +72,7 @@ describe('Manifest: short_name_length audit', () => {
   it('succeeds when a manifest contains a short_name', () => {
     const artifacts = generateMockArtifacts();
     const manifestSrc = JSON.stringify({
-      short_name: 'Lighthouse'
+      short_name: 'Lighthouse',
     });
     artifacts.Manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
     return ManifestShortNameLengthAudit.audit(artifacts).then(result => {

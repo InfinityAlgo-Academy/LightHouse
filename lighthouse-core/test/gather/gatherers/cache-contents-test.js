@@ -22,8 +22,8 @@ describe('Cache Contents gatherer', () => {
       driver: {
         evaluateAsync() {
           return Promise.resolve();
-        }
-      }
+        },
+      },
     }).then(
       _ => assert.ok(false),
       _ => assert.ok(true));

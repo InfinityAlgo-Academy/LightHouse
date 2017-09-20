@@ -27,7 +27,7 @@ class FirstMeaningfulPaint extends Audit {
       helpText: 'First meaningful paint measures when the primary content of a page is visible. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint).',
       scoringMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces']
+      requiredArtifacts: ['traces'],
     };
   }
 
@@ -61,7 +61,7 @@ class FirstMeaningfulPaint extends Audit {
         optimalValue: this.meta.optimalValue,
         extendedInfo: {
           value: result.extendedInfo,
-        }
+        },
       };
     });
   }
@@ -83,7 +83,7 @@ class FirstMeaningfulPaint extends Audit {
         onLoad: traceOfTab.timings.onLoad,
         endOfTrace: traceOfTab.timings.traceEnd,
       },
-      fmpFellBack: traceOfTab.fmpFellBack
+      fmpFellBack: traceOfTab.fmpFellBack,
     };
 
     Object.keys(extendedInfo.timings).forEach(key => {
@@ -111,7 +111,7 @@ class FirstMeaningfulPaint extends Audit {
       score,
       duration: firstMeaningfulPaint.toFixed(1),
       rawValue: firstMeaningfulPaint,
-      extendedInfo
+      extendedInfo,
     };
   }
 }

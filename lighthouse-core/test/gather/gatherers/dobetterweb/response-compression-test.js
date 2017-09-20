@@ -78,8 +78,8 @@ const traceData = {
       _responseHeaders: [],
       content: 'aaaaaaaaaa',
       finished: true,
-    }
-  ]
+    },
+  ],
 };
 
 describe('Optimized responses', () => {
@@ -142,8 +142,8 @@ describe('Optimized responses', () => {
           _responseHeaders: [],
           content: 'aaaaaaaaaa',
           finished: true,
-        }
-      ]
+        },
+      ],
     };
 
     return responseCompression.afterPass(options, createNetworkRequests(traceData))
@@ -164,7 +164,7 @@ describe('Optimized responses', () => {
       record.resourceType = () => {
         return Object.assign(
           {
-            isTextType: () => record._resourceType._isTextType
+            isTextType: () => record._resourceType._isTextType,
           },
           record._resourceType
         );

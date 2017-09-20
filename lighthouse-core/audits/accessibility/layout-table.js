@@ -29,7 +29,7 @@ class LayoutTable extends AxeAudit {
           'such as the th or caption elements or the summary attribute, because this can ' +
           'create a confusing experience for screen reader users. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/layout-table?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

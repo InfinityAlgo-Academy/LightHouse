@@ -26,7 +26,7 @@ class FirebaseAuth {
       authDomain: 'lighthouse-viewer.firebaseapp.com',
       databaseURL: 'https://lighthouse-viewer.firebaseio.com',
       storageBucket: 'lighthouse-viewer.appspot.com',
-      messagingSenderId: '962507201498'
+      messagingSenderId: '962507201498',
     });
 
     /**
@@ -36,7 +36,7 @@ class FirebaseAuth {
      */
     this._ready = Promise.all([
       new Promise(resolve => firebase.auth().onAuthStateChanged(resolve)),
-      idbKeyval.get('accessToken')
+      idbKeyval.get('accessToken'),
     ]).then(([user, token]) => {
       if (user && token) {
         this._accessToken = token;

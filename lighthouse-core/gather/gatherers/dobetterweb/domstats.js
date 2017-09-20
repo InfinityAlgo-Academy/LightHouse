@@ -121,8 +121,8 @@ function getDOMStats(element, deep=true) {
     },
     width: {
       max: result.maxWidth,
-      pathToElement: elementPathInDOM(parentWithMostChildren)
-    }
+      pathToElement: elementPathInDOM(parentWithMostChildren),
+    },
   };
 }
 

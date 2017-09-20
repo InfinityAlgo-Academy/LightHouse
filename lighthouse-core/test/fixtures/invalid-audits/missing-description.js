@@ -14,13 +14,13 @@ class MissingRequiredArtifacts extends LighthouseAudit {
       name: 'missing-description',
       category: 'Custom',
       helpText: 'This is missing required description (and failure description)',
-      requiredArtifacts: ['HTML']
+      requiredArtifacts: ['HTML'],
     };
   }
 
   static audit(_) {
     return {
-      rawValue: true
+      rawValue: true,
     };
   }
 }

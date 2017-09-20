@@ -19,9 +19,9 @@ module.exports = [
           value: {
             timings: {},
             timestamps: {},
-            frames: []
-          }
-        }
+            frames: [],
+          },
+        },
       },
       'first-meaningful-paint': {
         score: '>=90',
@@ -32,6 +32,6 @@ module.exports = [
       'consistently-interactive': {
         score: '>=90',
       },
-    }
+    },
   },
 ];

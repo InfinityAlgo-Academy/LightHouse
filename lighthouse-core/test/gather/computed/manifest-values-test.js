@@ -66,7 +66,7 @@ describe('ManifestValues computed artifact', () => {
   describe('color checks', () => {
     it('fails when a minimal manifest contains no background_color', () => {
       const Manifest = noUrlManifestParser(JSON.stringify({
-        start_url: '/'
+        start_url: '/',
       }));
       const results = manifestValues.compute_(Manifest);
       const colorResults = results.allChecks.filter(i => i.id.includes('Color'));
@@ -76,7 +76,7 @@ describe('ManifestValues computed artifact', () => {
     it('fails when a minimal manifest contains an invalid background_color', () => {
       const Manifest = noUrlManifestParser(JSON.stringify({
         background_color: 'no',
-        theme_color: 'no'
+        theme_color: 'no',
       }));
 
       const results = manifestValues.compute_(Manifest);
@@ -87,7 +87,7 @@ describe('ManifestValues computed artifact', () => {
     it('succeeds when a minimal manifest contains a valid background_color', () => {
       const Manifest = noUrlManifestParser(JSON.stringify({
         background_color: '#FAFAFA',
-        theme_color: '#FAFAFA'
+        theme_color: '#FAFAFA',
       }));
 
       const results = manifestValues.compute_(Manifest);
@@ -121,7 +121,7 @@ describe('ManifestValues computed artifact', () => {
     describe('icons exist check', () => {
       it('fails when a manifest contains no icons array', () => {
         const manifestSrc = JSON.stringify({
-          name: 'NoIconsHere'
+          name: 'NoIconsHere',
         });
         const Manifest = noUrlManifestParser(manifestSrc);
         const results = manifestValues.compute_(Manifest);
@@ -131,7 +131,7 @@ describe('ManifestValues computed artifact', () => {
 
       it('fails when a manifest contains no icons', () => {
         const manifestSrc = JSON.stringify({
-          icons: []
+          icons: [],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
         const results = manifestValues.compute_(Manifest);
@@ -144,8 +144,8 @@ describe('ManifestValues computed artifact', () => {
       it('fails when a manifest contains an icon with no size', () => {
         const manifestSrc = JSON.stringify({
           icons: [{
-            src: 'icon.png'
-          }]
+            src: 'icon.png',
+          }],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
         const results = manifestValues.compute_(Manifest);
@@ -158,8 +158,8 @@ describe('ManifestValues computed artifact', () => {
         const manifestSrc = JSON.stringify({
           icons: [{
             src: 'icon.png',
-            sizes: '72x72 96x96 128x128 256x256 1024x1024'
-          }]
+            sizes: '72x72 96x96 128x128 256x256 1024x1024',
+          }],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
         const results = manifestValues.compute_(Manifest);
@@ -171,11 +171,11 @@ describe('ManifestValues computed artifact', () => {
       it('succeeds when there\'s two icons, one without sizes; the other with a valid size', () => {
         const manifestSrc = JSON.stringify({
           icons: [{
-            src: 'icon.png'
+            src: 'icon.png',
           }, {
             src: 'icon2.png',
-            sizes: '1256x1256'
-          }]
+            sizes: '1256x1256',
+          }],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
         const results = manifestValues.compute_(Manifest);
@@ -189,8 +189,8 @@ describe('ManifestValues computed artifact', () => {
         const manifestSrc = JSON.stringify({
           icons: [{
             src: 'icon-non-square.png',
-            sizes: '200x220'
-          }]
+            sizes: '200x220',
+          }],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
         const results = manifestValues.compute_(Manifest);

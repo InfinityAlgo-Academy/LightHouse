@@ -26,7 +26,7 @@ class Bypass extends AxeAudit {
       helpText: 'Adding ways to bypass repetitive content lets keyboard users navigate the page ' +
           'more efficiently. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/bypass?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

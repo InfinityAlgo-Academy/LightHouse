@@ -20,7 +20,7 @@ class WithoutJavaScript extends Audit {
       helpText: 'Your app should display some content when JavaScript is disabled, even if it\'s ' +
           'just a warning to the user that JavaScript is required to use the app. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/no-js).',
-      requiredArtifacts: ['HTMLWithoutJavaScript']
+      requiredArtifacts: ['HTMLWithoutJavaScript'],
     };
   }
 
@@ -34,12 +34,12 @@ class WithoutJavaScript extends Audit {
     if (artifact.value.trim() === '') {
       return {
         rawValue: false,
-        debugString: 'The page body should render some content if its scripts are not available.'
+        debugString: 'The page body should render some content if its scripts are not available.',
       };
     }
 
     return {
-      rawValue: true
+      rawValue: true,
     };
   }
 }

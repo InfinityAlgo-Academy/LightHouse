@@ -73,7 +73,7 @@ function analyzeSite(sitePath) {
     console.log(`Metrics for ${runDir}:`, prettymetrics); // eslint-disable-line no-console
     runResults.push({
       runId: runDir,
-      metrics
+      metrics,
     });
   });
   return runResults;
@@ -89,12 +89,12 @@ function readResult(lighthouseReportPath) {
   const metrics = Metrics.metricsDefinitions.map(metric => ({
     name: metric.name,
     id: metric.id,
-    timing: metric.getTiming(data.audits)
+    timing: metric.getTiming(data.audits),
   }));
   const timings = Object.keys(constants.TIMING_NAME_MAP).map(timingName => ({
     name: constants.TIMING_NAME_MAP[timingName],
     id: 'timing' + timingName,
-    timing: data.timing[timingName]
+    timing: data.timing[timingName],
   }));
   return [...metrics, ...timings];
 }
@@ -113,8 +113,8 @@ function groupByMetrics(results) {
     acc[metricName] = results.map(siteResult => ({
       site: siteResult.site,
       metrics: siteResult.results.map(runResult => ({
-        timing: runResult.metrics[index].timing
-      }))
+        timing: runResult.metrics[index].timing,
+      })),
     }));
     return acc;
   }, {});

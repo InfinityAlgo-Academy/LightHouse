@@ -21,8 +21,8 @@ module.exports = [
       },
       'meta-description': {
         score: true,
-      }
-    }
+      },
+    },
   },
   {
     initialUrl: 'http://localhost:10200/seo/seo-failure-cases.html',
@@ -35,13 +35,13 @@ module.exports = [
         score: false,
         extendedInfo: {
           value: {
-            id: 'document-title'
-          }
-        }
+            id: 'document-title',
+          },
+        },
       },
       'meta-description': {
         score: false,
-      }
-    }
+      },
+    },
   },
 ];

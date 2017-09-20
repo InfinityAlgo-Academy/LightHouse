@@ -28,23 +28,23 @@ class AxeAudit extends Audit {
         type: 'node',
         selector: Array.isArray(node.target) ? node.target.join(' ') : '',
         path: node.path,
-        snippet: node.snippet
+        snippet: node.snippet,
       }));
     }
 
     return {
       rawValue: typeof rule === 'undefined',
       extendedInfo: {
-        value: rule
+        value: rule,
       },
       details: {
         type: 'list',
         header: {
           type: 'text',
-          text: 'View failing elements'
+          text: 'View failing elements',
         },
-        items: nodeDetails
-      }
+        items: nodeDetails,
+      },
     };
   }
 }

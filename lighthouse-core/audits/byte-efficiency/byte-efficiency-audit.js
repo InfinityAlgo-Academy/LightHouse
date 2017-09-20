@@ -146,7 +146,7 @@ class UnusedBytes extends Audit {
           results,
         },
       },
-      details: tableDetails
+      details: tableDetails,
     };
   }
 

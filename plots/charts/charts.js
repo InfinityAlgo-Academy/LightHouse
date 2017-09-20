@@ -65,7 +65,7 @@ function generateBoxPlotChartPerMetric() {
       generateBoxPlotChart({
         title: metric,
         data: generatedResults[metric].slice(i, i + width),
-        type: type
+        type: type,
       });
     }
   }
@@ -80,7 +80,7 @@ function generateBoxPlotChartPerMetric() {
           boxpoints: 'all',
           jitter: 0.9,
           pointpos: -2,
-          hoverinfo: 'x+name'
+          hoverinfo: 'x+name',
         };
       })
       .reverse(); // see: https://github.com/plotly/plotly.js/issues/1187
@@ -88,14 +88,14 @@ function generateBoxPlotChartPerMetric() {
     const layout = {
       title: title + ' ' + type,
       legend: {
-        traceorder: 'reversed'
+        traceorder: 'reversed',
       },
       xaxis: {
-        rangemode: 'tozero'
+        rangemode: 'tozero',
       },
       margin: {
-        l: 150
-      }
+        l: 150,
+      },
     };
     enqueuePlot(_ => {
       Plotly.newPlot(createChartElement(1000), data, layout);
@@ -123,7 +123,7 @@ function generateLinePlotChartPerMetric() {
       generateLinePlot({
         title: metric,
         data: generatedResults[metric].slice(i, i + width),
-        type: type
+        type: type,
       });
     }
   }
@@ -132,14 +132,14 @@ function generateLinePlotChartPerMetric() {
     data = data.map(siteResult => ({
       name: siteResult.site,
       y: siteResult.metrics.map(m => m ? m[type] : null),
-      type: 'scatter'
+      type: 'scatter',
     }));
 
     const layout = {
       title: title + ' ' + type,
       yaxis: {
-        rangemode: 'tozero'
-      }
+        rangemode: 'tozero',
+      },
     };
     enqueuePlot(_ => {
       Plotly.newPlot(createChartElement(), data, layout);
@@ -160,21 +160,21 @@ function generateBoxPlotPerSite() {
         boxpoints: 'all',
         jitter: 0.9,
         pointpos: -2,
-        hoverinfo: 'x+name'
+        hoverinfo: 'x+name',
       }))
       .reverse(); // see: https://github.com/plotly/plotly.js/issues/1187
 
     const layout = {
       xaxis: {
-        rangemode: 'tozero'
+        rangemode: 'tozero',
       },
       legend: {
-        traceorder: 'reversed'
+        traceorder: 'reversed',
       },
       title: generatedResults[metrics[0]][i].site,
       margin: {
-        l: 250
-      }
+        l: 250,
+      },
     };
     enqueuePlot(_ => {
       Plotly.newPlot(createChartElement(), data, layout);
@@ -192,16 +192,16 @@ function generateGroupedBarChart() {
     const data = metrics.map(metric => ({
       y: generatedResults[metric][i].metrics.map(m => m ? m.timing : null),
       name: metric,
-      type: 'bar'
+      type: 'bar',
     }));
 
     const layout = {
       yaxis: {
-        rangemode: 'tozero'
+        rangemode: 'tozero',
       },
       hovermode: 'closest',
       barmode: 'group',
-      title: generatedResults[metrics[0]][i].site
+      title: generatedResults[metrics[0]][i].site,
     };
     enqueuePlot(_ => {
       Plotly.newPlot(createChartElement(), data, layout);

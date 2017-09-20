@@ -64,7 +64,7 @@ class TimelineModel {
     const nonessentialEvents = [
       WebInspector.TimelineModel.RecordType.EventDispatch,
       WebInspector.TimelineModel.RecordType.FunctionCall,
-      WebInspector.TimelineModel.RecordType.TimerFire
+      WebInspector.TimelineModel.RecordType.TimerFire,
     ];
     filters.push(new WebInspector.ExclusiveNameFilter(nonessentialEvents));
 

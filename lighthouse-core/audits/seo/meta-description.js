@@ -20,7 +20,7 @@ class Description extends Audit {
       helpText: 'Meta descriptions may be included in search results to concisely summarize ' +
           'page content. Read more in the ' +
           '[Search Console Help page](https://support.google.com/webmasters/answer/35624?hl=en#1).',
-      requiredArtifacts: ['MetaDescription']
+      requiredArtifacts: ['MetaDescription'],
     };
   }
 
@@ -31,19 +31,19 @@ class Description extends Audit {
   static audit(artifacts) {
     if (artifacts.MetaDescription === null) {
       return {
-        rawValue: false
+        rawValue: false,
       };
     }
 
     if (artifacts.MetaDescription.trim().length === 0) {
       return {
         rawValue: false,
-        debugString: 'Description text is empty.'
+        debugString: 'Description text is empty.',
       };
     }
 
     return {
-      rawValue: true
+      rawValue: true,
     };
   }
 }

@@ -17,7 +17,7 @@ class CacheStartUrl extends Audit {
       name: 'cache-start-url',
       description: 'Cache contains start_url from manifest (alpha)',
       failureDescription: 'Cache does not contain start_url from manifest (alpha)',
-      requiredArtifacts: ['CacheContents', 'Manifest', 'URL']
+      requiredArtifacts: ['CacheContents', 'Manifest', 'URL'],
     };
   }
 
@@ -37,7 +37,7 @@ class CacheStartUrl extends Audit {
     if (!(manifest.start_url && manifest.start_url.value)) {
       return {
         rawValue: false,
-        debugString: 'start_url not present in Manifest'
+        debugString: 'start_url not present in Manifest',
       };
     }
 
@@ -59,7 +59,7 @@ class CacheStartUrl extends Audit {
     });
 
     return {
-      rawValue: (cacheHasStartUrl !== undefined)
+      rawValue: (cacheHasStartUrl !== undefined),
     };
   }
 }

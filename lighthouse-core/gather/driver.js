@@ -79,7 +79,7 @@ class Driver {
       // Flipped off until bugs.chromium.org/p/v8/issues/detail?id=5820 is fixed in Stable
       // 'disabled-by-default-v8.cpu_profiler',
       // 'disabled-by-default-v8.cpu_profiler.hires',
-      'disabled-by-default-devtools.screenshot'
+      'disabled-by-default-devtools.screenshot',
     ];
   }
 
@@ -210,7 +210,7 @@ class Driver {
    */
   evaluteScriptOnNewDocument(scriptSource) {
     return this.sendCommand('Page.addScriptToEvaluateOnLoad', {
-      scriptSource
+      scriptSource,
     });
   }
 
@@ -245,7 +245,7 @@ class Driver {
         }())`,
         includeCommandLineAPI: true,
         awaitPromise: true,
-        returnByValue: true
+        returnByValue: true,
       }).then(result => {
         clearTimeout(asyncTimeout);
         const value = result.result.value;
@@ -411,7 +411,7 @@ class Driver {
 
     return {
       promise,
-      cancel
+      cancel,
     };
   }
 
@@ -488,7 +488,7 @@ class Driver {
 
     return {
       promise,
-      cancel
+      cancel,
     };
   }
 
@@ -550,7 +550,7 @@ class Driver {
     // Wait for load or timeout and run the cleanup function the winner returns.
     return Promise.race([
       loadPromise,
-      maxTimeoutPromise
+      maxTimeoutPromise,
     ]).then(cleanup => cleanup());
   }
 
@@ -692,7 +692,7 @@ class Driver {
       .then(result => result.root.nodeId)
       .then(nodeId => this.sendCommand('DOM.querySelector', {
         nodeId,
-        selector
+        selector,
       }))
       .then(element => {
         if (element.nodeId === 0) {
@@ -711,7 +711,7 @@ class Driver {
       .then(result => result.root.nodeId)
       .then(nodeId => this.sendCommand('DOM.querySelectorAll', {
         nodeId,
-        selector
+        selector,
       }))
       .then(nodeList => {
         const elementList = [];
@@ -748,7 +748,7 @@ class Driver {
     const tracingOpts = {
       categories: _uniq(traceCategories).join(','),
       transferMode: 'ReturnAsStream',
-      options: 'sampling-frequency=10000'  // 1000 is default and too slow.
+      options: 'sampling-frequency=10000',  // 1000 is default and too slow.
     };
 
     // Check any domains that could interfere with or add overhead to the trace.
@@ -800,7 +800,7 @@ class Driver {
       const parser = new TraceParser();
 
       const readArguments = {
-        handle: streamHandle.stream
+        handle: streamHandle.stream,
       };
 
       const onChunkRead = response => {
@@ -905,12 +905,12 @@ class Driver {
       'shader_cache',
       'websql',
       'service_workers',
-      'cache_storage'
+      'cache_storage',
     ].join(',');
 
     return this.sendCommand('Storage.clearDataForOrigin', {
       origin: origin,
-      storageTypes: typesToClear
+      storageTypes: typesToClear,
     });
   }
 

@@ -21,7 +21,7 @@ describe('Cache: start_url audit', () => {
     const result = CacheStartUrlAudit.audit({
       Manifest: null,
       CacheContents,
-      URL: {finalUrl: URL}
+      URL: {finalUrl: URL},
     });
     assert.strictEqual(result.rawValue, false);
     assert.strictEqual(result.debugString, undefined);
@@ -31,7 +31,7 @@ describe('Cache: start_url audit', () => {
     return assert.equal(CacheStartUrlAudit.audit({
       Manifest: exampleManifest,
       CacheContents,
-      URL: {finalUrl: URL}
+      URL: {finalUrl: URL},
     }).rawValue, true);
   });
 
@@ -39,7 +39,7 @@ describe('Cache: start_url audit', () => {
     return assert.equal(CacheStartUrlAudit.audit({
       Manifest: exampleManifest,
       CacheContents,
-      URL: {finalUrl: AltURL}
+      URL: {finalUrl: AltURL},
     }).rawValue, true);
   });
 });

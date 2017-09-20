@@ -28,7 +28,7 @@ class UsesHTTP2Audit extends Audit {
       failureDescription: 'Does not use HTTP/2 for all of its resources',
       helpText: 'HTTP/2 offers many benefits over HTTP/1.1, including binary headers, ' +
           'multiplexing, and server push. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http2).',
-      requiredArtifacts: ['URL', 'devtoolsLogs']
+      requiredArtifacts: ['URL', 'devtoolsLogs'],
     };
   }
 
@@ -51,7 +51,7 @@ class UsesHTTP2Audit extends Audit {
       }).map(record => {
         return {
           protocol: record.protocol,
-          url: record.url // .url is a getter and not copied over for the assign.
+          url: record.url, // .url is a getter and not copied over for the assign.
         };
       });
 
@@ -75,7 +75,7 @@ class UsesHTTP2Audit extends Audit {
         extendedInfo: {
           value: {
             results: resources,
-          }
+          },
         },
         details,
       };

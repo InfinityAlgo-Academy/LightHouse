@@ -18,7 +18,7 @@ describe('External anchors use rel="noopener"', () => {
     const auditResult = ExternalAnchorsAudit.audit({
       AnchorsWithNoRelNoopener: [
         {href: 'https://google.com/test'},
-        {href: 'https://google.com/test1'}
+        {href: 'https://google.com/test1'},
       ],
       URL: {finalUrl: URL},
     });
@@ -31,7 +31,7 @@ describe('External anchors use rel="noopener"', () => {
     const auditResult = ExternalAnchorsAudit.audit({
       AnchorsWithNoRelNoopener: [
         {href: 'https://example.com/test'},
-        {href: 'https://example.com/test1'}
+        {href: 'https://example.com/test1'},
       ],
       URL: {finalUrl: URL},
     });
@@ -45,7 +45,7 @@ describe('External anchors use rel="noopener"', () => {
       AnchorsWithNoRelNoopener: [
         {href: ''},
         {href: 'http://'},
-        {href: 'http:'}
+        {href: 'http:'},
       ],
       URL: {finalUrl: URL},
     });

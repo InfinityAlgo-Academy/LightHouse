@@ -98,7 +98,7 @@ describe('Byte efficiency base audit', () => {
       headings: [{key: 'value', text: 'Label'}],
       results: [
         {wastedBytes: 2048, totalBytes: 4096, wastedPercent: 50},
-        {wastedBytes: 1986, totalBytes: 5436}
+        {wastedBytes: 1986, totalBytes: 5436},
       ],
     }, 1000);
 
@@ -114,7 +114,7 @@ describe('Byte efficiency base audit', () => {
       results: [
         {wastedBytes: 350, totalBytes: 700, wastedPercent: 50},
         {wastedBytes: 326, totalBytes: 1954},
-        {wastedBytes: 251, totalBytes: 899}
+        {wastedBytes: 251, totalBytes: 899},
       ],
     }, 1000);
 
@@ -161,8 +161,8 @@ describe('Byte efficiency base audit', () => {
       results: [
         {wastedBytes: 22416, totalBytes: 104330},
         {wastedBytes: 512, totalBytes: 1024},
-        {wastedBytes: 341, totalBytes: 1024}
-      ]
+        {wastedBytes: 341, totalBytes: 1024},
+      ],
     }, 2048);
 
     assert.equal(result.extendedInfo.value.results[0].potentialSavings, `22${NBSP}KB (21%)`);

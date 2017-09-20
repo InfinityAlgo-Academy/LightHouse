@@ -39,19 +39,19 @@ class EventListeners extends Gatherer {
     if (typeof nodeIdOrObject === 'string') {
       promise = this.driver.sendCommand('Runtime.evaluate', {
         expression: nodeIdOrObject,
-        objectGroup: 'event-listeners-gatherer' // populates event handler info.
+        objectGroup: 'event-listeners-gatherer', // populates event handler info.
       });
     } else {
       promise = this.driver.sendCommand('DOM.resolveNode', {
         nodeId: nodeIdOrObject,
-        objectGroup: 'event-listeners-gatherer' // populates event handler info.
+        objectGroup: 'event-listeners-gatherer', // populates event handler info.
       });
     }
 
     return promise.then(result => {
       const obj = result.object || result.result;
       return this.driver.sendCommand('DOMDebugger.getEventListeners', {
-        objectId: obj.objectId
+        objectId: obj.objectId,
       }).then(results => {
         return {listeners: results.listeners, tagName: obj.description};
       });

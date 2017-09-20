@@ -21,6 +21,6 @@ module.exports = [
         score: '<75',
         rawValue: '>9000',
       },
-    }
+    },
   },
 ];

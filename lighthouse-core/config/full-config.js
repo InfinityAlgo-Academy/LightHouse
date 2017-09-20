@@ -14,7 +14,7 @@ module.exports = {
         'styles',
         'css-usage',
         'js-usage',
-      ]
+      ],
     },
   ],
   audits: [

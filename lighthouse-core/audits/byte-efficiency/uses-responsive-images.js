@@ -33,7 +33,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
         'Serve images that are appropriately-sized to save cellular data ' +
         'and improve load time. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/oversized-images).',
-      requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'devtoolsLogs']
+      requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'devtoolsLogs'],
     };
   }
 
@@ -59,7 +59,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
       preview: {
         type: 'thumbnail',
         url: image.networkRecord.url,
-        mimeType: image.networkRecord.mimeType
+        mimeType: image.networkRecord.mimeType,
       },
       totalBytes,
       wastedBytes,

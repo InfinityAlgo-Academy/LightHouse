@@ -51,7 +51,7 @@ gulp.task('extras', () => {
     '!app/*.html',
   ], {
     base: 'app',
-    dot: true
+    dot: true,
   })
   .pipe(debug({title: 'copying to dist:'}))
   .pipe(gulp.dest(distDir));
@@ -60,7 +60,7 @@ gulp.task('extras', () => {
 gulp.task('lint', () => {
   return gulp.src([
     'app/src/**/*.js',
-    'gulpfile.js'
+    'gulpfile.js',
   ])
   .pipe(eslint())
   .pipe(eslint.format())
@@ -88,9 +88,9 @@ gulp.task('chromeManifest', () => {
     background: {
       target: 'scripts/lighthouse-background.js',
       exclude: [
-        'scripts/chromereload.js'
-      ]
-    }
+        'scripts/chromereload.js',
+      ],
+    },
   };
   return gulp.src('app/manifest.json')
   .pipe(chromeManifest(manifestOpts))
@@ -108,7 +108,7 @@ function applyBrowserifyTransforms(bundle) {
 
 gulp.task('browserify-lighthouse', () => {
   return gulp.src([
-    'app/src/lighthouse-background.js'
+    'app/src/lighthouse-background.js',
   ], {read: false})
     .pipe(tap(file => {
       let bundle = browserify(file.path); // , {debug: true}); // for sourcemaps
@@ -202,13 +202,13 @@ gulp.task('watch', ['browserify', 'html'], () => {
     'app/images/**/*',
     'app/styles/**/*',
     'app/_locales/**/*.json',
-    'node_modules/lighthouse-core/**/*.js'
+    'node_modules/lighthouse-core/**/*.js',
   ]).on('change', livereload.reload);
 
   gulp.watch([
     '*.js',
     'app/src/**/*.js',
-    '../lighthouse-core/**/*.js'
+    '../lighthouse-core/**/*.js',
   ], ['browserify']);
 });
 

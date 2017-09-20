@@ -15,7 +15,7 @@ describe('URL gatherer', () => {
     const urlGather = new URLGather();
     const url = 'https://example.com';
     const artifact = urlGather.afterPass({
-      url: url
+      url: url,
     });
 
     return assert.equal(artifact.finalUrl, url);

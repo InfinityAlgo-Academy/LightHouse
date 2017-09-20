@@ -37,23 +37,23 @@ class GithubApi {
       .then(accessToken => {
         const filename = getFilenamePrefix({
           url: jsonFile.url,
-          generatedTime: jsonFile.generatedTime
+          generatedTime: jsonFile.generatedTime,
         });
         const body = {
           description: 'Lighthouse json report',
           public: false,
           files: {
             [`${filename}${GithubApi.LH_JSON_EXT}`]: {
-              content: JSON.stringify(jsonFile)
-            }
-          }
+              content: JSON.stringify(jsonFile),
+            },
+          },
         };
 
         const request = new Request('https://api.github.com/gists', {
           method: 'POST',
           headers: new Headers({Authorization: `token ${accessToken}`}),
           // Stringify twice so quotes are escaped for POST request to succeed.
-          body: JSON.stringify(body)
+          body: JSON.stringify(body),
         });
         return fetch(request);
       })

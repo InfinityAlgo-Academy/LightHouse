@@ -21,7 +21,7 @@ class ManifestShortNameLength extends Audit {
       helpText: 'Make your app\'s `short_name` fewer than 12 characters to ' +
           'ensure that it\'s not truncated on homescreens. [Learn ' +
           'more](https://developers.google.com/web/tools/lighthouse/audits/manifest-short_name-is-not-truncated).',
-      requiredArtifacts: ['Manifest']
+      requiredArtifacts: ['Manifest'],
     };
   }
 
@@ -33,7 +33,7 @@ class ManifestShortNameLength extends Audit {
     return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {
       if (manifestValues.isParseFailure) {
         return {
-          rawValue: false
+          rawValue: false,
         };
       }
 
@@ -41,13 +41,13 @@ class ManifestShortNameLength extends Audit {
       if (!hasShortName) {
         return {
           rawValue: false,
-          debugString: 'No short_name found in manifest.'
+          debugString: 'No short_name found in manifest.',
         };
       }
 
       const isShortEnough = manifestValues.allChecks.find(i => i.id === 'shortNameLength').passing;
       return {
-        rawValue: isShortEnough
+        rawValue: isShortEnough,
       };
     });
   }

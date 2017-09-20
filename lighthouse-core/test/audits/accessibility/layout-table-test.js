@@ -17,9 +17,9 @@ describe('Accessibility: layout-table audit', () => {
         violations: [{
           id: 'layout-table',
           nodes: [],
-          help: 'http://example.com/'
-        }]
-      }
+          help: 'http://example.com/',
+        }],
+      },
     };
 
     const output = Audit.audit(artifacts);
@@ -32,9 +32,9 @@ describe('Accessibility: layout-table audit', () => {
         violations: [{
           id: 'layout-table',
           nodes: [{}],
-          help: 'http://example.com/'
-        }]
-      }
+          help: 'http://example.com/',
+        }],
+      },
     };
 
     const output = Audit.audit(artifacts);

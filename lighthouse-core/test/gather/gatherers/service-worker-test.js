@@ -21,16 +21,16 @@ describe('service worker gatherer', () => {
     const url = 'https://example.com/';
     const versions = [{
       status: 'activated',
-      scriptURL: url
+      scriptURL: url,
     }];
 
     return serviceWorkerGatherer.beforePass({
       driver: {
         getServiceWorkerVersions() {
           return Promise.resolve({versions});
-        }
+        },
       },
-      url
+      url,
     }).then(artifact => {
       assert.deepEqual(artifact.versions, versions);
     });

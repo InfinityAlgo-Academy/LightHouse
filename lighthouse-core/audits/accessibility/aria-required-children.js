@@ -27,7 +27,7 @@ class AriaRequiredChildren extends AxeAudit {
       helpText: 'Some ARIA parent roles must contain specific child roles to perform ' +
           'their intended accessibility functions. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-required-children?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

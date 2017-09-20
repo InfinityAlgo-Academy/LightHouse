@@ -16,10 +16,10 @@ describe('Offline: service worker audit', () => {
       ServiceWorker: {
         versions: [{
           status: 'activated',
-          scriptURL: 'https://example.com/sw.js'
-        }]
+          scriptURL: 'https://example.com/sw.js',
+        }],
       },
-      URL: {finalUrl: 'https://example.com'}
+      URL: {finalUrl: 'https://example.com'},
     });
 
     assert.equal(output.rawValue, true);
@@ -28,14 +28,14 @@ describe('Offline: service worker audit', () => {
   it('discards service worker registrations for other origins', () => {
     const versions = [{
       status: 'activated',
-      scriptURL: 'https://other-example.com'
+      scriptURL: 'https://other-example.com',
     }];
 
     const output = Audit.audit({
       ServiceWorker: {
-        versions
+        versions,
       },
-      URL: {finalUrl: 'https://example.com'}
+      URL: {finalUrl: 'https://example.com'},
     });
 
     assert.equal(output.rawValue, false);

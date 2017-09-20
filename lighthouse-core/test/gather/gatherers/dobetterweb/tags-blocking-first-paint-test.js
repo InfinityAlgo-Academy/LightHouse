@@ -21,7 +21,7 @@ const traceData = {
       _endTime: 10,
       finished: true,
       isLinkPreload: false,
-      _initiator: {type: 'parser'}
+      _initiator: {type: 'parser'},
     },
     {
       _url: 'http://google.com/wc/select.html',
@@ -31,7 +31,7 @@ const traceData = {
       _endTime: 11,
       finished: true,
       isLinkPreload: false,
-      _initiator: {type: 'other'}
+      _initiator: {type: 'other'},
     },
     {
       _url: 'http://google.com/js/app.json',
@@ -41,7 +41,7 @@ const traceData = {
       _endTime: 24,
       finished: true,
       isLinkPreload: false,
-      _initiator: {type: 'script'}
+      _initiator: {type: 'script'},
     },
     {
       _url: 'http://google.com/js/app.js',
@@ -51,7 +51,7 @@ const traceData = {
       _endTime: 22,
       finished: true,
       isLinkPreload: false,
-      _initiator: {type: 'parser'}
+      _initiator: {type: 'parser'},
     },
     {
       _url: 'http://google.com/wc/import.html',
@@ -61,7 +61,7 @@ const traceData = {
       _endTime: 13,
       finished: true,
       isLinkPreload: false,
-      _initiator: {type: 'script'}
+      _initiator: {type: 'script'},
     },
     {
       _url: 'http://google.com/css/ignored.css',
@@ -71,7 +71,7 @@ const traceData = {
       _endTime: 16,
       finished: true,
       isLinkPreload: true,
-      _initiator: {type: 'script'}
+      _initiator: {type: 'script'},
     },
     {
       _url: 'http://google.com/js/ignored.js',
@@ -81,7 +81,7 @@ const traceData = {
       _endTime: 16,
       finished: true,
       isLinkPreload: false,
-      _initiator: {type: 'script'}
+      _initiator: {type: 'script'},
     },
     {
       _url: 'http://google.com/js/also-ignored.js',
@@ -91,9 +91,9 @@ const traceData = {
       _endTime: 22,
       finished: false,
       isLinkPreload: false,
-      _initiator: {type: 'parser'}
+      _initiator: {type: 'parser'},
     },
-  ]
+  ],
 };
 
 describe('First paint blocking tags', () => {
@@ -110,25 +110,25 @@ describe('First paint blocking tags', () => {
         isLinkPreload: false,
         transferSize: 10,
         startTime: 10,
-        endTime: 10
+        endTime: 10,
       },
       'http://google.com/wc/select.html': {
         isLinkPreload: false,
         transferSize: 11,
         startTime: 11,
-        endTime: 11
+        endTime: 11,
       },
       'http://google.com/js/app.js': {
         isLinkPreload: false,
         transferSize: 12,
         startTime: 12,
-        endTime: 22
+        endTime: 22,
       },
       'http://google.com/wc/import.html': {
         isLinkPreload: false,
         transferSize: 13,
         startTime: 13,
-        endTime: 13
+        endTime: 13,
       },
     });
   });
@@ -140,35 +140,35 @@ describe('First paint blocking tags', () => {
       href: 'http://google.com/css/style.css',
       disabled: false,
       media: '',
-      rel: 'stylesheet'
+      rel: 'stylesheet',
     };
 
     const scriptDetails = {
       tagName: 'SCRIPT',
       url: 'http://google.com/js/app.js',
-      src: 'http://google.com/js/app.js'
+      src: 'http://google.com/js/app.js',
     };
 
     return tagsBlockingFirstPaint.afterPass({
       driver: {
         evaluateAsync() {
           return Promise.resolve([linkDetails, linkDetails, scriptDetails]);
-        }
-      }
+        },
+      },
     }, traceData).then(artifact => {
       const expected = [
         {
           tag: linkDetails,
           transferSize: 10,
           startTime: 10,
-          endTime: 10
+          endTime: 10,
         },
         {
           tag: scriptDetails,
           transferSize: 12,
           startTime: 12,
-          endTime: 22
-        }
+          endTime: 22,
+        },
       ];
       assert.deepEqual(artifact, expected);
     });

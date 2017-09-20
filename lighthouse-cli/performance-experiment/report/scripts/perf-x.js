@@ -84,7 +84,7 @@ class ConfigPanel {
   _rerunLighthouse() {
     this.log('Start Rerunning Lighthouse');
     const options = {
-      blockedUrlPatterns: this.getBlockedUrlPatterns()
+      blockedUrlPatterns: this.getBlockedUrlPatterns(),
     };
 
     const xhr = new XMLHttpRequest();

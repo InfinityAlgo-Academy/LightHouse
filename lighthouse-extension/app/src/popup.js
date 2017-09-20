@@ -122,7 +122,7 @@ function onGenerateReportButtonClick(background, selectedCategories) {
       .filter(key => !!selectedCategories[key]);
 
   background.runLighthouseInExtension({
-    restoreCleanState: true
+    restoreCleanState: true,
   }, categoryIDs).catch(err => {
     let message = err.message;
     let includeReportLink = true;

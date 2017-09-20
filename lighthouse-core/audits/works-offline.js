@@ -21,7 +21,7 @@ class WorksOffline extends Audit {
       helpText: 'If you\'re building a Progressive Web App, consider using a service worker so ' +
           'that your app can work offline. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).',
-      requiredArtifacts: ['Offline', 'URL']
+      requiredArtifacts: ['Offline', 'URL'],
     };
   }
 
@@ -41,7 +41,7 @@ class WorksOffline extends Audit {
 
     return {
       rawValue: passed,
-      debugString
+      debugString,
     };
   }
 }

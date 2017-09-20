@@ -27,7 +27,7 @@ class UsesWebPImages extends ByteEfficiencyAudit {
       helpText: 'WebP provides better lossy and lossless compression than PNG or JPEG, ' +
         'which means faster downloads and less data consumption. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/webp).',
-      requiredArtifacts: ['OptimizedImages', 'devtoolsLogs']
+      requiredArtifacts: ['OptimizedImages', 'devtoolsLogs'],
     };
   }
 
@@ -77,7 +77,7 @@ class UsesWebPImages extends ByteEfficiencyAudit {
     return {
       debugString,
       results,
-      headings
+      headings,
     };
   }
 }

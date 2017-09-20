@@ -22,7 +22,7 @@ class TTFBMetric extends Audit {
       informative: true,
       helpText: 'Time To First Byte identifies the time at which your server sends a response.' +
         ' [Learn more](https://developers.google.com/web/tools/chrome-devtools/network-performance/issues).',
-      requiredArtifacts: ['devtoolsLogs', 'URL']
+      requiredArtifacts: ['devtoolsLogs', 'URL'],
     };
   }
 

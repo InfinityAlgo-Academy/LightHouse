@@ -80,7 +80,7 @@ class DetailsRenderer {
 
     const element = this._renderText({
       type: 'url',
-      text: displayedURL
+      text: displayedURL,
     });
     element.classList.add('lh-text__url');
 

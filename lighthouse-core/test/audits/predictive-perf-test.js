@@ -17,10 +17,10 @@ describe('Performance: predictive performance audit', () => {
   it('should compute the predicted values', () => {
     const artifacts = Object.assign({
       traces: {
-        [PredictivePerf.DEFAULT_PASS]: acceptableTrace
+        [PredictivePerf.DEFAULT_PASS]: acceptableTrace,
       },
       devtoolsLogs: {
-        [PredictivePerf.DEFAULT_PASS]: acceptableDevToolsLog
+        [PredictivePerf.DEFAULT_PASS]: acceptableDevToolsLog,
       },
     }, Runner.instantiateComputedArtifacts());
 

@@ -19,7 +19,7 @@ const PORT = 8080;
 const startServer = function() {
   return connect.server({
     root: './public',
-    port: PORT
+    port: PORT,
   });
 };
 

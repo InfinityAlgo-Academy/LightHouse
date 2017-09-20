@@ -30,8 +30,8 @@ describe('HTML without JavaScript gatherer', () => {
       driver: {
         evaluateAsync() {
           return Promise.resolve('Hello!');
-        }
-      }
+        },
+      },
     };
     return htmlWithoutJavaScriptGather
         .afterPass(opts)
@@ -46,8 +46,8 @@ describe('HTML without JavaScript gatherer', () => {
       driver: {
         evaluateAsync() {
           return Promise.resolve(innerText);
-        }
-      }
+        },
+      },
     }).then(artifact => {
       assert.strictEqual(artifact.value, innerText);
     });
@@ -58,8 +58,8 @@ describe('HTML without JavaScript gatherer', () => {
       driver: {
         evaluateAsync() {
           return Promise.resolve(null);
-        }
-      }
+        },
+      },
     }).then(
       _ => assert.ok(false),
       _ => assert.ok(true));

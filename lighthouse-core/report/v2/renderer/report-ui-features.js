@@ -99,7 +99,7 @@ class ReportUIFeatures {
       e.clipboardData.setData('text/plain', JSON.stringify(this.json, null, 2));
 
       this._fireEventOn('lh-log', this._document, {
-        cmd: 'log', msg: 'Report JSON copied to clipboard'
+        cmd: 'log', msg: 'Report JSON copied to clipboard',
       });
     }
 
@@ -113,7 +113,7 @@ class ReportUIFeatures {
   onCopyButtonClick() {
     this._fireEventOn('lh-analytics', this._document, {
       cmd: 'send',
-      fields: {hitType: 'event', eventCategory: 'report', eventAction: 'copy'}
+      fields: {hitType: 'event', eventCategory: 'report', eventAction: 'copy'},
     });
 
     try {
@@ -126,7 +126,7 @@ class ReportUIFeatures {
           this._copyAttempt = false; // Prevent event handler from seeing this as a copy attempt.
 
           this._fireEventOn('lh-log', this._document, {
-            cmd: 'warn', msg: 'Your browser does not support copy to clipboard.'
+            cmd: 'warn', msg: 'Your browser does not support copy to clipboard.',
           });
         }
       }
@@ -194,7 +194,7 @@ class ReportUIFeatures {
           this._saveFile(new Blob([htmlStr], {type: 'text/html'}));
         } catch (/** @type {!Error} */ e) {
           this._fireEventOn('lh-log', this._document, {
-            cmd: 'error', msg: 'Could not export as HTML. ' + e.message
+            cmd: 'error', msg: 'Could not export as HTML. ' + e.message,
           });
         }
         break;
@@ -329,7 +329,7 @@ class ReportUIFeatures {
   _saveFile(blob) {
     const filename = getFilenamePrefix({
       url: this.json.url,
-      generatedTime: this.json.generatedTime
+      generatedTime: this.json.generatedTime,
     });
 
     const ext = blob.type.match('json') ? '.json' : '.html';

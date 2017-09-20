@@ -14,13 +14,13 @@ class MissingRequiredArtifacts extends LighthouseAudit {
       name: 'missing-category',
       description: 'Missing required artifacts',
       helpText: 'This is missing a required category',
-      requiredArtifacts: ['HTML']
+      requiredArtifacts: ['HTML'],
     };
   }
 
   static audit(_) {
     return {
-      rawValue: true
+      rawValue: true,
     };
   }
 }

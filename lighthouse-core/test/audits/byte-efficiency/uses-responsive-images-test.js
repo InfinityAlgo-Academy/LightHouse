@@ -15,7 +15,7 @@ function generateRecord(resourceSizeInKb, durationInMs, mimeType = 'image/png') 
     mimeType,
     resourceSize: resourceSizeInKb * 1024,
     endTime: durationInMs / 1000,
-    responseReceivedTime: 0
+    responseReceivedTime: 0,
   };
 }
 
@@ -44,8 +44,8 @@ describe('Page uses responsive images', () => {
             generateSize(...data.clientSize),
             generateSize(...data.naturalSize, 'natural'),
             generateRecord(data.sizeInKb, data.durationInMs || 200)
-          )
-        ]
+          ),
+        ],
       });
 
       assert.equal(result.results.length, data.listed ? 1 : 0);
@@ -69,7 +69,7 @@ describe('Page uses responsive images', () => {
     devicePixelRatio: 2,
     clientSize: [200, 200],
     naturalSize: [300, 300],
-    sizeInKb: 200
+    sizeInKb: 200,
   });
 
   testImage('small in file size', {
@@ -86,7 +86,7 @@ describe('Page uses responsive images', () => {
     devicePixelRatio: 2,
     clientSize: [100, 100],
     naturalSize: [300, 300],
-    sizeInKb: 1
+    sizeInKb: 1,
   });
 
   it('handles images without network record', () => {

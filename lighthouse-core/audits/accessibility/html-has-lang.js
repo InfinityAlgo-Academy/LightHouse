@@ -27,7 +27,7 @@ class HTMLHasLang extends AxeAudit {
           'screen reader. If the page isn\'t actually in the default language, then the screen ' +
           'reader might not announce the page\'s text correctly. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/html-lang?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

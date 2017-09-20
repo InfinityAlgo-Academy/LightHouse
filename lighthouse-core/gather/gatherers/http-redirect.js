@@ -34,7 +34,7 @@ class HTTPRedirect extends Gatherer {
     const securityPromise = options.driver.getSecurityState()
       .then(state => {
         return {
-          value: state.schemeIsCryptographic
+          value: state.schemeIsCryptographic,
         };
       });
 
@@ -49,7 +49,7 @@ class HTTPRedirect extends Gatherer {
 
     return Promise.race([
       securityPromise,
-      timeoutPromise
+      timeoutPromise,
     ]).then(result => {
       // Clear timeout. No effect if it won, no need to wait if it lost.
       clearTimeout(noSecurityChangesTimeout);

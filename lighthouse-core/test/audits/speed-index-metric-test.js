@@ -12,15 +12,15 @@ const assert = require('assert');
 
 const emptyTraceStub = {
   traces: {
-    defaultPass: {}
-  }
+    defaultPass: {},
+  },
 };
 
 function mockArtifactsWithSpeedlineResult(result) {
   const mockArtifacts = {
     requestSpeedline: function() {
       return Promise.resolve(result);
-    }
+    },
   };
   return Object.assign({}, emptyTraceStub, mockArtifacts);
 }
@@ -30,7 +30,7 @@ describe('Performance: speed-index-metric audit', () => {
     return {
       getTimeStamp: () => timestamp,
       getProgress: () => progress,
-      getPerceptualProgress: () => progress
+      getPerceptualProgress: () => progress,
     };
   }
 
@@ -44,7 +44,7 @@ describe('Performance: speed-index-metric audit', () => {
   it('throws an error if speed index of 0', () => {
     const SpeedlineResult = {
       frames: [frame(), frame(), frame()],
-      speedIndex: 0
+      speedIndex: 0,
     };
     const artifacts = mockArtifactsWithSpeedlineResult(SpeedlineResult);
 
@@ -59,7 +59,7 @@ describe('Performance: speed-index-metric audit', () => {
       first: 630,
       complete: 930,
       speedIndex: 831,
-      perceptualSpeedIndex: 845
+      perceptualSpeedIndex: 845,
     };
     const artifacts = mockArtifactsWithSpeedlineResult(SpeedlineResult);
 

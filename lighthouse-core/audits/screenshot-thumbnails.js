@@ -24,7 +24,7 @@ class ScreenshotThumbnails extends Audit {
       informative: true,
       description: 'Screenshot Thumbnails',
       helpText: 'This is what the load of your site looked like.',
-      requiredArtifacts: ['traces']
+      requiredArtifacts: ['traces'],
     };
   }
 

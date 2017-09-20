@@ -19,7 +19,7 @@ const mockDriver = {
   goOnline() {
     return Promise.resolve();
   },
-  off() {}
+  off() {},
 };
 
 const wrapSendCommand = (mockDriver, url) => {
@@ -41,8 +41,8 @@ const wrapSendCommand = (mockDriver, url) => {
       cb({
         request: {
           url,
-          requestId: 1
-        }
+          requestId: 1,
+        },
       });
     }
 
@@ -50,8 +50,8 @@ const wrapSendCommand = (mockDriver, url) => {
       cb({
         request: {
           url,
-          requestId: 1
-        }
+          requestId: 1,
+        },
       });
     }
   };
@@ -77,18 +77,18 @@ describe('Start-url gatherer', () => {
     const startUrlGathererWithQueryString = new StartUrlGatherer();
     const options = {
       url: 'https://do-not-match.com/',
-      driver: wrapSendCommand(mockDriver, 'https://do-not-match.com/')
+      driver: wrapSendCommand(mockDriver, 'https://do-not-match.com/'),
     };
     const optionsWithQueryString = {
       url: 'https://ifixit-pwa.appspot.com/?history',
-      driver: wrapSendCommand(mockDriver, 'https://ifixit-pwa.appspot.com/?history')
+      driver: wrapSendCommand(mockDriver, 'https://ifixit-pwa.appspot.com/?history'),
     };
 
     return Promise.all([
       startUrlGatherer.pass(options)
         .then(_ => startUrlGatherer.afterPass(options, tracingData)),
       startUrlGathererWithQueryString.pass(optionsWithQueryString)
-        .then(_ => startUrlGathererWithQueryString.afterPass(optionsWithQueryString, tracingData))
+        .then(_ => startUrlGathererWithQueryString.afterPass(optionsWithQueryString, tracingData)),
     ]).then(([artifact, artifactWithQueryString]) => {
       assert.equal(artifact.statusCode, -1);
       assert.ok(artifact.debugString, 'did not set debug string');
@@ -102,18 +102,18 @@ describe('Start-url gatherer', () => {
     const startUrlGathererWithFragment = new StartUrlGatherer();
     const options = {
       url: 'https://ifixit-pwa.appspot.com/',
-      driver: wrapSendCommand(mockDriver, 'https://ifixit-pwa.appspot.com/')
+      driver: wrapSendCommand(mockDriver, 'https://ifixit-pwa.appspot.com/'),
     };
     const optionsWithQueryString = {
       url: 'https://ifixit-pwa.appspot.com/#/history',
-      driver: wrapSendCommand(mockDriver, 'https://ifixit-pwa.appspot.com/#/history')
+      driver: wrapSendCommand(mockDriver, 'https://ifixit-pwa.appspot.com/#/history'),
     };
 
     return Promise.all([
       startUrlGatherer.pass(options)
         .then(_ => startUrlGatherer.afterPass(options, tracingData)),
       startUrlGathererWithFragment.pass(optionsWithQueryString)
-        .then(_ => startUrlGathererWithFragment.afterPass(optionsWithQueryString, tracingData))
+        .then(_ => startUrlGathererWithFragment.afterPass(optionsWithQueryString, tracingData)),
     ]).then(([artifact, artifactWithFragment]) => {
       assert.equal(artifact.statusCode, 200);
       assert.equal(artifactWithFragment.statusCode, 200);
@@ -124,7 +124,7 @@ describe('Start-url gatherer', () => {
     const startUrlGatherer = new StartUrlGatherer();
     const options = {
       url: 'https://ifixit-pwa.appspot.com/',
-      driver: wrapSendCommand(mockDriver, '')
+      driver: wrapSendCommand(mockDriver, ''),
     };
 
     return startUrlGatherer.pass(options)
@@ -138,7 +138,7 @@ describe('Start-url gatherer', () => {
     const startUrlGatherer = new StartUrlGatherer();
     const options = {
       url: 'https://ifixit-pwa.appspot.com/',
-      driver: wrapSendCommand(mockDriver, 'https://not-same-origin.com/')
+      driver: wrapSendCommand(mockDriver, 'https://not-same-origin.com/'),
     };
 
     return startUrlGatherer.pass(options)

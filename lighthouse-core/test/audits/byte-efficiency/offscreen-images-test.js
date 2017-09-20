@@ -44,7 +44,7 @@ function generateImage(size, coords, networkRecord, src = 'https://google.com/lo
 
 function generateInteractiveFunc(desiredTimeInSeconds) {
   return () => Promise.resolve({
-    timestamp: desiredTimeInSeconds * 1000000
+    timestamp: desiredTimeInSeconds * 1000000,
   });
 }
 

@@ -17,9 +17,9 @@ describe('Accessibility: meta-viewport audit', () => {
         violations: [{
           id: 'meta-viewport',
           nodes: [],
-          help: 'http://example.com/'
-        }]
-      }
+          help: 'http://example.com/',
+        }],
+      },
     };
 
     const output = Audit.audit(artifacts);
@@ -32,9 +32,9 @@ describe('Accessibility: meta-viewport audit', () => {
         violations: [{
           id: 'meta-viewport',
           nodes: [{}],
-          help: 'http://example.com/'
-        }]
-      }
+          help: 'http://example.com/',
+        }],
+      },
     };
 
     const output = Audit.audit(artifacts);

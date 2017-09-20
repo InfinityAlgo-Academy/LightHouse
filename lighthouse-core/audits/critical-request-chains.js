@@ -24,7 +24,7 @@ class CriticalRequestChains extends Audit {
           'the length of chains, reducing the download size of resources, or ' +
           'deferring the download of unnecessary resources. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains).',
-      requiredArtifacts: ['devtoolsLogs']
+      requiredArtifacts: ['devtoolsLogs'],
     };
   }
 
@@ -46,7 +46,7 @@ class CriticalRequestChains extends Audit {
           id,
           node: child,
           chainDuration: (child.request.endTime - startTime) * 1000,
-          chainTransferSize: (transferSize + child.request.transferSize)
+          chainTransferSize: (transferSize + child.request.transferSize),
         });
 
         // Carry on walking.
@@ -65,7 +65,7 @@ class CriticalRequestChains extends Audit {
     const longest = {
       duration: 0,
       length: 0,
-      transferSize: 0
+      transferSize: 0,
     };
     CriticalRequestChains._traverse(tree, opts => {
       const duration = opts.chainDuration;
@@ -120,15 +120,15 @@ class CriticalRequestChains extends Audit {
         extendedInfo: {
           value: {
             chains,
-            longestChain
-          }
+            longestChain,
+          },
         },
         details: {
           type: 'criticalrequestchain',
           header: {type: 'text', text: 'View critical network waterfall:'},
           chains,
-          longestChain
-        }
+          longestChain,
+        },
       };
     });
   }

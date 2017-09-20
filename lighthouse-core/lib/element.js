@@ -22,7 +22,7 @@ class Element {
   getAttribute(name) {
     return this.driver
       .sendCommand('DOM.getAttributes', {
-        nodeId: this.element.nodeId
+        nodeId: this.element.nodeId,
       })
       /**
        * @param {!{attributes: !Array<!string>}} resp The element attribute names & values are interleaved
@@ -44,7 +44,7 @@ class Element {
   getProperty(propName) {
     return this.driver
       .sendCommand('DOM.resolveNode', {
-        nodeId: this.element.nodeId
+        nodeId: this.element.nodeId,
       })
       .then(resp => {
         return this.driver.getObjectProperty(resp.object.objectId, propName);

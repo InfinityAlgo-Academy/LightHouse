@@ -328,7 +328,7 @@ class GatherRunner {
     const tracingData = {
       traces: {},
       devtoolsLogs: {},
-      networkRecords: {}
+      networkRecords: {},
     };
 
     if (typeof options.url !== 'string' || options.url.length === 0) {

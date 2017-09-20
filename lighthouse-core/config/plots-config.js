@@ -10,7 +10,7 @@ module.exports = {
     recordTrace: true,
     pauseBeforeTraceEndMs: 5000,
     useThrottling: true,
-    gatherers: []
+    gatherers: [],
   }],
 
   audits: [
@@ -18,6 +18,6 @@ module.exports = {
     'speed-index-metric',
     'estimated-input-latency',
     'first-interactive',
-    'consistently-interactive'
-  ]
+    'consistently-interactive',
+  ],
 };

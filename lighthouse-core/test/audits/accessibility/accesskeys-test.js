@@ -17,9 +17,9 @@ describe('Accessibility: accesskeys audit', () => {
         violations: [{
           id: 'accesskeys',
           nodes: [],
-          help: 'http://example.com/'
-        }]
-      }
+          help: 'http://example.com/',
+        }],
+      },
     };
 
     const output = Audit.audit(artifacts);
@@ -32,9 +32,9 @@ describe('Accessibility: accesskeys audit', () => {
         violations: [{
           id: 'accesskeys',
           nodes: [{}],
-          help: 'http://example.com/'
-        }]
-      }
+          help: 'http://example.com/',
+        }],
+      },
     };
 
     const output = Audit.audit(artifacts);

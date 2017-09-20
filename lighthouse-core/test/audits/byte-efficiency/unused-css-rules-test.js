@@ -123,7 +123,7 @@ describe('Best Practices: unused css rules audit', () => {
         {
           url: 'file://a.css',
           _transferSize: 10 * 1024,
-          _resourceType: {_name: 'stylesheet'}
+          _resourceType: {_name: 'stylesheet'},
         },
       ]);
     };
@@ -134,7 +134,7 @@ describe('Best Practices: unused css rules audit', () => {
         requestNetworkRecords,
         URL: {finalUrl: ''},
         CSSUsage: [{styleSheetId: 'a', used: false}],
-        Styles: []
+        Styles: [],
       }).then(result => {
         assert.equal(result.results.length, 0);
       });
@@ -153,13 +153,13 @@ describe('Best Practices: unused css rules audit', () => {
         Styles: [
           {
             header: {styleSheetId: 'a', sourceURL: 'file://a.css'},
-            content: '.my.selector {color: #ccc;}\n a {color: #fff}'
+            content: '.my.selector {color: #ccc;}\n a {color: #fff}',
           },
           {
             header: {styleSheetId: 'b', sourceURL: 'file://b.css'},
-            content: '.my.favorite.selector { rule: content; }'
-          }
-        ]
+            content: '.my.favorite.selector { rule: content; }',
+          },
+        ],
       }).then(result => {
         assert.equal(result.results.length, 0);
       });
@@ -177,17 +177,17 @@ describe('Best Practices: unused css rules audit', () => {
         Styles: [
           {
             header: {styleSheetId: 'a', sourceURL: 'file://a.css'},
-            content: '.my.selector {color: #ccc;}\n a {color: #fff}'
+            content: '.my.selector {color: #ccc;}\n a {color: #fff}',
           },
           {
             header: {styleSheetId: 'b', sourceURL: 'file://b.css'},
-            content: `${generate('123', 2050)}`
+            content: `${generate('123', 2050)}`,
           },
           {
             header: {styleSheetId: 'c', sourceURL: ''},
-            content: `${generate('123', 450)}` // will be filtered out
-          }
-        ]
+            content: `${generate('123', 450)}`, // will be filtered out
+          },
+        ],
       }).then(result => {
         assert.equal(result.results.length, 2);
         assert.equal(result.results[0].totalBytes, 10 * 1024);
@@ -208,14 +208,14 @@ describe('Best Practices: unused css rules audit', () => {
         Styles: [
           {
             header: {styleSheetId: 'a', sourceURL: 'file://a.css'},
-            content: '.my.selector {color: #ccc;}\n a {color: #fff}'
+            content: '.my.selector {color: #ccc;}\n a {color: #fff}',
           },
           {
             isDuplicate: true,
             header: {styleSheetId: 'b', sourceURL: 'file://b.css'},
-            content: 'a.other {color: #fff}'
+            content: 'a.other {color: #fff}',
           },
-        ]
+        ],
       }).then(result => {
         assert.equal(result.results.length, 1);
       });
@@ -233,25 +233,25 @@ describe('Best Practices: unused css rules audit', () => {
         Styles: [
           {
             header: {styleSheetId: 'a', sourceURL: 'file://a.css'},
-            content: `${generate('123', 4000)}`
+            content: `${generate('123', 4000)}`,
           },
           {
             header: {styleSheetId: 'b', sourceURL: 'file://b.css'},
-            content: `${generate('123', 500)}`
+            content: `${generate('123', 500)}`,
           },
           {
             header: {styleSheetId: 'c', sourceURL: 'file://c.css'},
-            content: '@import url(http://googlefonts.com?myfont)'
+            content: '@import url(http://googlefonts.com?myfont)',
           },
           {
             header: {styleSheetId: 'd', sourceURL: 'file://d.css'},
-            content: '/* nothing to see here */'
+            content: '/* nothing to see here */',
           },
           {
             header: {styleSheetId: 'e', sourceURL: 'file://e.css'},
-            content: '       '
+            content: '       ',
           },
-        ]
+        ],
       }).then(result => {
         assert.equal(result.results.length, 1);
         assert.equal(Math.floor(result.results[0].wastedPercent), 33);

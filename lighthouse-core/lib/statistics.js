@@ -55,10 +55,10 @@ function getLogNormalDistribution(median, falloff) {
     computeComplementaryPercentile(x) {
       const standardizedX = (Math.log(x) - location) / (Math.SQRT2 * shape);
       return (1 - erf(standardizedX)) / 2;
-    }
+    },
   };
 }
 
 module.exports = {
-  getLogNormalDistribution
+  getLogNormalDistribution,
 };

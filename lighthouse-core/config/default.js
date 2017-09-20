@@ -34,7 +34,7 @@ module.exports = {
       'dobetterweb/response-compression',
       'dobetterweb/tags-blocking-first-paint',
       'dobetterweb/websql',
-    ]
+    ],
   },
   {
     passName: 'offlinePass',
@@ -45,7 +45,7 @@ module.exports = {
       'service-worker',
       'offline',
       'start-url',
-    ]
+    ],
   },
   {
     passName: 'redirectPass',
@@ -57,7 +57,7 @@ module.exports = {
     gatherers: [
       'http-redirect',
       'html-without-javascript',
-    ]
+    ],
   }],
 
   audits: [
@@ -146,53 +146,53 @@ module.exports = {
   groups: {
     'perf-metric': {
       title: 'Metrics',
-      description: 'These metrics encapsulate your app\'s performance across a number of dimensions.'
+      description: 'These metrics encapsulate your app\'s performance across a number of dimensions.',
     },
     'perf-hint': {
       title: 'Opportunities',
-      description: 'These are opportunities to speed up your application by optimizing the following resources.'
+      description: 'These are opportunities to speed up your application by optimizing the following resources.',
     },
     'perf-info': {
       title: 'Diagnostics',
-      description: 'More information about the performance of your application.'
+      description: 'More information about the performance of your application.',
     },
     'a11y-color-contrast': {
       title: 'Color Contrast Is Satisfactory',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.'
+      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
     },
     'a11y-describe-contents': {
       title: 'Elements Describe Contents Well',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.'
+      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
     },
     'a11y-well-structured': {
       title: 'Elements Are Well Structured',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.'
+      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
     },
     'a11y-aria': {
       title: 'ARIA Attributes Follow Best Practices',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.'
+      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
     },
     'a11y-correct-attributes': {
       title: 'Elements Use Attributes Correctly',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.'
+      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
     },
     'a11y-element-names': {
       title: 'Elements Have Discernable Names',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.'
+      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
     },
     'a11y-language': {
       title: 'Page Specifies Valid Language',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.'
+      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
     },
     'a11y-meta': {
       title: 'Meta Tags Used Properly',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.'
+      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
     },
     'manual-pwa-checks': {
       title: 'Manual checks to verify',
       description: 'These checks are required by the baseline ' +
           '[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are ' +
-          'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.'
+          'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.',
     },
   },
   categories: {
@@ -215,7 +215,7 @@ module.exports = {
         {id: 'pwa-cross-browser', weight: 0, group: 'manual-pwa-checks'},
         {id: 'pwa-page-transitions', weight: 0, group: 'manual-pwa-checks'},
         {id: 'pwa-each-page-has-url', weight: 0, group: 'manual-pwa-checks'},
-      ]
+      ],
     },
     'performance': {
       name: 'Performance',
@@ -240,7 +240,7 @@ module.exports = {
         {id: 'user-timings', weight: 0, group: 'perf-info'},
 
         {id: 'screenshot-thumbnails', weight: 0},
-      ]
+      ],
     },
     'accessibility': {
       name: 'Accessibility',
@@ -281,7 +281,7 @@ module.exports = {
         {id: 'valid-lang', weight: 1, group: 'a11y-language'},
         {id: 'video-caption', weight: 1, group: 'a11y-describe-contents'},
         {id: 'video-description', weight: 1, group: 'a11y-describe-contents'},
-      ]
+      ],
     },
     'best-practices': {
       name: 'Best Practices',
@@ -301,7 +301,7 @@ module.exports = {
         {id: 'manifest-short-name-length', weight: 1},
         {id: 'password-inputs-can-be-pasted-into', weight: 1},
         {id: 'image-aspect-ratio', weight: 1},
-      ]
-    }
-  }
+      ],
+    },
+  },
 };

@@ -25,7 +25,7 @@ class AriaRoles extends AxeAudit {
       helpText: 'ARIA roles must have valid values in order to perform their ' +
           'intended accessibility functions. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-roles?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

@@ -37,7 +37,7 @@ class ConsistentlyInteractiveMetric extends Audit {
           'fully interactive. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).',
       scoringMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs']
+      requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
   }
 
@@ -240,7 +240,7 @@ class ConsistentlyInteractiveMetric extends Audit {
           optimalValue: this.meta.optimalValue,
           extendedInfo: {
             value: extendedInfo,
-          }
+          },
         };
       });
   }

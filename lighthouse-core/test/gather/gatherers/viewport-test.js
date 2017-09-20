@@ -22,10 +22,10 @@ describe('Viewport gatherer', () => {
       driver: {
         querySelector() {
           return Promise.resolve({
-            getAttribute: () => 'width=device-width'
+            getAttribute: () => 'width=device-width',
           });
-        }
-      }
+        },
+      },
     }).then(artifact => {
       assert.ok(typeof artifact === 'string');
       assert.ok(/width=/gim.test(artifact));

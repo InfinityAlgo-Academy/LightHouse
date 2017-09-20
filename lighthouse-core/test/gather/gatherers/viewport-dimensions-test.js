@@ -28,8 +28,8 @@ describe('ViewportDimensions gatherer', () => {
             outerHeight: 600,
             devicePixelRatio: 2,
           });
-        }
-      }
+        },
+      },
     }).then(artifact => {
       assert.ok(typeof artifact === 'object');
       assert.ok(artifact.outerWidth === 400);

@@ -11,7 +11,7 @@ module.exports = {
     passName: 'defaultPass',
     gatherers: [
       'seo/meta-description',
-    ]
+    ],
   }],
   audits: [
     'seo/meta-description',
@@ -20,16 +20,16 @@ module.exports = {
     'seo-mobile': {
       title: 'Mobile Friendly',
       description: 'Having a mobile-friendly website is a critical part of your online presence.' +
-        ' In many countries, smartphone traffic now exceeds desktop traffic.'
+        ' In many countries, smartphone traffic now exceeds desktop traffic.',
     },
     'seo-content': {
       title: 'Content Best Practices',
-      description: 'Ensure your markup enables crawlers to better understand your app\'s content.'
+      description: 'Ensure your markup enables crawlers to better understand your app\'s content.',
     },
     'seo-crawl': {
       title: 'Crawling and Indexing',
-      description: 'These ensure that your app is able to be crawled.'
-    }
+      description: 'These ensure that your app is able to be crawled.',
+    },
   },
   categories: {
     'seo': {
@@ -39,7 +39,7 @@ module.exports = {
         {id: 'viewport', weight: 1, group: 'seo-mobile'},
         {id: 'document-title', weight: 1, group: 'seo-content'},
         {id: 'meta-description', weight: 1, group: 'seo-content'},
-      ]
-    }
-  }
+      ],
+    },
+  },
 };

@@ -26,7 +26,7 @@ class HTMLLangValid extends AxeAudit {
       helpText: 'Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) ' +
           'helps screen readers announce text properly. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

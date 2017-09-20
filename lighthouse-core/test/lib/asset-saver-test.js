@@ -24,8 +24,8 @@ describe('asset-saver helper', () => {
       devtoolsLogs: {},
       traces: {
         [Audit.DEFAULT_PASS]: {
-          traceEvents: []
-        }
+          traceEvents: [],
+        },
       },
       requestScreenshots: () => Promise.resolve([]),
     };
@@ -38,14 +38,14 @@ describe('asset-saver helper', () => {
     before(() => {
       const artifacts = {
         devtoolsLogs: {
-          [Audit.DEFAULT_PASS]: [{message: 'first'}, {message: 'second'}]
+          [Audit.DEFAULT_PASS]: [{message: 'first'}, {message: 'second'}],
         },
         traces: {
           [Audit.DEFAULT_PASS]: {
-            traceEvents
-          }
+            traceEvents,
+          },
         },
-        requestScreenshots: () => Promise.resolve(screenshotFilmstrip)
+        requestScreenshots: () => Promise.resolve(screenshotFilmstrip),
       };
 
       return assetSaver.saveAssets(artifacts, dbwResults.audits, process.cwd() + '/the_file');
@@ -88,7 +88,7 @@ describe('asset-saver helper', () => {
       const mockArtifacts = {
         devtoolsLogs: {},
         traces: {
-          defaultPass: dbwTrace
+          defaultPass: dbwTrace,
         },
         requestScreenshots: () => Promise.resolve([]),
       };
@@ -125,7 +125,7 @@ describe('asset-saver helper', () => {
           'cpu-model': 70,
           'cpu-stepping': 1,
           'field-trials': [],
-        }
+        },
       };
 
       return assetSaver.saveTrace(trace, traceFilename)
@@ -143,9 +143,9 @@ describe('asset-saver helper', () => {
         anotherProp: {
           unlikely: {
             nested: [
-              'value'
-            ]
-          }
+              'value',
+            ],
+          },
         },
       };
 
@@ -167,7 +167,7 @@ describe('asset-saver helper', () => {
         longTraceEvents = longTraceEvents.concat(traceEvents);
       }
       const trace = {
-        traceEvents: longTraceEvents
+        traceEvents: longTraceEvents,
       };
 
       return assetSaver.saveTrace(trace, traceFilename)

@@ -108,7 +108,7 @@ class Runner {
       run = run.then(_ => {
         return {
           artifacts,
-          auditResults: config.auditResults
+          auditResults: config.auditResults,
         };
       });
     } else {
@@ -221,7 +221,7 @@ class Runner {
       'accessibility/axe-audit.js',
       'multi-check-audit.js',
       'byte-efficiency/byte-efficiency-audit.js',
-      'manual/manual-audit.js'
+      'manual/manual-audit.js',
     ];
 
     const fileList = [
@@ -232,7 +232,7 @@ class Runner {
           .map(f => `accessibility/${f}`),
       ...fs.readdirSync(path.join(__dirname, './audits/byte-efficiency'))
           .map(f => `byte-efficiency/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/manual')).map(f => `manual/${f}`)
+      ...fs.readdirSync(path.join(__dirname, './audits/manual')).map(f => `manual/${f}`),
     ];
     return fileList.filter(f => {
       return /\.js$/.test(f) && !ignoredFiles.includes(f);
@@ -248,7 +248,7 @@ class Runner {
       ...fs.readdirSync(path.join(__dirname, './gather/gatherers')),
       ...fs.readdirSync(path.join(__dirname, './gather/gatherers/seo')).map(f => `seo/${f}`),
       ...fs.readdirSync(path.join(__dirname, './gather/gatherers/dobetterweb'))
-          .map(f => `dobetterweb/${f}`)
+          .map(f => `dobetterweb/${f}`),
     ];
     return fileList.filter(f => /\.js$/.test(f) && f !== 'gatherer.js').sort();
   }
@@ -333,18 +333,18 @@ class Runner {
       {
         name: 'Device Emulation',
         enabled: !flags.disableDeviceEmulation,
-        description: emulationDesc['deviceEmulation']
+        description: emulationDesc['deviceEmulation'],
       },
       {
         name: 'Network Throttling',
         enabled: !flags.disableNetworkThrottling,
-        description: emulationDesc['networkThrottling']
+        description: emulationDesc['networkThrottling'],
       },
       {
         name: 'CPU Throttling',
         enabled: !flags.disableCpuThrottling,
-        description: emulationDesc['cpuThrottling']
-      }
+        description: emulationDesc['cpuThrottling'],
+      },
     ];
 
     return {environment, blockedUrlPatterns: flags.blockedUrlPatterns || []};

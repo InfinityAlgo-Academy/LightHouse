@@ -17,8 +17,8 @@ const NBSP = '\xa0';
 function generateArtifactsWithTrace(trace) {
   return Object.assign({
     traces: {
-      [Audit.DEFAULT_PASS]: {traceEvents: Array.isArray(trace) ? trace : trace.traceEvents}
-    }
+      [Audit.DEFAULT_PASS]: {traceEvents: Array.isArray(trace) ? trace : trace.traceEvents},
+    },
   }, computedArtifacts);
 }
 

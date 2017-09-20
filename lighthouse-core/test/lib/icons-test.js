@@ -21,7 +21,7 @@ describe('Icons helper', () => {
 
     it('fails when a manifest contains no icons array', () => {
       const manifestSrc = JSON.stringify({
-        name: 'NoIconsHere'
+        name: 'NoIconsHere',
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 
@@ -30,7 +30,7 @@ describe('Icons helper', () => {
 
     it('fails when a manifest contains no icons', () => {
       const manifestSrc = JSON.stringify({
-        icons: []
+        icons: [],
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.doExist(manifest.value), false);
@@ -39,8 +39,8 @@ describe('Icons helper', () => {
     it('succeed when a manifest contains icons', () => {
       const manifestSrc = JSON.stringify({
         icons: [{
-          src: 'icon.png'
-        }]
+          src: 'icon.png',
+        }],
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.doExist(manifest.value), true);
@@ -52,8 +52,8 @@ describe('Icons helper', () => {
       const manifestSrc = JSON.stringify({
         icons: [{
           src: 'icon192.png',
-          sizes: '192x192'
-        }]
+          sizes: '192x192',
+        }],
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       // /* manifest looks like this: */
@@ -75,8 +75,8 @@ describe('Icons helper', () => {
     it('fails when a manifest contains an icon with no size', () => {
       const manifestSrc = JSON.stringify({
         icons: [{
-          src: 'icon-no-size.png'
-        }]
+          src: 'icon-no-size.png',
+        }],
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.sizeAtLeast(192, manifest.value).length, 0);
@@ -86,8 +86,8 @@ describe('Icons helper', () => {
       const manifestSrc = JSON.stringify({
         icons: [{
           src: 'icon-192.png',
-          sizes: '192x192'
-        }]
+          sizes: '192x192',
+        }],
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.sizeAtLeast(144, manifest.value).length, 1);
@@ -97,8 +97,8 @@ describe('Icons helper', () => {
       const manifestSrc = JSON.stringify({
         icons: [{
           src: 'icon-192.png',
-          sizes: '192x192'
-        }]
+          sizes: '192x192',
+        }],
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.sizeAtLeast(256, manifest.value).length, 0);
@@ -108,8 +108,8 @@ describe('Icons helper', () => {
       const manifestSrc = JSON.stringify({
         icons: [{
           src: 'icon.png',
-          sizes: '72x72 96x96 128x128 256x256'
-        }]
+          sizes: '72x72 96x96 128x128 256x256',
+        }],
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.sizeAtLeast(192, manifest.value).length, 1);
@@ -118,11 +118,11 @@ describe('Icons helper', () => {
     it('succeeds when there\'s two icons, one without sizes; the other with a valid size', () => {
       const manifestSrc = JSON.stringify({
         icons: [{
-          src: 'icon.png'
+          src: 'icon.png',
         }, {
           src: 'icon2.png',
-          sizes: '256x256'
-        }]
+          sizes: '256x256',
+        }],
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.sizeAtLeast(192, manifest.value).length, 1);
@@ -133,8 +133,8 @@ describe('Icons helper', () => {
       const manifestSrc = JSON.stringify({
         icons: [{
           src: 'icon-non-square.png',
-          sizes: '200x220'
-        }]
+          sizes: '200x220',
+        }],
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.sizeAtLeast(192, manifest.value).length, 0);
@@ -144,8 +144,8 @@ describe('Icons helper', () => {
       const manifestSrc = JSON.stringify({
         icons: [{
           src: 'icon-vector.svg',
-          sizes: 'any'
-        }]
+          sizes: 'any',
+        }],
       });
       const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.sizeAtLeast(192, manifest.value).length, 0);

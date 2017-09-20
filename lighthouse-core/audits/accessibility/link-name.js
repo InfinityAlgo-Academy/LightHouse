@@ -26,7 +26,7 @@ class LinkName extends AxeAudit {
           'discernible, unique, and focusable improves the navigation experience for ' +
           'screen reader users. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/link-name?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

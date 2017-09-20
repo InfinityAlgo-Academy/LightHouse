@@ -34,7 +34,7 @@ function getCSSPropsInStyleSheet(parseTree) {
     results.push({
       property: {name: keyVal[0], val: keyVal[1]},
       declarationRange: node.declarationRange,
-      selector: parent.selectors.toString()
+      selector: parent.selectors.toString(),
     });
   });
 
@@ -90,7 +90,7 @@ class Styles extends Gatherer {
       // Get text content of each style.
       const contentPromises = this._activeStyleSheetIds.map(sheetId => {
         return driver.sendCommand('CSS.getStyleSheetText', {
-          styleSheetId: sheetId
+          styleSheetId: sheetId,
         }).then(content => {
           const styleHeader = this._activeStyleHeaders[sheetId];
           styleHeader.content = content.text;

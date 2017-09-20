@@ -22,7 +22,7 @@ function generateImage(type, originalSize, webpSize, jpegSize) {
       'reaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaly long' :
       `http://google.com/image.${type}`,
     mimeType: `image/${type}`,
-    originalSize, webpSize, jpegSize
+    originalSize, webpSize, jpegSize,
   };
 }
 

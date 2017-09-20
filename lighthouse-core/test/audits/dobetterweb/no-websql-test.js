@@ -13,7 +13,7 @@ const assert = require('assert');
 describe('No websql audit', () => {
   it('passes when no database is created', () => {
     assert.equal(NoWebSQLAudit.audit({
-      WebSQL: null
+      WebSQL: null,
     }).rawValue, true);
   });
 
@@ -23,8 +23,8 @@ describe('No websql audit', () => {
         id: '1',
         domain: 'example.com',
         name: 'db-name',
-        version: '1.0'
-      }
+        version: '1.0',
+      },
     });
 
     assert.equal(auditResult.rawValue, false);

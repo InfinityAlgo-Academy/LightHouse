@@ -26,7 +26,7 @@ class FirstInteractiveMetric extends Audit {
           'minimally interactive. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive).',
       scoringMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces']
+      requiredArtifacts: ['traces'],
     };
   }
 
@@ -51,7 +51,7 @@ class FirstInteractiveMetric extends Audit {
           displayValue: Util.formatMilliseconds(firstInteractive.timeInMs),
           extendedInfo: {
             value: firstInteractive,
-          }
+          },
         };
       });
   }

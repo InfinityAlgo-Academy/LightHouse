@@ -88,7 +88,7 @@ gulp.task('pwa', () => {
 gulp.task('polyfills', () => {
   return gulp.src([
     'node_modules/url-search-params/build/url-search-params.js',
-    'node_modules/whatwg-fetch/fetch.js'
+    'node_modules/whatwg-fetch/fetch.js',
   ])
   .pipe(gulp.dest(`dist/src/polyfills`));
 });
@@ -150,14 +150,14 @@ gulp.task('watch', ['build'], () => {
 
   gulp.watch([
     'app/manifest.json',
-    'app/sw.js'
+    'app/sw.js',
   ]).on('change', () => {
     runSequence('pwa');
   });
 
   gulp.watch([
     '../lighthouse-core/report/v2/report-generator.js',
-    'app/src/*.js'
+    'app/src/*.js',
   ]).on('change', () => {
     runSequence('compile-js');
   });
@@ -173,7 +173,7 @@ gulp.task('create-dir-for-gh-pages', () => {
 gulp.task('deploy', cb => {
   runSequence('clean', 'build', 'create-dir-for-gh-pages', function() {
     ghpages.publish(`dist/viewer`, {
-      logger: $.util.log
+      logger: $.util.log,
     }, err => {
       if (err) {
         $.util.log(err);

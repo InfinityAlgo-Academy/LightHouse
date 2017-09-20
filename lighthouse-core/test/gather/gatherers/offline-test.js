@@ -17,7 +17,7 @@ const mockDriver = {
   },
   goOnline() {
     return Promise.resolve();
-  }
+  },
 };
 
 describe('Offline gatherer', () => {
@@ -25,11 +25,11 @@ describe('Offline gatherer', () => {
     const offlineGather = new OfflineGather();
     const options = {
       url: 'https://do-not-match.com/',
-      driver: mockDriver
+      driver: mockDriver,
     };
     const optionsWithQueryString = {
       url: 'https://ifixit-pwa.appspot.com/?history',
-      driver: mockDriver
+      driver: mockDriver,
     };
 
     return Promise.all([
@@ -46,11 +46,11 @@ describe('Offline gatherer', () => {
     const offlineGather = new OfflineGather();
     const options = {
       url: 'https://ifixit-pwa.appspot.com/',
-      driver: mockDriver
+      driver: mockDriver,
     };
     const optionsWithFragment = {
       url: 'https://ifixit-pwa.appspot.com/#/history',
-      driver: mockDriver
+      driver: mockDriver,
     };
     return Promise.all([
       offlineGather.afterPass(options, tracingData).then(artifact => {

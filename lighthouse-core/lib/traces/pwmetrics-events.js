@@ -45,7 +45,7 @@ class Metrics {
         getTiming: auditResults => {
           const fmpExt = auditResults['first-meaningful-paint'].extendedInfo;
           return safeGet(fmpExt, 'value.timings.navStart');
-        }
+        },
       },
       {
         name: 'First Contentful Paint',
@@ -57,7 +57,7 @@ class Metrics {
         getTiming: auditResults => {
           const fmpExt = auditResults['first-meaningful-paint'].extendedInfo;
           return safeGet(fmpExt, 'value.timings.fCP');
-        }
+        },
       },
       {
         name: 'First Meaningful Paint',
@@ -69,7 +69,7 @@ class Metrics {
         getTiming: auditResults => {
           const fmpExt = auditResults['first-meaningful-paint'].extendedInfo;
           return safeGet(fmpExt, 'value.timings.fMP');
-        }
+        },
       },
       {
         name: 'Perceptual Speed Index',
@@ -81,7 +81,7 @@ class Metrics {
         getTiming: auditResults => {
           const siExt = auditResults['speed-index-metric'].extendedInfo;
           return safeGet(siExt, 'value.timings.perceptualSpeedIndex');
-        }
+        },
       },
       {
         name: 'First Visual Change',
@@ -93,7 +93,7 @@ class Metrics {
         getTiming: auditResults => {
           const siExt = auditResults['speed-index-metric'].extendedInfo;
           return safeGet(siExt, 'value.timings.firstVisualChange');
-        }
+        },
       },
       {
         name: 'Visually Complete 85%',
@@ -105,7 +105,7 @@ class Metrics {
         getTiming: auditResults => {
           const siExt = auditResults['speed-index-metric'].extendedInfo;
           return safeGet(siExt, 'value.timings.visuallyReady');
-        }
+        },
       },
       {
         name: 'Visually Complete 100%',
@@ -117,7 +117,7 @@ class Metrics {
         getTiming: auditResults => {
           const siExt = auditResults['speed-index-metric'].extendedInfo;
           return safeGet(siExt, 'value.timings.visuallyComplete');
-        }
+        },
       },
       {
         name: 'First Interactive (vBeta)',
@@ -129,7 +129,7 @@ class Metrics {
         getTiming: auditResults => {
           const ttfiExt = auditResults['first-interactive'].extendedInfo;
           return safeGet(ttfiExt, 'value.timeInMs');
-        }
+        },
       },
       {
         name: 'Time to Consistently Interactive (vBeta)',
@@ -141,7 +141,7 @@ class Metrics {
         getTiming: auditResults => {
           const ttiExt = auditResults['consistently-interactive'].extendedInfo;
           return safeGet(ttiExt, 'value.timeInMs');
-        }
+        },
       },
       {
         name: 'End of Trace',
@@ -153,7 +153,7 @@ class Metrics {
         getTiming: auditResults => {
           const ttiExt = auditResults['first-meaningful-paint'].extendedInfo;
           return safeGet(ttiExt, 'value.timings.endOfTrace');
-        }
+        },
       },
       {
         name: 'On Load',
@@ -165,8 +165,8 @@ class Metrics {
         getTiming: auditResults => {
           const ttiExt = auditResults['first-meaningful-paint'].extendedInfo;
           return safeGet(ttiExt, 'value.timings.onLoad');
-        }
-      }
+        },
+      },
     ];
   }
 

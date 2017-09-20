@@ -19,7 +19,7 @@ const Runner = require('../../runner.js');
 function generateMockArtifacts() {
   const computedArtifacts = Runner.instantiateComputedArtifacts();
   const mockArtifacts = Object.assign({}, computedArtifacts, {
-    Manifest: exampleManifest
+    Manifest: exampleManifest,
   });
   return mockArtifacts;
 }
@@ -98,7 +98,7 @@ describe('PWA: splash screen audit', () => {
     it('fails when a manifest contains no background color', () => {
       const artifacts = generateMockArtifacts();
       artifacts.Manifest = noUrlManifestParser(JSON.stringify({
-        background_color: 'no'
+        background_color: 'no',
       }));
 
       return SplashScreenAudit.audit(artifacts).then(result => {

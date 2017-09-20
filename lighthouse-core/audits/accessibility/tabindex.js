@@ -25,7 +25,7 @@ class TabIndex extends AxeAudit {
       helpText: 'A value greater than 0 implies an explicit navigation ordering. ' +
           'Although technically valid, this often creates frustrating experiences ' +
           'for users who rely on assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/2.2/tabindex?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

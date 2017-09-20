@@ -28,5 +28,5 @@ function cleanupJsDomGlobals() {
 
 module.exports = {
   setupJsDomGlobals,
-  cleanupJsDomGlobals
+  cleanupJsDomGlobals,
 };

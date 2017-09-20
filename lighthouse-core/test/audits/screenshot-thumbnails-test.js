@@ -46,7 +46,7 @@ describe('Screenshot thumbnails', () => {
 
   it('should extract thumbnails from a trace', () => {
     const artifacts = Object.assign({
-      traces: {defaultPass: pwaTrace}
+      traces: {defaultPass: pwaTrace},
     }, computedArtifacts);
 
     return ScreenshotThumbnailsAudit.audit(artifacts).then(results => {
@@ -67,7 +67,7 @@ describe('Screenshot thumbnails', () => {
 
   it('should scale the timeline to TTFI', () => {
     const artifacts = Object.assign({
-      traces: {defaultPass: pwaTrace}
+      traces: {defaultPass: pwaTrace},
     }, computedArtifacts);
 
     ttfiReturn = Promise.resolve({rawValue: 4000});
@@ -82,7 +82,7 @@ describe('Screenshot thumbnails', () => {
 
   it('should scale the timeline to TTCI', () => {
     const artifacts = Object.assign({
-      traces: {defaultPass: pwaTrace}
+      traces: {defaultPass: pwaTrace},
     }, computedArtifacts);
 
     ttfiReturn = Promise.resolve({rawValue: 8000});

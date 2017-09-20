@@ -125,7 +125,7 @@ class ExtensionConnection extends Connection {
     return new Promise((resolve, reject) => {
       const queryOpts = {
         active: true,
-        currentWindow: true
+        currentWindow: true,
       };
 
       chrome.tabs.query(queryOpts, (tabs => {

@@ -25,7 +25,7 @@ function createRiskPercentiles(percentiles, times) {
   return percentiles.map((percentile, index) => {
     return {
       percentile,
-      time: times[index]
+      time: times[index],
     };
   });
 }
@@ -217,7 +217,7 @@ describe('TracingProcessor lib', () => {
       oldFn = TracingProcessor._riskPercentiles;
       TracingProcessor._riskPercentiles = (durations, totalTime, percentiles, clippedLength) => {
         return {
-          durations, totalTime, percentiles, clippedLength
+          durations, totalTime, percentiles, clippedLength,
         };
       };
     });

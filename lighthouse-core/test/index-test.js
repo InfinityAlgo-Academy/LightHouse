@@ -73,12 +73,12 @@ describe('Module Tests', function() {
     return lighthouse('SOME_URL', {}, {
       passes: [{
         gatherers: [
-          'url'
-        ]
+          'url',
+        ],
       }],
       audits: [
-        'fluff'
-      ]
+        'fluff',
+      ],
     })
       .then(() => {
         throw new Error('Should not have resolved');
@@ -90,7 +90,7 @@ describe('Module Tests', function() {
   it('should return formatted audit results when given no categories', function() {
     const exampleUrl = 'https://example.com/';
     return lighthouse(exampleUrl, {
-      output: 'json'
+      output: 'json',
     }, {
       auditResults: [{
         score: true,
@@ -98,8 +98,8 @@ describe('Module Tests', function() {
         rawValue: true,
         name: 'viewport',
         category: 'Mobile Friendly',
-        description: 'HTML has a viewport <meta>'
-      }]
+        description: 'HTML has a viewport <meta>',
+      }],
     }).then(results => {
       assert.ok(results.lighthouseVersion);
       assert.ok(results.generatedTime);

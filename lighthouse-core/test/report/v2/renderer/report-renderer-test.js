@@ -36,7 +36,7 @@ describe('ReportRenderer V2', () => {
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
       return {
-        addListener: function() {}
+        addListener: function() {},
       };
     };
 

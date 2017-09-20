@@ -15,22 +15,22 @@ module.exports = [
     url: 'https://airhorner.com/',
     audits: {
       'is-on-https': {
-        score: true
+        score: true,
       },
       'redirects-http': {
-        score: true
+        score: true,
       },
       'service-worker': {
-        score: true
+        score: true,
       },
       'works-offline': {
-        score: true
+        score: true,
       },
       'viewport': {
-        score: true
+        score: true,
       },
       'without-javascript': {
-        score: true
+        score: true,
       },
       'load-fast-enough-for-pwa': {
         // Ignore speed test; just verify that it ran.
@@ -49,11 +49,11 @@ module.exports = [
                 {id: 'hasThemeColor', passing: true},
                 {id: 'hasShortName', passing: true},
                 {id: 'shortNameLength', passing: true},
-                {id: 'hasName', passing: true}
-              ]
-            }
-          }
-        }
+                {id: 'hasName', passing: true},
+              ],
+            },
+          },
+        },
       },
       'splash-screen': {
         score: true,
@@ -69,11 +69,11 @@ module.exports = [
                 {id: 'hasThemeColor', passing: true},
                 {id: 'hasShortName', passing: true},
                 {id: 'shortNameLength', passing: true},
-                {id: 'hasName', passing: true}
-              ]
-            }
-          }
-        }
+                {id: 'hasName', passing: true},
+              ],
+            },
+          },
+        },
       },
       'themed-omnibox': {
         score: true,
@@ -89,30 +89,30 @@ module.exports = [
                 {id: 'hasThemeColor', passing: true},
                 {id: 'hasShortName', passing: true},
                 {id: 'shortNameLength', passing: true},
-                {id: 'hasName', passing: true}
-              ]
-            }
-          }
-        }
+                {id: 'hasName', passing: true},
+              ],
+            },
+          },
+        },
       },
       'content-width': {
-        score: true
+        score: true,
       },
 
       // "manual" audits. Just verify in the results.
       'pwa-cross-browser': {
         score: false,
-        manual: true
+        manual: true,
       },
       'pwa-page-transitions': {
         score: false,
-        manual: true
+        manual: true,
       },
       'pwa-each-page-has-url': {
         score: false,
-        manual: true
-      }
-    }
+        manual: true,
+      },
+    },
   },
 
   {
@@ -120,22 +120,22 @@ module.exports = [
     url: 'https://www.chromestatus.com/features',
     audits: {
       'is-on-https': {
-        score: true
+        score: true,
       },
       'redirects-http': {
-        score: true
+        score: true,
       },
       'service-worker': {
-        score: true
+        score: true,
       },
       'works-offline': {
-        score: false
+        score: false,
       },
       'viewport': {
-        score: true
+        score: true,
       },
       'without-javascript': {
-        score: true
+        score: true,
       },
       'load-fast-enough-for-pwa': {
         // Ignore speed test; just verify that it ran.
@@ -154,11 +154,11 @@ module.exports = [
                 {id: 'hasThemeColor', passing: true},
                 {id: 'hasShortName', passing: true},
                 {id: 'shortNameLength', passing: false},
-                {id: 'hasName', passing: true}
-              ]
-            }
-          }
-        }
+                {id: 'hasName', passing: true},
+              ],
+            },
+          },
+        },
       },
       'splash-screen': {
         score: true,
@@ -174,11 +174,11 @@ module.exports = [
                 {id: 'hasThemeColor', passing: true},
                 {id: 'hasShortName', passing: true},
                 {id: 'shortNameLength', passing: false},
-                {id: 'hasName', passing: true}
-              ]
-            }
-          }
-        }
+                {id: 'hasName', passing: true},
+              ],
+            },
+          },
+        },
       },
       'themed-omnibox': {
         score: true,
@@ -194,30 +194,30 @@ module.exports = [
                 {id: 'hasThemeColor', passing: true},
                 {id: 'hasShortName', passing: true},
                 {id: 'shortNameLength', passing: false},
-                {id: 'hasName', passing: true}
-              ]
-            }
-          }
-        }
+                {id: 'hasName', passing: true},
+              ],
+            },
+          },
+        },
       },
       'content-width': {
-        score: true
+        score: true,
       },
 
       // "manual" audits. Just verify in the results.
       'pwa-cross-browser': {
         score: false,
-        manual: true
+        manual: true,
       },
       'pwa-page-transitions': {
         score: false,
-        manual: true
+        manual: true,
       },
       'pwa-each-page-has-url': {
         score: false,
-        manual: true
-      }
-    }
+        manual: true,
+      },
+    },
   },
 
   {
@@ -225,24 +225,24 @@ module.exports = [
     url: 'https://jakearchibald.github.io/svgomg/',
     audits: {
       'is-on-https': {
-        score: true
+        score: true,
       },
       'redirects-http': {
         // Note: relies on JS redirect.
         // see https://github.com/GoogleChrome/lighthouse/issues/2383
-        score: false
+        score: false,
       },
       'service-worker': {
-        score: true
+        score: true,
       },
       'works-offline': {
-        score: true
+        score: true,
       },
       'viewport': {
-        score: true
+        score: true,
       },
       'without-javascript': {
-        score: true
+        score: true,
       },
       'load-fast-enough-for-pwa': {
         // Ignore speed test; just verify that it ran.
@@ -261,11 +261,11 @@ module.exports = [
                 {id: 'hasThemeColor', passing: true},
                 {id: 'hasShortName', passing: false},
                 {id: 'shortNameLength', passing: false},
-                {id: 'hasName', passing: true}
-              ]
-            }
-          }
-        }
+                {id: 'hasName', passing: true},
+              ],
+            },
+          },
+        },
       },
       'splash-screen': {
         score: true,
@@ -281,11 +281,11 @@ module.exports = [
                 {id: 'hasThemeColor', passing: true},
                 {id: 'hasShortName', passing: false},
                 {id: 'shortNameLength', passing: false},
-                {id: 'hasName', passing: true}
-              ]
-            }
-          }
-        }
+                {id: 'hasName', passing: true},
+              ],
+            },
+          },
+        },
       },
       'themed-omnibox': {
         score: true,
@@ -301,30 +301,30 @@ module.exports = [
                 {id: 'hasThemeColor', passing: true},
                 {id: 'hasShortName', passing: false},
                 {id: 'shortNameLength', passing: false},
-                {id: 'hasName', passing: true}
-              ]
-            }
-          }
-        }
+                {id: 'hasName', passing: true},
+              ],
+            },
+          },
+        },
       },
       'content-width': {
-        score: true
+        score: true,
       },
 
       // "manual" audits. Just verify in the results.
       'pwa-cross-browser': {
         score: false,
-        manual: true
+        manual: true,
       },
       'pwa-page-transitions': {
         score: false,
-        manual: true
+        manual: true,
       },
       'pwa-each-page-has-url': {
         score: false,
-        manual: true
-      }
-    }
+        manual: true,
+      },
+    },
   },
 
   // Disabled due to flakiness of site.
@@ -439,22 +439,22 @@ module.exports = [
     url: 'https://pwa.rocks/',
     audits: {
       'is-on-https': {
-        score: true
+        score: true,
       },
       'redirects-http': {
-        score: true
+        score: true,
       },
       'service-worker': {
-        score: true
+        score: true,
       },
       'works-offline': {
-        score: true
+        score: true,
       },
       'viewport': {
-        score: true
+        score: true,
       },
       'without-javascript': {
-        score: true
+        score: true,
       },
       'load-fast-enough-for-pwa': {
         // Ignore speed test; just verify that it ran .
@@ -473,11 +473,11 @@ module.exports = [
                 {id: 'hasThemeColor', passing: true},
                 {id: 'hasShortName', passing: true},
                 {id: 'shortNameLength', passing: true},
-                {id: 'hasName', passing: true}
-              ]
-            }
-          }
-        }
+                {id: 'hasName', passing: true},
+              ],
+            },
+          },
+        },
       },
       'splash-screen': {
         score: false,
@@ -493,11 +493,11 @@ module.exports = [
                 {id: 'hasThemeColor', passing: true},
                 {id: 'hasShortName', passing: true},
                 {id: 'shortNameLength', passing: true},
-                {id: 'hasName', passing: true}
-              ]
-            }
-          }
-        }
+                {id: 'hasName', passing: true},
+              ],
+            },
+          },
+        },
       },
       'themed-omnibox': {
         score: false,
@@ -513,29 +513,29 @@ module.exports = [
                 {id: 'hasThemeColor', passing: true},
                 {id: 'hasShortName', passing: true},
                 {id: 'shortNameLength', passing: true},
-                {id: 'hasName', passing: true}
-              ]
-            }
-          }
-        }
+                {id: 'hasName', passing: true},
+              ],
+            },
+          },
+        },
       },
       'content-width': {
-        score: true
+        score: true,
       },
 
       // "manual" audits. Just verify in the results.
       'pwa-cross-browser': {
         score: false,
-        manual: true
+        manual: true,
       },
       'pwa-page-transitions': {
         score: false,
-        manual: true
+        manual: true,
       },
       'pwa-each-page-has-url': {
         score: false,
-        manual: true
-      }
-    }
-  }
+        manual: true,
+      },
+    },
+  },
 ];

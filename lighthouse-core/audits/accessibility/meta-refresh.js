@@ -26,7 +26,7 @@ class MetaRefresh extends AxeAudit {
           'focus back to the top of the page. This may create a frustrating or ' +
           'confusing experience. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/meta-refresh?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

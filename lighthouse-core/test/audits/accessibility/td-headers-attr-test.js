@@ -17,9 +17,9 @@ describe('Accessibility: td-headers-attr audit', () => {
         violations: [{
           id: 'td-headers-attr',
           nodes: [],
-          help: 'http://example.com/'
-        }]
-      }
+          help: 'http://example.com/',
+        }],
+      },
     };
 
     const output = Audit.audit(artifacts);
@@ -32,9 +32,9 @@ describe('Accessibility: td-headers-attr audit', () => {
         violations: [{
           id: 'td-headers-attr',
           nodes: [{}],
-          help: 'http://example.com/'
-        }]
-      }
+          help: 'http://example.com/',
+        }],
+      },
     };
 
     const output = Audit.audit(artifacts);

@@ -63,17 +63,17 @@ class Charts {
         showgrid: false,
         zeroline: false,
         tickangle: 60,
-        showticklabels: false
+        showticklabels: false,
       },
       yaxis: {
         zeroline: true,
-        rangemode: 'tozero'
+        rangemode: 'tozero',
       },
       showlegend: false,
       titlefont: {
         family: `"Roboto", -apple-system, BlinkMacSystemFont, sans-serif`,
-        size: 14
-      }
+        size: 14,
+      },
     };
   }
 
@@ -86,7 +86,7 @@ class Charts {
             x: batchName,
             higher: Utils.calculatePercentile(batch.map(metric => metric.timing), 0.8),
             median: Utils.calculatePercentile(batch.map(metric => metric.timing), 0.5),
-            lower: Utils.calculatePercentile(batch.map(metric => metric.timing), 0.2)
+            lower: Utils.calculatePercentile(batch.map(metric => metric.timing), 0.2),
           };
         })
         .slice(-1 * numberOfBatchesToShow);
@@ -96,7 +96,7 @@ class Charts {
         y: percentiles.map(r => r.median),
         type: 'scatter',
         mode: 'line',
-        name: 'median'
+        name: 'median',
       };
 
       const errorBands = {
@@ -107,7 +107,7 @@ class Charts {
         line: {color: 'transparent'},
         name: 'error bands',
         showlegend: false,
-        type: 'scatter'
+        type: 'scatter',
       };
       this._renderPreviewChart([median, errorBands], metricName);
     }
@@ -169,7 +169,7 @@ class Charts {
       data,
       Object.assign({title}, this._layout, {
         width: document.body.clientWidth - 100,
-        height: 500
+        height: 500,
       })
     );
   }
@@ -234,7 +234,7 @@ const Utils = {
     const weight = index % 1;
 
     return sorted[lower] * (1 - weight) + sorted[upper] * weight;
-  }
+  },
 };
 
 function main() {

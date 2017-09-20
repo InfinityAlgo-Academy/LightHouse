@@ -27,11 +27,11 @@ describe('Manifest gatherer', () => {
           return Promise.resolve({
             data: '{}',
             errors: [],
-            url: EXAMPLE_MANIFEST_URL
+            url: EXAMPLE_MANIFEST_URL,
           });
-        }
+        },
       },
-      url: EXAMPLE_DOC_URL
+      url: EXAMPLE_DOC_URL,
     }).then(artifact => {
       assert.ok(typeof artifact === 'object');
     });
@@ -51,11 +51,11 @@ describe('Manifest gatherer', () => {
             return Promise.resolve({
               data,
               errors: [],
-              url: EXAMPLE_MANIFEST_URL
+              url: EXAMPLE_MANIFEST_URL,
             });
-          }
+          },
         },
-        url: EXAMPLE_DOC_URL
+        url: EXAMPLE_DOC_URL,
       };
     };
 
@@ -86,8 +86,8 @@ describe('Manifest gatherer', () => {
           return Promise.reject(
             new Error(`Unable to retrieve manifest at ${EXAMPLE_MANIFEST_URL}.`)
           );
-        }
-      }
+        },
+      },
     }).then(
       _ => assert.ok(false),
       err => assert.ok(err.message.includes(EXAMPLE_MANIFEST_URL)));
@@ -98,8 +98,8 @@ describe('Manifest gatherer', () => {
       driver: {
         getAppManifest() {
           return Promise.resolve(null);
-        }
-      }
+        },
+      },
     }).then(artifact => {
       assert.strictEqual(artifact, null);
     });
@@ -107,7 +107,7 @@ describe('Manifest gatherer', () => {
 
   it('creates a manifest object for valid manifest content', () => {
     const data = JSON.stringify({
-      name: 'App'
+      name: 'App',
     });
     return manifestGather.afterPass({
       driver: {
@@ -115,11 +115,11 @@ describe('Manifest gatherer', () => {
           return Promise.resolve({
             errors: [],
             data,
-            url: EXAMPLE_MANIFEST_URL
+            url: EXAMPLE_MANIFEST_URL,
           });
-        }
+        },
       },
-      url: EXAMPLE_DOC_URL
+      url: EXAMPLE_DOC_URL,
     }).then(artifact => {
       assert.ok(typeof artifact.value === 'object');
       assert.strictEqual(artifact.debugString, undefined);

@@ -19,10 +19,10 @@ module.exports = [
           value: {
             wastedKb: 39,
             results: {
-              length: 2
-            }
-          }
-        }
+              length: 2,
+            },
+          },
+        },
       },
       'unused-javascript': {
         score: '<100',
@@ -41,41 +41,41 @@ module.exports = [
         extendedInfo: {
           value: {
             results: {
-              length: 3
-            }
-          }
-        }
+              length: 3,
+            },
+          },
+        },
       },
       'uses-webp-images': {
         score: '<100',
         extendedInfo: {
           value: {
             results: {
-              length: 4
-            }
-          }
-        }
+              length: 4,
+            },
+          },
+        },
       },
       'uses-optimized-images': {
         score: '<100',
         extendedInfo: {
           value: {
             results: {
-              length: 1
-            }
-          }
-        }
+              length: 1,
+            },
+          },
+        },
       },
       'uses-responsive-images': {
         score: '<100',
         extendedInfo: {
           value: {
             results: {
-              length: 3
-            }
-          }
-        }
-      }
-    }
+              length: 3,
+            },
+          },
+        },
+      },
+    },
   },
 ];

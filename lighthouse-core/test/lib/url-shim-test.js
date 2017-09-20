@@ -194,7 +194,7 @@ describe('URL Shim', () => {
       const equalPairs = [
         ['https://example.com/', 'https://example.com/'],
         ['https://example.com/', 'https://example.com/#/login?_k=dt915a'],
-        ['https://example.com/', 'https://example.com#anchor']
+        ['https://example.com/', 'https://example.com#anchor'],
       ];
       equalPairs.forEach(pair => assert.ok(URL.equalWithExcludedFragments(...pair)));
     });
@@ -204,7 +204,7 @@ describe('URL Shim', () => {
         ['https://example.com/', 'https://www.example.com/'],
         ['https://example.com/', 'http://example.com/'],
         ['https://example.com/#/login?_k=dt915a', 'https://example.com/index.html#/login?_k=dt915a'],
-        ['https://example.com#anchor', 'https://example.com?t=1#anchor']
+        ['https://example.com#anchor', 'https://example.com?t=1#anchor'],
       ];
       unequalPairs.forEach(pair => assert.ok(!URL.equalWithExcludedFragments(...pair)));
     });

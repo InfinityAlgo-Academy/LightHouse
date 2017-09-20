@@ -22,8 +22,8 @@ function runA11yChecks() {
       type: 'tag',
       values: [
         'wcag2a',
-        'wcag2aa'
-      ]
+        'wcag2aa',
+      ],
     },
     rules: {
       'tabindex': {enabled: true},
@@ -31,8 +31,8 @@ function runA11yChecks() {
       'td-has-header': {enabled: true},
       'area-alt': {enabled: false},
       'blink': {enabled: false},
-      'server-side-image-map': {enabled: false}
-    }
+      'server-side-image-map': {enabled: false},
+    },
   }).then(axeResult => {
     // Augment the node objects with outerHTML snippet & custom path string
     axeResult.violations.forEach(v => v.nodes.forEach(node => {

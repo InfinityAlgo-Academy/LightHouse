@@ -13,7 +13,7 @@ const assert = require('assert');
 describe('Appcache manifest audit', () => {
   it('fails when <html> contains a manifest attribute', () => {
     const auditResult = AppCacheManifestAttrAudit.audit({
-      AppCacheManifest: 'manifest-name'
+      AppCacheManifest: 'manifest-name',
     });
     assert.equal(auditResult.rawValue, false);
     assert.ok(auditResult.debugString);
@@ -21,7 +21,7 @@ describe('Appcache manifest audit', () => {
 
   it('passes when <html> does not contain a manifest attribute', () => {
     assert.equal(AppCacheManifestAttrAudit.audit({
-      AppCacheManifest: null
+      AppCacheManifest: null,
     }).rawValue, true);
   });
 });

@@ -20,7 +20,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       description: 'Unused JavaScript',
       informative: true,
       helpText: 'Remove unused JavaScript to reduce bytes consumed by network activity.',
-      requiredArtifacts: ['JsUsage', 'devtoolsLogs']
+      requiredArtifacts: ['JsUsage', 'devtoolsLogs'],
     };
   }
 

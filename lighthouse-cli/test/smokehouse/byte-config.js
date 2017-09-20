@@ -18,6 +18,6 @@ module.exports = {
       'uses-responsive-images',
       'unused-css-rules',
       'unused-javascript',
-    ]
-  }
+    ],
+  },
 };

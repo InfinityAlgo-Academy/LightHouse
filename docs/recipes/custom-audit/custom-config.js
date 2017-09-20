@@ -13,13 +13,13 @@ module.exports = {
   passes: [{
     passName: 'defaultPass',
     gatherers: [
-      'searchable-gatherer'
+      'searchable-gatherer',
     ],
   }],
 
   // 3. Add custom audit to the list of audits 'lighthouse:default' will run.
   audits: [
-    'searchable-audit'
+    'searchable-audit',
   ],
 
   // 4. Create a new 'My site metrics' section in the default report for our results.
@@ -29,8 +29,8 @@ module.exports = {
       description: 'Metrics for our super awesome site',
       audits: [
         // When we add more custom audits, `weight` controls how they're averaged together.
-        {id: 'searchable-audit', weight: 1}
-      ]
-    }
-  }
+        {id: 'searchable-audit', weight: 1},
+      ],
+    },
+  },
 };

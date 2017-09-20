@@ -25,7 +25,7 @@ class LoadAudit extends Audit {
           ' box is initialized and ready to search.',
 
       // The name of the custom gatherer class that provides input to this audit.
-      requiredArtifacts: ['TimeToSearchable']
+      requiredArtifacts: ['TimeToSearchable'],
     };
   }
 
@@ -38,7 +38,7 @@ class LoadAudit extends Audit {
 
     return {
       rawValue: loadMetrics.searchableTime,
-      score: belowThreshold
+      score: belowThreshold,
     };
   }
 }

@@ -25,7 +25,7 @@ class InputImageAlt extends AxeAudit {
       helpText: 'When an image is being used as an `<input>` button, providing alternative text ' +
           'can help screen reader users understand the purpose of the button. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/input-image-alt?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

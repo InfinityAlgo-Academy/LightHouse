@@ -12,7 +12,7 @@ const assert = require('assert');
 function generateRecord(url = 'https://google.com/logo.png', mimeType = 'image/png') {
   return {
     url,
-    mimeType
+    mimeType,
   };
 }
 
@@ -34,8 +34,8 @@ describe('Images: aspect-ratio audit', () => {
             {naturalWidth: data.naturalSize[0], naturalHeight: data.naturalSize[1]},
             generateRecord(),
             data.props
-          )
-        ]
+          ),
+        ],
       });
 
       assert.equal(result.rawValue, data.listed ? 1 : 0);
@@ -48,8 +48,8 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [200, 200],
     props: {
       isCss: false,
-      usesObjectFit: false
-    }
+      usesObjectFit: false,
+    },
   });
 
   testImage('is a css image and much larger than natural aspect ratio', {
@@ -58,8 +58,8 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [200, 200],
     props: {
       isCss: true,
-      usesObjectFit: false
-    }
+      usesObjectFit: false,
+    },
   });
 
   testImage('is larger than natural aspect ratio', {
@@ -68,8 +68,8 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [200, 200],
     props: {
       isCss: false,
-      usesObjectFit: false
-    }
+      usesObjectFit: false,
+    },
   });
 
   testImage('uses object-fit and is much smaller than natural aspect ratio', {
@@ -78,8 +78,8 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [800, 500],
     props: {
       isCss: false,
-      usesObjectFit: true
-    }
+      usesObjectFit: true,
+    },
   });
 
   testImage('is much smaller than natural aspect ratio', {
@@ -88,8 +88,8 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [800, 500],
     props: {
       isCss: false,
-      usesObjectFit: false
-    }
+      usesObjectFit: false,
+    },
   });
 
   testImage('is smaller than natural aspect ratio', {
@@ -98,8 +98,8 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [400, 300],
     props: {
       isCss: false,
-      usesObjectFit: false
-    }
+      usesObjectFit: false,
+    },
   });
 
   testImage('aspect ratios match', {
@@ -108,8 +108,8 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [300, 300],
     props: {
       isCss: false,
-      usesObjectFit: false
-    }
+      usesObjectFit: false,
+    },
   });
 
   testImage('has invalid sizing information', {
@@ -118,7 +118,7 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [100, 100],
     props: {
       isCss: false,
-      usesObjectFit: false
-    }
+      usesObjectFit: false,
+    },
   });
 });

@@ -24,10 +24,10 @@ describe('Theme Color gatherer', () => {
           return Promise.resolve({
             getAttribute() {
               return '#288A76';
-            }
+            },
           });
-        }
-      }
+        },
+      },
     }).then(artifact => {
       assert.equal(artifact, '#288A76');
     });

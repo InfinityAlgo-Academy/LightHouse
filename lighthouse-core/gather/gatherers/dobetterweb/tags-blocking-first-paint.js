@@ -51,7 +51,7 @@ function collectTagsThatBlockFirstPaint() {
             href: tag.href,
             rel: tag.rel,
             media: tag.media,
-            disabled: tag.disabled
+            disabled: tag.disabled,
           };
         });
       resolve(tagList);
@@ -82,7 +82,7 @@ function filteredAndIndexedByUrl(networkRecords) {
         isLinkPreload: record.isLinkPreload,
         transferSize: record._transferSize,
         startTime: record._startTime,
-        endTime: record._endTime
+        endTime: record._endTime,
       };
     }
 

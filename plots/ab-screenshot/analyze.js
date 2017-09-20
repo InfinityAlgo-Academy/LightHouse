@@ -39,7 +39,7 @@ function main() {
   const aggregatedScreenshots = {
     data: aggregate(outPathA, outPathB),
     a: outPathA,
-    b: outPathB
+    b: outPathB,
   };
 
   if (!utils.isDir(constants.OUT_PATH)) {
@@ -140,12 +140,12 @@ function analyzeSingleRunScreenshots(runPath) {
   const screenshotsPath = path.resolve(runPath, constants.SCREENSHOTS_FILENAME);
   const screenshots = JSON.parse(fs.readFileSync(screenshotsPath)).map(screenshot => ({
     timing: Math.round(screenshot.timestamp - navStartTimestamp),
-    datauri: screenshot.datauri
+    datauri: screenshot.datauri,
   }));
 
   const results = {
     runName: runPath,
-    screenshots
+    screenshots,
   };
 
   markScreenshots(results, 'isFCP', fcpTiming);

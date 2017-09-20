@@ -19,7 +19,7 @@ describe('Resources are fetched over http/2', () => {
     return UsesHTTP2Audit.audit({
       URL: {finalUrl: URL},
       devtoolsLogs: {[UsesHTTP2Audit.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords)
+      requestNetworkRecords: () => Promise.resolve(networkRecords),
     }).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
       assert.ok(auditResult.displayValue.match('4 requests were not'));
@@ -35,7 +35,7 @@ describe('Resources are fetched over http/2', () => {
     return UsesHTTP2Audit.audit({
       URL: {finalUrl: URL},
       devtoolsLogs: {[UsesHTTP2Audit.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(entryWithHTTP1)
+      requestNetworkRecords: () => Promise.resolve(entryWithHTTP1),
     }).then(auditResult => {
       assert.ok(auditResult.displayValue.match('1 request was not'));
     });
@@ -45,7 +45,7 @@ describe('Resources are fetched over http/2', () => {
     return UsesHTTP2Audit.audit({
       URL: {finalUrl: URL},
       devtoolsLogs: {[UsesHTTP2Audit.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(h2Records)
+      requestNetworkRecords: () => Promise.resolve(h2Records),
     }).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
       assert.ok(auditResult.displayValue === '');

@@ -24,8 +24,8 @@ function generateScript(url, ranges, transferSize = 1000) {
           startOffset: range[0],
           endOffset: range[1],
           count: range[2] ? 1 : 0,
-        }
-      ]
+        },
+      ],
     };
   });
 

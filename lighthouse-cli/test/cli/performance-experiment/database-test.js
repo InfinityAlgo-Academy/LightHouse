@@ -23,34 +23,34 @@ describe.skip('Perf-X Database', function() {
       {
         flags: {
           'blockedUrlPatterns': ['.woff2', '.jpg'],
-          'disableNetworkThrottling': false
+          'disableNetworkThrottling': false,
         },
-        results: sampleResults
+        results: sampleResults,
       },
       {
         flags: {
           'blockedUrlPatterns': ['.woff'],
           'disableCpuThrottling': true,
-          'deepReference': {'anObject': {'anArray': ['anElement', 'anotherElement']}}
+          'deepReference': {'anObject': {'anArray': ['anElement', 'anotherElement']}},
         },
         results: {
           generatedTime: new Date(2015, 6, 27, 0, 12, 55, 60).toJSON(),
           url: 'http://google.com/',
-          else: 'someData'
-        }
+          else: 'someData',
+        },
       },
       {
         flags: {
           'blockedUrlPatterns': ['.woff', 'cat.jpg', '*'],
           'disableCpuThrottling': false,
-          'disableDeviceEmulation': true
+          'disableDeviceEmulation': true,
         },
         results: {
           'generatedTime': new Date(2014, 5, 1, 23, 56, 54, 99).toJSON(),
           'url': 'http://mdn.com/',
           'audits': [{'is-on-https': {'score': true}}],
-        }
-      }
+        },
+      },
     ];
 
     dataSets.forEach(dataSet => {
@@ -67,7 +67,7 @@ describe.skip('Perf-X Database', function() {
     const flags = {
       'blockedUrlPatterns': ['.woff', '.jpg', 'random'],
       'disableCpuThrottling': false,
-      'randomFlag': 'randomString'
+      'randomFlag': 'randomString',
     };
     const results = JSON.parse(JSON.stringify(sampleResults));
 
@@ -90,20 +90,20 @@ describe.skip('Perf-X Database', function() {
   it('returns correct timestamps', () => {
     const dataSets = [
       {
-        results: sampleResults
+        results: sampleResults,
       },
       {
         results: {
           generatedTime: new Date(2015, 6, 12, 0, 6, 30, 60).toJSON(),
           url: 'http://google.com/',
-        }
+        },
       },
       {
         results: {
           'generatedTime': new Date(2014, 2, 21, 11, 12, 33, 46).toJSON(),
           'url': 'http://mdn.com/',
-        }
-      }
+        },
+      },
     ];
 
     dataSets.forEach(dataSet => {
@@ -122,22 +122,22 @@ describe.skip('Perf-X Database', function() {
       {
         flags: {
           'blockedUrlPatterns': ['.css', '.jpg'],
-          'disableDeviceEmulation': false
+          'disableDeviceEmulation': false,
         },
-        results: sampleResults
+        results: sampleResults,
       },
       {
         flags: {
           'blockedUrlPatterns': ['.js', '*'],
           'disableCpuThrottling': true,
-          'disableNetworkThrottling': true
+          'disableNetworkThrottling': true,
         },
         results: {
           'generatedTime': new Date(2015, 7, 23, 23, 56, 54, 99).toJSON(),
           'url': 'http://w3school.com/',
           'audits': [{'is-on-https': {'score': true}}],
-        }
-      }
+        },
+      },
     ];
 
     dataSets.forEach(dataSet => {

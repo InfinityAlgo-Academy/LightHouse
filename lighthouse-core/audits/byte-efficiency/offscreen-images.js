@@ -31,7 +31,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       helpText: 'Consider lazy-loading offscreen images to improve page load speed ' +
         'and time to interactive. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).',
-      requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'traces', 'devtoolsLogs']
+      requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'traces', 'devtoolsLogs'],
     };
   }
 
@@ -75,7 +75,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       preview: {
         type: 'thumbnail',
         url: image.networkRecord.url,
-        mimeType: image.networkRecord.mimeType
+        mimeType: image.networkRecord.mimeType,
       },
       requestStartTime: image.networkRecord.startTime,
       totalBytes,

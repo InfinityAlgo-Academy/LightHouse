@@ -47,7 +47,7 @@ function collectImageElementInfo() {
       isCss: false,
       isPicture: element.parentElement.tagName === 'PICTURE',
       usesObjectFit: computedStyle.getPropertyValue('object-fit') === 'cover'
-      || computedStyle.getPropertyValue('object-fit') === 'contain'
+      || computedStyle.getPropertyValue('object-fit') === 'contain',
     };
   });
 
@@ -83,7 +83,7 @@ function collectImageElementInfo() {
       naturalHeight: Number.MAX_VALUE,
       isCss: true,
       isPicture: false,
-      usesObjectFit: false
+      usesObjectFit: false,
     });
 
     return images;
@@ -100,7 +100,7 @@ function determineNaturalSize(url) {
     img.addEventListener('load', () => {
       resolve({
         naturalWidth: img.naturalWidth,
-        naturalHeight: img.naturalHeight
+        naturalHeight: img.naturalHeight,
       });
     });
 
@@ -132,7 +132,7 @@ class ImageUsage extends Gatherer {
           startTime: record.startTime,
           endTime: record.endTime,
           responseReceivedTime: record.responseReceivedTime,
-          mimeType: record._mimeType
+          mimeType: record._mimeType,
         };
       }
 

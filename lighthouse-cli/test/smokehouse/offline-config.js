@@ -30,6 +30,6 @@ module.exports = {
       'label',
       'tabindex',
       'content-width',
-    ]
-  }
+    ],
+  },
 };

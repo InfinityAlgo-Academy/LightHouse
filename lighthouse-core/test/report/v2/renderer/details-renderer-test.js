@@ -80,8 +80,8 @@ describe('DetailsRenderer', () => {
         items: [
           {title: 'Total DOM Nodes', value: 3500, target: '1,500 nodes'},
           {title: 'DOM Depth', value: 10, snippet: 'snippet'},
-          {title: 'Maximum Children', value: 20, snippet: 'snippet2', target: 20}
-        ]
+          {title: 'Maximum Children', value: 20, snippet: 'snippet2', target: 20},
+        ],
       };
 
       const details = renderer._renderCards(list);
@@ -108,7 +108,7 @@ describe('DetailsRenderer', () => {
         text: 'code snippet',
         lineNumber: 123,
         source: 'deprecation',
-        url: 'https://example.com/feature'
+        url: 'https://example.com/feature',
       });
 
       assert.ok(el.localName === 'pre');
@@ -190,7 +190,7 @@ describe('DetailsRenderer', () => {
       const el = renderer.render({
         type: 'link',
         text: linkText,
-        url: linkUrl
+        url: linkUrl,
       });
 
       assert.equal(el.localName, 'a');
@@ -206,7 +206,7 @@ describe('DetailsRenderer', () => {
       const el = renderer.render({
         type: 'link',
         text: linkText,
-        url: linkUrl
+        url: linkUrl,
       });
 
       assert.equal(el.localName, 'div');

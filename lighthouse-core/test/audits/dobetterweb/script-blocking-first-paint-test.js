@@ -28,26 +28,26 @@ describe('Script Block First Paint audit', () => {
           tag: scriptDetails,
           transferSize: 100,
           startTime: 1,
-          endTime: 1.1
+          endTime: 1.1,
         },
         {
           tag: scriptDetails,
           transferSize: 100,
           startTime: 15, // well after FCP and should be ignored
-          endTime: 15.1
+          endTime: 15.1,
         },
         {
           tag: scriptDetails,
           transferSize: 50,
           startTime: .95,
-          endTime: 1
+          endTime: 1,
         },
         {
           tag: {tagName: 'LINK'},
           transferSize: 110,
-          spendTime: 110
-        }
-      ]
+          spendTime: 110,
+        },
+      ],
     }).then(auditResult => {
       assert.equal(auditResult.rawValue, 150);
       assert.equal(auditResult.displayValue, `2 resources delayed first paint by 150${NBSP}ms`);
@@ -63,7 +63,7 @@ describe('Script Block First Paint audit', () => {
     return ScriptBlockingFirstPaintAudit.audit({
       traces: {},
       requestTraceOfTab: () => Promise.resolve({timestamps: {}}),
-      TagsBlockingFirstPaint: []
+      TagsBlockingFirstPaint: [],
     }).then(auditResult => {
       assert.equal(auditResult.rawValue, 0);
       assert.equal(auditResult.details.items.length, 0);

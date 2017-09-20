@@ -18,7 +18,7 @@ const SCREENSHOTS_FILENAME = 'assets-0.screenshots.json';
 const GENERATED_RESULTS_FILENAME = 'generated-results.js';
 
 const TIMING_NAME_MAP = {
-  'total': 'Lighthouse Execution'
+  'total': 'Lighthouse Execution',
 };
 
 module.exports = {

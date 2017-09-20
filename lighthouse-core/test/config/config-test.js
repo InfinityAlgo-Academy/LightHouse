@@ -24,7 +24,7 @@ describe('Config', () => {
 
   it('returns new object', () => {
     const config = {
-      audits: ['is-on-https']
+      audits: ['is-on-https'],
     };
     const newConfig = new Config(config);
     assert.notEqual(config, newConfig);
@@ -40,16 +40,16 @@ describe('Config', () => {
           description: 'My audit',
           failureDescription: 'My failing audit',
           helpText: '.',
-          requiredArtifacts: []
+          requiredArtifacts: [],
         };
       }
       static audit() {}
     }
     const config = {
       passes: [{
-        gatherers: [MyGatherer]
+        gatherers: [MyGatherer],
       }],
-      audits: [MyAudit]
+      audits: [MyAudit],
     };
     const newConfig = new Config(config);
     assert.equal(MyGatherer, newConfig.passes[0].gatherers[0]);
@@ -67,12 +67,12 @@ describe('Config', () => {
     const configJson = {
       passes: [{
         passName: unlikelyPassName,
-        gatherers: []
+        gatherers: [],
       }, {
         passName: unlikelyPassName,
-        gatherers: []
+        gatherers: [],
       }],
-      audits: []
+      audits: [],
     };
 
     assert.throws(_ => new Config(configJson), /unique/);
@@ -81,11 +81,11 @@ describe('Config', () => {
   it('warns when traced twice with no passNames specified', () => {
     const configJson = {
       passes: [{
-        gatherers: []
+        gatherers: [],
       }, {
-        gatherers: []
+        gatherers: [],
       }],
-      audits: []
+      audits: [],
     };
 
     assert.throws(_ => new Config(configJson), /requires a passName/);
@@ -94,11 +94,11 @@ describe('Config', () => {
   it('throws for unknown gatherers', () => {
     const config = {
       passes: [{
-        gatherers: ['fuzz']
+        gatherers: ['fuzz'],
       }],
       audits: [
-        'is-on-https'
-      ]
+        'is-on-https',
+      ],
     };
 
     return assert.throws(_ => new Config(config),
@@ -110,10 +110,10 @@ describe('Config', () => {
       passes: [{
         gatherers: [
           'url',
-          'viewport'
-        ]
+          'viewport',
+        ],
       }],
-      audits: ['is-on-https']
+      audits: ['is-on-https'],
     };
 
     const _ = new Config(configJSON);
@@ -129,9 +129,9 @@ describe('Config', () => {
       name: 'Test Audit',
       details: {
         items: {
-          a: 1
-        }
-      }
+          a: 1,
+        },
+      },
     }];
 
     const config = new Config(configJSON);
@@ -143,7 +143,7 @@ describe('Config', () => {
 
   it('expands audits', () => {
     const config = new Config({
-      audits: ['user-timings']
+      audits: ['user-timings'],
     });
 
     assert.ok(Array.isArray(config.audits));
@@ -153,7 +153,7 @@ describe('Config', () => {
 
   it('throws when an audit is not found', () => {
     return assert.throws(_ => new Config({
-      audits: ['/fake-path/non-existent-audit']
+      audits: ['/fake-path/non-existent-audit'],
     }), /locate audit/);
   });
 
@@ -161,7 +161,7 @@ describe('Config', () => {
     const configPath = '../../config/default.js';
 
     return assert.throws(_ => new Config({
-      audits: []
+      audits: [],
     }, configPath), /absolute path/);
   });
 
@@ -169,14 +169,14 @@ describe('Config', () => {
     const configPath = __filename;
 
     return assert.doesNotThrow(_ => new Config({
-      audits: ['../fixtures/valid-custom-audit']
+      audits: ['../fixtures/valid-custom-audit'],
     }, configPath));
   });
 
   it('loads an audit from node_modules/', () => {
     return assert.throws(_ => new Config({
       // Use a lighthouse dep as a stand in for a module.
-      audits: ['mocha']
+      audits: ['mocha'],
     }), function(err) {
       // Should throw an audit validation error, but *not* an audit not found error.
       return !/locate audit/.test(err) && /audit\(\) method/.test(err);
@@ -191,13 +191,13 @@ describe('Config', () => {
     const relativePath = path.relative(process.cwd(), absoluteAuditPath);
 
     return assert.doesNotThrow(_ => new Config({
-      audits: [relativePath]
+      audits: [relativePath],
     }));
   });
 
   it('throws but not for missing audit when audit has a dependency error', () => {
     return assert.throws(_ => new Config({
-      audits: [path.resolve(__dirname, '../fixtures/invalid-audits/require-error.js')]
+      audits: [path.resolve(__dirname, '../fixtures/invalid-audits/require-error.js')],
     }), function(err) {
       // We're expecting not to find parent class Audit, so only reject on our
       // own custom locate audit error, not the usual MODULE_NOT_FOUND.
@@ -208,27 +208,27 @@ describe('Config', () => {
   it('throws when it finds invalid audits', () => {
     const basePath = path.resolve(__dirname, '../fixtures/invalid-audits');
     assert.throws(_ => new Config({
-      audits: [basePath + '/missing-audit']
+      audits: [basePath + '/missing-audit'],
     }), /audit\(\) method/);
 
     assert.throws(_ => new Config({
-      audits: [basePath + '/missing-category']
+      audits: [basePath + '/missing-category'],
     }), /meta.category property/);
 
     assert.throws(_ => new Config({
-      audits: [basePath + '/missing-name']
+      audits: [basePath + '/missing-name'],
     }), /meta.name property/);
 
     assert.throws(_ => new Config({
-      audits: [basePath + '/missing-description']
+      audits: [basePath + '/missing-description'],
     }), /meta.description property/);
 
     assert.throws(_ => new Config({
-      audits: [basePath + '/missing-help-text']
+      audits: [basePath + '/missing-help-text'],
     }), /meta.helpText property/);
 
     assert.throws(_ => new Config({
-      audits: [basePath + '/missing-required-artifacts']
+      audits: [basePath + '/missing-required-artifacts'],
     }), /meta.requiredArtifacts property/);
   });
 
@@ -238,10 +238,10 @@ describe('Config', () => {
       categories: {
         pwa: {
           audits: [
-            {id: 'missing-audit'}
-          ]
-        }
-      }
+            {id: 'missing-audit'},
+          ],
+        },
+      },
     }), /could not find missing-audit/);
   });
 
@@ -251,10 +251,10 @@ describe('Config', () => {
       categories: {
         pwa: {
           audits: [
-            'oops-wrong-format'
-          ]
-        }
-      }
+            'oops-wrong-format',
+          ],
+        },
+      },
     }), 'missing an audit id at pwa[0]');
   });
 
@@ -264,10 +264,10 @@ describe('Config', () => {
       categories: {
         accessibility: {
           audits: [
-            {id: 'color-contrast'}
-          ]
-        }
-      }
+            {id: 'color-contrast'},
+          ],
+        },
+      },
     }), /does not have a group/);
   });
 
@@ -285,9 +285,9 @@ describe('Config', () => {
           audits: [
             {id: 'first-meaningful-paint', group: 'group-a'},
             {id: 'first-meaningful-paint', group: 'missing-group'},
-          ]
-        }
-      }
+          ],
+        },
+      },
     }), /unknown group missing-group/);
   });
 
@@ -323,8 +323,8 @@ describe('Config', () => {
         'unused-category': {
           audits: [
             {id: 'estimated-input-latency'},
-          ]
-        }
+          ],
+        },
       },
     });
 
@@ -432,7 +432,7 @@ describe('Config', () => {
         settings: {
           onlyAudits: ['first-meaningful-paint'],
           skipAudits: ['first-meaningful-paint'],
-        }
+        },
       });
     });
   });
@@ -474,12 +474,12 @@ describe('Config', () => {
       const config = new Config({
         artifacts: {
           traces: {
-            defaultPass: path.resolve(__dirname, '../fixtures/traces/trace-user-timings.json')
+            defaultPass: path.resolve(__dirname, '../fixtures/traces/trace-user-timings.json'),
           },
           devtoolsLogs: {
-            defaultPass: path.resolve(__dirname, '../fixtures/perflog.json')
-          }
-        }
+            defaultPass: path.resolve(__dirname, '../fixtures/perflog.json'),
+          },
+        },
       });
       const computed = Runner.instantiateComputedArtifacts();
 
@@ -498,13 +498,13 @@ describe('Config', () => {
         artifacts: {
           traces: {
             defaultPass: path.resolve(__dirname, '../fixtures/traces/trace-user-timings.json'),
-            otherPass: path.resolve(__dirname, '../fixtures/traces/trace-user-timings.json')
+            otherPass: path.resolve(__dirname, '../fixtures/traces/trace-user-timings.json'),
           },
           devtoolsLogs: {
             defaultPass: path.resolve(__dirname, '../fixtures/perflog.json'),
-            otherPass: path.resolve(__dirname, '../fixtures/perflog.json')
-          }
-        }
+            otherPass: path.resolve(__dirname, '../fixtures/perflog.json'),
+          },
+        },
       });
       const traceUserTimings = require('../fixtures/traces/trace-user-timings.json');
       assert.deepStrictEqual(config.artifacts.traces.defaultPass.traceEvents, traceUserTimings);
@@ -518,12 +518,12 @@ describe('Config', () => {
         artifacts: {
           traces: {
             defaultPass: path.resolve(__dirname,
-                            '../fixtures/traces/trace-user-timings-no-tracingstartedinpage.json')
+                            '../fixtures/traces/trace-user-timings-no-tracingstartedinpage.json'),
           },
           devtoolsLogs: {
-            defaultPass: path.resolve(__dirname, '../fixtures/perflog.json')
-          }
-        }
+            defaultPass: path.resolve(__dirname, '../fixtures/perflog.json'),
+          },
+        },
       });
 
       assert.ok(config.artifacts.traces.defaultPass.traceEvents.find(
@@ -537,14 +537,14 @@ describe('Config', () => {
         passes: [
           {passName: 'passA', gatherers: ['a']},
           {passName: 'passB', gatherers: ['b']},
-          {gatherers: ['c']}
-        ]
+          {gatherers: ['c']},
+        ],
       };
       const configB = {
         passes: [
           {passName: 'passB', recordTrace: true, gatherers: ['d']},
-          {gatherers: ['e']}
-        ]
+          {gatherers: ['e']},
+        ],
       };
 
       const merged = Config.extendConfigJSON(configA, configB);

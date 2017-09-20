@@ -23,11 +23,11 @@ function generateMockArtifacts() {
     ServiceWorker: {
       versions: [{
         status: 'activated',
-        scriptURL: 'https://example.com/sw.js'
-      }]
+        scriptURL: 'https://example.com/sw.js',
+      }],
     },
     StartUrl: {statusCode: 200},
-    URL: {finalUrl: 'https://example.com'}
+    URL: {finalUrl: 'https://example.com'},
   }));
   const mockArtifacts = Object.assign({}, computedArtifacts, clonedArtifacts);
   return mockArtifacts;

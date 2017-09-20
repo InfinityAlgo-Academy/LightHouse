@@ -23,10 +23,10 @@ describe('Meta description gatherer', () => {
       driver: {
         querySelector() {
           return Promise.resolve({
-            getAttribute: () => EXAMPLE_DESCRIPTION
+            getAttribute: () => EXAMPLE_DESCRIPTION,
           });
-        }
-      }
+        },
+      },
     }).then(artifact => {
       assert.equal(artifact, EXAMPLE_DESCRIPTION);
     });

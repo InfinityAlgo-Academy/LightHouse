@@ -145,5 +145,5 @@ class HTTPError extends Error {
 }
 
 module.exports = {
-  hostExperiment
+  hostExperiment,
 };

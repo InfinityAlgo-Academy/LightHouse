@@ -100,10 +100,10 @@ describe('Manifest Parser', function() {
     it('parses icons and discards any with invalid src values', () => {
       const manifestSrc = JSON.stringify({
         icons: [{
-          src: {}
+          src: {},
         }, {
-          src: 17
-        }]
+          src: 17,
+        }],
       });
       const parsedManifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       const icons = parsedManifest.value.icons;
@@ -113,8 +113,8 @@ describe('Manifest Parser', function() {
     it('parses icons and discards any with undefined or empty string src values', () => {
       const manifestSrc = JSON.stringify({
         icons: [{
-          src: ''
-        }, {}]
+          src: '',
+        }, {}],
       });
       const parsedManifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       const icons = parsedManifest.value.icons;
@@ -124,8 +124,8 @@ describe('Manifest Parser', function() {
     it('constructs icon URLs relative to manifest URL ', () => {
       const manifestSrc = JSON.stringify({
         icons: [{
-          src: '../cool.gif'
-        }]
+          src: '../cool.gif',
+        }],
       });
       const manifestUrl = 'https://example.com/resources/manifest.webmanifest';
       const parsedManifest = manifestParser(manifestSrc, manifestUrl, EXAMPLE_DOC_URL);
@@ -192,7 +192,7 @@ describe('Manifest Parser', function() {
     // 8.10(3)
     it('falls back to document URL and issues a warning for an invalid value', () => {
       const manifestSrc = JSON.stringify({
-        start_url: {}
+        start_url: {},
       });
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
@@ -205,7 +205,7 @@ describe('Manifest Parser', function() {
 
     it('falls back to document URL and issues a warning for an invalid value', () => {
       const manifestSrc = JSON.stringify({
-        start_url: 6
+        start_url: 6,
       });
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
@@ -218,7 +218,7 @@ describe('Manifest Parser', function() {
 
     it('falls back to document URL and issues a warning for an empty string', () => {
       const manifestSrc = JSON.stringify({
-        start_url: ''
+        start_url: '',
       });
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
@@ -244,7 +244,7 @@ describe('Manifest Parser', function() {
     it('falls back to document URL and issues a warning for an invalid URL', () => {
       // `new URL('/manifest.json', '')` is invalid and will throw.
       const manifestSrc = JSON.stringify({
-        start_url: '/manifest.json'
+        start_url: '/manifest.json',
       });
       const manifestUrl = '';
       const docUrl = 'https://example.com/index.html';
@@ -258,7 +258,7 @@ describe('Manifest Parser', function() {
     // 8.10(6)
     it('falls back to document URL with warning when on different domain from document URL', () => {
       const manifestSrc = JSON.stringify({
-        start_url: 'https://evil.com/index.html'
+        start_url: 'https://evil.com/index.html',
       });
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
@@ -271,7 +271,7 @@ describe('Manifest Parser', function() {
 
     it('falls back to document URL with warning when on different port from document URL', () => {
       const manifestSrc = JSON.stringify({
-        start_url: 'https://example.com:314/index.html'
+        start_url: 'https://example.com:314/index.html',
       });
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com:8080/index.html';
@@ -284,7 +284,7 @@ describe('Manifest Parser', function() {
 
     it('falls back to document URL with warning when on different scheme from document URL', () => {
       const manifestSrc = JSON.stringify({
-        start_url: 'http://example.com/index.html'
+        start_url: 'http://example.com/index.html',
       });
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
@@ -297,7 +297,7 @@ describe('Manifest Parser', function() {
 
     it('correctly parses a start_url of "/" relative to the manifest\'s url', () => {
       const manifestSrc = JSON.stringify({
-        start_url: '/'
+        start_url: '/',
       });
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
@@ -311,7 +311,7 @@ describe('Manifest Parser', function() {
     it('correctly parses a start_url relative to the manifest\'s url', () => {
       // from non-normative example in spec
       const manifestSrc = JSON.stringify({
-        start_url: '../start_point.html'
+        start_url: '../start_point.html',
       });
       const manifestUrl = 'https://example.com/resources/manifest.webmanifest';
       const docUrl = 'https://example.com/index.html';
@@ -413,11 +413,11 @@ describe('Manifest Parser', function() {
         related_applications: [{
           platform: 'play',
           url: 'https://play.google.com/store/apps/details?id=com.example.app1',
-          id: 'com.example.app1'
+          id: 'com.example.app1',
         }, {
           platform: 'itunes',
-          url: 'https://itunes.apple.com/app/example-app1/id123456789'
-        }]
+          url: 'https://itunes.apple.com/app/example-app1/id123456789',
+        }],
       };
       /* eslint-enable camelcase */
 
@@ -437,11 +437,11 @@ describe('Manifest Parser', function() {
         related_applications: [{
           platform: 'play',
           url: 6,
-          id: 'com.example.app1'
+          id: 'com.example.app1',
         }, {
           platform: 'itunes',
-          url: {}
-        }]
+          url: {},
+        }],
       };
       /* eslint-enable camelcase */
 

@@ -28,7 +28,7 @@ class TraceParser {
       loadingStarted: _ => {},
       loadingComplete: success => {
         if (!success) throw new Error('Parsing problem');
-      }
+      },
     };
     this.loader = new WebInspector.TimelineLoader(this.tracingModel, delegateMock);
   }
@@ -62,7 +62,7 @@ class TraceParser {
    */
   getTrace() {
     return {
-      traceEvents: this.traceEvents
+      traceEvents: this.traceEvents,
     };
   }
 }

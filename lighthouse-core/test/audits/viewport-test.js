@@ -13,7 +13,7 @@ const assert = require('assert');
 describe('Mobile-friendly: viewport audit', () => {
   it('fails when HTML does not contain a viewport meta tag', () => {
     return assert.equal(Audit.audit({
-      Viewport: null
+      Viewport: null,
     }).rawValue, false);
   });
 
@@ -21,7 +21,7 @@ describe('Mobile-friendly: viewport audit', () => {
     const viewport = 'maximum-scale=1';
     assert.equal(Audit.audit({Viewport: viewport}).rawValue, false);
     assert.equal(Audit.audit({
-      Viewport: viewport
+      Viewport: viewport,
     }).debugString, '');
   });
 
@@ -29,7 +29,7 @@ describe('Mobile-friendly: viewport audit', () => {
     const viewport = 'nonsense=true';
     assert.equal(Audit.audit({Viewport: viewport}).rawValue, false);
     assert.equal(Audit.audit({
-      Viewport: viewport
+      Viewport: viewport,
     }).debugString, 'Invalid properties found: {"nonsense":"true"}.');
   });
 
@@ -37,7 +37,7 @@ describe('Mobile-friendly: viewport audit', () => {
     const viewport = 'initial-scale=microscopic';
     assert.equal(Audit.audit({Viewport: viewport}).rawValue, false);
     assert.equal(Audit.audit({
-      Viewport: viewport
+      Viewport: viewport,
     }).debugString, 'Invalid values found: {"initial-scale":"microscopic"}.');
   });
 
@@ -45,7 +45,7 @@ describe('Mobile-friendly: viewport audit', () => {
     const viewport = 'nonsense=true, initial-scale=microscopic';
     assert.equal(Audit.audit({Viewport: viewport}).rawValue, false);
     assert.equal(Audit.audit({
-      Viewport: viewport
+      Viewport: viewport,
     }).debugString, 'Invalid properties found: {"nonsense":"true"}. ' +
         'Invalid values found: {"initial-scale":"microscopic"}.');
   });
@@ -59,7 +59,7 @@ describe('Mobile-friendly: viewport audit', () => {
     ];
     viewports.forEach(viewport => {
       assert.equal(Audit.audit({
-        Viewport: viewport
+        Viewport: viewport,
       }).rawValue, true);
     });
   });

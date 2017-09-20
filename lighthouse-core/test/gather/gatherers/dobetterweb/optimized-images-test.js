@@ -67,7 +67,7 @@ const traceData = {
       _resourceSize: 12000,
       finished: false, // ignore for not finishing
     },
-  ]
+  ],
 };
 
 describe('Optimized images', () => {
@@ -83,7 +83,7 @@ describe('Optimized images', () => {
         sendCommand: function() {
           return Promise.reject(new Error('wasn\'t found'));
         },
-      }
+      },
     };
   });
 

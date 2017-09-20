@@ -27,7 +27,7 @@ class ImageAspectRatio extends Audit {
       description: 'Uses Images with appropriate aspect ratio',
       failureDescription: 'Does not uses Images with appropriate aspect ratio',
       helpText: 'Image displayed sizes should match their natural aspect ratio.',
-      requiredArtifacts: ['ImageUsage']
+      requiredArtifacts: ['ImageUsage'],
     };
   }
 
@@ -51,7 +51,7 @@ class ImageAspectRatio extends Audit {
       preview: {
         type: 'thumbnail',
         url: image.networkRecord.url,
-        mimeType: image.networkRecord.mimeType
+        mimeType: image.networkRecord.mimeType,
       },
       displayedAspectRatio: `${image.width} x ${image.height}
         (${displayedAspectRatio.toFixed(2)})`,
@@ -91,13 +91,13 @@ class ImageAspectRatio extends Audit {
       {key: 'preview', itemType: 'thumbnail', text: ''},
       {key: 'url', itemType: 'url', text: 'URL'},
       {key: 'displayedAspectRatio', itemType: 'text', text: 'Aspect Ratio (Displayed)'},
-      {key: 'actualAspectRatio', itemType: 'text', text: 'Aspect Ratio (Actual)'}
+      {key: 'actualAspectRatio', itemType: 'text', text: 'Aspect Ratio (Actual)'},
     ];
 
     return {
       rawValue: results.length,
       debugString,
-      details: Audit.makeTableDetails(headings, results)
+      details: Audit.makeTableDetails(headings, results),
     };
   }
 }

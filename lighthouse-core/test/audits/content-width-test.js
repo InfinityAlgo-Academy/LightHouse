@@ -15,8 +15,8 @@ describe('Mobile-friendly: content-width audit', () => {
     const result = Audit.audit({
       ViewportDimensions: {
         innerWidth: 100,
-        outerWidth: 300
-      }
+        outerWidth: 300,
+      },
     });
 
     assert.equal(result.rawValue, false);
@@ -27,8 +27,8 @@ describe('Mobile-friendly: content-width audit', () => {
     return assert.equal(Audit.audit({
       ViewportDimensions: {
         innerWidth: 300,
-        outerWidth: 300
-      }
+        outerWidth: 300,
+      },
     }).rawValue, true);
   });
 });

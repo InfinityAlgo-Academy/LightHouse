@@ -29,7 +29,7 @@ class TDHeadersAttr extends AxeAudit {
           'cells using the `[headers]` attribute only refer to other cells in the same table may ' +
           'improve the experience for screen reader users. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/td-headers-attr?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

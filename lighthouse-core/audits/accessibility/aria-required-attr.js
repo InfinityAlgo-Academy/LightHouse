@@ -24,7 +24,7 @@ class ARIARequiredAttr extends AxeAudit {
       failureDescription: '`[role]`s do not have all required `[aria-*]` attributes.',
       helpText: 'Some ARIA roles have required attributes that describe the state ' +
           'of the element to screen readers. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-required-attr?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

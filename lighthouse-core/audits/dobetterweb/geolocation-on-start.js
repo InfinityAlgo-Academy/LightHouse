@@ -26,7 +26,7 @@ class GeolocationOnStart extends ViolationAudit {
       helpText: 'Users are mistrustful of or confused by sites that request their ' +
           'location without context. Consider tying the request to user gestures instead. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).',
-      requiredArtifacts: ['ChromeConsoleMessages']
+      requiredArtifacts: ['ChromeConsoleMessages'],
     };
   }
 
@@ -46,7 +46,7 @@ class GeolocationOnStart extends ViolationAudit {
     return {
       rawValue: results.length === 0,
       extendedInfo: {
-        value: results
+        value: results,
       },
       details,
     };

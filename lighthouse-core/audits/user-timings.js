@@ -21,7 +21,7 @@ class UserTimings extends Audit {
           'real-world measurements of key user experiences. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).',
       requiredArtifacts: ['traces'],
-      informative: true
+      informative: true,
     };
   }
 
@@ -56,7 +56,7 @@ class UserTimings extends Audit {
           name: ut.name,
           isMark: true,
           args: ut.args,
-          startTime: ut.ts
+          startTime: ut.ts,
         });
 
       // Beginning of measure event, keep track of this events start time
@@ -70,7 +70,7 @@ class UserTimings extends Audit {
           isMark: false,
           args: ut.args,
           startTime: measuresStartTimes[ut.name],
-          endTime: ut.ts
+          endTime: ut.ts,
         });
       }
     });
@@ -144,7 +144,7 @@ class UserTimings extends Audit {
         rawValue: userTimings.length === 0,
         displayValue: userTimings.length,
         extendedInfo: {
-          value: userTimings
+          value: userTimings,
         },
         details,
       };

@@ -25,7 +25,7 @@ class DuplicateId extends AxeAudit {
       helpText: 'The value of an id attribute must be unique to prevent ' +
           'other instances from being overlooked by assistive technologies. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/duplicate-id?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

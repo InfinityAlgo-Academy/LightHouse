@@ -87,5 +87,5 @@ module.exports = [
   'https://whatsapp.com',
   'https://alibaba.com',
   'https://ask.com',
-  'https://bbc.com'
+  'https://bbc.com',
 ];

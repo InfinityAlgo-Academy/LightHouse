@@ -59,7 +59,7 @@ class CriConnection extends Connection {
 
     return new Promise((resolve, reject) => {
       const ws = new WebSocket(url, {
-        perMessageDeflate: false
+        perMessageDeflate: false,
       });
       ws.on('open', () => {
         this._ws = ws;
@@ -80,7 +80,7 @@ class CriConnection extends Connection {
       const request = http.get({
         hostname: this.hostname,
         port: this.port,
-        path: '/json/' + command
+        path: '/json/' + command,
       }, response => {
         let data = '';
         response.on('data', chunk => {

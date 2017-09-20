@@ -21,7 +21,7 @@ describe('NetworkThroughput', () => {
       failed: false,
       statusCode: 200,
       url: 'https://google.com/logo.png',
-      parsedURL: {isValid: true, scheme: 'https'}
+      parsedURL: {isValid: true, scheme: 'https'},
     }, extras);
   }
 
@@ -64,7 +64,7 @@ describe('NetworkThroughput', () => {
       createRecord(0.5, 1.5),
       createRecord(1.25, 3),
       createRecord(1.4, 4),
-      createRecord(5, 9)
+      createRecord(5, 9),
     ]);
 
     assert.equal(result, 625);

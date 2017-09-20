@@ -27,7 +27,7 @@ class AudioCaption extends AxeAudit {
           'providing critical information such as who is talking, what they\'re saying, ' +
           'and other non-speech information. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/audio-caption?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

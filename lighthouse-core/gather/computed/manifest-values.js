@@ -29,51 +29,51 @@ class ManifestValues extends ComputedArtifact {
       {
         id: 'hasStartUrl',
         failureText: 'Manifest does not contain a `start_url`',
-        validate: manifest => !!manifest.value.start_url.value
+        validate: manifest => !!manifest.value.start_url.value,
       },
       {
         id: 'hasIconsAtLeast192px',
         failureText: 'Manifest does not have icons at least 192px',
         validate: manifest => icons.doExist(manifest.value) &&
-            icons.sizeAtLeast(192, /** @type {!Manifest} */ (manifest.value)).length > 0
+            icons.sizeAtLeast(192, /** @type {!Manifest} */ (manifest.value)).length > 0,
       },
       {
         id: 'hasIconsAtLeast512px',
         failureText: 'Manifest does not have icons at least 512px',
         validate: manifest => icons.doExist(manifest.value) &&
-            icons.sizeAtLeast(512, /** @type {!Manifest} */ (manifest.value)).length > 0
+            icons.sizeAtLeast(512, /** @type {!Manifest} */ (manifest.value)).length > 0,
       },
       {
         id: 'hasPWADisplayValue',
         failureText: 'Manifest\'s `display` value is not one of: ' + PWA_DISPLAY_VALUES.join(' | '),
-        validate: manifest => PWA_DISPLAY_VALUES.includes(manifest.value.display.value)
+        validate: manifest => PWA_DISPLAY_VALUES.includes(manifest.value.display.value),
       },
       {
         id: 'hasBackgroundColor',
         failureText: 'Manifest does not have `background_color`',
-        validate: manifest => !!manifest.value.background_color.value
+        validate: manifest => !!manifest.value.background_color.value,
       },
       {
         id: 'hasThemeColor',
         failureText: 'Manifest does not have `theme_color`',
-        validate: manifest => !!manifest.value.theme_color.value
+        validate: manifest => !!manifest.value.theme_color.value,
       },
       {
         id: 'hasShortName',
         failureText: 'Manifest does not have `short_name`',
-        validate: manifest => !!manifest.value.short_name.value
+        validate: manifest => !!manifest.value.short_name.value,
       },
       {
         id: 'shortNameLength',
         failureText: 'Manifest `short_name` will be truncated when displayed on the homescreen',
         validate: manifest => !!manifest.value.short_name.value &&
-            manifest.value.short_name.value.length <= SUGGESTED_SHORTNAME_LENGTH
+            manifest.value.short_name.value.length <= SUGGESTED_SHORTNAME_LENGTH,
       },
       {
         id: 'hasName',
         failureText: 'Manifest does not have `name`',
-        validate: manifest => !!manifest.value.name.value
-      }
+        validate: manifest => !!manifest.value.name.value,
+      },
     ];
   }
 
@@ -96,7 +96,7 @@ class ManifestValues extends ComputedArtifact {
       return {
         isParseFailure: true,
         parseFailureReason,
-        allChecks: []
+        allChecks: [],
       };
     }
 
@@ -109,7 +109,7 @@ class ManifestValues extends ComputedArtifact {
     return {
       isParseFailure: false,
       parseFailureReason,
-      allChecks: remainingChecks
+      allChecks: remainingChecks,
     };
   }
 

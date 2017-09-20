@@ -13,13 +13,13 @@ class MissingRequiredArtifacts {
       name: 'missing-required-artifacts',
       description: 'Missing required artifacts',
       helpText: 'This is missing required artifacts',
-      requiredArtifacts: ['HTML']
+      requiredArtifacts: ['HTML'],
     };
   }
 
   static audit(_) {
     return {
-      rawValue: true
+      rawValue: true,
     };
   }
 }

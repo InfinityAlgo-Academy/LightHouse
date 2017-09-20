@@ -38,11 +38,17 @@ module.exports = {
     "strict": [2, "global"],
     "prefer-const": 2,
     "curly": [2, "multi-line"],
+    "comma-dangle": [2, {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "never",
+      "exports": "never",
+      "functions": "never"
+    }],
 
     // Disabled rules
     "require-jsdoc": 0,
     "valid-jsdoc": 0,
-    "comma-dangle": 0,
     "arrow-parens": 0,
   },
   "parserOptions": {

@@ -22,7 +22,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
       helpText: 'Remove unused rules from stylesheets to reduce unnecessary ' +
           'bytes consumed by network activity. ' +
           '[Learn more](https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery)',
-      requiredArtifacts: ['CSSUsage', 'Styles', 'URL', 'devtoolsLogs']
+      requiredArtifacts: ['CSSUsage', 'Styles', 'URL', 'devtoolsLogs'],
     };
   }
 

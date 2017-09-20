@@ -19,7 +19,7 @@ describe('Accessibility: axe-audit', () => {
             category: 'Accessibility',
             name: 'fake-aria-fail',
             description: 'You have an aria-* issue.',
-            requiredArtifacts: ['Accessibility']
+            requiredArtifacts: ['Accessibility'],
           };
         }
       }
@@ -28,9 +28,9 @@ describe('Accessibility: axe-audit', () => {
           violations: [{
             id: 'fake-aria-fail',
             nodes: [{}],
-            help: 'http://example.com/'
-          }]
-        }
+            help: 'http://example.com/',
+          }],
+        },
       };
 
       const output = FakeA11yAudit.audit(artifacts);

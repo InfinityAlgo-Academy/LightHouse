@@ -17,7 +17,7 @@ describe('traceParser parser', () => {
     const readStream = fs.createReadStream(__dirname + '/' + filename, {
       encoding: 'utf-8',
       // devtools sends traces in 10mb chunks, but this trace is 12MB so we'll do a few chunks
-      highWaterMark: 4 * 1024 * 1024
+      highWaterMark: 4 * 1024 * 1024,
     });
     const parser = new TraceParser();
 

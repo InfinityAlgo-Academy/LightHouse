@@ -25,7 +25,7 @@ class DocumentTitle extends AxeAudit {
       helpText: 'Screen reader users use page titles to get an overview of the contents of ' +
           'the page. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/document-title?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

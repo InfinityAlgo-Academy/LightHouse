@@ -14,16 +14,16 @@ describe('Security: HTTP->HTTPS audit', () => {
   it('fails when no redirect detected', () => {
     return assert.equal(Audit.audit({
       HTTPRedirect: {
-        value: false
-      }
+        value: false,
+      },
     }).rawValue, false);
   });
 
   it('passes when redirect detected', () => {
     return assert.equal(Audit.audit({
       HTTPRedirect: {
-        value: true
-      }
+        value: true,
+      },
     }).rawValue, true);
   });
 });

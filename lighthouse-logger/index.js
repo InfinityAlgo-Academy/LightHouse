@@ -18,7 +18,7 @@ const colors = {
   cyan: isBrowser ? 'darkturquoise' : 6,
   green: isBrowser ? 'forestgreen' : 2,
   blue: isBrowser ? 'steelblue' : 4,
-  magenta: isBrowser ? 'palevioletred' : 5
+  magenta: isBrowser ? 'palevioletred' : 5,
 };
 
 // whitelist non-red/yellow colors for debug()

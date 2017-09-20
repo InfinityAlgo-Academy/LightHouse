@@ -54,7 +54,7 @@ function runLighthouse(url, configPath, saveAssetsPath) {
     `--config-path=${configPath}`,
     '--output=json',
     '--quiet',
-    '--port=0'
+    '--port=0',
   ];
 
   if (saveAssetsPath) {
@@ -151,7 +151,7 @@ function findDifference(path, actual, expected) {
     return {
       path,
       actual,
-      expected
+      expected,
     };
   }
 
@@ -200,7 +200,7 @@ function collateResults(actual, expected) {
       actual: actualResult,
       expected: expectedResult,
       equal: !diff,
-      diff
+      diff,
     };
   });
 
@@ -209,9 +209,9 @@ function collateResults(actual, expected) {
       category: 'final url',
       actual: actual.url,
       expected: expected.url,
-      equal: actual.url === expected.url
+      equal: actual.url === expected.url,
     },
-    audits: collatedAudits
+    audits: collatedAudits,
   };
 }
 
@@ -266,7 +266,7 @@ function report(results) {
 
   return {
     passed: correctCount,
-    failed: failedCount
+    failed: failedCount,
   };
 }
 

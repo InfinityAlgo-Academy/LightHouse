@@ -25,7 +25,7 @@ class ButtonName extends AxeAudit {
       helpText: 'When a button doesn\'t have an accessible name, screen readers announce it as ' +
           '"button", making it unusable for users who rely on screen readers. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/button-name?application=lighthouse).',
-      requiredArtifacts: ['Accessibility']
+      requiredArtifacts: ['Accessibility'],
     };
   }
 }

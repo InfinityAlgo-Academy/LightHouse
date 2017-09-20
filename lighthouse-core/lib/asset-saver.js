@@ -96,7 +96,7 @@ function prepareAssets(artifacts, audits) {
           traceData,
           devtoolsLog,
           screenshotsHTML,
-          screenshots
+          screenshots,
         });
       });
   }, Promise.resolve())
@@ -154,7 +154,7 @@ function saveTrace(traceData, traceFilename) {
       read() {
         const next = traceIter.next();
         this.push(next.done ? null : next.value);
-      }
+      },
     });
 
     const writeStream = fs.createWriteStream(traceFilename);
@@ -200,5 +200,5 @@ module.exports = {
   saveArtifacts,
   saveAssets,
   prepareAssets,
-  saveTrace
+  saveTrace,
 };

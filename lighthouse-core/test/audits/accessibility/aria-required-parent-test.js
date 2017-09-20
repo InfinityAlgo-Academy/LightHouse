@@ -17,9 +17,9 @@ describe('Accessibility: aria-required-parent audit', () => {
         violations: [{
           id: 'aria-required-parent',
           nodes: [],
-          help: 'http://example.com/'
-        }]
-      }
+          help: 'http://example.com/',
+        }],
+      },
     };
 
     const output = Audit.audit(artifacts);
@@ -32,9 +32,9 @@ describe('Accessibility: aria-required-parent audit', () => {
         violations: [{
           id: 'aria-required-parent',
           nodes: [{}],
-          help: 'http://example.com/'
-        }]
-      }
+          help: 'http://example.com/',
+        }],
+      },
     };
 
     const output = Audit.audit(artifacts);
