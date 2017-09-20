@@ -32,6 +32,10 @@ module.exports = [
       'consistently-interactive': {
         score: '>=90',
       },
+      'time-to-first-byte': {
+        // Can be flaky, so test float rawValue instead of boolean score
+        rawValue: '<1000',
+      },
     },
   },
 ];
