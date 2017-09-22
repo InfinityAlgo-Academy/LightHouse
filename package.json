@@ -56,7 +56,7 @@
   "devDependencies": {
     "@types/node": "^6.0.45",
     "babel-core": "^6.16.0",
-    "bundlesize": "^0.13.2",
+    "bundlesize": "^0.14.4",
     "codecov": "^2.2.0",
     "coveralls": "^2.11.9",
     "eslint": "^3.12.0",
