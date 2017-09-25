@@ -119,18 +119,6 @@ echo "Generate the release notes, and update the release page"
 echo "Inform various peoples"
 ```
 
-### Releasing chrome launcher.
-
-```sh
-cd chrome-launcher
-echo "build the launcher source code"
-yarn build
-yarn version --no-git-tag-version
-git commit -am "launcher to 0.x.x"
-echo "commit (but without a tag, as it gets mixed up with LH rls tags)"
-npm publish
-```
-
 ### Canary release
 
 ```sh

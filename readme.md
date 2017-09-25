@@ -194,11 +194,9 @@ yarn
 yarn install-all
 yarn build-all
 
-# The CLI and Chrome Launcher are authored in TypeScript and require compilation.
+# The CLI is authored in TypeScript and requires compilation.
 # If you need to make changes to the CLI, run the TS compiler in watch mode:
 # cd lighthouse-cli && yarn dev
-# similarly, run the TS compiler for the launcher:
-# cd chrome-launcher && yarn dev
 ```
 
 ### Run

@@ -10,7 +10,7 @@ import * as path from 'path';
 import * as Printer from './printer';
 import {Results} from './types/types';
 import {Flags} from './cli-flags';
-import {launch, LaunchedChrome} from '../chrome-launcher/chrome-launcher';
+import {launch, LaunchedChrome} from 'chrome-launcher';
 
 const yargs = require('yargs');
 const lighthouse = require('../lighthouse-core');

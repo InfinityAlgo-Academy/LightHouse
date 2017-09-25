@@ -20,11 +20,8 @@ elif [ "$flag" == '--viewer' ]; then
   _runmocha 'lighthouse-viewer'
 elif [ "$flag" == '--core' ]; then
   _runmocha 'lighthouse-core'
-elif [ "$flag" == '--launcher' ]; then
-  cd chrome-launcher && yarn test -- --timeout 60000 --reporter dot
 else
   echo "lighthouse-core tests" && _runmocha 'lighthouse-core' && \
   echo "lighthouse-cli tests" && _runmocha 'lighthouse-cli' && \
-  echo "lighthouse-viewer tests" && _runmocha 'lighthouse-viewer' && \
-  echo "chrome-launcher tests" && cd chrome-launcher && yarn test -- --timeout 60000 --reporter dot
+  echo "lighthouse-viewer tests" && _runmocha 'lighthouse-viewer'
 fi

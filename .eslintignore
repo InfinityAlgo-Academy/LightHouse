@@ -17,9 +17,6 @@ coverage/**
 lighthouse-cli/*.js
 lighthouse-cli/commands/*.js
 lighthouse-cli/types/*.js
-!chrome-launcher/manual-chrome-launcher.js
-!chrome-launcher/compiled-check.js
-chrome-launcher/*.js
 
 # Generated files
 plots/out*

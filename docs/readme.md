@@ -9,7 +9,7 @@ assumes you've installed Lighthouse as a dependency (`yarn add --dev lighthouse`
 
 ```javascript
 const lighthouse = require('lighthouse');
-const chromeLauncher = require('lighthouse/chrome-launcher');
+const chromeLauncher = require('chrome-launcher');
 
 function launchChromeAndRunLighthouse(url, flags = {}, config = null) {
   return chromeLauncher.launch().then(chrome => {

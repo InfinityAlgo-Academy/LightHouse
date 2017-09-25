@@ -1,6 +1,15 @@
 #!/usr/bin/env node
 
 'use strict';
+
+/**
+ * chrome-launcher has moved to its own repository and npm package.
+ * https://github.com/GoogleChrome/chrome-launcher
+ * https://www.npmjs.com/package/chrome-launcher
+ * This script preserved for Lighthouse's chrome-debug binary, but but file and
+ * bin entry will be removed in next major release.
+ */
+
 /**
  * @fileoverview Script to launch a clean Chrome instance on-demand.
  *
@@ -13,8 +22,7 @@
  *     chrome-debug --enable-extensions
  */
 
-require('./compiled-check.js')('chrome-launcher.js');
-const {launch} = require('./chrome-launcher');
+const {launch} = require('chrome-launcher');
 
 const args = process.argv.slice(2);
 let chromeFlags;
@@ -38,4 +46,6 @@ launch({
   port,
   enableExtensions,
   chromeFlags,
-}).then(v => console.log(`✨  Chrome debugging port: ${v.port}`));
+})
+// eslint-disable-next-line no-console
+.then(v => console.log(`✨  Chrome debugging port: ${v.port}`));

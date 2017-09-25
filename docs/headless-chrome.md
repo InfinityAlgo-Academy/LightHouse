@@ -72,7 +72,7 @@ Run it:
 
 ```javascript
 const lighthouse = require('lighthouse');
-const chromeLauncher = require('lighthouse/chrome-launcher');
+const chromeLauncher = require('chrome-launcher');
 
 function launchChromeAndRunLighthouse(url, flags = {}, config = null) {
   return chromeLauncher.launch(flags).then(chrome => {
