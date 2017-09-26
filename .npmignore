@@ -11,6 +11,7 @@ lighthouse-core/third_party/src/
 lighthouse-viewer/
 lighthouse-extension/
 lighthouse-cli/results/
+lighthouse-logger/
 
 # excluding cli/test minus smokehouse
 lighthouse-cli/test

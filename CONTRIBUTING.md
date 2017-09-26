@@ -78,9 +78,10 @@ echo "Test the extension"
 
 echo "Test a fresh local install"
 # (starting from lighthouse root...)
+# npm pack
 # cd ..; trash tmp; mkdir tmp; cd tmp
 # npm init -y
-# npm install ../lighthouse
+# npm install ../lighthouse/lighthouse-<version>.tgz
 # npm explore lighthouse -- npm run smoke
 # npm explore lighthouse -- npm run smokehouse
 # npm explore lighthouse -- npm run chrome # try the manual launcher
