@@ -13,6 +13,16 @@ module.exports = [
     initialUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
     url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
     audits: {
+      'errors-in-console': {
+        score: false,
+        rawValue: 3,
+        displayValue: '3',
+        details: {
+          items: {
+            length: 3,
+          },
+        },
+      },
       'is-on-https': {
         score: false,
         extendedInfo: {
