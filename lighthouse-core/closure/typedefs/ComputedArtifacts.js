@@ -69,3 +69,6 @@ ComputedArtifacts.prototype.requestTraceOfTab;
 
 /** @type {function(!Trace): !Promise<{timeInMs: number, timestamp: number}>} */
 ComputedArtifacts.prototype.requestFirstInteractive;
+
+/** @type {function(!DevtoolsLog): !Promise<WebInspector.NetworkRequest>} */
+ComputedArtifacts.prototype.requestMainResource;

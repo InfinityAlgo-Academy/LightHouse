@@ -22,11 +22,14 @@ module.exports = [
       'meta-description': {
         score: true,
       },
+      'http-status-code': {
+        score: true,
+      },
     },
   },
   {
-    initialUrl: 'http://localhost:10200/seo/seo-failure-cases.html',
-    url: 'http://localhost:10200/seo/seo-failure-cases.html',
+    initialUrl: 'http://localhost:10200/seo/seo-failure-cases.html?status_code=403',
+    url: 'http://localhost:10200/seo/seo-failure-cases.html?status_code=403',
     audits: {
       'viewport': {
         score: false,
@@ -41,6 +44,10 @@ module.exports = [
       },
       'meta-description': {
         score: false,
+      },
+      'http-status-code': {
+        score: false,
+        displayValue: '403',
       },
     },
   },

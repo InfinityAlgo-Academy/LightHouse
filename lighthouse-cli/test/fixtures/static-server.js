@@ -59,6 +59,11 @@ function requestHandler(request, response) {
     } else if (filePath.endsWith('.svg')) {
       headers = {'Content-Type': 'image/svg+xml'};
     }
+
+    if (queryString && typeof queryString.status_code !== 'undefined') {
+      statusCode = parseInt(queryString.status_code, 10);
+    }
+
     response.writeHead(statusCode, headers);
 
     // Delay the response by the specified ms defaulting to 2000ms for non-numeric values

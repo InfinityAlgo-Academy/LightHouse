@@ -15,6 +15,7 @@ module.exports = {
   }],
   audits: [
     'seo/meta-description',
+    'seo/http-status-code',
   ],
   groups: {
     'seo-mobile': {
@@ -39,6 +40,7 @@ module.exports = {
         {id: 'viewport', weight: 1, group: 'seo-mobile'},
         {id: 'document-title', weight: 1, group: 'seo-content'},
         {id: 'meta-description', weight: 1, group: 'seo-content'},
+        {id: 'http-status-code', weight: 1, group: 'seo-crawl'},
       ],
     },
   },
