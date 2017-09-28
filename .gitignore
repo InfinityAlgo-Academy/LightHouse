@@ -11,7 +11,6 @@ lcov.info
 .nyc_output
 
 lighthouse-cli/results
-lighthouse-cli/performance-experiment/experiment-database/experiment-data*
 results.html
 last-run-results.html
 

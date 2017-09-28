@@ -82,7 +82,6 @@ Options:
   --disable-device-emulation    Disable Nexus 5X emulation                                                                                 [boolean]
   --disable-cpu-throttling      Disable CPU throttling                                                                    [boolean] [default: false]
   --disable-network-throttling  Disable network throttling                                                                                 [boolean]
-  --interactive                 Open Lighthouse in interactive mode                                                                        [boolean]
 
 Examples:
   lighthouse <url> --view                                                   Opens the HTML report in a browser after the run completes
