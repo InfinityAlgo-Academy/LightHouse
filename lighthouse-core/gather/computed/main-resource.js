@@ -35,13 +35,13 @@ class MainResource extends ComputedArtifact {
   compute_(devtoolsLog, artifacts) {
     return artifacts.requestNetworkRecords(devtoolsLog)
       .then(requests => {
-        const mainResoruce = requests.find(this.isMainResource);
+        const mainResource = requests.find(this.isMainResource);
 
-        if (!mainResoruce) {
+        if (!mainResource) {
           throw new Error('Unable to identify the main resource');
         }
 
-        return mainResoruce;
+        return mainResource;
       });
   }
 }
