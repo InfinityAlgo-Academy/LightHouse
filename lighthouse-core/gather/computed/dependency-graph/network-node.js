@@ -45,16 +45,23 @@ class NetworkNode extends Node {
   }
 
   /**
-   * @return {string}
+   * @return {?string}
    */
   get resourceType() {
     return this._record._resourceType && this._record._resourceType._name;
   }
 
   /**
+   * @return {?string}
+   */
+  get initiatorType() {
+    return this._record._initiator && this._record._initiator.type;
+  }
+
+  /**
    * @return {boolean}
    */
-  isRenderBlocking() {
+  hasRenderBlockingPriority() {
     const priority = this._record.priority();
     return priority === 'VeryHigh' || (priority === 'High' && this.resourceType === 'script');
   }

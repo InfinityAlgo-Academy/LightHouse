@@ -45,17 +45,41 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
       const connection = new TcpConnection(100, Infinity);
       assert.deepEqual(connection.simulateDownloadUntil(50000), {
         bytesDownloaded: 50000,
+        extraBytesDownloaded: 0,
         congestionWindow: 40,
         roundTrips: 5,
         timeElapsed: 500,
       });
-      connection.setCongestionWindow(80); // will download all in one round trip
+      connection.setCongestionWindow(40); // will download all in one round trip
       assert.deepEqual(connection.simulateDownloadUntil(50000), {
         bytesDownloaded: 50000,
-        congestionWindow: 80,
+        extraBytesDownloaded: 0,
+        congestionWindow: 40,
         roundTrips: 3,
         timeElapsed: 300,
       });
+    });
+  });
+
+  describe('.setH2OverflowBytesDownloaded', () => {
+    it('adjusts the time to download appropriately for H2 connections', () => {
+      const connection = new TcpConnection(100, Infinity, 0, true, true);
+      connection.setWarmed(true);
+      assert.equal(connection.simulateDownloadUntil(30000).timeElapsed, 200);
+      connection.setH2OverflowBytesDownloaded(20000);
+      assert.equal(connection.simulateDownloadUntil(30000).timeElapsed, 100);
+      connection.setH2OverflowBytesDownloaded(50000);
+      assert.equal(connection.simulateDownloadUntil(30000).timeElapsed, 0);
+    });
+
+    it('does not adjust the time to download for non-H2 connections', () => {
+      const connection = new TcpConnection(100, Infinity, 0, true, false);
+      connection.setWarmed(true);
+      assert.equal(connection.simulateDownloadUntil(30000).timeElapsed, 200);
+      connection.setH2OverflowBytesDownloaded(20000);
+      assert.equal(connection.simulateDownloadUntil(30000).timeElapsed, 200);
+      connection.setH2OverflowBytesDownloaded(50000);
+      assert.equal(connection.simulateDownloadUntil(30000).timeElapsed, 200);
     });
   });
 
@@ -65,6 +89,7 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
         const connection = new TcpConnection(100, Infinity, 0, false);
         assert.deepEqual(connection.simulateDownloadUntil(7300), {
           bytesDownloaded: 7300,
+          extraBytesDownloaded: 0,
           congestionWindow: 10,
           roundTrips: 2,
           timeElapsed: 200,
@@ -75,6 +100,18 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
         const connection = new TcpConnection(100, Infinity, 0, true);
         assert.deepEqual(connection.simulateDownloadUntil(7300), {
           bytesDownloaded: 7300,
+          extraBytesDownloaded: 0,
+          congestionWindow: 10,
+          roundTrips: 3,
+          timeElapsed: 300,
+        });
+      });
+
+      it('should provide the correct values small payload H2', () => {
+        const connection = new TcpConnection(100, Infinity, 0, true, true);
+        assert.deepEqual(connection.simulateDownloadUntil(7300), {
+          bytesDownloaded: 7300,
+          extraBytesDownloaded: 7300,
           congestionWindow: 10,
           roundTrips: 3,
           timeElapsed: 300,
@@ -86,6 +123,7 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
         const connection = new TcpConnection(100, Infinity, responseTime, true);
         assert.deepEqual(connection.simulateDownloadUntil(7300), {
           bytesDownloaded: 7300,
+          extraBytesDownloaded: 0,
           congestionWindow: 10,
           roundTrips: 3,
           timeElapsed: 300 + responseTime,
@@ -97,6 +135,7 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
         const bytesToDownload = 10 * 1000 * 1000; // 10 mb
         assert.deepEqual(connection.simulateDownloadUntil(bytesToDownload), {
           bytesDownloaded: bytesToDownload,
+          extraBytesDownloaded: 0,
           congestionWindow: 68,
           roundTrips: 105,
           timeElapsed: 10500,
@@ -107,9 +146,23 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
         const connection = new TcpConnection(100, Infinity, 0, true);
         assert.deepEqual(connection.simulateDownloadUntil(7300, 250), {
           bytesDownloaded: 7300,
+          extraBytesDownloaded: 0,
           congestionWindow: 10,
           roundTrips: 3,
           timeElapsed: 50,
+        });
+      });
+
+      it('should provide the correct values resumed small payload H2', () => {
+        const connection = new TcpConnection(100, Infinity, 0, true, true);
+        connection.setWarmed(true);
+        connection.setH2OverflowBytesDownloaded(10000);
+        assert.deepEqual(connection.simulateDownloadUntil(7300), {
+          bytesDownloaded: 0,
+          extraBytesDownloaded: 2700, // 10000 - 7300
+          congestionWindow: 10,
+          roundTrips: 0,
+          timeElapsed: 0,
         });
       });
 
@@ -119,6 +172,7 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
         connection.setCongestionWindow(68);
         assert.deepEqual(connection.simulateDownloadUntil(bytesToDownload, 5234), {
           bytesDownloaded: bytesToDownload,
+          extraBytesDownloaded: 0,
           congestionWindow: 68,
           roundTrips: 51, // 5 mb / (1460 * 68)
           timeElapsed: 5100,
@@ -131,6 +185,7 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
         const connection = new TcpConnection(100, Infinity, 0, false);
         assert.deepEqual(connection.simulateDownloadUntil(7300, 0, 68), {
           bytesDownloaded: 7300,
+          extraBytesDownloaded: 0,
           congestionWindow: 10,
           roundTrips: 2,
           timeElapsed: 200,
@@ -141,6 +196,7 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
         const connection = new TcpConnection(100, Infinity, 0, false);
         assert.deepEqual(connection.simulateDownloadUntil(7300, 0, 250), {
           bytesDownloaded: 7300,
+          extraBytesDownloaded: 0,
           congestionWindow: 10,
           roundTrips: 2,
           timeElapsed: 200,
@@ -151,6 +207,7 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
         const connection = new TcpConnection(100, Infinity, 0, false);
         assert.deepEqual(connection.simulateDownloadUntil(7300, 75, 250), {
           bytesDownloaded: 7300,
+          extraBytesDownloaded: 0,
           congestionWindow: 10,
           roundTrips: 2,
           timeElapsed: 125,
@@ -162,6 +219,7 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
         const bytesToDownload = 10 * 1000 * 1000; // 10 mb
         assert.deepEqual(connection.simulateDownloadUntil(bytesToDownload, 500, 740), {
           bytesDownloaded: 683280, // should be less than 68 * 1460 * 8
+          extraBytesDownloaded: 0,
           congestionWindow: 68,
           roundTrips: 8,
           timeElapsed: 800, // skips the handshake because time already elapsed

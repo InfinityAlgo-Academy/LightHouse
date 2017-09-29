@@ -11,10 +11,18 @@ const emulation = require('../../../../lib/emulation').settings;
 
 // see https://cs.chromium.org/search/?q=kDefaultMaxNumDelayableRequestsPerClient&sq=package:chromium&type=cs
 const DEFAULT_MAXIMUM_CONCURRENT_REQUESTS = 10;
+
+// Fast 3G emulation target from DevTools, WPT 3G - Fast setting
 const DEFAULT_FALLBACK_TTFB = 30;
 const DEFAULT_RTT = emulation.TYPICAL_MOBILE_THROTTLING_METRICS.targetLatency;
-const DEFAULT_THROUGHPUT = emulation.TYPICAL_MOBILE_THROTTLING_METRICS.targetDownloadThroughput * 8;
-const DEFAULT_CPU_MULTIPLIER = 5;
+const DEFAULT_THROUGHPUT = emulation.TYPICAL_MOBILE_THROTTLING_METRICS.targetDownloadThroughput * 8; // 1.6 Mbps
+
+// same multiplier as Lighthouse uses for CPU emulation
+const DEFAULT_CPU_TASK_MULTIPLIER = emulation.CPU_THROTTLE_METRICS.rate;
+// layout tasks tend to be less CPU-bound and do not experience the same increase in duration
+const DEFAULT_LAYOUT_TASK_MULTIPLIER = DEFAULT_CPU_TASK_MULTIPLIER / 2;
+// if a task takes more than 10 seconds it's usually a sign it isn't actually CPU bound and we're overestimating
+const DEFAULT_MAXIMUM_CPU_TASK_DURATION = 10000;
 
 const TLS_SCHEMES = ['https', 'wss'];
 
@@ -44,7 +52,8 @@ class Estimator {
         throughput: DEFAULT_THROUGHPUT,
         fallbackTTFB: DEFAULT_FALLBACK_TTFB,
         maximumConcurrentRequests: DEFAULT_MAXIMUM_CONCURRENT_REQUESTS,
-        cpuMultiplier: DEFAULT_CPU_MULTIPLIER,
+        cpuTaskMultiplier: DEFAULT_CPU_TASK_MULTIPLIER,
+        layoutTaskMultiplier: DEFAULT_LAYOUT_TASK_MULTIPLIER,
       },
       options
     );
@@ -56,7 +65,8 @@ class Estimator {
       TcpConnection.maximumSaturatedConnections(this._rtt, this._throughput),
       this._options.maximumConcurrentRequests
     );
-    this._cpuMultiplier = this._options.cpuMultiplier;
+    this._cpuTaskMultiplier = this._options.cpuTaskMultiplier;
+    this._layoutTaskMultiplier = this._options.layoutTaskMultiplier;
   }
 
   /**
@@ -91,6 +101,7 @@ class Estimator {
 
     for (const [connectionId, records] of recordsByConnection.entries()) {
       const isTLS = TLS_SCHEMES.includes(records[0].parsedURL.scheme);
+      const isH2 = records[0].protocol === 'h2';
 
       // We'll approximate how much time the server for a connection took to respond after receiving
       // the request by computing the minimum TTFB time for requests on that connection.
@@ -109,7 +120,8 @@ class Estimator {
         this._rtt,
         this._throughput,
         estimatedResponseTime,
-        isTLS
+        isTLS,
+        isH2
       );
 
       connections.set(connectionId, connection);
@@ -248,7 +260,13 @@ class Estimator {
   _estimateTimeRemaining(node) {
     if (node.type === Node.TYPES.CPU) {
       const timingData = this._nodeTiming.get(node);
-      const totalDuration = Math.round(node.event.dur / 1000 * this._cpuMultiplier);
+      const multiplier = node.didPerformLayout()
+        ? this._layoutTaskMultiplier
+        : this._cpuTaskMultiplier;
+      const totalDuration = Math.min(
+        Math.round(node.event.dur / 1000 * multiplier),
+        DEFAULT_MAXIMUM_CPU_TASK_DURATION
+      );
       const estimatedTimeElapsed = totalDuration - timingData.timeElapsed;
       this._setTimingData(node, {estimatedTimeElapsed});
       return estimatedTimeElapsed;
@@ -307,6 +325,7 @@ class Estimator {
     );
 
     connection.setCongestionWindow(calculation.congestionWindow);
+    connection.setH2OverflowBytesDownloaded(calculation.extraBytesDownloaded);
 
     if (isFinished) {
       connection.setWarmed(true);
