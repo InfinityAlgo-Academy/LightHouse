@@ -13,9 +13,6 @@ const TracingProcessor = require('../../lib/traces/tracing-processor');
 
 // Tasks smaller than 10 ms have minimal impact on simulation
 const MINIMUM_TASK_DURATION_OF_INTEREST = 10;
-// TODO: video files tend to be enormous and throw off all graph traversals, move this ignore
-//    into estimation logic when we use the dependency graph for other purposes.
-const IGNORED_MIME_TYPES_REGEX = /^video/;
 
 class PageDependencyGraphArtifact extends ComputedArtifact {
   get name() {
@@ -51,7 +48,6 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
     const urlToNodeMap = new Map();
 
     networkRecords.forEach(record => {
-      if (IGNORED_MIME_TYPES_REGEX.test(record.mimeType)) return;
       const node = new NetworkNode(record);
       nodes.push(node);
 

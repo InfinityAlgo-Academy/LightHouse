@@ -51,7 +51,7 @@ describe('DependencyGraph/Estimator', () => {
       const cpuNode = new CpuNode(cpuTask({duration: 200}));
       cpuNode.addDependency(rootNode);
 
-      const estimator = new Estimator(rootNode, {fallbackTTFB: 500, cpuTaskMultiplier: 5});
+      const estimator = new Estimator(rootNode, {fallbackTTFB: 500});
       const result = estimator.estimate();
       // should be 2 RTTs and 500ms for the server response time + 200 CPU
       assert.equal(result, 300 + 500 + 200);
@@ -83,7 +83,7 @@ describe('DependencyGraph/Estimator', () => {
       nodeA.addDependent(nodeC);
       nodeA.addDependent(nodeD);
 
-      const estimator = new Estimator(nodeA, {fallbackTTFB: 500, cpuTaskMultiplier: 5});
+      const estimator = new Estimator(nodeA, {fallbackTTFB: 500});
       const result = estimator.estimate();
       // should be 800ms A, then 1000 ms total for B, C, D in serial
       assert.equal(result, 1800);
@@ -103,7 +103,7 @@ describe('DependencyGraph/Estimator', () => {
       nodeC.addDependent(nodeD);
       nodeC.addDependent(nodeF); // finishes 400 ms after D
 
-      const estimator = new Estimator(nodeA, {fallbackTTFB: 500, cpuTaskMultiplier: 5});
+      const estimator = new Estimator(nodeA, {fallbackTTFB: 500});
       const result = estimator.estimate();
       // should be 800ms each for A, B, C, D, with F finishing 400 ms after D
       assert.equal(result, 3600);

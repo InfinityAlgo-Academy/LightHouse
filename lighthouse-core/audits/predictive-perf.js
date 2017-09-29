@@ -42,9 +42,8 @@ class PredictivePerf extends Audit {
   static getOptimisticFMPGraph(dependencyGraph, traceOfTab) {
     const fmp = traceOfTab.timestamps.firstMeaningfulPaint;
     return dependencyGraph.cloneWithRelationships(node => {
-      if (node.endTime > fmp || node.type === Node.TYPES.CPU) return false;
-      // Include non-script-initiated network requests with a render-blocking priority
-      return node.hasRenderBlockingPriority() && node.initiatorType !== 'script';
+      if (node.endTime > fmp) return false;
+      return node.isRenderBlocking();
     });
   }
 
@@ -59,8 +58,8 @@ class PredictivePerf extends Audit {
       if (node.endTime > fmp) return false;
       // Include CPU tasks that performed a layout
       if (node.type === Node.TYPES.CPU) return node.didPerformLayout();
-      // Include all network requests that had render-blocking priority (even script-initiated)
-      return node.hasRenderBlockingPriority();
+      // Include every request before FMP that wasn't an image
+      return node.resourceType !== 'image';
     });
   }
 
@@ -76,9 +75,9 @@ class PredictivePerf extends Audit {
       // Include everything that might be a long task
       if (node.type === Node.TYPES.CPU) return node.event.dur > minimumCpuTaskDuration;
       // Include all scripts and high priority requests
-      return node.resourceType !== 'image' && (node.resourceType === 'script' ||
+      return node.resourceType === 'script' ||
           node.record.priority() === 'High' ||
-          node.record.priority() === 'VeryHigh');
+          node.record.priority() === 'VeryHigh';
     });
   }
 
