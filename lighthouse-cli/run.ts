@@ -12,7 +12,7 @@ import {Results} from './types/types';
 import {Flags} from './cli-flags';
 import {launch, LaunchedChrome} from 'chrome-launcher';
 
-const yargs = require('yargs');
+const yargsParser = require('yargs-parser');
 const lighthouse = require('../lighthouse-core');
 const log = require('lighthouse-logger');
 const getFilenamePrefix = require('../lighthouse-core/lib/file-namer.js').getFilenamePrefix;
@@ -28,28 +28,20 @@ interface LighthouseError extends Error {
   code?: string
 }
 
-// Boolean values that are true are rendered without a value (--debug vs. --debug=true)
-function formatArg(arg: string, value: any): string {
-  if (value === true) {
-    return `--${arg}`
-  }
-
-  // Only quote the value if it contains spaces
-  if (value.indexOf(' ') !== -1) {
-    value = `"${value}"`
-  }
-
-  return `--${arg}=${value}`
-}
-
 // exported for testing
-export function parseChromeFlags(flags: string) {
-  let args = yargs(flags).argv;
-  const allKeys = Object.keys(args);
+export function parseChromeFlags(flags: string = '') {
+  const parsed = yargsParser(
+      flags, {configuration: {'camel-case-expansion': false, 'boolean-negation': false}});
 
-  // Remove unneeded arguments (yargs includes a _ arg, $-prefixed args, and camelCase dupes)
-  return allKeys.filter(k => k !== '_' && !k.startsWith('$') && !/[A-Z]/.test(k))
-      .map(k => formatArg(k, args[k]));
+  return Object
+      .keys(parsed)
+      // Remove unnecessary _ item provided by yargs,
+      .filter(key => key !== '_')
+      // Avoid '=true', then reintroduce quotes
+      .map(key => {
+        if (parsed[key] === true) return `--${key}`;
+        return `--${key}="${parsed[key]}"`;
+      });
 }
 
 /**

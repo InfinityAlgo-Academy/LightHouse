@@ -47,28 +47,41 @@ describe('CLI run', function() {
 
 describe('Parsing --chrome-flags', () => {
   it('returns boolean flags that are true as a bare flag', () => {
-    assert.deepStrictEqual(['--debug'], parseChromeFlags('--debug'));
+    assert.deepStrictEqual(parseChromeFlags('--debug'), ['--debug']);
   });
 
   it('returns boolean flags that are false with value', () => {
-    assert.deepStrictEqual(['--debug=false'], parseChromeFlags('--debug=false'));
+    assert.deepStrictEqual(parseChromeFlags('--debug=false'), ['--debug="false"']);
   });
 
   it('returns boolean flags that empty when passed undefined', () => {
-    assert.deepStrictEqual([], parseChromeFlags());
+    assert.deepStrictEqual(parseChromeFlags(), []);
   });
 
-  it('returns flags correctly for issue 2817', () => {
+  it('keeps --no-flags untouched, #3003', () => {
+    assert.deepStrictEqual(parseChromeFlags('--no-sandbox'), ['--no-sandbox']);
+  });
+
+  it('handles numeric values', () => {
+    assert.deepStrictEqual(parseChromeFlags('--log-level=0'), ['--log-level="0"']);
+  });
+
+  it('quotes flag values with spaces in them (#2817)', () => {
     assert.deepStrictEqual(
-      ['--host-resolver-rules="MAP www.example.org:443 127.0.0.1:8443"'],
-      parseChromeFlags('--host-resolver-rules="MAP www.example.org:443 127.0.0.1:8443"')
+      parseChromeFlags('--user-agent="iPhone UA Test"'),
+      ['--user-agent="iPhone UA Test"']
+    );
+
+    assert.deepStrictEqual(
+      parseChromeFlags('--host-resolver-rules="MAP www.example.org:443 127.0.0.1:8443"'),
+      ['--host-resolver-rules="MAP www.example.org:443 127.0.0.1:8443"']
     );
   });
 
   it('returns all flags as provided', () => {
     assert.deepStrictEqual(
-      ['--spaces="1 2 3 4"', '--debug=false', '--verbose', '--more-spaces="9 9 9"'],
-      parseChromeFlags('--spaces="1 2 3 4" --debug=false --verbose --more-spaces="9 9 9"')
+      parseChromeFlags('--spaces="1 2 3 4" --debug=false --verbose --more-spaces="9 9 9"'),
+      ['--spaces="1 2 3 4"', '--debug="false"', '--verbose', '--more-spaces="9 9 9"']
     );
   });
 });
