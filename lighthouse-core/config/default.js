@@ -29,6 +29,7 @@ module.exports = {
       'dobetterweb/anchors-with-no-rel-noopener',
       'dobetterweb/appcache',
       'dobetterweb/domstats',
+      'dobetterweb/js-libraries',
       'dobetterweb/optimized-images',
       'dobetterweb/password-inputs-with-prevented-paste',
       'dobetterweb/response-compression',
@@ -59,7 +60,6 @@ module.exports = {
       'html-without-javascript',
     ],
   }],
-
   audits: [
     'is-on-https',
     'redirects-http',
@@ -136,6 +136,7 @@ module.exports = {
     'dobetterweb/link-blocking-first-paint',
     'dobetterweb/no-document-write',
     'dobetterweb/no-mutation-events',
+    'dobetterweb/no-vulnerable-libraries',
     'dobetterweb/no-websql',
     'dobetterweb/notification-on-start',
     'dobetterweb/password-inputs-can-be-pasted-into',
@@ -296,6 +297,7 @@ module.exports = {
         {id: 'no-document-write', weight: 1},
         {id: 'external-anchors-use-rel-noopener', weight: 1},
         {id: 'geolocation-on-start', weight: 1},
+        {id: 'no-vulnerable-libraries', weight: 1},
         {id: 'notification-on-start', weight: 1},
         {id: 'deprecations', weight: 1},
         {id: 'manifest-short-name-length', weight: 1},

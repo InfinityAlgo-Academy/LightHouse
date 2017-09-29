@@ -121,6 +121,14 @@ module.exports = [
       //     }
       //   }
       // },
+      'no-vulnerable-libraries': {
+        score: false,
+        details: {
+          items: {
+            length: 1,
+          },
+        },
+      },
       'no-websql': {
         score: false,
         debugString: 'Found database "mydb", version: 1.0.',
