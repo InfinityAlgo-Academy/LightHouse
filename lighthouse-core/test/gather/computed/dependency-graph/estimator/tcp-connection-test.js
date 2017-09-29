@@ -61,14 +61,14 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
     });
   });
 
-  describe('.setExtraBytesDownloaded', () => {
+  describe('.setH2OverflowBytesDownloaded', () => {
     it('adjusts the time to download appropriately for H2 connections', () => {
       const connection = new TcpConnection(100, Infinity, 0, true, true);
       connection.setWarmed(true);
       assert.equal(connection.simulateDownloadUntil(30000).timeElapsed, 200);
-      connection.setExtraBytesDownloaded(20000);
+      connection.setH2OverflowBytesDownloaded(20000);
       assert.equal(connection.simulateDownloadUntil(30000).timeElapsed, 100);
-      connection.setExtraBytesDownloaded(50000);
+      connection.setH2OverflowBytesDownloaded(50000);
       assert.equal(connection.simulateDownloadUntil(30000).timeElapsed, 0);
     });
 
@@ -76,9 +76,9 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
       const connection = new TcpConnection(100, Infinity, 0, true, false);
       connection.setWarmed(true);
       assert.equal(connection.simulateDownloadUntil(30000).timeElapsed, 200);
-      connection.setExtraBytesDownloaded(20000);
+      connection.setH2OverflowBytesDownloaded(20000);
       assert.equal(connection.simulateDownloadUntil(30000).timeElapsed, 200);
-      connection.setExtraBytesDownloaded(50000);
+      connection.setH2OverflowBytesDownloaded(50000);
       assert.equal(connection.simulateDownloadUntil(30000).timeElapsed, 200);
     });
   });
@@ -156,7 +156,7 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
       it('should provide the correct values resumed small payload H2', () => {
         const connection = new TcpConnection(100, Infinity, 0, true, true);
         connection.setWarmed(true);
-        connection.setExtraBytesDownloaded(10000);
+        connection.setH2OverflowBytesDownloaded(10000);
         assert.deepEqual(connection.simulateDownloadUntil(7300), {
           bytesDownloaded: 0,
           extraBytesDownloaded: 2700, // 10000 - 7300

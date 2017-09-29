@@ -24,7 +24,7 @@ class TcpConnection {
     this._throughput = throughput;
     this._serverLatency = serverLatency;
     this._congestionWindow = INITIAL_CONGESTION_WINDOW;
-    this._overflowBytesDownloaded = 0;
+    this._h2OverflowBytesDownloaded = 0;
   }
 
   /**
@@ -72,11 +72,13 @@ class TcpConnection {
   }
 
   /**
+   * Sets the number of excess bytes that are available to this connection on future downloads, only
+   * applies to H2 connections.
    * @param {number} bytes
    */
-  setExtraBytesDownloaded(bytes) {
+  setH2OverflowBytesDownloaded(bytes) {
     if (!this._h2) return;
-    this._overflowBytesDownloaded = bytes;
+    this._h2OverflowBytesDownloaded = bytes;
   }
 
   /**
@@ -93,7 +95,7 @@ class TcpConnection {
    */
   simulateDownloadUntil(bytesToDownload, timeAlreadyElapsed = 0, maximumTimeToElapse = Infinity) {
     if (this._warmed && this._h2) {
-      bytesToDownload -= this._overflowBytesDownloaded;
+      bytesToDownload -= this._h2OverflowBytesDownloaded;
     }
     const twoWayLatency = this._rtt;
     const oneWayLatency = twoWayLatency / 2;

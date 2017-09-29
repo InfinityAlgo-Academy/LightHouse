@@ -18,10 +18,10 @@ const DEFAULT_RTT = emulation.TYPICAL_MOBILE_THROTTLING_METRICS.targetLatency;
 const DEFAULT_THROUGHPUT = emulation.TYPICAL_MOBILE_THROTTLING_METRICS.targetDownloadThroughput * 8; // 1.6 Mbps
 
 // same multiplier as Lighthouse uses for CPU emulation
-const DEFAULT_CPU_TASK_MULTIPLIER = 4;
+const DEFAULT_CPU_TASK_MULTIPLIER = emulation.CPU_THROTTLE_METRICS.rate;
 // layout tasks tend to be less CPU-bound and do not experience the same increase in duration
-const DEFAULT_LAYOUT_TASK_MULTIPLIER = 2;
-// if a task takes more than 10 seconds it's usually a sign it isn't actually CPU bound and we're over estimating
+const DEFAULT_LAYOUT_TASK_MULTIPLIER = DEFAULT_CPU_TASK_MULTIPLIER / 2;
+// if a task takes more than 10 seconds it's usually a sign it isn't actually CPU bound and we're overestimating
 const DEFAULT_MAXIMUM_CPU_TASK_DURATION = 10000;
 
 const TLS_SCHEMES = ['https', 'wss'];
@@ -325,7 +325,7 @@ class Estimator {
     );
 
     connection.setCongestionWindow(calculation.congestionWindow);
-    connection.setExtraBytesDownloaded(calculation.extraBytesDownloaded);
+    connection.setH2OverflowBytesDownloaded(calculation.extraBytesDownloaded);
 
     if (isFinished) {
       connection.setWarmed(true);
