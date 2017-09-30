@@ -67,6 +67,7 @@ class Driver {
     return [
       '-*', // exclude default
       'toplevel',
+      'v8.execute',
       'blink.console',
       'blink.user_timing',
       'benchmark',
