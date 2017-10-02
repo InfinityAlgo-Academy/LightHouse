@@ -49,7 +49,7 @@ class TTFBMetric extends Audit {
         const passed = ttfb < TTFB_THRESHOLD;
 
         if (!passed) {
-          debugString = `Root document took ${Util.formatMilliseconds(ttfb, 1)} ms` +
+          debugString = `Root document took ${Util.formatMilliseconds(ttfb, 1)} ` +
             'to get the first byte.';
         }
 
