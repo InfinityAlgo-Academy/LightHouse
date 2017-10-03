@@ -8,7 +8,9 @@
 module.exports = {
   passes: [{
     recordTrace: true,
-    pauseBeforeTraceEndMs: 5000,
+    pauseAfterLoadMs: 5250,
+    networkQuietThresholdMs: 5250,
+    cpuQuietThresholdMs: 5250,
     useThrottling: true,
     gatherers: [],
   }],

@@ -13,7 +13,7 @@ You can specify a custom config file when using Lighthouse through the CLI or co
 module.exports = {
   passes: [{
     recordTrace: true,
-    pauseBeforeTraceEndMs: 5000,
+    pauseAfterLoadMs: 5000,
     useThrottling: true,
     gatherers: [],
   }],
