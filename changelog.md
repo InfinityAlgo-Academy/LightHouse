@@ -1,3 +1,81 @@
+<a name="2.5.0"></a>
+# 2.5.0 (2017-10-04)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v2.4.0...v2.5.0)
+
+## New Contributors!
+* Huge contributions from new contributors with all-new audits, Chrome launching improvements, and more complete documentation. Thanks to @mikecardwell, @rviscomi, @siddharthkp, @ThisIzKp, @rootulp, @kdzwinel, @LCartwright, @siteriaitaliana, @vinamratasingal, @alanyin0322, and @tkadlec!
+
+## New audits
+* `image-aspect-ratio` best practice audit (#3084)
+* `time-to-first-byte` perf audit (last fixes and now enabled) (#2231)
+* `errors-in-console` best practice audit (#2836)
+* `no-vulnerable-libraries` best practice audit (#2372)
+
+### New audits in [full-config](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/full-config.js)
+* `unused-javascript` coverage audit (#3085)
+
+### New audits in new [SEO config](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/seo.js) (#2999)
+* `meta-description` SEO audit (#3227)
+* `http-status-code` SEO audit (#3311)
+
+## [FastMode](https://github.com/GoogleChrome/lighthouse/issues/2703)
+* add `predictive-perf` shell and base audit (#2720, #3189)
+* add network estimation (#3187, cf5638d6)
+* add CPU estimation (#3162, 18837dad, 5b459a1e)
+
+## Core
+* update `unused-css-rules` audit to support new coverage format (full-config only) (#2518)
+* perf: use `Audits.getEncodedResponse` in `optimized-images` audit (#3087)
+* don't wait for `Page.navigate` to resolve to listen for page load (#3413)
+* include `v8.execute` trace event category (ab6aabde)
+
+## Report
+* clarify wording of category descriptions (#3000)
+* add a linked-text type to details renderer (#3165)
+* fix: tame greedy markdown-link regex (#3312)
+* fix: prevent `\u2028` and `\u2029` from breaking the report (#3442)
+* improve descriptions for a11y audits (#3474)
+
+## Testing
+* smokehouse: adjust `unused-css-rules` audit expectations (#3036)
+* bundlesize: fix reporting in github UI (ede05c0a, #3392)
+* smokehouse: add basic smoke test for SEO audits (#3267)
+* travis: unset `\_JAVA_OPTIONS` for DevTools' `compile_frontend.py` test (#3354)
+* eslint: enable `comma-dangle` rule, fix all new errors (#3324)
+* smokehouse: add `time-to-first-byte` smoke test (#3310)
+
+## Docs
+* import [audit glossary](https://github.com/GoogleChrome/lighthouse/blob/190b8abb9c39d469c09aa167e6a72fa9e01740d1/docs/architecture.md#components--terminology) from SEO doc (#3207)
+* add [advanced throttling guide](https://github.com/GoogleChrome/lighthouse/blob/190b8abb9c39d469c09aa167e6a72fa9e01740d1/docs/throttling.md) (#3205)
+* readme: reduce minimum Chrome version to current stable (#3287, 5382f37c)
+* readme: add explanation for [Lighthouse Integrations](https://github.com/GoogleChrome/lighthouse/blob/190b8abb9c39d469c09aa167e6a72fa9e01740d1/readme.md#lighthouse-integrations) section (#3418)
+contributing.md: fix grammatical errors (#3419)
+
+## CLI
+* add [`blockedUrlPatterns` support to CLI](https://github.com/GoogleChrome/lighthouse/blob/190b8abb9c39d469c09aa167e6a72fa9e01740d1/readme.md#cli-options) (#3125)
+* adopt `yargsParser` directly for `chromeFlags` parsing (#3408)
+
+## Chrome-launcher
+_chrome-launcher has moved to a [standalone npm package](https://npmjs.org/package/chrome-launcher)_
+* docs: add changelog (#2987)
+* improve `SIGINT` handling (#2959)
+* mute audio (#3028)
+* rev to 0.6.0 (ec38bcd9, 970d3cad, e9d569c5, 5e9a3aba)
+* handle errors inside `spawnPromise` (#2939)
+* switch to using standalone package (#3410)
+
+## Misc
+* apply small license header to remaining files (#3309)
+* fix: remove redundant `lighthouse-logger/` from npm package (#3411)
+* remove old `perfX` code (#3431)
+* update plots-config to use newer quiet parameters (#3464)
+* collect even malformed error messages in extension (#3473)
+
+## Deps
+* upgrade `bundlesize` to 0.13.2 (#3122)
+* upgrade `axe-core` to 2.4.1 (#3284, #3320)
+* upgrade `ws` to 1.1.2 (2d2206b8)
+* add yargs-parser at 7.0.0 (#3477, #3478)
 
 <a name="2.4.0"></a>
 # 2.4.0 (2017-08-14)
