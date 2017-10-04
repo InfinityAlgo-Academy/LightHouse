@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@types/node": "6.0.66",
-    "lighthouse-logger": "^1.0.0"
+    "lighthouse-logger": "^1.0.0",
+    "yargs-parser": "7.0.0"
   }
 }
