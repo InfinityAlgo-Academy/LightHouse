@@ -160,35 +160,35 @@ module.exports = {
     },
     'a11y-color-contrast': {
       title: 'Color Contrast Is Satisfactory',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
+      description: 'These are opportunities to improve the legibility of your content.',
     },
     'a11y-describe-contents': {
       title: 'Elements Describe Contents Well',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
+      description: 'These are opportunities to make your content easier to understand for a user of assistive technology, like a screen reader.',
     },
     'a11y-well-structured': {
       title: 'Elements Are Well Structured',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
+      description: 'These are opportunities to make sure your HTML is appropriately structured.',
     },
     'a11y-aria': {
       title: 'ARIA Attributes Follow Best Practices',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
+      description: 'These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader.',
     },
     'a11y-correct-attributes': {
       title: 'Elements Use Attributes Correctly',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
+      description: 'These are opportunities to improve the configuration of your HTML elements.',
     },
     'a11y-element-names': {
       title: 'Elements Have Discernable Names',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
+      description: 'These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.',
     },
     'a11y-language': {
       title: 'Page Specifies Valid Language',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
+      description: 'These are opportunities to improve the interpretation of your content by users in different locales.',
     },
     'a11y-meta': {
       title: 'Meta Tags Used Properly',
-      description: 'Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content.',
+      description: 'These are opportunities to improve the user experience of your site.',
     },
     'manual-pwa-checks': {
       title: 'Manual checks to verify',
