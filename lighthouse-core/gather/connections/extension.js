@@ -109,7 +109,7 @@ class ExtensionConnection extends Connection {
           try {
             errorMessage = JSON.parse(message).message;
           } catch (e) {}
-          errorMessage = errorMessage || 'Unknown debugger protocol error.';
+          errorMessage = errorMessage || message || 'Unknown debugger protocol error.';
 
           log.formatProtocol('method <= browser ERR', {method: command}, 'error');
           return reject(new Error(`Protocol error (${command}): ${errorMessage}`));
