@@ -70,7 +70,7 @@
   "dependencies": {
     "axe-core": "2.4.1",
     "chrome-devtools-frontend": "1.0.422034",
-    "chrome-launcher": "0.8.0",
+    "chrome-launcher": "0.8.1",
     "devtools-timeline-model": "1.1.6",
     "jpeg-js": "0.1.2",
     "js-library-detector": "^4.0.0",
