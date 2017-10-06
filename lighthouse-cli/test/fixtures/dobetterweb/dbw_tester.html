@@ -209,7 +209,7 @@ function passiveEventsListenerTest() {
     console.log('touchstart');
   });
 
-  // FAIL
+  // PASS - passive:false doesn't get a warning now. crbug.com/770208
   window.addEventListener('mousewheel', function(e) {
     console.log('mousewheel');
   }, {passive: false});
