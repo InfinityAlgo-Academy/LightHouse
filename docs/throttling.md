@@ -41,8 +41,7 @@ comcast --latency=150 --target-bw=1600 --dry-run
 # comcast --stop
 ```
 
-Currently, `comcast` [doesn't support](https://github.com/tylertreat/comcast/issues/17) a separate uplink throughput.
-
+Currently, `comcast` will also throttle the websocket port that Lighthouse uses to connect to Chrome. This isn't a big problem but mostly means that receiving the trace from the browser takes significantly more time. Also, `comcast` [doesn't support](https://github.com/tylertreat/comcast/issues/17) a separate uplink throughput.
 
 ### Using Lighthouse with `comcast`
 
@@ -53,6 +52,6 @@ comcast --latency=150 --target-bw=1600
 # Run Lighthouse with it's own throttling disabled
 lighthouse --disable-network-throttling # ...
 
-# Disable the traffic throttling
+# Disable the traffic throttling once you see "Retrieving trace"
 comcast --stop
 ```
