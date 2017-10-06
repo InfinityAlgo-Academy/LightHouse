@@ -24,25 +24,21 @@ module.exports = (function() {
     global.window = global;
   }
 
-  global.Runtime = {};
-  global.Runtime.experiments = {
-    isEnabled(experimentName) {
-      switch (experimentName) {
-        case 'timelineLatencyInfo':
-          return true;
-        default:
-          return false;
-      }
-    },
-  };
+  global.Runtime = global.Runtime || {};
+
+  const _queryParam = global.Runtime.queryParam;
   global.Runtime.queryParam = function(arg) {
     switch (arg) {
       case 'remoteFrontend':
         return false;
       case 'ws':
         return false;
-      default:
-        throw Error('Mock queryParam case not implemented.');
+      default: {
+        if (_queryParam) {
+          return _queryParam.call(global.Runtime, arg);
+        }
+        throw new Error('Mock queryParam case not implemented.');
+      }
     }
   };
 
