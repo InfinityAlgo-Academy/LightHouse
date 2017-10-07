@@ -28,7 +28,7 @@
     "smoke": "bash lighthouse-cli/test/smokehouse/offline-local/run-tests.sh && bash lighthouse-cli/test/smokehouse/perf/run-tests.sh && bash lighthouse-cli/test/smokehouse/dobetterweb/run-tests.sh && bash lighthouse-cli/test/smokehouse/byte-efficiency/run-tests.sh && bash lighthouse-cli/test/smokehouse/tricky-ttci/run-tests.sh && bash lighthouse-cli/test/smokehouse/seo/run-tests.sh && bash lighthouse-cli/test/smokehouse/redirects/run-tests.sh",
     "coverage": "istanbul cover -x \"**/third_party/**\" _mocha -- $(find */test -name '*-test.js') --timeout 10000 --reporter progress --report lcovonly",
     "start": "node ./lighthouse-cli/index.js",
-    "test": "yarn lint --silent && yarn unit && yarn closure && yarn test-cli-formatting",
+    "test": "yarn lint --quiet && yarn unit && yarn closure && yarn test-cli-formatting",
     "unit-core": "bash lighthouse-core/scripts/run-mocha.sh --core",
     "unit-cli": "bash lighthouse-core/scripts/run-mocha.sh --cli",
     "unit-viewer": "bash lighthouse-core/scripts/run-mocha.sh --viewer",
