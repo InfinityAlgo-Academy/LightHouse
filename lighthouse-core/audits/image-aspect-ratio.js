@@ -25,7 +25,7 @@ class ImageAspectRatio extends Audit {
       category: 'Images',
       name: 'image-aspect-ratio',
       description: 'Uses Images with appropriate aspect ratio',
-      failureDescription: 'Does not uses Images with appropriate aspect ratio',
+      failureDescription: 'Does not use Images with appropriate aspect ratio',
       helpText: 'Image displayed sizes should match their natural aspect ratio.',
       requiredArtifacts: ['ImageUsage'],
     };
