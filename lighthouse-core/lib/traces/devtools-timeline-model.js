@@ -36,11 +36,14 @@ class TimelineModel {
     // populate with events
     this._tracingModel.reset();
 
-    ConsoleQuieter.mute({prefix: 'timelineModel'});
-    this._tracingModel.addEvents(events);
-    this._tracingModel.tracingComplete();
-    this._timelineModel.setEvents(this._tracingModel);
-    ConsoleQuieter.unmuteAndFlush();
+    try {
+      ConsoleQuieter.mute({prefix: 'timelineModel'});
+      this._tracingModel.addEvents(events);
+      this._tracingModel.tracingComplete();
+      this._timelineModel.setEvents(this._tracingModel);
+    } finally {
+      ConsoleQuieter.unmuteAndFlush();
+    }
 
     return this;
   }

@@ -26,6 +26,10 @@ module.exports = (function() {
 
   global.Runtime = global.Runtime || {};
 
+  // Required for devtools-timeline-model
+  global.Runtime.experiments = global.Runtime.experiments || {};
+  global.Runtime.experiments.isEnabled = global.Runtime.experiments.isEnabled || (_ => false);
+
   const _queryParam = global.Runtime.queryParam;
   global.Runtime.queryParam = function(arg) {
     switch (arg) {
