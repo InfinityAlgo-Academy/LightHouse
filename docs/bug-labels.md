@@ -1,4 +1,4 @@
-Given the new onslought of issues that folks in the community are filing, we thought it might be good to explain some of our 
+Given the new onslaught of issues that folks in the community are filing, we thought it might be good to explain some of our 
 bug labeling and triaging practices to the community. 
 
 ## Bug Triaging Overview
@@ -31,5 +31,5 @@ Here are the different (actively used) labels and what they mean, organized by c
 
 ### Other labels
 - Good first bug: for new external contributor, these issues can be useful for them to tackle. 
-- Needs help: issues that could use help from the community. 
+- Help wanted: issues that could use help from the community. 
 
