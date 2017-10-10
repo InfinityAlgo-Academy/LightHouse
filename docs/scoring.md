@@ -15,6 +15,8 @@ Lighthouse primarily measures the following metrics:
 - Perceptual Speed Index (pSI): pSI measures how many pixels are painted at each given time interval on the viewport. The fewer the pixels that are painted, the better since we want an experience where most of the content is shown on the screen during the first few moments of initiating the page load. Therefore, the lower the pSI score, the better. 
 - Estimated Input Latency:  this audit measures how fast your app is in responding to user input. Our benchmark is that the estimated input latency should be under 50 ms (see documentation here as to why)
 
+*Note that by Lighthouse can experience weird behaviors when it run in the presence of anti-virus scanners. Please try to run without the anti-virus scanner to get the cleanest results.*
+
 # How are the scores weighted?
 Lighthouse returns a performance score from 0-100. A score of 0 usually indicates an error with performance measurement (so file an issue in the Lighthouse repo if further debugging is needed), and 100 is the best possible ideal score (really hard to get). 
 We usually recommend that if developers are scoring around a 95, their websites are extremely performant. Any additional improvements to the score past 95 doesn’t add additional value for the developer, so we don’t recommend they invest further time to improve the score. 
