@@ -30,5 +30,8 @@ The metric results are not weighted equally. Currently the weights are:
 
 Currently, these weights were determined based on heuristics, and the Lighthouse team is working on formalizing this approach through more field data.  
 
+# How do you determine the optimal and median value calculated?
+Looking at the distribution of metrics like Time to Consistently Interactive (TTCI) over the HTTPArchive dataset, we've seen that the median value of this distribution ends up being around 10 seconds, which is why the value of 12 seconds exists within the dataset. Given that we want to encourage web developers to build fast websites, we've shifted the median slightly to the left by 2 seconds to give a final median value of 10 seconds. Similarly, for the optimal value, we look at the curve to see where the curve flattens out, meaning that as a developer, every second you shave off the performance doesn't yield additional benefit. We've determined this point for TTCI to be around 3 seconds. 
+
 # What can developers do to improve their performance metrics?
 Lighthouse has a whole section in the report on this under the “Opportunities” section. There are detailed suggestions and documentation that explains the different suggestions there. Additionally, the diagnostics section lists additional guidance that developers can explore to further experiment and tweak with their performance, but the opportunities section will provide the most actionable advice for developers to follow. 
