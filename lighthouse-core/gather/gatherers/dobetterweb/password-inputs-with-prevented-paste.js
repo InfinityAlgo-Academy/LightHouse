@@ -18,7 +18,7 @@ function findPasswordInputsWithPreventedPaste() {
    * @return {string}
    */
   function getOuterHTMLSnippet(node) {
-    const reOpeningTag = /^.*?\>/;
+    const reOpeningTag = /^.*?>/;
     const match = node.outerHTML.match(reOpeningTag);
     return match && match[0];
   }

@@ -754,7 +754,7 @@ class Driver {
     const tracingOpts = {
       categories: _uniq(traceCategories).join(','),
       transferMode: 'ReturnAsStream',
-      options: 'sampling-frequency=10000',  // 1000 is default and too slow.
+      options: 'sampling-frequency=10000', // 1000 is default and too slow.
     };
 
     // Check any domains that could interfere with or add overhead to the trace.

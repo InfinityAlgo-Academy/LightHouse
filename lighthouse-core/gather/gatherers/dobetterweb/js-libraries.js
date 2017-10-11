@@ -39,7 +39,7 @@ function detectLibraries() {
           npmPkgName: lib.npm,
         });
       }
-    } catch(e) {}
+    } catch (e) {}
   });
 
   return libraries;

@@ -13,7 +13,6 @@
 const Gatherer = require('./gatherer');
 
 class ChromeConsoleMessages extends Gatherer {
-
   constructor() {
     super();
     this._logEntries = [];

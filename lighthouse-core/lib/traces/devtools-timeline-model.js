@@ -13,7 +13,6 @@ const TimelineModelTreeView =
     require('devtools-timeline-model/lib/timeline-model-treeview.js')(WebInspector);
 
 class TimelineModel {
-
   constructor(events) {
     this.init(events);
   }
@@ -85,10 +84,10 @@ class TimelineModel {
     return WebInspector.TimelineProfileTree.buildBottomUp(topDown, noGroupAggregator);
   }
 
- /**
-  * @param  {!string} grouping Allowed values: None Category Subdomain Domain URL EventName
-  * @return {!WebInspector.TimelineProfileTree.Node} A grouped and sorted tree
-  */
+  /**
+   * @param  {!string} grouping Allowed values: None Category Subdomain Domain URL EventName
+   * @return {!WebInspector.TimelineProfileTree.Node} A grouped and sorted tree
+   */
   bottomUpGroupBy(grouping) {
     const topDown = this.topDown();
 
@@ -120,7 +119,6 @@ class TimelineModel {
     irModel.populate(this._timelineModel);
     return irModel;
   }
-
 }
 
 module.exports = TimelineModel;

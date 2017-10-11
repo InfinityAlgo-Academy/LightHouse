@@ -24,7 +24,6 @@ function getViewportDimensions() {
 }
 
 class ViewportDimensions extends Gatherer {
-
   /**
    * @param {!Object} options
    * @return {!Promise<{innerWidth: number, outerWidth: number, devicePixelRatio: number}>}

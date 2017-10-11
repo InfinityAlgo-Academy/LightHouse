@@ -109,7 +109,6 @@ class DOMSize extends Audit {
       },
     };
   }
-
 }
 
 module.exports = DOMSize;

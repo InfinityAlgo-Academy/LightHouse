@@ -20,3 +20,5 @@ lighthouse-cli/types/*.js
 
 # Generated files
 plots/out*
+
+!.eslintrc.js

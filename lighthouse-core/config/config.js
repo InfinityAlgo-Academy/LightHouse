@@ -31,7 +31,7 @@ function cleanTrace(trace) {
     return {
       pid: evt.pid,
       tid: evt.tid,
-      ts: ts || 0,  // default to 0 for now
+      ts: ts || 0, // default to 0 for now
       ph: 'I',
       cat: 'disabled-by-default-devtools.timeline',
       name: 'TracingStartedInPage',
@@ -473,10 +473,10 @@ class Config {
     return new Set(audits.map(audit => audit.id));
   }
 
- /**
-  * @param {{categories: !Object<string, {name: string}>}} config
-  * @return {!Array<{id: string, name: string}>}
-  */
+  /**
+   * @param {{categories: !Object<string, {name: string}>}} config
+   * @return {!Array<{id: string, name: string}>}
+   */
   static getCategories(config) {
     return Object.keys(config.categories).map(id => {
       const name = config.categories[id].name;

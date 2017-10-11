@@ -19,14 +19,14 @@ const VERY_LOW = 'VeryLow';
 
 function mockTracingData(prioritiesList, edges) {
   const networkRecords = prioritiesList.map((priority, index) =>
-      ({requestId: index.toString(),
-        _resourceType: {
-          _category: 'fake',
-        },
-        finished: true,
-        priority: () => priority,
-        initiatorRequest: () => null,
-      }));
+    ({requestId: index.toString(),
+      _resourceType: {
+        _category: 'fake',
+      },
+      finished: true,
+      priority: () => priority,
+      initiatorRequest: () => null,
+    }));
 
   // add mock initiator information
   edges.forEach(edge => {

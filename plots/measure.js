@@ -221,7 +221,7 @@ function analyzeWithLighthouse(launcher, url, outputPath, assetsPath, {ignoreRun
  * @return {string}
  */
 function sanitize(string) {
-  const illegalRe = /[\/\?<>\\:\*\|":]/g;
+  const illegalRe = /[/?<>\\:*|":]/g;
   const controlRe = /[\x00-\x1f\x80-\x9f]/g; // eslint-disable-line no-control-regex
   const reservedRe = /^\.+$/;
 

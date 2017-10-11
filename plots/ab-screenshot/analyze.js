@@ -51,7 +51,7 @@ function main() {
     `var aggregatedScreenshots = ${JSON.stringify(aggregatedScreenshots, undefined, 2)}`
   );
   console.log('Wrote output to:', outFilePath); // eslint-disable-line no-console
-  console.log('Opening the screenshot viewer web page...');  // eslint-disable-line no-console
+  console.log('Opening the screenshot viewer web page...'); // eslint-disable-line no-console
   opn(path.resolve(__dirname, 'index.html'));
 }
 
