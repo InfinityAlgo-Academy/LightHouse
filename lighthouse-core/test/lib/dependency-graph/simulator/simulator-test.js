@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const NetworkNode = require('../../../../../gather/computed/dependency-graph/network-node');
-const CpuNode = require('../../../../../gather/computed/dependency-graph/cpu-node');
-const Estimator = require('../../../../../gather/computed/dependency-graph/estimator/estimator');
+const NetworkNode = require('../../../../lib/dependency-graph/network-node');
+const CpuNode = require('../../../../lib/dependency-graph/cpu-node');
+const Simulator = require('../../../../lib/dependency-graph/simulator/simulator');
 
 const assert = require('assert');
 let nextRequestId = 1;
@@ -36,28 +36,39 @@ function cpuTask({tid, ts, duration}) {
 }
 
 /* eslint-env mocha */
-describe('DependencyGraph/Estimator', () => {
-  describe('.estimate', () => {
-    it('should estimate basic network graphs', () => {
+describe('DependencyGraph/Simulator', () => {
+  describe('.simulate', () => {
+    function assertNodeTiming(result, node, assertions) {
+      const timing = result.nodeTiming.get(node);
+      assert.ok(timing, 'missing node timing information');
+      Object.keys(assertions).forEach(key => {
+        assert.equal(timing[key], assertions[key]);
+      });
+    }
+
+    it('should simulate basic network graphs', () => {
       const rootNode = new NetworkNode(request({}));
-      const estimator = new Estimator(rootNode, {fallbackTTFB: 500});
-      const result = estimator.estimate();
+      const simulator = new Simulator(rootNode, {fallbackTTFB: 500});
+      const result = simulator.simulate();
       // should be 2 RTTs and 500ms for the server response time
-      assert.equal(result, 300 + 500);
+      assert.equal(result.timeInMs, 300 + 500);
+      assertNodeTiming(result, rootNode, {startTime: 0, endTime: 800});
     });
 
-    it('should estimate basic mixed graphs', () => {
+    it('should simulate basic mixed graphs', () => {
       const rootNode = new NetworkNode(request({}));
       const cpuNode = new CpuNode(cpuTask({duration: 200}));
       cpuNode.addDependency(rootNode);
 
-      const estimator = new Estimator(rootNode, {fallbackTTFB: 500, cpuTaskMultiplier: 5});
-      const result = estimator.estimate();
+      const simulator = new Simulator(rootNode, {fallbackTTFB: 500, cpuTaskMultiplier: 5});
+      const result = simulator.simulate();
       // should be 2 RTTs and 500ms for the server response time + 200 CPU
-      assert.equal(result, 300 + 500 + 200);
+      assert.equal(result.timeInMs, 300 + 500 + 200);
+      assertNodeTiming(result, rootNode, {startTime: 0, endTime: 800});
+      assertNodeTiming(result, cpuNode, {startTime: 800, endTime: 1000});
     });
 
-    it('should estimate basic network waterfall graphs', () => {
+    it('should simulate basic network waterfall graphs', () => {
       const nodeA = new NetworkNode(request({connectionId: 1}));
       const nodeB = new NetworkNode(request({connectionId: 2}));
       const nodeC = new NetworkNode(request({connectionId: 3}));
@@ -67,13 +78,17 @@ describe('DependencyGraph/Estimator', () => {
       nodeB.addDependent(nodeC);
       nodeC.addDependent(nodeD);
 
-      const estimator = new Estimator(nodeA, {fallbackTTFB: 500});
-      const result = estimator.estimate();
+      const simulator = new Simulator(nodeA, {fallbackTTFB: 500});
+      const result = simulator.simulate();
       // should be 800ms each for A, B, C, D
-      assert.equal(result, 3200);
+      assert.equal(result.timeInMs, 3200);
+      assertNodeTiming(result, nodeA, {startTime: 0, endTime: 800});
+      assertNodeTiming(result, nodeB, {startTime: 800, endTime: 1600});
+      assertNodeTiming(result, nodeC, {startTime: 1600, endTime: 2400});
+      assertNodeTiming(result, nodeD, {startTime: 2400, endTime: 3200});
     });
 
-    it('should estimate basic CPU queue graphs', () => {
+    it('should simulate basic CPU queue graphs', () => {
       const nodeA = new NetworkNode(request({connectionId: 1}));
       const nodeB = new CpuNode(cpuTask({duration: 100}));
       const nodeC = new CpuNode(cpuTask({duration: 600}));
@@ -83,13 +98,17 @@ describe('DependencyGraph/Estimator', () => {
       nodeA.addDependent(nodeC);
       nodeA.addDependent(nodeD);
 
-      const estimator = new Estimator(nodeA, {fallbackTTFB: 500, cpuTaskMultiplier: 5});
-      const result = estimator.estimate();
+      const simulator = new Simulator(nodeA, {fallbackTTFB: 500, cpuTaskMultiplier: 5});
+      const result = simulator.simulate();
       // should be 800ms A, then 1000 ms total for B, C, D in serial
-      assert.equal(result, 1800);
+      assert.equal(result.timeInMs, 1800);
+      assertNodeTiming(result, nodeA, {startTime: 0, endTime: 800});
+      assertNodeTiming(result, nodeB, {startTime: 800, endTime: 900});
+      assertNodeTiming(result, nodeC, {startTime: 900, endTime: 1500});
+      assertNodeTiming(result, nodeD, {startTime: 1500, endTime: 1800});
     });
 
-    it('should estimate basic network waterfall graphs with CPU', () => {
+    it('should simulate basic network waterfall graphs with CPU', () => {
       const nodeA = new NetworkNode(request({connectionId: 1}));
       const nodeB = new NetworkNode(request({connectionId: 2}));
       const nodeC = new NetworkNode(request({connectionId: 3}));
@@ -103,13 +122,13 @@ describe('DependencyGraph/Estimator', () => {
       nodeC.addDependent(nodeD);
       nodeC.addDependent(nodeF); // finishes 400 ms after D
 
-      const estimator = new Estimator(nodeA, {fallbackTTFB: 500, cpuTaskMultiplier: 5});
-      const result = estimator.estimate();
+      const simulator = new Simulator(nodeA, {fallbackTTFB: 500, cpuTaskMultiplier: 5});
+      const result = simulator.simulate();
       // should be 800ms each for A, B, C, D, with F finishing 400 ms after D
-      assert.equal(result, 3600);
+      assert.equal(result.timeInMs, 3600);
     });
 
-    it('should estimate basic parallel requests', () => {
+    it('should simulate basic parallel requests', () => {
       const nodeA = new NetworkNode(request({connectionId: 1}));
       const nodeB = new NetworkNode(request({connectionId: 2}));
       const nodeC = new NetworkNode(request({connectionId: 3, transferSize: 15000}));
@@ -119,10 +138,10 @@ describe('DependencyGraph/Estimator', () => {
       nodeA.addDependent(nodeC);
       nodeA.addDependent(nodeD);
 
-      const estimator = new Estimator(nodeA, {fallbackTTFB: 500});
-      const result = estimator.estimate();
+      const simulator = new Simulator(nodeA, {fallbackTTFB: 500});
+      const result = simulator.simulate();
       // should be 800ms for A and 950ms for C (2 round trips of downloading)
-      assert.equal(result, 800 + 950);
+      assert.equal(result.timeInMs, 800 + 950);
     });
 
     it('should not reuse connections', () => {
@@ -135,10 +154,10 @@ describe('DependencyGraph/Estimator', () => {
       nodeA.addDependent(nodeC);
       nodeA.addDependent(nodeD);
 
-      const estimator = new Estimator(nodeA, {fallbackTTFB: 500});
-      const result = estimator.estimate();
+      const simulator = new Simulator(nodeA, {fallbackTTFB: 500});
+      const result = simulator.simulate();
       // should be 800ms for A and 650ms for the next 3
-      assert.equal(result, 800 + 650 * 3);
+      assert.equal(result.timeInMs, 800 + 650 * 3);
     });
 
     it('should adjust throughput based on number of requests', () => {
@@ -151,10 +170,10 @@ describe('DependencyGraph/Estimator', () => {
       nodeA.addDependent(nodeC);
       nodeA.addDependent(nodeD);
 
-      const estimator = new Estimator(nodeA, {fallbackTTFB: 500});
-      const result = estimator.estimate();
+      const simulator = new Simulator(nodeA, {fallbackTTFB: 500});
+      const result = simulator.simulate();
       // should be 800ms for A and 950ms for C (2 round trips of downloading)
-      assert.equal(result, 800 + 950);
+      assert.equal(result.timeInMs, 800 + 950);
     });
   });
 });

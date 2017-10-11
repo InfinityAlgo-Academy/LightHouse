@@ -260,7 +260,6 @@ class Runner {
     const computedArtifacts = {};
     const filenamesToSkip = [
       'computed-artifact.js', // the base class which other artifacts inherit
-      'dependency-graph', // a folder containing dependencies, not an artifact
     ];
 
     require('fs').readdirSync(__dirname + '/gather/computed').forEach(function(filename) {

@@ -89,11 +89,12 @@ class TcpConnection {
    *  https://hpbn.co/transport-layer-security-tls/#tls-handshake for details.
    *
    * @param {number} bytesToDownload
-   * @param {number=} timeAlreadyElapsed
-   * @param {number=} maximumTimeToElapse
+   * @param {{timeAlreadyElapsed: number, maximumTimeToElapse}=} options
    * @return {{timeElapsed: number, roundTrips: number, bytesDownloaded: number, congestionWindow: number}}
    */
-  simulateDownloadUntil(bytesToDownload, timeAlreadyElapsed = 0, maximumTimeToElapse = Infinity) {
+  simulateDownloadUntil(bytesToDownload, options) {
+    const {timeAlreadyElapsed = 0, maximumTimeToElapse = Infinity} = options || {};
+
     if (this._warmed && this._h2) {
       bytesToDownload -= this._h2OverflowBytesDownloaded;
     }

@@ -6,18 +6,19 @@
 'use strict';
 
 const PageDependencyGraph = require('../../../gather/computed/page-dependency-graph');
-const Node = require('../../../gather/computed/dependency-graph/node');
+const Node = require('../../../lib/dependency-graph/node');
 const Runner = require('../../../runner.js');
+const WebInspector = require('../../../lib/web-inspector');
 
 const sampleTrace = require('../../fixtures/traces/progressive-app-m60.json');
 const sampleDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 const assert = require('assert');
 
-function createRequest(requestId, url, startTime = 0, _initiator = null, resourceType = '') {
+function createRequest(requestId, url, startTime = 0, _initiator = null, _resourceType = null) {
   startTime = startTime / 1000;
   const endTime = startTime + .1;
-  return {requestId, url, startTime, endTime, _initiator, _resourceType: {_name: resourceType}};
+  return {requestId, url, startTime, endTime, _initiator, _resourceType};
 }
 
 /* eslint-env mocha */
@@ -158,7 +159,7 @@ describe('PageDependencyGraph computed artifact:', () => {
       const request1 = createRequest(1, '1', 0);
       const request2 = createRequest(2, '2', 50);
       const request3 = createRequest(3, '3', 50);
-      const request4 = createRequest(4, '4', 300, null, 'xhr');
+      const request4 = createRequest(4, '4', 300, null, WebInspector.resourceTypes.XHR);
       const networkRecords = [request1, request2, request3, request4];
 
       addTaskEvents(200, 200, [

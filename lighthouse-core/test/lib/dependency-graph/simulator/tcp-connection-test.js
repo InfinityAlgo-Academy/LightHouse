@@ -6,12 +6,12 @@
 'use strict';
 
 // eslint-disable-next-line
-const TcpConnection = require('../../../../../gather/computed/dependency-graph/estimator/tcp-connection');
+const TcpConnection = require('../../../../lib/dependency-graph/simulator/tcp-connection');
 
 const assert = require('assert');
 
 /* eslint-env mocha */
-describe('DependencyGraph/Estimator/TcpConnection', () => {
+describe('DependencyGraph/Simulator/TcpConnection', () => {
   describe('#constructor', () => {
     it('should create the connection', () => {
       const rtt = 150;
@@ -144,7 +144,7 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
 
       it('should provide the correct values resumed small payload', () => {
         const connection = new TcpConnection(100, Infinity, 0, true);
-        assert.deepEqual(connection.simulateDownloadUntil(7300, 250), {
+        assert.deepEqual(connection.simulateDownloadUntil(7300, {timeAlreadyElapsed: 250}), {
           bytesDownloaded: 7300,
           extraBytesDownloaded: 0,
           congestionWindow: 10,
@@ -170,60 +170,81 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
         const connection = new TcpConnection(100, 8 * 1000 * 1000);
         const bytesToDownload = 5 * 1000 * 1000; // 5 mb
         connection.setCongestionWindow(68);
-        assert.deepEqual(connection.simulateDownloadUntil(bytesToDownload, 5234), {
-          bytesDownloaded: bytesToDownload,
-          extraBytesDownloaded: 0,
-          congestionWindow: 68,
-          roundTrips: 51, // 5 mb / (1460 * 68)
-          timeElapsed: 5100,
-        });
+        assert.deepEqual(
+          connection.simulateDownloadUntil(bytesToDownload, {timeAlreadyElapsed: 5234}),
+          {
+            bytesDownloaded: bytesToDownload,
+            extraBytesDownloaded: 0,
+            congestionWindow: 68,
+            roundTrips: 51, // 5 mb / (1460 * 68)
+            timeElapsed: 5100,
+          }
+        );
       });
     });
 
     context('when maximumTime is set', () => {
       it('should provide the correct values less than TTFB', () => {
         const connection = new TcpConnection(100, Infinity, 0, false);
-        assert.deepEqual(connection.simulateDownloadUntil(7300, 0, 68), {
-          bytesDownloaded: 7300,
-          extraBytesDownloaded: 0,
-          congestionWindow: 10,
-          roundTrips: 2,
-          timeElapsed: 200,
-        });
+        assert.deepEqual(
+          connection.simulateDownloadUntil(7300, {timeAlreadyElapsed: 0, maximumTimeToElapse: 68}),
+          {
+            bytesDownloaded: 7300,
+            extraBytesDownloaded: 0,
+            congestionWindow: 10,
+            roundTrips: 2,
+            timeElapsed: 200,
+          }
+        );
       });
 
       it('should provide the correct values just over TTFB', () => {
         const connection = new TcpConnection(100, Infinity, 0, false);
-        assert.deepEqual(connection.simulateDownloadUntil(7300, 0, 250), {
-          bytesDownloaded: 7300,
-          extraBytesDownloaded: 0,
-          congestionWindow: 10,
-          roundTrips: 2,
-          timeElapsed: 200,
-        });
+        assert.deepEqual(
+          connection.simulateDownloadUntil(7300, {timeAlreadyElapsed: 0, maximumTimeToElapse: 250}),
+          {
+            bytesDownloaded: 7300,
+            extraBytesDownloaded: 0,
+            congestionWindow: 10,
+            roundTrips: 2,
+            timeElapsed: 200,
+          }
+        );
       });
 
       it('should provide the correct values with already elapsed', () => {
         const connection = new TcpConnection(100, Infinity, 0, false);
-        assert.deepEqual(connection.simulateDownloadUntil(7300, 75, 250), {
-          bytesDownloaded: 7300,
-          extraBytesDownloaded: 0,
-          congestionWindow: 10,
-          roundTrips: 2,
-          timeElapsed: 125,
-        });
+        assert.deepEqual(
+          connection.simulateDownloadUntil(7300, {
+            timeAlreadyElapsed: 75,
+            maximumTimeToElapse: 250,
+          }),
+          {
+            bytesDownloaded: 7300,
+            extraBytesDownloaded: 0,
+            congestionWindow: 10,
+            roundTrips: 2,
+            timeElapsed: 125,
+          }
+        );
       });
 
       it('should provide the correct values large payloads', () => {
         const connection = new TcpConnection(100, 8 * 1000 * 1000);
         const bytesToDownload = 10 * 1000 * 1000; // 10 mb
-        assert.deepEqual(connection.simulateDownloadUntil(bytesToDownload, 500, 740), {
-          bytesDownloaded: 683280, // should be less than 68 * 1460 * 8
-          extraBytesDownloaded: 0,
-          congestionWindow: 68,
-          roundTrips: 8,
-          timeElapsed: 800, // skips the handshake because time already elapsed
-        });
+        assert.deepEqual(
+          connection.simulateDownloadUntil(bytesToDownload, {
+            timeAlreadyElapsed: 500,
+            maximumTimeToElapse: 740,
+          }),
+          {
+            bytesDownloaded: 683280, // should be less than 68 * 1460 * 8
+            extraBytesDownloaded: 0,
+            congestionWindow: 68,
+            roundTrips: 8,
+            timeElapsed: 800, // skips the handshake because time already elapsed
+          }
+        );
       });
 
       it('should all add up', () => {
@@ -233,25 +254,26 @@ describe('DependencyGraph/Estimator/TcpConnection', () => {
         const secondStoppingPoint = 315;
         const thirdStoppingPoint = 10500 - firstStoppingPoint - secondStoppingPoint;
 
-        const firstSegment = connection.simulateDownloadUntil(
-          bytesToDownload,
-          0,
-          firstStoppingPoint
-        );
+        const firstSegment = connection.simulateDownloadUntil(bytesToDownload, {
+          timeAlreadyElapsed: 0,
+          maximumTimeToElapse: firstStoppingPoint,
+        });
         const firstOvershoot = firstSegment.timeElapsed - firstStoppingPoint;
 
         connection.setCongestionWindow(firstSegment.congestionWindow);
         const secondSegment = connection.simulateDownloadUntil(
           bytesToDownload - firstSegment.bytesDownloaded,
-          firstSegment.timeElapsed,
-          secondStoppingPoint - firstOvershoot
+          {
+            timeAlreadyElapsed: firstSegment.timeElapsed,
+            maximumTimeToElapse: secondStoppingPoint - firstOvershoot,
+          }
         );
         const secondOvershoot = firstOvershoot + secondSegment.timeElapsed - secondStoppingPoint;
 
         connection.setCongestionWindow(secondSegment.congestionWindow);
         const thirdSegment = connection.simulateDownloadUntil(
           bytesToDownload - firstSegment.bytesDownloaded - secondSegment.bytesDownloaded,
-          firstSegment.timeElapsed + secondSegment.timeElapsed
+          {timeAlreadyElapsed: firstSegment.timeElapsed + secondSegment.timeElapsed}
         );
         const thirdOvershoot = secondOvershoot + thirdSegment.timeElapsed - thirdStoppingPoint;
 

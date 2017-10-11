@@ -7,7 +7,7 @@
 
 const Node = require('../node');
 const TcpConnection = require('./tcp-connection');
-const emulation = require('../../../../lib/emulation').settings;
+const emulation = require('../../emulation').settings;
 
 // see https://cs.chromium.org/search/?q=kDefaultMaxNumDelayableRequestsPerClient&sq=package:chromium&type=cs
 const DEFAULT_MAXIMUM_CONCURRENT_REQUESTS = 10;
@@ -38,7 +38,14 @@ function groupBy(items, keyFunc) {
   return grouped;
 }
 
-class Estimator {
+const NodeState = {
+  NotReadyToStart: 0,
+  ReadyToStart: 1,
+  InProgress: 2,
+  Complete: 3,
+};
+
+class Simulator {
   /**
    * @param {!Node} graph
    * @param {{rtt: number, throughput: number, fallbackTTFB: number,
@@ -109,7 +116,7 @@ class Estimator {
       // Even though TTFB is greater than server response time, the RTT is underaccounted for by
       // not varying per-server and so the difference roughly evens out.
       // TODO(patrickhulce): investigate a way to identify per-server RTT
-      let estimatedResponseTime = Math.min(...records.map(Estimator.getTTFB));
+      let estimatedResponseTime = Math.min(...records.map(Simulator.getTTFB));
 
       // If we couldn't find a TTFB for the requests, use the fallback TTFB instead.
       if (!Number.isFinite(estimatedResponseTime)) {
@@ -132,16 +139,17 @@ class Estimator {
   }
 
   /**
-   * Initializes the various state data structures such as _nodesInQueue and _nodesCompleted.
+   * Initializes the various state data structures such as _nodesReadyToStart and _nodesCompleted.
    */
   _initializeAuxiliaryData() {
     this._nodeTiming = new Map();
-    this._nodesUnprocessed = new Set();
-    this._nodesCompleted = new Set();
-    this._nodesInProgress = new Set();
-    this._nodesInQueue = new Set(); // TODO: replace this with priority queue
     this._connectionsInUse = new Set();
     this._numberInProgressByType = new Map();
+
+    this._nodes = [];
+    for (const key of Object.keys(NodeState)) {
+      this._nodes[NodeState[key]] = new Set();
+    }
   }
 
   /**
@@ -166,9 +174,9 @@ class Estimator {
    * @param {!Node} node
    * @param {number} queuedTime
    */
-  _markNodeAsInQueue(node, queuedTime) {
-    this._nodesInQueue.add(node);
-    this._nodesUnprocessed.delete(node);
+  _markNodeAsReadyToStart(node, queuedTime) {
+    this._nodes[NodeState.ReadyToStart].add(node);
+    this._nodes[NodeState.NotReadyToStart].delete(node);
     this._setTimingData(node, {queuedTime});
   }
 
@@ -177,8 +185,8 @@ class Estimator {
    * @param {number} startTime
    */
   _markNodeAsInProgress(node, startTime) {
-    this._nodesInQueue.delete(node);
-    this._nodesInProgress.add(node);
+    this._nodes[NodeState.InProgress].add(node);
+    this._nodes[NodeState.ReadyToStart].delete(node);
     this._numberInProgressByType.set(node.type, this._numberInProgress(node.type) + 1);
     this._setTimingData(node, {startTime});
   }
@@ -188,8 +196,8 @@ class Estimator {
    * @param {number} endTime
    */
   _markNodeAsComplete(node, endTime) {
-    this._nodesCompleted.add(node);
-    this._nodesInProgress.delete(node);
+    this._nodes[NodeState.Complete].add(node);
+    this._nodes[NodeState.InProgress].delete(node);
     this._numberInProgressByType.set(node.type, this._numberInProgress(node.type) - 1);
     this._setTimingData(node, {endTime});
 
@@ -197,10 +205,10 @@ class Estimator {
     for (const dependent of node.getDependents()) {
       // Skip dependent node if one of its dependencies hasn't finished yet
       const dependencies = dependent.getDependencies();
-      if (dependencies.some(dependency => !this._nodesCompleted.has(dependency))) continue;
+      if (dependencies.some(dep => !this._nodes[NodeState.Complete].has(dep))) continue;
 
       // Otherwise add it to the queue
-      this._markNodeAsInQueue(dependent, endTime);
+      this._markNodeAsReadyToStart(dependent, endTime);
     }
   }
 
@@ -248,7 +256,7 @@ class Estimator {
    */
   _updateNetworkCapacity() {
     for (const connection of this._connectionsInUse) {
-      connection.setThroughput(this._throughput / this._nodesInProgress.size);
+      connection.setThroughput(this._throughput / this._nodes[NodeState.InProgress].size);
     }
   }
 
@@ -278,7 +286,7 @@ class Estimator {
     const connection = this._connections.get(node.record.connectionId);
     const calculation = connection.simulateDownloadUntil(
       node.record.transferSize - timingData.bytesDownloaded,
-      timingData.timeElapsed
+      {timeAlreadyElapsed: timingData.timeElapsed}
     );
 
     const estimatedTimeElapsed = calculation.timeElapsed + timingData.timeElapsedOvershoot;
@@ -292,7 +300,7 @@ class Estimator {
    */
   _findNextNodeCompletionTime() {
     let minimumTime = Infinity;
-    for (const node of this._nodesInProgress) {
+    for (const node of this._nodes[NodeState.InProgress]) {
       minimumTime = Math.min(minimumTime, this._estimateTimeRemaining(node));
     }
 
@@ -320,8 +328,10 @@ class Estimator {
     const connection = this._connections.get(node.record.connectionId);
     const calculation = connection.simulateDownloadUntil(
       node.record.transferSize - timingData.bytesDownloaded,
-      timingData.timeElapsed,
-      timePeriodLength - timingData.timeElapsedOvershoot
+      {
+        timeAlreadyElapsed: timingData.timeElapsed,
+        maximumTimeToElapse: timePeriodLength - timingData.timeElapsedOvershoot,
+      }
     );
 
     connection.setCongestionWindow(calculation.congestionWindow);
@@ -342,31 +352,31 @@ class Estimator {
    * Estimates the time taken to process all of the graph's nodes.
    * @return {{timeInMs: number, nodeTiming: !Map<!Node, !NodeTimingData>}}
    */
-  estimateWithDetails() {
+  simulate() {
     // initialize all the necessary data containers
     this._initializeNetworkRecords();
     this._initializeNetworkConnections();
     this._initializeAuxiliaryData();
 
-    const nodesUnprocessed = this._nodesUnprocessed;
-    const nodesInQueue = this._nodesInQueue;
-    const nodesInProgress = this._nodesInProgress;
+    const nodesNotReadyToStart = this._nodes[NodeState.NotReadyToStart];
+    const nodesReadyToStart = this._nodes[NodeState.ReadyToStart];
+    const nodesInProgress = this._nodes[NodeState.InProgress];
 
     const rootNode = this._graph.getRootNode();
-    rootNode.traverse(node => nodesUnprocessed.add(node));
+    rootNode.traverse(node => nodesNotReadyToStart.add(node));
 
     let depth = 0;
     let totalElapsedTime = 0;
 
-    // add root node to queue
-    this._markNodeAsInQueue(rootNode, totalElapsedTime);
+    // root node is always ready to start
+    this._markNodeAsReadyToStart(rootNode, totalElapsedTime);
 
     // loop as long as we have nodes in the queue or currently in progress
-    while (nodesInQueue.size || nodesInProgress.size) {
+    while (nodesReadyToStart.size || nodesInProgress.size) {
       depth++;
 
       // move all possible queued nodes to in progress
-      for (const node of nodesInQueue) {
+      for (const node of nodesReadyToStart) {
         this._startNodeIfPossible(node, totalElapsedTime);
       }
 
@@ -387,8 +397,8 @@ class Estimator {
       }
     }
 
-    if (nodesUnprocessed.size !== 0) {
-      throw new Error(`Cycle detected: ${nodesUnprocessed.size} unused nodes`);
+    if (nodesNotReadyToStart.size !== 0) {
+      throw new Error(`Cycle detected: ${nodesNotReadyToStart.size} unused nodes`);
     }
 
     return {
@@ -396,16 +406,9 @@ class Estimator {
       nodeTiming: this._nodeTiming,
     };
   }
-
-  /**
-   * @return {number}
-   */
-  estimate() {
-    return this.estimateWithDetails().timeInMs;
-  }
 }
 
-module.exports = Estimator;
+module.exports = Simulator;
 
 /**
  * @typedef {{
@@ -415,4 +418,4 @@ module.exports = Estimator;
  *    bytesDownloaded: number|undefined,
  * }}
  */
-Estimator.NodeTimingData; // eslint-disable-line no-unused-expressions
+Simulator.NodeTimingData; // eslint-disable-line no-unused-expressions

@@ -6,6 +6,7 @@
 'use strict';
 
 const Node = require('./node');
+const WebInspector = require('../web-inspector');
 
 class NetworkNode extends Node {
   /**
@@ -47,13 +48,6 @@ class NetworkNode extends Node {
   /**
    * @return {?string}
    */
-  get resourceType() {
-    return this._record._resourceType && this._record._resourceType._name;
-  }
-
-  /**
-   * @return {?string}
-   */
   get initiatorType() {
     return this._record._initiator && this._record._initiator.type;
   }
@@ -63,7 +57,8 @@ class NetworkNode extends Node {
    */
   hasRenderBlockingPriority() {
     const priority = this._record.priority();
-    return priority === 'VeryHigh' || (priority === 'High' && this.resourceType === 'script');
+    const isScript = this._record._resourceType === WebInspector.resourceTypes.Script;
+    return priority === 'VeryHigh' || (priority === 'High' && isScript);
   }
 
   /**

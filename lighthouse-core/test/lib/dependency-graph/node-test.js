@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Node = require('../../../../gather/computed/dependency-graph/node');
+const Node = require('../../../lib/dependency-graph/node');
 
 const assert = require('assert');
 

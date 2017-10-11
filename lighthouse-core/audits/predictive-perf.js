@@ -7,8 +7,9 @@
 
 const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util.js');
-const PageDependencyGraph = require('../gather/computed/page-dependency-graph.js');
-const Node = require('../gather/computed/dependency-graph/node.js');
+const LoadSimulator = require('../lib/dependency-graph/simulator/simulator.js');
+const Node = require('../lib/dependency-graph/node.js');
+const WebInspector = require('../lib/web-inspector');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 //   https://www.desmos.com/calculator/rjp0lbit8y
@@ -75,8 +76,10 @@ class PredictivePerf extends Audit {
     return dependencyGraph.cloneWithRelationships(node => {
       // Include everything that might be a long task
       if (node.type === Node.TYPES.CPU) return node.event.dur > minimumCpuTaskDuration;
-      // Include all scripts and high priority requests
-      return node.resourceType !== 'image' && (node.resourceType === 'script' ||
+      // Include all scripts and high priority requests, exclude all images
+      const isImage = node.record._resourceType === WebInspector.resourceTypes.Image;
+      const isScript = node.record._resourceType === WebInspector.resourceTypes.Script;
+      return !isImage && (isScript ||
           node.record.priority() === 'High' ||
           node.record.priority() === 'VeryHigh');
     });
@@ -123,7 +126,7 @@ class PredictivePerf extends Audit {
       let sum = 0;
       const values = {};
       Object.keys(graphs).forEach(key => {
-        const estimate = PageDependencyGraph.estimateGraph(graphs[key]);
+        const estimate = new LoadSimulator(graphs[key]).simulate();
         const lastLongTaskEnd = PredictivePerf.getLastLongTaskEndTime(estimate.nodeTiming);
 
         switch (key) {
