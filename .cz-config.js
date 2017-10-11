@@ -10,7 +10,7 @@ module.exports = {
   allowCustomScopes: true,
   scopes: [],
   types: [
-    {value: 'new-audit',  name: 'new-audit: A new audit'},
+    {value: 'new_audit',  name: 'new_audit: A new audit'},
     {value: 'core',       name: 'core:      Driver, gather, (non-new) audits, LHR JSON, etc'},
     {value: 'tests',      name: 'tests:     Tests, smokehouse, etc'},
     {value: 'docs',       name: 'docs:      Documentation'},
