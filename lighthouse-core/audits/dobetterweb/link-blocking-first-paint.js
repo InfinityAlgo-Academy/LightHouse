@@ -30,9 +30,9 @@ class LinkBlockingFirstPaintAudit extends Audit {
       name: 'link-blocking-first-paint',
       description: 'Reduce render-blocking stylesheets',
       informative: true,
-      helpText: 'Link elements are blocking the first paint of your page. Consider ' +
-          'inlining critical links and deferring non-critical ones. ' +
-          '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).',
+      helpText: 'External stylesheets are blocking the first paint of your page. Consider ' +
+          'delivering critical CSS via `<style>` tags and deferring non-critical ' +
+          'styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).',
       requiredArtifacts: ['TagsBlockingFirstPaint', 'traces'],
     };
   }
