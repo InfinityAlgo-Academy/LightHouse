@@ -30,6 +30,6 @@ Here are the different (actively used) labels and what they mean, organized by c
 - Question: question from community. Good fodder for new documentation that needs to be written. 
 
 ### Other labels
-- Good first bug: for new external contributor, these issues can be useful for them to tackle. 
+- Good first issue: for new external contributor, these issues can be useful for them to tackle. 
 - Help wanted: issues that could use help from the community. 
 
