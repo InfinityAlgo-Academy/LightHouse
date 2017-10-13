@@ -36,13 +36,13 @@ module.exports = [
         extendedInfo: {
           value: {
             results: {
-              length: 14,
+              length: 15,
             },
           },
         },
         details: {
           items: {
-            length: 14,
+            length: 15,
           },
         },
       },
@@ -182,6 +182,19 @@ module.exports = [
         extendedInfo: {
           value: {
             length: 2,
+          },
+        },
+      },
+      'image-aspect-ratio': {
+        score: false,
+        details: {
+          items: {
+            0: {
+              2: {
+                text: /^480 x 57/,
+              },
+            },
+            length: 1,
           },
         },
       },
