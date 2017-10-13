@@ -120,7 +120,7 @@
     <section>
       <form>
         <input
-          id="label" 
+          id="label"
           type="text">
       </form>
     </section>
@@ -197,5 +197,13 @@
     <section>
       <video id="video-description"></video>
     </section>
+    <script>
+      // axe fails if a different UMD loader like almond.js is used on the page, see https://github.com/GoogleChrome/lighthouse/issues/2505
+      // We can simulate this behavior by defining a similarly misbehaving `define` function.
+      window.define = function () {
+        throw new Error('No AMD modules allowed');
+      };
+      window.define.amd = true;
+    </script>
   </body>
 </html>

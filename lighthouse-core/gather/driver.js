@@ -41,6 +41,7 @@ class Driver {
     this._devtoolsLog = new DevtoolsLog(/^(Page|Network)\./);
     this.online = true;
     this._domainEnabledCounts = new Map();
+    this._isolatedExecutionContextId = undefined;
 
     /**
      * Used for monitoring network status events during gotoURL.
@@ -216,12 +217,29 @@ class Driver {
   }
 
   /**
-   * Evaluate an expression in the context of the current page.
+   * Evaluate an expression in the context of the current page. If useIsolation is true, the expression
+   * will be evaluated in a content script that has access to the page's DOM but whose JavaScript state
+   * is completely separate.
    * Returns a promise that resolves on the expression's value.
    * @param {string} expression
+   * @param {{useIsolation: boolean}=} options
    * @return {!Promise<*>}
    */
-  evaluateAsync(expression) {
+  evaluateAsync(expression, options = {}) {
+    const contextIdPromise = options.useIsolation ?
+        this._getOrCreateIsolatedContextId() :
+        Promise.resolve(undefined);
+    return contextIdPromise.then(contextId => this._evaluateInContext(expression, contextId));
+  }
+
+  /**
+   * Evaluate an expression in the given execution context; an undefined contextId implies the main
+   * page without isolation.
+   * @param {string} expression
+   * @param {number|undefined} contextId
+   * @return {!Promise<*>}
+   */
+  _evaluateInContext(expression, contextId) {
     return new Promise((resolve, reject) => {
       // If this gets to 60s and it hasn't been resolved, reject the Promise.
       const asyncTimeout = setTimeout(
@@ -229,7 +247,7 @@ class Driver {
         60000
       );
 
-      this.sendCommand('Runtime.evaluate', {
+      const evaluationParams = {
         // We need to explicitly wrap the raw expression for several purposes:
         // 1. Ensure that the expression will be a native Promise and not a polyfill/non-Promise.
         // 2. Ensure that errors in the expression are captured by the Promise.
@@ -247,7 +265,10 @@ class Driver {
         includeCommandLineAPI: true,
         awaitPromise: true,
         returnByValue: true,
-      }).then(result => {
+        contextId,
+      };
+
+      this.sendCommand('Runtime.evaluate', evaluationParams).then(result => {
         clearTimeout(asyncTimeout);
         const value = result.result.value;
 
@@ -431,10 +452,12 @@ class Driver {
 
     let lastTimeout;
     let cancelled = false;
+
+    const checkForQuietExpression = `(${checkTimeSinceLastLongTask.toString()})()`;
     function checkForQuiet(driver, resolve) {
       if (cancelled) return;
 
-      return driver.evaluateAsync(`(${checkTimeSinceLastLongTask.toString()})()`)
+      return driver.evaluateAsync(checkForQuietExpression)
         .then(timeSinceLongTask => {
           if (cancelled) return;
 
@@ -596,6 +619,32 @@ class Driver {
   }
 
   /**
+   * Returns the cached isolated execution context ID or creates a new execution context for the main
+   * frame. The cached execution context is cleared on every gotoURL invocation, so a new one will
+   * always be created on the first call on a new page.
+   * @return {!Promise<number>}
+   */
+  _getOrCreateIsolatedContextId() {
+    if (typeof this._isolatedExecutionContextId === 'number') {
+      return Promise.resolve(this._isolatedExecutionContextId);
+    }
+
+    return this.sendCommand('Page.getResourceTree')
+      .then(data => {
+        const mainFrameId = data.frameTree.frame.id;
+        return this.sendCommand('Page.createIsolatedWorld', {
+          frameId: mainFrameId,
+          worldName: 'lighthouse_isolated_context',
+        });
+      })
+      .then(data => this._isolatedExecutionContextId = data.executionContextId);
+  }
+
+  _clearIsolatedContextId() {
+    this._isolatedExecutionContextId = undefined;
+  }
+
+  /**
    * Navigate to the given URL. Direct use of this method isn't advised: if
    * the current page is already at the given URL, navigation will not occur and
    * so the returned promise will only resolve after the MAX_WAIT_FOR_FULLY_LOADED
@@ -623,6 +672,7 @@ class Driver {
     /* eslint-enable max-len */
 
     return this._beginNetworkStatusMonitoring(url)
+      .then(_ => this._clearIsolatedContextId())
       .then(_ => {
         // These can 'race' and that's OK.
         // We don't want to wait for Page.navigate's resolution, as it can now
@@ -949,7 +999,7 @@ class Driver {
     const globalVarToPopulate = `window['__${funcName}StackTraces']`;
     const collectUsage = () => {
       return this.evaluateAsync(
-          `Promise.resolve(Array.from(${globalVarToPopulate}).map(item => JSON.parse(item)))`)
+          `Array.from(${globalVarToPopulate}).map(item => JSON.parse(item))`)
         .then(result => {
           if (!Array.isArray(result)) {
             throw new Error(

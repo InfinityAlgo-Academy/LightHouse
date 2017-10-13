@@ -58,6 +58,8 @@ connection.sendCommand = function(command, params) {
       return Promise.resolve({
         nodeIds: params.selector === 'invalid' ? [] : [231],
       });
+    case 'Runtime.evaluate':
+      return Promise.resolve({result: {value: 123}});
     case 'Runtime.getProperties':
       return Promise.resolve({
         result: params.objectId === 'invalid' ? [] : [{
@@ -69,6 +71,10 @@ connection.sendCommand = function(command, params) {
           name: 'novalue',
         }],
       });
+    case 'Page.getResourceTree':
+      return Promise.resolve({frameTree: {frame: {id: 1}}});
+    case 'Page.createIsolatedWorld':
+      return Promise.resolve({executionContextId: 1});
     case 'Page.enable':
     case 'Tracing.start':
     case 'ServiceWorker.enable':
@@ -128,6 +134,30 @@ describe('Browser Driver', () => {
   it('returns null when getObjectProperty finds property name with no value', () => {
     return driverStub.getObjectProperty('test', 'novalue').then(value => {
       assert.deepEqual(value, null);
+    });
+  });
+
+  it('evaluates an expression', () => {
+    return driverStub.evaluateAsync('120 + 3').then(value => {
+      assert.deepEqual(value, 123);
+      assert.equal(sendCommandParams[0].command, 'Runtime.evaluate');
+    });
+  });
+
+  it('evaluates an expression in isolation', () => {
+    return driverStub.evaluateAsync('120 + 3', {useIsolation: true}).then(value => {
+      assert.deepEqual(value, 123);
+
+      assert.ok(sendCommandParams.length > 1, 'did not create execution context');
+      const evaluateCommand = sendCommandParams.find(data => data.command === 'Runtime.evaluate');
+      assert.equal(evaluateCommand.params.contextId, 1);
+
+      // test repeat isolation evaluations
+      sendCommandParams = [];
+      return driverStub.evaluateAsync('120 + 3', {useIsolation: true});
+    }).then(value => {
+      assert.deepEqual(value, 123);
+      assert.ok(sendCommandParams.length === 1, 'created unnecessary 2nd execution context');
     });
   });
 

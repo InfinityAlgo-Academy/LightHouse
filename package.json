@@ -25,7 +25,7 @@
     "build-viewer": "cd ./lighthouse-viewer && yarn build",
     "clean": "rimraf *.report.html *.report.dom.html *.report.json *.screenshots.html *.devtoolslog.json *.trace.json || true",
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
-    "smoke": "bash lighthouse-cli/test/smokehouse/offline-local/run-tests.sh && bash lighthouse-cli/test/smokehouse/perf/run-tests.sh && bash lighthouse-cli/test/smokehouse/dobetterweb/run-tests.sh && bash lighthouse-cli/test/smokehouse/byte-efficiency/run-tests.sh && bash lighthouse-cli/test/smokehouse/tricky-ttci/run-tests.sh && bash lighthouse-cli/test/smokehouse/seo/run-tests.sh && bash lighthouse-cli/test/smokehouse/redirects/run-tests.sh",
+    "smoke": "bash lighthouse-cli/test/smokehouse/run-all-tests.sh",
     "coverage": "istanbul cover -x \"**/third_party/**\" _mocha -- $(find */test -name '*-test.js') --timeout 10000 --reporter progress --report lcovonly",
     "start": "node ./lighthouse-cli/index.js",
     "test": "yarn lint --quiet && yarn unit && yarn closure && yarn test-cli-formatting",

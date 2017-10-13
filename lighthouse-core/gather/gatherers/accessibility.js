@@ -96,7 +96,7 @@ class Accessibility extends Gatherer {
       return (${runA11yChecks.toString()}());
     })()`;
 
-    return driver.evaluateAsync(expression).then(returnedValue => {
+    return driver.evaluateAsync(expression, {useIsolation: true}).then(returnedValue => {
       if (!returnedValue) {
         throw new Error('No axe-core results returned');
       }
