@@ -6,7 +6,9 @@
   "compilerOptions": {
     "target": "ES6",
     "noEmit": true,
-    "diagnostics": true
+    "diagnostics": true,
+    "checkJs": true,
+    "strict": true
   },
   "exclude": [
     "lighthouse-cli",
