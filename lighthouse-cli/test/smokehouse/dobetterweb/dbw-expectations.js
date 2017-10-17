@@ -15,11 +15,11 @@ module.exports = [
     audits: {
       'errors-in-console': {
         score: false,
-        rawValue: 3,
-        displayValue: '3',
+        rawValue: 4,
+        displayValue: '4',
         details: {
           items: {
-            length: 3,
+            length: 4,
           },
         },
       },

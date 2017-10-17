@@ -24,7 +24,7 @@ class ErrorLogs extends Audit {
       helpText: 'Errors logged to the console indicate unresolved problems. ' +
         'They can come from network request failures and other browser concerns.',
       failureDescription: 'Browser errors were logged to the console',
-      requiredArtifacts: ['ChromeConsoleMessages'],
+      requiredArtifacts: ['ChromeConsoleMessages', 'RuntimeExceptions'],
     };
   }
 
@@ -33,14 +33,29 @@ class ErrorLogs extends Audit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
-    const entries = artifacts.ChromeConsoleMessages;
-    const tableRows = entries.filter(log => log.entry.level === 'error').map(item => {
-      return {
-        source: item.entry.source,
-        description: item.entry.text,
-        url: item.entry.url,
-      };
-    });
+    const consoleEntries = artifacts.ChromeConsoleMessages;
+    const runtimeExceptions = artifacts.RuntimeExceptions;
+    const consoleRows =
+      consoleEntries.filter(log => log.entry && log.entry.level === 'error')
+      .map(item => {
+        return {
+          source: item.entry.source,
+          description: item.entry.text,
+          url: item.entry.url,
+        };
+      });
+
+    const runtimeExRows =
+      runtimeExceptions.filter(entry => entry.exceptionDetails !== undefined)
+      .map(entry => {
+        return {
+          source: 'Runtime.exception',
+          description: entry.exceptionDetails.exception.description,
+          url: entry.exceptionDetails.url,
+        };
+      });
+
+    const tableRows = consoleRows.concat(runtimeExRows);
 
     const headings = [
       {key: 'url', itemType: 'url', text: 'URL'},

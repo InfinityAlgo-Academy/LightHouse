@@ -22,6 +22,7 @@ module.exports = {
       'viewport-dimensions',
       'theme-color',
       'manifest',
+      'runtime-exceptions',
       'chrome-console-messages',
       'image-usage',
       'accessibility',

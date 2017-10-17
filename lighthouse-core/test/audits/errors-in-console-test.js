@@ -14,6 +14,7 @@ describe('Console error logs audit', () => {
   it('passes when no console messages were found', () => {
     const auditResult = ErrorLogsAudit.audit({
       ChromeConsoleMessages: [],
+      RuntimeExceptions: [],
     });
     assert.equal(auditResult.rawValue, 0);
     assert.equal(auditResult.score, true);
@@ -32,6 +33,7 @@ describe('Console error logs audit', () => {
           },
         },
       ],
+      RuntimeExceptions: [],
     });
     assert.equal(auditResult.rawValue, 0);
     assert.equal(auditResult.score, true);
@@ -57,10 +59,31 @@ describe('Console error logs audit', () => {
           },
         },
       ],
+      RuntimeExceptions: [{
+        'timestamp': 1506535813608.003,
+        'exceptionDetails': {
+          'url': 'http://example.com/fancybox.js',
+          'stackTrace': {
+            'callFrames': [
+              {
+                'url': 'http://example.com/fancybox.js',
+                'lineNumber': 28,
+                'columnNumber': 20,
+              },
+            ],
+          },
+          'exception': {
+            'className': 'TypeError',
+            'description': 'TypeError: Cannot read property \'msie\' of undefined',
+          },
+          'executionContextId': 3,
+        },
+      }],
     });
-    assert.equal(auditResult.rawValue, 2);
+
+    assert.equal(auditResult.rawValue, 3);
     assert.equal(auditResult.score, false);
-    assert.equal(auditResult.details.items.length, 2);
+    assert.equal(auditResult.details.items.length, 3);
     assert.equal(auditResult.details.items[0][0].type, 'url');
     assert.equal(auditResult.details.items[0][0].text, 'http://www.example.com/favicon.ico');
     assert.equal(auditResult.details.items[0][1].type, 'text');
@@ -71,6 +94,12 @@ describe('Console error logs audit', () => {
     assert.equal(auditResult.details.items[1][1].type, 'text');
     assert.equal(auditResult.details.items[1][1].text,
       'WebSocket connection failed: Unexpected response code: 500');
+    assert.equal(auditResult.details.items[2][0].type, 'url');
+    assert.equal(auditResult.details.items[2][0].text,
+      'http://example.com/fancybox.js');
+    assert.equal(auditResult.details.items[2][1].type, 'text');
+    assert.equal(auditResult.details.items[2][1].text,
+      'TypeError: Cannot read property \'msie\' of undefined');
   });
 
   it('handle the case when some logs fields are undefined', () => {
@@ -82,6 +111,7 @@ describe('Console error logs audit', () => {
           },
         },
       ],
+      RuntimeExceptions: [],
     });
     assert.equal(auditResult.rawValue, 1);
     assert.equal(auditResult.score, false);
