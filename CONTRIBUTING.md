@@ -6,6 +6,18 @@ We'd love your help! This doc covers how to become a contributor and submit code
 
 The `.eslintrc` file defines all. We use [JSDoc](http://usejsdoc.org/) along with [closure annotations](https://developers.google.com/closure/compiler/docs/js-for-compiler). Annotations are encouraged for all contributions.
 
+## Pull request titles
+
+We're using [conventional-commit](https://conventionalcommits.org/) for our commit messages. Since all PRs are squashed, we enforce this format for PR titles rather than individual git commits. A [`commitlint` bot](https://github.com/paulirish/commitlintbot) will update the status of your PR based on the title's conformance. The expected format is:
+
+> type(scope): message subject
+
+* The `type` must be one of: `new_audit` `core` `tests` `docs` `deps` `report` `cli` `extension` `misc`. (See [`.cz-config`](https://github.com/GoogleChrome/lighthouse/blob/master/.cz-config.js#L13))
+* The `scope` is optional, but recommended. Any string is allowed; it should indicate what the change affects.
+* The `message subject` should be pithy and direct.
+
+The [commitizen CLI](https://github.com/commitizen/cz-cli) can help to construct these commit messages.
+
 ## Learn about the architecture
 
 See [Lighthouse Architecture](./docs/architecture.md), our overview and tour of the codebase.
