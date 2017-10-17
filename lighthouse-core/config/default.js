@@ -35,6 +35,7 @@ module.exports = {
       'dobetterweb/response-compression',
       'dobetterweb/tags-blocking-first-paint',
       'dobetterweb/websql',
+      'seo/meta-description',
     ],
   },
   {
@@ -144,6 +145,8 @@ module.exports = {
     'dobetterweb/script-blocking-first-paint',
     'dobetterweb/uses-http2',
     'dobetterweb/uses-passive-event-listeners',
+    'seo/meta-description',
+    'seo/http-status-code',
   ],
 
   groups: {
