@@ -15,7 +15,6 @@ class Redirects extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'redirects',
       description: 'Avoids page redirects',
       failureDescription: 'Has multiple page redirects',

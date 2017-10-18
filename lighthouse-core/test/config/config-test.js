@@ -36,7 +36,6 @@ describe('Config', () => {
       static get meta() {
         return {
           name: 'MyAudit',
-          category: 'mine',
           description: 'My audit',
           failureDescription: 'My failing audit',
           helpText: '.',
@@ -210,10 +209,6 @@ describe('Config', () => {
     assert.throws(_ => new Config({
       audits: [basePath + '/missing-audit'],
     }), /audit\(\) method/);
-
-    assert.throws(_ => new Config({
-      audits: [basePath + '/missing-category'],
-    }), /meta.category property/);
 
     assert.throws(_ => new Config({
       audits: [basePath + '/missing-name'],
@@ -442,7 +437,6 @@ describe('Config', () => {
       static get meta() {
         return {
           name: 'custom-audit',
-          category: 'none',
           description: 'none',
           failureDescription: 'none',
           helpText: 'none',

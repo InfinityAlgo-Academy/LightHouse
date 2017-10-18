@@ -18,7 +18,6 @@ class THHasDataCells extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'th-has-data-cells',
       description: '`<th>` elements and elements with `[role="columnheader"/"rowheader"]` have ' +
           'data cells they describe.',

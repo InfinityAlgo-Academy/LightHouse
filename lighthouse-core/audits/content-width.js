@@ -13,7 +13,6 @@ class ContentWidth extends Audit {
    */
   static get meta() {
     return {
-      category: 'Mobile Friendly',
       name: 'content-width',
       description: 'Content is sized correctly for the viewport',
       failureDescription: 'Content is not sized correctly for the viewport',

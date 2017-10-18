@@ -24,7 +24,6 @@ class ThemedOmnibox extends MultiCheckAudit {
    */
   static get meta() {
     return {
-      category: 'PWA',
       name: 'themed-omnibox',
       description: 'Address bar matches brand colors',
       failureDescription: 'Address bar does not match brand colors',

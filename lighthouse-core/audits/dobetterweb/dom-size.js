@@ -33,7 +33,6 @@ class DOMSize extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'dom-size',
       description: 'Avoids an excessive DOM size',
       failureDescription: 'Uses an excessive DOM size',

@@ -18,7 +18,6 @@ class DocumentTitle extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'document-title',
       description: 'Document has a `<title>` element.',
       failureDescription: 'Document does not have a `<title>` element.',

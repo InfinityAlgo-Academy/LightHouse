@@ -24,7 +24,6 @@ class OffscreenImages extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      category: 'Images',
       name: 'offscreen-images',
       description: 'Offscreen images',
       informative: true,

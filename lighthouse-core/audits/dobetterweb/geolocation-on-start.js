@@ -19,7 +19,6 @@ class GeolocationOnStart extends ViolationAudit {
    */
   static get meta() {
     return {
-      category: 'UX',
       name: 'geolocation-on-start',
       description: 'Avoids requesting the geolocation permission on page load',
       failureDescription: 'Requests the geolocation permission on page load',

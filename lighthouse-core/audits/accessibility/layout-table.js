@@ -19,7 +19,6 @@ class LayoutTable extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'layout-table',
       description: 'Presentational `<table>` elements avoid using `<th>`, `<caption>` or the ' +
           '`[summary]` attribute.',

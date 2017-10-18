@@ -19,7 +19,6 @@ class SpeedIndexMetric extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'speed-index-metric',
       description: 'Perceptual Speed Index',
       helpText: 'Speed Index shows how quickly the contents of a page are visibly populated. ' +

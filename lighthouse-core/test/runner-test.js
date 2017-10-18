@@ -184,7 +184,6 @@ describe('Runner', () => {
 
   describe('Bad audit behavior handling', () => {
     const testAuditMeta = {
-      category: 'ThrowThrow',
       name: 'throwy-audit',
       description: 'Always throws',
       failureDescription: 'Always throws is failing, natch',

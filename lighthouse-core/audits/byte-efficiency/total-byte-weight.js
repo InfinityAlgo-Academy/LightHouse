@@ -19,7 +19,6 @@ class TotalByteWeight extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      category: 'Network',
       name: 'total-byte-weight',
       optimalValue: `< ${this.bytesToKbString(OPTIMAL_VALUE)}`,
       description: 'Avoids enormous network payloads',

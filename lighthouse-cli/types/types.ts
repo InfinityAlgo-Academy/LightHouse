@@ -20,7 +20,6 @@ interface AuditFullResult {
   error?: boolean;
   description: string;
   name: string;
-  category: string;
   helpText?: string;
   extendedInfo?: {value: string};
 }

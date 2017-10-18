@@ -25,7 +25,6 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      category: 'Images',
       name: 'uses-responsive-images',
       description: 'Properly size images',
       informative: true,

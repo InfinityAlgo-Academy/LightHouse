@@ -14,7 +14,6 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'external-anchors-use-rel-noopener',
       description: 'Opens external anchors using `rel="noopener"`',
       failureDescription: 'Does not open external anchors using `rel="noopener"`',

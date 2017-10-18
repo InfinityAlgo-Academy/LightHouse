@@ -13,7 +13,6 @@ class RedirectsHTTP extends Audit {
    */
   static get meta() {
     return {
-      category: 'Security',
       name: 'redirects-http',
       description: 'Redirects HTTP traffic to HTTPS',
       failureDescription: 'Does not redirect HTTP traffic to HTTPS',

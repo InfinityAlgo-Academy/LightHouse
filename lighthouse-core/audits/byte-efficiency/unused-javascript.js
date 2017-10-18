@@ -15,7 +15,6 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'unused-javascript',
       description: 'Unused JavaScript',
       informative: true,

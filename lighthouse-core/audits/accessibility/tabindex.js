@@ -18,7 +18,6 @@ class TabIndex extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'tabindex',
       description: 'No element has a `[tabindex]` value greater than 0.',
       failureDescription: 'Some elements have a `[tabindex]` value greater than 0.',

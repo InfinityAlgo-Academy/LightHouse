@@ -18,7 +18,6 @@ class ARIARequiredAttr extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'aria-required-attr',
       description: '`[role]`s have all required `[aria-*]` attributes.',
       failureDescription: '`[role]`s do not have all required `[aria-*]` attributes.',

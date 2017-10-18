@@ -18,7 +18,6 @@ class DefinitionList extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'definition-list',
       description: '`<dl>`\'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>` ' +
           'or `<template>` elements.',

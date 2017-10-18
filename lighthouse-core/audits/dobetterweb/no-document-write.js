@@ -18,7 +18,6 @@ class NoDocWriteAudit extends ViolationAudit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'no-document-write',
       description: 'Avoids `document.write()`',
       failureDescription: 'Uses `document.write()`',

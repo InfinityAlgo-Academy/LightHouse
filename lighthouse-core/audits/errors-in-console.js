@@ -18,7 +18,6 @@ class ErrorLogs extends Audit {
    */
   static get meta() {
     return {
-      category: 'ErrorLogs',
       name: 'errors-in-console',
       description: 'No browser errors logged to the console',
       helpText: 'Errors logged to the console indicate unresolved problems. ' +

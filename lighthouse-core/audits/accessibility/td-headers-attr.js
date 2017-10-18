@@ -19,7 +19,6 @@ class TDHeadersAttr extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'td-headers-attr',
       description: 'Cells in a `<table>` element that use the `[headers]` attribute only refer ' +
           'to other cells of that same table.',

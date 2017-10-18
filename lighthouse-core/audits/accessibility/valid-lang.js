@@ -18,7 +18,6 @@ class ValidLang extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'valid-lang',
       description: '`[lang]` attributes have a valid value.',
       failureDescription: '`[lang]` attributes do not have a valid value.',

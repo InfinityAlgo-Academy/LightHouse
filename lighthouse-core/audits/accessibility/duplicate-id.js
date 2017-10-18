@@ -18,7 +18,6 @@ class DuplicateId extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'duplicate-id',
       description: '`[id]` attributes on the page are unique.',
       failureDescription: '`[id]` attributes on the page are not unique.',

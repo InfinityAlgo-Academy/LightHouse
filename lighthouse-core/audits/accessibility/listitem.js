@@ -18,7 +18,6 @@ class ListItem extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'listitem',
       description: 'List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements.',
       failureDescription: 'List items (`<li>`) are not contained within `<ul>` ' +

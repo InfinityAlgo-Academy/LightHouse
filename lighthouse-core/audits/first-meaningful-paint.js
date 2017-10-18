@@ -20,7 +20,6 @@ class FirstMeaningfulPaint extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'first-meaningful-paint',
       description: 'First meaningful paint',
       optimalValue: `< ${Util.formatMilliseconds(SCORING_POINT_OF_DIMINISHING_RETURNS, 1)}`,

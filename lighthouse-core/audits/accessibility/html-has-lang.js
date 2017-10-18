@@ -18,7 +18,6 @@ class HTMLHasLang extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'html-has-lang',
       description: '`<html>` element has a `[lang]` attribute.',
       failureDescription: '`<html>` element does not have a `[lang]` attribute.',

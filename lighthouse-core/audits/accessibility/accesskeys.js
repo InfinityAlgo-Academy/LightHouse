@@ -18,7 +18,6 @@ class Accesskeys extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'accesskeys',
       description: '`[accesskey]` values are unique.',
       failureDescription: '`[accesskey]` values are not unique.',

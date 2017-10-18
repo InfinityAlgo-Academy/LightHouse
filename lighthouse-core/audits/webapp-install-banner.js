@@ -34,7 +34,6 @@ class WebappInstallBanner extends MultiCheckAudit {
    */
   static get meta() {
     return {
-      category: 'PWA',
       name: 'webapp-install-banner',
       description: 'User can be prompted to Install the Web App',
       failureDescription: 'User will not be prompted to Install the Web App',

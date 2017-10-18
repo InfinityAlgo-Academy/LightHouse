@@ -14,7 +14,6 @@ class UserTimings extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'user-timings',
       description: 'User Timing marks and measures',
       helpText: 'Consider instrumenting your app with the User Timing API to create custom, ' +

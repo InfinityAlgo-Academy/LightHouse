@@ -14,7 +14,6 @@ class Viewport extends Audit {
    */
   static get meta() {
     return {
-      category: 'Mobile Friendly',
       name: 'viewport',
       description: 'Has a `<meta name="viewport">` tag with `width` or `initial-scale`',
       failureDescription: 'Does not have a `<meta name="viewport">` tag with `width` ' +

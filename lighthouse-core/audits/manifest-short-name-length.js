@@ -13,7 +13,6 @@ class ManifestShortNameLength extends Audit {
    */
   static get meta() {
     return {
-      category: 'Manifest',
       name: 'manifest-short-name-length',
       description: 'Manifest\'s `short_name` won\'t be truncated when displayed on homescreen',
       failureDescription: 'Manifest\'s `short_name` will be truncated when displayed ' +

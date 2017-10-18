@@ -14,7 +14,6 @@ class WorksOffline extends Audit {
    */
   static get meta() {
     return {
-      category: 'Offline',
       name: 'works-offline',
       description: 'Responds with a 200 when offline',
       failureDescription: 'Does not respond with a 200 when offline',

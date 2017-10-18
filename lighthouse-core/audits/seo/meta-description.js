@@ -13,7 +13,6 @@ class Description extends Audit {
    */
   static get meta() {
     return {
-      category: 'Content Best Practices',
       name: 'meta-description',
       description: 'Document has a meta description',
       failureDescription: 'Document does not have a meta description',

@@ -16,7 +16,6 @@ class TTFBMetric extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'time-to-first-byte',
       description: 'Keep server response times low (TTFB)',
       informative: true,

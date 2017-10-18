@@ -18,7 +18,6 @@ class ButtonName extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'button-name',
       description: 'Buttons have an accessible name.',
       failureDescription: 'Buttons do not have an accessible name.',

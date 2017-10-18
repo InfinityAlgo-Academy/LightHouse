@@ -17,7 +17,6 @@ const MAX_SEARCHABLE_TIME = 4000;
 class LoadAudit extends Audit {
   static get meta() {
     return {
-      category: 'MyCustomCategory',
       name: 'searchable-audit',
       description: 'Search box initialized and ready',
       failureDescription: 'Search box slow to initialize',

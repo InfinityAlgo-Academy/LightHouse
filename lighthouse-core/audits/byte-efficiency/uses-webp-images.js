@@ -20,7 +20,6 @@ class UsesWebPImages extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      category: 'Images',
       name: 'uses-webp-images',
       description: 'Serve images as WebP',
       informative: true,

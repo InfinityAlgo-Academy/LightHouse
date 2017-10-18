@@ -13,7 +13,6 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
    */
   static get meta() {
     return {
-      category: 'UX',
       name: 'password-inputs-can-be-pasted-into',
       description: 'Allows users to paste into password fields',
       failureDescription: 'Prevents users to paste into password fields',

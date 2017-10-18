@@ -18,7 +18,6 @@ class ARIAValidAttr extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'aria-valid-attr-value',
       description: '`[aria-*]` attributes have valid values.',
       failureDescription: '`[aria-*]` attributes do not have valid values.',

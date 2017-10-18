@@ -19,7 +19,6 @@ class FirstInteractiveMetric extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'first-interactive',
       description: 'First Interactive (beta)',
       helpText: 'First Interactive marks the time at which the page is ' +

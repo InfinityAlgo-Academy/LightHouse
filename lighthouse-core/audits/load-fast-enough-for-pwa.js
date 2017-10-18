@@ -28,7 +28,6 @@ class LoadFastEnough4Pwa extends Audit {
    */
   static get meta() {
     return {
-      category: 'PWA',
       name: 'load-fast-enough-for-pwa',
       description: 'Page load is fast enough on 3G',
       failureDescription: 'Page load is not fast enough on 3G',

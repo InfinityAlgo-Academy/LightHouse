@@ -18,7 +18,6 @@ class AudioCaption extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'audio-caption',
       description: '`<audio>` elements contain a `<track>` element with `[kind="captions"]`.',
       failureDescription: '`<audio>` elements are missing a `<track>` element with ' +

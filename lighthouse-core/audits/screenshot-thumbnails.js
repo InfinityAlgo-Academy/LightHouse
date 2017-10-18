@@ -19,7 +19,6 @@ class ScreenshotThumbnails extends Audit {
    */
   static get meta() {
     return {
-      category: 'Images',
       name: 'screenshot-thumbnails',
       informative: true,
       description: 'Screenshot Thumbnails',

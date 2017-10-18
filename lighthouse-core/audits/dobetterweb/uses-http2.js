@@ -21,7 +21,6 @@ class UsesHTTP2Audit extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'uses-http2',
       description: 'Uses HTTP/2 for its own resources',
       failureDescription: 'Does not use HTTP/2 for all of its resources',

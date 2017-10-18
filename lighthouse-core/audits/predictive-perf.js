@@ -25,7 +25,6 @@ class PredictivePerf extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'predictive-perf',
       description: 'Predicted Performance (beta)',
       helpText: 'Predicted performance evaluates how your site will perform under ' +

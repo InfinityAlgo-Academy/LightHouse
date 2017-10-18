@@ -14,7 +14,6 @@ class CriticalRequestChains extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'critical-request-chains',
       description: 'Critical Request Chains',
       informative: true,

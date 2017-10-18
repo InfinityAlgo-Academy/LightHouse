@@ -19,7 +19,6 @@ class NotificationOnStart extends ViolationAudit {
    */
   static get meta() {
     return {
-      category: 'UX',
       name: 'notification-on-start',
       description: 'Avoids requesting the notification permission on page load',
       failureDescription: 'Requests the notification permission on page load',

@@ -19,7 +19,6 @@ class PassiveEventsAudit extends ViolationAudit {
    */
   static get meta() {
     return {
-      category: 'JavaScript',
       name: 'uses-passive-event-listeners',
       description: 'Uses passive listeners to improve scrolling performance',
       failureDescription: 'Does not use passive listeners to improve scrolling performance',

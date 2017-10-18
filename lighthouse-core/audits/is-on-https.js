@@ -18,7 +18,6 @@ class HTTPS extends Audit {
    */
   static get meta() {
     return {
-      category: 'Security',
       name: 'is-on-https',
       description: 'Uses HTTPS',
       failureDescription: 'Does not use HTTPS',

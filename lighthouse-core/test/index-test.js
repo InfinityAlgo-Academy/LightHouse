@@ -97,7 +97,6 @@ describe('Module Tests', function() {
         displayValue: '',
         rawValue: true,
         name: 'viewport',
-        category: 'Mobile Friendly',
         description: 'HTML has a viewport <meta>',
       }],
     }).then(results => {

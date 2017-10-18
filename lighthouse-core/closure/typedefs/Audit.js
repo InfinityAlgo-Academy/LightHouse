@@ -16,9 +16,6 @@
 function AuditMeta() {}
 
 /** @type {string} */
-AuditMeta.prototype.category;
-
-/** @type {string} */
 AuditMeta.prototype.name;
 
 /** @type {string} */

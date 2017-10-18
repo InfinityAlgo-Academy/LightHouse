@@ -14,7 +14,6 @@ class ServiceWorker extends Audit {
    */
   static get meta() {
     return {
-      category: 'Offline',
       name: 'service-worker',
       description: 'Registers a service worker',
       failureDescription: 'Does not register a service worker',

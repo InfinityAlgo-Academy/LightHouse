@@ -15,7 +15,6 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      category: 'CSS',
       name: 'unused-css-rules',
       description: 'Unused CSS rules',
       informative: true,

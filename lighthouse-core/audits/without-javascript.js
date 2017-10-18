@@ -13,7 +13,6 @@ class WithoutJavaScript extends Audit {
    */
   static get meta() {
     return {
-      category: 'JavaScript',
       name: 'without-javascript',
       description: 'Contains some content when JavaScript is not available',
       failureDescription: 'Does not provide fallback content when JavaScript is not available',

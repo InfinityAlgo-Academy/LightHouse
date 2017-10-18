@@ -19,7 +19,6 @@ class ScriptBlockingFirstPaint extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'script-blocking-first-paint',
       description: 'Reduce render-blocking scripts',
       informative: true,

@@ -14,7 +14,6 @@ const assert = require('assert');
 class TestAudit extends ManualAudit {
   static get meta() {
     return Object.assign({
-      category: 'AuditCategory',
       name: 'manual-audit',
       helpText: 'Some help text.',
     }, super.meta);

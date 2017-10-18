@@ -19,7 +19,6 @@ class NoWebSQLAudit extends Audit {
    */
   static get meta() {
     return {
-      category: 'Offline',
       name: 'no-websql',
       description: 'Avoids WebSQL DB',
       failureDescription: 'Uses WebSQL DB',

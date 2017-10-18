@@ -84,9 +84,6 @@ AuditFullResult.prototype.extendedInfo;
 AuditFullResult.prototype.name;
 
 /** @type {string} */
-AuditFullResult.prototype.category;
-
-/** @type {string} */
 AuditFullResult.prototype.description;
 
 /** @type {string} */

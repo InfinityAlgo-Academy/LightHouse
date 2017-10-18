@@ -19,7 +19,6 @@ class AriaRequiredChildren extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'aria-required-children',
       description: 'Elements with `[role]` that require specific children `[role]`s, are present.',
       failureDescription: 'Elements with `[role]` that require specific children `[role]`s, ' +

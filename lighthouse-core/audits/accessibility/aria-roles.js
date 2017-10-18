@@ -18,7 +18,6 @@ class AriaRoles extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'aria-roles',
       description: '`[role]` values are valid.',
       failureDescription: '`[role]` values are not valid.',

@@ -18,7 +18,6 @@ class HTMLLangValid extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'html-lang-valid',
       description: '`<html>` element has a valid value for its `[lang]` attribute.',
       failureDescription: '`<html>` element does not have a valid value for ' +

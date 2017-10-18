@@ -18,7 +18,6 @@ class List extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'list',
       description: 'Lists contain only `<li>` elements and script supporting elements ' +
           '(`<script>` and `<template>`).',

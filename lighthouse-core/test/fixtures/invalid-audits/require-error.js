@@ -12,7 +12,6 @@ class RequireErrorAudit extends LighthouseAudit {
   static get meta() {
     return {
       name: 'require-error',
-      category: 'Custom',
       description: 'Require Error',
       helpText: 'This one has a bad require()',
       requiredArtifacts: ['HTML'],

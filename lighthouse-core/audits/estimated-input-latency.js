@@ -20,7 +20,6 @@ class EstimatedInputLatency extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'estimated-input-latency',
       description: 'Estimated Input Latency',
       optimalValue: `< ${Util.formatMilliseconds(SCORING_POINT_OF_DIMINISHING_RETURNS, 1)}`,

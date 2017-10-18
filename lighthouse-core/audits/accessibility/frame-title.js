@@ -18,7 +18,6 @@ class FrameTitle extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'frame-title',
       description: '`<frame>` or `<iframe>` elements have a title.',
       failureDescription: '`<frame>` or `<iframe>` elements do not have a title.',

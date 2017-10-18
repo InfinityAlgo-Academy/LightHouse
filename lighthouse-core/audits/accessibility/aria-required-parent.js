@@ -19,7 +19,6 @@ class AriaRequiredParent extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'aria-required-parent',
       description: '`[role]`s are contained by their required parent element.',
       failureDescription: '`[role]`s are not contained by their required parent element.',

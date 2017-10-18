@@ -20,7 +20,6 @@ class Deprecations extends Audit {
    */
   static get meta() {
     return {
-      category: 'Deprecations',
       name: 'deprecations',
       description: 'Avoids deprecated APIs',
       failureDescription: 'Uses deprecated API\'s',

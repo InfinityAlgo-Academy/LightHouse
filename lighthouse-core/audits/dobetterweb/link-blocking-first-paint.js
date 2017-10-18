@@ -26,7 +26,6 @@ class LinkBlockingFirstPaintAudit extends Audit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'link-blocking-first-paint',
       description: 'Reduce render-blocking stylesheets',
       informative: true,

@@ -18,7 +18,6 @@ class ARIAAllowedAttr extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'aria-allowed-attr',
       description: '`[aria-*]` attributes match their roles.',
       failureDescription: '`[aria-*]` attributes do not match their roles.',

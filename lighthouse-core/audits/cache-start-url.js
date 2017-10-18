@@ -13,7 +13,6 @@ class CacheStartUrl extends Audit {
    */
   static get meta() {
     return {
-      category: 'Manifest',
       name: 'cache-start-url',
       description: 'Cache contains start_url from manifest (alpha)',
       failureDescription: 'Cache does not contain start_url from manifest (alpha)',

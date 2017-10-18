@@ -19,7 +19,6 @@ class Bypass extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'bypass',
       description: 'The page contains a heading, skip link, or landmark region.',
       failureDescription: 'The page does not contain a heading, skip link, or landmark region.',

@@ -21,7 +21,6 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'uses-request-compression',
       informative: true,
       description: 'Enable text compression',

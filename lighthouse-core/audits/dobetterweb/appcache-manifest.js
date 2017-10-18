@@ -18,7 +18,6 @@ class AppCacheManifestAttr extends Audit {
    */
   static get meta() {
     return {
-      category: 'Offline',
       name: 'appcache-manifest',
       description: 'Avoids Application Cache',
       failureDescription: 'Uses Application Cache',

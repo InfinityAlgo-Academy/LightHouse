@@ -18,7 +18,6 @@ class MetaRefresh extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'meta-refresh',
       description: 'The document does not use `<meta http-equiv="refresh">`.',
       failureDescription: 'The document uses `<meta http-equiv="refresh">`.',

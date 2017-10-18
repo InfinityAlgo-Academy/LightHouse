@@ -157,7 +157,6 @@ class Audit {
       informative: audit.meta.informative,
       manual: audit.meta.manual,
       name: audit.meta.name,
-      category: audit.meta.category,
       description: auditDescription,
       helpText: audit.meta.helpText,
       details: result.details,

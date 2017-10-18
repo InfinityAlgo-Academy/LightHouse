@@ -21,7 +21,6 @@ class NoOldFlexboxAudit extends Audit {
    */
   static get meta() {
     return {
-      category: 'CSS',
       name: 'no-old-flexbox',
       description: 'Avoids old CSS flexbox',
       failureDescription: 'Uses old CSS flexbox',

@@ -22,7 +22,6 @@ class NoVulnerableLibrariesAudit extends Audit {
    */
   static get meta() {
     return {
-      category: 'Security',
       name: 'no-vulnerable-libraries',
       description: 'Avoids front-end JavaScript libraries'
         + ' with known security vulnerabilities',

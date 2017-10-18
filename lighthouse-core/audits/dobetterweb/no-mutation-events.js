@@ -35,7 +35,6 @@ class NoMutationEventsAudit extends Audit {
    */
   static get meta() {
     return {
-      category: 'JavaScript',
       name: 'no-mutation-events',
       description: 'Avoids Mutation Events in its own scripts',
       failureDescription: 'Uses Mutation Events in its own scripts',

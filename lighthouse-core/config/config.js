@@ -179,10 +179,6 @@ function assertValidAudit(auditDefinition, auditPath) {
     throw new Error(`${auditName} has no meta.name property, or the property is not a string.`);
   }
 
-  if (typeof auditDefinition.meta.category !== 'string') {
-    throw new Error(`${auditName} has no meta.category property, or the property is not a string.`);
-  }
-
   if (typeof auditDefinition.meta.description !== 'string') {
     throw new Error(
       `${auditName} has no meta.description property, or the property is not a string.`

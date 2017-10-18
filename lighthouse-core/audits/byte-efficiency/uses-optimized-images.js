@@ -20,7 +20,6 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      category: 'Images',
       name: 'uses-optimized-images',
       description: 'Optimize images',
       informative: true,

@@ -12,7 +12,6 @@ class ValidCustomAudit extends LighthouseAudit {
   static get meta() {
     return {
       name: 'valid-audit',
-      category: 'Custom',
       description: 'Valid Audit',
       failureDescription: 'Valid failing Audit',
       helpText: 'Valid-sounding helpText',

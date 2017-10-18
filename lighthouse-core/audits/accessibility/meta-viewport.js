@@ -18,7 +18,6 @@ class MetaViewport extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'meta-viewport',
       description: '`[user-scalable="no"]` is not used in the `<meta name="viewport">` ' +
           'element and the `[maximum-scale]` attribute is not less than 5.',

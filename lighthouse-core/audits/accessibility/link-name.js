@@ -18,7 +18,6 @@ class LinkName extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'link-name',
       description: 'Links have a discernible name.',
       failureDescription: 'Links do not have a discernable name.',

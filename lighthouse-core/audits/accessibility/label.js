@@ -18,7 +18,6 @@ class Label extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'label',
       description: 'Form elements have associated labels.',
       failureDescription: 'Form elements do not have associated labels.',

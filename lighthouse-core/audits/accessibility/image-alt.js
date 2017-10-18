@@ -18,7 +18,6 @@ class ImageAlt extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'image-alt',
       description: 'Image elements have `[alt]` attributes.',
       failureDescription: 'Image elements do not have `[alt]` attributes.',

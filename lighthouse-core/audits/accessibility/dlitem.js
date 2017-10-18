@@ -18,7 +18,6 @@ class DLItem extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'dlitem',
       description: 'Definition list items are wrapped in `<dl>` elements.',
       failureDescription: 'Definition list items are not wrapped in `<dl>` elements.',

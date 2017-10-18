@@ -18,7 +18,6 @@ class ObjectAlt extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'object-alt',
       description: '`<object>` elements have `[alt]` text.',
       failureDescription: '`<object>` elements do not have `[alt]` text.',

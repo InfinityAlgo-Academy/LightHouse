@@ -18,7 +18,6 @@ class VideoDescription extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'video-description',
       description: '`<video>` elements contain a `<track>` element with `[kind="description"]`.',
       failureDescription: '`<video>` elements do not contain a `<track>` element with ' +

@@ -18,7 +18,6 @@ class InputImageAlt extends AxeAudit {
    */
   static get meta() {
     return {
-      category: 'Accessibility',
       name: 'input-image-alt',
       description: '`<input type="image">` elements have `[alt]` text.',
       failureDescription: '`<input type="image">` elements do not have `[alt]` text.',
