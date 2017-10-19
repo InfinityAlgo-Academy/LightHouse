@@ -365,7 +365,6 @@ class Simulator {
     const rootNode = this._graph.getRootNode();
     rootNode.traverse(node => nodesNotReadyToStart.add(node));
 
-    let depth = 0;
     let totalElapsedTime = 0;
 
     // root node is always ready to start
@@ -373,8 +372,6 @@ class Simulator {
 
     // loop as long as we have nodes in the queue or currently in progress
     while (nodesReadyToStart.size || nodesInProgress.size) {
-      depth++;
-
       // move all possible queued nodes to in progress
       for (const node of nodesReadyToStart) {
         this._startNodeIfPossible(node, totalElapsedTime);
@@ -391,14 +388,6 @@ class Simulator {
       for (const node of nodesInProgress) {
         this._updateProgressMadeInTimePeriod(node, minimumTime, totalElapsedTime);
       }
-
-      if (depth > 10000) {
-        throw new Error('Maximum depth exceeded: estimate');
-      }
-    }
-
-    if (nodesNotReadyToStart.size !== 0) {
-      throw new Error(`Cycle detected: ${nodesNotReadyToStart.size} unused nodes`);
     }
 
     return {

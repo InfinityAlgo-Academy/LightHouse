@@ -231,6 +231,10 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
     PageDependencyGraphArtifact.linkNetworkNodes(rootNode, networkNodeOutput, networkRecords);
     PageDependencyGraphArtifact.linkCPUNodes(rootNode, networkNodeOutput, cpuNodes);
 
+    if (NetworkNode.hasCycle(rootNode)) {
+      throw new Error('Invalid dependency graph created, cycle detected');
+    }
+
     return rootNode;
   }
 

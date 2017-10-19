@@ -218,4 +218,78 @@ describe('DependencyGraph/Node', () => {
       assert.deepEqual(ids, ['F', 'E', 'D', 'B', 'C', 'A']);
     });
   });
+
+  describe('#hasCycle', () => {
+    it('should return false for DAGs', () => {
+      const graph = createComplexGraph();
+      assert.equal(Node.hasCycle(graph.nodeA), false);
+    });
+
+    it('should return false for triangular DAGs', () => {
+      //   B
+      //  / \
+      // A - C
+      const nodeA = new Node('A');
+      const nodeB = new Node('B');
+      const nodeC = new Node('C');
+
+      nodeA.addDependent(nodeC);
+      nodeA.addDependent(nodeB);
+      nodeB.addDependent(nodeC);
+
+      assert.equal(Node.hasCycle(nodeA), false);
+    });
+
+    it('should return true for basic cycles', () => {
+      const nodeA = new Node('A');
+      const nodeB = new Node('B');
+      const nodeC = new Node('C');
+
+      nodeA.addDependent(nodeB);
+      nodeB.addDependent(nodeC);
+      nodeC.addDependent(nodeA);
+
+      assert.equal(Node.hasCycle(nodeA), true);
+    });
+
+    it('should return true for complex cycles', () => {
+      //   B - D - F - G - C!
+      //  /      /
+      // A - - C - E - H
+      const nodeA = new Node('A');
+      const nodeB = new Node('B');
+      const nodeC = new Node('C');
+      const nodeD = new Node('D');
+      const nodeE = new Node('E');
+      const nodeF = new Node('F');
+      const nodeG = new Node('G');
+      const nodeH = new Node('H');
+
+      nodeA.addDependent(nodeB);
+      nodeA.addDependent(nodeC);
+      nodeB.addDependent(nodeD);
+      nodeC.addDependent(nodeE);
+      nodeC.addDependent(nodeF);
+      nodeD.addDependent(nodeF);
+      nodeE.addDependent(nodeH);
+      nodeF.addDependent(nodeG);
+      nodeG.addDependent(nodeC);
+
+      assert.equal(Node.hasCycle(nodeA), true);
+    });
+
+    it('works for very large graphs', () => {
+      const root = new Node('root');
+
+      let lastNode = root;
+      for (let i = 0; i < 10000; i++) {
+        const nextNode = new Node(`child${i}`);
+        lastNode.addDependent(nextNode);
+        lastNode = nextNode;
+      }
+
+      lastNode.addDependent(root);
+      assert.equal(Node.hasCycle(root), true);
+    });
+  });
 });

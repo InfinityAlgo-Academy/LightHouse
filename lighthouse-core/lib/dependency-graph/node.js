@@ -81,14 +81,8 @@ class Node {
    */
   getRootNode() {
     let rootNode = this;
-    let maxDepth = 1000;
-    while (rootNode._dependencies.length && maxDepth) {
+    while (rootNode._dependencies.length) {
       rootNode = rootNode._dependencies[0];
-      maxDepth--;
-    }
-
-    if (!maxDepth) {
-      throw new Error('Maximum depth exceeded: getRootNode');
     }
 
     return rootNode;
@@ -210,6 +204,45 @@ class Node {
     };
 
     this._traversePaths(iterator, getNext);
+  }
+
+  /**
+   * Returns whether the given node has a cycle in its dependent graph by performing a DFS.
+   * @param {!Node} node
+   * @return {boolean}
+   */
+  static hasCycle(node) {
+    const visited = new Set();
+    const currentPath = [];
+    const toVisit = [node];
+    const depthAdded = new Map([[node, 0]]);
+
+    // Keep going while we have nodes to visit in the stack
+    while (toVisit.length) {
+      // Get the last node in the stack (DFS uses stack, not queue)
+      const currentNode = toVisit.pop();
+
+      // We've hit a cycle if the node we're visiting is in our current dependency path
+      if (currentPath.includes(currentNode)) return true;
+      // If we've already visited the node, no need to revisit it
+      if (visited.has(currentNode)) continue;
+
+      // Since we're visiting this node, clear out any nodes in our path that we had to backtrack
+      while (currentPath.length > depthAdded.get(currentNode)) currentPath.pop();
+
+      // Update our data structures to reflect that we're adding this node to our path
+      visited.add(currentNode);
+      currentPath.push(currentNode);
+
+      // Add all of its dependents to our toVisit stack
+      for (const dependent of currentNode._dependents) {
+        if (toVisit.includes(dependent)) continue;
+        toVisit.push(dependent);
+        depthAdded.set(dependent, currentPath.length);
+      }
+    }
+
+    return false;
   }
 }
 
