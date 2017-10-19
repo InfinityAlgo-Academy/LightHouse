@@ -25,6 +25,9 @@ module.exports = [
       'http-status-code': {
         score: true,
       },
+      'link-text': {
+        score: true,
+      },
     },
   },
   {
@@ -48,6 +51,15 @@ module.exports = [
       'http-status-code': {
         score: false,
         displayValue: '403',
+      },
+      'link-text': {
+        score: false,
+        displayValue: '3 links found',
+        details: {
+          items: {
+            length: 3,
+          },
+        },
       },
     },
   },

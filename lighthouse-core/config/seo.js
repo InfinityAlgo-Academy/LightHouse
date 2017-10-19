@@ -11,11 +11,13 @@ module.exports = {
     passName: 'defaultPass',
     gatherers: [
       'seo/meta-description',
+      'seo/crawlable-links',
     ],
   }],
   audits: [
     'seo/meta-description',
     'seo/http-status-code',
+    'seo/link-text',
   ],
   groups: {
     'seo-mobile': {
@@ -41,6 +43,7 @@ module.exports = {
         {id: 'document-title', weight: 1, group: 'seo-content'},
         {id: 'meta-description', weight: 1, group: 'seo-content'},
         {id: 'http-status-code', weight: 1, group: 'seo-crawl'},
+        {id: 'link-text', weight: 1, group: 'seo-content'},
       ],
     },
   },
