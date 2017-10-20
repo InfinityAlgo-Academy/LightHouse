@@ -48,7 +48,8 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
       // we require at least 10% savings off the original size AND at least 1400 bytes
       // if the savings is smaller than either, we don't care
       if (1 - gzipSize / originalSize < IGNORE_THRESHOLD_IN_PERCENT ||
-          gzipSavings < IGNORE_THRESHOLD_IN_BYTES
+          gzipSavings < IGNORE_THRESHOLD_IN_BYTES ||
+          record.transferSize < gzipSize
       ) {
         return;
       }

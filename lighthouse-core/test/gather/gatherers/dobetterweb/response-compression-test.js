@@ -18,9 +18,11 @@ const traceData = {
   networkRecords: [
     {
       _url: 'http://google.com/index.js',
+      _statusCode: 200,
       _mimeType: 'text/javascript',
       _requestId: 0,
       _resourceSize: 9,
+      _transferSize: 10,
       _resourceType: {
         _isTextType: true,
       },
@@ -33,9 +35,11 @@ const traceData = {
     },
     {
       _url: 'http://google.com/index.css',
+      _statusCode: 200,
       _mimeType: 'text/css',
       _requestId: 1,
       _resourceSize: 6,
+      _transferSize: 7,
       _resourceType: {
         _isTextType: true,
       },
@@ -45,9 +49,25 @@ const traceData = {
     },
     {
       _url: 'http://google.com/index.json',
+      _statusCode: 200,
       _mimeType: 'application/json',
       _requestId: 2,
       _resourceSize: 7,
+      _transferSize: 8,
+      _resourceType: {
+        _isTextType: true,
+      },
+      _responseHeaders: [],
+      content: '1234567',
+      finished: true,
+    },
+    {
+      _url: 'http://google.com/index.json',
+      _statusCode: 304, // ignore for being a cache not modified response
+      _mimeType: 'application/json',
+      _requestId: 2,
+      _resourceSize: 7,
+      _transferSize: 7,
       _resourceType: {
         _isTextType: true,
       },
@@ -57,9 +77,11 @@ const traceData = {
     },
     {
       _url: 'http://google.com/other.json',
+      _statusCode: 200,
       _mimeType: 'application/json',
       _requestId: 2,
       _resourceSize: 7,
+      _transferSize: 8,
       _resourceType: {
         _isTextType: true,
       },
@@ -69,9 +91,11 @@ const traceData = {
     },
     {
       _url: 'http://google.com/index.jpg',
+      _statusCode: 200,
       _mimeType: 'images/jpg',
       _requestId: 3,
       _resourceSize: 10,
+      _transferSize: 10,
       _resourceType: {
         _isTextType: false,
       },
@@ -124,6 +148,7 @@ describe('Optimized responses', () => {
           _mimeType: 'text/css',
           _requestId: 1,
           _resourceSize: 10,
+          _transferSize: 10,
           _resourceType: {
             _isTextType: true,
           },
@@ -136,6 +161,7 @@ describe('Optimized responses', () => {
           _mimeType: 'text/css',
           _requestId: 1,
           _resourceSize: 123,
+          _transferSize: 123,
           _resourceType: {
             _isTextType: true,
           },
@@ -157,8 +183,10 @@ describe('Optimized responses', () => {
   function createNetworkRequests(traceData) {
     traceData.networkRecords = traceData.networkRecords.map(record => {
       record.url = record._url;
+      record.statusCode = record._statusCode;
       record.mimeType = record._mimeType;
       record.resourceSize = record._resourceSize;
+      record.transferSize = record._transferSize;
       record.responseHeaders = record._responseHeaders;
       record.requestId = record._requestId;
       record.resourceType = () => {

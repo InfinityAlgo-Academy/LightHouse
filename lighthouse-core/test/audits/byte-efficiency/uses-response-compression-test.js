@@ -5,18 +5,18 @@
  */
 'use strict';
 
-const KB_BYTES = 1024;
+const KB = 1024;
 const ResponsesAreCompressedAudit =
   require('../../../audits/byte-efficiency/uses-request-compression.js');
 const assert = require('assert');
 
-function generateResponse(filename, type, originalSize, gzipSize) {
-  return {
-    url: `http://google.com/${filename}`,
-    mimeType: `${type}`,
-    resourceSize: originalSize,
-    gzipSize,
-  };
+function generateResponse(options) {
+  return Object.assign({
+    url: `http://google.com/${options.file}`,
+    transferSize: options.resourceSize || 0,
+    resourceSize: 0,
+    gzipSize: 0,
+  }, options);
 }
 
 /* eslint-env mocha */
@@ -25,9 +25,9 @@ describe('Page uses optimized responses', () => {
   it('fails when responses are collectively unoptimized', () => {
     const auditResult = ResponsesAreCompressedAudit.audit_({
       ResponseCompression: [
-        generateResponse('index.js', 'text/javascript', 100 * KB_BYTES, 90 * KB_BYTES), // 10kb & 10%
-        generateResponse('index.css', 'text/css', 50 * KB_BYTES, 37 * KB_BYTES), //  13kb & 26% (hit)
-        generateResponse('index.json', 'application/json', 2048 * KB_BYTES, 1024 * KB_BYTES), // 1024kb & 50% (hit)
+        generateResponse({file: 'index.js', resourceSize: 100 * KB, gzipSize: 90 * KB}), // 10kb & 10%
+        generateResponse({file: 'index.css', resourceSize: 50 * KB, gzipSize: 37 * KB}), //  13kb & 26% (hit)
+        generateResponse({file: 'index.json', resourceSize: 2048 * KB, gzipSize: 1024 * KB}), // 1024kb & 50% (hit)
       ],
     });
 
@@ -37,9 +37,11 @@ describe('Page uses optimized responses', () => {
   it('passes when all responses are sufficiently optimized', () => {
     const auditResult = ResponsesAreCompressedAudit.audit_({
       ResponseCompression: [
-        generateResponse('index.js', 'text/javascript', 1000 * KB_BYTES, 910 * KB_BYTES), // 90kb & 9%
-        generateResponse('index.css', 'text/css', 6 * KB_BYTES, 4.5 * KB_BYTES), // 1,5kb & 25% (hit)
-        generateResponse('index.json', 'application/json', 10 * KB_BYTES, 10 * KB_BYTES), // 0kb & 0%
+        generateResponse({file: 'index.js', resourceSize: 1000 * KB, gzipSize: 910 * KB}), // 90kb & 9%
+        generateResponse({file: 'index.css', resourceSize: 6 * KB, gzipSize: 4.5 * KB}), // 1,5kb & 25% (hit)
+        generateResponse({file: 'index.json', resourceSize: 10 * KB, gzipSize: 10 * KB}), // 0kb & 0%
+        generateResponse({file: 'compressed.json', resourceSize: 10 * KB, transferSize: 3 * KB,
+          gzipSize: 6 * KB}), // 0kb & 0%
       ],
     });
 

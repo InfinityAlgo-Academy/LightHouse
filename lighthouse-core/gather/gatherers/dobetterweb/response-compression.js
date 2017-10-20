@@ -29,7 +29,7 @@ class ResponseCompression extends Gatherer {
       const isChromeExtensionResource = record.url.startsWith(CHROME_EXTENSION_PROTOCOL);
 
       if (!isTextBasedResource || !record.resourceSize || !record.finished ||
-        isChromeExtensionResource) {
+        isChromeExtensionResource || !record.transferSize || record.statusCode === 304) {
         return;
       }
 
@@ -43,6 +43,7 @@ class ResponseCompression extends Gatherer {
           requestId: record.requestId,
           url: record.url,
           mimeType: record.mimeType,
+          transferSize: record.transferSize,
           resourceSize: record.resourceSize,
         });
       }
