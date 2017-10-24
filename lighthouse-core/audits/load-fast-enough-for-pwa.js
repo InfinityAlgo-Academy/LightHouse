@@ -113,7 +113,7 @@ class LoadFastEnough4Pwa extends Audit {
           return {
             rawValue: true,
             // eslint-disable-next-line max-len
-            debugString: `First Interactive was found at ${Util.formatMilliseconds(timeToFirstInteractive)}, however, the network request latencies were not sufficiently realistic, so the performance measurements cannot be trusted.`,
+            debugString: `First Interactive was found at ${Util.formatMilliseconds(timeToFirstInteractive)}; however, the network request latencies were not sufficiently realistic, so the performance measurements cannot be trusted.`,
             extendedInfo,
             details,
           };
