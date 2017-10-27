@@ -175,7 +175,7 @@ Useful documentation, examples, and recipes to get you started.
 **Videos**
 
 The session from Google I/O 2017 covers architecture, writing custom audits,
-Github/Travis/CI integration, headless Chrome, and more:
+GitHub/Travis/CI integration, headless Chrome, and more:
 
 [![Lighthouse @ Google I/O](https://img.youtube.com/vi/NoRYn6gOtVo/0.jpg)](https://www.youtube.com/watch?v=NoRYn6gOtVo)
 
@@ -242,7 +242,7 @@ This section details projects that have integrated Lighthouse. If you're working
 
 * **[HTTPArchive](http://httparchive.org/)** - HTTPArchive tracks how the web is built by crawling 500k pages with Web Page Test, including Lighthouse results, and stores the information in BigQuery where it is [publicly available](https://discuss.httparchive.org/t/quickstart-guide-to-exploring-the-http-archive/682).
 
-* **[Treo](https://treo.sh)** - Treo is Lighthouse as a Service. It provides regression testing, geographical regions, custom networks, and integrations with Github & Slack. Treo is a paid product with plans for solo-developers and teams.
+* **[Treo](https://treo.sh)** - Treo is Lighthouse as a Service. It provides regression testing, geographical regions, custom networks, and integrations with GitHub & Slack. Treo is a paid product with plans for solo-developers and teams.
 
 * **[Web Page Test](https://www.webpagetest.org)** — An [open source](https://github.com/WPO-Foundation/webpagetest) tool for measuring and analyzing the performance of web pages on real devices. Users can choose to produce a Lighthouse report alongside the analysis of WebPageTest results.
 
