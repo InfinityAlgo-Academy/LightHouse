@@ -21,6 +21,21 @@ describe('Web Inspector lib', function() {
     assert.ok(WebInspector.Color);
   });
 
+  it('does not polyfill setImmediate incorrectly', done => {
+    const fakeArg = {
+      foo() {},
+    };
+
+    setImmediate(function(arg) {
+      try {
+        arg.foo(); // make sure setImmediate passed the fakeArg
+        done();
+      } catch (err) {
+        done(err);
+      }
+    }, fakeArg);
+  });
+
   // Our implementation of using DevTools doesn't sandbox natives
   // In the future, it'd be valuable to handle that so lighthouse can safely
   // be consumed as a lib, without dirtying the shared natives
