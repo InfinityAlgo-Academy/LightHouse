@@ -6,6 +6,7 @@
 'use strict';
 
 const Audit = require('../audit');
+const Sentry = require('../../lib/sentry');
 const Util = require('../../report/v2/renderer/util');
 
 const KB_IN_BYTES = 1024;
@@ -133,6 +134,15 @@ class UnusedBytes extends Audit {
     }
 
     const tableDetails = Audit.makeTableDetails(result.headings, results);
+
+    if (debugString) {
+      // Track these with Sentry since we don't want to fail the entire audit for a single image failure.
+      // Use captureException to preserve the stack and take advantage of Sentry grouping.
+      Sentry.captureException(new Error(debugString), {
+        tags: {audit: this.meta.name},
+        level: 'warning',
+      });
+    }
 
     return {
       debugString,

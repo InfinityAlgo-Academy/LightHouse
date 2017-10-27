@@ -5,6 +5,7 @@
  */
 'use strict';
 
+import {existsSync} from 'fs';
 import * as path from 'path';
 
 import * as Commands from './commands/commands';
@@ -15,10 +16,15 @@ import {runLighthouse} from './run';
 const log = require('lighthouse-logger');
 const perfOnlyConfig = require('../lighthouse-core/config/perf.json');
 const pkg = require('../package.json');
+const Sentry = require('../lighthouse-core/lib/sentry');
 
 // accept noop modules for these, so the real dependency is optional.
 import {updateNotifier} from './shim-modules';
+import {askPermission} from './sentry-prompt';
 
+function isDev() {
+  return existsSync(path.join(__dirname, '../.git'));
+}
 
 // Tell user if there's a newer version of LH.
 updateNotifier({pkg}).notify();
@@ -59,6 +65,23 @@ if (cliFlags.output === Printer.OutputMode[Printer.OutputMode.json] && !cliFlags
   cliFlags.outputPath = 'stdout';
 }
 
-export function run() {
+export async function run() {
+  if (typeof cliFlags.enableErrorReporting === 'undefined') {
+    cliFlags.enableErrorReporting = await askPermission();
+  }
+
+  Sentry.init({
+    url,
+    flags: cliFlags,
+    environmentData: {
+      name: 'redacted', // prevent sentry from using hostname
+      environment: isDev() ? 'development' : 'production',
+      release: pkg.version,
+      tags: {
+        channel: 'cli',
+      },
+    },
+  });
+
   return runLighthouse(url, cliFlags, config);
 }

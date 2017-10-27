@@ -30,4 +30,27 @@ try {
   };
 }
 
-export {opn, updateNotifier};
+let inquirer;
+try {
+  inquirer = require('inquirer');
+} catch (e) {
+  inquirer = {
+    prompt() {
+      console.error('module `inquirer` not installed. Not reporting errors.');
+      return Promise.resolve({isErrorReportingEnabled: false});
+    }
+  }
+}
+
+let Configstore;
+try {
+  Configstore = require('configstore');
+} catch (e) {
+  Configstore = function Configstore() {
+    console.error('module `configstore` not installed. Not persisting user choices.');
+    this.get = () => false;
+    this.set = () => undefined;
+  }
+}
+
+export {opn, updateNotifier, inquirer, Configstore};

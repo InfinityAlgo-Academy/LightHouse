@@ -14,7 +14,7 @@ import {GetValidOutputOptions, OutputMode} from './printer';
 export interface Flags {
   port: number, chromeFlags: string, output: any, outputPath: string, saveArtifacts: boolean,
       saveAssets: boolean, view: boolean, maxWaitForLoad: number, logLevel: string,
-      hostname: string, blockedUrlPatterns: string[]
+      hostname: string, blockedUrlPatterns: string[], enableErrorReporting: boolean
 }
 
 export function getFlags(manualArgv?: string) {
@@ -54,10 +54,12 @@ export function getFlags(manualArgv?: string) {
           [
             'save-assets', 'save-artifacts', 'list-all-audits', 'list-trace-categories',
             'additional-trace-categories', 'config-path', 'chrome-flags', 'perf', 'port',
-            'hostname', 'max-wait-for-load'
+            'hostname', 'max-wait-for-load', 'enable-error-reporting'
           ],
           'Configuration:')
       .describe({
+        'enable-error-reporting':
+            'Enables error reporting (prompts once by default, setting this flag will force error reporting to that state).',
         'blocked-url-patterns': 'Block any network requests to the specified URL patterns',
         'disable-storage-reset':
             'Disable clearing the browser cache and other storage APIs before a run',

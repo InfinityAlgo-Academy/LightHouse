@@ -12,6 +12,7 @@
 
 const Gatherer = require('../gatherer');
 const URL = require('../../../lib/url-shim');
+const Sentry = require('../../../lib/sentry');
 
 const JPEG_QUALITY = 0.92;
 const WEBP_QUALITY = 0.85;
@@ -161,7 +162,16 @@ class OptimizedImages extends Gatherer {
     return imageRecords.reduce((promise, record) => {
       return promise.then(results => {
         return this.calculateImageStats(driver, record)
-          .catch(err => ({failed: true, err}))
+          .catch(err => {
+            // Track this with Sentry since these errors aren't surfaced anywhere else, but we don't
+            // want to tank the entire run due to a single image.
+            Sentry.captureException(err, {
+              tags: {gatherer: 'OptimizedImages'},
+              extra: {imageUrl: URL.elideDataURI(record.url)},
+              level: 'warning',
+            });
+            return {failed: true, err};
+          })
           .then(stats => {
             if (!stats) {
               return results;
