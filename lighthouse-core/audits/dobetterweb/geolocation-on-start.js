@@ -34,6 +34,7 @@ class GeolocationOnStart extends ViolationAudit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
+    // 'Only request geolocation information in response to a user gesture.'
     const results = ViolationAudit.getViolationResults(artifacts, /geolocation/);
 
     const headings = [

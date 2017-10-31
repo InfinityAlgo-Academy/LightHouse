@@ -9,41 +9,54 @@ const Audit = require('../../audits/redirects.js');
 const assert = require('assert');
 
 /* eslint-env mocha */
-const FAILING_REDIRECTS = {
+const FAILING_THREE_REDIRECTS = {
   startTime: 17,
+  url: 'http://exampel.com/',
   redirects: [
     {
-      endTime: 1,
-      responseReceivedTime: 5,
       startTime: 0,
       url: 'http://example.com/',
     },
     {
-      endTime: 16,
-      responseReceivedTime: 14,
       startTime: 11,
       url: 'https://example.com/',
     },
     {
-      endTime: 17,
-      responseReceivedTime: 15,
       startTime: 12,
       url: 'https://m.example.com/',
     },
   ],
 };
 
+const FAILING_TWO_REDIRECTS = {
+  startTime: 446.286,
+  url: 'http://lisairish.com/',
+  redirects: [
+    {
+      startTime: 445.648,
+      url: 'https://lisairish.com/',
+    },
+    {
+      startTime: 445.757,
+      url: 'https://www.lisairish.com/',
+    },
+  ],
+};
+
 const SUCCESS_ONE_REDIRECT = {
-  startTime: 0.7,
+  startTime: 136.383,
+  url: 'https://lisairish.com/',
   redirects: [{
-    endTime: 0.7,
-    responseReceivedTime: 5,
-    startTime: 0,
-    url: 'https://example.com/',
+    startTime: 135.873,
+    url: 'https://www.lisairish.com/',
   }],
 };
 
-const SUCCESS_NOREDIRECT = {};
+const SUCCESS_NOREDIRECT = {
+  startTime: 135.873,
+  url: 'https://www.google.com/',
+  redirects: [],
+};
 
 const mockArtifacts = (mockChain) => {
   return {
@@ -60,19 +73,28 @@ const mockArtifacts = (mockChain) => {
 };
 
 describe('Performance: Redirects audit', () => {
-  it('fails when more than one redirect detected', () => {
-    return Audit.audit(mockArtifacts(FAILING_REDIRECTS)).then(output => {
+  it('fails when 3 redirects detected', () => {
+    return Audit.audit(mockArtifacts(FAILING_THREE_REDIRECTS)).then(output => {
       assert.equal(output.score, 0);
+      assert.equal(output.details.items.length, 4);
+      assert.equal(output.rawValue, 17000);
+    });
+  });
+  it('fails when 2 redirects detected', () => {
+    return Audit.audit(mockArtifacts(FAILING_TWO_REDIRECTS)).then(output => {
+      assert.equal(output.score, 65);
       assert.equal(output.details.items.length, 3);
-      assert.equal(output.rawValue, 6000);
+      assert.equal(Math.round(output.rawValue), 638);
     });
   });
 
   it('passes when one redirect detected', () => {
     return Audit.audit(mockArtifacts(SUCCESS_ONE_REDIRECT)).then(output => {
+      // If === 1 redirect, perfect score is expected, regardless of latency
       assert.equal(output.score, 100);
-      assert.equal(output.details.items.length, 1);
-      assert.equal(output.rawValue, 0);
+      // We will still generate a table and show wasted time
+      assert.equal(output.details.items.length, 2);
+      assert.equal(Math.round(output.rawValue), 510);
     });
   });
 

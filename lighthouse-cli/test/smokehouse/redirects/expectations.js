@@ -20,7 +20,7 @@ module.exports = [
         rawValue: '>=500',
         details: {
           items: {
-            length: 2,
+            length: 3,
           },
         },
       },
@@ -32,10 +32,10 @@ module.exports = [
     audits: {
       'redirects': {
         score: 100,
-        rawValue: 0,
+        rawValue: '>=250',
         details: {
           items: {
-            length: 1,
+            length: 2,
           },
         },
       },

@@ -32,38 +32,45 @@ class Redirects extends Audit {
       .then(mainResource => {
         // redirects is only available when redirects happens
         const redirectRequests = Array.from(mainResource.redirects || []);
+
         // add main resource to redirectRequests so we can use it to calculate wastedMs
         redirectRequests.push(mainResource);
+
         let totalWastedMs = 0;
-
         const pageRedirects = [];
-        for (let i = 1; i < redirectRequests.length; i++) {
-          const request = redirectRequests[i - 1];
-          const nextRequest = redirectRequests[i];
-          const wastedMs = (nextRequest.startTime - request.startTime) * 1000;
 
-          // We skip the first redirect in our calculations but show it in the table below.
-          // We allow 1 redirect (www. => m.)
-          if (i > 1) {
-            totalWastedMs += wastedMs;
-          }
+        // Kickoff the results table (with the initial request) if there are > 1 redirects
+        if (redirectRequests.length > 1) {
+          pageRedirects.push({
+            url: `(Initial: ${redirectRequests[0].url})`,
+            wastedMs: 'n/a',
+          });
+        }
+
+        for (let i = 1; i < redirectRequests.length; i++) {
+          const initialRequest = redirectRequests[i - 1];
+          const redirectedRequest = redirectRequests[i];
+
+          const wastedMs = (redirectedRequest.startTime - initialRequest.startTime) * 1000;
+          totalWastedMs += wastedMs;
 
           pageRedirects.push({
-            url: request.url,
-            wastedMs: Util.formatMilliseconds(wastedMs),
+            url: redirectedRequest.url,
+            wastedMs: Util.formatMilliseconds(wastedMs, 1),
           });
         }
 
         const headings = [
-          {key: 'url', itemType: 'text', text: 'URL'},
+          {key: 'url', itemType: 'text', text: 'Redirected URL'},
           {key: 'wastedMs', itemType: 'text', text: 'Time for Redirect'},
         ];
         const details = Audit.makeTableDetails(headings, pageRedirects);
 
         return {
-          score: UnusedBytes.scoreForWastedMs(totalWastedMs),
+          // We award a passing grade if you only have 1 redirect
+          score: redirectRequests.length <= 2 ? 100 : UnusedBytes.scoreForWastedMs(totalWastedMs),
           rawValue: totalWastedMs,
-          displayValue: Util.formatMilliseconds(totalWastedMs),
+          displayValue: Util.formatMilliseconds(totalWastedMs, 1),
           extendedInfo: {
             value: {
               wastedMs: totalWastedMs,
