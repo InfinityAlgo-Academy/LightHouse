@@ -32,7 +32,9 @@ if (location.search === '' || params.has('passiveEvents')) {
 if (location.search === '' || params.has('deprecations')) {
   const div = document.createElement('div');
   div.createShadowRoot();
-  div.createShadowRoot(); // FAIL - multiple shadow v0 roots.
+  // FAIL(errors-in-console) - multiple shadow v0 roots.
+  // TODO: disabled until m64 is stable (when moved from deprecation warning to error)
+  // div.createShadowRoot();
 }
 
 })();

@@ -15,6 +15,7 @@ module.exports = [
     audits: {
       'errors-in-console': {
         score: false,
+        // TODO: should be 5 after m64 (see note in dbw_tester.js)
         rawValue: 4,
         displayValue: '4',
         details: {
@@ -168,12 +169,12 @@ module.exports = [
         score: false,
         extendedInfo: {
           value: {
-            length: 4,
+            length: 3,
           },
         },
         details: {
           items: {
-            length: 4,
+            length: 3,
           },
         },
       },
