@@ -453,4 +453,22 @@ describe('Runner', () => {
       }
     });
   });
+
+  it('includes any LighthouseRunWarnings from artifacts in output', () => {
+    const url = 'https://example.com';
+    const LighthouseRunWarnings = [
+      'warning0',
+      'warning1',
+    ];
+    const config = new Config({
+      artifacts: {
+        LighthouseRunWarnings,
+      },
+      audits: [],
+    });
+
+    return Runner.run(null, {url, config, driverMock}).then(results => {
+      assert.deepStrictEqual(results.runWarnings, LighthouseRunWarnings);
+    });
+  });
 });

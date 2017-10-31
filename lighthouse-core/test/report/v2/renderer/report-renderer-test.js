@@ -115,6 +115,30 @@ describe('ReportRenderer V2', () => {
       });
     });
 
+    it('renders no warning section when no lighthouseRunWarnings occur', () => {
+      const container = renderer._dom._document.body;
+      const output = renderer.renderReport(sampleResults, container);
+      assert.strictEqual(output.querySelector('.lh-run-warnings'), null);
+    });
+
+    it('renders a warning section', () => {
+      const runWarnings = [
+        'Less bad thing',
+        'Really bad thing',
+        'LH should maybe just retire now',
+      ];
+      const warningResults = Object.assign({}, sampleResults, {runWarnings});
+      const container = renderer._dom._document.body;
+      const output = renderer.renderReport(warningResults, container);
+
+      const warningEls = output.querySelectorAll('.lh-run-warnings > ul > li');
+      assert.strictEqual(warningEls.length, runWarnings.length);
+      warningEls.forEach((warningEl, index) => {
+        const warningText = warningEl.textContent;
+        assert.strictEqual(warningText, runWarnings[index]);
+      });
+    });
+
     it('renders a footer', () => {
       const footer = renderer._renderReportFooter(sampleResults);
       const footerContent = footer.querySelector('.lh-footer').textContent;

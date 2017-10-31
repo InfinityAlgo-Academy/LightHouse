@@ -23,6 +23,9 @@ class Runner {
 
     const config = opts.config;
 
+    // List of top-level warnings for this Lighthouse run.
+    const lighthouseRunWarnings = [];
+
     // save the initialUrl provided by the user
     opts.initialUrl = opts.url;
     if (typeof opts.initialUrl !== 'string' || opts.initialUrl.length === 0) {
@@ -73,8 +76,13 @@ class Runner {
         run = run.then(_ => config.artifacts);
       }
 
-      // Add computed artifacts.
       run = run.then(artifacts => {
+        // Bring in lighthouseRunWarnings from gathering stage.
+        if (artifacts.LighthouseRunWarnings) {
+          lighthouseRunWarnings.push(...artifacts.LighthouseRunWarnings);
+        }
+
+        // And add computed artifacts.
         return Object.assign({}, artifacts, Runner.instantiateComputedArtifacts());
       });
 
@@ -89,7 +97,6 @@ class Runner {
 
         return artifacts;
       });
-
 
       run = run.then(artifacts => {
         log.log('status', 'Analyzing and running audits...');
@@ -150,6 +157,7 @@ class Runner {
           generatedTime: (new Date()).toJSON(),
           initialUrl: opts.initialUrl,
           url: opts.url,
+          runWarnings: lighthouseRunWarnings,
           audits: resultsById,
           artifacts: runResults.artifacts,
           runtimeConfig: Runner.getRuntimeConfig(opts.flags),

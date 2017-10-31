@@ -255,7 +255,7 @@ describe('GatherRunner', function() {
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),
       blockUrlPatterns: asyncFunc,
-      getUserAgent: asyncFunc,
+      getUserAgent: () => Promise.resolve('Fake user agent'),
     };
 
     return GatherRunner.setupDriver(driver, {}, {flags: {}}).then(_ => {
@@ -313,7 +313,7 @@ describe('GatherRunner', function() {
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),
       blockUrlPatterns: asyncFunc,
-      getUserAgent: asyncFunc,
+      getUserAgent: () => Promise.resolve('Fake user agent'),
     };
 
     return GatherRunner.setupDriver(driver, {}, {
@@ -739,6 +739,8 @@ describe('GatherRunner', function() {
           Promise.reject(someOtherError),
           Promise.resolve(1729),
         ],
+
+        LighthouseRunWarnings: [],
       };
 
       return GatherRunner.collectArtifacts(gathererResults).then(artifacts => {
@@ -746,6 +748,22 @@ describe('GatherRunner', function() {
         assert.strictEqual(artifacts.PassGatherer, 284);
         assert.strictEqual(artifacts.SingleErrorGatherer, recoverableError);
         assert.strictEqual(artifacts.TwoErrorGatherer, recoverableError);
+      });
+    });
+
+    it('produces a LighthouseRunWarnings artifact from array of warnings', () => {
+      const LighthouseRunWarnings = [
+        'warning0',
+        'warning1',
+        'warning2',
+      ];
+
+      const gathererResults = {
+        LighthouseRunWarnings,
+      };
+
+      return GatherRunner.collectArtifacts(gathererResults).then(artifacts => {
+        assert.deepStrictEqual(artifacts.LighthouseRunWarnings, LighthouseRunWarnings);
       });
     });
 
@@ -922,5 +940,17 @@ describe('GatherRunner', function() {
           assert.ok(true);
         });
     });
+  });
+
+  it('issues a lighthouseRunWarnings if running in Headless', () => {
+    const userAgent = 'HeadlessChrome/64.0.3240.0';
+    const gathererResults = {
+      LighthouseRunWarnings: [],
+    };
+
+    GatherRunner.warnOnHeadless(userAgent, gathererResults);
+    assert.strictEqual(gathererResults.LighthouseRunWarnings.length, 1);
+    const warning = gathererResults.LighthouseRunWarnings[0];
+    assert.ok(/Headless Chrome/.test(warning));
   });
 });
