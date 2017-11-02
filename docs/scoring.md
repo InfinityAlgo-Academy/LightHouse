@@ -1,9 +1,9 @@
 # Goal
-The goal of this document is to explain how scoring works on Lighthouse works and what to do to improve your Lighthouse  scores across the four sections of the report. 
+The goal of this document is to explain how scoring works in Lighthouse and what to do to improve your Lighthouse scores across the four sections of the report. 
 
 *Note: if you want a **nice spreadsheet** version of this doc to understand weighting and scoring, check out the spreadsheet [here](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=0)*
 
-*Note 2: if you ever receive a **score of 0** in any Lighthouse category, that usually indicates an error on our part. Please file an issue [here](https://github.com/GoogleChrome/lighthouse/issues) so our team can look into it.*
+*Note 2: if you receive a **score of 0** in any Lighthouse category, that usually indicates an error on our part. Please file an issue [here](https://github.com/GoogleChrome/lighthouse/issues) so our team can look into it.*
 
 # Performance
  
@@ -15,8 +15,8 @@ Lighthouse measures the following performance metrics:
 *Note: this metric is currently in beta, which means that the underlying definition of this metric is in progress.*
 - [Consistently interactive](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive): defined as the first point at which everything is loaded such that the page will quickly respond to any user input throughout the page. 
 *Note: this metric is currently in beta, which means that the underlying definition of this metric is in progress.*
-- [Perceptual Speed Index (pSI)](https://developers.google.com/web/tools/lighthouse/audits/speed-index): pSI measures how many pixels are painted at each given time interval on the viewport. The later the pixels that are painted, the better you score on metric since we want an experience where most of the content is shown on the screen during the first few moments of initiating the page load. Loading more content earlier makes your end user feel like the website is loading quickly, which contributes to a positive user experience. Therefore, the lower the pSI score, the better. 
-- [Estimated Input Latency](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency):  this audit measures how fast your app is in responding to user input. Our benchmark is that the estimated input latency should be under 50 ms (see documentation [here](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency) as to why).
+- [Perceptual Speed Index (pSI)](https://developers.google.com/web/tools/lighthouse/audits/speed-index): pSI measures how many pixels are painted at each given time interval on the viewport. The earlier the pixels are painted, the better you score on metric since we want an experience where most of the content is shown on the screen during the first few moments of initiating the page load. Loading more content earlier makes your end user feel like the website is loading quickly, which contributes to a positive user experience. Therefore, the lower the pSI score, the better. 
+- [Estimated Input Latency](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency): this audit measures how fast your app is in responding to user input. Our benchmark is that the estimated input latency should be under 50 ms (see documentation [here](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency) as to why).
 
 *Some **variability** when running on real-world sites is to be expected as sites load different ads, scripts, and network conditions vary for each visit. Note that Lighthouse can especially experience inconsistent behaviors when it runs in the presence of anti-virus scanners, other extensions or programs that interfere with page load, and inconsistent ad behavior. Please try to run without anti-virus scanners or other extensions/programs to get the cleanest results, or alternatively, run Lighthouse on WebPageTest for the most consistent results [here](https://www.webpagetest.org/easy.php).*
 
@@ -56,7 +56,7 @@ The PWA score is calculated based on the Baseline PWA checklist [here](https://d
 
 # Accessibility
 ### How is the accessibility score calculated?
-The accessibility score is a weighted average of all the different audits (the weights for each audit can be found in this spreadsheet [here](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=0). Each audit is a pass/fail (meaning there is no room for partial points for getting an audit half-right). For example, that means if half your buttons have screenreader friendly names, and half don't, you don't get "half" of the weighted average- you get a 0 because it needs to be implemented *throughout* the page. 
+The accessibility score is a weighted average of all the different audits (the weights for each audit can be found in this spreadsheet [here](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=0)). Each audit is a pass/fail (meaning there is no room for partial points for getting an audit half-right). For example, that means if half your buttons have screenreader friendly names, and half don't, you don't get "half" of the weighted average-you get a 0 because it needs to be implemented *throughout* the page. 
 
 # Best Practices
 ### How is the Best Practices score calculated? 
