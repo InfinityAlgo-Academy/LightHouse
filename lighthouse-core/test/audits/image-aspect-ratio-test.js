@@ -133,4 +133,26 @@ describe('Images: aspect-ratio audit', () => {
       usesObjectFit: false,
     },
   });
+
+  it('skips svg images', () => {
+    const result = ImageAspectRatioAudit.audit({
+      ImageUsage: [
+        generateImage(
+          {width: 150, height: 150},
+          {},
+          {
+            url: 'https://google.com/logo.png',
+            mimeType: 'image/svg+xml',
+          },
+          {
+            isCss: false,
+            usesObjectFit: false,
+          }
+        ),
+      ],
+    });
+
+    assert.strictEqual(result.rawValue, true, 'rawValue does not match');
+    assert.strictEqual(result.debugString, undefined, 'debugString does not match');
+  });
 });

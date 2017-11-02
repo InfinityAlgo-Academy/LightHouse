@@ -70,9 +70,11 @@ class ImageAspectRatio extends Audit {
     let debugString;
     const results = [];
     images.filter(image => {
-      // filter out images that don't have following properties
-      // networkRecord, width, height, images that use `object-fit`: `cover` or `contain`
+      // - filter out images that don't have following properties:
+      //   networkRecord, width, height, images that use `object-fit`: `cover` or `contain`
+      // - filter all svgs as they have no natural dimensions to audit
       return image.networkRecord &&
+        image.networkRecord.mimeType !== 'image/svg+xml' &&
         image.width &&
         image.height &&
         !image.usesObjectFit;
