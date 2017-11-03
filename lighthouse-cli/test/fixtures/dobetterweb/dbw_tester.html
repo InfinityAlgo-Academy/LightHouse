@@ -35,6 +35,9 @@
 <!-- FAIL: block rendering -->
 <script src="./dbw_tester.js"></script>
 
+<!-- PASS: 'modules' are deferred by default and don't block rendering -->
+<script type="module" src="./empty_module.js?delay=500"></script>
+
 <!-- FAIL(errors-in-console): exception thrown -->
 <script type="text/javascript">throw new Error('An error');</script>
 

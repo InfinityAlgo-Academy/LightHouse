@@ -37,13 +37,13 @@ module.exports = [
         extendedInfo: {
           value: {
             results: {
-              length: 15,
+              length: 16,
             },
           },
         },
         details: {
           items: {
-            length: 15,
+            length: 16,
           },
         },
       },

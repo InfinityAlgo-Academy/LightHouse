@@ -32,7 +32,8 @@ function collectTagsThatBlockFirstPaint() {
           if (tag.tagName === 'SCRIPT') {
             return !tag.hasAttribute('async') &&
                 !tag.hasAttribute('defer') &&
-                !/^data:/.test(tag.src);
+                !/^data:/.test(tag.src) &&
+                tag.getAttribute('type') !== 'module';
           }
 
           // Filter stylesheet/HTML imports that block rendering.
