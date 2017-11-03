@@ -1,9 +1,12 @@
 # Goal
 The goal of this document is to explain how scoring works in Lighthouse and what to do to improve your Lighthouse scores across the four sections of the report. 
 
-*Note: if you want a **nice spreadsheet** version of this doc to understand weighting and scoring, check out the spreadsheet [here](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=0)*
+Note 1: if you want a **nice spreadsheet** version of this doc to understand weighting and scoring, check out the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=0)
 
-*Note 2: if you receive a **score of 0** in any Lighthouse category, that usually indicates an error on our part. Please file an issue [here](https://github.com/GoogleChrome/lighthouse/issues) so our team can look into it.*
+![alt text](https://user-images.githubusercontent.com/39191/32397461-2d20c87a-c0a7-11e7-99d8-61576113a710.png)
+*Screenshot of the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=0)*
+
+Note 2: if you receive a **score of 0** in any Lighthouse category, that usually indicates an error on our part. Please file an [issue](https://github.com/GoogleChrome/lighthouse/issues) so our team can look into it.
 
 # Performance
  
@@ -44,18 +47,18 @@ Once we finish computing the percentile equivalent of your raw performance score
 - Green (good): 75-100. 
 
 ### What can developers do to improve their performance score?
-*Note: we've built a little calculator that can help you understand what thresholds you should be aiming for achieving a certain Lighthouse performance score. You can find it [here](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=283330180).*
+*Note: we've built [a little calculator](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=283330180) that can help you understand what thresholds you should be aiming for achieving a certain Lighthouse performance score. *
 
 Lighthouse has a whole section in the report on improving your performance score under the “Opportunities” section. There are detailed suggestions and documentation that explains the different suggestions and how to implement them. Additionally, the diagnostics section lists additional guidance that developers can explore to further experiment and tweak with their performance. 
 
 
 # PWA
 ### How is the PWA score calculated? 
-The PWA score is calculated based on the Baseline PWA checklist [here](https://developers.google.com/web/progressive-web-apps/checklist#baseline), which lists 14 requirements. Lighthouse tests for 11 out of the 14 requirements automatically, with the other 3 being manual checks. Each of the 11 audits for the PWA section of the report is weighted equally, so implementing any of the audits correctly will increase your overall score by ~9 points. 
+The PWA score is calculated based on the [Baseline PWA checklist](https://developers.google.com/web/progressive-web-apps/checklist#baseline), which lists 14 requirements. Lighthouse tests for 11 out of the 14 requirements automatically, with the other 3 being manual checks. Each of the 11 audits for the PWA section of the report is weighted equally, so implementing any of the audits correctly will increase your overall score by ~9 points. 
 
 # Accessibility
 ### How is the accessibility score calculated?
-The accessibility score is a weighted average of all the different audits (the weights for each audit can be found in this spreadsheet [here](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=0)). Each audit is a pass/fail (meaning there is no room for partial points for getting an audit half-right). For example, that means if half your buttons have screenreader friendly names, and half don't, you don't get "half" of the weighted average-you get a 0 because it needs to be implemented *throughout* the page. 
+The accessibility score is a weighted average of all the different audits (the weights for each audit can be found in [the scoring spreadsheet](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=0)). Each audit is a pass/fail (meaning there is no room for partial points for getting an audit half-right). For example, that means if half your buttons have screenreader friendly names, and half don't, you don't get "half" of the weighted average-you get a 0 because it needs to be implemented *throughout* the page. 
 
 # Best Practices
 ### How is the Best Practices score calculated? 
