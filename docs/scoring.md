@@ -21,10 +21,9 @@ Lighthouse measures the following performance metrics:
 *Some **variability** when running on real-world sites is to be expected as sites load different ads, scripts, and network conditions vary for each visit. Note that Lighthouse can especially experience inconsistent behaviors when it runs in the presence of anti-virus scanners, other extensions or programs that interfere with page load, and inconsistent ad behavior. Please try to run without anti-virus scanners or other extensions/programs to get the cleanest results, or alternatively, run Lighthouse on WebPageTest for the most consistent results [here](https://www.webpagetest.org/easy.php).*
 
 ### How are the scores weighted?
-Lighthouse returns a performance score from 0-100. A score of 0 usually indicates an error with performance measurement (so file an issue in the Lighthouse repo if further debugging is needed), and 100 is the best possible ideal score (really hard to get). 
-If developers are scoring around a 95, their websites are extremely performant. Any additional improvements to the score past 95 doesn’t add additional value for the developer, so we don’t recommend they invest further time to improve the score. 
+Lighthouse returns a performance score from 0-100. A score of 0 usually indicates an error with performance measurement (so file an issue in the Lighthouse repo if further debugging is needed), and 100 is the best possible ideal score (really hard to get). Usually, any score above a 90 gets you in the top ~5% of performant websites. 
 
-The performance score is determined from the performance metrics only. The Opportunities/Diagnostics sections do not directly contribute to the performance score.
+The performance score is determined from the **performance metrics only**. The Opportunities/Diagnostics sections do not directly contribute to the performance score.
 
 The metric results are not weighted equally. Currently the weights are:
 
