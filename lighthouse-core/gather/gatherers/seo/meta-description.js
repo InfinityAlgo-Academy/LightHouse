@@ -15,7 +15,7 @@ class MetaDescription extends Gatherer {
   afterPass(options) {
     const driver = options.driver;
 
-    return driver.querySelector('head meta[name="description"]')
+    return driver.querySelector('head meta[name="description" i]')
       .then(node => node && node.getAttribute('content'));
   }
 }
