@@ -45,7 +45,7 @@ function collectImageElementInfo() {
       naturalWidth: element.naturalWidth,
       naturalHeight: element.naturalHeight,
       isCss: false,
-      isPicture: element.parentElement.tagName === 'PICTURE',
+      isPicture: !!element.parentElement && element.parentElement.tagName === 'PICTURE',
       usesObjectFit: computedStyle.getPropertyValue('object-fit') === 'cover'
       || computedStyle.getPropertyValue('object-fit') === 'contain',
     };

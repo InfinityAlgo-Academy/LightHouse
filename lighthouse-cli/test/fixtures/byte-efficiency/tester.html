@@ -51,6 +51,12 @@ setTimeout(() => {
 <div>
   <h2>Byte efficiency tester page</h2>
   <span>Hi there!</span>
+  <div id="image-in-shadow-root"></div>
+  <script>
+  // Make sure image audits can handle images in shadow roots, see https://github.com/GoogleChrome/lighthouse/issues/3731
+  const shadowRoot = document.getElementById('image-in-shadow-root').attachShadow({mode: 'open'});
+  shadowRoot.innerHTML = '<img hidden>';
+  </script>
 </div>
 
 <div class="images">
