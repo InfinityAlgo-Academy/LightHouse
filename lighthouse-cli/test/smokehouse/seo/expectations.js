@@ -28,11 +28,14 @@ module.exports = [
       'link-text': {
         score: true,
       },
+      'is-crawlable': {
+        score: true,
+      },
     },
   },
   {
-    initialUrl: 'http://localhost:10200/seo/seo-failure-cases.html?status_code=403',
-    url: 'http://localhost:10200/seo/seo-failure-cases.html?status_code=403',
+    initialUrl: 'http://localhost:10200/seo/seo-failure-cases.html?status_code=403&extra_header=x-robots-tag:none',
+    url: 'http://localhost:10200/seo/seo-failure-cases.html?status_code=403&extra_header=x-robots-tag:none',
     audits: {
       'viewport': {
         score: false,
@@ -58,6 +61,14 @@ module.exports = [
         details: {
           items: {
             length: 3,
+          },
+        },
+      },
+      'is-crawlable': {
+        score: false,
+        details: {
+          items: {
+            length: 2,
           },
         },
       },

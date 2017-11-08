@@ -12,6 +12,7 @@ const path = require('path');
 const fs = require('fs');
 const parseQueryString = require('querystring').parse;
 const parseURL = require('url').parse;
+const HEADER_SAFELIST = new Set(['x-robots-tag']);
 
 const lhRootDirPath = path.join(__dirname, '../../../');
 
@@ -51,13 +52,14 @@ function requestHandler(request, response) {
   }
 
   function sendResponse(statusCode, data) {
-    let headers;
+    const headers = {};
+
     if (filePath.endsWith('.js')) {
-      headers = {'Content-Type': 'text/javascript'};
+      headers['Content-Type'] = 'text/javascript';
     } else if (filePath.endsWith('.css')) {
-      headers = {'Content-Type': 'text/css'};
+      headers['Content-Type'] = 'text/css';
     } else if (filePath.endsWith('.svg')) {
-      headers = {'Content-Type': 'image/svg+xml'};
+      headers['Content-Type'] = 'image/svg+xml';
     }
 
     let delay = 0;
@@ -70,6 +72,19 @@ function requestHandler(request, response) {
       // set delay of request when present
       if (typeof queryString.delay !== 'undefined') {
         delay = parseInt(queryString.delay, 10) || 2000;
+      }
+
+      if (typeof queryString.extra_header !== 'undefined') {
+        let extraHeaders = queryString.extra_header;
+        extraHeaders = Array.isArray(extraHeaders) ? extraHeaders : [extraHeaders];
+
+        extraHeaders.forEach(header => {
+          const [headerName, ...headerValue] = header.split(':');
+
+          if (HEADER_SAFELIST.has(headerName.toLowerCase())) {
+            headers[headerName] = headerValue.join(':');
+          }
+        });
       }
 
       // redirect url to new url if present

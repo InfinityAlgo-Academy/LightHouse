@@ -37,6 +37,8 @@ module.exports = {
       'dobetterweb/tags-blocking-first-paint',
       'dobetterweb/websql',
       'seo/meta-description',
+      'seo/crawlable-links',
+      'seo/meta-robots',
     ],
   },
   {
@@ -148,6 +150,8 @@ module.exports = {
     'dobetterweb/uses-passive-event-listeners',
     'seo/meta-description',
     'seo/http-status-code',
+    'seo/link-text',
+    'seo/is-crawlable',
   ],
 
   groups: {
