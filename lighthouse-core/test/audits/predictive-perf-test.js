@@ -25,13 +25,18 @@ describe('Performance: predictive performance audit', () => {
     }, Runner.instantiateComputedArtifacts());
 
     return PredictivePerf.audit(artifacts).then(output => {
-      assert.equal(output.score, 99);
-      assert.equal(Math.round(output.rawValue), 1696);
-      assert.equal(output.displayValue, '1,700\xa0ms');
+      assert.equal(output.score, 80);
+      assert.equal(Math.round(output.rawValue), 5123);
+      assert.equal(output.displayValue, '5,120\xa0ms');
 
       const valueOf = name => Math.round(output.extendedInfo.value[name]);
-      assert.equal(valueOf('optimisticFMP'), 754);
+      assert.equal(valueOf('roughEstimateOfFCP'), 2035);
+      assert.equal(valueOf('optimisticFCP'), 607);
+      assert.equal(valueOf('pessimisticFCP'), 607);
+      assert.equal(valueOf('roughEstimateOfFMP'), 2845);
+      assert.equal(valueOf('optimisticFMP'), 904);
       assert.equal(valueOf('pessimisticFMP'), 1191);
+      assert.equal(valueOf('roughEstimateOfTTCI'), 5123);
       assert.equal(valueOf('optimisticTTCI'), 2438);
       assert.equal(valueOf('pessimisticTTCI'), 2399);
     });

@@ -56,10 +56,24 @@ class CPUNode extends Node {
   }
 
   /**
+   * Returns true if this node contains a Layout task.
    * @return {boolean}
    */
   didPerformLayout() {
     return this._childEvents.some(evt => evt.name === 'Layout');
+  }
+
+  /**
+   * Returns true if this node contains the EvaluateScript task for a URL in the given set.
+   * @param {!Set<string>} urls
+   * @return {boolean}
+   */
+  isEvaluateScriptFor(urls) {
+    return this._childEvents.some(evt => {
+      return evt.name === 'EvaluateScript' &&
+        evt.args.data &&
+        urls.has(evt.args.data.url);
+    });
   }
 
   /**
