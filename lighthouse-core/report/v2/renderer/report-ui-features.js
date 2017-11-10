@@ -177,7 +177,12 @@ class ReportUIFeatures {
       case 'copy':
         this.onCopyButtonClick();
         break;
-      case 'print':
+      case 'print-summary':
+        this.collapseAllDetails();
+        this.closeExportDropdown();
+        self.print();
+        break;
+      case 'print-expanded':
         this.expandAllDetails();
         this.closeExportDropdown();
         self.print();
@@ -257,7 +262,6 @@ class ReportUIFeatures {
    */
   printShortCutDetect(e) {
     if ((e.ctrlKey || e.metaKey) && e.keyCode === 80) { // Ctrl+P
-      this.expandAllDetails();
       this.closeExportDropdown();
     }
   }
