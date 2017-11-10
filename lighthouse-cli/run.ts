@@ -40,7 +40,10 @@ export function parseChromeFlags(flags: string = '') {
       // Avoid '=true', then reintroduce quotes
       .map(key => {
         if (parsed[key] === true) return `--${key}`;
-        return `--${key}="${parsed[key]}"`;
+        // ChromeLauncher passes flags to Chrome as atomic arguments, so do not double quote
+        // i.e. `lighthouse --chrome-flags="--user-agent='My Agent'"` becomes `chrome "--user-agent=My Agent"`
+        // see https://github.com/GoogleChrome/lighthouse/issues/3744
+        return `--${key}=${parsed[key]}`;
       });
 }
 
