@@ -188,7 +188,6 @@ if (typeof module !== 'undefined' && module.exports) {
  *       helpText: string,
  *       score: (number|boolean),
  *       scoringMode: string,
- *       optimalValue: number,
  *       extendedInfo: Object,
  *       details: (!DetailsRenderer.DetailsJSON|undefined)
  *     }

@@ -37,9 +37,6 @@ class CategoryRenderer {
     if (audit.result.displayValue) {
       title += `:  ${audit.result.displayValue}`;
     }
-    if (audit.result.optimalValue) {
-      title += ` (target: ${audit.result.optimalValue})`;
-    }
 
     if (audit.result.debugString) {
       const debugStrEl = tmpl.appendChild(this._dom.createElement('div', 'lh-debug'));

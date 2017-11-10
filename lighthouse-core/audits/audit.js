@@ -151,7 +151,6 @@ class Audit {
       rawValue: result.rawValue,
       error: result.error,
       debugString: result.debugString,
-      optimalValue: result.optimalValue,
       extendedInfo: result.extendedInfo,
       scoringMode: audit.meta.scoringMode || Audit.SCORING_MODES.BINARY,
       informative: audit.meta.informative,

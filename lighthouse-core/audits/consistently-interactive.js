@@ -236,7 +236,6 @@ class ConsistentlyInteractiveMetric extends Audit {
           ),
           rawValue: timeInMs,
           displayValue: Util.formatMilliseconds(timeInMs),
-          optimalValue: this.meta.optimalValue,
           extendedInfo: {
             value: extendedInfo,
           },

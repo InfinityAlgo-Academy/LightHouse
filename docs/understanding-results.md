@@ -61,7 +61,6 @@ An object containing the results of the audits, keyed by their name.
 | extendedInfo | `Object` | Extra information found by the audit. The structure of this object varies from audit to audit and is generally for programmatic consumption and debugging, though there is typically overlap with `details`. *WARNING: The structure of this object is not stable and cannot be trusted to follow semver* |
 | manual | `boolean` | Indicator used for display that the audit does not have results and is a placeholder for the user to conduct manual testing. |
 | informative | `boolean` | Indicator used for display that the audit is intended to be informative only. It cannot be passed or failed. |
-| category | `string` | No longer used. *WARNING: Deprecated, will be removed in Lighthouse 3.0* |
 
 ### Example
 ```json

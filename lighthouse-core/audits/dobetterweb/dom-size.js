@@ -36,7 +36,6 @@ class DOMSize extends Audit {
       name: 'dom-size',
       description: 'Avoids an excessive DOM size',
       failureDescription: 'Uses an excessive DOM size',
-      optimalValue: `< ${DOMSize.MAX_DOM_NODES.toLocaleString()} nodes`,
       helpText: 'Browser engineers recommend pages contain fewer than ' +
         `~${Util.formatNumber(DOMSize.MAX_DOM_NODES)} DOM nodes. The sweet spot is a tree ` +
         `depth < ${MAX_DOM_TREE_DEPTH} elements and fewer than ${MAX_DOM_TREE_WIDTH} ` +
@@ -96,7 +95,6 @@ class DOMSize extends Audit {
     return {
       score,
       rawValue: stats.totalDOMNodes,
-      optimalValue: this.meta.optimalValue,
       displayValue: `${Util.formatNumber(stats.totalDOMNodes)} nodes`,
       extendedInfo: {
         value: cards,

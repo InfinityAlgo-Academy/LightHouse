@@ -124,7 +124,6 @@ describe('Config', () => {
     configJSON.auditResults = [{
       value: 1,
       rawValue: 1.0,
-      optimalValue: 1.0,
       name: 'Test Audit',
       details: {
         items: {
