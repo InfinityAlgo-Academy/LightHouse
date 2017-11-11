@@ -146,6 +146,7 @@ echo "Test the lighthouse-viewer build"
 echo "Branch and commit the version bump."
 git co -b bumpv240
 git c "2.4.0"
+yarn changelog
 git tag -a v2.4.0 -m "v2.4.0"
 echo "Generate a PR and get it merged."
 
@@ -162,7 +163,7 @@ npm publish
 yarn deploy-viewer
 
 echo "Use the GitHub web interface to tag the release"
-echo "Generate the release notes, and update the release page"
+echo "Copy changelog to release notes and update the release page"
 
 # * Tell the world!!! *
 echo "Inform various peoples"

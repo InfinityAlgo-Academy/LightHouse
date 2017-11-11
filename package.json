@@ -46,7 +46,8 @@
     "smokehouse": "node lighthouse-cli/test/smokehouse/smokehouse.js",
     "deploy-viewer": "cd lighthouse-viewer && gulp deploy",
     "bundlesize": "bundlesize",
-    "plots-smoke": "bash plots/test/smoke.sh"
+    "plots-smoke": "bash plots/test/smoke.sh",
+    "changelog": "conventional-changelog -n ./build/changelog-generator/index.js -i changelog.md -s"
   },
   "devDependencies": {
     "@types/node": "^6.0.45",
@@ -54,6 +55,7 @@
     "bundlesize": "^0.14.4",
     "codecov": "^2.2.0",
     "commitizen": "^2.9.6",
+    "conventional-changelog-cli": "^1.3.4",
     "coveralls": "^2.11.9",
     "cz-customizable": "^5.2.0",
     "eslint": "^4.8.0",
