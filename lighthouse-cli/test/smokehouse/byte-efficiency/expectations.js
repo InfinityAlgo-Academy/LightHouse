@@ -40,9 +40,15 @@ module.exports = [
         score: '<100',
         extendedInfo: {
           value: {
-            results: {
-              length: 3,
-            },
+            results: [
+              {
+                url: /lighthouse-unoptimized.jpg$/,
+              }, {
+                url: /lighthouse-480x320.webp$/,
+              }, {
+                url: /large.svg$/,
+              },
+            ],
           },
         },
       },

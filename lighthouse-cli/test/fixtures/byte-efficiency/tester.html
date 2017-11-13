@@ -31,11 +31,17 @@ function generateInlineScriptWithSize(sizeInBytes, firstContent = '', used = fal
   document.head.appendChild(style);
 }
 
+// Add a long task to delay FI
+setTimeout(() => {
+  const start = Date.now();
+  while (Date.now() < start + 100) ;
+}, 2000);
+
 // Lazily load the image
 setTimeout(() => {
   const template = document.getElementById('lazily-loaded-image');
   document.body.appendChild(template.content.cloneNode(true));
-}, 6000);
+}, 7000);
 </script>
 <style>
   .onscreen {
