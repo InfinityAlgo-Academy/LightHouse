@@ -54,4 +54,16 @@ describe('External anchors use rel="noopener"', () => {
     assert.equal(auditResult.details.items.length, 3);
     assert.ok(auditResult.debugString, 'includes debugString');
   });
+
+  it('does not fail for links with javascript in href attribute', () => {
+    const auditResult = ExternalAnchorsAudit.audit({
+      AnchorsWithNoRelNoopener: [
+        {href: 'javascript:void(0)'},
+        {href: 'JAVASCRIPT:void(0)'},
+      ],
+      URL: {finalUrl: URL},
+    });
+    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.details.items.length, 0);
+  });
 });
