@@ -23,9 +23,9 @@ class ImageAspectRatio extends Audit {
   static get meta() {
     return {
       name: 'image-aspect-ratio',
-      description: 'Uses Images with appropriate aspect ratio',
-      failureDescription: 'Does not use Images with appropriate aspect ratio',
-      helpText: 'Image displayed sizes should match their natural aspect ratio.',
+      description: 'Displays images with correct aspect ratio',
+      failureDescription: 'Displays images with incorrect aspect ratio',
+      helpText: 'Image display dimensions should match natural aspect ratio.',
       requiredArtifacts: ['ImageUsage'],
     };
   }
