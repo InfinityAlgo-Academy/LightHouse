@@ -29,6 +29,7 @@ class Speedline extends ComputedArtifact {
       return speedline(traceEvents, {
         timeOrigin: navStart,
         fastMode: true,
+        include: 'perceptualSpeedIndex',
       });
     });
   }

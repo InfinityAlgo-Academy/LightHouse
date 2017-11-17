@@ -9,6 +9,8 @@
 
 const Audit = require('../../audits/speed-index-metric.js');
 const assert = require('assert');
+const pwaTrace = require('../fixtures/traces/progressive-app.json');
+const Runner = require('../../runner.js');
 
 const emptyTraceStub = {
   traces: {
@@ -34,6 +36,21 @@ describe('Performance: speed-index-metric audit', () => {
     };
   }
 
+  it('works on a real trace', () => {
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      traces: {defaultPass: {traceEvents: pwaTrace}},
+    });
+
+    return Audit.audit(artifacts).then(result => {
+      assert.equal(result.score, 100);
+      assert.equal(result.rawValue, 609);
+      assert.equal(Math.round(result.extendedInfo.value.timings.firstVisualChange), 475);
+      assert.equal(Math.round(result.extendedInfo.value.timings.visuallyReady), 700);
+      assert.equal(Math.round(result.extendedInfo.value.timings.visuallyComplete), 1105);
+      assert.equal(Math.round(result.extendedInfo.value.timings.perceptualSpeedIndex), 609);
+    });
+  });
+
   it('throws an error if no frames', () => {
     const artifacts = mockArtifactsWithSpeedlineResult({frames: []});
     return Audit.audit(artifacts).then(
@@ -44,7 +61,7 @@ describe('Performance: speed-index-metric audit', () => {
   it('throws an error if speed index of 0', () => {
     const SpeedlineResult = {
       frames: [frame(), frame(), frame()],
-      speedIndex: 0,
+      perceptualSpeedIndex: 0,
     };
     const artifacts = mockArtifactsWithSpeedlineResult(SpeedlineResult);
 
@@ -53,12 +70,11 @@ describe('Performance: speed-index-metric audit', () => {
       _ => assert.ok(true));
   });
 
-  it('scores speed index of 831 as 100', () => {
+  it('scores speed index of 845 as 100', () => {
     const SpeedlineResult = {
       frames: [frame(), frame(), frame()],
       first: 630,
       complete: 930,
-      speedIndex: 831,
       perceptualSpeedIndex: 845,
     };
     const artifacts = mockArtifactsWithSpeedlineResult(SpeedlineResult);
@@ -67,7 +83,6 @@ describe('Performance: speed-index-metric audit', () => {
       assert.equal(response.rawValue, 845);
       assert.equal(response.extendedInfo.value.timings.firstVisualChange, 630);
       assert.equal(response.extendedInfo.value.timings.visuallyComplete, 930);
-      assert.equal(response.extendedInfo.value.timings.speedIndex, 831);
       assert.equal(response.extendedInfo.value.timings.perceptualSpeedIndex, 845);
     });
   });

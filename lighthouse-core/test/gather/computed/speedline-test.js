@@ -29,16 +29,17 @@ describe('Speedline gatherer', () => {
     });
   });
 
-  it('measures the pwa.rocks example with speed index of 577', () => {
+  it('measures the pwa.rocks example', () => {
     return computedArtifacts.requestSpeedline({traceEvents: pwaTrace}).then(speedline => {
-      return assert.equal(Math.floor(speedline.speedIndex), 561);
+      assert.equal(speedline.speedIndex, undefined);
+      assert.equal(Math.floor(speedline.perceptualSpeedIndex), 609);
     });
   });
 
   it('measures SI of 3 frame trace (blank @1s, content @2s, more content @3s)', () => {
     return computedArtifacts.requestSpeedline(threeFrameTrace).then(speedline => {
-      assert.equal(Math.floor(speedline.speedIndex), 2040);
-      return assert.equal(Math.floor(speedline.perceptualSpeedIndex), 2030);
+      assert.equal(speedline.speedIndex, undefined);
+      assert.equal(Math.floor(speedline.perceptualSpeedIndex), 2030);
     });
   });
 
@@ -59,7 +60,7 @@ describe('Speedline gatherer', () => {
         assert.ok(Date.now() - start < 50, 'Quick results come from the cache');
         assert.equal(firstResult, speedline, 'Cache match matches');
 
-        return assert.equal(Math.floor(speedline.speedIndex), 561);
+        return assert.equal(Math.floor(speedline.perceptualSpeedIndex), 609);
       });
   });
 
