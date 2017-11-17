@@ -21,7 +21,7 @@ const errorTrace = JSON.parse(
 );
 
 describe('Performance: bootup-time audit', () => {
-  it('should compute the correct BootupTime values', (done) => {
+  it('should compute the correct BootupTime values', () => {
     const artifacts = {
       traces: {
         [BootupTime.DEFAULT_PASS]: acceptableTrace,
@@ -33,17 +33,21 @@ describe('Performance: bootup-time audit', () => {
     assert.equal(output.score, true);
     assert.equal(Math.round(output.rawValue), 176);
 
-    const valueOf = name => output.extendedInfo.value[name];
-    assert.deepEqual(valueOf('https://www.google-analytics.com/analytics.js'), {'Evaluate Script': 40.1, 'Compile Script': 9.6, 'Recalculate Style': 0.2});
-    assert.deepEqual(valueOf('https://pwa.rocks/script.js'), {'Evaluate Script': 31.8, 'Layout': 5.5, 'Compile Script': 1.3});
-    assert.deepEqual(valueOf('https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'), {'Evaluate Script': 25, 'Compile Script': 5.5, 'Recalculate Style': 1.2});
-    assert.deepEqual(valueOf('https://www.google-analytics.com/plugins/ua/linkid.js'), {'Evaluate Script': 25.2, 'Compile Script': 1.2});
-    assert.deepEqual(valueOf('https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'), {'Compile Script': 3, 'Evaluate Script': 1.2});
-    assert.deepEqual(valueOf('https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'), {'Compile Script': 2.5, 'Evaluate Script': 1});
-    assert.deepEqual(valueOf('https://pwa.rocks/'), {'Parse HTML': 14.2, 'Evaluate Script': 6.1, 'Compile Script': 1.2});
-    assert.deepEqual(valueOf('https://pwa.rocks/0ff789bf.js'), {'Parse HTML': 0});
+    const roundedValueOf = name => {
+      const value = output.extendedInfo.value[name];
+      const roundedValue = {};
+      Object.keys(value).forEach(key => roundedValue[key] = Math.round(value[key] * 10) / 10);
+      return roundedValue;
+    };
 
-    done();
+    assert.deepEqual(roundedValueOf('https://www.google-analytics.com/analytics.js'), {'Script Evaluation': 40.1, 'Script Parsing & Compile': 9.6, 'Style & Layout': 0.2});
+    assert.deepEqual(roundedValueOf('https://pwa.rocks/script.js'), {'Script Evaluation': 31.8, 'Style & Layout': 5.5, 'Script Parsing & Compile': 1.3});
+    assert.deepEqual(roundedValueOf('https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'), {'Script Evaluation': 25, 'Script Parsing & Compile': 5.5, 'Style & Layout': 1.2});
+    assert.deepEqual(roundedValueOf('https://www.google-analytics.com/plugins/ua/linkid.js'), {'Script Evaluation': 25.2, 'Script Parsing & Compile': 1.2});
+    assert.deepEqual(roundedValueOf('https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'), {'Script Parsing & Compile': 3, 'Script Evaluation': 1.2});
+    assert.deepEqual(roundedValueOf('https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'), {'Script Parsing & Compile': 2.5, 'Script Evaluation': 1});
+    assert.deepEqual(roundedValueOf('https://pwa.rocks/'), {'Parsing DOM': 14.2, 'Script Evaluation': 6.1, 'Script Parsing & Compile': 1.2});
+    assert.deepEqual(roundedValueOf('https://pwa.rocks/0ff789bf.js'), {'Parsing DOM': 0});
   });
 
   it('should get no data when no events are present', () => {

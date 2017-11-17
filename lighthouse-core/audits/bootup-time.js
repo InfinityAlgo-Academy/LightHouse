@@ -114,22 +114,25 @@ class BootupTime extends Audit {
    */
   static getExecutionTimingsByURL(trace) {
     const timelineModel = new DevtoolsTimelineModel(trace);
-    const bottomUpByName = timelineModel.bottomUpGroupBy('URL');
+    const bottomUpByURL = timelineModel.bottomUpGroupBy('URL');
     const result = new Map();
 
-    bottomUpByName.children.forEach((perUrlNode, url) => {
+    bottomUpByURL.children.forEach((perUrlNode, url) => {
       // when url is "" or about:blank, we skip it
       if (!url || url === 'about:blank') {
         return;
       }
 
-      const tasks = {};
+      const taskGroups = {};
       perUrlNode.children.forEach((perTaskPerUrlNode) => {
-        const taskGroup = WebInspector.TimelineUIUtils.eventStyle(perTaskPerUrlNode.event);
-        tasks[taskGroup.title] = tasks[taskGroup.title] || 0;
-        tasks[taskGroup.title] += Number((perTaskPerUrlNode.selfTime || 0).toFixed(1));
+        // eventStyle() returns a string like 'Evaluate Script'
+        const task = WebInspector.TimelineUIUtils.eventStyle(perTaskPerUrlNode.event);
+        // Resolve which taskGroup we're using
+        const groupName = taskToGroup[task.title] || group.other;
+        const groupTotal = taskGroups[groupName] || 0;
+        taskGroups[groupName] = groupTotal + (perTaskPerUrlNode.selfTime || 0);
       });
-      result.set(url, tasks);
+      result.set(url, taskGroups);
     });
 
     return result;
@@ -141,50 +144,34 @@ class BootupTime extends Audit {
    */
   static audit(artifacts) {
     const trace = artifacts.traces[BootupTime.DEFAULT_PASS];
-    const bootupTimings = BootupTime.getExecutionTimingsByURL(trace);
+    const executionTimings = BootupTime.getExecutionTimingsByURL(trace);
 
     let totalBootupTime = 0;
     const extendedInfo = {};
+
     const headings = [
       {key: 'url', itemType: 'url', text: 'URL'},
+      {key: 'scripting', itemType: 'text', text: group.scripting},
+      {key: 'scriptParseCompile', itemType: 'text', text: group.scriptParseCompile},
     ];
 
-    // Group tasks per url
-    const groupsPerUrl = Array.from(bootupTimings).map(([url, durations]) => {
-      extendedInfo[url] = durations;
+    // map data in correct format to create a table
+    const results = Array.from(executionTimings).map(([url, groups]) => {
+      // Add up the totalBootupTime for all the taskGroups
+      totalBootupTime += Object.keys(groups).reduce((sum, name) => sum += groups[name], 0);
+      extendedInfo[url] = groups;
 
-      const groups = [];
-      Object.keys(durations).forEach(task => {
-        totalBootupTime += durations[task];
-        const group = taskToGroup[task];
-
-        groups[group] = groups[group] || 0;
-        groups[group] += durations[task];
-
-        if (!headings.find(heading => heading.key === group)) {
-          headings.push(
-            {key: group, itemType: 'text', text: group}
-          );
-        }
-      });
-
+      const scriptingTotal = groups[group.scripting] || 0;
+      const parseCompileTotal = groups[group.scriptParseCompile] || 0;
       return {
         url: url,
-        groups,
+        sum: scriptingTotal + parseCompileTotal,
+        // Only reveal the javascript task costs
+        // Later we can account for forced layout costs, etc.
+        scripting: Util.formatMilliseconds(scriptingTotal, 1),
+        scriptParseCompile: Util.formatMilliseconds(parseCompileTotal, 1),
       };
-    });
-
-    // map data in correct format to create a table
-    const results = groupsPerUrl.map(({url, groups}) => {
-      const res = {};
-      headings.forEach(heading => {
-        res[heading.key] = Util.formatMilliseconds(groups[heading.key] || 0, 1);
-      });
-
-      res.url = url;
-
-      return res;
-    });
+    }).sort((a, b) => b.sum - a.sum);
 
     const tableDetails = BootupTime.makeTableDetails(headings, results);
 
