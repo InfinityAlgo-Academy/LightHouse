@@ -90,6 +90,7 @@ module.exports = {
     'content-width',
     'image-aspect-ratio',
     'deprecations',
+    'mainthread-work-breakdown',
     'bootup-time',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
@@ -253,6 +254,7 @@ module.exports = {
         {id: 'user-timings', weight: 0, group: 'perf-info'},
         {id: 'bootup-time', weight: 0, group: 'perf-info'},
         {id: 'screenshot-thumbnails', weight: 0},
+        {id: 'mainthread-work-breakdown', weight: 0, group: 'perf-info'},
       ],
     },
     'accessibility': {
