@@ -20,6 +20,12 @@ const parserOpts = {
   ],
 };
 
+process.stderr.write(`
+> Be sure to have the latest git tags locally:
+    git fetch --tags
+
+`);
+
 const writerOpts = {
   mainTemplate,
   headerPartial,
