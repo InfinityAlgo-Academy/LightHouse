@@ -118,7 +118,7 @@ yarn build-all
 
 # * Test err'thing *
 echo "Test the CLI."
-lighthouse --perf "chrome://version"
+lighthouse --perf "https://example.com"
 yarn smoke
 
 echo "Test the extension"
@@ -142,11 +142,16 @@ echo "Test the lighthouse-viewer build"
 # Drop in a results.json or paste an existing gist url (e.g. https://gist.github.com/ebidel/b9fd478b5f40bf5fab174439dc18f83a).
 # Check for errors!
 
+# * Update changelog *
+git fetch --tags
+yarn changelog
+# add new contributors, e.g. from
+# git shortlog -s -e -n v2.3.0..HEAD
+
 # * Put up the PR *
 echo "Branch and commit the version bump."
-git co -b bumpv240
-git c "2.4.0"
-yarn changelog
+git checkout -b bumpv240
+git commit -am "2.4.0"
 git tag -a v2.4.0 -m "v2.4.0"
 echo "Generate a PR and get it merged."
 
