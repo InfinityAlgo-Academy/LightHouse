@@ -1,3 +1,94 @@
+ <a name="2.6.0"></a>
+# 2.6.0 (2017-11-18)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.5.1...v2.6.0)
+
+## New Contributors!
+@peterjanes, @stevector, @AkshayIyer12, @manekinekko, @alekseykulikov, @coliff, @emazzotta
+
+## New Audits
+
+* `redirects`: avoid page redirects ([#3308](https://github.com/googlechrome/lighthouse/pull/3308))
+* `link-text`: descriptive anchor text audit ([#3490](https://github.com/googlechrome/lighthouse/pull/3490))
+* `is-crawlable`: page is blocked from indexing ([#3657](https://github.com/googlechrome/lighthouse/pull/3657))
+* `bootup-time`: JS bootup time per script ([#3563](https://github.com/googlechrome/lighthouse/pull/3563))
+* `uses-long-cache-ttl`: detects savings from leveraging caching ([#3531](https://github.com/googlechrome/lighthouse/pull/3531))
+* `mainthread-work-breakdown`: audit for page-execution timings ([#3520](https://github.com/googlechrome/lighthouse/pull/3520))
+
+## CLI
+
+* do not double quote `chromeFlags` ([#3775](https://github.com/googlechrome/lighthouse/pull/3775))
+
+## Core
+
+* `aspect-ratio`: skip aspect ratio audit for svg ([#3722](https://github.com/googlechrome/lighthouse/pull/3722))
+* audit: Ignore `href=javascript:.*` for `rel=noopener` audit ([#3574](https://github.com/googlechrome/lighthouse/pull/3574))
+* bootup-time: refactor task/group iteration ([33b1574](https://github.com/googlechrome/lighthouse/commit/33b1574))
+* config: add silent seo audits to default config ([#3582](https://github.com/googlechrome/lighthouse/pull/3582))
+* config: re-weight a11y scores based on severity and frequency ([#3515](https://github.com/googlechrome/lighthouse/pull/3515))
+* config: add category weight to perf config ([#3529](https://github.com/googlechrome/lighthouse/pull/3529))
+* `critical-request-chains`: Remove iframe as Critical Request ([#3583](https://github.com/googlechrome/lighthouse/pull/3583))
+* `dependency-graph`: add acyclic check ([#3592](https://github.com/googlechrome/lighthouse/pull/3592))
+* `devtools-model`: fix missing `Runtime.experiments` object ([#3514](https://github.com/googlechrome/lighthouse/pull/3514))
+* driver: increase default timeout to 45s ([#3741](https://github.com/googlechrome/lighthouse/pull/3741))
+* driver: use execution context isolation when necessary ([#3500](https://github.com/googlechrome/lighthouse/pull/3500))
+* emulation: remove use of deprecated `Emulation.setVisibleSize` ([#3536](https://github.com/googlechrome/lighthouse/pull/3536))
+* `errors-in-console`: include runtime exceptions ([#3494](https://github.com/googlechrome/lighthouse/pull/3494))
+* `image-aspect-ratio`: pass audit when no images are missized ([#3552](https://github.com/googlechrome/lighthouse/pull/3552))
+* `image-usage`: add null check for parentElement ([#3779](https://github.com/googlechrome/lighthouse/pull/3779))
+* add error reporting (CLI only) ([#2420](https://github.com/googlechrome/lighthouse/pull/2420))
+* meta tag gatherers: meta tag search should be case-insensitive ([#3729](https://github.com/googlechrome/lighthouse/pull/3729))
+* `predictive-perf`: predict FCP ([#3730](https://github.com/googlechrome/lighthouse/pull/3730))
+* `predictive-perf`: refactor simulation logic ([#3489](https://github.com/googlechrome/lighthouse/pull/3489))
+* `response-compression`: add transferSize sanity check ([#3606](https://github.com/googlechrome/lighthouse/pull/3606))
+* record top-level warnings in LHR and display in report ([#3692](https://github.com/googlechrome/lighthouse/pull/3692))
+* remove useless `optimalValue` ([#3774](https://github.com/googlechrome/lighthouse/pull/3774))
+* `speed-index`: only compute perceptual speed index ([#3845](https://github.com/googlechrome/lighthouse/pull/3845))
+* tags blocking first-paint: exclude script type=module ([#3676](https://github.com/googlechrome/lighthouse/pull/3676))
+
+## Docs
+
+* `changelog-generator`: Generate changelogs ([#3632](https://github.com/googlechrome/lighthouse/pull/3632))
+* scoring: create documentation on scoring ([#3436](https://github.com/googlechrome/lighthouse/pull/3535))
+* `bug-labels.md`: Create bug-labels.md ([#3522](https://github.com/googlechrome/lighthouse/pull/3535), [#3525](https://github.com/googlechrome/lighthouse/pull/3525), [#3535](https://github.com/googlechrome/lighthouse/pull/3535))
+* contributing: pr title guidelines ([#3590](https://github.com/googlechrome/lighthouse/pull/3590))
+* correct capitalization of GitHub ([#3669](https://github.com/googlechrome/lighthouse/pull/3669))
+* add results object explainer ([#3495](https://github.com/googlechrome/lighthouse/pull/3495))
+* `new-audits.md`: Principles and guidance for new audits ([#3617](https://github.com/googlechrome/lighthouse/pull/3617))
+* readme: add MagicLight WebBLE integration ([#3613](https://github.com/googlechrome/lighthouse/pull/3613))
+* readme: add Treo to the list of integrations ([#3484](https://github.com/googlechrome/lighthouse/pull/3484))
+* throttling: because `comcast` throttles the websocket ([bedb9a1](https://github.com/googlechrome/lighthouse/commit/bedb9a1))
+
+## Report
+
+* Add print summary and print expanded options ([#3578](https://github.com/googlechrome/lighthouse/pull/3578))
+* `image-aspect-ratio`: fix audit description ([#3843](https://github.com/googlechrome/lighthouse/pull/3843))
+* redirects: reformat results, incl all requests and wasted time, ([#3492](https://github.com/googlechrome/lighthouse/pull/3492))
+* `render-blocking-stylesheets`: improve actionability of helpText ([#3544](https://github.com/googlechrome/lighthouse/pull/3544))
+
+## Tests
+
+* update `eslint` (and goog config) to latest ([#3396](https://github.com/googlechrome/lighthouse/pull/3396))
+* `eslint`: use `--quiet` flag rather than `--silent` ([#3491](https://github.com/googlechrome/lighthouse/pull/3491))
+* smokehouse: add long task to `byte-efficiency` tester to deflake appveyor ([#3804](https://github.com/googlechrome/lighthouse/pull/3804))
+* smokehouse: disable multiple shadow root deprecation test ([#3695](https://github.com/googlechrome/lighthouse/pull/3695))
+* smokehouse: Passive event listener violation doesn't report on passive:false now ([#3498](https://github.com/googlechrome/lighthouse/pull/3498))
+* `web-inspector`: add test for `setImmediate` polyfill ([#3670](https://github.com/googlechrome/lighthouse/pull/3670))
+
+## Misc
+
+* codereview: add CODEOWNERS file ([#3591](https://github.com/googlechrome/lighthouse/pull/3591))
+* Bump `chrome-launcher` to 0.8.1 ([#3479](https://github.com/googlechrome/lighthouse/pull/3479))
+* web-inspector: fall back to page's `Runtime` and `queryParam()` ([#3497](https://github.com/googlechrome/lighthouse/pull/3497))
+* use undated Apache 2 LICENSE file ([#3700](https://github.com/googlechrome/lighthouse/pull/3700))
+* audits: removed unused audit `meta.category` ([#3554](https://github.com/googlechrome/lighthouse/pull/3554))
+* changelog: add commitlint config (for commitlintbot) ([21e25aa](https://github.com/googlechrome/lighthouse/commit/21e25aa))
+* `commitizen`: new-audit => new_audit ([#3534](https://github.com/googlechrome/lighthouse/pull/3534))
+* jsconfig: Enable type checking for JavaScript ([#3589](https://github.com/googlechrome/lighthouse/pull/3589))
+* logos: provide svg logo as png ([8b3d7f0](https://github.com/googlechrome/lighthouse/commit/8b3d7f0))
+* Fix minor grammatical error ([#3638](https://github.com/googlechrome/lighthouse/pull/3638))
+* add `cz-customizable` to establish a commit message convention ([#3499](https://github.com/googlechrome/lighthouse/pull/3499))
+* typo: fix typo in `image-aspect-ratio` audit ([#3513](https://github.com/googlechrome/lighthouse/pull/3513))
+
 <a name="2.5.1"></a>
 # 2.5.1 (2017-10-06)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v2.5.0...v2.5.1)
