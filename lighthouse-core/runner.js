@@ -261,6 +261,8 @@ class Runner {
       ...fs.readdirSync(path.join(__dirname, './audits/seo')).map(f => `seo/${f}`),
       ...fs.readdirSync(path.join(__dirname, './audits/accessibility'))
           .map(f => `accessibility/${f}`),
+      ...fs.readdirSync(path.join(__dirname, './audits/accessibility/manual'))
+          .map(f => `accessibility/manual/${f}`),
       ...fs.readdirSync(path.join(__dirname, './audits/byte-efficiency'))
           .map(f => `byte-efficiency/${f}`),
       ...fs.readdirSync(path.join(__dirname, './audits/manual')).map(f => `manual/${f}`),
