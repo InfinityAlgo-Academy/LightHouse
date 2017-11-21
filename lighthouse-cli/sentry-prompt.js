@@ -61,18 +61,21 @@ function prompt() {
  * @return {!Promise<boolean>}
  */
 function askPermission() {
-  const configstore = new Configstore('lighthouse');
-  let isErrorReportingEnabled = configstore.get('isErrorReportingEnabled');
-  if (typeof isErrorReportingEnabled === 'boolean') {
-    return Promise.resolve(isErrorReportingEnabled);
-  }
+  return Promise.resolve().then(_ => {
+    const configstore = new Configstore('lighthouse');
+    let isErrorReportingEnabled = configstore.get('isErrorReportingEnabled');
+    if (typeof isErrorReportingEnabled === 'boolean') {
+      return Promise.resolve(isErrorReportingEnabled);
+    }
 
-  return prompt()
-    .then(response => {
-      isErrorReportingEnabled = response;
-      configstore.set('isErrorReportingEnabled', isErrorReportingEnabled);
-      return isErrorReportingEnabled;
-    });
+    return prompt()
+      .then(response => {
+        isErrorReportingEnabled = response;
+        configstore.set('isErrorReportingEnabled', isErrorReportingEnabled);
+        return isErrorReportingEnabled;
+      });
+  // Error accessing configstore; default to false.
+  }).catch(_ => false);
 }
 
 module.exports = {
