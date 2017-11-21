@@ -3,6 +3,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
+// @ts-nocheck
 'use strict';
 
 const Runner = require('./runner');
@@ -10,7 +11,7 @@ const log = require('lighthouse-logger');
 const ChromeProtocol = require('./gather/connections/cri.js');
 const Config = require('./config/config');
 
-/**
+/*
  * The relationship between these root modules:
  *
  *   index.js  - the require('lighthouse') hook for Node modules (including the CLI)
@@ -25,7 +26,13 @@ const Config = require('./config/config');
  *
  */
 
-module.exports = function(url, flags = {}, configJSON) {
+/**
+ * @param {string} url
+ * @param {!LH.Flags} flags
+ * @param {!LH.Config|undefined} configJSON
+ * @return {!Promise<!LH.Results>}
+ */
+function lighthouse(url, flags = {}, configJSON) {
   const startTime = Date.now();
   return Promise.resolve().then(_ => {
     // set logging preferences, assume quiet
@@ -48,9 +55,11 @@ module.exports = function(url, flags = {}, configJSON) {
         return lighthouseResults;
       });
   });
-};
+}
 
-module.exports.getAuditList = Runner.getAuditList;
-module.exports.traceCategories = require('./gather/driver').traceCategories;
-module.exports.Audit = require('./audits/audit');
-module.exports.Gatherer = require('./gather/gatherers/gatherer');
+lighthouse.getAuditList = Runner.getAuditList;
+lighthouse.traceCategories = require('./gather/driver').traceCategories;
+lighthouse.Audit = require('./audits/audit');
+lighthouse.Gatherer = require('./gather/gatherers/gatherer');
+
+module.exports = lighthouse;

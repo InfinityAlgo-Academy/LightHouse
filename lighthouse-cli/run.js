@@ -5,31 +5,30 @@
  */
 'use strict';
 
-import * as path from 'path';
+/* eslint-disable no-console */
 
-import * as Printer from './printer';
-import {Results} from './types/types';
-import {Flags} from './cli-flags';
-import {launch, LaunchedChrome} from 'chrome-launcher';
+const path = require('path');
+
+const Printer = require('./printer');
+const ChromeLauncher = require('chrome-launcher');
 
 const yargsParser = require('yargs-parser');
-const lighthouse = require('../lighthouse-core');
+const lighthouse = require('../lighthouse-core/index.js');
 const log = require('lighthouse-logger');
 const getFilenamePrefix = require('../lighthouse-core/lib/file-namer.js').getFilenamePrefix;
 const assetSaver = require('../lighthouse-core/lib/asset-saver.js');
 
-// accept noop modules for these, so the real dependency is optional.
-import {opn} from './shim-modules';
+const opn = require('opn');
 
 const _RUNTIME_ERROR_CODE = 1;
 const _PROTOCOL_TIMEOUT_EXIT_CODE = 67;
 
-interface LighthouseError extends Error {
-  code?: string
-}
-
-// exported for testing
-export function parseChromeFlags(flags: string = '') {
+/**
+ * exported for testing
+ * @param {string} flags
+ * @return {!Array<string>}
+ */
+function parseChromeFlags(flags = '') {
   const parsed = yargsParser(
       flags, {configuration: {'camel-case-expansion': false, 'boolean-negation': false}});
 
@@ -50,12 +49,14 @@ export function parseChromeFlags(flags: string = '') {
 /**
  * Attempts to connect to an instance of Chrome with an open remote-debugging
  * port. If none is found, launches a debuggable instance.
+ * @param {!LH.Flags} flags
+ * @return {!Promise<!LH.LaunchedChrome>}
  */
-async function getDebuggableChrome(flags: Flags) {
-  return await launch({
+function getDebuggableChrome(flags) {
+  return ChromeLauncher.launch({
     port: flags.port,
     chromeFlags: parseChromeFlags(flags.chromeFlags),
-    logLevel: flags.logLevel
+    logLevel: flags.logLevel,
   });
 }
 
@@ -64,7 +65,10 @@ function showConnectionError() {
   process.exit(_RUNTIME_ERROR_CODE);
 }
 
-function showRuntimeError(err: LighthouseError) {
+/**
+ * @param {!LH.LighthouseError} err
+ */
+function showRuntimeError(err) {
   console.error('Runtime error encountered:', err);
   if (err.stack) {
     console.error(err.stack);
@@ -82,7 +86,10 @@ function showPageLoadError() {
   process.exit(_RUNTIME_ERROR_CODE);
 }
 
-function handleError(err: LighthouseError) {
+/**
+ * @param {!LH.LighthouseError} err
+ */
+function handleError(err) {
   if (err.code === 'PAGE_LOAD_ERROR') {
     showPageLoadError();
   } else if (err.code === 'ECONNREFUSED') {
@@ -94,7 +101,13 @@ function handleError(err: LighthouseError) {
   }
 }
 
-export function saveResults(results: Results, artifacts: Object, flags: Flags) {
+/**
+ * @param {!LH.Results} results
+ * @param {!Object} artifacts
+ * @param {!LH.Flags} flags
+ * @return {!Promise<void>}
+ */
+function saveResults(results, artifacts, flags) {
   let promise = Promise.resolve(results);
   const cwd = process.cwd();
   // Use the output path as the prefix for all generated files.
@@ -112,17 +125,18 @@ export function saveResults(results: Results, artifacts: Object, flags: Flags) {
     promise = promise.then(_ => assetSaver.saveAssets(artifacts, results.audits, resolvedPath));
   }
 
-  const typeToExtension = (type: string) => type === 'domhtml' ? 'html' : type;
   return promise.then(_ => {
     if (Array.isArray(flags.output)) {
       return flags.output.reduce((innerPromise, outputType) => {
-        const outputPath = `${resolvedPath}.report.${typeToExtension(outputType)}`;
-        return innerPromise.then((_: Results) => Printer.write(results, outputType, outputPath));
-      }, Promise.resolve(results));
+        const extension = outputType === 'domhtml' ? 'html' : outputType;
+        const outputPath = `${resolvedPath}.report.${extension}`;
+        return innerPromise.then(() => Printer.write(results, outputType, outputPath));
+      }, Promise.resolve());
     } else {
+      const extension = flags.output === 'domhtml' ? 'html' : flags.output;
       const outputPath =
-          flags.outputPath || `${resolvedPath}.report.${typeToExtension(flags.output)}`;
-      return Printer.write(results, flags.output, outputPath).then(results => {
+          flags.outputPath || `${resolvedPath}.report.${extension}`;
+      return Printer.write(results, flags.output, outputPath).then(_ => {
         if (flags.output === Printer.OutputMode[Printer.OutputMode.html] ||
             flags.output === Printer.OutputMode[Printer.OutputMode.domhtml]) {
           if (flags.view) {
@@ -130,37 +144,54 @@ export function saveResults(results: Results, artifacts: Object, flags: Flags) {
           } else {
             log.log(
                 'CLI',
+                // eslint-disable-next-line max-len
                 'Protip: Run lighthouse with `--view` to immediately open the HTML report in your browser');
           }
         }
-
-        return results;
       });
     }
   });
 }
 
-export async function runLighthouse(
-    url: string, flags: Flags, config: Object|null): Promise<{}|void> {
-  let launchedChrome: LaunchedChrome|undefined;
+/**
+ * @param {string} url
+ * @param {!LH.Flags} flags
+ * @param {!LH.Config|undefined} config
+ * @return {!Promise<!LH.Results|void>}
+ */
+function runLighthouse(url, flags, config) {
+  /** @type {!LH.LaunchedChrome} */
+  let launchedChrome;
 
-  try {
-    launchedChrome = await getDebuggableChrome(flags);
-    flags.port = launchedChrome.port;
-    const results = await lighthouse(url, flags, config);
+  return getDebuggableChrome(flags)
+    .then(launchedChromeInstance => {
+      launchedChrome = launchedChromeInstance;
+      flags.port = launchedChrome.port;
+      return lighthouse(url, flags, config);
+    })
+    .then(results => {
+      const artifacts = results.artifacts;
+      delete results.artifacts;
 
-    const artifacts = results.artifacts;
-    delete results.artifacts;
-
-    await saveResults(results, artifacts!, flags);
-    await launchedChrome.kill();
-
-    return results;
-  } catch (err) {
-    if (typeof launchedChrome !== 'undefined') {
-      await launchedChrome!.kill();
-    }
-
-    return handleError(err);
-  }
+      return saveResults(results, artifacts, flags)
+        .then(_ => launchedChrome.kill())
+        .then(_ => results);
+    })
+    .catch(err => {
+      return Promise.resolve()
+        .then(_ => {
+          if (launchedChrome !== undefined) {
+            return launchedChrome.kill()
+              // TODO: keeps tsc happy (erases return type) but is useless.
+              .then(_ => {});
+          }
+        })
+        .then(_ => handleError(err));
+    });
 }
+
+module.exports = {
+  parseChromeFlags,
+  saveResults,
+  runLighthouse,
+};

@@ -5,61 +5,59 @@
  */
 'use strict';
 
+const fs = require('fs');
+const ReportGenerator = require('../lighthouse-core/report/v2/report-generator');
+const log = require('lighthouse-logger');
+
 /**
  * An enumeration of acceptable output modes:
  *   'json': JSON formatted results
  *   'html': An HTML report
  *   'domhtml': Alias for 'html' report
  */
-enum OutputMode {
-  json,
-  html,
-  domhtml
-}
-;
-type Mode = 'json'|'html'|'domhtml';
-
-import {Results} from './types/types';
-
-const fs = require('fs');
-const ReportGeneratorV2 = require('../lighthouse-core/report/v2/report-generator');
-const log = require('lighthouse-logger');
-
+const OutputMode = {
+  json: 'json',
+  html: 'html',
+  domhtml: 'domhtml',
+};
 
 /**
  * Verify output path to use, either stdout or a file path.
+ * @param {string=} path
+ * @return {string}
  */
-function checkOutputPath(path: string): string {
+function checkOutputPath(path) {
   if (!path) {
     log.warn('Printer', 'No output path set; using stdout');
     return 'stdout';
   }
-
   return path;
 }
 
 /**
  * Creates the results output in a format based on the `mode`.
+ * @param {!LH.Results} results
+ * @param {string} outputMode
+ * @return {string}
  */
-function createOutput(results: Results, outputMode: OutputMode): string {
+function createOutput(results, outputMode) {
   // HTML report.
   if (outputMode === OutputMode.domhtml || outputMode === OutputMode.html) {
-    return new ReportGeneratorV2().generateReportHtml(results);
+    return new ReportGenerator().generateReportHtml(results);
   }
-
   // JSON report.
   if (outputMode === OutputMode.json) {
     return JSON.stringify(results, null, 2);
   }
-
   throw new Error('Invalid output mode: ' + outputMode);
 }
 
-/* istanbul ignore next */
 /**
  * Writes the output to stdout.
+ * @param {string} output
+ * @return {!Promise<undefined>}
  */
-function writeToStdout(output: string): Promise<{}> {
+function writeToStdout(output) {
   return new Promise(resolve => {
     // small delay to avoid race with debug() logs
     setTimeout(_ => {
@@ -71,11 +69,15 @@ function writeToStdout(output: string): Promise<{}> {
 
 /**
  * Writes the output to a file.
+ * @param {string} filePath
+ * @param {string} output
+ * @param {string} outputMode
+ * @return {!Promise<undefined>}
  */
-function writeFile(filePath: string, output: string, outputMode: OutputMode): Promise<{}> {
+function writeFile(filePath, output, outputMode) {
   return new Promise((resolve, reject) => {
     // TODO: make this mkdir to the filePath.
-    fs.writeFile(filePath, output, 'utf8', (err: Error) => {
+    fs.writeFile(filePath, output, (err) => {
       if (err) {
         return reject(err);
       }
@@ -87,39 +89,39 @@ function writeFile(filePath: string, output: string, outputMode: OutputMode): Pr
 
 /**
  * Writes the results.
+ * @param {!LH.Results} results
+ * @param {string} mode
+ * @param {string} path
+ * @return {!Promise<!LH.Results>}
  */
-function write(results: Results, mode: Mode, path: string): Promise<Results> {
+function write(results, mode, path) {
   return new Promise((resolve, reject) => {
     const outputPath = checkOutputPath(path);
+    const output = createOutput(results, mode);
 
-    const output = createOutput(results, (<any>OutputMode)[mode]);
-
-    // Testing stdout is out of scope, and doesn't really achieve much besides testing Node,
-    // so we will skip this chunk of the code.
-    /* istanbul ignore if */
     if (outputPath === 'stdout') {
       return writeToStdout(output).then(_ => resolve(results));
     }
-
-    return writeFile(outputPath, output, (<any>OutputMode)[mode])
-        .then(_ => {
-          resolve(results);
-        })
-        .catch(err => reject(err));
+    return writeFile(outputPath, output, mode)
+      .then(_ => {
+        resolve(results);
+      })
+      .catch(err => reject(err));
   });
 }
 
-function GetValidOutputOptions(): Array<Mode> {
-  return [
-    OutputMode[OutputMode.json] as Mode, OutputMode[OutputMode.html] as Mode,
-    OutputMode[OutputMode.domhtml] as Mode
-  ];
+/**
+ * Returns a list of valid output options.
+ * @return {!Array<string>}
+ */
+function getValidOutputOptions() {
+  return Object.keys(OutputMode);
 }
 
-export {
+module.exports = {
   checkOutputPath,
   createOutput,
   write,
   OutputMode,
-  GetValidOutputOptions,
-}
+  getValidOutputOptions,
+};

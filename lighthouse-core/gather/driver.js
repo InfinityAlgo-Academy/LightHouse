@@ -3,6 +3,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
+// @ts-nocheck
 'use strict';
 
 const NetworkRecorder = require('../lib/network-recorder');
@@ -107,7 +108,7 @@ class Driver {
   /**
    * Bind listeners for protocol events
    * @param {!string} eventName
-   * @param {function(...)} cb
+   * @param {function(...args)} cb
    */
   on(eventName, cb) {
     if (this._eventEmitter === null) {
@@ -123,7 +124,7 @@ class Driver {
    * Bind a one-time listener for protocol events. Listener is removed once it
    * has been called.
    * @param {!string} eventName
-   * @param {function(...)} cb
+   * @param {function(...args)} cb
    */
   once(eventName, cb) {
     if (this._eventEmitter === null) {
@@ -137,7 +138,7 @@ class Driver {
   /**
    * Unbind event listeners
    * @param {!string} eventName
-   * @param {function(...)} cb
+   * @param {function(...args)} cb
    */
   off(eventName, cb) {
     if (this._eventEmitter === null) {

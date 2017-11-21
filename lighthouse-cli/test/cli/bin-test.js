@@ -8,7 +8,7 @@
 /* eslint-env mocha */
 const assert = require('assert');
 
-require('../../bin');
+require('../../bin.js');
 
 describe('CLI bin', function() {
   it('all options should have descriptions', () => {

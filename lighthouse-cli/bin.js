@@ -5,23 +5,27 @@
  */
 'use strict';
 
-import {existsSync} from 'fs';
-import * as path from 'path';
+const existsSync = require('fs').existsSync;
+const path = require('path');
 
-import * as Commands from './commands/commands';
-import * as Printer from './printer';
-import {getFlags} from './cli-flags';
-import {runLighthouse} from './run';
+const commands = require('./commands/commands.js');
+const printer = require('./printer.js');
+const getFlags = require('./cli-flags.js').getFlags;
+const runLighthouse = require('./run').runLighthouse;
 
 const log = require('lighthouse-logger');
+// @ts-ignore
 const perfOnlyConfig = require('../lighthouse-core/config/perf.json');
+// @ts-ignore
 const pkg = require('../package.json');
 const Sentry = require('../lighthouse-core/lib/sentry');
 
-// accept noop modules for these, so the real dependency is optional.
-import {updateNotifier} from './shim-modules';
-import {askPermission} from './sentry-prompt';
+const updateNotifier = require('update-notifier');
+const askPermission = require('./sentry-prompt').askPermission;
 
+/**
+ * @return {boolean}
+ */
 function isDev() {
   return existsSync(path.join(__dirname, '../.git'));
 }
@@ -29,27 +33,29 @@ function isDev() {
 // Tell user if there's a newer version of LH.
 updateNotifier({pkg}).notify();
 
-const cliFlags = getFlags();
+const /** @type {!LH.Flags} */ cliFlags = getFlags();
 
 // Process terminating command
 if (cliFlags.listAllAudits) {
-  Commands.ListAudits();
+  commands.listAudits();
 }
 
 // Process terminating command
 if (cliFlags.listTraceCategories) {
-  Commands.ListTraceCategories();
+  commands.listTraceCategories();
 }
 
+/** @type {string} */
 const url = cliFlags._[0];
 
-let config: Object|null = null;
+/** @type {!LH.Config|undefined} */
+let config;
 if (cliFlags.configPath) {
   // Resolve the config file path relative to where cli was called.
   cliFlags.configPath = path.resolve(process.cwd(), cliFlags.configPath);
-  config = require(cliFlags.configPath);
+  config = /** @type {!LH.Config} */ (require(cliFlags.configPath));
 } else if (cliFlags.perf) {
-  config = perfOnlyConfig;
+  config = /** @type {!LH.Config} */ (perfOnlyConfig);
 }
 
 // set logging preferences
@@ -61,27 +67,39 @@ if (cliFlags.verbose) {
 }
 log.setLevel(cliFlags.logLevel);
 
-if (cliFlags.output === Printer.OutputMode[Printer.OutputMode.json] && !cliFlags.outputPath) {
+if (cliFlags.output === printer.OutputMode.json && !cliFlags.outputPath) {
   cliFlags.outputPath = 'stdout';
 }
+/**
+ * @return {!Promise<(void|!LH.Results)>}
+ */
+function run() {
+  return Promise.resolve()
+    .then(_ => {
+      if (typeof cliFlags.enableErrorReporting === 'undefined') {
+        return askPermission().then(answer => {
+          cliFlags.enableErrorReporting = answer;
+        });
+      }
+    })
+    .then(_ => {
+      Sentry.init({
+        url,
+        flags: cliFlags,
+        environmentData: {
+          name: 'redacted', // prevent sentry from using hostname
+          environment: isDev() ? 'development' : 'production',
+          release: pkg.version,
+          tags: {
+            channel: 'cli',
+          },
+        },
+      });
 
-export async function run() {
-  if (typeof cliFlags.enableErrorReporting === 'undefined') {
-    cliFlags.enableErrorReporting = await askPermission();
-  }
-
-  Sentry.init({
-    url,
-    flags: cliFlags,
-    environmentData: {
-      name: 'redacted', // prevent sentry from using hostname
-      environment: isDev() ? 'development' : 'production',
-      release: pkg.version,
-      tags: {
-        channel: 'cli',
-      },
-    },
-  });
-
-  return runLighthouse(url, cliFlags, config);
+      return runLighthouse(url, cliFlags, config);
+    });
 }
+
+module.exports = {
+  run,
+};

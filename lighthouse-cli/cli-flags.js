@@ -5,21 +5,21 @@
  */
 'use strict';
 
+/* eslint-disable max-len */
+
 const yargs = require('yargs');
+// @ts-ignore
 const pkg = require('../package.json');
 const Driver = require('../lighthouse-core/gather/driver.js');
+const printer = require('./printer');
 
-import {GetValidOutputOptions, OutputMode} from './printer';
-
-export interface Flags {
-  port: number, chromeFlags: string, output: any, outputPath: string, saveArtifacts: boolean,
-      saveAssets: boolean, view: boolean, maxWaitForLoad: number, logLevel: string,
-      hostname: string, blockedUrlPatterns: string[], enableErrorReporting: boolean
-}
-
-export function getFlags(manualArgv?: string) {
+/**
+ * @param {string=} manualArgv
+ * @return {!LH.Flags}
+ */
+function getFlags(manualArgv) {
+  // @ts-ignore yargs() is incorrectly typed as not returning itself
   const y = manualArgv ? yargs(manualArgv) : yargs;
-
   return y.help('help')
       .version(() => pkg.version)
       .showHelpOnFail(false, 'Specify --help for available options')
@@ -47,16 +47,16 @@ export function getFlags(manualArgv?: string) {
       .group(['verbose', 'quiet'], 'Logging:')
       .describe({
         verbose: 'Displays verbose logging',
-        quiet: 'Displays no progress, debug logs or errors'
+        quiet: 'Displays no progress, debug logs or errors',
       })
 
       .group(
-          [
-            'save-assets', 'save-artifacts', 'list-all-audits', 'list-trace-categories',
-            'additional-trace-categories', 'config-path', 'chrome-flags', 'perf', 'port',
-            'hostname', 'max-wait-for-load', 'enable-error-reporting'
-          ],
-          'Configuration:')
+        [
+          'save-assets', 'save-artifacts', 'list-all-audits', 'list-trace-categories',
+          'additional-trace-categories', 'config-path', 'chrome-flags', 'perf', 'port',
+          'hostname', 'max-wait-for-load', 'enable-error-reporting',
+        ],
+        'Configuration:')
       .describe({
         'enable-error-reporting':
             'Enables error reporting (prompts once by default, setting this flag will force error reporting to that state).',
@@ -90,31 +90,31 @@ export function getFlags(manualArgv?: string) {
       .describe({
         'output': `Reporter for the results, supports multiple values`,
         'output-path': `The file path to output the results. Use 'stdout' to write to stdout.
-If using JSON output, default is stdout.
-If using HTML output, default is a file in the working directory with a name based on the test URL and date.
-If using multiple outputs, --output-path is ignored.
-Example: --output-path=./lighthouse-results.html`,
-        'view': 'Open HTML report in your browser'
+  If using JSON output, default is stdout.
+  If using HTML output, default is a file in the working directory with a name based on the test URL and date.
+  If using multiple outputs, --output-path is ignored.
+  Example: --output-path=./lighthouse-results.html`,
+        'view': 'Open HTML report in your browser',
       })
 
       // boolean values
       .boolean([
         'disable-storage-reset', 'disable-device-emulation', 'disable-cpu-throttling',
         'disable-network-throttling', 'save-assets', 'save-artifacts', 'list-all-audits',
-        'list-trace-categories', 'perf', 'view', 'verbose', 'quiet', 'help'
+        'list-trace-categories', 'perf', 'view', 'verbose', 'quiet', 'help',
       ])
-      .choices('output', GetValidOutputOptions())
+      .choices('output', printer.getValidOutputOptions())
       // force as an array
       .array('blocked-url-patterns')
 
       // default values
       .default('chrome-flags', '')
       .default('disable-cpu-throttling', false)
-      .default('output', GetValidOutputOptions()[OutputMode.domhtml])
+      .default('output', 'domhtml')
       .default('port', 0)
       .default('hostname', 'localhost')
       .default('max-wait-for-load', Driver.MAX_WAIT_FOR_FULLY_LOADED)
-      .check((argv: {listAllAudits?: boolean, listTraceCategories?: boolean, _: Array<any>}) => {
+      .check(/** @param {!LH.Flags} argv */ (argv) => {
         // Make sure lighthouse has been passed a url, or at least one of --list-all-audits
         // or --list-trace-categories. If not, stop the program and ask for a url
         if (!argv.listAllAudits && !argv.listTraceCategories && argv._.length === 0) {
@@ -128,3 +128,7 @@ Example: --output-path=./lighthouse-results.html`,
       .wrap(yargs.terminalWidth())
       .argv;
 }
+
+module.exports = {
+  getFlags,
+};

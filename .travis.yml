@@ -15,10 +15,13 @@ cache:
   yarn: true
   directories:
     - node_modules
-    - lighthouse-cli/node_modules
     - lighthouse-extension/node_modules
     - lighthouse-viewer/node_modules
     - /home/travis/.rvm/gems/
+before_install:
+  # TODO: remove after yarn is 1.0+ on Travis: https://github.com/travis-ci/travis-ci/issues/7566
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$PATH"
 install:
   - yarn
   # travis can't handle the parallel install (without caches)
@@ -31,9 +34,9 @@ before_script:
   - yarn build-all
 script:
   - yarn bundlesize
-  - yarn test-cli-formatting
   - yarn lint
   - yarn unit
+  - yarn type-check
   - yarn closure
   - yarn smoke
   - yarn smokehouse
@@ -45,7 +48,7 @@ before_cache:
   - rm -rf ./node_modules/temp-devtoolsfrontend/
   - rm -rf ./node_modules/temp-devtoolsprotocol/
 after_success:
-  - ./lighthouse-core/scripts/generate-combined-coverage.sh
+  - yarn coveralls
 after_failure:
   - grep 'No screenshots' perf.json && travis-artifacts upload --path perf-0.trace.json
 addons:

@@ -94,6 +94,7 @@ class Util {
       return zeroLabel;
     }
 
+    /** @type {!Array<string>} */
     const parts = [];
     const unitLabels = /** @type {!Object<string, number>} */ ({
       d: 60 * 60 * 24,
@@ -119,7 +120,8 @@ class Util {
    * @param {{numPathParts: (number|undefined), preserveQuery: (boolean|undefined), preserveHost: (boolean|undefined)}=} options
    * @return {string}
    */
-  static getURLDisplayName(parsedUrl, options = {}) {
+  static getURLDisplayName(parsedUrl, options) {
+    options = options || {};
     const numPathParts = options.numPathParts !== undefined ? options.numPathParts : 2;
     const preserveQuery = options.preserveQuery !== undefined ? options.preserveQuery : true;
     const preserveHost = options.preserveHost || false;
@@ -197,5 +199,6 @@ class Util {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = Util;
 } else {
+  // @ts-ignore
   self.Util = Util;
 }

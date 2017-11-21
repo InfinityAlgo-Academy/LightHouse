@@ -33,13 +33,13 @@ test_script:
   - which yarn
   - yarn lint
   - yarn unit
+  - yarn type-check
   - yarn smoke
   - yarn smokehouse
 
 cache:
   #- chrome-win32 -> appveyor.yml,package.json
   - node_modules -> appveyor.yml,package.json,yarn.lock
-  - lighthouse-cli\node_modules -> appveyor.yml,package.json,yarn.lock,lighthouse-cli\package.json,lighthouse-cli\yarn.lock
   - lighthouse-extension\node_modules -> appveyor.yml,package.json,yarn.lock,lighthouse-extension\package.json,lighthouse-extension\yarn.lock
   - lighthouse-viewer\node_modules -> appveyor.yml,package.json,yarn.lock,lighthouse-viewer\package.json,lighthouse-viewer\yarn.lock
   - '%LOCALAPPDATA%\Yarn -> appveyor.yml,package.json,yarn.lock'

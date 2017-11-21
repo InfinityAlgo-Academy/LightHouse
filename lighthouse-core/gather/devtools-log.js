@@ -16,6 +16,8 @@ class DevtoolsLog {
    */
   constructor(regexFilter) {
     this._filter = regexFilter;
+
+    /** @type {!Array<{method: string, params: !Object}>} */
     this._messages = [];
     this._isRecording = false;
   }

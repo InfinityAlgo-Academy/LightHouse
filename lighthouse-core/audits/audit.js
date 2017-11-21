@@ -3,6 +3,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
+// @ts-nocheck
 'use strict';
 
 const statistics = require('../lib/statistics');
@@ -165,20 +166,21 @@ class Audit {
 
 module.exports = Audit;
 
-/** @typedef {
- * !Array<{
- *   key: string,
- *   itemType: string,
- *   text: string,
- * }>}
+/**
+ * @typedef {Object} Audit.Heading
+ * @property {string} key
+ * @property {string} itemType
+ * @property {string} text
  */
-Audit.Headings; // eslint-disable-line no-unused-expressions
 
-/** @typedef {{
- *   results: !Array<!Object<string, string>>,
- *   headings: !Audit.Headings,
- *   passes: boolean,
- *   debugString: (string|undefined)
- * }}
+/**
+ * @typedef {Array<Audit.Heading>} Audit.Headings
  */
-Audit.HeadingsResult; // eslint-disable-line no-unused-expressions
+
+/**
+ * @typedef {Object} Audit.HeadingsResult
+ * @property {number} results
+ * @property {Audit.Headings} headings
+ * @property {boolean} passes
+ * @property {string=} debugString
+ */

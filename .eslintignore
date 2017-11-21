@@ -8,15 +8,8 @@
 **/dist/**
 lighthouse-extension/app/scripts
 
-
 **/closure/*/*
 coverage/**
-
-# Typescript compiled
-!lighthouse-cli/index.js
-lighthouse-cli/*.js
-lighthouse-cli/commands/*.js
-lighthouse-cli/types/*.js
 
 # Generated files
 plots/out*

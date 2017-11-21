@@ -5,8 +5,6 @@
  */
 'use strict';
 
-require('../../compiled-check.js')('printer.js');
-
 /* eslint-env mocha */
 const Printer = require('../../printer.js');
 const assert = require('assert');
@@ -63,5 +61,14 @@ describe('Printer', () => {
     const outputCheck = new RegExp('dobetterweb/dbw_tester.css', 'i');
 
     assert.ok(outputCheck.test(htmlOutput));
+  });
+
+  it('returns output modes', () => {
+    const modes = Printer.getValidOutputOptions();
+    assert.ok(Array.isArray(modes));
+    assert.ok(modes.length > 1);
+    modes.forEach(mode => {
+      assert.strictEqual(typeof mode, 'string');
+    });
   });
 });
