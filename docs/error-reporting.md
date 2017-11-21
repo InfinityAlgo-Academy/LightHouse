@@ -22,10 +22,21 @@ Runtime exceptions will not be reported to the team. Your ability to use Lightho
 * Your Chrome version
 * Your operating system
 
-## How do I opt-in?
-The first time you run the CLI you will be prompted with a message asking you if Lighthouse can anonymously report runtime exceptions. You can give a direct response of `yes` or `no` (`y`, `n`, and pressing enter which defaults to `no` are also acceptable responses), and you will not be prompted again. If no response is given within 20 seconds, a `no` response will be assumed, and you will not be prompted again. Non-interactive terminal sessions and invocations with the `CI` environment variable set will automatically not be prompted and will not opt-in by default.
+[This code search](https://github.com/GoogleChrome/lighthouse/search?l=JavaScript&q=Sentry.&type=&utf8=%E2%9C%93) reveals where Sentry methods are used.
 
-The CLI also has two flags to control error reporting that will override the saved preference. Running Lighthouse with `--enable-error-reporting` will report errors regardless of the saved preference, and running Lighthouse with `--no-enable-error-reporting` will *not* report errors regardless of the saved preferences.
+## How do I opt-in?
+The first time you run the CLI you will be prompted with a message asking you if Lighthouse can anonymously report runtime exceptions. You can give a direct response of `yes` or `no` (`y`, `n`, and pressing enter which defaults to `no` are also acceptable responses), and you will not be prompted again. If no response is given within 20 seconds, a `no` response will be assumed and you will not be prompted again.
+
+Running Lighthouse with `--enable-error-reporting` will report errors regardless of the saved preference.
+
+## How do I keep error reporting disabled?
+As mentioned, if you do not respond to the CLI prompt within 20 seconds, a `no` response will be assumed and you will not be prompted again.
+
+Non-interactive terminal sessions (`process.stdout.isTTY === false`) and invocations with the `CI` environment variable (`process.env.CI === true`), common on CI providers like Travis and AppVeyor, will not be prompted and error reporting will remain disabled.
+
+Running Lighthouse with `--no-enable-error-reporting` will keep error reporting disabled regardless of the saved preference.
 
 ## How do I change my opt-in preference?
-Your response to the prompt will be saved to your home directory `~/.config/configstore/lighthouse.json` and used on future runs. To trigger a re-prompt, simply delete this file and Lighthouse will ask again on the next run. You can also edit this json file directly or run Lighthouse with the `--[no-]enable-error-reporting` flags.
+Your response to the prompt will be saved to your home directory `~/.config/configstore/lighthouse.json` and used on future runs. To trigger a re-prompt, simply delete this file and Lighthouse will ask again on the next run. You can also edit this json file directly.
+
+As mentioned above, any explicit `--[no-]enable-error-reporting` flags will override the saved preference.

@@ -59,7 +59,7 @@ function getFlags(manualArgv) {
         'Configuration:')
       .describe({
         'enable-error-reporting':
-            'Enables error reporting (prompts once by default, setting this flag will force error reporting to that state).',
+            'Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://git.io/vFFTO',
         'blocked-url-patterns': 'Block any network requests to the specified URL patterns',
         'disable-storage-reset':
             'Disable clearing the browser cache and other storage APIs before a run',
