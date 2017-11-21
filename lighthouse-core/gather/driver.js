@@ -106,6 +106,15 @@ class Driver {
   }
 
   /**
+   * Get the browser WebSocket endpoint for devtools protocol clients like Puppeteer.
+   * Only works with WebSocket connection, not extension or devtools.
+   * @return {!Promise<string>}
+   */
+  wsEndpoint() {
+    return this._connection.wsEndpoint();
+  }
+
+  /**
    * Bind listeners for protocol events
    * @param {!string} eventName
    * @param {function(...args)} cb
