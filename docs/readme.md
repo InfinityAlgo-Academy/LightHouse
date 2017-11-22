@@ -82,7 +82,7 @@ $ adb devices -l
 
 $ adb forward tcp:9222 localabstract:chrome_devtools_remote
 
-$ lighthouse --disable-device-emulation --disable-cpu-throttling https://mysite.com
+$ lighthouse --port=9222 --disable-device-emulation --disable-cpu-throttling https://example.com
 ```
 
 ## Lighthouse as trace processor
