@@ -50,6 +50,9 @@ sentryDelegate.init = function init(opts) {
         Sentry.captureException(...args, () => resolve());
       });
     };
+
+    // Report any rejections that are never caught
+    process.on('unhandledRejection', reason => sentryDelegate.captureException(reason));
   } catch (e) {
     log.warn(
       'sentry',
