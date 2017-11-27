@@ -93,12 +93,19 @@ NOTE: If the message you're capturing is dynamic/based on user data or you need 
 const Sentry = require('./lighthouse-core/lib/sentry');
 
 if (networkRecords.length === 1) {
-  Sentry.captureMessage('Site only had 1 network request');
+  Sentry.captureMessage('Site only had 1 network request', {level: 'info'});
   return null;
 } else {
   // do your thang
 }
 ```
+
+#### Level Guide
+
+- `info` for events that don't indicate a bug but should be tracked
+- `warning` for events that might indicate unexpected behavior but is recoverable
+- `error` for events that caused an audit/gatherer failure but were not fatal
+- `fatal` for events that caused Lighthouse to exit early and not produce a report
 
 # For Maintainers
 

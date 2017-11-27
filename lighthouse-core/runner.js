@@ -168,7 +168,7 @@ class Runner {
         };
       })
       .catch(err => {
-        return Sentry.captureException(err).then(() => {
+        return Sentry.captureException(err, {level: 'fatal'}).then(() => {
           throw err;
         });
       });
@@ -210,7 +210,7 @@ class Runner {
           const artifactError = artifacts[artifactName];
           Sentry.captureException(artifactError, {
             tags: {gatherer: artifactName},
-            level: 'warning',
+            level: 'error',
           });
 
           log.warn('Runner', `${artifactName} gatherer, required by audit ${audit.meta.name},` +
@@ -233,7 +233,7 @@ class Runner {
         throw err;
       }
 
-      Sentry.captureException(err, {tags: {audit: audit.meta.name}, level: 'warning'});
+      Sentry.captureException(err, {tags: {audit: audit.meta.name}, level: 'error'});
       // Non-fatal error become error audit result.
       return Audit.generateErrorAuditResult(audit, 'Audit error: ' + err.message);
     }).then(result => {

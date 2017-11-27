@@ -10,6 +10,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
+const Sentry = require('../../lib/sentry');
 const URL = require('../../lib/url-shim');
 
 const ALLOWABLE_OFFSCREEN_X = 100;
@@ -101,6 +102,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       const processed = OffscreenImages.computeWaste(image, viewportDimensions);
       if (processed instanceof Error) {
         debugString = processed.message;
+        Sentry.captureException(processed, {tags: {audit: this.meta.name}, level: 'warning'});
         return results;
       }
 

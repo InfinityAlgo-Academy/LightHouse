@@ -20,6 +20,13 @@ const sentryApi = {
   getContext: noop,
 };
 
+const SAMPLED_ERRORS = [
+  {pattern: /Unable to load/, rate: 0.1},
+  {pattern: /Failed to decode/, rate: 0.1},
+  {pattern: /No resource with given id/, rate: 0.01},
+  {pattern: /No node with given id/, rate: 0.01},
+];
+
 /**
  * We'll create a delegate for sentry so that environments without error reporting enabled will use
  * noop functions and environments with error reporting will call the actual Sentry methods.
@@ -43,11 +50,24 @@ sentryDelegate.init = function init(opts) {
     });
 
     // Special case captureException to return a Promise so we don't process.exit too early
-    sentryDelegate.captureException = (...args) => {
-      if (args[0] && args[0].expected) return Promise.resolve();
+    sentryDelegate.captureException = (err, opts) => {
+      opts = opts || {};
+
+      const empty = Promise.resolve();
+      // Ignore if there wasn't an error
+      if (!err) return empty;
+      // Ignore expected errors
+      if (err.expected) return empty;
+      // Sample known errors that occur at a high frequency
+      const sampledErrorMatch = SAMPLED_ERRORS.find(sample => sample.pattern.test(err.message));
+      if (sampledErrorMatch && sampledErrorMatch.rate <= Math.random()) return empty;
+      // Protocol errors all share same stack trace, so add more to fingerprint
+      if (err.protocolMethod) {
+        opts.fingerprint = ['{{ default }}', err.protocolMethod, err.protocolError];
+      }
 
       return new Promise(resolve => {
-        Sentry.captureException(...args, () => resolve());
+        Sentry.captureException(err, opts, () => resolve());
       });
     };
 

@@ -14,6 +14,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
+const Sentry = require('../../lib/sentry');
 const URL = require('../../lib/url-shim');
 
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
@@ -86,6 +87,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
       const processed = UsesResponsiveImages.computeWaste(image, DPR);
       if (processed instanceof Error) {
         debugString = processed.message;
+        Sentry.captureException(processed, {tags: {audit: this.meta.name}, level: 'warning'});
         return;
       }
 
