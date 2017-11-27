@@ -39,7 +39,7 @@ sentryDelegate.init = function init(opts) {
   }
 
   const environmentData = opts.environmentData || {};
-  const sentryConfig = Object.assign({}, environmentData, {allowSecretKey: true});
+  const sentryConfig = Object.assign({}, environmentData, {captureUnhandledRejections: true});
 
   try {
     const Sentry = require('raven');
@@ -70,9 +70,6 @@ sentryDelegate.init = function init(opts) {
         Sentry.captureException(err, opts, () => resolve());
       });
     };
-
-    // Report any rejections that are never caught
-    process.on('unhandledRejection', reason => sentryDelegate.captureException(reason));
   } catch (e) {
     log.warn(
       'sentry',
