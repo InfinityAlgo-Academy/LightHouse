@@ -13,8 +13,11 @@
 'use strict';
 
 const Audit = require('../audit');
+const Sentry = require('../../lib/sentry');
 const semver = require('semver');
 const snykDatabase = require('../../../third-party/snyk/snapshot.json');
+
+const SEMVER_REGEX = /^(\d+\.\d+\.\d+)[^-0-9]+/;
 
 class NoVulnerableLibrariesAudit extends Audit {
   /**
@@ -52,6 +55,23 @@ class NoVulnerableLibrariesAudit extends Audit {
   }
 
   /**
+   * Attempts to normalize the version.
+   * @param {?string} version
+   * @return {?string}
+   */
+  static normalizeVersion(version) {
+    if (!version) return version;
+    if (semver.valid(version)) return version;
+
+    // converts 1.5 -> 1.5.0
+    if (/^\d+\.\d+$/.test(version)) return `${version}.0`;
+    // converts 1.0.0a-bunch-of-crap -> 1.0.0
+    if (SEMVER_REGEX.test(version)) return version.match(SEMVER_REGEX)[1];
+    // leave everything else untouched
+    return version;
+  }
+
+  /**
    * @param {{name: string, version: string, npmPkgName: string|undefined}} lib
    * @param {{npm: !Object<string, !Array<{id: string, severity: string, semver: {vulnerable: !Array<string>}}>>}} snykDB
    * @return {!Array<{severity: string, numericSeverity: number, library: string, url: string}>}
@@ -62,8 +82,16 @@ class NoVulnerableLibrariesAudit extends Audit {
       return vulns;
     }
 
-    lib.pkgLink = 'https://snyk.io/vuln/npm:' + lib.npmPkgName
-      + '#lh@' + lib.version;
+    try {
+      semver.satisfies(lib.version, '*');
+    } catch (err) {
+      err.pkgName = lib.npmPkgName;
+      // Report the failure and skip this library if the version was ill-specified
+      Sentry.captureException(err, {level: 'warning'});
+      return vulns;
+    }
+
+    lib.pkgLink = `https://snyk.io/vuln/npm:${lib.npmPkgName}#lh@${lib.version}`;
     const snykInfo = snykDB.npm[lib.npmPkgName];
     snykInfo.forEach(vuln => {
       if (semver.satisfies(lib.version, vuln.semver.vulnerable[0])) {
@@ -103,6 +131,7 @@ class NoVulnerableLibrariesAudit extends Audit {
 
     let totalVulns = 0;
     const finalVulns = libraries.map(lib => {
+      lib.version = this.normalizeVersion(lib.version);
       lib.vulns = this.getVulns(lib, this.snykDB);
       if (lib.vulns.length > 0) {
         lib.vulnCount = lib.vulns.length;

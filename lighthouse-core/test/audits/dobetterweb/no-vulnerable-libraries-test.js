@@ -11,6 +11,21 @@ const assert = require('assert');
 
 /* eslint-env mocha */
 describe('Avoids front-end JavaScript libraries with known vulnerabilities', () => {
+  describe('#normalizeVersion', () => {
+    it('should leave valid and unsavable versions untouched', () => {
+      assert.equal(NoVulnerableLibrariesAudit.normalizeVersion(null), null);
+      assert.equal(NoVulnerableLibrariesAudit.normalizeVersion('52.1.13'), '52.1.13');
+      assert.equal(NoVulnerableLibrariesAudit.normalizeVersion('52.1.13-rc.1'), '52.1.13-rc.1');
+      assert.equal(NoVulnerableLibrariesAudit.normalizeVersion('c0ab71056b936'), 'c0ab71056b936');
+    });
+
+    it('should fix bad version numbers', () => {
+      assert.equal(NoVulnerableLibrariesAudit.normalizeVersion('11.51'), '11.51.0');
+      assert.equal(NoVulnerableLibrariesAudit.normalizeVersion('12.27.14 -junk'), '12.27.14');
+      assert.equal(NoVulnerableLibrariesAudit.normalizeVersion('12.27.14_other-junk'), '12.27.14');
+    });
+  });
+
   it('fails when JS libraries with known vulnerabilities are detected', () => {
     const auditResult = NoVulnerableLibrariesAudit.audit({
       JSLibraries: [
@@ -25,6 +40,20 @@ describe('Avoids front-end JavaScript libraries with known vulnerabilities', () 
     assert.equal(auditResult.details.items[0][2].text, 'High');
     assert.equal(auditResult.details.items[0][0].text, 'angular@1.1.4');
     assert.equal(auditResult.details.items[0][0].url, 'https://snyk.io/vuln/npm:angular#lh@1.1.4');
+  });
+
+  it('handles ill-specified versions', () => {
+    const auditResult = NoVulnerableLibrariesAudit.audit({
+      JSLibraries: [
+        {name: 'angular', version: 'c0ab71056b936', npmPkgName: 'angular'},
+        {name: 'react', version: '1.5.0 -something,weird', npmPkgName: 'react'},
+        {name: 'jquery', version: '1.8', npmPkgName: 'jquery'},
+      ],
+    });
+
+    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.details.items.length, 1);
+    assert.equal(auditResult.details.items[0][0].text, 'jquery@1.8.0');
   });
 
   it('passes when no JS libraries with known vulnerabilities are detected', () => {
