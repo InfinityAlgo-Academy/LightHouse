@@ -39,6 +39,7 @@ module.exports = {
       'seo/meta-description',
       'seo/crawlable-links',
       'seo/meta-robots',
+      'seo/hreflang',
     ],
   },
   {
@@ -165,6 +166,7 @@ module.exports = {
     'seo/http-status-code',
     'seo/link-text',
     'seo/is-crawlable',
+    'seo/hreflang',
   ],
 
   groups: {

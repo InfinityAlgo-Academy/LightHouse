@@ -13,6 +13,7 @@ module.exports = {
       'seo/meta-description',
       'seo/crawlable-links',
       'seo/meta-robots',
+      'seo/hreflang',
     ],
   }],
   audits: [
@@ -20,6 +21,7 @@ module.exports = {
     'seo/http-status-code',
     'seo/link-text',
     'seo/is-crawlable',
+    'seo/hreflang',
   ],
   groups: {
     'seo-mobile': {
@@ -47,6 +49,7 @@ module.exports = {
         {id: 'http-status-code', weight: 1, group: 'seo-crawl'},
         {id: 'link-text', weight: 1, group: 'seo-content'},
         {id: 'is-crawlable', weight: 1, group: 'seo-crawl'},
+        {id: 'hreflang', weight: 1, group: 'seo-content'},
       ],
     },
   },

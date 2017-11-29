@@ -4,14 +4,29 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
+const BASE_URL = 'http://localhost:10200/seo/';
+
+function headersParam(headers) {
+  return headers
+    .map(({name, value}) => `extra_header=${name}:${encodeURI(value)}`)
+    .join('&');
+}
+
+const failureHeaders = headersParam([{
+  name: 'x-robots-tag',
+  value: 'none',
+}, {
+  name: 'link',
+  value: '<http://example.com>;rel="alternate";hreflang="xx"',
+}]);
 
 /**
  * Expected Lighthouse audit values for seo tests
  */
 module.exports = [
   {
-    initialUrl: 'http://localhost:10200/seo/seo-tester.html',
-    url: 'http://localhost:10200/seo/seo-tester.html',
+    initialUrl: BASE_URL + 'seo-tester.html',
+    url: BASE_URL + 'seo-tester.html',
     audits: {
       'viewport': {
         score: true,
@@ -31,11 +46,14 @@ module.exports = [
       'is-crawlable': {
         score: true,
       },
+      'hreflang': {
+        score: true,
+      },
     },
   },
   {
-    initialUrl: 'http://localhost:10200/seo/seo-failure-cases.html?status_code=403&extra_header=x-robots-tag:none',
-    url: 'http://localhost:10200/seo/seo-failure-cases.html?status_code=403&extra_header=x-robots-tag:none',
+    initialUrl: BASE_URL + 'seo-failure-cases.html?status_code=403&' + failureHeaders,
+    url: BASE_URL + 'seo-failure-cases.html?status_code=403&' + failureHeaders,
     audits: {
       'viewport': {
         score: false,
@@ -69,6 +87,14 @@ module.exports = [
         details: {
           items: {
             length: 2,
+          },
+        },
+      },
+      'hreflang': {
+        score: false,
+        details: {
+          items: {
+            length: 3,
           },
         },
       },
