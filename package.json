@@ -97,7 +97,7 @@
     "speedline": "1.3.0",
     "update-notifier": "^2.1.0",
     "whatwg-url": "4.0.0",
-    "ws": "1.1.2",
+    "ws": "3.3.2",
     "yargs": "3.32.0",
     "yargs-parser": "7.0.0"
   },
