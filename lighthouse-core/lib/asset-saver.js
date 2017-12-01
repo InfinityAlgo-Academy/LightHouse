@@ -91,8 +91,9 @@ function prepareAssets(artifacts, audits) {
 
         if (audits) {
           const evts = new Metrics(traceData.traceEvents, audits).generateFakeEvents();
-          traceData.traceEvents.push(...evts);
+          traceData.traceEvents = traceData.traceEvents.concat(evts);
         }
+
         assets.push({
           traceData,
           devtoolsLog,

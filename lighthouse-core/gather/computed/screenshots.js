@@ -6,7 +6,6 @@
 'use strict';
 
 const ComputedArtifact = require('./computed-artifact');
-const DevtoolsTimelineModel = require('../../lib/traces/devtools-timeline-model');
 
 class ScreenshotFilmstrip extends ComputedArtifact {
   get name() {
@@ -21,19 +20,21 @@ class ScreenshotFilmstrip extends ComputedArtifact {
 
   /**
    * @param {{traceEvents: !Array}} trace
+   * @param {!Artifacts} trace
    * @return {!Promise}
   */
-  compute_(trace) {
-    const model = new DevtoolsTimelineModel(trace.traceEvents);
-    const filmStripFrames = model.filmStripModel().frames();
+  compute_(trace, artifacts) {
+    return artifacts.requestDevtoolsTimelineModel(trace).then(model => {
+      const filmStripFrames = model.filmStripModel().frames();
+      const frameFetches = filmStripFrames.map(frame => this.fetchScreenshot(frame));
 
-    const frameFetches = filmStripFrames.map(frame => this.fetchScreenshot(frame));
-    return Promise.all(frameFetches).then(images => {
-      const result = filmStripFrames.map((frame, i) => ({
-        timestamp: frame.timestamp,
-        datauri: images[i],
-      }));
-      return result;
+      return Promise.all(frameFetches).then(images => {
+        const result = filmStripFrames.map((frame, i) => ({
+          timestamp: frame.timestamp,
+          datauri: images[i],
+        }));
+        return result;
+      });
     });
   }
 }

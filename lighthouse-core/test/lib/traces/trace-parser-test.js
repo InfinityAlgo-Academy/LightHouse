@@ -13,8 +13,8 @@ const assert = require('assert');
 /* eslint-env mocha */
 describe('traceParser parser', () => {
   it('returns preact trace data the same as JSON.parse', (done) => {
-    const filename = '../../fixtures/traces/progressive-app-m60.json';
-    const readStream = fs.createReadStream(__dirname + '/' + filename, {
+    const filename = `${__dirname}/../../fixtures/traces/progressive-app-m60.json`;
+    const readStream = fs.createReadStream(filename, {
       encoding: 'utf-8',
       // devtools sends traces in 10mb chunks, but this trace is 12MB so we'll do a few chunks
       highWaterMark: 4 * 1024 * 1024,
@@ -26,7 +26,7 @@ describe('traceParser parser', () => {
     });
     readStream.on('end', () => {
       const streamedTrace = parser.getTrace();
-      const readTrace = require(filename);
+      const readTrace = JSON.parse(fs.readFileSync(filename));
 
       assert.equal(streamedTrace.traceEvents.length, readTrace.traceEvents.length);
       assert.deepStrictEqual(streamedTrace.traceEvents, readTrace.traceEvents);

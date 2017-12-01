@@ -12,91 +12,8 @@
 
 const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util');
-const DevtoolsTimelineModel = require('../lib/traces/devtools-timeline-model');
-
 // We group all trace events into groups to show a highlevel breakdown of the page
-const group = {
-  loading: 'Network request loading',
-  parseHTML: 'Parsing DOM',
-  styleLayout: 'Style & Layout',
-  compositing: 'Compositing',
-  painting: 'Paint',
-  gpu: 'GPU',
-  scripting: 'Script Evaluation',
-  scriptParseCompile: 'Script Parsing & Compile',
-  scriptGC: 'Garbage collection',
-  other: 'Other',
-  images: 'Images',
-};
-
-const taskToGroup = {
-  'Animation': group.painting,
-  'Async Task': group.other,
-  'Frame Start': group.painting,
-  'Frame Start (main thread)': group.painting,
-  'Cancel Animation Frame': group.scripting,
-  'Cancel Idle Callback': group.scripting,
-  'Compile Script': group.scriptParseCompile,
-  'Composite Layers': group.compositing,
-  'Console Time': group.scripting,
-  'Image Decode': group.images,
-  'Draw Frame': group.painting,
-  'Embedder Callback': group.scripting,
-  'Evaluate Script': group.scripting,
-  'Event': group.scripting,
-  'Animation Frame Fired': group.scripting,
-  'Fire Idle Callback': group.scripting,
-  'Function Call': group.scripting,
-  'DOM GC': group.scriptGC,
-  'GC Event': group.scriptGC,
-  'GPU': group.gpu,
-  'Hit Test': group.compositing,
-  'Invalidate Layout': group.styleLayout,
-  'JS Frame': group.scripting,
-  'Input Latency': group.scripting,
-  'Layout': group.styleLayout,
-  'Major GC': group.scriptGC,
-  'DOMContentLoaded event': group.scripting,
-  'First paint': group.painting,
-  'FMP': group.painting,
-  'FMP candidate': group.painting,
-  'Load event': group.scripting,
-  'Minor GC': group.scriptGC,
-  'Paint': group.painting,
-  'Paint Image': group.images,
-  'Paint Setup': group.painting,
-  'Parse Stylesheet': group.parseHTML,
-  'Parse HTML': group.parseHTML,
-  'Parse Script': group.scriptParseCompile,
-  'Other': group.other,
-  'Rasterize Paint': group.painting,
-  'Recalculate Style': group.styleLayout,
-  'Request Animation Frame': group.scripting,
-  'Request Idle Callback': group.scripting,
-  'Request Main Thread Frame': group.painting,
-  'Image Resize': group.images,
-  'Finish Loading': group.loading,
-  'Receive Data': group.loading,
-  'Receive Response': group.loading,
-  'Send Request': group.loading,
-  'Run Microtasks': group.scripting,
-  'Schedule Style Recalculation': group.styleLayout,
-  'Scroll': group.compositing,
-  'Task': group.other,
-  'Timer Fired': group.scripting,
-  'Install Timer': group.scripting,
-  'Remove Timer': group.scripting,
-  'Timestamp': group.scripting,
-  'Update Layer': group.compositing,
-  'Update Layer Tree': group.compositing,
-  'User Timing': group.scripting,
-  'Create WebSocket': group.scripting,
-  'Destroy WebSocket': group.scripting,
-  'Receive WebSocket Handshake': group.scripting,
-  'Send WebSocket Handshake': group.scripting,
-  'XHR Load': group.scripting,
-  'XHR Ready State Change': group.scripting,
-};
+const {taskToGroup} = require('../lib/task-groups');
 
 class PageExecutionTimings extends Audit {
   /**
@@ -115,11 +32,10 @@ class PageExecutionTimings extends Audit {
   }
 
   /**
-   * @param {!Array<TraceEvent>} trace
+   * @param {!DevtoolsTimelineModel} timelineModel
    * @return {!Map<string, number>}
    */
-  static getExecutionTimingsByCategory(trace) {
-    const timelineModel = new DevtoolsTimelineModel(trace);
+  static getExecutionTimingsByCategory(timelineModel) {
     const bottomUpByName = timelineModel.bottomUpGroupBy('EventName');
 
     const result = new Map();
@@ -135,43 +51,49 @@ class PageExecutionTimings extends Audit {
    */
   static audit(artifacts) {
     const trace = artifacts.traces[PageExecutionTimings.DEFAULT_PASS];
-    const executionTimings = PageExecutionTimings.getExecutionTimingsByCategory(trace);
-    let totalExecutionTime = 0;
 
-    const extendedInfo = {};
-    const categoryTotals = {};
-    const results = Array.from(executionTimings).map(([eventName, duration]) => {
-      totalExecutionTime += duration;
-      extendedInfo[eventName] = duration;
-      const groupName = taskToGroup[eventName];
+    return artifacts.requestDevtoolsTimelineModel(trace)
+      .then(devtoolsTimelineModel => {
+        const executionTimings = PageExecutionTimings.getExecutionTimingsByCategory(
+          devtoolsTimelineModel
+        );
+        let totalExecutionTime = 0;
 
-      const categoryTotal = categoryTotals[groupName] || 0;
-      categoryTotals[groupName] = categoryTotal + duration;
+        const extendedInfo = {};
+        const categoryTotals = {};
+        const results = Array.from(executionTimings).map(([eventName, duration]) => {
+          totalExecutionTime += duration;
+          extendedInfo[eventName] = duration;
+          const groupName = taskToGroup[eventName];
 
-      return {
-        category: eventName,
-        group: groupName,
-        duration: Util.formatMilliseconds(duration, 1),
-      };
-    });
+          const categoryTotal = categoryTotals[groupName] || 0;
+          categoryTotals[groupName] = categoryTotal + duration;
 
-    const headings = [
-      {key: 'group', itemType: 'text', text: 'Category'},
-      {key: 'category', itemType: 'text', text: 'Work'},
-      {key: 'duration', itemType: 'text', text: 'Time spent'},
-    ];
-    results.stableSort((a, b) => categoryTotals[b.group] - categoryTotals[a.group]);
-    const tableDetails = PageExecutionTimings.makeTableDetails(headings, results);
+          return {
+            category: eventName,
+            group: groupName,
+            duration: Util.formatMilliseconds(duration, 1),
+          };
+        });
 
-    return {
-      score: false,
-      rawValue: totalExecutionTime,
-      displayValue: Util.formatMilliseconds(totalExecutionTime),
-      details: tableDetails,
-      extendedInfo: {
-        value: extendedInfo,
-      },
-    };
+        const headings = [
+          {key: 'group', itemType: 'text', text: 'Category'},
+          {key: 'category', itemType: 'text', text: 'Work'},
+          {key: 'duration', itemType: 'text', text: 'Time spent'},
+        ];
+        results.stableSort((a, b) => categoryTotals[b.group] - categoryTotals[a.group]);
+        const tableDetails = PageExecutionTimings.makeTableDetails(headings, results);
+
+        return {
+          score: false,
+          rawValue: totalExecutionTime,
+          displayValue: Util.formatMilliseconds(totalExecutionTime),
+          details: tableDetails,
+          extendedInfo: {
+            value: extendedInfo,
+          },
+        };
+      });
   }
 }
 

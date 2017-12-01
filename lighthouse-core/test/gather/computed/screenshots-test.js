@@ -6,16 +6,22 @@
 'use strict';
 
 /* eslint-env mocha */
-
 const ScreenshotsGather = require('../../../gather/computed/screenshots');
+const Runner = require('../../../runner.js');
 const assert = require('assert');
 const pwaTrace = require('../../fixtures/traces/progressive-app.json');
 
-const screenshotsGather = new ScreenshotsGather();
+const screenshotsGather = new ScreenshotsGather({});
 
 describe('Screenshot gatherer', () => {
   it('returns an artifact for a real trace', () => {
-    return screenshotsGather.request({traceEvents: pwaTrace}).then(screenshots => {
+    const artifacts = Object.assign({
+      traces: {
+        [screenshotsGather.DEFAULT_PASS]: pwaTrace,
+      },
+    }, Runner.instantiateComputedArtifacts());
+
+    return artifacts.requestScreenshots({traceEvents: pwaTrace}).then(screenshots => {
       assert.ok(Array.isArray(screenshots));
       assert.equal(screenshots.length, 7);
 

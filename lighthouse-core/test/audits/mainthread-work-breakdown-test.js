@@ -7,24 +7,13 @@
 
 /* eslint-env mocha */
 const PageExecutionTimings = require('../../audits/mainthread-work-breakdown.js');
-const fs = require('fs');
+const Runner = require('../../runner.js');
 const assert = require('assert');
 
-// sadly require(file) is not working correctly.
-// traceParser parser returns preact trace data the same as JSON.parse
-// fails when require is used
-const acceptableTrace = JSON.parse(
-  fs.readFileSync(__dirname + '/../fixtures/traces/progressive-app-m60.json')
-);
-const siteWithRedirectTrace = JSON.parse(
-  fs.readFileSync(__dirname + '/../fixtures/traces/site-with-redirect.json')
-);
-const loadTrace = JSON.parse(
-  fs.readFileSync(__dirname + '/../fixtures/traces/load.json')
-);
-const errorTrace = JSON.parse(
-  fs.readFileSync(__dirname + '/../fixtures/traces/airhorner_no_fcp.json')
-);
+const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
+const siteWithRedirectTrace = require('../fixtures/traces/site-with-redirect.json');
+const loadTrace = require('../fixtures/traces/load.json');
+const errorTrace = require('../fixtures/traces/airhorner_no_fcp.json');
 
 const acceptableTraceExpectations = {
   'Compile Script': 25,
@@ -72,73 +61,80 @@ const loadTraceExpectations = {
 
 describe('Performance: page execution timings audit', () => {
   it('should compute the correct pageExecutionTiming values for the pwa trace', () => {
-    const artifacts = {
+    const artifacts = Object.assign({
       traces: {
         [PageExecutionTimings.DEFAULT_PASS]: acceptableTrace,
       },
-    };
-    const output = PageExecutionTimings.audit(artifacts);
-    const valueOf = name => Math.round(output.extendedInfo.value[name]);
+    }, Runner.instantiateComputedArtifacts());
 
-    assert.equal(output.details.items.length, 12);
-    assert.equal(output.score, false);
-    assert.equal(Math.round(output.rawValue), 611);
+    return PageExecutionTimings.audit(artifacts).then(output => {
+      const valueOf = name => Math.round(output.extendedInfo.value[name]);
 
-    for (const category in output.extendedInfo.value) {
-      if (output.extendedInfo.value[category]) {
-        assert.equal(valueOf(category), acceptableTraceExpectations[category]);
+      assert.equal(output.details.items.length, 12);
+      assert.equal(output.score, false);
+      assert.equal(Math.round(output.rawValue), 611);
+
+      for (const category in output.extendedInfo.value) {
+        if (output.extendedInfo.value[category]) {
+          assert.equal(valueOf(category), acceptableTraceExpectations[category]);
+        }
       }
-    }
+    });
   });
 
   it('should compute the correct pageExecutionTiming values for the redirect trace', () => {
-    const artifacts = {
+    const artifacts = Object.assign({
       traces: {
         [PageExecutionTimings.DEFAULT_PASS]: siteWithRedirectTrace,
       },
-    };
-    const output = PageExecutionTimings.audit(artifacts);
-    const valueOf = name => Math.round(output.extendedInfo.value[name]);
-    assert.equal(output.details.items.length, 13);
-    assert.equal(output.score, false);
-    assert.equal(Math.round(output.rawValue), 596);
+    }, Runner.instantiateComputedArtifacts());
 
-    for (const category in output.extendedInfo.value) {
-      if (output.extendedInfo.value[category]) {
-        assert.equal(valueOf(category), siteWithRedirectTraceExpectations[category]);
+    return PageExecutionTimings.audit(artifacts).then(output => {
+      const valueOf = name => Math.round(output.extendedInfo.value[name]);
+      assert.equal(output.details.items.length, 13);
+      assert.equal(output.score, false);
+      assert.equal(Math.round(output.rawValue), 596);
+
+      for (const category in output.extendedInfo.value) {
+        if (output.extendedInfo.value[category]) {
+          assert.equal(valueOf(category), siteWithRedirectTraceExpectations[category]);
+        }
       }
-    }
+    });
   });
 
   it('should compute the correct pageExecutionTiming values for the load trace', () => {
-    const artifacts = {
+    const artifacts = Object.assign({
       traces: {
         [PageExecutionTimings.DEFAULT_PASS]: loadTrace,
       },
-    };
-    const output = PageExecutionTimings.audit(artifacts);
-    const valueOf = name => Math.round(output.extendedInfo.value[name]);
-    assert.equal(output.details.items.length, 12);
-    assert.equal(output.score, false);
-    assert.equal(Math.round(output.rawValue), 524);
+    }, Runner.instantiateComputedArtifacts());
 
-    for (const category in output.extendedInfo.value) {
-      if (output.extendedInfo.value[category]) {
-        assert.equal(valueOf(category), loadTraceExpectations[category]);
+    return PageExecutionTimings.audit(artifacts).then(output => {
+      const valueOf = name => Math.round(output.extendedInfo.value[name]);
+      assert.equal(output.details.items.length, 12);
+      assert.equal(output.score, false);
+      assert.equal(Math.round(output.rawValue), 524);
+
+      for (const category in output.extendedInfo.value) {
+        if (output.extendedInfo.value[category]) {
+          assert.equal(valueOf(category), loadTraceExpectations[category]);
+        }
       }
-    }
+    });
   });
 
   it('should get no data when no events are present', () => {
-    const artifacts = {
+    const artifacts = Object.assign({
       traces: {
         [PageExecutionTimings.DEFAULT_PASS]: errorTrace,
       },
-    };
+    }, Runner.instantiateComputedArtifacts());
 
-    const output = PageExecutionTimings.audit(artifacts);
-    assert.equal(output.details.items.length, 0);
-    assert.equal(output.score, false);
-    assert.equal(Math.round(output.rawValue), 0);
+    return PageExecutionTimings.audit(artifacts).then(output => {
+      assert.equal(output.details.items.length, 0);
+      assert.equal(output.score, false);
+      assert.equal(Math.round(output.rawValue), 0);
+    });
   });
 });
