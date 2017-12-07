@@ -17,8 +17,8 @@ class Description extends Audit {
       description: 'Document has a meta description',
       failureDescription: 'Document does not have a meta description',
       helpText: 'Meta descriptions may be included in search results to concisely summarize ' +
-          'page content. Read more in the ' +
-          '[Search Console Help page](https://support.google.com/webmasters/answer/35624?hl=en#1).',
+          'page content. ' +
+          '[Learn more](https://support.google.com/webmasters/answer/35624?hl=en#1).',
       requiredArtifacts: ['MetaDescription'],
     };
   }
