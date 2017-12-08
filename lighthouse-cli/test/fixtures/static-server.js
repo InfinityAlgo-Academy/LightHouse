@@ -12,6 +12,7 @@ const path = require('path');
 const fs = require('fs');
 const parseQueryString = require('querystring').parse;
 const parseURL = require('url').parse;
+const URLSearchParams = require('../../../lighthouse-core/lib/url-shim').URLSearchParams;
 const HEADER_SAFELIST = new Set(['x-robots-tag', 'link']);
 
 const lhRootDirPath = path.join(__dirname, '../../../');
@@ -64,32 +65,29 @@ function requestHandler(request, response) {
 
     let delay = 0;
     if (queryString) {
+      const params = new URLSearchParams(queryString);
       // set document status-code
-      if (typeof queryString.status_code !== 'undefined') {
-        statusCode = parseInt(queryString.status_code, 10);
+      if (params.has('status_code')) {
+        statusCode = parseInt(params.get('status_code'), 10);
       }
 
       // set delay of request when present
-      if (typeof queryString.delay !== 'undefined') {
-        delay = parseInt(queryString.delay, 10) || 2000;
+      if (params.has('delay')) {
+        delay = parseInt(params.get('delay'), 10) || 2000;
       }
 
-      if (typeof queryString.extra_header !== 'undefined') {
-        let extraHeaders = queryString.extra_header;
-        extraHeaders = Array.isArray(extraHeaders) ? extraHeaders : [extraHeaders];
-
-        extraHeaders.forEach(header => {
-          const [headerName, ...headerValue] = header.split(':');
-
+      if (params.has('extra_header')) {
+        const extraHeaders = new URLSearchParams(params.get('extra_header'));
+        for (const [headerName, headerValue] of extraHeaders) {
           if (HEADER_SAFELIST.has(headerName.toLowerCase())) {
-            headers[headerName] = headerValue.join(':');
+            headers[headerName] = headerValue;
           }
-        });
+        }
       }
 
       // redirect url to new url if present
-      if (typeof queryString.redirect !== 'undefined') {
-        return setTimeout(sendRedirect, delay, queryString.redirect);
+      if (params.has('redirect')) {
+        return setTimeout(sendRedirect, delay, params.get('redirect'));
       }
     }
 

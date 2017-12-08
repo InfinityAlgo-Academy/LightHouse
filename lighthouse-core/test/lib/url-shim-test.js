@@ -218,6 +218,15 @@ describe('URL Shim', () => {
       assert.ok(URL.equalWithExcludedFragments(...pair));
     });
 
+    // https://github.com/GoogleChrome/lighthouse/pull/3941#discussion_r154026009
+    it('canonicalizes chrome:// urls without a trailing slash', () => {
+      const pair = [
+        'chrome://version/',
+        'chrome://version',
+      ];
+      assert.ok(URL.equalWithExcludedFragments(...pair));
+    });
+
     it('returns false for invalid URLs', () => {
       assert.ok(!URL.equalWithExcludedFragments('utter nonsense', 'http://example.com'));
     });

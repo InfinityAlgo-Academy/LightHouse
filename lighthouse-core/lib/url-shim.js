@@ -18,6 +18,9 @@ const Util = require('../report/v2/renderer/util.js');
 // https://github.com/GoogleChrome/lighthouse/issues/1186
 const URL = (typeof self !== 'undefined' && self.URL) || require('whatwg-url').URL;
 
+URL.URLSearchParams = (typeof self !== 'undefined' && self.URLSearchParams) ||
+    require('whatwg-url').URLSearchParams;
+
 URL.INVALID_URL_DEBUG_STRING =
     'Lighthouse was unable to determine the URL of some script executions. ' +
     'It\'s possible a Chrome extension or other eval\'d code is the source.';
@@ -104,6 +107,9 @@ URL.elideDataURI = function elideDataURI(url) {
 // As a result, the network URL (chrome://chrome/settings/) doesn't match the final document URL (chrome://settings/).
 function rewriteChromeInternalUrl(url) {
   if (!url || !url.startsWith('chrome://')) return url;
+  // Chrome adds a trailing slash to `chrome://` URLs, but the spec does not.
+  //   https://github.com/GoogleChrome/lighthouse/pull/3941#discussion_r154026009
+  if (url.endsWith('/')) url = url.replace(/\/$/, '');
   return url.replace(/^chrome:\/\/chrome\//, 'chrome://');
 }
 

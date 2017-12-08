@@ -5,20 +5,20 @@
  */
 'use strict';
 const BASE_URL = 'http://localhost:10200/seo/';
+const URLSearchParams = require('../../../../lighthouse-core/lib/url-shim').URLSearchParams;
 
 function headersParam(headers) {
-  return headers
-    .map(({name, value}) => `extra_header=${name}:${encodeURI(value)}`)
-    .join('&');
+  const headerString = new URLSearchParams(headers).toString();
+  return new URLSearchParams([['extra_header', headerString]]).toString();
 }
 
-const failureHeaders = headersParam([{
-  name: 'x-robots-tag',
-  value: 'none',
-}, {
-  name: 'link',
-  value: '<http://example.com>;rel="alternate";hreflang="xx"',
-}]);
+const failureHeaders = headersParam([[
+  'x-robots-tag',
+  'none',
+], [
+  'link',
+  '<http://example.com>;rel="alternate";hreflang="xx"',
+]]);
 
 /**
  * Expected Lighthouse audit values for seo tests
