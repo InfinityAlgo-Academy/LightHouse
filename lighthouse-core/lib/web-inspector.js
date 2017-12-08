@@ -30,10 +30,10 @@ module.exports = (function() {
   const _setImmediate = global.setImmediate;
 
   global.Runtime = global.Runtime || {};
-
-  // Required for devtools-timeline-model
   global.Runtime.experiments = global.Runtime.experiments || {};
-  global.Runtime.experiments.isEnabled = global.Runtime.experiments.isEnabled || (_ => false);
+  // DevTools runtime doesn't know about some experiments that DTM looks for
+  // To avoid exceptions, we assume all experiments are disabled
+  global.Runtime.experiments.isEnabled = (_ => false);
 
   const _queryParam = global.Runtime.queryParam;
   global.Runtime.queryParam = function(arg) {
