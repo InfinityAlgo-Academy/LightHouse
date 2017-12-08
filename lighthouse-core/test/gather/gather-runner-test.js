@@ -943,7 +943,7 @@ describe('GatherRunner', function() {
   });
 
   it('issues a lighthouseRunWarnings if running in Headless', () => {
-    const userAgent = 'HeadlessChrome/64.0.3240.0';
+    const userAgent = 'Mozilla/5.0 AppleWebKit/537.36 HeadlessChrome/64.0.3264.0 Safari/537.36';
     const gathererResults = {
       LighthouseRunWarnings: [],
     };

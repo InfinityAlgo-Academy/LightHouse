@@ -172,7 +172,7 @@ class GatherRunner {
    * @param {!GathererResults} gathererResults
    */
   static warnOnHeadless(userAgent, gathererResults) {
-    if (userAgent.startsWith('HeadlessChrome')) {
+    if (userAgent.includes('HeadlessChrome')) {
       gathererResults.LighthouseRunWarnings.push('Your site\'s mobile performance may be ' +
           'worse than the numbers presented in this report. Lighthouse could not test on a ' +
           'mobile connection because Headless Chrome does not support network throttling.');
