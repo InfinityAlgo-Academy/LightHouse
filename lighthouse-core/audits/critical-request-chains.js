@@ -18,9 +18,9 @@ class CriticalRequestChains extends Audit {
       description: 'Critical Request Chains',
       informative: true,
       helpText: 'The Critical Request Chains below show you what resources are ' +
-          'required for first render of this page. Improve page load by reducing ' +
+          'issued with a high priority. Consider reducing ' +
           'the length of chains, reducing the download size of resources, or ' +
-          'deferring the download of unnecessary resources. ' +
+          'deferring the download of unnecessary resources to improve page load. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains).',
       requiredArtifacts: ['devtoolsLogs'],
     };
