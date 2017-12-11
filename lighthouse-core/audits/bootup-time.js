@@ -18,7 +18,7 @@ class BootupTime extends Audit {
     return {
       category: 'Performance',
       name: 'bootup-time',
-      description: 'JavaScript boot-up time is high (> 4s)',
+      description: 'JavaScript boot-up time',
       failureDescription: 'JavaScript boot-up time is too high',
       helpText: 'Consider reducing the time spent parsing, compiling and executing JS. ' +
         'You may find delivering smaller JS payloads helps with this.',
@@ -93,7 +93,7 @@ class BootupTime extends Audit {
       const tableDetails = BootupTime.makeTableDetails(headings, results);
 
       return {
-        score: totalBootupTime < 4000,
+        score: totalBootupTime < 2000,
         rawValue: totalBootupTime,
         displayValue: Util.formatMilliseconds(totalBootupTime),
         details: tableDetails,

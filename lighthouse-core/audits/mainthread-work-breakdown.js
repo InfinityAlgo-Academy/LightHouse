@@ -85,7 +85,7 @@ class PageExecutionTimings extends Audit {
         const tableDetails = PageExecutionTimings.makeTableDetails(headings, results);
 
         return {
-          score: false,
+          score: totalExecutionTime < 3000,
           rawValue: totalExecutionTime,
           displayValue: Util.formatMilliseconds(totalExecutionTime),
           details: tableDetails,
