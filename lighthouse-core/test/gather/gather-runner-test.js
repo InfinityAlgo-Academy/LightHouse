@@ -942,13 +942,17 @@ describe('GatherRunner', function() {
     });
   });
 
-  it('issues a lighthouseRunWarnings if running in Headless', () => {
-    const userAgent = 'Mozilla/5.0 AppleWebKit/537.36 HeadlessChrome/64.0.3264.0 Safari/537.36';
+  it('issues a lighthouseRunWarnings if running an old version of Headless', () => {
     const gathererResults = {
       LighthouseRunWarnings: [],
     };
 
+    const userAgent = 'Mozilla/5.0 AppleWebKit/537.36 HeadlessChrome/63.0.3239.0 Safari/537.36';
     GatherRunner.warnOnHeadless(userAgent, gathererResults);
+    assert.strictEqual(gathererResults.LighthouseRunWarnings.length, 0);
+
+    const oldUserAgent = 'Mozilla/5.0 AppleWebKit/537.36 HeadlessChrome/62.0.3239.0 Safari/537.36';
+    GatherRunner.warnOnHeadless(oldUserAgent, gathererResults);
     assert.strictEqual(gathererResults.LighthouseRunWarnings.length, 1);
     const warning = gathererResults.LighthouseRunWarnings[0];
     assert.ok(/Headless Chrome/.test(warning));
