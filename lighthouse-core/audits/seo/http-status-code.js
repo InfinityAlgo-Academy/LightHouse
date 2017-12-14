@@ -20,7 +20,7 @@ class HTTPStatusCode extends Audit {
       failureDescription: 'Page has unsuccessful HTTP status code',
       helpText: 'Pages with unsuccessful HTTP status codes may not be indexed properly. ' +
       '[Learn more]' +
-      '(https://developers.goole.com/web/tools/lighthouse/audits/successful-http-code).',
+      '(https://developers.google.com/web/tools/lighthouse/audits/successful-http-code).',
       requiredArtifacts: ['devtoolsLogs'],
     };
   }

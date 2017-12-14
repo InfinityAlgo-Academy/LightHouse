@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const parseURL = require('url').parse;
+const URL = require('../../lib/url-shim');
 const Audit = require('../audit');
 const ViewportAudit = require('../viewport');
 const CSSStyleDeclaration = require('../../lib/web-inspector').CSSStyleDeclaration;
@@ -124,7 +124,7 @@ function findStyleRuleSource(baseURL, styleDeclaration, node) {
       const selector = rule.selectors.map(item => item.text).join(', ');
 
       if (stylesheet.sourceURL) {
-        const url = parseURL(stylesheet.sourceURL, baseURL);
+        const url = new URL(stylesheet.sourceURL, baseURL);
         const range = styleDeclaration.range;
         source = `${url.href}`;
 

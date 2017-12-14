@@ -226,6 +226,19 @@ module.exports = {
           '[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are ' +
           'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.',
     },
+    'seo-mobile': {
+      title: 'Mobile Friendly',
+      description: 'Make sure your pages are mobile friendly so users don’t have to pinch or zoom ' +
+          'in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/).',
+    },
+    'seo-content': {
+      title: 'Content Best Practices',
+      description: 'Format your HTML in a way that enables crawlers to better understand your app’s content.',
+    },
+    'seo-crawl': {
+      title: 'Crawling and Indexing',
+      description: 'To appear in search results, crawlers need access to your app.',
+    },
   },
   categories: {
     'pwa': {
@@ -348,6 +361,22 @@ module.exports = {
         {id: 'password-inputs-can-be-pasted-into', weight: 1},
         {id: 'errors-in-console', weight: 1},
         {id: 'image-aspect-ratio', weight: 1},
+      ],
+    },
+    'seo': {
+      name: 'SEO',
+      description: 'These checks ensure that your page is optimized for search engine results ranking. ' +
+          'There are additional factors Lighthouse does not check that may affect your search ranking. ' +
+          '[Learn more](https://support.google.com/webmasters/answer/35769).',
+      audits: [
+        {id: 'viewport', weight: 1, group: 'seo-mobile'},
+        {id: 'document-title', weight: 1, group: 'seo-content'},
+        {id: 'meta-description', weight: 1, group: 'seo-content'},
+        {id: 'http-status-code', weight: 1, group: 'seo-crawl'},
+        {id: 'link-text', weight: 1, group: 'seo-content'},
+        {id: 'is-crawlable', weight: 1, group: 'seo-crawl'},
+        {id: 'hreflang', weight: 1, group: 'seo-content'},
+        {id: 'font-size', weight: 1, group: 'seo-mobile'},
       ],
     },
   },
