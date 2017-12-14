@@ -9,20 +9,9 @@ module.exports = {
   extends: 'lighthouse:default',
   passes: [{
     passName: 'defaultPass',
-    gatherers: [
-      'seo/meta-description',
-      'seo/crawlable-links',
-      'seo/meta-robots',
-      'seo/hreflang',
-    ],
+    gatherers: [],
   }],
-  audits: [
-    'seo/meta-description',
-    'seo/http-status-code',
-    'seo/link-text',
-    'seo/is-crawlable',
-    'seo/hreflang',
-  ],
+  audits: [],
   groups: {
     'seo-mobile': {
       title: 'Mobile Friendly',
@@ -47,6 +36,7 @@ module.exports = {
         {id: 'document-title', weight: 1, group: 'seo-content'},
         {id: 'meta-description', weight: 1, group: 'seo-content'},
         {id: 'http-status-code', weight: 1, group: 'seo-crawl'},
+        {id: 'font-size', weight: 1, group: 'seo-mobile'},
         {id: 'link-text', weight: 1, group: 'seo-content'},
         {id: 'is-crawlable', weight: 1, group: 'seo-crawl'},
         {id: 'hreflang', weight: 1, group: 'seo-content'},

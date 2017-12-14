@@ -25,6 +25,22 @@ module.exports = (function() {
     global.window = global;
   }
 
+  global.Node = {
+    ELEMENT_NODE: 1,
+    TEXT_NODE: 3,
+  };
+
+  global.CSSAgent = {};
+  global.CSSAgent.StyleSheetOrigin = {
+    INJECTED: 'injected',
+    USER_AGENT: 'user-agent',
+    INSPECTOR: 'inspector',
+    REGULAR: 'regular',
+  };
+
+  global.CSS = {};
+  global.CSS.supports = () => true;
+
   // Stash the real one so we can reinstall after DT incorrectly polyfills.
   // See https://github.com/GoogleChrome/lighthouse/issues/73
   const _setImmediate = global.setImmediate;
@@ -308,6 +324,21 @@ module.exports = (function() {
 
     return ast;
   };
+
+  // Dependecies for efective CSS rule calculation.
+  require('chrome-devtools-frontend/front_end/sdk/CSSMatchedStyles.js');
+  require('chrome-devtools-frontend/front_end/sdk/CSSMedia.js');
+  require('chrome-devtools-frontend/front_end/sdk/CSSMetadata.js');
+  require('chrome-devtools-frontend/front_end/sdk/CSSProperty.js');
+  require('chrome-devtools-frontend/front_end/sdk/CSSRule.js');
+  require('chrome-devtools-frontend/front_end/sdk/CSSStyleDeclaration.js');
+
+  WebInspector.CSSMetadata._generatedProperties = [
+    {
+      name: 'font-size',
+      inherited: true,
+    },
+  ];
 
   // Restore setImmediate, see comment at top.
   global.setImmediate = _setImmediate;

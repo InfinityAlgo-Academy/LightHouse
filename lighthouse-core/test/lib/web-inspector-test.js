@@ -19,6 +19,7 @@ describe('Web Inspector lib', function() {
     assert.ok(WebInspector.TimelineAggregator);
     assert.ok(WebInspector.NetworkManager);
     assert.ok(WebInspector.Color);
+    assert.ok(WebInspector.CSSMetadata);
   });
 
   it('does not polyfill setImmediate incorrectly', done => {
