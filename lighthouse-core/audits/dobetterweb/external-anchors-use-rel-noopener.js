@@ -47,8 +47,7 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
         }
       })
       .filter(anchor => {
-        // Ignore href's that are not real links
-        return !anchor.href || !anchor.href.toLowerCase().startsWith('javascript:');
+        return !anchor.href || anchor.href.toLowerCase().startsWith('http');
       })
       .map(anchor => {
         return {

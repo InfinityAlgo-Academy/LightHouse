@@ -27,6 +27,30 @@ describe('External anchors use rel="noopener"', () => {
     assert.equal(auditResult.details.items.length, 0);
   });
 
+  it('passes when links have javascript in href attribute', () => {
+    const auditResult = ExternalAnchorsAudit.audit({
+      AnchorsWithNoRelNoopener: [
+        {href: 'javascript:void(0)'},
+        {href: 'JAVASCRIPT:void(0)'},
+      ],
+      URL: {finalUrl: URL},
+    });
+    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.details.items.length, 0);
+  });
+
+  it('passes when links have mailto in href attribute', () => {
+    const auditResult = ExternalAnchorsAudit.audit({
+      AnchorsWithNoRelNoopener: [
+        {href: 'mailto:inbox@email.com'},
+        {href: 'MAILTO:INBOX@EMAIL.COM'},
+      ],
+      URL: {finalUrl: URL},
+    });
+    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.details.items.length, 0);
+  });
+
   it('fails when links are from different hosts than the page host', () => {
     const auditResult = ExternalAnchorsAudit.audit({
       AnchorsWithNoRelNoopener: [
@@ -40,30 +64,32 @@ describe('External anchors use rel="noopener"', () => {
     assert.equal(auditResult.details.items.length, 2);
   });
 
-  it('handles links with no href attribute', () => {
+  it('fails when links have no href attribute', () => {
     const auditResult = ExternalAnchorsAudit.audit({
       AnchorsWithNoRelNoopener: [
         {href: ''},
-        {href: 'http://'},
-        {href: 'http:'},
       ],
       URL: {finalUrl: URL},
     });
     assert.equal(auditResult.rawValue, false);
-    assert.equal(auditResult.details.items.length, 3);
-    assert.equal(auditResult.details.items.length, 3);
+    assert.equal(auditResult.details.items.length, 1);
+    assert.equal(auditResult.details.items.length, 1);
     assert.ok(auditResult.debugString, 'includes debugString');
   });
 
-  it('does not fail for links with javascript in href attribute', () => {
+  it('fails when links have href attribute starting with a protocol', () => {
     const auditResult = ExternalAnchorsAudit.audit({
       AnchorsWithNoRelNoopener: [
-        {href: 'javascript:void(0)'},
-        {href: 'JAVASCRIPT:void(0)'},
+        {href: 'http://'},
+        {href: 'http:'},
+        {href: 'https://'},
+        {href: 'https:'},
       ],
       URL: {finalUrl: URL},
     });
-    assert.equal(auditResult.rawValue, true);
-    assert.equal(auditResult.details.items.length, 0);
+    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.details.items.length, 4);
+    assert.equal(auditResult.details.items.length, 4);
+    assert.ok(auditResult.debugString, 'includes debugString');
   });
 });

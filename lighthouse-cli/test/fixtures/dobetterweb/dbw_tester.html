@@ -106,10 +106,18 @@
   <!-- FAIL - does not use rel="noopener" and has no href attribute, giving an
     href value of '' when read, which will throw in a `new URL('')` constructor -->
   <a target="_blank">external link</a>
-  <!-- PASS -->
+  <!-- FAIL - external link that does have a rel attribute but it is not "noopener" -->
+  <a href="https://www.google.com/" target="_blank" rel="nofollow">external link</a>
+  <!-- PASS - external link correctly uses rel="noopener" and an additional rel value -->
   <a href="https://www.google.com/" target="_blank" rel="noopener nofollow">external link that uses rel noopener and another unrelated rel attribute</a>
-  <!-- PASS -->
+  <!-- PASS - external link correctly uses rel="noopener" -->
+  <a href="https://www.google.com/" target="_blank" rel="noopener">external link that uses rel noopener</a>
+  <!-- PASS - internal link without rel="noopener" -->
   <a href="./doesnotexist" target="_blank">internal link is ok</a>
+  <!-- PASS - href uses javascript: -->
+  <a href="javascript:void(0)" target="_blank"></a>
+  <!-- PASS - href uses mailto: -->
+  <a href="mailto:inbox@email.com" target="_blank"></a>
 </template>
 
 <template id="password-inputs-can-be-pasted-into">
