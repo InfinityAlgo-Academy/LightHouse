@@ -2,7 +2,9 @@
 
 # folders
 .vscode/
+.github/
 assets/
+build/
 coverage/
 
 lighthouse-core/scripts/

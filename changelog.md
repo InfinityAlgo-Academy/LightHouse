@@ -1,3 +1,65 @@
+ <a name="2.7.0"></a>
+# 2.7.0 (2017-12-14)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.6.0...v2.7.0)
+
+## New Contributors!
+Thanks to @sanjsanj, @dennismartensson, @daannijkamp, @crimeminister!
+
+## New Audits
+
+* accessibility: add accessibility manual audits ([#3834](https://github.com/googlechrome/lighthouse/pull/3834))
+* font-size: legible font sizes audit ([#3533](https://github.com/googlechrome/lighthouse/pull/3533))
+* hreflang: document has a valid hreflang code ([#3815](https://github.com/googlechrome/lighthouse/pull/3815))
+
+## CLI
+
+* compile out remaining typescript; add tsc type checking via jsdocs ([#3747](https://github.com/googlechrome/lighthouse/pull/3747))
+* sentry: handle configstore errors; don't enabling error reporting ([#3878](https://github.com/googlechrome/lighthouse/pull/3878))
+
+## Core
+
+* config: show SEO audits in the UI ([#4057](https://github.com/googlechrome/lighthouse/pull/4057))
+* critical-request-chains: corrected help text ([#4009](https://github.com/googlechrome/lighthouse/pull/4009))
+* devtools-timeline-model: extract model generation to a computed artifact...    ([46f6d2a](https://github.com/googlechrome/lighthouse/commit/46f6d2a))
+* driver: add driver.wsEndpoint() ([#3864](https://github.com/googlechrome/lighthouse/pull/3864))
+* gather-runner: fix headless chrome UA check ([#4019](https://github.com/googlechrome/lighthouse/pull/4019))
+* noopener-audit: Only test http/https links ([#4036](https://github.com/googlechrome/lighthouse/pull/4036))
+* optimized-images: skip mismatched mimeTypes ([#4045](https://github.com/googlechrome/lighthouse/pull/4045))
+* seo: consistent help text links ([#3901](https://github.com/googlechrome/lighthouse/pull/3901))
+* uses-webp: tweak text to be more next-gen focused ([#3985](https://github.com/googlechrome/lighthouse/pull/3985))
+* vulnerable-libs: add fix for recovering from bad versions ([#3932](https://github.com/googlechrome/lighthouse/pull/3932))
+* web-inspector: keep all experiments disabled, fixing conflict when running in DevTools ([#4010](https://github.com/googlechrome/lighthouse/pull/4010))
+
+## Deps
+
+* Bump ws to 3.3.2 ([#3949](https://github.com/googlechrome/lighthouse/pull/3949))
+
+## Docs
+
+* error-reporting: improve clarity for opt-out folks ([#3876](https://github.com/googlechrome/lighthouse/pull/3876))
+* add lantern accuracy data ([#3826](https://github.com/googlechrome/lighthouse/pull/3826))
+* fox mobile device testing example ([#3887](https://github.com/googlechrome/lighthouse/pull/3887))
+* readme: Add Greta Lighthouse to list of Integrations ([#4031](https://github.com/googlechrome/lighthouse/pull/4031))
+
+## Report
+
+* perf-audits: adjust presentation of runtime cost audits ([#4020](https://github.com/googlechrome/lighthouse/pull/4020))
+* warnings: warn only if using an old headless ([#4021](https://github.com/googlechrome/lighthouse/pull/4021))
+
+## Tests
+
+* smokehouse: adopt URLSearchParams for querystring manipulation ([#3941](https://github.com/googlechrome/lighthouse/pull/3941))
+
+## Misc
+
+* changelog: tweaks to changelog template and instructions ([#3849](https://github.com/googlechrome/lighthouse/pull/3849))
+* changelog: minor changelog generation usability bumps ([#3847](https://github.com/googlechrome/lighthouse/pull/3847))
+* codeowners: represent brendan's leave ([#3991](https://github.com/googlechrome/lighthouse/pull/3991))
+* error-reporting: report unhandled promise rejections, take 2 ([#3930](https://github.com/googlechrome/lighthouse/pull/3930))
+* error-reporting: tweak sentry levels and ignore list ([#3890](https://github.com/googlechrome/lighthouse/pull/3890))
+* error-reporting: report unhandled promise rejections ([#3886](https://github.com/googlechrome/lighthouse/pull/3886))
+* Update wording ([6036117](https://github.com/googlechrome/lighthouse/commit/6036117))
+
  <a name="2.6.0"></a>
 # 2.6.0 (2017-11-18)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.5.1...v2.6.0)
