@@ -25,8 +25,8 @@ class EstimatedInputLatency extends Audit {
       helpText: 'The score above is an estimate of how long your app takes to respond to user ' +
           'input, in milliseconds. There is a 90% probability that a user encounters this amount ' +
           'of latency, or less. 10% of the time a user can expect additional latency. If your ' +
-          'score is higher than Lighthouse\'s target score, users may perceive your app as ' +
-          'laggy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).',
+          'latency is higher than 50 ms, users may perceive your app as laggy. ' +
+          '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).',
       scoringMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces'],
     };
