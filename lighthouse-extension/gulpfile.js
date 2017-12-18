@@ -119,7 +119,6 @@ gulp.task('browserify-lighthouse', () => {
       // Do the additional transform to convert references of devtools-timeline-model
       // to the modified version internal to Lighthouse.
       bundle.transform('./dtm-transform.js', {global: true})
-      .ignore('../lighthouse-core/lib/asset-saver.js') // relative from gulpfile location
       .ignore('source-map')
       .ignore('whatwg-url')
       .ignore('url')

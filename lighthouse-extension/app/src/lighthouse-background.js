@@ -10,7 +10,9 @@ const RawProtocol = require('../../../lighthouse-core/gather/connections/raw');
 const Runner = require('../../../lighthouse-core/runner');
 const Config = require('../../../lighthouse-core/config/config');
 const defaultConfig = require('../../../lighthouse-core/config/default.js');
+const fastConfig = require('../../../lighthouse-core/config/fast-config.js');
 const log = require('lighthouse-logger');
+const assetSaver = require('../../../lighthouse-core/lib/asset-saver.js');
 
 const ReportGeneratorV2 = require('../../../lighthouse-core/report/v2/report-generator');
 
@@ -88,7 +90,7 @@ function filterOutArtifacts(result) {
  * @return {!Promise}
  */
 window.runLighthouseForConnection = function(connection, url, options, categoryIDs) {
-  const config = new Config({
+  const config = options && options.fastMode ? new Config(fastConfig) : new Config({
     extends: 'lighthouse:default',
     settings: {onlyCategories: categoryIDs},
   });
@@ -135,6 +137,34 @@ window.runLighthouseInExtension = function(options, categoryIDs) {
       // return enableOtherChromeExtensions(true).then(_ => {
       throw err;
       // });
+    });
+};
+
+/**
+ * Run lighthouse for connection and provide similar results as in CLI.
+ * @param {!Connection} connection
+ * @param {string} url
+ * @param {!Object} options Lighthouse options.
+          Specify lightriderFormat to change the output format.
+ * @param {!Array<string>} categoryIDs Name values of categories to include.
+ * @return {!Promise}
+ */
+window.runLighthouseAsInCLI = function(connection, url, options, categoryIDs) {
+  log.setLevel('info');
+  const startTime = Date.now();
+  return window.runLighthouseForConnection(connection, url, options, categoryIDs)
+    .then(results => {
+      const endTime = Date.now();
+      results.timing = {total: endTime - startTime};
+      let promise = Promise.resolve();
+      if (options && options.logAssets) {
+        promise = promise.then(_ => assetSaver.logAssets(results.artifacts, results.audits));
+      }
+      filterOutArtifacts(results);
+      return promise.then( _ => {
+        const json = options && options.outputFormat === 'json';
+        return json ? JSON.stringify(results) : new ReportGeneratorV2().generateReportHtml(results);
+      });
     });
 };
 
