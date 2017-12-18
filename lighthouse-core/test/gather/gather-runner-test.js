@@ -621,33 +621,31 @@ describe('GatherRunner', function() {
       /afterPass\(\) method/);
   });
 
-  describe('#assertPageLoaded', () => {
+  describe('#getPageLoadError', () => {
     it('passes when the page is loaded', () => {
       const url = 'http://the-page.com';
       const records = [{url}];
-      GatherRunner.assertPageLoaded(url, {online: true}, records);
+      assert.ok(!GatherRunner.getPageLoadError(url, records));
     });
 
     it('passes when the page is loaded, ignoring any fragment', () => {
       const url = 'http://example.com/#/page/list';
       const records = [{url: 'http://example.com'}];
-      GatherRunner.assertPageLoaded(url, {online: true}, records);
+      assert.ok(!GatherRunner.getPageLoadError(url, records));
     });
 
     it('throws when page fails to load', () => {
       const url = 'http://the-page.com';
       const records = [{url, failed: true, localizedFailDescription: 'foobar'}];
-      assert.throws(() => {
-        GatherRunner.assertPageLoaded(url, {online: true}, records);
-      }, /Unable.*foobar/);
+      const error = GatherRunner.getPageLoadError(url, records);
+      assert.ok(error && /Unable.*foobar/.test(error.message));
     });
 
     it('throws when page times out', () => {
       const url = 'http://the-page.com';
       const records = [];
-      assert.throws(() => {
-        GatherRunner.assertPageLoaded(url, {online: true}, records);
-      }, /Unable.*no document request/);
+      const error = GatherRunner.getPageLoadError(url, records);
+      assert.ok(error && /Unable.*no document request/.test(error.message));
     });
   });
 
@@ -901,13 +899,10 @@ describe('GatherRunner', function() {
         url,
         flags: {},
         config: new Config({}),
-      })
-        .then(_ => {
-          assert.ok(false);
-        }, error => {
-          assert.ok(true);
-          assert.ok(/net::ERR_NAME_NOT_RESOLVED/.test(error.message));
-        });
+      }).then(artifacts => {
+        assert.equal(artifacts.LighthouseRunWarnings.length, 1);
+        assert.ok(/unable.*load the page/.test(artifacts.LighthouseRunWarnings[0]));
+      });
     });
 
     it('resolves when domain name can\'t be resolved but is offline', () => {
