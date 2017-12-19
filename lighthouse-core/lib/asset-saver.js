@@ -208,13 +208,13 @@ function saveAssets(artifacts, audits, pathWithBasename) {
 function logAssets(artifacts, audits) {
   return prepareAssets(artifacts, audits).then(assets => {
     assets.map(data => {
-      log.log('devtoolslog-${data.passName}.json', data.devtoolsLog);
+      log.log(`devtoolslog-${data.passName}.json`, data.devtoolsLog);
       const traceIter = traceJsonGenerator(data.traceData);
       let traceJson = '';
       for (const trace of traceIter) {
         traceJson += trace;
       }
-      log.log('trace-${data.passName}.json', traceJson);
+      log.log(`trace-${data.passName}.json`, traceJson);
     });
   });
 }

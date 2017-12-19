@@ -160,8 +160,8 @@ window.runLighthouseAsInCLI = function(connection, url, options, categoryIDs) {
       if (options && options.logAssets) {
         promise = promise.then(_ => assetSaver.logAssets(results.artifacts, results.audits));
       }
-      filterOutArtifacts(results);
       return promise.then( _ => {
+        filterOutArtifacts(results);
         const json = options && options.outputFormat === 'json';
         return json ? JSON.stringify(results) : new ReportGeneratorV2().generateReportHtml(results);
       });
