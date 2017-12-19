@@ -8,7 +8,7 @@ Lighthouse audits that surface in the report should be:
 - Contribute significantly towards making the mobile web experience better for end users. 
 - Not have a significant impact on our runtime performance or bundle size. 
 - Something that is new, and not something that is already measured by existing audits. 
-- Important for our strategic goals as a product (i.e. could other Lightrider customers benefit from this? What about other GBO teams?)
+- Important for our strategic goals as a product.
 - Measurable (especially for performance audits) or have clear pass/fail states. 
 - Not use 3rd party APIs for completing the audit check. 
 
