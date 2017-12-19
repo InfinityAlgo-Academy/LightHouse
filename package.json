@@ -84,7 +84,7 @@
     "http-link-header": "^0.8.0",
     "inquirer": "^3.3.0",
     "jpeg-js": "0.1.2",
-    "js-library-detector": "^4.0.0",
+    "js-library-detector": "^4.3.1",
     "json-stringify-safe": "5.0.1",
     "lighthouse-logger": "^1.0.0",
     "metaviewport-parser": "0.1.0",
