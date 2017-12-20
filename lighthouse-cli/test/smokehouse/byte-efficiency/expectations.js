@@ -13,6 +13,17 @@ module.exports = [
     initialUrl: 'http://localhost:10200/byte-efficiency/tester.html',
     url: 'http://localhost:10200/byte-efficiency/tester.html',
     audits: {
+      'unminified-javascript': {
+        score: '<100',
+        extendedInfo: {
+          value: {
+            wastedKb: 14,
+            results: {
+              length: 1,
+            },
+          },
+        },
+      },
       'unused-css-rules': {
         score: '<100',
         extendedInfo: {

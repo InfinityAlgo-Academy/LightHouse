@@ -16,6 +16,7 @@ module.exports = {
       'uses-webp-images',
       'uses-optimized-images',
       'uses-responsive-images',
+      'unminified-javascript',
       'unused-css-rules',
       'unused-javascript',
     ],

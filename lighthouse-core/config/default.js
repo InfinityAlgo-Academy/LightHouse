@@ -18,6 +18,7 @@ module.exports = {
     useThrottling: true,
     gatherers: [
       'url',
+      'scripts',
       'viewport',
       'viewport-dimensions',
       'theme-color',
@@ -145,6 +146,7 @@ module.exports = {
     'byte-efficiency/uses-long-cache-ttl',
     'byte-efficiency/total-byte-weight',
     'byte-efficiency/offscreen-images',
+    'byte-efficiency/unminified-javascript',
     'byte-efficiency/uses-webp-images',
     'byte-efficiency/uses-optimized-images',
     'byte-efficiency/uses-request-compression',
@@ -254,6 +256,7 @@ module.exports = {
         {id: 'script-blocking-first-paint', weight: 0, group: 'perf-hint'},
         {id: 'uses-responsive-images', weight: 0, group: 'perf-hint'},
         {id: 'offscreen-images', weight: 0, group: 'perf-hint'},
+        {id: 'unminified-javascript', weight: 0, group: 'perf-hint'},
         {id: 'uses-optimized-images', weight: 0, group: 'perf-hint'},
         {id: 'uses-webp-images', weight: 0, group: 'perf-hint'},
         {id: 'uses-request-compression', weight: 0, group: 'perf-hint'},
