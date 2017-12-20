@@ -221,7 +221,7 @@ module.exports = {
       description: 'These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).',
     },
     'manual-pwa-checks': {
-      title: 'Manual checks to verify',
+      title: 'Additional items to manually check',
       description: 'These checks are required by the baseline ' +
           '[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are ' +
           'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.',
@@ -241,27 +241,6 @@ module.exports = {
     },
   },
   categories: {
-    'pwa': {
-      name: 'Progressive Web App',
-      weight: 1,
-      description: 'These checks validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).',
-      audits: [
-        {id: 'service-worker', weight: 1},
-        {id: 'works-offline', weight: 1},
-        {id: 'without-javascript', weight: 1},
-        {id: 'is-on-https', weight: 1},
-        {id: 'redirects-http', weight: 1},
-        {id: 'load-fast-enough-for-pwa', weight: 1},
-        {id: 'webapp-install-banner', weight: 1},
-        {id: 'splash-screen', weight: 1},
-        {id: 'themed-omnibox', weight: 1},
-        {id: 'viewport', weight: 1},
-        {id: 'content-width', weight: 1},
-        {id: 'pwa-cross-browser', weight: 0, group: 'manual-pwa-checks'},
-        {id: 'pwa-page-transitions', weight: 0, group: 'manual-pwa-checks'},
-        {id: 'pwa-each-page-has-url', weight: 0, group: 'manual-pwa-checks'},
-      ],
-    },
     'performance': {
       name: 'Performance',
       description: 'These encapsulate your app\'s current performance and opportunities to improve it.',
@@ -288,6 +267,27 @@ module.exports = {
         {id: 'bootup-time', weight: 0, group: 'perf-info'},
         {id: 'screenshot-thumbnails', weight: 0},
         {id: 'mainthread-work-breakdown', weight: 0, group: 'perf-info'},
+      ],
+    },
+    'pwa': {
+      name: 'Progressive Web App',
+      weight: 1,
+      description: 'These checks validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).',
+      audits: [
+        {id: 'service-worker', weight: 1},
+        {id: 'works-offline', weight: 1},
+        {id: 'without-javascript', weight: 1},
+        {id: 'is-on-https', weight: 1},
+        {id: 'redirects-http', weight: 1},
+        {id: 'load-fast-enough-for-pwa', weight: 1},
+        {id: 'webapp-install-banner', weight: 1},
+        {id: 'splash-screen', weight: 1},
+        {id: 'themed-omnibox', weight: 1},
+        {id: 'viewport', weight: 1},
+        {id: 'content-width', weight: 1},
+        {id: 'pwa-cross-browser', weight: 0, group: 'manual-pwa-checks'},
+        {id: 'pwa-page-transitions', weight: 0, group: 'manual-pwa-checks'},
+        {id: 'pwa-each-page-has-url', weight: 0, group: 'manual-pwa-checks'},
       ],
     },
     'accessibility': {
