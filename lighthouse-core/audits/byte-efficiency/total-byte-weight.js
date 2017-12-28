@@ -22,9 +22,9 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       description: 'Avoids enormous network payloads',
       failureDescription: 'Has enormous network payloads',
       helpText:
-          'Network transfer size [costs users real money](https://whatdoesmysitecost.com/) ' +
-          'and is [highly correlated](http://httparchive.org/interesting.php#onLoad) with long load times. ' +
-          'Try to find ways to reduce the size of required files.',
+          'Large network payloads cost users real money and are highly correlated with ' +
+          'long load times. [Learn ' +
+          'more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).',
       scoringMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['devtoolsLogs'],
     };
