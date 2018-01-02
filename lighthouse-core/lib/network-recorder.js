@@ -10,6 +10,8 @@ const NetworkManager = require('./web-inspector').NetworkManager;
 const EventEmitter = require('events').EventEmitter;
 const log = require('lighthouse-logger');
 
+const IGNORED_NETWORK_SCHEMES = ['data', 'ws'];
+
 class NetworkRecorder extends EventEmitter {
   /**
    * Creates an instance of NetworkRecorder.
@@ -21,29 +23,105 @@ class NetworkRecorder extends EventEmitter {
     this._records = recordArray;
     this.networkManager = NetworkManager.createWithFakeTarget();
 
-    this.startedRequestCount = 0;
-    this.finishedRequestCount = 0;
-
-    this.networkManager.addEventListener(this.EventTypes.RequestStarted,
-        this.onRequestStarted.bind(this));
-    this.networkManager.addEventListener(this.EventTypes.RequestFinished,
-        this.onRequestFinished.bind(this));
+    this.networkManager.addEventListener(
+      this.EventTypes.RequestStarted,
+      this.onRequestStarted.bind(this)
+    );
+    this.networkManager.addEventListener(
+      this.EventTypes.RequestFinished,
+      this.onRequestFinished.bind(this)
+    );
   }
 
   get EventTypes() {
     return NetworkManager.Events;
   }
 
-  activeRequestCount() {
-    return this.startedRequestCount - this.finishedRequestCount;
-  }
-
   isIdle() {
-    return this.activeRequestCount() === 0;
+    return !!this._getActiveIdlePeriod(0);
   }
 
   is2Idle() {
-    return this.activeRequestCount() <= 2;
+    return !!this._getActiveIdlePeriod(2);
+  }
+
+  _getActiveIdlePeriod(allowedRequests) {
+    const quietPeriods = NetworkRecorder.findNetworkQuietPeriods(this._records, allowedRequests);
+    return quietPeriods.find(period => !Number.isFinite(period.end));
+  }
+
+  _emitNetworkStatus() {
+    const zeroQuiet = this._getActiveIdlePeriod(0);
+    const twoQuiet = this._getActiveIdlePeriod(2);
+
+    if (twoQuiet && zeroQuiet) {
+      log.verbose('NetworkRecorder', 'network fully-quiet');
+      this.emit('network-2-idle');
+      this.emit('networkidle');
+    } else if (twoQuiet && !zeroQuiet) {
+      log.verbose('NetworkRecorder', 'network semi-quiet');
+      this.emit('network-2-idle');
+      this.emit('networkbusy');
+    } else {
+      log.verbose('NetworkRecorder', 'network busy');
+      this.emit('network-2-busy');
+      this.emit('networkbusy');
+    }
+  }
+
+  /**
+   * Finds all time periods where the number of inflight requests is less than or equal to the
+   * number of allowed concurrent requests.
+   * @param {!Array<!WebInspector.NetworkRequest>} networkRecords
+   * @param {number} allowedConcurrentRequests
+   * @param {number=} endTime
+   * @return {!Array<{start: number, end: number}>}
+   */
+  static findNetworkQuietPeriods(networkRecords, allowedConcurrentRequests, endTime = Infinity) {
+    // First collect the timestamps of when requests start and end
+    let timeBoundaries = [];
+    networkRecords.forEach(record => {
+      const scheme = record.parsedURL && record.parsedURL.scheme;
+      if (IGNORED_NETWORK_SCHEMES.includes(scheme)) {
+        return;
+      }
+
+      // convert the network record timestamp to ms
+      timeBoundaries.push({time: record.startTime * 1000, isStart: true});
+      if (record.finished) {
+        timeBoundaries.push({time: record.endTime * 1000, isStart: false});
+      }
+    });
+
+    timeBoundaries = timeBoundaries
+      .filter(boundary => boundary.time <= endTime)
+      .sort((a, b) => a.time - b.time);
+
+    let numInflightRequests = 0;
+    let quietPeriodStart = 0;
+    const quietPeriods = [];
+    timeBoundaries.forEach(boundary => {
+      if (boundary.isStart) {
+        // we've just started a new request. are we exiting a quiet period?
+        if (numInflightRequests === allowedConcurrentRequests) {
+          quietPeriods.push({start: quietPeriodStart, end: boundary.time});
+        }
+        numInflightRequests++;
+      } else {
+        numInflightRequests--;
+        // we've just completed a request. are we entering a quiet period?
+        if (numInflightRequests === allowedConcurrentRequests) {
+          quietPeriodStart = boundary.time;
+        }
+      }
+    });
+
+    // Check we ended in a quiet period
+    if (numInflightRequests <= allowedConcurrentRequests) {
+      quietPeriods.push({start: quietPeriodStart, end: endTime});
+    }
+
+    return quietPeriods;
   }
 
   /**
@@ -52,23 +130,8 @@ class NetworkRecorder extends EventEmitter {
    * @private
    */
   onRequestStarted(request) {
-    this.startedRequestCount++;
     this._records.push(request.data);
-
-    const activeCount = this.activeRequestCount();
-    log.verbose('NetworkRecorder', `Request started. ${activeCount} requests in progress` +
-        ` (${this.startedRequestCount} started and ${this.finishedRequestCount} finished).`);
-
-    // If only one request in progress, emit event that we've transitioned from
-    // idle to busy.
-    if (activeCount === 1) {
-      this.emit('networkbusy');
-    }
-
-    // If exactly three requests in progress, we've transitioned from 2-idle to 2-busy.
-    if (activeCount === 3) {
-      this.emit('network-2-busy');
-    }
+    this._emitNetworkStatus();
   }
 
   /**
@@ -78,22 +141,8 @@ class NetworkRecorder extends EventEmitter {
    * @private
    */
   onRequestFinished(request) {
-    this.finishedRequestCount++;
     this.emit('requestloaded', request.data);
-
-    const activeCount = this.activeRequestCount();
-    log.verbose('NetworkRecorder', `Request finished. ${activeCount} requests in progress` +
-        ` (${this.startedRequestCount} started and ${this.finishedRequestCount} finished).`);
-
-    // If no requests in progress, emit event that we've transitioned from busy
-    // to idle.
-    if (this.isIdle()) {
-      this.emit('networkidle');
-    }
-
-    if (this.is2Idle()) {
-      this.emit('network-2-idle');
-    }
+    this._emitNetworkStatus();
   }
 
   // The below methods proxy network data into the DevTools SDK network layer.
