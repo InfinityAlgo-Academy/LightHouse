@@ -8,7 +8,7 @@
 
 const Driver = require('./gather/driver.js');
 const GatherRunner = require('./gather/gather-runner');
-const ReportGeneratorV2 = require('./report/v2/report-generator');
+const ReportScoring = require('./scoring');
 const Audit = require('./audits/audit');
 const emulation = require('./lib/emulation');
 const log = require('lighthouse-logger');
@@ -146,8 +146,7 @@ class Runner {
         let reportCategories = [];
         let score = 0;
         if (config.categories) {
-          const reportGenerator = new ReportGeneratorV2();
-          const report = reportGenerator.generateReportJson(config, resultsById);
+          const report = ReportScoring.scoreAllCategories(config, resultsById);
           reportCategories = report.categories;
           score = report.score;
         }
