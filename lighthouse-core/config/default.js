@@ -171,6 +171,8 @@ module.exports = {
     'seo/link-text',
     'seo/is-crawlable',
     'seo/hreflang',
+    'seo/manual/mobile-friendly',
+    'seo/manual/structured-data',
   ],
 
   groups: {
@@ -240,6 +242,10 @@ module.exports = {
     'seo-crawl': {
       title: 'Crawling and Indexing',
       description: 'To appear in search results, crawlers need access to your app.',
+    },
+    'manual-seo-checks': {
+      title: 'Additional items to manually check',
+      description: 'Run these additional validators on your site to check additional SEO best practices.',
     },
   },
   categories: {
@@ -380,6 +386,8 @@ module.exports = {
         {id: 'is-crawlable', weight: 1, group: 'seo-crawl'},
         {id: 'hreflang', weight: 1, group: 'seo-content'},
         {id: 'font-size', weight: 1, group: 'seo-mobile'},
+        {id: 'mobile-friendly', weight: 0, group: 'manual-seo-checks'},
+        {id: 'structured-data', weight: 0, group: 'manual-seo-checks'},
       ],
     },
   },
