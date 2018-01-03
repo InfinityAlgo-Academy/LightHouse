@@ -51,6 +51,7 @@ class TraceOfTab extends ComputedArtifact {
     // The first TracingStartedInPage in the trace is definitely our renderer thread of interest
     // Beware: the tracingStartedInPage event can appear slightly after a navigationStart
     const startedInPageEvt = keyEvents.find(e => e.name === 'TracingStartedInPage');
+    if (!startedInPageEvt) throw new Error('TracingStartedInPage was not found in the trace');
     // Filter to just events matching the frame ID for sanity
     const frameEvents = keyEvents.filter(e => e.args.frame === startedInPageEvt.args.data.page);
 
