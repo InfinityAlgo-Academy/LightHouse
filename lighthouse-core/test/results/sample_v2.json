@@ -3599,7 +3599,7 @@
     },
     {
       "name": "Performance",
-      "description": "These encapsulate your app's performance.",
+      "description": "These encapsulate your web app's performance.",
       "audits": [
         {
           "id": "first-meaningful-paint",
@@ -4954,7 +4954,7 @@
     },
     {
       "name": "Accessibility",
-      "description": "These checks highlight opportunities to [improve the accessibility of your app](https://developers.google.com/web/fundamentals/accessibility).",
+      "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility).",
       "audits": [
         {
           "id": "accesskeys",
@@ -6889,7 +6889,7 @@
   "reportGroups": {
     "perf-metric": {
       "title": "Metrics",
-      "description": "These metrics encapsulate your app's performance across a number of dimensions."
+      "description": "These metrics encapsulate your web app's performance across a number of dimensions."
     },
     "perf-hint": {
       "title": "Opportunities",
