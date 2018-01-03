@@ -144,7 +144,7 @@ class ExtensionConnection extends Connection {
   }
 
   /**
-   * Used by lighthouse-background to kick off the run on the current page
+   * Used by lighthouse-ext-background to kick off the run on the current page
    */
   getCurrentTabURL() {
     return this._queryCurrentTab().then(tab => {

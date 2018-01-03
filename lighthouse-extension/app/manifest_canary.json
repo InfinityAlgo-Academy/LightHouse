@@ -13,7 +13,7 @@
   "background": {
     "scripts": [
       "scripts/chromereload.js",
-      "scripts/lighthouse-background.js"
+      "scripts/lighthouse-ext-background.js"
     ],
     "persistent": false
   },

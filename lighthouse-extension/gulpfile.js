@@ -86,7 +86,7 @@ gulp.task('chromeManifest', () => {
   const manifestOpts = {
     buildnumber: false,
     background: {
-      target: 'scripts/lighthouse-background.js',
+      target: 'scripts/lighthouse-ext-background.js',
       exclude: [
         'scripts/chromereload.js',
       ],
@@ -109,6 +109,7 @@ function applyBrowserifyTransforms(bundle) {
 gulp.task('browserify-lighthouse', () => {
   return gulp.src([
     'app/src/lighthouse-background.js',
+    'app/src/lighthouse-ext-background.js',
   ], {read: false})
     .pipe(tap(file => {
       let bundle = browserify(file.path); // , {debug: true}); // for sourcemaps
@@ -176,7 +177,9 @@ gulp.task('compilejs', () => {
     // sourceMaps: 'both'
   };
 
-  return gulp.src(['dist/scripts/lighthouse-background.js'])
+  return gulp.src([
+    'dist/scripts/lighthouse-background.js',
+    'dist/scripts/lighthouse-ext-background.js'])
     .pipe(tap(file => {
       const minified = babel.transform(file.contents.toString(), opts).code;
       file.contents = new Buffer(minified);
