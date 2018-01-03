@@ -112,7 +112,7 @@ As an example, here's a trace-only run that's reporting on user timings and crit
   "categories": {
     "performance": {
       "name": "Performance Metrics",
-      "description": "These encapsulate your app's performance.",
+      "description": "These encapsulate your web app's performance.",
       "audits": [
         {"id": "user-timings", "weight": 1},
         {"id": "critical-request-chains", "weight": 1}

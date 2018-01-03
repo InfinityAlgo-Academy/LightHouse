@@ -1126,7 +1126,7 @@
   "reportCategories": [
     {
       "name": "Performance",
-      "description": "These encapsulate your app's performance.",
+      "description": "These encapsulate your web app's performance.",
       "audits": [
         {
           "id": "first-meaningful-paint",
@@ -2322,7 +2322,7 @@
   "reportGroups": {
     "perf-metric": {
       "title": "Metrics",
-      "description": "These metrics encapsulate your app's performance across a number of dimensions."
+      "description": "These metrics encapsulate your web app's performance across a number of dimensions."
     },
     "perf-hint": {
       "title": "Opportunities",

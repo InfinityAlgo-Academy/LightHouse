@@ -178,7 +178,7 @@ module.exports = {
   groups: {
     'perf-metric': {
       title: 'Metrics',
-      description: 'These metrics encapsulate your app\'s performance across a number of dimensions.',
+      description: 'These metrics encapsulate your web app\'s performance across a number of dimensions.',
     },
     'perf-hint': {
       title: 'Opportunities',
@@ -251,7 +251,7 @@ module.exports = {
   categories: {
     'performance': {
       name: 'Performance',
-      description: 'These encapsulate your app\'s current performance and opportunities to improve it.',
+      description: 'These encapsulate your web app\'s current performance and opportunities to improve it.',
       audits: [
         {id: 'first-meaningful-paint', weight: 5, group: 'perf-metric'},
         {id: 'first-interactive', weight: 5, group: 'perf-metric'},
@@ -301,7 +301,7 @@ module.exports = {
     },
     'accessibility': {
       name: 'Accessibility',
-      description: 'These checks highlight opportunities to [improve the accessibility of your app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.',
+      description: 'These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.',
       audits: [
         {id: 'accesskeys', weight: 1, group: 'a11y-correct-attributes'},
         {id: 'aria-allowed-attr', weight: 3, group: 'a11y-aria'},

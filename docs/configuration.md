@@ -191,7 +191,7 @@ The groups property controls how to visually group audits within a category. For
   groups: {
     'perf-metric': {
       title: 'Metrics',
-      description: 'These metrics encapsulate your app\'s performance across a number of dimensions.'
+      description: 'These metrics encapsulate your web app\'s performance across a number of dimensions.'
     },
   }
 }
