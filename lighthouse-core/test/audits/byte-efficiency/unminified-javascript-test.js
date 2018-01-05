@@ -16,9 +16,8 @@ const _resourceType = {_name: 'script'};
 describe('Page uses optimized responses', () => {
   it('fails when given unminified scripts', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({
-      Scripts: new Map([
-        [
-          '123.1',
+      Scripts: {
+        '123.1':
           `
             var foo = new Set();
             foo.add(1);
@@ -28,9 +27,7 @@ describe('Page uses optimized responses', () => {
               console.log('hello!')
             }
           `,
-        ],
-        [
-          '123.2',
+        '123.2':
           `
             const foo = new Set();
             foo.add(1);
@@ -40,8 +37,7 @@ describe('Page uses optimized responses', () => {
               console.log('yay esnext!')
             }
           `,
-        ],
-      ]),
+      },
     }, [
       {requestId: '123.1', url: 'foo.js', _transferSize: 20 * KB, _resourceType},
       {requestId: '123.2', url: 'other.js', _transferSize: 50 * KB, _resourceType},
@@ -58,13 +54,10 @@ describe('Page uses optimized responses', () => {
 
   it('passes when scripts are already minified', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({
-      Scripts: new Map([
-        [
-          '123.1',
+      Scripts: {
+        '123.1':
           'var f=new Set();f.add(1);f.add(2);if(f.has(2))console.log(1234)',
-        ],
-        [
-          '123.2',
+        '123.2':
           `
             const foo = new Set();
             foo.add(1);
@@ -74,12 +67,9 @@ describe('Page uses optimized responses', () => {
               console.log('yay esnext!')
             }
           `,
-        ],
-        [
-          '123.3',
+        '123.3':
           'for{(wtf',
-        ],
-      ]),
+      },
     }, [
       {requestId: '123.1', url: 'foo.js', _transferSize: 20 * KB, _resourceType},
       {requestId: '123.2', url: 'other.js', _transferSize: 3 * KB, _resourceType},

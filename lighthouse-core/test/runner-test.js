@@ -6,16 +6,93 @@
 'use strict';
 
 const Runner = require('../runner');
+const GatherRunner = require('../gather/gather-runner');
 const driverMock = require('./gather/fake-driver');
 const Config = require('../config/config');
 const Audit = require('../audits/audit');
+const assetSaver = require('../lib/asset-saver');
 const assert = require('assert');
 const path = require('path');
+const sinon = require('sinon');
+
 const computedArtifacts = Runner.instantiateComputedArtifacts();
 
 /* eslint-env mocha */
 
 describe('Runner', () => {
+  const saveArtifactsSpy = sinon.spy(assetSaver, 'saveArtifacts');
+  const loadArtifactsSpy = sinon.spy(assetSaver, 'loadArtifacts');
+  const gatherRunnerRunSpy = sinon.spy(GatherRunner, 'run');
+  const runAuditSpy = sinon.spy(Runner, '_runAudit');
+
+  function resetSpies() {
+    saveArtifactsSpy.reset();
+    loadArtifactsSpy.reset();
+    gatherRunnerRunSpy.reset();
+    runAuditSpy.reset();
+  }
+
+  beforeEach(() => {
+    resetSpies();
+  });
+
+  describe('Gather Mode & Audit Mode', () => {
+    const url = 'https://example.com';
+    const generateConfig = _ => new Config({
+      passes: [{
+        gatherers: ['viewport-dimensions'],
+      }],
+      audits: ['content-width'],
+    });
+
+    it('-G gathers, quits, and doesn\'t run audits', () => {
+      const opts = {url, config: generateConfig(), driverMock, flags: {gatherMode: true}};
+      return Runner.run(null, opts).then(_ => {
+        assert.equal(loadArtifactsSpy.called, false, 'loadArtifacts was called');
+
+        assert.equal(saveArtifactsSpy.called, true, 'saveArtifacts was not called');
+        const saveArtifactArg = saveArtifactsSpy.getCall(0).args[0];
+        assert.ok(saveArtifactArg.ViewportDimensions);
+        assert.ok(saveArtifactArg.devtoolsLogs.defaultPass.length > 100);
+
+        assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
+        assert.equal(runAuditSpy.called, false, '_runAudit was called');
+      });
+    });
+
+    // uses the files on disk from the -G test. ;)
+    it('-A audits from saved artifacts and doesn\'t gather', () => {
+      const opts = {url, config: generateConfig(), driverMock, flags: {auditMode: true}};
+      return Runner.run(null, opts).then(_ => {
+        assert.equal(loadArtifactsSpy.called, true, 'loadArtifacts was not called');
+        assert.equal(gatherRunnerRunSpy.called, false, 'GatherRunner.run was called');
+        assert.equal(saveArtifactsSpy.called, false, 'saveArtifacts was called');
+        assert.equal(runAuditSpy.called, true, '_runAudit was not called');
+      });
+    });
+
+    it('-GA is a normal run but it saves artifacts to disk', () => {
+      const opts = {url, config: generateConfig(), driverMock,
+        flags: {auditMode: true, gatherMode: true}};
+      return Runner.run(null, opts).then(_ => {
+        assert.equal(loadArtifactsSpy.called, false, 'loadArtifacts was called');
+        assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
+        assert.equal(saveArtifactsSpy.called, true, 'saveArtifacts was not called');
+        assert.equal(runAuditSpy.called, true, '_runAudit was not called');
+      });
+    });
+
+    it('non -G/-A run doesn\'t save artifacts to disk', () => {
+      const opts = {url, config: generateConfig(), driverMock};
+      return Runner.run(null, opts).then(_ => {
+        assert.equal(loadArtifactsSpy.called, false, 'loadArtifacts was called');
+        assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
+        assert.equal(saveArtifactsSpy.called, false, 'saveArtifacts was called');
+        assert.equal(runAuditSpy.called, true, '_runAudit was not called');
+      });
+    });
+  });
+
   it('expands gatherers', () => {
     const url = 'https://example.com';
     const config = new Config({
@@ -28,9 +105,11 @@ describe('Runner', () => {
     });
 
     return Runner.run(null, {url, config, driverMock}).then(_ => {
+      assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
       assert.ok(typeof config.passes[0].gatherers[0] === 'object');
     });
   });
+
 
   it('rejects when given neither passes nor artifacts', () => {
     const url = 'https://example.com';
@@ -44,7 +123,7 @@ describe('Runner', () => {
       .then(_ => {
         assert.ok(false);
       }, err => {
-        assert.ok(/The config must provide passes/.test(err.message));
+        assert.ok(/No browser artifacts are either/.test(err.message));
       });
   });
 
@@ -264,7 +343,7 @@ describe('Runner', () => {
     });
   });
 
-  it('rejects when given neither audits nor auditResults', () => {
+  it('rejects when not given audits to run (and not -G)', () => {
     const url = 'https://example.com';
     const config = new Config({
       passes: [{
@@ -276,47 +355,41 @@ describe('Runner', () => {
       .then(_ => {
         assert.ok(false);
       }, err => {
-        assert.ok(/The config must provide passes/.test(err.message));
+        assert.ok(/No audits to evaluate/.test(err.message));
       });
   });
 
-  it('accepts existing auditResults', () => {
+  it('returns data even if no config categories are provided', () => {
     const url = 'https://example.com';
     const config = new Config({
-      auditResults: [{
-        name: 'content-width',
-        rawValue: true,
-        score: true,
-        displayValue: '',
+      passes: [{
+        gatherers: ['viewport-dimensions'],
       }],
-
-      categories: {
-        category: {
-          name: 'Category',
-          description: '',
-          audits: [
-            {id: 'content-width', weight: 1},
-          ],
-        },
-      },
+      audits: [
+        'content-width',
+      ],
     });
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
-      // Mostly checking that this did not throw, but check representative values.
+      assert.ok(results.lighthouseVersion);
+      assert.ok(results.generatedTime);
       assert.equal(results.initialUrl, url);
-      assert.strictEqual(results.audits['content-width'].rawValue, true);
+      assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
+      assert.equal(results.audits['content-width'].name, 'content-width');
+      assert.equal(results.score, 0);
     });
   });
+
 
   it('returns reportCategories', () => {
     const url = 'https://example.com';
     const config = new Config({
-      auditResults: [{
-        name: 'content-width',
-        rawValue: true,
-        score: true,
-        displayValue: 'display',
+      passes: [{
+        gatherers: ['viewport-dimensions'],
       }],
+      audits: [
+        'content-width',
+      ],
       categories: {
         category: {
           name: 'Category',
@@ -332,13 +405,14 @@ describe('Runner', () => {
       assert.ok(results.lighthouseVersion);
       assert.ok(results.generatedTime);
       assert.equal(results.initialUrl, url);
+      assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
       assert.equal(results.audits['content-width'].name, 'content-width');
       assert.equal(results.reportCategories[0].score, 100);
       assert.equal(results.reportCategories[0].audits[0].id, 'content-width');
       assert.equal(results.reportCategories[0].audits[0].score, 100);
-      assert.equal(results.reportCategories[0].audits[0].result.displayValue, 'display');
     });
   });
+
 
   it('rejects when not given a URL', () => {
     return Runner.run({}, {}).then(_ => assert.ok(false), _ => assert.ok(true));
@@ -425,32 +499,6 @@ describe('Runner', () => {
         assert.ok(chains['93149.1'].request);
         assert.ok(chains['93149.1'].children);
       });
-    });
-  });
-
-  it('results include artifacts when given auditResults', () => {
-    const url = 'https://example.com';
-    const config = new Config({
-      auditResults: [{
-        name: 'is-on-https',
-        rawValue: true,
-        score: true,
-        displayValue: '',
-      }],
-
-      artifacts: {
-        HTTPS: {
-          value: true,
-        },
-      },
-    });
-
-    return Runner.run(null, {url, config, driverMock}).then(results => {
-      assert.strictEqual(results.artifacts.HTTPS.value, true);
-
-      for (const method of Object.keys(computedArtifacts)) {
-        assert.ok(results.artifacts.hasOwnProperty(method));
-      }
     });
   });
 

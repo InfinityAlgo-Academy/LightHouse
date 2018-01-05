@@ -7,10 +7,13 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const log = require('lighthouse-logger');
 const stream = require('stream');
-const stringifySafe = require('json-stringify-safe');
 const Metrics = require('./traces/pwmetrics-events');
+const TraceParser = require('./traces/trace-parser');
+const rimraf = require('rimraf');
+const mkdirp = require('mkdirp');
 
 /**
  * Generate basic HTML page of screenshot filmstrip
@@ -55,19 +58,94 @@ img {
   `;
 }
 
+const artifactsFilename = 'artifacts.json';
+const traceSuffix = '.trace.json';
+const devtoolsLogSuffix = '.devtoolslog.json';
+
 /**
- * Save entire artifacts object to a single stringified file located at
- * pathWithBasename + .artifacts.log
- * @param {!Artifacts} artifacts
- * @param {string} pathWithBasename
+ * Load artifacts object from files located within basePath
+ * Also save the traces to their own files
+ * @param {string} basePath
+ * @return {!Promise<!Artifacts>}
  */
 // Set to ignore because testing it would imply testing fs, which isn't strictly necessary.
 /* istanbul ignore next */
-function saveArtifacts(artifacts, pathWithBasename) {
-  const fullPath = `${pathWithBasename}.artifacts.log`;
-  // The networkRecords artifacts have circular references
-  fs.writeFileSync(fullPath, stringifySafe(artifacts));
-  log.log('artifacts file saved to disk', fullPath);
+function loadArtifacts(basePath) {
+  log.log('Reading artifacts from disk:', basePath);
+
+  if (!fs.existsSync(basePath)) return Promise.reject(new Error('No saved artifacts found'));
+
+  // load artifacts.json
+  const filenames = fs.readdirSync(basePath);
+  const artifacts = JSON.parse(fs.readFileSync(path.join(basePath, artifactsFilename), 'utf8'));
+
+  // load devtoolsLogs
+  artifacts.devtoolsLogs = {};
+  filenames.filter(f => f.endsWith(devtoolsLogSuffix)).map(filename => {
+    const passName = filename.replace(devtoolsLogSuffix, '');
+    const devtoolsLog = JSON.parse(fs.readFileSync(path.join(basePath, filename), 'utf8'));
+    artifacts.devtoolsLogs[passName] = devtoolsLog;
+  });
+
+  // load traces
+  artifacts.traces = {};
+  const promises = filenames.filter(f => f.endsWith(traceSuffix)).map(filename => {
+    return new Promise(resolve => {
+      const passName = filename.replace(traceSuffix, '');
+      const readStream = fs.createReadStream(path.join(basePath, filename), {
+        encoding: 'utf-8',
+        highWaterMark: 4 * 1024 * 1024, // TODO benchmark to find the best buffer size here
+      });
+      const parser = new TraceParser();
+      readStream.on('data', chunk => parser.parseChunk(chunk));
+      readStream.on('end', _ => {
+        artifacts.traces[passName] = parser.getTrace();
+        resolve();
+      });
+    });
+  });
+  return Promise.all(promises).then(_ => artifacts);
+}
+
+/**
+ * Save artifacts object mostly to single file located at basePath/artifacts.log.
+ * Also save the traces & devtoolsLogs to their own files
+ * @param {!Artifacts} artifacts
+ * @param {string} basePath
+ */
+// Set to ignore because testing it would imply testing fs, which isn't strictly necessary.
+/* istanbul ignore next */
+function saveArtifacts(artifacts, basePath) {
+  mkdirp.sync(basePath);
+  rimraf.sync(`${basePath}/*${traceSuffix}`);
+  rimraf.sync(`${basePath}/${artifactsFilename}`);
+
+  // We don't want to mutate the artifacts as provided
+  artifacts = Object.assign({}, artifacts);
+
+  // save traces
+  const traces = artifacts.traces;
+  let promise = Promise.all(Object.keys(traces).map(passName => {
+    return saveTrace(traces[passName], `${basePath}/${passName}${traceSuffix}`);
+  }));
+
+  // save devtools log
+  const devtoolsLogs = artifacts.devtoolsLogs;
+  promise = promise.then(_ => {
+    Object.keys(devtoolsLogs).map(passName => {
+      const log = JSON.stringify(devtoolsLogs[passName]);
+      fs.writeFileSync(`${basePath}/${passName}${devtoolsLogSuffix}`, log, 'utf8');
+    });
+    delete artifacts.traces;
+    delete artifacts.devtoolsLogs;
+  });
+
+  // save everything else
+  promise = promise.then(_ => {
+    fs.writeFileSync(`${basePath}/${artifactsFilename}`, JSON.stringify(artifacts, 0, 2), 'utf8');
+    log.log('Artifacts saved to disk in folder:', basePath);
+  });
+  return promise;
 }
 
 /**
@@ -178,7 +256,7 @@ function saveTrace(traceData, traceFilename) {
 function saveAssets(artifacts, audits, pathWithBasename) {
   return prepareAssets(artifacts, audits).then(assets => {
     return Promise.all(assets.map((data, index) => {
-      const devtoolsLogFilename = `${pathWithBasename}-${index}.devtoolslog.json`;
+      const devtoolsLogFilename = `${pathWithBasename}-${index}${devtoolsLogSuffix}`;
       fs.writeFileSync(devtoolsLogFilename, JSON.stringify(data.devtoolsLog, null, 2));
       log.log('saveAssets', 'devtools log saved to disk: ' + devtoolsLogFilename);
 
@@ -190,7 +268,7 @@ function saveAssets(artifacts, audits, pathWithBasename) {
       fs.writeFileSync(screenshotsJSONFilename, JSON.stringify(data.screenshots, null, 2));
       log.log('saveAssets', 'screenshots saved to disk: ' + screenshotsJSONFilename);
 
-      const streamTraceFilename = `${pathWithBasename}-${index}.trace.json`;
+      const streamTraceFilename = `${pathWithBasename}-${index}${traceSuffix}`;
       log.log('saveAssets', 'streaming trace file to disk: ' + streamTraceFilename);
       return saveTrace(data.traceData, streamTraceFilename).then(_ => {
         log.log('saveAssets', 'trace file streamed to disk: ' + streamTraceFilename);
@@ -221,6 +299,7 @@ function logAssets(artifacts, audits) {
 
 module.exports = {
   saveArtifacts,
+  loadArtifacts,
   saveAssets,
   prepareAssets,
   saveTrace,

@@ -12,7 +12,6 @@ export interface Flags {
   chromeFlags: string;
   output: any;
   outputPath: string;
-  saveArtifacts: boolean;
   saveAssets: boolean;
   view: boolean;
   maxWaitForLoad: number;
@@ -22,6 +21,8 @@ export interface Flags {
   enableErrorReporting: boolean;
   listAllAudits: boolean;
   listTraceCategories: boolean;
+  auditMode: boolean;
+  gatherMode: boolean;
   configPath?: string;
   perf: boolean;
   verbose: boolean;

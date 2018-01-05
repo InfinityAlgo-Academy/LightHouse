@@ -24,6 +24,8 @@ last-run-results.html
 *.report.pretty
 *.artifacts.log
 
+latest-run
+
 closure-error.log
 
 /chrome-linux/

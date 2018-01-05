@@ -125,6 +125,8 @@ gulp.task('browserify-lighthouse', () => {
       .ignore('url')
       .ignore('debug/node')
       .ignore('raven')
+      .ignore('mkdirp')
+      .ignore('rimraf')
       .ignore('pako/lib/zlib/inflate.js');
 
       // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.

@@ -20,7 +20,7 @@ class Scripts extends Gatherer {
   afterPass(options, traceData) {
     const driver = options.driver;
 
-    const scriptContentMap = new Map();
+    const scriptContentMap = {};
     const scriptRecords = traceData.networkRecords
       .filter(record => record.resourceType() === WebInspector.resourceTypes.Script);
 
@@ -31,7 +31,7 @@ class Scripts extends Gatherer {
             .catch(_ => null)
             .then(content => {
               if (!content) return;
-              scriptContentMap.set(record.requestId, content);
+              scriptContentMap[record.requestId] = content;
             });
         })
         .then(() => scriptContentMap);

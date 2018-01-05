@@ -547,9 +547,7 @@ describe('GatherRunner', function() {
 
     return GatherRunner.run(passes, options)
       .then(artifacts => {
-        // todo, trash these
-        assert.equal(artifacts.networkRecords['firstPass'], undefined);
-        assert.equal(artifacts.networkRecords['secondPass'], undefined);
+        assert.equal(artifacts.networkRecords, undefined);
       });
   });
 
