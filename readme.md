@@ -47,7 +47,6 @@ Logging:
 
 Configuration:
   --save-assets                  Save the trace contents & screenshots to disk                                                             [boolean]
-  --save-artifacts               Save all gathered artifacts to disk                                                                       [boolean]
   --list-all-audits              Prints a list of all available audits and exits                                                           [boolean]
   --list-trace-categories        Prints a list of all required trace categories and exits                                                  [boolean]
   --additional-trace-categories  Additional categories to capture with the trace (comma-delimited).
@@ -60,14 +59,18 @@ Configuration:
                                  Chromium version 54.0 or later. By default, any detected Chrome Canary or Chrome (stable) will be launched.
                                                                                                                                        [default: ""]
   --perf                         Use a performance-test-only configuration                                                                 [boolean]
-  --port                         The port to use for the debugging protocol. Use 0 for a random port                                 [default: 9222]
-  --hostname                     The hostname to use for the debugging protocol.                                                [default: localhost]
+  --port                         The port to use for the debugging protocol. Use 0 for a random port                                    [default: 0]
+  --hostname                     The hostname to use for the debugging protocol.                                              [default: "localhost"]
   --max-wait-for-load            The timeout (in milliseconds) to wait before the page is considered done loading and the run should continue.
-                                 WARNING: Very high values can lead to large traces and instability                                 [default: 25000]
-  --enable-error-reporting       Enables error reporting (prompts once by default, setting this flag will force error reporting to that state).
+                                 WARNING: Very high values can lead to large traces and instability                                 [default: 45000]
+  --enable-error-reporting       Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More:
+                                 https://git.io/vFFTO
+  --gather-mode, -G              Collect artifacts from a connected browser and save to disk. If audit-mode is not also enabled, the run will quit
+                                 early.                                                                                                    [boolean]
+  --audit-mode, -A               Process saved artifacts from disk                                                                         [boolean]
 
 Output:
-  --output       Reporter for the results, supports multiple values                           [choices: "json", "html", "domhtml"] [default: "html"]
+  --output       Reporter for the results, supports multiple values                        [choices: "json", "html", "domhtml"] [default: "domhtml"]
   --output-path  The file path to output the results. Use 'stdout' to write to stdout.
                  If using JSON output, default is stdout.
                  If using HTML output, default is a file in the working directory with a name based on the test URL and date.
@@ -94,42 +97,49 @@ Examples:
   lighthouse <url> --quiet --chrome-flags="--headless"                      Launch Headless Chrome, turn off logging
 
 For more information on Lighthouse, see https://developers.google.com/web/tools/lighthouse/.
-
-
 ```
 
 ##### Output Examples
-`lighthouse` generates
-* `./<HOST>_<DATE>.report.html`
 
-`lighthouse --output json` generates
-* json output on `stdout`
+```sh
+lighthouse
+# saves `./<HOST>_<DATE>.report.html`
 
-`lighthouse --output html --output-path ./report.html` generates
-* `./report.html`
+lighthouse --output json
+# json output sent to stdout
 
-NOTE: specifying an output path with multiple formats ignores your specified extension for *ALL* formats
+lighthouse --output html --output-path ./report.html
+# saves `./report.html`
 
-`lighthouse --output json --output html --output-path ./myfile.json` generates
-* `./myfile.report.json`
-* `./myfile.report.html`
+# NOTE: specifying an output path with multiple formats ignores your specified extension for *ALL* formats
+lighthouse --output json --output html --output-path ./myfile.json
+# saves `./myfile.report.json` and `./myfile.report.html`
 
-`lighthouse --output json --output html` generates
-* `./<HOST>_<DATE>.report.json`
-* `./<HOST>_<DATE>.report.html`
+lighthouse --output json --output html
+# saves `./<HOST>_<DATE>.report.json` and `./<HOST>_<DATE>.report.html`
 
-`lighthouse --output-path=~/mydir/foo.out --save-assets` generates
-* `~/mydir/foo.report.html`
-* `~/mydir/foo-0.trace.json`
-* `~/mydir/foo-0.screenshots.html`
+lighthouse --output-path=~/mydir/foo.out --save-assets
+# saves `~/mydir/foo.report.html`
+# saves `~/mydir/foo-0.trace.json` and `~/mydir/foo-0.screenshots.html`
 
-`lighthouse --output-path=./report.json --output json --save-artifacts` generates
-* `./report.json`
-* `./report.artifacts.log`
+lighthouse --output-path=./report.json --output json
+# saves `./report.json`
+```
 
-`lighthouse --save-artifacts` generates
-* `./<HOST>_<DATE>.report.html`
-* `./<HOST>_<DATE>.artifacts.log`
+##### Lifecycle Examples
+You can run a subset of Lighthouse's lifecycle if desired via the `--gather-mode` (`-G`) and  `--audit-mode` (`-A`) CLI flags.
+
+```sh
+lighthouse -G http://example.com
+# launches browser, collects artifacts, saves them to disk (in `./latest-run/`) and quits
+
+lighthouse -A http://example.com
+# skips browser interaction, loads artifacts from disk (in `./latest-run/`), runs audits on them, generates report
+
+lighthouse -GA http://example.com
+# Normal gather + audit run, but also saves collected artifacts to disk for subsequent -A runs.
+```
+
 
 #### Notes on Error Reporting
 
