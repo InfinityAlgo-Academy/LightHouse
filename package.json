@@ -78,7 +78,7 @@
     "zone.js": "^0.7.3"
   },
   "dependencies": {
-    "axe-core": "2.4.1",
+    "axe-core": "2.6.1",
     "chrome-devtools-frontend": "1.0.422034",
     "chrome-launcher": "0.8.1",
     "configstore": "^3.1.1",

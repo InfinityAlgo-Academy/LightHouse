@@ -51,22 +51,22 @@ module.exports = [
         score: false,
       },
       'aria-valid-attr': {
-        score: true,
+        notApplicable: true,
       },
       'aria-allowed-attr': {
-        score: true,
+        notApplicable: true,
       },
       'color-contrast': {
         score: true,
       },
       'image-alt': {
-        score: true,
+        notApplicable: true,
       },
       'label': {
-        score: true,
+        notApplicable: true,
       },
       'tabindex': {
-        score: true,
+        notApplicable: true,
       },
       'content-width': {
         score: true,
@@ -114,10 +114,10 @@ module.exports = [
         score: false,
       },
       'aria-valid-attr': {
-        score: true,
+        notApplicable: true,
       },
       'aria-allowed-attr': {
-        score: true,
+        notApplicable: true,
       },
       'color-contrast': {
         score: true,
@@ -126,10 +126,10 @@ module.exports = [
         score: false,
       },
       'label': {
-        score: true,
+        notApplicable: true,
       },
       'tabindex': {
-        score: true,
+        notApplicable: true,
       },
       'content-width': {
         score: true,

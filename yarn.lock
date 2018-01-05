@@ -335,9 +335,9 @@ aws4@^1.2.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.4.1.tgz#fde7d5292466d230e5ee0f4e038d9dfaab08fc61"
 
-axe-core@2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-2.4.1.tgz#55b6ceaa847cb1eaef5d559b6c41035dc3e07dbf"
+axe-core@2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-2.6.1.tgz#28772c4f76966d373acda35b9a409299dc00d1b5"
 
 axios@0.15.3:
   version "0.15.3"

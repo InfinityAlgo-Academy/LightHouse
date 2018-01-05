@@ -43,6 +43,15 @@ class ReportScoring {
         if (typeof result.score === 'boolean') {
           auditScore = result.score ? 100 : 0;
         }
+        // If a result was not applicable, meaning its checks did not run against anything on
+        // the page, force it's weight to 0. It will not count during the arithmeticMean() but
+        // will still be included in the final report json and displayed in the report as
+        // "Not Applicable".
+        if (result.notApplicable) {
+          auditScore = 100;
+          audit.weight = 0;
+          result.informative = true;
+        }
 
         return Object.assign({}, audit, {result, score: auditScore});
       });

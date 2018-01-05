@@ -19,7 +19,19 @@ class AxeAudit extends Audit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
-    const violations = artifacts.Accessibility.violations;
+    // Indicate if a test is not applicable.
+    // This means aXe did not find any nodes which matched these checks.
+    // Note in Lighthouse we use the phrasing "Not Applicable" (aXe uses "inapplicable", which sounds weird).
+    const notApplicables = artifacts.Accessibility.notApplicable || [];
+    const isNotApplicable = notApplicables.find(result => result.id === this.meta.name);
+    if (isNotApplicable) {
+      return {
+        rawValue: false,
+        notApplicable: true,
+      };
+    }
+
+    const violations = artifacts.Accessibility.violations || [];
     const rule = violations.find(result => result.id === this.meta.name);
 
     let nodeDetails = [];
