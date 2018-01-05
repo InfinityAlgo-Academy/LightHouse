@@ -18,6 +18,7 @@ module.exports = {
     },
   ],
   audits: [
+    'byte-efficiency/unminified-css',
     'byte-efficiency/unused-css-rules',
     'byte-efficiency/unused-javascript',
     'dobetterweb/no-old-flexbox',
@@ -25,6 +26,7 @@ module.exports = {
   categories: {
     'performance': {
       audits: [
+        {id: 'unminified-css', weight: 0, group: 'perf-hint'},
         {id: 'unused-css-rules', weight: 0, group: 'perf-hint'},
         {id: 'unused-javascript', weight: 0, group: 'perf-hint'},
       ],
