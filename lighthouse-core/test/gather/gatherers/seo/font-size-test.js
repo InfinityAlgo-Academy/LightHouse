@@ -78,7 +78,6 @@ describe('Font size gatherer', () => {
         visitedTextLength: expectedVisitedTextLength,
         totalTextLength: expectedTotalTextLength,
         analyzedFailingNodesData: [{
-          cssRule: undefined,
           fontSize: 10,
           node: bodyNode,
           textLength: expectedFailingTextLength,

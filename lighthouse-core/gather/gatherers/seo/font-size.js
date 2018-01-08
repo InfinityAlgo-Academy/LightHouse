@@ -150,7 +150,7 @@ function isNonEmptyTextNode(node) {
 class FontSize extends Gatherer {
   /**
    * @param {{driver: !Object}} options Run options
-   * @return {!Promise<{totalTextLength: number, failingTextLength: number, visitedTextLength: number, analyzedFailingTextLength: number, analyzedFailingNodesData: Array<{fontSize: number, textLength: number, node: Node, cssRule: WebInspector.CSSStyleDeclaration}>}>} font-size analysis
+   * @return {!Promise<{totalTextLength: number, failingTextLength: number, visitedTextLength: number, analyzedFailingTextLength: number, analyzedFailingNodesData: Array<{fontSize: number, textLength: number, node: Node, cssRule: SimplifiedStyleDeclaration}>}>} font-size analysis
    */
   afterPass(options) {
     const stylesheets = new Map();
@@ -190,7 +190,20 @@ class FontSize extends Gatherer {
           .map(info =>
             getFontSizeSourceRule(options.driver, info.node)
               .then(sourceRule => {
-                info.cssRule = sourceRule;
+                if (sourceRule) {
+                  info.cssRule = {
+                    type: sourceRule.type,
+                    range: sourceRule.range,
+                    styleSheetId: sourceRule.styleSheetId,
+                  };
+
+                  if (sourceRule.parentRule) {
+                    info.cssRule.parentRule = {
+                      origin: sourceRule.parentRule.origin,
+                      selectors: sourceRule.parentRule.selectors,
+                    };
+                  }
+                }
                 return info;
               })
           )
@@ -222,3 +235,12 @@ class FontSize extends Gatherer {
 
 module.exports = FontSize;
 
+/**
+ * Simplified, for serializability sake, WebInspector.CSSStyleDeclaration
+ * @typedef {Object} SimplifiedStyleDeclaration
+ * @property {string} type
+ * @property {{startLine: number, startColumn: number}} range
+ * @property {{origin: string, selectors: Array<{text: string}>}} parentRule
+ * @property {string} styleSheetId
+ * @property {WebInspector.CSSStyleSheetHeader} stylesheet
+ */

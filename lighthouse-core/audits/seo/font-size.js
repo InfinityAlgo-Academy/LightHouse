@@ -12,8 +12,8 @@ const CSSStyleDeclaration = require('../../lib/web-inspector').CSSStyleDeclarati
 const MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT = 75;
 
 /**
- * @param {Array<{cssRule: WebInspector.CSSStyleDeclaration, fontSize: number, textLength: number, node: Node}>} fontSizeArtifact
- * @returns {Array<{cssRule: WebInspector.CSSStyleDeclaration, fontSize: number, textLength: number, node: Node}>}
+ * @param {Array<{cssRule: SimplifiedStyleDeclaration, fontSize: number, textLength: number, node: Node}>} fontSizeArtifact
+ * @returns {Array<{cssRule: SimplifiedStyleDeclaration, fontSize: number, textLength: number, node: Node}>}
  */
 function getUniqueFailingRules(fontSizeArtifact) {
   const failingRules = new Map();
@@ -91,7 +91,7 @@ function nodeToTableNode(node) {
 
 /**
  * @param {string} baseURL
- * @param {WebInspector.CSSStyleDeclaration} styleDeclaration
+ * @param {SimplifiedStyleDeclaration} styleDeclaration
  * @param {Node} node
  * @returns {{source:!string, selector:string|object}}
  */
@@ -154,7 +154,7 @@ function findStyleRuleSource(baseURL, styleDeclaration, node) {
 }
 
 /**
- * @param {WebInspector.CSSStyleDeclaration} styleDeclaration
+ * @param {SimplifiedStyleDeclaration} styleDeclaration
  * @param {Node} node
  * @return string
  */
