@@ -121,4 +121,34 @@ describe('Console error logs audit', () => {
     // text is undefined
     assert.strictEqual(auditResult.details.items[0][1].text, undefined);
   });
+
+  // Checks bug #4188
+  it('handle the case when exception info is not present', () => {
+    const auditResult = ErrorLogsAudit.audit({
+      ChromeConsoleMessages: [],
+      RuntimeExceptions: [{
+        'timestamp': 1506535813608.003,
+        'exceptionDetails': {
+          'url': 'http://example.com/fancybox.js',
+          'text': 'TypeError: Cannot read property \'msie\' of undefined',
+          'stackTrace': {
+            'callFrames': [
+              {
+                'url': 'http://example.com/fancybox.js',
+                'lineNumber': 28,
+                'columnNumber': 20,
+              },
+            ],
+          },
+          'executionContextId': 3,
+        },
+      }],
+    });
+    assert.equal(auditResult.rawValue, 1);
+    assert.equal(auditResult.score, false);
+    assert.equal(auditResult.details.items.length, 1);
+    assert.strictEqual(auditResult.details.items[0][0].text, 'http://example.com/fancybox.js');
+    assert.strictEqual(auditResult.details.items[0][1].text,
+      'TypeError: Cannot read property \'msie\' of undefined');
+  });
 });

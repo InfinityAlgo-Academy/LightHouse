@@ -47,9 +47,12 @@ class ErrorLogs extends Audit {
     const runtimeExRows =
       runtimeExceptions.filter(entry => entry.exceptionDetails !== undefined)
       .map(entry => {
+        const description = entry.exceptionDetails.exception ?
+          entry.exceptionDetails.exception.description : entry.exceptionDetails.text;
+
         return {
           source: 'Runtime.exception',
-          description: entry.exceptionDetails.exception.description,
+          description,
           url: entry.exceptionDetails.url,
         };
       });
