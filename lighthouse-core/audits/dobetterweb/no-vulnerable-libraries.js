@@ -91,7 +91,7 @@ class NoVulnerableLibrariesAudit extends Audit {
       return vulns;
     }
 
-    lib.pkgLink = `https://snyk.io/vuln/npm:${lib.npmPkgName}#lh@${lib.version}`;
+    lib.pkgLink = `https://snyk.io/vuln/npm:${lib.npmPkgName}?lh@${lib.version}`;
     const snykInfo = snykDB.npm[lib.npmPkgName];
     snykInfo.forEach(vuln => {
       if (semver.satisfies(lib.version, vuln.semver.vulnerable[0])) {
