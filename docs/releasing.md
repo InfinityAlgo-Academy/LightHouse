@@ -1,8 +1,36 @@
-## Release guide for maintainers
+### Release guide for maintainers
+
+## Release Policy
+
+### Cadence
+
+We ship twice a month, on the Thursday before the 15th and the Thursday before 1st. These dates are added to the internal Lighthouse calendar.
+
+### Release manager
+
+Rather than a rotation, release manager is appointed. However if the appointed manager is absent, the next engineer in the following list owns it:
+
+    bckenny, paulirish, patrickhulce
+
+Release manager follows the below _Release Process_.
+
+### Release publicity
+
+1. Release mgr copies changelog to a new [Releases](https://github.com/GoogleChrome/lighthouse/releases). Tags and ships it.
+1. Release mgr tells the _LH public_ Hangout chat about the new version.
+1. V writes and publishes the [/updates](https://developers.google.com/web/updates/) blog post
+1. Paul writes the tweet and sends it on [@____lighthouse](https://twitter.com/____lighthouse).
+1. Paul prepares a roll for DevTools frontend
+
+### Versioning
+
+We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patch`), to align with the greater Node community. Generally, this means our bi-weekly releases will bump a minor. Though we will release a new patch version if high-priority fixes are required before the next schedule release. Additionally, if a schedule release contains no new features, then we'll only bump the patch version.
+
+
+## Release Process
 
 ```sh
 # * Install the latest. This also builds the cli, extension, and viewer *
-yarn
 yarn install-all
 
 # * Bump it *
@@ -63,14 +91,11 @@ echo "ship it"
 npm publish
 yarn deploy-viewer
 
-echo "Use the GitHub web interface to tag the release"
-echo "Copy changelog to release notes and update the release page"
-
 # * Tell the world!!! *
-echo "Inform various peoples"
+echo "Complete the _Release publicity_ tasks documented above"
 ```
 
-### Canary release
+### Extension Canary release
 
 ```sh
 # Pull latest in a clean non-dev clone.
