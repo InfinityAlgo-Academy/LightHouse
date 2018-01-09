@@ -76,11 +76,8 @@ function getFlags(manualArgv) {
             'Additional categories to capture with the trace (comma-delimited).',
         'config-path': 'The path to the config JSON.',
         'chrome-flags':
-            `Custom flags to pass to Chrome (space-delimited). For a full list of flags, see http://peter.sh/experiments/chromium-command-line-switches/.
-
-            Environment variables:
-            CHROME_PATH: Explicit path of intended Chrome binary. If set must point to an executable of a build of Chromium version 54.0 or later. By default, any detected Chrome Canary or Chrome (stable) will be launched.
-            `,
+            `Custom flags to pass to Chrome (space-delimited). For a full list of flags, see http://bit.ly/chrome-flags
+            Additionally, use the CHROME_PATH environment variable to use a specific Chrome binary. Requires Chromium version 54.0 or later. If omitted, any detected Chrome Canary or Chrome stable will be used.`,
         'perf': 'Use a performance-test-only configuration',
         'hostname': 'The hostname to use for the debugging protocol.',
         'port': 'The port to use for the debugging protocol. Use 0 for a random port',
@@ -115,7 +112,7 @@ function getFlags(manualArgv) {
       // default values
       .default('chrome-flags', '')
       .default('disable-cpu-throttling', false)
-      .default('output', 'domhtml')
+      .default('output', 'html')
       .default('port', 0)
       .default('hostname', 'localhost')
       .default('max-wait-for-load', Driver.MAX_WAIT_FOR_FULLY_LOADED)

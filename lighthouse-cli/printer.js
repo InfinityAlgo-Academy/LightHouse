@@ -13,12 +13,10 @@ const log = require('lighthouse-logger');
  * An enumeration of acceptable output modes:
  *   'json': JSON formatted results
  *   'html': An HTML report
- *   'domhtml': Alias for 'html' report
  */
 const OutputMode = {
   json: 'json',
   html: 'html',
-  domhtml: 'domhtml',
 };
 
 /**
@@ -42,7 +40,7 @@ function checkOutputPath(path) {
  */
 function createOutput(results, outputMode) {
   // HTML report.
-  if (outputMode === OutputMode.domhtml || outputMode === OutputMode.html) {
+  if (outputMode === OutputMode.html) {
     return new ReportGenerator().generateReportHtml(results);
   }
   // JSON report.

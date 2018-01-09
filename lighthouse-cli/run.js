@@ -128,17 +128,16 @@ function saveResults(results, artifacts, flags) {
   return promise.then(_ => {
     if (Array.isArray(flags.output)) {
       return flags.output.reduce((innerPromise, outputType) => {
-        const extension = outputType === 'domhtml' ? 'html' : outputType;
+        const extension = outputType;
         const outputPath = `${resolvedPath}.report.${extension}`;
         return innerPromise.then(() => Printer.write(results, outputType, outputPath));
       }, Promise.resolve());
     } else {
-      const extension = flags.output === 'domhtml' ? 'html' : flags.output;
+      const extension = flags.output;
       const outputPath =
           flags.outputPath || `${resolvedPath}.report.${extension}`;
       return Printer.write(results, flags.output, outputPath).then(_ => {
-        if (flags.output === Printer.OutputMode[Printer.OutputMode.html] ||
-            flags.output === Printer.OutputMode[Printer.OutputMode.domhtml]) {
+        if (flags.output === Printer.OutputMode[Printer.OutputMode.html]) {
           if (flags.view) {
             opn(outputPath, {wait: false});
           } else {
