@@ -123,6 +123,19 @@ describe('URL Shim', () => {
       assert.equal(result, '/file-f303dec\u2026-somethingmore.css');
     });
 
+    it('Elides google-fonts hashes', () => {
+      const url = 'https://fonts.gstatic.com/s/droidsans/v8/s-BiyweUPV0v-yRb-cjciAzyDMXhdD8sAj6OAJTFsBI.woff2';
+      const result = URL.getURLDisplayName(url);
+      assert.equal(result, '\u2026v8/s-BiyweUP\u2026.woff2');
+    });
+
+    it('Elides long number sequences', () => {
+      const url = 'http://cdn.cnn.com/cnnnext/dam/assets/150507173438-11-week-in-photos-0508-large-169.jpg';
+      const result = URL.getURLDisplayName(url);
+      assert.equal(result, '\u2026assets/150\u2026-11-week-in-photos-0508-large-169.jpg');
+    });
+
+
     it('Elides query strings when can first parameter', () => {
       const url = 'http://example.com/file.css?aQueryString=true&other_long_query_stuff=false&some_other_super_long_query';
       const result = URL.getURLDisplayName(url);
@@ -145,7 +158,7 @@ describe('URL Shim', () => {
       const url = superLongName.slice(0, -3) +
           '-f303dec6eec305a4fab8025577db3c2feb418148ac75ba378281399fb1ba670b.css';
       const result = URL.getURLDisplayName(url);
-      const expected = '/thisIsASuperLongURLThatWillTriggerFilenameTruncationWhichW\u2026.css';
+      const expected = '/thisIsASu\u2026.css';
       assert.equal(result, expected);
     });
 

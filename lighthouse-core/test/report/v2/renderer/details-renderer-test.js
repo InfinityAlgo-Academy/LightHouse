@@ -216,7 +216,7 @@ describe('DetailsRenderer', () => {
 
     it('renders text URLs', () => {
       const urlText = 'https://example.com/';
-      const displayUrlText = '/';
+      const displayUrlText = '/(example.com)';
       const el = renderer.render({
         type: 'url',
         text: urlText,
@@ -224,7 +224,7 @@ describe('DetailsRenderer', () => {
 
       assert.equal(el.localName, 'div');
       assert.equal(el.textContent, displayUrlText);
-      assert.ok(el.classList.contains('lh-text'), 'adds classes');
+      assert.ok(el.classList.contains('lh-text__url'), 'adds classes');
     });
   });
 });

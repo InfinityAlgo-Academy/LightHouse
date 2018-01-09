@@ -61,7 +61,7 @@ class ErrorLogs extends Audit {
 
     const headings = [
       {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'description', itemType: 'text', text: 'Description'},
+      {key: 'description', itemType: 'code', text: 'Description'},
     ];
 
     const details = Audit.makeTableDetails(headings, tableRows);
