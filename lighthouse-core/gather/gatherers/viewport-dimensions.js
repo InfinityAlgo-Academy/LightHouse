@@ -31,7 +31,7 @@ class ViewportDimensions extends Gatherer {
   afterPass(options) {
     const driver = options.driver;
 
-    return driver.evaluateAsync(`(${getViewportDimensions.toString()}())`)
+    return driver.evaluateAsync(`(${getViewportDimensions.toString()}())`, {useIsolation: true})
 
     .then(dimensions => {
       const allNumeric = Object.keys(dimensions).every(key => Number.isFinite(dimensions[key]));

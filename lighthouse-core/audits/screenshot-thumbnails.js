@@ -78,9 +78,12 @@ class ScreenshotThumbnails extends Audit {
     ]).then(([speedline, ttfi, ttci]) => {
       const thumbnails = [];
       const analyzedFrames = speedline.frames.filter(frame => !frame.isProgressInterpolated());
+      const maxFrameTime =
+        speedline.complete ||
+        Math.max(...speedline.frames.map(frame => frame.getTimeStamp() - speedline.beginning));
       // Find thumbnails to cover the full range of the trace (max of last visual change and time
       // to interactive).
-      const timelineEnd = Math.max(speedline.complete, ttfi.rawValue, ttci.rawValue);
+      const timelineEnd = Math.max(maxFrameTime, ttfi.rawValue, ttci.rawValue);
 
       for (let i = 1; i <= NUMBER_OF_THUMBNAILS; i++) {
         const targetTimestamp = speedline.beginning + timelineEnd * i / NUMBER_OF_THUMBNAILS;
@@ -98,8 +101,9 @@ class ScreenshotThumbnails extends Audit {
 
         const imageData = frameForTimestamp.getParsedImage();
         const thumbnailImageData = ScreenshotThumbnails.scaleImageToThumbnail(imageData);
-        const base64Data = cachedThumbnails.get(frameForTimestamp) ||
-            jpeg.encode(thumbnailImageData, 90).data.toString('base64');
+        const base64Data =
+          cachedThumbnails.get(frameForTimestamp) ||
+          jpeg.encode(thumbnailImageData, 90).data.toString('base64');
 
         cachedThumbnails.set(frameForTimestamp, base64Data);
         thumbnails.push({
