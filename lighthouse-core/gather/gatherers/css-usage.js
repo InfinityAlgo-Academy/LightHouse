@@ -11,20 +11,39 @@ const Gatherer = require('./gatherer');
  * @fileoverview Tracks unused CSS rules.
  */
 class CSSUsage extends Gatherer {
-  beforePass(options) {
-    return options.driver.sendCommand('DOM.enable')
-      .then(_ => options.driver.sendCommand('CSS.enable'))
-      .then(_ => options.driver.sendCommand('CSS.startRuleUsageTracking'));
-  }
-
   afterPass(options) {
     const driver = options.driver;
 
-    return driver.sendCommand('CSS.stopRuleUsageTracking').then(results => {
-      return driver.sendCommand('CSS.disable')
-        .then(_ => driver.sendCommand('DOM.disable'))
-        .then(_ => results.ruleUsage);
-    });
+    const stylesheets = [];
+    const onStylesheetAdded = sheet => stylesheets.push(sheet);
+    driver.on('CSS.styleSheetAdded', onStylesheetAdded);
+
+    return driver
+      .sendCommand('DOM.enable')
+      .then(_ => driver.sendCommand('CSS.enable'))
+      .then(_ => driver.sendCommand('CSS.startRuleUsageTracking'))
+      .then(_ => driver.evaluateAsync('getComputedStyle(document.body)'))
+      .then(_ => {
+        driver.off('CSS.styleSheetAdded', onStylesheetAdded);
+        const promises = stylesheets.map(sheet => {
+          const styleSheetId = sheet.header.styleSheetId;
+          return driver.sendCommand('CSS.getStyleSheetText', {styleSheetId}).then(content => {
+            sheet.content = content.text;
+          });
+        });
+
+        return Promise.all(promises);
+      })
+      .then(_ => driver.sendCommand('CSS.stopRuleUsageTracking'))
+      .then(results => {
+        return driver
+          .sendCommand('CSS.disable')
+          .then(_ => driver.sendCommand('DOM.disable'))
+          .then(_ => {
+            const dedupedStylesheets = new Map(stylesheets.map(sheet => [sheet.content, sheet]));
+            return {rules: results.ruleUsage, stylesheets: Array.from(dedupedStylesheets.values())};
+          });
+      });
   }
 }
 

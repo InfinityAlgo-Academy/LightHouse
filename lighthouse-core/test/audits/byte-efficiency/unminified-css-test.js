@@ -119,38 +119,33 @@ describe('Page uses optimized css', () => {
   it('fails when given unminified stylesheets', () => {
     const auditResult = UnminifiedCssAudit.audit_(
       {
-        Styles: new Map([
-          [
-            '123.1',
-            {
-              header: {sourceURL: 'foo.css'},
-              content: `
-                /*
-                * a complicated comment
-                * that is
-                * several
-                * lines
-                */
-                .my-class {
-                  width: 100px;
-                  height: 100px;
-                }
-              `.replace(/\n\s+/g, '\n'),
-            },
-          ],
-          [
-            '123.2',
-            {
-              header: {sourceURL: 'other.css'},
-              content: `
-                .my-other-class {
-                  background: data("data:image/jpeg;base64,asdfadiosgjwiojasfaasd");
-                  height: 100px;
-                }
-              `.replace(/\n\s+/g, '\n'),
-            },
-          ],
-        ]).values(),
+        URL: {finalUrl: ''},
+        CSSUsage: {stylesheets: [
+          {
+            header: {sourceURL: 'foo.css'},
+            content: `
+              /*
+              * a complicated comment
+              * that is
+              * several
+              * lines
+              */
+              .my-class {
+                width: 100px;
+                height: 100px;
+              }
+            `.replace(/\n\s+/g, '\n'),
+          },
+          {
+            header: {sourceURL: 'other.css'},
+            content: `
+              .my-other-class {
+                background: data("data:image/jpeg;base64,asdfadiosgjwiojasfaasd");
+                height: 100px;
+              }
+            `.replace(/\n\s+/g, '\n'),
+          },
+        ]},
       },
       [
         {url: 'foo.css', _transferSize: 20 * KB, _resourceType},
@@ -170,28 +165,23 @@ describe('Page uses optimized css', () => {
   it('passes when stylesheets are already minified', () => {
     const auditResult = UnminifiedCssAudit.audit_(
       {
-        Styles: new Map([
-          ['123.1', {header: {sourceURL: 'foo.css'}, content: '#id{width:100px;}'}],
-          [
-            '123.2',
-            {
-              header: {sourceURL: 'other.css'},
-              content: `
-                /* basically just one comment */
-                .the-class {
-                  display: block;
-                }
-              `.replace(/\n\s+/g, '\n'),
-            },
-          ],
-          [
-            '123.3',
-            {
-              header: {sourceURL: 'invalid.css'},
-              content: '/* a broken comment .clasz { width: 0; }',
-            },
-          ],
-        ]).values(),
+        URL: {finalUrl: ''},
+        CSSUsage: {stylesheets: [
+          {header: {sourceURL: 'foo.css'}, content: '#id{width:100px;}'},
+          {
+            header: {sourceURL: 'other.css'},
+            content: `
+              /* basically just one comment */
+              .the-class {
+                display: block;
+              }
+            `.replace(/\n\s+/g, '\n'),
+          },
+          {
+            header: {sourceURL: 'invalid.css'},
+            content: '/* a broken comment .clasz { width: 0; }',
+          },
+        ]},
       },
       [
         {url: 'foo.css', _transferSize: 20 * KB, _resourceType},

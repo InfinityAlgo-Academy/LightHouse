@@ -438,7 +438,7 @@ describe('Config', () => {
     const auditNames = new Set(config.audits.map(audit => audit.meta.name));
     assert.ok(config, 'failed to generate config');
     assert.ok(auditNames.has('custom-audit'), 'did not include custom audit');
-    assert.ok(auditNames.has('no-old-flexbox'), 'did not include full audits');
+    assert.ok(auditNames.has('unused-css-rules'), 'did not include full audits');
     assert.ok(auditNames.has('first-meaningful-paint'), 'did not include default audits');
   });
 

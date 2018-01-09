@@ -7,6 +7,7 @@
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 
+const IGNORE_THRESHOLD_IN_BYTES = 2048;
 const PREVIEW_LENGTH = 100;
 
 class UnusedCSSRules extends ByteEfficiencyAudit {
@@ -21,7 +22,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
       helpText: 'Remove unused rules from stylesheets to reduce unnecessary ' +
           'bytes consumed by network activity. ' +
           '[Learn more](https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery)',
-      requiredArtifacts: ['CSSUsage', 'Styles', 'URL', 'devtoolsLogs'],
+      requiredArtifacts: ['CSSUsage', 'URL', 'devtoolsLogs'],
     };
   }
 
@@ -55,7 +56,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
     rules.forEach(rule => {
       const stylesheetInfo = indexedStylesheets[rule.styleSheetId];
 
-      if (!stylesheetInfo || stylesheetInfo.isDuplicate) {
+      if (!stylesheetInfo) {
         return;
       }
 
@@ -91,11 +92,11 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
 
   /**
    * Trims stylesheet content down to the first rule-set definition.
-   * @param {string} content
+   * @param {?string} content
    * @return {string}
    */
   static determineContentPreview(content) {
-    let preview = content
+    let preview = (content || '')
         .slice(0, PREVIEW_LENGTH * 5)
         .replace(/( {2,}|\t)+/g, '  ') // remove leading indentation if present
         .replace(/\n\s+}/g, '\n}') // completely remove indentation of closing braces
@@ -150,8 +151,8 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
    * @return {!Audit.HeadingsResult}
    */
   static audit_(artifacts) {
-    const styles = artifacts.Styles;
-    const usage = artifacts.CSSUsage;
+    const styles = artifacts.CSSUsage.stylesheets;
+    const usage = artifacts.CSSUsage.rules;
     const pageUrl = artifacts.URL.finalUrl;
 
     const devtoolsLogs = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
@@ -161,7 +162,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
 
       const results = Object.keys(indexedSheets)
           .map(sheetId => UnusedCSSRules.mapSheetToResult(indexedSheets[sheetId], pageUrl))
-          .filter(sheet => sheet && sheet.wastedBytes > 1024);
+          .filter(sheet => sheet && sheet.wastedBytes > IGNORE_THRESHOLD_IN_BYTES);
 
       const headings = [
         {key: 'url', itemType: 'url', text: 'URL'},

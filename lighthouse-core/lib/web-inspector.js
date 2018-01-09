@@ -298,34 +298,8 @@ module.exports = (function() {
     return fakeTarget.networkManager;
   };
 
-  // Dependencies for CSS parsing.
+  // Dependencies for effective CSS rule calculation.
   require('chrome-devtools-frontend/front_end/common/TextRange.js');
-  const gonzales = require('chrome-devtools-frontend/front_end/gonzales/gonzales-scss.js');
-  require('chrome-devtools-frontend/front_end/gonzales/SCSSParser.js');
-
-  // Mostly taken from from chrome-devtools-frontend/front_end/gonzales/SCSSParser.js.
-  WebInspector.SCSSParser.prototype.parse = function(content) {
-    let ast = null;
-    try {
-      ast = gonzales.parse(content, {syntax: 'css'});
-    } catch (e) {
-      return {error: e};
-    }
-
-    /** @type {!{properties: !Array<!Gonzales.Node>, node: !Gonzales.Node}} */
-    const rootBlock = {
-      properties: [],
-      node: ast,
-    };
-    /** @type {!Array<!{properties: !Array<!Gonzales.Node>, node: !Gonzales.Node}>} */
-    const blocks = [rootBlock];
-    ast.selectors = [];
-    WebInspector.SCSSParser.extractNodes(ast, blocks, rootBlock);
-
-    return ast;
-  };
-
-  // Dependecies for efective CSS rule calculation.
   require('chrome-devtools-frontend/front_end/sdk/CSSMatchedStyles.js');
   require('chrome-devtools-frontend/front_end/sdk/CSSMedia.js');
   require('chrome-devtools-frontend/front_end/sdk/CSSMetadata.js');

@@ -112,16 +112,6 @@ module.exports = [
           },
         },
       },
-      // 'no-old-flexbox': {
-      //   score: false,
-      //   extendedInfo: {
-      //     value: {
-      //       results: {
-      //         length: 7
-      //       }
-      //     }
-      //   }
-      // },
       'no-vulnerable-libraries': {
         score: false,
         details: {
@@ -316,9 +306,6 @@ module.exports = [
       'no-mutation-events': {
         score: true,
       },
-      // 'no-old-flexbox': {
-      //   score: true
-      // },
       'no-websql': {
         score: true,
       },

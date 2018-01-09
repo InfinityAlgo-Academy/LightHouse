@@ -6,6 +6,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
+const UnusedCSSRules = require('./unused-css-rules');
 
 const IGNORE_THRESHOLD_IN_PERCENT = 5;
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
@@ -24,7 +25,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
       informative: true,
       helpText: 'Minifying CSS files can reduce network payload sizes.' +
         '[Learn more](https://developers.google.com/speed/docs/insights/MinifyResources).',
-      requiredArtifacts: ['Styles', 'devtoolsLogs'],
+      requiredArtifacts: ['CSSUsage', 'devtoolsLogs'],
     };
   }
 
@@ -90,12 +91,20 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {string} stylesheet
+   * @param {{content: string, header: {sourceURL: string}}} stylesheet
+   * @param {?WebInspector.NetworkRequest} networkRecord
+   * @param {string} pageUrl
    * @return {{minifiedLength: number, contentLength: number}}
    */
-  static computeWaste(stylesheet, networkRecord) {
+  static computeWaste(stylesheet, networkRecord, pageUrl) {
     const content = stylesheet.content;
     const totalTokenLength = UnminifiedCSS.computeTokenLength(content);
+
+    let url = stylesheet.header.sourceURL;
+    if (!url || url === pageUrl) {
+      const contentPreview = UnusedCSSRules.determineContentPreview(stylesheet.content);
+      url = {type: 'code', text: contentPreview};
+    }
 
     const totalBytes = ByteEfficiencyAudit.estimateTransferSize(networkRecord, content.length,
       'stylesheet');
@@ -103,7 +112,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
     const wastedBytes = Math.round(totalBytes * wastedRatio);
 
     return {
-      url: networkRecord.url,
+      url,
       totalBytes,
       wastedBytes,
       wastedPercent: 100 * wastedRatio,
@@ -115,13 +124,14 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
    * @return {!Audit.HeadingsResult}
    */
   static audit_(artifacts, networkRecords) {
+    const pageUrl = artifacts.URL.finalUrl;
     const results = [];
-    for (const stylesheet of artifacts.Styles) {
+    for (const stylesheet of artifacts.CSSUsage.stylesheets) {
       const networkRecord = networkRecords
         .find(record => record.url === stylesheet.header.sourceURL);
-      if (!networkRecord || !stylesheet.content) continue;
+      if (!stylesheet.content) continue;
 
-      const result = UnminifiedCSS.computeWaste(stylesheet, networkRecord);
+      const result = UnminifiedCSS.computeWaste(stylesheet, networkRecord, pageUrl);
 
       // If the ratio is minimal, the file is likely already minified, so ignore it.
       // If the total number of bytes to be saved is quite small, it's also safe to ignore.

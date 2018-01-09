@@ -10,12 +10,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 <script>
-function generateInlineScriptWithSize(sizeInBytes, firstContent = '', used = false) {
+function generateInlineStyleWithSize(sizeInBytes, firstContent = '', used = false) {
   const data = [];
   while (sizeInBytes > 0) {
     const index = Math.round(100000 * Math.random());
     const className = `${used ? '' : 'un'}used-selector${index}`;
-    const rule = `.${className} { background: white; }`;
+    const prefix = used ? '' : '/* Here is a unused selector */\n';
+    const rule = `${prefix}.${className} { background: white; }`;
     data.push(rule);
     if (used) {
       const div = document.createElement('div');
@@ -145,13 +146,13 @@ setTimeout(() => {
 
 <script>
 // PASS: unused but too small savings
-generateInlineScriptWithSize(512, '.too-small { background: none; }\n');
+generateInlineStyleWithSize(512, '.too-small { background: none; }\n');
 // PASS: used
-generateInlineScriptWithSize(4000, '.mostly-used { background: none; }\n', true);
+generateInlineStyleWithSize(4000, '.mostly-used { background: none; }\n', true);
 // PASSWARN: unused and a bit of savings
-generateInlineScriptWithSize(2000, '.kinda-unused { background: none; }\n');
+generateInlineStyleWithSize(2000, '.kinda-unused { background: none; }\n');
 // FAIL: unused and lots of savings
-generateInlineScriptWithSize(24000, '.definitely-unused { background: none; }\n');
+generateInlineStyleWithSize(24000, '.definitely-unused { background: none; }\n');
 </script>
 
 <!-- Ensure the page takes at least 7 seconds and we don't exit before the lazily loaded image -->
