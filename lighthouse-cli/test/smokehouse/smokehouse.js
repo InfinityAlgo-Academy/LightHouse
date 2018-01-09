@@ -43,10 +43,9 @@ function resolveLocalOrCwd(payloadPath) {
  * Launch Chrome and do a full Lighthouse run.
  * @param {string} url
  * @param {string} configPath
- * @param {string=} saveAssetsPath
  * @return {!LighthouseResults}
  */
-function runLighthouse(url, configPath, saveAssetsPath) {
+function runLighthouse(url, configPath) {
   const command = 'node';
   const args = [
     'lighthouse-cli/index.js',
@@ -56,11 +55,6 @@ function runLighthouse(url, configPath, saveAssetsPath) {
     '--quiet',
     '--port=0',
   ];
-
-  if (saveAssetsPath) {
-    args.push('--save-assets');
-    args.push(`--output-path=${saveAssetsPath}`);
-  }
 
   // Lighthouse sometimes times out waiting to for a connection to Chrome in CI.
   // Watch for this error and retry relaunching Chrome and running Lighthouse up
@@ -84,11 +78,6 @@ function runLighthouse(url, configPath, saveAssetsPath) {
     console.error(`Lighthouse run failed with exit code ${runResults.status}. stderr to follow:`);
     console.error(runResults.stderr);
     process.exit(runResults.status);
-  }
-
-  if (saveAssetsPath) {
-    // If assets were saved, the JSON output was written to the specified path instead of stdout
-    return require(resolveLocalOrCwd(saveAssetsPath));
   }
 
   return JSON.parse(runResults.stdout);
@@ -275,7 +264,6 @@ const cli = yargs
   .describe({
     'config-path': 'The path to the config JSON file',
     'expectations-path': 'The path to the expected audit results file',
-    'save-assets-path': 'Saves assets to the named path if set',
   })
   .default('config-path', DEFAULT_CONFIG_PATH)
   .default('expectations-path', DEFAULT_EXPECTATIONS_PATH)
@@ -290,7 +278,7 @@ let passingCount = 0;
 let failingCount = 0;
 expectations.forEach(expected => {
   console.log(`Checking '${expected.initialUrl}'...`);
-  const results = runLighthouse(expected.initialUrl, configPath, cli['save-assets-path']);
+  const results = runLighthouse(expected.initialUrl, configPath);
   const collated = collateResults(results, expected);
   const counts = report(collated);
   passingCount += counts.passed;
