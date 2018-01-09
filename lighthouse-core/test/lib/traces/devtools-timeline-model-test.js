@@ -1,11 +1,12 @@
 'use strict';
 
 /* eslint-env mocha */
+const fs = require('fs');
 const assert = require('assert');
 const TimelineModel = require('../../../lib/traces/devtools-timeline-model');
 
 const filename = 'devtools-homepage-w-screenshots-trace.json';
-const events = require('../..//fixtures/traces/' + filename);
+const events = JSON.parse(fs.readFileSync(__dirname + '/../../fixtures/traces/' + filename));
 let model;
 
 describe('DevTools Timeline Model', function() {
