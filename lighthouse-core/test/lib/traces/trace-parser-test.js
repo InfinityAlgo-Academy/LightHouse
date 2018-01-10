@@ -29,7 +29,9 @@ describe('traceParser parser', () => {
       const readTrace = JSON.parse(fs.readFileSync(filename));
 
       assert.equal(streamedTrace.traceEvents.length, readTrace.traceEvents.length);
-      assert.deepStrictEqual(streamedTrace.traceEvents, readTrace.traceEvents);
+      streamedTrace.traceEvents.forEach((evt, i) => {
+        assert.deepStrictEqual(evt, readTrace.traceEvents[i]);
+      });
 
       done();
     });
