@@ -17,6 +17,7 @@ const dbwResults = require('../fixtures/dbw_tester-perf-results.json');
 const Audit = require('../../audits/audit.js');
 const fullTraceObj = require('../fixtures/traces/progressive-app-m60.json');
 
+// deepStrictEqual can hang on a full trace, we assert trace same-ness like so
 function assertTraceEventsEqual(traceEventsA, traceEventsB) {
   assert.equal(traceEventsA.length, traceEventsB.length);
   traceEventsA.forEach((evt, i) => {
