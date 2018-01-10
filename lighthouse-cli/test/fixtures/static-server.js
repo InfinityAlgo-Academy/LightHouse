@@ -80,7 +80,8 @@ function requestHandler(request, response) {
         const extraHeaders = new URLSearchParams(params.get('extra_header'));
         for (const [headerName, headerValue] of extraHeaders) {
           if (HEADER_SAFELIST.has(headerName.toLowerCase())) {
-            headers[headerName] = headerValue;
+            headers[headerName] = headers[headerName] || [];
+            headers[headerName].push(headerValue);
           }
         }
       }

@@ -17,6 +17,8 @@
   <link rel="alternate" hreflang="xx" href="https://xx.example.com" />
   <!-- FAIL(hreflang): spece before a valid code -->
   <link rel="alternate" href="http://example.com/" hreflang=" x-default" />
+  <!-- FAIL(canonical): multiple canonical URLs provided (another one is in the HTTP header) -->
+  <link rel="canonical" href="https://example.com/" />
 </head>
 <body>
   <h1>SEO</h1>

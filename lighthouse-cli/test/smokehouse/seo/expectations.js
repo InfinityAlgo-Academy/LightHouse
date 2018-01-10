@@ -18,6 +18,9 @@ const failureHeaders = headersParam([[
 ], [
   'link',
   '<http://example.com>;rel="alternate";hreflang="xx"',
+], [
+  'link',
+  '<https://example.com>; rel="canonical"',
 ]]);
 
 /**
@@ -58,6 +61,9 @@ module.exports = [
         score: true,
       },
       'plugins': {
+        score: true,
+      },
+      'canonical': {
         score: true,
       },
     },
@@ -120,6 +126,10 @@ module.exports = [
             length: 3,
           },
         },
+      },
+      'canonical': {
+        score: false,
+        debugString: 'Multiple URLs (https://example.com, https://example.com/)',
       },
     },
   },
