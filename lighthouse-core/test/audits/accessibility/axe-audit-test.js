@@ -17,7 +17,7 @@ describe('Accessibility: axe-audit', () => {
         static get meta() {
           return {
             name: 'fake-aria-fail',
-            description: 'You have an aria-* issue.',
+            description: 'You have an aria-* issue',
             requiredArtifacts: ['Accessibility'],
           };
         }

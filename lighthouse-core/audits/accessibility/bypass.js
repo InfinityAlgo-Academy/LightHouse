@@ -20,8 +20,8 @@ class Bypass extends AxeAudit {
   static get meta() {
     return {
       name: 'bypass',
-      description: 'The page contains a heading, skip link, or landmark region.',
-      failureDescription: 'The page does not contain a heading, skip link, or landmark region.',
+      description: 'The page contains a heading, skip link, or landmark region',
+      failureDescription: 'The page does not contain a heading, skip link, or landmark region',
       helpText: 'Adding ways to bypass repetitive content lets keyboard users navigate the page ' +
           'more efficiently. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/bypass?application=lighthouse).',

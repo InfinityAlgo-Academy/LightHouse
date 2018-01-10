@@ -20,7 +20,7 @@ class AriaRequiredChildren extends AxeAudit {
   static get meta() {
     return {
       name: 'aria-required-children',
-      description: 'Elements with `[role]` that require specific children `[role]`s, are present.',
+      description: 'Elements with `[role]` that require specific children `[role]`s, are present',
       failureDescription: 'Elements with `[role]` that require specific children `[role]`s, ' +
           'are missing.',
       helpText: 'Some ARIA parent roles must contain specific child roles to perform ' +

@@ -19,8 +19,8 @@ class TabIndex extends AxeAudit {
   static get meta() {
     return {
       name: 'tabindex',
-      description: 'No element has a `[tabindex]` value greater than 0.',
-      failureDescription: 'Some elements have a `[tabindex]` value greater than 0.',
+      description: 'No element has a `[tabindex]` value greater than 0',
+      failureDescription: 'Some elements have a `[tabindex]` value greater than 0',
       helpText: 'A value greater than 0 implies an explicit navigation ordering. ' +
           'Although technically valid, this often creates frustrating experiences ' +
           'for users who rely on assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/2.2/tabindex?application=lighthouse).',

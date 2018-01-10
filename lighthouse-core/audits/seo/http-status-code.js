@@ -16,7 +16,7 @@ class HTTPStatusCode extends Audit {
   static get meta() {
     return {
       name: 'http-status-code',
-      description: 'Page has successful HTTP status code.',
+      description: 'Page has successful HTTP status code',
       failureDescription: 'Page has unsuccessful HTTP status code',
       helpText: 'Pages with unsuccessful HTTP status codes may not be indexed properly. ' +
       '[Learn more]' +
