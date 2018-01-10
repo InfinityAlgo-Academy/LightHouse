@@ -67,10 +67,10 @@ class Plugins extends Audit {
   static get meta() {
     return {
       name: 'plugins',
-      description: 'Document avoids plugins.',
+      description: 'Document avoids plugins',
       failureDescription: 'Document uses plugins',
-      helpText: 'Some types of media or content are not playable on mobile devices. ' +
-      '[Learn more](https://developers.google.com/speed/docs/insights/AvoidPlugins).',
+      helpText: 'Most mobile devices do not support plugins, and many desktop browsers restrict ' +
+      'them.',
       requiredArtifacts: ['EmbeddedContent'],
     };
   }
@@ -132,7 +132,7 @@ class Plugins extends Audit {
       });
 
     const headings = [
-      {key: 'source', itemType: 'code', text: 'Source'},
+      {key: 'source', itemType: 'code', text: 'Element source'},
     ];
 
     const details = Audit.makeTableDetails(headings, plugins);
