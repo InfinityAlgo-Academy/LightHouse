@@ -23,7 +23,7 @@ describe('Performance: bootup-time audit', () => {
     }, Runner.instantiateComputedArtifacts());
 
     return BootupTime.audit(artifacts).then(output => {
-      assert.equal(output.details.items.length, 8);
+      assert.equal(output.details.items.length, 4);
       assert.equal(output.score, true);
       assert.equal(Math.round(output.rawValue), 176);
 
@@ -34,14 +34,12 @@ describe('Performance: bootup-time audit', () => {
         return roundedValue;
       };
 
-      assert.deepEqual(roundedValueOf('https://www.google-analytics.com/analytics.js'), {[groupIdToName.scripting]: 40.1, [groupIdToName.scriptParseCompile]: 9.6, [groupIdToName.styleLayout]: 0.2});
       assert.deepEqual(roundedValueOf('https://pwa.rocks/script.js'), {[groupIdToName.scripting]: 31.8, [groupIdToName.styleLayout]: 5.5, [groupIdToName.scriptParseCompile]: 1.3});
       assert.deepEqual(roundedValueOf('https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'), {[groupIdToName.scripting]: 25, [groupIdToName.scriptParseCompile]: 5.5, [groupIdToName.styleLayout]: 1.2});
       assert.deepEqual(roundedValueOf('https://www.google-analytics.com/plugins/ua/linkid.js'), {[groupIdToName.scripting]: 25.2, [groupIdToName.scriptParseCompile]: 1.2});
-      assert.deepEqual(roundedValueOf('https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'), {[groupIdToName.scriptParseCompile]: 3, [groupIdToName.scripting]: 1.2});
-      assert.deepEqual(roundedValueOf('https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'), {[groupIdToName.scriptParseCompile]: 2.5, [groupIdToName.scripting]: 1});
-      assert.deepEqual(roundedValueOf('https://pwa.rocks/'), {[groupIdToName.parseHTML]: 14.2, [groupIdToName.scripting]: 6.1, [groupIdToName.scriptParseCompile]: 1.2});
-      assert.deepEqual(roundedValueOf('https://pwa.rocks/0ff789bf.js'), {[groupIdToName.parseHTML]: 0});
+      assert.deepEqual(roundedValueOf('https://www.google-analytics.com/analytics.js'), {[groupIdToName.scripting]: 40.1, [groupIdToName.scriptParseCompile]: 9.6, [groupIdToName.styleLayout]: 0.2});
+
+      assert.ok(output.details.items.length < Object.keys(output.extendedInfo.value).length, 'Items below 10ms threshold were not filtered out');
     });
   }).timeout(10000);
 
