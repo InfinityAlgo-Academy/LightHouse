@@ -57,6 +57,9 @@ module.exports = [
       'hreflang': {
         score: true,
       },
+      'plugins': {
+        score: true,
+      },
     },
   },
   {
@@ -103,6 +106,14 @@ module.exports = [
         },
       },
       'hreflang': {
+        score: false,
+        details: {
+          items: {
+            length: 3,
+          },
+        },
+      },
+      'plugins': {
         score: false,
         details: {
           items: {

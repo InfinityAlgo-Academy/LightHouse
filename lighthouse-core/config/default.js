@@ -43,6 +43,7 @@ module.exports = {
       'seo/crawlable-links',
       'seo/meta-robots',
       'seo/hreflang',
+      'seo/embedded-content',
     ],
   },
   {
@@ -174,6 +175,7 @@ module.exports = {
     'seo/link-text',
     'seo/is-crawlable',
     'seo/hreflang',
+    'seo/plugins',
     'seo/manual/mobile-friendly',
     'seo/manual/structured-data',
   ],
@@ -391,6 +393,7 @@ module.exports = {
         {id: 'is-crawlable', weight: 1, group: 'seo-crawl'},
         {id: 'hreflang', weight: 1, group: 'seo-content'},
         {id: 'font-size', weight: 1, group: 'seo-mobile'},
+        {id: 'plugins', weight: 1, group: 'seo-content'},
         {id: 'mobile-friendly', weight: 0, group: 'manual-seo-checks'},
         {id: 'structured-data', weight: 0, group: 'manual-seo-checks'},
       ],
