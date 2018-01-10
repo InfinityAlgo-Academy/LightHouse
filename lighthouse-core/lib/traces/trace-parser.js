@@ -14,6 +14,7 @@ const WebInspector = require('../web-inspector');
  * streaming JSON parser.
  * The resulting trace doesn't include the "metadata" property, as it's excluded via DevTools'
  * implementation.
+ * FIXME: This can be removed once Node 8 support is dropped. https://stackoverflow.com/a/47781288/89484
  */
 class TraceParser {
   constructor() {

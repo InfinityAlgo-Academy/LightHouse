@@ -77,5 +77,5 @@ describe('DTM Model gatherer', () => {
           assert.deepStrictEqual(pwaTrace[i], freshTrace[i]);
         }
       });
-  });
+  }).timeout(20000);
 });

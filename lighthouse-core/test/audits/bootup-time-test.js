@@ -43,7 +43,7 @@ describe('Performance: bootup-time audit', () => {
       assert.deepEqual(roundedValueOf('https://pwa.rocks/'), {[groupIdToName.parseHTML]: 14.2, [groupIdToName.scripting]: 6.1, [groupIdToName.scriptParseCompile]: 1.2});
       assert.deepEqual(roundedValueOf('https://pwa.rocks/0ff789bf.js'), {[groupIdToName.parseHTML]: 0});
     });
-  });
+  }).timeout(10000);
 
   it('should get no data when no events are present', () => {
     const artifacts = Object.assign({

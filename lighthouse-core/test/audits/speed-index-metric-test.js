@@ -49,7 +49,7 @@ describe('Performance: speed-index-metric audit', () => {
       assert.equal(Math.round(result.extendedInfo.value.timings.visuallyComplete), 1105);
       assert.equal(Math.round(result.extendedInfo.value.timings.perceptualSpeedIndex), 609);
     });
-  });
+  }).timeout(10000);
 
   it('throws an error if no frames', () => {
     const artifacts = mockArtifactsWithSpeedlineResult({frames: []});

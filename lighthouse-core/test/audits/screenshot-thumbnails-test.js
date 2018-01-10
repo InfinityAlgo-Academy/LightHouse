@@ -63,7 +63,7 @@ describe('Screenshot thumbnails', () => {
       assert.equal(results.details.items[9].timing, 818);
       assert.equal(results.details.items[0].timestamp, 225414253815);
     });
-  });
+  }).timeout(10000);
 
   it('should scale the timeline to TTFI', () => {
     const artifacts = Object.assign({

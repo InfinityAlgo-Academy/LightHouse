@@ -35,7 +35,7 @@ describe('traceParser parser', () => {
 
       done();
     });
-  });
+  }).timeout(10000);
 
 
   it('parses a trace > 256mb (slow)', () => {
@@ -89,5 +89,5 @@ describe('traceParser parser', () => {
     assert.deepStrictEqual(
         streamedTrace.traceEvents[events.length - 2],
         events[0]);
-  });
+  }).timeout(40 * 1000);
 });

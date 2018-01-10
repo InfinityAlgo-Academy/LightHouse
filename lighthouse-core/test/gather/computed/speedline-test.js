@@ -34,14 +34,14 @@ describe('Speedline gatherer', () => {
       assert.equal(speedline.speedIndex, undefined);
       assert.equal(Math.floor(speedline.perceptualSpeedIndex), 609);
     });
-  });
+  }).timeout(10000);
 
   it('measures SI of 3 frame trace (blank @1s, content @2s, more content @3s)', () => {
     return computedArtifacts.requestSpeedline(threeFrameTrace).then(speedline => {
       assert.equal(speedline.speedIndex, undefined);
       assert.equal(Math.floor(speedline.perceptualSpeedIndex), 2030);
     });
-  });
+  }).timeout(10000);
 
   it('uses a cache', () => {
     let start;
@@ -62,7 +62,7 @@ describe('Speedline gatherer', () => {
 
         return assert.equal(Math.floor(speedline.perceptualSpeedIndex), 609);
       });
-  });
+  }).timeout(10000);
 
   it('does not change order of events in traces', () => {
     // Use fresh trace in case it has been altered by other require()s.
@@ -78,5 +78,5 @@ describe('Speedline gatherer', () => {
           assert.deepStrictEqual(pwaTrace[i], freshTrace[i]);
         }
       });
-  });
+  }).timeout(10000);
 });
