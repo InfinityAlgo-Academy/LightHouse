@@ -11,20 +11,23 @@ assumes you've installed Lighthouse as a dependency (`yarn add --dev lighthouse`
 const lighthouse = require('lighthouse');
 const chromeLauncher = require('chrome-launcher');
 
-function launchChromeAndRunLighthouse(url, flags = {}, config = null) {
-  return chromeLauncher.launch().then(chrome => {
-    flags.port = chrome.port;
-    return lighthouse(url, flags, config).then(results =>
+function launchChromeAndRunLighthouse(url, opts, config = null) {
+  return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
+    opts.port = chrome.port;
+    return lighthouse(url, opts, config).then(results =>
       chrome.kill().then(() => results));
   });
 }
 
-const flags = {};
+const opts = {
+  chromeFlags: ['--show-paint-rects']
+};
 
 // Usage:
-launchChromeAndRunLighthouse('https://example.com', flags).then(results => {
+launchChromeAndRunLighthouse('https://example.com', opts).then(results => {
   // Use results!
 });
+
 ```
 
 ### Performance-only Lighthouse run
