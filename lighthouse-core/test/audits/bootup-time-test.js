@@ -39,7 +39,8 @@ describe('Performance: bootup-time audit', () => {
       assert.deepEqual(roundedValueOf('https://www.google-analytics.com/plugins/ua/linkid.js'), {[groupIdToName.scripting]: 25.2, [groupIdToName.scriptParseCompile]: 1.2});
       assert.deepEqual(roundedValueOf('https://www.google-analytics.com/analytics.js'), {[groupIdToName.scripting]: 40.1, [groupIdToName.scriptParseCompile]: 9.6, [groupIdToName.styleLayout]: 0.2});
 
-      assert.ok(output.details.items.length < Object.keys(output.extendedInfo.value).length, 'Items below 10ms threshold were not filtered out');
+      assert.ok(output.details.items.length < Object.keys(output.extendedInfo.value).length,
+          'Items below 10ms threshold were not filtered out');
     });
   }).timeout(10000);
 
