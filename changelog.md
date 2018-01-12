@@ -1,3 +1,73 @@
+ <a name="2.8.0"></a>
+# 2.8.0 (2018-01-12)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.7.0...v2.8.0)
+
+## New Contributors!
+Thanks to @jianzhoufeng and @nhodges for their first contributions!
+
+## New Audits
+
+* avoid plugins ([#4218](https://github.com/googlechrome/lighthouse/pull/4218))
+* rel canonical: document has a valid rel=canonical ([#4163](https://github.com/googlechrome/lighthouse/pull/4163))
+* unminified-css: identifies savings from unminified CSS ([#4127](https://github.com/googlechrome/lighthouse/pull/4127))
+* unminified-javascript: detect savings from minifcation ([#3950](https://github.com/googlechrome/lighthouse/pull/3950))
+* manual SEO audits (structured data & mobile friendly) ([#4108](https://github.com/googlechrome/lighthouse/pull/4108))
+
+## Core
+
+* lifecycle: allow gathering & auditing to run separately ([#3743](https://github.com/googlechrome/lighthouse/pull/3743))
+* gather-runner: covert assertPageLoaded into soft failure ([#4048](https://github.com/googlechrome/lighthouse/pull/4048))
+* network-recorder: use findNetworkQuietPeriods for networkIdle ([#4102](https://github.com/googlechrome/lighthouse/pull/4102))
+* report-generator: extract scoring into separate module ([#4161](https://github.com/googlechrome/lighthouse/pull/4161))
+* screenshots: fix getParsedImage of null ([#4189](https://github.com/googlechrome/lighthouse/pull/4189))
+* trace-of-tab: error when TracingStartedInPage is missing ([#4164](https://github.com/googlechrome/lighthouse/pull/4164))
+* errors-in-console: If exception info is not present use exception text ([#4191](https://github.com/googlechrome/lighthouse/pull/4191))
+* estimated-input-latency: remove target reference ([#4069](https://github.com/googlechrome/lighthouse/pull/4069))
+* bootup-time: Add 10ms threshold to bootup-time audits ([#4223](https://github.com/googlechrome/lighthouse/pull/4223))
+* font-size: make font size artifact serializable ([#4194](https://github.com/googlechrome/lighthouse/pull/4194))
+
+## Report
+
+* a11y: Don't count non-applicable a11y audits toward score ([#4052](https://github.com/googlechrome/lighthouse/pull/4052))
+* more attractive table/URL rendering ([#4190](https://github.com/googlechrome/lighthouse/pull/4190))
+* improve devtools dark mode rendering ([#4232](https://github.com/googlechrome/lighthouse/pull/4232))
+* categories: performance first, then pwa, then the others ([#4095](https://github.com/googlechrome/lighthouse/pull/4095))
+* grammar: do not finalize audit titles with a period ([c5f6d05](https://github.com/googlechrome/lighthouse/commit/c5f6d05))
+* change 'app' => 'web app' ([29eecce](https://github.com/googlechrome/lighthouse/commit/29eecce))
+* Update vulnerability links ([#4198](https://github.com/googlechrome/lighthouse/pull/4198))
+
+## Deps
+
+* bump js-library-detector ([#4086](https://github.com/googlechrome/lighthouse/pull/4086))
+* chrome-launcher: Upgrade chrome-launcher to 0.10.2 ([#4192](https://github.com/googlechrome/lighthouse/pull/4192))
+
+## Docs
+
+* readme: update CLI options, output examples. add GAR/Lifecycle examples ([#4185](https://github.com/googlechrome/lighthouse/pull/4185))
+* readme: demo flags in example of programmatic use ([#3841](https://github.com/googlechrome/lighthouse/pull/3841))
+* lantern: update accuracy data ([#4180](https://github.com/googlechrome/lighthouse/pull/4180))
+* extract Release Guide into own docs file ([#4200](https://github.com/googlechrome/lighthouse/pull/4200))
+* releasing: document the LH Release Process ([#4201](https://github.com/googlechrome/lighthouse/pull/4201))
+* results: describe audit's notApplicable/error ([#4186](https://github.com/googlechrome/lighthouse/pull/4186))
+
+## Extension
+
+* extract a new ext-bg file, splitting extn/devtools usecases ([#4162](https://github.com/googlechrome/lighthouse/pull/4162))
+
+## Tests
+
+* remove global timeout, set timeouts individually ([#4224](https://github.com/googlechrome/lighthouse/pull/4224))
+* trace-parser: use fs over require ([#4209](https://github.com/googlechrome/lighthouse/pull/4209))
+* travis: force use of GCE, remove dSE calls ([#4222](https://github.com/googlechrome/lighthouse/pull/4222))
+* travis: remove upload artifacts ([#4219](https://github.com/googlechrome/lighthouse/pull/4219))
+* travis: test on Node 9, drop testing on Node 7 ([#4181](https://github.com/googlechrome/lighthouse/pull/4181))
+
+## Misc
+
+* remove CLI's legacy domhtml output ([#4176](https://github.com/googlechrome/lighthouse/pull/4176))
+* viewer: retain /plots/ when deploying new viewer version ([#4079](https://github.com/googlechrome/lighthouse/pull/4079))
+
+
  <a name="2.7.0"></a>
 # 2.7.0 (2017-12-14)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.6.0...v2.7.0)
