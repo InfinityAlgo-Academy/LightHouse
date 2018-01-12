@@ -63,3 +63,7 @@ window.runLighthouseInWorker = function(port, url, options, categoryIDs) {
 window.getDefaultCategories = function() {
   return Config.getCategories(defaultConfig);
 };
+
+window.listenForStatus = function(listenCallback) {
+  log.events.addListener('status', listenCallback);
+};
