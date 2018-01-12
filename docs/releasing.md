@@ -43,7 +43,7 @@ yarn build-all
 
 # * Test err'thing *
 echo "Test the CLI."
-lighthouse --perf "https://example.com"
+yarn start "https://example.com"
 yarn smoke
 
 echo "Test the extension"
@@ -52,7 +52,7 @@ echo "Test the extension"
 echo "Test a fresh local install"
 # (starting from lighthouse root...)
 # npm pack
-# cd ..; trash tmp; mkdir tmp; cd tmp
+# cd ..; rm -rf tmp; mkdir tmp; cd tmp
 # npm init -y
 # npm install ../lighthouse/lighthouse-<version>.tgz
 # npm explore lighthouse -- npm run smoke
@@ -60,6 +60,8 @@ echo "Test a fresh local install"
 # npm explore lighthouse -- npm run chrome # try the manual launcher
 # npm explore lighthouse -- npm run fast -- http://example.com
 # cd ..; rm -rf ./tmp;
+
+# delete that lighthouse-<version>.tgz
 
 echo "Test the lighthouse-viewer build"
 # Manual test for now:
@@ -82,6 +84,7 @@ echo "Generate a PR and get it merged."
 
 # * Deploy-time *
 cd lighthouse-extension; gulp package; cd ..
+echo "Go here: https://chrome.google.com/webstore/developer/edit/blipmdconlkpinefehnmjammfjpmpbjk "
 echo "Upload the package zip to CWS dev dashboard"
 
 echo "Verify the npm package won't include unncessary files"
