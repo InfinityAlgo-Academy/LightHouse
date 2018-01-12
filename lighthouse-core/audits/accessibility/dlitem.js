@@ -19,8 +19,8 @@ class DLItem extends AxeAudit {
   static get meta() {
     return {
       name: 'dlitem',
-      description: 'Definition list items are wrapped in `<dl>` elements.',
-      failureDescription: 'Definition list items are not wrapped in `<dl>` elements.',
+      description: 'Definition list items are wrapped in `<dl>` elements',
+      failureDescription: 'Definition list items are not wrapped in `<dl>` elements',
       helpText: 'Definition list items (`<dt>` and `<dd>`) must be wrapped in a ' +
           'parent `<dl>` element to ensure that screen readers can properly announce them. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/dlitem?application=lighthouse).',

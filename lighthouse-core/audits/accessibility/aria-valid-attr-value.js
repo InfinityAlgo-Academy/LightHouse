@@ -19,8 +19,8 @@ class ARIAValidAttr extends AxeAudit {
   static get meta() {
     return {
       name: 'aria-valid-attr-value',
-      description: '`[aria-*]` attributes have valid values.',
-      failureDescription: '`[aria-*]` attributes do not have valid values.',
+      description: '`[aria-*]` attributes have valid values',
+      failureDescription: '`[aria-*]` attributes do not have valid values',
       helpText: 'Assistive technologies, like screen readers, can\'t interpret ARIA ' +
           'attributes with invalid values. [Learn ' +
           'more](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr-value?application=lighthouse).',

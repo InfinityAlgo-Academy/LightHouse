@@ -27,7 +27,7 @@ class LinkText extends Audit {
     return {
       category: 'Content Best Practices',
       name: 'link-text',
-      description: 'Links have descriptive text.',
+      description: 'Links have descriptive text',
       failureDescription: 'Links do not have descriptive text',
       helpText: 'Descriptive link text helps search engines understand your content. ' +
       '[Learn more](https://webmasters.googleblog.com/2008/10/importance-of-link-architecture.html).',

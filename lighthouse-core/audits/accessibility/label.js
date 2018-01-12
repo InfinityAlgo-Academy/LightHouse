@@ -19,8 +19,8 @@ class Label extends AxeAudit {
   static get meta() {
     return {
       name: 'label',
-      description: 'Form elements have associated labels.',
-      failureDescription: 'Form elements do not have associated labels.',
+      description: 'Form elements have associated labels',
+      failureDescription: 'Form elements do not have associated labels',
       helpText: 'Labels ensure that form controls are announced properly by assistive ' +
           'technologies, like screen readers. [Learn ' +
           'more](https://dequeuniversity.com/rules/axe/2.2/label?application=lighthouse).',

@@ -19,8 +19,8 @@ class ARIAAllowedAttr extends AxeAudit {
   static get meta() {
     return {
       name: 'aria-allowed-attr',
-      description: '`[aria-*]` attributes match their roles.',
-      failureDescription: '`[aria-*]` attributes do not match their roles.',
+      description: '`[aria-*]` attributes match their roles',
+      failureDescription: '`[aria-*]` attributes do not match their roles',
       helpText: 'Each ARIA `role` supports a specific subset of `aria-*` attributes. ' +
           'Mismatching these invalidates the `aria-*` attributes. [Learn ' +
           'more](https://dequeuniversity.com/rules/axe/2.2/aria-allowed-attr?application=lighthouse).',

@@ -20,7 +20,7 @@ class ColorContrast extends AxeAudit {
   static get meta() {
     return {
       name: 'color-contrast',
-      description: 'Background and foreground colors have a sufficient contrast ratio.',
+      description: 'Background and foreground colors have a sufficient contrast ratio',
       failureDescription: 'Background and foreground colors do not have a ' +
           'sufficient contrast ratio.',
       helpText: 'Low-contrast text is difficult or impossible for many users to read. ' +

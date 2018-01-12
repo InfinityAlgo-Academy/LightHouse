@@ -19,7 +19,7 @@ class VideoCaption extends AxeAudit {
   static get meta() {
     return {
       name: 'video-caption',
-      description: '`<video>` elements contain a `<track>` element with `[kind="captions"]`.',
+      description: '`<video>` elements contain a `<track>` element with `[kind="captions"]`',
       failureDescription: '`<video>` elements do not contain a `<track>` element ' +
           'with `[kind="captions"]`.',
       helpText: 'When a video provides a caption it is easier for deaf and hearing impaired ' +

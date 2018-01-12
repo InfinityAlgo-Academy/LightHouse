@@ -19,8 +19,8 @@ class ObjectAlt extends AxeAudit {
   static get meta() {
     return {
       name: 'object-alt',
-      description: '`<object>` elements have `[alt]` text.',
-      failureDescription: '`<object>` elements do not have `[alt]` text.',
+      description: '`<object>` elements have `[alt]` text',
+      failureDescription: '`<object>` elements do not have `[alt]` text',
       helpText: 'Screen readers cannot translate non-text content. Adding alt text to `<object>` ' +
           'elements helps screen readers convey meaning to users. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/object-alt?application=lighthouse).',
