@@ -41,11 +41,11 @@
   --navitem-line-height: var(--body-line-height);
   --navitem-hpadding: var(--body-font-size);
   --navitem-vpadding: calc(var(--navitem-line-height) / 2);
-  --lh-score-highlight-bg: #fafafa;
+  --lh-score-highlight-bg: hsla(0, 0%, 90%, 0.2);
   --lh-score-icon-background-size: 24px;
   --lh-score-margin: 12px;
-  --lh-table-header-bg: #ccc;
-  --lh-table-higlight-bg: #fafafa;
+  --lh-table-header-bg: hsla(0, 0%, 50%, 0.4);
+  --lh-table-higlight-bg: hsla(0, 0%, 75%, 0.1);
   --lh-sparkline-height: 5px;
   --lh-sparkline-thin-height: 3px;
   --lh-filmstrip-thumbnail-width: 60px;
