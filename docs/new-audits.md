@@ -16,7 +16,7 @@ Lighthouse audits that surface in the report should be:
 
 ## Process for creating a new audit
 1. Briefly scan the criteria we’ve laid out above. If you think the principles match with your proposed new audit, then proceed! 
-2. Next step is to create an issue on Github with answers to the following questions: 
+2. Next step is to create an issue on GitHub with answers to the following questions: 
    - Description of audit and audit category (please include pass/fail states, and how it might be measured)
    - Explanation of how it’s different from other audits
    - What % of developers/pages will this impact (estimates OK, data points preferred) 
