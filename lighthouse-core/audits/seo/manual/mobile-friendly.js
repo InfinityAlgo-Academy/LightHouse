@@ -18,7 +18,7 @@ class MobileFriendly extends ManualAudit {
   static get meta() {
     return Object.assign({
       name: 'mobile-friendly',
-      helpText: 'Take the [Mobile-Friendly Test](https://search.google.com/test/mobile-friendly) to see how easily a visitor can use your page on a mobile device. [Learn more](https://developers.google.com/search/mobile-sites/).',
+      helpText: 'Take the [Mobile-Friendly Test](https://search.google.com/test/mobile-friendly) to check for audits not covered by Lighthouse, like sizing tap targets appropriately. [Learn more](https://developers.google.com/search/mobile-sites/).',
       description: 'Page is mobile friendly',
     }, super.meta);
   }
