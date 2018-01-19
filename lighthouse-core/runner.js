@@ -400,7 +400,11 @@ class Runner {
       },
     ];
 
-    return {environment, blockedUrlPatterns: flags.blockedUrlPatterns || []};
+    return {
+      environment,
+      blockedUrlPatterns: flags.blockedUrlPatterns || [],
+      extraHeaders: flags.extraHeaders || {},
+    };
   }
 }
 

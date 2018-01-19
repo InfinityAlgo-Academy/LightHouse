@@ -70,4 +70,7 @@ module.exports = {
   blockUrlPatterns() {
     return Promise.resolve();
   },
+  setExtraHTTPHeaders() {
+    return Promise.resolve();
+  },
 };

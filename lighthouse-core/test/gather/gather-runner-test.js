@@ -34,7 +34,8 @@ class TestGathererNoArtifact extends Gatherer {
 
 const fakeDriver = require('./fake-driver');
 
-function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn, blockUrlFn) {
+function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn,
+  blockUrlFn, extraHeadersFn) {
   const Driver = require('../../gather/driver');
   const Connection = require('../../gather/connections/connection');
   const EmulationDriver = class extends Driver {
@@ -71,6 +72,9 @@ function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn, blo
           break;
         case 'Network.setBlockedURLs':
           fn = blockUrlFn;
+          break;
+        case 'Network.setExtraHTTPHeaders':
+          fn = extraHeadersFn;
           break;
         default:
           fn = null;
@@ -255,6 +259,7 @@ describe('GatherRunner', function() {
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),
       blockUrlPatterns: asyncFunc,
+      setExtraHTTPHeaders: asyncFunc,
       getUserAgent: () => Promise.resolve('Fake user agent'),
     };
 
@@ -313,6 +318,7 @@ describe('GatherRunner', function() {
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),
       blockUrlPatterns: asyncFunc,
+      setExtraHTTPHeaders: asyncFunc,
       getUserAgent: () => Promise.resolve('Fake user agent'),
     };
 
@@ -356,6 +362,41 @@ describe('GatherRunner', function() {
       flags: {},
       config: {gatherers: []},
     }).then(() => assert.deepStrictEqual(receivedUrlPatterns, []));
+  });
+
+
+  it('tells the driver to set additional http headers when extraHeaders flag is given', () => {
+    let receivedHeaders = null;
+    const driver = getMockedEmulationDriver(null, null, null, null, params => {
+      receivedHeaders = params.headers;
+    });
+    const headers = {
+      'Cookie': 'monster',
+      'x-men': 'wolverine',
+    };
+
+    return GatherRunner.beforePass({
+      driver,
+      flags: {
+        extraHeaders: headers,
+      },
+      config: {gatherers: []},
+    }).then(() => assert.deepStrictEqual(
+        receivedHeaders,
+        headers
+      ));
+  });
+
+  it('returns an empty object if a falsey value is passed in to extraHeaders', () => {
+    const driver = getMockedEmulationDriver(null, null, null, null, params => params.headers);
+
+    return GatherRunner.beforePass({
+      driver,
+      flags: {
+        extraHeaders: undefined,
+      },
+      config: {gatherers: []},
+    }).then((returnValue) => assert.deepStrictEqual(returnValue, {}));
   });
 
   it('tells the driver to begin tracing', () => {
@@ -550,7 +591,6 @@ describe('GatherRunner', function() {
         assert.equal(artifacts.networkRecords, undefined);
       });
   });
-
 
   it('loads gatherers from custom paths', () => {
     const root = path.resolve(__dirname, '../fixtures');

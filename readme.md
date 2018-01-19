@@ -86,6 +86,7 @@ Options:
   --disable-device-emulation    Disable Nexus 5X emulation                                                                                 [boolean]
   --disable-cpu-throttling      Disable CPU throttling                                                                    [boolean] [default: false]
   --disable-network-throttling  Disable network throttling                                                                                 [boolean]
+  --extra-headers               Set extra HTTP Headers to pass with request                                                                 [string]
 
 Examples:
   lighthouse <url> --view                                                   Opens the HTML report in a browser after the run completes
@@ -95,6 +96,8 @@ Examples:
   lighthouse <url> --disable-device-emulation --disable-network-throttling  Disable device emulation
   lighthouse <url> --chrome-flags="--window-size=412,732"                   Launch Chrome with a specific window size
   lighthouse <url> --quiet --chrome-flags="--headless"                      Launch Headless Chrome, turn off logging
+  lighthouse <url> --extra-headers "{\"Cookie\":\"monster=blue\"}"          Stringify\'d JSON HTTP Header key/value pairs to send in requests
+  lighthouse <url> --extra-headers=./path/to/file.json                      Path to JSON file of HTTP Header key/value pairs to send in requests
 
 For more information on Lighthouse, see https://developers.google.com/web/tools/lighthouse/.
 ```

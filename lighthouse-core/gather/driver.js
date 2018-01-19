@@ -968,6 +968,20 @@ class Driver {
       .then(_ => this.sendCommand('Network.setCacheDisabled', {cacheDisabled: false}));
   }
 
+  /**
+   * @param {!Object} headers key/value pairs of HTTP Headers.
+   * @return {!Promise}
+   */
+  setExtraHTTPHeaders(headers) {
+    if (headers) {
+      return this.sendCommand('Network.setExtraHTTPHeaders', {
+        headers,
+      });
+    }
+
+    return Promise.resolve({});
+  }
+
   clearDataForOrigin(url) {
     const origin = new URL(url).origin;
 

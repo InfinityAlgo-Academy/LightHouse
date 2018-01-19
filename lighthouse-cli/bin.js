@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const existsSync = require('fs').existsSync;
+const fs = require('fs');
 const path = require('path');
 
 const commands = require('./commands/commands.js');
@@ -27,7 +27,7 @@ const askPermission = require('./sentry-prompt').askPermission;
  * @return {boolean}
  */
 function isDev() {
-  return existsSync(path.join(__dirname, '../.git'));
+  return fs.existsSync(path.join(__dirname, '../.git'));
 }
 
 // Tell user if there's a newer version of LH.
@@ -70,6 +70,15 @@ log.setLevel(cliFlags.logLevel);
 if (cliFlags.output === printer.OutputMode.json && !cliFlags.outputPath) {
   cliFlags.outputPath = 'stdout';
 }
+
+if (cliFlags.extraHeaders) {
+  if (cliFlags.extraHeaders.substr(0, 1) !== '{') {
+    cliFlags.extraHeaders = fs.readFileSync(cliFlags.extraHeaders, 'utf-8');
+  }
+
+  cliFlags.extraHeaders = JSON.parse(cliFlags.extraHeaders);
+}
+
 /**
  * @return {!Promise<(void|!LH.Results)>}
  */

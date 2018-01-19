@@ -27,6 +27,7 @@ last-run-results.html
 latest-run
 
 closure-error.log
+yarn-error.log
 
 /chrome-linux/
 /chrome-win32/

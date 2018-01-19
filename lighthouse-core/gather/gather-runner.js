@@ -198,7 +198,8 @@ class GatherRunner {
         // Set request blocking before any network activity
         // No "clearing" is done at the end of the pass since blockUrlPatterns([]) will unset all if
         // neccessary at the beginning of the next pass.
-        .then(() => options.driver.blockUrlPatterns(blockedUrls));
+        .then(() => options.driver.blockUrlPatterns(blockedUrls))
+        .then(() => options.driver.setExtraHTTPHeaders(options.flags.extraHeaders));
 
     return options.config.gatherers.reduce((chain, gatherer) => {
       return chain.then(_ => {
