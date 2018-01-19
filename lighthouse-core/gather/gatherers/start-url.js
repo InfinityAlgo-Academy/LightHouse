@@ -18,32 +18,11 @@ class StartUrl extends Gatherer {
   }
 
   executeFetchRequest(driver, url) {
-    return new Promise((resolve, reject) => {
-      let requestId;
-      const fetchRequestId = (data) => {
-        if (URL.equalWithExcludedFragments(data.request.url, url)) {
-          requestId = data.requestId;
-          driver.off('Network.requestWillBeSent', fetchRequestId);
-        }
-      };
-      const fetchDone = (data) => {
-        if (data.requestId === requestId) {
-          driver.off('Network.loadingFinished', fetchDone);
-          driver.off('Network.loadingFailed', fetchDone);
-
-          resolve();
-        }
-      };
-
-      driver.on('Network.requestWillBeSent', fetchRequestId);
-      driver.on('Network.loadingFinished', fetchDone);
-      driver.on('Network.loadingFailed', fetchDone);
-      driver.evaluateAsync(
-        `fetch('${url}')
-          .then(response => response.status)
-          .catch(err => -1)`
-      ).catch(err => reject(err));
-    });
+    return driver.evaluateAsync(
+      `fetch('${url}')
+        .then(response => response.status)
+        .catch(err => ({fetchFailed: true, message: err.message}))`
+    );
   }
 
   pass(options) {
@@ -78,17 +57,18 @@ class StartUrl extends Gatherer {
         record._fetchedViaServiceWorker;
     }).pop(); // Take the last record that matches.
 
+    const msgWithExtraDebugString = msg => this.debugString ? `${msg}: ${this.debugString}` : msg;
     return options.driver.goOnline(options)
       .then(_ => {
         if (!this.startUrl) {
           return {
             statusCode: -1,
-            debugString: this.debugString || 'No start URL to fetch',
+            debugString: msgWithExtraDebugString('No start URL to fetch'),
           };
         } else if (!navigationRecord) {
           return {
             statusCode: -1,
-            debugString: this.debugString || 'Did not fetch start URL from service worker',
+            debugString: msgWithExtraDebugString('Unable to fetch start URL via service worker'),
           };
         } else {
           return {

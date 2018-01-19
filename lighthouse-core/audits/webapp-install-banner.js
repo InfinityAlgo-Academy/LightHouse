@@ -80,6 +80,7 @@ class WebappInstallBanner extends MultiCheckAudit {
 
     if (!hasOfflineStartUrl) {
       result.failures.push('Service worker does not successfully serve the manifest\'s start_url');
+      if (artifacts.StartUrl.debugString) result.failures.push(artifacts.StartUrl.debugString);
     }
 
     if (artifacts.StartUrl.debugString) {
