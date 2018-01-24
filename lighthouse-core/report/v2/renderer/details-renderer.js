@@ -35,6 +35,11 @@ class DetailsRenderer {
         return this._renderText(details);
       case 'url':
         return this._renderTextURL(details);
+      case 'bytes':
+        return this._renderBytes(/** @type {!DetailsRenderer.NumericUnitDetailsJSON} */ (details));
+      case 'ms':
+        // eslint-disable-next-line max-len
+        return this._renderMilliseconds(/** @type {!DetailsRenderer.NumericUnitDetailsJSON} */ (details));
       case 'link':
         return this._renderLink(/** @type {!DetailsRenderer.LinkDetailsJSON} */ (details));
       case 'thumbnail':
@@ -57,6 +62,32 @@ class DetailsRenderer {
       default:
         throw new Error(`Unknown type: ${details.type}`);
     }
+  }
+
+  /**
+   * @param {!DetailsRenderer.NumericUnitDetailsJSON} details
+   * @return {!Element}
+   */
+  _renderBytes(details) {
+    let text = Util.formatNumber(details.value, details.granularity || 0);
+    if (details.displayUnit === 'kb') {
+      text = Util.formatBytesToKB(details.value, details.granularity);
+    }
+
+    return this._renderText({text});
+  }
+
+  /**
+   * @param {!DetailsRenderer.NumericUnitDetailsJSON} details
+   * @return {!Element}
+   */
+  _renderMilliseconds(details) {
+    let text = Util.formatNumber(details.value, details.granularity || 0);
+    if (details.displayUnit === 'duration') {
+      text = Util.formatDuration(details.value);
+    }
+
+    return this._renderText({text});
   }
 
   /**
@@ -314,6 +345,16 @@ DetailsRenderer.DetailsJSON; // eslint-disable-line no-unused-expressions
  * }}
  */
 DetailsRenderer.ListDetailsJSON; // eslint-disable-line no-unused-expressions
+
+/**
+ * @typedef {{
+ *     type: string,
+ *     value: number,
+ *     granularity: number|undefined,
+ *     displayUnit: string|undefined,
+ * }}
+ */
+DetailsRenderer.NumericUnitDetailsJSON; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{
