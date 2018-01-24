@@ -44,7 +44,11 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
     const contentLength = scriptContent.length;
     let totalTokenLength = 0;
 
-    const tokens = esprima.tokenize(scriptContent);
+    const tokens = esprima.tokenize(scriptContent, {tolerant: true});
+    if (!tokens.length && tokens.errors && tokens.errors.length) {
+      throw tokens.errors[0];
+    }
+
     for (const token of tokens) {
       totalTokenLength += token.value.length;
     }
@@ -68,22 +72,27 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
    */
   static audit_(artifacts, networkRecords) {
     const results = [];
+    let debugString;
     for (const requestId of Object.keys(artifacts.Scripts)) {
       const scriptContent = artifacts.Scripts[requestId];
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
       if (!networkRecord || !scriptContent) continue;
 
-      const result = UnminifiedJavaScript.computeWaste(scriptContent, networkRecord);
-
-      // If the ratio is minimal, the file is likely already minified, so ignore it.
-      // If the total number of bytes to be saved is quite small, it's also safe to ignore.
-      if (result.wastedPercent < IGNORE_THRESHOLD_IN_PERCENT ||
+      try {
+        const result = UnminifiedJavaScript.computeWaste(scriptContent, networkRecord);
+        // If the ratio is minimal, the file is likely already minified, so ignore it.
+        // If the total number of bytes to be saved is quite small, it's also safe to ignore.
+        if (result.wastedPercent < IGNORE_THRESHOLD_IN_PERCENT ||
           result.wastedBytes < IGNORE_THRESHOLD_IN_BYTES) continue;
-      results.push(result);
+        results.push(result);
+      } catch (err) {
+        debugString = `Unable to process ${networkRecord._url}: ${err.message}`;
+      }
     }
 
     return {
       results,
+      debugString,
       headings: [
         {key: 'url', itemType: 'url', text: 'URL'},
         {key: 'totalKb', itemType: 'text', text: 'Original'},
