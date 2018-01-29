@@ -63,4 +63,16 @@ describe('Mobile-friendly: viewport audit', () => {
       }).rawValue, true);
     });
   });
+
+  it('doesn\'t throw when viewport contains "invalid" iOS properties', () => {
+    const viewports = [
+      'width=device-width, shrink-to-fit=no',
+      'width=device-width, viewport-fit=cover',
+    ];
+    viewports.forEach(viewport => {
+      const result = Audit.audit({Viewport: viewport});
+      assert.equal(result.rawValue, true);
+      assert.equal(result.debugString, '');
+    });
+  });
 });
