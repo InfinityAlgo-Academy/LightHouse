@@ -11,7 +11,7 @@ const TTCI = require('./consistently-interactive');
 const jpeg = require('jpeg-js');
 
 const NUMBER_OF_THUMBNAILS = 10;
-const THUMBNAIL_WIDTH = 60;
+const THUMBNAIL_WIDTH = 120;
 
 class ScreenshotThumbnails extends Audit {
   /**
