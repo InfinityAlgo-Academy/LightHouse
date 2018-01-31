@@ -1,10 +1,15 @@
 sudo: required
 language: node_js
+branches:
+  only:
+  - master
 matrix:
   include:
     - node_js: "6.9.1"
     - node_js: "8"
+      if: head_branch IS blank AND branch = master
     - node_js: "9"
+      if: head_branch IS blank AND branch = master
 dist: trusty
 cache:
   yarn: true
@@ -13,10 +18,6 @@ cache:
     - lighthouse-extension/node_modules
     - lighthouse-viewer/node_modules
     - /home/travis/.rvm/gems/
-before_install:
-  # TODO: remove after yarn is 1.0+ on Travis: https://github.com/travis-ci/travis-ci/issues/7566
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH="$HOME/.yarn/bin:$PATH"
 install:
   - yarn
   # travis can't handle the parallel install (without caches)
@@ -27,6 +28,8 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - yarn build-all
 script:
+  - echo $TRAVIS_EVENT_TYPE;
+  - echo $TRAVIS_BRANCH
   - yarn bundlesize
   - yarn lint
   - yarn unit
