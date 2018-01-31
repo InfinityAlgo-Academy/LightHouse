@@ -1096,6 +1096,7 @@ class Driver {
  *     on the global object.
  * @return {function(...*): *} A wrapper around the original function.
  */
+/* istanbul ignore next */
 function captureJSCallUsage(funcRef, set) {
   /* global window */
   const __nativeError = window.__nativeError || Error;
@@ -1158,8 +1159,8 @@ function captureJSCallUsage(funcRef, set) {
  * information such as name, message, and stack trace of the error when it's wrapped in a
  * promise. Instead, map to a successful object that contains this information.
  * @param {string|Error} err The error to convert
- * istanbul ignore next
  */
+/* istanbul ignore next */
 function wrapRuntimeEvalErrorInBrowser(err) {
   err = err || new Error();
   const fallbackMessage = typeof err === 'string' ? err : 'unknown error';
@@ -1175,8 +1176,8 @@ function wrapRuntimeEvalErrorInBrowser(err) {
 /**
  * Used by _waitForCPUIdle and executed in the context of the page, updates the ____lastLongTask
  * property on window to the end time of the last long task.
- * instanbul ignore next
  */
+/* istanbul ignore next */
 function registerPerformanceObserverInPage() {
   window.____lastLongTask = window.performance.now();
   const observer = new window.PerformanceObserver(entryList => {
@@ -1201,8 +1202,8 @@ function registerPerformanceObserverInPage() {
 
 /**
  * Used by _waitForCPUIdle and executed in the context of the page, returns time since last long task.
- * instanbul ignore next
  */
+/* istanbul ignore next */
 function checkTimeSinceLastLongTask() {
   // Wait for a delta before returning so that we're sure the PerformanceObserver
   // has had time to register the last longtask

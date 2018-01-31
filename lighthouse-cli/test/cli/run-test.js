@@ -25,7 +25,8 @@ describe('CLI run', function() {
   it('runLighthouse completes a LH round trip', () => {
     const url = 'chrome://version';
     const filename = path.join(process.cwd(), 'run.ts.results.json');
-    const flags = getFlags(`--output=json --output-path=${filename} ${url}`);
+    const timeoutFlag = `--max-wait-for-load=${9000}`;
+    const flags = getFlags(`--output=json --output-path=${filename} ${timeoutFlag} ${url}`);
     return run.runLighthouse(url, flags, fastConfig).then(passedResults => {
       assert.ok(fs.existsSync(filename));
       const results = JSON.parse(fs.readFileSync(filename, 'utf-8'));
@@ -42,7 +43,7 @@ describe('CLI run', function() {
 
       fs.unlinkSync(filename);
     });
-  }).timeout(60000);
+  }).timeout(20 * 1000);
 });
 
 describe('Parsing --chrome-flags', () => {

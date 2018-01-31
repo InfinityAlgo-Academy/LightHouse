@@ -24,7 +24,7 @@
     "clean": "rimraf *.report.html *.report.dom.html *.report.json *.screenshots.html *.devtoolslog.json *.trace.json || true",
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
     "smoke": "bash lighthouse-cli/test/smokehouse/run-all-tests.sh",
-    "coverage": "istanbul cover -x \"**/third_party/**\" _mocha -- $(find */test -name '*-test.js') --timeout 10000 --reporter progress --report lcovonly",
+    "coverage": "istanbul cover -x \"**/third_party/**\" _mocha -- $(find */test -name '*-test.js') --reporter progress --report lcovonly",
     "coveralls": "yarn coverage && cat ./coverage/lcov.info | coveralls && ./node_modules/codecov/bin/codecov",
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
     "start": "node ./lighthouse-cli/index.js",
