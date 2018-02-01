@@ -7,6 +7,7 @@
 
 const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util');
+const LHError = require('../lib/errors');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 // https://www.desmos.com/calculator/mdgjzchijg
@@ -40,11 +41,11 @@ class SpeedIndexMetric extends Audit {
     // run speedline
     return artifacts.requestSpeedline(trace).then(speedline => {
       if (speedline.frames.length === 0) {
-        throw new Error('Trace unable to find visual progress frames.');
+        throw new LHError(LHError.errors.NO_SPEEDLINE_FRAMES);
       }
 
       if (speedline.perceptualSpeedIndex === 0) {
-        throw new Error('Error in Speedline calculating Speed Index (speedIndex of 0).');
+        throw new LHError(LHError.errors.SPEEDINDEX_OF_ZERO);
       }
 
       let visuallyReadyInMs = undefined;

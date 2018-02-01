@@ -13,10 +13,10 @@ const Printer = require('./printer');
 const ChromeLauncher = require('chrome-launcher');
 
 const yargsParser = require('yargs-parser');
-const lighthouse = require('../lighthouse-core/index.js');
+const lighthouse = require('../lighthouse-core');
 const log = require('lighthouse-logger');
-const getFilenamePrefix = require('../lighthouse-core/lib/file-namer.js').getFilenamePrefix;
-const assetSaver = require('../lighthouse-core/lib/asset-saver.js');
+const getFilenamePrefix = require('../lighthouse-core/lib/file-namer').getFilenamePrefix;
+const assetSaver = require('../lighthouse-core/lib/asset-saver');
 
 const opn = require('opn');
 
@@ -65,24 +65,19 @@ function showConnectionError() {
   process.exit(_RUNTIME_ERROR_CODE);
 }
 
-/**
- * @param {!LH.LighthouseError} err
- */
-function showRuntimeError(err) {
-  console.error('Runtime error encountered:', err);
-  if (err.stack) {
-    console.error(err.stack);
-  }
-  process.exit(_RUNTIME_ERROR_CODE);
-}
-
 function showProtocolTimeoutError() {
   console.error('Debugger protocol timed out while connecting to Chrome.');
   process.exit(_PROTOCOL_TIMEOUT_EXIT_CODE);
 }
 
-function showPageLoadError() {
-  console.error('Unable to load the page. Please verify the url you are trying to review.');
+/**
+ * @param {!LH.LighthouseError} err
+ */
+function showRuntimeError(err) {
+  console.error('Runtime error encountered:', err.friendlyMessage || err.message);
+  if (err.stack) {
+    console.error(err.stack);
+  }
   process.exit(_RUNTIME_ERROR_CODE);
 }
 
@@ -90,9 +85,7 @@ function showPageLoadError() {
  * @param {!LH.LighthouseError} err
  */
 function handleError(err) {
-  if (err.code === 'PAGE_LOAD_ERROR') {
-    showPageLoadError();
-  } else if (err.code === 'ECONNREFUSED') {
+  if (err.code === 'ECONNREFUSED') {
     showConnectionError();
   } else if (err.code === 'CRI_TIMEOUT') {
     showProtocolTimeoutError();

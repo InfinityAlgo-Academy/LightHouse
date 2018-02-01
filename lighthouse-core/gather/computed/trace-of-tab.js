@@ -18,6 +18,7 @@
 
 const ComputedArtifact = require('./computed-artifact');
 const log = require('lighthouse-logger');
+const LHError = require('../../lib/errors');
 const Sentry = require('../../lib/sentry');
 
 // Bring in web-inspector for side effect of adding [].stableSort
@@ -51,13 +52,13 @@ class TraceOfTab extends ComputedArtifact {
     // The first TracingStartedInPage in the trace is definitely our renderer thread of interest
     // Beware: the tracingStartedInPage event can appear slightly after a navigationStart
     const startedInPageEvt = keyEvents.find(e => e.name === 'TracingStartedInPage');
-    if (!startedInPageEvt) throw new Error('TracingStartedInPage was not found in the trace');
+    if (!startedInPageEvt) throw new LHError(LHError.errors.NO_TRACING_STARTED);
     // Filter to just events matching the frame ID for sanity
     const frameEvents = keyEvents.filter(e => e.args.frame === startedInPageEvt.args.data.page);
 
     // Our navStart will be the last frame navigation in the trace
     const navigationStart = frameEvents.filter(e => e.name === 'navigationStart').pop();
-    if (!navigationStart) throw new Error('navigationStart was not found in the trace');
+    if (!navigationStart) throw new LHError(LHError.errors.NO_NAVSTART);
 
     // Find our first paint of this frame
     const firstPaint = frameEvents.find(e => e.name === 'firstPaint' && e.ts > navigationStart.ts);

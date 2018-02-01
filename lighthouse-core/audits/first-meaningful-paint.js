@@ -6,7 +6,8 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/v2/renderer/util.js');
+const Util = require('../report/v2/renderer/util');
+const LHError = require('../lib/errors');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 // https://www.desmos.com/calculator/joz3pqttdq
@@ -40,13 +41,13 @@ class FirstMeaningfulPaint extends Audit {
     const trace = artifacts.traces[this.DEFAULT_PASS];
     return artifacts.requestTraceOfTab(trace).then(tabTrace => {
       if (!tabTrace.firstMeaningfulPaintEvt) {
-        throw new Error('No usable `firstMeaningfulPaint(Candidate)` events found in trace');
+        throw new LHError(LHError.errors.NO_FMP);
       }
 
       // navigationStart is currently essential to FMP calculation.
       // see: https://github.com/GoogleChrome/lighthouse/issues/753
       if (!tabTrace.navigationStartEvt) {
-        throw new Error('No `navigationStart` event found in trace');
+        throw new LHError(LHError.errors.NO_NAVSTART);
       }
 
       const result = this.calculateScore(tabTrace);

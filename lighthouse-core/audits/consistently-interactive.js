@@ -6,9 +6,10 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/v2/renderer/util.js');
+const Util = require('../report/v2/renderer/util');
 const NetworkRecorder = require('../lib/network-recorder');
 const TracingProcessor = require('../lib/traces/tracing-processor');
+const LHError = require('../lib/errors');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 //   https://www.desmos.com/calculator/uti67afozh
@@ -145,10 +146,11 @@ class ConsistentlyInteractiveMetric extends Audit {
       }
     }
 
-    const culprit = cpuCandidate ? 'Network' : 'Main thread';
-    throw new Error(`${culprit} activity continued through the end of the trace recording. ` +
-      'Consistently Interactive requires a minimum of 5 seconds of both main thread idle and ' +
-      'network idle.');
+    throw new LHError(
+      cpuCandidate
+        ? LHError.errors.NO_TTI_NETWORK_IDLE_PERIOD
+        : LHError.errors.NO_TTI_CPU_IDLE_PERIOD
+    );
   }
 
   /**
@@ -166,11 +168,11 @@ class ConsistentlyInteractiveMetric extends Audit {
     return Promise.all(computedArtifacts)
       .then(([networkRecords, traceOfTab]) => {
         if (!traceOfTab.timestamps.firstMeaningfulPaint) {
-          throw new Error('No firstMeaningfulPaint found in trace.');
+          throw new LHError(LHError.errors.NO_FMP);
         }
 
         if (!traceOfTab.timestamps.domContentLoaded) {
-          throw new Error('No domContentLoaded found in trace.');
+          throw new LHError(LHError.errors.NO_DCL);
         }
 
         const longTasks = TracingProcessor.getMainThreadTopLevelEvents(traceOfTab)

@@ -114,6 +114,7 @@ class CriConnection extends Connection {
           }
         });
 
+        // TODO: Replace this with an LHError on next major version bump
         // Reject on error with code specifically indicating timeout in connection setup.
         const err = new Error('Timeout waiting for initial Debugger Protocol connection.');
         err.code = 'CRI_TIMEOUT';

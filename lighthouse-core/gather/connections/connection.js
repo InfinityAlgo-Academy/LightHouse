@@ -8,6 +8,7 @@
 
 const EventEmitter = require('events').EventEmitter;
 const log = require('lighthouse-logger');
+const LHError = require('../../lib/errors');
 
 class Connection {
   constructor() {
@@ -99,12 +100,7 @@ class Connection {
         if (object.error) {
           const logLevel = callback.options && callback.options.silent ? 'verbose' : 'error';
           log.formatProtocol('method <= browser ERR', {method: callback.method}, logLevel);
-          let errMsg = `(${callback.method}): ${object.error.message}`;
-          if (object.error.data) errMsg += ` (${object.error.data})`;
-          const error = new Error(`Protocol error ${errMsg}`);
-          error.protocolMethod = callback.method;
-          error.protocolError = object.error.message;
-          throw error;
+          throw LHError.fromProtocolMessage(callback.method, object.error);
         }
 
         log.formatProtocol('method <= browser OK',

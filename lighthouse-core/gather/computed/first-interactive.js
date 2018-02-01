@@ -7,6 +7,7 @@
 
 const ComputedArtifact = require('./computed-artifact');
 const TracingProcessor = require('../../lib/traces/tracing-processor');
+const LHError = require('../../lib/errors');
 
 const LONG_TASK_THRESHOLD = 50;
 
@@ -15,8 +16,6 @@ const MIN_TASK_CLUSTER_PADDING = 1000;
 const MIN_TASK_CLUSTER_FMP_DISTANCE = 5000;
 
 const MAX_QUIET_WINDOW_SIZE = 5000;
-const TRACE_BUSY_MSG = 'The main thread was busy for the entire trace recording. ' +
-   'First Interactive requires the main thread to be idle for several seconds.';
 
 // Window size should be three seconds at 15 seconds after FMP
 const EXPONENTIATION_COEFFICIENT = -Math.log(3 - 1) / 15;
@@ -143,7 +142,7 @@ class FirstInteractive extends ComputedArtifact {
 
       // Check that we have a long enough trace
       if (windowEnd > traceEnd) {
-        throw new Error(TRACE_BUSY_MSG);
+        throw new LHError(LHError.errors.NO_FCPUI_IDLE_PERIOD);
       }
 
       // Check that this task isn't the beginning of a cluster
@@ -160,7 +159,7 @@ class FirstInteractive extends ComputedArtifact {
       }
     }
 
-    throw new Error(TRACE_BUSY_MSG);
+    throw new LHError(LHError.errors.NO_FCPUI_IDLE_PERIOD);
   }
 
   /**
@@ -174,11 +173,11 @@ class FirstInteractive extends ComputedArtifact {
     const traceEnd = traceOfTab.timings.traceEnd;
 
     if (traceEnd - FMP < MAX_QUIET_WINDOW_SIZE) {
-      throw new Error('trace not at least 5 seconds longer than FMP');
+      throw new LHError(LHError.errors.FMP_TOO_LATE_FOR_FCPUI);
     }
 
     if (!FMP || !DCL) {
-      throw new Error(`No ${FMP ? 'domContentLoaded' : 'firstMeaningfulPaint'} event in trace`);
+      throw new LHError(FMP ? LHError.errors.NO_DCL : LHError.errors.NO_FMP);
     }
 
     const longTasksAfterFMP = TracingProcessor.getMainThreadTopLevelEvents(traceOfTab, FMP)

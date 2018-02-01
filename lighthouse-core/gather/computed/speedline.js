@@ -7,6 +7,7 @@
 
 const ComputedArtifact = require('./computed-artifact');
 const speedline = require('speedline');
+const LHError = require('../../lib/errors');
 
 class Speedline extends ComputedArtifact {
   get name() {
@@ -31,6 +32,12 @@ class Speedline extends ComputedArtifact {
         fastMode: true,
         include: 'perceptualSpeedIndex',
       });
+    }).catch(err => {
+      if (/No screenshots found in trace/.test(err.message)) {
+        throw new LHError(LHError.errors.NO_SCREENSHOTS);
+      }
+
+      throw err;
     });
   }
 }

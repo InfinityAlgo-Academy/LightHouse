@@ -80,5 +80,6 @@ export interface LaunchedChrome {
 }
 
 export interface LighthouseError extends Error {
-  code?: string
+  code?: string;
+  friendlyMessage?: string;
 }

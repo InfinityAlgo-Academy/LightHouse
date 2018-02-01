@@ -28,7 +28,7 @@ describe('FirstInteractive computed artifact:', () => {
     return computedArtifacts.requestFirstInteractive({traceEvents: tooShortTrace}).then(() => {
       assert.ok(false, 'should have thrown for short trace');
     }).catch(err => {
-      assert.equal(err.message, 'trace not at least 5 seconds longer than FMP');
+      assert.equal(err.message, 'FMP_TOO_LATE_FOR_FCPUI');
     });
   });
 
@@ -71,7 +71,7 @@ describe('FirstInteractive computed artifact:', () => {
             navigationStart: 0,
           },
         });
-      }, /longer than FMP/);
+      }, /FMP_TOO_LATE/);
     });
 
     it('should return FMP when no trace events are found', () => {
@@ -282,7 +282,7 @@ describe('FirstInteractive computed artifact:', () => {
       const longTasks = [{start: 4000, end: 5700}];
       assert.throws(() => {
         FirstInteractive.findQuietWindow(200, 6000, longTasks);
-      }, /main thread was busy/);
+      }, /NO.*IDLE_PERIOD/);
     });
   });
 });

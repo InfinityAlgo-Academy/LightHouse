@@ -6,8 +6,9 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/v2/renderer/util.js');
+const Util = require('../report/v2/renderer/util');
 const TracingProcessor = require('../lib/traces/tracing-processor');
+const LHError = require('../lib/errors');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 // https://www.desmos.com/calculator/srv0hqhf7d
@@ -35,7 +36,7 @@ class EstimatedInputLatency extends Audit {
   static calculate(tabTrace) {
     const startTime = tabTrace.timings.firstMeaningfulPaint;
     if (!startTime) {
-      throw new Error('No firstMeaningfulPaint event found in trace');
+      throw new LHError(LHError.errors.NO_FMP);
     }
 
     const latencyPercentiles = TracingProcessor.getRiskToResponsiveness(tabTrace, startTime);

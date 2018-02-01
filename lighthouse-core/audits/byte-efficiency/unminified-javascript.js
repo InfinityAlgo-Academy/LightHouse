@@ -30,7 +30,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
       name: 'unminified-javascript',
       description: 'Minify JavaScript',
       informative: true,
-      helpText: 'Minifying JavaScript files can reduce payload sizes and script parse time.' +
+      helpText: 'Minifying JavaScript files can reduce payload sizes and script parse time. ' +
         '[Learn more](https://developers.google.com/speed/docs/insights/MinifyResources).',
       requiredArtifacts: ['Scripts', 'devtoolsLogs'],
     };
