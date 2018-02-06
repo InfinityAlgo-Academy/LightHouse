@@ -132,7 +132,7 @@ class ExtensionConnection extends Connection {
           return reject(chrome.runtime.lastError);
         }
         if (tabs.length === 0) {
-          const message = 'Couldn\'t resolve current tab. Please file a bug.';
+          const message = 'Couldn\'t resolve current tab. Check your URL, reload, and try again.';
           return reject(new Error(message));
         }
         if (tabs.length > 1) {
