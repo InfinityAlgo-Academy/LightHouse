@@ -7,7 +7,7 @@ sleep 0.5s
 config="lighthouse-core/config/perf.json"
 expectations="lighthouse-cli/test/smokehouse/perf/expectations.js"
 
-yarn smokehouse -- --config-path=$config --expectations-path=$expectations
+yarn smokehouse --config-path=$config --expectations-path=$expectations
 exit_code=$?
 
 # kill test servers

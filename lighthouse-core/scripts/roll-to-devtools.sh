@@ -11,13 +11,13 @@
 #   yarn devtools
 
 # with a custom devtools front_end location:
-#   yarn devtools -- node_modules/temp-devtoolsfrontend/front_end/
+#   yarn devtools node_modules/temp-devtoolsfrontend/front_end/
 
 chromium_dir="$HOME/chromium/src"
 
 if [[ -n "$1" ]]; then
   frontend_dir="$1"
-else 
+else
   frontend_dir="$chromium_dir/third_party/WebKit/Source/devtools/front_end"
 fi
 

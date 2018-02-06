@@ -42,7 +42,7 @@ cd "$protocol_path" && git reset --hard && git fetch origin master && git checko
 cd "$lhroot_path" || exit 1
 
 # copy renderer and lh backgrond into this devtools checkout
-yarn devtools -- "$frontend_path/front_end/"
+yarn devtools "$frontend_path/front_end/"
 
 #
 # monkeypatch the audits2 module.json to include any new files we're added that aren't present
