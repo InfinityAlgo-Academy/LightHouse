@@ -499,6 +499,15 @@ class Driver {
   }
 
   /**
+   * Return a promise that resolves `pauseAfterLoadMs` after the load event fires.
+   * @param {number} pauseAfterLoadMs
+   * @return {!Promise}
+   */
+  waitForLoadEvent(pauseAfterLoadMs = 0) {
+    return this._waitForLoadEvent(pauseAfterLoadMs).promise;
+  }
+
+  /**
    * Return a promise that resolves `pauseAfterLoadMs` after the load event
    * fires and a method to cancel internal listeners and timeout.
    * @param {number} pauseAfterLoadMs

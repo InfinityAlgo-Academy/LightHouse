@@ -18,6 +18,9 @@ module.exports = {
   gotoURL() {
     return Promise.resolve('https://example.com');
   },
+  waitForLoadEvent() {
+    return Promise.resolve();
+  },
   beginEmulation() {
     return Promise.resolve();
   },
