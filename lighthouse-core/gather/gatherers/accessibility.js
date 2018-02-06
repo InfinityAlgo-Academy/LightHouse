@@ -25,6 +25,7 @@ function runA11yChecks() {
         'wcag2aa',
       ],
     },
+    resultTypes: ['violations', 'inapplicable'],
     rules: {
       'tabindex': {enabled: true},
       'table-fake-caption': {enabled: true},
