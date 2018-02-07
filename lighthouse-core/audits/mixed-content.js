@@ -28,7 +28,7 @@ class MixedContent extends Audit {
       failureDescription: 'Some insecure resources can be upgraded to HTTPS',
       helpText: `Mixed content warnings can prevent you from upgrading to HTTPS.
       This audit shows which insecure resources this page uses that can be
-      upgraded to HTTPS. [Learn more]`,
+      upgraded to HTTPS. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/mixed-content)`,
       requiredArtifacts: ['devtoolsLogs', 'MixedContent'],
     };
   }
