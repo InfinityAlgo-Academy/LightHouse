@@ -65,7 +65,7 @@ const traceData = {
       _url: 'http://google.com/index.json',
       _statusCode: 304, // ignore for being a cache not modified response
       _mimeType: 'application/json',
-      _requestId: 2,
+      _requestId: 22,
       _resourceSize: 7,
       _transferSize: 7,
       _resourceType: {
@@ -79,7 +79,7 @@ const traceData = {
       _url: 'http://google.com/other.json',
       _statusCode: 200,
       _mimeType: 'application/json',
-      _requestId: 2,
+      _requestId: 23,
       _resourceSize: 7,
       _transferSize: 8,
       _resourceType: {
@@ -92,7 +92,7 @@ const traceData = {
     {
       _url: 'http://google.com/index.jpg',
       _statusCode: 200,
-      _mimeType: 'images/jpg',
+      _mimeType: 'image/jpg',
       _requestId: 3,
       _resourceSize: 10,
       _transferSize: 10,
@@ -101,6 +101,20 @@ const traceData = {
       },
       _responseHeaders: [],
       content: 'aaaaaaaaaa',
+      finished: true,
+    },
+    {
+      _url: 'http://google.com/helloworld.mp4',
+      _statusCode: 200,
+      _mimeType: 'video/mp4',
+      _requestId: 4,
+      _resourceSize: 100,
+      _transferSize: 100,
+      _resourceType: {
+        _isTextType: false,
+      },
+      _responseHeaders: [],
+      content: 'bbbbbbbb',
       finished: true,
     },
   ],
