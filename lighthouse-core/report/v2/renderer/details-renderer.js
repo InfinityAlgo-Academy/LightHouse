@@ -379,6 +379,7 @@ DetailsRenderer.CardsDetailsJSON; // eslint-disable-line no-unused-expressions
  * @typedef {{
  *     type: string,
  *     itemType: (string|undefined),
+ *     itemKey: (string|undefined),
  *     text: (string|undefined)
  * }}
  */
