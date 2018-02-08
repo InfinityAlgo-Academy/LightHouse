@@ -97,4 +97,22 @@ describe('Fonts gatherer', () => {
       assert.ok(artifact);
     });
   });
+
+  // some stylesheets are loaded by import rules. document.stylesheets do not capture these.
+  // this means we can't find the src of a webfont.
+  it('shouldn\'t break when no font-face rules are found', function() {
+    return fontsGatherer.afterPass({
+      driver: {
+        evaluateAsync: (code) => {
+          if (code.includes('getAllLoadedFonts')) {
+            return Promise.resolve(openSansFontFaces);
+          } else {
+            return Promise.resolve([]);
+          }
+        },
+      },
+    }).then(artifact => {
+      assert.ok(artifact);
+    });
+  });
 });
