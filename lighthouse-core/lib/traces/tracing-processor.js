@@ -9,6 +9,7 @@
 // first frame of the response.
 const BASE_RESPONSE_LATENCY = 16;
 const SCHEDULABLE_TASK_TITLE = 'TaskQueueManager::ProcessTaskFromWorkQueue';
+const SCHEDULABLE_TASK_TITLE_ALT = 'ThreadControllerImpl::DoWork';
 
 class TraceProcessor {
   /**
@@ -153,7 +154,7 @@ class TraceProcessor {
     const topLevelEvents = [];
     // note: mainThreadEvents is already sorted by event start
     for (const event of tabTrace.mainThreadEvents) {
-      if (event.name !== SCHEDULABLE_TASK_TITLE || !event.dur) continue;
+      if (!TraceProcessor.isScheduleableTask(event) || !event.dur) continue;
 
       const start = (event.ts - tabTrace.navigationStartEvt.ts) / 1000;
       const end = (event.ts + event.dur - tabTrace.navigationStartEvt.ts) / 1000;
@@ -165,10 +166,19 @@ class TraceProcessor {
         duration: event.dur / 1000,
       });
     }
+
+    // There should *always* be at least one top level event, having 0 typically means something is
+    // drastically wrong with the trace and would should just give up early and loudly.
+    if (!topLevelEvents.length) {
+      throw new Error('Could not find any top level events');
+    }
+
     return topLevelEvents;
   }
-}
 
-TraceProcessor.SCHEDULABLE_TASK_TITLE = SCHEDULABLE_TASK_TITLE;
+  static isScheduleableTask(evt) {
+    return evt.name === SCHEDULABLE_TASK_TITLE || evt.name === SCHEDULABLE_TASK_TITLE_ALT;
+  }
+}
 
 module.exports = TraceProcessor;

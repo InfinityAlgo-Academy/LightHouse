@@ -79,7 +79,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
 
       // Skip all trace events that aren't schedulable tasks with sizable duration
       if (
-        evt.name !== TracingProcessor.SCHEDULABLE_TASK_TITLE ||
+        !TracingProcessor.isScheduleableTask(evt)||
         !evt.dur ||
         evt.dur < minimumEvtDur
       ) {
