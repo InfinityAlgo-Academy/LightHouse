@@ -72,17 +72,25 @@ echo "Test the lighthouse-viewer build"
 # * Update changelog *
 git fetch --tags
 yarn changelog
-# add new contributors, e.g. from
-# git shortlog -s -e -n v2.3.0..HEAD
+# add new contributors, e.g. from git shortlog -s -e -n v2.3.0..HEAD
+#    and https://github.com/GoogleChrome/lighthouse/graphs/contributors
+echo "Edit the changelog for readability and brevity"
 
 # * Put up the PR *
 echo "Branch and commit the version bump."
 git checkout -b bumpv240
 git commit -am "2.4.0"
-git tag -a v2.4.0 -m "v2.4.0"
 echo "Generate a PR and get it merged."
 
+echo "Once it's merged, pull master and tag the (squashed) commit"
+git tag -a v2.4.0 -m "v2.4.0"
+git push --tags
+
+
 # * Deploy-time *
+echo "Rebuild extension and viewer to get the latest, tagged master commit"
+yarn build-viewer; yarn build-extension;
+
 cd lighthouse-extension; gulp package; cd ..
 echo "Go here: https://chrome.google.com/webstore/developer/edit/blipmdconlkpinefehnmjammfjpmpbjk "
 echo "Upload the package zip to CWS dev dashboard"
