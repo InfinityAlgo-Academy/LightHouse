@@ -5,13 +5,16 @@
  */
 'use strict';
 
+const ArbitraryEqualityMap = require('../../lib/arbitrary-equality-map');
+
 class ComputedArtifact {
   /**
    * @param {!ComputedArtifacts} allComputedArtifacts
    */
   constructor(allComputedArtifacts) {
     /** @private {!Map} */
-    this._cache = new Map();
+    this._cache = new ArbitraryEqualityMap();
+    this._cache.setEqualityFn(ArbitraryEqualityMap.deepEquals);
 
     /** @private {!ComputedArtifacts} */
     this._allComputedArtifacts = allComputedArtifacts;
@@ -36,74 +39,6 @@ class ComputedArtifact {
   }
 
   /**
-   * This is a helper function for performing cache operations and is responsible for maintaing the
-   * internal cache structure. This function accepts a path of artifacts, used to find the correct
-   * nested cache object, and an operation to perform on that cache with the final key.
-   *
-   * The cache is structured with the first argument occupying the keys of the toplevel cache that point
-   * to the Map of keys for the second argument and so forth until the 2nd to last argument's Map points
-   * to result values rather than further nesting. In the simplest case of a single argument, there
-   * is no nesting and the keys point directly to result values.
-   *
-   *  Map(
-   *    argument1A -> Map(
-   *      argument2A -> result1A2A
-   *      argument2B -> result1A2B
-   *    )
-   *    argument1B -> Map(
-   *      argument2A -> result1B2A
-   *    )
-   *  )
-   *
-   * @param {!Array<*>} artifacts
-   * @param {function(!Map, *)} cacheOperation
-   */
-  _performCacheOperation(artifacts, cacheOperation) {
-    artifacts = artifacts.slice();
-
-    let cache = this._cache;
-    while (artifacts.length > 1) {
-      const nextKey = artifacts.shift();
-      if (cache.has(nextKey)) {
-        cache = cache.get(nextKey);
-      } else {
-        const nextCache = new Map();
-        cache.set(nextKey, nextCache);
-        cache = nextCache;
-      }
-    }
-
-    return cacheOperation(cache, artifacts.shift());
-  }
-
-  /**
-   * Performs a cache.has operation, see _performCacheOperation for more.
-   * @param {!Array<*>} artifacts
-   * @return {boolean}
-   */
-  _cacheHas(artifacts) {
-    return this._performCacheOperation(artifacts, (cache, key) => cache.has(key));
-  }
-
-  /**
-   * Performs a cache.get operation, see _performCacheOperation for more.
-   * @param {!Array<*>} artifacts
-   * @return {*}
-   */
-  _cacheGet(artifacts) {
-    return this._performCacheOperation(artifacts, (cache, key) => cache.get(key));
-  }
-
-  /**
-   * Performs a cache.set operation, see _performCacheOperation for more.
-   * @param {!Array<*>} artifacts
-   * @param {*} result
-   */
-  _cacheSet(artifacts, result) {
-    return this._performCacheOperation(artifacts, (cache, key) => cache.set(key, result));
-  }
-
-  /**
    * Asserts that the length of the array is the same as the number of inputs the class expects
    * @param {!Array<*>} artifacts
    */
@@ -125,13 +60,13 @@ class ComputedArtifact {
    */
   request(...artifacts) {
     this._assertCorrectNumberOfArtifacts(artifacts);
-    if (this._cacheHas(artifacts)) {
-      return Promise.resolve(this._cacheGet(artifacts));
+    if (this._cache.has(artifacts)) {
+      return Promise.resolve(this._cache.get(artifacts));
     }
 
     const artifactPromise = Promise.resolve()
       .then(_ => this.compute_(...artifacts, this._allComputedArtifacts));
-    this._cacheSet(artifacts, artifactPromise);
+    this._cache.set(artifacts, artifactPromise);
 
     return artifactPromise;
   }
