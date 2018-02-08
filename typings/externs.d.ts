@@ -26,6 +26,7 @@ export interface Flags {
   gatherMode: boolean;
   configPath?: string;
   perf: boolean;
+  mixedContent: boolean;
   verbose: boolean;
   quiet: boolean;
 }

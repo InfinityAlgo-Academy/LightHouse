@@ -58,9 +58,9 @@ function getFlags(manualArgv) {
 
       .group(
         [
-          'save-assets', 'list-all-audits', 'list-trace-categories',
-          'additional-trace-categories', 'config-path', 'chrome-flags', 'perf', 'port',
-          'hostname', 'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
+          'save-assets', 'list-all-audits', 'list-trace-categories', 'additional-trace-categories',
+          'config-path', 'chrome-flags', 'perf', 'mixed-content', 'port', 'hostname',
+          'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
         ],
         'Configuration:')
       .describe({
@@ -81,6 +81,7 @@ function getFlags(manualArgv) {
         'additional-trace-categories':
             'Additional categories to capture with the trace (comma-delimited).',
         'config-path': 'The path to the config JSON.',
+        'mixed-content': 'Use the mixed-content auditing configuration.',
         'chrome-flags':
             `Custom flags to pass to Chrome (space-delimited). For a full list of flags, see http://bit.ly/chrome-flags
             Additionally, use the CHROME_PATH environment variable to use a specific Chrome binary. Requires Chromium version 54.0 or later. If omitted, any detected Chrome Canary or Chrome stable will be used.`,
@@ -110,7 +111,7 @@ function getFlags(manualArgv) {
         'disable-storage-reset', 'disable-device-emulation', 'disable-cpu-throttling',
         'disable-network-throttling', 'save-assets', 'list-all-audits',
         'list-trace-categories', 'perf', 'view', 'verbose', 'quiet', 'help',
-        'gather-mode', 'audit-mode',
+        'gather-mode', 'audit-mode', 'mixed-content',
       ])
       .choices('output', printer.getValidOutputOptions())
       // force as an array

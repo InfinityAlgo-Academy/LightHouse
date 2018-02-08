@@ -30,7 +30,7 @@ const _PROTOCOL_TIMEOUT_EXIT_CODE = 67;
  */
 function parseChromeFlags(flags = '') {
   const parsed = yargsParser(
-      flags, {configuration: {'camel-case-expansion': false, 'boolean-negation': false}});
+      flags.trim(), {configuration: {'camel-case-expansion': false, 'boolean-negation': false}});
 
   return Object
       .keys(parsed)
