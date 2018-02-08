@@ -10,11 +10,11 @@
  */
 module.exports = [
   {
-    initialUrl: 'http://localhost:10200/online-only.html',
-    url: 'http://localhost:10200/online-only.html',
+    initialUrl: 'http://localhost:10200/preload.html',
+    url: 'http://localhost:10200/preload.html',
     audits: {
       'speed-index-metric': {
-        score: '>=90',
+        score: '>=80',
         extendedInfo: {
           value: {
             timings: {},
@@ -35,6 +35,15 @@ module.exports = [
       'time-to-first-byte': {
         // Can be flaky, so test float rawValue instead of boolean score
         rawValue: '<1000',
+      },
+      'uses-rel-preload': {
+        score: '<100',
+        rawValue: '>500',
+        details: {
+          items: {
+            length: 1,
+          },
+        },
       },
     },
   },

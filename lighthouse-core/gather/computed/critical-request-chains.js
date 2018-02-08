@@ -58,16 +58,6 @@ class CriticalRequestChains extends ComputedArtifact {
     const criticalRequests = networkRecords.filter(request =>
       CriticalRequestChains.isCritical(request, mainResource));
 
-    const flattenRequest = request => {
-      return {
-        url: request._url,
-        startTime: request.startTime,
-        endTime: request.endTime,
-        responseReceivedTime: request.responseReceivedTime,
-        transferSize: request.transferSize,
-      };
-    };
-
     // Create a tree of critical requests.
     const criticalRequestChains = {};
     for (const request of criticalRequests) {
@@ -103,7 +93,7 @@ class CriticalRequestChains extends ComputedArtifact {
         const parentRequestId = parentRequest.requestId;
         if (!node[parentRequestId]) {
           node[parentRequestId] = {
-            request: flattenRequest(parentRequest),
+            request: parentRequest,
             children: {},
           };
         }
@@ -124,7 +114,7 @@ class CriticalRequestChains extends ComputedArtifact {
 
       // node should now point to the immediate parent for this request.
       node[request.requestId] = {
-        request: flattenRequest(request),
+        request,
         children: {},
       };
     }
