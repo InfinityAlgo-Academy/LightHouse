@@ -209,23 +209,34 @@ function collateResults(actual, expected) {
  * @param {{category: string, equal: boolean, diff: ?Object, actual: boolean, expected: boolean}} assertion
  */
 function reportAssertion(assertion) {
+  const _toJSON = RegExp.prototype.toJSON;
+  // eslint-disable-next-line no-extend-native
+  RegExp.prototype.toJSON = RegExp.prototype.toString;
+
   if (assertion.equal) {
     console.log(`  ${log.greenify(log.tick)} ${assertion.category}: ` +
         log.greenify(assertion.actual));
   } else {
     if (assertion.diff) {
       const diff = assertion.diff;
-      let msg = `  ${log.redify(log.cross)} difference at ${diff.path}: `;
-      msg += log.redify(`found ${diff.actual}, expected ${diff.expected}\n`);
-
       const fullActual = JSON.stringify(assertion.actual, null, 2).replace(/\n/g, '\n      ');
-      msg += log.redify('      full found result: ' + fullActual);
+      const msg = `
+  ${log.redify(log.cross)} difference at ${log.bold}${diff.path}${log.reset}
+              expected: ${JSON.stringify(diff.expected)}
+                 found: ${JSON.stringify(diff.actual)}
+          found result: ${log.redify(fullActual)}
+`;
       console.log(msg);
     } else {
-      console.log(`  ${log.redify(log.cross)} ${assertion.category}: ` +
-          log.redify(`found ${assertion.actual}, expected ${assertion.expected}`));
+      console.log(`  ${log.redify(log.cross)} ${assertion.category}:
+              expected: ${JSON.stringify(assertion.expected)}
+                 found: ${JSON.stringify(assertion.actual)}
+`);
     }
   }
+
+  // eslint-disable-next-line no-extend-native
+  RegExp.prototype.toJSON = _toJSON;
 }
 
 /**
