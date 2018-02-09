@@ -50,6 +50,12 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     const totalBytes = image.networkRecord.resourceSize;
     const wastedBytes = Math.round(totalBytes * wastedRatio);
 
+    // If the image has 0 dimensions, it's probably hidden/offscreen, so let the offscreen-images
+    // audit handle it instead.
+    if (!usedPixels) {
+      return null;
+    }
+
     if (!Number.isFinite(wastedRatio)) {
       return new Error(`Invalid image sizing information ${url}`);
     }
@@ -85,6 +91,8 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
       }
 
       const processed = UsesResponsiveImages.computeWaste(image, DPR);
+      if (!processed) return;
+
       if (processed instanceof Error) {
         debugString = processed.message;
         Sentry.captureException(processed, {tags: {audit: this.meta.name}, level: 'warning'});

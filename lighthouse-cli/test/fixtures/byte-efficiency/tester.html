@@ -103,6 +103,12 @@ setTimeout(() => {
   <!-- FAIL(offscreen): image is offscreen -->
   <img style="margin-top: 1000px; width: 120px; height: 80px;" src="lighthouse-480x320.webp">
 
+  <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image is WebP optimized -->
+  <!-- PASS(responsive): image is not visible -->
+  <!-- FAIL(offscreen): image is not visible -->
+  <div class="onscreen" style="display: none;"><img class="onscreen" style="width: 120px; height: 80px;" src="lighthouse-480x320.webp?invisible"></div>
+
   <!-- PASS(optimized): image is vector -->
   <!-- PASS(webp): image is vector -->
   <!-- PASS(responsive): image is vector -->
