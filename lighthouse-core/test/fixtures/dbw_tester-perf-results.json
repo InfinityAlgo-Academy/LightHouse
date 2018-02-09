@@ -2353,7 +2353,7 @@
       "description": "Screen readers and other assitive technologies require annotations to understand otherwise ambiguous content."
     },
     "a11y-element-names": {
-      "title": "Elements Have Discernable Names",
+      "title": "Elements Have Discernible Names",
       "description": "Screen readers and other assitive technologies require annotations to understand otherwise ambiguous content."
     },
     "a11y-language": {

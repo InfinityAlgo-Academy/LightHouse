@@ -219,7 +219,7 @@ module.exports = {
       description: 'These are opportunities to improve the configuration of your HTML elements.',
     },
     'a11y-element-names': {
-      title: 'Elements Have Discernable Names',
+      title: 'Elements Have Discernible Names',
       description: 'These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.',
     },
     'a11y-language': {

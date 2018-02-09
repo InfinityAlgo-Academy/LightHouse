@@ -1463,7 +1463,7 @@
       "scoringMode": "binary",
       "name": "link-name",
       "category": "Accessibility",
-      "description": "Links have a discernable name.",
+      "description": "Links have a discernible name.",
       "helpText": "Link text (and alternate text for images, when used as links) that is discernible, not duplicated, and focusable improves the navigating experience for screen reader users."
     },
     "list": {
@@ -5476,7 +5476,7 @@
             "scoringMode": "binary",
             "name": "link-name",
             "category": "Accessibility",
-            "description": "Links have a discernable name.",
+            "description": "Links have a discernible name.",
             "helpText": "Link text (and alternate text for images, when used as links) that is discernible, not duplicated, and focusable improves the navigating experience for screen reader users."
           },
           "score": 100
@@ -6922,7 +6922,7 @@
       "description": "Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content."
     },
     "a11y-element-names": {
-      "title": "Elements Have Discernable Names",
+      "title": "Elements Have Discernible Names",
       "description": "Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content."
     },
     "a11y-language": {
