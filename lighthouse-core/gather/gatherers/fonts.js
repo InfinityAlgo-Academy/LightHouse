@@ -6,6 +6,7 @@
 'use strict';
 
 const Gatherer = require('./gatherer');
+const Sentry = require('../../lib/sentry');
 const fontFaceDescriptors = [
   'display',
   'family',
@@ -119,7 +120,7 @@ function getFontFaceFromStylesheets() {
         promises.push(Promise.resolve(getSheetsFontFaces(stylesheet)));
       }
     } catch (err) {
-      promises.push(loadStylesheetWithCORS(stylesheet.ownerNode));
+      promises.push({err: {message: err.message, stack: err.stack}});
     }
   }
   // Flatten results
@@ -145,11 +146,18 @@ class Fonts extends Gatherer {
       ]
     ).then(([loadedFonts, fontFaces]) => {
       return loadedFonts.map(fontFace => {
+        if (fontFace.err) {
+          const err = new Error(fontFace.err.message);
+          err.stack = fontFace.err.stack;
+          Sentry.captureException(err, {tags: {gatherer: 'Fonts'}, level: 'warning'});
+          return null;
+        }
+
         const fontFaceItem = this._findSameFontFamily(fontFace, fontFaces);
         fontFace.src = (fontFaceItem && fontFaceItem.src) || [];
 
         return fontFace;
-      });
+      }).filter(Boolean);
     });
   }
 }
