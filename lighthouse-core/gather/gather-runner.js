@@ -5,15 +5,12 @@
  */
 // @ts-nocheck
 'use strict';
-const fs = require('fs');
 
 const log = require('lighthouse-logger');
 const Audit = require('../audits/audit');
 const LHError = require('../lib/errors');
 const URL = require('../lib/url-shim');
 const NetworkRecorder = require('../lib/network-recorder.js');
-const blankPageSource = fs.readFileSync(__dirname + '/blank-page.html', 'utf8');
-const logoPageSource = fs.readFileSync(__dirname + '/logo-page.html', 'utf8');
 
 /**
  * @typedef {!Object<string, !Array<!Promise<*>>>} GathererResults
@@ -24,21 +21,20 @@ const logoPageSource = fs.readFileSync(__dirname + '/logo-page.html', 'utf8');
  * Execution sequence when GatherRunner.run() is called:
  *
  * 1. Setup
+ *   A. navigate to about:blank
  *   B. driver.connect()
  *   C. GatherRunner.setupDriver()
- *     i. navigate to a blank page
- *     ii. assertNoSameOriginServiceWorkerClients
- *     iii. retrieve and save userAgent
- *     iv. beginEmulation
- *     v. enableRuntimeEvents
- *     vi. evaluateScriptOnLoad rescue native Promise from potential polyfill
- *     vii. register a performance observer
- *     viii. register dialog dismisser
- *     iv. clearDataForOrigin
+ *     i. assertNoSameOriginServiceWorkerClients
+ *     ii. beginEmulation
+ *     iii. enableRuntimeEvents
+ *     iv. evaluateScriptOnLoad rescue native Promise from potential polyfill
+ *     v. register a performance observer
+ *     vi. register dialog dismisser
+ *     vii. clearDataForOrigin
  *
  * 2. For each pass in the config:
  *   A. GatherRunner.beforePass()
- *     i. navigate to a blank page
+ *     i. navigate to about:blank
  *     ii. Enable network request blocking for specified patterns
  *     iii. all gatherers' beforePass()
  *   B. GatherRunner.pass()
@@ -60,27 +56,17 @@ const logoPageSource = fs.readFileSync(__dirname + '/logo-page.html', 'utf8');
  */
 class GatherRunner {
   /**
-   * Loads a blank page and waits there briefly. Since a Page.reload command does
-   * not let a service worker take over, we navigate away and then come back to reload.
+   * Loads about:blank and waits there briefly. Since a Page.reload command does
+   * not let a service worker take over, we navigate away and then come back to
+   * reload. We do not `waitForLoad` on about:blank since a page load event is
+   * never fired on it.
    * @param {!Driver} driver
    * @param {url=} url
    * @param {number=} duration
    * @return {!Promise}
    */
-  static loadBlank(driver, url) {
-    // The real about:blank doesn't fire onload and is full of mysteries (https://goo.gl/mdQkYr)
-    // To improve speed and avoid anomalies (https://goo.gl/Aho2R9), we use a basic data uri page
-    url = url || `data:text/html,${logoPageSource}`;
-    const blankPageUrl = `data:text/html,${blankPageSource}`;
-
-    // Only navigating to a single data-uri doesn't reliably trigger onload. (Why? Beats me.)
-    // Two data uris work, however the two need to be sufficiently different (Why? Beats me.)
-    // If they are too similar, Chrome considers the latter to be as superficial as a pushState
-    // Lastly, it's possible for two navigations to be racy, so we await onload inbetween.
-    return driver.gotoURL(blankPageUrl)
-      .then(_ => driver.waitForLoadEvent())
-      .then(_ => driver.gotoURL(url))
-      .then(_ => driver.waitForLoadEvent());
+  static loadBlank(driver, url = 'about:blank', duration = 300) {
+    return driver.gotoURL(url).then(_ => new Promise(resolve => setTimeout(resolve, duration)));
   }
 
   /**
@@ -112,10 +98,8 @@ class GatherRunner {
   static setupDriver(driver, gathererResults, options) {
     log.log('status', 'Initializing…');
     const resetStorage = !options.flags.disableStorageReset;
-    // In the devtools/extension case, we can't still be on the site while trying to clear state
-    // So we first navigate to a blank page, then apply our emulation & setup
-    return GatherRunner.loadBlank(driver)
-      .then(_ => driver.assertNoSameOriginServiceWorkerClients(options.url))
+    // Enable emulation based on flags
+    return driver.assertNoSameOriginServiceWorkerClients(options.url)
       .then(_ => driver.getUserAgent())
       .then(userAgent => {
         gathererResults.UserAgent = [userAgent];
@@ -211,17 +195,11 @@ class GatherRunner {
     const blockedUrls = (options.config.blockedUrlPatterns || [])
       .concat(options.flags.blockedUrlPatterns || []);
     const blankPage = options.config.blankPage;
-
-    // On the very first pass we're already on blank
-    const skipLoadBlank = options.passIndex === 0;
-    let pass = skipLoadBlank
-      ? Promise.resolve()
-      : GatherRunner.loadBlank(options.driver, blankPage);
-
-    // Set request blocking before any network activity
-    // No "clearing" is done at the end of the pass since blockUrlPatterns([]) will unset all if
-    // neccessary at the beginning of the next pass.
-    pass = pass
+    const blankDuration = options.config.blankDuration;
+    const pass = GatherRunner.loadBlank(options.driver, blankPage, blankDuration)
+        // Set request blocking before any network activity
+        // No "clearing" is done at the end of the pass since blockUrlPatterns([]) will unset all if
+        // neccessary at the beginning of the next pass.
         .then(() => options.driver.blockUrlPatterns(blockedUrls))
         .then(() => options.driver.setExtraHTTPHeaders(options.flags.extraHeaders));
 
@@ -422,6 +400,7 @@ class GatherRunner {
     };
 
     return driver.connect()
+      .then(_ => GatherRunner.loadBlank(driver))
       .then(_ => GatherRunner.setupDriver(driver, gathererResults, options))
 
       // Run each pass
@@ -429,7 +408,7 @@ class GatherRunner {
         // If the main document redirects, we'll update this to keep track
         let urlAfterRedirects;
         return passes.reduce((chain, config, passIndex) => {
-          const runOptions = Object.assign({}, options, {config}, {passIndex});
+          const runOptions = Object.assign({}, options, {config});
           return chain
             .then(_ => driver.setThrottling(options.flags, config))
             .then(_ => GatherRunner.beforePass(runOptions, gathererResults))
