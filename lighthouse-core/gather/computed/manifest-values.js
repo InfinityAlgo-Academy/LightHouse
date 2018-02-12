@@ -19,10 +19,6 @@ class ManifestValues extends ComputedArtifact {
     return 'ManifestValues';
   }
 
-  static get validityIds() {
-    return ['hasManifest', 'hasParseableManifest'];
-  }
-
   static get manifestChecks() {
     return [
       {
@@ -79,7 +75,7 @@ class ManifestValues extends ComputedArtifact {
   /**
    * Returns results of all manifest checks
    * @param {Manifest} manifest
-   * @return {{isParseFailure: !boolean, parseFailureReason: ?string, allChecks: !Array}}
+   * @return {{isParseFailure: boolean, parseFailureReason: (string|undefined), allChecks: !Array<{id: string, failureText: string, passing: boolean}>}}
    */
   compute_(manifest) {
     // if the manifest isn't there or is invalid json, we report that and bail
