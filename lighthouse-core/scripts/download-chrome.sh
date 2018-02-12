@@ -22,5 +22,5 @@ fi
 if [ -e "$LIGHTHOUSE_CHROMIUM_PATH" ]; then
   echo "cached chrome found"
 else
-  wget "$url" --no-check-certificate -q -O chrome.zip && unzip chrome.zip
+  wget "$url" --no-check-certificate -q -O chrome.zip && unzip -q chrome.zip
 fi
