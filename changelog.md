@@ -1,3 +1,30 @@
+ <a name="2.9.1"></a>
+# 2.9.1 (2018-02-12)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.9.0...v2.9.1)
+
+
+## New Contributors!
+Thanks to @GaryJones for [helping us spel gud](https://github.com/GoogleChrome/lighthouse/pull/4485)!
+
+
+## Core
+
+* REVERT: gather-runner: load a blank data URI, rather than about:blank ([#4518](https://github.com/googlechrome/lighthouse/pull/4518))
+* fonts: fix infinite loop ([#4488](https://github.com/googlechrome/lighthouse/pull/4488))
+* responsive-images: move images with no dimensions to offscreen audit ([#4487](https://github.com/googlechrome/lighthouse/pull/4487))
+* tracing-processor: fix scheduleable task logic ([#4480](https://github.com/googlechrome/lighthouse/pull/4480))
+* webfonts: patch fonts gatherer to handle missing font item ([#4465](https://github.com/googlechrome/lighthouse/pull/4465))
+* computed-artifact: use deep equality over strict ([#4409](https://github.com/googlechrome/lighthouse/pull/4409))
+
+## Docs & Tests
+
+* docs: examples of combining puppeteer & lighthouse ([#4408](https://github.com/googlechrome/lighthouse/pull/4408))
+* appveyor: quietly unzip Chrome to keep appveyor logs cleaner ([ecedb32](https://github.com/googlechrome/lighthouse/commit/ecedb32))
+* appveyor: only run tests against master and PRs ([#4484](https://github.com/googlechrome/lighthouse/pull/4484))
+* smokehouse: improve smokehouse failure output ([#4482](https://github.com/googlechrome/lighthouse/pull/4482))
+* spelling: fix discernable to discernible ([#4485](https://github.com/googlechrome/lighthouse/pull/4485))
+
+
  <a name="2.9.0"></a>
 # 2.9.0 (2018-02-08)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.8.0...v2.9.0)
