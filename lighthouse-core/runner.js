@@ -176,9 +176,9 @@ class Runner {
     // Run each audit sequentially
     const auditResults = [];
     let promise = Promise.resolve();
-    for (const audit of opts.config.audits) {
+    for (const auditDefn of opts.config.audits) {
       promise = promise.then(_ => {
-        return Runner._runAudit(audit, artifacts).then(ret => auditResults.push(ret));
+        return Runner._runAudit(auditDefn, artifacts).then(ret => auditResults.push(ret));
       });
     }
     return promise.then(_ => {
@@ -203,7 +203,8 @@ class Runner {
    * @return {!Promise<!AuditResult>}
    * @private
    */
-  static _runAudit(audit, artifacts) {
+  static _runAudit(auditDefn, artifacts) {
+    const audit = auditDefn.implementation;
     const status = `Evaluating: ${audit.meta.description}`;
 
     return Promise.resolve().then(_ => {
@@ -243,7 +244,7 @@ class Runner {
         }
       }
       // all required artifacts are in good shape, so we proceed
-      return audit.audit(artifacts);
+      return audit.audit(artifacts, {options: auditDefn.options || {}});
     // Fill remaining audit result fields.
     }).then(auditResult => Audit.generateAuditResult(audit, auditResult))
     .catch(err => {

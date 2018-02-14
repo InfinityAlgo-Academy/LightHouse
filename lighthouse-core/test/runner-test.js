@@ -146,6 +146,42 @@ describe('Runner', () => {
     });
   });
 
+  it('accepts audit options', () => {
+    const url = 'https://example.com';
+
+    const calls = [];
+    class EavesdropAudit extends Audit {
+      static get meta() {
+        return {
+          name: 'eavesdrop-audit',
+          description: 'It eavesdrops',
+          failureDescription: 'It does not',
+          helpText: 'Helpful when eavesdropping',
+          requiredArtifacts: [],
+        };
+      }
+      static audit(artifacts, context) {
+        calls.push(context.options);
+        return {rawValue: true};
+      }
+    }
+
+    const config = new Config({
+      audits: [
+        {implementation: EavesdropAudit, options: {x: 1}},
+        {implementation: EavesdropAudit, options: {x: 2}},
+      ],
+      artifacts: {},
+    });
+
+    return Runner.run({}, {url, config}).then(results => {
+      assert.equal(results.initialUrl, url);
+      assert.equal(results.audits['eavesdrop-audit'].rawValue, true);
+      // assert that the options we received matched expectations
+      assert.deepEqual(calls, [{x: 1}, {x: 2}]);
+    });
+  });
+
   it('accepts trace artifacts as paths and outputs appropriate data', () => {
     const url = 'https://example.com';
 

@@ -11,7 +11,6 @@ const Gatherer = require('../../gather/gatherers/gatherer');
 const GatherRunner = require('../../gather/gather-runner');
 const assert = require('assert');
 const Config = require('../../config/config');
-const path = require('path');
 const unresolvedPerfLog = require('./../fixtures/unresolved-perflog.json');
 
 class TestGatherer extends Gatherer {
@@ -417,7 +416,7 @@ describe('GatherRunner', function() {
     const config = {
       recordTrace: true,
       gatherers: [
-        new TestGatherer(),
+        {instance: new TestGatherer()},
       ],
     };
     const flags = {};
@@ -442,7 +441,7 @@ describe('GatherRunner', function() {
     const config = {
       recordTrace: true,
       gatherers: [
-        new TestGatherer(),
+        {instance: new TestGatherer()},
       ],
     };
 
@@ -466,7 +465,7 @@ describe('GatherRunner', function() {
 
     const config = {
       gatherers: [
-        new TestGatherer(),
+        {instance: new TestGatherer()},
       ],
     };
     const flags = {};
@@ -492,7 +491,7 @@ describe('GatherRunner', function() {
 
     const config = {
       gatherers: [
-        new TestGatherer(),
+        {instance: new TestGatherer()},
       ],
     };
 
@@ -528,13 +527,13 @@ describe('GatherRunner', function() {
       recordTrace: true,
       passName: 'firstPass',
       gatherers: [
-        t1,
+        {instance: t1},
       ],
     }, {
       blankDuration: 0,
       passName: 'secondPass',
       gatherers: [
-        t2,
+        {instance: t2},
       ],
     }];
 
@@ -554,12 +553,12 @@ describe('GatherRunner', function() {
       blankDuration: 0,
       recordTrace: true,
       passName: 'firstPass',
-      gatherers: [new TestGatherer()],
+      gatherers: [{instance: new TestGatherer()}],
     }, {
       blankDuration: 0,
       recordTrace: true,
       passName: 'secondPass',
-      gatherers: [new TestGatherer()],
+      gatherers: [{instance: new TestGatherer()}],
     }];
     const options = {driver: fakeDriver, url: 'https://example.com', flags: {}, config: {}};
 
@@ -577,12 +576,12 @@ describe('GatherRunner', function() {
       blankDuration: 0,
       recordTrace: true,
       passName: 'firstPass',
-      gatherers: [new TestGatherer()],
+      gatherers: [{instance: new TestGatherer()}],
     }, {
       blankDuration: 0,
       recordTrace: true,
       passName: 'secondPass',
-      gatherers: [new TestGatherer()],
+      gatherers: [{instance: new TestGatherer()}],
     }];
     const options = {driver: fakeDriver, url: 'https://example.com', flags: {}, config: {}};
 
@@ -590,73 +589,6 @@ describe('GatherRunner', function() {
       .then(artifacts => {
         assert.equal(artifacts.networkRecords, undefined);
       });
-  });
-
-  it('loads gatherers from custom paths', () => {
-    const root = path.resolve(__dirname, '../fixtures');
-
-    assert.doesNotThrow(_ => GatherRunner.getGathererClass(`${root}/valid-custom-gatherer`));
-    return assert.doesNotThrow(_ => GatherRunner.getGathererClass('valid-custom-gatherer', root));
-  });
-
-  it('returns gatherer when gatherer class, not package-name string, is provided', () => {
-    assert.equal(GatherRunner.getGathererClass(TestGatherer, '.'), TestGatherer);
-  });
-
-  it('throws when a gatherer is not found', () => {
-    return assert.throws(_ => GatherRunner.getGathererClass(
-        '/fake-path/non-existent-gatherer'), /locate gatherer/);
-  });
-
-  it('loads a gatherer relative to a config path', () => {
-    const configPath = __dirname;
-
-    return assert.doesNotThrow(_ =>
-        GatherRunner.getGathererClass('../fixtures/valid-custom-gatherer', configPath));
-  });
-
-  it('loads a gatherer from node_modules/', () => {
-    return assert.throws(_ => GatherRunner.getGathererClass(
-        // Use a lighthouse dep as a stand in for a module.
-        'mocha'
-    ), function(err) {
-      // Should throw a gatherer validation error, but *not* a gatherer not found error.
-      return !/locate gatherer/.test(err) && /beforePass\(\) method/.test(err);
-    });
-  });
-
-  it('loads a gatherer relative to the working directory', () => {
-    // Construct a gatherer URL relative to current working directory,
-    // regardless of where test was started from.
-    const absoluteGathererPath = path.resolve(__dirname, '../fixtures/valid-custom-gatherer');
-    assert.doesNotThrow(_ => require.resolve(absoluteGathererPath));
-    const relativeGathererPath = path.relative(process.cwd(), absoluteGathererPath);
-
-    return assert.doesNotThrow(_ =>
-        GatherRunner.getGathererClass(relativeGathererPath));
-  });
-
-  it('throws but not for missing gatherer when it has a dependency error', () => {
-    const gathererPath = path.resolve(__dirname, '../fixtures/invalid-gatherers/require-error.js');
-    return assert.throws(_ => GatherRunner.getGathererClass(gathererPath),
-        function(err) {
-          // We're expecting not to find parent class Gatherer, so only reject on
-          // our own custom locate gatherer error, not the usual MODULE_NOT_FOUND.
-          return !/locate gatherer/.test(err) && err.code === 'MODULE_NOT_FOUND';
-        });
-  });
-
-  it('throws for invalid gatherers', () => {
-    const root = path.resolve(__dirname, '../fixtures/invalid-gatherers');
-
-    assert.throws(_ => GatherRunner.getGathererClass('missing-before-pass', root),
-      /beforePass\(\) method/);
-
-    assert.throws(_ => GatherRunner.getGathererClass('missing-pass', root),
-      /pass\(\) method/);
-
-    assert.throws(_ => GatherRunner.getGathererClass('missing-after-pass', root),
-      /afterPass\(\) method/);
   });
 
   describe('#getPageLoadError', () => {
@@ -725,8 +657,8 @@ describe('GatherRunner', function() {
             return Promise.resolve(this.name);
           }
         }(),
-      ];
-      const gathererNames = gatherers.map(gatherer => gatherer.name);
+      ].map(instance => ({instance}));
+      const gathererNames = gatherers.map(gatherer => gatherer.instance.name);
       const passes = [{
         blankDuration: 0,
         gatherers,
@@ -741,6 +673,48 @@ describe('GatherRunner', function() {
         gathererNames.forEach(gathererName => {
           assert.strictEqual(artifacts[gathererName], gathererName);
         });
+      });
+    });
+
+    it('passes gatherer options', () => {
+      const calls = {beforePass: [], pass: [], afterPass: []};
+      class EavesdropGatherer extends Gatherer {
+        beforePass(context) {
+          calls.beforePass.push(context.options);
+        }
+        pass(context) {
+          calls.pass.push(context.options);
+        }
+        afterPass(context) {
+          calls.afterPass.push(context.options);
+          return context.options.x || 'none';
+        }
+      }
+
+      const gatherers = [
+        {instance: new class EavesdropGatherer1 extends EavesdropGatherer {}(), options: {x: 1}},
+        {instance: new class EavesdropGatherer2 extends EavesdropGatherer {}(), options: {x: 2}},
+        {instance: new class EavesdropGatherer3 extends EavesdropGatherer {}()},
+      ];
+
+      const passes = [{blankDuration: 0, gatherers}];
+      return GatherRunner.run(passes, {
+        driver: fakeDriver,
+        url: 'https://example.com',
+        flags: {},
+        config: new Config({}),
+      }).then(artifacts => {
+        assert.equal(artifacts.EavesdropGatherer1, 1);
+        assert.equal(artifacts.EavesdropGatherer2, 2);
+        assert.equal(artifacts.EavesdropGatherer3, 'none');
+
+        // assert that all three phases received the gatherer options expected
+        const expectedOptions = [{x: 1}, {x: 2}, {}];
+        for (let i = 0; i < 3; i++) {
+          assert.deepEqual(calls.beforePass[i], expectedOptions[i]);
+          assert.deepEqual(calls.pass[i], expectedOptions[i]);
+          assert.deepEqual(calls.afterPass[i], expectedOptions[i]);
+        }
       });
     });
 
@@ -843,8 +817,8 @@ describe('GatherRunner', function() {
             return Promise.reject(err);
           }
         }(),
-      ];
-      const gathererNames = gatherers.map(gatherer => gatherer.name);
+      ].map(instance => ({instance}));
+      const gathererNames = gatherers.map(gatherer => gatherer.instance.name);
       const passes = [{
         blankDuration: 0,
         gatherers,
@@ -880,7 +854,7 @@ describe('GatherRunner', function() {
             return Promise.reject(err);
           }
         },
-      ];
+      ].map(instance => ({instance}));
       const passes = [{
         blankDuration: 0,
         gatherers,
@@ -902,7 +876,7 @@ describe('GatherRunner', function() {
         recordTrace: true,
         passName: 'firstPass',
         gatherers: [
-          new TestGathererNoArtifact(),
+          {instance: new TestGathererNoArtifact()},
         ],
       }];
 

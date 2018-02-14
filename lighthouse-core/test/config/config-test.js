@@ -51,8 +51,8 @@ describe('Config', () => {
       audits: [MyAudit],
     };
     const newConfig = new Config(config);
-    assert.equal(MyGatherer, newConfig.passes[0].gatherers[0]);
-    assert.equal(MyAudit, newConfig.audits[0]);
+    assert.equal(MyGatherer, newConfig.passes[0].gatherers[0].implementation);
+    assert.equal(MyAudit, newConfig.audits[0].implementation);
   });
 
   it('uses the default config when no config is provided', () => {
@@ -126,7 +126,9 @@ describe('Config', () => {
 
     assert.ok(Array.isArray(config.audits));
     assert.equal(config.audits.length, 1);
-    return assert.equal(typeof config.audits[0], 'function');
+    assert.equal(config.audits[0].path, 'user-timings');
+    assert.equal(typeof config.audits[0].implementation, 'function');
+    assert.deepEqual(config.audits[0].options, {});
   });
 
   it('throws when an audit is not found', () => {
@@ -435,7 +437,7 @@ describe('Config', () => {
       ],
     });
 
-    const auditNames = new Set(config.audits.map(audit => audit.meta.name));
+    const auditNames = new Set(config.audits.map(audit => audit.implementation.meta.name));
     assert.ok(config, 'failed to generate config');
     assert.ok(auditNames.has('custom-audit'), 'did not include custom audit');
     assert.ok(auditNames.has('unused-css-rules'), 'did not include full audits');
@@ -628,6 +630,80 @@ describe('Config', () => {
       const auditCount = Object.keys(selectedCategory.audits).length;
       assert.equal(config.passes.length, 3, 'incorrect # of passes');
       assert.equal(config.audits.length, auditCount, 'audit filtering failed');
+    });
+  });
+
+  describe('#requireGatherers', () => {
+    function loadGatherer(gathererEntry) {
+      const config = new Config({passes: [{gatherers: [gathererEntry]}]});
+      return config.passes[0].gatherers[0];
+    }
+
+    it('loads a core gatherer', () => {
+      const gatherer = loadGatherer('viewport-dimensions');
+      assert.equal(gatherer.instance.name, 'ViewportDimensions');
+      assert.equal(typeof gatherer.instance.beforePass, 'function');
+    });
+
+    it('loads gatherers from custom paths', () => {
+      const customPath = path.resolve(__dirname, '../fixtures/valid-custom-gatherer');
+      const gatherer = loadGatherer(customPath);
+      assert.equal(gatherer.instance.name, 'CustomGatherer');
+      assert.equal(typeof gatherer.instance.beforePass, 'function');
+    });
+
+    it('returns gatherer when gatherer class, not package-name string, is provided', () => {
+      class TestGatherer extends Gatherer {}
+      const gatherer = loadGatherer(TestGatherer);
+      assert.equal(gatherer.instance.name, 'TestGatherer');
+      assert.equal(typeof gatherer.instance.beforePass, 'function');
+    });
+
+    it('throws when a gatherer is not found', () => {
+      assert.throws(_ => loadGatherer('/fake-non-existent-gatherer'), /locate gatherer/);
+    });
+
+    it('loads a gatherer from node_modules/', () => {
+      // Use a lighthouse dep as a stand in for a module.
+      assert.throws(_ => loadGatherer('mocha'), function(err) {
+        // Should throw a gatherer validation error, but *not* a gatherer not found error.
+        return !/locate gatherer/.test(err) && /beforePass\(\) method/.test(err);
+      });
+    });
+
+    it('loads a gatherer relative to the working directory', () => {
+      // Construct a gatherer URL relative to current working directory,
+      // regardless of where test was started from.
+      const absoluteGathererPath = path.resolve(__dirname, '../fixtures/valid-custom-gatherer');
+      assert.doesNotThrow(_ => require.resolve(absoluteGathererPath));
+      const relativeGathererPath = path.relative(process.cwd(), absoluteGathererPath);
+
+      const gatherer = loadGatherer(relativeGathererPath);
+      assert.equal(gatherer.instance.name, 'CustomGatherer');
+      assert.equal(typeof gatherer.instance.beforePass, 'function');
+    });
+
+    it('throws but not for missing gatherer when it has a dependency error', () => {
+      const gathererPath = path.resolve(__dirname, '../fixtures/invalid-gatherers/require-error');
+      return assert.throws(_ => loadGatherer(gathererPath),
+          function(err) {
+            // We're expecting not to find parent class Gatherer, so only reject on
+            // our own custom locate gatherer error, not the usual MODULE_NOT_FOUND.
+            return !/locate gatherer/.test(err) && err.code === 'MODULE_NOT_FOUND';
+          });
+    });
+
+    it('throws for invalid gatherers', () => {
+      const root = path.resolve(__dirname, '../fixtures/invalid-gatherers');
+
+      assert.throws(_ => loadGatherer(`${root}/missing-before-pass`),
+        /beforePass\(\) method/);
+
+      assert.throws(_ => loadGatherer(`${root}/missing-pass`),
+        /pass\(\) method/);
+
+      assert.throws(_ => loadGatherer(`${root}/missing-after-pass`),
+        /afterPass\(\) method/);
     });
   });
 });
