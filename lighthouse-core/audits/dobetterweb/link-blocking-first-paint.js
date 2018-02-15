@@ -12,7 +12,7 @@
 
 const Audit = require('../audit');
 const Util = require('../../report/v2/renderer/util.js');
-const scoreForWastedMs = require('../byte-efficiency/byte-efficiency-audit').scoreForWastedMs;
+const ByteEfficiencyAudit = require('../byte-efficiency/byte-efficiency-audit');
 
 // Because of the way we detect blocking stylesheets, asynchronously loaded
 // CSS with link[rel=preload] and an onload handler (see https://github.com/filamentgroup/loadCSS)
@@ -64,8 +64,12 @@ class LinkBlockingFirstPaintAudit extends Audit {
 
       return {
         url: item.tag.url,
-        totalKb: Util.formatBytesToKB(item.transferSize),
-        totalMs: Util.formatMilliseconds(Math.round((item.endTime - startTime) * 1000), 1),
+        totalKb: ByteEfficiencyAudit.bytesDetails(item.transferSize),
+        totalMs: {
+          type: 'ms',
+          value: (item.endTime - startTime) * 1000,
+          granularity: 1,
+        },
       };
     });
 
@@ -88,7 +92,7 @@ class LinkBlockingFirstPaintAudit extends Audit {
 
     return {
       displayValue,
-      score: scoreForWastedMs(rawDelayTime),
+      score: ByteEfficiencyAudit.scoreForWastedMs(rawDelayTime),
       rawValue: rawDelayTime,
       extendedInfo: {
         value: {

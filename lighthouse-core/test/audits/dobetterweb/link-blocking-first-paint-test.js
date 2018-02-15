@@ -69,10 +69,10 @@ describe('Link Block First Paint audit', () => {
       const results = auditResult.details.items;
       assert.equal(results.length, 2);
       assert.ok(results[0][0].text.includes('css/style.css'), 'has a url');
-      assert.equal(results[0][1].text, `0.1${NBSP}KB`);
-      assert.equal(results[1][1].text, `0.1${NBSP}KB`);
-      assert.equal(results[0][2].text, `500${NBSP}ms`);
-      assert.equal(results[1][2].text, `200${NBSP}ms`);
+      assert.equal(results[0][1].value, 100);
+      assert.equal(results[1][1].value, 100);
+      assert.equal(results[0][2].value, 500);
+      assert.equal(Math.round(results[1][2].value), 200);
     });
   });
 

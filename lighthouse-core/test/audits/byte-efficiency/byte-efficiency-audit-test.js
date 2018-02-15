@@ -11,6 +11,12 @@ const assert = require('assert');
 /* eslint-env mocha */
 
 describe('Byte efficiency base audit', () => {
+  const baseHeadings = [
+    {key: 'totalKb', itemType: 'text', text: ''},
+    {key: 'wastedKb', itemType: 'text', text: ''},
+    {key: 'wastedMs', itemType: 'text', text: ''},
+  ];
+
   describe('#estimateTransferSize', () => {
     const estimate = ByteEfficiencyAudit.estimateTransferSize;
 
@@ -40,16 +46,16 @@ describe('Byte efficiency base audit', () => {
 
   it('should format as extendedInfo', () => {
     const result = ByteEfficiencyAudit.createAuditResult({
-      headings: [{key: 'value', text: 'Label'}],
+      headings: baseHeadings,
       results: [],
     });
 
-    assert.deepEqual(result.extendedInfo.value.results, []);
+    assert.deepEqual(result.details.items, []);
   });
 
   it('should set the rawValue', () => {
     const result = ByteEfficiencyAudit.createAuditResult({
-      headings: [{key: 'value', text: 'Label'}],
+      headings: baseHeadings,
       results: [{wastedBytes: 2345, totalBytes: 3000, wastedPercent: 65}],
     }, 5000);
 
@@ -58,22 +64,22 @@ describe('Byte efficiency base audit', () => {
 
   it('should score the wastedMs', () => {
     const perfectResult = ByteEfficiencyAudit.createAuditResult({
-      headings: [{key: 'value', text: 'Label'}],
+      headings: baseHeadings,
       results: [{wastedBytes: 400, totalBytes: 4000, wastedPercent: 10}],
     }, 100000);
 
     const goodResult = ByteEfficiencyAudit.createAuditResult({
-      headings: [{key: 'value', text: 'Label'}],
+      headings: baseHeadings,
       results: [{wastedBytes: 2345, totalBytes: 3000, wastedPercent: 65}],
     }, 10000);
 
     const averageResult = ByteEfficiencyAudit.createAuditResult({
-      headings: [{key: 'value', text: 'Label'}],
+      headings: baseHeadings,
       results: [{wastedBytes: 2345, totalBytes: 3000, wastedPercent: 65}],
     }, 5000);
 
     const failingResult = ByteEfficiencyAudit.createAuditResult({
-      headings: [{key: 'value', text: 'Label'}],
+      headings: baseHeadings,
       results: [{wastedBytes: 45000, totalBytes: 45000, wastedPercent: 100}],
     }, 10000);
 
@@ -86,7 +92,7 @@ describe('Byte efficiency base audit', () => {
   it('should throw on invalid network throughput', () => {
     assert.throws(() => {
       ByteEfficiencyAudit.createAuditResult({
-        headings: [{key: 'value', text: 'Label'}],
+        headings: baseHeadings,
         results: [{wastedBytes: 350, totalBytes: 700, wastedPercent: 50}],
       }, Infinity);
     });
@@ -94,22 +100,22 @@ describe('Byte efficiency base audit', () => {
 
   it('should populate KB', () => {
     const result = ByteEfficiencyAudit.createAuditResult({
-      headings: [{key: 'value', text: 'Label'}],
+      headings: baseHeadings,
       results: [
         {wastedBytes: 2048, totalBytes: 4096, wastedPercent: 50},
         {wastedBytes: 1986, totalBytes: 5436},
       ],
     }, 1000);
 
-    assert.equal(result.extendedInfo.value.results[0].wastedKb.value, 2048);
-    assert.equal(result.extendedInfo.value.results[0].totalKb.value, 4096);
-    assert.equal(result.extendedInfo.value.results[1].wastedKb.value, 1986);
-    assert.equal(result.extendedInfo.value.results[1].totalKb.value, 5436);
+    assert.equal(result.details.items[0][1].value, 2048);
+    assert.equal(result.details.items[0][0].value, 4096);
+    assert.equal(result.details.items[1][1].value, 1986);
+    assert.equal(result.details.items[1][0].value, 5436);
   });
 
   it('should populate Ms', () => {
     const result = ByteEfficiencyAudit.createAuditResult({
-      headings: [{key: 'value', text: 'Label'}],
+      headings: baseHeadings,
       results: [
         {wastedBytes: 350, totalBytes: 700, wastedPercent: 50},
         {wastedBytes: 326, totalBytes: 1954},
@@ -117,17 +123,14 @@ describe('Byte efficiency base audit', () => {
       ],
     }, 1000);
 
-    assert.equal(result.extendedInfo.value.results[0].wastedMs.value, 350);
-    assert.equal(result.extendedInfo.value.results[0].totalMs.value, 700);
-    assert.equal(result.extendedInfo.value.results[1].wastedMs.value, 326);
-    assert.equal(result.extendedInfo.value.results[1].totalMs.value, 1954);
-    assert.equal(result.extendedInfo.value.results[2].wastedMs.value, 251);
-    assert.equal(result.extendedInfo.value.results[2].totalMs.value, 899);
+    assert.equal(result.details.items[0][2].value, 350);
+    assert.equal(result.details.items[1][2].value, 326);
+    assert.equal(result.details.items[2][2].value, 251);
   });
 
   it('should sort on wastedBytes', () => {
     const result = ByteEfficiencyAudit.createAuditResult({
-      headings: [{key: 'value', text: 'Label'}],
+      headings: baseHeadings,
       results: [
         {wastedBytes: 350, totalBytes: 700, wastedPercent: 50},
         {wastedBytes: 450, totalBytes: 1000, wastedPercent: 50},
@@ -135,14 +138,14 @@ describe('Byte efficiency base audit', () => {
       ],
     }, 1000);
 
-    assert.equal(result.extendedInfo.value.results[0].wastedBytes, 450);
-    assert.equal(result.extendedInfo.value.results[1].wastedBytes, 400);
-    assert.equal(result.extendedInfo.value.results[2].wastedBytes, 350);
+    assert.equal(result.details.items[0][2].value, 450);
+    assert.equal(result.details.items[1][2].value, 400);
+    assert.equal(result.details.items[2][2].value, 350);
   });
 
   it('should create a display value', () => {
     const result = ByteEfficiencyAudit.createAuditResult({
-      headings: [{key: 'value', text: 'Label'}],
+      headings: baseHeadings,
       results: [
         {wastedBytes: 512, totalBytes: 700, wastedPercent: 50},
         {wastedBytes: 512, totalBytes: 1000, wastedPercent: 50},

@@ -186,7 +186,7 @@ class CacheHeaders extends ByteEfficiencyAudit {
 
         const url = URL.elideDataURI(record._url);
         const totalBytes = record._transferSize;
-        const totalKb = ByteEfficiencyAudit.bytesToDetails(totalBytes);
+        const totalKb = ByteEfficiencyAudit.bytesDetails(totalBytes);
         const wastedBytes = (1 - cacheHitProbability) * totalBytes;
         const cacheLifetimeDisplay = {
           type: 'ms',

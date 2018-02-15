@@ -50,7 +50,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
         const result = {
           url: record.url,
           totalBytes: record.transferSize,
-          totalKb: ByteEfficiencyAudit.bytesToDetails(record.transferSize),
+          totalKb: ByteEfficiencyAudit.bytesDetails(record.transferSize),
           totalMs: ByteEfficiencyAudit.bytesToMsDetails(record.transferSize, networkThroughput),
         };
 

@@ -32,7 +32,7 @@ class UnusedBytes extends Audit {
    * @param {number} bytes
    * @return {string}
    */
-  static bytesToDetails(bytes) {
+  static bytesDetails(bytes) {
     return {
       type: 'bytes',
       value: bytes,
@@ -109,9 +109,9 @@ class UnusedBytes extends Audit {
     const debugString = result.debugString;
     const results = result.results
         .map(item => {
-          item.wastedKb = this.bytesToDetails(item.wastedBytes);
+          item.wastedKb = this.bytesDetails(item.wastedBytes);
           item.wastedMs = this.bytesToMsDetails(item.wastedBytes, networkThroughput);
-          item.totalKb = this.bytesToDetails(item.totalBytes);
+          item.totalKb = this.bytesDetails(item.totalBytes);
           item.totalMs = this.bytesToMsDetails(item.totalBytes, networkThroughput);
           return item;
         })

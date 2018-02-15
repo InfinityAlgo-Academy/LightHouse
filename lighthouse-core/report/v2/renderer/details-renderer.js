@@ -69,11 +69,8 @@ class DetailsRenderer {
    * @return {!Element}
    */
   _renderBytes(details) {
-    let text = Util.formatNumber(details.value, details.granularity || 0);
-    if (details.displayUnit === 'kb') {
-      text = Util.formatBytesToKB(details.value, details.granularity);
-    }
-
+    // TODO: handle displayUnit once we have something other than 'kb'
+    const text = Util.formatBytesToKB(details.value, details.granularity);
     return this._renderText({text});
   }
 
@@ -82,7 +79,7 @@ class DetailsRenderer {
    * @return {!Element}
    */
   _renderMilliseconds(details) {
-    let text = Util.formatNumber(details.value, details.granularity || 0);
+    let text = Util.formatMilliseconds(details.value, details.granularity);
     if (details.displayUnit === 'duration') {
       text = Util.formatDuration(details.value);
     }

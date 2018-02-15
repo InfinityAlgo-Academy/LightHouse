@@ -48,7 +48,7 @@ class Util {
    * @param {number=} granularity Controls how coarse the displayed value is, defaults to .01
    * @return {string}
    */
-  static formatBytesToKB(size, granularity = .01) {
+  static formatBytesToKB(size, granularity = .1) {
     const kbs = (Math.round(size / 1024 / granularity) * granularity).toLocaleString();
     return `${kbs}${NBSP}KB`;
   }
