@@ -27,25 +27,25 @@ describe('SEO: Font size audit', () => {
     assert.ok(auditResult.debugString.includes('missing viewport'));
   });
 
-  it('fails when less than 75% of text is legible', () => {
+  it('fails when less than 60% of text is legible', () => {
     const artifacts = {
       URL,
       Viewport: validViewport,
       FontSize: {
         totalTextLength: 100,
         visitedTextLength: 100,
-        failingTextLength: 33,
-        analyzedFailingTextLength: 33,
+        failingTextLength: 41,
+        analyzedFailingTextLength: 41,
         analyzedFailingNodesData: [
-          {textLength: 11, fontSize: 14, node: {nodeId: 1, localName: 'p', attributes: []}},
-          {textLength: 22, fontSize: 15, node: {nodeId: 2, localName: 'p', attributes: []}},
+          {textLength: 10, fontSize: 10, node: {nodeId: 1, localName: 'p', attributes: []}},
+          {textLength: 31, fontSize: 11, node: {nodeId: 2, localName: 'p', attributes: []}},
         ],
       },
     };
 
     const auditResult = FontSizeAudit.audit(artifacts);
     assert.equal(auditResult.rawValue, false);
-    assert.ok(auditResult.debugString.includes('33%'));
+    assert.ok(auditResult.debugString.includes('41%'));
   });
 
   it('passes when there is no text', () => {
@@ -58,7 +58,7 @@ describe('SEO: Font size audit', () => {
         failingTextLength: 0,
         analyzedFailingTextLength: 0,
         analyzedFailingNodesData: [
-          {textLength: 0, fontSize: 14, node: {nodeId: 1, localName: 'p', attributes: []}},
+          {textLength: 0, fontSize: 11, node: {nodeId: 1, localName: 'p', attributes: []}},
         ],
       },
     };
@@ -67,7 +67,7 @@ describe('SEO: Font size audit', () => {
     assert.equal(auditResult.rawValue, true);
   });
 
-  it('passes when more than 75% of text is legible', () => {
+  it('passes when more than 60% of text is legible', () => {
     const artifacts = {
       URL,
       Viewport: validViewport,
@@ -77,8 +77,8 @@ describe('SEO: Font size audit', () => {
         failingTextLength: 33,
         analyzedFailingTextLength: 33,
         analyzedFailingNodesData: [
-          {textLength: 11, fontSize: 14, node: {nodeId: 1, localName: 'p', attributes: []}},
-          {textLength: 22, fontSize: 15, node: {nodeId: 2, localName: 'p', attributes: []}},
+          {textLength: 11, fontSize: 10, node: {nodeId: 1, localName: 'p', attributes: []}},
+          {textLength: 22, fontSize: 11, node: {nodeId: 2, localName: 'p', attributes: []}},
         ],
       },
     };
@@ -112,9 +112,9 @@ describe('SEO: Font size audit', () => {
         failingTextLength: 7,
         analyzedFailingTextLength: 7,
         analyzedFailingNodesData: [
-          {textLength: 3, fontSize: 15, node: {nodeId: 1}, cssRule: style1},
-          {textLength: 2, fontSize: 14, node: {nodeId: 2}, cssRule: style2},
-          {textLength: 2, fontSize: 14, node: {nodeId: 3}, cssRule: style2},
+          {textLength: 3, fontSize: 11, node: {nodeId: 1}, cssRule: style1},
+          {textLength: 2, fontSize: 10, node: {nodeId: 2}, cssRule: style2},
+          {textLength: 2, fontSize: 10, node: {nodeId: 3}, cssRule: style2},
         ],
       },
     };
@@ -135,7 +135,7 @@ describe('SEO: Font size audit', () => {
         failingTextLength: 50,
         analyzedFailingTextLength: 10,
         analyzedFailingNodesData: [
-          {textLength: 10, fontSize: 14, node: {nodeId: 1, localName: 'p', attributes: []}},
+          {textLength: 10, fontSize: 10, node: {nodeId: 1, localName: 'p', attributes: []}},
         ],
       },
     };
@@ -156,7 +156,7 @@ describe('SEO: Font size audit', () => {
         failingTextLength: 50,
         analyzedFailingTextLength: 50,
         analyzedFailingNodesData: [
-          {textLength: 50, fontSize: 14, node: {nodeId: 1, localName: 'p', attributes: []}},
+          {textLength: 50, fontSize: 10, node: {nodeId: 1, localName: 'p', attributes: []}},
         ],
       },
     };

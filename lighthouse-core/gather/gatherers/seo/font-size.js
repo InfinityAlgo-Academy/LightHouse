@@ -18,8 +18,7 @@ const CSSMatchedStyles = require('../../../lib/web-inspector').CSSMatchedStyles;
 const Gatherer = require('../gatherer');
 const FONT_SIZE_PROPERTY_NAME = 'font-size';
 const TEXT_NODE_BLOCK_LIST = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT']);
-// 16px value comes from https://developers.google.com/speed/docs/insights/UseLegibleFontSizes
-const MINIMAL_LEGIBLE_FONT_SIZE_PX = 16;
+const MINIMAL_LEGIBLE_FONT_SIZE_PX = 12;
 // limit number of protocol calls to make sure that gatherer doesn't take more than 1-2s
 const MAX_NODES_VISITED = 500;
 const MAX_NODES_ANALYZED = 50;
