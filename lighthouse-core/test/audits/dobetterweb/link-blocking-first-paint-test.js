@@ -30,6 +30,12 @@ describe('Link Block First Paint audit', () => {
         {
           tag: linkDetails,
           transferSize: 100,
+          startTime: 4.9,
+          endTime: 5.1,
+        },
+        {
+          tag: linkDetails,
+          transferSize: 100,
           startTime: 5,
           endTime: 5.4,
         },
@@ -44,12 +50,6 @@ describe('Link Block First Paint audit', () => {
           transferSize: 100,
           startTime: 5,
           endTime: 5.8, // should be ignored for being after FCP
-        },
-        {
-          tag: linkDetails,
-          transferSize: 100,
-          startTime: 4.9,
-          endTime: 5.1,
         },
         {
           tag: linkDetails,
