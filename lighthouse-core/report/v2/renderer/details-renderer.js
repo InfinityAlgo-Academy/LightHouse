@@ -71,7 +71,7 @@ class DetailsRenderer {
   _renderBytes(details) {
     // TODO: handle displayUnit once we have something other than 'kb'
     const text = Util.formatBytesToKB(details.value, details.granularity);
-    return this._renderText({text});
+    return this._renderText({type: 'text', text});
   }
 
   /**
@@ -84,7 +84,7 @@ class DetailsRenderer {
       text = Util.formatDuration(details.value);
     }
 
-    return this._renderText({text});
+    return this._renderText({type: 'text', text});
   }
 
   /**
@@ -347,8 +347,8 @@ DetailsRenderer.ListDetailsJSON; // eslint-disable-line no-unused-expressions
  * @typedef {{
  *     type: string,
  *     value: number,
- *     granularity: number|undefined,
- *     displayUnit: string|undefined,
+ *     granularity: (number|undefined),
+ *     displayUnit: (string|undefined),
  * }}
  */
 DetailsRenderer.NumericUnitDetailsJSON; // eslint-disable-line no-unused-expressions
