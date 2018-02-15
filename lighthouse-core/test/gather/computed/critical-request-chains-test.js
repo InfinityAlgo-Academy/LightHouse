@@ -50,6 +50,7 @@ function replaceChain(chains, networkRecords) {
 describe('CriticalRequestChain gatherer: extractChain function', () => {
   it('returns correct data for chain from a devtoolsLog', () => {
     const computedArtifacts = Runner.instantiateComputedArtifacts();
+    computedArtifacts.URL = {finalUrl: 'https://en.m.wikipedia.org/wiki/Main_Page'};
     const wikiDevtoolsLog = require('../../fixtures/wikipedia-redirect.devtoolslog.json');
     const wikiChains = require('../../fixtures/wikipedia-redirect.critical-request-chains.json');
 

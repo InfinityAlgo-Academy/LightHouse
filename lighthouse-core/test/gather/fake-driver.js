@@ -16,7 +16,7 @@ module.exports = {
     return Promise.resolve();
   },
   gotoURL() {
-    return Promise.resolve('https://example.com');
+    return Promise.resolve('https://www.reddit.com/r/nba');
   },
   beginEmulation() {
     return Promise.resolve();

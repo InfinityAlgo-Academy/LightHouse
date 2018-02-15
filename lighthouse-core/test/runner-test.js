@@ -366,6 +366,9 @@ describe('Runner', () => {
       ],
 
       artifacts: {
+        URL: {
+          finalUrl: 'https://www.reddit.com/r/nba',
+        },
         devtoolsLogs: {
           defaultPass: path.join(__dirname, '/fixtures/perflog.json'),
         },
@@ -509,7 +512,7 @@ describe('Runner', () => {
     const config = new Config({
       passes: [{
         passName: 'firstPass',
-        gatherers: ['viewport-dimensions'],
+        gatherers: ['url', 'viewport-dimensions'],
       }],
 
       audits: [
