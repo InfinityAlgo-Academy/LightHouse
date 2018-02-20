@@ -136,7 +136,7 @@ gulp.task('browserify-lighthouse', () => {
         bundle = bundle.require(audit, {expose: audit.replace(corePath, '../')});
       });
       gatherers.forEach(gatherer => {
-        bundle = bundle.require(gatherer, {expose: gatherer.replace(driverPath, './')});
+        bundle = bundle.require(gatherer, {expose: gatherer.replace(driverPath, '../gather/')});
       });
       computedArtifacts.forEach(artifact => {
         bundle = bundle.require(artifact, {expose: artifact.replace(corePath, './')});
