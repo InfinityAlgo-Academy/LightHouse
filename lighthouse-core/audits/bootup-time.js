@@ -21,8 +21,9 @@ class BootupTime extends Audit {
       name: 'bootup-time',
       description: 'JavaScript boot-up time',
       failureDescription: 'JavaScript boot-up time is too high',
-      helpText: 'Consider reducing the time spent parsing, compiling and executing JS. ' +
-        'You may find delivering smaller JS payloads helps with this.',
+      helpText: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
+        'You may find delivering smaller JS payloads helps with this. [Learn ' +
+        'more](https://developers.google.com/web/lighthouse/audits/bootup).',
       requiredArtifacts: ['traces'],
     };
   }
