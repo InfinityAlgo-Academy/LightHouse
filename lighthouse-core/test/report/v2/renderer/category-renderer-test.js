@@ -43,7 +43,7 @@ describe('CategoryRenderer', () => {
 
   it('renders an audit', () => {
     const audit = sampleResults.reportCategories[0].audits[0];
-    const auditDOM = renderer._renderAudit(audit);
+    const auditDOM = renderer.renderAudit(audit);
 
     const title = auditDOM.querySelector('.lh-score__title');
     const description = auditDOM.querySelector('.lh-score__description');
@@ -57,20 +57,20 @@ describe('CategoryRenderer', () => {
   });
 
   it('renders an audit debug str when appropriate', () => {
-    const audit1 = renderer._renderAudit({
+    const audit1 = renderer.renderAudit({
       scoringMode: 'binary', score: 0,
       result: {helpText: 'help text', debugString: 'Debug string', description: 'Audit title'},
     });
     assert.ok(audit1.querySelector('.lh-debug'));
 
-    const audit2 = renderer._renderAudit({
+    const audit2 = renderer.renderAudit({
       scoringMode: 'binary', score: 0, result: {helpText: 'help text', description: 'Audit title'},
     });
     assert.ok(!audit2.querySelector('.lh-debug'));
   });
 
   it('renders an informative audit', () => {
-    const auditDOM = renderer._renderAudit({
+    const auditDOM = renderer.renderAudit({
       id: 'informative', score: 0,
       result: {description: 'It informs', helpText: 'help text', informative: true},
     });
@@ -138,106 +138,7 @@ describe('CategoryRenderer', () => {
     assert.ok(!categoryDOM2.querySelector('.lh-audit-group--notapplicable'));
   });
 
-  describe('performance category', () => {
-    const category = sampleResults.reportCategories.find(cat => cat.id === 'performance');
-
-    it('renders the category header', () => {
-      const categoryDOM = renderer.render(category, sampleResults.reportGroups);
-      const score = categoryDOM.querySelector('.lh-score');
-      const value = categoryDOM.querySelector('.lh-score  > .lh-score__value');
-      const title = score.querySelector('.lh-score__title');
-
-      assert.deepEqual(score, score.firstElementChild, 'first child is a score');
-      assert.ok(value.classList.contains('lh-score__value--numeric'),
-                'category score is numeric');
-      assert.equal(value.textContent, Math.round(category.score), 'category score is rounded');
-      assert.equal(title.textContent, category.name, 'title is set');
-    });
-
-    it('renders the sections', () => {
-      const categoryDOM = renderer.render(category, sampleResults.reportGroups);
-      const sections = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group');
-      assert.equal(sections.length, 4);
-    });
-
-    it('renders the metrics', () => {
-      const categoryDOM = renderer.render(category, sampleResults.reportGroups);
-      const metricsSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[0];
-
-      const metricAudits = category.audits.filter(audit => audit.group === 'perf-metric');
-      const timelineElements = metricsSection.querySelectorAll('.lh-timeline-metric');
-      const nontimelineElements = metricsSection.querySelectorAll('.lh-audit');
-      assert.equal(timelineElements.length + nontimelineElements.length, metricAudits.length);
-    });
-
-    it('renders the failing performance hints', () => {
-      const categoryDOM = renderer.render(category, sampleResults.reportGroups);
-
-      const hintAudits = category.audits.filter(audit => audit.group === 'perf-hint' &&
-          audit.score !== 100);
-      const hintElements = categoryDOM.querySelectorAll('.lh-perf-hint');
-      assert.equal(hintElements.length, hintAudits.length);
-
-      const hintElement = hintElements[0];
-      const hintSparklineElement = hintElement.querySelector('.lh-perf-hint__sparkline');
-      assert.ok(hintElement.querySelector('.lh-perf-hint__title'), 'did not render title');
-      assert.ok(hintSparklineElement, 'did not render sparkline');
-      assert.ok(hintElement.querySelector('.lh-perf-hint__stats'), 'did not render stats');
-      assert.ok(hintSparklineElement.title, 'did not render tooltip');
-    });
-
-    it('renders the performance hints with a debug string', () => {
-      const auditWithDebug = {
-        score: 0,
-        group: 'perf-hint',
-        result: {rawValue: 100, debugString: 'Yikes!', description: 'Bug'},
-      };
-
-      const fakeAudits = category.audits.concat(auditWithDebug);
-      const fakeCategory = Object.assign({}, category, {audits: fakeAudits});
-      const categoryDOM = renderer.render(fakeCategory, sampleResults.reportGroups);
-
-      const debugEl = categoryDOM.querySelector('.lh-perf-hint .lh-debug');
-      assert.ok(debugEl, 'did not render debug');
-    });
-
-    it('renders the performance hints with no extended info', () => {
-      const buggyAudit = {
-        score: 0,
-        group: 'perf-hint',
-        result: {debugString: 'Yikes!', description: 'Bug'},
-      };
-
-      const fakeAudits = category.audits.concat(buggyAudit);
-      const fakeCategory = Object.assign({}, category, {audits: fakeAudits});
-      const categoryDOM = renderer.render(fakeCategory, sampleResults.reportGroups);
-
-      const debugEl = categoryDOM.querySelector('.lh-perf-hint .lh-debug');
-      assert.ok(debugEl, 'did not render debug');
-    });
-
-    it('renders the failing diagnostics', () => {
-      const categoryDOM = renderer.render(category, sampleResults.reportGroups);
-      const diagnosticSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[2];
-
-      const diagnosticAudits = category.audits.filter(audit => audit.group === 'perf-info' &&
-          audit.score !== 100);
-      const diagnosticElements = diagnosticSection.querySelectorAll('.lh-audit');
-      assert.equal(diagnosticElements.length, diagnosticAudits.length);
-    });
-
-    it('renders the passed audits', () => {
-      const categoryDOM = renderer.render(category, sampleResults.reportGroups);
-      const passedSection = categoryDOM.querySelector('.lh-category > .lh-passed-audits');
-
-      const passedAudits = category.audits.filter(audit => audit.group !== 'perf-metric' &&
-          audit.score === 100);
-      const passedElements = passedSection.querySelectorAll('.lh-audit');
-      assert.equal(passedElements.length, passedAudits.length);
-    });
-  });
-
-  describe('accessibility category', () => {
+  describe('category with groups', () => {
     const category = sampleResults.reportCategories.find(cat => cat.id === 'accessibility');
 
     it('renders the category header', () => {
@@ -255,7 +156,8 @@ describe('CategoryRenderer', () => {
       assert.ok(description.querySelector('a'), 'description contains converted markdown links');
     });
 
-    it('renders the failed audits grouped by group', () => {
+    // TODO waiting for decision regarding this header
+    xit('renders the failed audits grouped by group', () => {
       const categoryDOM = renderer.render(category, sampleResults.reportGroups);
       const failedAudits = category.audits.filter(audit => {
         return audit.score !== 100 && !audit.result.notApplicable;
@@ -282,7 +184,6 @@ describe('CategoryRenderer', () => {
       assert.equal(auditsElements.length, category.audits.length);
     });
   });
-
 
   describe('grouping passed/failed/manual', () => {
     it('separates audits in the DOM', () => {
@@ -312,10 +213,10 @@ describe('CategoryRenderer', () => {
   });
 
   it('can set a custom templateContext', () => {
-    assert.equal(renderer._templateContext, renderer._dom.document());
+    assert.equal(renderer.templateContext, renderer.dom.document());
 
     const otherDocument = jsdom.jsdom(TEMPLATE_FILE);
     renderer.setTemplateContext(otherDocument);
-    assert.equal(renderer._templateContext, otherDocument);
+    assert.equal(renderer.templateContext, otherDocument);
   });
 });

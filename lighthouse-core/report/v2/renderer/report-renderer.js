@@ -12,18 +12,15 @@
  * Dummy text for ensuring report robustness: </script> pre$`post %%LIGHTHOUSE_JSON%%
  */
 
-/* globals self, Util */
+/* globals self, Util, DetailsRenderer, CategoryRenderer, PerformanceCategoryRenderer */
 
 class ReportRenderer {
   /**
    * @param {!DOM} dom
-   * @param {!CategoryRenderer} categoryRenderer
    */
-  constructor(dom, categoryRenderer) {
+  constructor(dom) {
     /** @private {!DOM} */
     this._dom = dom;
-    /** @private {!CategoryRenderer} */
-    this._categoryRenderer = categoryRenderer;
     /** @private {!Document|!Element} */
     this._templateContext = this._dom.document();
   }
@@ -46,7 +43,6 @@ class ReportRenderer {
    */
   setTemplateContext(context) {
     this._templateContext = context;
-    this._categoryRenderer.setTemplateContext(context);
   }
 
   /**
@@ -152,12 +148,25 @@ class ReportRenderer {
       scoreHeader = reportSection.appendChild(this._dom.createElement('div', 'lh-scores-header'));
     }
 
+    const detailsRenderer = new DetailsRenderer(this._dom);
+    const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
+    categoryRenderer.setTemplateContext(this._templateContext);
+    const perfCategoryRenderer = new PerformanceCategoryRenderer(this._dom, detailsRenderer);
+    perfCategoryRenderer.setTemplateContext(this._templateContext);
+
     const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
     for (const category of report.reportCategories) {
       if (scoreHeader) {
-        scoreHeader.appendChild(this._categoryRenderer.renderScoreGauge(category));
+        scoreHeader.appendChild(categoryRenderer.renderScoreGauge(category));
       }
-      categories.appendChild(this._categoryRenderer.render(category, report.reportGroups));
+
+      let renderer = categoryRenderer;
+
+      if (category.id === 'performance') {
+        renderer = perfCategoryRenderer;
+      }
+
+      categories.appendChild(renderer.render(category, report.reportGroups));
     }
 
     reportSection.appendChild(this._renderReportFooter(report));

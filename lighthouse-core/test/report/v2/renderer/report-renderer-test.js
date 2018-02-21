@@ -16,6 +16,8 @@ const DOM = require('../../../../report/v2/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/v2/renderer/details-renderer.js');
 const ReportUIFeatures = require('../../../../report/v2/renderer/report-ui-features.js');
 const CategoryRenderer = require('../../../../report/v2/renderer/category-renderer.js');
+// lazy loaded because it depends on CategoryRenderer to be available globally
+let PerformanceCategoryRenderer = null;
 const CriticalRequestChainRenderer = require(
     '../../../../report/v2/renderer/crc-details-renderer.js');
 const ReportRenderer = require('../../../../report/v2/renderer/report-renderer.js');
@@ -32,6 +34,13 @@ describe('ReportRenderer V2', () => {
     global.Util = Util;
     global.ReportUIFeatures = ReportUIFeatures;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
+    global.DetailsRenderer = DetailsRenderer;
+    global.CategoryRenderer = CategoryRenderer;
+    if (!PerformanceCategoryRenderer) {
+      PerformanceCategoryRenderer =
+        require('../../../../report/v2/renderer/performance-category-renderer.js');
+    }
+    global.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
 
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
@@ -56,6 +65,9 @@ describe('ReportRenderer V2', () => {
     global.ReportUIFeatures = undefined;
     global.matchMedia = undefined;
     global.CriticalRequestChainRenderer = undefined;
+    global.DetailsRenderer = undefined;
+    global.CategoryRenderer = undefined;
+    global.PerformanceCategoryRenderer = undefined;
   });
 
   describe('renderReport', () => {
