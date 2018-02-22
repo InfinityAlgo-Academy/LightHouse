@@ -72,6 +72,13 @@ class TcpConnection {
   }
 
   /**
+   * @return {boolean}
+   */
+  isWarm() {
+    return this._warmed;
+  }
+
+  /**
    * Sets the number of excess bytes that are available to this connection on future downloads, only
    * applies to H2 connections.
    * @param {number} bytes

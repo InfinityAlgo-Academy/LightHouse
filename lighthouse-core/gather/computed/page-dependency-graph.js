@@ -52,6 +52,13 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
 
     networkRecords.forEach(record => {
       if (IGNORED_MIME_TYPES_REGEX.test(record.mimeType)) return;
+
+      // Network record requestIds can be duplicated for an unknown reason
+      // Suffix all subsequent records with `:duplicate` until it's unique
+      while (idToNodeMap.has(record.requestId)) {
+        record._requestId += ':duplicate';
+      }
+
       const node = new NetworkNode(record);
       nodes.push(node);
 

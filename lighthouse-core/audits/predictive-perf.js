@@ -6,9 +6,10 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/v2/renderer/util.js');
-const LoadSimulator = require('../lib/dependency-graph/simulator/simulator.js');
-const Node = require('../lib/dependency-graph/node.js');
+const Util = require('../report/v2/renderer/util');
+const LoadSimulator = require('../lib/dependency-graph/simulator/simulator');
+const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer');
+const Node = require('../lib/dependency-graph/node');
 const WebInspector = require('../lib/web-inspector');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
@@ -27,13 +28,13 @@ const COEFFICIENTS = {
   },
   FMP: {
     intercept: 1532,
-    optimistic: -.30,
+    optimistic: -0.3,
     pessimistic: 1.33,
   },
   TTCI: {
     intercept: 1582,
-    optimistic: .97,
-    pessimistic: .49,
+    optimistic: 0.97,
+    pessimistic: 0.49,
   },
 };
 
@@ -69,6 +70,40 @@ class PredictivePerf extends Audit {
     });
 
     return scriptUrls;
+  }
+
+  /**
+   * @param {!Node} dependencyGraph
+   * @return {!Object}
+   */
+  static computeRTTAndServerResponseTime(dependencyGraph) {
+    const records = [];
+    dependencyGraph.traverse(node => {
+      if (node.type === Node.TYPES.NETWORK) records.push(node.record);
+    });
+
+    // First pass compute the estimated observed RTT to each origin's servers.
+    const rttByOrigin = new Map();
+    for (const [origin, summary] of NetworkAnalyzer.estimateRTTByOrigin(records).entries()) {
+      rttByOrigin.set(origin, summary.min);
+    }
+
+    // We'll use the minimum RTT as the assumed connection latency since we care about how much addt'l
+    // latency each origin introduces as Lantern will be simulating with its own connection latency.
+    const minimumRtt = Math.min(...Array.from(rttByOrigin.values()));
+    // We'll use the observed RTT information to help estimate the server response time
+    const responseTimeSummaries = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records, {
+      rttByOrigin,
+    });
+
+    const additionalRttByOrigin = new Map();
+    const serverResponseTimeByOrigin = new Map();
+    for (const [origin, summary] of responseTimeSummaries.entries()) {
+      additionalRttByOrigin.set(origin, rttByOrigin.get(origin) - minimumRtt);
+      serverResponseTimeByOrigin.set(origin, summary.median);
+    }
+
+    return {additionalRttByOrigin, serverResponseTimeByOrigin};
   }
 
   /**
@@ -173,9 +208,10 @@ class PredictivePerf extends Audit {
       // Include all scripts and high priority requests, exclude all images
       const isImage = node.record._resourceType === WebInspector.resourceTypes.Image;
       const isScript = node.record._resourceType === WebInspector.resourceTypes.Script;
-      return !isImage && (isScript ||
-          node.record.priority() === 'High' ||
-          node.record.priority() === 'VeryHigh');
+      return (
+        !isImage &&
+        (isScript || node.record.priority() === 'High' || node.record.priority() === 'VeryHigh')
+      );
     });
   }
 
@@ -191,12 +227,14 @@ class PredictivePerf extends Audit {
    * @param {!Map<!Node, {startTime, endTime}>} nodeTiming
    * @return {number}
    */
-  static getLastLongTaskEndTime(nodeTiming) {
+  static getLastLongTaskEndTime(nodeTiming, duration = 50) {
     return Array.from(nodeTiming.entries())
-        .filter(([node, timing]) => node.type === Node.TYPES.CPU &&
-            timing.endTime - timing.startTime > 50)
-        .map(([_, timing]) => timing.endTime)
-        .reduce((max, x) => Math.max(max, x), 0);
+      .filter(
+        ([node, timing]) =>
+          node.type === Node.TYPES.CPU && timing.endTime - timing.startTime > duration
+      )
+      .map(([_, timing]) => timing.endTime)
+      .reduce((max, x) => Math.max(max, x), 0);
   }
 
   /**
@@ -220,9 +258,14 @@ class PredictivePerf extends Audit {
       };
 
       const values = {};
+      const options = PredictivePerf.computeRTTAndServerResponseTime(graph);
       Object.keys(graphs).forEach(key => {
-        const estimate = new LoadSimulator(graphs[key]).simulate();
-        const lastLongTaskEnd = PredictivePerf.getLastLongTaskEndTime(estimate.nodeTiming);
+        const estimate = new LoadSimulator(graphs[key], options).simulate();
+        const longTaskThreshold = key.startsWith('optimistic') ? 100 : 50;
+        const lastLongTaskEnd = PredictivePerf.getLastLongTaskEndTime(
+          estimate.nodeTiming,
+          longTaskThreshold
+        );
 
         switch (key) {
           case 'optimisticFCP':
@@ -240,13 +283,16 @@ class PredictivePerf extends Audit {
         }
       });
 
-      values.roughEstimateOfFCP = COEFFICIENTS.FCP.intercept +
+      values.roughEstimateOfFCP =
+        COEFFICIENTS.FCP.intercept +
         COEFFICIENTS.FCP.optimistic * values.optimisticFCP +
         COEFFICIENTS.FCP.pessimistic * values.pessimisticFCP;
-      values.roughEstimateOfFMP = COEFFICIENTS.FMP.intercept +
+      values.roughEstimateOfFMP =
+        COEFFICIENTS.FMP.intercept +
         COEFFICIENTS.FMP.optimistic * values.optimisticFMP +
         COEFFICIENTS.FMP.pessimistic * values.pessimisticFMP;
-      values.roughEstimateOfTTCI = COEFFICIENTS.TTCI.intercept +
+      values.roughEstimateOfTTCI =
+        COEFFICIENTS.TTCI.intercept +
         COEFFICIENTS.TTCI.optimistic * values.optimisticTTCI +
         COEFFICIENTS.TTCI.pessimistic * values.pessimisticTTCI;
 

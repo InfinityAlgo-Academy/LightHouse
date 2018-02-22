@@ -7,13 +7,13 @@
 
 const Node = require('../node');
 const TcpConnection = require('./tcp-connection');
+const ConnectionPool = require('./connection-pool');
 const emulation = require('../../emulation').settings;
 
 // see https://cs.chromium.org/search/?q=kDefaultMaxNumDelayableRequestsPerClient&sq=package:chromium&type=cs
 const DEFAULT_MAXIMUM_CONCURRENT_REQUESTS = 10;
 
 // Fast 3G emulation target from DevTools, WPT 3G - Fast setting
-const DEFAULT_FALLBACK_TTFB = 30;
 const DEFAULT_RTT = emulation.TYPICAL_MOBILE_THROTTLING_METRICS.targetLatency;
 const DEFAULT_THROUGHPUT = emulation.TYPICAL_MOBILE_THROTTLING_METRICS.targetDownloadThroughput * 8; // 1.6 Mbps
 
@@ -23,20 +23,6 @@ const DEFAULT_CPU_TASK_MULTIPLIER = emulation.CPU_THROTTLE_METRICS.rate;
 const DEFAULT_LAYOUT_TASK_MULTIPLIER = DEFAULT_CPU_TASK_MULTIPLIER / 2;
 // if a task takes more than 10 seconds it's usually a sign it isn't actually CPU bound and we're overestimating
 const DEFAULT_MAXIMUM_CPU_TASK_DURATION = 10000;
-
-const TLS_SCHEMES = ['https', 'wss'];
-
-function groupBy(items, keyFunc) {
-  const grouped = new Map();
-  items.forEach(item => {
-    const key = keyFunc(item);
-    const group = grouped.get(key) || [];
-    group.push(item);
-    grouped.set(key, group);
-  });
-
-  return grouped;
-}
 
 const NodeState = {
   NotReadyToStart: 0,
@@ -57,7 +43,6 @@ class Simulator {
       {
         rtt: DEFAULT_RTT,
         throughput: DEFAULT_THROUGHPUT,
-        fallbackTTFB: DEFAULT_FALLBACK_TTFB,
         maximumConcurrentRequests: DEFAULT_MAXIMUM_CONCURRENT_REQUESTS,
         cpuTaskMultiplier: DEFAULT_CPU_TASK_MULTIPLIER,
         layoutTaskMultiplier: DEFAULT_LAYOUT_TASK_MULTIPLIER,
@@ -67,7 +52,6 @@ class Simulator {
 
     this._rtt = this._options.rtt;
     this._throughput = this._options.throughput;
-    this._fallbackTTFB = this._options.fallbackTTFB;
     this._maximumConcurrentRequests = Math.min(
       TcpConnection.maximumSaturatedConnections(this._rtt, this._throughput),
       this._options.maximumConcurrentRequests
@@ -77,65 +61,17 @@ class Simulator {
   }
 
   /**
-   * Computes the time to first byte of a network record. Returns Infinity if not available.
-   * @param {!WebInspector.NetworkRequest} record
-   * @return {number}
+   *
    */
-  static getTTFB(record) {
-    const timing = record._timing;
-    return (timing && timing.receiveHeadersEnd - timing.sendEnd) || Infinity;
-  }
-
-  /**
-   * Initializes this._networkRecords with the array of network records from the graph.
-   */
-  _initializeNetworkRecords() {
-    this._networkRecords = [];
-
+  _initializeConnectionPool() {
+    const records = [];
     this._graph.getRootNode().traverse(node => {
       if (node.type === Node.TYPES.NETWORK) {
-        this._networkRecords.push(node.record);
+        records.push(node.record);
       }
     });
-  }
 
-  /**
-   * Initializes this._connections with the map of available TcpConnections by connectionId.
-   */
-  _initializeNetworkConnections() {
-    const connections = new Map();
-    const recordsByConnection = groupBy(this._networkRecords, record => record.connectionId);
-
-    for (const [connectionId, records] of recordsByConnection.entries()) {
-      const isTLS = TLS_SCHEMES.includes(records[0].parsedURL.scheme);
-      const isH2 = records[0].protocol === 'h2';
-
-      // We'll approximate how much time the server for a connection took to respond after receiving
-      // the request by computing the minimum TTFB time for requests on that connection.
-      //    TTFB = one way latency + server response time + one way latency
-      // Even though TTFB is greater than server response time, the RTT is underaccounted for by
-      // not varying per-server and so the difference roughly evens out.
-      // TODO(patrickhulce): investigate a way to identify per-server RTT
-      let estimatedResponseTime = Math.min(...records.map(Simulator.getTTFB));
-
-      // If we couldn't find a TTFB for the requests, use the fallback TTFB instead.
-      if (!Number.isFinite(estimatedResponseTime)) {
-        estimatedResponseTime = this._fallbackTTFB;
-      }
-
-      const connection = new TcpConnection(
-        this._rtt,
-        this._throughput,
-        estimatedResponseTime,
-        isTLS,
-        isH2
-      );
-
-      connections.set(connectionId, connection);
-    }
-
-    this._connections = connections;
-    return connections;
+    this._connectionPool = new ConnectionPool(records, this._options);
   }
 
   /**
@@ -143,7 +79,6 @@ class Simulator {
    */
   _initializeAuxiliaryData() {
     this._nodeTiming = new Map();
-    this._connectionsInUse = new Set();
     this._numberInProgressByType = new Map();
 
     this._nodes = [];
@@ -229,16 +164,11 @@ class Simulator {
 
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
-    const connection = this._connections.get(node.record.connectionId);
+    // Start a network request if we're not at max requests and a connection is available
     const numberOfActiveRequests = this._numberInProgress(node.type);
-
-    // Start a network request if the connection isn't in use and we're not at max requests
-    if (
-      numberOfActiveRequests >= this._maximumConcurrentRequests ||
-      this._connectionsInUse.has(connection)
-    ) {
-      return;
-    }
+    if (numberOfActiveRequests >= this._maximumConcurrentRequests) return;
+    const connection = this._connectionPool.acquire(node.record);
+    if (!connection) return;
 
     this._markNodeAsInProgress(node, totalElapsedTime);
     this._setTimingData(node, {
@@ -246,8 +176,6 @@ class Simulator {
       timeElapsedOvershoot: 0,
       bytesDownloaded: 0,
     });
-
-    this._connectionsInUse.add(connection);
   }
 
   /**
@@ -255,7 +183,7 @@ class Simulator {
    * currently in flight.
    */
   _updateNetworkCapacity() {
-    for (const connection of this._connectionsInUse) {
+    for (const connection of this._connectionPool.connectionsInUse()) {
       connection.setThroughput(this._throughput / this._nodes[NodeState.InProgress].size);
     }
   }
@@ -283,7 +211,7 @@ class Simulator {
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
     const timingData = this._nodeTiming.get(node);
-    const connection = this._connections.get(node.record.connectionId);
+    const connection = this._connectionPool.acquire(node.record);
     const calculation = connection.simulateDownloadUntil(
       node.record.transferSize - timingData.bytesDownloaded,
       {timeAlreadyElapsed: timingData.timeElapsed}
@@ -325,7 +253,7 @@ class Simulator {
 
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
-    const connection = this._connections.get(node.record.connectionId);
+    const connection = this._connectionPool.acquire(node.record);
     const calculation = connection.simulateDownloadUntil(
       node.record.transferSize - timingData.bytesDownloaded,
       {
@@ -339,7 +267,7 @@ class Simulator {
 
     if (isFinished) {
       connection.setWarmed(true);
-      this._connectionsInUse.delete(connection);
+      this._connectionPool.release(node.record);
       this._markNodeAsComplete(node, totalElapsedTime);
     } else {
       timingData.timeElapsed += calculation.timeElapsed;
@@ -353,9 +281,8 @@ class Simulator {
    * @return {{timeInMs: number, nodeTiming: !Map<!Node, !NodeTimingData>}}
    */
   simulate() {
-    // initialize all the necessary data containers
-    this._initializeNetworkRecords();
-    this._initializeNetworkConnections();
+    // initialize the necessary data containers
+    this._initializeConnectionPool();
     this._initializeAuxiliaryData();
 
     const nodesNotReadyToStart = this._nodes[NodeState.NotReadyToStart];
@@ -366,6 +293,7 @@ class Simulator {
     rootNode.traverse(node => nodesNotReadyToStart.add(node));
 
     let totalElapsedTime = 0;
+    let iteration = 0;
 
     // root node is always ready to start
     this._markNodeAsReadyToStart(rootNode, totalElapsedTime);
@@ -384,6 +312,12 @@ class Simulator {
       const minimumTime = this._findNextNodeCompletionTime();
       totalElapsedTime += minimumTime;
 
+      // While this is no longer strictly necessary, it's always better than LH hanging
+      if (!Number.isFinite(minimumTime) || iteration > 100000) {
+        throw new Error('Graph creation failed, depth exceeded');
+      }
+
+      iteration++;
       // update how far each node will progress until that point
       for (const node of nodesInProgress) {
         this._updateProgressMadeInTimePeriod(node, minimumTime, totalElapsedTime);
