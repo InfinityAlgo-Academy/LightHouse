@@ -123,6 +123,10 @@ class UnusedBytes extends Audit {
       displayValue,
       rawValue: wastedMs,
       score: UnusedBytes.scoreForWastedMs(wastedMs),
+      summary: {
+        wastedMs,
+        wastedKb,
+      },
       // extendedInfo: {
       //   value: {
       //     wastedMs,

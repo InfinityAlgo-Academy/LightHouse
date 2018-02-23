@@ -45,8 +45,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
    * @return {!Element}
    */
   _renderPerfHintAudit(audit, scale) {
-    const extendedInfo = /** @type {!PerformanceCategoryRenderer.PerfHintExtendedInfo}
-        */ (audit.result.extendedInfo);
+    const summaryInfo = /** @type {!PerformanceCategoryRenderer.PerfHintSummaryInfo}
+        */ (audit.result.summary);
     const tooltipAttrs = {title: audit.result.displayValue};
 
     const element = this.dom.createElement('details', [
@@ -62,11 +62,11 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     this.dom.createChildOf(summary, 'div', 'lh-toggle-arrow', {title: 'See resources'});
 
-    if (!extendedInfo || typeof audit.result.rawValue !== 'number') {
-      const debugStrEl = this.dom.createChildOf(summary, 'div', 'lh-debug');
-      debugStrEl.textContent = audit.result.debugString || 'Report error: no extended information';
-      return element;
-    }
+    // if (!summaryInfo || typeof audit.result.rawValue !== 'number') {
+    //   const debugStrEl = this.dom.createChildOf(summary, 'div', 'lh-debug');
+    //   debugStrEl.textContent = audit.result.debugString || 'Report error: no extended information';
+    //   return element;
+    // }
 
     const sparklineContainerEl = this.dom.createChildOf(summary, 'div', 'lh-perf-hint__sparkline',
         tooltipAttrs);
@@ -78,9 +78,9 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const statsMsEl = this.dom.createChildOf(statsEl, 'div', 'lh-perf-hint__primary-stat');
     statsMsEl.textContent = Util.formatMilliseconds(audit.result.rawValue);
 
-    if (extendedInfo.value.wastedKb) {
+    if (summaryInfo && summaryInfo.wastedKb) {
       const statsKbEl = this.dom.createChildOf(statsEl, 'div', 'lh-perf-hint__secondary-stat');
-      statsKbEl.textContent = Util.formatNumber(extendedInfo.value.wastedKb) + ' KB';
+      statsKbEl.textContent = Util.formatNumber(audit.result.summary.wastedKb) + ' KB';
     }
 
     const descriptionEl = this.dom.createChildOf(element, 'div', 'lh-perf-hint__description');

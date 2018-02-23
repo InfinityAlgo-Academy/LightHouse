@@ -200,6 +200,7 @@ if (typeof module !== 'undefined' && module.exports) {
  *       scoringMode: string,
  *       extendedInfo: Object,
  *       details: (!DetailsRenderer.DetailsJSON|undefined)
+ *       summary: any
  *     }
  * }}
  */
