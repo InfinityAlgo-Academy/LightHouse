@@ -16,7 +16,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   _renderTimelineMetricAudit(audit, scale) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-timeline-metric', this.templateContext);
     const element = this.dom.find('.lh-timeline-metric', tmpl);
-    element.classList.add(`lh-timeline-metric--${Util.calculateRating(audit.score)}`);
+    element.classList.add(`lh-timeline-metric--${Util.calculateRating(audit.result.score)}`);
 
     const titleEl = this.dom.find('.lh-timeline-metric__title', tmpl);
     titleEl.textContent = audit.result.description;
@@ -51,7 +51,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     const element = this.dom.createElement('details', [
       'lh-perf-hint',
-      `lh-perf-hint--${Util.calculateRating(audit.score)}`,
+      `lh-perf-hint--${Util.calculateRating(audit.result.score)}`,
       'lh-expandable-details',
     ].join(' '));
 

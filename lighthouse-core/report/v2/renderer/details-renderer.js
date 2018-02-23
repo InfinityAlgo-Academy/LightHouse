@@ -214,9 +214,7 @@ class DetailsRenderer {
 
     const element = this._dom.createElement('details', 'lh-details');
     element.open = true;
-    if (details.header) {
-      element.appendChild(this._dom.createElement('summary')).textContent = details.header;
-    }
+    element.appendChild(this._dom.createElement('summary')).textContent = 'View Details';
 
     const tableElem = this._dom.createChildOf(element, 'table', 'lh-table');
     const theadElem = this._dom.createChildOf(tableElem, 'thead');
