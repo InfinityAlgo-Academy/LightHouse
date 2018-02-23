@@ -71,53 +71,16 @@ class Audit {
   }
 
   /**
-   * Table cells will use the type specified in headings[x].itemType. However a custom type
-   * can be provided: results[x].propName = {type: 'code', text: '...'}
-   * @param {!Audit.Headings} headings
-   * @param {!Array<!Object<string, *>>} results
-   * @return {!Array<!DetailsRenderer.DetailsJSON>}
-   */
-  static makeTableRows(headings, results) {
-    const tableRows = results.map(item => {
-      return headings.map(heading => {
-        const value = item[heading.key];
-        if (typeof value === 'object' && value && value.type) return value;
-
-        return {
-          type: heading.itemType,
-          text: value,
-        };
-      });
-    });
-    return tableRows;
-  }
-
-  /**
-   * @param {!Audit.Headings} headings
-   * @return {!Array<!DetailsRenderer.DetailsJSON>}
-   */
-  static makeTableHeaders(headings) {
-    return headings.map(heading => ({
-      type: 'text',
-      itemKey: heading.key,
-      itemType: heading.itemType,
-      text: heading.text,
-    }));
-  }
-
-  /**
    * @param {!Audit.Headings} headings
    * @param {!Array<!Object<string, string>>} results
    * @return {!DetailsRenderer.DetailsJSON}
    */
   static makeTableDetails(headings, results) {
-    const tableHeaders = Audit.makeTableHeaders(headings);
-    const tableRows = Audit.makeTableRows(headings, results);
+    // todo: empty the headings obj if results.length === 0
     return {
       type: 'table',
-      header: 'View Details',
-      itemHeaders: tableHeaders,
-      items: tableRows,
+      headings: headings,
+      items: results,
     };
   }
 
