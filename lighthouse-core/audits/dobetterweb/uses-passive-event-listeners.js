@@ -37,8 +37,8 @@ class PassiveEventsAudit extends ViolationAudit {
     const results = ViolationAudit.getViolationResults(artifacts, /passive event listener/);
 
     const headings = [
-      {itemKey: 'url', itemType: 'url', text: 'URL'},
-      {itemKey: 'label', itemType: 'text', text: 'Location'},
+      {key: 'url', itemType: 'url', text: 'URL'},
+      {key: 'label', itemType: 'text', text: 'Location'},
     ];
     const details = ViolationAudit.makeTableDetails(headings, results);
 

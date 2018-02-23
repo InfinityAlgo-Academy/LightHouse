@@ -131,9 +131,9 @@ class UserTimings extends Audit {
       });
 
       const headings = [
-        {itemKey: 'name', itemType: 'text', text: 'Name'},
-        {itemKey: 'timingType', itemType: 'text', text: 'Type'},
-        {itemKey: 'time', itemType: 'text', text: 'Time'},
+        {key: 'name', itemType: 'text', text: 'Name'},
+        {key: 'timingType', itemType: 'text', text: 'Type'},
+        {key: 'time', itemType: 'text', text: 'Time'},
       ];
 
       const details = Audit.makeTableDetails(headings, tableRows);

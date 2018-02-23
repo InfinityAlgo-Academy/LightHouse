@@ -217,10 +217,10 @@ class FontSize extends Audit {
     const pageUrl = artifacts.URL.finalUrl;
 
     const headings = [
-      {itemKey: 'source', itemType: 'url', text: 'Source'},
-      {itemKey: 'selector', itemType: 'code', text: 'Selector'},
-      {itemKey: 'coverage', itemType: 'text', text: '% of Page Text'},
-      {itemKey: 'fontSize', itemType: 'text', text: 'Font Size'},
+      {key: 'source', itemType: 'url', text: 'Source'},
+      {key: 'selector', itemType: 'code', text: 'Selector'},
+      {key: 'coverage', itemType: 'text', text: '% of Page Text'},
+      {key: 'fontSize', itemType: 'text', text: 'Font Size'},
     ];
 
     const tableData = failingRules.sort((a, b) => b.textLength - a.textLength)

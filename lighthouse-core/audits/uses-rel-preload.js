@@ -89,8 +89,8 @@ class UsesRelPreloadAudit extends Audit {
       results.sort((a, b) => b.wastedMs - a.wastedMs);
 
       const headings = [
-        {itemKey: 'url', itemType: 'url', text: 'URL'},
-        {itemKey: 'wastedMs', itemType: 'text', text: 'Potential Savings'},
+        {key: 'url', itemType: 'url', text: 'URL'},
+        {key: 'wastedMs', itemType: 'text', text: 'Potential Savings'},
       ];
       const details = Audit.makeTableDetails(headings, results);
 

@@ -73,9 +73,9 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       );
 
       const headings = [
-        {itemKey: 'url', itemType: 'url', text: 'URL'},
-        {itemKey: 'totalBytes', itemType: 'bytes', itemDisplayUnit: 'kb', itemGranularity: 1, text: 'Total Size'},
-        {itemKey: 'totalMs', itemType: 'ms', text: 'Transfer Time'},
+        {key: 'url', itemType: 'url', text: 'URL'},
+        {key: 'totalBytes', itemType: 'bytes', itemDisplayUnit: 'kb', itemGranularity: 1, text: 'Total Size'},
+        {key: 'totalMs', itemType: 'ms', text: 'Transfer Time'},
       ];
 
       const tableDetails = ByteEfficiencyAudit.makeTableDetails(headings, results);

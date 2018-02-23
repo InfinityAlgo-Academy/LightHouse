@@ -156,9 +156,9 @@ class NoVulnerableLibrariesAudit extends Audit {
     }
 
     const headings = [
-      {itemKey: 'detectedLib', itemType: 'link', text: 'Library Version'},
-      {itemKey: 'vulnCount', itemType: 'text', text: 'Vulnerability Count'},
-      {itemKey: 'highestSeverity', itemType: 'text', text: 'Highest Severity'},
+      {key: 'detectedLib', itemType: 'link', text: 'Library Version'},
+      {key: 'vulnCount', itemType: 'text', text: 'Vulnerability Count'},
+      {key: 'highestSeverity', itemType: 'text', text: 'Highest Severity'},
     ];
     const details = Audit.makeTableDetails(headings, finalVulns);
 

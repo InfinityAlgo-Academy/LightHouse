@@ -136,7 +136,6 @@ module.exports = Audit;
  * @typedef {Object} Audit.Heading
  * @property {string} key
  * @property {string} itemType
- * @property {string} itemKey
  * @property {string} text
  */
 

@@ -97,7 +97,7 @@ class IsCrawlable extends Audit {
           .forEach(h => blockingDirectives.push({source: `${h.name}: ${h.value}`}));
 
         const headings = [
-          {itemKey: 'source', itemType: 'code', text: 'Source'},
+          {key: 'source', itemType: 'code', text: 'Source'},
         ];
         const details = Audit.makeTableDetails(headings, blockingDirectives);
 

@@ -84,10 +84,10 @@ class ImageAspectRatio extends Audit {
     });
 
     const headings = [
-      {itemKey: 'url', itemType: 'thumbnail', text: ''},
-      {itemKey: 'url', itemType: 'url', text: 'URL'},
-      {itemKey: 'displayedAspectRatio', itemType: 'text', text: 'Aspect Ratio (Displayed)'},
-      {itemKey: 'actualAspectRatio', itemType: 'text', text: 'Aspect Ratio (Actual)'},
+      {key: 'url', itemType: 'thumbnail', text: ''},
+      {key: 'url', itemType: 'url', text: 'URL'},
+      {key: 'displayedAspectRatio', itemType: 'text', text: 'Aspect Ratio (Displayed)'},
+      {key: 'actualAspectRatio', itemType: 'text', text: 'Aspect Ratio (Actual)'},
     ];
 
     return {

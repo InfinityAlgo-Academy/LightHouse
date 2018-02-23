@@ -64,8 +64,8 @@ class FontDisplay extends Audit {
         });
 
       const headings = [
-        {itemKey: 'url', itemType: 'url', text: 'Font URL'},
-        {itemKey: 'wastedTime', itemType: 'text', text: 'Font download time'},
+        {key: 'url', itemType: 'url', text: 'Font URL'},
+        {key: 'wastedTime', itemType: 'text', text: 'Font download time'},
       ];
       const details = Audit.makeTableDetails(headings, results);
 

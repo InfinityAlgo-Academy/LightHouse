@@ -69,9 +69,9 @@ class BootupTime extends Audit {
       const extendedInfo = {};
 
       const headings = [
-        {itemKey: 'url', itemType: 'url', text: 'URL'},
-        {itemKey: 'scripting', itemType: 'text', text: groupIdToName.scripting},
-        {itemKey: 'scriptParseCompile', itemType: 'text', text: groupIdToName.scriptParseCompile},
+        {key: 'url', itemType: 'url', text: 'URL'},
+        {key: 'scripting', itemType: 'text', text: groupIdToName.scripting},
+        {key: 'scriptParseCompile', itemType: 'text', text: groupIdToName.scriptParseCompile},
       ];
 
       // map data in correct format to create a table

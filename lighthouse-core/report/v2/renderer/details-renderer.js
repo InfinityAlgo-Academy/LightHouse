@@ -234,7 +234,7 @@ class DetailsRenderer {
       const rowElem = this._dom.createChildOf(tbodyElem, 'tr');
       for (const heading of details.headings) {
 
-        const value = row[heading.itemKey];
+        const value = row[heading.key];
         // handle nested types like code blocks in table rows.
         if (value.type) {
           const classes = `lh-table-column--${value.type}`;
@@ -398,7 +398,7 @@ DetailsRenderer.CardsDetailsJSON; // eslint-disable-line no-unused-expressions
  * @typedef {{
  *     type: string,
  *     itemType: (string|undefined),
- *     itemKey: (string|undefined),
+ *     key: (string|undefined),
  *     text: (string|undefined)
  * }}
  */

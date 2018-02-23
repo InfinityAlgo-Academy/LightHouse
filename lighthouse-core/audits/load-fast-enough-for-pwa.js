@@ -97,8 +97,8 @@ class LoadFastEnough4Pwa extends Audit {
         };
 
         const details = Audit.makeTableDetails([
-          {itemKey: 'url', itemType: 'url', text: 'URL'},
-          {itemKey: 'latency', itemType: 'text', text: 'Latency (ms)'},
+          {key: 'url', itemType: 'url', text: 'URL'},
+          {key: 'latency', itemType: 'text', text: 'Latency (ms)'},
         ], firstRequestLatencies);
 
         if (!isFast) {

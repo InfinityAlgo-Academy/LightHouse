@@ -53,8 +53,8 @@ class LinkText extends Audit {
       });
 
     const headings = [
-      {itemKey: 'href', itemType: 'url', text: 'Link destination'},
-      {itemKey: 'text', itemType: 'text', text: 'Link Text'},
+      {key: 'href', itemType: 'url', text: 'Link destination'},
+      {key: 'text', itemType: 'text', text: 'Link Text'},
     ];
 
     const details = Audit.makeTableDetails(headings, failingLinks);
