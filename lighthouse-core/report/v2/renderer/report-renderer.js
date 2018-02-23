@@ -166,6 +166,11 @@ class ReportRenderer {
         renderer = perfCategoryRenderer;
       }
 
+      // smush auditDfn with weight/group into the audit result
+      category.audits.forEach(audit => {
+        const result = report.audits[audit.id];
+        audit.result = result;
+      });
       categories.appendChild(renderer.render(category, report.reportGroups));
     }
 

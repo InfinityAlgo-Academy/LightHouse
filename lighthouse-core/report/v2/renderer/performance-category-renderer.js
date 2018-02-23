@@ -141,7 +141,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     element.appendChild(metricAuditsEl);
 
     const hintAudits = category.audits
-        .filter(audit => audit.group === 'perf-hint' && audit.score < 100)
+        .filter(audit => audit.group === 'perf-hint' && audit.result.score < 100)
         .sort((auditA, auditB) => auditB.result.rawValue - auditA.result.rawValue);
     if (hintAudits.length) {
       const maxWaste = Math.max(...hintAudits.map(audit => audit.result.rawValue));
@@ -153,7 +153,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     const infoAudits = category.audits
-        .filter(audit => audit.group === 'perf-info' && audit.score < 100);
+        .filter(audit => audit.group === 'perf-info' && audit.result.score < 100);
     if (infoAudits.length) {
       const infoAuditsEl = this.renderAuditGroup(groups['perf-info'], {expandable: false});
       infoAudits.forEach(item => infoAuditsEl.appendChild(this.renderAudit(item)));
@@ -163,7 +163,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     const passedElements = category.audits
         .filter(audit => (audit.group === 'perf-hint' || audit.group === 'perf-info') &&
-            audit.score === 100)
+            audit.result.score === 100)
         .map(audit => this.renderAudit(audit));
 
     if (!passedElements.length) return element;

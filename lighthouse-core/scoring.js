@@ -32,11 +32,11 @@ class ReportScoring {
    * @return {{score: number, categories: !Array<{audits: !Array<{score: number, result: !Object}>}>}}
    */
   static scoreAllCategories(config, resultsByAuditId) {
-    const categories = Object.keys(config.categories).map(categoryId => {
+    Object.keys(config.categories).forEach(categoryId => {
       const category = config.categories[categoryId];
       category.id = categoryId;
 
-      const audits = category.audits.map(audit => {
+      category.audits.forEach(audit => {
         const result = resultsByAuditId[audit.id];
         // Cast to number to catch `null` and undefined when audits error
         let auditScore = Number(result.score) || 0;
@@ -53,15 +53,14 @@ class ReportScoring {
           result.informative = true;
         }
 
-        return Object.assign({}, audit, {result, score: auditScore});
+        result.score = auditScore;
       });
 
-      const categoryScore = ReportScoring.arithmeticMean(audits);
-      return Object.assign({}, category, {audits, score: categoryScore});
+      const scores = category.audits.map(audit => ({score: resultsByAuditId[audit.id].score, weight: audit.weight}));
+      const categoryScore = ReportScoring.arithmeticMean(scores);
+      // mutate config.categories[].score
+      category.score = categoryScore;
     });
-
-    const overallScore = ReportScoring.arithmeticMean(categories);
-    return {score: overallScore, categories};
   }
 }
 
