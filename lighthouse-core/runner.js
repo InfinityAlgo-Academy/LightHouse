@@ -93,10 +93,9 @@ class Runner {
       const resultsById = {};
       for (const audit of runResults.auditResults) resultsById[audit.name] = audit;
 
-      let report;
       let cats;
       if (opts.config.categories) {
-        report = Runner._scoreAndCategorize(opts, resultsById);
+        Runner._scoreAndCategorize(opts, resultsById);
         cats = Object.values(opts.config.categories);
       }
 
@@ -110,7 +109,6 @@ class Runner {
         audits: resultsById,
         artifacts: runResults.artifacts,
         runtimeConfig: Runner.getRuntimeConfig(opts.flags),
-        score: report ? report.score : 0,
         reportCategories: cats,
         reportGroups: opts.config.groups,
       };
@@ -194,7 +192,7 @@ class Runner {
    * @param {{}} resultsById
    */
   static _scoreAndCategorize(opts, resultsById) {
-    return ReportScoring.scoreAllCategories(opts.config, resultsById);
+    ReportScoring.scoreAllCategories(opts.config, resultsById);
   }
 
   /**

@@ -27,9 +27,9 @@ class ReportScoring {
 
   /**
    * Returns the report JSON object with computed scores.
-   * @param {{categories: !Object<string, {id: string|undefined, weight: number|undefined, audits: !Array<{id: string, weight: number|undefined}>}>}} config
+   * @param {{categories: !Object<string, {id: string|undefined, weight: number|undefined, score: number|undefined, audits: !Array<{id: string, weight: number|undefined}>}>}} config
    * @param {!Object<{score: ?number|boolean|undefined}>} resultsByAuditId
-   * @return {{score: number, categories: !Array<{audits: !Array<{score: number, result: !Object}>}>}}
+   * @void
    */
   static scoreAllCategories(config, resultsByAuditId) {
     Object.keys(config.categories).forEach(categoryId => {
