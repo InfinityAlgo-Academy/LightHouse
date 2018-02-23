@@ -243,7 +243,7 @@ class FontSize extends Audit {
 
       tableData.push({
         source: 'Add\'l illegible text',
-        selector: null,
+        selector: '',
         coverage: `${percentageOfUnanalyzedFailingText.toFixed(2)}%`,
         fontSize: '< 12px',
       });
@@ -252,7 +252,7 @@ class FontSize extends Audit {
     if (percentageOfPassingText > 0) {
       tableData.push({
         source: 'Legible text',
-        selector: null,
+        selector: '',
         coverage: `${percentageOfPassingText.toFixed(2)}%`,
         fontSize: '≥ 12px',
       });

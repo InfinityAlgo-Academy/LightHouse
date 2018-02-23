@@ -30,6 +30,8 @@ class DetailsRenderer {
    * @return {!Node}
    */
   render(details) {
+    if (!details.type && details.headings && details.items) details.type = 'table';
+
     switch (details.type) {
       case 'text':
         return this._renderText(details);
@@ -59,8 +61,10 @@ class DetailsRenderer {
           /** @type {!CriticalRequestChainRenderer.CRCDetailsJSON} */ (details));
       case 'list':
         return this._renderList(/** @type {!DetailsRenderer.ListDetailsJSON} */ (details));
-      default:
-        throw new Error(`Unknown type: ${details.type}`);
+      default: {
+        console.error(`Unknown type: ${details.type}`, details);
+        return document.createElement('span');
+      }
     }
   }
 
@@ -92,7 +96,7 @@ class DetailsRenderer {
    * @return {!Element}
    */
   _renderTextURL(text) {
-    const url = text.text || '';
+    const url = text.value || text.text || '';  // i think we only want to send this via text.value but not entirely sure.
 
     let displayedPath;
     let displayedHost;
@@ -155,7 +159,7 @@ class DetailsRenderer {
    */
   _renderText(text) {
     const element = this._dom.createElement('div', 'lh-text');
-    element.textContent = text.text;
+    element.textContent = text.text || text.value; // TODO, just use `value` always.
     return element;
   }
 
@@ -165,16 +169,16 @@ class DetailsRenderer {
    * @param {!DetailsRenderer.ThumbnailDetails} value
    * @return {!Element}
    */
-  _renderThumbnail(value) {
-    // TODO: use some empty value test instead? to handle data uris?
-    if (/^image/.test(value.mimeType) === false) {
-      return this._dom.createElement('span');
-    }
+  _renderThumbnail(details) {
+    // TODO: use some empty details test instead? to handle data uris?
+    // if (/^image/.test(details.mimeType) === false) {
+    //   return this._dom.createElement('span');
+    // }
 
     const element = this._dom.createElement('img', 'lh-thumbnail');
-    element.src = value.url;
+    element.src = details.value;
     element.alt = '';
-    element.title = value.url;
+    element.title = details.value;
     return element;
   }
 
@@ -218,18 +222,37 @@ class DetailsRenderer {
     const theadElem = this._dom.createChildOf(tableElem, 'thead');
     const theadTrElem = this._dom.createChildOf(theadElem, 'tr');
 
-    for (const heading of details.itemHeaders) {
+    for (const heading of details.headings) {
       const itemType = heading.itemType || 'text';
       const classes = `lh-table-column--${itemType}`;
-      this._dom.createChildOf(theadTrElem, 'th', classes).appendChild(this.render(heading));
+      this._dom.createChildOf(theadTrElem, 'th', classes).appendChild(this.render({
+        type: 'text',
+        value: heading.text,
+      }));
     }
 
     const tbodyElem = this._dom.createChildOf(tableElem, 'tbody');
     for (const row of details.items) {
       const rowElem = this._dom.createChildOf(tbodyElem, 'tr');
-      for (const columnItem of row) {
-        const classes = `lh-table-column--${columnItem.type}`;
-        this._dom.createChildOf(rowElem, 'td', classes).appendChild(this.render(columnItem));
+      for (const heading of details.headings) {
+
+        const value = row[heading.itemKey];
+        // handle nested types like code blocks in table rows.
+        if (value.type) {
+          const classes = `lh-table-column--${value.type}`;
+          this._dom.createChildOf(rowElem, 'td', classes).appendChild(this.render(value));
+          continue;
+        }
+
+        // build new details item to render
+        const item = {
+          value,
+          type: value.type || heading.itemType, // TODO, remove support for individual cell types?
+          displayUnit: value.displayUnit || heading.itemDisplayUnit,
+          granularity: value.granularity || heading.itemGranularity,
+        };
+        const classes = `lh-table-column--${value.type || heading.itemType}`;
+        this._dom.createChildOf(rowElem, 'td', classes).appendChild(this.render(item));
       }
     }
     return element;
