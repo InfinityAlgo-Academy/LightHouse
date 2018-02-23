@@ -166,7 +166,7 @@ class DetailsRenderer {
   /**
    * Create small thumbnail with scaled down image asset.
    * If the supplied details doesn't have an image/* mimeType, then an empty span is returned.
-   * @param {!DetailsRenderer.ThumbnailDetails} value
+   * @param {!DetailsRenderer.ThumbnailDetails} details
    * @return {!Element}
    */
   _renderThumbnail(details) {
@@ -426,8 +426,7 @@ DetailsRenderer.TableDetailsJSON; // eslint-disable-line no-unused-expressions
 
 /** @typedef {{
  *     type: string,
- *     url: ({text: string}|undefined),
- *     mimeType: ({text: string}|undefined)
+ *     value: ({text: string}|undefined),
  * }}
  */
 DetailsRenderer.ThumbnailDetails; // eslint-disable-line no-unused-expressions

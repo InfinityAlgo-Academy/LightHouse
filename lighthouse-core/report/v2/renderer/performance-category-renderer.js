@@ -182,10 +182,8 @@ if (typeof module !== 'undefined' && module.exports) {
 
 /**
  * @typedef {{
- *     value: {
- *       wastedMs: (number|undefined),
- *       wastedKb: (number|undefined),
- *     }
+ *     wastedMs: (number|undefined),
+ *     wastedKb: (number|undefined),
  * }}
  */
-PerformanceCategoryRenderer.PerfHintExtendedInfo; // eslint-disable-line no-unused-expressions
+PerformanceCategoryRenderer.PerfHintSummaryInfo; // eslint-disable-line no-unused-expressions

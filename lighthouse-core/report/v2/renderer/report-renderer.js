@@ -190,26 +190,29 @@ if (typeof module !== 'undefined' && module.exports) {
  * @typedef {{
  *     id: string,
  *     weight: number,
- *     score: number,
  *     group: string,
- *     result: {
- *       rawValue: (number|undefined),
- *       description: string,
- *       informative: boolean,
- *       manual: boolean,
- *       notApplicable: boolean,
- *       debugString: string,
- *       displayValue: string,
- *       helpText: string,
- *       score: (number|boolean),
- *       scoringMode: string,
- *       extendedInfo: Object,
- *       details: (!DetailsRenderer.DetailsJSON|undefined)
- *       summary: any
- *     }
  * }}
  */
 ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
+
+/**
+ * @typedef {{
+ *     rawValue: (number|undefined),
+ *     description: string,
+ *     informative: boolean,
+ *     manual: boolean,
+ *     notApplicable: boolean,
+ *     debugString: string,
+ *     displayValue: string,
+ *     helpText: string,
+ *     scoringMode: string,
+ *     extendedInfo: Object,
+ *     score: number,
+ *     details: (!DetailsRenderer.DetailsJSON|undefined),
+ *     summary: Object
+ * }}
+ */
+ReportRenderer.AuditResult; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{
