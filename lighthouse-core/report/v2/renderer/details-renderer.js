@@ -30,8 +30,6 @@ class DetailsRenderer {
    * @return {!Node}
    */
   render(details) {
-    if (!details.type && details.headings && details.items) details.type = 'table';
-
     switch (details.type) {
       case 'text':
         return this._renderText(details);
@@ -62,8 +60,7 @@ class DetailsRenderer {
       case 'list':
         return this._renderList(/** @type {!DetailsRenderer.ListDetailsJSON} */ (details));
       default: {
-        console.error(`Unknown type: ${details.type}`, details);
-        return document.createElement('span');
+        throw new Error(`Unknown type: ${details.type}`);
       }
     }
   }
