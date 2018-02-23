@@ -83,12 +83,12 @@ class TotalByteWeight extends ByteEfficiencyAudit {
         score,
         rawValue: totalBytes,
         displayValue: `Total size was ${Math.round(totalBytes / 1024)} KB`,
-        extendedInfo: {
-          value: {
-            results,
-            totalCompletedRequests,
-          },
-        },
+        // extendedInfo: {
+        //   value: {
+        //     results,
+        //     totalCompletedRequests,
+        //   },
+        // },
         details: tableDetails,
       };
     });

@@ -94,9 +94,9 @@ class SpeedIndexMetric extends Audit {
         score,
         rawValue,
         displayValue: Util.formatNumber(rawValue),
-        extendedInfo: {
-          value: extendedInfo,
-        },
+        // extendedInfo: {
+        //   value: extendedInfo,
+        // },
       };
     });
   }

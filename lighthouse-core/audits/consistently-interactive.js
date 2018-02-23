@@ -197,9 +197,9 @@ class ConsistentlyInteractiveMetric extends Audit {
           ),
           rawValue: timeInMs,
           displayValue: Util.formatMilliseconds(timeInMs),
-          extendedInfo: {
-            value: extendedInfo,
-          },
+          // extendedInfo: {
+          //   value: extendedInfo,
+          // },
         };
       });
   }

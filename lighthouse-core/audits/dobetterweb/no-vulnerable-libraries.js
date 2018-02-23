@@ -165,10 +165,10 @@ class NoVulnerableLibrariesAudit extends Audit {
     return {
       rawValue: totalVulns === 0,
       displayValue,
-      extendedInfo: {
-        jsLibs: libraries,
-        vulnerabilities: finalVulns,
-      },
+      // extendedInfo: {
+      //   jsLibs: libraries,
+      //   vulnerabilities: finalVulns,
+      // },
       details,
     };
   }

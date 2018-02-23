@@ -46,9 +46,9 @@ class AxeAudit extends Audit {
 
     return {
       rawValue: typeof rule === 'undefined',
-      extendedInfo: {
-        value: rule,
-      },
+      // extendedInfo: {
+      //   value: rule,
+      // },
       details: {
         type: 'list',
         header: {

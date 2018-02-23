@@ -34,7 +34,7 @@ class MultiCheckAudit extends Audit {
       return {
         rawValue: false,
         debugString: `Failures: ${result.failures.join(', ')}.`,
-        extendedInfo,
+        // extendedInfo,
       };
     }
 
@@ -46,7 +46,7 @@ class MultiCheckAudit extends Audit {
     // Otherwise, we pass
     return {
       rawValue: true,
-      extendedInfo,
+      // extendedInfo,
       debugString,
     };
   }

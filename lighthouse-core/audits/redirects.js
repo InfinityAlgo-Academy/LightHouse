@@ -71,11 +71,11 @@ class Redirects extends Audit {
           score: redirectRequests.length <= 2 ? 100 : UnusedBytes.scoreForWastedMs(totalWastedMs),
           rawValue: totalWastedMs,
           displayValue: Util.formatMilliseconds(totalWastedMs, 1),
-          extendedInfo: {
-            value: {
-              wastedMs: totalWastedMs,
-            },
-          },
+          // extendedInfo: {
+          //   value: {
+          //     wastedMs: totalWastedMs,
+          //   },
+          // },
           details,
         };
       });

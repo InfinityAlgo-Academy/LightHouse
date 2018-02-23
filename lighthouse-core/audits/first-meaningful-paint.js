@@ -57,9 +57,9 @@ class FirstMeaningfulPaint extends Audit {
         rawValue: parseFloat(result.duration),
         displayValue: Util.formatMilliseconds(result.duration),
         debugString: result.debugString,
-        extendedInfo: {
-          value: result.extendedInfo,
-        },
+        // extendedInfo: {
+        //   value: result.extendedInfo,
+        // },
       };
     });
   }
@@ -109,7 +109,7 @@ class FirstMeaningfulPaint extends Audit {
       score,
       duration: firstMeaningfulPaint.toFixed(1),
       rawValue: firstMeaningfulPaint,
-      extendedInfo,
+      // extendedInfo,
     };
   }
 }

@@ -89,9 +89,9 @@ class PageExecutionTimings extends Audit {
           rawValue: totalExecutionTime,
           displayValue: Util.formatMilliseconds(totalExecutionTime),
           details: tableDetails,
-          extendedInfo: {
-            value: extendedInfo,
-          },
+          // extendedInfo: {
+          //   value: extendedInfo,
+          // },
         };
       });
   }

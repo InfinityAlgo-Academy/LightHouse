@@ -45,9 +45,9 @@ class GeolocationOnStart extends ViolationAudit {
 
     return {
       rawValue: results.length === 0,
-      extendedInfo: {
-        value: results,
-      },
+      // extendedInfo: {
+      //   value: results,
+      // },
       details,
     };
   }

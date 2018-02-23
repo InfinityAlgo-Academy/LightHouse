@@ -61,9 +61,9 @@ class HTTPS extends Audit {
       return {
         rawValue: insecureRecords.length === 0,
         displayValue,
-        extendedInfo: {
-          value: insecureRecords,
-        },
+        // extendedInfo: {
+        //   value: insecureRecords,
+        // },
         details: {
           type: 'list',
           header: {type: 'text', text: 'Insecure URLs:'},

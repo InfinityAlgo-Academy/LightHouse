@@ -152,12 +152,12 @@ class CriticalRequestChains extends Audit {
       return {
         rawValue: chainCount === 0,
         displayValue: Util.formatNumber(chainCount),
-        extendedInfo: {
-          value: {
-            chains: flattenedChains,
-            longestChain,
-          },
-        },
+        // extendedInfo: {
+        //   value: {
+        //     chains: flattenedChains,
+        //     longestChain,
+        //   },
+        // },
         details: {
           type: 'criticalrequestchain',
           header: {type: 'text', text: 'View critical network waterfall:'},
