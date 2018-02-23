@@ -186,13 +186,7 @@ class CacheHeaders extends ByteEfficiencyAudit {
 
         const url = URL.elideDataURI(record._url);
         const totalBytes = record._transferSize;
-        const totalKb = ByteEfficiencyAudit.bytesDetails(totalBytes);
         const wastedBytes = (1 - cacheHitProbability) * totalBytes;
-        const cacheLifetimeDisplay = {
-          type: 'ms',
-          value: cacheLifetimeInSeconds,
-          displayUnit: 'duration',
-        };
 
         totalWastedBytes += wastedBytes;
         if (url.includes('?')) queryStringCount++;
@@ -201,9 +195,7 @@ class CacheHeaders extends ByteEfficiencyAudit {
           url,
           cacheControl,
           cacheLifetimeInSeconds,
-          cacheLifetimeDisplay,
           cacheHitProbability,
-          totalKb,
           totalBytes,
           wastedBytes,
         });
@@ -224,9 +216,9 @@ class CacheHeaders extends ByteEfficiencyAudit {
       );
 
       const headings = [
-        {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'cacheLifetimeDisplay', itemType: 'text', text: 'Cache TTL'},
-        {key: 'totalKb', itemType: 'text', text: 'Size (KB)'},
+        {itemKey: 'url', itemType: 'url', text: 'URL'},
+        {itemKey: 'cacheLifetimeInSeconds', itemType: 'ms', text: 'Cache TTL', itemDisplayUnit: 'duration'},
+        {itemKey: 'totalBytes', itemType: 'text', text: 'Size (KB)', itemDisplayUnit: 'kb', itemGranularity: 1},
       ];
 
       const tableDetails = ByteEfficiencyAudit.makeTableDetails(headings, results);

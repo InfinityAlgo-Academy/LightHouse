@@ -29,16 +29,12 @@ class UnusedBytes extends Audit {
   }
 
   /**
+   * TODO: REMOVE
    * @param {number} bytes
    * @return {string}
    */
   static bytesDetails(bytes) {
-    return {
-      type: 'bytes',
-      value: bytes,
-      displayUnit: 'kb',
-      granularity: 1,
-    };
+    return bytes;
   }
 
   /**
@@ -46,13 +42,9 @@ class UnusedBytes extends Audit {
    * @param {number} networkThroughput measured in bytes/second
    * @return {string}
    */
-  static bytesToMsDetails(bytes, networkThroughput) {
+  static bytesToMs(bytes, networkThroughput) {
     const milliseconds = bytes / networkThroughput * 1000;
-    return {
-      type: 'ms',
-      value: milliseconds,
-      granularity: 10,
-    };
+    return milliseconds;
   }
 
   /**

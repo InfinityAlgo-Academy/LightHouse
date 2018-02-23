@@ -38,8 +38,8 @@ class GeolocationOnStart extends ViolationAudit {
     const results = ViolationAudit.getViolationResults(artifacts, /geolocation/);
 
     const headings = [
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'label', itemType: 'text', text: 'Location'},
+      {itemKey: 'url', itemType: 'url', text: 'URL'},
+      {itemKey: 'label', itemType: 'text', text: 'Location'},
     ];
     const details = ViolationAudit.makeTableDetails(headings, results);
 

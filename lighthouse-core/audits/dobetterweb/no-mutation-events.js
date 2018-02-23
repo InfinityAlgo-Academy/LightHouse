@@ -67,11 +67,11 @@ class NoMutationEventsAudit extends Audit {
     const groupedResults = EventHelpers.groupCodeSnippetsByLocation(results);
 
     const headings = [
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'type', itemType: 'code', text: 'Event'},
-      {key: 'line', itemType: 'text', text: 'Line'},
-      {key: 'col', itemType: 'text', text: 'Col'},
-      {key: 'pre', itemType: 'code', text: 'Snippet'},
+      {itemKey: 'url', itemType: 'url', text: 'URL'},
+      {itemKey: 'type', itemType: 'code', text: 'Event'},
+      {itemKey: 'line', itemType: 'text', text: 'Line'},
+      {itemKey: 'col', itemType: 'text', text: 'Col'},
+      {itemKey: 'pre', itemType: 'code', text: 'Snippet'},
     ];
     const details = NoMutationEventsAudit.makeTableDetails(headings, groupedResults);
 

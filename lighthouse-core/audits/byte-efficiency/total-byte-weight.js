@@ -50,8 +50,8 @@ class TotalByteWeight extends ByteEfficiencyAudit {
         const result = {
           url: record.url,
           totalBytes: record.transferSize,
-          totalKb: ByteEfficiencyAudit.bytesDetails(record.transferSize),
-          totalMs: ByteEfficiencyAudit.bytesToMsDetails(record.transferSize, networkThroughput),
+          totalBytes: ByteEfficiencyAudit.bytesDetails(record.transferSize),
+          totalMs: ByteEfficiencyAudit.bytesToMs(record.transferSize, networkThroughput),
         };
 
         totalBytes += result.totalBytes;
@@ -72,9 +72,9 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       );
 
       const headings = [
-        {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'totalKb', itemType: 'text', text: 'Total Size'},
-        {key: 'totalMs', itemType: 'text', text: 'Transfer Time'},
+        {itemKey: 'url', itemType: 'url', text: 'URL'},
+        {itemKey: 'totalBytes', itemType: 'text', text: 'Total Size'},
+        {itemKey: 'totalMs', itemType: 'text', text: 'Transfer Time'},
       ];
 
       const tableDetails = ByteEfficiencyAudit.makeTableDetails(headings, results);

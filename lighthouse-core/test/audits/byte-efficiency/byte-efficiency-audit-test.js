@@ -12,9 +12,9 @@ const assert = require('assert');
 
 describe('Byte efficiency base audit', () => {
   const baseHeadings = [
-    {key: 'totalKb', itemType: 'text', text: ''},
-    {key: 'wastedKb', itemType: 'text', text: ''},
-    {key: 'wastedMs', itemType: 'text', text: ''},
+    {itemKey: 'totalBytes', itemType: 'text', text: ''},
+    {itemKey: 'wastedBytes', itemType: 'text', text: ''},
+    {itemKey: 'wastedMs', itemType: 'text', text: ''},
   ];
 
   describe('#estimateTransferSize', () => {

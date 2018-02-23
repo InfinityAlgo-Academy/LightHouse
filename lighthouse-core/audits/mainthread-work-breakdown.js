@@ -77,9 +77,9 @@ class PageExecutionTimings extends Audit {
         });
 
         const headings = [
-          {key: 'group', itemType: 'text', text: 'Category'},
-          {key: 'category', itemType: 'text', text: 'Work'},
-          {key: 'duration', itemType: 'text', text: 'Time spent'},
+          {itemKey: 'group', itemType: 'text', text: 'Category'},
+          {itemKey: 'category', itemType: 'text', text: 'Work'},
+          {itemKey: 'duration', itemType: 'text', text: 'Time spent'},
         ];
         results.stableSort((a, b) => categoryTotals[b.group] - categoryTotals[a.group]);
         const tableDetails = PageExecutionTimings.makeTableDetails(headings, results);

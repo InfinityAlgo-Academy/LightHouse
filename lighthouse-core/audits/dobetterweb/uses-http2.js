@@ -62,8 +62,8 @@ class UsesHTTP2Audit extends Audit {
       }
 
       const headings = [
-        {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'protocol', itemType: 'text', text: 'Protocol'},
+        {itemKey: 'url', itemType: 'url', text: 'URL'},
+        {itemKey: 'protocol', itemType: 'text', text: 'Protocol'},
       ];
       const details = Audit.makeTableDetails(headings, resources);
 

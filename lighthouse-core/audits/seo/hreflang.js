@@ -97,7 +97,7 @@ class Hreflang extends Audit {
           .forEach(h => invalidHreflangs.push({source: `${h.name}: ${h.value}`}));
 
         const headings = [
-          {key: 'source', itemType: 'code', text: 'Source'},
+          {itemKey: 'source', itemType: 'code', text: 'Source'},
         ];
         const details = Audit.makeTableDetails(headings, invalidHreflangs);
 

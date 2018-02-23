@@ -72,11 +72,6 @@ class OffscreenImages extends ByteEfficiencyAudit {
 
     return {
       url,
-      preview: {
-        type: 'thumbnail',
-        url: image.networkRecord.url,
-        mimeType: image.networkRecord.mimeType,
-      },
       requestStartTime: image.networkRecord.startTime,
       totalBytes,
       wastedBytes,
@@ -107,9 +102,9 @@ class OffscreenImages extends ByteEfficiencyAudit {
       }
 
       // If an image was used more than once, warn only about its least wasteful usage
-      const existing = results.get(processed.preview.url);
+      const existing = results.get(processed.url);
       if (!existing || existing.wastedBytes > processed.wastedBytes) {
-        results.set(processed.preview.url, processed);
+        results.set(processed.url, processed);
       }
 
       return results;
@@ -125,10 +120,10 @@ class OffscreenImages extends ByteEfficiencyAudit {
       });
 
       const headings = [
-        {key: 'preview', itemType: 'thumbnail', text: ''},
-        {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'totalKb', itemType: 'text', text: 'Original'},
-        {key: 'wastedKb', itemType: 'text', text: 'Potential Savings'},
+        {itemKey: 'url', itemType: 'thumbnail', text: ''},
+        {itemKey: 'url', itemType: 'url', text: 'URL'},
+        {itemKey: 'totalBytes', itemType: 'text', text: 'Original'},
+        {itemKey: 'wastedBytes', itemType: 'text', text: 'Potential Savings'},
       ];
 
       return {

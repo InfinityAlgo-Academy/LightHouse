@@ -132,7 +132,7 @@ class Plugins extends Audit {
       });
 
     const headings = [
-      {key: 'source', itemType: 'code', text: 'Element source'},
+      {itemKey: 'source', itemType: 'code', text: 'Element source'},
     ];
 
     const details = Audit.makeTableDetails(headings, plugins);

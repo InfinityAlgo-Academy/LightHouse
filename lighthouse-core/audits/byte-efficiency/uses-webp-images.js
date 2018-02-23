@@ -54,7 +54,6 @@ class UsesWebPImages extends ByteEfficiencyAudit {
         url,
         fromProtocol: image.fromProtocol,
         isCrossOrigin: !image.isSameOrigin,
-        preview: {url: image.url, mimeType: image.mimeType, type: 'thumbnail'},
         totalBytes: image.originalSize,
         wastedBytes: webpSavings.bytes,
       });
@@ -67,10 +66,10 @@ class UsesWebPImages extends ByteEfficiencyAudit {
     }
 
     const headings = [
-      {key: 'preview', itemType: 'thumbnail', text: ''},
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'totalKb', itemType: 'text', text: 'Original'},
-      {key: 'wastedKb', itemType: 'text', text: 'Potential Savings'},
+      {itemKey: 'url', itemType: 'thumbnail', text: ''},
+      {itemKey: 'url', itemType: 'url', text: 'URL'},
+      {itemKey: 'totalBytes', itemType: 'text', text: 'Original'},
+      {itemKey: 'wastedBytes', itemType: 'text', text: 'Potential Savings'},
     ];
 
     return {

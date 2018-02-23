@@ -70,9 +70,9 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
     });
 
     const headings = [
-      {key: 'url', itemType: 'url', text: 'Uncompressed resource URL'},
-      {key: 'totalKb', itemType: 'text', text: 'Original'},
-      {key: 'wastedKb', itemType: 'text', text: 'GZIP Savings'},
+      {itemKey: 'url', itemType: 'url', text: 'Uncompressed resource URL'},
+      {itemKey: 'totalBytes', itemType: 'text', text: 'Original'},
+      {itemKey: 'wastedBytes', itemType: 'text', text: 'GZIP Savings'},
     ];
 
     return {

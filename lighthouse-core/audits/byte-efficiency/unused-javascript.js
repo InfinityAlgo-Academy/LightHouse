@@ -110,9 +110,9 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     return {
       results,
       headings: [
-        {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'totalKb', itemType: 'text', text: 'Original'},
-        {key: 'wastedKb', itemType: 'text', text: 'Potential Savings'},
+        {itemKey: 'url', itemType: 'url', text: 'URL'},
+        {itemKey: 'totalBytes', itemType: 'text', text: 'Original'},
+        {itemKey: 'wastedBytes', itemType: 'text', text: 'Potential Savings'},
       ],
     };
   }

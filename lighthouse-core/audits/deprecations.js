@@ -47,9 +47,9 @@ class Deprecations extends Audit {
     });
 
     const headings = [
-      {key: 'text', itemType: 'code', text: 'Deprecation / Warning'},
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'lineNumber', itemType: 'text', text: 'Line'},
+      {itemKey: 'text', itemType: 'code', text: 'Deprecation / Warning'},
+      {itemKey: 'url', itemType: 'url', text: 'URL'},
+      {itemKey: 'lineNumber', itemType: 'text', text: 'Line'},
     ];
     const details = Audit.makeTableDetails(headings, deprecations);
 

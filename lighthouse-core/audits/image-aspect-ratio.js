@@ -47,11 +47,6 @@ class ImageAspectRatio extends Audit {
 
     return {
       url,
-      preview: {
-        type: 'thumbnail',
-        url: image.networkRecord.url,
-        mimeType: image.networkRecord.mimeType,
-      },
       displayedAspectRatio: `${image.width} x ${image.height}
         (${displayedAspectRatio.toFixed(2)})`,
       actualAspectRatio: `${image.naturalWidth} x ${image.naturalHeight}
@@ -89,10 +84,10 @@ class ImageAspectRatio extends Audit {
     });
 
     const headings = [
-      {key: 'preview', itemType: 'thumbnail', text: ''},
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'displayedAspectRatio', itemType: 'text', text: 'Aspect Ratio (Displayed)'},
-      {key: 'actualAspectRatio', itemType: 'text', text: 'Aspect Ratio (Actual)'},
+      {itemKey: 'url', itemType: 'thumbnail', text: ''},
+      {itemKey: 'url', itemType: 'url', text: 'URL'},
+      {itemKey: 'displayedAspectRatio', itemType: 'text', text: 'Aspect Ratio (Displayed)'},
+      {itemKey: 'actualAspectRatio', itemType: 'text', text: 'Aspect Ratio (Actual)'},
     ];
 
     return {

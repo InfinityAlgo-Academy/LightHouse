@@ -142,7 +142,7 @@ class MixedContent extends Audit {
           ${upgradeableResources.length === 1 ? 'request' : 'requests'}`;
 
       const headings = [
-        {key: 'fullUrl', itemType: 'url', text: 'URL'},
+        {itemKey: 'fullUrl', itemType: 'url', text: 'URL'},
       ];
       const details = Audit.makeTableDetails(headings, upgradeableResources);
 

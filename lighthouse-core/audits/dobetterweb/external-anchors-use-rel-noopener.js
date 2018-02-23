@@ -62,9 +62,9 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
       });
 
     const headings = [
-      {key: 'href', itemType: 'url', text: 'URL'},
-      {key: 'target', itemType: 'text', text: 'Target'},
-      {key: 'rel', itemType: 'text', text: 'Rel'},
+      {itemKey: 'href', itemType: 'url', text: 'URL'},
+      {itemKey: 'target', itemType: 'text', text: 'Target'},
+      {itemKey: 'rel', itemType: 'text', text: 'Rel'},
     ];
 
     const details = Audit.makeTableDetails(headings, failingAnchors);

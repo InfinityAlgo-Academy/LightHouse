@@ -61,8 +61,8 @@ class Redirects extends Audit {
         }
 
         const headings = [
-          {key: 'url', itemType: 'text', text: 'Redirected URL'},
-          {key: 'wastedMs', itemType: 'text', text: 'Time for Redirect'},
+          {itemKey: 'url', itemType: 'text', text: 'Redirected URL'},
+          {itemKey: 'wastedMs', itemType: 'text', text: 'Time for Redirect'},
         ];
         const details = Audit.makeTableDetails(headings, pageRedirects);
 
