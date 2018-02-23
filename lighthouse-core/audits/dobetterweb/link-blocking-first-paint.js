@@ -82,8 +82,8 @@ class LinkBlockingFirstPaintAudit extends Audit {
 
     const headings = [
       {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'totalBytes', itemType: 'bytes', itemDisplayUnit: 'kb', itemGranularity: 0.01, text: 'Size (KB)'},
-      {key: 'totalMs', itemType: 'ms', text: 'Delayed Paint By (ms)', itemGranularity: 1},
+      {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 0.01, text: 'Size (KB)'},
+      {key: 'totalMs', itemType: 'ms', text: 'Delayed Paint By (ms)', granularity: 1},
     ];
 
     const tableDetails = Audit.makeTableDetails(headings, results);

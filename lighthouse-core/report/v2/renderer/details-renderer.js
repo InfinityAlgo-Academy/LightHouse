@@ -246,8 +246,8 @@ class DetailsRenderer {
         const item = {
           value,
           type: value.type || heading.itemType, // TODO, remove support for individual cell types?
-          displayUnit: value.displayUnit || heading.itemDisplayUnit,
-          granularity: value.granularity || heading.itemGranularity,
+          displayUnit: value.displayUnit || heading.displayUnit,
+          granularity: value.granularity || heading.granularity,
         };
         const classes = `lh-table-column--${value.type || heading.itemType}`;
         this._dom.createChildOf(rowElem, 'td', classes).appendChild(this.render(item));

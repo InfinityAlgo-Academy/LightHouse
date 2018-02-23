@@ -12,8 +12,8 @@ const assert = require('assert');
 
 describe('Byte efficiency base audit', () => {
   const baseHeadings = [
-    {key: 'totalBytes', itemType: 'bytes', itemDisplayUnit: 'kb', itemGranularity: 1, text: ''},
-    {key: 'wastedBytes', itemType: 'bytes', itemDisplayUnit: 'kb', itemGranularity: 1, text: ''},
+    {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: ''},
+    {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: ''},
     {key: 'wastedMs', itemType: 'text', text: ''},
   ];
 

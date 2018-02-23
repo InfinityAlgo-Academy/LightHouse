@@ -68,8 +68,8 @@ class UsesWebPImages extends ByteEfficiencyAudit {
     const headings = [
       {key: 'url', itemType: 'thumbnail', text: ''},
       {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'totalBytes', itemType: 'bytes', itemDisplayUnit: 'kb', itemGranularity: 1, text: 'Original'},
-      {key: 'wastedBytes', itemType: 'bytes', itemDisplayUnit: 'kb', itemGranularity: 1, text: 'Potential Savings'},
+      {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
+      {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Potential Savings'},
     ];
 
     return {

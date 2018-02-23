@@ -217,8 +217,8 @@ class CacheHeaders {
 
       const headings = [
         {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'cacheLifetimeInSeconds', itemType: 'ms', text: 'Cache TTL', itemDisplayUnit: 'duration'},
-        {key: 'totalBytes', itemType: 'bytes', text: 'Size (KB)', itemDisplayUnit: 'kb', itemGranularity: 1},
+        {key: 'cacheLifetimeInSeconds', itemType: 'ms', text: 'Cache TTL', displayUnit: 'duration'},
+        {key: 'totalBytes', itemType: 'bytes', text: 'Size (KB)', displayUnit: 'kb', granularity: 1},
       ];
 
       const tableDetails = ByteEfficiencyAudit.makeTableDetails(headings, results);
