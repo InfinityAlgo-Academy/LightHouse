@@ -166,6 +166,7 @@ class DetailsRenderer {
    * @return {!Element}
    */
   _renderThumbnail(value) {
+    // TODO: use some empty value test instead? to handle data uris?
     if (/^image/.test(value.mimeType) === false) {
       return this._dom.createElement('span');
     }
@@ -315,7 +316,7 @@ class DetailsRenderer {
    */
   _renderCode(details) {
     const pre = this._dom.createElement('pre', 'lh-code');
-    pre.textContent = details.text;
+    pre.textContent = details.text || details.value; // TODO, pick a winner
     return pre;
   }
 }

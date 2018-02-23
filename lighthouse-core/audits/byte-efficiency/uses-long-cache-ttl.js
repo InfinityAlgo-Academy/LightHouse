@@ -18,7 +18,7 @@ const IGNORE_THRESHOLD_IN_PERCENT = 0.925;
 const SCORING_POINT_OF_DIMINISHING_RETURNS = 4; // 4 KB
 const SCORING_MEDIAN = 768; // 768 KB
 
-class CacheHeaders extends ByteEfficiencyAudit {
+class CacheHeaders {
   /**
    * @return {!AuditMeta}
    */

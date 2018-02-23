@@ -101,10 +101,8 @@ class UnusedBytes extends Audit {
     const debugString = result.debugString;
     const results = result.results
         .map(item => {
-          item.wastedKb = this.bytesDetails(item.wastedBytes);
-          item.wastedMs = this.bytesToMsDetails(item.wastedBytes, networkThroughput);
-          item.totalKb = this.bytesDetails(item.totalBytes);
-          item.totalMs = this.bytesToMsDetails(item.totalBytes, networkThroughput);
+          item.wastedMs = this.bytesToMs(item.wastedBytes, networkThroughput);
+          item.totalMs = this.bytesToMs(item.totalBytes, networkThroughput);
           return item;
         })
         .sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
