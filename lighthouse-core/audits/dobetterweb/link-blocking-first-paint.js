@@ -82,7 +82,7 @@ class LinkBlockingFirstPaintAudit extends Audit {
 
     const headings = [
       {itemKey: 'url', itemType: 'url', text: 'URL'},
-      {itemKey: 'totalBytes', itemType: 'text', text: 'Size (KB)'},
+      {itemKey: 'totalBytes', itemType: 'bytes', itemDisplayUnit: 'kb', itemGranularity: 1, text: 'Size (KB)'},
       {itemKey: 'totalMs', itemType: 'ms', text: 'Delayed Paint By (ms)', itemGranularity: 1},
     ];
 
