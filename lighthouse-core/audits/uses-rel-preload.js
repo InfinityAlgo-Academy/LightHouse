@@ -98,9 +98,9 @@ class UsesRelPreloadAudit extends Audit {
         score: UnusedBytes.scoreForWastedMs(maxWasted),
         rawValue: maxWasted,
         displayValue: Util.formatMilliseconds(maxWasted),
-        // extendedInfo: {
-        //   value: results,
-        // },
+        extendedInfo: {
+          value: results,
+        },
         details,
       };
     });

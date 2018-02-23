@@ -127,13 +127,13 @@ class UnusedBytes extends Audit {
         wastedMs,
         wastedKb,
       },
-      // extendedInfo: {
-      //   value: {
-      //     wastedMs,
-      //     wastedKb,
-      //     results,
-      //   },
-      // },
+      extendedInfo: {
+        value: {
+          wastedMs,
+          wastedKb,
+          results,
+        },
+      },
       details: tableDetails,
     };
   }

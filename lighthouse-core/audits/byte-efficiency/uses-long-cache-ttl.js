@@ -227,12 +227,12 @@ class CacheHeaders {
         score,
         rawValue: totalWastedBytes,
         displayValue: `${results.length} asset${results.length !== 1 ? 's' : ''} found`,
-        // extendedInfo: {
-        //   value: {
-        //     results,
-        //     queryStringCount,
-        //   },
-        // },
+        extendedInfo: {
+          value: {
+            results,
+            queryStringCount,
+          },
+        },
         details: tableDetails,
       };
     });

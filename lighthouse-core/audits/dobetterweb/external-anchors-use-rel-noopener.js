@@ -71,9 +71,9 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
 
     return {
       rawValue: failingAnchors.length === 0,
-      // extendedInfo: {
-      //   value: failingAnchors,
-      // },
+      extendedInfo: {
+        value: failingAnchors,
+      },
       details,
       debugString,
     };

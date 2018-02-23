@@ -102,6 +102,9 @@ class BootupTime extends Audit {
         rawValue: totalBootupTime,
         displayValue: Util.formatMilliseconds(totalBootupTime),
         details: tableDetails,
+        extendedInfo: {
+          value: extendedInfo,
+        },
       };
     });
   }

@@ -31,9 +31,9 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
 
     return {
       rawValue: passwordInputsWithPreventedPaste.length === 0,
-      // extendedInfo: {
-      //   value: passwordInputsWithPreventedPaste,
-      // },
+      extendedInfo: {
+        value: passwordInputsWithPreventedPaste,
+      },
       details: {
         type: 'list',
         header: {

@@ -92,12 +92,12 @@ class LinkBlockingFirstPaintAudit extends Audit {
       displayValue,
       score: ByteEfficiencyAudit.scoreForWastedMs(rawDelayTime),
       rawValue: rawDelayTime,
-      // extendedInfo: {
-      //   value: {
-      //     wastedMs: delayTime,
-      //     results,
-      //   },
-      // },
+      extendedInfo: {
+        value: {
+          wastedMs: delayTime,
+          results,
+        },
+      },
       details: tableDetails,
     };
   }
