@@ -189,8 +189,8 @@ describe('DetailsRenderer', () => {
       const linkUrl = 'https://example.com/';
       const el = renderer.render({
         type: 'link',
-        text: linkText,
-        url: linkUrl,
+        label: linkText,
+        value: linkUrl,
       });
 
       assert.equal(el.localName, 'a');
@@ -205,8 +205,8 @@ describe('DetailsRenderer', () => {
       const linkUrl = 'javascript:alert(5)';
       const el = renderer.render({
         type: 'link',
-        text: linkText,
-        url: linkUrl,
+        label: linkText,
+        value: linkUrl,
       });
 
       assert.equal(el.localName, 'div');
@@ -219,7 +219,7 @@ describe('DetailsRenderer', () => {
       const displayUrlText = '/(example.com)';
       const el = renderer.render({
         type: 'url',
-        text: urlText,
+        value: urlText,
       });
 
       assert.equal(el.localName, 'div');

@@ -167,9 +167,9 @@ class ReportRenderer {
       }
 
       // smush auditDfn with weight/group into the audit result
-      category.audits.forEach(audit => {
-        const result = report.audits[audit.id];
-        audit.result = result;
+      category.audits.forEach(auditMeta => {
+        const result = report.audits[auditMeta.id];
+        auditMeta.result = result;
       });
       categories.appendChild(renderer.render(category, report.reportGroups));
     }
@@ -191,6 +191,7 @@ if (typeof module !== 'undefined' && module.exports) {
  *     id: string,
  *     weight: number,
  *     group: string,
+ *     result: (ReportRenderer.AuditResultJSON|undefined)
  * }}
  */
 ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
@@ -212,7 +213,8 @@ ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
  *     summary: Object
  * }}
  */
-ReportRenderer.AuditResult; // eslint-disable-line no-unused-expressions
+ReportRenderer.AuditResultJSON; // eslint-disable-line no-unused-expressions
+
 
 /**
  * @typedef {{
@@ -244,6 +246,7 @@ ReportRenderer.GroupJSON; // eslint-disable-line no-unused-expressions
  *     url: string,
  *     runWarnings: (!Array<string>|undefined),
  *     artifacts: {traces: !Object},
+ *     audits: !Object<string, !ReportRenderer.AuditResultJSON>,
  *     reportCategories: !Array<!ReportRenderer.CategoryJSON>,
  *     reportGroups: !Object<string, !ReportRenderer.GroupJSON>,
  *     runtimeConfig: {

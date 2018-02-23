@@ -30,11 +30,12 @@ class DetailsRenderer {
    * @return {!Node}
    */
   render(details) {
+    console.log('typeof details.value', typeof details.value)
     switch (details.type) {
       case 'text':
-        return this._renderText(details);
+        return this._renderText(/** @type {!DetailsRenderer.StringDetailsJSON} */ (details));
       case 'url':
-        return this._renderTextURL(details);
+        return this._renderTextURL(/** @type {!DetailsRenderer.StringDetailsJSON} */ (details));
       case 'bytes':
         return this._renderBytes(/** @type {!DetailsRenderer.NumericUnitDetailsJSON} */ (details));
       case 'ms':
@@ -71,8 +72,8 @@ class DetailsRenderer {
    */
   _renderBytes(details) {
     // TODO: handle displayUnit once we have something other than 'kb'
-    const text = Util.formatBytesToKB(details.value, details.granularity);
-    return this._renderText({type: 'text', text});
+    const value = Util.formatBytesToKB(details.value, details.granularity);
+    return this._renderText({type: 'text', value});
   }
 
   /**
@@ -80,20 +81,21 @@ class DetailsRenderer {
    * @return {!Element}
    */
   _renderMilliseconds(details) {
-    let text = Util.formatMilliseconds(details.value, details.granularity);
+    let value = Util.formatMilliseconds(details.value, details.granularity);
     if (details.displayUnit === 'duration') {
-      text = Util.formatDuration(details.value);
+      value = Util.formatDuration(details.value);
     }
 
-    return this._renderText({type: 'text', text});
+    return this._renderText({type: 'text', value});
   }
 
   /**
-   * @param {!DetailsRenderer.DetailsJSON} text
+   * @param {!DetailsRenderer.StringDetailsJSON} text
    * @return {!Element}
    */
   _renderTextURL(text) {
-    const url = text.value || text.text || '';  // i think we only want to send this via text.value but not entirely sure.
+    console.assert(!('text' in text), 'text.text has value!!');
+    const url = text.value || '';
 
     let displayedPath;
     let displayedHost;
@@ -112,13 +114,13 @@ class DetailsRenderer {
 
     const element = this._dom.createElement('div', 'lh-text__url');
     element.appendChild(this._renderText({
-      text: displayedPath,
+      value: displayedPath,
       type: 'text',
     }));
 
     if (displayedHost) {
       const hostElem = this._renderText({
-        text: displayedHost,
+        value: displayedHost,
         type: 'text',
       });
       hostElem.classList.add('lh-text__url-host');
@@ -135,7 +137,7 @@ class DetailsRenderer {
    */
   _renderLink(details) {
     const allowedProtocols = ['https:', 'http:'];
-    const url = new URL(details.url);
+    const url = new URL(details.value);
     if (!allowedProtocols.includes(url.protocol)) {
       // Fall back to text if protocol not allowed.
       return this._renderText(details);
@@ -144,19 +146,20 @@ class DetailsRenderer {
     const a = /** @type {!HTMLAnchorElement} */ (this._dom.createElement('a'));
     a.rel = 'noopener';
     a.target = '_blank';
-    a.textContent = details.text;
+    a.textContent = details.label;
     a.href = url.href;
 
     return a;
   }
 
   /**
-   * @param {!DetailsRenderer.DetailsJSON} text
+   * @param {!DetailsRenderer.StringDetailsJSON} text
    * @return {!Element}
    */
   _renderText(text) {
     const element = this._dom.createElement('div', 'lh-text');
-    element.textContent = text.text || text.value; // TODO, just use `value` always.
+    console.assert(!('text' in text), 'text.text has value!!');
+    element.textContent = text.value;
     return element;
   }
 
@@ -168,10 +171,6 @@ class DetailsRenderer {
    */
   _renderThumbnail(details) {
     // TODO: use some empty details test instead? to handle data uris?
-    // if (/^image/.test(details.mimeType) === false) {
-    //   return this._dom.createElement('span');
-    // }
-
     const element = this._dom.createElement('img', 'lh-thumbnail');
     element.src = details.value;
     element.alt = '';
@@ -222,7 +221,7 @@ class DetailsRenderer {
       const classes = `lh-table-column--${itemType}`;
       this._dom.createChildOf(theadTrElem, 'th', classes).appendChild(this.render({
         type: 'text',
-        value: heading.text,
+        value: heading.text || '',
       }));
     }
 
@@ -231,20 +230,21 @@ class DetailsRenderer {
       const rowElem = this._dom.createChildOf(tbodyElem, 'tr');
       for (const heading of details.headings) {
 
-        const value = row[heading.key];
+        const value = /** @type {number|string|!DetailsRenderer.DetailsJSON} */ (row[heading.key]);
         // handle nested types like code blocks in table rows.
         if (value.type) {
-          const classes = `lh-table-column--${value.type}`;
-          this._dom.createChildOf(rowElem, 'td', classes).appendChild(this.render(value));
+          const valueAsDetails = /** @type {!DetailsRenderer.DetailsJSON} */ (value);
+          const classes = `lh-table-column--${valueAsDetails.type}`;
+          this._dom.createChildOf(rowElem, 'td', classes).appendChild(this.render(valueAsDetails));
           continue;
         }
 
         // build new details item to render
         const item = {
-          value,
-          type: value.type || heading.itemType, // TODO, remove support for individual cell types?
-          displayUnit: value.displayUnit || heading.displayUnit,
-          granularity: value.granularity || heading.granularity,
+          value: /** @type {number|string} */ (value),
+          type: heading.itemType,
+          displayUnit: heading.displayUnit,
+          granularity: heading.granularity,
         };
         const classes = `lh-table-column--${value.type || heading.itemType}`;
         this._dom.createChildOf(rowElem, 'td', classes).appendChild(this.render(item));
@@ -262,7 +262,6 @@ class DetailsRenderer {
     const element = this._dom.createElement('span', 'lh-node');
     element.textContent = item.snippet;
     element.title = item.selector;
-    if (item.text) element.setAttribute('data-text', item.text);
     if (item.path) element.setAttribute('data-path', item.path);
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
@@ -334,7 +333,7 @@ class DetailsRenderer {
    */
   _renderCode(details) {
     const pre = this._dom.createElement('pre', 'lh-code');
-    pre.textContent = details.text || details.value; // TODO, pick a winner
+    pre.textContent = details.text; // TODO, use value instead
     return pre;
   }
 }
@@ -345,10 +344,13 @@ if (typeof module !== 'undefined' && module.exports) {
   self.DetailsRenderer = DetailsRenderer;
 }
 
+// TODO, what's the diff between DetailsJSON and NumericUnitDetailsJSON?
 /**
  * @typedef {{
  *     type: string,
- *     text: (string|undefined)
+ *     value: (string|number|undefined),
+ *     granularity: (number|undefined),
+ *     displayUnit: (string|undefined)
  * }}
  */
 DetailsRenderer.DetailsJSON; // eslint-disable-line no-unused-expressions
@@ -357,10 +359,22 @@ DetailsRenderer.DetailsJSON; // eslint-disable-line no-unused-expressions
  * @typedef {{
  *     type: string,
  *     header: ({text: string}|undefined),
- *     items: !Array<{type: string, text: (string|undefined)}>
+ *     items: !Array<!DetailsRenderer.DetailsJSON>
  * }}
  */
 DetailsRenderer.ListDetailsJSON; // eslint-disable-line no-unused-expressions
+
+
+/**
+ * @typedef {{
+ *     type: string,
+ *     value: string,
+ *     granularity: (number|undefined),
+ *     displayUnit: (string|undefined),
+ * }}
+ */
+DetailsRenderer.StringDetailsJSON; // eslint-disable-line no-unused-expressions
+
 
 /**
  * @typedef {{
@@ -375,7 +389,6 @@ DetailsRenderer.NumericUnitDetailsJSON; // eslint-disable-line no-unused-express
 /**
  * @typedef {{
  *     type: string,
- *     text: (string|undefined),
  *     path: (string|undefined),
  *     selector: (string|undefined),
  *     snippet:(string|undefined)
@@ -393,45 +406,34 @@ DetailsRenderer.CardsDetailsJSON; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{
- *     type: string,
- *     itemType: (string|undefined),
- *     key: (string|undefined),
- *     text: (string|undefined)
+ *     itemType: string,
+ *     key: string,
+ *     text: (string|undefined),
+ *     granularity: (number|undefined),
+ *     displayUnit: (string|undefined),
  * }}
  */
 DetailsRenderer.TableHeaderJSON; // eslint-disable-line no-unused-expressions
 
-/**
- * @typedef {{
- *     type: string,
- *     text: (string|undefined),
- *     path: (string|undefined),
- *     selector: (string|undefined),
- *     snippet:(string|undefined)
- * }}
- */
-DetailsRenderer.NodeDetailsJSON; // eslint-disable-line no-unused-expressions
-
 /** @typedef {{
  *     type: string,
- *     header: ({text: string}|undefined),
- *     items: !Array<!Array<!DetailsRenderer.DetailsJSON>>,
- *     itemHeaders: !Array<!DetailsRenderer.TableHeaderJSON>
+ *     items: !Array<!DetailsRenderer.DetailsJSON>,
+ *     headings: !Array<!DetailsRenderer.TableHeaderJSON>
  * }}
  */
 DetailsRenderer.TableDetailsJSON; // eslint-disable-line no-unused-expressions
 
 /** @typedef {{
  *     type: string,
- *     value: ({text: string}|undefined),
+ *     value: (string|undefined),
  * }}
  */
 DetailsRenderer.ThumbnailDetails; // eslint-disable-line no-unused-expressions
 
 /** @typedef {{
  *     type: string,
- *     url: string,
- *     text: string
+ *     value: string,
+ *     label: string
  * }}
  */
 DetailsRenderer.LinkDetailsJSON; // eslint-disable-line no-unused-expressions

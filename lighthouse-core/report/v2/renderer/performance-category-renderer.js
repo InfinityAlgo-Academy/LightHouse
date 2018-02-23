@@ -75,12 +75,14 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     sparklineBarEl.style.width = audit.result.rawValue / scale * 100 + '%';
 
     const statsEl = this.dom.createChildOf(summary, 'div', 'lh-perf-hint__stats', tooltipAttrs);
-    const statsMsEl = this.dom.createChildOf(statsEl, 'div', 'lh-perf-hint__primary-stat');
-    statsMsEl.textContent = Util.formatMilliseconds(audit.result.rawValue);
+    if (audit.result.rawValue) {
+      const statsMsEl = this.dom.createChildOf(statsEl, 'div', 'lh-perf-hint__primary-stat');
+      statsMsEl.textContent = Util.formatMilliseconds(audit.result.rawValue);
+    }
 
     if (summaryInfo && summaryInfo.wastedKb) {
       const statsKbEl = this.dom.createChildOf(statsEl, 'div', 'lh-perf-hint__secondary-stat');
-      statsKbEl.textContent = Util.formatNumber(audit.result.summary.wastedKb) + ' KB';
+      statsKbEl.textContent = Util.formatNumber(summaryInfo.wastedKb) + ' KB';
     }
 
     const descriptionEl = this.dom.createChildOf(element, 'div', 'lh-perf-hint__description');

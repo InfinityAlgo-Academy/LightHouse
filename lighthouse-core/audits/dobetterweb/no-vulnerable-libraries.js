@@ -138,8 +138,8 @@ class NoVulnerableLibrariesAudit extends Audit {
         lib.highestSeverity = this.highestSeverity(lib.vulns).replace(/^\w/, l => l.toUpperCase());
         totalVulns += lib.vulnCount;
         lib.detectedLib = {};
-        lib.detectedLib.text = lib.name + '@' + lib.version;
-        lib.detectedLib.url = lib.pkgLink;
+        lib.detectedLib.label = lib.name + '@' + lib.version;
+        lib.detectedLib.value = lib.pkgLink;
         lib.detectedLib.type = 'link';
       }
       return lib;

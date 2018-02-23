@@ -116,7 +116,7 @@ class Audit {
       rawValue: result.rawValue,
       error: result.error,
       debugString: result.debugString,
-      extendedInfo: result.extendedInfo,
+      // extendedInfo: result.extendedInfo,
       scoringMode: audit.meta.scoringMode || Audit.SCORING_MODES.BINARY,
       informative: audit.meta.informative,
       manual: audit.meta.manual,
