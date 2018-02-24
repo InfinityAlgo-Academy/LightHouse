@@ -198,22 +198,30 @@ ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{
- *     rawValue: (number|undefined),
+ *     rawValue: (number|boolean|undefined),
  *     description: string,
- *     informative: boolean,
- *     manual: boolean,
- *     notApplicable: boolean,
- *     debugString: string,
+ *     informative: (boolean|undefined),
+ *     manual: (boolean|undefined),
+ *     notApplicable: (boolean|undefined),
+ *     debugString: (string|undefined),
  *     displayValue: string,
  *     helpText: string,
  *     scoringMode: string,
  *     extendedInfo: Object,
  *     score: number,
  *     details: (!DetailsRenderer.DetailsJSON|undefined),
- *     summary: Object
+ *     summary: (!ReportRenderer.AuditResultSummaryJSON|undefined)
  * }}
  */
 ReportRenderer.AuditResultJSON; // eslint-disable-line no-unused-expressions
+
+/**
+ * @typedef {{
+ *     wastedMs: (number|undefined),
+ *     wastedKb: (number|undefined),
+ * }}
+ */
+ReportRenderer.AuditResultSummaryJSON; // eslint-disable-line no-unused-expressions
 
 
 /**
@@ -245,7 +253,6 @@ ReportRenderer.GroupJSON; // eslint-disable-line no-unused-expressions
  *     initialUrl: string,
  *     url: string,
  *     runWarnings: (!Array<string>|undefined),
- *     artifacts: {traces: !Object},
  *     audits: !Object<string, !ReportRenderer.AuditResultJSON>,
  *     reportCategories: !Array<!ReportRenderer.CategoryJSON>,
  *     reportGroups: !Object<string, !ReportRenderer.GroupJSON>,

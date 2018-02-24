@@ -45,7 +45,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
    * @return {!Element}
    */
   _renderPerfHintAudit(audit, scale) {
-    const summaryInfo = /** @type {!PerformanceCategoryRenderer.PerfHintSummaryInfo}
+    const summaryInfo = /** @type {!ReportRenderer.AuditResultSummaryJSON}
         */ (audit.result.summary);
     const tooltipAttrs = {title: audit.result.displayValue};
 
@@ -62,11 +62,10 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     this.dom.createChildOf(summary, 'div', 'lh-toggle-arrow', {title: 'See resources'});
 
-    // if (!summaryInfo || typeof audit.result.rawValue !== 'number') {
-    //   const debugStrEl = this.dom.createChildOf(summary, 'div', 'lh-debug');
-    //   debugStrEl.textContent = audit.result.debugString || 'Report error: no extended information';
-    //   return element;
-    // }
+    if (!summaryInfo || typeof audit.result.rawValue !== 'number') {
+      console.error('Expected audit `summary` and numeric rawValue for perf-hint audit');
+      return element;
+    }
 
     const sparklineContainerEl = this.dom.createChildOf(summary, 'div', 'lh-perf-hint__sparkline',
         tooltipAttrs);
@@ -75,7 +74,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     sparklineBarEl.style.width = audit.result.rawValue / scale * 100 + '%';
 
     const statsEl = this.dom.createChildOf(summary, 'div', 'lh-perf-hint__stats', tooltipAttrs);
-    if (audit.result.rawValue) {
+    if (audit.result.rawValue && typeof audit.result.rawValue === 'number') {
       const statsMsEl = this.dom.createChildOf(statsEl, 'div', 'lh-perf-hint__primary-stat');
       statsMsEl.textContent = Util.formatMilliseconds(audit.result.rawValue);
     }
@@ -181,11 +180,3 @@ if (typeof module !== 'undefined' && module.exports) {
 } else {
   self.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
 }
-
-/**
- * @typedef {{
- *     wastedMs: (number|undefined),
- *     wastedKb: (number|undefined),
- * }}
- */
-PerformanceCategoryRenderer.PerfHintSummaryInfo; // eslint-disable-line no-unused-expressions
