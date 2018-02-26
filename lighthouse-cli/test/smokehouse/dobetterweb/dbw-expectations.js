@@ -15,12 +15,10 @@ module.exports = [
     audits: {
       'errors-in-console': {
         score: false,
-        // TODO: should be 5 after m64 (see note in dbw_tester.js)
-        rawValue: 4,
-        displayValue: '4',
+        rawValue: '>3',
         details: {
           items: {
-            length: 4,
+            length: '>3',
           },
         },
       },
@@ -37,13 +35,13 @@ module.exports = [
         extendedInfo: {
           value: {
             results: {
-              length: 16,
+              length: 18,
             },
           },
         },
         details: {
           items: {
-            length: 16,
+            length: 18,
           },
         },
       },
@@ -71,16 +69,17 @@ module.exports = [
       },
       'link-blocking-first-paint': {
         score: 0,
+        rawValue: '<3000',
         extendedInfo: {
           value: {
             results: {
-              length: 4,
+              length: 5,
             },
           },
         },
         details: {
           items: {
-            length: 4,
+            length: 5,
           },
         },
       },
@@ -128,18 +127,17 @@ module.exports = [
         score: false,
       },
       'script-blocking-first-paint': {
-        // TODO: re-enable score assertions when we have more flexible assertions like < 100
-        // score: 90,
+        score: '<100',
         extendedInfo: {
           value: {
             results: {
-              length: 1,
+              length: 2,
             },
           },
         },
         details: {
           items: {
-            length: 1,
+            length: 2,
           },
         },
       },

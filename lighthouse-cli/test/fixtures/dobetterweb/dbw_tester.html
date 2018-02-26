@@ -16,6 +16,17 @@
   <link rel="stylesheet" href="./dbw_tester.css?scriptActivated&delay=200"> <!-- PASS: initiator is script -->
 </template>
 
+<!-- AMP-style stylesheet script -->
+<!-- based on https://github.com/ampproject/amphtml/blob/38f1bdf4cc385f9a25cf2979abf215952880b876/src/font-stylesheet-timeout.js#L87-L103 -->
+<script type="text/javascript">
+  setTimeout(() => {
+    const stylesheet = document.getElementById('amp-style-link');
+    stylesheet.media = 'not-matching';
+    stylesheet.onload = () => stylesheet.media = 'screen';
+    stylesheet.parentNode.insertBefore(stylesheet, stylesheet.nextSibling);
+  }, 1500);
+</script>
+
 <!-- Note: these will only fail when using the static-server.js, which supports the ?delay=true param.
      If you're using your own server, the resource will load instantly and the
      stylesheets will be ignored for being below the threshold. -->
@@ -27,9 +38,11 @@
 <link rel="import" href="./dbw_partial_a.html?delay=200"> <!-- FAIL -->
 <link rel="import" href="./dbw_partial_b.html?delay=200&isasync" async> <!-- PASS -->
 
+<!-- FAIL: render blocking but capped at 500ms -->
+<link id="amp-style-link" rel="stylesheet" href="./dbw_tester.css?delay=3000&capped">
 <!-- PASS: preload that's activated later does not block rendering. -->
 <link rel="preload" href="./dbw_tester.css?delay=2000&async=true" as="style" onload="this.rel = 'stylesheet'">
-<!-- PASS: async stylesheet that loads after FCP -->
+<!-- PASS: async stylesheet -->
 <link rel="stylesheet" href="./dbw_tester.css?delay=3000&async=true" disabled onload="this.disabled = false">
 
 <!-- FAIL: block rendering -->
@@ -90,6 +103,9 @@
   </style>
 </template>
 
+<!-- Force FCP to be ~5s out, necessary to make sure our render-blocking audits still work -->
+<!-- even when other forces were responsible for delaying the render. -->
+<script src="./fcp-delayer.js?delay=5000"></script>
 </head>
 <body>
 
