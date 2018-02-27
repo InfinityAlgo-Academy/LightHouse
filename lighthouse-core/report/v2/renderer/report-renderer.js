@@ -190,7 +190,7 @@ if (typeof module !== 'undefined' && module.exports) {
  * @typedef {{
  *     id: string,
  *     weight: number,
- *     group: string,
+ *     group: (string|undefined),
  *     result: (ReportRenderer.AuditResultJSON|undefined)
  * }}
  */
@@ -228,7 +228,6 @@ ReportRenderer.AuditResultSummaryJSON; // eslint-disable-line no-unused-expressi
  * @typedef {{
  *     name: string,
  *     id: string,
- *     weight: number,
  *     score: number,
  *     description: string,
  *     audits: !Array<!ReportRenderer.AuditJSON>

@@ -294,7 +294,6 @@ module.exports = {
     },
     'pwa': {
       name: 'Progressive Web App',
-      weight: 1,
       description: 'These checks validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).',
       audits: [
         {id: 'service-worker', weight: 1},

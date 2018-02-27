@@ -38,16 +38,15 @@ class Deprecations extends Audit {
 
     const deprecations = entries.filter(log => log.entry.source === 'deprecation').map(log => {
       return {
-        type: 'code',
-        text: log.entry.text,
-        url: log.entry.url,
+        value: log.entry.text,
+        url: log.entry.url || '',
         source: log.entry.source,
         lineNumber: log.entry.lineNumber,
       };
     });
 
     const headings = [
-      {key: 'text', itemType: 'code', text: 'Deprecation / Warning'},
+      {key: 'value', itemType: 'code', text: 'Deprecation / Warning'},
       {key: 'url', itemType: 'url', text: 'URL'},
       {key: 'lineNumber', itemType: 'text', text: 'Line'},
     ];

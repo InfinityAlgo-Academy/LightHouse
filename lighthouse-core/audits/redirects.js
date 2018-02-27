@@ -56,13 +56,13 @@ class Redirects extends Audit {
 
           pageRedirects.push({
             url: redirectedRequest.url,
-            wastedMs: {type: 'ms', value: wastedMs, granularity: 1},
+            wastedMs,
           });
         }
 
         const headings = [
           {key: 'url', itemType: 'text', text: 'Redirected URL'},
-          {key: 'wastedMs', itemType: 'text', text: 'Time for Redirect'},
+          {key: 'wastedMs', itemType: 'ms', text: 'Time for Redirect', granularity: 1},
         ];
         const details = Audit.makeTableDetails(headings, pageRedirects);
 
