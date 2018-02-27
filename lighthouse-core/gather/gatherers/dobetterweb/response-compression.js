@@ -13,6 +13,7 @@
 const Gatherer = require('../gatherer');
 const gzip = require('zlib').gzip;
 
+const compressionHeaders = ['content-encoding', 'x-original-content-encoding'];
 const compressionTypes = ['gzip', 'br', 'deflate'];
 const binaryMimeTypes = ['image', 'audio', 'video'];
 const CHROME_EXTENSION_PROTOCOL = 'chrome-extension:';
@@ -39,7 +40,7 @@ class ResponseCompression extends Gatherer {
       }
 
       const isContentEncoded = record.responseHeaders.find(header =>
-        header.name.toLowerCase() === 'content-encoding' &&
+        compressionHeaders.includes(header.name.toLowerCase()) &&
         compressionTypes.includes(header.value)
       );
 
