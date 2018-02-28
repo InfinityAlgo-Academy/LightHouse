@@ -57,21 +57,111 @@ export interface AuditFullResult {
   error?: boolean;
   description: string;
   name: string;
+  informative?: boolean;
+  manual?: boolean;
+  notApplicable?: boolean;
   helpText?: string;
-  extendedInfo?: {value: string};
+  extendedInfo?: any;
+  details?: AuditDetails;
+  summary?: AuditSummary;
 }
 
+
+export interface AuditSummary {
+  wastedMs?: number;
+  wastedKb?: number;
+}
+
+export interface AuditDetailsItem {
+  [key: string]: LegacyDetails | string | number | boolean
+}
+
+
+export interface AuditDetails {
+  type: string,
+  // summary?: AuditDetailsSummary
+  items?: AuditDetailsItem[]
+  headings?: any; // AuditTableHeading[]
+
+  header?: LegacyDetails
+
+  scale?: number // for filmstrip
+}
+
+export interface AuditDetailsItem {
+  [key: string]: LegacyDetails | string | number | boolean
+}
+
+export interface LegacyDetails {
+  type: string
+  text?: string;   // not ideal both of these are ?
+  label?: string
+  value?: string | number
+  granularity?: string
+  displayUnit?: string
+}
+
+// TODO, move rawValue's use in report to details.summary
+export interface AuditDetailsSummary {
+  // displayValue?: LegacyDetails
+  wastedMs?: number // I might prefer sticking these two into a `performanceOpportunity` object or something, but we never really came up with other uses thus far either...
+  wastedKb?: number
+}
+
+export interface AuditTableHeading extends LegacyDetails {
+  key?: string // TODO, remove ?
+  itemKey? : string  // TODO, remove this
+  text: string
+  itemType: string
+}
+
+
+// export interface CRCDetails {
+//   header?: {text: string},
+//   longestChain: {duration: number, length: number, transferSize: number},
+//   chains: {[requestId: string]: CriticalRequestChainRenderer.CRCNode}
+// }
+
+
 export interface AuditFullResults {
-  [metric: string]: AuditFullResult
+  [auditId: string]: AuditFullResult
 }
 
 export interface Results {
   url: string;
+  initialUrl: string;
   audits: AuditFullResults;
   lighthouseVersion: string;
-  artifacts?: Object;
-  initialUrl: string;
   generatedTime: string;
+  timing: {total: number},
+  userAgent: string,
+  artifacts?: Object;
+  runWarnings?: string[];
+  reportCategories: CategoryMeta[];
+  reportGroups: {[groupName: string]: GroupMeta};
+  runtimeConfig: {
+    blockedUrlPatterns: string[];
+    extraHeaders: Object;
+    environment: Array<{description: string, enabled: boolean, name: string}>
+  }
+}
+
+export interface CategoryMeta {
+  name: string;
+  id: string;
+  score: number;
+  description: string;
+  audits: AuditMeta[];
+}
+export interface AuditMeta {
+  id: string;
+  weight: number;
+  group?: string;
+}
+
+export interface GroupMeta {
+  title: string;
+  description?: string;
 }
 
 export interface LaunchedChrome {
@@ -83,4 +173,59 @@ export interface LaunchedChrome {
 export interface LighthouseError extends Error {
   code?: string;
   friendlyMessage?: string;
+}
+
+
+
+export interface ByteEfficiencyAuditDetails {
+  type: string,
+  // summary?: AuditDetailsSummary // do we use this right now?
+  items: BEAuditDetailsItem[]
+  headings: any; // AuditTableHeading; // TODO, define later.
+}
+
+export interface TotalMsAuditDetails {
+  type: string,
+  // summary?: AuditDetailsSummary
+  items: TotalMsAuditDetailsItem[]
+  headings: any; // AuditTableHeading; // TODO, define later.
+}
+
+export interface CachingAuditDetails {
+  type: string,
+  // summary?: AuditDetailsSummary
+  items: CachingAuditDetailsItem[]
+  headings: any; // AuditTableHeading; // TODO, define later.
+}
+
+
+
+
+export interface BEAuditDetailsItem {
+  url: string;
+  wastedBytes: number;
+  totalBytes: number;
+
+  wastedMs?: number; // we plan to remove these, though it's currently always present
+  totalMs: number;
+
+  wastedPercent?: number;
+  fromProtocol?: boolean;
+  isCrossOrigin?: boolean;
+  isWasteful?: boolean;
+}
+
+export interface TotalMsAuditDetailsItem {
+  url: string;
+  wastedMs: number;
+  totalBytes?: number; // todo: make consistent across the audits
+}
+
+export interface CachingAuditDetailsItem {
+  url: string;
+  wastedBytes: number;
+  totalBytes: number;
+
+  cacheHitProbability: number;
+  cacheLifetimeInSeconds: number;
 }

@@ -76,6 +76,7 @@
     "npm-run-posix-or-windows": "^2.0.2",
     "sinon": "^2.3.5",
     "typescript": "^2.6.1",
+    "typescript-json-typesafe": "^0.0.3",
     "zone.js": "^0.7.3"
   },
   "dependencies": {

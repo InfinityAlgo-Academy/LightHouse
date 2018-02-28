@@ -193,7 +193,7 @@ class CacheHeaders {
 
         results.push({
           url,
-          cacheControl,
+          // cacheControl,
           cacheLifetimeInSeconds,
           cacheHitProbability,
           totalBytes,

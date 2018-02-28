@@ -17,6 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const URL = require('./lib/url-shim');
 const Sentry = require('./lib/sentry');
+const validateLHR = require('./test/lib/validate-lhr');
 
 const basePath = path.join(process.cwd(), 'latest-run');
 
@@ -99,7 +100,7 @@ class Runner {
         cats = Object.values(opts.config.categories);
       }
 
-      return {
+      const LHRObject = {
         userAgent: runResults.artifacts.UserAgent,
         lighthouseVersion: require('../package').version,
         generatedTime: (new Date()).toJSON(),
@@ -112,6 +113,10 @@ class Runner {
         reportCategories: cats,
         reportGroups: opts.config.groups,
       };
+
+      if (process.env.NODE_ENV !== 'production') validateLHR(LHRObject);
+
+      return LHRObject;
     }).catch(err => {
       return Sentry.captureException(err, {level: 'fatal'}).then(() => {
         throw err;

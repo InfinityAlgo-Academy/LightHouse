@@ -161,8 +161,8 @@ class CriticalRequestChains extends Audit {
         details: {
           type: 'criticalrequestchain',
           header: {type: 'text', text: 'View critical network waterfall:'},
-          chains: flattenedChains,
-          longestChain,
+          // chains: flattenedChains,
+          // longestChain,
         },
       };
     });
