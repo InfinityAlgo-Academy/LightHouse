@@ -8,6 +8,17 @@
 const INITIAL_CWD = 14 * 1024;
 
 module.exports = class NetworkAnalyzer {
+  /**
+   * @return {string}
+   */
+  static get SUMMARY() {
+    return '__SUMMARY__';
+  }
+
+  /**
+   * @param {LH.NetworkRequest[]} records
+   * @return {Map<string, LH.NetworkRequest[]>}
+   */
   static groupByOrigin(records) {
     const grouped = new Map();
     records.forEach(item => {
@@ -20,22 +31,10 @@ module.exports = class NetworkAnalyzer {
   }
 
   /**
-   * @param {!Array<number>} values
-   * @return {!NetworkAnalyzer.Summary}
+   * @param {number[]} values
+   * @return {NetworkAnalyzer.Summary}
    */
-  static summary(values) {
-    if (values instanceof Map) {
-      const summaryByKey = new Map();
-      const allEstimates = [];
-      for (const [key, estimates] of values) {
-        summaryByKey.set(key, NetworkAnalyzer.summary(estimates));
-        allEstimates.push(...estimates);
-      }
-
-      summaryByKey.set(NetworkAnalyzer.SUMMARY, NetworkAnalyzer.summary(allEstimates));
-      return summaryByKey;
-    }
-
+  static getSummary(values) {
     values.sort((a, b) => a - b);
 
     return {
@@ -47,9 +46,25 @@ module.exports = class NetworkAnalyzer {
   }
 
   /**
-   * @param {!Array<WebInspector.NetworkRequest>} records
-   * @param {function():void} iteratee
-   * @return {!Map<string, !Array<number>>}
+   * @param {Map<string,number[]>} values
+   * @return {Map<string, NetworkAnalyzer.Summary>}
+   */
+  static summarize(values) {
+    const summaryByKey = new Map();
+    const allEstimates = [];
+    for (const [key, estimates] of values) {
+      summaryByKey.set(key, NetworkAnalyzer.getSummary(estimates));
+      allEstimates.push(...estimates);
+    }
+
+    summaryByKey.set(NetworkAnalyzer.SUMMARY, NetworkAnalyzer.getSummary(allEstimates));
+    return summaryByKey;
+  }
+
+  /**
+   * @param {LH.NetworkRequest[]} records
+   * @param {function(any):any} iteratee
+   * @return {Map<string, number[]>}
    */
   static _estimateValueByOrigin(records, iteratee) {
     const connectionWasReused = NetworkAnalyzer.estimateIfConnectionWasReused(records);
@@ -57,6 +72,7 @@ module.exports = class NetworkAnalyzer {
 
     const estimates = new Map();
     for (const [origin, originRecords] of groupedByOrigin.entries()) {
+      /** @type {number[]} */
       let originEstimates = [];
 
       for (const record of originRecords) {
@@ -84,8 +100,8 @@ module.exports = class NetworkAnalyzer {
    * Estimates the observed RTT to each origin based on how long the TCP handshake took.
    * This is the most accurate and preferred method of measurement when the data is available.
    *
-   * @param {!Array<WebInspector.NetworkRequest>} records
-   * @return {!Map<string, !Array<number>>}
+   * @param {LH.NetworkRequest[]} records
+   * @return {Map<string, number[]>}
    */
   static _estimateRTTByOriginViaTCPTiming(records) {
     return NetworkAnalyzer._estimateValueByOrigin(records, ({timing, connectionReused}) => {
@@ -106,8 +122,8 @@ module.exports = class NetworkAnalyzer {
    * NOTE: this will tend to overestimate the actual RTT quite significantly as the download can be
    * slow for other reasons as well such as bandwidth constraints.
    *
-   * @param {!Array<WebInspector.NetworkRequest>} records
-   * @return {!Map<string, !Array<number>>}
+   * @param {LH.NetworkRequest[]} records
+   * @return {Map<string, number[]>}
    */
   static _estimateRTTByOriginViaDownloadTiming(records) {
     return NetworkAnalyzer._estimateValueByOrigin(records, ({record, timing, connectionReused}) => {
@@ -134,8 +150,8 @@ module.exports = class NetworkAnalyzer {
    * NOTE: this will tend to overestimate the actual RTT as the request can be delayed for other
    * reasons as well such as DNS lookup.
    *
-   * @param {!Array<WebInspector.NetworkRequest>} records
-   * @return {!Map<string, !Array<number>>}
+   * @param {LH.NetworkRequest[]} records
+   * @return {Map<string, number[]>}
    */
   static _estimateRTTByOriginViaSendStartTiming(records) {
     return NetworkAnalyzer._estimateValueByOrigin(records, ({record, timing, connectionReused}) => {
@@ -153,9 +169,9 @@ module.exports = class NetworkAnalyzer {
   /**
    * Given the RTT to each origin, estimates the observed server response times.
    *
-   * @param {!Array<WebInspector.NetworkRequest>} records
-   * @param {!Map<string, number>} rttByOrigin
-   * @return {!Map<string, !Array<number>>}
+   * @param {LH.NetworkRequest[]} records
+   * @param {Map<string, number>} rttByOrigin
+   * @return {Map<string, number[]>}
    */
   static _estimateResponseTimeByOrigin(records, rttByOrigin) {
     return NetworkAnalyzer._estimateValueByOrigin(records, ({record, timing}) => {
@@ -164,7 +180,7 @@ module.exports = class NetworkAnalyzer {
 
       const ttfb = timing.receiveHeadersEnd - timing.sendEnd;
       const origin = record.origin;
-      const rtt = rttByOrigin.get(origin) || rttByOrigin.get(NetworkAnalyzer.SUMMARY);
+      const rtt = rttByOrigin.get(origin) || rttByOrigin.get(NetworkAnalyzer.SUMMARY) || 0;
       return Math.max(ttfb - rtt, 0);
     });
   }
@@ -173,8 +189,9 @@ module.exports = class NetworkAnalyzer {
    * Returns a map of requestId -> connectionReused, estimating the information if the information
    * available in the records themselves appears untrustworthy.
    *
-   * @param {!WebInspector.NetworkRequest} records
-   * @return {!Map<string, boolean>}
+   * @param {LH.NetworkRequest[]} records
+   * @param {object} [options]
+   * @return {Map<string, boolean>}
    */
   static estimateIfConnectionWasReused(records, options) {
     options = Object.assign({forceCoarseEstimates: false}, options);
@@ -182,6 +199,7 @@ module.exports = class NetworkAnalyzer {
     const connectionIds = new Set(records.map(record => record.connectionId));
     // If the records actually have distinct connectionIds we can reuse these.
     if (!options.forceCoarseEstimates && connectionIds.size > 1) {
+      // @ts-ignore
       return new Map(records.map(record => [record.requestId, !!record.connectionReused]));
     }
 
@@ -217,9 +235,9 @@ module.exports = class NetworkAnalyzer {
    * Attempts to use the most accurate information first and falls back to coarser estimates when it
    * is unavailable.
    *
-   * @param {!Array<WebInspector.NetworkRequest>} records
-   * @param {Object=} options
-   * @return {!Map<string, !NetworkAnalyzer.Summary>}
+   * @param {LH.NetworkRequest[]} records
+   * @param {object} [options]
+   * @return {Map<string, !NetworkAnalyzer.Summary>}
    */
   static estimateRTTByOrigin(records, options) {
     options = Object.assign(
@@ -238,10 +256,7 @@ module.exports = class NetworkAnalyzer {
     if (!estimatesByOrigin.size || options.forceCoarseEstimates) {
       estimatesByOrigin = new Map();
       const estimatesViaDownload = NetworkAnalyzer._estimateRTTByOriginViaDownloadTiming(records);
-      const estimatesViaSendStart = NetworkAnalyzer._estimateRTTByOriginViaSendStartTiming(
-        records,
-        options.estimateResponseTime
-      );
+      const estimatesViaSendStart = NetworkAnalyzer._estimateRTTByOriginViaSendStartTiming(records);
 
       for (const [origin, estimates] of estimatesViaDownload.entries()) {
         estimatesByOrigin.set(origin, estimates);
@@ -258,16 +273,16 @@ module.exports = class NetworkAnalyzer {
     }
 
     if (!estimatesByOrigin.size) throw new Error('No timing information available');
-    return NetworkAnalyzer.summary(estimatesByOrigin);
+    return NetworkAnalyzer.summarize(estimatesByOrigin);
   }
 
   /**
    * Estimates the server response time of each origin. RTT times can be passed in or will be
    * estimated automatically if not provided.
    *
-   * @param {!Array<WebInspector.NetworkRequest>} records
+   * @param {LH.NetworkRequest[]} records
    * @param {Object=} options
-   * @return {!Map<string, !NetworkAnalyzer.Summary>}
+   * @return {Map<string, !NetworkAnalyzer.Summary>}
    */
   static estimateServerResponseTimeByOrigin(records, options) {
     options = Object.assign(
@@ -286,7 +301,7 @@ module.exports = class NetworkAnalyzer {
     }
 
     const estimatesByOrigin = NetworkAnalyzer._estimateResponseTimeByOrigin(records, rttByOrigin);
-    return NetworkAnalyzer.summary(estimatesByOrigin);
+    return NetworkAnalyzer.summarize(estimatesByOrigin);
   }
 };
 
@@ -297,5 +312,3 @@ module.exports = class NetworkAnalyzer {
  * @property {number} avg
  * @property {number} median
  */
-
-module.exports.SUMMARY = Symbol('__SUMMARY__');

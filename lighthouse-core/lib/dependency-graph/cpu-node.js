@@ -9,8 +9,8 @@ const Node = require('./node');
 
 class CPUNode extends Node {
   /**
-   * @param {!TraceEvent} parentEvent
-   * @param {!Array<TraceEvent>=} childEvents
+   * @param {LH.TraceEvent} parentEvent
+   * @param {LH.TraceEvent[]=} childEvents
    */
   constructor(parentEvent, childEvents = []) {
     const nodeId = `${parentEvent.tid}.${parentEvent.ts}`;
@@ -42,14 +42,14 @@ class CPUNode extends Node {
   }
 
   /**
-   * @return {!TraceEvent}
+   * @return {LH.TraceEvent}
    */
   get event() {
     return this._event;
   }
 
   /**
-   * @return {!TraceEvent}
+   * @return {LH.TraceEvent[]}
    */
   get childEvents() {
     return this._childEvents;
@@ -65,7 +65,7 @@ class CPUNode extends Node {
 
   /**
    * Returns true if this node contains the EvaluateScript task for a URL in the given set.
-   * @param {!Set<string>} urls
+   * @param {Set<string>} urls
    * @return {boolean}
    */
   isEvaluateScriptFor(urls) {
@@ -77,7 +77,7 @@ class CPUNode extends Node {
   }
 
   /**
-   * @return {!CPUNode}
+   * @return {CPUNode}
    */
   cloneWithoutRelationships() {
     return new CPUNode(this._event, this._childEvents);

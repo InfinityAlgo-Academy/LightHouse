@@ -23,7 +23,9 @@ class Node {
    */
   constructor(id) {
     this._id = id;
+    /** @type {Node[]} */
     this._dependents = [];
+    /** @type {Node[]} */
     this._dependencies = [];
   }
 
@@ -56,14 +58,14 @@ class Node {
   }
 
   /**
-   * @return {!Array<!Node>}
+   * @return {Node[]}
    */
   getDependents() {
     return this._dependents.slice();
   }
 
   /**
-   * @return {!Array<!Node>}
+   * @return {Node[]}
    */
   getDependencies() {
     return this._dependencies.slice();
@@ -77,9 +79,10 @@ class Node {
   }
 
   /**
-   * @return {!Node}
+   * @return {Node}
    */
   getRootNode() {
+    /** @type {Node} */
     let rootNode = this;
     while (rootNode._dependencies.length) {
       rootNode = rootNode._dependencies[0];
@@ -89,14 +92,14 @@ class Node {
   }
 
   /**
-   * @param {!Node}
+   * @param {Node} node
    */
   addDependent(node) {
     node.addDependency(this);
   }
 
   /**
-   * @param {!Node}
+   * @param {Node} node
    */
   addDependency(node) {
     if (this._dependencies.includes(node)) {
@@ -109,7 +112,7 @@ class Node {
 
   /**
    * Clones the node's information without adding any dependencies/dependents.
-   * @return {!Node}
+   * @return {Node}
    */
   cloneWithoutRelationships() {
     return new Node(this.id);
@@ -120,12 +123,13 @@ class Node {
    * included by the predicate, all nodes along the paths between the two will be included. If the
    * node that was called clone is not included in the resulting filtered graph, the return will be
    * undefined.
-   * @param {function(!Node):boolean=} predicate
-   * @return {!Node|undefined}
+   * @param {function(Node):boolean=} predicate
+   * @return {Node|undefined}
    */
   cloneWithRelationships(predicate) {
     const rootNode = this.getRootNode();
 
+    /** @type {function(Node): boolean} */
     let shouldIncludeNode = () => true;
     if (predicate) {
       const idsToInclude = new Set();
@@ -164,12 +168,15 @@ class Node {
   /**
    * Traverses all paths in the graph, calling iterator on each node visited. Decides which nodes to
    * visit with the getNext function.
-   * @param {function(!Node,!Array<!Node>)} iterator
-   * @param {function(!Node):!Array<!Node>} getNext
+   * @param {function(Node,Node[])} iterator
+   * @param {function(Node):Node[]} getNext
    */
   _traversePaths(iterator, getNext) {
+    /** @type {Node[][]} */
     const stack = [[this]];
     while (stack.length) {
+      /** @type {Node[]} */
+      // @ts-ignore - stack has length so it's guaranteed to have an item
       const path = stack.shift();
       const node = path[0];
       iterator(node, path);
@@ -184,8 +191,8 @@ class Node {
   /**
    * Traverses all connected nodes exactly once, calling iterator on each. Decides which nodes to
    * visit with the getNext function.
-   * @param {function(!Node,!Array<!Node>)} iterator
-   * @param {function(!Node):!Array<!Node>=} getNext Defaults to returning the dependents.
+   * @param {function(Node,Node[])} iterator
+   * @param {function(Node):Node[]} [getNext] Defaults to returning the dependents.
    */
   traverse(iterator, getNext) {
     if (!getNext) {
@@ -208,11 +215,12 @@ class Node {
 
   /**
    * Returns whether the given node has a cycle in its dependent graph by performing a DFS.
-   * @param {!Node} node
+   * @param {Node} node
    * @return {boolean}
    */
   static hasCycle(node) {
     const visited = new Set();
+    /** @type {Node[]} */
     const currentPath = [];
     const toVisit = [node];
     const depthAdded = new Map([[node, 0]]);
@@ -220,6 +228,8 @@ class Node {
     // Keep going while we have nodes to visit in the stack
     while (toVisit.length) {
       // Get the last node in the stack (DFS uses stack, not queue)
+      /** @type {Node} */
+      // @ts-ignore - toVisit has length so it's guaranteed to have an item
       const currentNode = toVisit.pop();
 
       // We've hit a cycle if the node we're visiting is in our current dependency path
@@ -228,6 +238,7 @@ class Node {
       if (visited.has(currentNode)) continue;
 
       // Since we're visiting this node, clear out any nodes in our path that we had to backtrack
+      // @ts-ignore
       while (currentPath.length > depthAdded.get(currentNode)) currentPath.pop();
 
       // Update our data structures to reflect that we're adding this node to our path

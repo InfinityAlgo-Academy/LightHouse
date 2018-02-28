@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-export as namespace LH
+export as namespace LH;
 
 export interface Flags {
   _: string[];
@@ -31,28 +31,26 @@ export interface Flags {
   quiet: boolean;
 }
 
-export interface Config {
-
-}
+export interface Config {}
 
 export interface AuditResult {
-  rawValue: boolean|number;
+  rawValue: boolean | number;
   displayValue?: string;
   debugString?: string;
-  score?: boolean|number;
-  optimalValue: number|string;
-  extendedInfo?: {value: string;};
+  score?: boolean | number;
+  optimalValue: number | string;
+  extendedInfo?: {value: string};
 }
 
 export interface AuditResults {
-  [metric: string]: AuditResult
+  [metric: string]: AuditResult;
 }
 
 export interface AuditFullResult {
-  rawValue: boolean|number;
+  rawValue: boolean | number;
   displayValue: string;
   debugString?: string;
-  score: boolean|number;
+  score: boolean | number;
   scoringMode: string;
   error?: boolean;
   description: string;
@@ -62,7 +60,7 @@ export interface AuditFullResult {
 }
 
 export interface AuditFullResults {
-  [metric: string]: AuditFullResult
+  [metric: string]: AuditFullResult;
 }
 
 export interface Results {
@@ -83,4 +81,52 @@ export interface LaunchedChrome {
 export interface LighthouseError extends Error {
   code?: string;
   friendlyMessage?: string;
+}
+
+export interface TraceEvent {
+  name: string;
+  args: any;
+  tid: number;
+  ts: number;
+  dur: number;
+}
+
+export interface NetworkRequest {
+  requestId: string;
+  connectionId: string;
+  connectionReused: boolean;
+
+  url: string;
+  protocol: string;
+  origin: string | null;
+  parsedURL: DevToolsParsedURL;
+
+  startTime: number;
+  endTime: number;
+
+  transferSize: number;
+
+  _initiator: NetworkRequestInitiator;
+  _timing: NetworkRequestTiming;
+  _resourceType: any;
+  priority(): 'VeryHigh' | 'High' | 'Medium' | 'Low';
+}
+
+export interface NetworkRequestInitiator {
+  type: 'script' | 'parser';
+}
+
+export interface NetworkRequestTiming {
+  connectStart: number;
+  connectEnd: number
+  sslStart: number;
+  sslEnd: number;
+  sendStart: number;
+  sendEnd: number;
+  receiveHeadersEnd: number;
+}
+
+export interface DevToolsParsedURL {
+  scheme: string;
+  host: string;
 }

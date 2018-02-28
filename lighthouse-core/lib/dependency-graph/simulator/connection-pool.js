@@ -13,7 +13,7 @@ const TLS_SCHEMES = ['https', 'wss'];
 
 module.exports = class ConnectionPool {
   /**
-   * @param {!Array<!WebInspector.NetworkRequest>} records
+   * @param {LH.NetworkRequest[]} records
    * @param {Object=} options
    */
   constructor(records, options) {
@@ -32,7 +32,9 @@ module.exports = class ConnectionPool {
     }
 
     this._records = records;
+    /** @type {Map<string, TcpConnection[]>} */
     this._connectionsByOrigin = new Map();
+    /** @type {Map<LH.NetworkRequest, TcpConnection>} */
     this._connectionsByRecord = new Map();
     this._connectionsInUse = new Set();
     this._connectionReusedByRequestId = NetworkAnalyzer.estimateIfConnectionWasReused(records, {
@@ -43,7 +45,7 @@ module.exports = class ConnectionPool {
   }
 
   /**
-   * @return {!Array<!WebInspector.NetworkRequest>}
+   * @return {TcpConnection[]}
    */
   connectionsInUse() {
     return Array.from(this._connectionsInUse);
@@ -85,16 +87,18 @@ module.exports = class ConnectionPool {
   }
 
   /**
-   * @param {!WebInspector.NetworkRequest} record
+   * @param {LH.NetworkRequest} record
    * @return {?TcpConnection}
    */
   acquire(record) {
     if (this._connectionsByRecord.has(record)) {
+      // @ts-ignore
       return this._connectionsByRecord.get(record);
     }
 
-    const origin = record.origin;
-    const connections = this._connectionsByOrigin.get(origin);
+    const origin = String(record.origin);
+    /** @type {TcpConnection[]} */
+    const connections = this._connectionsByOrigin.get(origin) || [];
     const wasConnectionWarm = !!this._connectionReusedByRequestId.get(record.requestId);
     const connection = connections.find(connection => {
       const meetsWarmRequirement = wasConnectionWarm === connection.isWarm();
@@ -108,7 +112,7 @@ module.exports = class ConnectionPool {
   }
 
   /**
-   * @param {!WebInspector.NetworkRequest} record
+   * @param {LH.NetworkRequest} record
    */
   release(record) {
     const connection = this._connectionsByRecord.get(record);

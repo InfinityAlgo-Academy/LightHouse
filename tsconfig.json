@@ -16,6 +16,7 @@
   },
   "include": [
     "lighthouse-cli/**/*.js",
+    "lighthouse-core/lib/dependency-graph/**/*.js",
     "./typings/externs.d.ts"
   ],
   "exclude": [

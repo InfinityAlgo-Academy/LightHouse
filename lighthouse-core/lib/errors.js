@@ -30,7 +30,7 @@ class LighthouseError extends Error {
   }
 
   /**
-   * @param {!LH.LighthouseError} err
+   * @param {LH.LighthouseError} err
    */
   static isPageLoadError(err) {
     return err.code === ERRORS.NO_DOCUMENT_REQUEST.code ||
