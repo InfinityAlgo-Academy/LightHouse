@@ -43,7 +43,7 @@ class Redirects extends Audit {
         if (redirectRequests.length > 1) {
           pageRedirects.push({
             url: `(Initial: ${redirectRequests[0].url})`,
-            wastedMs: 'n/a',
+            wastedMs: 0,
           });
         }
 
@@ -77,6 +77,9 @@ class Redirects extends Audit {
             },
           },
           details,
+          summary: {
+
+          },
         };
       });
   }
