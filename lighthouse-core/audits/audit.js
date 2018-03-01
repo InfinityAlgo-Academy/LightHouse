@@ -110,6 +110,10 @@ class Audit {
         auditDescription = audit.meta.failureDescription;
       }
     }
+    if (result.details)
+      result.details.summary = result.summary;
+    delete result.summary;
+
     return {
       score,
       displayValue: `${displayValue}`,
@@ -125,7 +129,6 @@ class Audit {
       description: auditDescription,
       helpText: audit.meta.helpText,
       details: result.details,
-      summary: result.summary,
     };
   }
 }
