@@ -50,7 +50,7 @@ An object containing the results of the audits, keyed by their name.
 | Name | Type | Description |
 | -- | -- | -- |
 | name  | `string` | The string identifier of the audit in kebab case.  |
-| description | `string` | The brief description of the audit's successful state. |
+| description | `string` | The brief description of the audit. The text can change depending on if the audit passed or failed. |
 | helpText | `string` | A more detailed description that describes why the audit is important and links to Lighthouse documentation on the audit, markdown links supported. |
 | debugString | <code>string&#124;undefined</code> | A string indicating some additional information to the user explaining an unusual circumstance or reason for failure. |
 | error | `boolean` | Set to true if there was an an exception thrown within the audit. The error message will be in `debugString`.
