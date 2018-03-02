@@ -27,35 +27,11 @@ class HTTPRedirect extends Gatherer {
     // Reset the options.
     options.url = this._preRedirectURL;
 
-    // Allow override for faster testing.
-    const timeout = options._testTimeout || 10000;
-
-    const securityPromise = options.driver.getSecurityState()
-      .then(state => {
-        return {
-          value: state.schemeIsCryptographic,
-        };
-      });
-
-    let noSecurityChangesTimeout;
-    const timeoutPromise = new Promise((resolve, reject) => {
-      // Set up a timeout for ten seconds in case we don't get any
-      // security events at all. If that happens, bail.
-      noSecurityChangesTimeout = setTimeout(_ => {
-        reject(new Error('Timed out waiting for HTTP redirection.'));
-      }, timeout);
-    });
-
-    return Promise.race([
-      securityPromise,
-      timeoutPromise,
-    ]).then(result => {
-      // Clear timeout. No effect if it won, no need to wait if it lost.
-      clearTimeout(noSecurityChangesTimeout);
-      return result;
-    }).catch(err => {
-      clearTimeout(noSecurityChangesTimeout);
-      throw err;
+    const expression = `new URL(window.location).protocol === 'https:'`;
+    return options.driver.evaluateAsync(expression, {useIsolation: true}).then(returnedValue => {
+      return {
+        value: returnedValue,
+      };
     });
   }
 }

@@ -29,10 +29,8 @@ describe('HTTP Redirect gatherer', () => {
     const opts = {
       url: 'https://example.com',
       driver: {
-        getSecurityState() {
-          return Promise.resolve({
-            schemeIsCryptographic: true,
-          });
+        evaluateAsync: function() {
+          return Promise.resolve(true);
         },
       },
     };
@@ -48,10 +46,8 @@ describe('HTTP Redirect gatherer', () => {
   it('returns an artifact', () => {
     return httpRedirectGather.afterPass({
       driver: {
-        getSecurityState() {
-          return Promise.resolve({
-            schemeIsCryptographic: true,
-          });
+        evaluateAsync: function() {
+          return Promise.resolve(true);
         },
       },
     }).then(artifact => {
@@ -59,36 +55,25 @@ describe('HTTP Redirect gatherer', () => {
     });
   });
 
+  it('fails a non-redirecting page', () => {
+    return httpRedirectGather.afterPass({
+      driver: {
+        evaluateAsync: function() {
+          return Promise.resolve(false);
+        },
+      },
+    }).then(artifact => {
+      assert.ok(artifact.value === false);
+    });
+  });
+
   it('throws an error on driver failure', () => {
     return httpRedirectGather.afterPass({
       driver: {
-        getSecurityState() {
-          return Promise.reject('such a fail');
+        evaluateAsync: function() {
+          return Promise.reject(new Error('an unexpected driver error occurred'));
         },
       },
-    }).then(
-      _ => assert.ok(false),
-      _ => assert.ok(true));
-  });
-
-  it('handles driver timeout', () => {
-    const fastTimeout = 50;
-    const slowResolve = 200;
-
-    return httpRedirectGather.afterPass({
-      driver: {
-        getSecurityState() {
-          return new Promise((resolve, reject) => {
-            // Resolve slowly, after the timeout for waiting on the security
-            // state has fired.
-            setTimeout(_ => resolve({
-              schemeIsCryptographic: true,
-            }), slowResolve);
-          });
-        },
-      },
-
-      _testTimeout: fastTimeout,
     }).then(
       _ => assert.ok(false),
       _ => assert.ok(true));

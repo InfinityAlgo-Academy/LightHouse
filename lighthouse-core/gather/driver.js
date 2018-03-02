@@ -312,17 +312,6 @@ class Driver {
       });
   }
 
-  getSecurityState() {
-    return new Promise((resolve, reject) => {
-      this.once('Security.securityStateChanged', data => {
-        this.sendCommand('Security.disable')
-          .then(_ => resolve(data), reject);
-      });
-
-      this.sendCommand('Security.enable').catch(reject);
-    });
-  }
-
   getServiceWorkerVersions() {
     return new Promise((resolve, reject) => {
       const versionUpdatedListener = data => {

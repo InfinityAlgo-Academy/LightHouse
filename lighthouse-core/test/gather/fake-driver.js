@@ -62,11 +62,6 @@ module.exports = {
   endDevtoolsLog() {
     return require('../fixtures/perflog.json');
   },
-  getSecurityState() {
-    return Promise.resolve({
-      schemeIsCryptographic: true,
-    });
-  },
   blockUrlPatterns() {
     return Promise.resolve();
   },
