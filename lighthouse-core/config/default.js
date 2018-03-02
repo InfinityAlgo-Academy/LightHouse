@@ -45,6 +45,7 @@ module.exports = {
       'seo/hreflang',
       'seo/embedded-content',
       'seo/canonical',
+      'seo/robots-txt',
       'fonts',
     ],
   },

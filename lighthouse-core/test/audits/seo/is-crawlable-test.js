@@ -30,6 +30,7 @@ describe('SEO: Is page crawlable audit', () => {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
         requestMainResource: () => Promise.resolve(mainResource),
         MetaRobots: robotsValue,
+        RobotsTxt: {},
       };
 
       return IsCrawlableAudit.audit(artifacts).then(auditResult => {
@@ -49,6 +50,7 @@ describe('SEO: Is page crawlable audit', () => {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
       requestMainResource: () => Promise.resolve(mainResource),
       MetaRobots: 'all, noarchive',
+      RobotsTxt: {},
     };
 
     return IsCrawlableAudit.audit(artifacts).then(auditResult => {
@@ -64,6 +66,7 @@ describe('SEO: Is page crawlable audit', () => {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
       requestMainResource: () => Promise.resolve(mainResource),
       MetaRobots: null,
+      RobotsTxt: {},
     };
 
     return IsCrawlableAudit.audit(artifacts).then(auditResult => {
@@ -102,6 +105,7 @@ describe('SEO: Is page crawlable audit', () => {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
         requestMainResource: () => Promise.resolve(mainResource),
         MetaRobots: null,
+        RobotsTxt: {},
       };
 
       return IsCrawlableAudit.audit(artifacts).then(auditResult => {
@@ -124,6 +128,7 @@ describe('SEO: Is page crawlable audit', () => {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
       requestMainResource: () => Promise.resolve(mainResource),
       MetaRobots: null,
+      RobotsTxt: {},
     };
 
     return IsCrawlableAudit.audit(artifacts).then(auditResult => {
@@ -131,7 +136,7 @@ describe('SEO: Is page crawlable audit', () => {
     });
   });
 
-  it('succeeds when there is no robots header', () => {
+  it('succeeds when there is no robots header and robots.txt is unavailable', () => {
     const mainResource = {
       responseHeaders: [],
     };
@@ -139,6 +144,7 @@ describe('SEO: Is page crawlable audit', () => {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
       requestMainResource: () => Promise.resolve(mainResource),
       MetaRobots: null,
+      RobotsTxt: {},
     };
 
     return IsCrawlableAudit.audit(artifacts).then(auditResult => {
@@ -157,6 +163,7 @@ describe('SEO: Is page crawlable audit', () => {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
       requestMainResource: () => Promise.resolve(mainResource),
       MetaRobots: null,
+      RobotsTxt: {},
     };
 
     return IsCrawlableAudit.audit(artifacts).then(auditResult => {
@@ -164,22 +171,112 @@ describe('SEO: Is page crawlable audit', () => {
     });
   });
 
+  it('fails when page is blocked from indexing by robots.txt', () => {
+    const robotsTxts = [
+      {
+        content: `User-agent: *
+        Disallow: /`,
+      },
+      {
+        content: `User-agent: *
+        Disallow: /test/page.html`,
+      },
+      {
+        content: `User-agent: *
+        Disallow:
+
+        User-agent: *
+        Disallow: /`,
+      },
+      {
+        content: `User-agent: *
+        Disallow: /one/
+        Disallow: /two/
+        Disallow: /test/
+        Allow: page.html
+        # Allow: /test/page.html
+        Allow: /test/page.html /someother/url.html`,
+      },
+    ];
+
+    const allRuns = robotsTxts.map(robotsTxt => {
+      const mainResource = {
+        url: 'http://example.com/test/page.html',
+        responseHeaders: [],
+      };
+      const artifacts = {
+        devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
+        requestMainResource: () => Promise.resolve(mainResource),
+        MetaRobots: null,
+        RobotsTxt: robotsTxt,
+      };
+
+      return IsCrawlableAudit.audit(artifacts).then(auditResult => {
+        assert.equal(auditResult.rawValue, false);
+        assert.equal(auditResult.details.items.length, 1);
+      });
+    });
+
+    return Promise.all(allRuns);
+  });
+
+  it('succeeds when page is allowed by robots.txt', () => {
+    const robotsTxts = [
+      {
+        content: `User-agent: SomeBot
+        Disallow: /`,
+      },
+      {
+        content: `User-agent: *
+        Disallow: /_/
+        Disallow: /search?q=*
+        Disallow: /test/
+        Allow: /test/page.html`,
+      },
+    ];
+
+    const allRuns = robotsTxts.map(robotsTxt => {
+      const mainResource = {
+        url: 'http://example.com/test/page.html',
+        responseHeaders: [],
+      };
+      const artifacts = {
+        devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
+        requestMainResource: () => Promise.resolve(mainResource),
+        MetaRobots: null,
+        RobotsTxt: robotsTxt,
+      };
+
+      return IsCrawlableAudit.audit(artifacts).then(auditResult => {
+        assert.equal(auditResult.rawValue, true);
+      });
+    });
+
+    return Promise.all(allRuns);
+  });
+
   it('returns all failing items', () => {
     const mainResource = {
+      url: 'http://example.com/test/page.html',
       responseHeaders: [
         {name: 'x-robots-tag', value: 'none'},
         {name: 'x-robots-tag', value: 'noindex'},
       ],
     };
+    const robotsTxt = {
+      content: `User-agent: *
+      Disallow: /`,
+    };
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
       requestMainResource: () => Promise.resolve(mainResource),
       MetaRobots: 'noindex',
+      RobotsTxt: robotsTxt,
     };
 
     return IsCrawlableAudit.audit(artifacts).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.equal(auditResult.details.items.length, 3);
+      assert.equal(auditResult.details.items.length, 4);
     });
   });
 });
