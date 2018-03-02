@@ -99,6 +99,7 @@ class Audit {
   static makeTableHeaders(headings) {
     return headings.map(heading => ({
       type: 'text',
+      itemKey: heading.key,
       itemType: heading.itemType,
       text: heading.text,
     }));
@@ -171,6 +172,7 @@ module.exports = Audit;
  * @typedef {Object} Audit.Heading
  * @property {string} key
  * @property {string} itemType
+ * @property {string} itemKey
  * @property {string} text
  */
 

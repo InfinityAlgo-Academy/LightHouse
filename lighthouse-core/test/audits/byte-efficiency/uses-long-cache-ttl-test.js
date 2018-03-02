@@ -77,12 +77,12 @@ describe('Cache headers audit', () => {
       const items = result.extendedInfo.value.results;
       assert.equal(items.length, 3);
       assert.equal(items[0].cacheLifetimeInSeconds, 3600);
-      assert.equal(items[0].cacheLifetimeDisplay, '1\xa0h');
+      assert.equal(items[0].cacheLifetimeDisplay.value, 3600);
       assert.equal(items[0].cacheHitProbability, .2);
       assert.equal(Math.round(items[0].wastedBytes), 80000);
       assert.equal(items[1].cacheLifetimeInSeconds, 3600);
       assert.equal(Math.round(items[1].wastedBytes), 8000);
-      assert.equal(items[2].cacheLifetimeDisplay, '1\xa0d');
+      assert.equal(items[2].cacheLifetimeInSeconds, 86400);
       assert.equal(Math.round(items[2].wastedBytes), 4000);
       assert.equal(result.displayValue, '3 assets found');
     });

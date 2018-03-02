@@ -102,7 +102,7 @@ describe('Best Practices: unused css rules audit', () => {
       };
     });
 
-    it('correctly computes potentialSavings', () => {
+    it('correctly computes wastedKb', () => {
       assert.equal(map({usedRules: []}).wastedPercent, 100);
       assert.equal(map({usedRules: [{startOffset: 0, endOffset: 3}]}).wastedPercent, 40);
       assert.equal(map({usedRules: [{startOffset: 0, endOffset: 5}]}).wastedPercent, 0);

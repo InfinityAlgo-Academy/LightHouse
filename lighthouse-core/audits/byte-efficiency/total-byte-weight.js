@@ -50,8 +50,8 @@ class TotalByteWeight extends ByteEfficiencyAudit {
         const result = {
           url: record.url,
           totalBytes: record.transferSize,
-          totalKb: this.bytesToKbString(record.transferSize),
-          totalMs: this.bytesToMsString(record.transferSize, networkThroughput),
+          totalKb: ByteEfficiencyAudit.bytesDetails(record.transferSize),
+          totalMs: ByteEfficiencyAudit.bytesToMsDetails(record.transferSize, networkThroughput),
         };
 
         totalBytes += result.totalBytes;
@@ -82,7 +82,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       return {
         score,
         rawValue: totalBytes,
-        displayValue: `Total size was ${ByteEfficiencyAudit.bytesToKbString(totalBytes)}`,
+        displayValue: `Total size was ${Math.round(totalBytes / 1024)} KB`,
         extendedInfo: {
           value: {
             results,

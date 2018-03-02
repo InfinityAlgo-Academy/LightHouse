@@ -35,20 +35,21 @@ class Util {
   /**
    * Format number.
    * @param {number} number
-   * @param {number=} decimalPlaces Number of decimal places to include. Defaults to 1.
+   * @param {number=} granularity Number of decimal places to include. Defaults to 0.1.
    * @return {string}
    */
-  static formatNumber(number, decimalPlaces = 1) {
-    return number.toLocaleString(undefined, {maximumFractionDigits: decimalPlaces});
+  static formatNumber(number, granularity = 0.1) {
+    const coarseValue = Math.round(number / granularity) * granularity;
+    return coarseValue.toLocaleString();
   }
 
   /**
    * @param {number} size
-   * @param {number=} decimalPlaces Number of decimal places to include. Defaults to 2.
+   * @param {number=} granularity Controls how coarse the displayed value is, defaults to .01
    * @return {string}
    */
-  static formatBytesToKB(size, decimalPlaces = 2) {
-    const kbs = (size / 1024).toLocaleString(undefined, {maximumFractionDigits: decimalPlaces});
+  static formatBytesToKB(size, granularity = .1) {
+    const kbs = (Math.round(size / 1024 / granularity) * granularity).toLocaleString();
     return `${kbs}${NBSP}KB`;
   }
 
@@ -84,14 +85,14 @@ class Util {
     return formatter.format(new Date(date));
   }
   /**
-   * Converts a time in seconds into a duration string, i.e. `1d 2h 13m 52s`
-   * @param {number} timeInSeconds
-   * @param {string=} zeroLabel
+   * Converts a time in milliseconds into a duration string, i.e. `1d 2h 13m 52s`
+   * @param {number} timeInMilliseconds
    * @return {string}
    */
-  static formatDuration(timeInSeconds, zeroLabel = 'None') {
-    if (timeInSeconds === 0) {
-      return zeroLabel;
+  static formatDuration(timeInMilliseconds) {
+    let timeInSeconds = timeInMilliseconds * 1000;
+    if (Math.round(timeInSeconds) === 0) {
+      return 'None';
     }
 
     /** @type {!Array<string>} */

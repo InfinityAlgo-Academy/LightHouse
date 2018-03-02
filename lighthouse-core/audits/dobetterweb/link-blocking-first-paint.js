@@ -12,7 +12,7 @@
 
 const Audit = require('../audit');
 const Util = require('../../report/v2/renderer/util.js');
-const scoreForWastedMs = require('../byte-efficiency/byte-efficiency-audit').scoreForWastedMs;
+const ByteEfficiencyAudit = require('../byte-efficiency/byte-efficiency-audit');
 
 // Because of the way we detect blocking stylesheets, asynchronously loaded
 // CSS with link[rel=preload] and an onload handler (see https://github.com/filamentgroup/loadCSS)
@@ -59,15 +59,21 @@ class LinkBlockingFirstPaintAudit extends Audit {
         filtered.reduce((t, item) => Math.min(t, item.startTime), Number.MAX_VALUE);
     let endTime = 0;
 
-    const results = filtered.map(item => {
-      endTime = Math.max(item.endTime, endTime);
+    const results = filtered
+      .map(item => {
+        endTime = Math.max(item.endTime, endTime);
 
-      return {
-        url: item.tag.url,
-        totalKb: Util.formatBytesToKB(item.transferSize),
-        totalMs: Util.formatMilliseconds(Math.round((item.endTime - startTime) * 1000), 1),
-      };
-    });
+        return {
+          url: item.tag.url,
+          totalKb: ByteEfficiencyAudit.bytesDetails(item.transferSize),
+          totalMs: {
+            type: 'ms',
+            value: (item.endTime - startTime) * 1000,
+            granularity: 1,
+          },
+        };
+      })
+      .sort((a, b) => b.totalMs.value - a.totalMs.value);
 
     const rawDelayTime = Math.round((endTime - startTime) * 1000);
     const delayTime = Util.formatMilliseconds(rawDelayTime, 1);
@@ -88,7 +94,7 @@ class LinkBlockingFirstPaintAudit extends Audit {
 
     return {
       displayValue,
-      score: scoreForWastedMs(rawDelayTime),
+      score: ByteEfficiencyAudit.scoreForWastedMs(rawDelayTime),
       rawValue: rawDelayTime,
       extendedInfo: {
         value: {

@@ -8,7 +8,6 @@
 const assert = require('assert');
 const parseCacheControl = require('parse-cache-control');
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const formatDuration = require('../../report/v2/renderer/util.js').formatDuration;
 const WebInspector = require('../../lib/web-inspector');
 const URL = require('../../lib/url-shim');
 
@@ -187,9 +186,13 @@ class CacheHeaders extends ByteEfficiencyAudit {
 
         const url = URL.elideDataURI(record._url);
         const totalBytes = record._transferSize;
-        const totalKb = ByteEfficiencyAudit.bytesToKbString(totalBytes);
+        const totalKb = ByteEfficiencyAudit.bytesDetails(totalBytes);
         const wastedBytes = (1 - cacheHitProbability) * totalBytes;
-        const cacheLifetimeDisplay = formatDuration(cacheLifetimeInSeconds);
+        const cacheLifetimeDisplay = {
+          type: 'ms',
+          value: cacheLifetimeInSeconds,
+          displayUnit: 'duration',
+        };
 
         totalWastedBytes += wastedBytes;
         if (url.includes('?')) queryStringCount++;

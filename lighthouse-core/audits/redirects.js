@@ -56,7 +56,7 @@ class Redirects extends Audit {
 
           pageRedirects.push({
             url: redirectedRequest.url,
-            wastedMs: Util.formatMilliseconds(wastedMs, 1),
+            wastedMs: {type: 'ms', value: wastedMs, granularity: 1},
           });
         }
 

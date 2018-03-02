@@ -81,7 +81,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
       {key: 'preview', itemType: 'thumbnail', text: ''},
       {key: 'url', itemType: 'url', text: 'URL'},
       {key: 'totalKb', itemType: 'text', text: 'Original'},
-      {key: 'potentialSavings', itemType: 'text', text: 'Potential Savings'},
+      {key: 'wastedKb', itemType: 'text', text: 'Potential Savings'},
     ];
 
     return {

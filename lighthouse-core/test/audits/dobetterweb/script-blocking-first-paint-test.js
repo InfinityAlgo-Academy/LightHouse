@@ -54,8 +54,8 @@ describe('Script Block First Paint audit', () => {
       const results = auditResult.details.items;
       assert.equal(results.length, 2);
       assert.ok(results[0][0].text.includes('js/app.js'), 'has a url');
-      assert.equal(results[0][2].text, `150${NBSP}ms`);
-      assert.equal(results[1][2].text, `50${NBSP}ms`);
+      assert.equal(Math.round(results[0][2].value), 150);
+      assert.equal(Math.round(results[1][2].value), 50);
     });
   });
 
