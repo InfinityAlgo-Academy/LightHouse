@@ -64,8 +64,7 @@ class Canonical extends Audit {
       description: 'Document has a valid `rel=canonical`',
       failureDescription: 'Document does not have a valid `rel=canonical`',
       helpText: 'Canonical links suggest which URL to show in search results. ' +
-        'Read more in [Use canonical URLs]' +
-        '(https://support.google.com/webmasters/answer/139066).',
+        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/canonical).',
       requiredArtifacts: ['Canonical', 'Hreflang'],
     };
   }
