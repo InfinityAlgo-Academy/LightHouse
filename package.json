@@ -8,7 +8,7 @@
     "chrome-debug": "./chrome-launcher/manual-chrome-launcher.js"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "scripts": {
     "install-all": "npm-run-posix-or-windows install-all:task",

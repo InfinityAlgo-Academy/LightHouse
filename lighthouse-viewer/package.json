@@ -2,7 +2,7 @@
   "name": "lighthouse-viewer",
   "private": true,
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "scripts": {
     "watch": "gulp watch",
