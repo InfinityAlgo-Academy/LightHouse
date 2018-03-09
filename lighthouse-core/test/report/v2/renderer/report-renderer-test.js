@@ -117,7 +117,8 @@ describe('ReportRenderer V2', () => {
 
     it('renders a left nav', () => {
       const header = renderer._renderReportNav(sampleResults);
-      assert.equal(header.querySelectorAll('.lh-leftnav__item').length, 4);
+      const categoryCount = sampleResults.reportCategories.length;
+      assert.equal(header.querySelectorAll('.lh-leftnav__item').length, categoryCount);
 
       const categories = header.querySelectorAll('.leftnav-item__category');
       const scores = header.querySelectorAll('.leftnav-item__score');

@@ -6,6 +6,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
+const Util = require('../../report/v2/renderer/util');
 
 // Parameters for log-normal CDF scoring. See https://www.desmos.com/calculator/gpmjeykbwr
 // ~75th and ~90th percentiles http://httparchive.org/interesting.php?a=All&l=Feb%201%202017&s=All#bytesTotal
@@ -22,9 +23,9 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       description: 'Avoids enormous network payloads',
       failureDescription: 'Has enormous network payloads',
       helpText:
-          'Large network payloads cost users real money and are highly correlated with ' +
-          'long load times. [Learn ' +
-          'more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).',
+        'Large network payloads cost users real money and are highly correlated with ' +
+        'long load times. [Learn ' +
+        'more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).',
       scoringMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['devtoolsLogs'],
     };
@@ -50,8 +51,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
         const result = {
           url: record.url,
           totalBytes: record.transferSize,
-          totalKb: ByteEfficiencyAudit.bytesDetails(record.transferSize),
-          totalMs: ByteEfficiencyAudit.bytesToMsDetails(record.transferSize, networkThroughput),
+          totalMs: ByteEfficiencyAudit.bytesToMs(record.transferSize, networkThroughput),
         };
 
         totalBytes += result.totalBytes;
@@ -59,7 +59,6 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       });
       const totalCompletedRequests = results.length;
       results = results.sort((itemA, itemB) => itemB.totalBytes - itemA.totalBytes).slice(0, 10);
-
 
       // Use the CDF of a log-normal distribution for scoring.
       //   <= 1600KB: score≈100
@@ -73,8 +72,14 @@ class TotalByteWeight extends ByteEfficiencyAudit {
 
       const headings = [
         {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'totalKb', itemType: 'text', text: 'Total Size'},
-        {key: 'totalMs', itemType: 'text', text: 'Transfer Time'},
+        {
+          key: 'totalBytes',
+          itemType: 'bytes',
+          displayUnit: 'kb',
+          granularity: 1,
+          text: 'Total Size',
+        },
+        {key: 'totalMs', itemType: 'ms', text: 'Transfer Time'},
       ];
 
       const tableDetails = ByteEfficiencyAudit.makeTableDetails(headings, results);
@@ -82,7 +87,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       return {
         score,
         rawValue: totalBytes,
-        displayValue: `Total size was ${Math.round(totalBytes / 1024)} KB`,
+        displayValue: `Total size was ${Util.formatBytesToKB(totalBytes, 1)}`,
         extendedInfo: {
           value: {
             results,

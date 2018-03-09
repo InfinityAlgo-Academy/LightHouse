@@ -35,35 +35,18 @@ describe('DetailsRenderer', () => {
 
   describe('render', () => {
     it('renders text', () => {
-      const el = renderer.render({type: 'text', text: 'My text content'});
+      const el = renderer.render({type: 'text', value: 'My text content'});
       assert.equal(el.textContent, 'My text content');
       assert.ok(el.classList.contains('lh-text'), 'adds classes');
-    });
-
-    it('renders lists with headers', () => {
-      const el = renderer.render({
-        type: 'list',
-        header: {type: 'text', text: 'My Header'},
-        items: [
-          {type: 'text', text: 'content 1'},
-          {type: 'text', text: 'content 2'},
-        ],
-      });
-
-      const header = el.querySelector('.lh-list__header');
-      assert.equal(header.textContent, 'My Header', 'did not render header');
-
-      const items = el.querySelector('.lh-list__items');
-      assert.equal(items.children.length, 2, 'did not render children');
     });
 
     it('renders lists without headers', () => {
       const el = renderer.render({
         type: 'list',
         items: [
-          {type: 'text', text: 'content 1'},
-          {type: 'text', text: 'content 2'},
-          {type: 'text', text: 'content 3'},
+          {type: 'text', value: 'content 1'},
+          {type: 'text', value: 'content 2'},
+          {type: 'text', value: 'content 3'},
         ],
       });
 
@@ -76,7 +59,7 @@ describe('DetailsRenderer', () => {
 
     it('renders cards', () => {
       const list = {
-        header: {type: 'text', text: 'View details'},
+        header: {type: 'text', value: 'View details'},
         items: [
           {title: 'Total DOM Nodes', value: 3500, target: '1,500 nodes'},
           {title: 'DOM Depth', value: 10, snippet: 'snippet'},
@@ -85,8 +68,6 @@ describe('DetailsRenderer', () => {
       };
 
       const details = renderer._renderCards(list);
-      assert.ok(details.classList.contains('lh-details'));
-      assert.equal(details.querySelector('summary').textContent, 'View details');
 
       const cards = details.querySelectorAll('.lh-scorecards > .lh-scorecard');
       assert.ok(cards.length, list.items.length, `renders ${list.items.length} cards`);
@@ -105,7 +86,7 @@ describe('DetailsRenderer', () => {
     it('renders code', () => {
       const el = renderer.render({
         type: 'code',
-        text: 'code snippet',
+        value: 'code snippet',
         lineNumber: 123,
         source: 'deprecation',
         url: 'https://example.com/feature',
@@ -119,7 +100,7 @@ describe('DetailsRenderer', () => {
     it('renders thumbnails', () => {
       const el = renderer.render({
         type: 'thumbnail',
-        url: 'http://example.com/my-image.jpg',
+        value: 'http://example.com/my-image.jpg',
         mimeType: 'image/jpeg',
       });
 
@@ -154,23 +135,22 @@ describe('DetailsRenderer', () => {
     it('renders tables', () => {
       const el = renderer.render({
         type: 'table',
-        header: 'View Items',
-        itemHeaders: [
-          {type: 'text', text: 'First'},
-          {type: 'text', text: 'Second'},
-          {type: 'text', text: 'Preview', itemType: 'thumbnail'},
+        headings: [
+          {text: 'First', key: 'a', itemType: 'text'},
+          {text: 'Second', key: 'b', itemType: 'text'},
+          {text: 'Preview', key: 'c', itemType: 'thumbnail'},
         ],
         items: [
-          [
-            {type: 'text', text: 'value A.1'},
-            {type: 'text', text: 'value A.2'},
-            {type: 'thumbnail', url: 'http://example.com/image.jpg', mimeType: 'image/jpeg'},
-          ],
-          [
-            {type: 'text', text: 'value B.1'},
-            {type: 'text', text: 'value B.2'},
-            {type: 'thumbnail', url: 'unknown'},
-          ],
+          {
+            a: 'value A.1',
+            b: 'value A.2',
+            c: {type: 'thumbnail', value: 'http://example.com/image.jpg'},
+          },
+          {
+            a: 'value B.1',
+            b: 'value B.2',
+            c: {type: 'thumbnail', value: 'unknown'},
+          },
         ],
       });
 
@@ -219,7 +199,7 @@ describe('DetailsRenderer', () => {
       const displayUrlText = '/(example.com)';
       const el = renderer.render({
         type: 'url',
-        text: urlText,
+        value: urlText,
       });
 
       assert.equal(el.localName, 'div');

@@ -59,11 +59,10 @@ describe('Performance: Font Display audit', () => {
         _resourceType: WebInspector.resourceTypes.Font,
       },
     ], webFonts)).then(result => {
-      const items = [[{
-        type: 'url',
-        text: openSansFontBold.src[0],
-      },
-      {type: 'text', text: '2,000 ms'}]];
+      const items = [{
+        url: openSansFontBold.src[0],
+        wastedTime: 2000,
+      }];
       assert.strictEqual(result.rawValue, false);
       assert.deepEqual(result.details.items, items);
     });

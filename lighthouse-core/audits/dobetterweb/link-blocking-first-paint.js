@@ -65,15 +65,11 @@ class LinkBlockingFirstPaintAudit extends Audit {
 
         return {
           url: item.tag.url,
-          totalKb: ByteEfficiencyAudit.bytesDetails(item.transferSize),
-          totalMs: {
-            type: 'ms',
-            value: (item.endTime - startTime) * 1000,
-            granularity: 1,
-          },
+          totalBytes: item.transferSize,
+          wastedMs: (item.endTime - startTime) * 1000,
         };
       })
-      .sort((a, b) => b.totalMs.value - a.totalMs.value);
+      .sort((a, b) => b.wastedMs - a.wastedMs);
 
     const rawDelayTime = Math.round((endTime - startTime) * 1000);
     const delayTime = Util.formatMilliseconds(rawDelayTime, 1);
@@ -86,11 +82,13 @@ class LinkBlockingFirstPaintAudit extends Audit {
 
     const headings = [
       {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'totalKb', itemType: 'text', text: 'Size (KB)'},
-      {key: 'totalMs', itemType: 'text', text: 'Delayed Paint By (ms)'},
+      {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 0.01,
+        text: 'Size (KB)'},
+      {key: 'wastedMs', itemType: 'ms', text: 'Delayed Paint By (ms)', granularity: 1},
     ];
 
-    const tableDetails = Audit.makeTableDetails(headings, results);
+    const summary = {wastedMs: rawDelayTime};
+    const details = Audit.makeTableDetails(headings, results, summary);
 
     return {
       displayValue,
@@ -98,11 +96,10 @@ class LinkBlockingFirstPaintAudit extends Audit {
       rawValue: rawDelayTime,
       extendedInfo: {
         value: {
-          wastedMs: delayTime,
           results,
         },
       },
-      details: tableDetails,
+      details,
     };
   }
 

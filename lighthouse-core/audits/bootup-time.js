@@ -95,13 +95,14 @@ class BootupTime extends Audit {
         .filter(result => result.sum >= THRESHOLD_IN_MS)
         .sort((a, b) => b.sum - a.sum);
 
-      const tableDetails = BootupTime.makeTableDetails(headings, results);
+      const summary = {wastedMs: totalBootupTime};
+      const details = BootupTime.makeTableDetails(headings, results, summary);
 
       return {
         score: totalBootupTime < 2000,
         rawValue: totalBootupTime,
         displayValue: Util.formatMilliseconds(totalBootupTime),
-        details: tableDetails,
+        details,
         extendedInfo: {
           value: extendedInfo,
         },

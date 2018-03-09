@@ -30,29 +30,12 @@ class UnusedBytes extends Audit {
 
   /**
    * @param {number} bytes
-   * @return {string}
-   */
-  static bytesDetails(bytes) {
-    return {
-      type: 'bytes',
-      value: bytes,
-      displayUnit: 'kb',
-      granularity: 1,
-    };
-  }
-
-  /**
-   * @param {number} bytes
    * @param {number} networkThroughput measured in bytes/second
    * @return {string}
    */
-  static bytesToMsDetails(bytes, networkThroughput) {
+  static bytesToMs(bytes, networkThroughput) {
     const milliseconds = bytes / networkThroughput * 1000;
-    return {
-      type: 'ms',
-      value: milliseconds,
-      granularity: 10,
-    };
+    return milliseconds;
   }
 
   /**
@@ -109,10 +92,8 @@ class UnusedBytes extends Audit {
     const debugString = result.debugString;
     const results = result.results
         .map(item => {
-          item.wastedKb = this.bytesDetails(item.wastedBytes);
-          item.wastedMs = this.bytesToMsDetails(item.wastedBytes, networkThroughput);
-          item.totalKb = this.bytesDetails(item.totalBytes);
-          item.totalMs = this.bytesToMsDetails(item.totalBytes, networkThroughput);
+          item.wastedMs = this.bytesToMs(item.wastedBytes, networkThroughput);
+          item.totalMs = this.bytesToMs(item.totalBytes, networkThroughput);
           return item;
         })
         .sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
@@ -126,7 +107,11 @@ class UnusedBytes extends Audit {
       displayValue = `Potential savings of ${wastedBytes} bytes`;
     }
 
-    const tableDetails = Audit.makeTableDetails(result.headings, results);
+    const summary = {
+      wastedMs,
+      wastedBytes,
+    };
+    const details = Audit.makeTableDetails(result.headings, results, summary);
 
     return {
       debugString,
@@ -140,7 +125,7 @@ class UnusedBytes extends Audit {
           results,
         },
       },
-      details: tableDetails,
+      details,
     };
   }
 

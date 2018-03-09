@@ -139,7 +139,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
     let url = stylesheetInfo.header.sourceURL;
     if (!url || url === pageUrl) {
       const contentPreview = UnusedCSSRules.determineContentPreview(stylesheetInfo.content);
-      url = {type: 'code', text: contentPreview};
+      url = {type: 'code', value: contentPreview};
     }
 
     const usage = UnusedCSSRules.computeUsage(stylesheetInfo);
@@ -166,8 +166,9 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
 
       const headings = [
         {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'totalKb', itemType: 'text', text: 'Original'},
-        {key: 'wastedKb', itemType: 'text', text: 'Potential Savings'},
+        {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
+        {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1,
+          text: 'Potential Savings'},
       ];
 
       return {

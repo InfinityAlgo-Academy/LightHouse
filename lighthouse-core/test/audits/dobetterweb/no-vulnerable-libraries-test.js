@@ -37,9 +37,10 @@ describe('Avoids front-end JavaScript libraries with known vulnerabilities', () 
     assert.equal(auditResult.rawValue, false);
     assert.equal(auditResult.details.items.length, 1);
     assert.equal(auditResult.extendedInfo.jsLibs.length, 3);
-    assert.equal(auditResult.details.items[0][2].text, 'High');
-    assert.equal(auditResult.details.items[0][0].text, 'angular@1.1.4');
-    assert.equal(auditResult.details.items[0][0].url, 'https://snyk.io/vuln/npm:angular?lh@1.1.4');
+    assert.equal(auditResult.details.items[0].highestSeverity, 'High');
+    assert.equal(auditResult.details.items[0].detectedLib.type, 'link');
+    assert.equal(auditResult.details.items[0].detectedLib.text, 'angular@1.1.4');
+    assert.equal(auditResult.details.items[0].detectedLib.url, 'https://snyk.io/vuln/npm:angular?lh@1.1.4');
   });
 
   it('handles ill-specified versions', () => {
@@ -53,7 +54,8 @@ describe('Avoids front-end JavaScript libraries with known vulnerabilities', () 
 
     assert.equal(auditResult.rawValue, false);
     assert.equal(auditResult.details.items.length, 1);
-    assert.equal(auditResult.details.items[0][0].text, 'jquery@1.8.0');
+    assert.equal(auditResult.details.items[0].detectedLib.type, 'link');
+    assert.equal(auditResult.details.items[0].detectedLib.text, 'jquery@1.8.0');
   });
 
   it('passes when no JS libraries with known vulnerabilities are detected', () => {

@@ -24,7 +24,7 @@ describe('Resources are fetched over http/2', () => {
       assert.equal(auditResult.rawValue, false);
       assert.ok(auditResult.displayValue.match('4 requests were not'));
       assert.equal(auditResult.details.items.length, 4);
-      const headers = auditResult.details.itemHeaders;
+      const headers = auditResult.details.headings;
       assert.equal(headers[0].text, 'URL', 'table headings are correct and in order');
       assert.equal(headers[1].text, 'Protocol', 'table headings are correct and in order');
     });

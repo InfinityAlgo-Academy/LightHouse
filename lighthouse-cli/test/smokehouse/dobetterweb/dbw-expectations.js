@@ -179,9 +179,7 @@ module.exports = [
         details: {
           items: {
             0: {
-              2: {
-                text: /^480 x 57/,
-              },
+              displayedAspectRatio: /^480 x 57/,
             },
             length: 1,
           },

@@ -32,7 +32,7 @@ describe('Page does not use mutation events', () => {
     assert.equal(auditResult.rawValue, false);
     assert.equal(auditResult.details.items.length, 4);
 
-    const itemHeaders = auditResult.details.itemHeaders;
+    const itemHeaders = auditResult.details.headings;
     assert.deepEqual(Object.keys(itemHeaders).map(key => itemHeaders[key].text),
                      ['URL', 'Event', 'Line', 'Col', 'Snippet'],
                      'table headings are correct and in order');
@@ -64,7 +64,7 @@ describe('Page does not use mutation events', () => {
       URL: {finalUrl: URL},
     });
     assert.equal(auditResult.rawValue, false);
-    assert.equal(auditResult.details.items[0][0].text, 'eval(<context>):54:21');
+    assert.equal(auditResult.details.items[0].url, 'eval(<context>):54:21');
     assert.equal(auditResult.details.items.length, 1);
   });
 });

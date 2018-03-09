@@ -95,8 +95,9 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
       debugString,
       headings: [
         {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'totalKb', itemType: 'text', text: 'Original'},
-        {key: 'wastedKb', itemType: 'text', text: 'Potential Savings'},
+        {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
+        {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1,
+          text: 'Potential Savings'},
       ],
     };
   }

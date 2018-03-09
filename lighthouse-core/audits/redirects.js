@@ -43,7 +43,7 @@ class Redirects extends Audit {
         if (redirectRequests.length > 1) {
           pageRedirects.push({
             url: `(Initial: ${redirectRequests[0].url})`,
-            wastedMs: 'n/a',
+            wastedMs: 0,
           });
         }
 
@@ -56,15 +56,16 @@ class Redirects extends Audit {
 
           pageRedirects.push({
             url: redirectedRequest.url,
-            wastedMs: {type: 'ms', value: wastedMs, granularity: 1},
+            wastedMs,
           });
         }
 
         const headings = [
           {key: 'url', itemType: 'text', text: 'Redirected URL'},
-          {key: 'wastedMs', itemType: 'text', text: 'Time for Redirect'},
+          {key: 'wastedMs', itemType: 'ms', text: 'Time for Redirect', granularity: 1},
         ];
-        const details = Audit.makeTableDetails(headings, pageRedirects);
+        const summary = {wastedMs: totalWastedMs};
+        const details = Audit.makeTableDetails(headings, pageRedirects, summary);
 
         return {
           // We award a passing grade if you only have 1 redirect

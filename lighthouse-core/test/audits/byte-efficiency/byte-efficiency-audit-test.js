@@ -12,8 +12,8 @@ const assert = require('assert');
 
 describe('Byte efficiency base audit', () => {
   const baseHeadings = [
-    {key: 'totalKb', itemType: 'text', text: ''},
-    {key: 'wastedKb', itemType: 'text', text: ''},
+    {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: ''},
+    {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: ''},
     {key: 'wastedMs', itemType: 'text', text: ''},
   ];
 
@@ -107,10 +107,10 @@ describe('Byte efficiency base audit', () => {
       ],
     }, 1000);
 
-    assert.equal(result.details.items[0][1].value, 2048);
-    assert.equal(result.details.items[0][0].value, 4096);
-    assert.equal(result.details.items[1][1].value, 1986);
-    assert.equal(result.details.items[1][0].value, 5436);
+    assert.equal(result.details.items[0].wastedBytes, 2048);
+    assert.equal(result.details.items[0].totalBytes, 4096);
+    assert.equal(result.details.items[1].wastedBytes, 1986);
+    assert.equal(result.details.items[1].totalBytes, 5436);
   });
 
   it('should populate Ms', () => {
@@ -123,9 +123,9 @@ describe('Byte efficiency base audit', () => {
       ],
     }, 1000);
 
-    assert.equal(result.details.items[0][2].value, 350);
-    assert.equal(result.details.items[1][2].value, 326);
-    assert.equal(result.details.items[2][2].value, 251);
+    assert.equal(result.details.items[0].wastedMs, 350);
+    assert.equal(result.details.items[1].wastedMs, 326);
+    assert.equal(result.details.items[2].wastedMs, 251);
   });
 
   it('should sort on wastedBytes', () => {
@@ -138,9 +138,9 @@ describe('Byte efficiency base audit', () => {
       ],
     }, 1000);
 
-    assert.equal(result.details.items[0][2].value, 450);
-    assert.equal(result.details.items[1][2].value, 400);
-    assert.equal(result.details.items[2][2].value, 350);
+    assert.equal(result.details.items[0].wastedMs, 450);
+    assert.equal(result.details.items[1].wastedMs, 400);
+    assert.equal(result.details.items[2].wastedMs, 350);
   });
 
   it('should create a display value', () => {

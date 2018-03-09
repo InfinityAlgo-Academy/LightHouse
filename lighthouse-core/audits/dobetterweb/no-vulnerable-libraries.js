@@ -160,7 +160,7 @@ class NoVulnerableLibrariesAudit extends Audit {
       {key: 'vulnCount', itemType: 'text', text: 'Vulnerability Count'},
       {key: 'highestSeverity', itemType: 'text', text: 'Highest Severity'},
     ];
-    const details = Audit.makeTableDetails(headings, finalVulns);
+    const details = Audit.makeTableDetails(headings, finalVulns, {});
 
     return {
       rawValue: totalVulns === 0,

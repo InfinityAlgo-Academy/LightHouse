@@ -74,10 +74,9 @@ describe('Cache headers audit', () => {
     ];
 
     return CacheHeadersAudit.audit(artifacts).then(result => {
-      const items = result.extendedInfo.value.results;
+      const items = result.details.items;
       assert.equal(items.length, 3);
       assert.equal(items[0].cacheLifetimeInSeconds, 3600);
-      assert.equal(items[0].cacheLifetimeDisplay.value, 3600);
       assert.equal(items[0].cacheHitProbability, .2);
       assert.equal(Math.round(items[0].wastedBytes), 80000);
       assert.equal(items[1].cacheLifetimeInSeconds, 3600);

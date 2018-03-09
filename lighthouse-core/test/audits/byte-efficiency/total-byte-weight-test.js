@@ -45,7 +45,7 @@ describe('Total byte weight audit', () => {
       const results = result.details.items;
       assert.strictEqual(results.length, 3);
       assert.strictEqual(result.extendedInfo.value.totalCompletedRequests, 3);
-      assert.strictEqual(results[0][1].value, 71680, 'results are sorted');
+      assert.strictEqual(results[0].totalBytes, 71680, 'results are sorted');
     });
   });
 

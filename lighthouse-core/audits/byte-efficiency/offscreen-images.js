@@ -28,7 +28,8 @@ class OffscreenImages extends ByteEfficiencyAudit {
       name: 'offscreen-images',
       description: 'Offscreen images',
       informative: true,
-      helpText: 'Consider lazy-loading offscreen and hidden images to improve page load speed ' +
+      helpText:
+        'Consider lazy-loading offscreen and hidden images to improve page load speed ' +
         'and time to interactive. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).',
       requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'traces', 'devtoolsLogs'],
@@ -72,11 +73,6 @@ class OffscreenImages extends ByteEfficiencyAudit {
 
     return {
       url,
-      preview: {
-        type: 'thumbnail',
-        url: image.networkRecord.url,
-        mimeType: image.networkRecord.mimeType,
-      },
       requestStartTime: image.networkRecord.startTime,
       totalBytes,
       wastedBytes,
@@ -107,9 +103,9 @@ class OffscreenImages extends ByteEfficiencyAudit {
       }
 
       // If an image was used more than once, warn only about its least wasteful usage
-      const existing = results.get(processed.preview.url);
+      const existing = results.get(processed.url);
       if (!existing || existing.wastedBytes > processed.wastedBytes) {
-        results.set(processed.preview.url, processed);
+        results.set(processed.url, processed);
       }
 
       return results;
@@ -118,17 +114,24 @@ class OffscreenImages extends ByteEfficiencyAudit {
     return artifacts.requestFirstInteractive(trace).then(firstInteractive => {
       const ttiTimestamp = firstInteractive.timestamp / 1000000;
       const results = Array.from(resultsMap.values()).filter(item => {
-        const isWasteful = item.wastedBytes > IGNORE_THRESHOLD_IN_BYTES &&
-            item.wastedPercent > IGNORE_THRESHOLD_IN_PERCENT;
+        const isWasteful =
+          item.wastedBytes > IGNORE_THRESHOLD_IN_BYTES &&
+          item.wastedPercent > IGNORE_THRESHOLD_IN_PERCENT;
         const loadedEarly = item.requestStartTime < ttiTimestamp;
         return isWasteful && loadedEarly;
       });
 
       const headings = [
-        {key: 'preview', itemType: 'thumbnail', text: ''},
+        {key: 'url', itemType: 'thumbnail', text: ''},
         {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'totalKb', itemType: 'text', text: 'Original'},
-        {key: 'wastedKb', itemType: 'text', text: 'Potential Savings'},
+        {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
+        {
+          key: 'wastedBytes',
+          itemType: 'bytes',
+          displayUnit: 'kb',
+          granularity: 1,
+          text: 'Potential Savings',
+        },
       ];
 
       return {

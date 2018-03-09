@@ -45,7 +45,7 @@ class CategoryRenderer {
 
     // Append audit details to header section so the entire audit is within a <details>.
     const header = /** @type {!HTMLDetailsElement} */ (this.dom.find('.lh-score__header', tmpl));
-    if (audit.result.details) {
+    if (audit.result.details && audit.result.details.type) {
       header.appendChild(this.detailsRenderer.render(audit.result.details));
     }
 
@@ -200,25 +200,24 @@ class CategoryRenderer {
    * @param {!Element} element Parent container to add the manual audits to.
    */
   _renderManualAudits(manualAudits, groupDefinitions, element) {
-    const auditsGroupedByGroup = /** @type {!Object<string,
-        !Array<!ReportRenderer.AuditJSON>>} */ ({});
+    // While we could support rendering multiple groups of manual audits, it doesn't
+    // seem desirable for UX or renderer complexity. So we'll throw.
+    const groupsIds = new Set(manualAudits.map(a => a.group));
+    /* eslint-disable no-console */
+    console.assert(groupsIds.size <= 1, 'More than 1 manual audit group found.');
+    console.assert(!groupsIds.has(undefined), 'Some manual audits don\'t belong to a group');
+    /* eslint-enable no-console */
+    if (!groupsIds.size) return;
+
+    const groupId = /** @type {string} */ (Array.from(groupsIds)[0]);
+    const auditGroupElem = this.renderAuditGroup(groupDefinitions[groupId], {expandable: true});
+    auditGroupElem.classList.add('lh-audit-group--manual');
+
     manualAudits.forEach(audit => {
-      const group = auditsGroupedByGroup[audit.group] || [];
-      group.push(audit);
-      auditsGroupedByGroup[audit.group] = group;
+      auditGroupElem.appendChild(this.renderAudit(audit));
     });
 
-    Object.keys(auditsGroupedByGroup).forEach(groupId => {
-      const group = groupDefinitions[groupId];
-      const auditGroupElem = this.renderAuditGroup(group, {expandable: true});
-      auditGroupElem.classList.add('lh-audit-group--manual');
-
-      auditsGroupedByGroup[groupId].forEach(audit => {
-        auditGroupElem.appendChild(this.renderAudit(audit));
-      });
-
-      element.appendChild(auditGroupElem);
-    });
+    element.appendChild(auditGroupElem);
   }
 
   /**

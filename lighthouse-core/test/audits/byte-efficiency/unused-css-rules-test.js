@@ -102,14 +102,14 @@ describe('Best Practices: unused css rules audit', () => {
       };
     });
 
-    it('correctly computes wastedKb', () => {
+    it('correctly computes wastedBytes', () => {
       assert.equal(map({usedRules: []}).wastedPercent, 100);
       assert.equal(map({usedRules: [{startOffset: 0, endOffset: 3}]}).wastedPercent, 40);
       assert.equal(map({usedRules: [{startOffset: 0, endOffset: 5}]}).wastedPercent, 0);
     });
 
     it('correctly computes url', () => {
-      const expectedPreview = {type: 'code', text: 'dummy'};
+      const expectedPreview = {type: 'code', value: 'dummy'};
       assert.deepEqual(map({header: {sourceURL: ''}}).url, expectedPreview);
       assert.deepEqual(map({header: {sourceURL: 'a'}}, 'http://g.co/a').url, expectedPreview);
       assert.equal(map({header: {sourceURL: 'foobar'}}).url, 'http://g.co/foobar');

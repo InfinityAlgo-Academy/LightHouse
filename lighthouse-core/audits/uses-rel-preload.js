@@ -92,7 +92,8 @@ class UsesRelPreloadAudit extends Audit {
         {key: 'url', itemType: 'url', text: 'URL'},
         {key: 'wastedMs', itemType: 'text', text: 'Potential Savings'},
       ];
-      const details = Audit.makeTableDetails(headings, results);
+      const summary = {wastedMs: maxWasted};
+      const details = Audit.makeTableDetails(headings, results, summary);
 
       return {
         score: UnusedBytes.scoreForWastedMs(maxWasted),

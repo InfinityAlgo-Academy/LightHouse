@@ -184,26 +184,31 @@ if (typeof module !== 'undefined' && module.exports) {
 /**
  * @typedef {{
  *     id: string,
- *     weight: number,
  *     score: number,
- *     group: string,
- *     result: {
- *       rawValue: (number|undefined),
- *       description: string,
- *       informative: boolean,
- *       manual: boolean,
- *       notApplicable: boolean,
- *       debugString: string,
- *       displayValue: string,
- *       helpText: string,
- *       score: (number|boolean),
- *       scoringMode: string,
- *       extendedInfo: Object,
- *       details: (!DetailsRenderer.DetailsJSON|undefined)
- *     }
+ *     weight: number,
+ *     group: (string|undefined),
+ *     result: (ReportRenderer.AuditResultJSON|undefined)
  * }}
  */
 ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
+
+/**
+ * @typedef {{
+ *     rawValue: (number|boolean|undefined),
+ *     description: string,
+ *     informative: (boolean|undefined),
+ *     manual: (boolean|undefined),
+ *     notApplicable: (boolean|undefined),
+ *     debugString: (string|undefined),
+ *     displayValue: string,
+ *     helpText: string,
+ *     scoringMode: string,
+ *     extendedInfo: Object,
+ *     error: boolean,
+ *     details: (!DetailsRenderer.DetailsJSON|undefined),
+ * }}
+ */
+ReportRenderer.AuditResultJSON; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{
@@ -234,7 +239,7 @@ ReportRenderer.GroupJSON; // eslint-disable-line no-unused-expressions
  *     initialUrl: string,
  *     url: string,
  *     runWarnings: (!Array<string>|undefined),
- *     artifacts: {traces: !Object},
+ *     audits: !Object<string, !ReportRenderer.AuditResultJSON>,
  *     reportCategories: !Array<!ReportRenderer.CategoryJSON>,
  *     reportGroups: !Object<string, !ReportRenderer.GroupJSON>,
  *     runtimeConfig: {

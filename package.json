@@ -126,7 +126,7 @@
     },
     {
       "path": "./lighthouse-viewer/dist/src/viewer.js",
-      "threshold": "60 Kb"
+      "threshold": "65 Kb"
     }
   ],
   "homepage": "https://github.com/GoogleChrome/lighthouse#readme",

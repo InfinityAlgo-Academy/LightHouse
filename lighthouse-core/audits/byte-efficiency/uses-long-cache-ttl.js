@@ -7,7 +7,7 @@
 
 const assert = require('assert');
 const parseCacheControl = require('parse-cache-control');
-const ByteEfficiencyAudit = require('./byte-efficiency-audit');
+const Audit = require('../audit');
 const WebInspector = require('../../lib/web-inspector');
 const URL = require('../../lib/url-shim');
 
@@ -18,7 +18,7 @@ const IGNORE_THRESHOLD_IN_PERCENT = 0.925;
 const SCORING_POINT_OF_DIMINISHING_RETURNS = 4; // 4 KB
 const SCORING_MEDIAN = 768; // 768 KB
 
-class CacheHeaders extends ByteEfficiencyAudit {
+class CacheHeaders extends Audit {
   /**
    * @return {!AuditMeta}
    */
@@ -31,7 +31,7 @@ class CacheHeaders extends ByteEfficiencyAudit {
       helpText:
         'A long cache lifetime can speed up repeat visits to your page. ' +
         '[Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#cache-control).',
-      scoringMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
+      scoringMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['devtoolsLogs'],
     };
   }
@@ -157,7 +157,7 @@ class CacheHeaders extends ByteEfficiencyAudit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
-    const devtoolsLogs = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
+    const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     return artifacts.requestNetworkRecords(devtoolsLogs).then(records => {
       const results = [];
       let queryStringCount = 0;
@@ -186,13 +186,7 @@ class CacheHeaders extends ByteEfficiencyAudit {
 
         const url = URL.elideDataURI(record._url);
         const totalBytes = record._transferSize;
-        const totalKb = ByteEfficiencyAudit.bytesDetails(totalBytes);
         const wastedBytes = (1 - cacheHitProbability) * totalBytes;
-        const cacheLifetimeDisplay = {
-          type: 'ms',
-          value: cacheLifetimeInSeconds,
-          displayUnit: 'duration',
-        };
 
         totalWastedBytes += wastedBytes;
         if (url.includes('?')) queryStringCount++;
@@ -201,9 +195,7 @@ class CacheHeaders extends ByteEfficiencyAudit {
           url,
           cacheControl,
           cacheLifetimeInSeconds,
-          cacheLifetimeDisplay,
           cacheHitProbability,
-          totalKb,
           totalBytes,
           wastedBytes,
         });
@@ -217,7 +209,7 @@ class CacheHeaders extends ByteEfficiencyAudit {
       //   <= 4KB: score≈100
       //   768KB: score=50
       //   >= 4600KB: score≈5
-      const score = ByteEfficiencyAudit.computeLogNormalScore(
+      const score = Audit.computeLogNormalScore(
         totalWastedBytes / 1024,
         SCORING_POINT_OF_DIMINISHING_RETURNS,
         SCORING_MEDIAN
@@ -225,11 +217,13 @@ class CacheHeaders extends ByteEfficiencyAudit {
 
       const headings = [
         {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'cacheLifetimeDisplay', itemType: 'text', text: 'Cache TTL'},
-        {key: 'totalKb', itemType: 'text', text: 'Size (KB)'},
+        {key: 'cacheLifetimeInSeconds', itemType: 'ms', text: 'Cache TTL', displayUnit: 'duration'},
+        {key: 'totalBytes', itemType: 'bytes', text: 'Size (KB)', displayUnit: 'kb',
+          granularity: 1},
       ];
 
-      const tableDetails = ByteEfficiencyAudit.makeTableDetails(headings, results);
+      const summary = {wastedBytes: totalWastedBytes};
+      const details = Audit.makeTableDetails(headings, results, summary);
 
       return {
         score,
@@ -241,7 +235,7 @@ class CacheHeaders extends ByteEfficiencyAudit {
             queryStringCount,
           },
         },
-        details: tableDetails,
+        details,
       };
     });
   }

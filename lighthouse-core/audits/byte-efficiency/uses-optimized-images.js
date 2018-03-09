@@ -65,7 +65,6 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
         url,
         fromProtocol: image.fromProtocol,
         isCrossOrigin: !image.isSameOrigin,
-        preview: {url: image.url, mimeType: image.mimeType, type: 'thumbnail'},
         totalBytes: image.originalSize,
         wastedBytes: jpegSavings.bytes,
       });
@@ -78,10 +77,11 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
     }
 
     const headings = [
-      {key: 'preview', itemType: 'thumbnail', text: ''},
+      {key: 'url', itemType: 'thumbnail', text: ''},
       {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'totalKb', itemType: 'text', text: 'Original'},
-      {key: 'wastedKb', itemType: 'text', text: 'Potential Savings'},
+      {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
+      {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1,
+        text: 'Potential Savings'},
     ];
 
     return {

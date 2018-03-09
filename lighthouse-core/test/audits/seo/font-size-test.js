@@ -122,7 +122,7 @@ describe('SEO: Font size audit', () => {
 
     assert.equal(auditResult.rawValue, false);
     assert.equal(auditResult.details.items.length, 2);
-    assert.equal(auditResult.details.items[0][2].text, '57.14%');
+    assert.equal(auditResult.details.items[0].coverage, '57.14%');
   });
 
   it('adds a category for failing text that wasn\'t analyzed', () => {
@@ -142,8 +142,8 @@ describe('SEO: Font size audit', () => {
     const auditResult = FontSizeAudit.audit(artifacts);
     assert.equal(auditResult.rawValue, false);
     assert.equal(auditResult.details.items.length, 3);
-    assert.equal(auditResult.details.items[1][0].text, 'Add\'l illegible text');
-    assert.equal(auditResult.details.items[1][2].text, '40.00%');
+    assert.equal(auditResult.details.items[1].source, 'Add\'l illegible text');
+    assert.equal(auditResult.details.items[1].coverage, '40.00%');
   });
 
   it('informs user if audit haven\'t covered all text on the page', () => {

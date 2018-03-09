@@ -6,7 +6,6 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/v2/renderer/util');
 const WebInspector = require('../lib/web-inspector');
 const allowedFontFaceDisplays = ['block', 'fallback', 'optional', 'swap'];
 
@@ -59,13 +58,13 @@ class FontDisplay extends Audit {
 
           return {
             url: record.url,
-            wastedTime: Util.formatMilliseconds(wastedTime, 1),
+            wastedTime,
           };
         });
 
       const headings = [
         {key: 'url', itemType: 'url', text: 'Font URL'},
-        {key: 'wastedTime', itemType: 'text', text: 'Font download time'},
+        {key: 'wastedTime', itemType: 'ms', granularity: 1, text: 'Font download time'},
       ];
       const details = Audit.makeTableDetails(headings, results);
 

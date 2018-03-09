@@ -103,7 +103,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
     let url = stylesheet.header.sourceURL;
     if (!url || url === pageUrl) {
       const contentPreview = UnusedCSSRules.determineContentPreview(stylesheet.content);
-      url = {type: 'code', text: contentPreview};
+      url = {type: 'code', value: contentPreview};
     }
 
     const totalBytes = ByteEfficiencyAudit.estimateTransferSize(networkRecord, content.length,
@@ -144,8 +144,9 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
       results,
       headings: [
         {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'totalKb', itemType: 'text', text: 'Original'},
-        {key: 'wastedKb', itemType: 'text', text: 'Potential Savings'},
+        {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
+        {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1,
+          text: 'Potential Savings'},
       ],
     };
   }

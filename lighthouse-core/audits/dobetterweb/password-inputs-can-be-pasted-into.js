@@ -38,11 +38,11 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
         type: 'list',
         header: {
           type: 'text',
-          text: 'Password inputs that prevent pasting into',
+          value: 'Password inputs that prevent pasting into',
         },
         items: passwordInputsWithPreventedPaste.map(input => ({
           type: 'text',
-          text: input.snippet,
+          value: input.snippet,
         })),
       },
     };

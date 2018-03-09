@@ -27,8 +27,8 @@ describe('SEO: link text audit', () => {
     const auditResult = LinkTextAudit.audit(artifacts);
     assert.equal(auditResult.rawValue, false);
     assert.equal(auditResult.details.items.length, 1);
-    assert.equal(auditResult.details.items[0][0].text, invalidLink.href);
-    assert.equal(auditResult.details.items[0][1].text, invalidLink.text);
+    assert.equal(auditResult.details.items[0].href, invalidLink.href);
+    assert.equal(auditResult.details.items[0].text, invalidLink.text);
   });
 
   it('ignores links pointing to the main document', () => {

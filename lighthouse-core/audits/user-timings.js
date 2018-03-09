@@ -6,7 +6,6 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/v2/renderer/util');
 
 class UserTimings extends Audit {
   /**
@@ -115,13 +114,12 @@ class UserTimings extends Audit {
         return {
           name: item.name,
           timingType: item.isMark ? 'Mark' : 'Measure',
-          time: Util.formatMilliseconds(time, 0.001),
-          timeAsNumber: time,
+          time,
         };
       }).sort((itemA, itemB) => {
         if (itemA.timingType === itemB.timingType) {
           // If both items are the same type, sort in ascending order by time
-          return itemA.timeAsNumber - itemB.timeAsNumber;
+          return itemA.time - itemB.time;
         } else if (itemA.timingType === 'Measure') {
           // Put measures before marks
           return -1;
@@ -133,7 +131,7 @@ class UserTimings extends Audit {
       const headings = [
         {key: 'name', itemType: 'text', text: 'Name'},
         {key: 'timingType', itemType: 'text', text: 'Type'},
-        {key: 'time', itemType: 'text', text: 'Time'},
+        {key: 'time', itemType: 'ms', granularity: 0.01, text: 'Time'},
       ];
 
       const details = Audit.makeTableDetails(headings, tableRows);
