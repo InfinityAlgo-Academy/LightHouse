@@ -32,11 +32,13 @@ function generateInlineStyleWithSize(sizeInBytes, firstContent = '', used = fals
   document.head.appendChild(style);
 }
 
-// Add a long task to delay FI
-setTimeout(() => {
+function longTask() {
   const start = Date.now();
   while (Date.now() < start + 100) ;
-}, 2000);
+}
+
+// Add a long task to delay FI
+setTimeout(longTask, 2000);
 
 // Lazily load the image
 setTimeout(() => {

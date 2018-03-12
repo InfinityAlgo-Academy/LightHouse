@@ -6,6 +6,8 @@
 'use strict';
 
 const Audit = require('../audit');
+const PredictivePerf = require('../predictive-perf');
+const LoadSimulator = require('../../lib/dependency-graph/simulator/simulator.js');
 
 const KB_IN_BYTES = 1024;
 
@@ -60,7 +62,7 @@ class UnusedBytes extends Audit {
     } else {
       // This was an asset that was inlined in a different resource type (e.g. HTML document).
       // Use the compression ratio of the resource to estimate the total transferred bytes.
-      const compressionRatio = (networkRecord._transferSize / networkRecord._resourceSize) || 1;
+      const compressionRatio = networkRecord._transferSize / networkRecord._resourceSize || 1;
       return Math.round(totalBytes * compressionRatio);
     }
   }
@@ -70,37 +72,78 @@ class UnusedBytes extends Audit {
    * @return {!Promise<!AuditResult>}
    */
   static audit(artifacts) {
+    const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    return artifacts.requestNetworkRecords(devtoolsLog)
-      .then(networkRecords => this.audit_(artifacts, networkRecords))
-      .then(result => {
-        return artifacts.requestNetworkThroughput(devtoolsLog)
-          .then(networkThroughput => this.createAuditResult(result, networkThroughput));
-      });
+    return artifacts
+      .requestNetworkRecords(devtoolsLog)
+      .then(networkRecords =>
+        Promise.all([
+          this.audit_(artifacts, networkRecords),
+          artifacts.requestPageDependencyGraph(trace, devtoolsLog),
+        ])
+      )
+      .then(([result, graph]) => this.createAuditResult(result, graph));
+  }
+
+  /**
+   * Computes the estimated effect of all the byte savings on the last long task
+   * in the provided graph.
+   *
+   * @param {!Array<{url: string, wastedBytes: number}>} results The array of byte savings results per resource
+   * @param {!Node} graph
+   * @return {number}
+   */
+  static computeWasteWithTTIGraph(results, graph, simulator) {
+    const simulationBeforeChanges = simulator.simulate();
+    const resultsByUrl = new Map();
+    for (const result of results) {
+      resultsByUrl.set(result.url, result);
+    }
+
+    // Update all the transfer sizes to reflect implementing our recommendations
+    graph.traverse(node => {
+      if (node.type !== 'network') return;
+      if (!resultsByUrl.has(node.record.url)) return;
+      const original = node.record.transferSize;
+      const wastedBytes = resultsByUrl.get(node.record.url).wastedBytes;
+      // cloning NetworkRequest objects is difficult, so just stash the original transfer size
+      node.record._originalTransferSize = original;
+      node.record._transferSize = Math.max(original - wastedBytes, 0);
+    });
+
+    const simulationAfterChanges = simulator.simulate();
+    // Restore the original transfer size after we've done our simulation
+    graph.traverse(node => {
+      if (node.type !== 'network') return;
+      if (!node.record._originalTransferSize) return;
+      node.record._transferSize = node.record._originalTransferSize;
+    });
+
+    const savingsOnTTI = Math.max(
+      PredictivePerf.getLastLongTaskEndTime(simulationBeforeChanges.nodeTiming) -
+        PredictivePerf.getLastLongTaskEndTime(simulationAfterChanges.nodeTiming),
+      0
+    );
+
+    // Round waste to nearest 10ms
+    return Math.round(savingsOnTTI / 10) * 10;
   }
 
   /**
    * @param {!Audit.HeadingsResult} result
-   * @param {number} networkThroughput
+   * @param {!Node} graph
    * @return {!AuditResult}
    */
-  static createAuditResult(result, networkThroughput) {
-    if (!Number.isFinite(networkThroughput) && result.results.length) {
-      throw new Error('Invalid network timing information');
-    }
+  static createAuditResult(result, graph) {
+    const simulatorOptions = PredictivePerf.computeRTTAndServerResponseTime(graph);
+    const simulator = new LoadSimulator(graph, simulatorOptions);
 
     const debugString = result.debugString;
-    const results = result.results
-        .map(item => {
-          item.wastedMs = this.bytesToMs(item.wastedBytes, networkThroughput);
-          item.totalMs = this.bytesToMs(item.totalBytes, networkThroughput);
-          return item;
-        })
-        .sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
+    const results = result.results.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
 
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
     const wastedKb = Math.round(wastedBytes / KB_IN_BYTES);
-    const wastedMs = Math.round(wastedBytes / networkThroughput * 100) * 10;
+    const wastedMs = UnusedBytes.computeWasteWithTTIGraph(results, graph, simulator);
 
     let displayValue = result.displayValue || '';
     if (typeof result.displayValue === 'undefined' && wastedBytes) {
