@@ -183,17 +183,6 @@ if (typeof module !== 'undefined' && module.exports) {
 
 /**
  * @typedef {{
- *     id: string,
- *     score: number,
- *     weight: number,
- *     group: (string|undefined),
- *     result: (ReportRenderer.AuditResultJSON|undefined)
- * }}
- */
-ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
-
-/**
- * @typedef {{
  *     rawValue: (number|boolean|undefined),
  *     description: string,
  *     informative: (boolean|undefined),
@@ -209,6 +198,17 @@ ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
  * }}
  */
 ReportRenderer.AuditResultJSON; // eslint-disable-line no-unused-expressions
+
+/**
+ * @typedef {{
+ *     id: string,
+ *     score: number,
+ *     weight: number,
+ *     group: (string|undefined),
+ *     result: (ReportRenderer.AuditResultJSON|undefined)
+ * }}
+ */
+ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{
