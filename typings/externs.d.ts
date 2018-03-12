@@ -130,3 +130,13 @@ export interface DevToolsParsedURL {
   scheme: string;
   host: string;
 }
+
+export interface DevToolsJsonTarget {
+  description: string;
+  devtoolsFrontendUrl: string;
+  id: string;
+  title: string;
+  type: string;
+  url: string;
+  webSocketDebuggerUrl: string;
+}
