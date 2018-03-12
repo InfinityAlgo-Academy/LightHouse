@@ -49,10 +49,9 @@ yarn devtools "$frontend_path/front_end/"
 #
 audit2_modulejson_path="$frontend_path/front_end/audits2/module.json"
 # remove existing renderer file mentions
-sed -i 's/.*\/renderer\/.*//' $audit2_modulejson_path
-# remove existing renderer file mentions
-sed -i "s/\"Audits2Panel\.js\"/ $files_to_include \"Audits2Panel.js\"/" $audit2_modulejson_path
-
+sed -i='' 's/.*\/renderer\/.*//' $audit2_modulejson_path
+# add in our hardcoded renderer file mentions
+sed -i='' "s/\"Audits2Panel\.js\"/ $files_to_include \"Audits2Panel.js\"/" $audit2_modulejson_path
 
 # compile, finally
 python "$frontend_path/scripts/compile_frontend.py" --protocol-externs-file "$protocol_path/externs/protocol_externs.js"
