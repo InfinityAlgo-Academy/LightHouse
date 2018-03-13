@@ -16,7 +16,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   _renderTimelineMetricAudit(audit, scale) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-timeline-metric', this.templateContext);
     const element = this.dom.find('.lh-timeline-metric', tmpl);
-    element.classList.add(`lh-timeline-metric--${Util.calculateRating(audit.score)}`);
+    element.classList.add(`lh-timeline-metric--${Util.calculateRating(audit.result.score)}`);
 
     const titleEl = this.dom.find('.lh-timeline-metric__title', tmpl);
     titleEl.textContent = audit.result.description;
@@ -49,7 +49,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     const element = this.dom.createElement('details', [
       'lh-perf-hint',
-      `lh-perf-hint--${Util.calculateRating(audit.score)}`,
+      `lh-perf-hint--${Util.calculateRating(audit.result.score)}`,
       'lh-expandable-details',
     ].join(' '));
 
@@ -152,7 +152,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     element.appendChild(metricAuditsEl);
 
     const hintAudits = category.audits
-        .filter(audit => audit.group === 'perf-hint' && audit.score < 100)
+        .filter(audit => audit.group === 'perf-hint' && audit.result.score < 100)
         .sort((auditA, auditB) => auditB.result.rawValue - auditA.result.rawValue);
     if (hintAudits.length) {
       const maxWaste = Math.max(...hintAudits.map(audit => audit.result.rawValue));
@@ -164,7 +164,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     const infoAudits = category.audits
-        .filter(audit => audit.group === 'perf-info' && audit.score < 100);
+        .filter(audit => audit.group === 'perf-info' && audit.result.score < 100);
     if (infoAudits.length) {
       const infoAuditsEl = this.renderAuditGroup(groups['perf-info'], {expandable: false});
       infoAudits.forEach(item => infoAuditsEl.appendChild(this.renderAudit(item)));
@@ -174,7 +174,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     const passedElements = category.audits
         .filter(audit => (audit.group === 'perf-hint' || audit.group === 'perf-info') &&
-            audit.score === 100)
+            audit.result.score === 100)
         .map(audit => this.renderAudit(audit));
 
     if (!passedElements.length) return element;

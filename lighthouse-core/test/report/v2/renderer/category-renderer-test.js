@@ -17,6 +17,7 @@ const DetailsRenderer = require('../../../../report/v2/renderer/details-renderer
 const CriticalRequestChainRenderer = require(
     '../../../../report/v2/renderer/crc-details-renderer.js');
 const CategoryRenderer = require('../../../../report/v2/renderer/category-renderer.js');
+const ReportRenderer = require('../../../../report/v2/renderer/report-renderer.js');
 const sampleResults = require('../../../results/sample_v2.json');
 
 const TEMPLATE_FILE = fs.readFileSync(__dirname + '/../../../../report/v2/templates.html', 'utf8');
@@ -33,6 +34,9 @@ describe('CategoryRenderer', () => {
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
     renderer = new CategoryRenderer(dom, detailsRenderer);
+
+    ReportRenderer.smooshAuditResultsIntoCategories(sampleResults.audits,
+      sampleResults.reportCategories);
   });
 
   after(() => {
@@ -178,7 +182,7 @@ describe('CategoryRenderer', () => {
     it.skip('renders the failed audits grouped by group', () => {
       const categoryDOM = renderer.render(category, sampleResults.reportGroups);
       const failedAudits = category.audits.filter(audit => {
-        return audit.score !== 100 && !audit.result.notApplicable;
+        return audit.result.score !== 100 && !audit.result.notApplicable;
       });
       const failedAuditTags = new Set(failedAudits.map(audit => audit.group));
 
@@ -188,10 +192,10 @@ describe('CategoryRenderer', () => {
 
     it('renders the passed audits grouped by group', () => {
       const categoryDOM = renderer.render(category, sampleResults.reportGroups);
-
       const passedAudits = category.audits.filter(audit =>
-        !audit.result.notApplicable && audit.score === 100);
+          !audit.result.notApplicable && audit.result.score === 100);
       const passedAuditTags = new Set(passedAudits.map(audit => audit.group));
+
       const passedAuditGroups = categoryDOM.querySelectorAll('.lh-passed-audits .lh-audit-group');
       assert.equal(passedAuditGroups.length, passedAuditTags.size);
     });
@@ -219,7 +223,7 @@ describe('CategoryRenderer', () => {
     it('doesnt create a passed section if there were 0 passed', () => {
       const origCategory = sampleResults.reportCategories.find(c => c.id === 'pwa');
       const category = JSON.parse(JSON.stringify(origCategory));
-      category.audits.forEach(audit => audit.score = 0);
+      category.audits.forEach(audit => audit.result.score = 0);
       const elem = renderer.render(category, sampleResults.reportGroups);
       const passedAudits = elem.querySelectorAll('.lh-passed-audits > .lh-audit');
       const failedAudits = elem.querySelectorAll('.lh-failed-audits > .lh-audit');

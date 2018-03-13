@@ -42,31 +42,6 @@ describe('ReportScoring', () => {
   });
 
   describe('#scoreAllCategories', () => {
-    it('should return a score', () => {
-      const result = ReportScoring.scoreAllCategories({
-        categories: {
-          'categoryA': {weight: 1, audits: [{id: 'auditA', weight: 1}]},
-          'categoryB': {weight: 4, audits: [{id: 'auditB', weight: 1}]},
-          'categoryC': {audits: []},
-        },
-      }, {auditA: {score: 50}, auditB: {score: 100}});
-
-      assert.equal(result.score, 90);
-    });
-
-    it('should return categories', () => {
-      const result = ReportScoring.scoreAllCategories({
-        categories: {
-          'my-category': {name: 'My Category', audits: []},
-          'my-other-category': {description: 'It is a nice category', audits: []},
-        },
-      }, {});
-
-      assert.equal(result.categories.length, 2);
-      assert.equal(result.categories[0].name, 'My Category');
-      assert.equal(result.categories[1].description, 'It is a nice category');
-    });
-
     it('should score the categories', () => {
       const resultsByAuditId = {
         'my-audit': {rawValue: 'you passed'},
@@ -76,10 +51,10 @@ describe('ReportScoring', () => {
         'my-boolean-failed-audit': {score: false},
       };
 
-      const result = ReportScoring.scoreAllCategories({
+      const result = {
         categories: {
-          'my-category': {audits: [{id: 'my-audit'}]},
-          'my-scored': {
+          categoryA: {audits: [{id: 'my-audit'}]},
+          categoryB: {
             audits: [
               {id: 'my-boolean-audit', weight: 1},
               {id: 'my-scored-audit', weight: 1},
@@ -88,11 +63,12 @@ describe('ReportScoring', () => {
             ],
           },
         },
-      }, resultsByAuditId);
+      };
 
-      assert.equal(result.categories.length, 2);
-      assert.equal(result.categories[0].score, 0);
-      assert.equal(result.categories[1].score, 55);
+      ReportScoring.scoreAllCategories(result, resultsByAuditId);
+
+      assert.equal(result.categories.categoryA.score, 0);
+      assert.equal(result.categories.categoryB.score, 55);
     });
   });
 });

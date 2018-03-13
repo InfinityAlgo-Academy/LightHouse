@@ -9,39 +9,53 @@
 class ReportScoring {
   /**
    * Computes the weighted-average of the score of the list of items.
-   * @param {!Array<{score: number|undefined, weight: number|undefined}>} items
+   * @param {!Array<{score: ?number|boolean|undefined, weight: number|undefined}>} items
    * @return {number}
    */
   static arithmeticMean(items) {
-    const results = items.reduce((result, item) => {
-      const score = Number(item.score) || 0;
-      const weight = Number(item.weight) || 0;
-      return {
-        weight: result.weight + weight,
-        sum: result.sum + score * weight,
-      };
-    }, {weight: 0, sum: 0});
+    const results = items.reduce(
+      (result, item) => {
+        // HACK. remove this in the next PR
+        // Srsly. The score inconsitency has been very bad.
+        let itemScore = item.score;
+        if (typeof item.score === 'boolean') {
+          itemScore = item.score ? 100 : 0;
+        }
 
-    return (results.sum / results.weight) || 0;
+        const score = Number(itemScore) || 0;
+        const weight = Number(item.weight) || 0;
+        return {
+          weight: result.weight + weight,
+          sum: result.sum + score * weight,
+        };
+      },
+      {weight: 0, sum: 0}
+    );
+
+    return results.sum / results.weight || 0;
   }
 
   /**
    * Returns the report JSON object with computed scores.
-   * @param {{categories: !Object<string, {id: string|undefined, weight: number|undefined, audits: !Array<{id: string, weight: number|undefined}>}>}} config
+   * @param {{categories: !Object<string, {id: string|undefined, weight: number|undefined, score: number|undefined, audits: !Array<{id: string, weight: number|undefined}>}>}} config
    * @param {!Object<string, {score: ?number|boolean|undefined, notApplicable: boolean, informative: boolean}>} resultsByAuditId
-   * @return {{score: number, categories: !Array<{audits: !Array<{score: number, result: !Object}>}>}}
    */
   static scoreAllCategories(config, resultsByAuditId) {
-    const categories = Object.keys(config.categories).map(categoryId => {
-      const category = config.categories[categoryId];
+    for (const [categoryId, category] of Object.entries(config.categories)) {
       category.id = categoryId;
-
-      const audits = category.audits.map(audit => {
+      category.audits.forEach(audit => {
         const result = resultsByAuditId[audit.id];
         // Cast to number to catch `null` and undefined when audits error
+        /** @type {number|boolean} */
         let auditScore = Number(result.score) || 0;
         if (typeof result.score === 'boolean') {
-          auditScore = result.score ? 100 : 0;
+          // HACK removed in the next PR
+          // While we'd like to do this boolean transformation happened on the auditDfn:
+          //     auditScore = result.score ? 100 : 0;
+          // …the original result.score is untouched which means the smokehouse expectations will fail
+          // We're officially rebaselining all those expectations in the next PR...
+          // So for now, we'll keep keep both auditDfn.score and result.score boolean
+          auditScore = result.score;
         }
         // If a result was not applicable, meaning its checks did not run against anything on
         // the page, force it's weight to 0. It will not count during the arithmeticMean() but
@@ -53,15 +67,17 @@ class ReportScoring {
           result.informative = true;
         }
 
-        return Object.assign({}, audit, {result, score: auditScore});
+        result.score = auditScore;
       });
 
-      const categoryScore = ReportScoring.arithmeticMean(audits);
-      return Object.assign({}, category, {audits, score: categoryScore});
-    });
-
-    const overallScore = ReportScoring.arithmeticMean(categories);
-    return {score: overallScore, categories};
+      const scores = category.audits.map(audit => ({
+        score: resultsByAuditId[audit.id].score,
+        weight: audit.weight,
+      }));
+      const categoryScore = ReportScoring.arithmeticMean(scores);
+      // mutate config.categories[].score
+      category.score = categoryScore;
+    }
   }
 }
 

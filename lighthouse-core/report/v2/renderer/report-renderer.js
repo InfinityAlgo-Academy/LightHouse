@@ -30,9 +30,14 @@ class ReportRenderer {
    * @param {!Element} container Parent element to render the report into.
    */
   renderReport(report, container) {
-    container.textContent = ''; // Remove previous report.
-    const element = container.appendChild(this._renderReport(report));
+    // If any mutations happen to the report within the renderers, we want the original object untouched
+    const clone = /** @type {!ReportRenderer.ReportJSON} */ (JSON.parse(JSON.stringify(report)));
 
+    if (!Array.isArray(clone.reportCategories)) throw new Error('No reportCategories provided.');
+    ReportRenderer.smooshAuditResultsIntoCategories(clone.audits, clone.reportCategories);
+
+    container.textContent = ''; // Remove previous report.
+    const element = container.appendChild(this._renderReport(clone));
     return /** @type {!Element} **/ (element);
   }
 
@@ -155,23 +160,36 @@ class ReportRenderer {
     perfCategoryRenderer.setTemplateContext(this._templateContext);
 
     const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
+
     for (const category of report.reportCategories) {
       if (scoreHeader) {
         scoreHeader.appendChild(categoryRenderer.renderScoreGauge(category));
       }
 
       let renderer = categoryRenderer;
-
       if (category.id === 'performance') {
         renderer = perfCategoryRenderer;
       }
-
       categories.appendChild(renderer.render(category, report.reportGroups));
     }
 
     reportSection.appendChild(this._renderReportFooter(report));
 
     return container;
+  }
+
+  /**
+   * Place the AuditResult into the auditDfn (which has just weight & group)
+   * @param {!Object<string, !ReportRenderer.AuditResultJSON>} audits
+   * @param {!Array<!ReportRenderer.CategoryJSON>} reportCategories
+   */
+  static smooshAuditResultsIntoCategories(audits, reportCategories) {
+    for (const category of reportCategories) {
+      category.audits.forEach(auditMeta => {
+        const result = audits[auditMeta.id];
+        auditMeta.result = result;
+      });
+    }
   }
 }
 
@@ -194,6 +212,7 @@ if (typeof module !== 'undefined' && module.exports) {
  *     scoringMode: string,
  *     extendedInfo: Object,
  *     error: boolean,
+ *     score: number,
  *     details: (!DetailsRenderer.DetailsJSON|undefined),
  * }}
  */
@@ -214,7 +233,6 @@ ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
  * @typedef {{
  *     name: string,
  *     id: string,
- *     weight: number,
  *     score: number,
  *     description: string,
  *     audits: !Array<!ReportRenderer.AuditJSON>

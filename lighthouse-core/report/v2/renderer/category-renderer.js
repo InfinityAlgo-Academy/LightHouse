@@ -57,7 +57,7 @@ class CategoryRenderer {
       scoreEl.classList.add('lh-score--manual');
     }
 
-    return this._populateScore(tmpl, audit.score, scoringMode, title, description);
+    return this._populateScore(tmpl, audit.result.score, scoringMode, title, description);
   }
 
   /**
@@ -294,7 +294,7 @@ class CategoryRenderer {
 
       if (audit.result.notApplicable) {
         group.notApplicable.push(audit);
-      } else if (audit.score === 100 && !audit.result.debugString) {
+      } else if (audit.result.score === 100 && !audit.result.debugString) {
         group.passed.push(audit);
       } else {
         group.failed.push(audit);

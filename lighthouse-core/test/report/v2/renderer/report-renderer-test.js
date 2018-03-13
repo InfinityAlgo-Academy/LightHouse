@@ -115,6 +115,13 @@ describe('ReportRenderer V2', () => {
       });
     });
 
+    it('should not mutate a report object', () => {
+      const container = renderer._dom._document.body;
+      const originalResults = JSON.parse(JSON.stringify(sampleResults));
+      renderer.renderReport(sampleResults, container);
+      assert.deepStrictEqual(sampleResults, originalResults);
+    }).timeout(2000);
+
     it('renders a left nav', () => {
       const header = renderer._renderReportNav(sampleResults);
       const categoryCount = sampleResults.reportCategories.length;
