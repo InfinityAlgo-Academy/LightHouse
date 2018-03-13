@@ -41,6 +41,8 @@ class NetworkRequests extends Audit {
           endTime: (record.endTime - earliestStartTime) * 1000,
           transferSize: record.transferSize,
           statusCode: record.statusCode,
+          mimeType: record.mimeType,
+          resourceType: record._resourceType && record._resourceType._name,
         };
       });
 
@@ -56,13 +58,15 @@ class NetworkRequests extends Audit {
           text: 'Transfer Size',
         },
         {key: 'statusCode', itemType: 'text', text: 'Status Code'},
+        {key: 'mimeType', itemType: 'text', text: 'MIME Type'},
+        {key: 'resourceType', itemType: 'text', text: 'Resource Type'},
       ];
 
       const tableDetails = Audit.makeTableDetails(headings, results);
 
       return {
         score: 100,
-        rawValue: records.length,
+        rawValue: results.length,
         extendedInfo: {value: results},
         details: tableDetails,
       };
