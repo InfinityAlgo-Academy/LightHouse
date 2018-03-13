@@ -9,6 +9,7 @@
 const NetworkRecorder = require('../lib/network-recorder');
 const emulation = require('../lib/emulation');
 const Element = require('../lib/element');
+const LHError = require('../lib/errors');
 const EventEmitter = require('events').EventEmitter;
 const URL = require('../lib/url-shim');
 const TraceParser = require('../lib/traces/trace-parser');
@@ -714,13 +715,25 @@ class Driver {
   /**
    * Return the body of the response with the given ID.
    * @param {string} requestId
+   * @param {number|undefined} timeout
    * @return {string}
    */
-  getRequestContent(requestId) {
-    return this.sendCommand('Network.getResponseBody', {
-      requestId,
-    // Ignoring result.base64Encoded, which indicates if body is already encoded
-    }).then(result => result.body);
+  getRequestContent(requestId, timeout = 1000) {
+    return new Promise((resolve, reject) => {
+      // If this takes more than 1s, reject the Promise.
+      // Why? Encoding issues can lead to hanging getResponseBody calls: https://github.com/GoogleChrome/lighthouse/pull/4718
+      const err = new LHError(LHError.errors.REQUEST_CONTENT_TIMEOUT);
+      const asyncTimeout = setTimeout((_ => reject(err)), timeout);
+
+      this.sendCommand('Network.getResponseBody', {requestId}).then(result => {
+        clearTimeout(asyncTimeout);
+        // Ignoring result.base64Encoded, which indicates if body is already encoded
+        resolve(result.body);
+      }).catch(e => {
+        clearTimeout(asyncTimeout);
+        reject(e);
+      });
+    });
   }
 
   /**
