@@ -177,7 +177,7 @@ describe('Byte efficiency base audit', () => {
 
   it('should work on real graphs', () => {
     const artifacts = Runner.instantiateComputedArtifacts();
-    return artifacts.requestPageDependencyGraph(trace, devtoolsLog).then(graph => {
+    return artifacts.requestPageDependencyGraph({trace, devtoolsLog}).then(graph => {
       const result = ByteEfficiencyAudit.createAuditResult(
         {
           headings: [{key: 'value', text: 'Label'}],

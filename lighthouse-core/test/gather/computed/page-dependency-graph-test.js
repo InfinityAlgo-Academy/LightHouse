@@ -55,10 +55,10 @@ describe('PageDependencyGraph computed artifact:', () => {
 
   describe('#compute_', () => {
     it('should compute the dependency graph', () => {
-      return computedArtifacts.requestPageDependencyGraph(
-        sampleTrace,
-        sampleDevtoolsLog
-      ).then(output => {
+      return computedArtifacts.requestPageDependencyGraph({
+        trace: sampleTrace,
+        devtoolsLog: sampleDevtoolsLog,
+      }).then(output => {
         assert.ok(output instanceof Node, 'did not return a graph');
 
         const dependents = output.getDependents();

@@ -22,10 +22,6 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
     return 'PageDependencyGraph';
   }
 
-  get requiredNumberOfArtifacts() {
-    return 2;
-  }
-
   /**
    * @param {!WebInspector.NetworkRequest} record
    * @return {!Array<string>}
@@ -284,12 +280,13 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {!Trace} trace
-   * @param {!DevtoolsLog} devtoolsLog
+   * @param {{trace: !Trace, devtoolsLog: !DevToolsLog}} data
    * @param {!ComputedArtifacts} artifacts
    * @return {!Promise<!Node>}
    */
-  compute_(trace, devtoolsLog, artifacts) {
+  compute_(data, artifacts) {
+    const trace = data.trace;
+    const devtoolsLog = data.devtoolsLog;
     const promises = [
       artifacts.requestTraceOfTab(trace),
       artifacts.requestNetworkRecords(devtoolsLog),

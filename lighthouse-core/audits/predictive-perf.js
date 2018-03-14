@@ -243,9 +243,9 @@ class PredictivePerf extends Audit {
    */
   static audit(artifacts) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     return Promise.all([
-      artifacts.requestPageDependencyGraph(trace, devtoolsLogs),
+      artifacts.requestPageDependencyGraph({trace, devtoolsLog}),
       artifacts.requestTraceOfTab(trace),
     ]).then(([graph, traceOfTab]) => {
       const graphs = {
