@@ -708,7 +708,7 @@
         "items": []
       }
     },
-    "uses-request-compression": {
+    "uses-text-compression": {
       "score": 90,
       "displayValue": "Potential savings of 62 KB (~290ms)",
       "rawValue": 290,
@@ -749,7 +749,7 @@
       },
       "scoringMode": "binary",
       "informative": true,
-      "name": "uses-request-compression",
+      "name": "uses-text-compression",
       "category": "Performance",
       "description": "Enable text compression",
       "helpText": "Text-based responses should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer).",
@@ -1660,7 +1660,7 @@
           "score": 100
         },
         {
-          "id": "uses-request-compression",
+          "id": "uses-text-compression",
           "weight": 0,
           "group": "perf-hint",
           "result": {
@@ -1704,7 +1704,7 @@
             },
             "scoringMode": "binary",
             "informative": true,
-            "name": "uses-request-compression",
+            "name": "uses-text-compression",
             "category": "Performance",
             "description": "Enable text compression",
             "helpText": "Text-based responses should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer).",

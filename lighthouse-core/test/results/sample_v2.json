@@ -2958,7 +2958,7 @@
         }
       }
     },
-    "uses-request-compression": {
+    "uses-text-compression": {
       "score": 0.9,
       "displayValue": "Potential savings of 64646 bytes",
       "rawValue": 150,
@@ -2982,7 +2982,7 @@
       },
       "scoreDisplayMode": "numeric",
       "informative": true,
-      "name": "uses-request-compression",
+      "name": "uses-text-compression",
       "description": "Enable text compression",
       "helpText": "Text-based responses should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer).",
       "details": {
@@ -4647,7 +4647,7 @@
           "group": "perf-hint"
         },
         {
-          "id": "uses-request-compression",
+          "id": "uses-text-compression",
           "weight": 0,
           "group": "perf-hint"
         },

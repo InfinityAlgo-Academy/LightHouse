@@ -15,6 +15,7 @@ module.exports = {
       'offscreen-images',
       'uses-webp-images',
       'uses-optimized-images',
+      'uses-text-compression',
       'uses-responsive-images',
       'unminified-css',
       'unminified-javascript',

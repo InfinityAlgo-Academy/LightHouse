@@ -90,6 +90,17 @@ module.exports = [
           },
         },
       },
+      'uses-text-compression': {
+        extendedInfo: {
+          value: {
+            wastedMs: '>700',
+            wastedKb: '>50',
+            results: {
+              length: 2,
+            },
+          },
+        },
+      },
       'uses-optimized-images': {
         extendedInfo: {
           value: {
