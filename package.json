@@ -21,7 +21,7 @@
     "build-all:task:windows": "yarn build-extension && yarn build-viewer",
     "build-extension": "cd ./lighthouse-extension && yarn build",
     "build-viewer": "cd ./lighthouse-viewer && yarn build",
-    "clean": "rimraf *.report.html *.report.dom.html *.report.json *.screenshots.html *.devtoolslog.json *.trace.json || true",
+    "clean": "rimraf *.report.html *.report.dom.html *.report.json *.screenshots.html *.screenshots.json *.devtoolslog.json *.trace.json || true",
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
     "smoke": "bash lighthouse-cli/test/smokehouse/run-all-tests.sh",
     "coverage": "istanbul cover -x \"**/third_party/**\" _mocha -- $(find */test -name '*-test.js') --reporter progress --report lcovonly",
