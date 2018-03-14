@@ -60,7 +60,8 @@ describe('PerfCategoryRenderer', () => {
     assert.deepEqual(score, score.firstElementChild, 'first child is a score');
     assert.ok(value.classList.contains('lh-score__value--numeric'),
               'category score is numeric');
-    assert.equal(value.textContent, Math.round(category.score), 'category score is rounded');
+    const scoreInDom = Number(value.textContent);
+    assert.ok(Number.isInteger(scoreInDom) && scoreInDom > 10, 'category score is rounded');
     assert.equal(title.textContent, category.name, 'title is set');
   });
 

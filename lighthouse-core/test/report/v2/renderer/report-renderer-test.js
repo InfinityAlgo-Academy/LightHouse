@@ -131,7 +131,7 @@ describe('ReportRenderer V2', () => {
       const scores = header.querySelectorAll('.leftnav-item__score');
       sampleResults.reportCategories.forEach((cat, i) => {
         assert.equal(categories[i].textContent, cat.name);
-        assert.equal(scores[i].textContent, Math.round(Util.formatNumber(cat.score)));
+        assert.equal(Number(scores[i].textContent), cat.score * 100);
       });
     });
 

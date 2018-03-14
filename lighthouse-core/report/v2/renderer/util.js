@@ -11,8 +11,8 @@ const ELLIPSIS = '\u2026';
 const NBSP = '\xa0';
 
 const RATINGS = {
-  PASS: {label: 'pass', minScore: 75},
-  AVERAGE: {label: 'average', minScore: 45},
+  PASS: {label: 'pass', minScore: 0.75},
+  AVERAGE: {label: 'average', minScore: 0.45},
   FAIL: {label: 'fail'},
 };
 

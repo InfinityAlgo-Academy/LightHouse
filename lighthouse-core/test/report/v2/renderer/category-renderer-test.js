@@ -97,7 +97,8 @@ describe('CategoryRenderer', () => {
     assert.deepEqual(score, score.firstElementChild, 'first child is a score');
     assert.ok(value.classList.contains('lh-score__value--numeric'),
               'category score is numeric');
-    assert.equal(value.textContent, Math.round(category.score), 'category score is rounded');
+    const scoreInDom = Number(value.textContent);
+    assert.ok(Number.isInteger(scoreInDom) && scoreInDom > 10, 'category score is rounded');
     assert.equal(title.textContent, category.name, 'title is set');
 
     const audits = categoryDOM.querySelectorAll('.lh-audit');
@@ -179,7 +180,8 @@ describe('CategoryRenderer', () => {
       assert.deepEqual(score, score.firstElementChild, 'first child is a score');
       assert.ok(value.classList.contains('lh-score__value--numeric'),
                 'category score is numeric');
-      assert.equal(value.textContent, Math.round(category.score), 'category score is rounded');
+      const scoreInDom = Number(value.textContent);
+      assert.ok(Number.isInteger(scoreInDom) && scoreInDom > 10, 'score is rounded out of 100');
       assert.equal(title.textContent, category.name, 'title is set');
       assert.ok(description.querySelector('a'), 'description contains converted markdown links');
     });
