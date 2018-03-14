@@ -571,7 +571,7 @@ describe('Config', () => {
     });
   });
 
-  describe('generateConfigOfCategories', () => {
+  describe('generateNewFilteredConfig', () => {
     it('should not mutate the original config', () => {
       const configCopy = JSON.parse(JSON.stringify(origConfig));
       Config.generateNewFilteredConfig(configCopy, ['performance']);
@@ -630,6 +630,27 @@ describe('Config', () => {
       const auditCount = Object.keys(selectedCategory.audits).length;
       assert.equal(config.passes.length, 3, 'incorrect # of passes');
       assert.equal(config.audits.length, auditCount, 'audit filtering failed');
+    });
+  });
+
+  describe('expandAuditShorthandAndMergeOptions', () => {
+    it('should merge audits', () => {
+      const audits = ['a', {path: 'b', options: {x: 1, y: 1}}, {path: 'b', options: {x: 2}}];
+      const merged = Config.expandAuditShorthandAndMergeOptions(audits);
+      assert.deepEqual(merged, [{path: 'a', options: {}}, {path: 'b', options: {x: 2, y: 1}}]);
+    });
+  });
+
+  describe('expandGathererShorthandAndMergeOptions', () => {
+    it('should merge gatherers', () => {
+      const gatherers = [
+        'viewport-dimensions',
+        {path: 'viewport-dimensions', options: {x: 1}},
+        {path: 'viewport-dimensions', options: {y: 1}},
+      ];
+
+      const merged = Config.expandGathererShorthandAndMergeOptions([{gatherers}]);
+      assert.deepEqual(merged[0].gatherers, [{path: 'viewport-dimensions', options: {x: 1, y: 1}}]);
     });
   });
 
