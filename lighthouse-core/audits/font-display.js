@@ -69,7 +69,7 @@ class FontDisplay extends Audit {
       const details = Audit.makeTableDetails(headings, results);
 
       return {
-        score: results.length === 0,
+        score: Number(results.length === 0),
         rawValue: results.length === 0,
         details,
       };

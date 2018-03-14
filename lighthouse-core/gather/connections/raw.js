@@ -31,7 +31,7 @@ class Port {
 
 class RawConnection extends Connection {
   /**
-   * @param {Port} port 
+   * @param {Port} port
    */
   constructor(port) {
     super();

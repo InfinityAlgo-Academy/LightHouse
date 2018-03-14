@@ -77,7 +77,7 @@ describe('Cache headers audit', () => {
       const items = result.details.items;
       assert.equal(items.length, 3);
       assert.equal(items[0].cacheLifetimeInSeconds, 3600);
-      assert.equal(items[0].cacheHitProbability, .2);
+      assert.equal(items[0].cacheHitProbability, 0.2);
       assert.equal(Math.round(items[0].wastedBytes), 80000);
       assert.equal(items[1].cacheLifetimeInSeconds, 3600);
       assert.equal(Math.round(items[1].wastedBytes), 8000);
@@ -157,7 +157,7 @@ describe('Cache headers audit', () => {
 
     return CacheHeadersAudit.audit(artifacts).then(result => {
       const items = result.extendedInfo.value.results;
-      assert.equal(result.score, 100);
+      assert.equal(result.score, 1);
       assert.equal(items.length, 0);
     });
   });
@@ -171,7 +171,7 @@ describe('Cache headers audit', () => {
     ];
 
     return CacheHeadersAudit.audit(artifacts).then(result => {
-      assert.equal(result.score, 100);
+      assert.equal(result.score, 1);
       const items = result.extendedInfo.value.results;
       assert.equal(items.length, 1);
       assert.equal(result.extendedInfo.value.queryStringCount, 1);

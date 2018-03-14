@@ -10,6 +10,13 @@ const statistics = require('../lib/statistics');
 
 const DEFAULT_PASS = 'defaultPass';
 
+/**
+ * Clamp figure to 2 decimal places
+ * @param {number} val
+ * @return {number}
+ */
+const clampTo2Decimals = val => Math.round(val * 100) / 100;
+
 class Audit {
   /**
    * @return {!string}
@@ -51,10 +58,10 @@ class Audit {
       diminishingReturnsValue
     );
 
-    let score = 100 * distribution.computeComplementaryPercentile(measuredValue);
-    score = Math.min(100, score);
+    let score = distribution.computeComplementaryPercentile(measuredValue);
+    score = Math.min(1, score);
     score = Math.max(0, score);
-    return Math.round(score);
+    return clampTo2Decimals(score);
   }
 
   /**
@@ -97,6 +104,29 @@ class Audit {
   /**
    * @param {!Audit} audit
    * @param {!AuditResult} result
+   * @return {{score: number, scoreDisplayMode: string}}
+   */
+  static _normalizeAuditScore(audit, result) {
+    // Cast true/false to 1/0
+    let score = result.score === undefined ? Number(result.rawValue) : result.score;
+
+    if (!Number.isFinite(score)) throw new Error(`Invalid score: ${score}`);
+    if (score > 1) throw new Error(`Audit score for ${audit.meta.name} is > 1`);
+    if (score < 0) throw new Error(`Audit score for ${audit.meta.name} is < 0`);
+
+    score = clampTo2Decimals(score);
+
+    const scoreDisplayMode = audit.meta.scoreDisplayMode || Audit.SCORING_MODES.BINARY;
+
+    return {
+      score,
+      scoreDisplayMode,
+    };
+  }
+
+  /**
+   * @param {!Audit} audit
+   * @param {!AuditResult} result
    * @return {!AuditFullResult}
    */
   static generateAuditResult(audit, result) {
@@ -104,31 +134,35 @@ class Audit {
       throw new Error('generateAuditResult requires a rawValue');
     }
 
-    const score = typeof result.score === 'undefined' ? result.rawValue : result.score;
-    let displayValue = result.displayValue;
-    if (typeof displayValue === 'undefined') {
-      displayValue = result.rawValue ? result.rawValue : '';
+    // eslint-disable-next-line prefer-const
+    let {score, scoreDisplayMode} = Audit._normalizeAuditScore(audit, result);
+
+    // If the audit was determined to not apply to the page, we'll reset it as informative only
+    let informative = audit.meta.informative;
+    if (result.notApplicable) {
+      score = 1;
+      informative = true;
+      result.rawValue = true;
     }
 
-    // The same value or true should be '' it doesn't add value to the report
-    if (displayValue === score) {
-      displayValue = '';
-    }
+    const displayValue = result.displayValue ? `${result.displayValue}` : '';
+
     let auditDescription = audit.meta.description;
     if (audit.meta.failureDescription) {
-      if (!score || (typeof score === 'number' && score < 100)) {
+      if (score < 1) {
         auditDescription = audit.meta.failureDescription;
       }
     }
+
     return {
       score,
-      displayValue: `${displayValue}`,
+      displayValue,
       rawValue: result.rawValue,
       error: result.error,
       debugString: result.debugString,
       extendedInfo: result.extendedInfo,
-      scoringMode: audit.meta.scoringMode || Audit.SCORING_MODES.BINARY,
-      informative: audit.meta.informative,
+      scoreDisplayMode,
+      informative,
       manual: audit.meta.manual,
       notApplicable: result.notApplicable,
       name: audit.meta.name,

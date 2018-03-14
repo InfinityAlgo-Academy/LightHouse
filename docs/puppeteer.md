@@ -30,7 +30,7 @@ browser.on('targetchanged', async target => {
     style.appendChild(document.createTextNode(content));
     document.head.appendChild(style);
   }
-  
+
   const css = '* {color: red}';
 
   if (page && page.url() === url) {
@@ -51,7 +51,7 @@ const lhr = await lighthouse(url, {
   logLevel: 'info',
 });
 
-console.log(`Lighthouse score: ${lhr.score}`);
+console.log(`Lighthouse scores: ${lhr.reportCategories.map(c => c.score).join(', ')}`);
 
 await browser.close();
 })();
@@ -90,7 +90,7 @@ const browser = await puppeteer.connect({browserWSEndpoint: webSocketDebuggerUrl
 
 // Run Lighthouse.
 const lhr = await lighthouse(URL, opts, null);
-console.log(`Lighthouse score: ${lhr.score}`);
+console.log(`Lighthouse scores: ${lhr.reportCategories.map(c => c.score).join(', ')}`);
 
 await browser.disconnect();
 await chrome.kill();

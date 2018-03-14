@@ -68,7 +68,7 @@ class ErrorLogs extends Audit {
     const numErrors = tableRows.length;
 
     return {
-      score: numErrors === 0,
+      score: Number(numErrors === 0),
       rawValue: numErrors,
       details,
     };

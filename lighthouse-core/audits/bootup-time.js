@@ -99,7 +99,7 @@ class BootupTime extends Audit {
       const details = BootupTime.makeTableDetails(headings, results, summary);
 
       return {
-        score: totalBootupTime < 2000,
+        score: Number(totalBootupTime < 2000),
         rawValue: totalBootupTime,
         displayValue: Util.formatMilliseconds(totalBootupTime),
         details,

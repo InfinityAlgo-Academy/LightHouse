@@ -209,7 +209,7 @@ if (typeof module !== 'undefined' && module.exports) {
  *     debugString: (string|undefined),
  *     displayValue: string,
  *     helpText: string,
- *     scoringMode: string,
+ *     scoreDisplayMode: string,
  *     extendedInfo: Object,
  *     error: boolean,
  *     score: number,
