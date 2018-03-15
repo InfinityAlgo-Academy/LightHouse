@@ -1,3 +1,59 @@
+ <a name="2.9.2"></a>
+# 2.9.2 (2018-03-15)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.9.1...v2.9.2)
+
+
+## New Contributors!
+Thanks to @echopi for improving our extensibility. We're happy to work with you!
+
+
+## Audit fixes
+* render-blocking: handle amp-style stylesheets ([#4555](https://github.com/googlechrome/lighthouse/pull/4555))
+* font-size: recalibrate the legible font sizes ([#4550](https://github.com/googlechrome/lighthouse/pull/4550))
+* http-redirect: drop use of getSecurityState() to gain Android support ([#4661](https://github.com/googlechrome/lighthouse/pull/4661))
+* is-crawlable: determine if page indexing is blocked by robots.txt ([#4548](https://github.com/googlechrome/lighthouse/pull/4548))
+* is-on-https: consider about:* secure ([#4749](https://github.com/googlechrome/lighthouse/pull/4749))
+* main-resource: adjust main resource identification logic ([#4475](https://github.com/googlechrome/lighthouse/pull/4475))
+* response-compression: also check x-original-content-encoding ([#4607](https://github.com/googlechrome/lighthouse/pull/4607))
+
+## Core
+
+* driver: add timeout to getRequestContent ([#4718](https://github.com/googlechrome/lighthouse/pull/4718))
+* emulation: update Chrome userAgent to 66 ([#4779](https://github.com/googlechrome/lighthouse/pull/4779))
+* lantern: improve RTT estimates ([#4552](https://github.com/googlechrome/lighthouse/pull/4552))
+* network-requests: add network requests audit ([#4631](https://github.com/googlechrome/lighthouse/pull/4631))
+* config: add support for audit/gatherer options ([#4394](https://github.com/googlechrome/lighthouse/pull/4394))
+* config: look up custom gatherer relative to the config file path ([#4751](https://github.com/googlechrome/lighthouse/pull/4751))
+
+
+## Deps
+
+* update axe-core to 3.0.0-beta.2 release for performance gains ([#4595](https://github.com/googlechrome/lighthouse/pull/4595)).
+   - a11y test on mlb.com went from 27s to 9s! Thank you axe-core team!
+
+## Report
+
+* category: enable all categories to show audit groups, refactor CategoryRenderer ([#4278](https://github.com/googlechrome/lighthouse/pull/4278))
+* seo: link to "meta description" reference ([#4566](https://github.com/googlechrome/lighthouse/pull/4566))
+* description: update helpText for document.title audit ([#4677](https://github.com/googlechrome/lighthouse/pull/4677))
+* update docs links: rel=canonical reference ([#4701](https://github.com/googlechrome/lighthouse/pull/4701)), bootup-time audit ([#4537](https://github.com/googlechrome/lighthouse/pull/4537)), s-crawlable/indexing reference ([#4678](https://github.com/googlechrome/lighthouse/pull/4678))
+
+## Misc
+
+* typecheck: add dependency graph to tsc ([#4605](https://github.com/googlechrome/lighthouse/pull/4605))
+* clean *.screenshots.json ([#4754](https://github.com/googlechrome/lighthouse/pull/4754))
+* polish the status updates within the popup ([#4780](https://github.com/googlechrome/lighthouse/pull/4780))
+* closure: fix BSD sed calls within compile-devtools ([#4736](https://github.com/googlechrome/lighthouse/pull/4736))
+* config: add merge-options test ([#4747](https://github.com/googlechrome/lighthouse/pull/4747))
+
+## Docs
+
+* contributing: fix link for closure annotations ([#4680](https://github.com/googlechrome/lighthouse/pull/4680))
+* headless-chrome: switch to prioritize headless ([#4553](https://github.com/googlechrome/lighthouse/pull/4553))
+* programmatic: add caveat about removing artifacts ([#4540](https://github.com/googlechrome/lighthouse/pull/4540))
+* understanding-results: description can dynamically be the failureDescription ([cc53688](https://github.com/googlechrome/lighthouse/commit/cc53688))
+
+
  <a name="2.9.1"></a>
 # 2.9.1 (2018-02-12)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.9.0...v2.9.1)
