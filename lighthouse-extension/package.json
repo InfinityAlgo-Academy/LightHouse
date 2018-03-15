@@ -9,13 +9,13 @@
     "build": "gulp build:production"
   },
   "devDependencies": {
-    "brfs": "^1.4.3",
-    "browserify": "^13.0.0",
+    "brfs": "^1.5.0",
+    "browserify": "^16.1.1",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-chrome-manifest": "0.0.13",
     "gulp-debug": "^2.1.2",
-    "gulp-eslint": "^4.0.0",
+    "gulp-eslint": "^4.0.2",
     "gulp-header": "^1.8.9",
     "gulp-livereload": "^3.8.1",
     "gulp-tap": "^0.1.3",
