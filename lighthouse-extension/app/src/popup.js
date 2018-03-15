@@ -85,6 +85,11 @@ ${err.stack}
 }
 
 function logStatus([, message, details]) {
+  if (typeof details === 'string' && details.length > 110) {
+    // Grab 100 characters and up to the next comma, ellipsis for the rest
+    const hundredPlusChars = details.replace(/(.{100}.*?),.*/, '$1…');
+    details = hundredPlusChars;
+  }
   document.querySelector('.status__msg').textContent = message;
   const statusDetailsMessageEl = document.querySelector('.status__detailsmsg');
   statusDetailsMessageEl.textContent = details;

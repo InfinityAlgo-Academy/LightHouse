@@ -149,7 +149,7 @@ html, body {
 
 .status {
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background-color: #fff;
 }
 
