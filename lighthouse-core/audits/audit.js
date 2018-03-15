@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-// @ts-nocheck
 'use strict';
 
 const statistics = require('../lib/statistics');
@@ -19,14 +18,14 @@ const clampTo2Decimals = val => Math.round(val * 100) / 100;
 
 class Audit {
   /**
-   * @return {!string}
+   * @return {string}
    */
   static get DEFAULT_PASS() {
     return DEFAULT_PASS;
   }
 
   /**
-   * @return {{NUMERIC: string, BINARY: string}}
+   * @return {Audit.ScoringModes}
    */
   static get SCORING_MODES() {
     return {
@@ -36,14 +35,14 @@ class Audit {
   }
 
   /**
-   * @throws {Error}
+   * @return {Audit.Meta}
    */
   static get meta() {
     throw new Error('Audit meta information must be overridden.');
   }
 
   /**
-   * Computes a clamped score between 0 and 100 based on the measured value. Score is determined by
+   * Computes a clamped score between 0 and 1 based on the measured value. Score is determined by
    * considering a log-normal distribution governed by the two control points, point of diminishing
    * returns and the median value, and returning the percentage of sites that have higher value.
    *
@@ -65,9 +64,9 @@ class Audit {
   }
 
   /**
-   * @param {!Audit} audit
+   * @param {typeof Audit} audit
    * @param {string} debugString
-   * @return {!AuditFullResult}
+   * @return {LH.AuditFullResult}
    */
   static generateErrorAuditResult(audit, debugString) {
     return Audit.generateAuditResult(audit, {
@@ -78,10 +77,10 @@ class Audit {
   }
 
   /**
-   * @param {!Audit.Headings} headings
-   * @param {!Array<!Object<string, string>>} results
-   * @param {!DetailsRenderer.DetailsSummary} summary
-   * @return {!DetailsRenderer.DetailsJSON}
+   * @param {Audit.Headings} headings
+   * @param {Array<Object<string, string>>} results
+   * @param {Audit.DetailsRenderer.DetailsSummary} summary
+   * @return {Audit.DetailsRenderer.DetailsJSON}
    */
   static makeTableDetails(headings, results, summary) {
     if (results.length === 0) {
@@ -102,9 +101,9 @@ class Audit {
   }
 
   /**
-   * @param {!Audit} audit
-   * @param {!AuditResult} result
-   * @return {{score: number, scoreDisplayMode: string}}
+   * @param {typeof Audit} audit
+   * @param {LH.AuditResult} result
+   * @return {{score: number, scoreDisplayMode: Audit.ScoringModeValues}}
    */
   static _normalizeAuditScore(audit, result) {
     // Cast true/false to 1/0
@@ -125,9 +124,9 @@ class Audit {
   }
 
   /**
-   * @param {!Audit} audit
-   * @param {!AuditResult} result
-   * @return {!AuditFullResult}
+   * @param {typeof Audit} audit
+   * @param {LH.AuditResult} result
+   * @return {LH.AuditFullResult}
    */
   static generateAuditResult(audit, result) {
     if (typeof result.rawValue === 'undefined') {
@@ -176,6 +175,28 @@ class Audit {
 module.exports = Audit;
 
 /**
+ * @typedef {Object} Audit.ScoringModes
+ * @property {'numeric'} NUMERIC
+ * @property {'binary'} BINARY
+ */
+
+/**
+ * @typedef {Audit.ScoringModes[keyof Audit.ScoringModes]} Audit.ScoringModeValues
+ */
+
+/**
+ * @typedef {Object} Audit.Meta
+ * @property {string} name
+ * @property {string} description
+ * @property {string} helpText
+ * @property {Array<string>} requiredArtifacts
+ * @property {string} [failureDescription]
+ * @property {boolean} [informative]
+ * @property {boolean} [manual]
+ * @property {Audit.ScoringModeValues} [scoreDisplayMode]
+ */
+
+/**
  * @typedef {Object} Audit.Heading
  * @property {string} key
  * @property {string} itemType
@@ -191,5 +212,20 @@ module.exports = Audit;
  * @property {number} results
  * @property {Audit.Headings} headings
  * @property {boolean} passes
- * @property {string=} debugString
+ * @property {string} [debugString]
+ */
+
+// TODO: placeholder typedefs until Details are typed
+/**
+ * @typedef {void} Audit.DetailsRenderer.DetailsSummary
+ * @property {number} [wastedMs]
+ * @property {number} [wastedKb]
+ */
+
+/**
+ * @typedef {object} Audit.DetailsRenderer.DetailsJSON
+ * @property {'table'} type
+ * @property {Array<Audit.Heading>} headings
+ * @property {Array<Object<string, string>>} items
+ * @property {Audit.DetailsRenderer.DetailsSummary} summary
  */
