@@ -336,7 +336,7 @@ class Config {
     // Store the directory of the config path, if one was provided.
     this._configDir = configPath ? path.dirname(configPath) : undefined;
 
-    this._passes = Config.requireGatherers(configJSON.passes);
+    this._passes = Config.requireGatherers(configJSON.passes, this._configDir);
     this._audits = Config.requireAudits(configJSON.audits, this._configDir);
     this._artifacts = expandArtifacts(configJSON.artifacts);
     this._categories = configJSON.categories;

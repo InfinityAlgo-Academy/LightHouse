@@ -673,6 +673,16 @@ describe('Config', () => {
       assert.equal(typeof gatherer.instance.beforePass, 'function');
     });
 
+    it('loads a gatherer relative to a config path', () => {
+      const config = new Config({
+        passes: [{gatherers: ['../fixtures/valid-custom-gatherer']}],
+      }, __filename);
+      const gatherer = config.passes[0].gatherers[0];
+
+      assert.equal(gatherer.instance.name, 'CustomGatherer');
+      assert.equal(typeof gatherer.instance.beforePass, 'function');
+    });
+
     it('returns gatherer when gatherer class, not package-name string, is provided', () => {
       class TestGatherer extends Gatherer {}
       const gatherer = loadGatherer(TestGatherer);
