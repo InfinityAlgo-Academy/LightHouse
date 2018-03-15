@@ -121,6 +121,7 @@ gulp.task('browserify-lighthouse', () => {
       // to the modified version internal to Lighthouse.
       bundle.transform('./dtm-transform.js', {global: true})
       .ignore('source-map')
+      .ignore('whatwg-url')
       .ignore('url')
       .ignore('debug/node')
       .ignore('raven')
