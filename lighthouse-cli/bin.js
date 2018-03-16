@@ -16,7 +16,6 @@ const runLighthouse = require('./run').runLighthouse;
 const log = require('lighthouse-logger');
 // @ts-ignore
 const perfOnlyConfig = require('../lighthouse-core/config/perf.json');
-// @ts-ignore
 const mixedContentConfig = require('../lighthouse-core/config/mixed-content.js');
 // @ts-ignore
 const pkg = require('../package.json');

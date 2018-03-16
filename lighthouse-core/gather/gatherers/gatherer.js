@@ -28,7 +28,7 @@ class Gatherer {
 
   /**
    * Called before navigation to target url.
-   * @param {Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.PassContext} passContext
    * @return {*|!Promise<*>}
    */
   beforePass(passContext) { }
@@ -36,7 +36,7 @@ class Gatherer {
   /**
    * Called after target page is loaded. If a trace is enabled for this pass,
    * the trace is still being recorded.
-   * @param {Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.PassContext} passContext
    * @return {*|!Promise<*>}
    */
   pass(passContext) { }
@@ -45,25 +45,13 @@ class Gatherer {
    * Called after target page is loaded, all gatherer `pass` methods have been
    * executed, and — if generated in this pass — the trace is ended. The trace
    * and record of network activity are provided in `loadData`.
-   * @param {Gatherer.PassContext} passContext
-   * @param {Gatherer.LoadData} loadData
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.LoadData} loadData
    * @return {*|!Promise<*>}
    */
   afterPass(passContext, loadData) { }
 
   /* eslint-enable no-unused-vars */
 }
-
-/**
- * @typedef {Object} Gatherer.PassContext
- * @property {object} options
- */
-
-/**
- * @typedef {Object} Gatherer.LoadData
- * @property {Array<LH.NetworkRequest>} networkRecords
- * @property {Array<void>} devtoolsLog
- * @property {{traceEvents: Array<LH.TraceEvent>}} trace
- */
 
 module.exports = Gatherer;

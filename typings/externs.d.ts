@@ -33,40 +33,9 @@ declare namespace LH {
 
   export interface Config {}
 
-  export interface AuditResult {
-    rawValue: boolean | number | null;
-    displayValue?: string;
-    debugString?: string;
-    score?: number;
-    extendedInfo?: {value: string};
-    notApplicable?: boolean;
-    error?: boolean;
-    // TODO: define details
-    details?: object;
-  }
-
-  export interface AuditResults {
-    [metric: string]: AuditResult;
-  }
-
-  export interface AuditFullResult extends AuditResult {
-    displayValue: string;
-    score: number;
-    scoreDisplayMode: 'numeric' | 'binary';
-    description: string;
-    name: string;
-    helpText?: string;
-    informative?: boolean;
-    manual?: boolean;
-  }
-
-  export interface AuditFullResults {
-    [metric: string]: AuditFullResult;
-  }
-
   export interface Results {
     url: string;
-    audits: AuditFullResults;
+    audits: LH.Audit.Results;
     lighthouseVersion: string;
     artifacts?: Object;
     initialUrl: string;

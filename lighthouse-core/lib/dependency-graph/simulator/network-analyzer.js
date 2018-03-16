@@ -7,7 +7,7 @@
 
 const INITIAL_CWD = 14 * 1024;
 
-module.exports = class NetworkAnalyzer {
+class NetworkAnalyzer {
   /**
    * @return {string}
    */
@@ -303,7 +303,9 @@ module.exports = class NetworkAnalyzer {
     const estimatesByOrigin = NetworkAnalyzer._estimateResponseTimeByOrigin(records, rttByOrigin);
     return NetworkAnalyzer.summarize(estimatesByOrigin);
   }
-};
+}
+
+module.exports = NetworkAnalyzer;
 
 /**
  * @typedef NetworkAnalyzer.Summary

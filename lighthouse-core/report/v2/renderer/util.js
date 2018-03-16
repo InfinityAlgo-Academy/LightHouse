@@ -122,7 +122,9 @@ class Util {
    * @return {string}
    */
   static getURLDisplayName(parsedUrl, options) {
-    options = options || {};
+    // Closure optional properties aren't optional in tsc, so fallback needs undefined  values.
+    options = options || {numPathParts: undefined, preserveQuery: undefined,
+      preserveHost: undefined};
     const numPathParts = options.numPathParts !== undefined ? options.numPathParts : 2;
     const preserveQuery = options.preserveQuery !== undefined ? options.preserveQuery : true;
     const preserveHost = options.preserveHost || false;
