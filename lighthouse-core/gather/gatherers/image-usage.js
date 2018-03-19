@@ -96,7 +96,7 @@ function collectImageElementInfo() {
 function determineNaturalSize(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.addEventListener('error', reject);
+    img.addEventListener('error', _ => reject(new Error('determineNaturalSize failed img load')));
     img.addEventListener('load', () => {
       resolve({
         naturalWidth: img.naturalWidth,
@@ -118,6 +118,9 @@ class ImageUsage extends Gatherer {
     return this.driver.evaluateAsync(`(${determineNaturalSize.toString()})(${url})`)
       .then(size => {
         return Object.assign(element, size);
+      }).catch(_ => {
+        // determineNaturalSize fails on invalid images, which we treat as non-visible
+        return Object.assign(element, {naturalWidth: 0, naturalHeight: 0});
       });
   }
 
