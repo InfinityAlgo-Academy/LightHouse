@@ -36,7 +36,7 @@ describe('Byte efficiency base audit', () => {
 
     graph = new NetworkNode(networkRecord);
     // add a CPU node to force improvement to TTI
-    graph.addDependent(new CPUNode({tid: 1, ts: 0, dur: 50 * 1000}));
+    graph.addDependent(new CPUNode({tid: 1, ts: 0, dur: 100 * 1000}));
   });
 
   const baseHeadings = [
@@ -188,7 +188,7 @@ describe('Byte efficiency base audit', () => {
         graph
       );
 
-      assert.equal(result.rawValue, 420);
+      assert.equal(result.rawValue, 300);
     });
   });
 });
