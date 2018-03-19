@@ -138,7 +138,7 @@ class DOMStats extends Gatherer {
       return (${getDOMStats.toString()}(document.documentElement));
     })()`;
     return options.driver.sendCommand('DOM.enable')
-      .then(() => options.driver.evaluateAsync(expression))
+      .then(() => options.driver.evaluateAsync(expression, {useIsolation: true}))
       .then(results => options.driver.getElementsInDocument().then(allNodes => {
         results.totalDOMNodes = allNodes.length;
         return options.driver.sendCommand('DOM.disable').then(() => results);
