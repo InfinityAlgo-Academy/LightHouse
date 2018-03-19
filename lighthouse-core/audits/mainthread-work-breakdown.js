@@ -15,7 +15,12 @@ const Util = require('../report/v2/renderer/util');
 // We group all trace events into groups to show a highlevel breakdown of the page
 const {taskToGroup} = require('../lib/task-groups');
 
-class PageExecutionTimings extends Audit {
+// Parameters for log-normal CDF scoring. See https://www.desmos.com/calculator/s2eqcifkum
+// <1s ~= 100, >3s is yellow, >4s is red
+const SCORING_POINT_OF_DIMINISHING_RETURNS = 1500;
+const SCORING_MEDIAN = 4000;
+
+class MainThreadWorkBreakdown extends Audit {
   /**
    * @return {!AuditMeta}
    */
@@ -23,8 +28,9 @@ class PageExecutionTimings extends Audit {
     return {
       category: 'Performance',
       name: 'mainthread-work-breakdown',
-      description: 'Main thread work breakdown',
-      informative: true,
+      description: 'Minimizes main thread work',
+      failureDescription: 'Has significant main thread work',
+      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       helpText: 'Consider reducing the time spent parsing, compiling and executing JS.' +
         'You may find delivering smaller JS payloads helps with this.',
       requiredArtifacts: ['traces'],
@@ -50,11 +56,11 @@ class PageExecutionTimings extends Audit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
-    const trace = artifacts.traces[PageExecutionTimings.DEFAULT_PASS];
+    const trace = artifacts.traces[MainThreadWorkBreakdown.DEFAULT_PASS];
 
     return artifacts.requestDevtoolsTimelineModel(trace)
       .then(devtoolsTimelineModel => {
-        const executionTimings = PageExecutionTimings.getExecutionTimingsByCategory(
+        const executionTimings = MainThreadWorkBreakdown.getExecutionTimingsByCategory(
           devtoolsTimelineModel
         );
         let totalExecutionTime = 0;
@@ -82,10 +88,16 @@ class PageExecutionTimings extends Audit {
           {key: 'duration', itemType: 'text', text: 'Time spent'},
         ];
         results.stableSort((a, b) => categoryTotals[b.group] - categoryTotals[a.group]);
-        const tableDetails = PageExecutionTimings.makeTableDetails(headings, results);
+        const tableDetails = MainThreadWorkBreakdown.makeTableDetails(headings, results);
+
+        const score = Audit.computeLogNormalScore(
+          totalExecutionTime,
+          SCORING_POINT_OF_DIMINISHING_RETURNS,
+          SCORING_MEDIAN
+        );
 
         return {
-          score: Number(totalExecutionTime < 3000),
+          score,
           rawValue: totalExecutionTime,
           displayValue: Util.formatMilliseconds(totalExecutionTime),
           details: tableDetails,
@@ -97,4 +109,4 @@ class PageExecutionTimings extends Audit {
   }
 }
 
-module.exports = PageExecutionTimings;
+module.exports = MainThreadWorkBreakdown;

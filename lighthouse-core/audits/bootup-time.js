@@ -11,6 +11,11 @@ const Util = require('../report/v2/renderer/util');
 const {groupIdToName, taskToGroup} = require('../lib/task-groups');
 const THRESHOLD_IN_MS = 10;
 
+// Parameters for log-normal CDF scoring. See https://www.desmos.com/calculator/rkphawothk
+// <500ms ~= 100, >2s is yellow, >3.5s is red
+const SCORING_POINT_OF_DIMINISHING_RETURNS = 600;
+const SCORING_MEDIAN = 3500;
+
 class BootupTime extends Audit {
   /**
    * @return {!AuditMeta}
@@ -21,6 +26,7 @@ class BootupTime extends Audit {
       name: 'bootup-time',
       description: 'JavaScript boot-up time',
       failureDescription: 'JavaScript boot-up time is too high',
+      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       helpText: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
         'You may find delivering smaller JS payloads helps with this. [Learn ' +
         'more](https://developers.google.com/web/lighthouse/audits/bootup).',
@@ -98,8 +104,14 @@ class BootupTime extends Audit {
       const summary = {wastedMs: totalBootupTime};
       const details = BootupTime.makeTableDetails(headings, results, summary);
 
+      const score = Audit.computeLogNormalScore(
+        totalBootupTime,
+        SCORING_POINT_OF_DIMINISHING_RETURNS,
+        SCORING_MEDIAN
+      );
+
       return {
-        score: Number(totalBootupTime < 2000),
+        score,
         rawValue: totalBootupTime,
         displayValue: Util.formatMilliseconds(totalBootupTime),
         details,
