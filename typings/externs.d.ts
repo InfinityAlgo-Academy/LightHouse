@@ -22,8 +22,8 @@ declare namespace LH {
     enableErrorReporting: boolean;
     listAllAudits: boolean;
     listTraceCategories: boolean;
-    auditMode: boolean;
-    gatherMode: boolean;
+    auditMode: boolean|string;
+    gatherMode: boolean|string;
     configPath?: string;
     perf: boolean;
     mixedContent: boolean;

@@ -18,8 +18,6 @@ const path = require('path');
 const URL = require('./lib/url-shim');
 const Sentry = require('./lib/sentry');
 
-const basePath = path.join(process.cwd(), 'latest-run');
-
 class Runner {
   static run(connection, opts) {
     // Clean opts input.
@@ -68,11 +66,20 @@ class Runner {
     // Gather phase
     // Either load saved artifacts off disk, from config, or get from the browser
     if (opts.flags.auditMode && !opts.flags.gatherMode) {
-      run = run.then(_ => Runner._loadArtifactsFromDisk());
+      const path = Runner._getArtifactsPath(opts.flags);
+      run = run.then(_ => Runner._loadArtifactsFromDisk(path));
     } else if (opts.config.artifacts) {
       run = run.then(_ => opts.config.artifacts);
     } else {
       run = run.then(_ => Runner._gatherArtifactsFromBrowser(opts, connection));
+      // -G means save these to ./latest-run, etc.
+      if (opts.flags.gatherMode) {
+        run = run.then(async artifacts => {
+          const path = Runner._getArtifactsPath(opts.flags);
+          await Runner._saveArtifacts(artifacts, path);
+          return artifacts;
+        });
+      }
     }
 
     // Potentially quit early
@@ -123,10 +130,11 @@ class Runner {
 
   /**
    * No browser required, just load the artifacts from disk
+   * @param {string} path
    * @return {!Promise<!Artifacts>}
    */
-  static _loadArtifactsFromDisk() {
-    return assetSaver.loadArtifacts(basePath);
+  static _loadArtifactsFromDisk(path) {
+    return assetSaver.loadArtifacts(path);
   }
 
   /**
@@ -135,27 +143,23 @@ class Runner {
    * @param {*} connection
    * @return {!Promise<!Artifacts>}
    */
-  static _gatherArtifactsFromBrowser(opts, connection) {
+  static async _gatherArtifactsFromBrowser(opts, connection) {
     if (!opts.config.passes) {
       return Promise.reject(new Error('No browser artifacts are either provided or requested.'));
     }
 
     opts.driver = opts.driverMock || new Driver(connection);
-    return GatherRunner.run(opts.config.passes, opts).then(artifacts => {
-      const flags = opts.flags;
-      const shouldSave = flags.gatherMode;
-      const p = shouldSave ? Runner._saveArtifacts(artifacts): Promise.resolve();
-      return p.then(_ => artifacts);
-    });
+    return GatherRunner.run(opts.config.passes, opts);
   }
 
   /**
    * Save collected artifacts to disk
    * @param {!Artifacts} artifacts
+   * @param {string} path
    * @return {!Promise>}
    */
-  static _saveArtifacts(artifacts) {
-    return assetSaver.saveArtifacts(artifacts, basePath);
+  static _saveArtifacts(artifacts, path) {
+    return assetSaver.saveArtifacts(artifacts, path);
   }
 
   /**
@@ -409,6 +413,18 @@ class Runner {
       blockedUrlPatterns: flags.blockedUrlPatterns || [],
       extraHeaders: flags.extraHeaders || {},
     };
+  }
+
+  /**
+   * Get path to use for -G and -A modes. Defaults to $CWD/latest-run
+   * @param {Flags} flags
+   * @return {string}
+   */
+  static _getArtifactsPath(flags) {
+    // This enables usage like: -GA=./custom-folder
+    if (typeof flags.auditMode === 'string') return path.resolve(process.cwd(), flags.auditMode);
+    if (typeof flags.gatherMode === 'string') return path.resolve(process.cwd(), flags.gatherMode);
+    return path.join(process.cwd(), 'latest-run');
   }
 }
 

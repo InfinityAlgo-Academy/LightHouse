@@ -141,6 +141,10 @@ lighthouse -A http://example.com
 
 lighthouse -GA http://example.com
 # Normal gather + audit run, but also saves collected artifacts to disk for subsequent -A runs.
+
+
+# You can optionally provide a custom folder destination to -G/-A/-GA. Without a value, the default will be `$PWD/latest-run`.
+lighthouse -GA=./gmailartifacts https://gmail.com
 ```
 
 

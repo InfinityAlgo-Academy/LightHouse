@@ -11,9 +11,11 @@ const driverMock = require('./gather/fake-driver');
 const Config = require('../config/config');
 const Audit = require('../audits/audit');
 const assetSaver = require('../lib/asset-saver');
+const fs = require('fs');
 const assert = require('assert');
 const path = require('path');
 const sinon = require('sinon');
+const rimraf = require('rimraf');
 
 const computedArtifacts = Runner.instantiateComputedArtifacts();
 
@@ -44,9 +46,15 @@ describe('Runner', () => {
       }],
       audits: ['content-width'],
     });
+    const artifactsPath = '.tmp/test_artifacts';
+    const resolvedPath = path.resolve(process.cwd(), artifactsPath);
+
+    after(() => {
+      rimraf.sync(resolvedPath);
+    });
 
     it('-G gathers, quits, and doesn\'t run audits', () => {
-      const opts = {url, config: generateConfig(), driverMock, flags: {gatherMode: true}};
+      const opts = {url, config: generateConfig(), driverMock, flags: {gatherMode: artifactsPath}};
       return Runner.run(null, opts).then(_ => {
         assert.equal(loadArtifactsSpy.called, false, 'loadArtifacts was called');
 
@@ -57,12 +65,15 @@ describe('Runner', () => {
 
         assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
         assert.equal(runAuditSpy.called, false, '_runAudit was called');
+
+        assert.ok(fs.existsSync(resolvedPath));
+        assert.ok(fs.existsSync(`${resolvedPath}/artifacts.json`));
       });
     });
 
     // uses the files on disk from the -G test. ;)
     it('-A audits from saved artifacts and doesn\'t gather', () => {
-      const opts = {url, config: generateConfig(), driverMock, flags: {auditMode: true}};
+      const opts = {url, config: generateConfig(), driverMock, flags: {auditMode: artifactsPath}};
       return Runner.run(null, opts).then(_ => {
         assert.equal(loadArtifactsSpy.called, true, 'loadArtifacts was not called');
         assert.equal(gatherRunnerRunSpy.called, false, 'GatherRunner.run was called');
@@ -73,7 +84,7 @@ describe('Runner', () => {
 
     it('-GA is a normal run but it saves artifacts to disk', () => {
       const opts = {url, config: generateConfig(), driverMock,
-        flags: {auditMode: true, gatherMode: true}};
+        flags: {auditMode: artifactsPath, gatherMode: artifactsPath}};
       return Runner.run(null, opts).then(_ => {
         assert.equal(loadArtifactsSpy.called, false, 'loadArtifacts was called');
         assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');

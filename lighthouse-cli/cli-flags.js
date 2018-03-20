@@ -73,8 +73,8 @@ function getFlags(manualArgv) {
         'disable-cpu-throttling': 'Disable CPU throttling',
         'disable-network-throttling': 'Disable network throttling',
         'gather-mode':
-            'Collect artifacts from a connected browser and save to disk. If audit-mode is not also enabled, the run will quit early.',
-        'audit-mode': 'Process saved artifacts from disk',
+            'Collect artifacts from a connected browser and save to disk. (Artifacts folder path may optionally be provided). If audit-mode is not also enabled, the run will quit early.',
+        'audit-mode': 'Process saved artifacts from disk. (Artifacts folder path may be provided, otherwise defaults to ./latest-run/)',
         'save-assets': 'Save the trace contents & screenshots to disk',
         'list-all-audits': 'Prints a list of all available audits and exits',
         'list-trace-categories': 'Prints a list of all required trace categories and exits',
@@ -111,7 +111,7 @@ function getFlags(manualArgv) {
         'disable-storage-reset', 'disable-device-emulation', 'disable-cpu-throttling',
         'disable-network-throttling', 'save-assets', 'list-all-audits',
         'list-trace-categories', 'perf', 'view', 'verbose', 'quiet', 'help',
-        'gather-mode', 'audit-mode', 'mixed-content',
+        'mixed-content',
       ])
       .choices('output', printer.getValidOutputOptions())
       // force as an array
