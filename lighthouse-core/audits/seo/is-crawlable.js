@@ -107,7 +107,7 @@ class IsCrawlable extends Audit {
             blockingDirectives.push({
               source: {
                 type: 'url',
-                text: robotsFileUrl.href,
+                value: robotsFileUrl.href,
               },
             });
           }
