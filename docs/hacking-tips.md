@@ -54,7 +54,7 @@ You can do a local docker image install of Travis to better inspect a travis bui
 * [Common Build Problems - Travis CI](https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image)
 
 ```sh
-docker run --name travis-debug -dit travisci/ci-garnet:packer-1496954857 /sbin/init
+docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0 /sbin/init
 docker exec -it travis-debug bash -l
 
 # once inside, change to travis user, rather than root
