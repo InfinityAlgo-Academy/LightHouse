@@ -4,14 +4,19 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-declare namespace LH.Gatherer {
-  export interface PassContext {
-    options: object;
-  }
+declare global {
+  module LH.Gatherer {
+    export interface PassContext {
+      options: object;
+    }
 
-  export interface LoadData {
-    networkRecords: Array<LH.NetworkRequest>;
-    devtoolsLog: Array<void>;
-    trace: {trraceEvents: Array<LH.TraceEvent>}
+    export interface LoadData {
+      networkRecords: Array<void>;
+      devtoolsLog: Array<void>;
+      trace: {traceEvents: Array<TraceEvent>}
+    }
   }
 }
+
+// empty export to keep file a module
+export {}
