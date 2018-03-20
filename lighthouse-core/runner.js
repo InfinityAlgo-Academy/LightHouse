@@ -105,11 +105,11 @@ class Runner {
         Runner._scoreAndCategorize(opts, resultsById);
         categories = Object.values(opts.config.categories);
       }
-
       return {
         userAgent: runResults.artifacts.UserAgent,
         lighthouseVersion: require('../package').version,
-        generatedTime: (new Date()).toJSON(),
+        fetchedAt: runResults.artifacts.fetchedAt,
+        generatedTime: 'Please use .fetchedAt instead',
         initialUrl: opts.initialUrl,
         url: opts.url,
         runWarnings: lighthouseRunWarnings,

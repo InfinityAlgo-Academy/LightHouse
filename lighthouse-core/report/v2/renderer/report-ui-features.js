@@ -332,7 +332,7 @@ class ReportUIFeatures {
   _saveFile(blob) {
     const filename = getFilenamePrefix({
       url: this.json.url,
-      generatedTime: this.json.generatedTime,
+      fetchedAt: this.json.fetchedAt,
     });
 
     const ext = blob.type.match('json') ? '.json' : '.html';

@@ -43,7 +43,7 @@ declare global {
       lighthouseVersion: string;
       artifacts?: Object;
       initialUrl: string;
-      generatedTime: string;
+      fetchedAt: string;
     }
 
     export interface LaunchedChrome {

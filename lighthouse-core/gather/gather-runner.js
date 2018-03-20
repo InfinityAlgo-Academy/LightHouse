@@ -104,6 +104,7 @@ class GatherRunner {
       .then(userAgent => {
         gathererResults.UserAgent = [userAgent];
         GatherRunner.warnOnHeadless(userAgent, gathererResults);
+        gathererResults.fetchedAt = [(new Date()).toJSON()];
       })
       .then(_ => driver.beginEmulation(options.flags))
       .then(_ => driver.enableRuntimeEvents())

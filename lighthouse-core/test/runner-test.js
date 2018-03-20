@@ -422,7 +422,7 @@ describe('Runner', () => {
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
       assert.ok(results.lighthouseVersion);
-      assert.ok(results.generatedTime);
+      assert.ok(results.fetchedAt);
       assert.equal(results.initialUrl, url);
       assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
       assert.equal(results.audits['content-width'].name, 'content-width');
@@ -452,7 +452,7 @@ describe('Runner', () => {
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
       assert.ok(results.lighthouseVersion);
-      assert.ok(results.generatedTime);
+      assert.ok(results.fetchedAt);
       assert.equal(results.initialUrl, url);
       assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
       assert.equal(results.audits['content-width'].name, 'content-width');

@@ -37,7 +37,7 @@ class GithubApi {
       .then(accessToken => {
         const filename = getFilenamePrefix({
           url: jsonFile.url,
-          generatedTime: jsonFile.generatedTime,
+          fetchedAt: jsonFile.fetchedAt,
         });
         const body = {
           description: 'Lighthouse json report',
