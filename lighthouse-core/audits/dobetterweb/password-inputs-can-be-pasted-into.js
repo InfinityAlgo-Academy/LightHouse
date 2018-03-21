@@ -29,22 +29,20 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
   static audit(artifacts) {
     const passwordInputsWithPreventedPaste = artifacts.PasswordInputsWithPreventedPaste;
 
+    const items = passwordInputsWithPreventedPaste.map(input => ({
+      node: {type: 'node', snippet: input.snippet},
+    }));
+
+    const headings = [
+      {key: 'node', itemType: 'node', text: 'Failing Elements'},
+    ];
+
     return {
       rawValue: passwordInputsWithPreventedPaste.length === 0,
       extendedInfo: {
         value: passwordInputsWithPreventedPaste,
       },
-      details: {
-        type: 'list',
-        header: {
-          type: 'text',
-          value: 'Password inputs that prevent pasting into',
-        },
-        items: passwordInputsWithPreventedPaste.map(input => ({
-          type: 'text',
-          value: input.snippet,
-        })),
-      },
+      details: Audit.makeTableDetails(headings, items),
     };
   }
 }

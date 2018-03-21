@@ -167,20 +167,6 @@ summary {
   background-image: url('data:image/svg+xml;utf8,<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
 }
 
-/* List */
-.lh-list {
-  font-size: smaller;
-  margin-top: var(--default-padding);
-}
-
-.lh-list__items {
-  padding-left: var(--default-padding);
-}
-
-.lh-list__item {
-  margin-bottom: 2px;
-}
-
 /* Node */
 .lh-node {
   display: block;
@@ -191,43 +177,6 @@ summary {
 span.lh-node:hover {
     background: hsl(0, 0%, 98%);
     border-radius: 2px;
-}
-
-/* Card */
-.lh-scorecards {
-  display: flex;
-  flex-wrap: wrap;
-}
-.lh-scorecard {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 calc(12 * var(--body-font-size));
-  flex-direction: column;
-  padding: var(--default-padding);
-  padding-top: calc(32px + var(--default-padding));
-  border-radius: 3px;
-  margin-right: var(--default-padding);
-  position: relative;
-  line-height: inherit;
-  border: 1px solid #ebebeb;
-}
-.lh-scorecard__title {
-  background-color: #eee;
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: calc(var(--default-padding) / 2);
-}
-.lh-scorecard__value {
-  font-size: calc(1.6 * var(--body-font-size));
-}
-.lh-scorecard__target {
-  margin-top: calc(var(--default-padding) / 2);
 }
 
 /* Score */

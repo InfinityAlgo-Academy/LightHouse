@@ -34,29 +34,28 @@ class AxeAudit extends Audit {
     const violations = artifacts.Accessibility.violations || [];
     const rule = violations.find(result => result.id === this.meta.name);
 
-    let nodeDetails = [];
+    let items = [];
     if (rule && rule.nodes) {
-      nodeDetails = rule.nodes.map(node => ({
-        type: 'node',
-        selector: Array.isArray(node.target) ? node.target.join(' ') : '',
-        path: node.path,
-        snippet: node.snippet,
+      items = rule.nodes.map(node => ({
+        node: {
+          type: 'node',
+          selector: Array.isArray(node.target) ? node.target.join(' ') : '',
+          path: node.path,
+          snippet: node.snippet,
+        },
       }));
     }
+
+    const headings = [
+      {key: 'node', itemType: 'node', text: 'Failing Elements'},
+    ];
 
     return {
       rawValue: typeof rule === 'undefined',
       extendedInfo: {
         value: rule,
       },
-      details: {
-        type: 'list',
-        header: {
-          type: 'text',
-          text: 'View failing elements',
-        },
-        items: nodeDetails,
-      },
+      details: Audit.makeTableDetails(headings, items),
     };
   }
 }

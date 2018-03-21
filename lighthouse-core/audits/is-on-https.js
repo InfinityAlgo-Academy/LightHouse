@@ -58,17 +58,21 @@ class HTTPS extends Audit {
         displayValue = `${insecureRecords.length} insecure request found`;
       }
 
+      const items = insecureRecords.map(record => ({
+        url: record.url,
+      }));
+
+      const headings = [
+        {key: 'url', itemType: 'url', text: 'Insecure URL'},
+      ];
+
       return {
         rawValue: insecureRecords.length === 0,
         displayValue,
         extendedInfo: {
           value: insecureRecords,
         },
-        details: {
-          type: 'list',
-          header: {type: 'text', text: 'Insecure URLs:'},
-          items: insecureRecords.map(record => ({type: 'url', value: record.url})),
-        },
+        details: Audit.makeTableDetails(headings, items),
       };
     });
   }

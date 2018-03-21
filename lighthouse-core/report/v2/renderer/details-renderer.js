@@ -46,8 +46,6 @@ class DetailsRenderer {
         return this._renderThumbnail(/** @type {!DetailsRenderer.ThumbnailDetails} */ (details));
       case 'filmstrip':
         return this._renderFilmstrip(/** @type {!DetailsRenderer.FilmstripDetails} */ (details));
-      case 'cards':
-        return this._renderCards(/** @type {!DetailsRenderer.CardsDetailsJSON} */ (details));
       case 'table':
         return this._renderTable(/** @type {!DetailsRenderer.TableDetailsJSON} */ (details));
       case 'code':
@@ -57,8 +55,6 @@ class DetailsRenderer {
       case 'criticalrequestchain':
         return CriticalRequestChainRenderer.render(this._dom, this._templateContext,
           /** @type {!CriticalRequestChainRenderer.CRCDetailsJSON} */ (details));
-      case 'list':
-        return this._renderList(/** @type {!DetailsRenderer.ListDetailsJSON} */ (details));
       default: {
         throw new Error(`Unknown type: ${details.type}`);
       }
@@ -178,24 +174,6 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {!DetailsRenderer.ListDetailsJSON} list
-   * @return {!Element}
-   */
-  _renderList(list) {
-    if (!list.items.length) return this._dom.createElement('span');
-
-    const element = this._dom.createElement('details', 'lh-details');
-    element.open = true;
-
-    const itemsElem = this._dom.createChildOf(element, 'div', 'lh-list__items');
-    for (const item of list.items) {
-      const itemElem = this._dom.createChildOf(itemsElem, 'span', 'lh-list__item');
-      itemElem.appendChild(this.render(item));
-    }
-    return element;
-  }
-
-  /**
    * @param {!DetailsRenderer.TableDetailsJSON} details
    * @return {!Element}
    */
@@ -267,37 +245,6 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {!DetailsRenderer.CardsDetailsJSON} details
-   * @return {!Element}
-   */
-  _renderCards(details) {
-    const element = this._dom.createElement('details', 'lh-details');
-    element.open = true;
-    if (details.header) {
-      element.appendChild(this._dom.createElement('summary')).textContent = details.header.text;
-    }
-
-    const cardsParent = this._dom.createElement('div', 'lh-scorecards');
-    for (const item of details.items) {
-      const card = cardsParent.appendChild(
-          this._dom.createElement('div', 'lh-scorecard', {title: item.snippet}));
-      const titleEl = this._dom.createElement('div', 'lh-scorecard__title');
-      const valueEl = this._dom.createElement('div', 'lh-scorecard__value');
-      const targetEl = this._dom.createElement('div', 'lh-scorecard__target');
-
-      card.appendChild(titleEl).textContent = item.title;
-      card.appendChild(valueEl).textContent = item.value;
-
-      if (item.target) {
-        card.appendChild(targetEl).textContent = `target: ${item.target}`;
-      }
-    }
-
-    element.appendChild(cardsParent);
-    return element;
-  }
-
-  /**
    * @param {!DetailsRenderer.FilmstripDetails} details
    * @return {!Element}
    */
@@ -357,16 +304,6 @@ DetailsRenderer.DetailsJSON; // eslint-disable-line no-unused-expressions
 /**
  * @typedef {{
  *     type: string,
- *     header: ({text: string}|undefined),
- *     items: !Array<!DetailsRenderer.DetailsJSON>
- * }}
- */
-DetailsRenderer.ListDetailsJSON; // eslint-disable-line no-unused-expressions
-
-
-/**
- * @typedef {{
- *     type: string,
  *     value: string,
  *     granularity: (number|undefined),
  *     displayUnit: (string|undefined),
@@ -394,14 +331,6 @@ DetailsRenderer.NumericUnitDetailsJSON; // eslint-disable-line no-unused-express
  * }}
  */
 DetailsRenderer.NodeDetailsJSON; // eslint-disable-line no-unused-expressions
-
-/** @typedef {{
- *     type: string,
- *     header: ({text: string}|undefined),
- *     items: !Array<{title: string, value: string, snippet: (string|undefined), target: string}>
- * }}
- */
-DetailsRenderer.CardsDetailsJSON; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{

@@ -47,24 +47,13 @@ class DOMSize extends Audit {
     };
   }
 
+
   /**
    * @param {!Artifacts} artifacts
    * @return {!AuditResult}
    */
   static audit(artifacts) {
     const stats = artifacts.DOMStats;
-
-    /**
-     * html >
-     *   body >
-     *     div >
-     *       span
-     */
-    const depthSnippet = stats.depth.pathToElement.reduce((str, curr, i) => {
-      return `${str}\n` + '  '.repeat(i) + `${curr} >`;
-    }, '').replace(/>$/g, '').trim();
-    const widthSnippet = 'Element with most children:\n' +
-        stats.width.pathToElement[stats.width.pathToElement.length - 1];
 
     // Use the CDF of a log-normal distribution for scoring.
     //   <= 1500: score≈1
@@ -76,34 +65,33 @@ class DOMSize extends Audit {
       SCORING_MEDIAN
     );
 
-    const cards = [{
-      title: 'Total DOM Nodes',
-      value: Util.formatNumber(stats.totalDOMNodes),
-      target: `< ${Util.formatNumber(MAX_DOM_NODES)} nodes`,
-    }, {
-      title: 'DOM Depth',
-      value: Util.formatNumber(stats.depth.max),
-      snippet: depthSnippet,
-      target: `< ${Util.formatNumber(MAX_DOM_TREE_DEPTH)}`,
-    }, {
-      title: 'Maximum Children',
-      value: Util.formatNumber(stats.width.max),
-      snippet: widthSnippet,
-      target: `< ${Util.formatNumber(MAX_DOM_TREE_WIDTH)} nodes`,
-    }];
+    const headings = [
+      {key: 'totalNodes', itemType: 'text', text: 'Total DOM Nodes'},
+      {key: 'depth', itemType: 'text', text: 'Maximum DOM Depth'},
+      {key: 'width', itemType: 'text', text: 'Maximum Children'},
+    ];
+
+    const items = [
+      {
+        totalNodes: Util.formatNumber(stats.totalDOMNodes),
+        depth: Util.formatNumber(stats.depth.max),
+        width: Util.formatNumber(stats.width.max),
+      },
+      {
+        totalNodes: '',
+        depth: stats.depth.snippet,
+        width: stats.width.snippet,
+      },
+    ];
 
     return {
       score,
       rawValue: stats.totalDOMNodes,
       displayValue: `${Util.formatNumber(stats.totalDOMNodes)} nodes`,
       extendedInfo: {
-        value: cards,
+        value: items,
       },
-      details: {
-        type: 'cards',
-        header: {type: 'text', text: 'View details'},
-        items: cards,
-      },
+      details: Audit.makeTableDetails(headings, items),
     };
   }
 }

@@ -23,15 +23,17 @@
       "description": "Does not use HTTPS",
       "helpText": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/https).",
       "details": {
-        "type": "list",
-        "header": {
-          "type": "text",
-          "text": "Insecure URLs:"
-        },
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "url",
+            "text": "Insecure URL"
+          }
+        ],
         "items": [
           {
-            "type": "url",
-            "value": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"
+            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"
           }
         ]
       }
@@ -1746,11 +1748,8 @@
       "description": "The page contains a heading, skip link, or landmark region",
       "helpText": "Adding ways to bypass repetitive content lets keyboard users navigate the page more efficiently. [Learn more](https://dequeuniversity.com/rules/axe/2.2/bypass?application=lighthouse).",
       "details": {
-        "type": "list",
-        "header": {
-          "type": "text",
-          "text": "View failing elements"
-        },
+        "type": "table",
+        "headings": [],
         "items": []
       }
     },
@@ -1799,23 +1798,30 @@
       "description": "Background and foreground colors do not have a sufficient contrast ratio.",
       "helpText": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse).",
       "details": {
-        "type": "list",
-        "header": {
-          "type": "text",
-          "text": "View failing elements"
-        },
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Failing Elements"
+          }
+        ],
         "items": [
           {
-            "type": "node",
-            "selector": "div > h2",
-            "path": "3,HTML,1,BODY,0,DIV,0,H2",
-            "snippet": "<h2>"
+            "node": {
+              "type": "node",
+              "selector": "div > h2",
+              "path": "3,HTML,1,BODY,0,DIV,0,H2",
+              "snippet": "<h2>"
+            }
           },
           {
-            "type": "node",
-            "selector": "div > span",
-            "path": "3,HTML,1,BODY,0,DIV,1,SPAN",
-            "snippet": "<span>"
+            "node": {
+              "type": "node",
+              "selector": "div > span",
+              "path": "3,HTML,1,BODY,0,DIV,1,SPAN",
+              "snippet": "<span>"
+            }
           }
         ]
       }
@@ -1852,11 +1858,8 @@
       "description": "Document has a `<title>` element",
       "helpText": "The title gives screen reader users an overview of the page, and search engine users rely on it heavily to determine if a page is relevant to their search. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/title).",
       "details": {
-        "type": "list",
-        "header": {
-          "type": "text",
-          "text": "View failing elements"
-        },
+        "type": "table",
+        "headings": [],
         "items": []
       }
     },
@@ -1870,11 +1873,8 @@
       "description": "`[id]` attributes on the page are unique",
       "helpText": "The value of an id attribute must be unique to prevent other instances from being overlooked by assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/2.2/duplicate-id?application=lighthouse).",
       "details": {
-        "type": "list",
-        "header": {
-          "type": "text",
-          "text": "View failing elements"
-        },
+        "type": "table",
+        "headings": [],
         "items": []
       }
     },
@@ -1924,17 +1924,22 @@
       "description": "`<html>` element does not have a `[lang]` attribute",
       "helpText": "If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default language that the user chose when setting up the screen reader. If the page isn't actually in the default language, then the screen reader might not announce the page's text correctly. [Learn more](https://dequeuniversity.com/rules/axe/2.2/html-lang?application=lighthouse).",
       "details": {
-        "type": "list",
-        "header": {
-          "type": "text",
-          "text": "View failing elements"
-        },
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Failing Elements"
+          }
+        ],
         "items": [
           {
-            "type": "node",
-            "selector": "html",
-            "path": "3,HTML",
-            "snippet": "<html manifest=\"clock.appcache\">"
+            "node": {
+              "type": "node",
+              "selector": "html",
+              "path": "3,HTML",
+              "snippet": "<html manifest=\"clock.appcache\">"
+            }
           }
         ]
       }
@@ -2007,29 +2012,38 @@
       "description": "Image elements do not have `[alt]` attributes",
       "helpText": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute.[Learn more](https://dequeuniversity.com/rules/axe/2.2/image-alt?application=lighthouse).",
       "details": {
-        "type": "list",
-        "header": {
-          "type": "text",
-          "text": "View failing elements"
-        },
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Failing Elements"
+          }
+        ],
         "items": [
           {
-            "type": "node",
-            "selector": "body > img[src$=\"lighthouse-480x318.jpg\"]:nth-child(5)",
-            "path": "3,HTML,1,BODY,5,IMG",
-            "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">"
+            "node": {
+              "type": "node",
+              "selector": "body > img[src$=\"lighthouse-480x318.jpg\"]:nth-child(5)",
+              "path": "3,HTML,1,BODY,5,IMG",
+              "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">"
+            }
           },
           {
-            "type": "node",
-            "selector": "body > img[src$=\"lighthouse-480x318.jpg\"]:nth-child(6)",
-            "path": "3,HTML,1,BODY,7,IMG",
-            "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">"
+            "node": {
+              "type": "node",
+              "selector": "body > img[src$=\"lighthouse-480x318.jpg\"]:nth-child(6)",
+              "path": "3,HTML,1,BODY,7,IMG",
+              "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">"
+            }
           },
           {
-            "type": "node",
-            "selector": "body > img:nth-child(20)",
-            "path": "3,HTML,1,BODY,36,IMG",
-            "snippet": "<img src=\"blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277\">"
+            "node": {
+              "type": "node",
+              "selector": "body > img:nth-child(20)",
+              "path": "3,HTML,1,BODY,36,IMG",
+              "snippet": "<img src=\"blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277\">"
+            }
           }
         ]
       }
@@ -2103,29 +2117,38 @@
       "description": "Form elements do not have associated labels",
       "helpText": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/2.2/label?application=lighthouse).",
       "details": {
-        "type": "list",
-        "header": {
-          "type": "text",
-          "text": "View failing elements"
-        },
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Failing Elements"
+          }
+        ],
         "items": [
           {
-            "type": "node",
-            "selector": "body > input[type=\"password\"]:nth-child(17)",
-            "path": "3,HTML,1,BODY,31,INPUT",
-            "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">"
+            "node": {
+              "type": "node",
+              "selector": "body > input[type=\"password\"]:nth-child(17)",
+              "path": "3,HTML,1,BODY,31,INPUT",
+              "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">"
+            }
           },
           {
-            "type": "node",
-            "selector": "body > input[type=\"password\"]:nth-child(18)",
-            "path": "3,HTML,1,BODY,33,INPUT",
-            "snippet": "<input type=\"password\">"
+            "node": {
+              "type": "node",
+              "selector": "body > input[type=\"password\"]:nth-child(18)",
+              "path": "3,HTML,1,BODY,33,INPUT",
+              "snippet": "<input type=\"password\">"
+            }
           },
           {
-            "type": "node",
-            "selector": "body > input[type=\"password\"]:nth-child(19)",
-            "path": "3,HTML,1,BODY,35,INPUT",
-            "snippet": "<input type=\"password\" onpaste=\"return false;\">"
+            "node": {
+              "type": "node",
+              "selector": "body > input[type=\"password\"]:nth-child(19)",
+              "path": "3,HTML,1,BODY,35,INPUT",
+              "snippet": "<input type=\"password\" onpaste=\"return false;\">"
+            }
           }
         ]
       }
@@ -2190,23 +2213,30 @@
       "description": "Links do not have a discernible name",
       "helpText": "Link text (and alternate text for images, when used as links) that is discernible, unique, and focusable improves the navigation experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/2.2/link-name?application=lighthouse).",
       "details": {
-        "type": "list",
-        "header": {
-          "type": "text",
-          "text": "View failing elements"
-        },
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Failing Elements"
+          }
+        ],
         "items": [
           {
-            "type": "node",
-            "selector": "body > a:nth-child(15)",
-            "path": "3,HTML,1,BODY,27,A",
-            "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">"
+            "node": {
+              "type": "node",
+              "selector": "body > a:nth-child(15)",
+              "path": "3,HTML,1,BODY,27,A",
+              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">"
+            }
           },
           {
-            "type": "node",
-            "selector": "body > a[href$=\"mailto:inbox@email.com\"]",
-            "path": "3,HTML,1,BODY,29,A",
-            "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">"
+            "node": {
+              "type": "node",
+              "selector": "body > a[href$=\"mailto:inbox@email.com\"]",
+              "path": "3,HTML,1,BODY,29,A",
+              "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">"
+            }
           }
         ]
       }
@@ -2254,11 +2284,8 @@
       "description": "`[user-scalable=\"no\"]` is not used in the `<meta name=\"viewport\">` element and the `[maximum-scale]` attribute is not less than 5.",
       "helpText": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more](https://dequeuniversity.com/rules/axe/2.2/meta-viewport?application=lighthouse).",
       "details": {
-        "type": "list",
-        "header": {
-          "type": "text",
-          "text": "View failing elements"
-        },
+        "type": "table",
+        "headings": [],
         "items": []
       }
     },
@@ -3151,21 +3178,12 @@
       "extendedInfo": {
         "value": [
           {
-            "title": "Total DOM Nodes",
-            "value": "53",
-            "target": "< 1,500 nodes"
+            "totalNodes": "53",
+            "depth": "4",
+            "width": "22"
           },
           {
-            "title": "DOM Depth",
-            "value": "4",
-            "snippet": "html >\n  body >\n    div >\n      h2",
-            "target": "< 32"
-          },
-          {
-            "title": "Maximum Children",
-            "value": "22",
-            "snippet": "Element with most children:\nbody",
-            "target": "< 60 nodes"
+            "totalNodes": ""
           }
         ]
       },
@@ -3174,28 +3192,32 @@
       "description": "Avoids an excessive DOM size",
       "helpText": "Browser engineers recommend pages contain fewer than ~1,500 DOM nodes. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/fundamentals/performance/rendering/).",
       "details": {
-        "type": "cards",
-        "header": {
-          "type": "text",
-          "text": "View details"
-        },
+        "type": "table",
+        "headings": [
+          {
+            "key": "totalNodes",
+            "itemType": "text",
+            "text": "Total DOM Nodes"
+          },
+          {
+            "key": "depth",
+            "itemType": "text",
+            "text": "Maximum DOM Depth"
+          },
+          {
+            "key": "width",
+            "itemType": "text",
+            "text": "Maximum Children"
+          }
+        ],
         "items": [
           {
-            "title": "Total DOM Nodes",
-            "value": "53",
-            "target": "< 1,500 nodes"
+            "totalNodes": "53",
+            "depth": "4",
+            "width": "22"
           },
           {
-            "title": "DOM Depth",
-            "value": "4",
-            "snippet": "html >\n  body >\n    div >\n      h2",
-            "target": "< 32"
-          },
-          {
-            "title": "Maximum Children",
-            "value": "22",
-            "snippet": "Element with most children:\nbody",
-            "target": "< 60 nodes"
+            "totalNodes": ""
           }
         ]
       }
@@ -4061,19 +4083,26 @@
       "description": "Prevents users to paste into password fields",
       "helpText": "Preventing password pasting undermines good security policy. [Learn more](https://www.ncsc.gov.uk/blog-post/let-them-paste-passwords)",
       "details": {
-        "type": "list",
-        "header": {
-          "type": "text",
-          "value": "Password inputs that prevent pasting into"
-        },
+        "type": "table",
+        "headings": [
+          {
+            "key": "node",
+            "itemType": "node",
+            "text": "Failing Elements"
+          }
+        ],
         "items": [
           {
-            "type": "text",
-            "value": "<input type=\"password\" onpaste=\"event.preventDefault();\">"
+            "node": {
+              "type": "node",
+              "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">"
+            }
           },
           {
-            "type": "text",
-            "value": "<input type=\"password\" onpaste=\"return false;\">"
+            "node": {
+              "type": "node",
+              "snippet": "<input type=\"password\" onpaste=\"return false;\">"
+            }
           }
         ]
       }
@@ -4509,7 +4538,7 @@
       "scoreDisplayMode": "binary",
       "name": "font-size",
       "description": "Document uses legible font sizes",
-      "helpText": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more](https://developers.google.com/web/fundamentals/design-and-ux/responsive/#optimize_text_for_reading).",
+      "helpText": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).",
       "details": {
         "type": "table",
         "headings": [
@@ -4551,7 +4580,7 @@
       "scoreDisplayMode": "binary",
       "name": "link-text",
       "description": "Links have descriptive text",
-      "helpText": "Descriptive link text helps search engines understand your content. [Learn more](https://webmasters.googleblog.com/2008/10/importance-of-link-architecture.html).",
+      "helpText": "Descriptive link text helps search engines understand your content. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text).",
       "details": {
         "type": "table",
         "headings": [],
@@ -5312,6 +5341,6 @@
     }
   },
   "timing": {
-    "total": 1098
+    "total": 1227
   }
 }
