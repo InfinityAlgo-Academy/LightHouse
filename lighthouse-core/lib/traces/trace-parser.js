@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-// @ts-nocheck
 'use strict';
 
 const WebInspector = require('../web-inspector');
@@ -18,16 +17,19 @@ const WebInspector = require('../web-inspector');
  */
 class TraceParser {
   constructor() {
+    /** @type {Array<LH.TraceEvent>} */
     this.traceEvents = [];
 
     this.tracingModel = {
-      reset: _ => this._reset(),
+      reset: () => this._reset(),
+      /** @param {Array<LH.TraceEvent>} evts */
       addEvents: evts => this._addEvents(evts),
     };
 
     const delegateMock = {
-      loadingProgress: _ => {},
-      loadingStarted: _ => {},
+      loadingProgress: () => {},
+      loadingStarted: () => {},
+      /** @param {boolean} success */
       loadingComplete: success => {
         if (!success) throw new Error('Parsing problem');
       },
@@ -44,7 +46,7 @@ class TraceParser {
 
   /**
    * Adds parsed trace events to array
-   * @param {!Array<!TraceEvent>} evts
+   * @param {Array<LH.TraceEvent>} evts
    */
   _addEvents(evts) {
     this.traceEvents.push(...evts);
@@ -60,7 +62,7 @@ class TraceParser {
 
   /**
    * Returns entire trace
-   * @return {{traceEvents: !Array<!TraceEvent>}}
+   * @return {{traceEvents: Array<LH.TraceEvent>}}
    */
   getTrace() {
     return {

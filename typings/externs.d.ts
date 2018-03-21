@@ -18,7 +18,7 @@ declare global {
       outputPath: string;
       saveAssets: boolean;
       view: boolean;
-      maxWaitForLoad: number;
+      maxWaitForLoad?: number;
       logLevel: string;
       hostname: string;
       blockedUrlPatterns: string[];
@@ -33,9 +33,22 @@ declare global {
       mixedContent: boolean;
       verbose: boolean;
       quiet: boolean;
+      disableDeviceEmulation?: boolean;
+      disableCpuThrottling?: boolean;
+      disableNetworkThrottling?: boolean;
     }
 
-    export interface Config {}
+    // TODO: type checking for Config
+    export interface Config {
+      passes: ConfigPass[];
+    }
+
+    export interface ConfigPass {
+      pauseAfterLoadMs?: number;
+      networkQuietThresholdMs?: number;
+      cpuQuietThresholdMs?: number;
+      useThrottling?: boolean;
+    }
 
     export interface Results {
       url: string;

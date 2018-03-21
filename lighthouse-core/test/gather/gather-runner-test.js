@@ -386,18 +386,6 @@ describe('GatherRunner', function() {
       ));
   });
 
-  it('returns an empty object if a falsey value is passed in to extraHeaders', () => {
-    const driver = getMockedEmulationDriver(null, null, null, null, params => params.headers);
-
-    return GatherRunner.beforePass({
-      driver,
-      flags: {
-        extraHeaders: undefined,
-      },
-      config: {gatherers: []},
-    }).then((returnValue) => assert.deepStrictEqual(returnValue, {}));
-  });
-
   it('tells the driver to begin tracing', () => {
     let calledTrace = false;
     const driver = {

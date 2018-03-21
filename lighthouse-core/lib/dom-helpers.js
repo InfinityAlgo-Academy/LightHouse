@@ -12,6 +12,8 @@
 
 /* global document */
 
+// TODO: move to page-functions.js
+
 /**
  * @param {string=} selector Optional simple CSS selector to filter nodes on.
  *     Combinators are not supported.

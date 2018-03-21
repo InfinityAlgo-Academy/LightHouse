@@ -60,7 +60,7 @@ class Connection {
   /**
    * Bind listeners for connection events
    * @param {'notification'} eventName
-   * @param {(...args: any[]) => void} cb
+   * @param {(body: {method: string, params: object}) => void} cb
    */
   on(eventName, cb) {
     if (eventName !== 'notification') {
