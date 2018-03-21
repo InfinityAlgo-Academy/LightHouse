@@ -24,6 +24,9 @@ last-run-results.html
 *.report.pretty
 *.artifacts.log
 
+!lighthouse-core/test/results/artifacts/*.trace.json
+!lighthouse-core/test/results/artifacts/*.devtoolslog.json
+
 latest-run
 
 closure-error.log
