@@ -148,12 +148,7 @@ describe('Lighthouse chrome extension', function() {
     }
 
     const auditErrors = await extensionPage.$$eval('.lh-debug', getDebugStrings, selectors);
-    const errors = auditErrors.filter(
-      item =>
-        item.debugString.includes('Audit error:') &&
-        // FIXME(phulce): fix timing failing on travis.
-        !item.debugString.includes('No timing information available')
-    );
+    const errors = auditErrors.filter(item => item.debugString.includes('Audit error:'));
     assert.deepStrictEqual(errors, [], 'Audit errors found within the report');
   });
 });

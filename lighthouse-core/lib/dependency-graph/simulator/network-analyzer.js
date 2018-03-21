@@ -186,6 +186,23 @@ class NetworkAnalyzer {
   }
 
   /**
+   * @param {LH.NetworkRequest[]} records
+   * @return {boolean}
+   */
+  static canTrustConnectionInformation(records) {
+    const connectionIdWasStarted = new Map();
+    for (const record of records) {
+      const started = connectionIdWasStarted.get(record.connectionId) || !record.connectionReused;
+      connectionIdWasStarted.set(record.connectionId, started);
+    }
+
+    // We probably can't trust the network information if all the connection IDs were the same
+    if (connectionIdWasStarted.size <= 1) return false;
+    // Or if there were connections that were always reused (a connection had to have started at some point)
+    return Array.from(connectionIdWasStarted.values()).every(started => started);
+  }
+
+  /**
    * Returns a map of requestId -> connectionReused, estimating the information if the information
    * available in the records themselves appears untrustworthy.
    *
@@ -196,9 +213,8 @@ class NetworkAnalyzer {
   static estimateIfConnectionWasReused(records, options) {
     options = Object.assign({forceCoarseEstimates: false}, options);
 
-    const connectionIds = new Set(records.map(record => record.connectionId));
-    // If the records actually have distinct connectionIds we can reuse these.
-    if (!options.forceCoarseEstimates && connectionIds.size > 1) {
+    // Check if we can trust the connection information coming from the protocol
+    if (!options.forceCoarseEstimates && NetworkAnalyzer.canTrustConnectionInformation(records)) {
       // @ts-ignore
       return new Map(records.map(record => [record.requestId, !!record.connectionReused]));
     }
