@@ -1,3 +1,23 @@
+ <a name="2.9.3"></a>
+# 2.9.3 (2018-03-22)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.9.2...v2.9.3)
+
+## Bug Fixes
+
+* start_url: fix start_url audit while offline ([#4710](https://github.com/googlechrome/lighthouse/pull/4710))
+* domstats: useIsolation within domstats ([#4811](https://github.com/googlechrome/lighthouse/pull/4811))
+* img-usage: handle invalid images within determineNaturalSize ([#4812](https://github.com/googlechrome/lighthouse/pull/4812))
+* deps: patch robots-parser to work in browser env ([#4819](https://github.com/googlechrome/lighthouse/pull/4819))
+
+## Tests
+
+* add extension puppeteer smoketest ([#4640](https://github.com/googlechrome/lighthouse/pull/4640))
+
+## Report
+
+* font-size, link-text: update docs links ([#4829](https://github.com/googlechrome/lighthouse/pull/4829))
+* is-crawlable: fix broken learn more link ([#4844](https://github.com/googlechrome/lighthouse/pull/4844))
+
  <a name="2.9.2"></a>
 # 2.9.2 (2018-03-15)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.9.1...v2.9.2)
