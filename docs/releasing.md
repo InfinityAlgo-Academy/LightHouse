@@ -31,6 +31,8 @@ We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patc
 ## Release Process
 
 ```sh
+# use a custom lighthouse-pristine checkout to make sure your dev files aren't involved.
+
 # * Install the latest. This also builds the cli, extension, and viewer *
 yarn install-all
 
@@ -50,18 +52,18 @@ echo "Test the extension"
 # ...
 
 echo "Test a fresh local install"
-# (starting from lighthouse root...)
-# npm pack
-# cd ..; rm -rf tmp; mkdir tmp; cd tmp
-# npm init -y
-# npm install ../lighthouse/lighthouse-<version>.tgz
-# npm explore lighthouse -- npm run smoke
-# npm explore lighthouse -- npm run smokehouse
-# npm explore lighthouse -- npm run chrome # try the manual launcher
-# npm explore lighthouse -- npm run fast -- http://example.com
-# cd ..; rm -rf ./tmp;
+# (starting from lighthouse-pristine root...)
+yarn pack
+cd ..; rm -rf tmp; mkdir tmp; cd tmp
+npm init -y
+npm install ../lighthouse-pristine/lighthouse-*.tgz
+npm explore lighthouse -- npm run smoke
+npm explore lighthouse -- npm run smokehouse
+npm explore lighthouse -- npm run chrome # try the manual launcher
+npm explore lighthouse -- npm run fast -- http://example.com
+cd ..; rm -rf ./tmp;
 
-# delete that lighthouse-<version>.tgz
+cd lighthouse-pristine; command rm -f lighthouse-*.tgz
 
 echo "Test the lighthouse-viewer build"
 # Manual test for now:
@@ -89,15 +91,16 @@ git push --tags
 
 # * Deploy-time *
 echo "Rebuild extension and viewer to get the latest, tagged master commit"
-yarn build-viewer; yarn build-extension;
+yarn build-all;
 
-cd lighthouse-extension; gulp package; cd ..
+# zip the extension files, but remove lh-background as it's not needed
+cd lighthouse-extension; command rm -f dist/scripts/lighthouse-background.js; gulp package; cd ..
 echo "Go here: https://chrome.google.com/webstore/developer/edit/blipmdconlkpinefehnmjammfjpmpbjk "
 echo "Upload the package zip to CWS dev dashboard"
 
 echo "Verify the npm package won't include unncessary files"
-yarn global add irish-pub pkgfiles
-irish-pub; pkgfiles;
+yarn global add pkgfiles
+pkgfiles   # publishable size should be ~2MB
 
 echo "ship it"
 npm publish
