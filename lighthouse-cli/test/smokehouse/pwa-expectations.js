@@ -141,7 +141,7 @@ module.exports = [
         // Ignore speed test; just verify that it ran.
       },
       'webapp-install-banner': {
-        score: 0,
+        score: 1,
         extendedInfo: {
           value: {
             manifestValues: {
