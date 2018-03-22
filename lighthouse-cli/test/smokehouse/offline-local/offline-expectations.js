@@ -105,7 +105,7 @@ module.exports = [
         displayValue: '0',
       },
       'webapp-install-banner': {
-        score: false,
+        score: true,
       },
       'splash-screen': {
         score: false,
