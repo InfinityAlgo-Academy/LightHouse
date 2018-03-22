@@ -45,7 +45,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     return CanonicalAudit.audit(artifacts).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.debugString.includes('multiple'));
+      assert.ok(auditResult.debugString.includes('Multiple'), auditResult.debugString);
     });
   });
 
@@ -63,7 +63,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     return CanonicalAudit.audit(artifacts).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.debugString.includes('invalid'));
+      assert.ok(auditResult.debugString.includes('Invalid'), auditResult.debugString);
     });
   });
 
@@ -81,7 +81,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     return CanonicalAudit.audit(artifacts).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.debugString.includes('relative'));
+      assert.ok(auditResult.debugString.includes('Relative'), auditResult.debugString);
     });
   });
 
@@ -102,7 +102,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     return CanonicalAudit.audit(artifacts).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.debugString.includes('hreflang'));
+      assert.ok(auditResult.debugString.includes('hreflang'), auditResult.debugString);
     });
   });
 
@@ -120,7 +120,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     return CanonicalAudit.audit(artifacts).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.debugString.includes('domain'));
+      assert.ok(auditResult.debugString.includes('domain'), auditResult.debugString);
     });
   });
 
@@ -138,7 +138,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     return CanonicalAudit.audit(artifacts).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.debugString.includes('root'));
+      assert.ok(auditResult.debugString.includes('root'), auditResult.debugString);
     });
   });
 
