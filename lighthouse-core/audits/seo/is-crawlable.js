@@ -67,7 +67,7 @@ class IsCrawlable extends Audit {
       failureDescription: 'Page is blocked from indexing',
       helpText: 'Search engines are unable to include your pages in search results ' +
           'if they don\'t have permission to crawl them. [Learn ' +
-          'more](https://developers.google.com/lighthouse/audits/indexing).',
+          'more](https://developers.google.com/web/tools/lighthouse/audits/indexing).',
       requiredArtifacts: ['MetaRobots', 'RobotsTxt'],
     };
   }
