@@ -1,3 +1,16 @@
+ <a name="2.9.4"></a>
+# 2.9.4 (2018-03-23)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.9.3...v2.9.4)
+
+## Bug Fixes
+
+* add node 6 support to (patched) robots-parser ([#4851](https://github.com/googlechrome/lighthouse/pull/4851))
+
+## Tests
+
+* transpile extension test for node 6 ([#4855](https://github.com/googlechrome/lighthouse/pull/4855))
+* rename seo test files ([#4853](https://github.com/googlechrome/lighthouse/pull/4853))
+
  <a name="2.9.3"></a>
 # 2.9.3 (2018-03-22)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.9.2...v2.9.3)
