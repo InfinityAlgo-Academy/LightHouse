@@ -17,6 +17,10 @@ const config = require(path.resolve(__dirname, '../../lighthouse-core/config/def
 
 const getAuditsOfCategory = category => config.categories[category].audits;
 
+// eslint-disable-next-line
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+
 describe('Lighthouse chrome extension', function() {
   const manifestLocation = path.join(lighthouseExtensionPath, 'manifest.json');
   const lighthouseCategories = Object.keys(config.categories);
@@ -32,7 +36,7 @@ describe('Lighthouse chrome extension', function() {
     );
   }
 
-  before(async function() {
+  before(_asyncToGenerator(function* () {
     // eslint-disable-next-line
     this.timeout(90 * 1000);
 
@@ -46,7 +50,7 @@ describe('Lighthouse chrome extension', function() {
     fs.writeFileSync(manifestLocation, JSON.stringify(manifest, null, 2));
 
     // start puppeteer
-    browser = await puppeteer.launch({
+    browser = yield puppeteer.launch({
       headless: false,
       executablePath: process.env.CHROME_PATH,
       args: [
@@ -55,22 +59,22 @@ describe('Lighthouse chrome extension', function() {
       ],
     });
 
-    const page = await browser.newPage();
-    await page.goto('https://www.paulirish.com', {waitUntil: 'networkidle2'});
-    const targets = await browser.targets();
-    const extensionTarget = targets.find(({_targetInfo}) => {
+    const page = yield browser.newPage();
+    yield page.goto('https://www.paulirish.com', {waitUntil: 'networkidle2'});
+    const targets = yield browser.targets();
+    const extensionTarget = targets.find(function({_targetInfo}) {
       return _targetInfo.title === 'Lighthouse' && _targetInfo.type === 'background_page';
     });
 
     if (!extensionTarget) {
-      return await browser.close();
+      return yield browser.close();
     }
 
-    const client = await extensionTarget.createCDPSession();
-    const lighthouseResult = await client.send('Runtime.evaluate', {
+    const client = yield extensionTarget.createCDPSession();
+    const lighthouseResult = yield client.send('Runtime.evaluate', {
       expression: `runLighthouseInExtension({
-          restoreCleanState: true,
-        }, ${JSON.stringify(lighthouseCategories)})`,
+        restoreCleanState: true,
+      }, ${JSON.stringify(lighthouseCategories)})`,
       awaitPromise: true,
       returnByValue: true,
     });
@@ -83,19 +87,19 @@ describe('Lighthouse chrome extension', function() {
       throw new Error(lighthouseResult.exceptionDetails.text);
     }
 
-    extensionPage = (await browser.pages()).find(page =>
+    extensionPage = (yield browser.pages()).find(page =>
       page.url().includes('blob:chrome-extension://')
     );
-  });
+  }));
 
-  after(async () => {
+  after(_asyncToGenerator(function* () {
     // put the default manifest back
     fs.writeFileSync(manifestLocation, originalManifest);
 
     if (browser) {
-      await browser.close();
+      yield browser.close();
     }
-  });
+  }));
 
 
   const selectors = {
@@ -103,23 +107,23 @@ describe('Lighthouse chrome extension', function() {
     titles: '.lh-score__title, .lh-perf-hint__title, .lh-timeline-metric__title',
   };
 
-  it('should contain all categories', async () => {
-    const categories = await extensionPage.$$(`#${lighthouseCategories.join(',#')}`);
+  it('should contain all categories', _asyncToGenerator(function* () {
+    const categories = yield extensionPage.$$(`#${lighthouseCategories.join(',#')}`);
     assert.equal(
       categories.length,
       lighthouseCategories.length,
       `${categories.join(' ')} does not match ${lighthouseCategories.join(' ')}`
     );
-  });
+  }));
 
-  it('should contain audits of all categories', async () => {
+  it('should contain audits of all categories', _asyncToGenerator(function* () {
     for (const category of lighthouseCategories) {
       let expected = getAuditsOfCategory(category).length;
       if (category === 'performance') {
         expected = getAuditsOfCategory(category).filter(a => !!a.group).length;
       }
 
-      const elementCount = await getAuditElementsCount({category, selector: selectors.audits});
+      const elementCount = yield getAuditElementsCount({category, selector: selectors.audits});
 
       assert.equal(
         expected,
@@ -127,15 +131,15 @@ describe('Lighthouse chrome extension', function() {
         `${category} does not have the correct amount of audits`
       );
     }
-  });
+  }));
 
-  it('should contain a filmstrip', async () => {
-    const filmstrip = await extensionPage.$('.lh-filmstrip');
+  it('should contain a filmstrip', _asyncToGenerator(function* () {
+    const filmstrip = yield extensionPage.$('.lh-filmstrip');
 
     assert.ok(!!filmstrip, `filmstrip is not available`);
-  });
+  }));
 
-  it('should not have any audit errors', async () => {
+  it('should not have any audit errors', _asyncToGenerator(function* () {
     function getDebugStrings(elems, selectors) {
       return elems.map(el => {
         const audit = el.closest(selectors.audits);
@@ -147,7 +151,7 @@ describe('Lighthouse chrome extension', function() {
       });
     }
 
-    const auditErrors = await extensionPage.$$eval('.lh-debug', getDebugStrings, selectors);
+    const auditErrors = yield extensionPage.$$eval('.lh-debug', getDebugStrings, selectors);
     const errors = auditErrors.filter(
       item =>
         item.debugString.includes('Audit error:') &&
@@ -155,5 +159,5 @@ describe('Lighthouse chrome extension', function() {
         !item.debugString.includes('No timing information available')
     );
     assert.deepStrictEqual(errors, [], 'Audit errors found within the report');
-  });
+  }));
 });
