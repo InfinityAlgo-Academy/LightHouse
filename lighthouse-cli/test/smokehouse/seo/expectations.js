@@ -66,6 +66,10 @@ module.exports = [
       'canonical': {
         score: 1,
       },
+      'robots-txt': {
+        rawValue: true,
+        notApplicable: true,
+      },
     },
   },
   {
