@@ -40,11 +40,11 @@ function lighthouse(url, flags = {}, configJSON) {
     log.setLevel(flags.logLevel);
 
     // Use ConfigParser to generate a valid config file
-    const config = new Config(configJSON, flags.configPath);
+    const config = new Config(configJSON, flags);
     const connection = new ChromeProtocol(flags.port, flags.hostname);
 
     // kick off a lighthouse run
-    return Runner.run(connection, {url, flags, config})
+    return Runner.run(connection, {url, config})
       .then((lighthouseResults = {}) => {
         // Annotate with time to run lighthouse.
         const endTime = Date.now();

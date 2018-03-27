@@ -142,7 +142,7 @@ describe('Config', () => {
 
     return assert.throws(_ => new Config({
       audits: [],
-    }, configPath), /absolute path/);
+    }, {configPath}), /absolute path/);
   });
 
   it('loads an audit relative to a config path', () => {
@@ -150,7 +150,7 @@ describe('Config', () => {
 
     return assert.doesNotThrow(_ => new Config({
       audits: ['../fixtures/valid-custom-audit'],
-    }, configPath));
+    }, {configPath}));
   });
 
   it('loads an audit from node_modules/', () => {
@@ -440,8 +440,26 @@ describe('Config', () => {
     const auditNames = new Set(config.audits.map(audit => audit.implementation.meta.name));
     assert.ok(config, 'failed to generate config');
     assert.ok(auditNames.has('custom-audit'), 'did not include custom audit');
-    assert.ok(auditNames.has('unused-css-rules'), 'did not include full audits');
+    assert.ok(auditNames.has('unused-javascript'), 'did not include full audits');
     assert.ok(auditNames.has('first-meaningful-paint'), 'did not include default audits');
+  });
+
+  it('merges settings with correct priority', () => {
+    const config = new Config(
+      {
+        extends: 'lighthouse:full',
+        settings: {
+          disableStorageReset: true,
+          disableDeviceEmulation: false,
+        },
+      },
+      {disableDeviceEmulation: true}
+    );
+
+    assert.ok(config, 'failed to generate config');
+    assert.ok(typeof config.settings.maxWaitForLoad === 'number', 'missing setting from default');
+    assert.ok(config.settings.disableStorageReset, 'missing setting from extension config');
+    assert.ok(config.settings.disableDeviceEmulation, 'missing setting from flags');
   });
 
   describe('artifact loading', () => {
@@ -676,7 +694,7 @@ describe('Config', () => {
     it('loads a gatherer relative to a config path', () => {
       const config = new Config({
         passes: [{gatherers: ['../fixtures/valid-custom-gatherer']}],
-      }, __filename);
+      }, {configPath: __filename});
       const gatherer = config.passes[0].gatherers[0];
 
       assert.equal(gatherer.instance.name, 'CustomGatherer');

@@ -5,10 +5,14 @@
  */
 'use strict';
 
+const Driver = require('../gather/driver');
+
 /* eslint-disable max-len */
 
 module.exports = {
-  settings: {},
+  settings: {
+    maxWaitForLoad: Driver.MAX_WAIT_FOR_FULLY_LOADED,
+  },
   passes: [{
     passName: 'defaultPass',
     recordTrace: true,

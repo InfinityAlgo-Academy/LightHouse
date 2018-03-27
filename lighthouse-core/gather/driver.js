@@ -431,7 +431,7 @@ class Driver {
     };
 
     // Check here for _networkStatusMonitor to satisfy type checker. Any further race condition
-    // will be caught at runtime on calls to it. 
+    // will be caught at runtime on calls to it.
     if (!this._networkStatusMonitor) {
       throw new Error('Driver._waitForNetworkIdle called with no networkStatusMonitor');
     }
@@ -717,12 +717,13 @@ class Driver {
    * possible workaround.
    * Resolves on the url of the loaded page, taking into account any redirects.
    * @param {string} url
-   * @param {{waitForLoad?: boolean, disableJavaScript?: boolean, config?: LH.ConfigPass, flags?: LH.Flags}} options
+   * @param {{waitForLoad?: boolean, passContext?: LH.Gatherer.PassContext}} options
    * @return {Promise<string>}
    */
   async gotoURL(url, options = {}) {
     const waitForLoad = options.waitForLoad || false;
-    const disableJS = options.disableJavaScript || false;
+    const passContext = options.passContext || {};
+    const disableJS = passContext.disableJavaScript || false;
 
     await this._beginNetworkStatusMonitoring(url);
     await this._clearIsolatedContextId();
@@ -735,10 +736,9 @@ class Driver {
     this.sendCommand('Page.navigate', {url});
 
     if (waitForLoad) {
-      let pauseAfterLoadMs = options.config && options.config.pauseAfterLoadMs;
-      let networkQuietThresholdMs = options.config && options.config.networkQuietThresholdMs;
-      let cpuQuietThresholdMs = options.config && options.config.cpuQuietThresholdMs;
-      let maxWaitMs = options.flags && options.flags.maxWaitForLoad;
+      const passConfig = passContext.passConfig || {};
+      let {pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = passConfig;
+      let maxWaitMs = passContext.settings && passContext.settings.maxWaitForLoad;
 
       /* eslint-disable max-len */
       if (typeof pauseAfterLoadMs !== 'number') pauseAfterLoadMs = DEFAULT_PAUSE_AFTER_LOAD;
@@ -893,12 +893,12 @@ class Driver {
   }
 
   /**
-   * @param {{additionalTraceCategories: string=}=} flags
+   * @param {{additionalTraceCategories: string=}=} settings
    * @return {Promise<void>}
    */
-  beginTrace(flags) {
-    const additionalCategories = (flags && flags.additionalTraceCategories &&
-        flags.additionalTraceCategories.split(',')) || [];
+  beginTrace(settings) {
+    const additionalCategories = (settings && settings.additionalTraceCategories &&
+        settings.additionalTraceCategories.split(',')) || [];
     const traceCategories = this._traceCategories.concat(additionalCategories);
     const uniqueCategories = Array.from(new Set(traceCategories));
     const tracingOpts = {
@@ -1016,25 +1016,25 @@ class Driver {
   }
 
   /**
-   * @param {LH.Flags} flags
+   * @param {LH.ConfigSettings} settings
    * @return {Promise<void>}
    */
-  async beginEmulation(flags) {
-    if (!flags.disableDeviceEmulation) {
+  async beginEmulation(settings) {
+    if (!settings.disableDeviceEmulation) {
       await emulation.enableNexus5X(this);
     }
 
-    await this.setThrottling(flags, {useThrottling: true});
+    await this.setThrottling(settings, {useThrottling: true});
   }
 
   /**
-   * @param {LH.Flags} flags
+   * @param {LH.ConfigSettings} settings
    * @param {{useThrottling?: boolean}} passConfig
    * @return {Promise<void>}
    */
-  async setThrottling(flags, passConfig) {
-    const throttleCpu = passConfig.useThrottling && !flags.disableCpuThrottling;
-    const throttleNetwork = passConfig.useThrottling && !flags.disableNetworkThrottling;
+  async setThrottling(settings, passConfig) {
+    const throttleCpu = passConfig.useThrottling && !settings.disableCpuThrottling;
+    const throttleNetwork = passConfig.useThrottling && !settings.disableNetworkThrottling;
     const cpuPromise = throttleCpu ?
         emulation.enableCPUThrottling(this) :
         emulation.disableCPUThrottling(this);
@@ -1057,12 +1057,12 @@ class Driver {
 
   /**
    * Enable internet connection, using emulated mobile settings if
-   * `options.flags.disableNetworkThrottling` is false.
-   * @param {{flags: LH.Flags, config: LH.ConfigPass}} options
+   * `options.settings.disableNetworkThrottling` is false.
+   * @param {{settings: LH.ConfigSettings, passConfig: LH.ConfigPass}} options
    * @return {Promise<void>}
    */
   async goOnline(options) {
-    await this.setThrottling(options.flags, options.config);
+    await this.setThrottling(options.settings, options.passConfig);
     this.online = true;
   }
 

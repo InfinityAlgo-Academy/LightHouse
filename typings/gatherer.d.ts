@@ -7,7 +7,10 @@
 declare global {
   module LH.Gatherer {
     export interface PassContext {
-      options: object;
+      disableJavaScript?: boolean;
+      passConfig?: ConfigPass;
+      settings?: ConfigSettings;
+      options?: object;
     }
 
     export interface LoadData {

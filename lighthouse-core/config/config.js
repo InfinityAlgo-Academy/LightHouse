@@ -15,8 +15,6 @@ const path = require('path');
 const Audit = require('../audits/audit');
 const Runner = require('../runner');
 
-const _flatten = arr => [].concat(...arr);
-
 // cleanTrace is run to remove duplicate TracingStartedInPage events,
 // and to change TracingStartedInBrowser events into TracingStartedInPage.
 // This is done by searching for most occuring threads and basing new events
@@ -281,9 +279,11 @@ class Config {
   /**
    * @constructor
    * @param {!LighthouseConfig} configJSON
-   * @param {string=} configPath The absolute path to the config file, if there is one.
+   * @param {LH.Flags=} flags
    */
-  constructor(configJSON, configPath) {
+  constructor(configJSON, flags) {
+    let configPath = flags && flags.configPath;
+
     if (!configJSON) {
       configJSON = defaultConfig;
       configPath = path.resolve(__dirname, defaultConfigPath);
@@ -321,11 +321,13 @@ class Config {
     configJSON.audits = Config.expandAuditShorthandAndMergeOptions(configJSON.audits);
     configJSON.passes = Config.expandGathererShorthandAndMergeOptions(configJSON.passes);
 
+    // Override any applicable settings with CLI flags
+    configJSON.settings = merge(configJSON.settings || {}, flags || {});
+
     // Generate a limited config if specified
-    if (configJSON.settings &&
-        (Array.isArray(configJSON.settings.onlyCategories) ||
+    if (Array.isArray(configJSON.settings.onlyCategories) ||
         Array.isArray(configJSON.settings.onlyAudits) ||
-        Array.isArray(configJSON.settings.skipAudits))) {
+        Array.isArray(configJSON.settings.skipAudits)) {
       const categoryIds = configJSON.settings.onlyCategories;
       const auditIds = configJSON.settings.onlyAudits;
       const skipAuditIds = configJSON.settings.skipAudits;
@@ -341,6 +343,7 @@ class Config {
     this._artifacts = expandArtifacts(configJSON.artifacts);
     this._categories = configJSON.categories;
     this._groups = configJSON.groups;
+    this._settings = configJSON.settings || {};
 
     // validatePasses must follow after audits are required
     validatePasses(configJSON.passes, this._audits);
@@ -563,8 +566,13 @@ class Config {
    * @return {!Set<string>}
    */
   static getAuditIdsInCategories(categories) {
-    const audits = _flatten(Object.keys(categories).map(id => categories[id].audits));
-    return new Set(audits.map(audit => audit.id));
+    /** @type {Array<string>} */
+    let audits = [];
+    for (const category of Object.values(categories)) {
+      audits = audits.concat(category.audits.map(audit => audit.id));
+    }
+
+    return new Set(audits);
   }
 
   /**
@@ -581,7 +589,7 @@ class Config {
   /**
    * Creates mapping from audit path (used in config.audits) to audit.name (used in categories)
    * @param {!Object} config Lighthouse config object.
-   * @return {Map}
+   * @return {Map<string, string>}
    */
   static getMapOfAuditPathToName(config) {
     const auditObjectsAll = Config.requireAudits(config.audits);
@@ -747,6 +755,11 @@ class Config {
   /** @type {Object<string, {title: string, description: string}>|undefined} */
   get groups() {
     return this._groups;
+  }
+
+  /** @type {LH.ConfigSettings} */
+  get settings() {
+    return this._settings;
   }
 }
 

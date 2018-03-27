@@ -7,6 +7,7 @@
 
 module.exports = {
   extends: 'lighthouse:default',
+  settings: {},
   passes: [
     {
       passName: 'extraPass',

@@ -21,7 +21,7 @@ const Sentry = require('./lib/sentry');
 class Runner {
   static run(connection, opts) {
     // Clean opts input.
-    opts.flags = opts.flags || {};
+    opts.settings = opts.config && opts.config.settings || {};
 
     // List of top-level warnings for this Lighthouse run.
     const lighthouseRunWarnings = [];
@@ -65,17 +65,17 @@ class Runner {
 
     // Gather phase
     // Either load saved artifacts off disk, from config, or get from the browser
-    if (opts.flags.auditMode && !opts.flags.gatherMode) {
-      const path = Runner._getArtifactsPath(opts.flags);
+    if (opts.settings.auditMode && !opts.settings.gatherMode) {
+      const path = Runner._getArtifactsPath(opts.settings);
       run = run.then(_ => Runner._loadArtifactsFromDisk(path));
     } else if (opts.config.artifacts) {
       run = run.then(_ => opts.config.artifacts);
     } else {
       run = run.then(_ => Runner._gatherArtifactsFromBrowser(opts, connection));
       // -G means save these to ./latest-run, etc.
-      if (opts.flags.gatherMode) {
+      if (opts.settings.gatherMode) {
         run = run.then(async artifacts => {
-          const path = Runner._getArtifactsPath(opts.flags);
+          const path = Runner._getArtifactsPath(opts.settings);
           await Runner._saveArtifacts(artifacts, path);
           return artifacts;
         });
@@ -83,7 +83,7 @@ class Runner {
     }
 
     // Potentially quit early
-    if (opts.flags.gatherMode && !opts.flags.auditMode) return run;
+    if (opts.settings.gatherMode && !opts.settings.auditMode) return run;
 
     // Audit phase
     run = run.then(artifacts => Runner._runAudits(opts, artifacts));
@@ -115,7 +115,7 @@ class Runner {
         runWarnings: lighthouseRunWarnings,
         audits: resultsById,
         artifacts: runResults.artifacts,
-        runtimeConfig: Runner.getRuntimeConfig(opts.flags),
+        runtimeConfig: Runner.getRuntimeConfig(opts.settings),
         reportCategories: categories,
         reportGroups: opts.config.groups,
       };
@@ -385,45 +385,45 @@ class Runner {
 
   /**
    * Get runtime configuration specified by the flags
-   * @param {!Object} flags
+   * @param {!LH.ConfigSettings} settings
    * @return {!Object} runtime config
    */
-  static getRuntimeConfig(flags) {
+  static getRuntimeConfig(settings) {
     const emulationDesc = emulation.getEmulationDesc();
     const environment = [
       {
         name: 'Device Emulation',
-        enabled: !flags.disableDeviceEmulation,
+        enabled: !settings.disableDeviceEmulation,
         description: emulationDesc['deviceEmulation'],
       },
       {
         name: 'Network Throttling',
-        enabled: !flags.disableNetworkThrottling,
+        enabled: !settings.disableNetworkThrottling,
         description: emulationDesc['networkThrottling'],
       },
       {
         name: 'CPU Throttling',
-        enabled: !flags.disableCpuThrottling,
+        enabled: !settings.disableCpuThrottling,
         description: emulationDesc['cpuThrottling'],
       },
     ];
 
     return {
       environment,
-      blockedUrlPatterns: flags.blockedUrlPatterns || [],
-      extraHeaders: flags.extraHeaders || {},
+      blockedUrlPatterns: settings.blockedUrlPatterns || [],
+      extraHeaders: settings.extraHeaders || {},
     };
   }
 
   /**
    * Get path to use for -G and -A modes. Defaults to $CWD/latest-run
-   * @param {Flags} flags
+   * @param {LH.ConfigSettings} settings
    * @return {string}
    */
-  static _getArtifactsPath(flags) {
+  static _getArtifactsPath({auditMode, gatherMode}) {
     // This enables usage like: -GA=./custom-folder
-    if (typeof flags.auditMode === 'string') return path.resolve(process.cwd(), flags.auditMode);
-    if (typeof flags.gatherMode === 'string') return path.resolve(process.cwd(), flags.gatherMode);
+    if (typeof auditMode === 'string') return path.resolve(process.cwd(), auditMode);
+    if (typeof gatherMode === 'string') return path.resolve(process.cwd(), gatherMode);
     return path.join(process.cwd(), 'latest-run');
   }
 }

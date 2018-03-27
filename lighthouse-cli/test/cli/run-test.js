@@ -46,6 +46,12 @@ describe('CLI run', function() {
   }).timeout(20 * 1000);
 });
 
+describe('flag coercing', () => {
+  it('should force to array', () => {
+    assert.deepStrictEqual(getFlags(`--only-audits foo chrome://version`).onlyAudits, ['foo']);
+  });
+});
+
 describe('Parsing --chrome-flags', () => {
   it('returns boolean flags that are true as a bare flag', () => {
     assert.deepStrictEqual(parseChromeFlags('--debug'), ['--debug']);

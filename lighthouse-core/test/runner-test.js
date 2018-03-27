@@ -40,11 +40,12 @@ describe('Runner', () => {
 
   describe('Gather Mode & Audit Mode', () => {
     const url = 'https://example.com';
-    const generateConfig = _ => new Config({
+    const generateConfig = settings => new Config({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
       audits: ['content-width'],
+      settings,
     });
     const artifactsPath = '.tmp/test_artifacts';
     const resolvedPath = path.resolve(process.cwd(), artifactsPath);
@@ -54,7 +55,7 @@ describe('Runner', () => {
     });
 
     it('-G gathers, quits, and doesn\'t run audits', () => {
-      const opts = {url, config: generateConfig(), driverMock, flags: {gatherMode: artifactsPath}};
+      const opts = {url, config: generateConfig({gatherMode: artifactsPath}), driverMock};
       return Runner.run(null, opts).then(_ => {
         assert.equal(loadArtifactsSpy.called, false, 'loadArtifacts was called');
 
@@ -73,7 +74,7 @@ describe('Runner', () => {
 
     // uses the files on disk from the -G test. ;)
     it('-A audits from saved artifacts and doesn\'t gather', () => {
-      const opts = {url, config: generateConfig(), driverMock, flags: {auditMode: artifactsPath}};
+      const opts = {url, config: generateConfig({auditMode: artifactsPath}), driverMock};
       return Runner.run(null, opts).then(_ => {
         assert.equal(loadArtifactsSpy.called, true, 'loadArtifacts was not called');
         assert.equal(gatherRunnerRunSpy.called, false, 'GatherRunner.run was called');
@@ -83,8 +84,8 @@ describe('Runner', () => {
     });
 
     it('-GA is a normal run but it saves artifacts to disk', () => {
-      const opts = {url, config: generateConfig(), driverMock,
-        flags: {auditMode: artifactsPath, gatherMode: artifactsPath}};
+      const settings = {auditMode: artifactsPath, gatherMode: artifactsPath};
+      const opts = {url, config: generateConfig(settings), driverMock};
       return Runner.run(null, opts).then(_ => {
         assert.equal(loadArtifactsSpy.called, false, 'loadArtifacts was called');
         assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');

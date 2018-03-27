@@ -4,13 +4,28 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import _Crdp from "../node_modules/vscode-chrome-debug-core/lib/crdp/crdp";
+import _Crdp from '../node_modules/vscode-chrome-debug-core/lib/crdp/crdp';
 
 declare global {
   module LH {
     export import Crdp = _Crdp;
 
-    export interface Flags {
+    interface SharedFlagsSettings {
+      maxWaitForLoad?: number;
+      blockedUrlPatterns?: string[];
+      additionalTraceCategories?: string[];
+      auditMode?: boolean | string;
+      gatherMode?: boolean | string;
+      disableStorageReset?: boolean;
+      disableDeviceEmulation?: boolean;
+      disableCpuThrottling?: boolean;
+      disableNetworkThrottling?: boolean;
+      onlyAudits?: string[];
+      onlyCategories?: string[];
+      skipAudits?: string[];
+    }
+
+    export interface Flags extends SharedFlagsSettings {
       _: string[];
       port: number;
       chromeFlags: string;
@@ -18,29 +33,28 @@ declare global {
       outputPath: string;
       saveAssets: boolean;
       view: boolean;
-      maxWaitForLoad?: number;
       logLevel: string;
       hostname: string;
-      blockedUrlPatterns: string[];
-      extraHeaders: string;
       enableErrorReporting: boolean;
       listAllAudits: boolean;
       listTraceCategories: boolean;
-      auditMode: boolean|string;
-      gatherMode: boolean|string;
       configPath?: string;
       perf: boolean;
       mixedContent: boolean;
       verbose: boolean;
       quiet: boolean;
-      disableDeviceEmulation?: boolean;
-      disableCpuThrottling?: boolean;
-      disableNetworkThrottling?: boolean;
+
+      extraHeaders?: string;
     }
 
     // TODO: type checking for Config
     export interface Config {
       passes: ConfigPass[];
+      settings: ConfigSettings;
+    }
+
+    export interface ConfigSettings extends SharedFlagsSettings {
+      extraHeaders?: Crdp.Network.Headers;
     }
 
     export interface ConfigPass {
@@ -105,7 +119,7 @@ declare global {
 
     export interface NetworkRequestTiming {
       connectStart: number;
-      connectEnd: number
+      connectEnd: number;
       sslStart: number;
       sslEnd: number;
       sendStart: number;

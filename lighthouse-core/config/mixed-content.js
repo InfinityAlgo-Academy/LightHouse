@@ -6,6 +6,7 @@
 'use strict';
 
 module.exports = {
+  settings: {},
   // This performs two passes:
   // (1) Gather the default resources requested by the page, and
   // (2) Re-load page but attempt to upgrade each request to HTTPS.
