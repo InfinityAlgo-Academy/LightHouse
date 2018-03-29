@@ -18,6 +18,7 @@
     "lighthouse-cli/**/*.js",
     "lighthouse-core/audits/audit.js",
     "lighthouse-core/lib/dependency-graph/**/*.js",
+    "lighthouse-core/lib/emulation.js",
     "lighthouse-core/gather/connections/**/*.js",
     "lighthouse-core/gather/gatherers/gatherer.js",
     "lighthouse-core/scripts/*.js",

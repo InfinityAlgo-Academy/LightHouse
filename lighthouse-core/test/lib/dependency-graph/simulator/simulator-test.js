@@ -61,7 +61,10 @@ describe('DependencyGraph/Simulator', () => {
       const cpuNode = new CpuNode(cpuTask({duration: 200}));
       cpuNode.addDependency(rootNode);
 
-      const simulator = new Simulator(rootNode, {serverResponseTimeByOrigin, cpuTaskMultiplier: 5});
+      const simulator = new Simulator(rootNode, {
+        serverResponseTimeByOrigin,
+        cpuSlowdownMultiplier: 5,
+      });
       const result = simulator.simulate();
       // should be 2 RTTs and 500ms for the server response time + 200 CPU
       assert.equal(result.timeInMs, 300 + 500 + 200);
@@ -99,7 +102,10 @@ describe('DependencyGraph/Simulator', () => {
       nodeA.addDependent(nodeC);
       nodeA.addDependent(nodeD);
 
-      const simulator = new Simulator(nodeA, {serverResponseTimeByOrigin, cpuTaskMultiplier: 5});
+      const simulator = new Simulator(nodeA, {
+        serverResponseTimeByOrigin,
+        cpuSlowdownMultiplier: 5,
+      });
       const result = simulator.simulate();
       // should be 800ms A, then 1000 ms total for B, C, D in serial
       assert.equal(result.timeInMs, 1800);
@@ -123,7 +129,10 @@ describe('DependencyGraph/Simulator', () => {
       nodeC.addDependent(nodeD);
       nodeC.addDependent(nodeF); // finishes 400 ms after D
 
-      const simulator = new Simulator(nodeA, {serverResponseTimeByOrigin, cpuTaskMultiplier: 5});
+      const simulator = new Simulator(nodeA, {
+        serverResponseTimeByOrigin,
+        cpuSlowdownMultiplier: 5,
+      });
       const result = simulator.simulate();
       // should be 800ms each for A, B, C, D, with F finishing 400 ms after D
       assert.equal(result.timeInMs, 3600);

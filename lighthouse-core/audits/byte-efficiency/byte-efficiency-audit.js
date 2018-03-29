@@ -137,7 +137,7 @@ class UnusedBytes extends Audit {
   static createAuditResult(result, graph) {
     const simulatorOptions = PredictivePerf.computeRTTAndServerResponseTime(graph);
     // TODO: calibrate multipliers, see https://github.com/GoogleChrome/lighthouse/issues/820
-    Object.assign(simulatorOptions, {cpuTaskMultiplier: 1, layoutTaskMultiplier: 1});
+    Object.assign(simulatorOptions, {cpuSlowdownMultiplier: 1, layoutTaskMultiplier: 1});
     const simulator = new LoadSimulator(graph, simulatorOptions);
 
     const debugString = result.debugString;

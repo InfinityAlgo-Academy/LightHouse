@@ -389,21 +389,18 @@ class Runner {
    * @return {!Object} runtime config
    */
   static getRuntimeConfig(settings) {
-    const emulationDesc = emulation.getEmulationDesc();
+    const emulationDesc = emulation.getEmulationDesc(settings);
     const environment = [
       {
         name: 'Device Emulation',
-        enabled: !settings.disableDeviceEmulation,
         description: emulationDesc['deviceEmulation'],
       },
       {
         name: 'Network Throttling',
-        enabled: !settings.disableNetworkThrottling,
         description: emulationDesc['networkThrottling'],
       },
       {
         name: 'CPU Throttling',
-        enabled: !settings.disableCpuThrottling,
         description: emulationDesc['cpuThrottling'],
       },
     ];

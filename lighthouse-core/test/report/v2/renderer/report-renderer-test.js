@@ -105,11 +105,9 @@ describe('ReportRenderer V2', () => {
       assert.equal(userAgent.textContent, sampleResults.userAgent, 'user agent populated');
 
       // Check runtime settings were populated.
-      const enables = header.querySelectorAll('.lh-env__enabled');
       const names = Array.from(header.querySelectorAll('.lh-env__name')).slice(1);
       const descriptions = header.querySelectorAll('.lh-env__description');
       sampleResults.runtimeConfig.environment.forEach((env, i) => {
-        assert.equal(enables[i].textContent, env.enabled ? 'Enabled' : 'Disabled');
         assert.equal(names[i].textContent, env.name);
         assert.equal(descriptions[i].textContent, env.description);
       });

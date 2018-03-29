@@ -69,8 +69,6 @@ class ReportRenderer {
       const item = this._dom.cloneTemplate('#tmpl-lh-env__items', env);
       this._dom.find('.lh-env__name', item).textContent = runtime.name;
       this._dom.find('.lh-env__description', item).textContent = runtime.description;
-      this._dom.find('.lh-env__enabled', item).textContent =
-          runtime.enabled ? 'Enabled' : 'Disabled';
       env.appendChild(item);
     });
 

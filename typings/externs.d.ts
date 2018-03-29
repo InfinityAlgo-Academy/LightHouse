@@ -10,6 +10,18 @@ declare global {
   module LH {
     export import Crdp = _Crdp;
 
+    interface ThrottlingSettings {
+      // simulation settings
+      rttMs?: number;
+      throughputKbps?: number;
+      // devtools settings
+      requestLatencyMs?: number;
+      downloadThroughputKbps?: number;
+      uploadThroughputKbps?: number;
+      // used by both
+      cpuSlowdownMultiplier?: number
+    }
+
     interface SharedFlagsSettings {
       maxWaitForLoad?: number;
       blockedUrlPatterns?: string[];
@@ -18,8 +30,8 @@ declare global {
       gatherMode?: boolean | string;
       disableStorageReset?: boolean;
       disableDeviceEmulation?: boolean;
-      disableCpuThrottling?: boolean;
-      disableNetworkThrottling?: boolean;
+      throttlingMethod?: 'devtools'|'simulate'|'provided';
+      throttling?: ThrottlingSettings;
       onlyAudits?: string[];
       onlyCategories?: string[];
       skipAudits?: string[];

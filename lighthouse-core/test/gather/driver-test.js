@@ -79,10 +79,13 @@ connection.sendCommand = function(command, params) {
     case 'Network.getResponseBody':
       return new Promise(res => setTimeout(res, MAX_WAIT_FOR_PROTOCOL + 20));
     case 'Page.enable':
+    case 'Network.enable':
     case 'Tracing.start':
     case 'ServiceWorker.enable':
     case 'ServiceWorker.disable':
     case 'Network.setExtraHTTPHeaders':
+    case 'Network.emulateNetworkConditions':
+    case 'Emulation.setCPUThrottlingRate':
       return Promise.resolve({});
     case 'Tracing.end':
       return Promise.reject(new Error('tracing not started'));
@@ -400,5 +403,89 @@ describe('Multiple tab check', () => {
     };
 
     return driverStub.assertNoSameOriginServiceWorkerClients(pageUrl);
+  });
+
+  describe('.goOnline', () => {
+    it('re-establishes previous throttling settings', async () => {
+      await driverStub.goOnline({
+        passConfig: {useThrottling: true},
+        settings: {
+          throttlingMethod: 'devtools',
+          throttling: {
+            requestLatencyMs: 500,
+            downloadThroughputKbps: 1000,
+            uploadThroughputKbps: 1000,
+          },
+        },
+      });
+
+      const emulateCommand = sendCommandParams
+        .find(item => item.command === 'Network.emulateNetworkConditions');
+      assert.ok(emulateCommand, 'did not call emulate network');
+      assert.deepStrictEqual(emulateCommand.params, {
+        offline: false,
+        latency: 500,
+        downloadThroughput: 1000 * 1024 / 8,
+        uploadThroughput: 1000 * 1024 / 8,
+      });
+    });
+
+    it('clears network emulation when throttling is not devtools', async () => {
+      await driverStub.goOnline({
+        passConfig: {useThrottling: true},
+        settings: {
+          throttlingMethod: 'provided',
+        },
+      });
+
+      const emulateCommand = sendCommandParams
+        .find(item => item.command === 'Network.emulateNetworkConditions');
+      assert.ok(emulateCommand, 'did not call emulate network');
+      assert.deepStrictEqual(emulateCommand.params, {
+        offline: false,
+        latency: 0,
+        downloadThroughput: 0,
+        uploadThroughput: 0,
+      });
+    });
+
+    it('clears network emulation when useThrottling is false', async () => {
+      await driverStub.goOnline({
+        passConfig: {useThrottling: false},
+        settings: {
+          throttlingMethod: 'devtools',
+          throttling: {
+            requestLatencyMs: 500,
+            downloadThroughputKbps: 1000,
+            uploadThroughputKbps: 1000,
+          },
+        },
+      });
+
+      const emulateCommand = sendCommandParams
+        .find(item => item.command === 'Network.emulateNetworkConditions');
+      assert.ok(emulateCommand, 'did not call emulate network');
+      assert.deepStrictEqual(emulateCommand.params, {
+        offline: false,
+        latency: 0,
+        downloadThroughput: 0,
+        uploadThroughput: 0,
+      });
+    });
+  });
+
+  describe('.goOffline', () => {
+    it('should send offline emulation', async () => {
+      await driverStub.goOffline();
+      const emulateCommand = sendCommandParams
+        .find(item => item.command === 'Network.emulateNetworkConditions');
+      assert.ok(emulateCommand, 'did not call emulate network');
+      assert.deepStrictEqual(emulateCommand.params, {
+        offline: true,
+        latency: 0,
+        downloadThroughput: 0,
+        uploadThroughput: 0,
+      });
+    });
   });
 });

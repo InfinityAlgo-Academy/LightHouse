@@ -82,12 +82,11 @@ sentryDelegate.init = function init(opts) {
     );
   }
 
-  const context = {
+  const context = Object.assign({
     url: opts.url,
     deviceEmulation: !opts.flags.disableDeviceEmulation,
-    networkThrottling: !opts.flags.disableNetworkThrottling,
-    cpuThrottling: !opts.flags.disableCpuThrottling,
-  };
+    throttlingMethod: opts.flags.throttlingMethod,
+  }, opts.flags.throttling);
 
   sentryDelegate.mergeContext({extra: Object.assign({}, environmentData.extra, context)});
   return context;
