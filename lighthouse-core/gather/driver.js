@@ -90,6 +90,7 @@ class Driver {
       // 'disabled-by-default-v8.cpu_profiler',
       // 'disabled-by-default-v8.cpu_profiler.hires',
       'disabled-by-default-devtools.screenshot',
+      'disabled-by-default-blink.feature_usage',
     ];
   }
 
