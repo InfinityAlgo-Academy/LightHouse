@@ -316,17 +316,29 @@ class Runner {
   }
 
   /**
+   * Returns list of computed gatherer names for external querying.
+   * @return {!Array<string>}
+   */
+  static getComputedGathererList() {
+    const filenamesToSkip = [
+      'computed-artifact.js', // the base class which other artifacts inherit
+      'metrics', // the sub folder that contains metric names
+    ];
+
+    const fileList = [
+      ...fs.readdirSync(path.join(__dirname, './gather/computed')),
+      ...fs.readdirSync(path.join(__dirname, './gather/computed/metrics')).map(f => `metrics/${f}`),
+    ];
+
+    return fileList.filter(f => /\.js$/.test(f) && !filenamesToSkip.includes(f)).sort();
+  }
+
+  /**
    * @return {!ComputedArtifacts}
    */
   static instantiateComputedArtifacts() {
     const computedArtifacts = {};
-    const filenamesToSkip = [
-      'computed-artifact.js', // the base class which other artifacts inherit
-    ];
-
-    require('fs').readdirSync(__dirname + '/gather/computed').forEach(function(filename) {
-      if (filenamesToSkip.includes(filename)) return;
-
+    Runner.getComputedGathererList().forEach(function(filename) {
       // Drop `.js` suffix to keep browserify import happy.
       filename = filename.replace(/\.js$/, '');
       const ArtifactClass = require('./gather/computed/' + filename);
@@ -334,6 +346,7 @@ class Runner {
       // define the request* function that will be exposed on `artifacts`
       computedArtifacts['request' + artifact.name] = artifact.request.bind(artifact);
     });
+
     return computedArtifacts;
   }
 

@@ -1,8 +1,6 @@
 // generated on 2016-03-19 using generator-chrome-extension 0.5.4
 
 'use strict';
-const fs = require('fs');
-const path = require('path');
 const del = require('del');
 const gutil = require('gulp-util');
 const runSequence = require('run-sequence');
@@ -35,9 +33,7 @@ const audits = LighthouseRunner.getAuditList()
 const gatherers = LighthouseRunner.getGathererList()
     .map(f => '../lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
 
-const computedArtifacts = fs.readdirSync(
-    path.join(__dirname, '../lighthouse-core/gather/computed/'))
-    .filter(f => /\.js$/.test(f))
+const computedArtifacts = LighthouseRunner.getComputedGathererList()
     .map(f => '../lighthouse-core/gather/computed/' + f.replace(/\.js$/, ''));
 
 gulp.task('extras', () => {

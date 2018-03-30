@@ -6,7 +6,8 @@
 'use strict';
 
 const Audit = require('../audit');
-const PredictivePerf = require('../predictive-perf');
+const ConsistentlyInteractive = require('../../gather/computed/metrics/lantern-consistently-interactive'); // eslint-disable-line max-len
+const NetworkAnalysis = require('../../gather/computed/network-analysis');
 const LoadSimulator = require('../../lib/dependency-graph/simulator/simulator.js');
 
 const KB_IN_BYTES = 1024;
@@ -120,8 +121,8 @@ class UnusedBytes extends Audit {
     });
 
     const savingsOnTTI = Math.max(
-      PredictivePerf.getLastLongTaskEndTime(simulationBeforeChanges.nodeTiming) -
-        PredictivePerf.getLastLongTaskEndTime(simulationAfterChanges.nodeTiming),
+      ConsistentlyInteractive.getLastLongTaskEndTime(simulationBeforeChanges.nodeTiming) -
+        ConsistentlyInteractive.getLastLongTaskEndTime(simulationAfterChanges.nodeTiming),
       0
     );
 
@@ -135,7 +136,11 @@ class UnusedBytes extends Audit {
    * @return {!AuditResult}
    */
   static createAuditResult(result, graph) {
-    const simulatorOptions = PredictivePerf.computeRTTAndServerResponseTime(graph);
+    const records = [];
+    graph.traverse(node => node.record && records.push(node.record));
+    const simulatorOptions = NetworkAnalysis.computeRTTAndServerResponseTime(records);
+    // TODO: use rtt/throughput from config.settings instead of defaults
+    delete simulatorOptions.rtt;
     // TODO: calibrate multipliers, see https://github.com/GoogleChrome/lighthouse/issues/820
     Object.assign(simulatorOptions, {cpuSlowdownMultiplier: 1, layoutTaskMultiplier: 1});
     const simulator = new LoadSimulator(graph, simulatorOptions);

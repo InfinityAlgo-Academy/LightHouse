@@ -90,7 +90,7 @@ function writeFile(filePath, output, outputMode) {
  * @param {!LH.Results} results
  * @param {string} mode
  * @param {string} path
- * @return {!Promise<!LH.Results>}
+ * @return {Promise<LH.Results>}
  */
 function write(results, mode, path) {
   return new Promise((resolve, reject) => {

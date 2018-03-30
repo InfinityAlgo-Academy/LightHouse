@@ -36,7 +36,7 @@ const NodeState = {
 class Simulator {
   /**
    * @param {Node} graph
-   * @param {SimulationOptions} [options]
+   * @param {LH.Gatherer.Simulation.Options} [options]
    */
   constructor(graph, options) {
     this._graph = graph;
@@ -75,7 +75,7 @@ class Simulator {
     const records = [];
     this._graph.getRootNode().traverse(node => {
       if (node.type === Node.TYPES.NETWORK) {
-        records.push((/** @type {NetworkNode} */ (node)).record);
+        records.push(/** @type {NetworkNode} */ (node).record);
       }
     });
 
@@ -105,7 +105,7 @@ class Simulator {
 
   /**
    * @param {Node} node
-   * @param {NodeTimingData} values
+   * @param {LH.Gatherer.Simulation.NodeTiming} values
    */
   _setTimingData(node, values) {
     const timingData = this._nodeTiming.get(node) || {};
@@ -175,7 +175,7 @@ class Simulator {
     // Start a network request if we're not at max requests and a connection is available
     const numberOfActiveRequests = this._numberInProgress(node.type);
     if (numberOfActiveRequests >= this._maximumConcurrentRequests) return;
-    const connection = this._connectionPool.acquire((/** @type {NetworkNode} */ (node)).record);
+    const connection = this._connectionPool.acquire(/** @type {NetworkNode} */ (node).record);
     if (!connection) return;
 
     this._markNodeAsInProgress(node, totalElapsedTime);
@@ -204,11 +204,11 @@ class Simulator {
   _estimateTimeRemaining(node) {
     if (node.type === Node.TYPES.CPU) {
       const timingData = this._nodeTiming.get(node);
-      const multiplier = (/** @type {CpuNode} */ (node)).didPerformLayout()
+      const multiplier = /** @type {CpuNode} */ (node).didPerformLayout()
         ? this._layoutTaskMultiplier
         : this._cpuSlowdownMultiplier;
       const totalDuration = Math.min(
-        Math.round((/** @type {CpuNode} */ (node)).event.dur / 1000 * multiplier),
+        Math.round(/** @type {CpuNode} */ (node).event.dur / 1000 * multiplier),
         DEFAULT_MAXIMUM_CPU_TASK_DURATION
       );
       const estimatedTimeElapsed = totalDuration - timingData.timeElapsed;
@@ -218,7 +218,7 @@ class Simulator {
 
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
-    const record = (/** @type {NetworkNode} */ (node)).record;
+    const record = /** @type {NetworkNode} */ (node).record;
     const timingData = this._nodeTiming.get(node);
     const connection = /** @type {TcpConnection} */ (this._connectionPool.acquire(record));
     const calculation = connection.simulateDownloadUntil(
@@ -262,7 +262,7 @@ class Simulator {
 
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
-    const record = (/** @type {NetworkNode} */ (node)).record;
+    const record = /** @type {NetworkNode} */ (node).record;
     const connection = /** @type {TcpConnection} */ (this._connectionPool.acquire(record));
     const calculation = connection.simulateDownloadUntil(
       record.transferSize - timingData.bytesDownloaded,
@@ -288,7 +288,7 @@ class Simulator {
 
   /**
    * Estimates the time taken to process all of the graph's nodes.
-   * @return {{timeInMs: number, nodeTiming: Map<Node, NodeTimingData>}}
+   * @return {LH.Gatherer.Simulation.Result}
    */
   simulate() {
     // initialize the necessary data containers
@@ -342,25 +342,3 @@ class Simulator {
 }
 
 module.exports = Simulator;
-
-/**
- * @typedef NodeTimingData
- * @property {number} [startTime]
- * @property {number} [endTime]
- * @property {number} [queuedTime]
- * @property {number} [estimatedTimeElapsed]
- * @property {number} [timeElapsed]
- * @property {number} [timeElapsedOvershoot]
- * @property {number} [bytesDownloaded]
- */
-
-/**
- * @typedef SimulationOptions
- * @property {number} [rtt]
- * @property {number} [throughput]
- * @property {number} [fallbackTTFB]
- * @property {number} [maximumConcurrentRequests]
- * @property {number} [cpuSlowdownMultiplier]
- * @property {number} [layoutTaskMultiplier]
- */
-

@@ -5,6 +5,7 @@
  */
 'use strict';
 
+// @ts-ignore
 const isEqual = require('lodash.isequal');
 
 /**
@@ -14,32 +15,49 @@ const isEqual = require('lodash.isequal');
  */
 module.exports = class ArbitraryEqualityMap {
   constructor() {
-    this._equalsFn = (a, b) => a === b;
+    this._equalsFn = /** @type {function(any,any):boolean} */ ((a, b) => a === b);
+    /** @type {Array<{key: string, value: *}>} */
     this._entries = [];
   }
 
   /**
-   * @param {function():boolean} equalsFn
+   * @param {function(*,*):boolean} equalsFn
    */
   setEqualityFn(equalsFn) {
     this._equalsFn = equalsFn;
   }
 
+  /**
+   * @param {string} key
+   * @return {boolean}
+   */
   has(key) {
     return this._findIndexOf(key) !== -1;
   }
 
+  /**
+   * @param {string} key
+   * @return {*}
+   */
   get(key) {
     const entry = this._entries[this._findIndexOf(key)];
     return entry && entry.value;
   }
 
+  /**
+   * @param {string} key
+   * @param {*} value
+   */
   set(key, value) {
     let index = this._findIndexOf(key);
     if (index === -1) index = this._entries.length;
     this._entries[index] = {key, value};
   }
 
+  /**
+   * @param {string} key
+   * @return {number}
+   */
   _findIndexOf(key) {
     for (let i = 0; i < this._entries.length; i++) {
       if (this._equalsFn(key, this._entries[i].key)) return i;
