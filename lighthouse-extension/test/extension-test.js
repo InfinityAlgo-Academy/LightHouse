@@ -18,6 +18,9 @@ const config = require(path.resolve(__dirname, '../../lighthouse-core/config/def
 const getAuditsOfCategory = category => config.categories[category].audits;
 
 describe('Lighthouse chrome extension', function() {
+  // eslint-disable-next-line no-console
+  console.log('\n✨ Be sure to have recently run this: yarn build-extension');
+
   const manifestLocation = path.join(lighthouseExtensionPath, 'manifest.json');
   const lighthouseCategories = Object.keys(config.categories);
   let browser;
