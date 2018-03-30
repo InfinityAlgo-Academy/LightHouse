@@ -70,7 +70,7 @@ Configuration:
   --audit-mode, -A               Process saved artifacts from disk                                                                         [boolean]
 
 Output:
-  --output       Reporter for the results, supports multiple values                        [choices: "json", "html", "domhtml"] [default: "domhtml"]
+  --output       Reporter for the results, supports multiple values                        [choices: "json", "html"] [default: "html"]
   --output-path  The file path to output the results. Use 'stdout' to write to stdout.
                  If using JSON output, default is stdout.
                  If using HTML output, default is a file in the working directory with a name based on the test URL and date.
