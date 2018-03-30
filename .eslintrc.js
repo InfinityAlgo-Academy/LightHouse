@@ -28,6 +28,7 @@ module.exports = {
         'CallExpression > ArrowFunctionExpression > :expression.body',
       ],
     }],
+    'no-floating-decimal': 2,
     'max-len': [2, 100, {
       ignoreComments: true,
       ignoreUrls: true,

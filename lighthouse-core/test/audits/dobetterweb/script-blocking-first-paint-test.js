@@ -39,7 +39,7 @@ describe('Script Block First Paint audit', () => {
         {
           tag: scriptDetails,
           transferSize: 50,
-          startTime: .95,
+          startTime: 0.95,
           endTime: 1,
         },
         {

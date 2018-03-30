@@ -371,7 +371,7 @@ class GatherRunner {
       });
     }, Promise.resolve()).then(_ => {
       // Fail the run if more than 50% of all artifacts failed due to page load failure.
-      if (pageLoadFailures.length > Object.keys(artifacts).length * .5) {
+      if (pageLoadFailures.length > Object.keys(artifacts).length * 0.5) {
         throw pageLoadFailures[0];
       }
 

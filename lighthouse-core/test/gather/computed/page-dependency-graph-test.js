@@ -17,7 +17,7 @@ const assert = require('assert');
 
 function createRequest(requestId, url, startTime = 0, _initiator = null, _resourceType = null) {
   startTime = startTime / 1000;
-  const endTime = startTime + .1;
+  const endTime = startTime + 0.1;
   return {requestId, url, startTime, endTime, _initiator, _resourceType};
 }
 
