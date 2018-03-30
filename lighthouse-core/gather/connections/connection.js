@@ -9,11 +9,17 @@ const EventEmitter = require('events').EventEmitter;
 const log = require('lighthouse-logger');
 const LHError = require('../../lib/errors');
 
+/**
+ * @typedef {LH.StrictEventEmitter<{'protocolevent': LH.Protocol.RawEventMessage}>} CrdpEventMessageEmitter
+ */
+
 class Connection {
   constructor() {
     this._lastCommandId = 0;
     /** @type {Map<number, {resolve: function(Promise<*>), method: string, options: {silent?: boolean}}>}*/
     this._callbacks = new Map();
+
+    /** @type {?CrdpEventMessageEmitter} */
     this._eventEmitter = new EventEmitter();
   }
 
@@ -31,14 +37,12 @@ class Connection {
     return Promise.reject(new Error('Not implemented'));
   }
 
-
   /**
    * @return {Promise<string>}
    */
   wsEndpoint() {
     return Promise.reject(new Error('Not implemented'));
   }
-
 
   /**
    * Call protocol methods
@@ -55,22 +59,6 @@ class Connection {
     return new Promise(resolve => {
       this._callbacks.set(id, {resolve, method, options: cmdOpts});
     });
-  }
-
-  /**
-   * Bind listeners for connection events
-   * @param {'notification'} eventName
-   * @param {(body: {method: string, params: object}) => void} cb
-   */
-  on(eventName, cb) {
-    if (eventName !== 'notification') {
-      throw new Error('Only supports "notification" events');
-    }
-
-    if (!this._eventEmitter) {
-      throw new Error('Attempted to add event listener after connection disposed.');
-    }
-    this._eventEmitter.on(eventName, cb);
   }
 
   /* eslint-disable no-unused-vars */
@@ -91,13 +79,15 @@ class Connection {
    * @protected
    */
   handleRawMessage(message) {
-    const object = JSON.parse(message);
-    // Remote debugging protocol is JSON RPC 2.0 compiant. In terms of that transport,
-    // responses to the commands carry "id" property, while notifications do not.
-    if (!object.id) {
+    const object = /** @type {LH.Protocol.RawMessage} */(JSON.parse(message));
+
+    // Responses to commands carry "id" property, while events do not.
+    if (!('id' in object)) {
+      // tsc doesn't currently narrow type in !in branch, so manually cast.
+      const eventMessage = /** @type {LH.Protocol.RawEventMessage} */(object);
       log.formatProtocol('<= event',
-          {method: object.method, params: object.params}, 'verbose');
-      this.emitNotification(object.method, object.params);
+          {method: eventMessage.method, params: eventMessage.params}, 'verbose');
+      this.emitProtocolEvent(eventMessage);
       return;
     }
 
@@ -126,15 +116,14 @@ class Connection {
   }
 
   /**
-   * @param {string} method
-   * @param {object=} params
-   * @protected
+   * @param {LH.Protocol.RawEventMessage} eventMessage
    */
-  emitNotification(method, params) {
+  emitProtocolEvent(eventMessage) {
     if (!this._eventEmitter) {
       throw new Error('Attempted to emit event after connection disposed.');
     }
-    this._eventEmitter.emit('notification', {method, params});
+
+    this._eventEmitter.emit('protocolevent', eventMessage);
   }
 
   /**
@@ -147,5 +136,21 @@ class Connection {
     }
   }
 }
+
+// Declared outside class body because function expressions can be typed via more expressive @type
+/**
+ * Bind listeners for connection events
+ * @type {CrdpEventMessageEmitter['on']}
+ */
+Connection.prototype.on = function on(eventName, cb) {
+  if (eventName !== 'protocolevent') {
+    throw new Error('Only supports "protocolevent" events');
+  }
+
+  if (!this._eventEmitter) {
+    throw new Error('Attempted to add event listener after connection disposed.');
+  }
+  this._eventEmitter.on(eventName, cb);
+};
 
 module.exports = Connection;

@@ -5,10 +5,15 @@
  */
 
 import _Crdp from '../node_modules/vscode-chrome-debug-core/lib/crdp/crdp';
+import _StrictEventEmitter from '../third-party/strict-event-emitter-types/index';
+import { EventEmitter } from 'events';
 
 declare global {
   module LH {
+    // re-export useful type modules under global LH module.
     export import Crdp = _Crdp;
+    export type StrictEventEmitter<TEventRecord, TEmitterType = EventEmitter, TEmitRecord = TEventRecord> =
+      _StrictEventEmitter<TEmitterType, TEventRecord, TEmitRecord>;
 
     interface ThrottlingSettings {
       // simulation settings

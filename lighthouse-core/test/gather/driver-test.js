@@ -187,7 +187,7 @@ describe('Browser Driver', () => {
         return Promise.resolve();
       }
       replayLog() {
-        redirectDevtoolsLog.forEach(msg => this.emit('notification', msg));
+        redirectDevtoolsLog.forEach(msg => this.emit('protocolevent', msg));
       }
       sendCommand(method) {
         const resolve = Promise.resolve();

@@ -30,7 +30,11 @@ class ExtensionConnection extends Connection {
   _onEvent(source, method, params) {
     // log events received
     log.log('<=', method, params);
-    this.emitNotification(method, params);
+
+    // Warning: type cast, assuming that debugger API is giving us a valid protocol event.
+    // Must be cast together since types of `params` and `method` come as a pair.
+    const eventMessage = /** @type {LH.Protocol.RawEventMessage} */({method, params});
+    this.emitProtocolEvent(eventMessage);
   }
 
   /**

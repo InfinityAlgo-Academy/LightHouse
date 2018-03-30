@@ -29,6 +29,10 @@ const DEFAULT_NETWORK_QUIET_THRESHOLD = 5000;
 // Controls how long to wait between longtasks before determining the CPU is idle, off by default
 const DEFAULT_CPU_QUIET_THRESHOLD = 0;
 
+/**
+ * @typedef {LH.StrictEventEmitter<LH.CrdpEvents>} CrdpEventEmitter
+ */
+
 class Driver {
   static get MAX_WAIT_FOR_FULLY_LOADED() {
     return 45 * 1000;
@@ -39,6 +43,10 @@ class Driver {
    */
   constructor(connection) {
     this._traceCategories = Driver.traceCategories;
+    /**
+     * An event emitter that enforces mapping between Crdp event names and payload types.
+     * @type {CrdpEventEmitter}
+     */
     this._eventEmitter = new EventEmitter();
     this._connection = connection;
     // currently only used by WPT where just Page and Network are needed
@@ -63,7 +71,7 @@ class Driver {
      */
     this._monitoredUrl = null;
 
-    connection.on('notification', event => {
+    connection.on('protocolevent', event => {
       this._devtoolsLog.record(event);
       if (this._networkStatusMonitor) {
         this._networkStatusMonitor.dispatch(event.method, event.params);
@@ -122,49 +130,6 @@ class Driver {
    */
   wsEndpoint() {
     return this._connection.wsEndpoint();
-  }
-
-  /**
-   * Bind listeners for protocol events
-   * @param {string} eventName
-   * @param {(event: any) => void} cb
-   */
-  on(eventName, cb) {
-    if (this._eventEmitter === null) {
-      throw new Error('connect() must be called before attempting to listen to events.');
-    }
-
-    // log event listeners being bound
-    log.formatProtocol('listen for event =>', {method: eventName}, 'verbose');
-    this._eventEmitter.on(eventName, cb);
-  }
-
-  /**
-   * Bind a one-time listener for protocol events. Listener is removed once it
-   * has been called.
-   * @param {string} eventName
-   * @param {(event: any) => void} cb
-   */
-  once(eventName, cb) {
-    if (this._eventEmitter === null) {
-      throw new Error('connect() must be called before attempting to listen to events.');
-    }
-    // log event listeners being bound
-    log.formatProtocol('listen once for event =>', {method: eventName}, 'verbose');
-    this._eventEmitter.once(eventName, cb);
-  }
-
-  /**
-   * Unbind event listeners
-   * @param {string} eventName
-   * @param {(event: any) => void} cb
-   */
-  off(eventName, cb) {
-    if (this._eventEmitter === null) {
-      throw new Error('connect() must be called before attempting to remove an event listener.');
-    }
-
-    this._eventEmitter.removeListener(eventName, cb);
   }
 
   /**
@@ -495,7 +460,7 @@ class Driver {
     const checkForQuietExpression = `(${pageFunctions.checkTimeSinceLastLongTask.toString()})()`;
     /**
      * @param {Driver} driver
-     * @param {(value: void) => void} resolve
+     * @param {() => void} resolve
      */
     function checkForQuiet(driver, resolve) {
       if (cancelled) return;
@@ -893,7 +858,7 @@ class Driver {
   }
 
   /**
-   * @param {{additionalTraceCategories: string=}=} settings
+   * @param {{additionalTraceCategories?: string}=} settings
    * @return {Promise<void>}
    */
   beginTrace(settings) {
@@ -946,8 +911,8 @@ class Driver {
   endTrace() {
     return new Promise((resolve, reject) => {
       // When the tracing has ended this will fire with a stream handle.
-      this.once('Tracing.tracingComplete', streamHandle => {
-        this._readTraceFromStream(streamHandle)
+      this.once('Tracing.tracingComplete', completeEvent => {
+        this._readTraceFromStream(completeEvent)
             .then(traceContents => resolve(traceContents), reject);
       });
 
@@ -957,15 +922,15 @@ class Driver {
   }
 
   /**
-   * @param {LH.Crdp.Tracing.TracingCompleteEvent} streamHandle
+   * @param {LH.Crdp.Tracing.TracingCompleteEvent} traceCompleteEvent
    */
-  _readTraceFromStream(streamHandle) {
+  _readTraceFromStream(traceCompleteEvent) {
     return new Promise((resolve, reject) => {
       let isEOF = false;
       const parser = new TraceParser();
 
       const readArguments = {
-        handle: streamHandle.stream,
+        handle: traceCompleteEvent.stream,
       };
 
       /**
@@ -1204,5 +1169,46 @@ class Driver {
     });
   }
 }
+
+// Declared outside class body because function expressions can be typed via more expressive @type
+/**
+ * Bind listeners for protocol events.
+ * @type {CrdpEventEmitter['on']}
+ */
+Driver.prototype.on = function on(eventName, cb) {
+  if (this._eventEmitter === null) {
+    throw new Error('connect() must be called before attempting to listen to events.');
+  }
+
+  // log event listeners being bound
+  log.formatProtocol('listen for event =>', {method: eventName}, 'verbose');
+  this._eventEmitter.on(eventName, cb);
+};
+
+/**
+ * Bind a one-time listener for protocol events. Listener is removed once it
+ * has been called.
+ * @type {CrdpEventEmitter['once']}
+ */
+Driver.prototype.once = function once(eventName, cb) {
+  if (this._eventEmitter === null) {
+    throw new Error('connect() must be called before attempting to listen to events.');
+  }
+  // log event listeners being bound
+  log.formatProtocol('listen once for event =>', {method: eventName}, 'verbose');
+  this._eventEmitter.once(eventName, cb);
+};
+
+/**
+ * Unbind event listener.
+ * @type {CrdpEventEmitter['removeListener']}
+ */
+Driver.prototype.off = function off(eventName, cb) {
+  if (this._eventEmitter === null) {
+    throw new Error('connect() must be called before attempting to remove an event listener.');
+  }
+
+  this._eventEmitter.removeListener(eventName, cb);
+};
 
 module.exports = Driver;
