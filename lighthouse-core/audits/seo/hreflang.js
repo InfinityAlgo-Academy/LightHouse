@@ -60,9 +60,9 @@ class Hreflang extends Audit {
       name: 'hreflang',
       description: 'Document has a valid `hreflang`',
       failureDescription: 'Document doesn\'t have a valid `hreflang`',
-      helpText: 'hreflang allows crawlers to discover alternate translations of the ' +
-        'page content. [Learn more]' +
-        '(https://support.google.com/webmasters/answer/189077).',
+      helpText: 'hreflang links tell search engines what version of a page they should ' +
+        'list in search results for a given language or region. [Learn more]' +
+        '(https://developers.google.com/web/tools/lighthouse/audits/hreflang).',
       requiredArtifacts: ['Hreflang'],
     };
   }
