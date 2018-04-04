@@ -162,25 +162,6 @@ class Driver {
   }
 
   /**
-   * Call protocol methods
-   * @param {string} method
-   * @param {object=} params
-   * @param {{silent: boolean}=} cmdOpts
-   * @return {Promise<any>}
-   */
-  sendCommand(method, params, cmdOpts) {
-    const domainCommand = /^(\w+)\.(enable|disable)$/.exec(method);
-    if (domainCommand) {
-      const enable = domainCommand[2] === 'enable';
-      if (!this._shouldToggleDomain(domainCommand[1], enable)) {
-        return Promise.resolve();
-      }
-    }
-
-    return this._connection.sendCommand(method, params, cmdOpts);
-  }
-
-  /**
    * Returns whether a domain is currently enabled.
    * @param {string} domain
    * @return {boolean}
@@ -276,7 +257,7 @@ class Driver {
   }
 
   /**
-   * @return {Promise<LH.Crdp.Page.GetAppManifestResponse>}
+   * @return {Promise<?LH.Crdp.Page.GetAppManifestResponse>}
    */
   getAppManifest() {
     return this.sendCommand('Page.getAppManifest')
@@ -656,11 +637,9 @@ class Driver {
       return this._isolatedExecutionContextId;
     }
 
-    /** @type {LH.Crdp.Page.GetResourceTreeResponse} */
     const resourceTreeResponse = await this.sendCommand('Page.getResourceTree');
     const mainFrameId = resourceTreeResponse.frameTree.frame.id;
 
-    /** @type {LH.Crdp.Page.CreateIsolatedWorldResponse} */
     const isolatedWorldResponse = await this.sendCommand('Page.createIsolatedWorld', {
       frameId: mainFrameId,
       worldName: 'lighthouse_isolated_context',
@@ -725,7 +704,6 @@ class Driver {
    * @return {Promise<string|null>} The property value, or null, if property not found
   */
   async getObjectProperty(objectId, propName) {
-    /** @type {LH.Crdp.Runtime.GetPropertiesResponse} */
     const propertiesResponse = await this.sendCommand('Runtime.getProperties', {
       objectId,
       accessorPropertiesOnly: true,
@@ -760,7 +738,7 @@ class Driver {
       this.sendCommand('Network.getResponseBody', {requestId}).then(result => {
         clearTimeout(asyncTimeout);
         // Ignoring result.base64Encoded, which indicates if body is already encoded
-        resolve(/** @type {LH.Crdp.Network.GetResponseBodyResponse} */(result).body);
+        resolve(result.body);
       }).catch(e => {
         clearTimeout(asyncTimeout);
         reject(e);
@@ -788,11 +766,9 @@ class Driver {
    * @return {Promise<Element|null>} The found element, or null, resolved in a promise
    */
   async querySelector(selector) {
-    /** @type {LH.Crdp.DOM.GetDocumentResponse} */
     const documentResponse = await this.sendCommand('DOM.getDocument');
     const rootNodeId = documentResponse.root.nodeId;
 
-    /** @type {LH.Crdp.DOM.QuerySelectorResponse} */
     const targetNode = await this.sendCommand('DOM.querySelector', {
       nodeId: rootNodeId,
       selector,
@@ -809,11 +785,9 @@ class Driver {
    * @return {Promise<Array<Element>>} The found elements, or [], resolved in a promise
    */
   async querySelectorAll(selector) {
-    /** @type {LH.Crdp.DOM.GetDocumentResponse} */
     const documentResponse = await this.sendCommand('DOM.getDocument');
     const rootNodeId = documentResponse.root.nodeId;
 
-    /** @type {LH.Crdp.DOM.QuerySelectorAllResponse} */
     const targetNodeList = await this.sendCommand('DOM.querySelectorAll', {
       nodeId: rootNodeId,
       selector,
@@ -850,7 +824,6 @@ class Driver {
    * @return {Promise<Array<LH.Crdp.DOM.Node>>} The found nodes, or [], resolved in a promise
    */
   async getNodesInDocument(pierce = true) {
-    /** @type {LH.Crdp.DOM.GetFlattenedDocumentResponse} */
     const flattenedDocument = await this.sendCommand('DOM.getFlattenedDocument',
         {depth: -1, pierce});
 
@@ -866,11 +839,6 @@ class Driver {
         settings.additionalTraceCategories.split(',')) || [];
     const traceCategories = this._traceCategories.concat(additionalCategories);
     const uniqueCategories = Array.from(new Set(traceCategories));
-    const tracingOpts = {
-      categories: uniqueCategories.join(','),
-      transferMode: 'ReturnAsStream',
-      options: 'sampling-frequency=10000', // 1000 is default and too slow.
-    };
 
     // Check any domains that could interfere with or add overhead to the trace.
     if (this.isDomainEnabled('Debugger')) {
@@ -888,7 +856,11 @@ class Driver {
       // ensure tracing is stopped before we can start
       // see https://github.com/GoogleChrome/lighthouse/issues/1091
       .then(_ => this.endTraceIfStarted())
-      .then(_ => this.sendCommand('Tracing.start', tracingOpts));
+      .then(_ => this.sendCommand('Tracing.start', {
+        categories: uniqueCategories.join(','),
+        transferMode: 'ReturnAsStream',
+        options: 'sampling-frequency=10000', // 1000 is default and too slow.
+      }));
   }
 
   /**
@@ -928,6 +900,10 @@ class Driver {
     return new Promise((resolve, reject) => {
       let isEOF = false;
       const parser = new TraceParser();
+
+      if (!traceCompleteEvent.stream) {
+        return reject('No streamHandle returned by traceCompleteEvent');
+      }
 
       const readArguments = {
         handle: traceCompleteEvent.stream,
@@ -1210,5 +1186,37 @@ Driver.prototype.off = function off(eventName, cb) {
 
   this._eventEmitter.removeListener(eventName, cb);
 };
+
+/** @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]['returnType']} CommandReturnTypes */
+
+/**
+ * Loosely-typed internal implementation of `Driver.sendCommand` which is
+ * strictly typed externally on exposed Driver interface. Type tightening occurs
+ * when assigned to `Driver.prototype` below and typed with
+ * `LH.Protocol.SendCommand`.
+ * Necessitated by `params` only being optional for some values of `method`.
+ * See https://github.com/Microsoft/TypeScript/issues/5453 for needed variadic
+ * primitive.
+ * @type {(this: Driver, method: any, params?: any, cmdOpts?: {silent?: boolean}) => Promise<CommandReturnTypes>}
+ */
+function _sendCommand(method, params = {}, cmdOpts = {}) {
+  const domainCommand = /^(\w+)\.(enable|disable)$/.exec(method);
+  if (domainCommand) {
+    const enable = domainCommand[2] === 'enable';
+    // eslint-disable-next-line no-invalid-this
+    if (!this._shouldToggleDomain(domainCommand[1], enable)) {
+      return Promise.resolve();
+    }
+  }
+
+  // eslint-disable-next-line no-invalid-this
+  return this._connection.sendCommand(method, params, cmdOpts);
+}
+
+/**
+ * Call protocol methods.
+ * @type {LH.Protocol.SendCommand}
+ */
+Driver.prototype.sendCommand = _sendCommand;
 
 module.exports = Driver;

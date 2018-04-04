@@ -39,7 +39,7 @@ class LighthouseError extends Error {
 
   /**
    * @param {string} method
-   * @param {{message: string, data: string|undefined}} protocolError
+   * @param {{message: string, data?: string|undefined}} protocolError
    * @return {!Error|LighthouseError}
    */
   static fromProtocolMessage(method, protocolError) {

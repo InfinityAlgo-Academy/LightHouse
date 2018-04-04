@@ -20,11 +20,14 @@ declare global {
 
     /**
      * Raw (over the wire) message format of all possible Crdp command responses.
-     * TODO(bckenny): add types for commands.
      */
     export type RawCommandMessage = {
       id: number;
-      [prop: string]: any;
+      result: CrdpCommands[keyof CrdpCommands]['returnType'];
+      error: {
+        code: number,
+        message: string
+      };
     }
 
     /**
@@ -32,6 +35,15 @@ declare global {
      * responses.
      */
     export type RawMessage = RawCommandMessage | RawEventMessage;
+
+    /**
+     * Strict overloaded typing for calling protocol methods with and without
+     * params object.
+     */
+    export type SendCommand = {
+      <C extends VoidParamsKeys>(method: C, params?: void, cmdOpts?: {silent?: boolean}): Promise<CrdpCommands[C]['returnType']>;
+      <C extends NonVoidParamsKeys>(method: C, params: CrdpCommands[C]['paramsType']): Promise<CrdpCommands[C]['returnType']>
+    }
   }
 }
 
@@ -49,6 +61,24 @@ type RawEventMessageRecord = {
     params: LH.CrdpEvents[K] extends void ? undefined: LH.CrdpEvents[K]
   };
 }
+
+/**
+ * An intermediate type that's the union of all command names where a `params`
+ * object is not required (represented by `void` when no params object or a
+ * union with `void` if all properties on params object are optional).
+ */
+type VoidParamsKeys = {
+  [P in keyof LH.CrdpCommands]: void extends LH.CrdpCommands[P]['paramsType'] ? P : never;
+}[keyof LH.CrdpCommands];
+
+/**
+ * An intermediate type that's the union of all command names that require a
+ * `params` object (no void in union). Note that `VoidParamsKeys` and
+ * `NonVoidParamsKeys` are not disjoint.
+ */
+type NonVoidParamsKeys = {
+  [P in keyof LH.CrdpCommands]: LH.CrdpCommands[P]['paramsType'] extends void ? never : P;
+}[keyof LH.CrdpCommands];
 
 // empty export to keep file a module
 export {}

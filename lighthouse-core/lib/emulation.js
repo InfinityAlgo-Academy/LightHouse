@@ -11,6 +11,7 @@ const NBSP = '\xa0';
 
 /**
  * Nexus 5X metrics adapted from emulated_devices/module.json
+ * @type {LH.Crdp.Emulation.SetDeviceMetricsOverrideRequest}
  */
 const NEXUS5X_EMULATION_METRICS = {
   mobile: true,
@@ -22,7 +23,6 @@ const NEXUS5X_EMULATION_METRICS = {
   positionY: 0,
   scale: 1,
   deviceScaleFactor: 2.625,
-  fitWindow: false,
   screenOrientation: {
     angle: 0,
     type: 'portraitPrimary',
@@ -86,7 +86,7 @@ function enableNexus5X(driver) {
     // Network.enable must be called for UA overriding to work
     driver.sendCommand('Network.enable'),
     driver.sendCommand('Network.setUserAgentOverride', NEXUS5X_USERAGENT),
-    driver.sendCommand('Emulation.setTouchEmulationEnabled', {
+    driver.sendCommand('Emulation.setEmitTouchEventsForMouse', {
       enabled: true,
       configuration: 'mobile',
     }),
@@ -145,7 +145,8 @@ function goOffline(driver) {
  * @return {Promise<void>}
  */
 function enableCPUThrottling(driver, throttlingSettings) {
-  const rate = throttlingSettings
+  // TODO: cpuSlowdownMultiplier should be a required property by this point
+  const rate = throttlingSettings && throttlingSettings.cpuSlowdownMultiplier !== undefined
     ? throttlingSettings.cpuSlowdownMultiplier
     : CPU_THROTTLE_METRICS.rate;
   return driver.sendCommand('Emulation.setCPUThrottlingRate', {rate});

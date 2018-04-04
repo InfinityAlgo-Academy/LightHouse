@@ -11,12 +11,14 @@ const LHError = require('../../lib/errors');
 
 /**
  * @typedef {LH.StrictEventEmitter<{'protocolevent': LH.Protocol.RawEventMessage}>} CrdpEventMessageEmitter
+ * @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]['paramsType']} CommandParamsTypes
+ * @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]['returnType']} CommandReturnTypes
  */
 
 class Connection {
   constructor() {
     this._lastCommandId = 0;
-    /** @type {Map<number, {resolve: function(Promise<*>), method: string, options: {silent?: boolean}}>}*/
+    /** @type {Map<number, {resolve: function(Promise<CommandReturnTypes>), method: keyof LH.CrdpCommands, options: {silent?: boolean}}>} */
     this._callbacks = new Map();
 
     /** @type {?CrdpEventMessageEmitter} */
@@ -42,23 +44,6 @@ class Connection {
    */
   wsEndpoint() {
     return Promise.reject(new Error('Not implemented'));
-  }
-
-  /**
-   * Call protocol methods
-   * @param {string} method
-   * @param {object=} params
-   * @param {{silent?: boolean}=} cmdOpts
-   * @return {Promise<*>}
-   */
-  sendCommand(method, params = {}, cmdOpts = {}) {
-    log.formatProtocol('method => browser', {method, params}, 'verbose');
-    const id = ++this._lastCommandId;
-    const message = JSON.stringify({id, method, params});
-    this.sendRawMessage(message);
-    return new Promise(resolve => {
-      this._callbacks.set(id, {resolve, method, options: cmdOpts});
-    });
   }
 
   /* eslint-disable no-unused-vars */
@@ -95,6 +80,8 @@ class Connection {
     if (callback) {
       this._callbacks.delete(object.id);
 
+      // @ts-ignore since can't convince compiler that callback.resolve's return
+      // type and object.result are matching since only linked by object.id.
       return callback.resolve(Promise.resolve().then(_ => {
         if (object.error) {
           const logLevel = callback.options.silent ? 'verbose' : 'error';
@@ -111,7 +98,7 @@ class Connection {
       // just log these occurrences.
       const error = object.error && object.error.message;
       log.formatProtocol(`disowned method <= browser ${error ? 'ERR' : 'OK'}`,
-          {method: object.method, params: error || object.result}, 'verbose');
+          {method: 'UNKNOWN', params: error || object.result}, 'verbose');
     }
   }
 
@@ -152,5 +139,29 @@ Connection.prototype.on = function on(eventName, cb) {
   }
   this._eventEmitter.on(eventName, cb);
 };
+
+/**
+ * Looser-typed internal implementation of `Connection.sendCommand` which is
+ * strictly typed externally on exposed Connection interface. See
+ * `Driver.sendCommand` for explanation.
+ * @type {(this: Connection, method: keyof LH.CrdpCommands, params?: CommandParamsTypes, cmdOpts?: {silent?: boolean}) => Promise<CommandReturnTypes>}
+ */
+function _sendCommand(method, params = {}, cmdOpts = {}) {
+  /* eslint-disable no-invalid-this */
+  log.formatProtocol('method => browser', {method, params}, 'verbose');
+  const id = ++this._lastCommandId;
+  const message = JSON.stringify({id, method, params});
+  this.sendRawMessage(message);
+  return new Promise(resolve => {
+    this._callbacks.set(id, {resolve, method, options: cmdOpts});
+  });
+  /* eslint-enable no-invalid-this */
+}
+
+/**
+ * Call protocol methods.
+ * @type {LH.Protocol.SendCommand}
+ */
+Connection.prototype.sendCommand = _sendCommand;
 
 module.exports = Connection;

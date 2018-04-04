@@ -108,42 +108,6 @@ class ExtensionConnection extends Connection {
   }
 
   /**
-   * Call protocol methods.
-   * @override
-   * @param {string} method
-   * @param {object=} params
-   * @return {Promise<*>}
-   */
-  sendCommand(method, params) {
-    return new Promise((resolve, reject) => {
-      log.formatProtocol('method => browser', {method, params}, 'verbose');
-      if (!this._tabId) {
-        log.error('ExtensionConnection', 'No tabId set for sendCommand');
-        return reject(new Error('No tabId set for sendCommand'));
-      }
-
-      chrome.debugger.sendCommand({tabId: this._tabId}, method, params, result => {
-        if (chrome.runtime.lastError) {
-          // The error from the extension has a `message` property that is the
-          // stringified version of the actual protocol error object.
-          const message = chrome.runtime.lastError.message || '';
-          let errorMessage;
-          try {
-            errorMessage = JSON.parse(message).message;
-          } catch (e) {}
-          errorMessage = errorMessage || message || 'Unknown debugger protocol error.';
-
-          log.formatProtocol('method <= browser ERR', {method}, 'error');
-          return reject(new Error(`Protocol error (${method}): ${errorMessage}`));
-        }
-
-        log.formatProtocol('method <= browser OK', {method, params: result}, 'verbose');
-        resolve(result);
-      });
-    });
-  }
-
-  /**
    * @return {Promise<chrome.tabs.Tab>}
    * @private
    */
@@ -198,5 +162,52 @@ class ExtensionConnection extends Connection {
     });
   }
 }
+
+/**
+ * @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]['paramsType']} CommandParamsTypes
+ * @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]['returnType']} CommandReturnTypes
+ */
+// Declared outside class body because function expressions can be typed via more expressive @type
+/**
+ * Looser-typed internal implementation of `ExtensionConnection.sendCommand`
+ * which is strictly typed externally on exposed ExtensionConnection interface.
+ * See `Driver.sendCommand` for explanation.
+ * @type {(this: ExtensionConnection, method: keyof LH.CrdpCommands, params?: CommandParamsTypes) => Promise<CommandReturnTypes>}
+ */
+function _sendCommand(method, params = {}) {
+  return new Promise((resolve, reject) => {
+    log.formatProtocol('method => browser', {method, params}, 'verbose');
+    if (!this._tabId) { // eslint-disable-line no-invalid-this
+      log.error('ExtensionConnection', 'No tabId set for sendCommand');
+      return reject(new Error('No tabId set for sendCommand'));
+    }
+
+    // eslint-disable-next-line no-invalid-this
+    chrome.debugger.sendCommand({tabId: this._tabId}, method, params, result => {
+      if (chrome.runtime.lastError) {
+        // The error from the extension has a `message` property that is the
+        // stringified version of the actual protocol error object.
+        const message = chrome.runtime.lastError.message || '';
+        let errorMessage;
+        try {
+          errorMessage = JSON.parse(message).message;
+        } catch (e) {}
+        errorMessage = errorMessage || message || 'Unknown debugger protocol error.';
+
+        log.formatProtocol('method <= browser ERR', {method}, 'error');
+        return reject(new Error(`Protocol error (${method}): ${errorMessage}`));
+      }
+
+      log.formatProtocol('method <= browser OK', {method, params: result}, 'verbose');
+      resolve(result);
+    });
+  });
+}
+
+/**
+ * Call protocol methods.
+ * @type {LH.Protocol.SendCommand}
+ */
+ExtensionConnection.prototype.sendCommand = _sendCommand;
 
 module.exports = ExtensionConnection;
