@@ -15,7 +15,7 @@ class NetworkRecords extends ComputedArtifact {
 
   /**
    * @param {!DevtoolsLog} devtoolsLog
-   * @return {!Array<!WebInspector.NetworkRequest>} networkRecords
+   * @return {Array<LH.WebInspector.NetworkRequest>} networkRecords
    */
   compute_(devtoolsLog) {
     return NetworkRecorder.recordsFromLogs(devtoolsLog);

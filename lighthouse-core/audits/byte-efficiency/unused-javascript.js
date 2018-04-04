@@ -62,7 +62,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
   /**
    * @param {!Array<{unusedLength: number, contentLength: number}>} wasteData
-   * @param {!WebInspector.NetworkRequest} networkRecord
+   * @param {LH.WebInspector.NetworkRequest} networkRecord
    * @return {{url: string, totalBytes: number, wastedBytes: number, wastedPercent: number}}
    */
   static mergeWaste(wasteData, networkRecord) {

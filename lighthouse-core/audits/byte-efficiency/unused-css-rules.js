@@ -29,7 +29,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
 
   /**
    * @param {!Array.<{header: {styleSheetId: string}}>} styles The output of the Styles gatherer.
-   * @param {!Array<WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
    * @return {!Object} A map of styleSheetId to stylesheet information.
    */
   static indexStylesheetsById(styles, networkRecords) {

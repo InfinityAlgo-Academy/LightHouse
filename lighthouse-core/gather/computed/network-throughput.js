@@ -17,7 +17,7 @@ class NetworkThroughput extends ComputedArtifact {
    * Excludes data URI, failed or otherwise incomplete, and cached requests.
    * Returns Infinity if there were no analyzable network records.
    *
-   * @param {!Array<!WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
    * @return {number}
    */
   static getThroughput(networkRecords) {

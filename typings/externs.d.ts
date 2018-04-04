@@ -103,50 +103,14 @@ declare global {
 
     export interface TraceEvent {
       name: string;
-      args: any;
+      args: {
+        data?: {
+          url?: string
+        };
+      };
       tid: number;
       ts: number;
       dur: number;
-    }
-
-    export interface NetworkRequest {
-      requestId: string;
-      connectionId: string;
-      connectionReused: boolean;
-
-      url: string;
-      protocol: string;
-      origin: string | null;
-      parsedURL: DevToolsParsedURL;
-
-      startTime: number;
-      endTime: number;
-
-      transferSize: number;
-
-      _initiator: NetworkRequestInitiator;
-      _timing: NetworkRequestTiming;
-      _resourceType: any;
-      priority(): 'VeryHigh' | 'High' | 'Medium' | 'Low';
-    }
-
-    export interface NetworkRequestInitiator {
-      type: 'script' | 'parser';
-    }
-
-    export interface NetworkRequestTiming {
-      connectStart: number;
-      connectEnd: number;
-      sslStart: number;
-      sslEnd: number;
-      sendStart: number;
-      sendEnd: number;
-      receiveHeadersEnd: number;
-    }
-
-    export interface DevToolsParsedURL {
-      scheme: string;
-      host: string;
     }
 
     export interface DevToolsJsonTarget {

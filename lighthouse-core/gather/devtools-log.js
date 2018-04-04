@@ -17,13 +17,13 @@ class DevtoolsLog {
   constructor(regexFilter) {
     this._filter = regexFilter;
 
-    /** @type {!Array<{method: string, params: !Object}>} */
+    /** @type {Array<LH.Protocol.RawEventMessage>} */
     this._messages = [];
     this._isRecording = false;
   }
 
   /**
-   * @return {!Array<{method: string, params: !Object}>}
+   * @return {Array<LH.Protocol.RawEventMessage>}
    */
   get messages() {
     return this._messages;
@@ -43,7 +43,7 @@ class DevtoolsLog {
 
   /**
    * Records a message if method matches filter and recording has been started.
-   * @param {{method: string, params: !Object}} message
+   * @param {LH.Protocol.RawEventMessage} message
    */
   record(message) {
     if (this._isRecording && (!this._filter || this._filter.test(message.method))) {

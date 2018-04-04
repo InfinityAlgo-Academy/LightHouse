@@ -71,7 +71,7 @@ class CPUNode extends Node {
   isEvaluateScriptFor(urls) {
     return this._childEvents.some(evt => {
       return evt.name === 'EvaluateScript' &&
-        evt.args.data &&
+        !!evt.args.data && !!evt.args.data.url &&
         urls.has(evt.args.data.url);
     });
   }

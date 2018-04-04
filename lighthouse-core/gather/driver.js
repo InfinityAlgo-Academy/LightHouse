@@ -74,7 +74,7 @@ class Driver {
     connection.on('protocolevent', event => {
       this._devtoolsLog.record(event);
       if (this._networkStatusMonitor) {
-        this._networkStatusMonitor.dispatch(event.method, event.params);
+        this._networkStatusMonitor.dispatch(event);
       }
       this._eventEmitter.emit(event.method, event.params);
     });
@@ -593,8 +593,8 @@ class Driver {
 
     // Update startingUrl if it's ever redirected.
     this._monitoredUrl = startingUrl;
-    // TODO(bckenny): WebInspector.NetworkRequest
-    this._networkStatusMonitor.on('requestloaded', redirectRequest => {
+    /** @param {LH.WebInspector.NetworkRequest} redirectRequest */
+    const requestLoadedListener = redirectRequest => {
       // Ignore if this is not a redirected request.
       if (!redirectRequest.redirectSource) {
         return;
@@ -603,7 +603,8 @@ class Driver {
       if (earlierRequest.url === this._monitoredUrl) {
         this._monitoredUrl = redirectRequest.url;
       }
-    });
+    };
+    this._networkStatusMonitor.on('requestloaded', requestLoadedListener);
 
     return this.sendCommand('Network.enable');
   }
@@ -942,7 +943,7 @@ class Driver {
 
   /**
    * Stop recording to devtoolsLog and return log contents.
-   * @return {Array<{method: string, params: (Object<string, *>|undefined)}>}
+   * @return {Array<LH.Protocol.RawEventMessage>}
    */
   endDevtoolsLog() {
     this._devtoolsLog.endRecording();

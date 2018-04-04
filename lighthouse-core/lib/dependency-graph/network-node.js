@@ -10,7 +10,7 @@ const WebInspector = require('../web-inspector');
 
 class NetworkNode extends Node {
   /**
-   * @param {LH.NetworkRequest} networkRecord
+   * @param {LH.WebInspector.NetworkRequest} networkRecord
    */
   constructor(networkRecord) {
     super(networkRecord.requestId);
@@ -39,7 +39,7 @@ class NetworkNode extends Node {
   }
 
   /**
-   * @return {LH.NetworkRequest}
+   * @return {LH.WebInspector.NetworkRequest}
    */
   get record() {
     // Ensure that the record has an origin value

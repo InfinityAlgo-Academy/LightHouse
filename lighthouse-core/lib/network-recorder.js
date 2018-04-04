@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-// @ts-nocheck
 'use strict';
 
 const NetworkManager = require('./web-inspector').NetworkManager;
@@ -12,10 +11,12 @@ const log = require('lighthouse-logger');
 
 const IGNORED_NETWORK_SCHEMES = ['data', 'ws'];
 
+/** @typedef {'requestloaded'|'network-2-idle'|'networkidle'|'networkbusy'|'network-2-busy'} NetworkRecorderEvent */
+
 class NetworkRecorder extends EventEmitter {
   /**
    * Creates an instance of NetworkRecorder.
-   * @param {!Array} recordArray
+   * @param {Array<LH.WebInspector.NetworkRequest>} recordArray
    */
   constructor(recordArray) {
     super();
@@ -33,6 +34,22 @@ class NetworkRecorder extends EventEmitter {
     );
   }
 
+  /**
+   * @param {NetworkRecorderEvent} event
+   * @param {*} listener
+   */
+  on(event, listener) {
+    return super.on(event, listener);
+  }
+
+  /**
+   * @param {NetworkRecorderEvent} event
+   * @param {*} listener
+   */
+  once(event, listener) {
+    return super.on(event, listener);
+  }
+
   get EventTypes() {
     return NetworkManager.Events;
   }
@@ -45,6 +62,9 @@ class NetworkRecorder extends EventEmitter {
     return !!this._getActiveIdlePeriod(2);
   }
 
+  /**
+   * @param {number} allowedRequests
+   */
   _getActiveIdlePeriod(allowedRequests) {
     const quietPeriods = NetworkRecorder.findNetworkQuietPeriods(this._records, allowedRequests);
     return quietPeriods.find(period => !Number.isFinite(period.end));
@@ -72,13 +92,14 @@ class NetworkRecorder extends EventEmitter {
   /**
    * Finds all time periods where the number of inflight requests is less than or equal to the
    * number of allowed concurrent requests.
-   * @param {!Array<!WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
    * @param {number} allowedConcurrentRequests
    * @param {number=} endTime
-   * @return {!Array<{start: number, end: number}>}
+   * @return {Array<{start: number, end: number}>}
    */
   static findNetworkQuietPeriods(networkRecords, allowedConcurrentRequests, endTime = Infinity) {
     // First collect the timestamps of when requests start and end
+    /** @type {Array<{time: number, isStart: boolean}>} */
     let timeBoundaries = [];
     networkRecords.forEach(record => {
       const scheme = record.parsedURL && record.parsedURL.scheme;
@@ -99,6 +120,7 @@ class NetworkRecorder extends EventEmitter {
 
     let numInflightRequests = 0;
     let quietPeriodStart = 0;
+    /** @type {Array<{start: number, end: number}>} */
     const quietPeriods = [];
     timeBoundaries.forEach(boundary => {
       if (boundary.isStart) {
@@ -127,6 +149,7 @@ class NetworkRecorder extends EventEmitter {
   /**
    * Listener for the DevTools SDK NetworkManager's RequestStarted event, which includes both
    * web socket and normal request creation.
+   * @param {{data: LH.WebInspector.NetworkRequest}} request
    * @private
    */
   onRequestStarted(request) {
@@ -137,7 +160,7 @@ class NetworkRecorder extends EventEmitter {
   /**
    * Listener for the DevTools SDK NetworkManager's RequestFinished event, which includes
    * request finish, failure, and redirect, as well as the closing of web sockets.
-   * @param {!WebInspector.NetworkRequest} request
+   * @param {{data: LH.WebInspector.NetworkRequest}} request
    * @private
    */
   onRequestFinished(request) {
@@ -149,6 +172,9 @@ class NetworkRecorder extends EventEmitter {
   // There are a few differences between the debugging protocol naming and
   // the parameter naming used in NetworkManager. These are noted below.
 
+  /**
+   * @param {LH.Crdp.Network.RequestWillBeSentEvent} data
+   */
   onRequestWillBeSent(data) {
     // NOTE: data.timestamp -> time, data.type -> resourceType
     this.networkManager._dispatcher.requestWillBeSent(data.requestId,
@@ -157,28 +183,43 @@ class NetworkRecorder extends EventEmitter {
         data.type);
   }
 
+  /**
+   * @param {LH.Crdp.Network.RequestServedFromCacheEvent} data
+   */
   onRequestServedFromCache(data) {
     this.networkManager._dispatcher.requestServedFromCache(data.requestId);
   }
 
+  /**
+   * @param {LH.Crdp.Network.ResponseReceivedEvent} data
+   */
   onResponseReceived(data) {
     // NOTE: data.timestamp -> time, data.type -> resourceType
     this.networkManager._dispatcher.responseReceived(data.requestId,
         data.frameId, data.loaderId, data.timestamp, data.type, data.response);
   }
 
+  /**
+   * @param {LH.Crdp.Network.DataReceivedEvent} data
+   */
   onDataReceived(data) {
     // NOTE: data.timestamp -> time
     this.networkManager._dispatcher.dataReceived(data.requestId, data.timestamp,
         data.dataLength, data.encodedDataLength);
   }
 
+  /**
+   * @param {LH.Crdp.Network.LoadingFinishedEvent} data
+   */
   onLoadingFinished(data) {
     // NOTE: data.timestamp -> finishTime
     this.networkManager._dispatcher.loadingFinished(data.requestId,
         data.timestamp, data.encodedDataLength);
   }
 
+  /**
+   * @param {LH.Crdp.Network.LoadingFailedEvent} data
+   */
   onLoadingFailed(data) {
     // NOTE: data.timestamp -> time, data.type -> resourceType,
     // data.errorText -> localizedDescription
@@ -187,6 +228,9 @@ class NetworkRecorder extends EventEmitter {
         data.blockedReason);
   }
 
+  /**
+   * @param {LH.Crdp.Network.ResourceChangedPriorityEvent} data
+   */
   onResourceChangedPriority(data) {
     this.networkManager._dispatcher.resourceChangedPriority(data.requestId,
         data.newPriority, data.timestamp);
@@ -194,36 +238,36 @@ class NetworkRecorder extends EventEmitter {
 
   /**
    * Routes network events to their handlers, so we can construct networkRecords
-   * @param {!string} method
-   * @param {!Object<string, *>=} params
+   * @param {LH.Protocol.RawEventMessage} event
    */
-  dispatch(method, params) {
-    if (!method.startsWith('Network.')) {
+  dispatch(event) {
+    if (!event.method.startsWith('Network.')) {
       return;
     }
 
-    switch (method) {
-      case 'Network.requestWillBeSent': return this.onRequestWillBeSent(params);
-      case 'Network.requestServedFromCache': return this.onRequestServedFromCache(params);
-      case 'Network.responseReceived': return this.onResponseReceived(params);
-      case 'Network.dataReceived': return this.onDataReceived(params);
-      case 'Network.loadingFinished': return this.onLoadingFinished(params);
-      case 'Network.loadingFailed': return this.onLoadingFailed(params);
-      case 'Network.resourceChangedPriority': return this.onResourceChangedPriority(params);
+    switch (event.method) {
+      case 'Network.requestWillBeSent': return this.onRequestWillBeSent(event.params);
+      case 'Network.requestServedFromCache': return this.onRequestServedFromCache(event.params);
+      case 'Network.responseReceived': return this.onResponseReceived(event.params);
+      case 'Network.dataReceived': return this.onDataReceived(event.params);
+      case 'Network.loadingFinished': return this.onLoadingFinished(event.params);
+      case 'Network.loadingFailed': return this.onLoadingFailed(event.params);
+      case 'Network.resourceChangedPriority': return this.onResourceChangedPriority(event.params);
       default: return;
     }
   }
 
   /**
    * Construct network records from a log of devtools protocol messages.
-   * @param {!DevtoolsLog} devtoolsLog
-   * @return {!Array<!WebInspector.NetworkRequest>}
+   * @param {Array<LH.Protocol.RawEventMessage>} devtoolsLog
+   * @return {Array<LH.WebInspector.NetworkRequest>}
    */
   static recordsFromLogs(devtoolsLog) {
+    /** @type {Array<LH.WebInspector.NetworkRequest>} */
     const records = [];
     const nr = new NetworkRecorder(records);
     devtoolsLog.forEach(message => {
-      nr.dispatch(message.method, message.params);
+      nr.dispatch(message);
     });
     return records;
   }

@@ -18,8 +18,8 @@ declare global {
     }
 
     export interface LoadData {
-      networkRecords: Array<void>;
-      devtoolsLog: Array<void>;
+      networkRecords: Array<WebInspector.NetworkRequest>;
+      devtoolsLog: Array<Protocol.RawEventMessage>;
       trace: {traceEvents: Array<TraceEvent>};
     }
 

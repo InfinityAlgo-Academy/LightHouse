@@ -19,7 +19,7 @@ class MainResource extends ComputedArtifact {
   /**
    * @param {!DevtoolsLog} devtoolsLog
    * @param {!ComputedArtifacts} artifacts
-   * @return {!WebInspector.NetworkRequest}
+   * @return {LH.WebInspector.NetworkRequest}
    */
   compute_(devtoolsLog, artifacts) {
     return artifacts.requestNetworkRecords(devtoolsLog)

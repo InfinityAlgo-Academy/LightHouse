@@ -13,7 +13,7 @@ const TLS_SCHEMES = ['https', 'wss'];
 
 module.exports = class ConnectionPool {
   /**
-   * @param {LH.NetworkRequest[]} records
+   * @param {LH.WebInspector.NetworkRequest[]} records
    * @param {Object=} options
    */
   constructor(records, options) {
@@ -34,7 +34,7 @@ module.exports = class ConnectionPool {
     this._records = records;
     /** @type {Map<string, TcpConnection[]>} */
     this._connectionsByOrigin = new Map();
-    /** @type {Map<LH.NetworkRequest, TcpConnection>} */
+    /** @type {Map<LH.WebInspector.NetworkRequest, TcpConnection>} */
     this._connectionsByRecord = new Map();
     this._connectionsInUse = new Set();
     this._connectionReusedByRequestId = NetworkAnalyzer.estimateIfConnectionWasReused(records, {
@@ -87,7 +87,7 @@ module.exports = class ConnectionPool {
   }
 
   /**
-   * @param {LH.NetworkRequest} record
+   * @param {LH.WebInspector.NetworkRequest} record
    * @return {?TcpConnection}
    */
   acquire(record) {
@@ -112,7 +112,7 @@ module.exports = class ConnectionPool {
   }
 
   /**
-   * @param {LH.NetworkRequest} record
+   * @param {LH.WebInspector.NetworkRequest} record
    */
   release(record) {
     const connection = this._connectionsByRecord.get(record);

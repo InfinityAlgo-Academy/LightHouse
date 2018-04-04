@@ -93,7 +93,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
 
   /**
    * @param {{content: string, header: {sourceURL: string}}} stylesheet
-   * @param {?WebInspector.NetworkRequest} networkRecord
+   * @param {?LH.WebInspector.NetworkRequest} networkRecord
    * @param {string} pageUrl
    * @return {{minifiedLength: number, contentLength: number}}
    */

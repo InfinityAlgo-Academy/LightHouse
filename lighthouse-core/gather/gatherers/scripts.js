@@ -14,7 +14,7 @@ const WebInspector = require('../../lib/web-inspector');
 class Scripts extends Gatherer {
   /**
    * @param {{driver: !Driver}} options
-   * @param {{networkRecords: !Array<WebInspector.NetworkRequest}} traceData
+   * @param {{networkRecords: Array<LH.WebInspector.NetworkRequest}} traceData
    * @return {!Promise<!Map<string, string>>}
    */
   afterPass(options, traceData) {

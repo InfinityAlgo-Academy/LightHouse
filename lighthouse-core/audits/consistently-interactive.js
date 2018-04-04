@@ -44,7 +44,7 @@ class ConsistentlyInteractiveMetric extends Audit {
   /**
    * Finds all time periods where the number of inflight requests is less than or equal to the
    * number of allowed concurrent requests (2).
-   * @param {!Array<!WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
    * @param {{timestamps: {traceEnd: number}}} traceOfTab
    * @return {!Array<!TimePeriod>}
    */
@@ -95,7 +95,7 @@ class ConsistentlyInteractiveMetric extends Audit {
   /**
    * Finds the first time period where a network quiet period and a CPU quiet period overlap.
    * @param {!Array<!TimePeriod>} longTasks
-   * @param {!Array<!WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
    * @param {{timestamps: {navigationStart: number, firstMeaningfulPaint: number,
    *    traceEnd: number}}} traceOfTab
    * @return {{cpuQuietPeriod: !TimePeriod, networkQuietPeriod: !TimePeriod,

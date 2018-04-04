@@ -71,7 +71,7 @@ class Simulator {
    *
    */
   _initializeConnectionPool() {
-    /** @type {LH.NetworkRequest[]} */
+    /** @type {LH.WebInspector.NetworkRequest[]} */
     const records = [];
     this._graph.getRootNode().traverse(node => {
       if (node.type === Node.TYPES.NETWORK) {

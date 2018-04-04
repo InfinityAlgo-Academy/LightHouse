@@ -16,8 +16,8 @@ class NetworkAnalyzer {
   }
 
   /**
-   * @param {LH.NetworkRequest[]} records
-   * @return {Map<string, LH.NetworkRequest[]>}
+   * @param {LH.WebInspector.NetworkRequest[]} records
+   * @return {Map<string, LH.WebInspector.NetworkRequest[]>}
    */
   static groupByOrigin(records) {
     const grouped = new Map();
@@ -62,7 +62,7 @@ class NetworkAnalyzer {
   }
 
   /**
-   * @param {LH.NetworkRequest[]} records
+   * @param {LH.WebInspector.NetworkRequest[]} records
    * @param {function(any):any} iteratee
    * @return {Map<string, number[]>}
    */
@@ -100,7 +100,7 @@ class NetworkAnalyzer {
    * Estimates the observed RTT to each origin based on how long the TCP handshake took.
    * This is the most accurate and preferred method of measurement when the data is available.
    *
-   * @param {LH.NetworkRequest[]} records
+   * @param {LH.WebInspector.NetworkRequest[]} records
    * @return {Map<string, number[]>}
    */
   static _estimateRTTByOriginViaTCPTiming(records) {
@@ -122,7 +122,7 @@ class NetworkAnalyzer {
    * NOTE: this will tend to overestimate the actual RTT quite significantly as the download can be
    * slow for other reasons as well such as bandwidth constraints.
    *
-   * @param {LH.NetworkRequest[]} records
+   * @param {LH.WebInspector.NetworkRequest[]} records
    * @return {Map<string, number[]>}
    */
   static _estimateRTTByOriginViaDownloadTiming(records) {
@@ -150,7 +150,7 @@ class NetworkAnalyzer {
    * NOTE: this will tend to overestimate the actual RTT as the request can be delayed for other
    * reasons as well such as DNS lookup.
    *
-   * @param {LH.NetworkRequest[]} records
+   * @param {LH.WebInspector.NetworkRequest[]} records
    * @return {Map<string, number[]>}
    */
   static _estimateRTTByOriginViaSendStartTiming(records) {
@@ -169,7 +169,7 @@ class NetworkAnalyzer {
   /**
    * Given the RTT to each origin, estimates the observed server response times.
    *
-   * @param {LH.NetworkRequest[]} records
+   * @param {LH.WebInspector.NetworkRequest[]} records
    * @param {Map<string, number>} rttByOrigin
    * @return {Map<string, number[]>}
    */
@@ -186,7 +186,7 @@ class NetworkAnalyzer {
   }
 
   /**
-   * @param {LH.NetworkRequest[]} records
+   * @param {LH.WebInspector.NetworkRequest[]} records
    * @return {boolean}
    */
   static canTrustConnectionInformation(records) {
@@ -206,7 +206,7 @@ class NetworkAnalyzer {
    * Returns a map of requestId -> connectionReused, estimating the information if the information
    * available in the records themselves appears untrustworthy.
    *
-   * @param {LH.NetworkRequest[]} records
+   * @param {LH.WebInspector.NetworkRequest[]} records
    * @param {object} [options]
    * @return {Map<string, boolean>}
    */
@@ -251,7 +251,7 @@ class NetworkAnalyzer {
    * Attempts to use the most accurate information first and falls back to coarser estimates when it
    * is unavailable.
    *
-   * @param {LH.NetworkRequest[]} records
+   * @param {LH.WebInspector.NetworkRequest[]} records
    * @param {object} [options]
    * @return {Map<string, !NetworkAnalyzer.Summary>}
    */
@@ -296,7 +296,7 @@ class NetworkAnalyzer {
    * Estimates the server response time of each origin. RTT times can be passed in or will be
    * estimated automatically if not provided.
    *
-   * @param {LH.NetworkRequest[]} records
+   * @param {LH.WebInspector.NetworkRequest[]} records
    * @param {Object=} options
    * @return {Map<string, !NetworkAnalyzer.Summary>}
    */

@@ -19,7 +19,7 @@ class CriticalRequestChains extends ComputedArtifact {
    * It's imperfect, but there is not a higher-fidelity signal available yet.
    * @see https://docs.google.com/document/d/1bCDuq9H1ih9iNjgzyAL0gpwNFiEP4TZS-YLRp_RuMlc
    * @param {any} request
-   * @param {!WebInspector.NetworkRequest} mainResource
+   * @param {LH.WebInspector.NetworkRequest} mainResource
    */
   static isCritical(request, mainResource) {
     assert.ok(mainResource, 'mainResource not provided');

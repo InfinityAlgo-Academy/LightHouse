@@ -23,7 +23,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {!WebInspector.NetworkRequest} record
+   * @param {LH.WebInspector.NetworkRequest} record
    * @return {!Array<string>}
    */
   static getNetworkInitiators(record) {
@@ -38,7 +38,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {!Array<!WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
    * @return {!NetworkNodeOutput}
    */
   static getNetworkNodeOutput(networkRecords) {
@@ -230,7 +230,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
 
   /**
    * @param {!TraceOfTabArtifact} traceOfTab
-   * @param {!Array<!WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
    * @return {!Node}
    */
   static createGraph(traceOfTab, networkRecords) {
