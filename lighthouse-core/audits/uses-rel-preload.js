@@ -22,7 +22,7 @@ class UsesRelPreloadAudit extends Audit {
       description: 'Preload key requests',
       informative: true,
       helpText: 'Consider using <link rel=preload> to prioritize fetching late-discovered ' +
-        'resources sooner [Learn more](https://developers.google.com/web/updates/2016/03/link-rel-preload).',
+        'resources sooner. [Learn more](https://developers.google.com/web/updates/2016/03/link-rel-preload).',
       requiredArtifacts: ['devtoolsLogs', 'traces'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };

@@ -1007,7 +1007,7 @@
       "scoreDisplayMode": "numeric",
       "name": "mainthread-work-breakdown",
       "description": "Minimizes main thread work",
-      "helpText": "Consider reducing the time spent parsing, compiling and executing JS.You may find delivering smaller JS payloads helps with this.",
+      "helpText": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this.",
       "details": {
         "type": "table",
         "headings": [
@@ -1187,7 +1187,7 @@
       "informative": true,
       "name": "uses-rel-preload",
       "description": "Preload key requests",
-      "helpText": "Consider using <link rel=preload> to prioritize fetching late-discovered resources sooner [Learn more](https://developers.google.com/web/updates/2016/03/link-rel-preload).",
+      "helpText": "Consider using <link rel=preload> to prioritize fetching late-discovered resources sooner. [Learn more](https://developers.google.com/web/updates/2016/03/link-rel-preload).",
       "details": {
         "type": "table",
         "headings": [],
@@ -2010,7 +2010,7 @@
       "scoreDisplayMode": "binary",
       "name": "image-alt",
       "description": "Image elements do not have `[alt]` attributes",
-      "helpText": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute.[Learn more](https://dequeuniversity.com/rules/axe/2.2/image-alt?application=lighthouse).",
+      "helpText": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more](https://dequeuniversity.com/rules/axe/2.2/image-alt?application=lighthouse).",
       "details": {
         "type": "table",
         "headings": [
@@ -2963,7 +2963,7 @@
       "informative": true,
       "name": "unused-css-rules",
       "description": "Unused CSS rules",
-      "helpText": "Remove unused rules from stylesheets to reduce unnecessary bytes consumed by network activity. [Learn more](https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery)",
+      "helpText": "Remove unused rules from stylesheets to reduce unnecessary bytes consumed by network activity. [Learn more](https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery).",
       "details": {
         "type": "table",
         "headings": [],
@@ -4081,7 +4081,7 @@
       "scoreDisplayMode": "binary",
       "name": "password-inputs-can-be-pasted-into",
       "description": "Prevents users to paste into password fields",
-      "helpText": "Preventing password pasting undermines good security policy. [Learn more](https://www.ncsc.gov.uk/blog-post/let-them-paste-passwords)",
+      "helpText": "Preventing password pasting undermines good security policy. [Learn more](https://www.ncsc.gov.uk/blog-post/let-them-paste-passwords).",
       "details": {
         "type": "table",
         "headings": [

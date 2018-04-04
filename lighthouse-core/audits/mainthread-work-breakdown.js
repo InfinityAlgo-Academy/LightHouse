@@ -31,7 +31,7 @@ class MainThreadWorkBreakdown extends Audit {
       description: 'Minimizes main thread work',
       failureDescription: 'Has significant main thread work',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      helpText: 'Consider reducing the time spent parsing, compiling and executing JS.' +
+      helpText: 'Consider reducing the time spent parsing, compiling and executing JS. ' +
         'You may find delivering smaller JS payloads helps with this.',
       requiredArtifacts: ['traces'],
     };
