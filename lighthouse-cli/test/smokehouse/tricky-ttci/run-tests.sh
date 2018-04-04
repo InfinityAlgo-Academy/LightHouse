@@ -4,7 +4,7 @@ node lighthouse-cli/test/fixtures/static-server.js &
 
 sleep 0.5s
 
-config="lighthouse-core/config/default.js"
+config="lighthouse-core/config/default-config.js"
 expectations="lighthouse-cli/test/smokehouse/tricky-ttci/expectations.js"
 
 yarn smokehouse --config-path=$config --expectations-path=$expectations

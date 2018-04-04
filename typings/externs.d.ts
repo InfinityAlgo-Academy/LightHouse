@@ -66,8 +66,8 @@ declare global {
 
     // TODO: type checking for Config
     export interface Config {
-      passes: ConfigPass[];
-      settings: ConfigSettings;
+      passes?: ConfigPass[];
+      settings?: ConfigSettings;
     }
 
     export interface ConfigSettings extends SharedFlagsSettings {
@@ -75,10 +75,14 @@ declare global {
     }
 
     export interface ConfigPass {
+      recordTrace?: boolean;
+      useThrottling?: boolean;
       pauseAfterLoadMs?: number;
       networkQuietThresholdMs?: number;
       cpuQuietThresholdMs?: number;
-      useThrottling?: boolean;
+      blockedUrlPatterns?: string[];
+      blankPage?: string;
+      blankDuration?: string;
     }
 
     export interface Results {

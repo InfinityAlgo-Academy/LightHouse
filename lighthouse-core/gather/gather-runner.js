@@ -11,6 +11,7 @@ const Audit = require('../audits/audit');
 const LHError = require('../lib/errors');
 const URL = require('../lib/url-shim');
 const NetworkRecorder = require('../lib/network-recorder.js');
+const constants = require('../config/constants');
 
 /**
  * @typedef {!Object<string, !Array<!Promise<*>>>} GathererResults
@@ -65,7 +66,11 @@ class GatherRunner {
    * @param {number=} duration
    * @return {!Promise}
    */
-  static loadBlank(driver, url = 'about:blank', duration = 300) {
+  static loadBlank(
+      driver,
+      url = constants.defaultPassConfig.blankPage,
+      duration = constants.defaultPassConfig.blankDuration
+  ) {
     return driver.gotoURL(url).then(_ => new Promise(resolve => setTimeout(resolve, duration)));
   }
 

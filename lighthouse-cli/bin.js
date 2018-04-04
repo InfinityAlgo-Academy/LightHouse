@@ -14,9 +14,8 @@ const getFlags = require('./cli-flags.js').getFlags;
 const runLighthouse = require('./run').runLighthouse;
 
 const log = require('lighthouse-logger');
-// @ts-ignore
-const perfOnlyConfig = require('../lighthouse-core/config/perf.json');
-const mixedContentConfig = require('../lighthouse-core/config/mixed-content.js');
+const perfOnlyConfig = require('../lighthouse-core/config/perf-config.js');
+const mixedContentConfig = require('../lighthouse-core/config/mixed-content-config.js');
 // @ts-ignore
 const pkg = require('../package.json');
 const Sentry = require('../lighthouse-core/lib/sentry');

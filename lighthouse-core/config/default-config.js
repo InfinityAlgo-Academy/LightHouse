@@ -5,29 +5,19 @@
  */
 'use strict';
 
-const Driver = require('../gather/driver');
-const emulation = require('../lib/emulation').settings;
+const constants = require('./constants');
 
 /* eslint-disable max-len */
 
 module.exports = {
-  settings: {
-    maxWaitForLoad: Driver.MAX_WAIT_FOR_FULLY_LOADED,
-    throttlingMethod: 'devtools',
-    throttling: {
-      requestLatencyMs: emulation.MOBILE_3G_THROTTLING.adjustedLatencyMs,
-      downloadThroughputKbps: emulation.MOBILE_3G_THROTTLING.adjustedDownloadThroughputKbps,
-      uploadThroughputKbps: emulation.MOBILE_3G_THROTTLING.adjustedUploadThroughputKbps,
-      cpuSlowdownMultiplier: emulation.CPU_THROTTLE_METRICS.rate,
-    },
-  },
+  settings: constants.defaultSettings,
   passes: [{
     passName: 'defaultPass',
     recordTrace: true,
+    useThrottling: true,
     pauseAfterLoadMs: 5250,
     networkQuietThresholdMs: 5250,
     cpuQuietThresholdMs: 5250,
-    useThrottling: true,
     gatherers: [
       'url',
       'scripts',
@@ -63,9 +53,6 @@ module.exports = {
   },
   {
     passName: 'offlinePass',
-    useThrottling: false,
-    // Just wait for onload
-    networkQuietThresholdMs: 0,
     gatherers: [
       'service-worker',
       'offline',
@@ -74,9 +61,6 @@ module.exports = {
   },
   {
     passName: 'redirectPass',
-    useThrottling: false,
-    // Just wait for onload
-    networkQuietThresholdMs: 0,
     // Speed up the redirect pass by blocking stylesheets, fonts, and images
     blockedUrlPatterns: ['*.css', '*.jpg', '*.jpeg', '*.png', '*.gif', '*.svg', '*.ttf', '*.woff', '*.woff2'],
     gatherers: [

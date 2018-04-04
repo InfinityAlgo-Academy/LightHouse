@@ -10,7 +10,6 @@ const gulp = require('gulp');
 const connect = require('gulp-connect');
 const lighthouse = require('lighthouse');
 const chromeLauncher = require('chrome-launcher');
-const perfConfig = require('lighthouse/lighthouse-core/config/perf.json');
 const PORT = 8080;
 
 /**
@@ -71,7 +70,8 @@ const flags = {}; // available options - https://github.com/GoogleChrome/lightho
 
 gulp.task('lighthouse', function() {
   startServer();
-  return launchChromeAndRunLighthouse(`http://localhost:${PORT}/index.html`, flags, perfConfig)
+  const config = {settings: {onlyCategories: ['performance']}};
+  return launchChromeAndRunLighthouse(`http://localhost:${PORT}/index.html`, flags, config)
     .then(handleOk)
     .catch(handleError);
 });

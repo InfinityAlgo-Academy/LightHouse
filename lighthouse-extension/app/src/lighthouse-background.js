@@ -8,7 +8,7 @@
 const RawProtocol = require('../../../lighthouse-core/gather/connections/raw');
 const Runner = require('../../../lighthouse-core/runner');
 const Config = require('../../../lighthouse-core/config/config');
-const defaultConfig = require('../../../lighthouse-core/config/default.js');
+const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
 const fastConfig = require('../../../lighthouse-core/config/fast-config.js');
 const log = require('lighthouse-logger');
 

@@ -6,6 +6,7 @@
 'use strict';
 
 const Driver = require('../gather/driver'); // eslint-disable-line no-unused-vars
+const mobile3G = require('../config/constants').throttling.mobile3G;
 
 const NBSP = '\xa0';
 
@@ -32,27 +33,6 @@ const NEXUS5X_EMULATION_METRICS = {
 const NEXUS5X_USERAGENT = {
   userAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36' +
     '(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36',
-};
-
-/**
- * Adjustments needed for DevTools network throttling to simulate
- * more realistic network conditions.
- * See: crbug.com/721112
- */
-const LATENCY_FACTOR = 3.75;
-const THROUGHPUT_FACTOR = 0.9;
-
-const TARGET_LATENCY = 150; // 150ms
-const TARGET_DOWNLOAD_THROUGHPUT = Math.floor(1.6 * 1024); // 1.6Mbps
-const TARGET_UPLOAD_THROUGHPUT = Math.floor(750); // 750Kbps
-
-const MOBILE_3G_THROTTLING = {
-  targetLatencyMs: TARGET_LATENCY,
-  adjustedLatencyMs: TARGET_LATENCY * LATENCY_FACTOR,
-  targetDownloadThroughputKbps: TARGET_DOWNLOAD_THROUGHPUT,
-  adjustedDownloadThroughputKbps: TARGET_DOWNLOAD_THROUGHPUT * THROUGHPUT_FACTOR,
-  targetUploadThroughputKbps: TARGET_UPLOAD_THROUGHPUT,
-  adjustedUploadThroughputKbps: TARGET_UPLOAD_THROUGHPUT * THROUGHPUT_FACTOR,
 };
 
 const OFFLINE_METRICS = {
@@ -98,24 +78,14 @@ function enableNexus5X(driver) {
  * @param {LH.ThrottlingSettings|undefined} throttlingSettings
  * @return {Promise<void>}
  */
-function enableNetworkThrottling(driver, throttlingSettings) {
+function enableNetworkThrottling(driver, throttlingSettings = mobile3G) {
   /** @type {LH.Crdp.Network.EmulateNetworkConditionsRequest} */
-  let conditions;
-  if (throttlingSettings) {
-    conditions = {
-      offline: false,
-      latency: throttlingSettings.requestLatencyMs || 0,
-      downloadThroughput: throttlingSettings.downloadThroughputKbps || 0,
-      uploadThroughput: throttlingSettings.uploadThroughputKbps || 0,
-    };
-  } else {
-    conditions = {
-      offline: false,
-      latency: MOBILE_3G_THROTTLING.adjustedLatencyMs,
-      downloadThroughput: MOBILE_3G_THROTTLING.adjustedDownloadThroughputKbps,
-      uploadThroughput: MOBILE_3G_THROTTLING.adjustedUploadThroughputKbps,
-    };
-  }
+  const conditions = {
+    offline: false,
+    latency: throttlingSettings.requestLatencyMs || 0,
+    downloadThroughput: throttlingSettings.downloadThroughputKbps || 0,
+    uploadThroughput: throttlingSettings.uploadThroughputKbps || 0,
+  };
 
   // DevTools expects throughput in bytes per second rather than kbps
   conditions.downloadThroughput = Math.floor(conditions.downloadThroughput * 1024 / 8);
@@ -211,13 +181,4 @@ module.exports = {
   disableCPUThrottling,
   goOffline,
   getEmulationDesc,
-  settings: {
-    NEXUS5X_EMULATION_METRICS,
-    NEXUS5X_USERAGENT,
-    MOBILE_3G_THROTTLING,
-    OFFLINE_METRICS,
-    NO_THROTTLING_METRICS,
-    NO_CPU_THROTTLE_METRICS,
-    CPU_THROTTLE_METRICS,
-  },
 };

@@ -13,7 +13,7 @@
 
 const Audit = require('./audit');
 const URL = require('../lib/url-shim');
-const Emulation = require('../lib/emulation');
+const targetLatencyMs = require('../config/constants').throttling.mobile3G.rttMs;
 const Sentry = require('../lib/sentry');
 const Util = require('../report/v2/renderer/util.js');
 
@@ -80,7 +80,7 @@ class LoadFastEnough4Pwa extends Audit {
       });
 
       let firstRequestLatencies = Array.from(firstRequestLatenciesByOrigin.values());
-      const latency3gMin = Emulation.settings.MOBILE_3G_THROTTLING.targetLatencyMs - 10;
+      const latency3gMin = targetLatencyMs - 10;
       const areLatenciesAll3G = firstRequestLatencies.every(val => val.latency > latency3gMin);
       firstRequestLatencies = firstRequestLatencies.map(item => ({
         url: item.url,

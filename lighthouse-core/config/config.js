@@ -6,10 +6,12 @@
 // @ts-nocheck
 'use strict';
 
-const defaultConfigPath = './default.js';
-const defaultConfig = require('./default.js');
+const defaultConfigPath = './default-config.js';
+const defaultConfig = require('./default-config.js');
 const fullConfig = require('./full-config.js');
+const constants = require('./constants');
 
+const isDeepEqual = require('lodash.isequal');
 const log = require('lighthouse-logger');
 const path = require('path');
 const Audit = require('../audits/audit');
@@ -118,18 +120,8 @@ function validatePasses(passes, audits) {
 
   // Passes must have unique `passName`s. Throw otherwise.
   const usedNames = new Set();
-  let defaultUsed = false;
-  passes.forEach((pass, index) => {
-    let passName = pass.passName;
-    if (!passName) {
-      if (defaultUsed) {
-        throw new Error(`passes[${index}] requires a passName`);
-      }
-
-      passName = Audit.DEFAULT_PASS;
-      defaultUsed = true;
-    }
-
+  passes.forEach(pass => {
+    const passName = pass.passName;
     if (usedNames.has(passName)) {
       throw new Error(`Passes must have unique names (repeated passName: ${passName}.`);
     }
@@ -259,7 +251,12 @@ function merge(base, extension) {
     return extension;
   } else if (Array.isArray(extension)) {
     if (!Array.isArray(base)) throw new TypeError(`Expected array but got ${typeof base}`);
-    return base.concat(extension);
+    const merged = base.slice();
+    extension.forEach(item => {
+      if (!merged.some(candidate => isDeepEqual(candidate, item))) merged.push(item);
+    });
+
+    return merged;
   } else if (typeof extension === 'object') {
     if (typeof base !== 'object') throw new TypeError(`Expected object but got ${typeof base}`);
     Object.keys(extension).forEach(key => {
@@ -272,7 +269,21 @@ function merge(base, extension) {
 }
 
 function deepClone(json) {
-  return JSON.parse(JSON.stringify(json));
+  const cloned = JSON.parse(JSON.stringify(json));
+
+  // Copy arrays that could contain plugins to allow for programmatic
+  // injection of plugins.
+  if (Array.isArray(json.passes)) {
+    cloned.passes.forEach((pass, i) => {
+      pass.gatherers = Array.from(json.passes[i].gatherers);
+    });
+  }
+
+  if (Array.isArray(json.audits)) {
+    cloned.audits = Array.from(json.audits);
+  }
+
+  return cloned;
 }
 
 class Config {
@@ -294,19 +305,7 @@ class Config {
     }
 
     // We don't want to mutate the original config object
-    const inputConfig = configJSON;
     configJSON = deepClone(configJSON);
-
-    // Copy arrays that could contain plugins to allow for programmatic
-    // injection of plugins.
-    if (Array.isArray(inputConfig.passes)) {
-      configJSON.passes.forEach((pass, i) => {
-        pass.gatherers = Array.from(inputConfig.passes[i].gatherers);
-      });
-    }
-    if (Array.isArray(inputConfig.audits)) {
-      configJSON.audits = Array.from(inputConfig.audits);
-    }
 
     // Extend the default or full config if specified
     if (configJSON.extends === 'lighthouse:full') {
@@ -317,7 +316,10 @@ class Config {
       configJSON = Config.extendConfigJSON(deepClone(defaultConfig), configJSON);
     }
 
-    // Expand audit/gatherer short-hand representations
+    // Augment config with necessary defaults
+    configJSON = Config.augmentWithDefaults(configJSON);
+
+    // Expand audit/gatherer short-hand representations and merge in defaults
     configJSON.audits = Config.expandAuditShorthandAndMergeOptions(configJSON.audits);
     configJSON.passes = Config.expandGathererShorthandAndMergeOptions(configJSON.passes);
 
@@ -358,8 +360,11 @@ class Config {
   static extendConfigJSON(baseJSON, extendJSON) {
     if (extendJSON.passes) {
       extendJSON.passes.forEach(pass => {
-        const basePass = baseJSON.passes.find(candidate => candidate.passName === pass.passName);
-        if (!basePass || !pass.passName) {
+        // use the default pass name if one is not specified
+        const passName = pass.passName || constants.defaultPassConfig.passName;
+        const basePass = baseJSON.passes.find(candidate => candidate.passName === passName);
+
+        if (!basePass) {
           baseJSON.passes.push(pass);
         } else {
           merge(basePass, pass);
@@ -370,6 +375,20 @@ class Config {
     }
 
     return merge(baseJSON, extendJSON);
+  }
+
+  /**
+   * @param {LH.Config} config
+   * @return {LH.Config}
+   */
+  static augmentWithDefaults(config) {
+    const {defaultSettings, defaultPassConfig} = constants;
+    config.settings = merge(deepClone(defaultSettings), config.settings);
+    if (config.passes) {
+      config.passes = config.passes.map(pass => merge(deepClone(defaultPassConfig), pass));
+    }
+
+    return config;
   }
 
   /**
@@ -418,6 +437,8 @@ class Config {
           return {path: gatherer, options: {}};
         } else if (typeof gatherer === 'function') {
           return {implementation: gatherer, options: {}};
+        } else if (gatherer && typeof gatherer.beforePass === 'function') {
+          return {instance: gatherer, options: {}};
         } else {
           return gatherer;
         }
@@ -464,12 +485,17 @@ class Config {
     config.passes = Config.expandGathererShorthandAndMergeOptions(config.passes);
     config.passes = Config.requireGatherers(config.passes);
 
-    // 1. Filter to just the chosen categories
-    config.categories = Config.filterCategoriesAndAudits(config.categories, categoryIds, auditIds,
-        skipAuditIds);
+    // 1. Filter to just the chosen categories/audits
+    const {categories, audits: requestedAuditNames} = Config.filterCategoriesAndAudits(
+      config.categories,
+      categoryIds,
+      auditIds,
+      skipAuditIds
+    );
+
+    config.categories = categories;
 
     // 2. Resolve which audits will need to run
-    const requestedAuditNames = Config.getAuditIdsInCategories(config.categories);
     const auditPathToNameMap = Config.getMapOfAuditPathToName(config);
     const getAuditName = auditDefn => auditDefn.implementation ?
       auditDefn.implementation.meta.name :
@@ -492,7 +518,7 @@ class Config {
    * @param {!Array<string>=} categoryIds
    * @param {!Array<string>=} auditIds
    * @param {!Array<string>=} skipAuditIds
-   * @return {!Object<string, {audits: !Array<{id: string}>}>}
+   * @return {{categories: Object<string, {audits: !Array<{id: string}>}>, audits: Set<string>}}
    */
   static filterCategoriesAndAudits(oldCategories, categoryIds, auditIds, skipAuditIds) {
     if (auditIds && skipAuditIds) {
@@ -532,6 +558,9 @@ class Config {
       }
     }
 
+    const includedAudits = new Set(auditIds);
+    skipAuditIds.forEach(id => includedAudits.delete(id));
+
     Object.keys(oldCategories).forEach(categoryId => {
       const category = deepClone(oldCategories[categoryId]);
 
@@ -554,25 +583,11 @@ class Config {
 
       if (category.audits.length) {
         categories[categoryId] = category;
+        category.audits.forEach(audit => includedAudits.add(audit.id));
       }
     });
 
-    return categories;
-  }
-
-  /**
-   * Finds the unique set of audit IDs used by the categories object.
-   * @param {!Object<string, {audits: !Array<{id: string}>}>} categories
-   * @return {!Set<string>}
-   */
-  static getAuditIdsInCategories(categories) {
-    /** @type {Array<string>} */
-    let audits = [];
-    for (const category of Object.values(categories)) {
-      audits = audits.concat(category.audits.map(audit => audit.id));
-    }
-
-    return new Set(audits);
+    return {categories, audits: includedAudits};
   }
 
   /**

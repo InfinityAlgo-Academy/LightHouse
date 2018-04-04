@@ -8,7 +8,7 @@
 const Config = require('../../config/config');
 const assert = require('assert');
 const path = require('path');
-const defaultConfig = require('../../config/default.js');
+const defaultConfig = require('../../config/default-config.js');
 const log = require('lighthouse-logger');
 const Gatherer = require('../../gather/gatherers/gatherer');
 const Audit = require('../../audits/audit');
@@ -35,16 +35,19 @@ describe('Config', () => {
     class MyAudit extends Audit {
       static get meta() {
         return {
-          name: 'MyAudit',
+          name: 'my-audit',
           description: 'My audit',
           failureDescription: 'My failing audit',
           helpText: '.',
-          requiredArtifacts: [],
+          requiredArtifacts: ['MyGatherer'],
         };
       }
       static audit() {}
     }
     const config = {
+      // Extend to default to double test our ability to handle plugins
+      extends: 'lighthouse:default',
+      settings: {onlyAudits: ['my-audit']},
       passes: [{
         gatherers: [MyGatherer],
       }],
@@ -61,33 +64,35 @@ describe('Config', () => {
     assert.equal(origConfig.audits.length, config.audits.length);
   });
 
-  it('warns when a passName is used twice', () => {
+  it('throws when a passName is used twice', () => {
     const unlikelyPassName = 'unlikelyPassName';
     const configJson = {
       passes: [{
         passName: unlikelyPassName,
-        gatherers: [],
+        gatherers: ['url'],
       }, {
         passName: unlikelyPassName,
-        gatherers: [],
+        gatherers: ['viewport-dimensions'],
       }],
-      audits: [],
     };
 
     assert.throws(_ => new Config(configJson), /unique/);
   });
 
-  it('warns when traced twice with no passNames specified', () => {
+  it('defaults passName to defaultPass', () => {
+    class MyGatherer extends Gatherer {}
     const configJson = {
       passes: [{
-        gatherers: [],
-      }, {
-        gatherers: [],
+        gatherers: [MyGatherer],
       }],
-      audits: [],
     };
 
-    assert.throws(_ => new Config(configJson), /requires a passName/);
+    const config = new Config(configJson);
+    const defaultPass = config.passes.find(pass => pass.passName === 'defaultPass');
+    assert.ok(
+      defaultPass.gatherers.find(gatherer => gatherer.implementation === MyGatherer),
+      'defaultPass should have contained extra gatherer'
+    );
   });
 
   it('throws for unknown gatherers', () => {
@@ -138,7 +143,7 @@ describe('Config', () => {
   });
 
   it('throws on a non-absolute config path', () => {
-    const configPath = '../../config/default.js';
+    const configPath = '../../config/default-config.js';
 
     return assert.throws(_ => new Config({
       audits: [],

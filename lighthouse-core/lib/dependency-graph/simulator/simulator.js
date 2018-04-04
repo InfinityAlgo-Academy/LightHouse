@@ -10,17 +10,10 @@ const NetworkNode = require('../network-node'); // eslint-disable-line no-unused
 const CpuNode = require('../cpu-node'); // eslint-disable-line no-unused-vars
 const TcpConnection = require('./tcp-connection');
 const ConnectionPool = require('./connection-pool');
-const emulation = require('../../emulation').settings;
+const mobile3G = require('../../../config/constants').throttling.mobile3G;
 
 // see https://cs.chromium.org/search/?q=kDefaultMaxNumDelayableRequestsPerClient&sq=package:chromium&type=cs
 const DEFAULT_MAXIMUM_CONCURRENT_REQUESTS = 10;
-
-// Fast 3G emulation target from DevTools, WPT 3G - Fast setting
-const DEFAULT_RTT = emulation.MOBILE_3G_THROTTLING.targetLatencyMs;
-const DEFAULT_THROUGHPUT = emulation.MOBILE_3G_THROTTLING.targetDownloadThroughputKbps * 1024; // 1.6 Mbps
-
-// same multiplier as Lighthouse uses for CPU emulation
-const DEFAULT_CPU_TASK_MULTIPLIER = emulation.CPU_THROTTLE_METRICS.rate;
 // layout tasks tend to be less CPU-bound and do not experience the same increase in duration
 const DEFAULT_LAYOUT_TASK_MULTIPLIER = 0.5;
 // if a task takes more than 10 seconds it's usually a sign it isn't actually CPU bound and we're overestimating
@@ -42,10 +35,10 @@ class Simulator {
     this._graph = graph;
     this._options = Object.assign(
       {
-        rtt: DEFAULT_RTT,
-        throughput: DEFAULT_THROUGHPUT,
+        rtt: mobile3G.rttMs,
+        throughput: mobile3G.throughputKbps * 1024,
         maximumConcurrentRequests: DEFAULT_MAXIMUM_CONCURRENT_REQUESTS,
-        cpuSlowdownMultiplier: DEFAULT_CPU_TASK_MULTIPLIER,
+        cpuSlowdownMultiplier: mobile3G.cpuSlowdownMultiplier,
         layoutTaskMultiplier: DEFAULT_LAYOUT_TASK_MULTIPLIER,
       },
       options

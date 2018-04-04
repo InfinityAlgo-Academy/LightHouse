@@ -36,15 +36,15 @@ launchChromeAndRunLighthouse('https://example.com', opts).then(results => {
 ### Performance-only Lighthouse run
 
 Many modules consuming Lighthouse are only interested in the performance numbers.
-Lighthouse ships with a [performance-only config](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/perf.json) that you can use:
+You can limit the audits you run to a particular category or set of audits.
 
 ```js
-const perfConfig: any = require('lighthouse/lighthouse-core/config/perf.json');
+const perfConfig = require('lighthouse/lighthouse-core/config/perf-config.js');
 // ...
 launchChromeAndRunLighthouse(url, flags, perfConfig).then( // ...
 ```
 
-You can also craft your own config (e.g. [plots-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/plots-config.js)) for completely custom runs. Also see the [basic custom audit recipe](https://github.com/GoogleChrome/lighthouse/tree/master/docs/recipes/custom-audit).
+You can also craft your own config (e.g. [mixed-content-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/mixed-content-config.js)) for custom runs. Also see the [basic custom audit recipe](https://github.com/GoogleChrome/lighthouse/tree/master/docs/recipes/custom-audit).
 
 
 ### Turn on logging

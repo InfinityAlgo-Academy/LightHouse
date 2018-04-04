@@ -207,8 +207,7 @@ The stock Lighthouse configurations can be extended if you only need to make sma
 
 The best examples are the ones Lighthouse uses itself! There are several reference configuration files that are maintained as part of Lighthouse.
 
-* [lighthouse-core/config/default.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/default.js)
-* [lighthouse-core/config/perf.json](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/perf.json)
+* [lighthouse-core/config/default-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/default-config.js)
 * [lighthouse-core/config/plots-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/plots-config.js)
 * [docs/recipes/custom-audit/custom-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/docs/recipes/custom-audit/custom-config.js)
 * [pwmetrics](https://github.com/paulirish/pwmetrics/blob/master/lib/lh-config.ts)

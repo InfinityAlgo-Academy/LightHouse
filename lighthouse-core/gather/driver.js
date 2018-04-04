@@ -12,6 +12,7 @@ const LHError = require('../lib/errors');
 const EventEmitter = require('events').EventEmitter;
 const URL = require('../lib/url-shim');
 const TraceParser = require('../lib/traces/trace-parser');
+const constants = require('../config/constants');
 
 const log = require('lighthouse-logger');
 const DevtoolsLog = require('./devtools-log');
@@ -34,10 +35,6 @@ const DEFAULT_CPU_QUIET_THRESHOLD = 0;
  */
 
 class Driver {
-  static get MAX_WAIT_FOR_FULLY_LOADED() {
-    return 45 * 1000;
-  }
-
   /**
    * @param {Connection} connection
    */
@@ -689,7 +686,7 @@ class Driver {
       if (typeof pauseAfterLoadMs !== 'number') pauseAfterLoadMs = DEFAULT_PAUSE_AFTER_LOAD;
       if (typeof networkQuietThresholdMs !== 'number') networkQuietThresholdMs = DEFAULT_NETWORK_QUIET_THRESHOLD;
       if (typeof cpuQuietThresholdMs !== 'number') cpuQuietThresholdMs = DEFAULT_CPU_QUIET_THRESHOLD;
-      if (typeof maxWaitMs !== 'number') maxWaitMs = Driver.MAX_WAIT_FOR_FULLY_LOADED;
+      if (typeof maxWaitMs !== 'number') maxWaitMs = constants.defaultSettings.maxWaitForLoad;
       /* eslint-enable max-len */
 
       await this._waitForFullyLoaded(pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs,
