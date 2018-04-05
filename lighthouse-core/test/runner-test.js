@@ -83,6 +83,17 @@ describe('Runner', () => {
       });
     });
 
+    it('-A throws if the settings change', async () => {
+      const settings = {auditMode: artifactsPath, disableDeviceEmulation: true};
+      const opts = {url, config: generateConfig(settings), driverMock};
+      try {
+        await Runner.run(null, opts);
+        assert.fail('should have thrown');
+      } catch (err) {
+        assert.ok(/Cannot change settings/.test(err.message), 'should have prevented run');
+      }
+    });
+
     it('-GA is a normal run but it saves artifacts to disk', () => {
       const settings = {auditMode: artifactsPath, gatherMode: artifactsPath};
       const opts = {url, config: generateConfig(settings), driverMock};

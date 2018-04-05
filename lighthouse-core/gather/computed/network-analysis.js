@@ -50,7 +50,7 @@ class NetworkAnalysis extends ComputedArtifact {
     const records = await artifacts.requestNetworkRecords(devtoolsLog);
     const throughput = await artifacts.requestNetworkThroughput(devtoolsLog);
     const rttAndServerResponseTime = NetworkAnalysis.computeRTTAndServerResponseTime(records);
-    rttAndServerResponseTime.throughput = throughput;
+    rttAndServerResponseTime.throughput = throughput * 8; // convert from KBps to Kbps
     return rttAndServerResponseTime;
   }
 }

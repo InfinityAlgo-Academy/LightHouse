@@ -49,8 +49,8 @@ describe('DependencyGraph/Simulator', () => {
 
     it('should simulate basic network graphs', () => {
       const rootNode = new NetworkNode(request({}));
-      const simulator = new Simulator(rootNode, {serverResponseTimeByOrigin});
-      const result = simulator.simulate();
+      const simulator = new Simulator({serverResponseTimeByOrigin});
+      const result = simulator.simulate(rootNode);
       // should be 2 RTTs and 500ms for the server response time
       assert.equal(result.timeInMs, 300 + 500);
       assertNodeTiming(result, rootNode, {startTime: 0, endTime: 800});
@@ -61,11 +61,11 @@ describe('DependencyGraph/Simulator', () => {
       const cpuNode = new CpuNode(cpuTask({duration: 200}));
       cpuNode.addDependency(rootNode);
 
-      const simulator = new Simulator(rootNode, {
+      const simulator = new Simulator({
         serverResponseTimeByOrigin,
         cpuSlowdownMultiplier: 5,
       });
-      const result = simulator.simulate();
+      const result = simulator.simulate(rootNode);
       // should be 2 RTTs and 500ms for the server response time + 200 CPU
       assert.equal(result.timeInMs, 300 + 500 + 200);
       assertNodeTiming(result, rootNode, {startTime: 0, endTime: 800});
@@ -82,8 +82,8 @@ describe('DependencyGraph/Simulator', () => {
       nodeB.addDependent(nodeC);
       nodeC.addDependent(nodeD);
 
-      const simulator = new Simulator(nodeA, {serverResponseTimeByOrigin});
-      const result = simulator.simulate();
+      const simulator = new Simulator({serverResponseTimeByOrigin});
+      const result = simulator.simulate(nodeA);
       // should be 800ms each for A, B, C, D
       assert.equal(result.timeInMs, 3200);
       assertNodeTiming(result, nodeA, {startTime: 0, endTime: 800});
@@ -102,11 +102,11 @@ describe('DependencyGraph/Simulator', () => {
       nodeA.addDependent(nodeC);
       nodeA.addDependent(nodeD);
 
-      const simulator = new Simulator(nodeA, {
+      const simulator = new Simulator({
         serverResponseTimeByOrigin,
         cpuSlowdownMultiplier: 5,
       });
-      const result = simulator.simulate();
+      const result = simulator.simulate(nodeA);
       // should be 800ms A, then 1000 ms total for B, C, D in serial
       assert.equal(result.timeInMs, 1800);
       assertNodeTiming(result, nodeA, {startTime: 0, endTime: 800});
@@ -129,11 +129,11 @@ describe('DependencyGraph/Simulator', () => {
       nodeC.addDependent(nodeD);
       nodeC.addDependent(nodeF); // finishes 400 ms after D
 
-      const simulator = new Simulator(nodeA, {
+      const simulator = new Simulator({
         serverResponseTimeByOrigin,
         cpuSlowdownMultiplier: 5,
       });
-      const result = simulator.simulate();
+      const result = simulator.simulate(nodeA);
       // should be 800ms each for A, B, C, D, with F finishing 400 ms after D
       assert.equal(result.timeInMs, 3600);
     });
@@ -148,8 +148,8 @@ describe('DependencyGraph/Simulator', () => {
       nodeA.addDependent(nodeC);
       nodeA.addDependent(nodeD);
 
-      const simulator = new Simulator(nodeA, {serverResponseTimeByOrigin});
-      const result = simulator.simulate();
+      const simulator = new Simulator({serverResponseTimeByOrigin});
+      const result = simulator.simulate(nodeA);
       // should be 800ms for A and 950ms for C (2 round trips of downloading)
       assert.equal(result.timeInMs, 800 + 950);
     });
@@ -164,8 +164,8 @@ describe('DependencyGraph/Simulator', () => {
       nodeA.addDependent(nodeC);
       nodeA.addDependent(nodeD);
 
-      const simulator = new Simulator(nodeA, {serverResponseTimeByOrigin});
-      const result = simulator.simulate();
+      const simulator = new Simulator({serverResponseTimeByOrigin});
+      const result = simulator.simulate(nodeA);
       // should be 800ms for A and 650ms for the next 3
       assert.equal(result.timeInMs, 800 + 650 * 3);
     });
@@ -180,10 +180,38 @@ describe('DependencyGraph/Simulator', () => {
       nodeA.addDependent(nodeC);
       nodeA.addDependent(nodeD);
 
-      const simulator = new Simulator(nodeA, {serverResponseTimeByOrigin});
-      const result = simulator.simulate();
+      const simulator = new Simulator({serverResponseTimeByOrigin});
+      const result = simulator.simulate(nodeA);
       // should be 800ms for A and 950ms for C (2 round trips of downloading)
       assert.equal(result.timeInMs, 800 + 950);
+    });
+
+    it('should simulate two graphs in a row', () => {
+      const simulator = new Simulator({serverResponseTimeByOrigin});
+
+      const nodeA = new NetworkNode(request({}));
+      const nodeB = new NetworkNode(request({}));
+      const nodeC = new NetworkNode(request({transferSize: 15000}));
+      const nodeD = new NetworkNode(request({}));
+
+      nodeA.addDependent(nodeB);
+      nodeA.addDependent(nodeC);
+      nodeA.addDependent(nodeD);
+
+      const resultA = simulator.simulate(nodeA);
+      // should be 800ms for A and 950ms for C (2 round trips of downloading)
+      assert.equal(resultA.timeInMs, 800 + 950);
+
+      const nodeE = new NetworkNode(request({}));
+      const nodeF = new NetworkNode(request({}));
+      const nodeG = new NetworkNode(request({}));
+
+      nodeE.addDependent(nodeF);
+      nodeE.addDependent(nodeG);
+
+      const resultB = simulator.simulate(nodeE);
+      // should be 800ms for E and 800ms for F/G
+      assert.equal(resultB.timeInMs, 800 + 800);
     });
   });
 });

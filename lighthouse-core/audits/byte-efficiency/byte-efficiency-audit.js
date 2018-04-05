@@ -7,8 +7,7 @@
 
 const Audit = require('../audit');
 const ConsistentlyInteractive = require('../../gather/computed/metrics/lantern-consistently-interactive'); // eslint-disable-line max-len
-const NetworkAnalysis = require('../../gather/computed/network-analysis');
-const LoadSimulator = require('../../lib/dependency-graph/simulator/simulator.js');
+const Simulator = require('../../lib/dependency-graph/simulator/simulator'); // eslint-disable-line no-unused-vars
 
 const KB_IN_BYTES = 1024;
 
@@ -69,33 +68,43 @@ class UnusedBytes extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!Promise<!AuditResult>}
+   * @param {Artifacts} artifacts
+   * @param {LH.Audit.Context=} context
+   * @return {Promise<AuditResult>}
    */
-  static audit(artifacts) {
+  static audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const settings = context && context.settings || {};
+    const simulatorOptions = {
+      devtoolsLog,
+      throttlingMethod: settings.throttlingMethod,
+      throttling: settings.throttling,
+    };
+
     return artifacts
       .requestNetworkRecords(devtoolsLog)
       .then(networkRecords =>
         Promise.all([
           this.audit_(artifacts, networkRecords),
           artifacts.requestPageDependencyGraph({trace, devtoolsLog}),
+          artifacts.requestLoadSimulator(simulatorOptions),
         ])
       )
-      .then(([result, graph]) => this.createAuditResult(result, graph));
+      .then(([result, graph, simulator]) => this.createAuditResult(result, graph, simulator));
   }
 
   /**
    * Computes the estimated effect of all the byte savings on the last long task
    * in the provided graph.
    *
-   * @param {!Array<{url: string, wastedBytes: number}>} results The array of byte savings results per resource
-   * @param {!Node} graph
+   * @param {Array<{url: string, wastedBytes: number}>} results The array of byte savings results per resource
+   * @param {Node} graph
+   * @param {Simulator} simulator
    * @return {number}
    */
   static computeWasteWithTTIGraph(results, graph, simulator) {
-    const simulationBeforeChanges = simulator.simulate();
+    const simulationBeforeChanges = simulator.simulate(graph);
     const resultsByUrl = new Map();
     for (const result of results) {
       resultsByUrl.set(result.url, result);
@@ -112,7 +121,7 @@ class UnusedBytes extends Audit {
       node.record._transferSize = Math.max(original - wastedBytes, 0);
     });
 
-    const simulationAfterChanges = simulator.simulate();
+    const simulationAfterChanges = simulator.simulate(graph);
     // Restore the original transfer size after we've done our simulation
     graph.traverse(node => {
       if (node.type !== 'network') return;
@@ -131,20 +140,12 @@ class UnusedBytes extends Audit {
   }
 
   /**
-   * @param {!Audit.HeadingsResult} result
-   * @param {!Node} graph
-   * @return {!AuditResult}
+   * @param {Audit.HeadingsResult} result
+   * @param {Node} graph
+   * @param {Simulator} simulator
+   * @return {AuditResult}
    */
-  static createAuditResult(result, graph) {
-    const records = [];
-    graph.traverse(node => node.record && records.push(node.record));
-    const simulatorOptions = NetworkAnalysis.computeRTTAndServerResponseTime(records);
-    // TODO: use rtt/throughput from config.settings instead of defaults
-    delete simulatorOptions.rtt;
-    // TODO: calibrate multipliers, see https://github.com/GoogleChrome/lighthouse/issues/820
-    Object.assign(simulatorOptions, {cpuSlowdownMultiplier: 1, layoutTaskMultiplier: 1});
-    const simulator = new LoadSimulator(graph, simulatorOptions);
-
+  static createAuditResult(result, graph, simulator) {
     const debugString = result.debugString;
     const results = result.results.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
 

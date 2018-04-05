@@ -9,6 +9,7 @@ const Runner = require('../../../runner');
 const ByteEfficiencyAudit = require('../../../audits/byte-efficiency/byte-efficiency-audit');
 const NetworkNode = require('../../../lib/dependency-graph/network-node');
 const CPUNode = require('../../../lib/dependency-graph/cpu-node');
+const Simulator = require('../../../lib/dependency-graph/simulator/simulator');
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -18,6 +19,7 @@ const assert = require('assert');
 
 describe('Byte efficiency base audit', () => {
   let graph;
+  let simulator;
 
   beforeEach(() => {
     const networkRecord = {
@@ -37,6 +39,7 @@ describe('Byte efficiency base audit', () => {
     graph = new NetworkNode(networkRecord);
     // add a CPU node to force improvement to TTI
     graph.addDependent(new CPUNode({tid: 1, ts: 0, dur: 100 * 1000}));
+    simulator = new Simulator({});
   });
 
   const baseHeadings = [
@@ -76,7 +79,7 @@ describe('Byte efficiency base audit', () => {
     const result = ByteEfficiencyAudit.createAuditResult({
       headings: baseHeadings,
       results: [],
-    }, graph);
+    }, graph, simulator);
 
     assert.deepEqual(result.details.items, []);
   });
@@ -89,7 +92,8 @@ describe('Byte efficiency base audit', () => {
           {url: 'http://example.com/', wastedBytes: 200 * 1000},
         ],
       },
-      graph
+      graph,
+      simulator
     );
 
     // 900ms savings comes from the graph calculation
@@ -100,22 +104,22 @@ describe('Byte efficiency base audit', () => {
     const perfectResult = ByteEfficiencyAudit.createAuditResult({
       headings: baseHeadings,
       results: [{url: 'http://example.com/', wastedBytes: 1 * 1000}],
-    }, graph);
+    }, graph, simulator);
 
     const goodResult = ByteEfficiencyAudit.createAuditResult({
       headings: baseHeadings,
       results: [{url: 'http://example.com/', wastedBytes: 20 * 1000}],
-    }, graph);
+    }, graph, simulator);
 
     const averageResult = ByteEfficiencyAudit.createAuditResult({
       headings: baseHeadings,
       results: [{url: 'http://example.com/', wastedBytes: 100 * 1000}],
-    }, graph);
+    }, graph, simulator);
 
     const failingResult = ByteEfficiencyAudit.createAuditResult({
       headings: baseHeadings,
       results: [{url: 'http://example.com/', wastedBytes: 400 * 1000}],
-    }, graph);
+    }, graph, simulator);
 
     assert.equal(perfectResult.score, 1, 'scores perfect wastedMs');
     assert.ok(goodResult.score > 0.75 && goodResult.score < 1, 'scores good wastedMs');
@@ -139,7 +143,7 @@ describe('Byte efficiency base audit', () => {
         {wastedBytes: 2048, totalBytes: 4096, wastedPercent: 50},
         {wastedBytes: 1986, totalBytes: 5436},
       ],
-    }, graph);
+    }, graph, simulator);
 
     assert.equal(result.details.items[0].wastedBytes, 2048);
     assert.equal(result.details.items[0].totalBytes, 4096);
@@ -155,7 +159,7 @@ describe('Byte efficiency base audit', () => {
         {wastedBytes: 450, totalBytes: 1000, wastedPercent: 50},
         {wastedBytes: 400, totalBytes: 450, wastedPercent: 50},
       ],
-    }, graph);
+    }, graph, simulator);
 
     assert.equal(result.details.items[0].wastedBytes, 450);
     assert.equal(result.details.items[1].wastedBytes, 400);
@@ -170,25 +174,28 @@ describe('Byte efficiency base audit', () => {
         {wastedBytes: 512, totalBytes: 1000, wastedPercent: 50},
         {wastedBytes: 1024, totalBytes: 1200, wastedPercent: 50},
       ],
-    }, graph);
+    }, graph, simulator);
 
     assert.ok(result.displayValue.includes('2048 bytes'), 'contains correct bytes');
   });
 
-  it('should work on real graphs', () => {
+  it('should work on real graphs', async () => {
+    const throttling = {rttMs: 150, throughputKbps: 1600, cpuSlowdownMultiplier: 1};
+    const settings = {throttlingMethod: 'simulate', throttling};
     const artifacts = Runner.instantiateComputedArtifacts();
-    return artifacts.requestPageDependencyGraph({trace, devtoolsLog}).then(graph => {
-      const result = ByteEfficiencyAudit.createAuditResult(
-        {
-          headings: [{key: 'value', text: 'Label'}],
-          results: [
-            {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW', wastedBytes: 30 * 1024},
-          ],
-        },
-        graph
-      );
+    const graph = await artifacts.requestPageDependencyGraph({trace, devtoolsLog});
+    const simulator = await artifacts.requestLoadSimulator({devtoolsLog, settings});
+    const result = ByteEfficiencyAudit.createAuditResult(
+      {
+        headings: [{key: 'value', text: 'Label'}],
+        results: [
+          {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW', wastedBytes: 30 * 1024},
+        ],
+      },
+      graph,
+      simulator
+    );
 
-      assert.equal(result.rawValue, 300);
-    });
+    assert.equal(result.rawValue, 300);
   });
 });

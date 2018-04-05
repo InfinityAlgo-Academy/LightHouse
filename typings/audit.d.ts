@@ -6,6 +6,11 @@
 
 declare global {
   module LH.Audit {
+    export interface Context {
+      options: Object; // audit options
+      settings: ConfigSettings;
+    }
+
     export interface ScoringModes {
       NUMERIC: 'numeric';
       BINARY: 'binary';

@@ -65,6 +65,7 @@ class NetworkThroughput extends ComputedArtifact {
    * @return {!Promise<!Object>}
    */
   compute_(devtoolsLog, artifacts) {
+    // TODO(phulce): migrate this to network-analysis computed artifact
     return artifacts.requestNetworkRecords(devtoolsLog)
       .then(NetworkThroughput.getThroughput);
   }

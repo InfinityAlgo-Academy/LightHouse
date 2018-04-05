@@ -8,7 +8,7 @@
 const ComputedArtifact = require('../computed-artifact');
 const Node = require('../../../lib/dependency-graph/node');
 const NetworkNode = require('../../../lib/dependency-graph/network-node'); // eslint-disable-line no-unused-vars
-const Simulator = require('../../../lib/dependency-graph/simulator/simulator');
+const Simulator = require('../../../lib/dependency-graph/simulator/simulator'); // eslint-disable-line no-unused-vars
 const WebInspector = require('../../../lib/web-inspector');
 
 class LanternMetricArtifact extends ComputedArtifact {
@@ -75,19 +75,15 @@ class LanternMetricArtifact extends ComputedArtifact {
     const {trace, devtoolsLog} = data;
     const graph = await artifacts.requestPageDependencyGraph({trace, devtoolsLog});
     const traceOfTab = await artifacts.requestTraceOfTab(trace);
-    const networkAnalysis = await artifacts.requestNetworkAnalysis(devtoolsLog);
+    // TODO(phulce): passthrough settings once all metrics are converted to computed artifacts
+    /** @type {Simulator} */
+    const simulator = await artifacts.requestLoadSimulator({devtoolsLog});
 
     const optimisticGraph = this.getOptimisticGraph(graph, traceOfTab);
     const pessimisticGraph = this.getPessimisticGraph(graph, traceOfTab);
 
-    // TODO(phulce): use rtt and throughput from config.settings instead of defaults
-    const options = {
-      additionalRttByOrigin: networkAnalysis.additionalRttByOrigin,
-      serverResponseTimeByOrigin: networkAnalysis.serverResponseTimeByOrigin,
-    };
-
-    const optimisticSimulation = new Simulator(optimisticGraph, options).simulate();
-    const pessimisticSimulation = new Simulator(pessimisticGraph, options).simulate();
+    const optimisticSimulation = simulator.simulate(optimisticGraph);
+    const pessimisticSimulation = simulator.simulate(pessimisticGraph);
 
     const optimisticEstimate = this.getEstimateFromSimulation(
       optimisticSimulation,

@@ -444,8 +444,8 @@ class GatherRunner {
       .then(_ => GatherRunner.disposeDriver(driver))
       .then(_ => GatherRunner.collectArtifacts(gathererResults))
       .then(artifacts => {
-        // Add tracing data to the artifacts object.
-        return Object.assign(artifacts, tracingData);
+        // Add tracing data and settings used to the artifacts object.
+        return Object.assign(artifacts, tracingData, {settings: options.settings});
       })
       // cleanup on error
       .catch(err => {
