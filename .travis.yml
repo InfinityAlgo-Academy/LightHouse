@@ -33,7 +33,7 @@ before_script:
 script:
   - yarn bundlesize
   - yarn lint
-  - yarn unit
+  - yarn unit:silentcoverage
   - yarn type-check
   - yarn closure
   - yarn smoke

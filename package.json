@@ -24,23 +24,27 @@
     "clean": "rimraf *.report.html *.report.dom.html *.report.json *.screenshots.html *.screenshots.json *.devtoolslog.json *.trace.json || true",
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
     "smoke": "bash lighthouse-cli/test/smokehouse/run-all-tests.sh",
-    "coverage": "istanbul cover -x \"**/third_party/**\" _mocha -- $(find */test -name '*-test.js') --reporter progress --report lcovonly",
-    "coveralls": "yarn coverage && cat ./coverage/lcov.info | coveralls && ./node_modules/codecov/bin/codecov",
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
     "start": "node ./lighthouse-cli/index.js",
     "test": "yarn lint --quiet && yarn unit && yarn type-check && yarn closure",
     "test-extension": "cd lighthouse-extension && yarn test",
-    "unit-core": "bash lighthouse-core/scripts/run-mocha.sh --core",
-    "unit-cli": "bash lighthouse-core/scripts/run-mocha.sh --cli",
-    "unit-viewer": "bash lighthouse-core/scripts/run-mocha.sh --viewer",
-    "unit": "bash lighthouse-core/scripts/run-mocha.sh --default",
+
+    "unit-core": "mocha --reporter dot \"lighthouse-core/test/**/*-test.js\"",
+    "unit-cli": "mocha --reporter dot \"lighthouse-cli/test/**/*-test.js\"",
+    "unit-viewer": "mocha --reporter dot \"lighthouse-viewer/test/**/*-test.js\"",
+    "unit": "yarn unit-core && yarn unit-cli && yarn unit-viewer",
     "core-unit": "yarn unit-core",
     "cli-unit": "yarn unit-cli",
     "viewer-unit": "yarn unit-viewer",
+    "watch": "yarn unit-core --watch",
+
+    "unit:silentcoverage": "nyc --silent yarn unit",
+    "coverage": "nyc yarn unit && nyc report --reporter html",
+    "coveralls": "nyc report --reporter lcovonly && cat ./coverage/lcov.info | coveralls && codecov",
+
     "closure": "cd lighthouse-core && node closure/closure-type-checking.js",
     "devtools": "bash lighthouse-core/scripts/roll-to-devtools.sh",
     "compile-devtools": "bash lighthouse-core/scripts/compile-against-devtools.sh",
-    "watch": "bash lighthouse-core/scripts/run-mocha.sh --watch",
     "chrome": "node chrome-launcher/manual-chrome-launcher.js",
     "fast": "yarn start --disable-device-emulation --disable-cpu-throttling --disable-network-throttling",
     "smokehouse": "node lighthouse-cli/test/smokehouse/smokehouse.js",
@@ -76,10 +80,10 @@
     "gulp": "^3.9.1",
     "gulp-replace": "^0.5.4",
     "gulp-util": "^3.0.7",
-    "istanbul": "^0.4.3",
     "jsdom": "^9.12.0",
     "mocha": "^3.2.0",
     "npm-run-posix-or-windows": "^2.0.2",
+    "nyc": "^11.6.0",
     "postinstall-prepare": "^1.0.1",
     "puppeteer": "^1.1.1",
     "sinon": "^2.3.5",
@@ -138,6 +142,13 @@
       "threshold": "65 Kb"
     }
   ],
+  "nyc": {
+    "exclude": [
+      "**/third_party/**",
+      "**/test/",
+      "lighthouse-extension/"
+    ]
+  },
   "homepage": "https://github.com/GoogleChrome/lighthouse#readme",
   "config": {
     "commitizen": {
