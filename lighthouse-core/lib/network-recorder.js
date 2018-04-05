@@ -47,7 +47,7 @@ class NetworkRecorder extends EventEmitter {
    * @param {*} listener
    */
   once(event, listener) {
-    return super.on(event, listener);
+    return super.once(event, listener);
   }
 
   get EventTypes() {
