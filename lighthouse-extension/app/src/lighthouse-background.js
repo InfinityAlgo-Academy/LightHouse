@@ -22,10 +22,10 @@ const log = require('lighthouse-logger');
 window.runLighthouseForConnection = function(
     connection, url, options, categoryIDs,
     updateBadgeFn = function() { }) {
-  const config = options && options.fastMode ? new Config(fastConfig) : new Config({
+  const config = options && options.fastMode ? new Config(fastConfig, options.flags) : new Config({
     extends: 'lighthouse:default',
     settings: {onlyCategories: categoryIDs},
-  });
+  }, options.flags);
 
   // Add url and config to fresh options object.
   const runOptions = Object.assign({}, options, {url, config});
