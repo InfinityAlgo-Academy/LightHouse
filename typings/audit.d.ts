@@ -11,6 +11,11 @@ declare global {
       settings: ConfigSettings;
     }
 
+    export interface ScoreOptions {
+      scorePODR: number;
+      scoreMedian: number;
+    }
+
     export interface ScoringModes {
       NUMERIC: 'numeric';
       BINARY: 'binary';

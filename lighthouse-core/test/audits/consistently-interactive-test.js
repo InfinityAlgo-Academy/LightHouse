@@ -8,6 +8,7 @@
 const ConsistentlyInteractive = require('../../audits/consistently-interactive.js');
 const Runner = require('../../runner.js');
 const assert = require('assert');
+const options = ConsistentlyInteractive.defaultOptions;
 
 const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
 const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -38,7 +39,7 @@ describe('Performance: consistently-interactive audit', () => {
       },
     }, Runner.instantiateComputedArtifacts());
 
-    return ConsistentlyInteractive.audit(artifacts).then(output => {
+    return ConsistentlyInteractive.audit(artifacts, {options}).then(output => {
       assert.equal(output.score, 0.99);
       assert.equal(Math.round(output.rawValue), 1582);
       assert.equal(output.displayValue, '1,580\xa0ms');
@@ -55,7 +56,7 @@ describe('Performance: consistently-interactive audit', () => {
       },
     }, Runner.instantiateComputedArtifacts());
 
-    return ConsistentlyInteractive.audit(artifacts).then(output => {
+    return ConsistentlyInteractive.audit(artifacts, {options}).then(output => {
       assert.equal(output.score, 0.95);
       assert.equal(Math.round(output.rawValue), 2712);
       assert.equal(output.displayValue, '2,710\xa0ms');

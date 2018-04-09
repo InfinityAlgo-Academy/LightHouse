@@ -19,10 +19,6 @@ const MAX_DOM_NODES = 1500;
 const MAX_DOM_TREE_WIDTH = 60;
 const MAX_DOM_TREE_DEPTH = 32;
 
-// Parameters for log-normal CDF scoring. See https://www.desmos.com/calculator/9cyxpm5qgp.
-const SCORING_POINT_OF_DIMINISHING_RETURNS = 2400;
-const SCORING_MEDIAN = 3000;
-
 class DOMSize extends Audit {
   static get MAX_DOM_NODES() {
     return MAX_DOM_NODES;
@@ -47,22 +43,30 @@ class DOMSize extends Audit {
     };
   }
 
+  /**
+   * @return {LH.Audit.ScoreOptions}
+   */
+  static get defaultOptions() {
+    return {
+      // see https://www.desmos.com/calculator/9cyxpm5qgp
+      scorePODR: 2400,
+      scoreMedian: 3000,
+    };
+  }
+
 
   /**
    * @param {!Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {!AuditResult}
    */
-  static audit(artifacts) {
+  static audit(artifacts, context) {
     const stats = artifacts.DOMStats;
 
-    // Use the CDF of a log-normal distribution for scoring.
-    //   <= 1500: score≈1
-    //   3000: score=0.5
-    //   >= 5970: score≈0
     const score = Audit.computeLogNormalScore(
       stats.totalDOMNodes,
-      SCORING_POINT_OF_DIMINISHING_RETURNS,
-      SCORING_MEDIAN
+      context.options.scorePODR,
+      context.options.scoreMedian
     );
 
     const headings = [

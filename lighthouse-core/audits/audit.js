@@ -43,6 +43,13 @@ class Audit {
   }
 
   /**
+   * @return {Object}
+   */
+  static get defaultOptions() {
+    return {};
+  }
+
+  /**
    * Computes a clamped score between 0 and 1 based on the measured value. Score is determined by
    * considering a log-normal distribution governed by the two control points, point of diminishing
    * returns and the median value, and returning the percentage of sites that have higher value.

@@ -260,8 +260,10 @@ class Runner {
           throw error;
         }
       }
+
+      const auditOptions = Object.assign({}, audit.defaultOptions, auditDefn.options);
       // all required artifacts are in good shape, so we proceed
-      return audit.audit(artifacts, {options: auditDefn.options || {}, settings: opts.settings});
+      return audit.audit(artifacts, {options: auditOptions, settings: opts.settings});
     // Fill remaining audit result fields.
     }).then(auditResult => Audit.generateAuditResult(audit, auditResult))
     .catch(err => {

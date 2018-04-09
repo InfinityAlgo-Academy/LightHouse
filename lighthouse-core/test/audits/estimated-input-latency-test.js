@@ -8,6 +8,7 @@
 const Audit = require('../../audits/estimated-input-latency.js');
 const Runner = require('../../runner.js');
 const assert = require('assert');
+const options = Audit.defaultOptions;
 
 const pwaTrace = require('../fixtures/traces/progressive-app.json');
 
@@ -25,7 +26,7 @@ function generateArtifactsWithTrace(trace) {
 describe('Performance: estimated-input-latency audit', () => {
   it('evaluates valid input correctly', () => {
     const artifacts = generateArtifactsWithTrace({traceEvents: pwaTrace});
-    return Audit.audit(artifacts).then(output => {
+    return Audit.audit(artifacts, {options}).then(output => {
       assert.equal(output.debugString, undefined);
       assert.equal(output.rawValue, 16.2);
       assert.equal(output.displayValue, '16\xa0ms');

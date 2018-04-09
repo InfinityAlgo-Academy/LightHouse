@@ -22,7 +22,7 @@ describe('Performance: bootup-time audit', () => {
       },
     }, Runner.instantiateComputedArtifacts());
 
-    return BootupTime.audit(artifacts).then(output => {
+    return BootupTime.audit(artifacts, {options: BootupTime.defaultOptions}).then(output => {
       assert.equal(output.details.items.length, 4);
       assert.equal(output.score, 1);
       assert.equal(Math.round(output.rawValue), 176);
@@ -51,7 +51,7 @@ describe('Performance: bootup-time audit', () => {
       },
     }, Runner.instantiateComputedArtifacts());
 
-    return BootupTime.audit(artifacts)
+    return BootupTime.audit(artifacts, {options: BootupTime.defaultOptions})
       .then(output => {
         assert.equal(output.details.items.length, 0);
         assert.equal(output.score, 1);

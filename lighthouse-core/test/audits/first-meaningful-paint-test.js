@@ -8,6 +8,7 @@
 const FMPAudit = require('../../audits/first-meaningful-paint.js');
 const Audit = require('../../audits/audit.js');
 const assert = require('assert');
+const options = FMPAudit.defaultOptions;
 const traceEvents = require('../fixtures/traces/progressive-app.json');
 const badNavStartTrace = require('../fixtures/traces/bad-nav-start-ts.json');
 const lateTracingStartedTrace = require('../fixtures/traces/tracingstarted-after-navstart.json');
@@ -32,7 +33,7 @@ describe('Performance: first-meaningful-paint audit', () => {
     let fmpResult;
 
     it('processes a valid trace file', () => {
-      return FMPAudit.audit(generateArtifactsWithTrace(traceEvents)).then(result => {
+      return FMPAudit.audit(generateArtifactsWithTrace(traceEvents), {options}).then(result => {
         fmpResult = result;
       }).catch(_ => {
         assert.ok(false);
@@ -67,7 +68,8 @@ describe('Performance: first-meaningful-paint audit', () => {
 
   describe('finds correct FMP', () => {
     it('if there was a tracingStartedInPage after the frame\'s navStart', () => {
-      return FMPAudit.audit(generateArtifactsWithTrace(lateTracingStartedTrace)).then(result => {
+      const artifacts = generateArtifactsWithTrace(lateTracingStartedTrace);
+      return FMPAudit.audit(artifacts, {options}).then(result => {
         assert.equal(result.displayValue, '530\xa0ms');
         assert.equal(result.rawValue, 529.9);
         assert.equal(result.extendedInfo.value.timestamps.navStart, 29343540951);
@@ -78,7 +80,8 @@ describe('Performance: first-meaningful-paint audit', () => {
     });
 
     it('if there was a tracingStartedInPage after the frame\'s navStart #2', () => {
-      return FMPAudit.audit(generateArtifactsWithTrace(badNavStartTrace)).then(result => {
+      const artifacts = generateArtifactsWithTrace(badNavStartTrace);
+      return FMPAudit.audit(artifacts, {options}).then(result => {
         assert.equal(result.displayValue, '630\xa0ms');
         assert.equal(result.rawValue, 632.4);
         assert.equal(result.extendedInfo.value.timestamps.navStart, 8885424467);
@@ -89,7 +92,7 @@ describe('Performance: first-meaningful-paint audit', () => {
     });
 
     it('if it appears slightly before the fCP', () => {
-      return FMPAudit.audit(generateArtifactsWithTrace(preactTrace)).then(result => {
+      return FMPAudit.audit(generateArtifactsWithTrace(preactTrace), {options}).then(result => {
         assert.equal(result.displayValue, '880\xa0ms');
         assert.equal(result.rawValue, 878.4);
         assert.equal(result.extendedInfo.value.timestamps.navStart, 1805796384607);
@@ -100,7 +103,7 @@ describe('Performance: first-meaningful-paint audit', () => {
     });
 
     it('from candidates if no defined FMP exists', () => {
-      return FMPAudit.audit(generateArtifactsWithTrace(noFMPtrace)).then(result => {
+      return FMPAudit.audit(generateArtifactsWithTrace(noFMPtrace), {options}).then(result => {
         assert.equal(result.displayValue, '4,460\xa0ms');
         assert.equal(result.rawValue, 4460.9);
         assert.equal(result.extendedInfo.value.timings.fCP, 1494.73);
@@ -111,7 +114,7 @@ describe('Performance: first-meaningful-paint audit', () => {
   });
 
   it('handles traces missing an FCP', () => {
-    return FMPAudit.audit(generateArtifactsWithTrace(noFCPtrace)).then(result => {
+    return FMPAudit.audit(generateArtifactsWithTrace(noFCPtrace), {options}).then(result => {
       assert.strictEqual(result.debugString, undefined);
       assert.strictEqual(result.displayValue, '480\xa0ms');
       assert.strictEqual(result.rawValue, 482.3);

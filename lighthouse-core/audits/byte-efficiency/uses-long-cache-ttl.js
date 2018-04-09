@@ -14,10 +14,6 @@ const URL = require('../../lib/url-shim');
 // Ignore assets that have very high likelihood of cache hit
 const IGNORE_THRESHOLD_IN_PERCENT = 0.925;
 
-// Scoring curve: https://www.desmos.com/calculator/zokzso8umm
-const SCORING_POINT_OF_DIMINISHING_RETURNS = 4; // 4 KB
-const SCORING_MEDIAN = 768; // 768 KB
-
 class CacheHeaders extends Audit {
   /**
    * @return {!AuditMeta}
@@ -33,6 +29,17 @@ class CacheHeaders extends Audit {
         '[Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#cache-control).',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['devtoolsLogs'],
+    };
+  }
+
+  /**
+   * @return {LH.Audit.ScoreOptions}
+   */
+  static get defaultOptions() {
+    return {
+      // see https://www.desmos.com/calculator/zokzso8umm
+      scorePODR: 4 * 1024,
+      scoreMedian: 768 * 1024,
     };
   }
 
@@ -154,9 +161,10 @@ class CacheHeaders extends Audit {
 
   /**
    * @param {!Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {!AuditResult}
    */
-  static audit(artifacts) {
+  static audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     return artifacts.requestNetworkRecords(devtoolsLogs).then(records => {
       const results = [];
@@ -205,14 +213,10 @@ class CacheHeaders extends Audit {
         (a, b) => a.cacheLifetimeInSeconds - b.cacheLifetimeInSeconds || b.totalBytes - a.totalBytes
       );
 
-      // Use the CDF of a log-normal distribution for scoring.
-      //   <= 4KB: score≈1
-      //   768KB: score=0.5
-      //   >= 4600KB: score≈0.05
       const score = Audit.computeLogNormalScore(
-        totalWastedBytes / 1024,
-        SCORING_POINT_OF_DIMINISHING_RETURNS,
-        SCORING_MEDIAN
+        totalWastedBytes,
+        context.options.scorePODR,
+        context.options.scoreMedian
       );
 
       const headings = [

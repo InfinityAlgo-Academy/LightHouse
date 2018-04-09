@@ -9,12 +9,6 @@ const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util');
 const LHError = require('../lib/errors');
 
-// Parameters (in ms) for log-normal CDF scoring. To see the curve:
-// https://www.desmos.com/calculator/joz3pqttdq
-const SCORING_POINT_OF_DIMINISHING_RETURNS = 1600;
-const SCORING_MEDIAN = 4000;
-
-
 class FirstMeaningfulPaint extends Audit {
   /**
    * @return {!AuditMeta}
@@ -31,13 +25,25 @@ class FirstMeaningfulPaint extends Audit {
   }
 
   /**
+   * @return {LH.Audit.ScoreOptions}
+   */
+  static get defaultOptions() {
+    return {
+      // see https://www.desmos.com/calculator/joz3pqttdq
+      scorePODR: 1600,
+      scoreMedian: 4000,
+    };
+  }
+
+  /**
    * Audits the page to give a score for First Meaningful Paint.
    * @see https://github.com/GoogleChrome/lighthouse/issues/26
    * @see https://docs.google.com/document/d/1BR94tJdZLsin5poeet0XoTW60M0SjvOJQttKT-JK8HI/view
    * @param {!Artifacts} artifacts The artifacts from the gather phase.
+   * @param {LH.Audit.Context} context
    * @return {!Promise<!AuditResult>}
    */
-  static audit(artifacts) {
+  static audit(artifacts, context) {
     const trace = artifacts.traces[this.DEFAULT_PASS];
     return artifacts.requestTraceOfTab(trace).then(tabTrace => {
       if (!tabTrace.firstMeaningfulPaintEvt) {
@@ -50,7 +56,7 @@ class FirstMeaningfulPaint extends Audit {
         throw new LHError(LHError.errors.NO_NAVSTART);
       }
 
-      const result = this.calculateScore(tabTrace);
+      const result = this.calculateScore(tabTrace, context);
 
       return {
         score: result.score,
@@ -64,7 +70,7 @@ class FirstMeaningfulPaint extends Audit {
     });
   }
 
-  static calculateScore(traceOfTab) {
+  static calculateScore(traceOfTab, context) {
     // Expose the raw, unchanged monotonic timestamps from the trace, along with timing durations
     const extendedInfo = {
       timestamps: {
@@ -94,15 +100,11 @@ class FirstMeaningfulPaint extends Audit {
       }
     });
 
-    // Use the CDF of a log-normal distribution for scoring.
-    //   < 1100ms: score≈1
-    //   4000ms: score=0.5
-    //   >= 14000ms: score≈0
     const firstMeaningfulPaint = traceOfTab.timings.firstMeaningfulPaint;
     const score = Audit.computeLogNormalScore(
       firstMeaningfulPaint,
-      SCORING_POINT_OF_DIMINISHING_RETURNS,
-      SCORING_MEDIAN
+      context.options.scorePODR,
+      context.options.scoreMedian
     );
 
     return {

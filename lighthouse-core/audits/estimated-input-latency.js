@@ -10,11 +10,6 @@ const Util = require('../report/v2/renderer/util');
 const TracingProcessor = require('../lib/traces/tracing-processor');
 const LHError = require('../lib/errors');
 
-// Parameters (in ms) for log-normal CDF scoring. To see the curve:
-// https://www.desmos.com/calculator/srv0hqhf7d
-const SCORING_POINT_OF_DIMINISHING_RETURNS = 50;
-const SCORING_MEDIAN = 100;
-
 class EstimatedInputLatency extends Audit {
   /**
    * @return {!AuditMeta}
@@ -33,7 +28,18 @@ class EstimatedInputLatency extends Audit {
     };
   }
 
-  static calculate(tabTrace) {
+  /**
+   * @return {LH.Audit.ScoreOptions}
+   */
+  static get defaultOptions() {
+    return {
+      // see https://www.desmos.com/calculator/srv0hqhf7d
+      scorePODR: 50,
+      scoreMedian: 100,
+    };
+  }
+
+  static calculate(tabTrace, context) {
     const startTime = tabTrace.timings.firstMeaningfulPaint;
     if (!startTime) {
       throw new LHError(LHError.errors.NO_FMP);
@@ -43,16 +49,10 @@ class EstimatedInputLatency extends Audit {
     const ninetieth = latencyPercentiles.find(result => result.percentile === 0.9);
     const rawValue = parseFloat(ninetieth.time.toFixed(1));
 
-    // Use the CDF of a log-normal distribution for scoring.
-    //  10th Percentile ≈ 58ms
-    //  25th Percentile ≈ 75ms
-    //  Median = 100ms
-    //  75th Percentile ≈ 133ms
-    //  95th Percentile ≈ 199ms
     const score = Audit.computeLogNormalScore(
       ninetieth.time,
-      SCORING_POINT_OF_DIMINISHING_RETURNS,
-      SCORING_MEDIAN
+      context.options.scorePODR,
+      context.options.scoreMedian
     );
 
     return {
@@ -69,13 +69,14 @@ class EstimatedInputLatency extends Audit {
    * Audits the page to estimate input latency.
    * @see https://github.com/GoogleChrome/lighthouse/issues/28
    * @param {!Artifacts} artifacts The artifacts from the gather phase.
+   * @param {LH.Audit.Context} context
    * @return {!Promise<!AuditResult>} The score from the audit, ranging from 0-100.
    */
-  static audit(artifacts) {
+  static audit(artifacts, context) {
     const trace = artifacts.traces[this.DEFAULT_PASS];
 
     return artifacts.requestTraceOfTab(trace)
-        .then(EstimatedInputLatency.calculate);
+        .then(traceOfTab => EstimatedInputLatency.calculate(traceOfTab, context));
   }
 }
 

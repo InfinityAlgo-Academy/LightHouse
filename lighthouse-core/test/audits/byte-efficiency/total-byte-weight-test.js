@@ -7,6 +7,7 @@
 
 const TotalByteWeight = require('../../../audits/byte-efficiency/total-byte-weight.js');
 const assert = require('assert');
+const options = TotalByteWeight.defaultOptions;
 
 /* eslint-env mocha */
 
@@ -39,7 +40,7 @@ describe('Total byte weight audit', () => {
       ['file.jpg', 70],
     ]);
 
-    return TotalByteWeight.audit(artifacts).then(result => {
+    return TotalByteWeight.audit(artifacts, {options}).then(result => {
       assert.strictEqual(result.rawValue, 150 * 1024);
       assert.strictEqual(result.score, 1);
       const results = result.details.items;
@@ -64,7 +65,7 @@ describe('Total byte weight audit', () => {
       ['small6.js', 5],
     ]);
 
-    return TotalByteWeight.audit(artifacts).then(result => {
+    return TotalByteWeight.audit(artifacts, {options}).then(result => {
       assert.ok(0.40 < result.score && result.score < 0.6, 'score is around 0.5');
       assert.strictEqual(result.rawValue, 4180 * 1024);
       const results = result.details.items;
@@ -80,7 +81,7 @@ describe('Total byte weight audit', () => {
       ['file.jpg', 7000],
     ]);
 
-    return TotalByteWeight.audit(artifacts).then(result => {
+    return TotalByteWeight.audit(artifacts, {options}).then(result => {
       assert.strictEqual(result.rawValue, 15000 * 1024);
       assert.strictEqual(result.score, 0);
     });

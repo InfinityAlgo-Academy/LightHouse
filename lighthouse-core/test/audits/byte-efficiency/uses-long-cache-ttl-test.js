@@ -8,6 +8,7 @@
 const CacheHeadersAudit = require('../../../audits/byte-efficiency/uses-long-cache-ttl.js');
 const assert = require('assert');
 const WebInspector = require('../../../lib/web-inspector');
+const options = CacheHeadersAudit.defaultOptions;
 
 /* eslint-env mocha */
 
@@ -56,7 +57,7 @@ describe('Cache headers audit', () => {
 
   it('detects missing cache headers', () => {
     networkRecords = [networkRecord()];
-    return CacheHeadersAudit.audit(artifacts).then(result => {
+    return CacheHeadersAudit.audit(artifacts, {options}).then(result => {
       const items = result.extendedInfo.value.results;
       assert.equal(items.length, 1);
       assert.equal(items[0].cacheLifetimeInSeconds, 0);
@@ -73,7 +74,7 @@ describe('Cache headers audit', () => {
       networkRecord({headers: {'cache-control': 'max-age=31536000'}}), // a year
     ];
 
-    return CacheHeadersAudit.audit(artifacts).then(result => {
+    return CacheHeadersAudit.audit(artifacts, {options}).then(result => {
       const items = result.details.items;
       assert.equal(items.length, 3);
       assert.equal(items[0].cacheLifetimeInSeconds, 3600);
@@ -98,7 +99,7 @@ describe('Cache headers audit', () => {
       networkRecord({headers: {expires: expiresIn(3600)}}), // an hour
     ];
 
-    return CacheHeadersAudit.audit(artifacts).then(result => {
+    return CacheHeadersAudit.audit(artifacts, {options}).then(result => {
       const items = result.extendedInfo.value.results;
       assert.equal(items.length, 3);
       closeEnough(items[0].cacheLifetimeInSeconds, 3600);
@@ -124,7 +125,7 @@ describe('Cache headers audit', () => {
       }}),
     ];
 
-    return CacheHeadersAudit.audit(artifacts).then(result => {
+    return CacheHeadersAudit.audit(artifacts, {options}).then(result => {
       const items = result.extendedInfo.value.results;
       assert.equal(items.length, 2);
       assert.ok(Math.abs(items[0].cacheLifetimeInSeconds - 3600) <= 1, 'invalid expires parsing');
@@ -140,7 +141,7 @@ describe('Cache headers audit', () => {
       networkRecord({headers: {'etag': 'md5hashhere', 'cache-control': 'max-age=60'}}),
     ];
 
-    return CacheHeadersAudit.audit(artifacts).then(result => {
+    return CacheHeadersAudit.audit(artifacts, {options}).then(result => {
       const items = result.extendedInfo.value.results;
       assert.equal(items.length, 2);
     });
@@ -155,7 +156,7 @@ describe('Cache headers audit', () => {
       networkRecord({headers: {pragma: 'no-cache'}}),
     ];
 
-    return CacheHeadersAudit.audit(artifacts).then(result => {
+    return CacheHeadersAudit.audit(artifacts, {options}).then(result => {
       const items = result.extendedInfo.value.results;
       assert.equal(result.score, 1);
       assert.equal(items.length, 0);
@@ -170,7 +171,7 @@ describe('Cache headers audit', () => {
       networkRecord({resourceType: WebInspector.resourceTypes.XHR}),
     ];
 
-    return CacheHeadersAudit.audit(artifacts).then(result => {
+    return CacheHeadersAudit.audit(artifacts, {options}).then(result => {
       assert.equal(result.score, 1);
       const items = result.extendedInfo.value.results;
       assert.equal(items.length, 1);

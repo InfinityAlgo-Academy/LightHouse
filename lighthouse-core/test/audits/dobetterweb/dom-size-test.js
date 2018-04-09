@@ -7,6 +7,7 @@
 
 const DOMSize = require('../../../audits/dobetterweb/dom-size.js');
 const assert = require('assert');
+const options = DOMSize.defaultOptions;
 
 /* eslint-env mocha */
 
@@ -21,7 +22,7 @@ describe('Num DOM nodes audit', () => {
   };
 
   it('calculates score hitting top of distribution', () => {
-    const auditResult = DOMSize.audit(artifact);
+    const auditResult = DOMSize.audit(artifact, {options});
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.rawValue, numNodes);
     assert.equal(auditResult.displayValue, `${numNodes.toLocaleString()} nodes`);
@@ -32,11 +33,11 @@ describe('Num DOM nodes audit', () => {
 
   it('calculates score hitting mid distribution', () => {
     artifact.DOMStats.totalDOMNodes = 3100;
-    assert.equal(DOMSize.audit(artifact).score, 0.43);
+    assert.equal(DOMSize.audit(artifact, {options}).score, 0.43);
   });
 
   it('calculates score hitting bottom of distribution', () => {
     artifact.DOMStats.totalDOMNodes = 5970;
-    assert.equal(DOMSize.audit(artifact).score, 0);
+    assert.equal(DOMSize.audit(artifact, {options}).score, 0);
   });
 });

@@ -9,11 +9,6 @@ const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util');
 const LHError = require('../lib/errors');
 
-// Parameters (in ms) for log-normal CDF scoring. To see the curve:
-// https://www.desmos.com/calculator/mdgjzchijg
-const SCORING_POINT_OF_DIMINISHING_RETURNS = 1250;
-const SCORING_MEDIAN = 5500;
-
 class SpeedIndexMetric extends Audit {
   /**
    * @return {!AuditMeta}
@@ -30,12 +25,24 @@ class SpeedIndexMetric extends Audit {
   }
 
   /**
+   * @return {LH.Audit.ScoreOptions}
+   */
+  static get defaultOptions() {
+    return {
+      // see https://www.desmos.com/calculator/mdgjzchijg
+      scorePODR: 1250,
+      scoreMedian: 5500,
+    };
+  }
+
+  /**
    * Audits the page to give a score for the Speed Index.
    * @see  https://github.com/GoogleChrome/lighthouse/issues/197
    * @param {!Artifacts} artifacts The artifacts from the gather phase.
+   * @param {LH.Audit.Context} context
    * @return {!Promise<!AuditResult>}
    */
-  static audit(artifacts) {
+  static audit(artifacts, context) {
     const trace = artifacts.traces[this.DEFAULT_PASS];
 
     // run speedline
@@ -55,16 +62,10 @@ class SpeedIndexMetric extends Audit {
         }
       });
 
-      // Use the CDF of a log-normal distribution for scoring.
-      //  10th Percentile = 2,240
-      //  25th Percentile = 3,430
-      //  Median = 5,500
-      //  75th Percentile = 8,820
-      //  95th Percentile = 17,400
       const score = Audit.computeLogNormalScore(
         speedline.perceptualSpeedIndex,
-        SCORING_POINT_OF_DIMINISHING_RETURNS,
-        SCORING_MEDIAN
+        context.options.scorePODR,
+        context.options.scoreMedian
       );
 
       const extendedInfo = {

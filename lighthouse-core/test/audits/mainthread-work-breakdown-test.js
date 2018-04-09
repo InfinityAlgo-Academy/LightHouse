@@ -9,6 +9,7 @@
 const PageExecutionTimings = require('../../audits/mainthread-work-breakdown.js');
 const Runner = require('../../runner.js');
 const assert = require('assert');
+const options = PageExecutionTimings.defaultOptions;
 
 const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
 const siteWithRedirectTrace = require('../fixtures/traces/site-with-redirect.json');
@@ -67,7 +68,7 @@ describe('Performance: page execution timings audit', () => {
       },
     }, Runner.instantiateComputedArtifacts());
 
-    return PageExecutionTimings.audit(artifacts).then(output => {
+    return PageExecutionTimings.audit(artifacts, {options}).then(output => {
       const valueOf = name => Math.round(output.extendedInfo.value[name]);
 
       assert.equal(output.details.items.length, 12);
@@ -89,7 +90,7 @@ describe('Performance: page execution timings audit', () => {
       },
     }, Runner.instantiateComputedArtifacts());
 
-    return PageExecutionTimings.audit(artifacts).then(output => {
+    return PageExecutionTimings.audit(artifacts, {options}).then(output => {
       const valueOf = name => Math.round(output.extendedInfo.value[name]);
       assert.equal(output.details.items.length, 13);
       assert.equal(output.score, 1);
@@ -110,7 +111,7 @@ describe('Performance: page execution timings audit', () => {
       },
     }, Runner.instantiateComputedArtifacts());
 
-    return PageExecutionTimings.audit(artifacts).then(output => {
+    return PageExecutionTimings.audit(artifacts, {options}).then(output => {
       const valueOf = name => Math.round(output.extendedInfo.value[name]);
       assert.equal(output.details.items.length, 12);
       assert.equal(output.score, 1);
@@ -131,7 +132,7 @@ describe('Performance: page execution timings audit', () => {
       },
     }, Runner.instantiateComputedArtifacts());
 
-    return PageExecutionTimings.audit(artifacts).then(output => {
+    return PageExecutionTimings.audit(artifacts, {options}).then(output => {
       assert.equal(output.details.items.length, 0);
       assert.equal(output.score, 1);
       assert.equal(Math.round(output.rawValue), 0);

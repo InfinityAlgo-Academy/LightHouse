@@ -268,6 +268,12 @@ function merge(base, extension) {
   return extension;
 }
 
+function cloneArrayWithPluginSafety(array) {
+  return array.map(item => {
+    return typeof item === 'object' ? Object.assign({}, item) : item;
+  });
+}
+
 function deepClone(json) {
   const cloned = JSON.parse(JSON.stringify(json));
 
@@ -275,12 +281,12 @@ function deepClone(json) {
   // injection of plugins.
   if (Array.isArray(json.passes)) {
     cloned.passes.forEach((pass, i) => {
-      pass.gatherers = Array.from(json.passes[i].gatherers);
+      pass.gatherers = cloneArrayWithPluginSafety(json.passes[i].gatherers);
     });
   }
 
   if (Array.isArray(json.audits)) {
-    cloned.audits = Array.from(json.audits);
+    cloned.audits = cloneArrayWithPluginSafety(json.audits);
   }
 
   return cloned;

@@ -11,6 +11,7 @@ const Audit = require('../../audits/speed-index-metric.js');
 const assert = require('assert');
 const pwaTrace = require('../fixtures/traces/progressive-app.json');
 const Runner = require('../../runner.js');
+const options = Audit.defaultOptions;
 
 const emptyTraceStub = {
   traces: {
@@ -41,7 +42,7 @@ describe('Performance: speed-index-metric audit', () => {
       traces: {defaultPass: {traceEvents: pwaTrace}},
     });
 
-    return Audit.audit(artifacts).then(result => {
+    return Audit.audit(artifacts, {options}).then(result => {
       assert.equal(result.score, 1);
       assert.equal(result.rawValue, 609);
       assert.equal(Math.round(result.extendedInfo.value.timings.firstVisualChange), 475);
@@ -53,7 +54,7 @@ describe('Performance: speed-index-metric audit', () => {
 
   it('throws an error if no frames', () => {
     const artifacts = mockArtifactsWithSpeedlineResult({frames: []});
-    return Audit.audit(artifacts).then(
+    return Audit.audit(artifacts, {options}).then(
       _ => assert.ok(false),
       _ => assert.ok(true));
   });
@@ -65,7 +66,7 @@ describe('Performance: speed-index-metric audit', () => {
     };
     const artifacts = mockArtifactsWithSpeedlineResult(SpeedlineResult);
 
-    return Audit.audit(artifacts).then(
+    return Audit.audit(artifacts, {options}).then(
       _ => assert.ok(false),
       _ => assert.ok(true));
   });
@@ -79,7 +80,7 @@ describe('Performance: speed-index-metric audit', () => {
     };
     const artifacts = mockArtifactsWithSpeedlineResult(SpeedlineResult);
 
-    return Audit.audit(artifacts).then(response => {
+    return Audit.audit(artifacts, {options}).then(response => {
       assert.equal(response.rawValue, 845);
       assert.equal(response.extendedInfo.value.timings.firstVisualChange, 630);
       assert.equal(response.extendedInfo.value.timings.visuallyComplete, 930);
