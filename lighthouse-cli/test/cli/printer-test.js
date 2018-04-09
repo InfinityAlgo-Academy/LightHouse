@@ -10,6 +10,7 @@ const Printer = require('../../printer.js');
 const assert = require('assert');
 const fs = require('fs');
 const sampleResults = require('../../../lighthouse-core/test/results/sample_v2.json');
+const csvValidator = require('csv-validator');
 
 describe('Printer', () => {
   it('accepts valid output paths', () => {
@@ -33,6 +34,27 @@ describe('Printer', () => {
     const htmlOutput = Printer.createOutput(sampleResults, mode);
     assert.ok(/<!doctype/gim.test(htmlOutput));
     assert.ok(/<html lang="en"/gim.test(htmlOutput));
+  });
+
+  it('creates CSV for results', async () => {
+    const mode = Printer.OutputMode.csv;
+    const path = './.results-as-csv.csv';
+    const headers = {
+      category: '',
+      name: '',
+      title: '',
+      type: '',
+      score: 42,
+    };
+    await Printer.write(sampleResults, mode, path);
+
+    try {
+      await csvValidator(path, headers);
+    } catch (err) {
+      assert.fail('CSV parser error:\n' + err.join('\n'));
+    } finally {
+      fs.unlinkSync(path);
+    }
   });
 
   it('writes file for results', () => {

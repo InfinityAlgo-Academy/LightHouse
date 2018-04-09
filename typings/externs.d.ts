@@ -92,6 +92,19 @@ declare global {
       artifacts?: Object;
       initialUrl: string;
       fetchedAt: string;
+      reportCategories: ReportCategory[];
+    }
+
+    export interface ReportCategory {
+      name: string;
+      description: string;
+      audits: ReportAudit[];
+    }
+
+    export interface ReportAudit {
+      id: string;
+      weight: number;
+      group: string;
     }
 
     export interface LaunchedChrome {
