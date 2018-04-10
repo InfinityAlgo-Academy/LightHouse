@@ -72,4 +72,4 @@ function aUsedFunction () {
 }
 
 aUsedFunction();
-longTask();
+longTask(175);

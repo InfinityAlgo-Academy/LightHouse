@@ -145,20 +145,31 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
     function addDependentNetworkRequest(cpuNode, reqId) {
       const networkNode = networkNodeOutput.idToNodeMap.get(reqId);
       if (!networkNode ||
-          networkNode.record._resourceType !== WebInspector.resourceTypes.XHR) return;
+          // Ignore all non-XHRs
+          networkNode.record._resourceType !== WebInspector.resourceTypes.XHR ||
+          // Ignore all network nodes that started before this CPU task started
+          // A network request that started earlier could not possibly have been started by this task
+          networkNode.startTime <= cpuNode.startTime) return;
       cpuNode.addDependent(networkNode);
     }
 
     function addDependencyOnUrl(cpuNode, url) {
       if (!url) return;
+      // Allow network requests that end up to 100ms before the task started
+      // Some script evaluations can start before the script finishes downloading
+      const minimumAllowableTimeSinceNetworkNodeEnd = -100 * 1000;
       const candidates = networkNodeOutput.urlToNodeMap.get(url) || [];
 
       let minCandidate = null;
       let minDistance = Infinity;
       // Find the closest request that finished before this CPU task started
       candidates.forEach(candidate => {
+        // Explicitly ignore all requests that started after this CPU node
+        // A network request that started after this task started cannot possibly be a dependency
+        if (cpuNode.startTime <= candidate.startTime) return;
+
         const distance = cpuNode.startTime - candidate.endTime;
-        if (distance > 0 && distance < minDistance) {
+        if (distance >= minimumAllowableTimeSinceNetworkNodeEnd && distance < minDistance) {
           minCandidate = candidate;
           minDistance = distance;
         }

@@ -32,9 +32,9 @@ function generateInlineStyleWithSize(sizeInBytes, firstContent = '', used = fals
   document.head.appendChild(style);
 }
 
-function longTask() {
+function longTask(length = 75) {
   const start = Date.now();
-  while (Date.now() < start + 100) ;
+  while (Date.now() < start + length) ;
 }
 
 // Add a long task to delay FI
@@ -53,6 +53,7 @@ setTimeout(() => {
     left: 0;
   }
 </style>
+<script src="script.js"></script>
 </head>
 
 <body>
@@ -165,7 +166,6 @@ generateInlineStyleWithSize(24000, '.definitely-unused { background: none; }\n')
 
 <!-- Ensure the page takes at least 7 seconds and we don't exit before the lazily loaded image -->
 <script src="delay-complete.js?delay=7000" async></script>
-<script src="script.js"></script>
 <script>
   // Used block #1
   // FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES -- FILLER DATA JUST TO OCCUPY BYTES

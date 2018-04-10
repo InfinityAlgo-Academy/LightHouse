@@ -17,7 +17,7 @@ const assert = require('assert');
 
 function createRequest(requestId, url, startTime = 0, _initiator = null, _resourceType = null) {
   startTime = startTime / 1000;
-  const endTime = startTime + 0.1;
+  const endTime = startTime + 0.05;
   return {requestId, url, startTime, endTime, _initiator, _resourceType};
 }
 
@@ -206,6 +206,48 @@ describe('PageDependencyGraph computed artifact:', () => {
       assert.deepEqual(nodes[1].getDependencies(), [nodes[0]]);
       assert.deepEqual(nodes[2].getDependencies(), [nodes[0]]);
       assert.deepEqual(nodes[3].getDependencies(), [nodes[0]]); // should depend on rootNode instead
+    });
+
+    it('should be forgiving without cyclic dependencies', () => {
+      const request1 = createRequest(1, '1', 0);
+      const request2 = createRequest(2, '2', 250, null, WebInspector.resourceTypes.XHR);
+      const request3 = createRequest(3, '3', 210);
+      const request4 = createRequest(4, '4', 590);
+      const request5 = createRequest(5, '5', 595, null, WebInspector.resourceTypes.XHR);
+      const networkRecords = [request1, request2, request3, request4, request5];
+
+      addTaskEvents(200, 200, [
+        // CPU 1.2 should depend on Network 1
+        {name: 'EvaluateScript', data: {url: '1'}},
+
+        // Network 2 should depend on CPU 1.2, but 1.2 should not depend on Network 1
+        {name: 'ResourceSendRequest', data: {requestId: 2}},
+        {name: 'XHRReadyStateChange', data: {readyState: 4, url: '2'}},
+
+        // CPU 1.2 should not depend on Network 3 because it starts after CPU 1.2
+        {name: 'EvaluateScript', data: {url: '3'}},
+      ]);
+
+      addTaskEvents(600, 150, [
+        // CPU 1.4 should depend on Network 4 even though it ends at 410ms
+        {name: 'InvalidateLayout', data: {stackTrace: [{url: '4'}]}},
+        // Network 5 should not depend on CPU 1.4 because it started before CPU 1.4
+        {name: 'ResourceSendRequest', data: {requestId: 5}},
+      ]);
+
+      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const nodes = [];
+      graph.traverse(node => nodes.push(node));
+
+      const getDependencyIds = node => node.getDependencies().map(node => node.id);
+
+      assert.deepEqual(getDependencyIds(nodes[0]), []);
+      assert.deepEqual(getDependencyIds(nodes[1]), [1, '1.200000']);
+      assert.deepEqual(getDependencyIds(nodes[2]), [1]);
+      assert.deepEqual(getDependencyIds(nodes[3]), [1]);
+      assert.deepEqual(getDependencyIds(nodes[4]), [1]);
+      assert.deepEqual(getDependencyIds(nodes[5]), [1]);
+      assert.deepEqual(getDependencyIds(nodes[6]), [4]);
     });
   });
 });
