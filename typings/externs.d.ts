@@ -102,8 +102,17 @@ declare global {
       friendlyMessage?: string;
     }
 
+    /**
+     * A record of DevTools Debugging Protocol events.
+     */
+    export type DevtoolsLog = Array<Protocol.RawEventMessage>;
+
     export interface Trace {
       traceEvents: TraceEvent[];
+      metadata?: {
+        'cpu-family'?: number;
+      };
+      [futureProps: string]: any;
     }
 
     export interface TraceEvent {

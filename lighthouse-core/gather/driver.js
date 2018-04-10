@@ -729,7 +729,6 @@ class Driver {
     return new Promise((resolve, reject) => {
       // If this takes more than 1s, reject the Promise.
       // Why? Encoding issues can lead to hanging getResponseBody calls: https://github.com/GoogleChrome/lighthouse/pull/4718
-      // @ts-ignore TODO(bckenny): fix LHError constructor/errors mismatch
       const err = new LHError(LHError.errors.REQUEST_CONTENT_TIMEOUT);
       const asyncTimeout = setTimeout((_ => reject(err)), timeout);
 
@@ -941,7 +940,7 @@ class Driver {
 
   /**
    * Stop recording to devtoolsLog and return log contents.
-   * @return {Array<LH.Protocol.RawEventMessage>}
+   * @return {LH.DevtoolsLog}
    */
   endDevtoolsLog() {
     this._devtoolsLog.endRecording();

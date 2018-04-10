@@ -17,13 +17,13 @@ class DevtoolsLog {
   constructor(regexFilter) {
     this._filter = regexFilter;
 
-    /** @type {Array<LH.Protocol.RawEventMessage>} */
+    /** @type {LH.DevtoolsLog} */
     this._messages = [];
     this._isRecording = false;
   }
 
   /**
-   * @return {Array<LH.Protocol.RawEventMessage>}
+   * @return {LH.DevtoolsLog}
    */
   get messages() {
     return this._messages;

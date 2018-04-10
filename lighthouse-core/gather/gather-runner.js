@@ -19,7 +19,7 @@ const Driver = require('../gather/driver.js'); // eslint-disable-line no-unused-
  * `collectArtifacts`.
  * @typedef {{LighthouseRunWarnings: Array<string>, [artifactName: string]: Array<*>}} GathererResults
  */
-/** @typedef {{traces: Object<string, LH.Trace>, devtoolsLogs: Object<string, Array<LH.Protocol.RawEventMessage>>}} TracingData */
+/** @typedef {{traces: Object<string, LH.Trace>, devtoolsLogs: Object<string, LH.DevtoolsLog>}} TracingData */
 
 /**
  * Class that drives browser to load the page and runs gatherer lifecycle hooks.
@@ -173,7 +173,6 @@ class GatherRunner {
     }
 
     if (errorCode) {
-      // @ts-ignore TODO(bckenny): fix LHError constructor/errors mismatch
       const error = new LHError(errorCode, {reason: errorReason});
       log.error('GatherRunner', error.message, url);
       return error;

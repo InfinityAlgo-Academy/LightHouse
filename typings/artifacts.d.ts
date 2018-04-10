@@ -11,12 +11,12 @@ declare global {
       LighthouseRunWarnings: string[];
       UserAgent: string;
       traces: {[passName: string]: Trace};
-      devtoolsLogs: {[passName: string]: Protocol.RawEventMessage};
+      devtoolsLogs: {[passName: string]: DevtoolsLog};
     }
 
     module Artifacts {
       export interface MetricComputationDataInput {
-        devtoolsLog: Array<Protocol.RawEventMessage>;
+        devtoolsLog: DevtoolsLog;
         trace: Trace;
         settings: Config.Settings;
       }

@@ -69,11 +69,10 @@ module.exports = {
     'arrow-parens': 0,
   },
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 2018,
     ecmaFeatures: {
       globalReturn: true,
       jsx: false,
-      experimentalObjectRestSpread: false,
     },
     sourceType: 'script',
   },

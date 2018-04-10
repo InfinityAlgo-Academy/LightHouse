@@ -259,7 +259,7 @@ class NetworkRecorder extends EventEmitter {
 
   /**
    * Construct network records from a log of devtools protocol messages.
-   * @param {Array<LH.Protocol.RawEventMessage>} devtoolsLog
+   * @param {LH.DevtoolsLog} devtoolsLog
    * @return {Array<LH.WebInspector.NetworkRequest>}
    */
   static recordsFromLogs(devtoolsLog) {

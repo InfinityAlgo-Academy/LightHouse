@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-// @ts-nocheck
 'use strict';
 
 const fs = require('fs');
@@ -15,10 +14,24 @@ const TraceParser = require('./traces/trace-parser');
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 
+const artifactsFilename = 'artifacts.json';
+const traceSuffix = '.trace.json';
+const devtoolsLogSuffix = '.devtoolslog.json';
+
+/** @typedef {{timestamp: number, datauri: string}} Screenshot */
+/**
+ * @typedef {object} PreparedAssets
+ * @property {string} passName
+ * @property {LH.Trace} traceData
+ * @property {LH.DevtoolsLog} devtoolsLog
+ * @property {string} screenshotsHTML
+ * @property {Array<Screenshot>} screenshots
+ */
+
 /**
  * Generate basic HTML page of screenshot filmstrip
- * @param {!Array<{timestamp: number, datauri: string}>} screenshots
- * @return {!string}
+ * @param {Array<Screenshot>} screenshots
+ * @return {string}
  */
 function screenshotDump(screenshots) {
   return `
@@ -58,25 +71,20 @@ img {
   `;
 }
 
-const artifactsFilename = 'artifacts.json';
-const traceSuffix = '.trace.json';
-const devtoolsLogSuffix = '.devtoolslog.json';
-
 /**
  * Load artifacts object from files located within basePath
  * Also save the traces to their own files
  * @param {string} basePath
- * @return {!Promise<!Artifacts>}
+ * @return {Promise<LH.Artifacts>}
  */
-// Set to ignore because testing it would imply testing fs, which isn't strictly necessary.
-/* istanbul ignore next */
-function loadArtifacts(basePath) {
+async function loadArtifacts(basePath) {
   log.log('Reading artifacts from disk:', basePath);
 
   if (!fs.existsSync(basePath)) return Promise.reject(new Error('No saved artifacts found'));
 
   // load artifacts.json
   const filenames = fs.readdirSync(basePath);
+  /** @type {LH.Artifacts} */
   const artifacts = JSON.parse(fs.readFileSync(path.join(basePath, artifactsFilename), 'utf8'));
 
   // load devtoolsLogs
@@ -104,91 +112,91 @@ function loadArtifacts(basePath) {
       });
     });
   });
-  return Promise.all(promises).then(_ => artifacts);
+  await Promise.all(promises);
+
+  return artifacts;
 }
 
 /**
  * Save artifacts object mostly to single file located at basePath/artifacts.log.
  * Also save the traces & devtoolsLogs to their own files
- * @param {!Artifacts} artifacts
+ * @param {LH.Artifacts} artifacts
  * @param {string} basePath
+ * @return {Promise<void>}
  */
-// Set to ignore because testing it would imply testing fs, which isn't strictly necessary.
-/* istanbul ignore next */
-function saveArtifacts(artifacts, basePath) {
+async function saveArtifacts(artifacts, basePath) {
   mkdirp.sync(basePath);
   rimraf.sync(`${basePath}/*${traceSuffix}`);
   rimraf.sync(`${basePath}/${artifactsFilename}`);
 
-  // We don't want to mutate the artifacts as provided
-  artifacts = Object.assign({}, artifacts);
+  // TODO: when https://github.com/GoogleChrome/lighthouse/issues/4952 is fixed
+  // const {traces, devtoolsLogs, ...restArtifacts} = artifacts;
+  const traces = artifacts.traces;
+  const devtoolsLogs = artifacts.devtoolsLogs;
+  const restArtifacts = Object.assign({}, artifacts);
+  delete restArtifacts.traces;
+  delete restArtifacts.devtoolsLogs;
 
   // save traces
-  const traces = artifacts.traces;
-  let promise = Promise.all(Object.keys(traces).map(passName => {
-    return saveTrace(traces[passName], `${basePath}/${passName}${traceSuffix}`);
-  }));
+  for (const [passName, trace] of Object.entries(traces)) {
+    await saveTrace(trace, `${basePath}/${passName}${traceSuffix}`);
+  }
 
   // save devtools log
-  const devtoolsLogs = artifacts.devtoolsLogs;
-  promise = promise.then(_ => {
-    Object.keys(devtoolsLogs).map(passName => {
-      const log = JSON.stringify(devtoolsLogs[passName]);
-      fs.writeFileSync(`${basePath}/${passName}${devtoolsLogSuffix}`, log, 'utf8');
-    });
-    delete artifacts.traces;
-    delete artifacts.devtoolsLogs;
-  });
+  for (const [passName, devtoolsLog] of Object.entries(devtoolsLogs)) {
+    const log = JSON.stringify(devtoolsLog);
+    fs.writeFileSync(`${basePath}/${passName}${devtoolsLogSuffix}`, log, 'utf8');
+  }
 
   // save everything else
-  promise = promise.then(_ => {
-    fs.writeFileSync(`${basePath}/${artifactsFilename}`, JSON.stringify(artifacts, 0, 2), 'utf8');
-    log.log('Artifacts saved to disk in folder:', basePath);
-  });
-  return promise;
+  const restArtifactsString = JSON.stringify(restArtifacts, null, 2);
+  fs.writeFileSync(`${basePath}/${artifactsFilename}`, restArtifactsString, 'utf8');
+  log.log('Artifacts saved to disk in folder:', basePath);
 }
 
 /**
  * Filter traces and extract screenshots to prepare for saving.
- * @param {!Artifacts} artifacts
- * @param {!Audits} audits
- * @return {!Promise<!Array<{traceData: !Object, html: string}>>}
+ * @param {LH.Artifacts} artifacts
+ * @param {LH.Audit.Results} [audits]
+ * @return {Promise<Array<PreparedAssets>>}
  */
-function prepareAssets(artifacts, audits) {
+async function prepareAssets(artifacts, audits) {
   const passNames = Object.keys(artifacts.traces);
+  /** @type {Array<PreparedAssets>} */
   const assets = [];
 
-  return passNames.reduce((chain, passName) => {
+  for (const passName of passNames) {
     const trace = artifacts.traces[passName];
     const devtoolsLog = artifacts.devtoolsLogs[passName];
+    /** @type {Array<Screenshot>} */
+    // @ts-ignore TODO(bckenny): need typed computed artifacts
+    const screenshots = await artifacts.requestScreenshots(trace);
 
-    return chain.then(_ => artifacts.requestScreenshots(trace))
-      .then(screenshots => {
-        const traceData = Object.assign({}, trace);
-        const screenshotsHTML = screenshotDump(screenshots);
+    const traceData = Object.assign({}, trace);
+    const screenshotsHTML = screenshotDump(screenshots);
 
-        if (audits) {
-          const evts = new Metrics(traceData.traceEvents, audits).generateFakeEvents();
-          traceData.traceEvents = traceData.traceEvents.concat(evts);
-        }
+    if (audits) {
+      const evts = new Metrics(traceData.traceEvents, audits).generateFakeEvents();
+      traceData.traceEvents = traceData.traceEvents.concat(evts);
+    }
 
-        assets.push({
-          passName,
-          traceData,
-          devtoolsLog,
-          screenshotsHTML,
-          screenshots,
-        });
-      });
-  }, Promise.resolve())
-    .then(_ => assets);
+    assets.push({
+      passName,
+      traceData,
+      devtoolsLog,
+      screenshotsHTML,
+      screenshots,
+    });
+  }
+
+  return assets;
 }
 
 /**
  * Generates a JSON representation of traceData line-by-line to avoid OOM due to
  * very large traces.
- * @param {{traceEvents: !Array}} traceData
- * @return {!Iterator<string>}
+ * @param {LH.Trace} traceData
+ * @return {IterableIterator<string>}
  */
 function* traceJsonGenerator(traceData) {
   const keys = Object.keys(traceData);
@@ -222,9 +230,9 @@ function* traceJsonGenerator(traceData) {
 
 /**
  * Save a trace as JSON by streaming to disk at traceFilename.
- * @param {{traceEvents: !Array}} traceData
+ * @param {LH.Trace} traceData
  * @param {string} traceFilename
- * @return {!Promise<undefined>}
+ * @return {Promise<void>}
  */
 function saveTrace(traceData, traceFilename) {
   return new Promise((resolve, reject) => {
@@ -247,53 +255,52 @@ function saveTrace(traceData, traceFilename) {
 }
 
 /**
- * Writes trace(s) and associated screenshot(s) to disk.
- * @param {!Artifacts} artifacts
- * @param {!Audits} audits
+ * Writes trace(s) and associated asset(s) to disk.
+ * @param {LH.Artifacts} artifacts
+ * @param {LH.Audit.Results} audits
  * @param {string} pathWithBasename
- * @return {!Promise}
+ * @return {Promise<void>}
  */
-function saveAssets(artifacts, audits, pathWithBasename) {
-  return prepareAssets(artifacts, audits).then(assets => {
-    return Promise.all(assets.map((data, index) => {
-      const devtoolsLogFilename = `${pathWithBasename}-${index}${devtoolsLogSuffix}`;
-      fs.writeFileSync(devtoolsLogFilename, JSON.stringify(data.devtoolsLog, null, 2));
-      log.log('saveAssets', 'devtools log saved to disk: ' + devtoolsLogFilename);
+async function saveAssets(artifacts, audits, pathWithBasename) {
+  const allAssets = await prepareAssets(artifacts, audits);
+  const saveAll = allAssets.map(async (passAssets, index) => {
+    const devtoolsLogFilename = `${pathWithBasename}-${index}${devtoolsLogSuffix}`;
+    fs.writeFileSync(devtoolsLogFilename, JSON.stringify(passAssets.devtoolsLog, null, 2));
+    log.log('saveAssets', 'devtools log saved to disk: ' + devtoolsLogFilename);
 
-      const screenshotsHTMLFilename = `${pathWithBasename}-${index}.screenshots.html`;
-      fs.writeFileSync(screenshotsHTMLFilename, data.screenshotsHTML);
-      log.log('saveAssets', 'screenshots saved to disk: ' + screenshotsHTMLFilename);
+    const screenshotsHTMLFilename = `${pathWithBasename}-${index}.screenshots.html`;
+    fs.writeFileSync(screenshotsHTMLFilename, passAssets.screenshotsHTML);
+    log.log('saveAssets', 'screenshots saved to disk: ' + screenshotsHTMLFilename);
 
-      const screenshotsJSONFilename = `${pathWithBasename}-${index}.screenshots.json`;
-      fs.writeFileSync(screenshotsJSONFilename, JSON.stringify(data.screenshots, null, 2));
-      log.log('saveAssets', 'screenshots saved to disk: ' + screenshotsJSONFilename);
+    const screenshotsJSONFilename = `${pathWithBasename}-${index}.screenshots.json`;
+    fs.writeFileSync(screenshotsJSONFilename, JSON.stringify(passAssets.screenshots, null, 2));
+    log.log('saveAssets', 'screenshots saved to disk: ' + screenshotsJSONFilename);
 
-      const streamTraceFilename = `${pathWithBasename}-${index}${traceSuffix}`;
-      log.log('saveAssets', 'streaming trace file to disk: ' + streamTraceFilename);
-      return saveTrace(data.traceData, streamTraceFilename).then(_ => {
-        log.log('saveAssets', 'trace file streamed to disk: ' + streamTraceFilename);
-      });
-    }));
+    const streamTraceFilename = `${pathWithBasename}-${index}${traceSuffix}`;
+    log.log('saveAssets', 'streaming trace file to disk: ' + streamTraceFilename);
+    await saveTrace(passAssets.traceData, streamTraceFilename);
+    log.log('saveAssets', 'trace file streamed to disk: ' + streamTraceFilename);
   });
+
+  await Promise.all(saveAll);
 }
 
 /**
- * Log trace(s) and associated screenshot(s) to console.
- * @param {!Artifacts} artifacts
- * @param {!Audits} audits
- * @return {!Promise}
+ * Log trace(s) and associated devtoolsLog(s) to console.
+ * @param {LH.Artifacts} artifacts
+ * @param {LH.Audit.Results} audits
+ * @return {Promise<void>}
  */
-function logAssets(artifacts, audits) {
-  return prepareAssets(artifacts, audits).then(assets => {
-    assets.map(data => {
-      log.log(`devtoolslog-${data.passName}.json`, JSON.stringify(data.devtoolsLog));
-      const traceIter = traceJsonGenerator(data.traceData);
-      let traceJson = '';
-      for (const trace of traceIter) {
-        traceJson += trace;
-      }
-      log.log(`trace-${data.passName}.json`, traceJson);
-    });
+async function logAssets(artifacts, audits) {
+  const allAssets = await prepareAssets(artifacts, audits);
+  allAssets.map(passAssets => {
+    log.log(`devtoolslog-${passAssets.passName}.json`, JSON.stringify(passAssets.devtoolsLog));
+    const traceIter = traceJsonGenerator(passAssets.traceData);
+    let traceJson = '';
+    for (const trace of traceIter) {
+      traceJson += trace;
+    }
+    log.log(`trace-${passAssets.passName}.json`, traceJson);
   });
 }
 
