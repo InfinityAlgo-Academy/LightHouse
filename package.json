@@ -5,7 +5,7 @@
   "main": "./lighthouse-core/index.js",
   "bin": {
     "lighthouse": "./lighthouse-cli/index.js",
-    "chrome-debug": "./chrome-launcher/manual-chrome-launcher.js"
+    "chrome-debug": "./lighthouse-core/scripts/manual-chrome-launcher.js"
   },
   "engines": {
     "node": ">=8"
@@ -45,7 +45,7 @@
     "closure": "cd lighthouse-core && node closure/closure-type-checking.js",
     "devtools": "bash lighthouse-core/scripts/roll-to-devtools.sh",
     "compile-devtools": "bash lighthouse-core/scripts/compile-against-devtools.sh",
-    "chrome": "node chrome-launcher/manual-chrome-launcher.js",
+    "chrome": "node lighthouse-core/scripts/manual-chrome-launcher.js",
     "fast": "yarn start --disable-device-emulation --disable-cpu-throttling --disable-network-throttling",
     "smokehouse": "node lighthouse-cli/test/smokehouse/smokehouse.js",
     "deploy-viewer": "cd lighthouse-viewer && gulp deploy",

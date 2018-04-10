@@ -3,14 +3,6 @@
 'use strict';
 
 /**
- * chrome-launcher has moved to its own repository and npm package.
- * https://github.com/GoogleChrome/chrome-launcher
- * https://www.npmjs.com/package/chrome-launcher
- * This script preserved for Lighthouse's chrome-debug binary, but but file and
- * bin entry will be removed in next major release.
- */
-
-/**
  * @fileoverview Script to launch a clean Chrome instance on-demand.
  *
  * Assuming Lighthouse is installed globally or `npm link`ed, use via:
@@ -34,7 +26,7 @@ if (args.length) {
   chromeFlags = args.filter(flag => flag.startsWith('--'));
 
   const portFlag = chromeFlags.find(flag => flag.startsWith('--port='));
-  port = portFlag && portFlag.replace('--port=', '');
+  if (portFlag) port = parseInt(portFlag.replace('--port=', ''), 10);
 
   enableExtensions = !!chromeFlags.find(flag => flag === '--enable-extensions');
 
