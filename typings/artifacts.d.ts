@@ -15,6 +15,20 @@ declare global {
     }
 
     module Artifacts {
+      export interface MetricComputationData {
+        devtoolsLog: Array<Protocol.RawEventMessage>;
+        trace: Trace;
+        settings: Config.Settings;
+
+        networkRecords?: Array<WebInspector.NetworkRequest>;
+        traceOfTab?: TraceOfTab;
+      }
+
+      export interface Metric {
+        timing: number;
+        timestamp: number;
+      }
+
       export interface LanternMetric {
         timing: number;
         optimisticEstimate: Gatherer.Simulation.Result
@@ -22,7 +36,7 @@ declare global {
         optimisticGraph: Gatherer.Simulation.GraphNode;
         pessimisticGraph: Gatherer.Simulation.GraphNode;
       }
-      
+
       export interface TraceTimes {
         navigationStart: number;
         firstPaint: number;
@@ -32,7 +46,7 @@ declare global {
         onLoad: number;
         domContentLoaded: number;
       }
-      
+
       export interface TraceOfTab {
         timings: TraceTimes;
         timestamps: TraceTimes;

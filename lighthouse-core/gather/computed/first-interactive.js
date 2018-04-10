@@ -163,7 +163,7 @@ class FirstInteractive extends ComputedArtifact {
   }
 
   /**
-   * @param {!TraceOfTabArtifact} traceOfTab
+   * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {{timeInMs: number, timestamp: number}}
    */
   computeWithArtifacts(traceOfTab) {

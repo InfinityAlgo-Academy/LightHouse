@@ -66,18 +66,17 @@ class LanternMetricArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {{trace: Object, devtoolsLog: Object}} data
+   * @param {{trace: Object, devtoolsLog: Object, settings: LH.Config.Settings}} data
    * @param {Object} artifacts
    * @param {any=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   async computeMetricWithGraphs(data, artifacts, extras) {
-    const {trace, devtoolsLog} = data;
+    const {trace, devtoolsLog, settings} = data;
     const graph = await artifacts.requestPageDependencyGraph({trace, devtoolsLog});
     const traceOfTab = await artifacts.requestTraceOfTab(trace);
-    // TODO(phulce): passthrough settings once all metrics are converted to computed artifacts
     /** @type {Simulator} */
-    const simulator = await artifacts.requestLoadSimulator({devtoolsLog});
+    const simulator = await artifacts.requestLoadSimulator({devtoolsLog, settings});
 
     const optimisticGraph = this.getOptimisticGraph(graph, traceOfTab);
     const pessimisticGraph = this.getPessimisticGraph(graph, traceOfTab);
@@ -110,7 +109,7 @@ class LanternMetricArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {{trace: Object, devtoolsLog: Object}} data
+   * @param {LH.Artifacts.MetricComputationData} data
    * @param {Object} artifacts
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */

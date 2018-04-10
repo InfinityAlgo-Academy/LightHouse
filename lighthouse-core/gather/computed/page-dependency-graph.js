@@ -69,7 +69,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {!TraceOfTabArtifact} traceOfTab
+   * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {!Array<!CPUNode>}
    */
   static getCPUNodes(traceOfTab) {
@@ -240,7 +240,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {!TraceOfTabArtifact} traceOfTab
+   * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
    * @return {!Node}
    */

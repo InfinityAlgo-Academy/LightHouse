@@ -338,6 +338,8 @@ class Runner {
     const filenamesToSkip = [
       'computed-artifact.js', // the base class which other artifacts inherit
       'metrics', // the sub folder that contains metric names
+      'metrics/lantern-metric.js',
+      'metrics/metric.js',
     ];
 
     const fileList = [

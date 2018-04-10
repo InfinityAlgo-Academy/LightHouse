@@ -35,7 +35,7 @@ class TraceOfTab extends ComputedArtifact {
    * Finds key trace events, identifies main process/thread, and returns timings of trace events
    * in milliseconds since navigation start in addition to the standard microsecond monotonic timestamps.
    * @param {{traceEvents: !Array}} trace
-   * @return {!TraceOfTabArtifact}
+   * @return {LH.Artifacts.TraceOfTab}
   */
   compute_(trace) {
     // Parse the trace for our key events and sort them by timestamp. Note: sort

@@ -82,7 +82,7 @@ class ConsistentlyInteractive extends MetricArtifact {
   }
 
   /**
-   * @param {{trace: Object, devtoolsLog: Object}} data
+   * @param {LH.Artifacts.MetricComputationData} data
    * @param {Object} artifacts
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */

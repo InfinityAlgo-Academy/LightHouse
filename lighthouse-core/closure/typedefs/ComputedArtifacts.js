@@ -64,7 +64,7 @@ ComputedArtifacts.prototype.requestNetworkThroughput;
 /** @type {function(!Trace): !Promise<!SpeedlineArtifact>} */
 ComputedArtifacts.prototype.requestSpeedline;
 
-/** @type {function(!Trace): !Promise<!TraceOfTabArtifact>} */
+/** @type {function(!Trace): !Promise<LH.Artifacts.TraceOfTab>} */
 ComputedArtifacts.prototype.requestTraceOfTab;
 
 /** @type {function(!Trace): !Promise<{timeInMs: number, timestamp: number}>} */

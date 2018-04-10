@@ -11,7 +11,7 @@ const strings = require('./strings');
  * @typedef LighthouseErrorDefinition
  * @property {string} code
  * @property {string} message
- * @property {RegExp|undefined} pattern
+ * @property {RegExp} [pattern]
  */
 
 class LighthouseError extends Error {
@@ -94,6 +94,8 @@ const ERRORS = {
 };
 
 Object.keys(ERRORS).forEach(code => ERRORS[code].code = code);
+
+/** @type {Object<string, LighthouseErrorDefinition>} */
 LighthouseError.errors = ERRORS;
 module.exports = LighthouseError;
 
