@@ -33,7 +33,7 @@ function isDev() {
 // Tell user if there's a newer version of LH.
 updateNotifier({pkg}).notify();
 
-const /** @type {!LH.Flags} */ cliFlags = getFlags();
+const /** @type {LH.Flags} */ cliFlags = getFlags();
 
 // Process terminating command
 if (cliFlags.listAllAudits) {
@@ -48,16 +48,16 @@ if (cliFlags.listTraceCategories) {
 /** @type {string} */
 const url = cliFlags._[0];
 
-/** @type {!LH.Config|undefined} */
+/** @type {LH.Config.Json|undefined} */
 let config;
 if (cliFlags.configPath) {
   // Resolve the config file path relative to where cli was called.
   cliFlags.configPath = path.resolve(process.cwd(), cliFlags.configPath);
-  config = /** @type {!LH.Config} */ (require(cliFlags.configPath));
+  config = /** @type {LH.Config.Json} */ (require(cliFlags.configPath));
 } else if (cliFlags.perf) {
-  config = /** @type {!LH.Config} */ (perfOnlyConfig);
+  config = perfOnlyConfig;
 } else if (cliFlags.mixedContent) {
-  config = /** @type {!LH.Config} */ (mixedContentConfig);
+  config = mixedContentConfig;
   // The mixed-content audits require headless Chrome (https://crbug.com/764505).
   cliFlags.chromeFlags = `${cliFlags.chromeFlags} --headless`;
 }
@@ -84,7 +84,7 @@ if (cliFlags.extraHeaders) {
 }
 
 /**
- * @return {!Promise<(void|!LH.Results)>}
+ * @return {Promise<LH.Results|void>}
  */
 function run() {
   return Promise.resolve()

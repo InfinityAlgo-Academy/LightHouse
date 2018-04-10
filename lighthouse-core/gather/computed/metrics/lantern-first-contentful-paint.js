@@ -28,7 +28,7 @@ class FirstContentfulPaint extends MetricArtifact {
 
   /**
    * @param {!Node} dependencyGraph
-   * @param {LH.Gatherer.Artifact.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {!Node}
    */
   getOptimisticGraph(dependencyGraph, traceOfTab) {
@@ -54,7 +54,7 @@ class FirstContentfulPaint extends MetricArtifact {
 
   /**
    * @param {!Node} dependencyGraph
-   * @param {LH.Gatherer.Artifact.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {!Node}
    */
   getPessimisticGraph(dependencyGraph, traceOfTab) {

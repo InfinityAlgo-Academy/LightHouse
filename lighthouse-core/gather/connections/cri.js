@@ -113,7 +113,6 @@ class CriConnection extends Connection {
 
         // After aborting, we expect an ECONNRESET error. Ignore.
         request.on('error', err => {
-          // @ts-ignore `code` property extension to Error by Node.
           if (err.code !== 'ECONNRESET') {
             throw err;
           }
@@ -122,7 +121,6 @@ class CriConnection extends Connection {
         // TODO: Replace this with an LHError on next major version bump
         // Reject on error with code specifically indicating timeout in connection setup.
         const err = new Error('Timeout waiting for initial Debugger Protocol connection.');
-        // @ts-ignore fixed by above TODO
         err.code = 'CRI_TIMEOUT';
         log.error('CriConnection', err.message);
         reject(err);

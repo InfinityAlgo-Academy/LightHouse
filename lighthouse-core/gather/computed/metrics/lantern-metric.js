@@ -40,7 +40,7 @@ class LanternMetricArtifact extends ComputedArtifact {
 
   /**
    * @param {!Node} dependencyGraph
-   * @param {LH.Gatherer.Artifact.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {!Node}
    */
   getOptimisticGraph(dependencyGraph, traceOfTab) { // eslint-disable-line no-unused-vars
@@ -49,7 +49,7 @@ class LanternMetricArtifact extends ComputedArtifact {
 
   /**
    * @param {!Node} dependencyGraph
-   * @param {LH.Gatherer.Artifact.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {!Node}
    */
   getPessimisticGraph(dependencyGraph, traceOfTab) { // eslint-disable-line no-unused-vars
@@ -69,7 +69,7 @@ class LanternMetricArtifact extends ComputedArtifact {
    * @param {{trace: Object, devtoolsLog: Object}} data
    * @param {Object} artifacts
    * @param {any=} extras
-   * @return {Promise<LH.Gatherer.Artifact.LanternMetric>}
+   * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   async computeMetricWithGraphs(data, artifacts, extras) {
     const {trace, devtoolsLog} = data;
@@ -112,7 +112,7 @@ class LanternMetricArtifact extends ComputedArtifact {
   /**
    * @param {{trace: Object, devtoolsLog: Object}} data
    * @param {Object} artifacts
-   * @return {Promise<LH.Gatherer.Artifact.LanternMetric>}
+   * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   compute_(data, artifacts) {
     return this.computeMetricWithGraphs(data, artifacts);

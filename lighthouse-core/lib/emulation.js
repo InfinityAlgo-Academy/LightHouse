@@ -131,7 +131,7 @@ function disableCPUThrottling(driver) {
 }
 
 /**
- * @param {LH.ConfigSettings} settings
+ * @param {LH.Config.Settings} settings
  * @return {{deviceEmulation: string, cpuThrottling: string, networkThrottling: string}}
  */
 function getEmulationDesc(settings) {

@@ -664,7 +664,7 @@ class Driver {
    */
   async gotoURL(url, options = {}) {
     const waitForLoad = options.waitForLoad || false;
-    const passContext = options.passContext || {};
+    const passContext = /** @type {Partial<LH.Gatherer.PassContext>} */ (options.passContext || {});
     const disableJS = passContext.disableJavaScript || false;
 
     await this._beginNetworkStatusMonitoring(url);
@@ -678,7 +678,7 @@ class Driver {
     this.sendCommand('Page.navigate', {url});
 
     if (waitForLoad) {
-      const passConfig = passContext.passConfig || {};
+      const passConfig = /** @type {Partial<LH.Config.Pass>} */ (passContext.passConfig || {});
       let {pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = passConfig;
       let maxWaitMs = passContext.settings && passContext.settings.maxWaitForLoad;
 
@@ -876,7 +876,7 @@ class Driver {
   }
 
   /**
-   * @return {Promise<void>}
+   * @return {Promise<LH.Trace>}
    */
   endTrace() {
     return new Promise((resolve, reject) => {
@@ -893,6 +893,7 @@ class Driver {
 
   /**
    * @param {LH.Crdp.Tracing.TracingCompleteEvent} traceCompleteEvent
+   * @return {Promise<LH.Trace>}
    */
   _readTraceFromStream(traceCompleteEvent) {
     return new Promise((resolve, reject) => {
@@ -955,7 +956,7 @@ class Driver {
   }
 
   /**
-   * @param {LH.ConfigSettings} settings
+   * @param {LH.Config.Settings} settings
    * @return {Promise<void>}
    */
   async beginEmulation(settings) {
@@ -967,7 +968,7 @@ class Driver {
   }
 
   /**
-   * @param {LH.ConfigSettings} settings
+   * @param {LH.Config.Settings} settings
    * @param {{useThrottling?: boolean}} passConfig
    * @return {Promise<void>}
    */
@@ -998,7 +999,7 @@ class Driver {
 
   /**
    * Enable internet connection, using emulated mobile settings if applicable.
-   * @param {{settings: LH.ConfigSettings, passConfig: LH.ConfigPass}} options
+   * @param {{settings: LH.Config.Settings, passConfig: LH.Config.Pass}} options
    * @return {Promise<void>}
    */
   async goOnline(options) {
@@ -1019,17 +1020,15 @@ class Driver {
   }
 
   /**
-   * @param {LH.Crdp.Network.Headers} headers key/value pairs of HTTP Headers.
+   * @param {LH.Crdp.Network.Headers=} headers key/value pairs of HTTP Headers.
    * @return {Promise<void>}
    */
-  setExtraHTTPHeaders(headers) {
-    if (headers) {
-      return this.sendCommand('Network.setExtraHTTPHeaders', {
-        headers,
-      });
+  async setExtraHTTPHeaders(headers) {
+    if (!headers) {
+      return;
     }
 
-    return Promise.resolve();
+    return this.sendCommand('Network.setExtraHTTPHeaders', {headers});
   }
 
   /**

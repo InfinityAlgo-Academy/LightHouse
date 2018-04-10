@@ -26,6 +26,8 @@ declare global {
       redirectSource?: {
         url: string;
       }
+      failed?: boolean;
+      localizedFailDescription?: string;
 
       _initiator: NetworkRequestInitiator;
       _timing: NetworkRequestTiming;

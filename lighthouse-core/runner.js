@@ -142,11 +142,11 @@ class Runner {
    * Establish connection, load page and collect all required artifacts
    * @param {*} opts
    * @param {*} connection
-   * @return {!Promise<!Artifacts>}
+   * @return {Promise<Artifacts>}
    */
   static async _gatherArtifactsFromBrowser(opts, connection) {
     if (!opts.config.passes) {
-      return Promise.reject(new Error('No browser artifacts are either provided or requested.'));
+      throw new Error('No browser artifacts are either provided or requested.');
     }
 
     opts.driver = opts.driverMock || new Driver(connection);

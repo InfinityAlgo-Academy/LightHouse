@@ -147,8 +147,8 @@ function saveResults(results, artifacts, flags) {
 
 /**
  * @param {string} url
- * @param {!LH.Flags} flags
- * @param {!LH.Config|undefined} config
+ * @param {LH.Flags} flags
+ * @param {LH.Config.Json|undefined} config
  * @return {Promise<LH.Results|void>}
  */
 function runLighthouse(url, flags, config) {

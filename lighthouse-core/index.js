@@ -28,9 +28,9 @@ const Config = require('./config/config');
 
 /**
  * @param {string} url
- * @param {!LH.Flags} flags
- * @param {!LH.Config|undefined} configJSON
- * @return {!Promise<!LH.Results>}
+ * @param {LH.Flags} flags
+ * @param {LH.Config.Json|undefined} configJSON
+ * @return {Promise<LH.Results>}
  */
 function lighthouse(url, flags = {}, configJSON) {
   const startTime = Date.now();

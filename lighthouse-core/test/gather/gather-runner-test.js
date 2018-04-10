@@ -106,22 +106,12 @@ describe('GatherRunner', function() {
     });
   });
 
-  it('creates settings if needed', () => {
-    const url = 'https://example.com';
-    const driver = fakeDriver;
-    const config = new Config({});
-    const options = {url, driver, config};
-
-    return GatherRunner.run([], options).then(_ => {
-      assert.equal(typeof options.settings, 'object');
-    });
-  });
-
   it('collects user agent as an artifact', () => {
     const url = 'https://example.com';
     const driver = fakeDriver;
     const config = new Config({});
-    const options = {url, driver, config};
+    const settings = {};
+    const options = {url, driver, config, settings};
 
     return GatherRunner.run([], options).then(results => {
       assert.equal(results.UserAgent, 'Fake user agent', 'did not find expected user agent string');
@@ -501,21 +491,6 @@ describe('GatherRunner', function() {
     });
   });
 
-  it('rejects when not given a URL', () => {
-    return GatherRunner.run({}, {}).then(_ => assert.ok(false), _ => assert.ok(true));
-  });
-
-  it('rejects when given a URL of zero length', () => {
-    return GatherRunner.run({}, {url: ''}).then(_ => assert.ok(false), _ => assert.ok(true));
-  });
-
-  it('rejects when not given a config', () => {
-    return GatherRunner.run({}, {url: 'http://example.com'})
-        .then(_ => assert.ok(false), err => {
-          assert.ok(/config/i.test(err));
-        });
-  });
-
   it('does as many passes as are required', () => {
     const t1 = new TestGatherer();
     const t2 = new TestGatherer();
@@ -622,6 +597,86 @@ describe('GatherRunner', function() {
   });
 
   describe('artifact collection', () => {
+    // Make sure our gatherers never execute in parallel
+    it('runs gatherer lifecycle methods strictly in sequence', async () => {
+      const counter = {
+        beforePass: 0,
+        pass: 0,
+        afterPass: 0,
+      };
+      const shortPause = () => new Promise(resolve => setTimeout(resolve, 50));
+      async function fastish(counterName, value) {
+        assert.strictEqual(counter[counterName], value - 1);
+        counter[counterName] = value;
+        await shortPause();
+        assert.strictEqual(counter[counterName], value);
+      }
+      async function medium(counterName, value) {
+        await Promise.resolve();
+        await Promise.resolve();
+        await fastish(counterName, value);
+      }
+      async function slowwwww(counterName, value) {
+        await shortPause();
+        await shortPause();
+        await medium(counterName, value);
+      }
+
+      const gatherers = [
+        class First extends Gatherer {
+          async beforePass() {
+            await slowwwww('beforePass', 1);
+          }
+          async pass() {
+            await slowwwww('pass', 1);
+          }
+          async afterPass() {
+            await slowwwww('afterPass', 1);
+            return this.name;
+          }
+        },
+        class Second extends Gatherer {
+          async beforePass() {
+            await medium('beforePass', 2);
+          }
+          async pass() {
+            await medium('pass', 2);
+          }
+          async afterPass() {
+            await medium('afterPass', 2);
+            return this.name;
+          }
+        },
+        class Third extends Gatherer {
+          beforePass() {
+            return fastish('beforePass', 3);
+          }
+          pass() {
+            return fastish('pass', 3);
+          }
+          async afterPass() {
+            await fastish('afterPass', 3);
+            return this.name;
+          }
+        },
+      ];
+      const passes = [{
+        blankDuration: 0,
+        gatherers: gatherers.map(G => ({instance: new G()})),
+      }];
+
+      const artifacts = await GatherRunner.run(passes, {
+        driver: fakeDriver,
+        url: 'https://example.com',
+        settings: {},
+      });
+
+      // Ensure artifacts returned and not errors.
+      gatherers.forEach(gatherer => {
+        assert.strictEqual(artifacts[gatherer.name], gatherer.name);
+      });
+    });
+
     it('supports sync and async return of artifacts from gatherers', () => {
       const gatherers = [
         // sync
@@ -755,7 +810,7 @@ describe('GatherRunner', function() {
         LighthouseRunWarnings: [],
       };
 
-      return GatherRunner.collectArtifacts(gathererResults).then(artifacts => {
+      return GatherRunner.collectArtifacts(gathererResults, {}).then(artifacts => {
         assert.strictEqual(artifacts.AfterGatherer, 97);
         assert.strictEqual(artifacts.PassGatherer, 284);
         assert.strictEqual(artifacts.SingleErrorGatherer, recoverableError);
@@ -774,7 +829,7 @@ describe('GatherRunner', function() {
         LighthouseRunWarnings,
       };
 
-      return GatherRunner.collectArtifacts(gathererResults).then(artifacts => {
+      return GatherRunner.collectArtifacts(gathererResults, {}).then(artifacts => {
         assert.deepStrictEqual(artifacts.LighthouseRunWarnings, LighthouseRunWarnings);
       });
     });

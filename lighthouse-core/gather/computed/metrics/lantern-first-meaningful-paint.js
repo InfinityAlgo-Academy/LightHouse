@@ -28,7 +28,7 @@ class FirstMeaningfulPaint extends MetricArtifact {
 
   /**
    * @param {!Node} dependencyGraph
-   * @param {LH.Gatherer.Artifact.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {!Node}
    */
   getOptimisticGraph(dependencyGraph, traceOfTab) {
@@ -54,7 +54,7 @@ class FirstMeaningfulPaint extends MetricArtifact {
 
   /**
    * @param {!Node} dependencyGraph
-   * @param {LH.Gatherer.Artifact.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {!Node}
    */
   getPessimisticGraph(dependencyGraph, traceOfTab) {
@@ -80,7 +80,7 @@ class FirstMeaningfulPaint extends MetricArtifact {
   /**
    * @param {{trace: Object, devtoolsLog: Object}} data
    * @param {Object} artifacts
-   * @return {Promise<LH.Gatherer.Artifact.LanternMetric>}
+   * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   async compute_(data, artifacts) {
     const fcpResult = await artifacts.requestLanternFirstContentfulPaint(data, artifacts);

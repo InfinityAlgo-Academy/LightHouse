@@ -7,54 +7,23 @@
 import * as _Node from '../lighthouse-core/lib/dependency-graph/node';
 import * as _NetworkNode from '../lighthouse-core/lib/dependency-graph/network-node';
 import * as _CPUNode from '../lighthouse-core/lib/dependency-graph/cpu-node';
+import * as Driver from '../lighthouse-core/gather/driver';
 
 declare global {
   module LH.Gatherer {
     export interface PassContext {
+      url: string;
+      driver: InstanceType<typeof Driver>;
       disableJavaScript?: boolean;
-      passConfig?: ConfigPass;
-      settings?: ConfigSettings;
+      passConfig: Config.Pass
+      settings: Config.Settings;
       options?: object;
     }
 
     export interface LoadData {
       networkRecords: Array<WebInspector.NetworkRequest>;
       devtoolsLog: Array<Protocol.RawEventMessage>;
-      trace: {traceEvents: Array<TraceEvent>};
-    }
-
-    namespace Artifact {
-      export interface LanternMetric {
-        timing: number;
-        optimisticEstimate: Simulation.Result;
-        pessimisticEstimate: Simulation.Result;
-        optimisticGraph: Simulation.GraphNode;
-        pessimisticGraph: Simulation.GraphNode;
-      }
-
-      export interface TraceTimes {
-        navigationStart: number;
-        firstPaint: number;
-        firstContentfulPaint: number;
-        firstMeaningfulPaint: number;
-        traceEnd: number;
-        onLoad: number;
-        domContentLoaded: number;
-      }
-
-      export interface TraceOfTab {
-        timings: TraceTimes;
-        timestamps: TraceTimes;
-        processEvents: Array<TraceEvent>;
-        mainThreadEvents: Array<TraceEvent>;
-        startedInPageEvt: TraceEvent;
-        navigationStartEvt: TraceEvent;
-        firstPaintEvt: TraceEvent;
-        firstContentfulPaintEvt: TraceEvent;
-        firstMeaningfulPaintEvt: TraceEvent;
-        onLoadEvt: TraceEvent;
-        fmpFellBack: boolean;
-      }
+      trace?: Trace;
     }
 
     namespace Simulation {
