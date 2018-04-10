@@ -71,6 +71,7 @@ const ERRORS = {
   // Trace parsing errors
   NO_TRACING_STARTED: {message: strings.badTraceRecording},
   NO_NAVSTART: {message: strings.badTraceRecording},
+  NO_FCP: {message: strings.badTraceRecording},
   NO_FMP: {message: strings.badTraceRecording},
   NO_DCL: {message: strings.badTraceRecording},
 

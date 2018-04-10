@@ -75,6 +75,7 @@ module.exports = {
     'works-offline',
     'viewport',
     'without-javascript',
+    'first-contentful-paint',
     'first-meaningful-paint',
     'load-fast-enough-for-pwa',
     'speed-index-metric',
@@ -262,7 +263,8 @@ module.exports = {
       name: 'Performance',
       description: 'These encapsulate your web app\'s current performance and opportunities to improve it.',
       audits: [
-        {id: 'first-meaningful-paint', weight: 5, group: 'perf-metric'},
+        {id: 'first-contentful-paint', weight: 5, group: 'perf-metric'},
+        {id: 'first-meaningful-paint', weight: 3, group: 'perf-metric'},
         {id: 'first-interactive', weight: 5, group: 'perf-metric'},
         {id: 'consistently-interactive', weight: 5, group: 'perf-metric'},
         {id: 'speed-index-metric', weight: 1, group: 'perf-metric'},

@@ -15,13 +15,15 @@ declare global {
     }
 
     module Artifacts {
-      export interface MetricComputationData {
+      export interface MetricComputationDataInput {
         devtoolsLog: Array<Protocol.RawEventMessage>;
         trace: Trace;
         settings: Config.Settings;
+      }
 
-        networkRecords?: Array<WebInspector.NetworkRequest>;
-        traceOfTab?: TraceOfTab;
+      export interface MetricComputationData extends MetricComputationDataInput {
+        networkRecords: Array<WebInspector.NetworkRequest>;
+        traceOfTab: TraceOfTab;
       }
 
       export interface Metric {

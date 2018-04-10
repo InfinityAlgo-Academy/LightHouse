@@ -42,7 +42,7 @@ class ComputedMetric extends ComputedArtifact {
   }
 
   /**
-   * @param {LH.Artifacts.MetricComputationData} data
+   * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {Object} artifacts
    * @return {Promise<LH.Artifacts.LanternMetric|LH.Artifacts.Metric>}
    */

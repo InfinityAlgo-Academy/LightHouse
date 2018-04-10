@@ -137,10 +137,6 @@ class ConsistentlyInteractive extends MetricArtifact {
    */
   computeObservedMetric(data) {
     const {traceOfTab, networkRecords} = data;
-    if (!traceOfTab || !networkRecords) {
-      throw new Error('Missing required artifacts');
-    }
-
     if (!traceOfTab.timestamps.firstMeaningfulPaint) {
       throw new LHError(LHError.errors.NO_FMP);
     }
