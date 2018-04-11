@@ -11,6 +11,9 @@
 module.exports = {
   extends: 'lighthouse:default',
   settings: {
+    onlyCategories: [
+      'best-practices',
+    ],
     onlyAudits: [
       'is-on-https',
       'redirects-http',
@@ -20,6 +23,8 @@ module.exports = {
       'without-javascript',
       'user-timings',
       'critical-request-chains',
+      'link-blocking-first-paint',
+      'script-blocking-first-paint',
       'webapp-install-banner',
       'splash-screen',
       'themed-omnibox',

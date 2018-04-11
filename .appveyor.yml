@@ -39,7 +39,6 @@ test_script:
   - yarn unit
   - yarn type-check
   - yarn smoke
-  - yarn smokehouse
 
 cache:
   #- chrome-win32 -> appveyor.yml,package.json

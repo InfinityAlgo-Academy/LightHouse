@@ -23,7 +23,9 @@
     "build-viewer": "cd ./lighthouse-viewer && yarn build",
     "clean": "rimraf *.report.html *.report.dom.html *.report.json *.screenshots.html *.screenshots.json *.devtoolslog.json *.trace.json || true",
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
-    "smoke": "bash lighthouse-cli/test/smokehouse/run-all-tests.sh",
+
+    "smoke": "node lighthouse-cli/test/smokehouse/run-smoke.js",
+
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
     "start": "node ./lighthouse-cli/index.js",
     "test": "yarn lint --quiet && yarn unit && yarn type-check && yarn closure",

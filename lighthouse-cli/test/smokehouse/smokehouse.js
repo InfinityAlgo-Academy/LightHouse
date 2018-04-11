@@ -14,9 +14,6 @@ const spawnSync = require('child_process').spawnSync;
 const yargs = require('yargs');
 const log = require('lighthouse-logger');
 
-const DEFAULT_CONFIG_PATH = 'pwa-config';
-const DEFAULT_EXPECTATIONS_PATH = 'pwa-expectations';
-
 const PROTOCOL_TIMEOUT_EXIT_CODE = 67;
 const RETRIES = 3;
 const NUMERICAL_EXPECTATION_REGEXP = /^(<=?|>=?)((\d|\.)+)$/;
@@ -252,7 +249,9 @@ function reportAssertion(assertion) {
   ${log.redify(log.cross)} difference at ${log.bold}${diff.path}${log.reset}
               expected: ${JSON.stringify(diff.expected)}
                  found: ${JSON.stringify(diff.actual)}
-          found result: ${log.redify(fullActual)}
+
+          found result:
+      ${log.redify(fullActual)}
 `;
       console.log(msg);
     } else {
@@ -288,7 +287,7 @@ function report(results) {
   });
 
   const plural = correctCount === 1 ? '' : 's';
-  const correctStr = `${correctCount} audit${plural}`;
+  const correctStr = `${correctCount} assertion${plural}`;
   const colorFn = correctCount === 0 ? log.redify : log.greenify;
   console.log(`  Correctly passed ${colorFn(correctStr)}\n`);
 
@@ -305,8 +304,8 @@ const cli = yargs
     'expectations-path': 'The path to the expected audit results file',
     'debug': 'Save the artifacts along with the output',
   })
-  .default('config-path', DEFAULT_CONFIG_PATH)
-  .default('expectations-path', DEFAULT_EXPECTATIONS_PATH)
+  .require('config-path')
+  .require('expectations-path')
   .argv;
 
 const configPath = resolveLocalOrCwd(cli['config-path']);
@@ -317,8 +316,10 @@ const expectations = require(resolveLocalOrCwd(cli['expectations-path']));
 let passingCount = 0;
 let failingCount = 0;
 expectations.forEach(expected => {
-  console.log(`Checking '${expected.initialUrl}'...`);
+  console.log(`Doing a run of '${expected.initialUrl}'...`);
   const results = runLighthouse(expected.initialUrl, configPath, cli.debug);
+
+  console.log(`Asserting expected results match those found. (${expected.initialUrl})`);
   const collated = collateResults(results, expected);
   const counts = report(collated);
   passingCount += counts.passed;
