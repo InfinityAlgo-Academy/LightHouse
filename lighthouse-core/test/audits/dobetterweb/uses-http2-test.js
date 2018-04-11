@@ -22,8 +22,9 @@ describe('Resources are fetched over http/2', () => {
       requestNetworkRecords: () => Promise.resolve(networkRecords),
     }).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.displayValue.match('4 requests were not'));
-      assert.equal(auditResult.details.items.length, 4);
+      assert.ok(auditResult.displayValue.match('3 requests were not'));
+      assert.equal(auditResult.details.items.length, 3);
+      assert.equal(auditResult.details.items[0].url, 'https://webtide.com/wp-content/plugins/wp-pagenavi/pagenavi-css.css?ver=2.70');
       const headers = auditResult.details.headings;
       assert.equal(headers[0].text, 'URL', 'table headings are correct and in order');
       assert.equal(headers[1].text, 'Protocol', 'table headings are correct and in order');

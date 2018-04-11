@@ -22,6 +22,7 @@ describe('Security: HTTPS audit', () => {
     return Audit.audit(getArtifacts([
       {url: 'https://google.com/', scheme: 'https', domain: 'google.com'},
       {url: 'http://insecure.com/image.jpeg', scheme: 'http', domain: 'insecure.com'},
+      {url: 'http://insecure.com/image.jpeg', scheme: 'http', domain: 'insecure.com'}, // should be de-duped
       {url: 'http://insecure.com/image2.jpeg', scheme: 'http', domain: 'insecure.com'},
       {url: 'https://google.com/', scheme: 'https', domain: 'google.com'},
     ])).then(result => {

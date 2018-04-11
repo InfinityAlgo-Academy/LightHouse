@@ -39,6 +39,7 @@ class UsesHTTP2Audit extends Audit {
     return artifacts.requestNetworkRecords(devtoolsLogs).then(networkRecords => {
       const finalHost = new URL(artifacts.URL.finalUrl).host;
 
+      const seenURLs = new Set();
       // Filter requests that are on the same host as the page and not over h2.
       const resources = networkRecords.filter(record => {
         // test the protocol first to avoid (potentially) expensive URL parsing
@@ -49,8 +50,12 @@ class UsesHTTP2Audit extends Audit {
       }).map(record => {
         return {
           protocol: record.protocol,
-          url: record.url, // .url is a getter and not copied over for the assign.
+          url: record._url,
         };
+      }).filter(record => {
+        if (seenURLs.has(record.url)) return false;
+        seenURLs.add(record.url);
+        return true;
       });
 
       let displayValue = '';

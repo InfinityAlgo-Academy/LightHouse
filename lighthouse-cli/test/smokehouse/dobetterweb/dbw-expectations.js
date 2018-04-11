@@ -35,13 +35,13 @@ module.exports = [
         extendedInfo: {
           value: {
             results: {
-              length: 18,
+              length: 17,
             },
           },
         },
         details: {
           items: {
-            length: 18,
+            length: 17,
           },
         },
       },

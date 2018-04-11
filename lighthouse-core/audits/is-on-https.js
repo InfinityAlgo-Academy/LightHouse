@@ -47,30 +47,28 @@ class HTTPS extends Audit {
   static audit(artifacts) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     return artifacts.requestNetworkRecords(devtoolsLogs).then(networkRecords => {
-      const insecureRecords = networkRecords
+      const insecureURLs = networkRecords
           .filter(record => !HTTPS.isSecureRecord(record))
-          .map(record => ({url: URL.elideDataURI(record.url)}));
+          .map(record => URL.elideDataURI(record.url));
 
       let displayValue = '';
-      if (insecureRecords.length > 1) {
-        displayValue = `${Util.formatNumber(insecureRecords.length)} insecure requests found`;
-      } else if (insecureRecords.length === 1) {
-        displayValue = `${insecureRecords.length} insecure request found`;
+      if (insecureURLs.length > 1) {
+        displayValue = `${Util.formatNumber(insecureURLs.length)} insecure requests found`;
+      } else if (insecureURLs.length === 1) {
+        displayValue = `${insecureURLs.length} insecure request found`;
       }
 
-      const items = insecureRecords.map(record => ({
-        url: record.url,
-      }));
+      const items = Array.from(new Set(insecureURLs)).map(url => ({url}));
 
       const headings = [
         {key: 'url', itemType: 'url', text: 'Insecure URL'},
       ];
 
       return {
-        rawValue: insecureRecords.length === 0,
+        rawValue: items.length === 0,
         displayValue,
         extendedInfo: {
-          value: insecureRecords,
+          value: items,
         },
         details: Audit.makeTableDetails(headings, items),
       };
