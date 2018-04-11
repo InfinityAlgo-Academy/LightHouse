@@ -10,7 +10,8 @@
     "test": "mocha test/extension-test.js"
   },
   "devDependencies": {
-    "brfs": "^1.5.0",
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
+    "brfs": "^1.6.1",
     "browserify": "^16.1.1",
     "del": "^2.2.0",
     "gulp": "^3.9.1",

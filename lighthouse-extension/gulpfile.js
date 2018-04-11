@@ -97,7 +97,7 @@ function applyBrowserifyTransforms(bundle) {
   // Fix an issue with imported speedline code that doesn't brfs well.
   return bundle.transform('./fs-transform', {global: true})
   // Transform the fs.readFile etc, but do so in all the modules.
-  .transform('brfs', {global: true})
+  .transform('brfs', {global: true, parserOpts: {ecmaVersion: 9}})
   // Strip everything out of package.json includes except for the version.
   .transform('package-json-versionify');
 }
@@ -170,6 +170,9 @@ gulp.task('compilejs', () => {
     retainLines: true, // Keep things on the same line (looks wonky but helps with stacktraces)
     comments: false, // Don't output comments
     shouldPrintComment: _ => false, // Don't include @license or @preserve comments either
+    plugins: [
+      'syntax-object-rest-spread',
+    ],
     // sourceMaps: 'both'
   };
 
