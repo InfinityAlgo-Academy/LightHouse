@@ -84,6 +84,7 @@ function displaySmokehouseOutput(result) {
   }
   console.timeEnd(`smoketest-${result.id}`);
   console.log(`${purpleify(result.id)} smoketest complete. \n`);
+  return result;
 }
 
 /**
@@ -183,4 +184,7 @@ async function cli() {
   process.exit(0);
 }
 
-cli();
+cli().catch(e => {
+  console.error(e);
+  process.exit(1);
+});
