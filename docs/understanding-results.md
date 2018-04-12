@@ -1,17 +1,17 @@
 # Understanding the Results
 
-The results object contains all the audit information Lighthouse determined about the page. In fact, everything you see in the HTML report, even the screenshots, is a rendering of information contained in the results object. You might need to work directly with the results object if you use [Lighthouse programmatically](https://github.com/GoogleChrome/lighthouse/blob/master/docs/readme.md#using-programmatically), consume the JSON output of the [CLI](https://github.com/GoogleChrome/lighthouse#using-the-node-cli), explore [Lighthouse results in HTTPArchive](https://github.com/GoogleChrome/lighthouse#lighthouse-integrations), or work on the report generation code that reads the Lighthouse JSON and outputs HTML.
+The result object contains all the audit information Lighthouse determined about the page. In fact, everything you see in the HTML report, even the screenshots, is a rendering of information contained in the result object. You might need to work directly with the result object if you use [Lighthouse programmatically](https://github.com/GoogleChrome/lighthouse/blob/master/docs/readme.md#using-programmatically), consume the JSON output of the [CLI](https://github.com/GoogleChrome/lighthouse#using-the-node-cli), explore [Lighthouse results in HTTPArchive](https://github.com/GoogleChrome/lighthouse#lighthouse-integrations), or work on the report generation code that reads the Lighthouse JSON and outputs HTML.
 
-## Lighthouse Results Object (LHR)
+## Lighthouse Result Object (LHR)
 
-The top-level Lighthouse Results object (LHR) is what the lighthouse node module returns and the entirety of the JSON output of the CLI. It contains some metadata about the run and the results in the various subproperties below.
+The top-level Lighthouse Result object (LHR) is what the lighthouse node module returns and the entirety of the JSON output of the CLI. It contains some metadata about the run and the results in the various subproperties below.
 
 ### Properties
 
 | Name | Description |
 | - | - |
-| lighthouseVersion | The version of Lighthouse with which these results were generated. |
-| fetchedAt | The ISO-8601 timestamp of when the results were generated. |
+| lighthouseVersion | The version of Lighthouse with which this result were generated. |
+| fetchedAt | The ISO-8601 timestamp of when the result was generated. |
 | userAgent | The user agent string of the version of Chrome that was used by Lighthouse. |
 | initialUrl | The URL that was supplied to Lighthouse and initially navigated to. |
 | url | The URL that Lighthouse ended up auditing after redirects were followed. |
