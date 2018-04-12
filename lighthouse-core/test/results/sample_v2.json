@@ -84,29 +84,19 @@
       "description": "Contains some content when JavaScript is not available",
       "helpText": "Your app should display some content when JavaScript is disabled, even if it's just a warning to the user that JavaScript is required to use the app. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/no-js)."
     },
+    "first-contentful-paint": {
+      "score": 0.51,
+      "displayValue": "3,970 ms",
+      "rawValue": 3969.135,
+      "scoreDisplayMode": "numeric",
+      "name": "first-contentful-paint",
+      "description": "First Contentful Paint",
+      "helpText": "First contentful paint marks the time at which the first text/image is painted. [Learn more](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    },
     "first-meaningful-paint": {
       "score": 0.51,
       "displayValue": "3,970 ms",
-      "rawValue": 3969.1,
-      "extendedInfo": {
-        "value": {
-          "timestamps": {
-            "navStart": 185603319912,
-            "fCP": 185607289047,
-            "fMP": 185607289048,
-            "onLoad": 185608244374,
-            "endOfTrace": 185613601189
-          },
-          "timings": {
-            "navStart": 0,
-            "fCP": 3969.135,
-            "fMP": 3969.136,
-            "onLoad": 4924.462,
-            "endOfTrace": 10281.277
-          },
-          "fmpFellBack": false
-        }
-      },
+      "rawValue": 3969.136,
       "scoreDisplayMode": "numeric",
       "name": "first-meaningful-paint",
       "description": "First meaningful paint",
@@ -372,28 +362,8 @@
       "rawValue": 4927.278,
       "extendedInfo": {
         "value": {
-          "cpuQuietPeriod": {
-            "start": 185608247.19,
-            "end": 185613601.189
-          },
-          "networkQuietPeriod": {
-            "start": 185607537.382,
-            "end": 185613601.189
-          },
-          "cpuQuietPeriods": [
-            {
-              "start": 185608247.19,
-              "end": 185613601.189
-            }
-          ],
-          "networkQuietPeriods": [
-            {
-              "start": 185607537.382,
-              "end": 185613601.189
-            }
-          ],
-          "timestamp": 185608247190,
-          "timeInMs": 4927.278
+          "timeInMs": 4927.278,
+          "timestamp": 185608247190
         }
       },
       "scoreDisplayMode": "numeric",
@@ -1591,6 +1561,84 @@
             "statusCode": 404,
             "mimeType": "text/plain",
             "resourceType": "other"
+          }
+        ]
+      }
+    },
+    "metrics": {
+      "score": 1,
+      "displayValue": "",
+      "rawValue": 4927.278,
+      "scoreDisplayMode": "binary",
+      "informative": true,
+      "name": "metrics",
+      "description": "Metrics",
+      "helpText": "Collects all available metrics.",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "metricName",
+            "itemType": "text",
+            "text": "Name"
+          },
+          {
+            "key": "timing",
+            "itemType": "ms",
+            "granularity": 10,
+            "text": "Value (ms)"
+          }
+        ],
+        "items": [
+          {
+            "metricName": "firstContentfulPaint",
+            "timing": 3969.135,
+            "timestamp": 185607289047
+          },
+          {
+            "metricName": "firstMeaningfulPaint",
+            "timing": 3969.136,
+            "timestamp": 185607289048
+          },
+          {
+            "metricName": "timeToInteractive",
+            "timing": 4927.278,
+            "timestamp": 185608247190
+          },
+          {
+            "metricName": "traceNavigationStart",
+            "timing": 0,
+            "timestamp": 185603319912
+          },
+          {
+            "metricName": "traceFirstPaint",
+            "timing": 3969.131,
+            "timestamp": 185607289043
+          },
+          {
+            "metricName": "traceFirstContentfulPaint",
+            "timing": 3969.135,
+            "timestamp": 185607289047
+          },
+          {
+            "metricName": "traceFirstMeaningfulPaint",
+            "timing": 3969.136,
+            "timestamp": 185607289048
+          },
+          {
+            "metricName": "traceTraceEnd",
+            "timing": 10281.277,
+            "timestamp": 185613601189
+          },
+          {
+            "metricName": "traceLoad",
+            "timing": 4924.462,
+            "timestamp": 185608244374
+          },
+          {
+            "metricName": "traceDomContentLoaded",
+            "timing": 4900.822,
+            "timestamp": 185608220734
           }
         ]
       }
@@ -3251,8 +3299,8 @@
       },
       "scoreDisplayMode": "binary",
       "name": "external-anchors-use-rel-noopener",
-      "description": "Does not open external anchors using `rel=\"noopener\"`",
-      "helpText": "Open new tabs using `rel=\"noopener\"` to improve performance and prevent security vulnerabilities. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/noopener).",
+      "description": "Links to cross-origin destinations are unsafe",
+      "helpText": "Add `rel=\"noopener\"` or `rel=\"noreferrer\"` to any external links to improve performance and prevent security vulnerabilities. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/noopener).",
       "details": {
         "type": "table",
         "headings": [
@@ -4163,7 +4211,7 @@
     },
     "uses-http2": {
       "score": 0,
-      "displayValue": "16 requests were not handled over HTTP/2",
+      "displayValue": "15 requests were not handled over HTTP/2",
       "rawValue": false,
       "extendedInfo": {
         "value": {
@@ -4223,10 +4271,6 @@
             {
               "protocol": "http/1.1",
               "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
             },
             {
               "protocol": "http/1.1",
@@ -4309,10 +4353,6 @@
           {
             "protocol": "http/1.1",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "protocol": "http/1.1",
@@ -4597,7 +4637,18 @@
       "scoreDisplayMode": "binary",
       "name": "is-crawlable",
       "description": "Page is blocked from indexing",
-      "helpText": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more](https://developers.google.com/lighthouse/audits/indexing)."
+      "helpText": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/indexing)."
+    },
+    "robots-txt": {
+      "score": 0,
+      "displayValue": "",
+      "rawValue": null,
+      "error": true,
+      "debugString": "Audit error: Required RobotsTxt gatherer did not run.",
+      "scoreDisplayMode": "binary",
+      "name": "robots-txt",
+      "description": "robots.txt is not valid",
+      "helpText": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed."
     },
     "hreflang": {
       "score": 1,
@@ -4606,7 +4657,7 @@
       "scoreDisplayMode": "binary",
       "name": "hreflang",
       "description": "Document has a valid `hreflang`",
-      "helpText": "hreflang allows crawlers to discover alternate translations of the page content. [Learn more](https://support.google.com/webmasters/answer/189077).",
+      "helpText": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/hreflang).",
       "details": {
         "type": "table",
         "headings": [],
@@ -4620,7 +4671,7 @@
       "scoreDisplayMode": "binary",
       "name": "plugins",
       "description": "Document avoids plugins",
-      "helpText": "Most mobile devices do not support plugins, and many desktop browsers restrict them.",
+      "helpText": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/plugins).",
       "details": {
         "type": "table",
         "headings": [],
@@ -4665,18 +4716,15 @@
     "environment": [
       {
         "name": "Device Emulation",
-        "enabled": true,
         "description": "Nexus 5X"
       },
       {
         "name": "Network Throttling",
-        "enabled": true,
-        "description": "562.5ms RTT, 1.4Mbps down, 0.7Mbps up"
+        "description": "562.5 ms HTTP RTT, 1474.5600000000002 Kbps down, 675 Kbps up (DevTools)"
       },
       {
         "name": "CPU Throttling",
-        "enabled": true,
-        "description": "4x slowdown"
+        "description": "4x slowdown (DevTools)"
       }
     ],
     "blockedUrlPatterns": [],
@@ -4688,8 +4736,13 @@
       "description": "These encapsulate your web app's current performance and opportunities to improve it.",
       "audits": [
         {
-          "id": "first-meaningful-paint",
+          "id": "first-contentful-paint",
           "weight": 5,
+          "group": "perf-metric"
+        },
+        {
+          "id": "first-meaningful-paint",
+          "weight": 3,
           "group": "perf-metric"
         },
         {
@@ -4802,6 +4855,10 @@
           "weight": 0
         },
         {
+          "id": "metrics",
+          "weight": 0
+        },
+        {
           "id": "user-timings",
           "weight": 0,
           "group": "perf-info"
@@ -4827,7 +4884,7 @@
         }
       ],
       "id": "performance",
-      "score": 0.73
+      "score": 0.69
     },
     {
       "name": "Progressive Web App",
@@ -5236,6 +5293,11 @@
           "group": "seo-crawl"
         },
         {
+          "id": "robots-txt",
+          "weight": 1,
+          "group": "seo-crawl"
+        },
+        {
           "id": "hreflang",
           "weight": 1,
           "group": "seo-content"
@@ -5267,7 +5329,7 @@
         }
       ],
       "id": "seo",
-      "score": 0.78
+      "score": 0.7
     }
   ],
   "reportGroups": {
@@ -5341,6 +5403,6 @@
     }
   },
   "timing": {
-    "total": 1227
+    "total": 904
   }
 }

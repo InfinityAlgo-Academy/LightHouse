@@ -9,121 +9,37 @@ const FMPAudit = require('../../audits/first-meaningful-paint.js');
 const Audit = require('../../audits/audit.js');
 const assert = require('assert');
 const options = FMPAudit.defaultOptions;
-const traceEvents = require('../fixtures/traces/progressive-app.json');
-const badNavStartTrace = require('../fixtures/traces/bad-nav-start-ts.json');
-const lateTracingStartedTrace = require('../fixtures/traces/tracingstarted-after-navstart.json');
-const preactTrace = require('../fixtures/traces/preactjs.com_ts_of_undefined.json');
-const noFMPtrace = require('../fixtures/traces/no_fmp_event.json');
-const noFCPtrace = require('../fixtures/traces/airhorner_no_fcp');
+const trace = require('../fixtures/traces/progressive-app-m60.json');
+const devtoolsLogs = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 const Runner = require('../../runner.js');
 const computedArtifacts = Runner.instantiateComputedArtifacts();
 
-function generateArtifactsWithTrace(trace) {
-  return Object.assign({
-    traces: {
-      [Audit.DEFAULT_PASS]: {traceEvents: Array.isArray(trace) ? trace : trace.traceEvents},
-    },
-  }, computedArtifacts);
-}
-
 /* eslint-env mocha */
 describe('Performance: first-meaningful-paint audit', () => {
-  describe('measures the pwa.rocks example correctly', () => {
-    let fmpResult;
+  it('computes FMP correctly for valid trace', async () => {
+    const artifacts = Object.assign({
+      traces: {[Audit.DEFAULT_PASS]: trace},
+      devtoolsLogs: {[Audit.DEFAULT_PASS]: devtoolsLogs},
+    }, computedArtifacts);
+    const context = {options, settings: {throttlingMethod: 'provided'}};
+    const fmpResult = await FMPAudit.audit(artifacts, context);
 
-    it('processes a valid trace file', () => {
-      return FMPAudit.audit(generateArtifactsWithTrace(traceEvents), {options}).then(result => {
-        fmpResult = result;
-      }).catch(_ => {
-        assert.ok(false);
-      });
-    });
-
-    it('finds the expected fMP', () => {
-      assert.equal(fmpResult.displayValue, '1,100\xa0ms');
-      assert.equal(fmpResult.rawValue, 1099.5);
-    });
-
-    it('finds the correct fMP timings', () => {
-      assert.equal(fmpResult.extendedInfo.value.timings.fMP, 1099.523);
-    });
-
-    it('exposes the FCP timing', () => {
-      assert.equal(fmpResult.extendedInfo.value.timings.fCP, 461.901);
-    });
-
-    it('exposes the navStart timestamp', () => {
-      assert.equal(fmpResult.extendedInfo.value.timestamps.navStart, 668545382727);
-    });
-
-    it('scores the fMP correctly', () => {
-      assert.equal(fmpResult.score, 0.99);
-    });
-
-    it('did not fall back to an FMP candidate event', () => {
-      assert.ok(!fmpResult.extendedInfo.value.fmpFellBack);
-    });
+    assert.equal(fmpResult.score, 1);
+    assert.equal(fmpResult.displayValue, '780\xa0ms');
+    assert.equal(fmpResult.rawValue, 783.328);
   });
 
-  describe('finds correct FMP', () => {
-    it('if there was a tracingStartedInPage after the frame\'s navStart', () => {
-      const artifacts = generateArtifactsWithTrace(lateTracingStartedTrace);
-      return FMPAudit.audit(artifacts, {options}).then(result => {
-        assert.equal(result.displayValue, '530\xa0ms');
-        assert.equal(result.rawValue, 529.9);
-        assert.equal(result.extendedInfo.value.timestamps.navStart, 29343540951);
-        assert.equal(result.extendedInfo.value.timings.fCP, 80.054);
-        assert.ok(!result.extendedInfo.value.fmpFellBack);
-        assert.ok(!result.debugString);
-      });
-    });
+  it('computes FMP correctly for simulated', async () => {
+    const artifacts = Object.assign({
+      traces: {[Audit.DEFAULT_PASS]: trace},
+      devtoolsLogs: {[Audit.DEFAULT_PASS]: devtoolsLogs},
+    }, computedArtifacts);
+    const context = {options, settings: {throttlingMethod: 'simulate'}};
+    const fmpResult = await FMPAudit.audit(artifacts, context);
 
-    it('if there was a tracingStartedInPage after the frame\'s navStart #2', () => {
-      const artifacts = generateArtifactsWithTrace(badNavStartTrace);
-      return FMPAudit.audit(artifacts, {options}).then(result => {
-        assert.equal(result.displayValue, '630\xa0ms');
-        assert.equal(result.rawValue, 632.4);
-        assert.equal(result.extendedInfo.value.timestamps.navStart, 8885424467);
-        assert.equal(result.extendedInfo.value.timings.fCP, 632.419);
-        assert.ok(!result.extendedInfo.value.fmpFellBack);
-        assert.ok(!result.debugString);
-      });
-    });
-
-    it('if it appears slightly before the fCP', () => {
-      return FMPAudit.audit(generateArtifactsWithTrace(preactTrace), {options}).then(result => {
-        assert.equal(result.displayValue, '880\xa0ms');
-        assert.equal(result.rawValue, 878.4);
-        assert.equal(result.extendedInfo.value.timestamps.navStart, 1805796384607);
-        assert.equal(result.extendedInfo.value.timings.fCP, 879.046);
-        assert.ok(!result.extendedInfo.value.fmpFellBack);
-        assert.ok(!result.debugString);
-      });
-    });
-
-    it('from candidates if no defined FMP exists', () => {
-      return FMPAudit.audit(generateArtifactsWithTrace(noFMPtrace), {options}).then(result => {
-        assert.equal(result.displayValue, '4,460\xa0ms');
-        assert.equal(result.rawValue, 4460.9);
-        assert.equal(result.extendedInfo.value.timings.fCP, 1494.73);
-        assert.ok(result.extendedInfo.value.fmpFellBack);
-        assert.ok(!result.debugString);
-      });
-    });
-  });
-
-  it('handles traces missing an FCP', () => {
-    return FMPAudit.audit(generateArtifactsWithTrace(noFCPtrace), {options}).then(result => {
-      assert.strictEqual(result.debugString, undefined);
-      assert.strictEqual(result.displayValue, '480\xa0ms');
-      assert.strictEqual(result.rawValue, 482.3);
-      assert.strictEqual(result.extendedInfo.value.timings.fCP, undefined);
-      assert.strictEqual(result.extendedInfo.value.timings.fMP, 482.318);
-      assert.strictEqual(result.extendedInfo.value.timestamps.fCP, undefined);
-      assert.strictEqual(result.extendedInfo.value.timestamps.fMP, 2149509604903);
-      // NOTE: falls back to candidate FMP
-      assert.ok(result.extendedInfo.value.fmpFellBack);
-    });
+    assert.equal(fmpResult.score, 0.75);
+    assert.equal(fmpResult.displayValue, '2,850\xa0ms');
+    assert.equal(Math.round(fmpResult.rawValue), 2851);
   });
 });

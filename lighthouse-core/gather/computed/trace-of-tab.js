@@ -92,7 +92,7 @@ class TraceOfTab extends ComputedArtifact {
       firstMeaningfulPaint = lastCandidate;
     }
 
-    const onLoad = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > navigationStart.ts);
+    const load = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > navigationStart.ts);
     const domContentLoaded = frameEvents.find(
       e => e.name === 'domContentLoadedEventEnd' && e.ts > navigationStart.ts
     );
@@ -116,7 +116,7 @@ class TraceOfTab extends ComputedArtifact {
       firstContentfulPaint,
       firstMeaningfulPaint,
       traceEnd: {ts: traceEnd.ts + (traceEnd.dur || 0)},
-      onLoad,
+      load,
       domContentLoaded,
     };
 
@@ -138,7 +138,8 @@ class TraceOfTab extends ComputedArtifact {
       firstPaintEvt: firstPaint,
       firstContentfulPaintEvt: firstContentfulPaint,
       firstMeaningfulPaintEvt: firstMeaningfulPaint,
-      onLoadEvt: onLoad,
+      loadEvt: load,
+      domContentLoadedEvt: domContentLoaded,
       fmpFellBack,
     };
   }

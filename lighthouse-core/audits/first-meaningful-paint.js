@@ -7,7 +7,6 @@
 
 const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util');
-const LHError = require('../lib/errors');
 
 class FirstMeaningfulPaint extends Audit {
   /**
@@ -43,75 +42,20 @@ class FirstMeaningfulPaint extends Audit {
    * @param {LH.Audit.Context} context
    * @return {!Promise<!AuditResult>}
    */
-  static audit(artifacts, context) {
-    const trace = artifacts.traces[this.DEFAULT_PASS];
-    return artifacts.requestTraceOfTab(trace).then(tabTrace => {
-      if (!tabTrace.firstMeaningfulPaintEvt) {
-        throw new LHError(LHError.errors.NO_FMP);
-      }
-
-      // navigationStart is currently essential to FMP calculation.
-      // see: https://github.com/GoogleChrome/lighthouse/issues/753
-      if (!tabTrace.navigationStartEvt) {
-        throw new LHError(LHError.errors.NO_NAVSTART);
-      }
-
-      const result = this.calculateScore(tabTrace, context);
-
-      return {
-        score: result.score,
-        rawValue: parseFloat(result.duration),
-        displayValue: Util.formatMilliseconds(result.duration),
-        debugString: result.debugString,
-        extendedInfo: {
-          value: result.extendedInfo,
-        },
-      };
-    });
-  }
-
-  static calculateScore(traceOfTab, context) {
-    // Expose the raw, unchanged monotonic timestamps from the trace, along with timing durations
-    const extendedInfo = {
-      timestamps: {
-        navStart: traceOfTab.timestamps.navigationStart,
-        fCP: traceOfTab.timestamps.firstContentfulPaint,
-        fMP: traceOfTab.timestamps.firstMeaningfulPaint,
-        onLoad: traceOfTab.timestamps.onLoad,
-        endOfTrace: traceOfTab.timestamps.traceEnd,
-      },
-      timings: {
-        navStart: 0,
-        fCP: traceOfTab.timings.firstContentfulPaint,
-        fMP: traceOfTab.timings.firstMeaningfulPaint,
-        onLoad: traceOfTab.timings.onLoad,
-        endOfTrace: traceOfTab.timings.traceEnd,
-      },
-      fmpFellBack: traceOfTab.fmpFellBack,
-    };
-
-    Object.keys(extendedInfo.timings).forEach(key => {
-      const val = extendedInfo.timings[key];
-      if (typeof val !== 'number' || Number.isNaN(val)) {
-        extendedInfo.timings[key] = undefined;
-        extendedInfo.timestamps[key] = undefined;
-      } else {
-        extendedInfo.timings[key] = parseFloat(extendedInfo.timings[key].toFixed(3));
-      }
-    });
-
-    const firstMeaningfulPaint = traceOfTab.timings.firstMeaningfulPaint;
-    const score = Audit.computeLogNormalScore(
-      firstMeaningfulPaint,
-      context.options.scorePODR,
-      context.options.scoreMedian
-    );
+  static async audit(artifacts, context) {
+    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const metricComputationData = {trace, devtoolsLog, settings: context.settings};
+    const metricResult = await artifacts.requestFirstMeaningfulPaint(metricComputationData);
 
     return {
-      score,
-      duration: firstMeaningfulPaint.toFixed(1),
-      rawValue: firstMeaningfulPaint,
-      extendedInfo,
+      score: Audit.computeLogNormalScore(
+        metricResult.timing,
+        context.options.scorePODR,
+        context.options.scoreMedian
+      ),
+      rawValue: metricResult.timing,
+      displayValue: Util.formatMilliseconds(metricResult.timing),
     };
   }
 }

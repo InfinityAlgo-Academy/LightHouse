@@ -67,14 +67,14 @@ class ScreenshotThumbnails extends Audit {
    * @param {!Artifacts} artifacts
    * @return {!AuditResult}
    */
-  static audit(artifacts) {
+  static audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const cachedThumbnails = new Map();
 
     return Promise.all([
       artifacts.requestSpeedline(trace),
-      TTFI.audit(artifacts).catch(() => ({rawValue: 0})),
-      TTCI.audit(artifacts).catch(() => ({rawValue: 0})),
+      TTFI.audit(artifacts, context).catch(() => ({rawValue: 0})),
+      TTCI.audit(artifacts, context).catch(() => ({rawValue: 0})),
     ]).then(([speedline, ttfi, ttci]) => {
       const thumbnails = [];
       const analyzedFrames = speedline.frames.filter(frame => !frame.isProgressInterpolated());

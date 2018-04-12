@@ -8,8 +8,8 @@
 const Metrics = require('../../../lib/traces/pwmetrics-events');
 const assert = require('assert');
 
-const dbwTrace = require('../../fixtures/traces/dbw_tester.json');
-const dbwResults = require('../../fixtures/dbw_tester-perf-results.json');
+const dbwTrace = require('../../results/artifacts/defaultPass.trace.json');
+const dbwResults = require('../../results/sample_v2.json');
 
 /* eslint-env mocha */
 describe('metrics events class', () => {
