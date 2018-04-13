@@ -67,6 +67,7 @@ const ERRORS = {
   NO_SPEEDLINE_FRAMES: {message: strings.didntCollectScreenshots},
   SPEEDINDEX_OF_ZERO: {message: strings.didntCollectScreenshots},
   NO_SCREENSHOTS: {message: strings.didntCollectScreenshots},
+  INVALID_SPEEDLINE: {message: strings.didntCollectScreenshots},
 
   // Trace parsing errors
   NO_TRACING_STARTED: {message: strings.badTraceRecording},

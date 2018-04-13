@@ -6,8 +6,7 @@
 'use strict';
 
 const Audit = require('./audit');
-const TTFI = require('./first-interactive');
-const TTCI = require('./consistently-interactive');
+const LHError = require('../lib/errors');
 const jpeg = require('jpeg-js');
 
 const NUMBER_OF_THUMBNAILS = 10;
@@ -23,7 +22,7 @@ class ScreenshotThumbnails extends Audit {
       informative: true,
       description: 'Screenshot Thumbnails',
       helpText: 'This is what the load of your site looked like.',
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
   }
 
@@ -67,62 +66,73 @@ class ScreenshotThumbnails extends Audit {
    * @param {!Artifacts} artifacts
    * @return {!AuditResult}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const cachedThumbnails = new Map();
 
-    return Promise.all([
-      artifacts.requestSpeedline(trace),
-      TTFI.audit(artifacts, context).catch(() => ({rawValue: 0})),
-      TTCI.audit(artifacts, context).catch(() => ({rawValue: 0})),
-    ]).then(([speedline, ttfi, ttci]) => {
-      const thumbnails = [];
-      const analyzedFrames = speedline.frames.filter(frame => !frame.isProgressInterpolated());
-      const maxFrameTime =
-        speedline.complete ||
-        Math.max(...speedline.frames.map(frame => frame.getTimeStamp() - speedline.beginning));
-      // Find thumbnails to cover the full range of the trace (max of last visual change and time
-      // to interactive).
-      const timelineEnd = Math.max(maxFrameTime, ttfi.rawValue, ttci.rawValue);
+    const speedline = await artifacts.requestSpeedline(trace);
 
-      for (let i = 1; i <= NUMBER_OF_THUMBNAILS; i++) {
-        const targetTimestamp = speedline.beginning + timelineEnd * i / NUMBER_OF_THUMBNAILS;
+    let minimumTimelineDuration = 0;
+    // Ensure thumbnails cover the full range of the trace (TTI can be later than visually complete)
+    if (context.settings.throttlingMethod !== 'simulate') {
+      const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+      const metricComputationData = {trace, devtoolsLog, settings: context.settings};
+      const ttci = artifacts.requestConsistentlyInteractive(metricComputationData);
+      try {
+        minimumTimelineDuration = (await ttci).timing;
+      } catch (_) {
+        minimumTimelineDuration = 0;
+      }
+    }
 
-        let frameForTimestamp = null;
-        if (i === NUMBER_OF_THUMBNAILS) {
-          frameForTimestamp = analyzedFrames[analyzedFrames.length - 1];
-        } else {
-          analyzedFrames.forEach(frame => {
-            if (frame.getTimeStamp() <= targetTimestamp) {
-              frameForTimestamp = frame;
-            }
-          });
-        }
+    const thumbnails = [];
+    const analyzedFrames = speedline.frames.filter(frame => !frame.isProgressInterpolated());
+    const maxFrameTime =
+      speedline.complete ||
+      Math.max(...speedline.frames.map(frame => frame.getTimeStamp() - speedline.beginning));
+    const timelineEnd = Math.max(maxFrameTime, minimumTimelineDuration);
 
-        const imageData = frameForTimestamp.getParsedImage();
-        const thumbnailImageData = ScreenshotThumbnails.scaleImageToThumbnail(imageData);
-        const base64Data =
-          cachedThumbnails.get(frameForTimestamp) ||
-          jpeg.encode(thumbnailImageData, 90).data.toString('base64');
+    if (!analyzedFrames.length || !Number.isFinite(timelineEnd)) {
+      throw new LHError(LHError.errors.INVALID_SPEEDLINE);
+    }
 
-        cachedThumbnails.set(frameForTimestamp, base64Data);
-        thumbnails.push({
-          timing: Math.round(targetTimestamp - speedline.beginning),
-          timestamp: targetTimestamp * 1000,
-          data: base64Data,
+    for (let i = 1; i <= NUMBER_OF_THUMBNAILS; i++) {
+      const targetTimestamp = speedline.beginning + timelineEnd * i / NUMBER_OF_THUMBNAILS;
+
+      let frameForTimestamp = null;
+      if (i === NUMBER_OF_THUMBNAILS) {
+        frameForTimestamp = analyzedFrames[analyzedFrames.length - 1];
+      } else {
+        analyzedFrames.forEach(frame => {
+          if (frame.getTimeStamp() <= targetTimestamp) {
+            frameForTimestamp = frame;
+          }
         });
       }
 
-      return {
-        score: 1,
-        rawValue: thumbnails.length > 0,
-        details: {
-          type: 'filmstrip',
-          scale: timelineEnd,
-          items: thumbnails,
-        },
-      };
-    });
+      const imageData = frameForTimestamp.getParsedImage();
+      const thumbnailImageData = ScreenshotThumbnails.scaleImageToThumbnail(imageData);
+      const base64Data =
+        cachedThumbnails.get(frameForTimestamp) ||
+        jpeg.encode(thumbnailImageData, 90).data.toString('base64');
+
+      cachedThumbnails.set(frameForTimestamp, base64Data);
+      thumbnails.push({
+        timing: Math.round(targetTimestamp - speedline.beginning),
+        timestamp: targetTimestamp * 1000,
+        data: base64Data,
+      });
+    }
+
+    return {
+      score: 1,
+      rawValue: thumbnails.length > 0,
+      details: {
+        type: 'filmstrip',
+        scale: timelineEnd,
+        items: thumbnails,
+      },
+    };
   }
 }
 
