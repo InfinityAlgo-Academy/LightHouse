@@ -26,10 +26,24 @@ const throttling = {
   },
 };
 
+/** @type {LH.Config.Settings} */
 const defaultSettings = {
   maxWaitForLoad: 45 * 1000,
   throttlingMethod: 'devtools',
   throttling: throttling.mobile3G,
+  auditMode: false,
+  gatherMode: false,
+  disableStorageReset: false,
+  disableDeviceEmulation: false,
+
+  // the following settings have no defaults but we still want ensure that `key in settings`
+  // in config will work in a typechecked way
+  blockedUrlPatterns: null,
+  additionalTraceCategories: null,
+  extraHeaders: null,
+  onlyAudits: null,
+  onlyCategories: null,
+  skipAudits: null,
 };
 
 const defaultPassConfig = {

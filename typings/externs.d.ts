@@ -35,17 +35,17 @@ declare global {
 
     interface SharedFlagsSettings {
       maxWaitForLoad?: number;
-      blockedUrlPatterns?: string[];
-      additionalTraceCategories?: string;
+      blockedUrlPatterns?: string[] | null;
+      additionalTraceCategories?: string | null;
       auditMode?: boolean | string;
       gatherMode?: boolean | string;
       disableStorageReset?: boolean;
       disableDeviceEmulation?: boolean;
       throttlingMethod?: 'devtools'|'simulate'|'provided';
       throttling?: ThrottlingSettings;
-      onlyAudits?: string[];
-      onlyCategories?: string[];
-      skipAudits?: string[];
+      onlyAudits?: string[] | null;
+      onlyCategories?: string[] | null;
+      skipAudits?: string[] | null;
     }
 
     export interface Flags extends SharedFlagsSettings {

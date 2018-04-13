@@ -246,8 +246,27 @@ function expandArtifacts(artifacts) {
   return artifacts;
 }
 
+/**
+ * Creates a settings object from potential flags object by dropping all the properties
+ * that don't exist on Config.Settings.
+ *
+ * @param {LH.Flags=} flags
+ * @return {Partial<LH.Config.Settings>}
+ */
+function cleanFlagsForSettings(flags = {}) {
+  const settings = {};
+  for (const key of Object.keys(flags)) {
+    if (typeof constants.defaultSettings[key] !== 'undefined') {
+      settings[key] = flags[key];
+    }
+  }
+
+  return settings;
+}
+
 function merge(base, extension) {
-  if (typeof base === 'undefined') {
+  // If the default value doesn't exist or is explicitly null, defer to the extending value
+  if (typeof base === 'undefined' || base === null) {
     return extension;
   } else if (Array.isArray(extension)) {
     if (!Array.isArray(base)) throw new TypeError(`Expected array but got ${typeof base}`);
@@ -330,7 +349,7 @@ class Config {
     configJSON.passes = Config.expandGathererShorthandAndMergeOptions(configJSON.passes);
 
     // Override any applicable settings with CLI flags
-    configJSON.settings = merge(configJSON.settings || {}, flags || {});
+    configJSON.settings = merge(configJSON.settings || {}, cleanFlagsForSettings(flags));
 
     // Generate a limited config if specified
     if (Array.isArray(configJSON.settings.onlyCategories) ||

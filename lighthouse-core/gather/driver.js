@@ -828,7 +828,7 @@ class Driver {
   }
 
   /**
-   * @param {{additionalTraceCategories?: string}=} settings
+   * @param {{additionalTraceCategories?: string|null}=} settings
    * @return {Promise<void>}
    */
   beginTrace(settings) {
@@ -1019,7 +1019,7 @@ class Driver {
   }
 
   /**
-   * @param {LH.Crdp.Network.Headers=} headers key/value pairs of HTTP Headers.
+   * @param {LH.Crdp.Network.Headers|null} headers key/value pairs of HTTP Headers.
    * @return {Promise<void>}
    */
   async setExtraHTTPHeaders(headers) {

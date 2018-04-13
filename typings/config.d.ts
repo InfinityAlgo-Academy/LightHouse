@@ -24,11 +24,11 @@ declare global {
         settings?: SettingsJson;
         passes?: PassJson[];
       }
-  
+
       export interface SettingsJson extends SharedFlagsSettings {
-        extraHeaders?: Crdp.Network.Headers;
+        extraHeaders?: Crdp.Network.Headers | null;
       }
-  
+
       export interface PassJson {
         passName: string;
         recordTrace?: boolean;
@@ -41,7 +41,7 @@ declare global {
         blankDuration?: number;
         gatherers: GathererJson[];
       }
-  
+
       export type GathererJson = {
         path: string;
         options?: {};
@@ -52,14 +52,14 @@ declare global {
         instance: InstanceType<typeof Gatherer>;
         options?: {};
       } | string;
-  
+
       // TODO(bckenny): we likely don't want to require all these
       export type Settings = Required<SettingsJson>;
-  
+
       export interface Pass extends Required<PassJson> {
         gatherers: GathererDefn[];
       }
-  
+
       export interface GathererDefn {
         implementation: typeof Gatherer;
         instance: InstanceType<typeof Gatherer>;

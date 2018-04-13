@@ -418,6 +418,12 @@ describe('Config', () => {
     });
   });
 
+  it('cleans up flags for settings', () => {
+    const config = new Config({extends: true}, {nonsense: 1, foo: 2, throttlingMethod: 'provided'});
+    assert.equal(config.settings.throttlingMethod, 'provided');
+    assert.ok(config.settings.nonsense === undefined, 'did not cleanup settings');
+  });
+
   it('extends the full config', () => {
     class CustomAudit extends Audit {
       static get meta() {
