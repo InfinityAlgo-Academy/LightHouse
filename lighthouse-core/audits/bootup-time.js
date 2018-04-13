@@ -24,7 +24,7 @@ class BootupTime extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       helpText: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
         'You may find delivering smaller JS payloads helps with this. [Learn ' +
-        'more](https://developers.google.com/web/lighthouse/audits/bootup).',
+        'more](https://developers.google.com/web/tools/lighthouse/audits/bootup).',
       requiredArtifacts: ['traces'],
     };
   }
