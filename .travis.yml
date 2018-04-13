@@ -36,6 +36,7 @@ script:
   - yarn unit:silentcoverage
   - yarn type-check
   - yarn closure
+  - yarn diff:sample-json
   - yarn smoke
   - yarn test-extension
   # _JAVA_OPTIONS is breaking parsing of compiler output. See #3338.

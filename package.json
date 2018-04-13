@@ -28,7 +28,7 @@
 
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
     "start": "node ./lighthouse-cli/index.js",
-    "test": "yarn lint --quiet && yarn unit && yarn type-check && yarn closure",
+    "test": "yarn lint --quiet && yarn unit && yarn type-check && yarn closure && yarn diff:sample-json",
     "test-extension": "cd lighthouse-extension && yarn test",
 
     "unit-core": "mocha --reporter dot \"lighthouse-core/test/**/*-test.js\"",
@@ -57,6 +57,7 @@
     "type-check": "tsc -p .",
     "update:sample-artifacts": "node lighthouse-core/scripts/update-report-fixtures.js -G",
     "update:sample-json": "node ./lighthouse-cli -A=./lighthouse-core/test/results/artifacts --output=json --output-path=./lighthouse-core/test/results/sample_v2.json http://localhost/dobetterweb/dbw_tester.html",
+    "diff:sample-json": "bash lighthouse-core/scripts/assert-golden-lhr-unchanged.sh",
     "update:crdp-typings": "node lighthouse-core/scripts/extract-crdp-mapping.js",
     "mixed-content": "./lighthouse-cli/index.js --chrome-flags='--headless' --config-path=./lighthouse-core/config/mixed-content.js"
   },
