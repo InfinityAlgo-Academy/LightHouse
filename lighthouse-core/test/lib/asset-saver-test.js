@@ -10,7 +10,6 @@ const Metrics = require('../../lib/traces/pwmetrics-events');
 const assert = require('assert');
 const fs = require('fs');
 
-const screenshotFilmstrip = require('../fixtures/traces/screenshots.json');
 const traceEvents = require('../fixtures/traces/progressive-app.json');
 const dbwTrace = require('../results/artifacts/defaultPass.trace.json');
 const dbwResults = require('../results/sample_v2.json');
@@ -27,21 +26,6 @@ function assertTraceEventsEqual(traceEventsA, traceEventsB) {
 
 /* eslint-env mocha */
 describe('asset-saver helper', () => {
-  it('generates HTML', () => {
-    const artifacts = {
-      devtoolsLogs: {},
-      traces: {
-        [Audit.DEFAULT_PASS]: {
-          traceEvents: [],
-        },
-      },
-      requestScreenshots: () => Promise.resolve([]),
-    };
-    return assetSaver.prepareAssets(artifacts).then(assets => {
-      assert.ok(/<!doctype/gim.test(assets[0].screenshotsHTML));
-    });
-  });
-
   describe('saves files', function() {
     before(() => {
       const artifacts = {
@@ -53,7 +37,6 @@ describe('asset-saver helper', () => {
             traceEvents,
           },
         },
-        requestScreenshots: () => Promise.resolve(screenshotFilmstrip),
       };
 
       return assetSaver.saveAssets(artifacts, dbwResults.audits, process.cwd() + '/the_file');
@@ -78,7 +61,7 @@ describe('asset-saver helper', () => {
       const ssHTMLFilename = 'the_file-0.screenshots.html';
       const ssFileContents = fs.readFileSync(ssHTMLFilename, 'utf8');
       assert.ok(/<!doctype/gim.test(ssFileContents));
-      const expectedScreenshotContent = '{"timestamp":674089419.919';
+      const expectedScreenshotContent = '{"timestamp":668545858.596';
       assert.ok(ssFileContents.includes(expectedScreenshotContent), 'unexpected screenshot html');
       fs.unlinkSync(ssHTMLFilename);
     });
@@ -86,7 +69,7 @@ describe('asset-saver helper', () => {
     it('screenshots json file saved to disk with data', () => {
       const ssJSONFilename = 'the_file-0.screenshots.json';
       const ssContents = JSON.parse(fs.readFileSync(ssJSONFilename, 'utf8'));
-      assert.equal(ssContents[0].timestamp, 674089419.919, 'unexpected screenshot json');
+      assert.equal(ssContents[0].timestamp, 668545858.596, 'unexpected screenshot json');
       fs.unlinkSync(ssJSONFilename);
     });
   });
@@ -99,7 +82,6 @@ describe('asset-saver helper', () => {
         traces: {
           defaultPass: dbwTrace,
         },
-        requestScreenshots: () => Promise.resolve([]),
       };
       const beforeCount = countEvents(dbwTrace);
       return assetSaver.prepareAssets(mockArtifacts, dbwResults.audits).then(preparedAssets => {

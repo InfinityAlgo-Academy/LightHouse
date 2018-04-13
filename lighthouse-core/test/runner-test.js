@@ -17,8 +17,6 @@ const path = require('path');
 const sinon = require('sinon');
 const rimraf = require('rimraf');
 
-const computedArtifacts = Runner.instantiateComputedArtifacts();
-
 /* eslint-env mocha */
 
 describe('Runner', () => {
@@ -522,14 +520,10 @@ describe('Runner', () => {
 
     return Runner.run({}, {url, config}).then(results => {
       assert.deepEqual(results.artifacts.ViewportDimensions, ViewportDimensions);
-
-      for (const method of Object.keys(computedArtifacts)) {
-        assert.ok(results.artifacts.hasOwnProperty(method));
-      }
     });
   });
 
-  it('results include artifacts and computedArtifacts when given passes and audits', () => {
+  it('results include artifacts when given passes and audits', () => {
     const url = 'https://example.com';
     const config = new Config({
       passes: [{
@@ -543,23 +537,13 @@ describe('Runner', () => {
     });
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
-      // Check whether non-computedArtifacts attributes are returned
+      // User-specified artifact.
       assert.ok(results.artifacts.ViewportDimensions);
 
-      for (const method of Object.keys(computedArtifacts)) {
-        assert.ok(results.artifacts.hasOwnProperty(method));
-      }
-
-      // Verify a computed artifact
+      // Default artifact.
       const artifacts = results.artifacts;
       const devtoolsLogs = artifacts.devtoolsLogs['firstPass'];
       assert.equal(Array.isArray(devtoolsLogs), true, 'devtoolsLogs is not an array');
-
-      return artifacts.requestCriticalRequestChains(devtoolsLogs).then(chains => {
-        assert.ok(chains['93149.1']);
-        assert.ok(chains['93149.1'].request);
-        assert.ok(chains['93149.1'].children);
-      });
     });
   });
 

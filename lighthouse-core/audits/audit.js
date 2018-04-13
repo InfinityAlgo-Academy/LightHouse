@@ -49,6 +49,20 @@ class Audit {
     return {};
   }
 
+  /* eslint-disable no-unused-vars */
+
+  /**
+   *
+   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
+   * @return {LH.Audit.Product|Promise<LH.Audit.Product>}
+   */
+  static audit(artifacts, context) {
+    throw new Error('audit() method must be overriden');
+  }
+
+  /* eslint-enable no-unused-vars */
+
   /**
    * Computes a clamped score between 0 and 1 based on the measured value. Score is determined by
    * considering a log-normal distribution governed by the two control points, point of diminishing

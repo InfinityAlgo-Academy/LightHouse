@@ -27,7 +27,7 @@ declare global {
       name: string;
       description: string;
       helpText: string;
-      requiredArtifacts: Array<string>;
+      requiredArtifacts: Array<keyof Artifacts>;
       failureDescription?: string;
       informative?: boolean;
       manual?: boolean;

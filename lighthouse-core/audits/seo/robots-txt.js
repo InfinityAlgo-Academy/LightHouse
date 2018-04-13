@@ -170,7 +170,7 @@ class RobotsTxt extends Audit {
   }
 
   /**
-   * @param {{RobotsTxt: {status: number, content: string}}} artifacts
+   * @param {LH.Artifacts} artifacts
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
@@ -196,6 +196,11 @@ class RobotsTxt extends Audit {
         rawValue: true,
         notApplicable: true,
       };
+    }
+
+    // If status is good, content must be not null.
+    if (content === null) {
+      throw new Error(`Status ${status} was valid, but content was null`);
     }
 
     const validationErrors = validateRobots(content);

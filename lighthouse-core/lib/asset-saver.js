@@ -162,9 +162,13 @@ async function prepareAssets(artifacts, audits) {
   for (const passName of passNames) {
     const trace = artifacts.traces[passName];
     const devtoolsLog = artifacts.devtoolsLogs[passName];
+
+    // Avoid Runner->AssetSaver->Runner circular require by loading Runner here.
+    const Runner = require('../runner.js');
+    const computedArtifacts = Runner.instantiateComputedArtifacts();
     /** @type {Array<Screenshot>} */
     // @ts-ignore TODO(bckenny): need typed computed artifacts
-    const screenshots = await artifacts.requestScreenshots(trace);
+    const screenshots = await computedArtifacts.requestScreenshots(trace);
 
     const traceData = Object.assign({}, trace);
     const screenshotsHTML = screenshotDump(screenshots);

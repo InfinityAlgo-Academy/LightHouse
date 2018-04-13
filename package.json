@@ -65,6 +65,7 @@
     "@types/chrome": "^0.0.60",
     "@types/configstore": "^2.1.1",
     "@types/inquirer": "^0.0.35",
+    "@types/lodash.isequal": "^4.5.2",
     "@types/node": "*",
     "@types/opn": "^3.0.28",
     "@types/update-notifier": "^1.0.2",

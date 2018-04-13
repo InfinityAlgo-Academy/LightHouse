@@ -160,7 +160,7 @@ function assertValidAudit(auditDefinition, auditPath) {
   const auditName = auditPath ||
     (auditDefinition && auditDefinition.meta && auditDefinition.meta.name);
 
-  if (typeof auditDefinition.audit !== 'function') {
+  if (typeof auditDefinition.audit !== 'function' || auditDefinition.audit === Audit.audit) {
     throw new Error(`${auditName} has no audit() method.`);
   }
 

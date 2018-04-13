@@ -12,6 +12,8 @@ declare global {
       UserAgent: string;
       traces: {[passName: string]: Trace};
       devtoolsLogs: {[passName: string]: DevtoolsLog};
+      settings: Config.Settings;
+      RobotsTxt: {status: number|null, content: string|null};
     }
 
     module Artifacts {

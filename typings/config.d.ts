@@ -5,6 +5,10 @@
  */
 
 import * as Gatherer from '../lighthouse-core/gather/gatherers/gatherer.js';
+import * as Audit from '../lighthouse-core/audits/audit.js';
+
+/** From type T, drop set of properties K */
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
 declare global {
   module LH {
@@ -13,7 +17,12 @@ declare global {
      */
     export interface Config {
       settings: Config.Settings;
-      passes: Config.Pass[];
+      passes?: Config.Pass[];
+      audits?: Config.AuditDefn[];
+      categories?: Record<string, Config.Category>;
+      groups?: Record<string, Config.Group>;
+      // TODO(bckenny): should be Partial<> maybe? don't want to fail imported json
+      artifacts?: Artifacts;
     }
 
     module Config {
@@ -23,6 +32,9 @@ declare global {
       export interface Json {
         settings?: SettingsJson;
         passes?: PassJson[];
+        categories?: Record<string, CategoryJson>;
+        groups?: GroupJson[];
+        artifacts?: ArtifactsJson;
       }
 
       export interface SettingsJson extends SharedFlagsSettings {
@@ -53,6 +65,38 @@ declare global {
         options?: {};
       } | string;
 
+      export interface CategoryJson {
+        name: string;
+        description: string;
+        audits: CategoryMemberJson[];
+      }
+
+      export interface GroupJson {
+        title: string;
+        description: string;
+      }
+
+      /**
+       * A LH Artifacts object, but the traces and devtoolsLogs are replaced
+       * with file paths of json files to import as those artifacts.
+       * TODO(bckenny): this is to support legacy config.artifacts. Migrate to
+       * -A instead.
+       */
+      export interface ArtifactsJson extends Omit<Artifacts, 'traces'|'devtoolsLogs'> {
+        traces: Record<string, string>;
+        devtoolsLogs: Record<string, string>;
+      }
+
+      /**
+       * Reference to an audit member of a category and how its score should be
+       * weighted and how its results grouped with other members.
+       */
+      export interface CategoryMemberJson {
+        id: string;
+        weight: number;
+        group?: string;
+      }
+
       // TODO(bckenny): we likely don't want to require all these
       export type Settings = Required<SettingsJson>;
 
@@ -65,6 +109,18 @@ declare global {
         instance: InstanceType<typeof Gatherer>;
         options: {};
       }
+
+      export interface AuditDefn {
+        implementation: typeof Audit;
+        options: {};
+      }
+
+      // TODO: For now, these are unchanged from JSON and Result versions. Need to harmonize.
+      export interface CategoryMember extends CategoryMemberJson {}
+      export interface Category extends CategoryJson {
+        audits: CategoryMember[];
+      }
+      export interface Group extends GroupJson {}
     }
   }
 }
