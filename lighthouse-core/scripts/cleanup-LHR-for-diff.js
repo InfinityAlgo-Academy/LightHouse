@@ -24,5 +24,8 @@ writeFileSync(filename, cleanAndFormatLHR(data), 'utf8');
 function cleanAndFormatLHR(lhrString) {
   const lhr = JSON.parse(lhrString);
   delete lhr.timing;
+  for (const auditResult of Object.values(lhr.audits)) {
+    auditResult.helpText = '**Excluded from diff**';
+  }
   return JSON.stringify(lhr, null, 2);
 }
