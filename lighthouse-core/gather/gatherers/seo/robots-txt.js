@@ -9,6 +9,7 @@ const Gatherer = require('../gatherer');
 
 /* global fetch, URL, location */
 
+/* istanbul ignore next */
 function getRobotsTxtContent() {
   return fetch(new URL('/robots.txt', location.href))
     .then(response => {

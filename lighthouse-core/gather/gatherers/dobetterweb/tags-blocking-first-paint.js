@@ -23,6 +23,7 @@ const Gatherer = require('../gatherer');
 
 /* global document,window,HTMLLinkElement */
 
+/* istanbul ignore next */
 function installMediaListener() {
   window.___linkMediaChanges = [];
   Object.defineProperty(HTMLLinkElement.prototype, 'media', {

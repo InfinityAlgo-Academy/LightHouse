@@ -19,6 +19,7 @@
  *     Combinators are not supported.
  * @param {!Array<!Element>}
  */
+/* istanbul ignore next */
 function getElementsInDocument(selector) {
   const results = [];
 
