@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
-
 const ComputedArtifact = require('./computed-artifact');
 const TracingProcessor = require('../../lib/traces/tracing-processor');
 const LHError = require('../../lib/errors');
@@ -67,22 +66,24 @@ class FirstInteractive extends ComputedArtifact {
    * Clusters tasks after startIndex that are in the specified window if they are within
    * MIN_TASK_CLUSTER_PADDING ms of each other. Can return tasks that start outside of the window,
    * but all clusters are guaranteed to have started before windowEnd.
-   * @param {!Array<{start: number, end: number}>} tasks
+   * @param {Array<Task>} tasks
    * @param {number} startIndex
    * @param {number} windowEnd
-   * @return {!Array<{start: number, end: number, duration: number}>}
+   * @return {Array<TaskCluster>}
    */
   static getTaskClustersInWindow(tasks, startIndex, windowEnd) {
     const clusters = [];
 
     let previousTaskEndTime = -Infinity;
-    let currentCluster = null;
+    /** @type {Array<Task>} */
+    let currentCluster = [];
 
     // Examine all tasks that could possibly be part of a cluster starting before windowEnd.
     // Consider the case where window end is 15s, there's a 100ms task from 14.9-15s and a 500ms
     // task from 15.5-16s, we need that later task to be clustered with the first so we can properly
     // identify that main thread isn't quiet.
     const clusteringWindowEnd = windowEnd + MIN_TASK_CLUSTER_PADDING;
+    /** @param {Task} task */
     const isInClusteringWindow = task => task.start < clusteringWindowEnd;
     for (let i = startIndex; i < tasks.length; i++) {
       if (!isInClusteringWindow(tasks[i])) {
@@ -119,7 +120,7 @@ class FirstInteractive extends ComputedArtifact {
    * of the trace.
    * @param {number} FMP
    * @param {number} traceEnd
-   * @param {!Array<{start: number, end: number>}} longTasks
+   * @param {Array<Task>} longTasks
    * @return {number}
    */
   static findQuietWindow(FMP, traceEnd, longTasks) {
@@ -129,8 +130,11 @@ class FirstInteractive extends ComputedArtifact {
       return FMP;
     }
 
+    /** @param {TaskCluster} cluster */
     const isTooCloseToFMP = cluster => cluster.start < FMP + MIN_TASK_CLUSTER_FMP_DISTANCE;
+    /** @param {TaskCluster} cluster */
     const isTooLong = cluster => cluster.duration > MAX_TASK_CLUSTER_DURATION;
+    /** @param {TaskCluster} cluster */
     const isBadCluster = cluster => isTooCloseToFMP(cluster) || isTooLong(cluster);
 
     // FirstInteractive must start at the end of a long task, consider each long task and
@@ -192,9 +196,9 @@ class FirstInteractive extends ComputedArtifact {
   }
 
   /**
-   * @param {!Trace} trace
-   * @param {!ComputedArtifacts} artifacts
-   * @return {{timeInMs: number, timestamp: number}}
+   * @param {LH.Trace} trace
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<{timeInMs: number, timestamp: number}>}
    */
   compute_(trace, artifacts) {
     return artifacts.requestTraceOfTab(trace).then(traceOfTab => {
@@ -202,5 +206,10 @@ class FirstInteractive extends ComputedArtifact {
     });
   }
 }
+
+/**
+ * @typedef {{start: number, end: number}} Task
+ * @typedef {{start: number, end: number, duration: number}} TaskCluster
+ */
 
 module.exports = FirstInteractive;

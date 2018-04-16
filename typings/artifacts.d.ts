@@ -14,6 +14,8 @@ declare global {
       devtoolsLogs: {[passName: string]: DevtoolsLog};
       settings: Config.Settings;
       RobotsTxt: {status: number|null, content: string|null};
+      // TODO(bckenny): remove this for real computed artifacts approach
+      requestTraceOfTab(trace: Trace): Promise<Artifacts.TraceOfTab>
     }
 
     module Artifacts {
