@@ -17,12 +17,14 @@
 /**
  * @param {string=} selector Optional simple CSS selector to filter nodes on.
  *     Combinators are not supported.
- * @param {!Array<!Element>}
+ * @return {Array<Element>}
  */
 /* istanbul ignore next */
 function getElementsInDocument(selector) {
+  /** @type {Array<Element>} */
   const results = [];
 
+  /** @param {NodeListOf<Element>} nodes */
   const _findAllElements = nodes => {
     for (let i = 0, el; el = nodes[i]; ++i) {
       if (!selector || el.matches(selector)) {

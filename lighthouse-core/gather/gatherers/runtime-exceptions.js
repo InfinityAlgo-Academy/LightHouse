@@ -15,23 +15,33 @@ const Gatherer = require('./gatherer');
 class RuntimeExceptions extends Gatherer {
   constructor() {
     super();
+    /** @type {Array<LH.Crdp.Runtime.ExceptionThrownEvent>} */
     this._exceptions = [];
     this._onRuntimeExceptionThrown = this.onRuntimeExceptionThrown.bind(this);
   }
 
+  /**
+   * @param {LH.Crdp.Runtime.ExceptionThrownEvent} entry
+   */
   onRuntimeExceptionThrown(entry) {
     this._exceptions.push(entry);
   }
 
-  beforePass(options) {
-    const driver = options.driver;
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   */
+  beforePass(passContext) {
+    const driver = passContext.driver;
     driver.on('Runtime.exceptionThrown', this._onRuntimeExceptionThrown);
   }
 
-  afterPass(options) {
-    return Promise.resolve()
-      .then(_ => options.driver.off('Runtime.exceptionThrown', this._onRuntimeExceptionThrown))
-      .then(_ => this._exceptions);
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['RuntimeExceptions']>}
+   */
+  async afterPass(passContext) {
+    await passContext.driver.off('Runtime.exceptionThrown', this._onRuntimeExceptionThrown);
+    return this._exceptions;
   }
 }
 

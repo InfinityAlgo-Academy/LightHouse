@@ -13,6 +13,7 @@ declare global {
       connectionReused: boolean;
 
       url: string;
+      _url: string;
       protocol: string;
       origin: string | null;
       parsedURL: ParsedURL;
@@ -23,6 +24,7 @@ declare global {
       transferSize: number;
 
       finished: boolean;
+      statusCode: number;
       redirectSource?: {
         url: string;
       }
@@ -31,8 +33,11 @@ declare global {
 
       _initiator: NetworkRequestInitiator;
       _timing: NetworkRequestTiming;
+      // TODO(bckenny): type from ResourceType.js
       _resourceType: any;
       priority(): 'VeryHigh' | 'High' | 'Medium' | 'Low';
+
+      _fetchedViaServiceWorker?: boolean;
     }
 
     export interface ParsedURL {

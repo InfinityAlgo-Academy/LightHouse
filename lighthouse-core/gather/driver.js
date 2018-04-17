@@ -254,7 +254,7 @@ class Driver {
   }
 
   /**
-   * @return {Promise<?LH.Crdp.Page.GetAppManifestResponse>}
+   * @return {Promise<{url: string, data: string}|null>}
    */
   getAppManifest() {
     return this.sendCommand('Page.getAppManifest')
@@ -267,7 +267,7 @@ class Driver {
           return null;
         }
 
-        return response;
+        return /** @type {Required<LH.Crdp.Page.GetAppManifestResponse>} */ (response);
       });
   }
 
@@ -720,7 +720,8 @@ class Driver {
   }
 
   /**
-   * Return the body of the response with the given ID.
+   * Return the body of the response with the given ID. Rejects if getting the
+   * body times out.
    * @param {string} requestId
    * @param {number} [timeout]
    * @return {Promise<string>}

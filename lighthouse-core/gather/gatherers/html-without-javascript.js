@@ -22,24 +22,29 @@ function getBodyText() {
 }
 
 class HTMLWithoutJavaScript extends Gatherer {
-  beforePass(options) {
-    options.disableJavaScript = true;
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   */
+  beforePass(passContext) {
+    passContext.disableJavaScript = true;
   }
 
-  afterPass(options) {
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['HTMLWithoutJavaScript']>}
+   */
+  async afterPass(passContext) {
     // Reset the JS disable.
-    options.disableJavaScript = false;
+    passContext.disableJavaScript = false;
 
-    return options.driver.evaluateAsync(`(${getBodyText.toString()}())`)
-      .then(result => {
-        if (typeof result !== 'string') {
-          throw new Error('document body innerText returned by protocol was not a string');
-        }
+    const bodyText = await passContext.driver.evaluateAsync(`(${getBodyText.toString()}())`);
+    if (typeof bodyText !== 'string') {
+      throw new Error('document body innerText returned by protocol was not a string');
+    }
 
-        return {
-          value: result,
-        };
-      });
+    return {
+      value: bodyText,
+    };
   }
 }
 

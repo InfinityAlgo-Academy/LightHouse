@@ -15,7 +15,7 @@ const Connection = require('./connection.js');
 class Port {
   /**
    * @param {'message' | 'close'} eventName
-   * @param {function(string|undefined)} cb
+   * @param {function(string)|function()} cb
    */
   on(eventName, cb) { }
 

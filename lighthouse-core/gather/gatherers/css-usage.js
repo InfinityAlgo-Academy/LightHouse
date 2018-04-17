@@ -11,39 +11,48 @@ const Gatherer = require('./gatherer');
  * @fileoverview Tracks unused CSS rules.
  */
 class CSSUsage extends Gatherer {
-  afterPass(options) {
-    const driver = options.driver;
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['CSSUsage']>}
+   */
+  async afterPass(passContext) {
+    const driver = passContext.driver;
 
+    /** @type {Array<LH.Crdp.CSS.StyleSheetAddedEvent>} */
     const stylesheets = [];
+    /** @param {LH.Crdp.CSS.StyleSheetAddedEvent} sheet */
     const onStylesheetAdded = sheet => stylesheets.push(sheet);
     driver.on('CSS.styleSheetAdded', onStylesheetAdded);
 
-    return driver
-      .sendCommand('DOM.enable')
-      .then(_ => driver.sendCommand('CSS.enable'))
-      .then(_ => driver.sendCommand('CSS.startRuleUsageTracking'))
-      .then(_ => driver.evaluateAsync('getComputedStyle(document.body)'))
-      .then(_ => {
-        driver.off('CSS.styleSheetAdded', onStylesheetAdded);
-        const promises = stylesheets.map(sheet => {
-          const styleSheetId = sheet.header.styleSheetId;
-          return driver.sendCommand('CSS.getStyleSheetText', {styleSheetId}).then(content => {
-            sheet.content = content.text;
-          });
-        });
+    await driver.sendCommand('DOM.enable');
+    await driver.sendCommand('CSS.enable');
+    await driver.sendCommand('CSS.startRuleUsageTracking');
+    await driver.evaluateAsync('getComputedStyle(document.body)');
+    driver.off('CSS.styleSheetAdded', onStylesheetAdded);
 
-        return Promise.all(promises);
-      })
-      .then(_ => driver.sendCommand('CSS.stopRuleUsageTracking'))
-      .then(results => {
-        return driver
-          .sendCommand('CSS.disable')
-          .then(_ => driver.sendCommand('DOM.disable'))
-          .then(_ => {
-            const dedupedStylesheets = new Map(stylesheets.map(sheet => [sheet.content, sheet]));
-            return {rules: results.ruleUsage, stylesheets: Array.from(dedupedStylesheets.values())};
-          });
+    // Fetch style sheet content in parallel.
+    const promises = stylesheets.map(sheet => {
+      const styleSheetId = sheet.header.styleSheetId;
+      return driver.sendCommand('CSS.getStyleSheetText', {styleSheetId}).then(content => {
+        return {
+          header: sheet.header,
+          content: content.text,
+        };
       });
+    });
+    const styleSheetInfo = await Promise.all(promises);
+
+    const ruleUsageResponse = await driver.sendCommand('CSS.stopRuleUsageTracking');
+    await driver.sendCommand('CSS.disable');
+    await driver.sendCommand('DOM.disable');
+
+    const dedupedStylesheets = new Map(styleSheetInfo.map(sheet => {
+      return /** @type {[string, LH.Artifacts.CSSStyleSheetInfo]} */ ([sheet.content, sheet]);
+    }));
+    return {
+      rules: ruleUsageResponse.ruleUsage,
+      stylesheets: Array.from(dedupedStylesheets.values()),
+    };
   }
 }
 

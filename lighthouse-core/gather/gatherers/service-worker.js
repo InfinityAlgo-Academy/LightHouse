@@ -8,15 +8,15 @@
 const Gatherer = require('./gatherer');
 
 class ServiceWorker extends Gatherer {
-  beforePass(options) {
-    const driver = options.driver;
-    return driver
-      .getServiceWorkerVersions()
-      .then(data => {
-        return {
-          versions: data.versions,
-        };
-      });
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['ServiceWorker']>}
+   */
+  async beforePass(passContext) {
+    const {versions} = await passContext.driver.getServiceWorkerVersions();
+    return {
+      versions,
+    };
   }
 }
 

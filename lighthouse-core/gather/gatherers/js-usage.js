@@ -11,27 +11,26 @@ const Gatherer = require('./gatherer');
  * @fileoverview Tracks unused JavaScript
  */
 class JsUsage extends Gatherer {
-  beforePass(options) {
-    return options.driver.sendCommand('Profiler.enable')
-      .then(_ => options.driver.sendCommand('Profiler.startPreciseCoverage'));
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   */
+  async beforePass(passContext) {
+    await passContext.driver.sendCommand('Profiler.enable');
+    await passContext.driver.sendCommand('Profiler.startPreciseCoverage');
   }
 
   /**
-   * @param {{driver: !Driver}} options
-   * @return {!Promise<!Array<!JsUsageArtifact>}
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['JsUsageArtifact']>}
    */
-  afterPass(options) {
-    const driver = options.driver;
+  async afterPass(passContext) {
+    const driver = passContext.driver;
 
-    return driver.sendCommand('Profiler.takePreciseCoverage').then(results => {
-      return driver.sendCommand('Profiler.stopPreciseCoverage')
-        .then(_ => driver.sendCommand('Profiler.disable'))
-        .then(_ => results.result);
-    });
+    const coverageResponse = await driver.sendCommand('Profiler.takePreciseCoverage');
+    await driver.sendCommand('Profiler.stopPreciseCoverage');
+    await driver.sendCommand('Profiler.disable');
+    return coverageResponse.result;
   }
 }
 
 module.exports = JsUsage;
-
-/** @typedef {{functions: !Array<{ranges: {count: number, startOffset: number, endOffset: number}}>}} */
-JsUsage.JsUsageArtifact; // eslint-disable-line no-unused-expressions

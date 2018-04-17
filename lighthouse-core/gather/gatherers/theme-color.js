@@ -9,14 +9,14 @@ const Gatherer = require('./gatherer');
 
 class ThemeColor extends Gatherer {
   /**
-   * @param {{driver: !Object}} options
-   * @return {!Promise<?string>} The value of the theme-color meta's content attribute, or null
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['ThemeColor']>} The value of the theme-color meta's content attribute, or null
    */
-  afterPass(options) {
-    const driver = options.driver;
+  async afterPass(passContext) {
+    const driver = passContext.driver;
 
-    return driver.querySelector('head meta[name="theme-color" i]')
-      .then(node => node && node.getAttribute('content'));
+    const metaEl = await driver.querySelector('head meta[name="theme-color" i]');
+    return metaEl && metaEl.getAttribute('content');
   }
 }
 

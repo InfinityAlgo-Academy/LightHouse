@@ -15,24 +15,30 @@ const Gatherer = require('./gatherer');
 class HTTPRedirect extends Gatherer {
   constructor() {
     super();
-    this._preRedirectURL = undefined;
+    this._preRedirectURL = '';
   }
 
-  beforePass(options) {
-    this._preRedirectURL = options.url;
-    options.url = this._preRedirectURL.replace(/^https/, 'http');
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   */
+  beforePass(passContext) {
+    this._preRedirectURL = passContext.url;
+    passContext.url = this._preRedirectURL.replace(/^https/, 'http');
   }
 
-  afterPass(options) {
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['HTTPRedirect']>}
+   */
+  async afterPass(passContext) {
     // Reset the options.
-    options.url = this._preRedirectURL;
+    passContext.url = this._preRedirectURL;
 
     const expression = `new URL(window.location).protocol === 'https:'`;
-    return options.driver.evaluateAsync(expression, {useIsolation: true}).then(returnedValue => {
-      return {
-        value: returnedValue,
-      };
-    });
+    const isHttps = await passContext.driver.evaluateAsync(expression, {useIsolation: true});
+    return {
+      value: isHttps,
+    };
   }
 }
 

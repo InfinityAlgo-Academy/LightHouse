@@ -11,11 +11,15 @@ const Gatherer = require('./gatherer');
 const fs = require('fs');
 const axeLibSource = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 
-// This is run in the page, not Lighthouse itself.
-// axe.run returns a promise which fulfills with a results object
-// containing any violations.
+/**
+ * This is run in the page, not Lighthouse itself.
+ * axe.run returns a promise which fulfills with a results object
+ * containing any violations.
+ * @return {Promise<LH.Artifacts.Accessibility>}
+ */
 /* istanbul ignore next */
 function runA11yChecks() {
+  // @ts-ignore axe defined by axeLibSource
   return window.axe.run(document, {
     elementRef: true,
     runOnly: {
@@ -34,8 +38,10 @@ function runA11yChecks() {
       'blink': {enabled: false},
       'server-side-image-map': {enabled: false},
     },
+    // @ts-ignore
   }).then(axeResult => {
     // Augment the node objects with outerHTML snippet & custom path string
+    // @ts-ignore
     axeResult.violations.forEach(v => v.nodes.forEach(node => {
       node.path = getNodePath(node.element);
       node.snippet = getOuterHTMLSnippet(node.element);
@@ -48,15 +54,21 @@ function runA11yChecks() {
     return axeResult;
   });
 
-  // Adapted from DevTools' SDK.DOMNode.prototype.path
-  //   https://github.com/ChromeDevTools/devtools-frontend/blob/7a2e162ddefd/front_end/sdk/DOMModel.js#L530-L552
-  // TODO: Doesn't handle frames or shadow roots...
+  /**
+   * Adapted from DevTools' SDK.DOMNode.prototype.path
+   *   https://github.com/ChromeDevTools/devtools-frontend/blob/7a2e162ddefd/front_end/sdk/DOMModel.js#L530-L552
+   * TODO: Doesn't handle frames or shadow roots...
+   * @param {Node} node
+   */
   function getNodePath(node) {
+    /** @param {Node} node */
     function getNodeIndex(node) {
       let index = 0;
-      while (node = node.previousSibling) {
+      let prevNode;
+      while (prevNode = node.previousSibling) {
+        node = prevNode;
         // skip empty text nodes
-        if (node.nodeType === Node.TEXT_NODE &&
+        if (node.nodeType === Node.TEXT_NODE && node.textContent &&
           node.textContent.trim().length === 0) continue;
         index++;
       }
@@ -75,23 +87,23 @@ function runA11yChecks() {
 
   /**
    * Gets the opening tag text of the given node.
-   * @param {!Node}
-   * @return {string}
+   * @param {Element} el
+   * @return {?string}
    */
-  function getOuterHTMLSnippet(node) {
+  function getOuterHTMLSnippet(el) {
     const reOpeningTag = /^.*?>/;
-    const match = node.outerHTML.match(reOpeningTag);
+    const match = el.outerHTML.match(reOpeningTag);
     return match && match[0];
   }
 }
 
 class Accessibility extends Gatherer {
   /**
-   * @param {!Object} options
-   * @return {!Promise<{violations: !Array}>}
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts.Accessibility>}
    */
-  afterPass(options) {
-    const driver = options.driver;
+  afterPass(passContext) {
+    const driver = passContext.driver;
     const expression = `(function () {
       ${axeLibSource};
       return (${runA11yChecks.toString()}());

@@ -8,12 +8,17 @@
 const Gatherer = require('./gatherer');
 
 class URL extends Gatherer {
-  afterPass(options) {
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {LH.Artifacts['URL']}
+   */
+  afterPass(passContext) {
     // Instead of the originally inputted URL (options.initialUrl), we want the resolved
     // post-redirect URL (which is here at options.url)
     return {
-      initialUrl: options.initialUrl,
-      finalUrl: options.url,
+      // @ts-ignore TODO(bckenny): fix url/initialUrl on passContext
+      initialUrl: passContext.initialUrl,
+      finalUrl: passContext.url,
     };
   }
 }

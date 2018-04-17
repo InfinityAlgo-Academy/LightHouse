@@ -8,6 +8,8 @@
 const Gatherer = require('./gatherer');
 const URL = require('../../lib/url-shim');
 
+const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
+
 /**
  * This gatherer sets the Network requestInterceptor so that it can intercept
  * every HTTP request and send an HTTP 302 Found redirect back to redirect the
@@ -25,6 +27,7 @@ class MixedContent extends Gatherer {
     super();
     this.ids = new Set();
     this.url = undefined;
+    this._onRequestIntercepted = undefined;
   }
 
   /**
@@ -47,58 +50,70 @@ class MixedContent extends Gatherer {
     return parsedURL.href;
   }
 
-  _onRequestIntercepted(driver, event) {
-    // Track requests the gatherer has already seen so we can try at-most-once
-    // to upgrade each. This avoids repeatedly intercepting a request if it gets
-    // downgraded back to HTTP.
-    if (new URL(event.request.url).protocol === 'http:' &&
-        !URL.equalWithExcludedFragments(event.request.url, this.url) &&
-        !this.ids.has(event.interceptionId)) {
-      this.ids.add(event.interceptionId);
-      event.request.url = this.upgradeURL(event.request.url);
-      driver.sendCommand('Network.continueInterceptedRequest', {
-        interceptionId: event.interceptionId,
-        rawResponse: Buffer.from(
-            `HTTP/1.1 302 Found\r\nLocation: ${event.request.url}\r\n\r\n`,
-            'utf8').toString('base64'),
-      });
-    } else {
-      driver.sendCommand('Network.continueInterceptedRequest', {
-        interceptionId: event.interceptionId,
-      });
-    }
+  /**
+   * @param {string} pageUrl
+   * @param {Driver} driver
+   */
+  _getRequestInterceptor(pageUrl, driver) {
+    /** @param {LH.Crdp.Network.RequestInterceptedEvent} event */
+    const onRequestIntercepted = (event) => {
+      // Track requests the gatherer has already seen so we can try at-most-once
+      // to upgrade each. This avoids repeatedly intercepting a request if it gets
+      // downgraded back to HTTP.
+      if (new URL(event.request.url).protocol === 'http:' &&
+          !URL.equalWithExcludedFragments(event.request.url, pageUrl) &&
+          !this.ids.has(event.interceptionId)) {
+        this.ids.add(event.interceptionId);
+        event.request.url = this.upgradeURL(event.request.url);
+        driver.sendCommand('Network.continueInterceptedRequest', {
+          interceptionId: event.interceptionId,
+          rawResponse: Buffer.from(
+              `HTTP/1.1 302 Found\r\nLocation: ${event.request.url}\r\n\r\n`,
+              'utf8').toString('base64'),
+        });
+      } else {
+        driver.sendCommand('Network.continueInterceptedRequest', {
+          interceptionId: event.interceptionId,
+        });
+      }
+    };
+
+    return onRequestIntercepted;
   }
 
-  beforePass(options) {
-    const driver = options.driver;
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   */
+  async beforePass(passContext) {
+    const driver = passContext.driver;
 
     // Attempt to load the HTTP version of the page.
     // The base URL can be brittle under redirects of the page, but the worst
     // case is the gatherer accidentally upgrades the final base URL to
     // HTTPS and loses the ability to check upgrading active mixed content.
-    options.url = this.downgradeURL(options.url);
-    this.url = options.url;
+    passContext.url = this.downgradeURL(passContext.url);
+    this.url = passContext.url;
+    this._onRequestIntercepted = this._getRequestInterceptor(this.url, driver);
 
-    driver.sendCommand('Network.enable', {});
-    driver.on('Network.requestIntercepted',
-      this._onRequestIntercepted.bind(this, driver));
-    driver.sendCommand('Network.setCacheDisabled', {cacheDisabled: true});
-    driver.sendCommand('Network.setRequestInterception',
-      {patterns: [{urlPattern: '*'}]});
+    await driver.sendCommand('Network.enable');
+    driver.on('Network.requestIntercepted', this._onRequestIntercepted);
+    await driver.sendCommand('Network.setCacheDisabled', {cacheDisabled: true});
+    await driver.sendCommand('Network.setRequestInterception', {patterns: [{urlPattern: '*'}]});
   }
 
-  afterPass(options, _) {
-    const driver = options.driver;
-    return Promise.resolve().then(_ => driver.sendCommand(
-        'Network.setRequestInterception', {patterns: []})
-    ).then(_ => driver.off(
-        'Network.requestIntercepted',
-        this._onRequestIntercepted.bind(this, driver))
-    ).then(driver.sendCommand(
-        'Network.setCacheDisabled', {cacheDisabled: false})
-    ).then(_ => {
-      return {url: options.url};
-    });
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<{url: string}>}
+   */
+  async afterPass(passContext) {
+    const driver = passContext.driver;
+    await driver.sendCommand('Network.setRequestInterception', {patterns: []});
+    if (this._onRequestIntercepted) {
+      driver.off('Network.requestIntercepted', this._onRequestIntercepted);
+    }
+    await driver.sendCommand('Network.setCacheDisabled', {cacheDisabled: false});
+
+    return {url: passContext.url};
   }
 }
 

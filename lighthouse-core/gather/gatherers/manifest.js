@@ -21,25 +21,25 @@ class Manifest extends Gatherer {
    * Returns the parsed manifest or null if the page had no manifest. If the manifest
    * was unparseable as JSON, manifest.value will be undefined and manifest.debugString
    * will have the reason. See manifest-parser.js for more information.
-   * @param {!Object} options
-   * @return {!Promise<?Manifest>}
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['Manifest']>}
    */
-  afterPass(options) {
-    const manifestPromise = options.driver.getAppManifest();
+  async afterPass(passContext) {
+    const manifestPromise = passContext.driver.getAppManifest();
+    /** @type {Promise<void>} */
     const timeoutPromise = new Promise(resolve => setTimeout(resolve, 3000));
-    return Promise.race([manifestPromise, timeoutPromise])
-      .then(response => {
-        if (!response) {
-          return null;
-        }
 
-        const isBomEncoded = response.data.charCodeAt(0) === BOM_FIRSTCHAR;
-        if (isBomEncoded) {
-          response.data = Buffer.from(response.data).slice(BOM_LENGTH).toString();
-        }
+    const response = await Promise.race([manifestPromise, timeoutPromise]);
+    if (!response) {
+      return null;
+    }
 
-        return manifestParser(response.data, response.url, options.url);
-      });
+    const isBomEncoded = response.data.charCodeAt(0) === BOM_FIRSTCHAR;
+    if (isBomEncoded) {
+      response.data = Buffer.from(response.data).slice(BOM_LENGTH).toString();
+    }
+
+    return manifestParser(response.data, response.url, passContext.url);
   }
 }
 

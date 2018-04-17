@@ -31,6 +31,10 @@ const ALLOWED_ORIENTATION_VALUES = [
   'landscape-secondary',
 ];
 
+/**
+ * @param {*} raw
+ * @param {boolean=} trim
+ */
 function parseString(raw, trim) {
   let value;
   let debugString;
@@ -51,6 +55,9 @@ function parseString(raw, trim) {
   };
 }
 
+/**
+ * @param {*} raw
+ */
 function parseColor(raw) {
   const color = parseString(raw);
 
@@ -69,10 +76,16 @@ function parseColor(raw) {
   return color;
 }
 
+/**
+ * @param {*} jsonInput
+ */
 function parseName(jsonInput) {
   return parseString(jsonInput.name, true);
 }
 
+/**
+ * @param {*} jsonInput
+ */
 function parseShortName(jsonInput) {
   return parseString(jsonInput.short_name, true);
 }
@@ -92,6 +105,9 @@ function checkSameOrigin(url1, url2) {
 
 /**
  * https://w3c.github.io/manifest/#start_url-member
+ * @param {*} jsonInput
+ * @param {string} manifestUrl
+ * @param {string} documentUrl
  */
 function parseStartUrl(jsonInput, manifestUrl, documentUrl) {
   const raw = jsonInput.start_url;
@@ -138,6 +154,9 @@ function parseStartUrl(jsonInput, manifestUrl, documentUrl) {
   };
 }
 
+/**
+ * @param {*} jsonInput
+ */
 function parseDisplay(jsonInput) {
   const display = parseString(jsonInput.display, true);
 
@@ -156,6 +175,9 @@ function parseDisplay(jsonInput) {
   return display;
 }
 
+/**
+ * @param {*} jsonInput
+ */
 function parseOrientation(jsonInput) {
   const orientation = parseString(jsonInput.orientation, true);
 
@@ -168,6 +190,10 @@ function parseOrientation(jsonInput) {
   return orientation;
 }
 
+/**
+ * @param {*} raw
+ * @param {string} manifestUrl
+ */
 function parseIcon(raw, manifestUrl) {
   // 9.4(3)
   const src = parseString(raw.src, true);
@@ -185,6 +211,7 @@ function parseIcon(raw, manifestUrl) {
   const density = {
     raw: raw.density,
     value: 1,
+    /** @type {string|undefined} */
     debugString: undefined,
   };
   if (density.raw !== undefined) {
@@ -195,11 +222,19 @@ function parseIcon(raw, manifestUrl) {
     }
   }
 
-  const sizes = parseString(raw.sizes);
-  if (sizes.value !== undefined) {
+  let sizes;
+  const parsedSizes = parseString(raw.sizes);
+  if (parsedSizes.value !== undefined) {
+    /** @type {Set<string>} */
     const set = new Set();
-    sizes.value.trim().split(/\s+/).forEach(size => set.add(size.toLowerCase()));
-    sizes.value = set.size > 0 ? Array.from(set) : undefined;
+    parsedSizes.value.trim().split(/\s+/).forEach(size => set.add(size.toLowerCase()));
+    sizes = {
+      raw: raw.sizes,
+      value: set.size > 0 ? Array.from(set) : undefined,
+      debugString: undefined,
+    };
+  } else {
+    sizes = {...parsedSizes};
   }
 
   return {
@@ -214,6 +249,10 @@ function parseIcon(raw, manifestUrl) {
   };
 }
 
+/**
+ * @param {*} jsonInput
+ * @param {string} manifestUrl
+ */
 function parseIcons(jsonInput, manifestUrl) {
   const raw = jsonInput.icons;
 
@@ -250,6 +289,9 @@ function parseIcons(jsonInput, manifestUrl) {
   };
 }
 
+/**
+ * @param {*} raw
+ */
 function parseApplication(raw) {
   const platform = parseString(raw.platform, true);
   const id = parseString(raw.id, true);
@@ -277,6 +319,9 @@ function parseApplication(raw) {
   };
 }
 
+/**
+ * @param {*} jsonInput
+ */
 function parseRelatedApplications(jsonInput) {
   const raw = jsonInput.related_applications;
 
@@ -310,6 +355,9 @@ function parseRelatedApplications(jsonInput) {
   };
 }
 
+/**
+ * @param {*} jsonInput
+ */
 function parsePreferRelatedApplications(jsonInput) {
   const raw = jsonInput.prefer_related_applications;
   let value;
@@ -331,10 +379,16 @@ function parsePreferRelatedApplications(jsonInput) {
   };
 }
 
+/**
+ * @param {*} jsonInput
+ */
 function parseThemeColor(jsonInput) {
   return parseColor(jsonInput.theme_color);
 }
 
+/**
+ * @param {*} jsonInput
+ */
 function parseBackgroundColor(jsonInput) {
   return parseColor(jsonInput.background_color);
 }
@@ -344,7 +398,6 @@ function parseBackgroundColor(jsonInput) {
  * @param {string} string Manifest JSON string.
  * @param {string} manifestUrl URL of manifest file.
  * @param {string} documentUrl URL of document containing manifest link element.
- * @return {!ManifestNode<(!Manifest|undefined)>}
  */
 function parse(string, manifestUrl, documentUrl) {
   if (manifestUrl === undefined || documentUrl === undefined) {

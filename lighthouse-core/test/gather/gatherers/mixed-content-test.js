@@ -61,7 +61,8 @@ describe('MixedContent Gatherer', () => {
       assert.strictEqual(Buffer.from(args.rawResponse, 'base64')
           .toString('utf8').includes('302 Found'), true);
     };
-    mixedContentGather._onRequestIntercepted(driver, event);
+    const onRequestIntercepted = mixedContentGather._getRequestInterceptor(undefined, driver);
+    onRequestIntercepted(event);
   });
 
   it('only tries redirecting once', () => {
@@ -81,21 +82,23 @@ describe('MixedContent Gatherer', () => {
       }
       driver.numInterceptions += 1;
     };
-    mixedContentGather._onRequestIntercepted(driver, event);
-    mixedContentGather._onRequestIntercepted(driver, event);
+    const onRequestIntercepted = mixedContentGather._getRequestInterceptor(undefined, driver);
+    onRequestIntercepted(event);
+    onRequestIntercepted(event);
   });
 
   it('does not sent a redirect when intercepting the main URL', () => {
-    mixedContentGather.url = 'http://www.example.org/';
+    const url = 'http://www.example.org/';
     const event = {
       interceptionId: 1,
       request: {
-        url: 'http://www.example.org/',
+        url,
       },
     };
     driver.cb = (args) => {
       assert.strictEqual(args.rawResponse, undefined);
     };
-    mixedContentGather._onRequestIntercepted(driver, event);
+    const onRequestIntercepted = mixedContentGather._getRequestInterceptor(url, driver);
+    onRequestIntercepted(event);
   });
 });
