@@ -37,6 +37,10 @@ const SMOKETESTS = [{
   expectations: smokehouseDir + 'pwa2-expectations.js',
   config: smokehouseDir + 'pwa-config.js',
 }, {
+  id: 'pwa3',
+  expectations: smokehouseDir + 'pwa3-expectations.js',
+  config: smokehouseDir + 'pwa-config.js',
+}, {
   id: 'dbw',
   expectations: 'dobetterweb/dbw-expectations.js',
   config: smokehouseDir + 'dbw-config.js',
@@ -56,12 +60,12 @@ const SMOKETESTS = [{
   id: 'byte',
   expectations: 'byte-efficiency/expectations.js',
   config: smokehouseDir + 'byte-config.js',
-  batch: 'perf',
+  batch: 'perf-opportunity',
 }, {
   id: 'perf',
   expectations: 'perf/expectations.js',
   config: 'lighthouse-core/config/perf-config.js',
-  batch: 'perf',
+  batch: 'perf-metric',
 }, {
   id: 'ttci',
   expectations: 'tricky-ttci/expectations.js',
