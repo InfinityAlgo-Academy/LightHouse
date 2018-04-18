@@ -80,12 +80,15 @@ img {
 async function loadArtifacts(basePath) {
   log.log('Reading artifacts from disk:', basePath);
 
-  if (!fs.existsSync(basePath)) return Promise.reject(new Error('No saved artifacts found'));
+  if (!fs.existsSync(basePath)) {
+    throw new Error('No saved artifacts found at ' + basePath);
+  }
 
   // load artifacts.json
-  const filenames = fs.readdirSync(basePath);
   /** @type {LH.Artifacts} */
   const artifacts = JSON.parse(fs.readFileSync(path.join(basePath, artifactsFilename), 'utf8'));
+
+  const filenames = fs.readdirSync(basePath);
 
   // load devtoolsLogs
   artifacts.devtoolsLogs = {};

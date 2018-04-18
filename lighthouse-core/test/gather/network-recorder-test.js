@@ -7,7 +7,7 @@
 
 const NetworkRecorder = require('../../lib/network-recorder');
 const assert = require('assert');
-const devtoolsLogItems = require('../fixtures/perflog.json');
+const devtoolsLogItems = require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
 
 /* eslint-env mocha */
 describe('network recorder', function() {

@@ -70,18 +70,16 @@ class Runner {
       opts.url = parsedURL.href;
 
       // User can run -G solo, -A solo, or -GA together
-      // -G and -A will do run partial lighthouse pipelines,
+      // -G and -A will run partial lighthouse pipelines,
       // and -GA will run everything plus save artifacts to disk
 
       // Gather phase
-      // Either load saved artifacts off disk, from config, or get from the browser
+      // Either load saved artifacts off disk or from the browser
       let artifacts;
       if (settings.auditMode && !settings.gatherMode) {
         // No browser required, just load the artifacts from disk.
         const path = Runner._getArtifactsPath(settings);
         artifacts = await assetSaver.loadArtifacts(path);
-      } else if (opts.config.artifacts) {
-        artifacts = opts.config.artifacts;
       } else {
         artifacts = await Runner._gatherArtifactsFromBrowser(opts, connection);
         // -G means save these to ./latest-run, etc.
@@ -115,7 +113,8 @@ class Runner {
       const resultsById = {};
       for (const audit of auditResults) resultsById[audit.name] = audit;
 
-      let reportCategories;
+      /** @type {Array<LH.Result.Category>} */
+      let reportCategories = [];
       if (opts.config.categories) {
         reportCategories = ReportScoring.scoreAllCategories(opts.config.categories, resultsById);
       }

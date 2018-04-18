@@ -7,9 +7,6 @@
 import * as Gatherer from '../lighthouse-core/gather/gatherers/gatherer.js';
 import * as Audit from '../lighthouse-core/audits/audit.js';
 
-/** From type T, drop set of properties K */
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-
 declare global {
   module LH {
     /**
@@ -21,8 +18,6 @@ declare global {
       audits?: Config.AuditDefn[];
       categories?: Record<string, Config.Category>;
       groups?: Record<string, Config.Group>;
-      // TODO(bckenny): should be Partial<> maybe? don't want to fail imported json
-      artifacts?: Artifacts;
     }
 
     module Config {
@@ -34,7 +29,6 @@ declare global {
         passes?: PassJson[];
         categories?: Record<string, CategoryJson>;
         groups?: GroupJson[];
-        artifacts?: ArtifactsJson;
       }
 
       export interface SettingsJson extends SharedFlagsSettings {
@@ -74,17 +68,6 @@ declare global {
       export interface GroupJson {
         title: string;
         description: string;
-      }
-
-      /**
-       * A LH Artifacts object, but the traces and devtoolsLogs are replaced
-       * with file paths of json files to import as those artifacts.
-       * TODO(bckenny): this is to support legacy config.artifacts. Migrate to
-       * -A instead.
-       */
-      export interface ArtifactsJson extends Omit<Artifacts, 'traces'|'devtoolsLogs'> {
-        traces: Record<string, string>;
-        devtoolsLogs: Record<string, string>;
       }
 
       /**

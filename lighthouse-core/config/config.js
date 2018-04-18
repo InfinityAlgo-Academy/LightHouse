@@ -17,89 +17,6 @@ const path = require('path');
 const Audit = require('../audits/audit');
 const Runner = require('../runner');
 
-// cleanTrace is run to remove duplicate TracingStartedInPage events,
-// and to change TracingStartedInBrowser events into TracingStartedInPage.
-// This is done by searching for most occuring threads and basing new events
-// off of those.
-function cleanTrace(trace) {
-  const traceEvents = trace.traceEvents;
-  // Keep track of most occuring threads
-  const threads = [];
-  const countsByThread = {};
-  const traceStartEvents = [];
-  const makeMockEvent = (evt, ts) => {
-    return {
-      pid: evt.pid,
-      tid: evt.tid,
-      ts: ts || 0, // default to 0 for now
-      ph: 'I',
-      cat: 'disabled-by-default-devtools.timeline',
-      name: 'TracingStartedInPage',
-      args: {
-        data: {
-          page: evt.frame,
-        },
-      },
-      s: 't',
-    };
-  };
-
-  let frame;
-  let data;
-  let name;
-  let counter;
-
-  traceEvents.forEach((evt, idx) => {
-    if (evt.name.startsWith('TracingStartedIn')) {
-      traceStartEvents.push(idx);
-    }
-
-    // find the event's frame
-    data = evt.args && (evt.args.data || evt.args.beginData || evt.args.counters);
-    frame = (evt.args && evt.args.frame) || data && (data.frame || data.page);
-
-    if (!frame) {
-      return;
-    }
-
-    // Increase occurences count of the frame
-    name = `pid${evt.pid}-tid${evt.tid}-frame${frame}`;
-    counter = countsByThread[name];
-    if (!counter) {
-      counter = {
-        pid: evt.pid,
-        tid: evt.tid,
-        frame: frame,
-        count: 0,
-      };
-      countsByThread[name] = counter;
-      threads.push(counter);
-    }
-    counter.count++;
-  });
-
-  // find most active thread (and frame)
-  threads.sort((a, b) => b.count - a.count);
-  const mostActiveFrame = threads[0];
-
-  // Remove all current TracingStartedIn* events, storing
-  // the first events ts.
-  const ts = traceEvents[traceStartEvents[0]] && traceEvents[traceStartEvents[0]].ts;
-
-  // account for offset after removing items
-  let i = 0;
-  for (const dup of traceStartEvents) {
-    traceEvents.splice(dup - i, 1);
-    i++;
-  }
-
-  // Add a new TracingStartedInPage event based on most active thread
-  // and using TS of first found TracingStartedIn* event
-  traceEvents.unshift(makeMockEvent(mostActiveFrame, ts));
-
-  return trace;
-}
-
 function validatePasses(passes, audits) {
   if (!Array.isArray(passes)) {
     return;
@@ -212,38 +129,6 @@ function assertValidGatherer(gathererInstance, gathererName) {
   if (typeof gathererInstance.afterPass !== 'function') {
     throw new Error(`${gathererName} has no afterPass() method.`);
   }
-}
-
-function expandArtifacts(artifacts) {
-  if (!artifacts) {
-    return null;
-  }
-  // currently only trace logs and performance logs should be imported
-  if (artifacts.traces) {
-    Object.keys(artifacts.traces).forEach(key => {
-      log.log('info', 'Normalizng trace contents into expected state...');
-      let trace = require(artifacts.traces[key]);
-      // Before Chrome 54.0.2816 (codereview.chromium.org/2161583004), trace was
-      // an array of trace events. After this point, trace is an object with a
-      // traceEvents property. Normalize to new format.
-      if (Array.isArray(trace)) {
-        trace = {
-          traceEvents: trace,
-        };
-      }
-      trace = cleanTrace(trace);
-
-      artifacts.traces[key] = trace;
-    });
-  }
-
-  if (artifacts.devtoolsLogs) {
-    Object.keys(artifacts.devtoolsLogs).forEach(key => {
-      artifacts.devtoolsLogs[key] = require(artifacts.devtoolsLogs[key]);
-    });
-  }
-
-  return artifacts;
 }
 
 /**
@@ -367,7 +252,6 @@ class Config {
 
     this._passes = Config.requireGatherers(configJSON.passes, this._configDir);
     this._audits = Config.requireAudits(configJSON.audits, this._configDir);
-    this._artifacts = expandArtifacts(configJSON.artifacts);
     this._categories = configJSON.categories;
     this._groups = configJSON.groups;
     this._settings = configJSON.settings || {};
@@ -780,11 +664,6 @@ class Config {
   /** @type {Array<!Config.AuditWithOptions>} */
   get audits() {
     return this._audits;
-  }
-
-  /** @type {Array<!Artifacts>} */
-  get artifacts() {
-    return this._artifacts;
   }
 
   /** @type {Object<{audits: !Array<{id: string, weight: number}>}>} */

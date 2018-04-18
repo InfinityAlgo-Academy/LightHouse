@@ -60,7 +60,7 @@ module.exports = {
   },
   beginDevtoolsLog() {},
   endDevtoolsLog() {
-    return require('../fixtures/perflog.json');
+    return require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
   },
   blockUrlPatterns() {
     return Promise.resolve();

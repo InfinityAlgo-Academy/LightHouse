@@ -21,7 +21,7 @@ declare global {
       /** An object containing the results of the audits, keyed by the audits' `id` identifier. */
       audits: Record<string, Audit.Result>;
       /** The top-level categories, their overall scores, and member audits. */
-      reportCategories?: Result.Category[];
+      reportCategories: Result.Category[];
       /** Descriptions of the groups referenced by CategoryMembers. */
       reportGroups?: Record<string, Result.Group>;
 

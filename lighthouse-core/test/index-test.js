@@ -87,18 +87,17 @@ describe('Module Tests', function() {
       });
   });
 
-  it.skip('should return formatted audit results when given no categories', function() {
+  it('should return formatted LHR when given no categories', function() {
     const exampleUrl = 'https://example.com/';
     return lighthouse(exampleUrl, {
       output: 'json',
     }, {
-      auditResults: [{
-        score: 0,
-        displayValue: '',
-        rawValue: true,
-        name: 'viewport',
-        description: 'HTML has a viewport <meta>',
-      }],
+      settings: {
+        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+      },
+      audits: [
+        'viewport',
+      ],
     }).then(results => {
       assert.ok(results.lighthouseVersion);
       assert.ok(results.fetchedAt);
@@ -107,6 +106,8 @@ describe('Module Tests', function() {
       assert.ok(Array.isArray(results.reportCategories));
       assert.equal(results.reportCategories.length, 0);
       assert.ok(results.audits.viewport);
+      assert.strictEqual(results.audits.viewport.score, 0);
+      assert.ok(results.audits.viewport.debugString);
       assert.ok(results.timing);
       assert.equal(typeof results.timing.total, 'number');
     });

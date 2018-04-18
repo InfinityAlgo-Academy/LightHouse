@@ -148,25 +148,6 @@ describe('Runner', () => {
       });
   });
 
-  it('accepts existing artifacts', () => {
-    const url = 'https://example.com';
-    const config = new Config({
-      audits: [
-        'content-width',
-      ],
-
-      artifacts: {
-        ViewportDimensions: {},
-      },
-    });
-
-    return Runner.run({}, {url, config}).then(results => {
-      // Mostly checking that this did not throw, but check representative values.
-      assert.equal(results.initialUrl, url);
-      assert.strictEqual(results.audits['content-width'].rawValue, true);
-    });
-  });
-
   it('accepts audit options', () => {
     const url = 'https://example.com';
 
@@ -188,11 +169,13 @@ describe('Runner', () => {
     }
 
     const config = new Config({
+      settings: {
+        auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+      },
       audits: [
         {implementation: EavesdropAudit, options: {x: 1}},
         {implementation: EavesdropAudit, options: {x: 2}},
       ],
-      artifacts: {},
     });
 
     return Runner.run({}, {url, config}).then(results => {
@@ -207,15 +190,12 @@ describe('Runner', () => {
     const url = 'https://example.com';
 
     const config = new Config({
+      settings: {
+        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+      },
       audits: [
         'user-timings',
       ],
-
-      artifacts: {
-        traces: {
-          [Audit.DEFAULT_PASS]: path.join(__dirname, '/fixtures/traces/trace-user-timings.json'),
-        },
-      },
     });
 
     return Runner.run({}, {url, config}).then(results => {
@@ -255,13 +235,13 @@ describe('Runner', () => {
     it('outputs an error audit result when trace required but not provided', () => {
       const url = 'https://example.com';
       const config = new Config({
+        settings: {
+          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+        },
         audits: [
           // requires traces[Audit.DEFAULT_PASS]
           'user-timings',
         ],
-        artifacts: {
-          traces: {},
-        },
       });
 
       return Runner.run({}, {url, config}).then(results => {
@@ -275,12 +255,13 @@ describe('Runner', () => {
     it('outputs an error audit result when missing a required artifact', () => {
       const url = 'https://example.com';
       const config = new Config({
+        settings: {
+          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+        },
         audits: [
           // requires the ViewportDimensions artifact
           'content-width',
         ],
-
-        artifacts: {},
       });
 
       return Runner.run({}, {url, config}).then(results => {
@@ -291,7 +272,9 @@ describe('Runner', () => {
       });
     });
 
-    it('outputs an error audit result when required artifact was a non-fatal Error', () => {
+    // TODO: need to support save/load of artifact errors.
+    // See https://github.com/GoogleChrome/lighthouse/issues/4984
+    it.skip('outputs an error audit result when required artifact was a non-fatal Error', () => {
       const errorMessage = 'blurst of times';
       const artifactError = new Error(errorMessage);
 
@@ -331,6 +314,9 @@ describe('Runner', () => {
       const errorMessage = 'Audit yourself';
       const url = 'https://example.com';
       const config = new Config({
+        settings: {
+          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+        },
         audits: [
           class ThrowyAudit extends Audit {
             static get meta() {
@@ -341,8 +327,6 @@ describe('Runner', () => {
             }
           },
         ],
-
-        artifacts: {},
       });
 
       return Runner.run({}, {url, config}).then(results => {
@@ -357,6 +341,9 @@ describe('Runner', () => {
       const errorMessage = 'Uh oh';
       const url = 'https://example.com';
       const config = new Config({
+        settings: {
+          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+        },
         audits: [
           class FatalThrowyAudit extends Audit {
             static get meta() {
@@ -369,8 +356,6 @@ describe('Runner', () => {
             }
           },
         ],
-
-        artifacts: {},
       });
 
       return Runner.run({}, {url, config}).then(
@@ -379,21 +364,15 @@ describe('Runner', () => {
     });
   });
 
-  it('accepts performance logs as an artifact', () => {
+  it('accepts devtoolsLog in artifacts', () => {
     const url = 'https://example.com';
     const config = new Config({
+      settings: {
+        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+      },
       audits: [
         'critical-request-chains',
       ],
-
-      artifacts: {
-        URL: {
-          finalUrl: 'https://www.reddit.com/r/nba',
-        },
-        devtoolsLogs: {
-          defaultPass: path.join(__dirname, '/fixtures/perflog.json'),
-        },
-      },
     });
 
     return Runner.run({}, {url, config}).then(results => {
@@ -509,17 +488,18 @@ describe('Runner', () => {
 
   it('results include artifacts when given artifacts and audits', () => {
     const url = 'https://example.com';
-    const ViewportDimensions = {innerHeight: 10, innerWidth: 10};
     const config = new Config({
+      settings: {
+        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+      },
       audits: [
         'content-width',
       ],
-
-      artifacts: {ViewportDimensions},
     });
 
     return Runner.run({}, {url, config}).then(results => {
-      assert.deepEqual(results.artifacts.ViewportDimensions, ViewportDimensions);
+      assert.strictEqual(results.artifacts.ViewportDimensions.innerWidth, 412);
+      assert.strictEqual(results.artifacts.ViewportDimensions.innerHeight, 732);
     });
   });
 
@@ -549,19 +529,18 @@ describe('Runner', () => {
 
   it('includes any LighthouseRunWarnings from artifacts in output', () => {
     const url = 'https://example.com';
-    const LighthouseRunWarnings = [
-      'warning0',
-      'warning1',
-    ];
     const config = new Config({
-      artifacts: {
-        LighthouseRunWarnings,
+      settings: {
+        auditMode: __dirname + '/fixtures/artifacts/perflog/',
       },
       audits: [],
     });
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
-      assert.deepStrictEqual(results.runWarnings, LighthouseRunWarnings);
+      assert.deepStrictEqual(results.runWarnings, [
+        'I\'m a warning!',
+        'Also a warning',
+      ]);
     });
   });
 });
