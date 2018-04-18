@@ -6,22 +6,24 @@
 'use strict';
 
 const FastPWAAudit = require('../../audits/load-fast-enough-for-pwa');
+const Runner = require('../../runner.js');
 const Audit = require('../../audits/audit.js');
+const mobile3GThrottling = require('../../config/constants').throttling.mobile3G;
 const assert = require('assert');
 
-function generateArtifacts(firstInteractiveValue, networkRecords = []) {
+const trace = require('../fixtures/traces/progressive-app-m60.json');
+const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+
+function generateArtifacts(ttiValue) {
   return {
     devtoolsLogs: {
       [Audit.DEFAULT_PASS]: [],
     },
-    requestNetworkRecords: () => {
-      return Promise.resolve(networkRecords);
-    },
     traces: {
       [Audit.DEFAULT_PASS]: {traceEvents: []},
     },
-    requestFirstInteractive: () => Promise.resolve({
-      timeInMs: firstInteractiveValue,
+    requestConsistentlyInteractive: () => Promise.resolve({
+      timing: ttiValue,
     }),
   };
 }
@@ -29,65 +31,41 @@ function generateArtifacts(firstInteractiveValue, networkRecords = []) {
 /* eslint-env mocha */
 describe('PWA: load-fast-enough-for-pwa audit', () => {
   it('returns boolean based on TTI value', () => {
-    return FastPWAAudit.audit(generateArtifacts(5000)).then(result => {
-      assert.equal(result.rawValue, true, 'fixture trace is not passing audit');
+    const settings = {throttlingMethod: 'devtools', throttling: mobile3GThrottling};
+    return FastPWAAudit.audit(generateArtifacts(5000), {settings}).then(result => {
+      assert.equal(result.score, true, 'fixture trace is not passing audit');
+      assert.equal(result.rawValue, 5000);
     });
   });
 
   it('fails a bad TTI value', () => {
-    return FastPWAAudit.audit(generateArtifacts(15000)).then(result => {
-      assert.equal(result.rawValue, false, 'not failing a long TTI value');
+    const settings = {throttlingMethod: 'devtools', throttling: mobile3GThrottling};
+    return FastPWAAudit.audit(generateArtifacts(15000), {settings}).then(result => {
+      assert.equal(result.score, false, 'not failing a long TTI value');
+      assert.equal(result.rawValue, 15000);
       assert.ok(result.debugString);
     });
   });
 
-  it('warns on a good TTI value with no throttling', () => {
-    // latencies are very short
-    const mockNetworkRecords = [
-      {_timing: {sendEnd: 0, receiveHeadersEnd: 50}, finished: true, _url: 'https://google.com/'},
-      {_timing: {sendEnd: 0, receiveHeadersEnd: 75}, finished: true, _url: 'https://google.com/a'},
-      { },
-      {_timing: {sendEnd: 0, receiveHeadersEnd: 50}, finished: true, _url: 'https://google.com/b'},
-    ];
-    return FastPWAAudit.audit(generateArtifacts(5000, mockNetworkRecords)).then(result => {
-      assert.equal(result.rawValue, true);
-      assert.ok(result.debugString.includes('network request latencies'));
-      assert.ok(result.details, 'contains details when latencies were not realistic');
-    });
+  it('respects the observed result when throttling is preset', async () => {
+    const artifacts = Object.assign({
+      traces: {defaultPass: trace},
+      devtoolsLogs: {defaultPass: devtoolsLog},
+    }, Runner.instantiateComputedArtifacts());
+
+    const settings = {throttlingMethod: 'devtools', throttling: mobile3GThrottling};
+    const result = await FastPWAAudit.audit(artifacts, {settings});
+    assert.equal(Math.round(result.rawValue), 1582);
   });
 
-  it('ignores resources coming from cache', () => {
-    const mockNetworkRecords = [
-      {_timing: {sendEnd: 0, receiveHeadersEnd: 50}, _fromDiskCache: true},
-    ];
-    return FastPWAAudit.audit(generateArtifacts(5000, mockNetworkRecords)).then(result => {
-      assert.equal(result.rawValue, true);
-      assert.strictEqual(result.debugString, undefined);
-    });
-  });
+  it('overrides with simulated result when throttling is modified', async () => {
+    const artifacts = Object.assign({
+      traces: {defaultPass: trace},
+      devtoolsLogs: {defaultPass: devtoolsLog},
+    }, Runner.instantiateComputedArtifacts());
 
-  it('passes a good TTI value and WITH throttling', () => {
-    // latencies are very long
-    const urlA = 'https://google.com';
-    const urlB = 'https://example.com';
-    const urlC = 'https://example-c.com';
-    const mockNetworkRecords = [
-      {_timing: {sendEnd: 0, receiveHeadersEnd: 250}, finished: true, _url: urlA, _startTime: 0},
-      {_timing: {sendEnd: 0, receiveHeadersEnd: 250}, finished: true, _url: urlB},
-      // ignored for not having timing
-      { },
-      // ignored for not being the first of the origin
-      {_timing: {sendEnd: 0, receiveHeadersEnd: 100}, finished: true, _url: urlA, _startTime: 100},
-      // ignored for being redirected internally
-      {_timing: {sendEnd: 0, receiveHeadersEnd: 100}, finished: true, _url: urlC, _startTime: 0,
-        statusCode: 307},
-      // ignored for not finishing
-      {_timing: {sendEnd: 0, receiveHeadersEnd: -1}, finished: false},
-    ];
-    return FastPWAAudit.audit(generateArtifacts(5000, mockNetworkRecords)).then(result => {
-      assert.equal(result.rawValue, true);
-      assert.strictEqual(result.debugString, undefined);
-      assert.ok(!result.details, 'does not contain details when latencies are realistic');
-    });
+    const settings = {throttlingMethod: 'provided', throttling: {rttMs: 40, throughput: 100000}};
+    const result = await FastPWAAudit.audit(artifacts, {settings});
+    assert.equal(Math.round(result.rawValue), 5308);
   });
 });

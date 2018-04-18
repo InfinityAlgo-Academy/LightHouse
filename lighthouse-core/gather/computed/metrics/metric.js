@@ -48,6 +48,10 @@ class ComputedMetric extends ComputedArtifact {
    */
   async compute_(data, artifacts) {
     const {trace, devtoolsLog, settings} = data;
+    if (!trace || !devtoolsLog || !settings) {
+      throw new Error('Did not provide necessary metric computation data');
+    }
+
     const augmentedData = Object.assign({
       networkRecords: await artifacts.requestNetworkRecords(devtoolsLog),
       traceOfTab: await artifacts.requestTraceOfTab(trace),

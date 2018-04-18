@@ -105,24 +105,7 @@
     "load-fast-enough-for-pwa": {
       "score": 1,
       "displayValue": "",
-      "rawValue": true,
-      "extendedInfo": {
-        "value": {
-          "areLatenciesAll3G": true,
-          "firstRequestLatencies": [
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "latency": "570.56"
-            },
-            {
-              "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-              "latency": "564.12"
-            }
-          ],
-          "isFast": true,
-          "timeToFirstInteractive": 4927.278
-        }
-      },
+      "rawValue": 4927.278,
       "scoreDisplayMode": "binary",
       "name": "load-fast-enough-for-pwa",
       "description": "Page load is fast enough on 3G",
@@ -5403,6 +5386,6 @@
     }
   },
   "timing": {
-    "total": 877
+    "total": 788
   }
 }
