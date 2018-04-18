@@ -23,13 +23,18 @@ const failureHeaders = headersParam([[
   '<https://example.com>; rel="canonical"',
 ]]);
 
+const passHeaders = headersParam([[
+  'link',
+  '<http://localhost:10200/seo/>; rel="canonical"',
+]]);
+
 /**
  * Expected Lighthouse audit values for seo tests
  */
 module.exports = [
   {
-    initialUrl: BASE_URL + 'seo-tester.html',
-    url: BASE_URL + 'seo-tester.html',
+    initialUrl: BASE_URL + 'seo-tester.html?' + passHeaders,
+    url: BASE_URL + 'seo-tester.html?' + passHeaders,
     audits: {
       'viewport': {
         score: 1,
@@ -133,7 +138,7 @@ module.exports = [
       },
       'canonical': {
         score: 0,
-        debugString: 'Multiple URLs (https://example.com, https://example.com/)',
+        debugString: 'Multiple conflicting URLs (https://example.com, https://example.com/)',
       },
     },
   },

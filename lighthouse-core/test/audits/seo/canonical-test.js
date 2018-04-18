@@ -142,6 +142,26 @@ describe('SEO: Document has valid canonical link', () => {
     });
   });
 
+  it('succeeds when there are multiple identical canonical links', () => {
+    const mainResource = {
+      url: 'http://www.example.com/',
+      responseHeaders: [{
+        name: 'Link',
+        value: '<https://www.example.com>; rel="canonical"',
+      }],
+    };
+    const artifacts = {
+      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: []},
+      requestMainResource: () => Promise.resolve(mainResource),
+      Canonical: ['https://www.example.com'],
+      Hreflang: [],
+    };
+
+    return CanonicalAudit.audit(artifacts).then(auditResult => {
+      assert.equal(auditResult.rawValue, true);
+    });
+  });
+
   it('succeeds when valid canonical is provided via meta tag', () => {
     const mainResource = {
       url: 'http://example.com/articles/cats-and-you?utm_source=twitter',

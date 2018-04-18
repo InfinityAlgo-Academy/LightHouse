@@ -90,6 +90,9 @@ class Canonical extends Audit {
           });
 
         canonicals = canonicals.concat(artifacts.Canonical);
+        // we should only fail if there are multiple conflicting URLs
+        // see: https://github.com/GoogleChrome/lighthouse/issues/3178#issuecomment-381181762
+        canonicals = Array.from(new Set(canonicals));
 
         artifacts.Hreflang.forEach(({href}) => hreflangs.push(href));
 
@@ -107,7 +110,7 @@ class Canonical extends Audit {
         if (canonicals.length > 1) {
           return {
             rawValue: false,
-            debugString: `Multiple URLs (${canonicals.join(', ')})`,
+            debugString: `Multiple conflicting URLs (${canonicals.join(', ')})`,
           };
         }
 
