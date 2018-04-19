@@ -36,7 +36,7 @@ describe('metrics events class', () => {
 
   it('generates fake trace events that are valid', () => {
     const evts = new Metrics(dbwTrace.traceEvents, dbwResults.audits).generateFakeEvents();
-    const vizCompleteEvts = evts.filter(e => e.name.includes('Visually Complete 100'));
+    const vizCompleteEvts = evts.filter(e => e.name.includes('Speed Index'));
     assert.equal(vizCompleteEvts.length, 2, 'Two visually complete 100% events not found');
     assert.equal(vizCompleteEvts[0].id, vizCompleteEvts[1].id, 'UT trace ids don\'t match');
 

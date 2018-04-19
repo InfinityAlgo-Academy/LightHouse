@@ -30,7 +30,7 @@ class Speedline extends ComputedArtifact {
       return speedline(traceEvents, {
         timeOrigin: navStart,
         fastMode: true,
-        include: 'perceptualSpeedIndex',
+        include: 'speedIndex',
       });
     }).catch(err => {
       if (/No screenshots found in trace/.test(err.message)) {
@@ -38,6 +38,16 @@ class Speedline extends ComputedArtifact {
       }
 
       throw err;
+    }).then(speedline => {
+      if (speedline.frames.length === 0) {
+        throw new LHError(LHError.errors.NO_SPEEDLINE_FRAMES);
+      }
+
+      if (speedline.speedIndex === 0) {
+        throw new LHError(LHError.errors.SPEEDINDEX_OF_ZERO);
+      }
+
+      return speedline;
     });
   }
 }

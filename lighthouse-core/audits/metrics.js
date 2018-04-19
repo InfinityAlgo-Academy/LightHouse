@@ -31,10 +31,12 @@ class Metrics extends Audit {
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
 
     const traceOfTab = await artifacts.requestTraceOfTab(trace);
+    const speedline = await artifacts.requestSpeedline(trace);
     const firstContentfulPaint = await artifacts.requestFirstContentfulPaint(metricComputationData);
     const firstMeaningfulPaint = await artifacts.requestFirstMeaningfulPaint(metricComputationData);
     const firstCPUIdle = await artifacts.requestFirstCPUIdle(metricComputationData);
     const timeToInteractive = await artifacts.requestConsistentlyInteractive(metricComputationData);
+    const speedIndex = await artifacts.requestSpeedIndex(metricComputationData);
     const metrics = [];
 
     // Include the simulated/observed performance metrics
@@ -43,18 +45,41 @@ class Metrics extends Audit {
       firstMeaningfulPaint,
       firstCPUIdle,
       timeToInteractive,
+      speedIndex,
     };
+
     for (const [metricName, values] of Object.entries(metricsMap)) {
-      metrics.push(Object.assign({metricName}, values));
+      metrics.push({
+        metricName,
+        timing: Math.round(values.timing),
+        timestamp: values.timestamp,
+      });
     }
 
     // Include all timestamps of interest from trace of tab
     for (const [traceEventName, timing] of Object.entries(traceOfTab.timings)) {
       const uppercased = traceEventName.slice(0, 1).toUpperCase() + traceEventName.slice(1);
-      const metricName = `trace${uppercased}`;
+      const metricName = `observed${uppercased}`;
       const timestamp = traceOfTab.timestamps[traceEventName];
       metrics.push({metricName, timing, timestamp});
     }
+
+    // Include some visual metrics from speedline
+    metrics.push({
+      metricName: 'observedFirstVisualChange',
+      timing: speedline.first,
+      timestamp: (speedline.first + speedline.beginning) * 1000,
+    });
+    metrics.push({
+      metricName: 'observedLastVisualChange',
+      timing: speedline.complete,
+      timestamp: (speedline.complete + speedline.beginning) * 1000,
+    });
+    metrics.push({
+      metricName: 'observedSpeedIndex',
+      timing: speedline.speedIndex,
+      timestamp: (speedline.speedIndex + speedline.beginning) * 1000,
+    });
 
     const headings = [
       {key: 'metricName', itemType: 'text', text: 'Name'},

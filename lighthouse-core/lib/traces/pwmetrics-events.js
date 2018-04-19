@@ -8,22 +8,6 @@
 
 const log = require('lighthouse-logger');
 
-/**
- * @param {!Object} object
- * @param {string} path
- * @return {*}
- */
-function safeGet(object, path) {
-  const components = path.split('.');
-  for (const component of components) {
-    if (!object) {
-      return null;
-    }
-    object = object[component];
-  }
-  return object;
-}
-
 function findValueInMetricsAuditFn(metricName, timingOrTimestamp) {
   return auditResults => {
     const metricsAudit = auditResults.metrics;
@@ -49,68 +33,38 @@ class Metrics {
       {
         name: 'Navigation Start',
         id: 'navstart',
-        getTs: findValueInMetricsAuditFn('traceNavigationStart', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('traceNavigationStart', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedNavigationStart', 'timestamp'),
+        getTiming: findValueInMetricsAuditFn('observedNavigationStart', 'timing'),
       },
       {
         name: 'First Contentful Paint',
         id: 'ttfcp',
-        getTs: findValueInMetricsAuditFn('traceFirstContentfulPaint', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('traceFirstContentfulPaint', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedFirstContentfulPaint', 'timestamp'),
+        getTiming: findValueInMetricsAuditFn('observedFirstContentfulPaint', 'timing'),
       },
       {
         name: 'First Meaningful Paint',
         id: 'ttfmp',
-        getTs: findValueInMetricsAuditFn('traceFirstMeaningfulPaint', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('traceFirstMeaningfulPaint', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedFirstMeaningfulPaint', 'timestamp'),
+        getTiming: findValueInMetricsAuditFn('observedFirstMeaningfulPaint', 'timing'),
       },
       {
-        name: 'Perceptual Speed Index',
-        id: 'psi',
-        getTs: auditResults => {
-          const siExt = auditResults['speed-index-metric'].extendedInfo;
-          return safeGet(siExt, 'value.timestamps.perceptualSpeedIndex');
-        },
-        getTiming: auditResults => {
-          const siExt = auditResults['speed-index-metric'].extendedInfo;
-          return safeGet(siExt, 'value.timings.perceptualSpeedIndex');
-        },
+        name: 'Speed Index',
+        id: 'si',
+        getTs: findValueInMetricsAuditFn('observedSpeedIndex', 'timestamp'),
+        getTiming: findValueInMetricsAuditFn('observedSpeedIndex', 'timing'),
       },
       {
         name: 'First Visual Change',
         id: 'fv',
-        getTs: auditResults => {
-          const siExt = auditResults['speed-index-metric'].extendedInfo;
-          return safeGet(siExt, 'value.timestamps.firstVisualChange');
-        },
-        getTiming: auditResults => {
-          const siExt = auditResults['speed-index-metric'].extendedInfo;
-          return safeGet(siExt, 'value.timings.firstVisualChange');
-        },
-      },
-      {
-        name: 'Visually Complete 85%',
-        id: 'vc85',
-        getTs: auditResults => {
-          const siExt = auditResults['speed-index-metric'].extendedInfo;
-          return safeGet(siExt, 'value.timestamps.visuallyReady');
-        },
-        getTiming: auditResults => {
-          const siExt = auditResults['speed-index-metric'].extendedInfo;
-          return safeGet(siExt, 'value.timings.visuallyReady');
-        },
+        getTs: findValueInMetricsAuditFn('observedFirstVisualChange', 'timestamp'),
+        getTiming: findValueInMetricsAuditFn('observedFirstVisualChange', 'timing'),
       },
       {
         name: 'Visually Complete 100%',
         id: 'vc100',
-        getTs: auditResults => {
-          const siExt = auditResults['speed-index-metric'].extendedInfo;
-          return safeGet(siExt, 'value.timestamps.visuallyComplete');
-        },
-        getTiming: auditResults => {
-          const siExt = auditResults['speed-index-metric'].extendedInfo;
-          return safeGet(siExt, 'value.timings.visuallyComplete');
-        },
+        getTs: findValueInMetricsAuditFn('observedLastVisualChange', 'timestamp'),
+        getTiming: findValueInMetricsAuditFn('observedLastVisualChange', 'timing'),
       },
       {
         name: 'First CPU Idle',
@@ -119,34 +73,28 @@ class Metrics {
         getTiming: findValueInMetricsAuditFn('firstCPUIdle', 'timing'),
       },
       {
-        name: 'Time to Consistently Interactive (vBeta)',
+        name: 'Time to Interactive',
         id: 'ttci',
-        getTs: auditResults => {
-          const ttiExt = auditResults['consistently-interactive'].extendedInfo;
-          return safeGet(ttiExt, 'value.timestamp');
-        },
-        getTiming: auditResults => {
-          const ttiExt = auditResults['consistently-interactive'].extendedInfo;
-          return safeGet(ttiExt, 'value.timeInMs');
-        },
+        getTs: findValueInMetricsAuditFn('timeToInteractive', 'timestamp'),
+        getTiming: findValueInMetricsAuditFn('timeToInteractive', 'timing'),
       },
       {
         name: 'End of Trace',
         id: 'eot',
-        getTs: findValueInMetricsAuditFn('traceTraceEnd', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('traceTraceEnd', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedTraceEnd', 'timestamp'),
+        getTiming: findValueInMetricsAuditFn('observedTraceEnd', 'timing'),
       },
       {
         name: 'On Load',
         id: 'onload',
-        getTs: findValueInMetricsAuditFn('traceLoad', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('traceLoad', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedLoad', 'timestamp'),
+        getTiming: findValueInMetricsAuditFn('observedLoad', 'timing'),
       },
       {
         name: 'DOM Content Loaded',
         id: 'dcl',
-        getTs: findValueInMetricsAuditFn('traceDomContentLoaded', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('traceDomContentLoaded', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedDomContentLoaded', 'timestamp'),
+        getTiming: findValueInMetricsAuditFn('observedDomContentLoaded', 'timing'),
       },
     ];
   }

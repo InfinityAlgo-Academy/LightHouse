@@ -141,7 +141,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     metricAudits.forEach(item => {
-      if (item.id === 'speed-index-metric' || item.id === 'estimated-input-latency') {
+      if (item.id === 'speed-index' || item.id === 'estimated-input-latency') {
         return metricAuditsEl.appendChild(this.renderAudit(item));
       }
 

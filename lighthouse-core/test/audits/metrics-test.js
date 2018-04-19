@@ -27,6 +27,13 @@ describe('Performance: metrics', () => {
 
     const settings = {throttlingMethod: 'simulate'};
     const result = await Audit.audit(artifacts, {settings});
+
+    assert.deepStrictEqual(result.details.items[0], {
+      metricName: 'firstContentfulPaint',
+      timing: 2038,
+      timestamp: undefined,
+    });
+
     const metrics = {};
     result.details.items.forEach(item => metrics[item.metricName] = Math.round(item.timing));
 
@@ -35,13 +42,18 @@ describe('Performance: metrics', () => {
       firstMeaningfulPaint: 2851,
       firstCPUIdle: 5308,
       timeToInteractive: 5308,
-      traceNavigationStart: 0,
-      traceFirstPaint: 499,
-      traceFirstContentfulPaint: 499,
-      traceFirstMeaningfulPaint: 783,
-      traceTraceEnd: 12540,
-      traceLoad: 2199,
-      traceDomContentLoaded: 560,
+      speedIndex: 2063,
+
+      observedNavigationStart: 0,
+      observedFirstPaint: 499,
+      observedFirstContentfulPaint: 499,
+      observedFirstMeaningfulPaint: 783,
+      observedTraceEnd: 12540,
+      observedLoad: 2199,
+      observedDomContentLoaded: 560,
+      observedFirstVisualChange: 520,
+      observedLastVisualChange: 818,
+      observedSpeedIndex: 605,
     });
   });
 });
