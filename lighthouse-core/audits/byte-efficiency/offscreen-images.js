@@ -85,10 +85,11 @@ class OffscreenImages extends ByteEfficiencyAudit {
    * @param {!Artifacts} artifacts
    * @return {!Audit.HeadingsResult}
    */
-  static audit_(artifacts) {
+  static audit_(artifacts, networkRecords, context) {
     const images = artifacts.ImageUsage;
     const viewportDimensions = artifacts.ViewportDimensions;
     const trace = artifacts.traces[ByteEfficiencyAudit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
 
     let debugString;
     const resultsMap = images.reduce((results, image) => {
@@ -112,7 +113,9 @@ class OffscreenImages extends ByteEfficiencyAudit {
       return results;
     }, new Map());
 
-    return artifacts.requestFirstInteractive(trace).then(firstInteractive => {
+    // TODO(phulce): move this to always use lantern
+    const settings = context.settings;
+    return artifacts.requestFirstCPUIdle({trace, devtoolsLog, settings}).then(firstInteractive => {
       const ttiTimestamp = firstInteractive.timestamp / 1000000;
       const results = Array.from(resultsMap.values()).filter(item => {
         const isWasteful =

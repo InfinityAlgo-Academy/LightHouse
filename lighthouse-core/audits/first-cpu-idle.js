@@ -8,16 +8,16 @@
 const Audit = require('./audit');
 const Util = require('../report/v2/renderer/util.js');
 
-class FirstInteractiveMetric extends Audit {
+class FirstCPUIdle extends Audit {
   /**
    * @return {!AuditMeta}
    */
   static get meta() {
     return {
-      name: 'first-interactive',
-      description: 'First Interactive (beta)',
-      helpText: 'First Interactive marks the time at which the page is ' +
-          'minimally interactive. ' +
+      name: 'first-cpu-idle',
+      description: 'First CPU Idle',
+      helpText: 'First CPU Idle marks the first time at which the page\'s main thread is ' +
+          'quiet enough to handle input. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive).',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces'],
@@ -39,28 +39,26 @@ class FirstInteractiveMetric extends Audit {
    * Identify the time the page is "first interactive"
    * @see https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#
    *
-   * @param {!Artifacts} artifacts
+   * @param {Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {!Promise<!AuditResult>}
+   * @return {Promise<AuditResult>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    return artifacts.requestFirstInteractive(trace)
-      .then(firstInteractive => {
-        return {
-          score: Audit.computeLogNormalScore(
-            firstInteractive.timeInMs,
-            context.options.scorePODR,
-            context.options.scoreMedian
-          ),
-          rawValue: firstInteractive.timeInMs,
-          displayValue: Util.formatMilliseconds(firstInteractive.timeInMs),
-          extendedInfo: {
-            value: firstInteractive,
-          },
-        };
-      });
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const metricComputationData = {trace, devtoolsLog, settings: context.settings};
+    const metricResult = await artifacts.requestFirstCPUIdle(metricComputationData);
+
+    return {
+      score: Audit.computeLogNormalScore(
+        metricResult.timing,
+        context.options.scorePODR,
+        context.options.scoreMedian
+      ),
+      rawValue: metricResult.timing,
+      displayValue: Util.formatMilliseconds(metricResult.timing),
+    };
   }
 }
 
-module.exports = FirstInteractiveMetric;
+module.exports = FirstCPUIdle;

@@ -33,6 +33,7 @@ describe('Performance: metrics', () => {
     assert.deepStrictEqual(metrics, {
       firstContentfulPaint: 2038,
       firstMeaningfulPaint: 2851,
+      firstCPUIdle: 5308,
       timeToInteractive: 5308,
       traceNavigationStart: 0,
       traceFirstPaint: 499,

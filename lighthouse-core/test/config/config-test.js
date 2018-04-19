@@ -284,14 +284,14 @@ describe('Config', () => {
       audits: [
         'accessibility/color-contrast',
         'first-meaningful-paint',
-        'first-interactive',
+        'first-cpu-idle',
         'estimated-input-latency',
       ],
       categories: {
         'needed-category': {
           audits: [
             {id: 'first-meaningful-paint'},
-            {id: 'first-interactive'},
+            {id: 'first-cpu-idle'},
           ],
         },
         'other-category': {
@@ -328,14 +328,14 @@ describe('Config', () => {
       audits: [
         'accessibility/color-contrast',
         'first-meaningful-paint',
-        'first-interactive',
+        'first-cpu-idle',
         'estimated-input-latency',
       ],
       categories: {
         'needed-category': {
           audits: [
             {id: 'first-meaningful-paint'},
-            {id: 'first-interactive'},
+            {id: 'first-cpu-idle'},
             {id: 'color-contrast'},
           ],
         },
@@ -396,7 +396,7 @@ describe('Config', () => {
       extends: true,
       settings: {
         onlyCategories: ['performance', 'missing-category'],
-        onlyAudits: ['first-interactive', 'missing-audit'],
+        onlyAudits: ['first-cpu-idle', 'missing-audit'],
       },
     });
 

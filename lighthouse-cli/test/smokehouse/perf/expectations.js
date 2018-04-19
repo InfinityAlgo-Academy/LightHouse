@@ -26,7 +26,7 @@ module.exports = [
       'first-meaningful-paint': {
         score: '>=0.90',
       },
-      'first-interactive': {
+      'first-cpu-idle': {
         score: '>=0.90',
       },
       'consistently-interactive': {

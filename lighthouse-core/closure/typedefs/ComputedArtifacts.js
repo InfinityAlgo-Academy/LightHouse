@@ -68,7 +68,7 @@ ComputedArtifacts.prototype.requestSpeedline;
 ComputedArtifacts.prototype.requestTraceOfTab;
 
 /** @type {function(!Trace): !Promise<{timeInMs: number, timestamp: number}>} */
-ComputedArtifacts.prototype.requestFirstInteractive;
+ComputedArtifacts.prototype.requestFirstCPUIdle;
 
 /** @type {function(!DevtoolsLog): !Promise<WebInspector.NetworkRequest>} */
 ComputedArtifacts.prototype.requestMainResource;

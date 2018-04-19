@@ -9,27 +9,27 @@ const Node = require('../../../lib/dependency-graph/node');
 const CPUNode = require('../../../lib/dependency-graph/cpu-node'); // eslint-disable-line no-unused-vars
 const NetworkNode = require('../../../lib/dependency-graph/network-node'); // eslint-disable-line no-unused-vars
 
-const FirstInteractive = require('../first-interactive');
+const FirstCPUIdle = require('./first-cpu-idle');
 const LanternConsistentlyInteractive = require('./lantern-consistently-interactive');
 
-class FirstCPUIdle extends LanternConsistentlyInteractive {
+class LanternFirstCPUIdle extends LanternConsistentlyInteractive {
   get name() {
     return 'LanternFirstCPUIdle';
   }
 
   /**
-   * @param {LH.Gatherer.Simulation.Result} simulationResult
+   * @param {LH.Gatherer.Simulation.Result} simulation
    * @param {Object} extras
    * @return {LH.Gatherer.Simulation.Result}
    */
-  getEstimateFromSimulation(simulationResult, extras) {
+  getEstimateFromSimulation(simulation, extras) {
     const fmpTimeInMs = extras.optimistic
       ? extras.fmpResult.optimisticEstimate.timeInMs
       : extras.fmpResult.pessimisticEstimate.timeInMs;
 
     return {
-      timeInMs: FirstCPUIdle.getFirstCPUIdleWindowStart(simulationResult.nodeTiming, fmpTimeInMs),
-      nodeTiming: simulationResult.nodeTiming,
+      timeInMs: LanternFirstCPUIdle.getFirstCPUIdleWindowStart(simulation.nodeTiming, fmpTimeInMs),
+      nodeTiming: simulation.nodeTiming,
     };
   }
 
@@ -48,8 +48,8 @@ class FirstCPUIdle extends LanternConsistentlyInteractive {
       longTasks.push({start: timing.startTime, end: timing.endTime});
     }
 
-    return FirstInteractive.findQuietWindow(fmpTimeInMs, Infinity, longTasks);
+    return FirstCPUIdle.findQuietWindow(fmpTimeInMs, Infinity, longTasks);
   }
 }
 
-module.exports = FirstCPUIdle;
+module.exports = LanternFirstCPUIdle;

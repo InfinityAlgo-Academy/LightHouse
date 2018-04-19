@@ -13,7 +13,7 @@ module.exports = [
     initialUrl: 'http://localhost:10200/tricky-ttci.html',
     url: 'http://localhost:10200/tricky-ttci.html',
     audits: {
-      'first-interactive': {
+      'first-cpu-idle': {
         score: '<75',
         rawValue: '>9000',
       },

@@ -86,7 +86,7 @@ class UnusedBytes extends Audit {
       .requestNetworkRecords(devtoolsLog)
       .then(networkRecords =>
         Promise.all([
-          this.audit_(artifacts, networkRecords),
+          this.audit_(artifacts, networkRecords, context),
           artifacts.requestPageDependencyGraph({trace, devtoolsLog}),
           artifacts.requestLoadSimulator(simulatorOptions),
         ])

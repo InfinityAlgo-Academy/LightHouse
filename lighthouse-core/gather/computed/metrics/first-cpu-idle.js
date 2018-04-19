@@ -4,9 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
-const ComputedArtifact = require('./computed-artifact');
-const TracingProcessor = require('../../lib/traces/tracing-processor');
-const LHError = require('../../lib/errors');
+const MetricArtifact = require('./metric');
+const TracingProcessor = require('../../../lib/traces/tracing-processor');
+const LHError = require('../../../lib/errors');
 
 const LONG_TASK_THRESHOLD = 50;
 
@@ -23,7 +23,7 @@ const EXPONENTIATION_COEFFICIENT = -Math.log(3 - 1) / 15;
  * @fileoverview This artifact identifies the time the page is "first interactive" as defined below
  * @see https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#
  *
- * First Interactive marks the first moment when a website is minimally interactive:
+ * First CPU Idle marks the first moment when a website is minimally interactive:
  *    > Enough (but maybe not all) UI components shown on the screen are interactive
  *      DISCLAIMER: This is assumed by virtue of the fact that the CPU is idle; actual event
  *      listeners are not examined. Server-side rendering and extreme network latency can trick this
@@ -31,7 +31,7 @@ const EXPONENTIATION_COEFFICIENT = -Math.log(3 - 1) / 15;
  *    > The page responds to user input in a reasonable time on average, but it’s ok if this
  *      response is not always immediate.
  *
- * First Interactive is defined as the first period after FMP of N-seconds that has no bad task
+ * First CPU Idle is defined as the first period after FMP of N-seconds that has no bad task
  * clusters.
  *
  *    > t = time in seconds since FMP
@@ -45,11 +45,11 @@ const EXPONENTIATION_COEFFICIENT = -Math.log(3 - 1) / 15;
  *        > Spans more than 250ms from the start of the earliest task in the cluster to the end of the
  *          latest task in the cluster.
  *
- * If this timestamp is earlier than DOMContentLoaded, use DOMContentLoaded as firstInteractive.
+ * If this timestamp is earlier than DOMContentLoaded, use DOMContentLoaded as firstCPUIdle.
  */
-class FirstInteractive extends ComputedArtifact {
+class FirstCPUIdle extends MetricArtifact {
   get name() {
-    return 'FirstInteractive';
+    return 'FirstCPUIdle';
   }
 
   /**
@@ -126,7 +126,7 @@ class FirstInteractive extends ComputedArtifact {
   static findQuietWindow(FMP, traceEnd, longTasks) {
     // If we have an empty window at the very beginning, just return FMP early
     if (longTasks.length === 0 ||
-        longTasks[0].start > FMP + FirstInteractive.getRequiredWindowSizeInMs(0)) {
+        longTasks[0].start > FMP + FirstCPUIdle.getRequiredWindowSizeInMs(0)) {
       return FMP;
     }
 
@@ -137,11 +137,11 @@ class FirstInteractive extends ComputedArtifact {
     /** @param {TaskCluster} cluster */
     const isBadCluster = cluster => isTooCloseToFMP(cluster) || isTooLong(cluster);
 
-    // FirstInteractive must start at the end of a long task, consider each long task and
+    // FirstCPUIdle must start at the end of a long task, consider each long task and
     // examine the window that follows it.
     for (let i = 0; i < longTasks.length; i++) {
       const windowStart = longTasks[i].end;
-      const windowSize = FirstInteractive.getRequiredWindowSizeInMs(windowStart - FMP);
+      const windowSize = FirstCPUIdle.getRequiredWindowSizeInMs(windowStart - FMP);
       const windowEnd = windowStart + windowSize;
 
       // Check that we have a long enough trace
@@ -155,7 +155,7 @@ class FirstInteractive extends ComputedArtifact {
         continue;
       }
 
-      const taskClusters = FirstInteractive.getTaskClustersInWindow(longTasks, i + 1, windowEnd);
+      const taskClusters = FirstCPUIdle.getTaskClustersInWindow(longTasks, i + 1, windowEnd);
       const hasBadTaskClusters = taskClusters.some(isBadCluster);
 
       if (!hasBadTaskClusters) {
@@ -167,10 +167,11 @@ class FirstInteractive extends ComputedArtifact {
   }
 
   /**
-   * @param {LH.Artifacts.TraceOfTab} traceOfTab
-   * @return {{timeInMs: number, timestamp: number}}
+   * @param {LH.Artifacts.MetricComputationData} data
+   * @return {Promise<LH.Artifacts.Metric>}
    */
-  computeWithArtifacts(traceOfTab) {
+  computeObservedMetric(data) {
+    const {traceOfTab} = data;
     const navStart = traceOfTab.timestamps.navigationStart;
     const FMP = traceOfTab.timings.firstMeaningfulPaint;
     const DCL = traceOfTab.timings.domContentLoaded;
@@ -186,23 +187,13 @@ class FirstInteractive extends ComputedArtifact {
 
     const longTasksAfterFMP = TracingProcessor.getMainThreadTopLevelEvents(traceOfTab, FMP)
         .filter(evt => evt.duration >= LONG_TASK_THRESHOLD);
-    const firstInteractive = FirstInteractive.findQuietWindow(FMP, traceEnd, longTasksAfterFMP);
+    const firstInteractive = FirstCPUIdle.findQuietWindow(FMP, traceEnd, longTasksAfterFMP);
 
     const valueInMs = Math.max(firstInteractive, DCL);
-    return {
-      timeInMs: valueInMs,
-      timestamp: valueInMs * 1000 + navStart,
-    };
-  }
 
-  /**
-   * @param {LH.Trace} trace
-   * @param {LH.Artifacts} artifacts
-   * @return {Promise<{timeInMs: number, timestamp: number}>}
-   */
-  compute_(trace, artifacts) {
-    return artifacts.requestTraceOfTab(trace).then(traceOfTab => {
-      return this.computeWithArtifacts(traceOfTab);
+    return Promise.resolve({
+      timing: valueInMs,
+      timestamp: valueInMs * 1000 + navStart,
     });
   }
 }
@@ -212,4 +203,4 @@ class FirstInteractive extends ComputedArtifact {
  * @typedef {{start: number, end: number, duration: number}} TaskCluster
  */
 
-module.exports = FirstInteractive;
+module.exports = FirstCPUIdle;

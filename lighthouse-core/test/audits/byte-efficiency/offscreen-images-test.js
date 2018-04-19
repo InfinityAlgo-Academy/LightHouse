@@ -58,8 +58,9 @@ describe('OffscreenImages audit', () => {
         generateImage(generateSize(100, 100), [0, 0]),
       ],
       traces: {},
-      requestFirstInteractive: generateInteractiveFunc(2),
-    }).then(auditResult => {
+      devtoolsLogs: {},
+      requestFirstCPUIdle: generateInteractiveFunc(2),
+    }, [], {}).then(auditResult => {
       assert.equal(auditResult.results.length, 0);
     });
   });
@@ -75,8 +76,9 @@ describe('OffscreenImages audit', () => {
         generateImage(generateSize(400, 400), [1720, 1080], generateRecord(3), urlC),
       ],
       traces: {},
-      requestFirstInteractive: generateInteractiveFunc(2),
-    }).then(auditResult => {
+      devtoolsLogs: {},
+      requestFirstCPUIdle: generateInteractiveFunc(2),
+    }, [], {}).then(auditResult => {
       assert.equal(auditResult.results.length, 0);
     });
   });
@@ -98,8 +100,9 @@ describe('OffscreenImages audit', () => {
         generateImage(generateSize(1000, 1000), [0, -500], generateRecord(100), url('E')),
       ],
       traces: {},
-      requestFirstInteractive: generateInteractiveFunc(2),
-    }).then(auditResult => {
+      devtoolsLogs: {},
+      requestFirstCPUIdle: generateInteractiveFunc(2),
+    }, [], {}).then(auditResult => {
       assert.equal(auditResult.results.length, 4);
     });
   });
@@ -111,8 +114,9 @@ describe('OffscreenImages audit', () => {
         generateImage(generateSize(0, 0), [0, 0], generateRecord(100)),
       ],
       traces: {},
-      requestFirstInteractive: generateInteractiveFunc(2),
-    }).then(auditResult => {
+      devtoolsLogs: {},
+      requestFirstCPUIdle: generateInteractiveFunc(2),
+    }, [], {}).then(auditResult => {
       assert.equal(auditResult.results.length, 1);
     });
   });
@@ -128,8 +132,9 @@ describe('OffscreenImages audit', () => {
         generateImage(generateSize(400, 400), [0, 1500], generateRecord(90), urlB),
       ],
       traces: {},
-      requestFirstInteractive: generateInteractiveFunc(2),
-    }).then(auditResult => {
+      devtoolsLogs: {},
+      requestFirstCPUIdle: generateInteractiveFunc(2),
+    }, [], {}).then(auditResult => {
       assert.equal(auditResult.results.length, 1);
     });
   });
@@ -142,8 +147,9 @@ describe('OffscreenImages audit', () => {
         generateImage(generateSize(200, 200), [3000, 0], generateRecord(100, 3)),
       ],
       traces: {},
-      requestFirstInteractive: generateInteractiveFunc(2),
-    }).then(auditResult => {
+      devtoolsLogs: {},
+      requestFirstCPUIdle: generateInteractiveFunc(2),
+    }, [], {}, [], {}).then(auditResult => {
       assert.equal(auditResult.results.length, 0);
     });
   });

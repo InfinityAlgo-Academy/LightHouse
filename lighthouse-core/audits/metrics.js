@@ -33,11 +33,17 @@ class Metrics extends Audit {
     const traceOfTab = await artifacts.requestTraceOfTab(trace);
     const firstContentfulPaint = await artifacts.requestFirstContentfulPaint(metricComputationData);
     const firstMeaningfulPaint = await artifacts.requestFirstMeaningfulPaint(metricComputationData);
+    const firstCPUIdle = await artifacts.requestFirstCPUIdle(metricComputationData);
     const timeToInteractive = await artifacts.requestConsistentlyInteractive(metricComputationData);
     const metrics = [];
 
     // Include the simulated/observed performance metrics
-    const metricsMap = {firstContentfulPaint, firstMeaningfulPaint, timeToInteractive};
+    const metricsMap = {
+      firstContentfulPaint,
+      firstMeaningfulPaint,
+      firstCPUIdle,
+      timeToInteractive,
+    };
     for (const [metricName, values] of Object.entries(metricsMap)) {
       metrics.push(Object.assign({metricName}, values));
     }

@@ -83,7 +83,7 @@ module.exports = {
     'estimated-input-latency',
     'errors-in-console',
     'time-to-first-byte',
-    'first-interactive',
+    'first-cpu-idle',
     'consistently-interactive',
     'user-timings',
     'critical-request-chains',
@@ -266,7 +266,7 @@ module.exports = {
       audits: [
         {id: 'first-contentful-paint', weight: 5, group: 'perf-metric'},
         {id: 'first-meaningful-paint', weight: 3, group: 'perf-metric'},
-        {id: 'first-interactive', weight: 5, group: 'perf-metric'},
+        {id: 'first-cpu-idle', weight: 5, group: 'perf-metric'},
         {id: 'consistently-interactive', weight: 5, group: 'perf-metric'},
         {id: 'speed-index-metric', weight: 1, group: 'perf-metric'},
         {id: 'estimated-input-latency', weight: 1, group: 'perf-metric'},

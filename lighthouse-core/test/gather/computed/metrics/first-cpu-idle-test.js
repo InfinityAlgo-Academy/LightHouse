@@ -5,27 +5,34 @@
  */
 'use strict';
 
-const FirstInteractive = require('../../../gather/computed/first-interactive');
-const firstInteractive = new FirstInteractive();
-const TracingProcessor = require('../../../lib/traces/tracing-processor.js');
-const Runner = require('../../../runner.js');
+const FirstCPUIdle = require('../../../../gather/computed/metrics/first-cpu-idle');
+const firstCPUIdle = new FirstCPUIdle();
+const TracingProcessor = require('../../../../lib/traces/tracing-processor');
+const Runner = require('../../../../runner.js');
 
-const tooShortTrace = require('../../fixtures/traces/progressive-app.json');
-const acceptableTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const redirectTrace = require('../../fixtures/traces/site-with-redirect.json');
+const tooShortTrace = require('../../../fixtures/traces/progressive-app.json');
+const acceptableTrace = require('../../../fixtures/traces/progressive-app-m60.json');
+const acceptableDevtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json'); // eslint-disable-line max-len
+const redirectTrace = require('../../../fixtures/traces/site-with-redirect.json');
 
 const assert = require('assert');
 
 /* eslint-env mocha */
 describe('FirstInteractive computed artifact:', () => {
   let computedArtifacts;
+  let trace;
+  let settings;
+  let devtoolsLog;
 
   beforeEach(() => {
     computedArtifacts = Runner.instantiateComputedArtifacts();
+    settings = {throttlingMethod: 'provided'};
+    devtoolsLog = [];
   });
 
   it('throws on short traces', () => {
-    return computedArtifacts.requestFirstInteractive({traceEvents: tooShortTrace}).then(() => {
+    trace = {traceEvents: tooShortTrace};
+    return computedArtifacts.requestFirstCPUIdle({trace, devtoolsLog, settings}).then(() => {
       assert.ok(false, 'should have thrown for short trace');
     }).catch(err => {
       assert.equal(err.message, 'FMP_TOO_LATE_FOR_FCPUI');
@@ -33,27 +40,48 @@ describe('FirstInteractive computed artifact:', () => {
   });
 
   it('should compute firstInteractive', () => {
-    return computedArtifacts.requestFirstInteractive(acceptableTrace).then(output => {
-      assert.equal(Math.round(output.timeInMs), 1582);
+    trace = acceptableTrace;
+    return computedArtifacts.requestFirstCPUIdle({trace, devtoolsLog, settings}).then(output => {
+      assert.equal(Math.round(output.timing), 1582);
       assert.ok(output.timestamp, 'output is missing timestamp');
     });
   });
 
   it('should compute firstInteractive on pages with redirect', () => {
-    return computedArtifacts.requestFirstInteractive(redirectTrace).then(output => {
-      assert.equal(Math.round(output.timeInMs), 2712);
+    trace = redirectTrace;
+    return computedArtifacts.requestFirstCPUIdle({trace, devtoolsLog, settings}).then(output => {
+      assert.equal(Math.round(output.timing), 2712);
       assert.ok(output.timestamp, 'output is missing timestamp');
     });
   });
 
-  describe('#computeWithArtifacts', () => {
+  it('should simulate when settings specify', async () => {
+    settings = {throttlingMethod: 'simulate'};
+    trace = acceptableTrace;
+    devtoolsLog = acceptableDevtoolsLog;
+
+    const artifacts = Runner.instantiateComputedArtifacts();
+    const result = await artifacts.requestFirstCPUIdle({trace, devtoolsLog, settings});
+
+    assert.equal(Math.round(result.timing), 5308);
+    assert.equal(Math.round(result.optimisticEstimate.timeInMs), 2451);
+    assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 2752);
+    assert.equal(result.optimisticEstimate.nodeTiming.size, 19);
+    assert.equal(result.pessimisticEstimate.nodeTiming.size, 79);
+    assert.ok(result.optimisticGraph, 'should have created optimistic graph');
+    assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
+  });
+
+  describe('#computeObservedMetric', () => {
     let mainThreadEvents;
     let originalMainThreadEventsFunc;
+    let computeObservedMetric;
 
     before(() => {
       originalMainThreadEventsFunc = TracingProcessor.getMainThreadTopLevelEvents;
       TracingProcessor.getMainThreadTopLevelEvents = () => mainThreadEvents
           .map(evt => Object.assign(evt, {duration: evt.end - evt.start}));
+      computeObservedMetric = traceOfTab => firstCPUIdle.computeObservedMetric({traceOfTab});
     });
 
     after(() => {
@@ -62,7 +90,7 @@ describe('FirstInteractive computed artifact:', () => {
 
     it('should throw when trace is not long enough after FMP', () => {
       assert.throws(() => {
-        firstInteractive.computeWithArtifacts({
+        computeObservedMetric({
           timings: {
             firstMeaningfulPaint: 3400,
             traceEnd: 4500,
@@ -74,10 +102,10 @@ describe('FirstInteractive computed artifact:', () => {
       }, /FMP_TOO_LATE/);
     });
 
-    it('should return FMP when no trace events are found', () => {
+    it('should return FMP when no trace events are found', async () => {
       mainThreadEvents = [];
 
-      const result = firstInteractive.computeWithArtifacts({
+      const result = await computeObservedMetric({
         timings: {
           firstMeaningfulPaint: 3400,
           domContentLoaded: 2000,
@@ -88,14 +116,14 @@ describe('FirstInteractive computed artifact:', () => {
         },
       });
 
-      assert.equal(result.timeInMs, 3400);
+      assert.equal(result.timing, 3400);
       assert.equal(result.timestamp, 4000000);
     });
 
-    it('should not return a time earlier than FMP', () => {
+    it('should not return a time earlier than FMP', async () => {
       mainThreadEvents = [];
 
-      const result = firstInteractive.computeWithArtifacts({
+      const result = await computeObservedMetric({
         timings: {
           firstMeaningfulPaint: 3400,
           domContentLoaded: 2000,
@@ -106,13 +134,13 @@ describe('FirstInteractive computed artifact:', () => {
         },
       });
 
-      assert.equal(result.timeInMs, 3400);
+      assert.equal(result.timing, 3400);
     });
 
-    it('should return DCL when DCL is after FMP', () => {
+    it('should return DCL when DCL is after FMP', async () => {
       mainThreadEvents = [];
 
-      const result = firstInteractive.computeWithArtifacts({
+      const result = await computeObservedMetric({
         timings: {
           firstMeaningfulPaint: 3400,
           domContentLoaded: 7000,
@@ -123,15 +151,15 @@ describe('FirstInteractive computed artifact:', () => {
         },
       });
 
-      assert.equal(result.timeInMs, 7000);
+      assert.equal(result.timing, 7000);
     });
 
-    it('should return DCL when DCL is after interactive', () => {
+    it('should return DCL when DCL is after interactive', async () => {
       mainThreadEvents = [
         {start: 5000, end: 5100},
       ];
 
-      const result = firstInteractive.computeWithArtifacts({
+      const result = await computeObservedMetric({
         timings: {
           firstMeaningfulPaint: 3400,
           domContentLoaded: 7000,
@@ -142,17 +170,17 @@ describe('FirstInteractive computed artifact:', () => {
         },
       });
 
-      assert.equal(result.timeInMs, 7000);
+      assert.equal(result.timing, 7000);
     });
 
-    it('should return the quiet window', () => {
+    it('should return the quiet window', async () => {
       mainThreadEvents = [
         {start: 4000, end: 4200},
         {start: 9000, end: 9500},
         {start: 12000, end: 12100}, // light task
       ];
 
-      const result = firstInteractive.computeWithArtifacts({
+      const result = await computeObservedMetric({
         timings: {
           firstMeaningfulPaint: 3400,
           domContentLoaded: 2300,
@@ -163,19 +191,19 @@ describe('FirstInteractive computed artifact:', () => {
         },
       });
 
-      assert.equal(result.timeInMs, 9500);
+      assert.equal(result.timing, 9500);
     });
   });
 
   describe('#findQuietWindow', () => {
     it('should return FMP when there are no long tasks', () => {
-      const result = FirstInteractive.findQuietWindow(200, 1000, []);
+      const result = FirstCPUIdle.findQuietWindow(200, 1000, []);
       assert.equal(result, 200);
     });
 
     it('should return FMP when long tasks are more than 5s out', () => {
       const longTasks = [{start: 5600, end: 6000}];
-      const result = FirstInteractive.findQuietWindow(200, 60000, longTasks);
+      const result = FirstCPUIdle.findQuietWindow(200, 60000, longTasks);
       assert.equal(result, 200);
     });
 
@@ -184,7 +212,7 @@ describe('FirstInteractive computed artifact:', () => {
         {start: 2200, end: 4000},
         {start: 9000, end: 10000},
       ];
-      const result = FirstInteractive.findQuietWindow(200, 60000, longTasks);
+      const result = FirstCPUIdle.findQuietWindow(200, 60000, longTasks);
       assert.equal(result, 4000);
     });
 
@@ -193,7 +221,7 @@ describe('FirstInteractive computed artifact:', () => {
         {start: 2200, end: 15000},
         {start: 18500, end: 20000}, // window of only 3.5 seconds
       ];
-      const result = FirstInteractive.findQuietWindow(200, 60000, longTasks);
+      const result = FirstCPUIdle.findQuietWindow(200, 60000, longTasks);
       assert.equal(result, 15000);
     });
 
@@ -210,7 +238,7 @@ describe('FirstInteractive computed artifact:', () => {
         // second light task cluster
         {start: 14000, end: 14200},
       ];
-      const result = FirstInteractive.findQuietWindow(5000, 60000, longTasks);
+      const result = FirstCPUIdle.findQuietWindow(5000, 60000, longTasks);
       assert.equal(result, 11500);
     });
 
@@ -221,7 +249,7 @@ describe('FirstInteractive computed artifact:', () => {
         {start: 12500, end: 16500},
       ];
 
-      const result = FirstInteractive.findQuietWindow(5000, 60000, longTasks);
+      const result = FirstCPUIdle.findQuietWindow(5000, 60000, longTasks);
       assert.equal(result, 5100);
     });
 
@@ -236,7 +264,7 @@ describe('FirstInteractive computed artifact:', () => {
         {start: 12935, end: 12990},
       ];
 
-      const result = FirstInteractive.findQuietWindow(10000, 60000, longTasks);
+      const result = FirstCPUIdle.findQuietWindow(10000, 60000, longTasks);
       assert.equal(result, 12990);
     });
 
@@ -253,7 +281,7 @@ describe('FirstInteractive computed artifact:', () => {
         {start: 14000, end: 17000},
       ];
 
-      const result = FirstInteractive.findQuietWindow(5000, 60000, longTasks);
+      const result = FirstCPUIdle.findQuietWindow(5000, 60000, longTasks);
       assert.equal(result, 17000);
     });
 
@@ -263,7 +291,7 @@ describe('FirstInteractive computed artifact:', () => {
         {start: 10600, end: 10700},
       ];
 
-      const result = FirstInteractive.findQuietWindow(5000, 60000, longTasks);
+      const result = FirstCPUIdle.findQuietWindow(5000, 60000, longTasks);
       assert.equal(result, 10700);
     });
 
@@ -274,14 +302,14 @@ describe('FirstInteractive computed artifact:', () => {
         {start: 10500, end: 16500},
       ];
 
-      const result = FirstInteractive.findQuietWindow(5000, 60000, longTasks);
+      const result = FirstCPUIdle.findQuietWindow(5000, 60000, longTasks);
       assert.equal(result, 16500);
     });
 
     it('should throw when long tasks are too close to traceEnd', () => {
       const longTasks = [{start: 4000, end: 5700}];
       assert.throws(() => {
-        FirstInteractive.findQuietWindow(200, 6000, longTasks);
+        FirstCPUIdle.findQuietWindow(200, 6000, longTasks);
       }, /NO.*IDLE_PERIOD/);
     });
   });
