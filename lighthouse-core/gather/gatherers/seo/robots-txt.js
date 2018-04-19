@@ -9,28 +9,30 @@ const Gatherer = require('../gatherer');
 
 /* global fetch, URL, location */
 
+/** @return {Promise<LH.Artifacts['RobotsTxt']>} */
 /* istanbul ignore next */
-function getRobotsTxtContent() {
-  return fetch(new URL('/robots.txt', location.href))
-    .then(response => {
-      if (!response.ok) {
-        return {status: response.status, content: null};
-      }
+async function getRobotsTxtContent() {
+  try {
+    const response = await fetch(new URL('/robots.txt', location.href).href);
+    if (!response.ok) {
+      return {status: response.status, content: null};
+    }
 
-      return response.text()
-        .then(content => ({status: response.status, content}));
-    })
-    .catch(_ => ({status: null, content: null}));
+    const content = await response.text();
+    return {status: response.status, content};
+  } catch (_) {
+    return {status: null, content: null};
+  }
 }
 
 
 class RobotsTxt extends Gatherer {
   /**
-   * @param {{driver: !Driver}} options Run options
-   * @return {!Promise<!{code: number, content: string}>}
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['RobotsTxt']>}
    */
-  afterPass(options) {
-    return options.driver.evaluateAsync(`(${getRobotsTxtContent.toString()}())`);
+  afterPass(passContext) {
+    return passContext.driver.evaluateAsync(`(${getRobotsTxtContent.toString()}())`);
   }
 }
 

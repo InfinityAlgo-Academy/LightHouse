@@ -3,6 +3,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
+// @ts-nocheck
 'use strict';
 
 /**
@@ -23,8 +24,10 @@ const MINIMAL_LEGIBLE_FONT_SIZE_PX = 12;
 const MAX_NODES_VISITED = 500;
 const MAX_NODES_ANALYZED = 50;
 
+const Driver = require('../../driver.js'); // eslint-disable-line no-unused-vars
+
 /**
- * @param {!Node} node
+ * @param {LH.Artifacts.FontSize.DomNodeWithParent} node
  * @returns {boolean}
  */
 function nodeInBody(node) {
@@ -40,8 +43,8 @@ function nodeInBody(node) {
 /**
  * Get list of all nodes from the document body.
  *
- * @param {!Object} driver
- * @returns {!Array<!Node>}
+ * @param {Driver} driver
+ * @returns {Array<LH.Artifacts.FontSize.DomNodeWithParent>}
  */
 function getAllNodesFromBody(driver) {
   return driver.getNodesInDocument()
@@ -56,9 +59,9 @@ function getAllNodesFromBody(driver) {
 /**
  * Returns effective CSS rule for given CSS property
  *
- * @param {!string} property CSS property name
- * @param {!Node} node
- * @param {!Object} matched CSS rules
+ * @param {string} property CSS property name
+ * @param {LH.Crdp.DOM.Node} node
+ * @param {LH.Crdp.CSS.GetMatchedStylesForNodeResponse} matched CSS rules
  * @returns {WebInspector.CSSStyleDeclaration}
  */
 function getEffectiveRule(property, node, {
@@ -96,16 +99,16 @@ function getEffectiveRule(property, node, {
 }
 
 /**
- * @param {!Node} node
- * @returns {!number}
+ * @param {LH.Crdp.DOM.Node} node
+ * @returns {number}
  */
 function getNodeTextLength(node) {
   return !node.nodeValue ? 0 : node.nodeValue.trim().length;
 }
 
 /**
- * @param {!Object} driver
- * @param {!Node} node text node
+ * @param {Driver} driver
+ * @param {LH.Crdp.DOM.Node} node text node
  * @returns {WebInspector.CSSStyleDeclaration}
  */
 function getFontSizeSourceRule(driver, node) {
@@ -114,9 +117,9 @@ function getFontSizeSourceRule(driver, node) {
 }
 
 /**
- * @param {!Object} driver
- * @param {!Node} node text node
- * @returns {!{fontSize: number, textLength: number, node: Node}}
+ * @param {Driver} driver
+ * @param {LH.Artifacts.FontSize.DomNodeWithParent} node text node
+ * @returns {Promise<?{fontSize: number, textLength: number, node: LH.Artifacts.FontSize.DomNodeWithParent}>}
  */
 function getFontSizeInformation(driver, node) {
   return driver.sendCommand('CSS.getComputedStyleForNode', {nodeId: node.parentId})
@@ -137,7 +140,7 @@ function getFontSizeInformation(driver, node) {
 }
 
 /**
- * @param {Node} node
+ * @param {LH.Artifacts.FontSize.DomNodeWithParent} node
  * @returns {boolean}
  */
 function isNonEmptyTextNode(node) {
@@ -148,23 +151,25 @@ function isNonEmptyTextNode(node) {
 
 class FontSize extends Gatherer {
   /**
-   * @param {{driver: !Object}} options Run options
+   * @param {LH.Gatherer.PassContext} passContext
    * @return {!Promise<{totalTextLength: number, failingTextLength: number, visitedTextLength: number, analyzedFailingTextLength: number, analyzedFailingNodesData: Array<{fontSize: number, textLength: number, node: Node, cssRule: SimplifiedStyleDeclaration}>}>} font-size analysis
    */
-  afterPass(options) {
+  afterPass(passContext) {
+    /** @type {Map<string, LH.Crdp.CSS.CSSStyleSheetHeader>} */
     const stylesheets = new Map();
+    /** @param {LH.Crdp.CSS.StyleSheetAddedEvent} sheet */
     const onStylesheetAdd = sheet => stylesheets.set(sheet.header.styleSheetId, sheet.header);
-    options.driver.on('CSS.styleSheetAdded', onStylesheetAdd);
+    passContext.driver.on('CSS.styleSheetAdded', onStylesheetAdd);
 
-    const enableDOM = options.driver.sendCommand('DOM.enable');
-    const enableCSS = options.driver.sendCommand('CSS.enable');
+    const enableDOM = passContext.driver.sendCommand('DOM.enable');
+    const enableCSS = passContext.driver.sendCommand('CSS.enable');
 
     let failingTextLength = 0;
     let visitedTextLength = 0;
     let totalTextLength = 0;
 
     return Promise.all([enableDOM, enableCSS])
-      .then(() => getAllNodesFromBody(options.driver))
+      .then(() => getAllNodesFromBody(passContext.driver))
       .then(nodes => {
         const textNodes = nodes.filter(isNonEmptyTextNode);
         totalTextLength = textNodes.reduce((sum, node) => sum += getNodeTextLength(node), 0);
@@ -175,7 +180,7 @@ class FontSize extends Gatherer {
         return nodesToVisit;
       })
       .then(textNodes =>
-        Promise.all(textNodes.map(node => getFontSizeInformation(options.driver, node))))
+        Promise.all(textNodes.map(node => getFontSizeInformation(passContext.driver, node))))
       .then(fontSizeInfo => {
         const visitedNodes = fontSizeInfo.filter(Boolean);
         visitedTextLength = visitedNodes.reduce((sum, {textLength}) => sum += textLength, 0);
@@ -187,7 +192,7 @@ class FontSize extends Gatherer {
           .sort((a, b) => b.textLength - a.textLength)
           .slice(0, MAX_NODES_ANALYZED)
           .map(info =>
-            getFontSizeSourceRule(options.driver, info.node)
+            getFontSizeSourceRule(passContext.driver, info.node)
               .then(sourceRule => {
                 if (sourceRule) {
                   info.cssRule = {
@@ -209,7 +214,7 @@ class FontSize extends Gatherer {
         );
       })
       .then(analyzedFailingNodesData => {
-        options.driver.off('CSS.styleSheetAdded', onStylesheetAdd);
+        passContext.driver.off('CSS.styleSheetAdded', onStylesheetAdd);
 
         const analyzedFailingTextLength = analyzedFailingNodesData
           .reduce((sum, {textLength}) => sum += textLength, 0);
@@ -219,8 +224,8 @@ class FontSize extends Gatherer {
           .forEach(data => data.cssRule.stylesheet = stylesheets.get(data.cssRule.styleSheetId));
 
         return Promise.all([
-          options.driver.sendCommand('DOM.disable'),
-          options.driver.sendCommand('CSS.disable'),
+          passContext.driver.sendCommand('DOM.disable'),
+          passContext.driver.sendCommand('CSS.disable'),
         ]).then(_ => ({
           analyzedFailingNodesData,
           analyzedFailingTextLength,

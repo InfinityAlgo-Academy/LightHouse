@@ -20,13 +20,27 @@ declare global {
       // Remaining are provided by gatherers
       Accessibility: Artifacts.Accessibility;
       CacheContents: string[];
+      /** Href values of link[rel=canonical] nodes found in HEAD (or null, if no href attribute). */
+      Canonical: (string | null)[];
       ChromeConsoleMessages: Crdp.Log.EntryAddedEvent[];
+      /** The href and innerText of all non-nofollow anchors in the page. */
+      CrawlableLinks: {href: string, text: string}[];
       CSSUsage: {rules: Crdp.CSS.RuleUsage[], stylesheets: Artifacts.CSSStyleSheetInfo[]};
+      /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
+      EmbeddedContent: Artifacts.EmbeddedContentInfo[];
+      FontSize: Artifacts.FontSize;
+      /** The hreflang and href values of all link[rel=alternate] nodes found in HEAD. */
+      Hreflang: {href: string, hreflang: string}[];
       HTMLWithoutJavaScript: {value: string};
       HTTPRedirect: {value: boolean};
       JsUsageArtifact: Crdp.Profiler.ScriptCoverage[];
       Manifest: ReturnType<typeof parseManifest> | null;
+      /** The value of the <meta name="description">'s content attribute, or null. */
+      MetaDescription: string|null;
+      /** The value of the <meta name="robots">'s content attribute, or null. */
+      MetaRobots: string|null;
       Offline: number;
+      /** Information on fetching and the content of the /robots.txt file. */
       RobotsTxt: {status: number|null, content: string|null};
       RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
       Scripts: Record<string, string>;
@@ -58,6 +72,41 @@ declare global {
       export interface CSSStyleSheetInfo {
         header: Crdp.CSS.CSSStyleSheetHeader;
         content: string;
+      }
+
+      export interface EmbeddedContentInfo {
+        tagName: string;
+        type: string | null;
+        src: string | null;
+        data: string | null;
+        code: string | null;
+        params: {name: string; value: string}[];
+      }
+
+      export interface FontSize {
+        totalTextLength: number;
+        failingTextLength: number;
+        visitedTextLength: number;
+        analyzedFailingTextLength: number;
+        analyzedFailingNodesData: {
+          fontSize: number;
+          textLength: number;
+          node: FontSize.DomNodeWithParent;
+          cssRule: {
+            type: string;
+            range: {startLine: number, startColumn: number};
+            parentRule: {origin: string, selectors: {text: string}[]};
+            styleSheetId: string;
+            stylesheet: Crdp.CSS.CSSStyleSheetHeader;
+          }
+        }
+      }
+
+      export module FontSize {
+        export interface DomNodeWithParent extends Crdp.DOM.Node {
+          parentId: number;
+          parentNode: DomNodeWithParent;
+        }
       }
 
       export interface ViewportDimensions {

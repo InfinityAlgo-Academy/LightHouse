@@ -9,11 +9,11 @@ const Gatherer = require('../gatherer');
 
 class MetaRobots extends Gatherer {
   /**
-   * @param {{driver: !Driver}} options Run options
-   * @return {!Promise<?string>} The value of the description meta's content attribute, or null
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['MetaRobots']>}
    */
-  afterPass(options) {
-    const driver = options.driver;
+  afterPass(passContext) {
+    const driver = passContext.driver;
 
     return driver.querySelector('head meta[name="robots" i]')
       .then(node => node && node.getAttribute('content'));

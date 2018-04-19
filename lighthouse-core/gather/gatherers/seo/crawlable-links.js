@@ -10,10 +10,10 @@ const DOMHelpers = require('../../../lib/dom-helpers.js');
 
 class CrawlableLinks extends Gatherer {
   /**
-   * @param {{driver: !Object}} options Run options
-   * @return {!Promise<!Array<{href: string, text: string}>>}
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['CrawlableLinks']>}
    */
-  afterPass(options) {
+  afterPass(passContext) {
     const expression = `(function() {
       ${DOMHelpers.getElementsInDocumentFnString}; // define function on page
       const selector = 'a[href]:not([rel~="nofollow"])';
@@ -25,7 +25,7 @@ class CrawlableLinks extends Gatherer {
         }));
     })()`;
 
-    return options.driver.evaluateAsync(expression);
+    return passContext.driver.evaluateAsync(expression);
   }
 }
 

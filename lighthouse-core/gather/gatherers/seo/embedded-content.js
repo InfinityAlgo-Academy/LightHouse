@@ -10,10 +10,10 @@ const DOMHelpers = require('../../../lib/dom-helpers.js');
 
 class EmbeddedContent extends Gatherer {
   /**
-   * @param {{driver: !Driver}} options Run options
-   * @return {!Promise<Array<{tagName: string, type: ?string, src: ?string, data: ?string, code: ?string, params: Array<{name: string, value: string}>}>>} All <object>s, <embed>s and <applet>s with list of relevant attributes and child properties
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['EmbeddedContent']>}
    */
-  afterPass(options) {
+  afterPass(passContext) {
     const expression = `(function() {
       ${DOMHelpers.getElementsInDocumentFnString}; // define function on page
       const selector = 'object, embed, applet';
@@ -34,7 +34,7 @@ class EmbeddedContent extends Gatherer {
         }));
     })()`;
 
-    return options.driver.evaluateAsync(expression);
+    return passContext.driver.evaluateAsync(expression);
   }
 }
 

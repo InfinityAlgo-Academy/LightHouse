@@ -22,6 +22,7 @@
     "lighthouse-core/gather/computed/metrics/*.js",
     "lighthouse-core/gather/connections/**/*.js",
     "lighthouse-core/gather/gatherers/*.js",
+    "lighthouse-core/gather/gatherers/seo/*.js",
     "lighthouse-core/scripts/*.js",
     "lighthouse-core/audits/seo/robots-txt.js",
     "./typings/*.d.ts"
