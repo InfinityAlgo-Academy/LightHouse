@@ -23,6 +23,7 @@ const traceData = {
       _url: 'http://google.com/image.jpg',
       _mimeType: 'image/jpeg',
       _resourceSize: 10000,
+      _transferSize: 20000,
       _resourceType: {_name: 'image'},
       finished: true,
     },
@@ -30,6 +31,7 @@ const traceData = {
       _url: 'http://google.com/transparent.png',
       _mimeType: 'image/png',
       _resourceSize: 11000,
+      _transferSize: 20000,
       _resourceType: {_name: 'image'},
       finished: true,
     },
@@ -37,6 +39,7 @@ const traceData = {
       _url: 'http://google.com/image.bmp',
       _mimeType: 'image/bmp',
       _resourceSize: 12000,
+      _transferSize: 9000, // bitmap was compressed another way
       _resourceType: {_name: 'image'},
       finished: true,
     },
@@ -44,6 +47,7 @@ const traceData = {
       _url: 'http://google.com/image.bmp',
       _mimeType: 'image/bmp',
       _resourceSize: 12000,
+      _transferSize: 20000,
       _resourceType: {_name: 'image'},
       finished: true,
     },
@@ -51,6 +55,7 @@ const traceData = {
       _url: 'http://google.com/vector.svg',
       _mimeType: 'image/svg+xml',
       _resourceSize: 13000,
+      _transferSize: 20000,
       _resourceType: {_name: 'image'},
       finished: true,
     },
@@ -58,6 +63,7 @@ const traceData = {
       _url: 'http://gmail.com/image.jpg',
       _mimeType: 'image/jpeg',
       _resourceSize: 15000,
+      _transferSize: 20000,
       _resourceType: {_name: 'image'},
       finished: true,
     },
@@ -66,6 +72,7 @@ const traceData = {
       _mimeType: 'image/jpeg',
       _resourceType: {_name: 'image'},
       _resourceSize: 14000,
+      _transferSize: 20000,
       finished: true,
     },
     {
@@ -73,6 +80,7 @@ const traceData = {
       _mimeType: 'image/bmp',
       _resourceType: {_name: 'image'},
       _resourceSize: 12000,
+      _transferSize: 20000,
       finished: false, // ignore for not finishing
     },
     {
@@ -80,6 +88,7 @@ const traceData = {
       _mimeType: 'image/bmp',
       _resourceType: {_name: 'document'}, // ignore for not really being an image
       _resourceSize: 12000,
+      _transferSize: 20000,
       finished: true,
     },
   ],
@@ -125,7 +134,7 @@ describe('Optimized images', () => {
       assert.equal(artifact.length, 4);
       checkSizes(artifact[0], 10000, 60, 80);
       checkSizes(artifact[1], 11000, 60, 80);
-      checkSizes(artifact[2], 12000, 60, 80);
+      checkSizes(artifact[2], 9000, 60, 80);
       // skip cross-origin for now
       // checkSizes(artifact[3], 15000, 60, 80);
       checkSizes(artifact[3], 20, 80, 100); // uses base64 data

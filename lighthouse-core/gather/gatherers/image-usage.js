@@ -130,7 +130,7 @@ class ImageUsage extends Gatherer {
       if (/^image/.test(record._mimeType) && record.finished) {
         map[record._url] = {
           url: record.url,
-          resourceSize: record.resourceSize,
+          resourceSize: Math.min(record.resourceSize, record.transferSize),
           startTime: record.startTime,
           endTime: record.endTime,
           responseReceivedTime: record.responseReceivedTime,
