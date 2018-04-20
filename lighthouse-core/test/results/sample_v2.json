@@ -190,34 +190,10 @@
       "score": 1,
       "displayValue": "16 ms",
       "rawValue": 16,
-      "extendedInfo": {
-        "value": [
-          {
-            "percentile": 0.5,
-            "time": 16
-          },
-          {
-            "percentile": 0.75,
-            "time": 16
-          },
-          {
-            "percentile": 0.9,
-            "time": 16
-          },
-          {
-            "percentile": 0.99,
-            "time": 92.83829500000138
-          },
-          {
-            "percentile": 1,
-            "time": 138.53700000000208
-          }
-        ]
-      },
       "scoreDisplayMode": "numeric",
       "name": "estimated-input-latency",
       "description": "Estimated Input Latency",
-      "helpText": "The score above is an estimate of how long your app takes to respond to user input, in milliseconds. There is a 90% probability that a user encounters this amount of latency, or less. 10% of the time a user can expect additional latency. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
+      "helpText": "The score above is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
     },
     "errors-in-console": {
       "score": 0,
@@ -5371,6 +5347,6 @@
     }
   },
   "timing": {
-    "total": 842
+    "total": 830
   }
 }

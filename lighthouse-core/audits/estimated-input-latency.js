@@ -10,6 +10,13 @@ const Util = require('../report/v2/renderer/util');
 const TracingProcessor = require('../lib/traces/tracing-processor');
 const LHError = require('../lib/errors');
 
+const ROLLING_WINDOW_SIZE = 5000;
+
+/**
+ * @fileOverview This audit determines the largest 90 percentile EQT value of all 5s windows between
+ *    FMP and the end of the trace.
+ * @see https://docs.google.com/document/d/1b9slyaB9yho91YTOkAQfpCdULFkZM9LqsipcX3t7He8/preview
+ */
 class EstimatedInputLatency extends Audit {
   /**
    * @return {!AuditMeta}
@@ -19,8 +26,7 @@ class EstimatedInputLatency extends Audit {
       name: 'estimated-input-latency',
       description: 'Estimated Input Latency',
       helpText: 'The score above is an estimate of how long your app takes to respond to user ' +
-          'input, in milliseconds. There is a 90% probability that a user encounters this amount ' +
-          'of latency, or less. 10% of the time a user can expect additional latency. If your ' +
+          'input, in milliseconds, during the busiest 5s window of page load. If your ' +
           'latency is higher than 50 ms, users may perceive your app as laggy. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
@@ -45,23 +51,36 @@ class EstimatedInputLatency extends Audit {
       throw new LHError(LHError.errors.NO_FMP);
     }
 
-    const latencyPercentiles = TracingProcessor.getRiskToResponsiveness(tabTrace, startTime);
-    const ninetieth = latencyPercentiles.find(result => result.percentile === 0.9);
-    const rawValue = parseFloat(ninetieth.time.toFixed(1));
+    const events = TracingProcessor.getMainThreadTopLevelEvents(tabTrace, startTime)
+      .filter(evt => evt.duration >= 1);
+
+    const candidateStartEvts = events.filter(evt => evt.duration >= 10);
+
+    let worst90thPercentileLatency = 16;
+    for (const startEvt of candidateStartEvts) {
+      const latencyPercentiles = TracingProcessor.getRiskToResponsiveness(
+        events,
+        startEvt.start,
+        startEvt.start + ROLLING_WINDOW_SIZE,
+        [0.9]
+      );
+
+      worst90thPercentileLatency = Math.max(
+        latencyPercentiles[0].time,
+        worst90thPercentileLatency
+      );
+    }
 
     const score = Audit.computeLogNormalScore(
-      ninetieth.time,
+      worst90thPercentileLatency,
       context.options.scorePODR,
       context.options.scoreMedian
     );
 
     return {
       score,
-      rawValue,
-      displayValue: Util.formatMilliseconds(rawValue, 1),
-      extendedInfo: {
-        value: latencyPercentiles,
-      },
+      rawValue: worst90thPercentileLatency,
+      displayValue: Util.formatMilliseconds(worst90thPercentileLatency, 1),
     };
   }
 

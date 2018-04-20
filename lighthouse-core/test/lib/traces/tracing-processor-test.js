@@ -191,7 +191,8 @@ describe('TracingProcessor lib', () => {
     it('gets durations of top-level tasks', () => {
       const trace = {traceEvents: pwaTrace};
       const tabTrace = new TraceOfTab().compute_(trace);
-      const ret = TracingProcessor.getMainThreadTopLevelEventDurations(tabTrace);
+      const events = TracingProcessor.getMainThreadTopLevelEvents(tabTrace);
+      const ret = TracingProcessor.getMainThreadTopLevelEventDurations(events);
       const durations = ret.durations;
 
       function getDurationFromIndex(index) {
@@ -225,7 +226,8 @@ describe('TracingProcessor lib', () => {
     it('compute correct defaults', () => {
       const trace = {traceEvents: pwaTrace};
       const tabTrace = new TraceOfTab().compute_(trace);
-      const ret = TracingProcessor.getRiskToResponsiveness(tabTrace);
+      const events = TracingProcessor.getMainThreadTopLevelEvents(tabTrace);
+      const ret = TracingProcessor.getRiskToResponsiveness(events, 0, tabTrace.timings.traceEnd);
       assert.equal(ret.durations.length, 645);
       assert.equal(Math.round(ret.totalTime), 2143);
       assert.equal(ret.clippedLength, 0);
