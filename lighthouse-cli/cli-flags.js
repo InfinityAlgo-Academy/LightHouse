@@ -33,8 +33,8 @@ function getFlags(manualArgv) {
           'lighthouse <url> --output=json --output-path=./report.json --save-assets',
           'Save trace, screenshots, and named JSON report.')
       .example(
-          'lighthouse <url> --disable-device-emulation --disable-network-throttling',
-          'Disable device emulation')
+          'lighthouse <url> --disable-device-emulation --throttling-method=provided',
+          'Disable device emulation and all throttling')
       .example(
           'lighthouse <url> --chrome-flags="--window-size=412,732"',
           'Launch Chrome with a specific window size')
@@ -70,8 +70,13 @@ function getFlags(manualArgv) {
         'disable-storage-reset':
             'Disable clearing the browser cache and other storage APIs before a run',
         'disable-device-emulation': 'Disable Nexus 5X emulation',
-        'disable-cpu-throttling': 'Disable CPU throttling',
-        'disable-network-throttling': 'Disable network throttling',
+        'throttling-method': 'Controls throttling method',
+        'throttling.rttMs': 'Controls simulated network RTT (TCP layer)',
+        'throttling.throughputKbps': 'Controls simulated network download throughput',
+        'throttling.requestLatencyMs': 'Controls emulated network RTT (HTTP layer)',
+        'throttling.downloadThroughputKbps': 'Controls emulated network download throughput',
+        'throttling.uploadThroughputKbps': 'Controls emulated network upload throughput',
+        'throttling.cpuSlowdownMultiplier': 'Controls simulated + emulated CPU throttling',
         'gather-mode':
             'Collect artifacts from a connected browser and save to disk. (Artifacts folder path may optionally be provided). If audit-mode is not also enabled, the run will quit early.',
         'audit-mode': 'Process saved artifacts from disk. (Artifacts folder path may be provided, otherwise defaults to ./latest-run/)',
@@ -111,12 +116,12 @@ function getFlags(manualArgv) {
 
       // boolean values
       .boolean([
-        'disable-storage-reset', 'disable-device-emulation', 'disable-cpu-throttling',
-        'disable-network-throttling', 'save-assets', 'list-all-audits',
+        'disable-storage-reset', 'disable-device-emulation', 'save-assets', 'list-all-audits',
         'list-trace-categories', 'perf', 'view', 'verbose', 'quiet', 'help',
         'mixed-content',
       ])
       .choices('output', printer.getValidOutputOptions())
+      .choices('throttling-method', ['devtools', 'provided', 'simulate'])
       // force as an array
       // note MUST use camelcase versions or only the kebab-case version will be forced
       .array('blockedUrlPatterns')

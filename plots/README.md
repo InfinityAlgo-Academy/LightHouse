@@ -43,8 +43,6 @@ node measure.js [options]
 
 Lighthouse settings:
   --disable-device-emulation    Disable Nexus 5X emulation                                                     [boolean]
-  --disable-cpu-throttling      Disable CPU throttling                                                         [boolean]
-  --disable-network-throttling  Disable network throttling                                                     [boolean]
 
 Options to specify sites:
   --sites-path  Include relative path of a json file with urls to run                              [default: "sites.js"]
