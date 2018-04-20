@@ -28,34 +28,42 @@ const SMOKETESTS = [{
   id: 'ally',
   config: smokehouseDir + 'a11y/a11y-config.js',
   expectations: 'a11y/expectations.js',
+  batch: 'parallel-first',
 }, {
   id: 'pwa',
   expectations: smokehouseDir + 'pwa-expectations.js',
   config: smokehouseDir + 'pwa-config.js',
+  batch: 'parallel-second',
 }, {
   id: 'pwa2',
   expectations: smokehouseDir + 'pwa2-expectations.js',
   config: smokehouseDir + 'pwa-config.js',
+  batch: 'parallel-second',
 }, {
   id: 'pwa3',
   expectations: smokehouseDir + 'pwa3-expectations.js',
   config: smokehouseDir + 'pwa-config.js',
+  batch: 'parallel-first',
 }, {
   id: 'dbw',
   expectations: 'dobetterweb/dbw-expectations.js',
   config: smokehouseDir + 'dbw-config.js',
+  batch: 'parallel-second',
 }, {
   id: 'redirects',
   expectations: 'redirects/expectations.js',
   config: smokehouseDir + 'redirects-config.js',
+  batch: 'parallel-first',
 }, {
   id: 'seo',
   expectations: 'seo/expectations.js',
   config: smokehouseDir + 'seo-config.js',
+  batch: 'parallel-first',
 }, {
   id: 'offline',
   expectations: 'offline-local/offline-expectations.js',
   config: smokehouseDir + 'offline-config.js',
+  batch: 'parallel-second',
 }, {
   id: 'byte',
   expectations: 'byte-efficiency/expectations.js',
@@ -70,6 +78,7 @@ const SMOKETESTS = [{
   id: 'ttci',
   expectations: 'tricky-ttci/expectations.js',
   config: 'lighthouse-core/config/default-config.js',
+  batch: 'parallel-second',
 }];
 
 /**
