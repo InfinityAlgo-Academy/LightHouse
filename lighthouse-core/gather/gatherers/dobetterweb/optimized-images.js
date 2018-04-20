@@ -13,6 +13,7 @@
 const Gatherer = require('../gatherer');
 const URL = require('../../../lib/url-shim');
 const Sentry = require('../../../lib/sentry');
+const Driver = require('../../driver.js'); // eslint-disable-line no-unused-vars
 
 const JPEG_QUALITY = 0.92;
 const WEBP_QUALITY = 0.85;
@@ -24,7 +25,7 @@ const MINIMUM_IMAGE_SIZE = 4096; // savings of <4 KB will be ignored in the audi
 /**
  * Runs in the context of the browser
  * @param {string} url
- * @return {!Promise<{jpeg: Object, webp: Object}>}
+ * @return {Promise<{jpeg: Object, webp: Object}>}
  */
 /* istanbul ignore next */
 function getOptimizedNumBytes(url) {
@@ -32,7 +33,14 @@ function getOptimizedNumBytes(url) {
     const img = new Image();
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
+    if (!context) {
+      return reject(new Error('unable to create canvas context'));
+    }
 
+    /**
+     * @param {'image/jpeg'|'image/webp'} type
+     * @param {number} quality
+     */
     function getTypeStats(type, quality) {
       const dataURI = canvas.toDataURL(type, quality);
       const base64 = dataURI.slice(dataURI.indexOf(',') + 1);
@@ -62,8 +70,8 @@ function getOptimizedNumBytes(url) {
 class OptimizedImages extends Gatherer {
   /**
    * @param {string} pageUrl
-   * @param {!NetworkRecords} networkRecords
-   * @return {!Array<{url: string, isBase64DataUri: boolean, mimeType: string, resourceSize: number}>}
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @return {Array<SimplifiedNetworkRecord>}
    */
   static filterImageRequests(pageUrl, networkRecords) {
     const seenUrls = new Set();
@@ -79,7 +87,7 @@ class OptimizedImages extends Gatherer {
       const isSameOrigin = URL.originsMatch(pageUrl, record._url);
       const isBase64DataUri = /^data:.{2,40}base64\s*,/.test(record._url);
 
-      const actualResourceSize = Math.min(record._resourceSize, record._transferSize);
+      const actualResourceSize = Math.min(record._resourceSize || 0, record._transferSize || 0);
       if (isOptimizableImage && actualResourceSize > MINIMUM_IMAGE_SIZE) {
         prev.push({
           isSameOrigin,
@@ -92,14 +100,14 @@ class OptimizedImages extends Gatherer {
       }
 
       return prev;
-    }, []);
+    }, /** @type {Array<SimplifiedNetworkRecord>} */ ([]));
   }
 
   /**
-   * @param {!Object} driver
+   * @param {Driver} driver
    * @param {string} requestId
-   * @param {string} encoding Either webp or jpeg.
-   * @return {!Promise<{encodedSize: number}>}
+   * @param {'jpeg'|'webp'} encoding Either webp or jpeg.
+   * @return {Promise<LH.Crdp.Audits.GetEncodedResponseResponse>}
    */
   _getEncodedResponse(driver, requestId, encoding) {
     const quality = encoding === 'jpeg' ? JPEG_QUALITY : WEBP_QUALITY;
@@ -108,9 +116,9 @@ class OptimizedImages extends Gatherer {
   }
 
   /**
-   * @param {!Object} driver
-   * @param {{url: string, isBase64DataUri: boolean, resourceSize: number}} networkRecord
-   * @return {!Promise<?{fromProtocol: boolean, originalSize: number, jpegSize: number, webpSize: number}>}
+   * @param {Driver} driver
+   * @param {SimplifiedNetworkRecord} networkRecord
+   * @return {Promise<?{fromProtocol: boolean, originalSize: number, jpegSize: number, webpSize: number}>}
    */
   calculateImageStats(driver, networkRecord) {
     // TODO(phulce): remove this dance of trying _getEncodedResponse with a fallback when Audits
@@ -157,17 +165,21 @@ class OptimizedImages extends Gatherer {
   }
 
   /**
-   * @param {!Object} driver
-   * @param {!Array<!Object>} imageRecords
-   * @return {!Promise<!Array<!Object>>}
+   * @param {Driver} driver
+   * @param {Array<SimplifiedNetworkRecord>} imageRecords
+   * @return {Promise<LH.Artifacts['OptimizedImages']>}
    */
   computeOptimizedImages(driver, imageRecords) {
+    /** @type {LH.Artifacts['OptimizedImages']} */
+    const result = [];
+
     return imageRecords.reduce((promise, record) => {
       return promise.then(results => {
         return this.calculateImageStats(driver, record)
           .catch(err => {
             // Track this with Sentry since these errors aren't surfaced anywhere else, but we don't
             // want to tank the entire run due to a single image.
+            // @ts-ignore TODO(bckenny): Sentry type checking
             Sentry.captureException(err, {
               tags: {gatherer: 'OptimizedImages'},
               extra: {imageUrl: URL.elideDataURI(record.url)},
@@ -183,20 +195,22 @@ class OptimizedImages extends Gatherer {
             return results.concat(Object.assign(stats, record));
           });
       });
-    }, Promise.resolve([]));
+    }, Promise.resolve(result));
   }
 
+  /** @typedef {{isSameOrigin: boolean, isBase64DataUri: boolean, requestId: string, url: string, mimeType: string, resourceSize: number}} SimplifiedNetworkRecord */
+
   /**
-   * @param {!Object} options
-   * @param {{networkRecords: !Array<!NetworRecord>}} traceData
-   * @return {!Promise<!Array<!Object>}
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.LoadData} loadData
+   * @return {Promise<LH.Artifacts['OptimizedImages']>}
    */
-  afterPass(options, traceData) {
-    const networkRecords = traceData.networkRecords;
-    const imageRecords = OptimizedImages.filterImageRequests(options.url, networkRecords);
+  afterPass(passContext, loadData) {
+    const networkRecords = loadData.networkRecords;
+    const imageRecords = OptimizedImages.filterImageRequests(passContext.url, networkRecords);
 
     return Promise.resolve()
-      .then(_ => this.computeOptimizedImages(options.driver, imageRecords))
+      .then(_ => this.computeOptimizedImages(passContext.driver, imageRecords))
       .then(results => {
         const successfulResults = results.filter(result => !result.failed);
         if (results.length && !successfulResults.length) {

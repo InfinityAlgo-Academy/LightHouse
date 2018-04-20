@@ -20,15 +20,15 @@ const libDetectorSource = fs.readFileSync(
 
 /**
  * Obtains a list of detected JS libraries and their versions.
- * @return {!Array<!{name: string, version: string, npmPkgName: string}>}
  */
-/* eslint-disable camelcase */
 /* istanbul ignore next */
 function detectLibraries() {
+  /** @type {LH.Artifacts['JSLibraries']} */
   const libraries = [];
 
   // d41d8cd98f00b204e9800998ecf8427e_ is a consistent prefix used by the detect libraries
   // see https://github.com/HTTPArchive/httparchive/issues/77#issuecomment-291320900
+  // @ts-ignore - injected libDetectorSource var
   Object.entries(d41d8cd98f00b204e9800998ecf8427e_LibraryDetectorTests).forEach(([name, lib]) => {
     try {
       const result = lib.test(window);
@@ -44,20 +44,19 @@ function detectLibraries() {
 
   return libraries;
 }
-/* eslint-enable camelcase */
 
 class JSLibraries extends Gatherer {
   /**
-   * @param {!Object} options
-   * @return {!Promise<!Array<!Object>>}
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['JSLibraries']>}
    */
-  afterPass(options) {
+  afterPass(passContext) {
     const expression = `(function () {
       ${libDetectorSource};
       return (${detectLibraries.toString()}());
     })()`;
 
-    return options.driver.evaluateAsync(expression);
+    return passContext.driver.evaluateAsync(expression);
   }
 }
 

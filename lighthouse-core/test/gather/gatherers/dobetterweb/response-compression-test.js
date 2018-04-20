@@ -203,14 +203,12 @@ describe('Optimized responses', () => {
       record.transferSize = record._transferSize;
       record.responseHeaders = record._responseHeaders;
       record.requestId = record._requestId;
-      record.resourceType = () => {
-        return Object.assign(
-          {
-            isTextType: () => record._resourceType._isTextType,
-          },
-          record._resourceType
-        );
-      };
+      record._resourceType = Object.assign(
+        {
+          isTextType: () => record._resourceType._isTextType,
+        },
+        record._resourceType
+      );
 
       return record;
     });

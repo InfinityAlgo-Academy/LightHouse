@@ -18,28 +18,32 @@ const compressionTypes = ['gzip', 'br', 'deflate'];
 const binaryMimeTypes = ['image', 'audio', 'video'];
 const CHROME_EXTENSION_PROTOCOL = 'chrome-extension:';
 
+/** @typedef {{requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize: number}} ResponseInfo */
+
 class ResponseCompression extends Gatherer {
   /**
-   * @param {!NetworkRecords} networkRecords
-   * @return {!Array<{url: string, isBase64DataUri: boolean, mimeType: string, resourceSize: number}>}
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @return {Array<ResponseInfo>}
    */
   static filterUnoptimizedResponses(networkRecords) {
+    /** @type {Array<ResponseInfo>} */
     const unoptimizedResponses = [];
 
     networkRecords.forEach(record => {
-      const mimeType = record.mimeType;
-      const resourceType = record.resourceType();
+      const mimeType = record._mimeType;
+      const resourceType = record._resourceType;
+      const resourceSize = record._resourceSize;
 
       const isBinaryResource = mimeType && binaryMimeTypes.some(type => mimeType.startsWith(type));
       const isTextBasedResource = !isBinaryResource && resourceType && resourceType.isTextType();
       const isChromeExtensionResource = record.url.startsWith(CHROME_EXTENSION_PROTOCOL);
 
-      if (!isTextBasedResource || !record.resourceSize || !record.finished ||
+      if (!isTextBasedResource || !resourceSize || !record.finished ||
         isChromeExtensionResource || !record.transferSize || record.statusCode === 304) {
         return;
       }
 
-      const isContentEncoded = record.responseHeaders.find(header =>
+      const isContentEncoded = (record._responseHeaders || []).find(header =>
         compressionHeaders.includes(header.name.toLowerCase()) &&
         compressionTypes.includes(header.value)
       );
@@ -48,9 +52,10 @@ class ResponseCompression extends Gatherer {
         unoptimizedResponses.push({
           requestId: record.requestId,
           url: record.url,
-          mimeType: record.mimeType,
+          mimeType: mimeType,
           transferSize: record.transferSize,
-          resourceSize: record.resourceSize,
+          resourceSize: resourceSize,
+          gzipSize: 0,
         });
       }
     });
@@ -58,19 +63,19 @@ class ResponseCompression extends Gatherer {
     return unoptimizedResponses;
   }
 
-  afterPass(options, traceData) {
-    const networkRecords = traceData.networkRecords;
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.LoadData} loadData
+   */
+  afterPass(passContext, loadData) {
+    const networkRecords = loadData.networkRecords;
     const textRecords = ResponseCompression.filterUnoptimizedResponses(networkRecords);
 
-    const driver = options.driver;
+    const driver = passContext.driver;
     return Promise.all(textRecords.map(record => {
-      const contentPromise = driver.getRequestContent(record.requestId);
-      const timeoutPromise = new Promise(resolve => setTimeout(resolve, 3000));
-      return Promise.race([contentPromise, timeoutPromise]).then(content => {
-        // if we don't have any content gzipSize is set to 0
+      return driver.getRequestContent(record.requestId).then(content => {
+        // if we don't have any content, gzipSize is already set to 0
         if (!content) {
-          record.gzipSize = 0;
-
           return record;
         }
 

@@ -103,7 +103,7 @@ describe('First paint blocking tags', () => {
   });
 
   it('return filtered and indexed requests', () => {
-    const actual = tagsBlockingFirstPaint
+    const actual = TagsBlockingFirstPaint
       ._filteredAndIndexedByUrl(traceData.networkRecords);
     return assert.deepEqual(actual, {
       'http://google.com/css/style.css': {

@@ -6,11 +6,17 @@
 'use strict';
 
 const Gatherer = require('../gatherer');
+const Driver = require('../../driver.js'); // eslint-disable-line no-unused-vars
 
 const MAX_WAIT_TIMEOUT = 500;
 
 class WebSQL extends Gatherer {
+  /**
+   * @param {Driver} driver
+   * @return {Promise<?LH.Crdp.Database.AddDatabaseEvent>}
+   */
   listenForDatabaseEvents(driver) {
+    /** @type {NodeJS.Timer} */
     let timeout;
 
     return new Promise((resolve, reject) => {
@@ -32,11 +38,11 @@ class WebSQL extends Gatherer {
 
   /**
    * Returns WebSQL database information or null if none was found.
-   * @param {!Object} options
-   * @return {?{id: string, domain: string, name: string, version: string}}
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['WebSQL']>}
    */
-  afterPass(options) {
-    return this.listenForDatabaseEvents(options.driver)
+  afterPass(passContext) {
+    return this.listenForDatabaseEvents(passContext.driver)
       .then(result => {
         return result && result.database;
       });

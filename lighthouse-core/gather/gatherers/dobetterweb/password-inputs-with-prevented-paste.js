@@ -10,16 +10,20 @@
 const Gatherer = require('../gatherer');
 
 // This is run in the page, not Lighthouse itself.
+/**
+ * @return {LH.Artifacts['PasswordInputsWithPreventedPaste']}
+ */
 /* istanbul ignore next */
 function findPasswordInputsWithPreventedPaste() {
   /**
-   * Gets the opening tag text of the given node.
-   * @param {!Node}
+   * Gets the opening tag text of the given element.
+   * @param {Element} element
    * @return {string}
    */
-  function getOuterHTMLSnippet(node) {
+  function getOuterHTMLSnippet(element) {
     const reOpeningTag = /^.*?>/;
-    const match = node.outerHTML.match(reOpeningTag);
+    const match = element.outerHTML.match(reOpeningTag);
+    // @ts-ignore We are confident match was found.
     return match && match[0];
   }
 
@@ -36,12 +40,11 @@ function findPasswordInputsWithPreventedPaste() {
 
 class PasswordInputsWithPreventedPaste extends Gatherer {
   /**
-   * @param {!Object} options
-   * @return {!Promise<!Array<{name: string, id: string}>>}
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['PasswordInputsWithPreventedPaste']>}
    */
-  afterPass(options) {
-    const driver = options.driver;
-    return driver.evaluateAsync(
+  afterPass(passContext) {
+    return passContext.driver.evaluateAsync(
       `(${findPasswordInputsWithPreventedPaste.toString()}())`
     );
   }

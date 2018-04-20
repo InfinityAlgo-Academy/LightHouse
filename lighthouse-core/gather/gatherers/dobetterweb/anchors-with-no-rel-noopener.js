@@ -10,10 +10,10 @@ const DOMHelpers = require('../../../lib/dom-helpers.js');
 
 class AnchorsWithNoRelNoopener extends Gatherer {
   /**
-   * @param {!Object} options
-   * @return {!Promise<!Array<{href: string, rel: string, target: string}>>}
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts['AnchorsWithNoRelNoopener']>}
    */
-  afterPass(options) {
+  afterPass(passContext) {
     const expression = `(function() {
       ${DOMHelpers.getElementsInDocumentFnString}; // define function on page
       const selector = 'a[target="_blank"]:not([rel~="noopener"]):not([rel~="noreferrer"])';
@@ -25,7 +25,7 @@ class AnchorsWithNoRelNoopener extends Gatherer {
       }));
     })()`;
 
-    return options.driver.evaluateAsync(expression);
+    return passContext.driver.evaluateAsync(expression);
   }
 }
 

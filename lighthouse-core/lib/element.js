@@ -3,10 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-// @ts-nocheck
 'use strict';
 
+const Driver = require('../gather/driver.js'); // eslint-disable-line no-unused-vars
+
 class Element {
+  /**
+   * @param {{nodeId: number}} element
+   * @param {Driver} driver
+   */
   constructor(element, driver) {
     if (!element || !driver) {
       throw Error('Driver and element required to create Element');
@@ -16,8 +21,8 @@ class Element {
   }
 
   /**
-   * @param {!string} name Attribute name
-   * @return {!Promise<?string>} The attribute value or null if not found
+   * @param {string} name Attribute name
+   * @return {Promise<?string>} The attribute value or null if not found
    */
   getAttribute(name) {
     return this.driver
@@ -25,7 +30,7 @@ class Element {
         nodeId: this.element.nodeId,
       })
       /**
-       * @param {!{attributes: !Array<!string>}} resp The element attribute names & values are interleaved
+       * @param resp The element attribute names & values are interleaved
        */
       .then(resp => {
         const attrIndex = resp.attributes.indexOf(name);
@@ -38,8 +43,15 @@ class Element {
   }
 
   /**
-   * @param {!string} propName Property name
-   * @return {!Promise<?string>} The property value
+   * @return {number}
+   */
+  getNodeId() {
+    return this.element.nodeId;
+  }
+
+  /**
+   * @param {string} propName Property name
+   * @return {Promise<?string>} The property value
    */
   getProperty(propName) {
     return this.driver
@@ -47,6 +59,9 @@ class Element {
         nodeId: this.element.nodeId,
       })
       .then(resp => {
+        if (!resp.object.objectId) {
+          return null;
+        }
         return this.driver.getObjectProperty(resp.object.objectId, propName);
       });
   }

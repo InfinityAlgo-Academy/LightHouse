@@ -6,9 +6,11 @@
 
 declare global {
   module LH.WebInspector {
+    // TODO(bckenny): standardize on underscored internal API
     // externs for chrome-devtools-frontend/front_end/sdk/NetworkRequest.js
     export interface NetworkRequest {
       requestId: string;
+      _requestId: string;
       connectionId: string;
       connectionReused: boolean;
 
@@ -22,6 +24,8 @@ declare global {
       endTime: number;
 
       transferSize: number;
+      _transferSize?: number;
+      _resourceSize?: number;
 
       finished: boolean;
       statusCode: number;
@@ -33,9 +37,10 @@ declare global {
 
       _initiator: NetworkRequestInitiator;
       _timing: NetworkRequestTiming;
-      // TODO(bckenny): type from ResourceType.js
-      _resourceType: any;
+      _resourceType: ResourceType;
+      _mimeType: string;
       priority(): 'VeryHigh' | 'High' | 'Medium' | 'Low';
+      _responseHeaders?: {name: string, value: string}[];
 
       _fetchedViaServiceWorker?: boolean;
     }
@@ -57,6 +62,13 @@ declare global {
       sendStart: number;
       sendEnd: number;
       receiveHeadersEnd: number;
+    }
+
+    export interface ResourceType {
+      name(): string;
+      _name: string;
+      title(): string;
+      isTextType(): boolean;
     }
   }
 }

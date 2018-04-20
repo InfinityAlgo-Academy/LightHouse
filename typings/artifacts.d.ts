@@ -19,6 +19,10 @@ declare global {
 
       // Remaining are provided by gatherers
       Accessibility: Artifacts.Accessibility;
+      /** Information on all anchors in the page that aren't nofollow or noreferrer. */
+      AnchorsWithNoRelNoopener: {href: string; rel: string; target: string}[];
+      /** The value of the page's <html> manifest attribute, or null if not defined */
+      AppCacheManifest: string | null;
       CacheContents: string[];
       /** Href values of link[rel=canonical] nodes found in HEAD (or null, if no href attribute). */
       Canonical: (string | null)[];
@@ -26,13 +30,18 @@ declare global {
       /** The href and innerText of all non-nofollow anchors in the page. */
       CrawlableLinks: {href: string, text: string}[];
       CSSUsage: {rules: Crdp.CSS.RuleUsage[], stylesheets: Artifacts.CSSStyleSheetInfo[]};
+      /** Information on the size of all DOM nodes in the page and the most extreme members. */
+      DOMStats: Artifacts.DOMStats;
       /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
       EmbeddedContent: Artifacts.EmbeddedContentInfo[];
+      /** Information on all event listeners in the page. */
+      EventListeners: {url: string, type: string, handler?: {description?: string}, objectName: string, line: number, col: number}[];
       FontSize: Artifacts.FontSize;
       /** The hreflang and href values of all link[rel=alternate] nodes found in HEAD. */
       Hreflang: {href: string, hreflang: string}[];
       HTMLWithoutJavaScript: {value: string};
       HTTPRedirect: {value: boolean};
+      JSLibraries: {name: string, version: string, npmPkgName: string}[];
       JsUsageArtifact: Crdp.Profiler.ScriptCoverage[];
       Manifest: ReturnType<typeof parseManifest> | null;
       /** The value of the <meta name="description">'s content attribute, or null. */
@@ -40,15 +49,21 @@ declare global {
       /** The value of the <meta name="robots">'s content attribute, or null. */
       MetaRobots: string|null;
       Offline: number;
+      OptimizedImages: Artifacts.OptimizedImage[];
+      PasswordInputsWithPreventedPaste: {snippet: string}[];
       /** Information on fetching and the content of the /robots.txt file. */
       RobotsTxt: {status: number|null, content: string|null};
       RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
       Scripts: Record<string, string>;
       ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[]};
+      /** Information on <script> and <link> tags blocking first paint. */
+      TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       ThemeColor: string|null;
       URL: {initialUrl: string, finalUrl: string};
       Viewport: string|null;
       ViewportDimensions: Artifacts.ViewportDimensions;
+      /** WebSQL database information for the page or null if none was found. */
+      WebSQL: Crdp.Database.Database | null;
 
       // TODO(bckenny): remove this for real computed artifacts approach
       requestTraceOfTab(trace: Trace): Promise<Artifacts.TraceOfTab>
@@ -72,6 +87,12 @@ declare global {
       export interface CSSStyleSheetInfo {
         header: Crdp.CSS.CSSStyleSheetHeader;
         content: string;
+      }
+
+      export interface DOMStats {
+        totalDOMNodes: number;
+        width: {max: number, pathToElement: Array<string>, snippet: string};
+        depth: {max: number, pathToElement: Array<string>, snippet: string};
       }
 
       export interface EmbeddedContentInfo {
@@ -107,6 +128,31 @@ declare global {
           parentId: number;
           parentNode: DomNodeWithParent;
         }
+      }
+
+      export interface OptimizedImage {
+        isSameOrigin: boolean;
+        isBase64DataUri: boolean;
+        requestId: string;
+        url: string;
+        mimeType: string;
+        resourceSize: number;
+        fromProtocol?: boolean;
+        originalSize?: number;
+        jpegSize?: number;
+        webpSize?: number;
+        failed?: boolean;
+        err?: Error;
+      }
+
+      export interface TagBlockingFirstPaint {
+        startTime: number;
+        endTime: number;
+        transferSize: number;
+        tag: {
+          tagName: string;
+          url: string;
+        };
       }
 
       export interface ViewportDimensions {
