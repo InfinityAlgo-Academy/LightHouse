@@ -135,6 +135,20 @@ module.exports = [
               wastedBytes: 682028,
             },
           ],
+        }
+      },
+      'total-byte-weight': {
+        details: {
+          items: {
+            0: {
+              url: 'http://localhost:10200/dobetterweb/dbw_large-file.js',
+              totalBytes: 359690,
+              flagged: true,
+            },
+            1: {
+              flagged: false,
+            }
+          },
         },
       },
     },
