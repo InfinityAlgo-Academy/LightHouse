@@ -24,6 +24,8 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
+const BUNDLE_SIZE_THRESHOLD = 450 * 1024;
+
 class TotalByteWeight extends ByteEfficiencyAudit {
   /**
    * @return {LH.Audit.Meta}
@@ -52,6 +54,17 @@ class TotalByteWeight extends ByteEfficiencyAudit {
   }
 
   /**
+   * Checks if record is a javascript asset and if it exceeds our bundle size limit
+   *
+   * @param {LH.WebInspector.NetworkRequest} record
+   * @return {boolean}
+   */
+  static hasExceededJSBundleSize(record) {
+    return record._resourceType === WebInspector.resourceTypes.Script
+      && record.transferSize > BUNDLE_SIZE_THRESHOLD;
+  }
+
+  /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
@@ -64,7 +77,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
     ]);
 
     let totalBytes = 0;
-    /** @type {Array<{url: string, totalBytes: number, totalMs: number}>} */
+    /** @type {Array<{url: string, totalBytes: number, totalMs: number, flagged: boolean}>} */
     let results = [];
     networkRecords.forEach(record => {
       // exclude data URIs since their size is reflected in other resources
@@ -75,6 +88,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
         url: record.url,
         totalBytes: record.transferSize,
         totalMs: ByteEfficiencyAudit.bytesToMs(record.transferSize, networkThroughput),
+        flagged: TotalByteWeight.hasExceededJSBundleSize(record),
       };
 
       totalBytes += result.totalBytes;

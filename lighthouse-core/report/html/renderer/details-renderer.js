@@ -207,7 +207,11 @@ class DetailsRenderer {
 
     const tbodyElem = this._dom.createChildOf(tableElem, 'tbody');
     for (const row of details.items) {
-      const rowElem = this._dom.createChildOf(tbodyElem, 'tr');
+      let classes = '';
+      if (row.flagged) {
+        classes = 'lh-table-row--flagged';
+      }
+      const rowElem = this._dom.createChildOf(tbodyElem, 'tr', classes);
       for (const heading of details.headings) {
         const key = /** @type {keyof DetailsJSON} */ (heading.key);
         // TODO(bckenny): type should be naturally inferred here.

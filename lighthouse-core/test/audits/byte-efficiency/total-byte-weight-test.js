@@ -6,13 +6,14 @@
 'use strict';
 
 const TotalByteWeight = require('../../../audits/byte-efficiency/total-byte-weight.js');
+const WebInspector = require('../../../lib/web-inspector');
 const assert = require('assert');
 const URL = require('url').URL;
 const options = TotalByteWeight.defaultOptions;
 
 /* eslint-env jest */
 
-function generateRequest(url, size, baseUrl = 'http://google.com/') {
+function generateRequest(url, size, resourceType, baseUrl = 'http://google.com/') {
   const parsedUrl = new URL(url, baseUrl);
   const scheme = parsedUrl.protocol.slice(0, -1);
   return {
@@ -24,6 +25,7 @@ function generateRequest(url, size, baseUrl = 'http://google.com/') {
     parsedURL: {
       scheme,
     },
+    _resourceType: resourceType,
   };
 }
 
@@ -42,9 +44,9 @@ function generateArtifacts(records) {
 describe('Total byte weight audit', () => {
   it('passes when requests are small', () => {
     const artifacts = generateArtifacts([
-      ['file.html', 30],
-      ['file.js', 50],
-      ['file.jpg', 70],
+      ['file.html', 30, WebInspector.resourceTypes.Document],
+      ['file.js', 50, WebInspector.resourceTypes.Script],
+      ['file.jpg', 70, WebInspector.resourceTypes.Image],
     ]);
 
     return TotalByteWeight.audit(artifacts, {options}).then(result => {
@@ -59,17 +61,17 @@ describe('Total byte weight audit', () => {
 
   it('scores in the middle when a mixture of small and large requests are used', () => {
     const artifacts = generateArtifacts([
-      ['file.html', 30],
-      ['file.js', 50],
-      ['file.jpg', 70],
-      ['file-large.jpg', 1000],
-      ['file-xlarge.jpg', 3000],
-      ['small1.js', 5],
-      ['small2.js', 5],
-      ['small3.js', 5],
-      ['small4.js', 5],
-      ['small5.js', 5],
-      ['small6.js', 5],
+      ['file.html', 30, WebInspector.resourceTypes.Document],
+      ['file.js', 50, WebInspector.resourceTypes.Script],
+      ['file.jpg', 70, WebInspector.resourceTypes.Image],
+      ['file-large.jpg', 1000, WebInspector.resourceTypes.Image],
+      ['file-xlarge.jpg', 3000, WebInspector.resourceTypes.Image],
+      ['small1.js', 5, WebInspector.resourceTypes.Script],
+      ['small2.js', 5, WebInspector.resourceTypes.Script],
+      ['small3.js', 5, WebInspector.resourceTypes.Script],
+      ['small4.js', 5, WebInspector.resourceTypes.Script],
+      ['small5.js', 5, WebInspector.resourceTypes.Script],
+      ['small6.js', 5, WebInspector.resourceTypes.Script],
     ]);
 
     return TotalByteWeight.audit(artifacts, {options}).then(result => {
@@ -81,11 +83,27 @@ describe('Total byte weight audit', () => {
     });
   });
 
+  it('should flag script requests which are exceeding the file size', () => {
+    const artifacts = generateArtifacts([
+      ['file.html', 30, WebInspector.resourceTypes.Document],
+      ['file.js', 451, WebInspector.resourceTypes.Script],
+      ['file.jpg', 70, WebInspector.resourceTypes.Image],
+      ['file-large.jpg', 1000, WebInspector.resourceTypes.Image],
+      ['file-xlarge.jpg', 3000, WebInspector.resourceTypes.Image],
+      ['small1.js', 5, WebInspector.resourceTypes.Script],
+    ]);
+
+    return TotalByteWeight.audit(artifacts, {options}).then(result => {
+      const results = result.details.items;
+      assert.strictEqual(results[2].flagged, true);
+    });
+  });
+
   it('fails when requests are huge', () => {
     const artifacts = generateArtifacts([
-      ['file.html', 3000],
-      ['file.js', 5000],
-      ['file.jpg', 7000],
+      ['file.html', 3000, WebInspector.resourceTypes.Document],
+      ['file.js', 5000, WebInspector.resourceTypes.Script],
+      ['file.jpg', 7000, WebInspector.resourceTypes.Image],
     ]);
 
     return TotalByteWeight.audit(artifacts, {options}).then(result => {

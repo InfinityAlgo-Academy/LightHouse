@@ -55,6 +55,8 @@
   --lh-score-margin: 12px;
   --lh-table-header-bg: #f8f9fa;
   --lh-table-higlight-bg: hsla(0, 0%, 75%, 0.1);
+  --lh-row-flagged-bg: #f00;
+  --lh-row-flagged-color: #fff;
   --lh-sparkline-height: 5px;
   --lh-sparkline-thin-height: 3px;
   --lh-filmstrip-thumbnail-width: 60px;
@@ -860,6 +862,16 @@ summary.lh-passed-audits-summary {
 .lh-table th,
 .lh-table td {
   padding: 8px 6px;
+}
+
+/* double classnames to override the cascade */
+.lh-table-row--flagged,
+.lh-table-row--flagged.lh-table-row--flagged:nth-child(even) {
+  background-color: var(--lh-row-flagged-bg);
+}
+
+.lh-table-row--flagged > td {
+  color: var(--lh-row-flagged-color);
 }
 
 .lh-table-column--text,
