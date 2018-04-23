@@ -383,7 +383,8 @@ if (typeof module !== 'undefined' && module.exports) {
       type: string,
       value: (string|number|undefined),
       granularity?: number,
-      displayUnit?: string
+      displayUnit?: string,
+      flagged: (boolean|undefined)
   }} DetailsJSON
  */
 
