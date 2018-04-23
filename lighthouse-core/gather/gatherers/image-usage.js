@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-// @ts-nocheck
 /**
   * @fileoverview Gathers all images used on the page with their src, size,
   *   and attribute information. Executes script in the context of the page.
@@ -12,11 +11,16 @@
 
 const Gatherer = require('./gatherer');
 const DOMHelpers = require('../../lib/dom-helpers.js');
+const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
 
 /* global window, getElementsInDocument, Image */
 
+/** @typedef {MakeOptional<LH.Artifacts.SingleImageUsage, 'networkRecord'>} ImageSizeInfo */
+
+/** @return {Array<ImageSizeInfo>} */
 /* istanbul ignore next */
 function collectImageElementInfo() {
+  /** @param {Element} element */
   function getClientRect(element) {
     const clientRect = element.getBoundingClientRect();
     return {
@@ -28,9 +32,14 @@ function collectImageElementInfo() {
     };
   }
 
+  /** @type {Array<Element>} */
+  // @ts-ignore - added by getElementsInDocumentFnString
   const allElements = getElementsInDocument();
-  const allImageElements = allElements.filter(element => element.localName === 'img');
+  const allImageElements = /** @type {Array<HTMLImageElement>} */ (allElements.filter(element => {
+    return element.localName === 'img';
+  }));
 
+  /** @type {Array<ImageSizeInfo>} */
   const htmlImages = allImageElements.map(element => {
     const computedStyle = window.getComputedStyle(element);
     return {
@@ -59,12 +68,13 @@ function collectImageElementInfo() {
 
   const cssImages = allElements.reduce((images, element) => {
     const style = window.getComputedStyle(element);
-    if (!CSS_URL_REGEX.test(style.backgroundImage) ||
-        !CSS_SIZE_REGEX.test(style.backgroundSize)) {
+    if (!style.backgroundImage || !CSS_URL_REGEX.test(style.backgroundImage) ||
+        !style.backgroundSize || !CSS_SIZE_REGEX.test(style.backgroundSize)) {
       return images;
     }
 
     const imageMatch = style.backgroundImage.match(CSS_URL_REGEX);
+    // @ts-ignore test() above ensures that there is a match.
     const url = imageMatch[1];
 
     // Heuristic to filter out sprite sheets
@@ -87,11 +97,15 @@ function collectImageElementInfo() {
     });
 
     return images;
-  }, []);
+  }, /** @type {Array<ImageSizeInfo>} */ ([]));
 
   return htmlImages.concat(cssImages);
 }
 
+/**
+ * @param {string} url
+ * @return {Promise<{naturalWidth: number, naturalHeight: number}>}
+ */
 /* istanbul ignore next */
 function determineNaturalSize(url) {
   return new Promise((resolve, reject) => {
@@ -110,63 +124,70 @@ function determineNaturalSize(url) {
 
 class ImageUsage extends Gatherer {
   /**
-   * @param {{src: string}} element
-   * @return {!Promise<!Object>}
+   * @param {Driver} driver
+   * @param {ImageSizeInfo} element
+   * @return {Promise<ImageSizeInfo>}
    */
-  fetchElementWithSizeInformation(element) {
+  async fetchElementWithSizeInformation(driver, element) {
     const url = JSON.stringify(element.src);
-    return this.driver.evaluateAsync(`(${determineNaturalSize.toString()})(${url})`)
-      .then(size => {
-        return Object.assign(element, size);
-      }).catch(_ => {
-        // determineNaturalSize fails on invalid images, which we treat as non-visible
-        return Object.assign(element, {naturalWidth: 0, naturalHeight: 0});
-      });
+    try {
+      /** @type {{naturalWidth: number, naturalHeight: number}} */
+      const size = await driver.evaluateAsync(`(${determineNaturalSize.toString()})(${url})`);
+      return Object.assign(element, size);
+    } catch (_) {
+      // determineNaturalSize fails on invalid images, which we treat as non-visible
+      return Object.assign(element, {naturalWidth: 0, naturalHeight: 0});
+    }
   }
 
-  afterPass(options, traceData) {
-    const driver = this.driver = options.driver;
-    const indexedNetworkRecords = traceData.networkRecords.reduce((map, record) => {
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.LoadData} loadData
+   * @return {Promise<LH.Artifacts['ImageUsage']>}
+   */
+  afterPass(passContext, loadData) {
+    const driver = passContext.driver;
+    const indexedNetworkRecords = loadData.networkRecords.reduce((map, record) => {
       if (/^image/.test(record._mimeType) && record.finished) {
         map[record._url] = {
           url: record.url,
-          resourceSize: Math.min(record.resourceSize, record.transferSize),
+          resourceSize: Math.min(record._resourceSize || 0, record.transferSize),
           startTime: record.startTime,
           endTime: record.endTime,
-          responseReceivedTime: record.responseReceivedTime,
+          responseReceivedTime: record._responseReceivedTime,
           mimeType: record._mimeType,
         };
       }
 
       return map;
-    }, {});
+    }, /** @type {Object<string, LH.Artifacts.SingleImageUsage['networkRecord']>} */ ({}));
 
     const expression = `(function() {
       ${DOMHelpers.getElementsInDocumentFnString}; // define function on page
       return (${collectImageElementInfo.toString()})();
     })()`;
 
-    return driver.evaluateAsync(expression)
-      .then(elements => {
-        return elements.reduce((promise, element) => {
-          return promise.then(collector => {
+    /** @type {Promise<Array<ImageSizeInfo>>} */
+    const evaluatePromise = driver.evaluateAsync(expression);
+    return evaluatePromise.then(elements => {
+      return elements.reduce((promise, element) => {
+        return promise.then(collector => {
+          // Images within `picture` behave strangely and natural size information isn't accurate,
+          // CSS images have no natural size information at all.
+          // Try to get the actual size if we can.
+          const elementPromise = (element.isPicture || element.isCss) && element.networkRecord ?
+              this.fetchElementWithSizeInformation(driver, element) :
+              Promise.resolve(element);
+
+          return elementPromise.then(element => {
             // link up the image with its network record
             element.networkRecord = indexedNetworkRecords[element.src];
-
-            // Images within `picture` behave strangely and natural size information isn't accurate,
-            // CSS images have no natural size information at all.
-            // Try to get the actual size if we can.
-            const elementPromise = (element.isPicture || element.isCss) && element.networkRecord ?
-                this.fetchElementWithSizeInformation(element) :
-                Promise.resolve(element);
-
-            return elementPromise.then(element => {
-              collector.push(element);
-              return collector;
-            });
+            collector.push(/** @type {LH.Artifacts.SingleImageUsage} */ (element));
+            return collector;
           });
-        }, Promise.resolve([]));
-      });
+        });
+      }, Promise.resolve(/** @type {LH.Artifacts['ImageUsage']} */ ([])));
+    });
   }
 }
 

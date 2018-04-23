@@ -18,15 +18,13 @@ const compressionTypes = ['gzip', 'br', 'deflate'];
 const binaryMimeTypes = ['image', 'audio', 'video'];
 const CHROME_EXTENSION_PROTOCOL = 'chrome-extension:';
 
-/** @typedef {{requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize: number}} ResponseInfo */
-
 class ResponseCompression extends Gatherer {
   /**
    * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
-   * @return {Array<ResponseInfo>}
+   * @return {LH.Artifacts['ResponseCompression']}
    */
   static filterUnoptimizedResponses(networkRecords) {
-    /** @type {Array<ResponseInfo>} */
+    /** @type {LH.Artifacts['ResponseCompression']} */
     const unoptimizedResponses = [];
 
     networkRecords.forEach(record => {
@@ -66,6 +64,7 @@ class ResponseCompression extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
+   * @return {Promise<LH.Artifacts['ResponseCompression']>}
    */
   afterPass(passContext, loadData) {
     const networkRecords = loadData.networkRecords;

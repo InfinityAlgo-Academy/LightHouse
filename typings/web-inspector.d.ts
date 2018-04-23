@@ -22,6 +22,7 @@ declare global {
 
       startTime: number;
       endTime: number;
+      _responseReceivedTime: number;
 
       transferSize: number;
       _transferSize?: number;

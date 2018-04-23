@@ -15,6 +15,13 @@ declare global {
     code?: string;
   }
 
+  /** Make properties K in T optional. */
+  type MakeOptional<T, K extends keyof T> = {
+    [P in Exclude<keyof T, K>]: T[P]
+  } & {
+    [P in K]+?: T[P]
+  }
+
   module LH {
     // re-export useful type modules under global LH module.
     export import Crdp = _Crdp;

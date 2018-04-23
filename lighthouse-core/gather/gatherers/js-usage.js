@@ -21,7 +21,7 @@ class JsUsage extends Gatherer {
 
   /**
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts['JsUsageArtifact']>}
+   * @return {Promise<LH.Artifacts['JsUsage']>}
    */
   async afterPass(passContext) {
     const driver = passContext.driver;
