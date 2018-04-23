@@ -90,7 +90,7 @@ describe('Module Tests', function() {
   it('should return formatted LHR when given no categories', function() {
     const exampleUrl = 'https://example.com/';
     return lighthouse(exampleUrl, {
-      output: 'json',
+      output: 'html',
     }, {
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
@@ -99,17 +99,19 @@ describe('Module Tests', function() {
         'viewport',
       ],
     }).then(results => {
-      assert.ok(results.lighthouseVersion);
-      assert.ok(results.fetchedAt);
-      assert.equal(results.url, exampleUrl);
-      assert.equal(results.initialUrl, exampleUrl);
-      assert.ok(Array.isArray(results.reportCategories));
-      assert.equal(results.reportCategories.length, 0);
-      assert.ok(results.audits.viewport);
-      assert.strictEqual(results.audits.viewport.score, 0);
-      assert.ok(results.audits.viewport.debugString);
-      assert.ok(results.timing);
-      assert.equal(typeof results.timing.total, 'number');
+      assert.ok(/<html/.test(results.report), 'did not create html report');
+      assert.ok(results.artifacts.ViewportDimensions, 'did not set artifacts');
+      assert.ok(results.lhr.lighthouseVersion);
+      assert.ok(results.lhr.fetchedAt);
+      assert.equal(results.lhr.url, exampleUrl);
+      assert.equal(results.lhr.initialUrl, exampleUrl);
+      assert.ok(Array.isArray(results.lhr.reportCategories));
+      assert.equal(results.lhr.reportCategories.length, 0);
+      assert.ok(results.lhr.audits.viewport);
+      assert.strictEqual(results.lhr.audits.viewport.score, 0);
+      assert.ok(results.lhr.audits.viewport.debugString);
+      assert.ok(results.lhr.timing);
+      assert.equal(typeof results.lhr.timing.total, 'number');
     });
   });
 

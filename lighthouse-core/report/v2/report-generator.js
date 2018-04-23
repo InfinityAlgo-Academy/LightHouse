@@ -5,47 +5,9 @@
  */
 'use strict';
 
-const fs = require('fs');
-
-const REPORT_TEMPLATE = fs.readFileSync(__dirname + '/report-template.html', 'utf8');
-const REPORT_JAVASCRIPT = [
-  fs.readFileSync(__dirname + '/renderer/util.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/dom.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/details-renderer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/crc-details-renderer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/../../lib/file-namer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/logger.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/report-ui-features.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/category-renderer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/performance-category-renderer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/report-renderer.js', 'utf8'),
-].join(';\n');
-const REPORT_CSS = fs.readFileSync(__dirname + '/report-styles.css', 'utf8');
-const REPORT_TEMPLATES = fs.readFileSync(__dirname + '/templates.html', 'utf8');
+const htmlReportAssets = require('./html-report-assets');
 
 class ReportGeneratorV2 {
-  /**
-   * @return {string}
-   */
-  static get reportJs() {
-    return REPORT_JAVASCRIPT;
-  }
-
-  /**
-   * @return {string}
-   */
-  static get reportCss() {
-    return REPORT_CSS;
-  }
-
-  /**
-   * @return {string}
-   */
-  static get reportTemplates() {
-    return REPORT_TEMPLATES;
-  }
-
-
   /**
    * Replaces all the specified strings in source without serial replacements.
    * @param {string} source
@@ -65,25 +27,83 @@ class ReportGeneratorV2 {
         .join(firstReplacement.replacement);
   }
 
-
   /**
    * Returns the report HTML as a string with the report JSON and renderer JS inlined.
-   * @param {!Object} reportAsJson
+   * @param {LH.Result} lhr
    * @return {string}
    */
-  generateReportHtml(reportAsJson) {
-    const sanitizedJson = JSON.stringify(reportAsJson)
+  static generateReportHtml(lhr) {
+    const sanitizedJson = JSON.stringify(lhr)
       .replace(/</g, '\\u003c') // replaces opening script tags
       .replace(/\u2028/g, '\\u2028') // replaces line separators ()
       .replace(/\u2029/g, '\\u2029'); // replaces paragraph separators
-    const sanitizedJavascript = REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
+    const sanitizedJavascript = htmlReportAssets.REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
 
-    return ReportGeneratorV2.replaceStrings(REPORT_TEMPLATE, [
+    return ReportGeneratorV2.replaceStrings(htmlReportAssets.REPORT_TEMPLATE, [
       {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
       {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: sanitizedJavascript},
-      {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: REPORT_CSS},
-      {search: '%%LIGHTHOUSE_TEMPLATES%%', replacement: REPORT_TEMPLATES},
+      {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: htmlReportAssets.REPORT_CSS},
+      {search: '%%LIGHTHOUSE_TEMPLATES%%', replacement: htmlReportAssets.REPORT_TEMPLATES},
     ]);
+  }
+
+  /**
+   * Converts the results to a CSV formatted string
+   * Each row describes the result of 1 audit with
+   *  - the name of the category the audit belongs to
+   *  - the name of the audit
+   *  - a description of the audit
+   *  - the score type that is used for the audit
+   *  - the score value of the audit
+   *
+   * @param {LH.Result} lhr
+   * @returns {string}
+   */
+  static generateReportCSV(lhr) {
+    // To keep things "official" we follow the CSV specification (RFC4180)
+    // The document describes how to deal with escaping commas and quotes etc.
+    const CRLF = '\r\n';
+    const separator = ',';
+    /** @param {string} value @returns {string} */
+    const escape = value => `"${value.replace(/"/g, '""')}"`;
+
+    // Possible TODO: tightly couple headers and row values
+    const header = ['category', 'name', 'title', 'type', 'score'];
+    const table = lhr.reportCategories.map(category => {
+      return category.audits.map(catAudit => {
+        const audit = lhr.audits[catAudit.id];
+        return [category.name, audit.name, audit.description, audit.scoreDisplayMode, audit.score]
+          .map(value => value.toString())
+          .map(escape);
+      });
+    });
+
+    // @ts-ignore TS loses track of type Array
+    const flattedTable = [].concat(...table);
+    return [header, ...flattedTable].map(row => row.join(separator)).join(CRLF);
+  }
+
+  /**
+   * Creates the results output in a format based on the `mode`.
+   * @param {LH.Result} lhr
+   * @param {'json'|'html'|'csv'} outputMode
+   * @return {string}
+   */
+  static generateReport(lhr, outputMode) {
+    // HTML report.
+    if (outputMode === 'html') {
+      return ReportGeneratorV2.generateReportHtml(lhr);
+    }
+    // CSV report.
+    if (outputMode === 'csv') {
+      return ReportGeneratorV2.generateReportCSV(lhr);
+    }
+    // JSON report.
+    if (outputMode === 'json') {
+      return JSON.stringify(lhr, null, 2);
+    }
+
+    throw new Error('Invalid output mode: ' + outputMode);
   }
 }
 

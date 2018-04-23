@@ -153,6 +153,8 @@ function merge(base, extension) {
   // If the default value doesn't exist or is explicitly null, defer to the extending value
   if (typeof base === 'undefined' || base === null) {
     return extension;
+  } else if (typeof extension === 'undefined') {
+    return base;
   } else if (Array.isArray(extension)) {
     if (!Array.isArray(base)) throw new TypeError(`Expected array but got ${typeof base}`);
     const merged = base.slice();

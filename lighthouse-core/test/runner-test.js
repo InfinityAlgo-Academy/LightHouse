@@ -179,8 +179,8 @@ describe('Runner', () => {
     });
 
     return Runner.run({}, {url, config}).then(results => {
-      assert.equal(results.initialUrl, url);
-      assert.equal(results.audits['eavesdrop-audit'].rawValue, true);
+      assert.equal(results.lhr.initialUrl, url);
+      assert.equal(results.lhr.audits['eavesdrop-audit'].rawValue, true);
       // assert that the options we received matched expectations
       assert.deepEqual(calls, [{x: 1}, {x: 2}]);
     });
@@ -199,7 +199,7 @@ describe('Runner', () => {
     });
 
     return Runner.run({}, {url, config}).then(results => {
-      const audits = results.audits;
+      const audits = results.lhr.audits;
       assert.equal(audits['user-timings'].displayValue, 2);
       assert.equal(audits['user-timings'].rawValue, false);
     });
@@ -245,7 +245,7 @@ describe('Runner', () => {
       });
 
       return Runner.run({}, {url, config}).then(results => {
-        const auditResult = results.audits['user-timings'];
+        const auditResult = results.lhr.audits['user-timings'];
         assert.strictEqual(auditResult.rawValue, null);
         assert.strictEqual(auditResult.error, true);
         assert.ok(auditResult.debugString.includes('traces'));
@@ -265,7 +265,7 @@ describe('Runner', () => {
       });
 
       return Runner.run({}, {url, config}).then(results => {
-        const auditResult = results.audits['content-width'];
+        const auditResult = results.lhr.audits['content-width'];
         assert.strictEqual(auditResult.rawValue, null);
         assert.strictEqual(auditResult.error, true);
         assert.ok(auditResult.debugString.includes('ViewportDimensions'));
@@ -293,7 +293,7 @@ describe('Runner', () => {
       config.artifacts.ViewportDimensions = artifactError;
 
       return Runner.run({}, {url, config}).then(results => {
-        const auditResult = results.audits['content-width'];
+        const auditResult = results.lhr.audits['content-width'];
         assert.strictEqual(auditResult.rawValue, null);
         assert.strictEqual(auditResult.error, true);
         assert.ok(auditResult.debugString.includes(errorMessage));
@@ -330,7 +330,7 @@ describe('Runner', () => {
       });
 
       return Runner.run({}, {url, config}).then(results => {
-        const auditResult = results.audits['throwy-audit'];
+        const auditResult = results.lhr.audits['throwy-audit'];
         assert.strictEqual(auditResult.rawValue, null);
         assert.strictEqual(auditResult.error, true);
         assert.ok(auditResult.debugString.includes(errorMessage));
@@ -376,7 +376,7 @@ describe('Runner', () => {
     });
 
     return Runner.run({}, {url, config}).then(results => {
-      const audits = results.audits;
+      const audits = results.lhr.audits;
       assert.equal(audits['critical-request-chains'].displayValue, '5 chains found');
       assert.equal(audits['critical-request-chains'].rawValue, false);
     });
@@ -410,11 +410,11 @@ describe('Runner', () => {
     });
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
-      assert.ok(results.lighthouseVersion);
-      assert.ok(results.fetchedAt);
-      assert.equal(results.initialUrl, url);
+      assert.ok(results.lhr.lighthouseVersion);
+      assert.ok(results.lhr.fetchedAt);
+      assert.equal(results.lhr.initialUrl, url);
       assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
-      assert.equal(results.audits['content-width'].name, 'content-width');
+      assert.equal(results.lhr.audits['content-width'].name, 'content-width');
     });
   });
 
@@ -440,14 +440,14 @@ describe('Runner', () => {
     });
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
-      assert.ok(results.lighthouseVersion);
-      assert.ok(results.fetchedAt);
-      assert.equal(results.initialUrl, url);
+      assert.ok(results.lhr.lighthouseVersion);
+      assert.ok(results.lhr.fetchedAt);
+      assert.equal(results.lhr.initialUrl, url);
       assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
-      assert.equal(results.audits['content-width'].name, 'content-width');
-      assert.equal(results.audits['content-width'].score, 1);
-      assert.equal(results.reportCategories[0].score, 1);
-      assert.equal(results.reportCategories[0].audits[0].id, 'content-width');
+      assert.equal(results.lhr.audits['content-width'].name, 'content-width');
+      assert.equal(results.lhr.audits['content-width'].score, 1);
+      assert.equal(results.lhr.reportCategories[0].score, 1);
+      assert.equal(results.lhr.reportCategories[0].audits[0].id, 'content-width');
     });
   });
 
@@ -537,7 +537,7 @@ describe('Runner', () => {
     });
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
-      assert.deepStrictEqual(results.runWarnings, [
+      assert.deepStrictEqual(results.lhr.runWarnings, [
         'I\'m a warning!',
         'Also a warning',
       ]);

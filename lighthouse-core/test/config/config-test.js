@@ -472,6 +472,11 @@ describe('Config', () => {
     assert.ok(config.settings.disableDeviceEmulation, 'missing setting from flags');
   });
 
+  it('inherits default settings when undefined', () => {
+    const config = new Config({settings: undefined});
+    assert.ok(typeof config.settings.maxWaitForLoad === 'number', 'missing setting from default');
+  });
+
   describe('#extendConfigJSON', () => {
     it('should merge passes', () => {
       const configA = {

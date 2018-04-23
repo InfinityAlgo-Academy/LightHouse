@@ -41,7 +41,7 @@ node generate_report_v2.js > temp.report.html; open temp.report.html
 
 const ReportGeneratorV2 = require('./lighthouse-core/report/v2/report-generator');
 const results = require('./temp.report.json');
-const html = new ReportGeneratorV2().generateReportHtml(results);
+const html = ReportGeneratorV2.generateReportHtml(results);
 
 console.log(html);
 ```
@@ -64,7 +64,7 @@ su - travis
 ```
 
 ```sh
-# you may also want to mount a local folder into your docker instance. 
+# you may also want to mount a local folder into your docker instance.
 # This will mount your local machines's ~/temp/trav folder into the container's /home/travis/mountpoint folder
 docker run -v $HOME/temp/trav:/home/travis/mountpoint --name travis-debug -dit travisci/ci-garnet:packer-1496954857 /sbin/init
 

@@ -6,7 +6,6 @@
 'use strict';
 
 const fs = require('fs');
-const ReportGenerator = require('../lighthouse-core/report/v2/report-generator');
 const log = require('lighthouse-logger');
 
 /**
@@ -32,65 +31,6 @@ function checkOutputPath(path) {
     return 'stdout';
   }
   return path;
-}
-
-/**
- * Converts the results to a CSV formatted string
- * Each row describes the result of 1 audit with
- *  - the name of the category the audit belongs to
- *  - the name of the audit
- *  - a description of the audit
- *  - the score type that is used for the audit
- *  - the score value of the audit
- *
- * @param {LH.Results} results
- * @returns {string}
- */
-function toCSVReport(results) {
-  // To keep things "official" we follow the CSV specification (RFC4180)
-  // The document describes how to deal with escaping commas and quotes etc.
-  const CRLF = '\r\n';
-  const separator = ',';
-  /** @param {string} value @returns {string} */
-  const escape = (value) => `"${value.replace(/"/g, '""')}"`;
-
-
-  // Possible TODO: tightly couple headers and row values
-  const header = ['category', 'name', 'title', 'type', 'score'];
-  const table = results.reportCategories.map(category => {
-    return category.audits.map(catAudit => {
-      const audit = results.audits[catAudit.id];
-      return [category.name, audit.name, audit.description, audit.scoreDisplayMode, audit.score]
-        .map(value => value.toString())
-        .map(escape);
-    });
-  });
-
-  // @ts-ignore TS loses track of type Array
-  const flattedTable = [].concat(...table);
-  return [header, ...flattedTable].map(row => row.join(separator)).join(CRLF);
-}
-
-/**
- * Creates the results output in a format based on the `mode`.
- * @param {!LH.Results} results
- * @param {string} outputMode
- * @return {string}
- */
-function createOutput(results, outputMode) {
-  // HTML report.
-  if (outputMode === OutputMode.html) {
-    return new ReportGenerator().generateReportHtml(results);
-  }
-  // JSON report.
-  if (outputMode === OutputMode.json) {
-    return JSON.stringify(results, null, 2);
-  }
-  // CSV report.
-  if (outputMode === OutputMode.csv) {
-    return toCSVReport(results);
-  }
-  throw new Error('Invalid output mode: ' + outputMode);
 }
 
 /**
@@ -130,15 +70,15 @@ function writeFile(filePath, output, outputMode) {
 
 /**
  * Writes the results.
- * @param {!LH.Results} results
+ * @param {LH.RunnerResult} results
  * @param {string} mode
  * @param {string} path
- * @return {Promise<LH.Results>}
+ * @return {Promise<LH.RunnerResult>}
  */
 function write(results, mode, path) {
   return new Promise((resolve, reject) => {
     const outputPath = checkOutputPath(path);
-    const output = createOutput(results, mode);
+    const output = results.report;
 
     if (outputPath === 'stdout') {
       return writeToStdout(output).then(_ => resolve(results));
@@ -161,7 +101,6 @@ function getValidOutputOptions() {
 
 module.exports = {
   checkOutputPath,
-  createOutput,
   write,
   OutputMode,
   getValidOutputOptions,

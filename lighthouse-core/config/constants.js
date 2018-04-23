@@ -28,6 +28,7 @@ const throttling = {
 
 /** @type {LH.Config.Settings} */
 const defaultSettings = {
+  output: 'json',
   maxWaitForLoad: 45 * 1000,
   throttlingMethod: 'devtools',
   throttling: throttling.mobile3G,

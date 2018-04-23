@@ -10,7 +10,6 @@ const Printer = require('../../printer.js');
 const assert = require('assert');
 const fs = require('fs');
 const sampleResults = require('../../../lighthouse-core/test/results/sample_v2.json');
-const csvValidator = require('csv-validator');
 
 describe('Printer', () => {
   it('accepts valid output paths', () => {
@@ -23,66 +22,22 @@ describe('Printer', () => {
     assert.notEqual(Printer.checkOutputPath(path), path);
   });
 
-  it('creates JSON for results', () => {
-    const mode = Printer.OutputMode.json;
-    const jsonOutput = Printer.createOutput(sampleResults, mode);
-    assert.doesNotThrow(_ => JSON.parse(jsonOutput));
-  });
-
-  it('creates HTML for results', () => {
-    const mode = Printer.OutputMode.html;
-    const htmlOutput = Printer.createOutput(sampleResults, mode);
-    assert.ok(/<!doctype/gim.test(htmlOutput));
-    assert.ok(/<html lang="en"/gim.test(htmlOutput));
-  });
-
-  it('creates CSV for results', async () => {
-    const mode = Printer.OutputMode.csv;
-    const path = './.results-as-csv.csv';
-    const headers = {
-      category: '',
-      name: '',
-      title: '',
-      type: '',
-      score: 42,
-    };
-    await Printer.write(sampleResults, mode, path);
-
-    try {
-      await csvValidator(path, headers);
-    } catch (err) {
-      assert.fail('CSV parser error:\n' + err.join('\n'));
-    } finally {
-      fs.unlinkSync(path);
-    }
-  });
-
   it('writes file for results', () => {
-    const mode = 'html';
-    const path = './.test-file.html';
-
-    // Now do a second pass where the file is written out.
-    return Printer.write(sampleResults, mode, path).then(_ => {
+    const path = './.test-file.json';
+    const report = JSON.stringify(sampleResults);
+    return Printer.write({report}, 'json', path).then(_ => {
       const fileContents = fs.readFileSync(path, 'utf8');
-      assert.ok(/<!doctype/gim.test(fileContents));
+      assert.ok(/lighthouseVersion/gim.test(fileContents));
       fs.unlinkSync(path);
     });
   });
 
   it('throws for invalid paths', () => {
-    const mode = 'html';
-    const path = '!/#@.html';
-    return Printer.write(sampleResults, mode, path).catch(err => {
+    const path = '!/#@.json';
+    const report = JSON.stringify(sampleResults);
+    return Printer.write({report}, 'html', path).catch(err => {
       assert.ok(err.code === 'ENOENT');
     });
-  });
-
-  it('writes extended info', () => {
-    const mode = Printer.OutputMode.html;
-    const htmlOutput = Printer.createOutput(sampleResults, mode);
-    const outputCheck = new RegExp('dobetterweb/dbw_tester.css', 'i');
-
-    assert.ok(outputCheck.test(htmlOutput));
   });
 
   it('returns output modes', () => {

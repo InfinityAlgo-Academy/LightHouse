@@ -20,7 +20,7 @@ const uglifyEs = require('uglify-es');
 const composer = require('gulp-uglify/composer');
 const uglify = composer(uglifyEs, console);
 
-const ReportGenerator = require('../lighthouse-core/report/v2/report-generator.js');
+const htmlReportAssets = require('../lighthouse-core/report/v2/html-report-assets');
 const lighthousePackage = require('../package.json');
 
 const $ = gulpLoadPlugins();
@@ -62,7 +62,7 @@ gulp.task('images', () => {
 
 // Concat Report and Viewer stylesheets into single viewer.css file.
 gulp.task('concat-css', () => {
-  const reportCss = streamFromString(ReportGenerator.reportCss, 'report-styles.css');
+  const reportCss = streamFromString(htmlReportAssets.REPORT_CSS, 'report-styles.css');
   const viewerCss = gulp.src('app/styles/viewer.css');
 
   return streamqueue({objectMode: true}, reportCss, viewerCss)
@@ -71,7 +71,7 @@ gulp.task('concat-css', () => {
 });
 
 gulp.task('html', () => {
-  const templatesStr = ReportGenerator.reportTemplates;
+  const templatesStr = htmlReportAssets.REPORT_TEMPLATES;
 
   return gulp.src('app/index.html')
     .pipe($.replace(/%%LIGHTHOUSE_TEMPLATES%%/, _ => templatesStr))
@@ -105,7 +105,7 @@ gulp.task('compile-js', () => {
     .pipe(vinylBuffer());
 
   // JS bundle from report renderer scripts.
-  const baseReportJs = streamFromString(ReportGenerator.reportJs, 'report.js');
+  const baseReportJs = streamFromString(htmlReportAssets.REPORT_JAVASCRIPT, 'report.js');
 
   // JS bundle of library dependencies.
   const deps = gulp.src([

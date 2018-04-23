@@ -11,8 +11,6 @@ const ExtensionProtocol = require('../../../lighthouse-core/gather/connections/e
 const log = require('lighthouse-logger');
 const assetSaver = require('../../../lighthouse-core/lib/asset-saver.js');
 
-const ReportGeneratorV2 = require('../../../lighthouse-core/report/v2/report-generator');
-
 const STORAGE_KEY = 'lighthouse_audits';
 const SETTINGS_KEY = 'lighthouse_settings';
 
@@ -72,15 +70,6 @@ function updateBadgeUI(optUrl) {
 }
 
 /**
- * Removes artifacts from the result object for portability
- * @param {!Object} result Lighthouse results object
- */
-function filterOutArtifacts(result) {
-  // strip them out, as the networkRecords artifact has circular structures
-  result.artifacts = undefined;
-}
-
-/**
  * @param {!Object} options Lighthouse options.
  * @param {!Array<string>} categoryIDs Name values of categories to include.
  * @return {!Promise}
@@ -89,15 +78,16 @@ window.runLighthouseInExtension = function(options, categoryIDs) {
   // Default to 'info' logging level.
   log.setLevel('info');
   const connection = new ExtensionProtocol();
+  options.flags = Object.assign({}, options.flags, {output: 'html'});
+
   // return enableOtherChromeExtensions(false)
   // .then(_ => connection.getCurrentTabURL())
   return connection.getCurrentTabURL()
     .then(url => window.runLighthouseForConnection(connection, url, options,
       categoryIDs, updateBadgeUI))
-    .then(results => {
-      filterOutArtifacts(results);
+    .then(runnerResult => {
       // return enableOtherChromeExtensions(true).then(_ => {
-      const blobURL = window.createReportPageAsBlob(results, 'extension');
+      const blobURL = window.createReportPageAsBlob(runnerResult, 'extension');
       chrome.windows.create({url: blobURL});
       // });
     }).catch(err => {
@@ -112,39 +102,38 @@ window.runLighthouseInExtension = function(options, categoryIDs) {
  * @param {!Connection} connection
  * @param {string} url
  * @param {!Object} options Lighthouse options.
-          Specify lightriderFormat to change the output format.
+          Specify outputFormat to change the output format.
  * @param {!Array<string>} categoryIDs Name values of categories to include.
  * @return {!Promise}
  */
 window.runLighthouseAsInCLI = function(connection, url, options, categoryIDs) {
   log.setLevel('info');
   const startTime = Date.now();
+  options.flags = Object.assign({}, options.flags, {output: options.outputFormat});
+
   return window.runLighthouseForConnection(connection, url, options, categoryIDs)
     .then(results => {
       const endTime = Date.now();
       results.timing = {total: endTime - startTime};
       let promise = Promise.resolve();
       if (options && options.logAssets) {
-        promise = promise.then(_ => assetSaver.logAssets(results.artifacts, results.audits));
+        promise = promise.then(_ => assetSaver.logAssets(results.artifacts, results.lhr.audits));
       }
       return promise.then( _ => {
-        filterOutArtifacts(results);
-        const json = options && options.outputFormat === 'json';
-        return json ? JSON.stringify(results) : new ReportGeneratorV2().generateReportHtml(results);
+        return results.report;
       });
     });
 };
 
 
 /**
- * @param {!Object} results Lighthouse results object
+ * @param {LH.RunnerResult} runnerResult Lighthouse results object
  * @param {!string} reportContext Where the report is going
  * @return {!string} Blob URL of the report (or error page) HTML
  */
-window.createReportPageAsBlob = function(results) {
+window.createReportPageAsBlob = function(runnerResult) {
   performance.mark('report-start');
-  const html = new ReportGeneratorV2().generateReportHtml(results);
-
+  const html = runnerResult.report;
   const blob = new Blob([html], {type: 'text/html'});
   const blobURL = window.URL.createObjectURL(blob);
 

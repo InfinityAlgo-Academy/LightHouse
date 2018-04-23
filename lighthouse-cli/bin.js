@@ -84,7 +84,7 @@ if (cliFlags.extraHeaders) {
 }
 
 /**
- * @return {Promise<LH.Results|void>}
+ * @return {Promise<LH.RunnerResult|void>}
  */
 function run() {
   return Promise.resolve()

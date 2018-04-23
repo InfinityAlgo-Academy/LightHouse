@@ -30,10 +30,9 @@ const Config = require('./config/config');
  * @param {string} url
  * @param {LH.Flags} flags
  * @param {LH.Config.Json|undefined} configJSON
- * @return {Promise<LH.Results>}
+ * @return {Promise<LH.RunnerResult>}
  */
 function lighthouse(url, flags = {}, configJSON) {
-  const startTime = Date.now();
   return Promise.resolve().then(_ => {
     // set logging preferences, assume quiet
     flags.logLevel = flags.logLevel || 'error';
@@ -44,15 +43,7 @@ function lighthouse(url, flags = {}, configJSON) {
     const connection = new ChromeProtocol(flags.port, flags.hostname);
 
     // kick off a lighthouse run
-    return Runner.run(connection, {url, config})
-      .then((lighthouseResults = {}) => {
-        // Annotate with time to run lighthouse.
-        const endTime = Date.now();
-        lighthouseResults.timing = lighthouseResults.timing || {};
-        lighthouseResults.timing.total = endTime - startTime;
-
-        return lighthouseResults;
-      });
+    return Runner.run(connection, {url, config});
   });
 }
 

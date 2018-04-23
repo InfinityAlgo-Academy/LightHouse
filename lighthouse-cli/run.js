@@ -95,12 +95,12 @@ function handleError(err) {
 }
 
 /**
- * @param {!LH.Results} results
- * @param {!Object} artifacts
+ * @param {!LH.RunnerResult} runnerResult
  * @param {!LH.Flags} flags
  * @return {Promise<void>}
  */
-function saveResults(results, artifacts, flags) {
+function saveResults(runnerResult, flags) {
+  const {lhr, artifacts} = runnerResult;
   const cwd = process.cwd();
   let promise = Promise.resolve();
 
@@ -110,12 +110,12 @@ function saveResults(results, artifacts, flags) {
   // Use the output path as the prefix for all generated files.
   // If no output path is set, generate a file prefix using the URL and date.
   const configuredPath = !flags.outputPath || flags.outputPath === 'stdout' ?
-      getFilenamePrefix(results) :
+      getFilenamePrefix(lhr) :
       flags.outputPath.replace(/\.\w{2,4}$/, '');
   const resolvedPath = path.resolve(cwd, configuredPath);
 
   if (flags.saveAssets) {
-    promise = promise.then(_ => assetSaver.saveAssets(artifacts, results.audits, resolvedPath));
+    promise = promise.then(_ => assetSaver.saveAssets(artifacts, lhr.audits, resolvedPath));
   }
 
   return promise.then(_ => {
@@ -123,13 +123,13 @@ function saveResults(results, artifacts, flags) {
       return flags.output.reduce((innerPromise, outputType) => {
         const extension = outputType;
         const outputPath = `${resolvedPath}.report.${extension}`;
-        return innerPromise.then(() => Printer.write(results, outputType, outputPath));
+        return innerPromise.then(() => Printer.write(runnerResult, outputType, outputPath));
       }, Promise.resolve());
     } else {
       const extension = flags.output;
       const outputPath =
           flags.outputPath || `${resolvedPath}.report.${extension}`;
-      return Printer.write(results, flags.output, outputPath).then(_ => {
+      return Printer.write(runnerResult, flags.output, outputPath).then(_ => {
         if (flags.output === Printer.OutputMode[Printer.OutputMode.html]) {
           if (flags.view) {
             opn(outputPath, {wait: false});
@@ -149,7 +149,7 @@ function saveResults(results, artifacts, flags) {
  * @param {string} url
  * @param {LH.Flags} flags
  * @param {LH.Config.Json|undefined} config
- * @return {Promise<LH.Results|void>}
+ * @return {Promise<LH.RunnerResult|void>}
  */
 function runLighthouse(url, flags, config) {
   /** @type {!LH.LaunchedChrome} */
@@ -167,12 +167,10 @@ function runLighthouse(url, flags, config) {
   }
 
   const resultsP = chromeP.then(_ => {
-    return lighthouse(url, flags, config).then(results => {
-      return potentiallyKillChrome().then(_ => results);
-    }).then(results => {
-      const artifacts = results.artifacts;
-      delete results.artifacts;
-      return saveResults(results, artifacts, flags).then(_ => results);
+    return lighthouse(url, flags, config).then(runnerResult => {
+      return potentiallyKillChrome().then(_ => runnerResult);
+    }).then(runnerResult => {
+      return saveResults(runnerResult, flags).then(_ => runnerResult);
     });
   });
 

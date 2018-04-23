@@ -20,4 +20,4 @@ function ReportGenerator() {}
  * @param {!ReportRenderer.ReportJSON} reportJson
  * @return {string}
  */
-ReportGenerator.prototype.generateReportHtml = function(reportJson) {};
+ReportGenerator.generateReportHtml = function(reportJson) {};

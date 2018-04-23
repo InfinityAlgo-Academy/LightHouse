@@ -43,7 +43,7 @@ class ViewerUIFeatures extends ReportUIFeatures {
    * @override
    */
   getReportHtml() {
-    return new ReportGenerator().generateReportHtml(this.json);
+    return ReportGenerator.generateReportHtml(this.json);
   }
 
   /**
