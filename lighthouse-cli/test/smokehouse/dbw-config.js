@@ -19,6 +19,7 @@ module.exports = {
       'render-blocking-resources',
       'errors-in-console',
       'efficient-animated-content',
+      'total-byte-weight',
     ],
   },
 };

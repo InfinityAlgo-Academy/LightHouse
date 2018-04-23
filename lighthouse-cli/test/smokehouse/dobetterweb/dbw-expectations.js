@@ -137,12 +137,13 @@ module.exports = [
           ],
         }
       },
+      // check if table rows are getting flagged
       'total-byte-weight': {
         details: {
           items: {
             0: {
               url: 'http://localhost:10200/dobetterweb/dbw_large-file.js',
-              totalBytes: 359690,
+              totalBytes: 359710,
               flagged: true,
             },
             1: {
