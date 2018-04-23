@@ -355,4 +355,22 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
       },
     });
   });
+
+  it('returns correct data for chain with preload',
+    () => {
+      const networkRecords = mockTracingData(
+        [HIGH, HIGH],
+        [[0, 1]]
+      );
+      networkRecords[1]._isLinkPreload = true;
+      const mainResource = networkRecords[0];
+      const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+      assert.deepEqual(criticalChains, {
+        0: {
+          request: networkRecords[0],
+          children: {},
+        },
+      });
+    }
+  );
 });

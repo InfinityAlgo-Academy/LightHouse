@@ -310,7 +310,7 @@
     },
     "critical-request-chains": {
       "score": 0,
-      "displayValue": "13 chains found",
+      "displayValue": "12 chains found",
       "rawValue": false,
       "extendedInfo": {
         "value": {
@@ -324,16 +324,6 @@
                 "transferSize": 12640
               },
               "children": {
-                "75994.2": {
-                  "request": {
-                    "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
-                    "startTime": 185603.951516,
-                    "endTime": 185605.956256,
-                    "responseReceivedTime": 185605.955291,
-                    "transferSize": 821
-                  },
-                  "children": {}
-                },
                 "75994.3": {
                   "request": {
                     "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
@@ -495,16 +485,6 @@
               "transferSize": 12640
             },
             "children": {
-              "75994.2": {
-                "request": {
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
-                  "startTime": 185603.951516,
-                  "endTime": 185605.956256,
-                  "responseReceivedTime": 185605.955291,
-                  "transferSize": 821
-                },
-                "children": {}
-              },
               "75994.3": {
                 "request": {
                   "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
@@ -5347,6 +5327,6 @@
     }
   },
   "timing": {
-    "total": 830
+    "total": 1709
   }
 }

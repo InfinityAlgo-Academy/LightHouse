@@ -23,6 +23,12 @@ class CriticalRequestChains extends ComputedArtifact {
    */
   static isCritical(request, mainResource) {
     assert.ok(mainResource, 'mainResource not provided');
+
+    // Treat any preloaded resource as non-critical
+    if (request._isLinkPreload) {
+      return false;
+    }
+
     const resourceTypeCategory = request._resourceType && request._resourceType._category;
 
     // Iframes are considered High Priority but they are not render blocking
