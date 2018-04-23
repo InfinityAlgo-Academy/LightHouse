@@ -67,6 +67,7 @@
   "devDependencies": {
     "@types/chrome": "^0.0.60",
     "@types/configstore": "^2.1.1",
+    "@types/css-font-loading-module": "^0.0.1",
     "@types/inquirer": "^0.0.35",
     "@types/lodash.isequal": "^4.5.2",
     "@types/node": "*",

@@ -36,6 +36,8 @@ declare global {
       EmbeddedContent: Artifacts.EmbeddedContentInfo[];
       /** Information on all event listeners in the page. */
       EventListeners: {url: string, type: string, handler?: {description?: string}, objectName: string, line: number, col: number}[];
+      /** Information for font faces used in the page. */
+      Fonts: Artifacts.Font[];
       FontSize: Artifacts.FontSize;
       /** The hreflang and href values of all link[rel=alternate] nodes found in HEAD. */
       Hreflang: {href: string, hreflang: string}[];
@@ -102,6 +104,18 @@ declare global {
         data: string | null;
         code: string | null;
         params: {name: string; value: string}[];
+      }
+
+      export interface Font {
+        display: string;
+        family: string;
+        featureSettings: string;
+        stretch: string;
+        style: string;
+        unicodeRange: string;
+        variant: string;
+        weight: string;
+        src?: string[];
       }
 
       export interface FontSize {
