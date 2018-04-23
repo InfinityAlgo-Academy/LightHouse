@@ -12,6 +12,7 @@
 const {readFileSync, writeFileSync} = require('fs');
 
 const filename = process.argv[2];
+const extraFlag = process.argv[3];
 if (!filename) throw new Error('No filename provided.');
 
 const data = readFileSync(filename, 'utf8');
@@ -24,8 +25,10 @@ writeFileSync(filename, cleanAndFormatLHR(data), 'utf8');
 function cleanAndFormatLHR(lhrString) {
   const lhr = JSON.parse(lhrString);
   delete lhr.timing;
-  for (const auditResult of Object.values(lhr.audits)) {
-    auditResult.helpText = '**Excluded from diff**';
+  if (extraFlag !== '--only-remove-timing') {
+    for (const auditResult of Object.values(lhr.audits)) {
+      auditResult.helpText = '**Excluded from diff**';
+    }
   }
   return JSON.stringify(lhr, null, 2);
 }

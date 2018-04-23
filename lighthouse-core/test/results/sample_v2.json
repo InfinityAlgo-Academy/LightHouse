@@ -5325,8 +5325,5 @@
       "title": "Additional items to manually check",
       "description": "Run these additional validators on your site to check additional SEO best practices."
     }
-  },
-  "timing": {
-    "total": 1709
   }
 }
