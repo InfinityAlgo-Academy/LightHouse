@@ -10,21 +10,20 @@
 class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {!ReportRenderer.AuditJSON} audit
-   * @param {number} scale
    * @return {!Element}
    */
-  _renderTimelineMetricAudit(audit, scale) {
-    const tmpl = this.dom.cloneTemplate('#tmpl-lh-timeline-metric', this.templateContext);
-    const element = this.dom.find('.lh-timeline-metric', tmpl);
-    element.classList.add(`lh-timeline-metric--${Util.calculateRating(audit.result.score)}`);
+  _renderMetric(audit) {
+    const tmpl = this.dom.cloneTemplate('#tmpl-lh-perf-metric', this.templateContext);
+    const element = this.dom.find('.lh-perf-metric', tmpl);
+    element.classList.add(`lh-perf-metric--${Util.calculateRating(audit.result.score)}`);
 
-    const titleEl = this.dom.find('.lh-timeline-metric__title', tmpl);
+    const titleEl = this.dom.find('.lh-perf-metric__title', tmpl);
     titleEl.textContent = audit.result.description;
 
-    const valueEl = this.dom.find('.lh-timeline-metric__value', tmpl);
+    const valueEl = this.dom.find('.lh-perf-metric__value span', tmpl);
     valueEl.textContent = audit.result.displayValue;
 
-    const descriptionEl = this.dom.find('.lh-timeline-metric__description', tmpl);
+    const descriptionEl = this.dom.find('.lh-perf-metric__description', tmpl);
     descriptionEl.appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.helpText));
 
     if (typeof audit.result.rawValue !== 'number') {
@@ -32,9 +31,6 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       debugStrEl.textContent = audit.result.debugString || 'Report error: no metric information';
       return element;
     }
-
-    const sparklineBarEl = this.dom.find('.lh-sparkline__bar', tmpl);
-    sparklineBarEl.style.width = `${audit.result.rawValue / scale * 100}%`;
 
     return element;
   }
@@ -119,38 +115,37 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     const metricAudits = category.audits.filter(audit => audit.group === 'perf-metric');
     const metricAuditsEl = this.renderAuditGroup(groups['perf-metric'], {expandable: false});
-    const timelineContainerEl = this.dom.createChildOf(metricAuditsEl, 'div',
-        'lh-timeline-container');
-    const timelineEl = this.dom.createChildOf(timelineContainerEl, 'div', 'lh-timeline');
 
-    let perfTimelineScale = 0;
-    metricAudits.forEach(audit => {
-      if (typeof audit.result.rawValue === 'number' && audit.result.rawValue) {
-        perfTimelineScale = Math.max(perfTimelineScale, audit.result.rawValue);
-      }
+    // Metrics
+    const keyMetrics = metricAudits.filter(a => a.weight >= 3);
+    const otherMetrics = metricAudits.filter(a => a.weight < 3);
+
+    const metricsBoxesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics-container');
+    const metricsColumn1El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-metrics-column');
+    const metricsColumn2El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-metrics-column');
+
+    keyMetrics.forEach(item => {
+      metricsColumn1El.appendChild(this._renderMetric(item));
+    });
+    otherMetrics.forEach(item => {
+      metricsColumn2El.appendChild(this._renderMetric(item));
     });
 
+    // Filmstrip
+    const timelineEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-timeline');
     const thumbnailAudit = category.audits.find(audit => audit.id === 'screenshot-thumbnails');
     const thumbnailResult = thumbnailAudit && thumbnailAudit.result;
     if (thumbnailResult && thumbnailResult.details) {
       const thumbnailDetails = /** @type {!DetailsRenderer.FilmstripDetails} */
           (thumbnailResult.details);
-      perfTimelineScale = Math.max(perfTimelineScale, thumbnailDetails.scale);
       const filmstripEl = this.detailsRenderer.render(thumbnailDetails);
       timelineEl.appendChild(filmstripEl);
     }
 
-    metricAudits.forEach(item => {
-      if (item.id === 'speed-index' || item.id === 'estimated-input-latency') {
-        return metricAuditsEl.appendChild(this.renderAudit(item));
-      }
-
-      timelineEl.appendChild(this._renderTimelineMetricAudit(item, perfTimelineScale));
-    });
-
     metricAuditsEl.open = true;
     element.appendChild(metricAuditsEl);
 
+    // Opportunities
     const hintAudits = category.audits
         .filter(audit => audit.group === 'perf-hint' && audit.result.score < 1)
         .sort((auditA, auditB) => auditB.result.rawValue - auditA.result.rawValue);
@@ -163,6 +158,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       element.appendChild(hintAuditsEl);
     }
 
+    // Diagnostics
     const infoAudits = category.audits
         .filter(audit => audit.group === 'perf-info' && audit.result.score < 1);
     if (infoAudits.length) {

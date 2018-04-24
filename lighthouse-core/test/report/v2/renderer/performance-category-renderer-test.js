@@ -76,7 +76,7 @@ describe('PerfCategoryRenderer', () => {
     const metricsSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[0];
 
     const metricAudits = category.audits.filter(audit => audit.group === 'perf-metric');
-    const timelineElements = metricsSection.querySelectorAll('.lh-timeline-metric');
+    const timelineElements = metricsSection.querySelectorAll('.lh-perf-metric');
     const nontimelineElements = metricsSection.querySelectorAll('.lh-audit');
     assert.equal(timelineElements.length + nontimelineElements.length, metricAudits.length);
   });

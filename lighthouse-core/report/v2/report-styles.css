@@ -25,11 +25,11 @@
   --expandable-indent: 20px;
   --secondary-text-color: #565656;
   /*--accent-color: #3879d9;*/
-  --fail-color: #df332f;
-  --pass-color: #2b882f;
+  --fail-color: hsl(1, 73%, 45%);
+  --average-color: hsl(31, 100%, 45%); /* md orange 800 */
+  --pass-color: hsl(139, 70%, 30%);
   --informative-color: #0c50c7;
-  --manual-color: #757575;
-  --average-color: #ef6c00; /* md orange 800 */
+  --medium-75-gray: #757575;
   --warning-color: #ffab00; /* md amber a700 */
   --report-border-color: #ccc;
   --report-secondary-border-color: #ebebeb;
@@ -174,7 +174,7 @@ summary {
   word-break: break-word;
   color: hsl(174, 100%, 27%);
 }
-span.lh-node:hover {
+.lh-node:hover {
     background: hsl(0, 0%, 98%);
     border-radius: 2px;
 }
@@ -221,7 +221,7 @@ span.lh-node:hover {
 .lh-score--manual .lh-score__value::after {
   background: url('data:image/svg+xml;utf8,<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><title>manual</title><path d="M2 5h8v2H2z" fill="hsl(0, 0%, 100%)" fill-rule="evenodd"/></svg>') no-repeat 50% 50%;
   background-size: 18px;
-  background-color: var(--manual-color);
+  background-color: var(--medium-75-gray);
   width: 20px;
   height:  20px;
   position: relative;
@@ -362,78 +362,82 @@ span.lh-node:hover {
 
 /* Perf Timeline Metric */
 
-.lh-timeline-metric {
-  position: relative;
-  margin-bottom: calc(2 * var(--lh-audit-vpadding));
-  padding-top: var(--lh-audit-vpadding);
-  border-top: 1px solid var(--report-secondary-border-color);
-}
-
-.lh-timeline-metric__header {
+.lh-metrics-container {
   display: flex;
 }
 
-.lh-timeline-metric__details {
+.lh-metrics-column {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.lh-perf-metric {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+
+  padding: calc(2 * var(--lh-audit-vpadding)) 0;
+  border-top: 1px solid var(--report-secondary-border-color);
+}
+
+.lh-perf-metric__header {
+  display: flex;
+}
+
+.lh-perf-metric__details {
   order: -1;
 }
 
-.lh-timeline-metric__title {
+.lh-perf-metric__title {
   font-size: var(--body-font-size);
   line-height: var(--body-line-height);
   display: flex;
 }
 
-.lh-timeline-metric__name {
+.lh-perf-metric__name {
   flex: 1;
 }
 
-.lh-timeline-metric__description {
+.lh-perf-metric__description {
   color: var(--secondary-text-color);
 }
 
-.lh-timeline-metric__value {
-  width: var(--lh-audit-score-width);
-  text-align: right;
-}
 
-.lh-timeline-metric--pass .lh-timeline-metric__value {
+.lh-perf-metric--pass .lh-perf-metric__value {
   color: var(--pass-color);
 }
 
-.lh-timeline-metric--average .lh-timeline-metric__value {
+.lh-perf-metric .lh-perf-metric__value span::after {
+  content: '';
+  width: var(--body-font-size);
+  height: var(--body-font-size);
+  background-size: contain;
+  display: inline-block;
+  vertical-align: text-bottom;
+  margin-left: calc(var(--body-font-size) / 2);
+}
+
+.lh-perf-metric--pass .lh-perf-metric__value span::after {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>check</title><path fill="hsl(139, 70%, 30%)" d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/></svg>') no-repeat 50% 50%;
+}
+
+
+.lh-perf-metric--average .lh-perf-metric__value {
   color: var(--average-color);
 }
+.lh-perf-metric--average .lh-perf-metric__value span::after {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>info</title><path fill="hsl(31, 100%, 45%)" d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm2 30h-4V22h4v12zm0-16h-4v-4h4v4z"/></svg>') no-repeat 50% 50%;
+}
 
-.lh-timeline-metric--fail .lh-timeline-metric__value {
+
+.lh-perf-metric--fail .lh-perf-metric__value {
   color: var(--fail-color);
 }
-
-.lh-timeline-metric__sparkline {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -1px;
-  height: 3px;
-  width: 100%;
+.lh-perf-metric--fail .lh-perf-metric__value span::after {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>warn</title><path fill="hsl(1, 73%, 45%)" d="M2 42h44L24 4 2 42zm24-6h-4v-4h4v4zm0-8h-4v-8h4v8z"/></svg>') no-repeat 50% 50%;
 }
 
-.lh-timeline-metric__sparkline .lh-sparkline__bar {
-  float: none;
-}
-
-.lh-timeline-metric--pass .lh-sparkline__bar {
-  background: var(--pass-color);
-}
-
-.lh-timeline-metric--average .lh-sparkline__bar {
-  background: var(--average-color);
-}
-
-.lh-timeline-metric--fail .lh-sparkline__bar {
-  background: var(--fail-color);
-}
-
-.lh-timeline-metric .lh-debug {
+.lh-perf-metric .lh-debug {
   margin-left: var(--expandable-indent);
 }
 
@@ -583,7 +587,7 @@ span.lh-node:hover {
 }
 
 /* correlate metric end location with sparkline */
-.lh-timeline-metric:hover .lh-sparkline__bar::after {
+.lh-perf-metric:hover .lh-sparkline__bar::after {
   content: '';
   height: 100vh;
   width: 2px;
@@ -722,13 +726,47 @@ span.lh-node:hover {
   display: flex;
   justify-content: center;
   overflow-x: hidden;
-  padding: var(--section-padding);
+  padding: var(--section-padding) var(--section-padding) calc(var(--section-padding) * 3);
   border-bottom: 1px solid var(--report-border-color);
+  position: relative;
 }
 .lh-scores-header__solo {
   padding: 0;
   border: 0;
 }
+
+.lh-scorescale {
+  position: absolute;
+  right: var(--section-padding);
+  bottom: var(--section-padding);
+  color: var(--medium-75-gray);
+}
+
+.lh-scorescale-range {
+  margin-left: 10px;
+}
+
+.lh-scorescale-range::before {
+  content: '';
+  width: var(--body-font-size);
+  height: calc(var(--body-font-size) * .60);
+  border-radius: 4px;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.lh-scorescale-range--pass::before {
+  background-color: var(--pass-color);
+}
+
+.lh-scorescale-range--average::before {
+  background-color: var(--average-color);
+}
+
+.lh-scorescale-range--fail::before {
+  background-color: var(--fail-color);
+}
+
 
 .lh-categories {
   width: 100%;
@@ -916,5 +954,49 @@ summary.lh-passed-audits-summary {
   width: var(--image-preview-size);
   object-fit: contain;
 }
+
+
+/* Tooltip */
+.tooltip-boundary {
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  display: none; /* Don't retain these layers when not needed */
+  opacity: 0;
+}
+
+.tooltip-boundary:hover .tooltip {
+  display: block;
+  animation: fadeInTooltip 150ms;
+  animation-fill-mode: forwards;
+  animation-delay: 500ms;
+  min-width: 15em;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 5px;
+  bottom: 100%;
+  z-index: 1;
+  will-change: opacity;
+}
+
+.tooltip::before {
+  content: "";
+  border: solid transparent;
+  border-bottom-color: #fff;
+  border-width: 10px;
+  position: absolute;
+  bottom: -20px;
+  transform: rotate(180deg);
+  pointer-events: none;
+}
+
+@keyframes fadeInTooltip {
+  0% { opacity: 0; }
+  75% { opacity: 1; }
+  100% { opacity: 1;  filter: drop-shadow(1px 0px 1px #aaa) drop-shadow(0px 2px 4px hsla(206, 6%, 25%, 0.15)); }
+}
+
 
 /*# sourceURL=report.styles.css */
