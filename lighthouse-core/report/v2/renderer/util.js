@@ -99,7 +99,7 @@ class Util {
    * @return {string}
    */
   static formatDuration(timeInMilliseconds) {
-    let timeInSeconds = timeInMilliseconds * 1000;
+    let timeInSeconds = timeInMilliseconds / 1000;
     if (Math.round(timeInSeconds) === 0) {
       return 'None';
     }

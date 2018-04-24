@@ -7,6 +7,7 @@
 
 const assert = require('assert');
 const Util = require('../../../../report/v2/renderer/util.js');
+const NBSP = '\xa0';
 
 /* eslint-env mocha */
 
@@ -24,6 +25,23 @@ describe('util helpers', () => {
       timestamp.includes('Apr 28, 2017') ||
       timestamp.includes('Apr 29, 2017')
     );
+  });
+
+  it('formats bytes', () => {
+    assert.equal(Util.formatBytesToKB(100), `0.1${NBSP}KB`);
+    assert.equal(Util.formatBytesToKB(2000), `2${NBSP}KB`);
+    assert.equal(Util.formatBytesToKB(1014 * 1024), `1,014${NBSP}KB`);
+  });
+
+  it('formats ms', () => {
+    assert.equal(Util.formatMilliseconds(123), `120${NBSP}ms`);
+    assert.equal(Util.formatMilliseconds(2456.5, 0.1), `2,456.5${NBSP}ms`);
+  });
+
+  it('formats a duration', () => {
+    assert.equal(Util.formatDuration(60 * 1000), `1${NBSP}m`);
+    assert.equal(Util.formatDuration(60 * 60 * 1000 + 5000), `1${NBSP}h 5${NBSP}s`);
+    assert.equal(Util.formatDuration(28 * 60 * 60 * 1000 + 5000), `1${NBSP}d 4${NBSP}h 5${NBSP}s`);
   });
 
   it('calculates a score ratings', () => {

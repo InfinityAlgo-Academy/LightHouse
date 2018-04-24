@@ -202,7 +202,7 @@ class CacheHeaders extends Audit {
         results.push({
           url,
           cacheControl,
-          cacheLifetimeInSeconds,
+          cacheLifetimeMs: cacheLifetimeInSeconds * 1000,
           cacheHitProbability,
           totalBytes,
           wastedBytes,
@@ -210,7 +210,7 @@ class CacheHeaders extends Audit {
       }
 
       results.sort(
-        (a, b) => a.cacheLifetimeInSeconds - b.cacheLifetimeInSeconds || b.totalBytes - a.totalBytes
+        (a, b) => a.cacheLifetimeMs - b.cacheLifetimeMs || b.totalBytes - a.totalBytes
       );
 
       const score = Audit.computeLogNormalScore(
@@ -221,7 +221,7 @@ class CacheHeaders extends Audit {
 
       const headings = [
         {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'cacheLifetimeInSeconds', itemType: 'ms', text: 'Cache TTL', displayUnit: 'duration'},
+        {key: 'cacheLifetimeMs', itemType: 'ms', text: 'Cache TTL', displayUnit: 'duration'},
         {key: 'totalBytes', itemType: 'bytes', text: 'Size (KB)', displayUnit: 'kb',
           granularity: 1},
       ];
