@@ -50,10 +50,10 @@ class SpeedIndex extends MetricArtifact {
     const fcpTimeInMs = extras.fcpResult.timing;
     const estimate = extras.optimistic
       ? extras.speedline.speedIndex
-      : SpeedIndex.computeLayoutBasedSpeedIndex(simulationResult.nodeTiming, fcpTimeInMs);
+      : SpeedIndex.computeLayoutBasedSpeedIndex(simulationResult.nodeTimings, fcpTimeInMs);
     return {
       timeInMs: estimate,
-      nodeTiming: simulationResult.nodeTiming,
+      nodeTimings: simulationResult.nodeTimings,
     };
   }
 
@@ -84,14 +84,14 @@ class SpeedIndex extends MetricArtifact {
    * different methods. Read more in the evaluation doc.
    *
    * @see https://docs.google.com/document/d/1qJWXwxoyVLVadezIp_Tgdk867G3tDNkkVRvUJSH3K1E/edit#
-   * @param {Map<Node, LH.Gatherer.Simulation.NodeTiming>} nodeTiming
+   * @param {Map<Node, LH.Gatherer.Simulation.NodeTiming>} nodeTimings
    * @param {number} fcpTimeInMs
    * @return {number}
    */
-  static computeLayoutBasedSpeedIndex(nodeTiming, fcpTimeInMs) {
+  static computeLayoutBasedSpeedIndex(nodeTimings, fcpTimeInMs) {
     /** @type {Array<{time: number, weight: number}>} */
     const layoutWeights = [];
-    for (const [node, timing] of nodeTiming.entries()) {
+    for (const [node, timing] of nodeTimings.entries()) {
       if (node.type !== Node.TYPES.CPU) continue;
       if (!timing.startTime || !timing.endTime) continue;
 

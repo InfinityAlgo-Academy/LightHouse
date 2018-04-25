@@ -71,13 +71,13 @@ class ConsistentlyInteractive extends MetricArtifact {
    * @return {LH.Gatherer.Simulation.Result}
    */
   getEstimateFromSimulation(simulationResult, extras) {
-    const lastTaskAt = ConsistentlyInteractive.getLastLongTaskEndTime(simulationResult.nodeTiming);
+    const lastTaskAt = ConsistentlyInteractive.getLastLongTaskEndTime(simulationResult.nodeTimings);
     const minimumTime = extras.optimistic
       ? extras.fmpResult.optimisticEstimate.timeInMs
       : extras.fmpResult.pessimisticEstimate.timeInMs;
     return {
       timeInMs: Math.max(minimumTime, lastTaskAt),
-      nodeTiming: simulationResult.nodeTiming,
+      nodeTimings: simulationResult.nodeTimings,
     };
   }
 
@@ -94,12 +94,12 @@ class ConsistentlyInteractive extends MetricArtifact {
   }
 
   /**
-   * @param {Map<Node, {startTime?: number, endTime?: number}>} nodeTiming
+   * @param {Map<Node, LH.Gatherer.Simulation.NodeTiming>} nodeTimings
    * @return {number}
    */
-  static getLastLongTaskEndTime(nodeTiming, duration = 50) {
+  static getLastLongTaskEndTime(nodeTimings, duration = 50) {
     // @ts-ignore TS can't infer how the object invariants change
-    return Array.from(nodeTiming.entries())
+    return Array.from(nodeTimings.entries())
       .filter(([node, timing]) => {
         if (node.type !== Node.TYPES.CPU) return false;
         if (!timing.endTime || !timing.startTime) return false;

@@ -23,14 +23,14 @@ const WebInspector = require('../../lib/web-inspector');
 const MINIMUM_WASTED_MS = 50;
 
 /**
- * Given a simulation's nodeTiming, return an object with the nodes/timing keyed by network URL
- * @param {LH.Gatherer.Simulation.Result['nodeTiming']} nodeTimingMap
+ * Given a simulation's nodeTimings, return an object with the nodes/timing keyed by network URL
+ * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
  * @return {Object<string, {node: Node, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>}
  */
-const getNodesAndTimingByUrl = nodeTimingMap => {
-  const nodes = Array.from(nodeTimingMap.keys());
+const getNodesAndTimingByUrl = nodeTimings => {
+  const nodes = Array.from(nodeTimings.keys());
   return nodes.reduce((map, node) => {
-    map[node.record && node.record.url] = {node, nodeTiming: nodeTimingMap.get(node)};
+    map[node.record && node.record.url] = {node, nodeTiming: nodeTimings.get(node)};
     return map;
   }, {});
 };
@@ -70,7 +70,7 @@ class RenderBlockingResources extends Audit {
     const fcpSimulation = await artifacts.requestFirstContentfulPaint(metricComputationData);
     const fcpTsInMs = traceOfTab.timestamps.firstContentfulPaint / 1000;
 
-    const nodesByUrl = getNodesAndTimingByUrl(fcpSimulation.optimisticEstimate.nodeTiming);
+    const nodesByUrl = getNodesAndTimingByUrl(fcpSimulation.optimisticEstimate.nodeTimings);
 
     const results = [];
     const deferredNodeIds = new Set();

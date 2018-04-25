@@ -40,7 +40,7 @@ describe('DependencyGraph/Simulator', () => {
     const serverResponseTimeByOrigin = new Map([['http://example.com', 500]]);
 
     function assertNodeTiming(result, node, assertions) {
-      const timing = result.nodeTiming.get(node);
+      const timing = result.nodeTimings.get(node);
       assert.ok(timing, 'missing node timing information');
       Object.keys(assertions).forEach(key => {
         assert.equal(timing[key], assertions[key]);

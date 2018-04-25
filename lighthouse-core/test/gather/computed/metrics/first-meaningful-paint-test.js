@@ -42,8 +42,8 @@ describe('Metrics: FMP', () => {
     assert.equal(Math.round(result.timing), 2851);
     assert.equal(Math.round(result.optimisticEstimate.timeInMs), 911);
     assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 1198);
-    assert.equal(result.optimisticEstimate.nodeTiming.size, 4);
-    assert.equal(result.pessimisticEstimate.nodeTiming.size, 7);
+    assert.equal(result.optimisticEstimate.nodeTimings.size, 4);
+    assert.equal(result.pessimisticEstimate.nodeTimings.size, 7);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
   });

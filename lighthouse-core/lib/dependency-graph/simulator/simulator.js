@@ -52,7 +52,7 @@ class Simulator {
     this._layoutTaskMultiplier = this._cpuSlowdownMultiplier * this._options.layoutTaskMultiplier;
 
     // Properties reset on every `.simulate` call but duplicated here for type checking
-    this._nodeTiming = new Map();
+    this._nodeTimings = new Map();
     this._numberInProgressByType = new Map();
     this._nodes = {};
     // @ts-ignore
@@ -78,7 +78,7 @@ class Simulator {
    * Initializes the various state data structures such as _nodesReadyToStart and _nodesCompleted.
    */
   _initializeAuxiliaryData() {
-    this._nodeTiming = new Map();
+    this._nodeTimings = new Map();
     this._numberInProgressByType = new Map();
 
     this._nodes = {};
@@ -100,9 +100,9 @@ class Simulator {
    * @param {LH.Gatherer.Simulation.NodeTiming} values
    */
   _setTimingData(node, values) {
-    const timingData = this._nodeTiming.get(node) || {};
+    const timingData = this._nodeTimings.get(node) || {};
     Object.assign(timingData, values);
-    this._nodeTiming.set(node, timingData);
+    this._nodeTimings.set(node, timingData);
   }
 
   /**
@@ -195,7 +195,7 @@ class Simulator {
    */
   _estimateTimeRemaining(node) {
     if (node.type === Node.TYPES.CPU) {
-      const timingData = this._nodeTiming.get(node);
+      const timingData = this._nodeTimings.get(node);
       const multiplier = /** @type {CpuNode} */ (node).didPerformLayout()
         ? this._layoutTaskMultiplier
         : this._cpuSlowdownMultiplier;
@@ -211,7 +211,7 @@ class Simulator {
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
     const record = /** @type {NetworkNode} */ (node).record;
-    const timingData = this._nodeTiming.get(node);
+    const timingData = this._nodeTimings.get(node);
     const connection = /** @type {TcpConnection} */ (this._connectionPool.acquire(record));
     const calculation = connection.simulateDownloadUntil(
       record.transferSize - timingData.bytesDownloaded,
@@ -243,7 +243,7 @@ class Simulator {
    * @param {number} totalElapsedTime
    */
   _updateProgressMadeInTimePeriod(node, timePeriodLength, totalElapsedTime) {
-    const timingData = this._nodeTiming.get(node);
+    const timingData = this._nodeTimings.get(node);
     const isFinished = timingData.estimatedTimeElapsed === timePeriodLength;
 
     if (node.type === Node.TYPES.CPU) {
@@ -329,7 +329,7 @@ class Simulator {
 
     return {
       timeInMs: totalElapsedTime,
-      nodeTiming: this._nodeTiming,
+      nodeTimings: this._nodeTimings,
     };
   }
 }

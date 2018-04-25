@@ -61,7 +61,7 @@ declare global {
 
       export interface Result {
         timeInMs: number;
-        nodeTiming: Map<GraphNode, NodeTiming>;
+        nodeTimings: Map<GraphNode, NodeTiming>;
       }
     }
   }
