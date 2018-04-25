@@ -198,4 +198,31 @@ describe('Byte efficiency base audit', () => {
 
     assert.equal(result.rawValue, 300);
   });
+
+  it('should create load simulator with the specified settings', async () => {
+    class MockAudit extends ByteEfficiencyAudit {
+      static audit_(artifacts, records) {
+        return {
+          results: records.map(record => ({url: record.url, wastedBytes: record.transferSize})),
+          headings: [],
+        };
+      }
+    }
+
+    const artifacts = Runner.instantiateComputedArtifacts();
+    artifacts.traces = {defaultPass: trace};
+    artifacts.devtoolsLogs = {defaultPass: devtoolsLog};
+
+    const modestThrottling = {rttMs: 150, throughputKbps: 1000, cpuSlowdownMultiplier: 2};
+    const ultraSlowThrottling = {rttMs: 150, throughputKbps: 100, cpuSlowdownMultiplier: 8};
+    let settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
+    let result = await MockAudit.audit(artifacts, {settings});
+    // expect modest savings
+    assert.equal(result.rawValue, 800);
+
+    settings = {throttlingMethod: 'simulate', throttling: ultraSlowThrottling};
+    result = await MockAudit.audit(artifacts, {settings});
+    // expect lots of savings
+    assert.equal(result.rawValue, 22350);
+  });
 });

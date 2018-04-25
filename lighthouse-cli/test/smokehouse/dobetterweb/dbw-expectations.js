@@ -67,22 +67,6 @@ module.exports = [
       'geolocation-on-start': {
         score: 0,
       },
-      'link-blocking-first-paint': {
-        score: 0,
-        rawValue: '<3000',
-        extendedInfo: {
-          value: {
-            results: {
-              length: 5,
-            },
-          },
-        },
-        details: {
-          items: {
-            length: 5,
-          },
-        },
-      },
       'no-document-write': {
         score: 0,
         extendedInfo: {
@@ -126,18 +110,12 @@ module.exports = [
       'notification-on-start': {
         score: 0,
       },
-      'script-blocking-first-paint': {
+      'render-blocking-resources': {
         score: '<1',
-        extendedInfo: {
-          value: {
-            results: {
-              length: 2,
-            },
-          },
-        },
+        rawValue: '>100',
         details: {
           items: {
-            length: 2,
+            length: 7,
           },
         },
       },

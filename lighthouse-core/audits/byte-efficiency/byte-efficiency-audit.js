@@ -78,8 +78,7 @@ class UnusedBytes extends Audit {
     const settings = context && context.settings || {};
     const simulatorOptions = {
       devtoolsLog,
-      throttlingMethod: settings.throttlingMethod,
-      throttling: settings.throttling,
+      settings,
     };
 
     return artifacts

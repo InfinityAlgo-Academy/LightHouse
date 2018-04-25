@@ -2834,6 +2834,69 @@
         }
       }
     },
+    "render-blocking-resources": {
+      "score": 0,
+      "displayValue": "5 resources delayed first paint by 1129ms",
+      "rawValue": 1129,
+      "scoreDisplayMode": "numeric",
+      "informative": true,
+      "name": "render-blocking-resources",
+      "description": "Eliminate render-blocking resources",
+      "helpText": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "url",
+            "text": "URL"
+          },
+          {
+            "key": "totalBytes",
+            "itemType": "bytes",
+            "displayUnit": "kb",
+            "granularity": 0.01,
+            "text": "Size (KB)"
+          },
+          {
+            "key": "wastedMs",
+            "itemType": "ms",
+            "text": "Download Time (ms)",
+            "granularity": 1
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
+            "totalBytes": 821,
+            "wastedMs": 873
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
+            "totalBytes": 139,
+            "wastedMs": 873
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
+            "totalBytes": 821,
+            "wastedMs": 873
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
+            "totalBytes": 736,
+            "wastedMs": 723
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "totalBytes": 1703,
+            "wastedMs": 723
+          }
+        ],
+        "summary": {
+          "wastedMs": 1129
+        }
+      }
+    },
     "unminified-css": {
       "score": 1,
       "displayValue": "",
@@ -3402,90 +3465,6 @@
             }
           }
         ]
-      }
-    },
-    "link-blocking-first-paint": {
-      "score": 0,
-      "displayValue": "4 resources delayed first paint by 2,214 ms",
-      "rawValue": 2214,
-      "extendedInfo": {
-        "value": {
-          "results": [
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-              "totalBytes": 821,
-              "wastedMs": 2213.8710000144783
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
-              "totalBytes": 736,
-              "wastedMs": 593.0220000154804
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-              "totalBytes": 139,
-              "wastedMs": 577.7950000192504
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
-              "totalBytes": 821,
-              "wastedMs": 569.1630000073928
-            }
-          ]
-        }
-      },
-      "scoreDisplayMode": "numeric",
-      "informative": true,
-      "name": "link-blocking-first-paint",
-      "description": "Reduce render-blocking stylesheets",
-      "helpText": "External stylesheets are blocking the first paint of your page. Consider delivering critical CSS via `<style>` tags and deferring non-critical styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "totalBytes",
-            "itemType": "bytes",
-            "displayUnit": "kb",
-            "granularity": 0.01,
-            "text": "Size (KB)"
-          },
-          {
-            "key": "wastedMs",
-            "itemType": "ms",
-            "text": "Delayed Paint By (ms)",
-            "granularity": 1
-          }
-        ],
-        "items": [
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-            "totalBytes": 821,
-            "wastedMs": 2213.8710000144783
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
-            "totalBytes": 736,
-            "wastedMs": 593.0220000154804
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-            "totalBytes": 139,
-            "wastedMs": 577.7950000192504
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
-            "totalBytes": 821,
-            "wastedMs": 569.1630000073928
-          }
-        ],
-        "summary": {
-          "wastedMs": 2214
-        }
       }
     },
     "no-document-write": {
@@ -4079,60 +4058,6 @@
         ]
       }
     },
-    "script-blocking-first-paint": {
-      "score": 0,
-      "displayValue": "1 resource delayed first paint by 1,148 ms",
-      "rawValue": 1148,
-      "extendedInfo": {
-        "value": {
-          "results": [
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-              "totalBytes": 1703,
-              "wastedMs": 1148.00399998785
-            }
-          ]
-        }
-      },
-      "scoreDisplayMode": "numeric",
-      "informative": true,
-      "name": "script-blocking-first-paint",
-      "description": "Reduce render-blocking scripts",
-      "helpText": "Script elements are blocking the first paint of your page. Consider inlining critical scripts and deferring non-critical ones. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "totalBytes",
-            "itemType": "bytes",
-            "displayUnit": "kb",
-            "granularity": 0.01,
-            "text": "Size (KB)"
-          },
-          {
-            "key": "wastedMs",
-            "itemType": "ms",
-            "text": "Delayed Paint By (ms)",
-            "granularity": 1
-          }
-        ],
-        "items": [
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "totalBytes": 1703,
-            "wastedMs": 1148.00399998785
-          }
-        ],
-        "summary": {
-          "wastedMs": 1148
-        }
-      }
-    },
     "uses-http2": {
       "score": 0,
       "displayValue": "15 requests were not handled over HTTP/2",
@@ -4690,12 +4615,7 @@
           "group": "perf-metric"
         },
         {
-          "id": "link-blocking-first-paint",
-          "weight": 0,
-          "group": "perf-hint"
-        },
-        {
-          "id": "script-blocking-first-paint",
+          "id": "render-blocking-resources",
           "weight": 0,
           "group": "perf-hint"
         },

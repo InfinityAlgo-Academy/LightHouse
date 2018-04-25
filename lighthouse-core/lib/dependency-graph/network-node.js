@@ -65,7 +65,10 @@ class NetworkNode extends Node {
   hasRenderBlockingPriority() {
     const priority = this._record.priority();
     const isScript = this._record._resourceType === WebInspector.resourceTypes.Script;
-    return priority === 'VeryHigh' || (priority === 'High' && isScript);
+    const isDocument = this._record._resourceType === WebInspector.resourceTypes.Document;
+    const isBlockingScript = priority === 'High' && isScript;
+    const isBlockingHtmlImport = priority === 'High' && isDocument;
+    return priority === 'VeryHigh' || isBlockingScript || isBlockingHtmlImport;
   }
 
   /**

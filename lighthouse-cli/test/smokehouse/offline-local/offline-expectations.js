@@ -30,7 +30,7 @@ module.exports = [
       'geolocation-on-start': {
         score: 1,
       },
-      'link-blocking-first-paint': {
+      'render-blocking-resources': {
         score: 1,
       },
       'no-document-write': {
@@ -40,9 +40,6 @@ module.exports = [
         score: 1,
       },
       'no-websql': {
-        score: 1,
-      },
-      'script-blocking-first-paint': {
         score: 1,
       },
       'uses-passive-event-listeners': {
