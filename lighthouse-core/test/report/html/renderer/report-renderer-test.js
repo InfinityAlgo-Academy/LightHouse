@@ -10,23 +10,24 @@
 const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
-const Util = require('../../../../report/v2/renderer/util.js');
+const Util = require('../../../../report/html/renderer/util.js');
 const URL = require('../../../../lib/url-shim');
-const DOM = require('../../../../report/v2/renderer/dom.js');
-const DetailsRenderer = require('../../../../report/v2/renderer/details-renderer.js');
-const ReportUIFeatures = require('../../../../report/v2/renderer/report-ui-features.js');
-const CategoryRenderer = require('../../../../report/v2/renderer/category-renderer.js');
+const DOM = require('../../../../report/html/renderer/dom.js');
+const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
+const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-features.js');
+const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
 // lazy loaded because it depends on CategoryRenderer to be available globally
 let PerformanceCategoryRenderer = null;
 const CriticalRequestChainRenderer = require(
-    '../../../../report/v2/renderer/crc-details-renderer.js');
-const ReportRenderer = require('../../../../report/v2/renderer/report-renderer.js');
+    '../../../../report/html/renderer/crc-details-renderer.js');
+const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
 const sampleResults = require('../../../results/sample_v2.json');
 
 const TIMESTAMP_REGEX = /\d+, \d{4}.*\d+:\d+/;
-const TEMPLATE_FILE = fs.readFileSync(__dirname + '/../../../../report/v2/templates.html', 'utf8');
+const TEMPLATE_FILE = fs.readFileSync(__dirname +
+    '/../../../../report/html/templates.html', 'utf8');
 
-describe('ReportRenderer V2', () => {
+describe('ReportRenderer', () => {
   let renderer;
 
   before(() => {
@@ -38,7 +39,7 @@ describe('ReportRenderer V2', () => {
     global.CategoryRenderer = CategoryRenderer;
     if (!PerformanceCategoryRenderer) {
       PerformanceCategoryRenderer =
-        require('../../../../report/v2/renderer/performance-category-renderer.js');
+        require('../../../../report/html/renderer/performance-category-renderer.js');
     }
     global.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
 

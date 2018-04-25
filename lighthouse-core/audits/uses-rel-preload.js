@@ -7,7 +7,7 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/v2/renderer/util');
+const Util = require('../report/html/renderer/util');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
 const THRESHOLD_IN_MS = 100;
 

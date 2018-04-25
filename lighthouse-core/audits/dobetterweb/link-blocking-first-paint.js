@@ -11,7 +11,7 @@
 'use strict';
 
 const Audit = require('../audit');
-const Util = require('../../report/v2/renderer/util.js');
+const Util = require('../../report/html/renderer/util.js');
 const ByteEfficiencyAudit = require('../byte-efficiency/byte-efficiency-audit');
 
 // Because of the way we detect blocking stylesheets, asynchronously loaded

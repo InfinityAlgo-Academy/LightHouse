@@ -7,7 +7,7 @@
 
 const Audit = require('./audit');
 const WebInspector = require('../lib/web-inspector');
-const Util = require('../report/v2/renderer/util');
+const Util = require('../report/html/renderer/util');
 const {groupIdToName, taskToGroup} = require('../lib/task-groups');
 const THRESHOLD_IN_MS = 10;
 

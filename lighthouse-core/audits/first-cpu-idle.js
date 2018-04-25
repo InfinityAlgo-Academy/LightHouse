@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/v2/renderer/util.js');
+const Util = require('../report/html/renderer/util.js');
 
 class FirstCPUIdle extends Audit {
   /**

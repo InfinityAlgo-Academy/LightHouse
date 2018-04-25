@@ -20,7 +20,7 @@ const uglifyEs = require('uglify-es');
 const composer = require('gulp-uglify/composer');
 const uglify = composer(uglifyEs, console);
 
-const htmlReportAssets = require('../lighthouse-core/report/v2/html-report-assets');
+const htmlReportAssets = require('../lighthouse-core/report/html/html-report-assets');
 const lighthousePackage = require('../package.json');
 
 const $ = gulpLoadPlugins();
@@ -96,7 +96,7 @@ gulp.task('polyfills', () => {
 // Combine multiple JS bundles into single viewer.js file.
 gulp.task('compile-js', () => {
   // JS bundle from browserified ReportGenerator.
-  const generatorFilename = __dirname + '/../lighthouse-core/report/v2/report-generator.js';
+  const generatorFilename = __dirname + '/../lighthouse-core/report/report-generator.js';
   const opts = {standalone: 'ReportGenerator'};
   const generatorJs = browserify(generatorFilename, opts)
     .transform('brfs')
@@ -136,14 +136,14 @@ gulp.task('clean', () => {
 gulp.task('watch', ['build'], () => {
   gulp.watch([
     'app/styles/**/*.css',
-    '../lighthouse-core/report/v2/**/*.css',
+    '../lighthouse-core/report/html/**/*.css',
   ]).on('change', () => {
     runSequence('concat-css');
   });
 
   gulp.watch([
     'app/index.html',
-    '../lighthouse-core/report/v2/templates.html',
+    '../lighthouse-core/report/html/templates.html',
   ]).on('change', () => {
     runSequence('html');
   });
@@ -156,7 +156,7 @@ gulp.task('watch', ['build'], () => {
   });
 
   gulp.watch([
-    '../lighthouse-core/report/v2/report-generator.js',
+    '../lighthouse-core/report/report-generator.js',
     'app/src/*.js',
   ]).on('change', () => {
     runSequence('compile-js');

@@ -13,7 +13,7 @@
 'use strict';
 
 const Audit = require('../audit');
-const Util = require('../../report/v2/renderer/util.js');
+const Util = require('../../report/html/renderer/util.js');
 
 const MAX_DOM_NODES = 1500;
 const MAX_DOM_TREE_WIDTH = 60;

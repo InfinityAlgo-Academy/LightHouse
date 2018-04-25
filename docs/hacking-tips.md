@@ -24,7 +24,7 @@ npm run start -- --output=json --output-path=lighthouse-core/test/results/sample
 
 After updating, consider deleting any irrelevant changes from the diff (exact timings, timestamps, etc). Be sure to run the tests.
 
-## Iterating on the v2 report
+## Iterating on the report
 
 This will generate new reports from the same results json.
 
@@ -33,15 +33,15 @@ This will generate new reports from the same results json.
 lighthouse --output=json http://example.com > temp.report.json
 
 # quickly generate reports:
-node generate_report_v2.js > temp.report.html; open temp.report.html
+node generate_report.js > temp.report.html; open temp.report.html
 ```
 ```js
-// generate_report_v2.js
+// generate_report.js
 'use strict';
 
-const ReportGeneratorV2 = require('./lighthouse-core/report/v2/report-generator');
+const ReportGenerator = require('./lighthouse-core/report/report-generator');
 const results = require('./temp.report.json');
-const html = ReportGeneratorV2.generateReportHtml(results);
+const html = ReportGenerator.generateReportHtml(results);
 
 console.log(html);
 ```

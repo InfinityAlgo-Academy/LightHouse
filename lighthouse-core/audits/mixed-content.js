@@ -7,7 +7,7 @@
 
 const Audit = require('./audit');
 const URL = require('../lib/url-shim');
-const Util = require('../report/v2/renderer/util');
+const Util = require('../report/html/renderer/util');
 
 /**
  * This audit checks which resources a page currently loads over HTTP which it

@@ -8,18 +8,18 @@
 const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
-const ReportGeneratorV2 = require('../../../report/v2/report-generator.js');
-const TEMPLATES_FILE = fs.readFileSync(__dirname + '/../../../report/v2/templates.html', 'utf8');
-const sampleResults = require('../../../../lighthouse-core/test/results/sample_v2.json');
+const ReportGenerator = require('../../report/report-generator.js');
+const TEMPLATES_FILE = fs.readFileSync(__dirname + '/../../report/html/templates.html', 'utf8');
+const sampleResults = require('../../../lighthouse-core/test/results/sample_v2.json');
 const csvValidator = require('csv-validator');
 
 /* eslint-env mocha */
 
-describe('ReportGeneratorV2', () => {
+describe('ReportGenerator', () => {
   describe('#replaceStrings', () => {
     it('should replace all occurrences', () => {
       const source = '%foo! %foo %bar!';
-      const result = ReportGeneratorV2.replaceStrings(source, [
+      const result = ReportGenerator.replaceStrings(source, [
         {search: '%foo', replacement: 'hey'},
         {search: '%bar', replacement: 'you'},
       ]);
@@ -28,7 +28,7 @@ describe('ReportGeneratorV2', () => {
     });
 
     it('should not replace serial occurences', () => {
-      const result = ReportGeneratorV2.replaceStrings('%1', [
+      const result = ReportGenerator.replaceStrings('%1', [
         {search: '%1', replacement: '%2'},
         {search: '%2', replacement: 'pwnd'},
       ]);
@@ -39,34 +39,34 @@ describe('ReportGeneratorV2', () => {
 
   describe('#generateHtmlReport', () => {
     it('should return html', () => {
-      const result = ReportGeneratorV2.generateReportHtml({});
+      const result = ReportGenerator.generateReportHtml({});
       assert.ok(result.includes('doctype html'), 'includes doctype');
       assert.ok(result.trim().match(/<\/html>$/), 'ends with HTML tag');
     });
 
     it('should inject the report JSON', () => {
       const code = 'hax\u2028hax</script><script>console.log("pwned");%%LIGHTHOUSE_JAVASCRIPT%%';
-      const result = ReportGeneratorV2.generateReportHtml({code});
+      const result = ReportGenerator.generateReportHtml({code});
       assert.ok(result.includes('"code":"hax\\u2028'), 'injects the json');
       assert.ok(result.includes('hax\\u003c/script'), 'escapes HTML tags');
       assert.ok(result.includes('LIGHTHOUSE_JAVASCRIPT'), 'cannot be tricked');
     });
 
     it('should inject the report templates', () => {
-      const page = jsdom.jsdom(ReportGeneratorV2.generateReportHtml({}));
+      const page = jsdom.jsdom(ReportGenerator.generateReportHtml({}));
       const templates = jsdom.jsdom(TEMPLATES_FILE);
       assert.equal(page.querySelectorAll('template[id^="tmpl-"]').length,
           templates.querySelectorAll('template[id^="tmpl-"]').length, 'all templates injected');
     });
 
     it('should inject the report CSS', () => {
-      const result = ReportGeneratorV2.generateReportHtml({});
+      const result = ReportGenerator.generateReportHtml({});
       assert.ok(!result.includes('/*%%LIGHTHOUSE_CSS%%*/'));
       assert.ok(result.includes('--pass-color'));
     });
 
     it('should inject the report renderer javascript', () => {
-      const result = ReportGeneratorV2.generateReportHtml({});
+      const result = ReportGenerator.generateReportHtml({});
       assert.ok(result.includes('ReportRenderer'), 'injects the script');
       assert.ok(result.includes('robustness: \\u003c/script'), 'escapes HTML tags in javascript');
       assert.ok(result.includes('pre$`post'), 'does not break from String.replace');
@@ -76,12 +76,12 @@ describe('ReportGeneratorV2', () => {
 
   describe('#generateReport', () => {
     it('creates JSON for results', () => {
-      const jsonOutput = ReportGeneratorV2.generateReport(sampleResults, 'json');
+      const jsonOutput = ReportGenerator.generateReport(sampleResults, 'json');
       assert.doesNotThrow(_ => JSON.parse(jsonOutput));
     });
 
     it('creates HTML for results', () => {
-      const htmlOutput = ReportGeneratorV2.generateReport(sampleResults, 'html');
+      const htmlOutput = ReportGenerator.generateReport(sampleResults, 'html');
       assert.ok(/<!doctype/gim.test(htmlOutput));
       assert.ok(/<html lang="en"/gim.test(htmlOutput));
     });
@@ -96,7 +96,7 @@ describe('ReportGeneratorV2', () => {
         score: 42,
       };
 
-      const csvOutput = ReportGeneratorV2.generateReport(sampleResults, 'csv');
+      const csvOutput = ReportGenerator.generateReport(sampleResults, 'csv');
       fs.writeFileSync(path, csvOutput);
 
       try {
@@ -109,7 +109,7 @@ describe('ReportGeneratorV2', () => {
     });
 
     it('writes extended info', () => {
-      const htmlOutput = ReportGeneratorV2.generateReport(sampleResults, 'html');
+      const htmlOutput = ReportGenerator.generateReport(sampleResults, 'html');
       const outputCheck = new RegExp('dobetterweb/dbw_tester.css', 'i');
       assert.ok(outputCheck.test(htmlOutput));
     });

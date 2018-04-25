@@ -17,7 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const URL = require('./lib/url-shim');
 const Sentry = require('./lib/sentry');
-const generateReport = require('./report/v2/report-generator').generateReport;
+const generateReport = require('./report/report-generator').generateReport;
 
 const Connection = require('./gather/connections/connection.js'); // eslint-disable-line no-unused-vars
 

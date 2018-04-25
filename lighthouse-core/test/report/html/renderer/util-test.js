@@ -6,7 +6,7 @@
 'use strict';
 
 const assert = require('assert');
-const Util = require('../../../../report/v2/renderer/util.js');
+const Util = require('../../../../report/html/renderer/util.js');
 const NBSP = '\xa0';
 
 /* eslint-env mocha */

@@ -14,7 +14,7 @@
 const isDeepEqual = require('lodash.isequal');
 const Audit = require('./audit');
 const mobile3GThrottling = require('../config/constants').throttling.mobile3G;
-const Util = require('../report/v2/renderer/util.js');
+const Util = require('../report/html/renderer/util.js');
 
 // Maximum TTI to be considered "fast" for PWA baseline checklist
 //   https://developers.google.com/web/progressive-web-apps/checklist

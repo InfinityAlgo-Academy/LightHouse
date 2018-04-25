@@ -24,7 +24,7 @@ gulp.task('compile-report', () => {
     'closure/typedefs/viewer-externs.js',
 
     'lib/file-namer.js',
-    'report/v2/renderer/*.js',
+    'report/html/renderer/*.js',
     '../lighthouse-viewer/app/src/viewer-ui-features.js',
   ])
 

@@ -30,14 +30,14 @@ else
   echo -e "\033[96m ✓\033[39m Chromium folder in place."
 fi
 
-v2dir="lighthouse-core/report/v2"
+report_dir="lighthouse-core/report/html"
 fe_lh_dir="$frontend_dir/audits2/lighthouse"
 
 lh_bg_js="lighthouse-extension/dist/scripts/lighthouse-background.js"
 lh_worker_dir="$frontend_dir/audits2_worker/lighthouse"
 
 # copy report files
-cp -pPR $v2dir/{report-styles.css,templates.html,renderer} "$fe_lh_dir"
+cp -pPR $report_dir/{report-styles.css,templates.html,renderer} "$fe_lh_dir"
 echo -e "\033[32m ✓\033[39m Report renderer files copied."
 
 # copy lighthouse-background (potentially stale)

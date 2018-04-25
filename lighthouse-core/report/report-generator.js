@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const htmlReportAssets = require('./html-report-assets');
+const htmlReportAssets = require('./html/html-report-assets');
 
-class ReportGeneratorV2 {
+class ReportGenerator {
   /**
    * Replaces all the specified strings in source without serial replacements.
    * @param {string} source
@@ -23,7 +23,7 @@ class ReportGeneratorV2 {
     const nextReplacements = replacements.slice(1);
     return source
         .split(firstReplacement.search)
-        .map(part => ReportGeneratorV2.replaceStrings(part, nextReplacements))
+        .map(part => ReportGenerator.replaceStrings(part, nextReplacements))
         .join(firstReplacement.replacement);
   }
 
@@ -39,7 +39,7 @@ class ReportGeneratorV2 {
       .replace(/\u2029/g, '\\u2029'); // replaces paragraph separators
     const sanitizedJavascript = htmlReportAssets.REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
 
-    return ReportGeneratorV2.replaceStrings(htmlReportAssets.REPORT_TEMPLATE, [
+    return ReportGenerator.replaceStrings(htmlReportAssets.REPORT_TEMPLATE, [
       {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
       {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: sanitizedJavascript},
       {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: htmlReportAssets.REPORT_CSS},
@@ -92,11 +92,11 @@ class ReportGeneratorV2 {
   static generateReport(lhr, outputMode) {
     // HTML report.
     if (outputMode === 'html') {
-      return ReportGeneratorV2.generateReportHtml(lhr);
+      return ReportGenerator.generateReportHtml(lhr);
     }
     // CSV report.
     if (outputMode === 'csv') {
-      return ReportGeneratorV2.generateReportCSV(lhr);
+      return ReportGenerator.generateReportCSV(lhr);
     }
     // JSON report.
     if (outputMode === 'json') {
@@ -107,4 +107,4 @@ class ReportGeneratorV2 {
   }
 }
 
-module.exports = ReportGeneratorV2;
+module.exports = ReportGenerator;

@@ -12,7 +12,7 @@
  */
 
 const Audit = require('./audit');
-const Util = require('../report/v2/renderer/util');
+const Util = require('../report/html/renderer/util');
 
 class Deprecations extends Audit {
   /**

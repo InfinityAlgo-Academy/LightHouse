@@ -125,7 +125,7 @@ gulp.task('browserify-lighthouse', () => {
 
       // Prevent the DevTools background script from getting the stringified HTML.
       if (/lighthouse-background/.test(file.path)) {
-        bundle.ignore(require.resolve('../lighthouse-core/report/v2/html-report-assets.js'));
+        bundle.ignore(require.resolve('../lighthouse-core/report/html/html-report-assets.js'));
       }
 
       // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.

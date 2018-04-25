@@ -9,11 +9,12 @@ const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
 const URL = require('../../../../lib/url-shim');
-const DOM = require('../../../../report/v2/renderer/dom.js');
-const Util = require('../../../../report/v2/renderer/util.js');
-const DetailsRenderer = require('../../../../report/v2/renderer/details-renderer.js');
+const DOM = require('../../../../report/html/renderer/dom.js');
+const Util = require('../../../../report/html/renderer/util.js');
+const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 
-const TEMPLATE_FILE = fs.readFileSync(__dirname + '/../../../../report/v2/templates.html', 'utf8');
+const TEMPLATE_FILE = fs.readFileSync(__dirname +
+    '/../../../../report/html/templates.html', 'utf8');
 
 /* eslint-env mocha */
 

@@ -10,17 +10,18 @@
 const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
-const Util = require('../../../../report/v2/renderer/util.js');
+const Util = require('../../../../report/html/renderer/util.js');
 const URL = require('../../../../lib/url-shim');
-const DOM = require('../../../../report/v2/renderer/dom.js');
-const DetailsRenderer = require('../../../../report/v2/renderer/details-renderer.js');
+const DOM = require('../../../../report/html/renderer/dom.js');
+const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const CriticalRequestChainRenderer = require(
-    '../../../../report/v2/renderer/crc-details-renderer.js');
-const CategoryRenderer = require('../../../../report/v2/renderer/category-renderer.js');
-const ReportRenderer = require('../../../../report/v2/renderer/report-renderer.js');
+    '../../../../report/html/renderer/crc-details-renderer.js');
+const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
+const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
 const sampleResults = require('../../../results/sample_v2.json');
 
-const TEMPLATE_FILE = fs.readFileSync(__dirname + '/../../../../report/v2/templates.html', 'utf8');
+const TEMPLATE_FILE = fs.readFileSync(__dirname +
+    '/../../../../report/html/templates.html', 'utf8');
 
 describe('PerfCategoryRenderer', () => {
   let renderer;
@@ -32,7 +33,7 @@ describe('PerfCategoryRenderer', () => {
     global.CategoryRenderer = CategoryRenderer;
 
     const PerformanceCategoryRenderer =
-        require('../../../../report/v2/renderer/performance-category-renderer.js');
+        require('../../../../report/html/renderer/performance-category-renderer.js');
 
     const document = jsdom.jsdom(TEMPLATE_FILE);
     const dom = new DOM(document);

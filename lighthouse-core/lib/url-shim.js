@@ -11,7 +11,7 @@
 
 /* global self */
 
-const Util = require('../report/v2/renderer/util.js');
+const Util = require('../report/html/renderer/util.js');
 
 // Type cast so tsc sees window.URL and require('url').URL as sufficiently equivalent.
 const URL = /** @type {!Window["URL"]} */ (typeof self !== 'undefined' && self.URL) ||

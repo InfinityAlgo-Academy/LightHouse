@@ -11,7 +11,7 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/v2/renderer/util');
+const Util = require('../report/html/renderer/util');
 // We group all trace events into groups to show a highlevel breakdown of the page
 const {taskToGroup} = require('../lib/task-groups');
 

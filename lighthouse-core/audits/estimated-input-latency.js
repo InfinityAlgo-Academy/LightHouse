@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/v2/renderer/util');
+const Util = require('../report/html/renderer/util');
 const TracingProcessor = require('../lib/traces/tracing-processor');
 const LHError = require('../lib/errors');
 
