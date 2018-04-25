@@ -14,6 +14,11 @@ const LHError = require('../../../lib/errors');
 const REQUIRED_QUIET_WINDOW = 5000;
 const ALLOWED_CONCURRENT_REQUESTS = 2;
 
+/**
+ * @fileoverview Computes "Time To Interactive", the time at which the page has loaded critical
+ * resources and is mostly idle.
+ * @see https://docs.google.com/document/d/1yE4YWsusi5wVXrnwhR61j-QyjK9tzENIzfxrCjA1NAk/edit#heading=h.yozfsuqcgpc4
+ */
 class ConsistentlyInteractive extends MetricArtifact {
   get name() {
     return 'ConsistentlyInteractive';
@@ -28,7 +33,13 @@ class ConsistentlyInteractive extends MetricArtifact {
    */
   static _findNetworkQuietPeriods(networkRecords, traceOfTab) {
     const traceEndTsInMs = traceOfTab.timestamps.traceEnd / 1000;
-    return NetworkRecorder.findNetworkQuietPeriods(networkRecords,
+    // Ignore records that failed, never finished, or were POST/PUT/etc.
+    const filteredNetworkRecords = networkRecords.filter(record => {
+      return record.finished && record.requestMethod === 'GET' && !record.failed &&
+          // Consider network records that had 4xx/5xx status code as "failed"
+          record.statusCode < 400;
+    });
+    return NetworkRecorder.findNetworkQuietPeriods(filteredNetworkRecords,
       ALLOWED_CONCURRENT_REQUESTS, traceEndTsInMs);
   }
 
@@ -79,11 +90,11 @@ class ConsistentlyInteractive extends MetricArtifact {
    * @return {{cpuQuietPeriod: TimePeriod, networkQuietPeriod: TimePeriod, cpuQuietPeriods: Array<TimePeriod>, networkQuietPeriods: Array<TimePeriod>}}
    */
   static findOverlappingQuietPeriods(longTasks, networkRecords, traceOfTab) {
-    const FMPTsInMs = traceOfTab.timestamps.firstMeaningfulPaint / 1000;
+    const FcpTsInMs = traceOfTab.timestamps.firstContentfulPaint / 1000;
 
     /** @type {function(TimePeriod):boolean} */
     const isLongEnoughQuietPeriod = period =>
-        period.end > FMPTsInMs + REQUIRED_QUIET_WINDOW &&
+        period.end > FcpTsInMs + REQUIRED_QUIET_WINDOW &&
         period.end - period.start >= REQUIRED_QUIET_WINDOW;
     const networkQuietPeriods = this._findNetworkQuietPeriods(networkRecords, traceOfTab)
         .filter(isLongEnoughQuietPeriod);
@@ -137,8 +148,8 @@ class ConsistentlyInteractive extends MetricArtifact {
    */
   computeObservedMetric(data) {
     const {traceOfTab, networkRecords} = data;
-    if (!traceOfTab.timestamps.firstMeaningfulPaint) {
-      throw new LHError(LHError.errors.NO_FMP);
+    if (!traceOfTab.timestamps.firstContentfulPaint) {
+      throw new LHError(LHError.errors.NO_FCP);
     }
 
     if (!traceOfTab.timestamps.domContentLoaded) {
@@ -157,7 +168,7 @@ class ConsistentlyInteractive extends MetricArtifact {
 
     const timestamp = Math.max(
       cpuQuietPeriod.start,
-      traceOfTab.timestamps.firstMeaningfulPaint / 1000,
+      traceOfTab.timestamps.firstContentfulPaint / 1000,
       traceOfTab.timestamps.domContentLoaded / 1000
     ) * 1000;
     const timing = (timestamp - traceOfTab.timestamps.navigationStart) / 1000;

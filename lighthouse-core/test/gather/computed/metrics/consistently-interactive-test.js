@@ -17,6 +17,9 @@ function generateNetworkRecords(records, navStart) {
   const navStartInMs = navStart / 1000;
   return records.map(item => {
     return {
+      failed: item.failed || false,
+      statusCode: item.statusCode || 200,
+      requestMethod: item.requestMethod || 'GET',
       finished: typeof item.finished === 'undefined' ? true : item.finished,
       startTime: (item.start + navStartInMs) / 1000,
       endTime: item.end === -1 ? -1 : (item.end + navStartInMs) / 1000,
@@ -52,9 +55,9 @@ describe('Metrics: TTCI', () => {
   describe('#findOverlappingQuietPeriods', () => {
     it('should return entire range when no activity is present', () => {
       const navigationStart = 220023532;
-      const firstMeaningfulPaint = 2500 * 1000 + navigationStart;
+      const firstContentfulPaint = 2500 * 1000 + navigationStart;
       const traceEnd = 10000 * 1000 + navigationStart;
-      const traceOfTab = {timestamps: {navigationStart, firstMeaningfulPaint, traceEnd}};
+      const traceOfTab = {timestamps: {navigationStart, firstContentfulPaint, traceEnd}};
 
       const cpu = [];
       const network = generateNetworkRecords([], navigationStart);
@@ -66,9 +69,9 @@ describe('Metrics: TTCI', () => {
 
     it('should throw when trace ended too soon after FMP', () => {
       const navigationStart = 220023532;
-      const firstMeaningfulPaint = 2500 * 1000 + navigationStart;
+      const firstContentfulPaint = 2500 * 1000 + navigationStart;
       const traceEnd = 5000 * 1000 + navigationStart;
-      const traceOfTab = {timestamps: {navigationStart, firstMeaningfulPaint, traceEnd}};
+      const traceOfTab = {timestamps: {navigationStart, firstContentfulPaint, traceEnd}};
 
       const cpu = [];
       const network = generateNetworkRecords([], navigationStart);
@@ -80,9 +83,9 @@ describe('Metrics: TTCI', () => {
 
     it('should throw when CPU is quiet but network is not', () => {
       const navigationStart = 220023532;
-      const firstMeaningfulPaint = 2500 * 1000 + navigationStart;
+      const firstContentfulPaint = 2500 * 1000 + navigationStart;
       const traceEnd = 10000 * 1000 + navigationStart;
-      const traceOfTab = {timestamps: {navigationStart, firstMeaningfulPaint, traceEnd}};
+      const traceOfTab = {timestamps: {navigationStart, firstContentfulPaint, traceEnd}};
 
       const cpu = [];
       const network = generateNetworkRecords([
@@ -99,9 +102,9 @@ describe('Metrics: TTCI', () => {
 
     it('should throw when network is quiet but CPU is not', () => {
       const navigationStart = 220023532;
-      const firstMeaningfulPaint = 2500 * 1000 + navigationStart;
+      const firstContentfulPaint = 2500 * 1000 + navigationStart;
       const traceEnd = 10000 * 1000 + navigationStart;
-      const traceOfTab = {timestamps: {navigationStart, firstMeaningfulPaint, traceEnd}};
+      const traceOfTab = {timestamps: {navigationStart, firstContentfulPaint, traceEnd}};
 
       const cpu = [
         {start: 3000, end: 8000},
@@ -115,29 +118,32 @@ describe('Metrics: TTCI', () => {
       }, /NO.*CPU_IDLE_PERIOD/);
     });
 
-    it('should handle unfinished network requests', () => {
+    it('should ignore unnecessary network requests', () => {
       const navigationStart = 220023532;
-      const firstMeaningfulPaint = 2500 * 1000 + navigationStart;
+      const firstContentfulPaint = 2500 * 1000 + navigationStart;
       const traceEnd = 10000 * 1000 + navigationStart;
-      const traceOfTab = {timestamps: {navigationStart, firstMeaningfulPaint, traceEnd}};
+      const traceOfTab = {timestamps: {navigationStart, firstContentfulPaint, traceEnd}};
 
       const cpu = [];
-      const network = generateNetworkRecords([
+      let network = generateNetworkRecords([
         {start: 0, end: -1, finished: false},
-        {start: 0, end: -1, finished: false},
-        {start: 0, end: -1, finished: false},
+        {start: 0, end: 11000, failed: true},
+        {start: 0, end: 11000, requestMethod: 'POST'},
+        {start: 0, end: 11000, statusCode: 500},
       ], navigationStart);
+      // Triple the requests to ensure it's not just the 2-quiet kicking in
+      network = network.concat(network).concat(network);
 
-      assert.throws(() => {
-        ConsistentlyInteractive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
-      }, /NO.*NETWORK_IDLE_PERIOD/);
+      const result = ConsistentlyInteractive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
+      assert.deepEqual(result.cpuQuietPeriod, {start: 0, end: traceEnd / 1000});
+      assert.deepEqual(result.networkQuietPeriod, {start: 0, end: traceEnd / 1000});
     });
 
     it('should find first overlapping quiet period', () => {
       const navigationStart = 220023532;
-      const firstMeaningfulPaint = 10000 * 1000 + navigationStart;
+      const firstContentfulPaint = 10000 * 1000 + navigationStart;
       const traceEnd = 45000 * 1000 + navigationStart;
-      const traceOfTab = {timestamps: {navigationStart, firstMeaningfulPaint, traceEnd}};
+      const traceOfTab = {timestamps: {navigationStart, firstContentfulPaint, traceEnd}};
 
       const cpu = [
         // quiet period before FMP

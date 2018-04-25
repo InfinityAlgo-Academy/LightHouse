@@ -97,7 +97,7 @@ const ERRORS = {
 
 Object.keys(ERRORS).forEach(code => ERRORS[code].code = code);
 
-/** @type {Object<string, LighthouseErrorDefinition>} */
+/** @type {Object<keyof ERRORS, LighthouseErrorDefinition>} */
 LighthouseError.errors = ERRORS;
 module.exports = LighthouseError;
 
