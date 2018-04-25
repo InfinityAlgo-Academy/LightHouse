@@ -171,8 +171,10 @@ class ReportRenderer {
       categories.appendChild(renderer.render(category, report.reportGroups));
     }
 
-    const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
-    scoreHeader.appendChild(scoreScale);
+    if (scoreHeader) {
+      const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
+      scoreHeader.appendChild(scoreScale);
+    }
 
     reportSection.appendChild(this._renderReportFooter(report));
 
