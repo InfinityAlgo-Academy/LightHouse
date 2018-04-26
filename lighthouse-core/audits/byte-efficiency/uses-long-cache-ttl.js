@@ -37,9 +37,11 @@ class CacheHeaders extends Audit {
    */
   static get defaultOptions() {
     return {
-      // see https://www.desmos.com/calculator/zokzso8umm
+      // 50th and 75th percentiles HTTPArchive -> 50 and 75
+      // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
+      // see https://www.desmos.com/calculator/8meohdnjbl
       scorePODR: 4 * 1024,
-      scoreMedian: 768 * 1024,
+      scoreMedian: 128 * 1024,
     };
   }
 

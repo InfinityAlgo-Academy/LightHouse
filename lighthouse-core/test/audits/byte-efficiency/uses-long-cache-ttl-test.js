@@ -166,7 +166,7 @@ describe('Cache headers audit', () => {
   it('ignores potentially uncacheable records', () => {
     networkRecords = [
       networkRecord({statusCode: 500}),
-      networkRecord({url: 'https://example.com/dynamic.js?userId=crazy'}),
+      networkRecord({url: 'https://example.com/dynamic.js?userId=crazy', transferSize: 10}),
       networkRecord({url: 'data:image/jpeg;base64,what'}),
       networkRecord({resourceType: WebInspector.resourceTypes.XHR}),
     ];

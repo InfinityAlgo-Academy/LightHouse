@@ -31,7 +31,7 @@ describe('Performance: consistently-interactive audit', () => {
 
     const settings = {throttlingMethod: 'provided'};
     return ConsistentlyInteractive.audit(artifacts, {options, settings}).then(output => {
-      assert.equal(output.score, 0.99);
+      assert.equal(output.score, 0.97);
       assert.equal(Math.round(output.rawValue), 1582);
       assert.equal(output.displayValue, '1,580\xa0ms');
     });
@@ -49,7 +49,7 @@ describe('Performance: consistently-interactive audit', () => {
 
     const settings = {throttlingMethod: 'provided'};
     return ConsistentlyInteractive.audit(artifacts, {options, settings}).then(output => {
-      assert.equal(output.score, 0.95);
+      assert.equal(output.score, 0.89);
       assert.equal(Math.round(output.rawValue), 2712);
       assert.equal(output.displayValue, '2,710\xa0ms');
     });

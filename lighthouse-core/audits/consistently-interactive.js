@@ -35,9 +35,11 @@ class ConsistentlyInteractiveMetric extends Audit {
    */
   static get defaultOptions() {
     return {
-      // see https://www.desmos.com/calculator/uti67afozh
-      scorePODR: 1700,
-      scoreMedian: 10000,
+      // 75th and 90th percentiles HTTPArchive -> 50 and 75
+      // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
+      // see https://www.desmos.com/calculator/dohd3b0sbr
+      scorePODR: 1200,
+      scoreMedian: 7300,
     };
   }
 

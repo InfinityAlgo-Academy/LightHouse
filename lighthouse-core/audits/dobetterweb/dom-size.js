@@ -48,9 +48,11 @@ class DOMSize extends Audit {
    */
   static get defaultOptions() {
     return {
-      // see https://www.desmos.com/calculator/9cyxpm5qgp
-      scorePODR: 2400,
-      scoreMedian: 3000,
+      // 25th and 50th percentiles HTTPArchive -> 50 and 75
+      // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
+      // see https://www.desmos.com/calculator/vqot3wci4g
+      scorePODR: 700,
+      scoreMedian: 1400,
     };
   }
 

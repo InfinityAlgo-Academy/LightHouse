@@ -21,9 +21,9 @@ describe('Num DOM nodes audit', () => {
     },
   };
 
-  it('calculates score hitting top of distribution', () => {
+  it('calculates score hitting mid distribution', () => {
     const auditResult = DOMSize.audit(artifact, {options});
-    assert.equal(auditResult.score, 1);
+    assert.equal(auditResult.score, 0.43);
     assert.equal(auditResult.rawValue, numNodes);
     assert.equal(auditResult.displayValue, `${numNodes.toLocaleString()} nodes`);
     assert.equal(auditResult.details.items[0].totalNodes, numNodes.toLocaleString());
@@ -31,9 +31,9 @@ describe('Num DOM nodes audit', () => {
     assert.equal(auditResult.details.items[0].width, '2');
   });
 
-  it('calculates score hitting mid distribution', () => {
-    artifact.DOMStats.totalDOMNodes = 3100;
-    assert.equal(DOMSize.audit(artifact, {options}).score, 0.43);
+  it('calculates score hitting top distribution', () => {
+    artifact.DOMStats.totalDOMNodes = 400;
+    assert.equal(DOMSize.audit(artifact, {options}).score, 1);
   });
 
   it('calculates score hitting bottom of distribution', () => {

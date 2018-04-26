@@ -28,8 +28,10 @@ class FirstContentfulPaint extends Audit {
    */
   static get defaultOptions() {
     return {
-      // see https://www.desmos.com/calculator/joz3pqttdq
-      scorePODR: 1600,
+      // 75th and 90th percentiles HTTPArchive -> 50 and 75
+      // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
+      // see https://www.desmos.com/calculator/trv2goqvsd
+      scorePODR: 1400,
       scoreMedian: 4000,
     };
   }
