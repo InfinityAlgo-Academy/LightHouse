@@ -154,7 +154,7 @@ describe('DetailsRenderer', () => {
 
     it('renders text URLs', () => {
       const urlText = 'https://example.com/';
-      const displayUrlText = '/(example.com)';
+      const displayUrlText = 'https://example.com';
       const el = renderer.render({
         type: 'url',
         value: urlText,

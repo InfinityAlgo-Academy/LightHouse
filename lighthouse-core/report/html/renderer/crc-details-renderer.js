@@ -110,7 +110,7 @@ class CriticalRequestChainRenderer {
     const {file, hostname} = Util.parseURL(segment.node.request.url);
     const treevalEl = dom.find('.crc-node__tree-value', chainsEl);
     dom.find('.crc-node__tree-file', treevalEl).textContent = `${file}`;
-    dom.find('.crc-node__tree-hostname', treevalEl).textContent = `(${hostname})`;
+    dom.find('.crc-node__tree-hostname', treevalEl).textContent = hostname ? `(${hostname})` : '';
 
     if (!segment.hasChildren) {
       const span = dom.createElement('span', 'crc-node__chain-duration');

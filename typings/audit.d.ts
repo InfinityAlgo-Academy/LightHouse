@@ -57,7 +57,7 @@ declare global {
     export interface DetailsRendererDetailsJSON {
       type: 'table';
       headings: Array<Audit.Heading>;
-      items: Array<{[x: string]: string}>;
+      items: Array<{[x: string]: string|number}>;
       summary: DetailsRendererDetailsSummary;
     }
 
@@ -67,7 +67,7 @@ declare global {
       displayValue?: string;
       debugString?: string;
       score?: number;
-      extendedInfo?: {value: string};
+      extendedInfo?: {value: any};
       notApplicable?: boolean;
       error?: boolean;
       // TODO: define details
@@ -82,7 +82,7 @@ declare global {
       score: number;
       scoreDisplayMode: ScoringModeValue;
       description: string;
-      extendedInfo?: {value: string};
+      extendedInfo?: {value: any};
       notApplicable?: boolean;
       error?: boolean;
       name: string;

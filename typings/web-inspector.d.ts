@@ -38,6 +38,7 @@ declare global {
       localizedFailDescription?: string;
 
       _initiator: NetworkRequestInitiator;
+      initiatorRequest(): NetworkRequest,
       _timing: NetworkRequestTiming;
       _resourceType: ResourceType;
       _mimeType: string;
@@ -57,6 +58,8 @@ declare global {
     }
 
     export interface NetworkRequestTiming {
+      dnsStart: number;
+      dnsEnd: number;
       connectStart: number;
       connectEnd: number;
       sslStart: number;

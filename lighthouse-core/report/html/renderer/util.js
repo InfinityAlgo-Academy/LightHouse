@@ -163,7 +163,7 @@ class Util {
     name = name.replace(/([a-f0-9]{7})[a-f0-9]{13}[a-f0-9]*/g, `$1${ELLIPSIS}`);
     // Also elide other hash-like mixed-case strings
     name = name.replace(/([a-zA-Z0-9-_]{9})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9-_]{10,}/g,
-        `$1${ELLIPSIS}`);
+      `$1${ELLIPSIS}`);
     // Also elide long number sequences
     name = name.replace(/(\d{3})\d{6,}/g, `$1${ELLIPSIS}`);
     // Merge any adjacent ellipses
@@ -185,8 +185,8 @@ class Util {
       const dotIndex = name.lastIndexOf('.');
       if (dotIndex >= 0) {
         name = name.slice(0, MAX_LENGTH - 1 - (name.length - dotIndex)) +
-            // Show file extension
-            `${ELLIPSIS}${name.slice(dotIndex)}`;
+          // Show file extension
+          `${ELLIPSIS}${name.slice(dotIndex)}`;
       } else {
         name = name.slice(0, MAX_LENGTH - 1) + ELLIPSIS;
       }
@@ -196,13 +196,17 @@ class Util {
   }
 
   /**
-   * Split a URL into a file and hostname for easy display.
+   * Split a URL into a file, hostname and origin for easy display.
    * @param {string} url
-   * @return {{file: string, hostname: string}}
+   * @return {{file: string, hostname: string, origin: string}}
    */
   static parseURL(url) {
     const parsedUrl = new URL(url);
-    return {file: Util.getURLDisplayName(parsedUrl), hostname: parsedUrl.hostname};
+    return {
+      file: Util.getURLDisplayName(parsedUrl),
+      hostname: parsedUrl.hostname,
+      origin: parsedUrl.origin,
+    };
   }
 
   /**

@@ -95,6 +95,8 @@ declare global {
 
       // TODO(bckenny): remove this for real computed artifacts approach
       requestTraceOfTab(trace: Trace): Promise<Artifacts.TraceOfTab>
+      requestNetworkRecords(devtoolsLogs: DevtoolsLog): Promise<WebInspector.NetworkRequest[]>
+      requestMainResource(devtoolsLogs: DevtoolsLog): Promise<WebInspector.NetworkRequest>
     }
 
     module Artifacts {
