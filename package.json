@@ -145,7 +145,7 @@
   "bundlesize": [
     {
       "path": "./lighthouse-extension/dist/scripts/lighthouse-background.js",
-      "threshold": "400 Kb"
+      "threshold": "426 Kb"
     },
     {
       "path": "./lighthouse-viewer/dist/src/viewer.js",
