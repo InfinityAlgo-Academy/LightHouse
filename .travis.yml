@@ -39,6 +39,7 @@ script:
   - yarn diff:sample-json
   - yarn smoke:silentcoverage
   - yarn test-extension
+  - yarn test-viewer
   # _JAVA_OPTIONS is breaking parsing of compiler output. See #3338.
   - unset _JAVA_OPTIONS
   # FIXME(paulirish): re-enable after a roll of LH->CDT

@@ -6,7 +6,8 @@
   },
   "scripts": {
     "watch": "gulp watch",
-    "build": "gulp"
+    "build": "gulp",
+    "pptr-test": "mocha test/viewer-test-pptr.js"
   },
   "devDependencies": {
     "brfs": "^1.4.3",

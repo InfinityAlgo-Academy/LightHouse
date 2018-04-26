@@ -24,16 +24,22 @@ function requestHandler(request, response) {
   const queryString = requestUrl.search && parseQueryString(requestUrl.search.slice(1));
   let absoluteFilePath = path.join(__dirname, filePath);
 
+  if (filePath.startsWith('/lighthouse-viewer')) {
+    // Rewrite lighthouse-viewer paths to point to that location.
+    absoluteFilePath = path.join(__dirname, '/../../../', filePath);
+  }
+
   if (filePath === '/zone.js') {
     // evaluateAsync previously had a bug that LH would fail if a page polyfilled Promise.
     // We bring in an aggressive Promise polyfill (zone) to ensure we don't still fail.
     const zonePath = '../../../node_modules/zone.js';
     absoluteFilePath = path.join(__dirname, `${zonePath}/dist/zone.js`);
-  }
-
-  // Disallow file requests outside of LH folder
-  if (!path.parse(absoluteFilePath).dir.startsWith(lhRootDirPath)) {
-    return readFileCallback(new Error('Disallowed path'));
+  } else {
+    // Otherwise, disallow file requests outside of LH folder or from node_modules
+    const filePathDir = path.parse(absoluteFilePath).dir;
+    if (!filePathDir.startsWith(lhRootDirPath) || filePathDir.includes('node_modules')) {
+      return readFileCallback(new Error('Disallowed path'));
+    }
   }
 
   fs.exists(absoluteFilePath, fsExistsCallback);
