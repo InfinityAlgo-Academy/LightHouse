@@ -141,14 +141,21 @@ module.exports = [
       'total-byte-weight': {
         details: {
           items: {
-            0: {
+            1: {
               url: 'http://localhost:10200/dobetterweb/dbw_large-file.js',
-              totalBytes: 359710,
+              totalBytes: 181100,
               flagged: true,
             },
-            1: {
+            2: {
+              url: "http://localhost:10200/zone.js",
+              totalBytes: 71654,
               flagged: false,
-            }
+            },
+            3: {
+              url: 'http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+              totalBytes: 30174,
+              flagged: false,
+            },
           },
         },
       },

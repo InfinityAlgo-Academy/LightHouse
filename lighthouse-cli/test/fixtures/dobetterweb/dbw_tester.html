@@ -385,5 +385,7 @@ if (location.search === '') {
      FAIL: Loads a vulnerable JS library
 -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- this file should trigger the flagged resource logic-->
+<script src="./dbw_large-file.js"></script>
 </body>
 </html>
