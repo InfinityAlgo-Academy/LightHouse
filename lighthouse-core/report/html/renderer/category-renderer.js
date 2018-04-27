@@ -30,6 +30,7 @@ class CategoryRenderer {
   renderAudit(audit) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-audit', this.templateContext);
     const auditEl = this.dom.find('.lh-audit', tmpl);
+    auditEl.id = audit.result.name;
 
     const scoreDisplayMode = audit.result.scoreDisplayMode;
     const description = audit.result.helpText;

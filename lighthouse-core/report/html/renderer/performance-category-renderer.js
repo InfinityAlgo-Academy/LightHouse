@@ -15,6 +15,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   _renderMetric(audit) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-perf-metric', this.templateContext);
     const element = this.dom.find('.lh-perf-metric', tmpl);
+    element.id = audit.result.name;
     element.classList.add(`lh-perf-metric--${Util.calculateRating(audit.result.score)}`);
 
     const titleEl = this.dom.find('.lh-perf-metric__title', tmpl);
@@ -48,6 +49,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       `lh-perf-hint--${Util.calculateRating(audit.result.score)}`,
       'lh-expandable-details',
     ].join(' '));
+    element.id = audit.result.name;
 
     const summary = this.dom.createChildOf(element, 'summary', 'lh-perf-hint__summary ' +
       'lh-expandable-details__summary');
@@ -136,6 +138,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const thumbnailAudit = category.audits.find(audit => audit.id === 'screenshot-thumbnails');
     const thumbnailResult = thumbnailAudit && thumbnailAudit.result;
     if (thumbnailResult && thumbnailResult.details) {
+      timelineEl.id = thumbnailResult.name;
       const thumbnailDetails = /** @type {!DetailsRenderer.FilmstripDetails} */
           (thumbnailResult.details);
       const filmstripEl = this.detailsRenderer.render(thumbnailDetails);

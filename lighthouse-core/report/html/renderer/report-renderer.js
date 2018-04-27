@@ -205,6 +205,7 @@ if (typeof module !== 'undefined' && module.exports) {
 /**
  * @typedef {{
  *     rawValue: (number|boolean|undefined),
+ *     name: string,
  *     description: string,
  *     informative: (boolean|undefined),
  *     manual: (boolean|undefined),

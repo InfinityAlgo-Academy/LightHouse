@@ -27,12 +27,24 @@ describe('Lighthouse chrome extension', function() {
   let extensionPage;
   let originalManifest;
 
-  function getAuditElementsCount({category, selector}) {
+  function getAuditElementsIds({category, selector}) {
     return extensionPage.evaluate(
-      ({category, selector}) =>
-        document.querySelector(`#${category}`).parentNode.querySelectorAll(selector).length,
-      {category, selector}
+      ({category, selector}) => {
+        const elems = document.querySelector(`#${category}`).parentNode.querySelectorAll(selector);
+        return Array.from(elems).map(el => el.id);
+      }, {category, selector}
     );
+  }
+
+  function getCategoryElementsIds() {
+    return extensionPage.evaluate(
+      () => {
+        const elems = Array.from(document.querySelectorAll(`.lh-category`));
+        return elems.map(el => {
+          const permalink = el.querySelector('.lh-permalink');
+          return permalink && permalink.id;
+        });
+      });
   }
 
   before(async function() {
@@ -110,26 +122,26 @@ describe('Lighthouse chrome extension', function() {
   };
 
   it('should contain all categories', async () => {
-    const categories = await extensionPage.$$(`#${lighthouseCategories.join(',#')}`);
-    assert.equal(
-      categories.length,
-      lighthouseCategories.length,
-      `${categories.join(' ')} does not match ${lighthouseCategories.join(' ')}`
+    const categories = await getCategoryElementsIds();
+    assert.deepStrictEqual(
+      categories.sort(),
+      lighthouseCategories.sort(),
+      `all categories not found`
     );
   });
 
   it('should contain audits of all categories', async () => {
     for (const category of lighthouseCategories) {
-      let expected = getAuditsOfCategory(category).length;
+      let expected = getAuditsOfCategory(category);
       if (category === 'performance') {
-        expected = getAuditsOfCategory(category).filter(a => !!a.group).length;
+        expected = getAuditsOfCategory(category).filter(a => !!a.group);
       }
+      expected = expected.map(audit => audit.id);
+      const elementIds = await getAuditElementsIds({category, selector: selectors.audits});
 
-      const elementCount = await getAuditElementsCount({category, selector: selectors.audits});
-
-      assert.equal(
-        expected,
-        elementCount,
+      assert.deepStrictEqual(
+        elementIds.sort(),
+        expected.sort(),
         `${category} does not have the correct amount of audits`
       );
     }
