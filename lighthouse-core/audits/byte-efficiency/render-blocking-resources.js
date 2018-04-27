@@ -49,7 +49,10 @@ class RenderBlockingResources extends Audit {
         'Resources are blocking the first paint of your page. Consider ' +
         'delivering critical JS/CSS inline and deferring all non-critical ' +
         'JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).',
-      requiredArtifacts: ['CSSUsage', 'URL', 'TagsBlockingFirstPaint', 'traces'],
+      // This audit also looks at CSSUsage but has a graceful fallback if it failed, so do not mark
+      // it as a "requiredArtifact".
+      // TODO: look into adding an `optionalArtifacts` property that captures this
+      requiredArtifacts: ['URL', 'TagsBlockingFirstPaint', 'traces'],
     };
   }
 
@@ -63,7 +66,7 @@ class RenderBlockingResources extends Audit {
     const simulatorData = {devtoolsLog, settings: context.settings};
     const traceOfTab = await artifacts.requestTraceOfTab(trace);
     const simulator = await artifacts.requestLoadSimulator(simulatorData);
-    const wastedBytesMap = await RenderBlockingResources.computeWastedCSSBytes(artifacts, context);
+    const wastedCssBytes = await RenderBlockingResources.computeWastedCSSBytes(artifacts, context);
 
     const metricSettings = {throttlingMethod: 'simulate'};
     const metricComputationData = {trace, devtoolsLog, simulator, settings: metricSettings};
@@ -82,7 +85,7 @@ class RenderBlockingResources extends Audit {
 
       const {node, nodeTiming} = nodesByUrl[resource.tag.url];
 
-      // Mark this node and all it's dependents as deferrable
+      // Mark this node and all its dependents as deferrable
       // TODO(phulce): make this slightly more surgical
       // i.e. the referenced font asset won't become inlined just because you inline the CSS
       node.traverse(node => deferredNodeIds.add(node.id));
@@ -106,7 +109,7 @@ class RenderBlockingResources extends Audit {
       simulator,
       fcpSimulation.optimisticGraph,
       deferredNodeIds,
-      wastedBytesMap
+      wastedCssBytes
     );
 
     return {results, wastedMs};
@@ -125,10 +128,10 @@ class RenderBlockingResources extends Audit {
    * @param {Simulator} simulator
    * @param {Node} fcpGraph
    * @param {Set<string>} deferredIds
-   * @param {Map<string, number>} wastedBytesMap
+   * @param {Map<string, number>} wastedCssBytesByUrl
    * @return {number}
    */
-  static estimateSavingsWithGraphs(simulator, fcpGraph, deferredIds, wastedBytesMap) {
+  static estimateSavingsWithGraphs(simulator, fcpGraph, deferredIds, wastedCssBytesByUrl) {
     const originalEstimate = simulator.simulate(fcpGraph).timeInMs;
 
     let totalChildNetworkBytes = 0;
@@ -139,7 +142,7 @@ class RenderBlockingResources extends Audit {
         node.record._resourceType === WebInspector.resourceTypes.Stylesheet;
       if (canDeferRequest && isStylesheet) {
         // We'll inline the used bytes of the stylesheet and assume the rest can be deferred
-        const wastedBytes = wastedBytesMap.get(node.record.url) || 0;
+        const wastedBytes = wastedCssBytesByUrl.get(node.record.url) || 0;
         totalChildNetworkBytes += node.record._transferSize - wastedBytes;
       }
 
@@ -162,6 +165,7 @@ class RenderBlockingResources extends Audit {
   static async computeWastedCSSBytes(artifacts, context) {
     const wastedBytesByUrl = new Map();
     try {
+      // TODO(phulce): pull this out into computed artifact
       const results = await UnusedCSS.audit(artifacts, context);
       for (const item of results.details.items) {
         wastedBytesByUrl.set(item.url, item.wastedBytes);
