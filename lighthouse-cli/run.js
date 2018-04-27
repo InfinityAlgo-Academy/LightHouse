@@ -100,12 +100,12 @@ function handleError(err) {
  * @return {Promise<void>}
  */
 function saveResults(runnerResult, flags) {
-  const {lhr, artifacts} = runnerResult;
   const cwd = process.cwd();
   let promise = Promise.resolve();
 
   const shouldSaveResults = flags.auditMode || (flags.gatherMode === flags.auditMode);
   if (!shouldSaveResults) return promise;
+  const {lhr, artifacts} = runnerResult;
 
   // Use the output path as the prefix for all generated files.
   // If no output path is set, generate a file prefix using the URL and date.

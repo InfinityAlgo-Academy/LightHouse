@@ -179,7 +179,7 @@ class Runner {
     artifacts = Object.assign(Runner.instantiateComputedArtifacts(), artifacts);
 
     if (artifacts.settings) {
-      const overrides = {gatherMode: undefined, auditMode: undefined};
+      const overrides = {gatherMode: undefined, auditMode: undefined, output: undefined};
       const normalizedGatherSettings = Object.assign({}, artifacts.settings, overrides);
       const normalizedAuditSettings = Object.assign({}, settings, overrides);
 

@@ -53,6 +53,14 @@ describe('flag coercing', () => {
   });
 });
 
+
+describe('saveResults', () => {
+  it('will quit early if we\'re in gather mode', async () => {
+    const result = await run.saveResults(undefined, {gatherMode: true});
+    assert.equal(result, undefined);
+  });
+});
+
 describe('Parsing --chrome-flags', () => {
   it('returns boolean flags that are true as a bare flag', () => {
     assert.deepStrictEqual(parseChromeFlags('--debug'), ['--debug']);
