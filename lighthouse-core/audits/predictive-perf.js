@@ -41,6 +41,7 @@ class PredictivePerf extends Audit {
     const ttci = await artifacts.requestLanternConsistentlyInteractive({trace, devtoolsLog});
     const ttfcpui = await artifacts.requestLanternFirstCPUIdle({trace, devtoolsLog});
     const si = await artifacts.requestLanternSpeedIndex({trace, devtoolsLog});
+    const eil = await artifacts.requestLanternEstimatedInputLatency({trace, devtoolsLog});
 
     const values = {
       roughEstimateOfFCP: fcp.timing,
@@ -62,6 +63,10 @@ class PredictivePerf extends Audit {
       roughEstimateOfSI: si.timing,
       optimisticSI: si.optimisticEstimate.timeInMs,
       pessimisticSI: si.pessimisticEstimate.timeInMs,
+
+      roughEstimateOfEIL: eil.timing,
+      optimisticEIL: eil.optimisticEstimate.timeInMs,
+      pessimisticEIL: eil.pessimisticEstimate.timeInMs,
     };
 
     const score = Audit.computeLogNormalScore(

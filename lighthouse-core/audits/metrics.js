@@ -37,6 +37,7 @@ class Metrics extends Audit {
     const firstCPUIdle = await artifacts.requestFirstCPUIdle(metricComputationData);
     const timeToInteractive = await artifacts.requestConsistentlyInteractive(metricComputationData);
     const speedIndex = await artifacts.requestSpeedIndex(metricComputationData);
+    const estimatedInputLatency = await artifacts.requestEstimatedInputLatency(metricComputationData); // eslint-disable-line max-len
     const metrics = [];
 
     // Include the simulated/observed performance metrics
@@ -46,6 +47,7 @@ class Metrics extends Audit {
       firstCPUIdle,
       timeToInteractive,
       speedIndex,
+      estimatedInputLatency,
     };
 
     for (const [metricName, values] of Object.entries(metricsMap)) {

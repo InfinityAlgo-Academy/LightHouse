@@ -1536,6 +1536,10 @@
             "timestamp": 185607736912
           },
           {
+            "metricName": "estimatedInputLatency",
+            "timing": 16
+          },
+          {
             "metricName": "observedNavigationStart",
             "timing": 0,
             "timestamp": 185603319912
