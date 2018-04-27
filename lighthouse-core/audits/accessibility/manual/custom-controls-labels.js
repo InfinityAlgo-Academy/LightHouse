@@ -14,14 +14,14 @@ const ManualAudit = require('../../manual/manual-audit');
 
 class CustomControlsLabels extends ManualAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return Object.assign({
       name: 'custom-controls-labels',
       helpText: 'Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).',
       description: 'Custom controls have associated labels',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

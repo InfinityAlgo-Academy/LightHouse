@@ -14,14 +14,14 @@ const ManualAudit = require('../../manual/manual-audit');
 
 class ManagedFocus extends ManualAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return Object.assign({
       name: 'managed-focus',
       helpText: 'If new content, such as a dialog, is added to the page, the user\'s focus is directed to it. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#start_with_the_keyboard).',
       description: 'The user\'s focus is directed to new content added to the page',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

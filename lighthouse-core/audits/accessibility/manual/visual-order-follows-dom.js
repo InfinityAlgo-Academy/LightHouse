@@ -14,14 +14,14 @@ const ManualAudit = require('../../manual/manual-audit');
 
 class VisualOrderFollowsDOM extends ManualAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return Object.assign({
       name: 'visual-order-follows-dom',
       helpText: 'DOM order matches the visual order, improving navigation for assistive technology. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).',
       description: 'Visual order on the page follows DOM order',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

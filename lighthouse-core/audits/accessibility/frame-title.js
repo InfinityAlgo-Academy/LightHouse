@@ -14,7 +14,7 @@ const AxeAudit = require('./axe-audit');
 
 class FrameTitle extends AxeAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {

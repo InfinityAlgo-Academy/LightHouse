@@ -13,14 +13,14 @@ const ManualAudit = require('../../manual/manual-audit');
 
 class StructuredData extends ManualAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return Object.assign({
       name: 'structured-data',
       helpText: 'Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://developers.google.com/search/docs/guides/mark-up-content).',
       description: 'Structured data is valid',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

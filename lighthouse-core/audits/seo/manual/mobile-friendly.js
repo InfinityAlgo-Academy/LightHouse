@@ -13,14 +13,14 @@ const ManualAudit = require('../../manual/manual-audit');
 
 class MobileFriendly extends ManualAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return Object.assign({
       name: 'mobile-friendly',
       helpText: 'Take the [Mobile-Friendly Test](https://search.google.com/test/mobile-friendly) to check for audits not covered by Lighthouse, like sizing tap targets appropriately. [Learn more](https://developers.google.com/search/mobile-sites/).',
       description: 'Page is mobile friendly',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

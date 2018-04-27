@@ -14,14 +14,14 @@ const ManualAudit = require('../../manual/manual-audit');
 
 class UseLandmarks extends ManualAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return Object.assign({
       name: 'use-landmarks',
       helpText: 'Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#take_advantage_of_headings_and_landmarks).',
       description: 'HTML5 landmark elements are used to improve navigation',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

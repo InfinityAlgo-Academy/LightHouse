@@ -15,14 +15,14 @@ const ManualAudit = require('../../manual/manual-audit');
 
 class OffscreenContentHidden extends ManualAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return Object.assign({
       name: 'offscreen-content-hidden',
       helpText: 'Offscreen content is hidden with display: none or aria-hidden=true. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).',
       description: 'Offscreen content is hidden from assistive technology',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

@@ -57,8 +57,15 @@ declare global {
     export interface DetailsRendererDetailsJSON {
       type: 'table';
       headings: Array<Audit.Heading>;
-      items: Array<{[x: string]: string|number}>;
-      summary: DetailsRendererDetailsSummary;
+      items: Array<{[x: string]: string|number|DetailsRendererNodeDetailsJSON}>;
+      summary?: DetailsRendererDetailsSummary;
+    }
+
+    export interface DetailsRendererNodeDetailsJSON {
+      type: 'node';
+      path?: string;
+      selector?: string;
+      snippet?: string;
     }
 
     // Type returned by Audit.audit(). Only rawValue is required.

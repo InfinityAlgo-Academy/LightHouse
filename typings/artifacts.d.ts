@@ -105,7 +105,7 @@ declare global {
           id: string;
           nodes: {
             path: string;
-            snippet: string | null;
+            snippet: string;
             target: string[];
           }[];
         }[];

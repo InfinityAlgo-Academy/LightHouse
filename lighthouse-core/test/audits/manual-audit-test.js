@@ -16,7 +16,7 @@ class TestAudit extends ManualAudit {
     return Object.assign({
       name: 'manual-audit',
       helpText: 'Some help text.',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

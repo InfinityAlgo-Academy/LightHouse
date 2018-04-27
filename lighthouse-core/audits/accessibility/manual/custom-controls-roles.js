@@ -14,14 +14,14 @@ const ManualAudit = require('../../manual/manual-audit');
 
 class CustomControlsRoles extends ManualAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return Object.assign({
       name: 'custom-controls-roles',
       helpText: 'Custom interactive controls have appropriate ARIA roles. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).',
       description: 'Custom controls have ARIA roles',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

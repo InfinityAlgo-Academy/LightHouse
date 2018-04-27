@@ -14,9 +14,9 @@ const Audit = require('../audit');
 
 class AxeAudit extends Audit {
   /**
-   * @param {!Artifacts} artifacts Accessibility gatherer artifacts. Note that AxeAudit
+   * @param {LH.Artifacts} artifacts Accessibility gatherer artifacts. Note that AxeAudit
    * expects the meta name for the class to match the rule id from aXe.
-   * @return {!AuditResult}
+   * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
     // Indicate if a test is not applicable.
@@ -34,15 +34,16 @@ class AxeAudit extends Audit {
     const violations = artifacts.Accessibility.violations || [];
     const rule = violations.find(result => result.id === this.meta.name);
 
+    /** @type {Array<{node: LH.Audit.DetailsRendererNodeDetailsJSON}>}>} */
     let items = [];
     if (rule && rule.nodes) {
       items = rule.nodes.map(node => ({
-        node: {
+        node: /** @type {LH.Audit.DetailsRendererNodeDetailsJSON} */ ({
           type: 'node',
           selector: Array.isArray(node.target) ? node.target.join(' ') : '',
           path: node.path,
           snippet: node.snippet,
-        },
+        }),
       }));
     }
 

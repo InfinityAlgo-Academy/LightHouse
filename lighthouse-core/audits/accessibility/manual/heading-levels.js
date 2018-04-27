@@ -14,14 +14,14 @@ const ManualAudit = require('../../manual/manual-audit');
 
 class HeadingLevels extends ManualAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return Object.assign({
       name: 'heading-levels',
       helpText: 'Headings are used to create an outline for the page and heading levels are not skipped. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#take_advantage_of_headings_and_landmarks).',
       description: 'Headings don\'t skip levels',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

@@ -14,14 +14,14 @@ const ManualAudit = require('../../manual/manual-audit');
 
 class FocusTraps extends ManualAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return Object.assign({
       name: 'focus-traps',
       helpText: 'A user can tab into and out of any control or region without accidentally trapping their focus. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#start_with_the_keyboard).',
       description: 'User focus is not accidentally trapped in a region',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

@@ -14,7 +14,7 @@ const AxeAudit = require('./axe-audit');
 
 class THHasDataCells extends AxeAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {

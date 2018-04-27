@@ -14,7 +14,7 @@ const AxeAudit = require('./axe-audit');
 
 class VideoCaption extends AxeAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {

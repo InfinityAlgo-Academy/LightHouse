@@ -15,7 +15,7 @@ const AxeAudit = require('./axe-audit');
 
 class AriaRequiredParent extends AxeAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {

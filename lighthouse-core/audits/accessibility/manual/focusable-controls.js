@@ -14,14 +14,14 @@ const ManualAudit = require('../../manual/manual-audit');
 
 class FocusableControls extends ManualAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return Object.assign({
       name: 'focusable-controls',
       helpText: 'Custom interactive controls are keyboard focusable and display a focus indicator. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#start_with_the_keyboard).',
       description: 'Interactive controls are keyboard focusable',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

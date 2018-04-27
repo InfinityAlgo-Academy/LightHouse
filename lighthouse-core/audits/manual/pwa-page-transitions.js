@@ -13,7 +13,7 @@ const ManualAudit = require('./manual-audit');
 
 class PWAPageTransitions extends ManualAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return Object.assign({
@@ -21,7 +21,7 @@ class PWAPageTransitions extends ManualAudit {
       helpText: 'Transitions should feel snappy as you tap around, even on a slow network, a key ' +
           'to perceived performance. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network).',
       description: 'Page transitions don\'t feel like they block on the network',
-    }, super.meta);
+    }, super.partialMeta);
   }
 }
 

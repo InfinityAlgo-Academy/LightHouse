@@ -88,12 +88,13 @@ function runA11yChecks() {
   /**
    * Gets the opening tag text of the given node.
    * @param {Element} el
-   * @return {?string}
+   * @return {string}
    */
   function getOuterHTMLSnippet(el) {
     const reOpeningTag = /^.*?>/;
     const match = el.outerHTML.match(reOpeningTag);
-    return match && match[0];
+    // Should always be a snippet, so just fall back to '' to keep a string.
+    return match && match[0] || '';
   }
 }
 

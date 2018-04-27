@@ -14,9 +14,9 @@ const Audit = require('../audit');
 
 class ManualAudit extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {Pick<LH.Audit.Meta, 'informative'|'manual'|'requiredArtifacts'>}
    */
-  static get meta() {
+  static get partialMeta() {
     return {
       informative: true,
       manual: true,
@@ -25,7 +25,7 @@ class ManualAudit extends Audit {
   }
 
   /**
-   * @return {!AuditResult}
+   * @return {LH.Audit.Product}
    */
   static audit() {
     return {
