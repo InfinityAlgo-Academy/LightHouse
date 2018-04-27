@@ -52,9 +52,10 @@ describe('CategoryRenderer', () => {
       .find(a => a.id === 'works-offline');
 
     const auditDOM = renderer.renderAudit(audit);
+    assert.equal(auditDOM.nodeType, 1, 'Audit returns an element');
 
-    const title = auditDOM.querySelector('.lh-score__title');
-    const description = auditDOM.querySelector('.lh-score__description');
+    const title = auditDOM.querySelector('.lh-audit__title');
+    const description = auditDOM.querySelector('.lh-audit__description');
     const score = auditDOM.querySelector('.lh-score__value');
 
     assert.equal(title.textContent, audit.result.description);
@@ -84,18 +85,18 @@ describe('CategoryRenderer', () => {
       result: {description: 'It informs', helpText: 'help text', informative: true},
     });
 
-    assert.ok(auditDOM.querySelector('.lh-score--informative'));
+    assert.ok(auditDOM.matches('.lh-audit--informative'));
   });
 
   it('renders a category', () => {
     const category = sampleResults.reportCategories.find(c => c.id === 'pwa');
     const categoryDOM = renderer.render(category, sampleResults.reportGroups);
 
-    const score = categoryDOM.querySelector('.lh-score');
-    const value = categoryDOM.querySelector('.lh-score  > .lh-score__value');
-    const title = score.querySelector('.lh-score__title');
+    const categoryEl = categoryDOM.querySelector('.lh-category-header');
+    const value = categoryDOM.querySelector('.lh-score__value');
+    const title = categoryEl.querySelector('.lh-category-header__title');
 
-    assert.deepEqual(score, score.firstElementChild, 'first child is a score');
+    assert.deepEqual(categoryEl, categoryEl.firstElementChild, 'first child is a score');
     assert.ok(value.classList.contains('lh-score__value--numeric'),
               'category score is numeric');
     const scoreInDom = Number(value.textContent);
@@ -111,8 +112,7 @@ describe('CategoryRenderer', () => {
     const prevDesc = category.description;
     category.description += ' [link text](http://example.com).';
     const categoryDOM = renderer.render(category, sampleResults.reportGroups);
-
-    const description = categoryDOM.querySelector('.lh-score .lh-score__description');
+    const description = categoryDOM.querySelector('.lh-category-header__description');
     assert.ok(description.querySelector('a'), 'description contains converted markdown links');
     category.description = prevDesc;
   });
@@ -137,7 +137,7 @@ describe('CategoryRenderer', () => {
     const pwaCategory = sampleResults.reportCategories.find(cat => cat.id === 'pwa');
     const categoryDOM = renderer.render(pwaCategory, sampleResults.reportGroups);
     assert.ok(categoryDOM.querySelector('.lh-audit-group--manual .lh-audit-group__summary'));
-    assert.equal(categoryDOM.querySelectorAll('.lh-score--informative.lh-score--manual').length, 3,
+    assert.equal(categoryDOM.querySelectorAll('.lh-audit--informative.lh-audit--manual').length, 3,
         'score shows informative and dash icon');
 
     const perfCategory = sampleResults.reportCategories.find(cat => cat.id === 'performance');
@@ -153,7 +153,7 @@ describe('CategoryRenderer', () => {
     const notApplicableCount = a11yCategory.audits.reduce((sum, audit) =>
         sum += audit.result.notApplicable ? 1 : 0, 0);
     assert.equal(
-      categoryDOM.querySelectorAll('.lh-audit-group--notapplicable .lh-score--informative').length,
+      categoryDOM.querySelectorAll('.lh-audit-group--notapplicable .lh-audit--informative').length,
       notApplicableCount,
       'score shows informative and dash icon'
     );
@@ -172,10 +172,10 @@ describe('CategoryRenderer', () => {
       const gauge = categoryDOM.querySelector('.lh-gauge__percentage');
       assert.equal(gauge.textContent.trim(), '35', 'score is 0-100');
 
-      const score = categoryDOM.querySelector('.lh-score');
-      const value = categoryDOM.querySelector('.lh-score  > .lh-score__value');
-      const title = score.querySelector('.lh-score__title');
-      const description = score.querySelector('.lh-score__description');
+      const score = categoryDOM.querySelector('.lh-category-header');
+      const value = categoryDOM.querySelector('.lh-score__value');
+      const title = score.querySelector('.lh-category-header__title');
+      const description = score.querySelector('.lh-category-header__description');
 
       assert.deepEqual(score, score.firstElementChild, 'first child is a score');
       assert.ok(value.classList.contains('lh-score__value--numeric'),

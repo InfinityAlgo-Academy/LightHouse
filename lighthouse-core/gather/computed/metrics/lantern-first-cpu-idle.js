@@ -35,7 +35,7 @@ class LanternFirstCPUIdle extends LanternConsistentlyInteractive {
 
   /**
    *
-   * @param {Map<Node, LH.Gatherer.Simulation.NodeTiming>} nodeTimings
+   * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
    * @param {number} fmpTimeInMs
    */
   static getFirstCPUIdleWindowStart(nodeTimings, fmpTimeInMs, longTaskLength = 50) {

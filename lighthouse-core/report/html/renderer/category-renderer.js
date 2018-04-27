@@ -27,8 +27,9 @@ class CategoryRenderer {
    * @param {!ReportRenderer.AuditJSON} audit
    * @return {!Element}
    */
-  _renderAuditScore(audit) {
-    const tmpl = this.dom.cloneTemplate('#tmpl-lh-audit-score', this.templateContext);
+  renderAudit(audit) {
+    const tmpl = this.dom.cloneTemplate('#tmpl-lh-audit', this.templateContext);
+    const auditEl = this.dom.find('.lh-audit', tmpl);
 
     const scoreDisplayMode = audit.result.scoreDisplayMode;
     const description = audit.result.helpText;
@@ -39,25 +40,24 @@ class CategoryRenderer {
     }
 
     if (audit.result.debugString) {
-      const debugStrEl = tmpl.appendChild(this.dom.createElement('div', 'lh-debug'));
+      const debugStrEl = auditEl.appendChild(this.dom.createElement('div', 'lh-debug'));
       debugStrEl.textContent = audit.result.debugString;
     }
 
     // Append audit details to header section so the entire audit is within a <details>.
-    const header = /** @type {!HTMLDetailsElement} */ (this.dom.find('.lh-score__header', tmpl));
+    const header = /** @type {!HTMLDetailsElement} */ (this.dom.find('.lh-audit__header', auditEl));
     if (audit.result.details && audit.result.details.type) {
       header.appendChild(this.detailsRenderer.render(audit.result.details));
     }
 
-    const scoreEl = this.dom.find('.lh-score', tmpl);
     if (audit.result.informative) {
-      scoreEl.classList.add('lh-score--informative');
+      auditEl.classList.add('lh-audit--informative');
     }
     if (audit.result.manual) {
-      scoreEl.classList.add('lh-score--manual');
+      auditEl.classList.add('lh-audit--manual');
     }
 
-    return this._populateScore(tmpl, audit.result.score, scoreDisplayMode, title, description);
+    return this._populateScore(auditEl, audit.result.score, scoreDisplayMode, title, description);
   }
 
   /**
@@ -76,9 +76,9 @@ class CategoryRenderer {
     valueEl.classList.add(`lh-score__value--${Util.calculateRating(score)}`,
         `lh-score__value--${scoreDisplayMode}`);
 
-    this.dom.find('.lh-score__title', element).appendChild(
+    this.dom.find('.lh-audit__title, .lh-category-header__title', element).appendChild(
         this.dom.convertMarkdownCodeSnippets(title));
-    this.dom.find('.lh-score__description', element)
+    this.dom.find('.lh-audit__description, .lh-category-header__description', element)
         .appendChild(this.dom.convertMarkdownLinkSnippets(description));
 
     return /** @type {!Element} **/ (element);
@@ -89,7 +89,7 @@ class CategoryRenderer {
    * @return {!Element}
    */
   renderCategoryScore(category) {
-    const tmpl = this.dom.cloneTemplate('#tmpl-lh-category-score', this.templateContext);
+    const tmpl = this.dom.cloneTemplate('#tmpl-lh-category-header', this.templateContext);
 
     const gaugeContainerEl = this.dom.find('.lh-score__gauge', tmpl);
     const gaugeEl = this.renderScoreGauge(category);
@@ -97,16 +97,6 @@ class CategoryRenderer {
 
     const {score, name, description} = category;
     return this._populateScore(tmpl, score, 'numeric', name, description);
-  }
-
-  /**
-   * @param {!ReportRenderer.AuditJSON} audit
-   * @return {!Element}
-   */
-  renderAudit(audit) {
-    const element = this.dom.createElement('div', 'lh-audit');
-    element.appendChild(this._renderAuditScore(audit));
-    return element;
   }
 
   /**

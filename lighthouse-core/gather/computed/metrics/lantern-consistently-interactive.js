@@ -94,7 +94,7 @@ class ConsistentlyInteractive extends MetricArtifact {
   }
 
   /**
-   * @param {Map<Node, LH.Gatherer.Simulation.NodeTiming>} nodeTimings
+   * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
    * @return {number}
    */
   static getLastLongTaskEndTime(nodeTimings, duration = 50) {

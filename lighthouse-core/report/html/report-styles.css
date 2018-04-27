@@ -181,13 +181,8 @@ summary {
 
 /* Score */
 
-.lh-score {
-  display: flex;
-  align-items: flex-start;
-}
-
 .lh-score__value {
-  flex: none;
+  float: right;
   margin-left: var(--lh-score-margin);
   width: calc(var(--lh-audit-score-width) - var(--lh-score-margin));
   position: relative;
@@ -206,19 +201,19 @@ summary {
   width: 16px;
 }
 
-.lh-score--informative .lh-score__value {
+.lh-audit--informative .lh-score__value {
   color: var(--informative-color);
   border-radius: 50%;
   top: 3px;
 }
 
-.lh-score--informative .lh-score__value::after {
+.lh-audit--informative .lh-score__value::after {
   display: none;
   background: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>info</title><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="hsl(218, 89%, 41%)"/></svg>') no-repeat 50% 50%;
   background-size: var(--lh-score-icon-background-size);
 }
 
-.lh-score--manual .lh-score__value::after {
+.lh-audit--manual .lh-score__value::after {
   background: url('data:image/svg+xml;utf8,<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><title>manual</title><path d="M2 5h8v2H2z" fill="hsl(0, 0%, 100%)" fill-rule="evenodd"/></svg>') no-repeat 50% 50%;
   background-size: 18px;
   background-color: var(--medium-75-gray);
@@ -267,23 +262,13 @@ summary {
   background: var(--fail-icon-url) no-repeat center center / 12px 12px;
 }
 
-.lh-score__description {
+.lh-audit__description, .lh-category-header__description  {
   font-size: var(--body-font-size);
   color: var(--secondary-text-color);
   line-height: var(--body-line-height);
 }
 
-.lh-score__snippet {
-  align-items: center;
-  justify-content: space-between;
-  /*outline: none;*/
-}
-
-.lh-score__snippet::-moz-list-bullet {
-  display: none;
-}
-
-.lh-score__title {
+.lh-audit__title {
   flex: 1;
 }
 
@@ -307,11 +292,6 @@ summary {
 
 /* Expandable Details (Audit Groups, Audits) */
 
-.lh-score__header {
-  order: -1;
-  flex: 1;
-}
-
 .lh-expandable-details {
   padding-left: var(--expandable-indent);
 }
@@ -333,7 +313,7 @@ summary {
   display: none;
 }
 
-.lh-score__snippet .lh-toggle-arrow {
+.lh-audit__header .lh-toggle-arrow {
   margin-top: calc((var(--body-line-height) - 12px) / 2);
 }
 
@@ -606,14 +586,11 @@ summary {
   margin-bottom: var(--lh-audit-vpadding);
   padding-top: var(--lh-audit-vpadding);
   border-top: 1px solid var(--report-secondary-border-color);
+  font-size: var(--body-font-size);
 }
 
 .lh-audit:last-of-type {
   border-bottom: none;
-}
-
-.lh-audit > .lh-score {
-  font-size: var(--body-font-size);
 }
 
 .lh-audit .lh-debug {
@@ -774,6 +751,8 @@ summary {
 }
 
 .lh-category {
+  --circle-size: calc(2.5 * var(--header-font-size));
+
   padding: var(--section-padding);
   border-top: 1px solid var(--report-border-color);
 }
@@ -792,32 +771,27 @@ summary {
   border: none;
 }
 
-.lh-category > .lh-score {
+.lh-category-header {
   font-size: var(--header-font-size);
-  padding-bottom: var(--lh-section-vpadding);
+  min-height: var(--circle-size);
+  margin-bottom: var(--lh-section-vpadding);
 }
 
-.lh-category > .lh-score .lh-score__value,
-.lh-category > .lh-score .lh-score__gauge .lh-gauge__label {
+.lh-category-header .lh-score__value,
+.lh-category-header .lh-score__gauge .lh-gauge__label {
   display: none;
+}
+
+
+.lh-category-header .lh-score__gauge {
+  float: right;
 }
 
 .lh-category .lh-score__gauge {
   margin-left: var(--section-indent);
-  flex-basis: var(--circle-size);
-  flex-shrink: 0;
 }
 
-.lh-category .lh-score__gauge .lh-gauge {
-  --circle-size: calc(2.5 * var(--header-font-size));
-}
-
-/* Category snippet shouldnt have pointer cursor. */
-.lh-category > .lh-score .lh-score__snippet {
-  cursor: initial;
-}
-
-.lh-category > .lh-score .lh-score__title {
+.lh-category-header .lh-audit__title {
   font-size: var(--header-font-size);
   line-height: var(--header-line-height);
 }
@@ -997,6 +971,5 @@ summary.lh-passed-audits-summary {
   75% { opacity: 1; }
   100% { opacity: 1;  filter: drop-shadow(1px 0px 1px #aaa) drop-shadow(0px 2px 4px hsla(206, 6%, 25%, 0.15)); }
 }
-
 
 /*# sourceURL=report.styles.css */
