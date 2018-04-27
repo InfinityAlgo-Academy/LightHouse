@@ -35,13 +35,13 @@ module.exports = [
         extendedInfo: {
           value: {
             results: {
-              length: 17,
+              length: '>15',
             },
           },
         },
         details: {
           items: {
-            length: 17,
+            length: '>15',
           },
         },
       },
@@ -161,6 +161,22 @@ module.exports = [
             },
             length: 1,
           },
+        },
+      },
+      'efficient-animated-content': {
+        extendedInfo: {
+          value: {
+            wastedKb: 666,
+          },
+        },
+        details: {
+          items: [
+            {
+              url: 'http://localhost:10200/dobetterweb/lighthouse-rotating.gif',
+              totalBytes: 934285,
+              wastedBytes: 682028,
+            },
+          ],
         },
       },
     },

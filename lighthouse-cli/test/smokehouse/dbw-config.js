@@ -18,6 +18,7 @@ module.exports = {
       'dom-size',
       'render-blocking-resources',
       'errors-in-console',
+      'efficient-animated-content',
     ],
   },
 };
