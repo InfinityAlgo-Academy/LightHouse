@@ -107,16 +107,23 @@ describe('DetailsRenderer', () => {
             b: 'value B.2',
             c: {type: 'thumbnail', value: 'unknown'},
           },
+          {
+            a: 'value C.1',
+            b: 'value C.2',
+            c: {type: 'thumbnail', value: 'unknown'},
+            flagged: true,
+          },
         ],
       });
 
       assert.equal(el.localName, 'table', 'did not render table');
       assert.ok(el.querySelector('img'), 'did not render recursive items');
       assert.equal(el.querySelectorAll('th').length, 3, 'did not render header items');
-      assert.equal(el.querySelectorAll('td').length, 6, 'did not render table cells');
-      assert.equal(el.querySelectorAll('.lh-table-column--text').length, 6, '--text not set');
-      assert.equal(el.querySelectorAll('.lh-table-column--thumbnail').length, 3,
+      assert.equal(el.querySelectorAll('td').length, 9, 'did not render table cells');
+      assert.equal(el.querySelectorAll('.lh-table-column--text').length, 8, '--text not set');
+      assert.equal(el.querySelectorAll('.lh-table-column--thumbnail').length, 4,
           '--thumbnail not set');
+      assert.equal(el.querySelectorAll('.lh-table-row--flagged').length, 1, '--flagged not set');
     });
 
     it('renders links', () => {
