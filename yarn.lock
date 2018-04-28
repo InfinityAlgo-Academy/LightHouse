@@ -16,9 +16,9 @@
   version "0.9.43"
   resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-0.9.43.tgz#65d646c5e8c0cd1bdee37065799f9d3d48748253"
 
-"@types/css-font-loading-module@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@types/css-font-loading-module/-/css-font-loading-module-0.0.1.tgz#00f3594bcb15813282b8d5595d9d997db49b2608"
+"@types/css-font-loading-module@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@types/css-font-loading-module/-/css-font-loading-module-0.0.2.tgz#09f1f1772975777e37851b7b7a4389d97c210add"
 
 "@types/events@*":
   version "1.2.0"

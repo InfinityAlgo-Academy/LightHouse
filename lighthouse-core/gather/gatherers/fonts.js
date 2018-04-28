@@ -10,9 +10,9 @@
 const Gatherer = require('./gatherer');
 const Sentry = require('../../lib/sentry');
 
-// TODO(bckenny): manually add 'display' for now.
-// PR to add full FontFace props in https://github.com/DefinitelyTyped/DefinitelyTyped/pull/25045
-/** @typedef {Exclude<keyof FontFace, 'load'|'loaded'|'status'> | 'display'} FontFaceStringKeys */
+// All the property keys of FontFace where the value is a string and are worth
+// using for finding font matches (see _findSameFontFamily).
+/** @typedef {'family'|'style'|'weight'|'stretch'|'unicodeRange'|'variant'|'featureSettings'|'display'} FontFaceStringKeys */
 /** @typedef {{err: {message: string, stack: string}}} FontGatherError */
 
 /** @type {Array<FontFaceStringKeys>} */
@@ -42,7 +42,6 @@ function getAllLoadedFonts(descriptors) {
       src: [],
     };
     descriptors.forEach(descriptor => {
-      // @ts-ignore TODO(bckenny): see above 'display' TODO
       fontRule[descriptor] = fontFace[descriptor];
     });
 
