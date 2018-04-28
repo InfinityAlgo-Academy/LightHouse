@@ -15,7 +15,9 @@ class Speedline extends ComputedArtifact {
   }
 
   /**
-   * @return {!Promise}
+   * @param {LH.Trace} trace
+   * @param {LH.ComputedArtifacts} computedArtifacts
+   * @return {Promise<LH.Artifacts.Speedline>}
    */
   compute_(trace, computedArtifacts) {
     // speedline() may throw without a promise, so we resolve immediately

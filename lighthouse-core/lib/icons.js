@@ -6,7 +6,7 @@
 'use strict';
 
 /**
- * @param {!Manifest=} manifest
+ * @param {NonNullable<LH.Artifacts.Manifest['value']>} manifest
  * @return {boolean} Does the manifest have any icons?
  */
 function doExist(manifest) {
@@ -21,19 +21,22 @@ function doExist(manifest) {
 
 /**
  * @param {number} sizeRequirement
- * @param {!Manifest} manifest
- * @return {!Array<string>} Value of satisfactory sizes (eg. ['192x192', '256x256'])
+ * @param {NonNullable<LH.Artifacts.Manifest['value']>} manifest
+ * @return {Array<string>} Value of satisfactory sizes (eg. ['192x192', '256x256'])
  */
 function sizeAtLeast(sizeRequirement, manifest) {
   // An icon can be provided for a single size, or for multiple sizes.
   // To handle both, we flatten all found sizes into a single array.
   const iconValues = manifest.icons.value;
-  const nestedSizes = iconValues.map(icon => icon.value.sizes.value);
-  const flattenedSizes = [].concat(...nestedSizes);
+  /** @type {Array<string>} */
+  const flattenedSizes = [];
+  iconValues.forEach(icon => {
+    if (icon.value.sizes.value) {
+      flattenedSizes.push(...icon.value.sizes.value);
+    }
+  });
 
   return flattenedSizes
-      // First, filter out any undefined values, in case an icon was defined without a size
-      .filter(size => typeof size === 'string')
       // discard sizes that are not AAxBB (eg. "any")
       .filter(size => /\d+x\d+/.test(size))
       .filter(size => {

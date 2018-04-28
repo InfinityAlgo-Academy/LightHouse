@@ -14,8 +14,8 @@ class PushedRequests extends ComputedArtifact {
 
   /**
    * Return list of network requests that were pushed.
-   * @param {!DevtoolsLog} devtoolsLog
-   * @param {!ComputedArtifacts} artifacts
+   * @param {LH.DevtoolsLog} devtoolsLog
+   * @param {LH.ComputedArtifacts} artifacts
    * @return {Promise<Array<LH.WebInspector.NetworkRequest>>}
    */
   compute_(devtoolsLog, artifacts) {

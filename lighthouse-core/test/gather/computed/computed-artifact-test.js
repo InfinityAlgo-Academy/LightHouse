@@ -23,7 +23,7 @@ class TestComputedArtifact extends ComputedArtifact {
     return 'TestComputedArtifact';
   }
 
-  compute_(...args) {
+  async compute_(...args) {
     this.lastArguments = args;
     return this.computeCounter++;
   }

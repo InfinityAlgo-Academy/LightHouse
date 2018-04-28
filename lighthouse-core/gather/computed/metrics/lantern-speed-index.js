@@ -59,12 +59,12 @@ class SpeedIndex extends MetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
-   * @param {Object} artifacts
+   * @param {LH.ComputedArtifacts} artifacts
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   async compute_(data, artifacts) {
     const speedline = await artifacts.requestSpeedline(data.trace);
-    const fcpResult = await artifacts.requestLanternFirstContentfulPaint(data, artifacts);
+    const fcpResult = await artifacts.requestLanternFirstContentfulPaint(data);
     const metricResult = await this.computeMetricWithGraphs(data, artifacts, {
       speedline,
       fcpResult,

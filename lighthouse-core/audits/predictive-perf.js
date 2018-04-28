@@ -30,18 +30,20 @@ class PredictivePerf extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
+   * @param {LH.Artifacts} artifacts
    * @return {!AuditResult}
    */
   static async audit(artifacts) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const fcp = await artifacts.requestLanternFirstContentfulPaint({trace, devtoolsLog});
-    const fmp = await artifacts.requestLanternFirstMeaningfulPaint({trace, devtoolsLog});
-    const ttci = await artifacts.requestLanternConsistentlyInteractive({trace, devtoolsLog});
-    const ttfcpui = await artifacts.requestLanternFirstCPUIdle({trace, devtoolsLog});
-    const si = await artifacts.requestLanternSpeedIndex({trace, devtoolsLog});
-    const eil = await artifacts.requestLanternEstimatedInputLatency({trace, devtoolsLog});
+    const settings = {}; // Use default settings.
+    const fcp = await artifacts.requestLanternFirstContentfulPaint({trace, devtoolsLog, settings});
+    const fmp = await artifacts.requestLanternFirstMeaningfulPaint({trace, devtoolsLog, settings});
+    const ttci = await artifacts.requestLanternConsistentlyInteractive({trace, devtoolsLog,
+      settings});
+    const ttfcpui = await artifacts.requestLanternFirstCPUIdle({trace, devtoolsLog, settings});
+    const si = await artifacts.requestLanternSpeedIndex({trace, devtoolsLog, settings});
+    const eil = await artifacts.requestLanternEstimatedInputLatency({trace, devtoolsLog, settings});
 
     const values = {
       roughEstimateOfFCP: fcp.timing,

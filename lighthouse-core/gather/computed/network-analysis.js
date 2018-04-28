@@ -14,11 +14,12 @@ class NetworkAnalysis extends ComputedArtifact {
   }
 
   /**
-   * @param {!Array} records
-   * @return {!Object}
+   * @param {Array<LH.WebInspector.NetworkRequest>} records
+   * @return {LH.Artifacts.NetworkAnalysis}
    */
   static computeRTTAndServerResponseTime(records) {
     // First pass compute the estimated observed RTT to each origin's servers.
+    /** @type {Map<string, number>} */
     const rttByOrigin = new Map();
     for (const [origin, summary] of NetworkAnalyzer.estimateRTTByOrigin(records).entries()) {
       rttByOrigin.set(origin, summary.min);
@@ -32,23 +33,29 @@ class NetworkAnalysis extends ComputedArtifact {
       rttByOrigin,
     });
 
+    /** @type {Map<string, number>} */
     const additionalRttByOrigin = new Map();
+    /** @type {Map<string, number>} */
     const serverResponseTimeByOrigin = new Map();
     for (const [origin, summary] of responseTimeSummaries.entries()) {
-      additionalRttByOrigin.set(origin, rttByOrigin.get(origin) - minimumRtt);
+      /** @type {number} */
+      // @ts-ignore - satisfy the type checker that entry exists.
+      const rttForOrigin = rttByOrigin.get(origin);
+      additionalRttByOrigin.set(origin, rttForOrigin - minimumRtt);
       serverResponseTimeByOrigin.set(origin, summary.median);
     }
 
-    return {rtt: minimumRtt, additionalRttByOrigin, serverResponseTimeByOrigin};
+    return {rtt: minimumRtt, additionalRttByOrigin, serverResponseTimeByOrigin, throughput: 0};
   }
 
   /**
-   * @param {Object} devtoolsLog
-   * @return {Object}
+   * @param {LH.DevtoolsLog} devtoolsLog
+   * @param {LH.ComputedArtifacts} computedArtifacts
+   * @return {Promise<LH.Artifacts.NetworkAnalysis>}
    */
-  async compute_(devtoolsLog, artifacts) {
-    const records = await artifacts.requestNetworkRecords(devtoolsLog);
-    const throughput = await artifacts.requestNetworkThroughput(devtoolsLog);
+  async compute_(devtoolsLog, computedArtifacts) {
+    const records = await computedArtifacts.requestNetworkRecords(devtoolsLog);
+    const throughput = await computedArtifacts.requestNetworkThroughput(devtoolsLog);
     const rttAndServerResponseTime = NetworkAnalysis.computeRTTAndServerResponseTime(records);
     rttAndServerResponseTime.throughput = throughput * 8; // convert from KBps to Kbps
     return rttAndServerResponseTime;

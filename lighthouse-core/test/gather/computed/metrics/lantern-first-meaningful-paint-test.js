@@ -15,7 +15,8 @@ const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtoo
 describe('Metrics: Lantern FMP', () => {
   it('should compute predicted value', async () => {
     const artifacts = Runner.instantiateComputedArtifacts();
-    const result = await artifacts.requestLanternFirstMeaningfulPaint({trace, devtoolsLog});
+    const result = await artifacts.requestLanternFirstMeaningfulPaint({trace, devtoolsLog,
+      settings: {}});
 
     assert.equal(Math.round(result.timing), 2851);
     assert.equal(Math.round(result.optimisticEstimate.timeInMs), 911);

@@ -66,11 +66,11 @@ class LanternEstimatedInputLatency extends LanternMetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
-   * @param {Object} artifacts
+   * @param {LH.ComputedArtifacts} artifacts
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   async compute_(data, artifacts) {
-    const fmpResult = await artifacts.requestLanternFirstMeaningfulPaint(data, artifacts);
+    const fmpResult = await artifacts.requestLanternFirstMeaningfulPaint(data);
     return this.computeMetricWithGraphs(data, artifacts, {fmpResult});
   }
 

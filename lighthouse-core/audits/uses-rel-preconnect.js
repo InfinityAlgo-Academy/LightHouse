@@ -27,7 +27,7 @@ class UsesRelPreconnectAudit extends Audit {
       helpText:
         'Consider adding preconnect or dns-prefetch resource hints to establish early ' +
         `connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).`,
-      requiredArtifacts: ['devtoolsLogs'],
+      requiredArtifacts: ['devtoolsLogs', 'URL'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
   }
@@ -68,12 +68,13 @@ class UsesRelPreconnectAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts) {
-    const devtoolsLogs = artifacts.devtoolsLogs[UsesRelPreconnectAudit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreconnectAudit.DEFAULT_PASS];
+    const URL = artifacts.URL;
     let maxWasted = 0;
 
     const [networkRecords, mainResource] = await Promise.all([
-      artifacts.requestNetworkRecords(devtoolsLogs),
-      artifacts.requestMainResource(devtoolsLogs),
+      artifacts.requestNetworkRecords(devtoolsLog),
+      artifacts.requestMainResource({devtoolsLog, URL}),
     ]);
 
     /** @type {Map<string, LH.WebInspector.NetworkRequest[]>}  */

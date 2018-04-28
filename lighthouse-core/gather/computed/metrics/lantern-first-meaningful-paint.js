@@ -27,9 +27,9 @@ class FirstMeaningfulPaint extends MetricArtifact {
   }
 
   /**
-   * @param {!Node} dependencyGraph
+   * @param {Node} dependencyGraph
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
-   * @return {!Node}
+   * @return {Node}
    */
   getOptimisticGraph(dependencyGraph, traceOfTab) {
     const fmp = traceOfTab.timestamps.firstMeaningfulPaint;
@@ -53,9 +53,9 @@ class FirstMeaningfulPaint extends MetricArtifact {
   }
 
   /**
-   * @param {!Node} dependencyGraph
+   * @param {Node} dependencyGraph
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
-   * @return {!Node}
+   * @return {Node}
    */
   getPessimisticGraph(dependencyGraph, traceOfTab) {
     const fmp = traceOfTab.timestamps.firstMeaningfulPaint;
@@ -79,11 +79,11 @@ class FirstMeaningfulPaint extends MetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
-   * @param {Object} artifacts
+   * @param {LH.ComputedArtifacts} artifacts
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   async compute_(data, artifacts) {
-    const fcpResult = await artifacts.requestLanternFirstContentfulPaint(data, artifacts);
+    const fcpResult = await artifacts.requestLanternFirstContentfulPaint(data);
     const metricResult = await this.computeMetricWithGraphs(data, artifacts);
     metricResult.timing = Math.max(metricResult.timing, fcpResult.timing);
     return metricResult;

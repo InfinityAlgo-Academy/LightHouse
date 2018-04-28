@@ -30,10 +30,10 @@ class NetworkThroughput extends ComputedArtifact {
       }
 
       totalBytes += record.transferSize;
-      boundaries.push({time: record.responseReceivedTime, isStart: true});
+      boundaries.push({time: record._responseReceivedTime, isStart: true});
       boundaries.push({time: record.endTime, isStart: false});
       return boundaries;
-    }, []).sort((a, b) => a.time - b.time);
+    }, /** @type {Array<{time: number, isStart: boolean}>} */([])).sort((a, b) => a.time - b.time);
 
     if (!timeBoundaries.length) {
       return Infinity;
@@ -60,13 +60,13 @@ class NetworkThroughput extends ComputedArtifact {
   }
 
   /**
-   * @param {!DevtoolsLog} devtoolsLog
-   * @param {!ComputedArtifacts} artifacts
-   * @return {!Promise<!Object>}
+   * @param {LH.DevtoolsLog} devtoolsLog
+   * @param {LH.ComputedArtifacts} computedArtifacts
+   * @return {Promise<number>}
    */
-  compute_(devtoolsLog, artifacts) {
+  compute_(devtoolsLog, computedArtifacts) {
     // TODO(phulce): migrate this to network-analysis computed artifact
-    return artifacts.requestNetworkRecords(devtoolsLog)
+    return computedArtifacts.requestNetworkRecords(devtoolsLog)
       .then(NetworkThroughput.getThroughput);
   }
 }

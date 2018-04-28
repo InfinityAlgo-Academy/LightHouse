@@ -11,6 +11,8 @@ const CPUNode = require('../../lib/dependency-graph/cpu-node');
 const TracingProcessor = require('../../lib/traces/tracing-processor');
 const WebInspector = require('../../lib/web-inspector');
 
+const Node = require('../../lib/dependency-graph/node.js'); // eslint-disable-line no-unused-vars
+
 // Tasks smaller than 10 ms have minimal impact on simulation
 const MINIMUM_TASK_DURATION_OF_INTEREST = 10;
 // TODO: video files tend to be enormous and throw off all graph traversals, move this ignore
@@ -24,12 +26,12 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
 
   /**
    * @param {LH.WebInspector.NetworkRequest} record
-   * @return {!Array<string>}
+   * @return {Array<string>}
    */
   static getNetworkInitiators(record) {
     if (!record._initiator) return [];
     if (record._initiator.url) return [record._initiator.url];
-    if (record._initiator.type === 'script') {
+    if (record._initiator.type === 'script' && record._initiator.stack) {
       const frames = record._initiator.stack.callFrames;
       return Array.from(new Set(frames.map(frame => frame.url))).filter(Boolean);
     }
@@ -39,15 +41,16 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
 
   /**
    * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
-   * @return {!NetworkNodeOutput}
+   * @return {NetworkNodeOutput}
    */
   static getNetworkNodeOutput(networkRecords) {
+    /** @type {Array<NetworkNode>} */
     const nodes = [];
     const idToNodeMap = new Map();
     const urlToNodeMap = new Map();
 
     networkRecords.forEach(record => {
-      if (IGNORED_MIME_TYPES_REGEX.test(record.mimeType)) return;
+      if (IGNORED_MIME_TYPES_REGEX.test(record._mimeType)) return;
 
       // Network record requestIds can be duplicated for an unknown reason
       // Suffix all subsequent records with `:duplicate` until it's unique
@@ -70,9 +73,10 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
 
   /**
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
-   * @return {!Array<!CPUNode>}
+   * @return {Array<CPUNode>}
    */
   static getCPUNodes(traceOfTab) {
+    /** @type {Array<CPUNode>} */
     const nodes = [];
     let i = 0;
 
@@ -91,6 +95,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
       }
 
       // Capture all events that occurred within the task
+      /** @type {Array<LH.TraceEvent>} */
       const children = [];
       i++; // Start examining events after this one
       for (
@@ -108,8 +113,8 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {!Node} rootNode
-   * @param {!NetworkNodeOutput} networkNodeOutput
+   * @param {Node} rootNode
+   * @param {NetworkNodeOutput} networkNodeOutput
    */
   static linkNetworkNodes(rootNode, networkNodeOutput) {
     networkNodeOutput.nodes.forEach(node => {
@@ -131,17 +136,20 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
       for (let i = 1; i < redirects.length; i++) {
         const redirectNode = networkNodeOutput.idToNodeMap.get(redirects[i - 1].requestId);
         const actualNode = networkNodeOutput.idToNodeMap.get(redirects[i].requestId);
-        actualNode.addDependency(redirectNode);
+        if (actualNode && redirectNode) {
+          actualNode.addDependency(redirectNode);
+        }
       }
     });
   }
 
   /**
-   * @param {!Node} rootNode
-   * @param {!NetworkNodeOutput} networkNodeOutput
-   * @param {!Array<!CPUNode>} cpuNodes
+   * @param {Node} rootNode
+   * @param {NetworkNodeOutput} networkNodeOutput
+   * @param {Array<CPUNode>} cpuNodes
    */
   static linkCPUNodes(rootNode, networkNodeOutput, cpuNodes) {
+    /** @param {CPUNode} cpuNode @param {string} reqId */
     function addDependentNetworkRequest(cpuNode, reqId) {
       const networkNode = networkNodeOutput.idToNodeMap.get(reqId);
       if (!networkNode ||
@@ -153,6 +161,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
       cpuNode.addDependent(networkNode);
     }
 
+    /** @param {CPUNode} cpuNode @param {string} url */
     function addDependencyOnUrl(cpuNode, url) {
       if (!url) return;
       // Allow network requests that end up to 100ms before the task started
@@ -163,7 +172,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
       let minCandidate = null;
       let minDistance = Infinity;
       // Find the closest request that finished before this CPU task started
-      candidates.forEach(candidate => {
+      for (const candidate of candidates) {
         // Explicitly ignore all requests that started after this CPU node
         // A network request that started after this task started cannot possibly be a dependency
         if (cpuNode.startTime <= candidate.startTime) return;
@@ -173,26 +182,29 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
           minCandidate = candidate;
           minDistance = distance;
         }
-      });
+      }
 
       if (!minCandidate) return;
       cpuNode.addDependency(minCandidate);
     }
 
+    /** @type {Map<string, CPUNode>} */
     const timers = new Map();
     for (const node of cpuNodes) {
       for (const evt of node.childEvents) {
         if (!evt.args.data) continue;
 
-        const url = evt.args.data.url;
+        const argsUrl = evt.args.data.url;
         const stackTraceUrls = (evt.args.data.stackTrace || []).map(l => l.url).filter(Boolean);
 
         switch (evt.name) {
           case 'TimerInstall':
+            // @ts-ignore - 'TimerInstall' event means timerId exists.
             timers.set(evt.args.data.timerId, node);
             stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
             break;
           case 'TimerFire': {
+            // @ts-ignore - 'TimerFire' event means timerId exists.
             const installer = timers.get(evt.args.data.timerId);
             if (!installer) break;
             installer.addDependent(node);
@@ -205,29 +217,35 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
             break;
 
           case 'EvaluateScript':
-            addDependencyOnUrl(node, url);
+            // @ts-ignore - 'EvaluateScript' event means argsUrl is defined.
+            addDependencyOnUrl(node, argsUrl);
             stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
             break;
 
           case 'XHRReadyStateChange':
             // Only create the dependency if the request was completed
+            // @ts-ignore - 'XHRReadyStateChange' event means readyState is defined.
             if (evt.args.data.readyState !== 4) break;
 
-            addDependencyOnUrl(node, url);
+            // @ts-ignore - 'XHRReadyStateChange' event means argsUrl is defined.
+            addDependencyOnUrl(node, argsUrl);
             stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
             break;
 
           case 'FunctionCall':
           case 'v8.compile':
-            addDependencyOnUrl(node, url);
+            // @ts-ignore - events mean argsUrl is defined.
+            addDependencyOnUrl(node, argsUrl);
             break;
 
           case 'ParseAuthorStyleSheet':
+            // @ts-ignore - 'ParseAuthorStyleSheet' event means styleSheetUrl is defined.
             addDependencyOnUrl(node, evt.args.data.styleSheetUrl);
             break;
 
           case 'ResourceSendRequest':
-            addDependentNetworkRequest(node, evt.args.data.requestId, evt);
+            // @ts-ignore - 'ResourceSendRequest' event means requestId is defined.
+            addDependentNetworkRequest(node, evt.args.data.requestId);
             stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
             break;
         }
@@ -242,7 +260,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
   /**
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
-   * @return {!Node}
+   * @return {Node}
    */
   static createGraph(traceOfTab, networkRecords) {
     const networkNodeOutput = PageDependencyGraphArtifact.getNetworkNodeOutput(networkRecords);
@@ -251,7 +269,12 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
     const rootRequest = networkRecords.reduce((min, r) => (min.startTime < r.startTime ? min : r));
     const rootNode = networkNodeOutput.idToNodeMap.get(rootRequest.requestId);
 
-    PageDependencyGraphArtifact.linkNetworkNodes(rootNode, networkNodeOutput, networkRecords);
+    if (!rootNode) {
+      // Should always be found.
+      throw new Error('rootNode not found.');
+    }
+
+    PageDependencyGraphArtifact.linkNetworkNodes(rootNode, networkNodeOutput);
     PageDependencyGraphArtifact.linkCPUNodes(rootNode, networkNodeOutput, cpuNodes);
 
     if (NetworkNode.hasCycle(rootNode)) {
@@ -263,13 +286,15 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
 
   /**
    *
-   * @param {!Node} rootNode
+   * @param {Node} rootNode
    */
   static printGraph(rootNode, widthInCharacters = 100) {
+    /** @param {string} str @param {number} target */
     function padRight(str, target, padChar = ' ') {
       return str + padChar.repeat(Math.max(target - str.length, 0));
     }
 
+    /** @type {Array<Node>} */
     const nodes = [];
     rootNode.traverse(node => nodes.push(node));
     nodes.sort((a, b) => a.startTime - b.startTime);
@@ -284,6 +309,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
       const length = Math.ceil((node.endTime - node.startTime) / timePerCharacter);
       const bar = padRight('', offset) + padRight('', length, '=');
 
+      // @ts-ignore -- disambiguate displayName from across possible Node types.
       const displayName = node.record ? node.record._url : node.type;
       // eslint-disable-next-line
       console.log(padRight(bar, widthInCharacters), `| ${displayName.slice(0, 30)}`);
@@ -291,31 +317,27 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {{trace: !Trace, devtoolsLog: !DevToolsLog}} data
-   * @param {!ComputedArtifacts} artifacts
-   * @return {!Promise<!Node>}
+   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog}} data
+   * @param {LH.ComputedArtifacts} artifacts
+   * @return {Promise<Node>}
    */
-  compute_(data, artifacts) {
+  async compute_(data, artifacts) {
     const trace = data.trace;
     const devtoolsLog = data.devtoolsLog;
-    const promises = [
+    const [traceOfTab, networkRecords] = await Promise.all([
       artifacts.requestTraceOfTab(trace),
       artifacts.requestNetworkRecords(devtoolsLog),
-    ];
+    ]);
 
-    return Promise.all(promises).then(([traceOfTab, networkRecords]) => {
-      return PageDependencyGraphArtifact.createGraph(traceOfTab, networkRecords);
-    });
+    return PageDependencyGraphArtifact.createGraph(traceOfTab, networkRecords);
   }
 }
 
 module.exports = PageDependencyGraphArtifact;
 
 /**
- * @typedef {{
- *    nodes: !Array<!NetworkNode>,
- *    idToNodeMap: !Map<string, !NetworkNode>,
- *    urlToNodeMap: !Map<string, !Array<!NetworkNode>
- * }}
+ * @typedef {Object} NetworkNodeOutput
+ * @property {Array<NetworkNode>} nodes
+ * @property {Map<string, NetworkNode>} idToNodeMap
+ * @property {Map<string, Array<NetworkNode>>} urlToNodeMap
  */
-PageDependencyGraphArtifact.NetworkNodeOutput; // eslint-disable-line no-unused-expressions

@@ -10,14 +10,17 @@ const ConsoleQuieter = require('../console-quieter');
 
 // Polyfill the bottom-up and topdown tree sorting.
 const TimelineModelTreeView =
-    require('devtools-timeline-model/lib/timeline-model-treeview.js')(WebInspector);
+  // @ts-ignore
+  require('devtools-timeline-model/lib/timeline-model-treeview.js')(WebInspector);
 
 class TimelineModel {
+  /** @param {LH.Trace} events */
   constructor(events) {
     this.init(events);
   }
 
-  init(events) {
+  /** @param {LH.Trace} trace */
+  init(trace) {
     // (devtools) tracing model
     this._tracingModel =
         new WebInspector.TracingModel(new WebInspector.TempFileBackingStorage('tracing'));
@@ -25,11 +28,15 @@ class TimelineModel {
     this._timelineModel =
         new WebInspector.TimelineModel(WebInspector.TimelineUIUtils.visibleEventsFilter());
 
-    if (typeof events === 'string') {
-      events = JSON.parse(events);
+    let events;
+    if (Array.isArray(trace)) {
+      events = trace;
     }
-    if (events.hasOwnProperty('traceEvents')) {
-      events = events.traceEvents;
+    if (typeof trace === 'string') {
+      events = JSON.parse(trace);
+    }
+    if (trace.hasOwnProperty('traceEvents')) {
+      events = trace.traceEvents;
     }
 
     // populate with events
@@ -86,7 +93,6 @@ class TimelineModel {
 
   /**
    * @param  {!string} grouping Allowed values: None Category Subdomain Domain URL EventName
-   * @return {!WebInspector.TimelineProfileTree.Node} A grouped and sorted tree
    */
   bottomUpGroupBy(grouping) {
     const topDown = this.topDown();
@@ -102,14 +108,15 @@ class TimelineModel {
   }
 
   frameModel() {
-    const frameModel = new WebInspector.TimelineFrameModel(event =>
-      WebInspector.TimelineUIUtils.eventStyle(event).category.name
-    );
+    /** @param {LH.TraceEvent} event */
+    const mapper = event => WebInspector.TimelineUIUtils.eventStyle(event).category.name;
+    const frameModel = new WebInspector.TimelineFrameModel(mapper);
     frameModel.addTraceEvents({ /* target */ },
       this._timelineModel.inspectedTargetEvents(), this._timelineModel.sessionId() || '');
     return frameModel;
   }
 
+  /** @return {LH.Artifacts.DevtoolsTimelineFilmStripModel} */
   filmStripModel() {
     return new WebInspector.FilmStripModel(this._tracingModel);
   }

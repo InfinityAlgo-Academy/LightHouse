@@ -158,21 +158,32 @@ function parseStartUrl(jsonInput, manifestUrl, documentUrl) {
  * @param {*} jsonInput
  */
 function parseDisplay(jsonInput) {
-  const display = parseString(jsonInput.display, true);
+  const parsedString = parseString(jsonInput.display, true);
+  const stringValue = parsedString.value;
 
-  if (!display.value) {
-    display.value = DEFAULT_DISPLAY_MODE;
-    return display;
+  if (!stringValue) {
+    return {
+      raw: jsonInput,
+      value: DEFAULT_DISPLAY_MODE,
+      debugString: parsedString.debugString,
+    };
   }
 
-  display.value = display.value.toLowerCase();
-  if (!ALLOWED_DISPLAY_VALUES.includes(display.value)) {
-    display.debugString = 'ERROR: \'display\' has invalid value ' + display.value +
-        ` will fall back to ${DEFAULT_DISPLAY_MODE}.`;
-    display.value = DEFAULT_DISPLAY_MODE;
+  const displayValue = stringValue.toLowerCase();
+  if (!ALLOWED_DISPLAY_VALUES.includes(displayValue)) {
+    return {
+      raw: jsonInput,
+      value: DEFAULT_DISPLAY_MODE,
+      debugString: 'ERROR: \'display\' has invalid value ' + displayValue +
+        `. will fall back to ${DEFAULT_DISPLAY_MODE}.`,
+    };
   }
 
-  return display;
+  return {
+    raw: jsonInput,
+    value: displayValue,
+    debugString: undefined,
+  };
 }
 
 /**
@@ -234,7 +245,7 @@ function parseIcon(raw, manifestUrl) {
       debugString: undefined,
     };
   } else {
-    sizes = {...parsedSizes};
+    sizes = {...parsedSizes, value: undefined};
   }
 
   return {
@@ -259,6 +270,7 @@ function parseIcons(jsonInput, manifestUrl) {
   if (raw === undefined) {
     return {
       raw,
+      /** @type {Array<ReturnType<typeof parseIcon>>} */
       value: [],
       debugString: undefined,
     };
@@ -267,6 +279,7 @@ function parseIcons(jsonInput, manifestUrl) {
   if (!Array.isArray(raw)) {
     return {
       raw,
+      /** @type {Array<ReturnType<typeof parseIcon>>} */
       value: [],
       debugString: 'ERROR: \'icons\' expected to be an array but is not.',
     };

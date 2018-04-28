@@ -13,9 +13,9 @@ const WebInspector = require('../../../lib/web-inspector');
 
 class LanternMetricArtifact extends ComputedArtifact {
   /**
-   * @param {!Node} dependencyGraph
+   * @param {Node} dependencyGraph
    * @param {function(NetworkNode):boolean=} condition
-   * @return {!Set<string>}
+   * @return {Set<string>}
    */
   static getScriptUrls(dependencyGraph, condition) {
     const scriptUrls = new Set();
@@ -39,18 +39,18 @@ class LanternMetricArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {!Node} dependencyGraph
+   * @param {Node} dependencyGraph
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
-   * @return {!Node}
+   * @return {Node}
    */
   getOptimisticGraph(dependencyGraph, traceOfTab) { // eslint-disable-line no-unused-vars
     throw new Error('Optimistic graph unimplemented!');
   }
 
   /**
-   * @param {!Node} dependencyGraph
+   * @param {Node} dependencyGraph
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
-   * @return {!Node}
+   * @return {Node}
    */
   getPessimisticGraph(dependencyGraph, traceOfTab) { // eslint-disable-line no-unused-vars
     throw new Error('Pessmistic graph unimplemented!');
@@ -66,8 +66,8 @@ class LanternMetricArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {{trace: Object, devtoolsLog: Object, settings: LH.Config.Settings, simulator?: Simulator}} data
-   * @param {Object} artifacts
+   * @param {LH.Artifacts.MetricComputationData} data
+   * @param {LH.ComputedArtifacts} artifacts
    * @param {any=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
@@ -111,11 +111,11 @@ class LanternMetricArtifact extends ComputedArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
-   * @param {Object} artifacts
+   * @param {LH.ComputedArtifacts} computedArtifacts
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
-  compute_(data, artifacts) {
-    return this.computeMetricWithGraphs(data, artifacts);
+  compute_(data, computedArtifacts) {
+    return this.computeMetricWithGraphs(data, computedArtifacts);
   }
 }
 

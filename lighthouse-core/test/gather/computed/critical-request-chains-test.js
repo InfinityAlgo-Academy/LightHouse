@@ -24,7 +24,7 @@ function mockTracingData(prioritiesList, edges) {
       _resourceType: {
         _category: 'fake',
       },
-      frameId: 1,
+      _frameId: 1,
       finished: true,
       priority: () => priority,
       initiatorRequest: () => null,
@@ -50,12 +50,13 @@ function replaceChain(chains, networkRecords) {
 describe('CriticalRequestChain gatherer: extractChain function', () => {
   it('returns correct data for chain from a devtoolsLog', () => {
     const computedArtifacts = Runner.instantiateComputedArtifacts();
-    computedArtifacts.URL = {finalUrl: 'https://en.m.wikipedia.org/wiki/Main_Page'};
     const wikiDevtoolsLog = require('../../fixtures/wikipedia-redirect.devtoolslog.json');
     const wikiChains = require('../../fixtures/wikipedia-redirect.critical-request-chains.json');
+    const URL = {finalUrl: 'https://en.m.wikipedia.org/wiki/Main_Page'};
 
     const networkPromise = computedArtifacts.requestNetworkRecords(wikiDevtoolsLog);
-    const CRCPromise = computedArtifacts.requestCriticalRequestChains(wikiDevtoolsLog);
+    const CRCPromise = computedArtifacts.requestCriticalRequestChains({devtoolsLog: wikiDevtoolsLog,
+      URL});
     Promise.all([CRCPromise, networkPromise]).then(([chains, networkRecords]) => {
       // set all network requests based on requestid
       replaceChain(wikiChains, networkRecords);
@@ -69,7 +70,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
       [[0, 1], [1, 2], [2, 3]]
     );
     const mainResource = networkRecords[0];
-    const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {
       0: {
         request: networkRecords[0],
@@ -100,7 +101,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
         [[0, 1], [1, 2], [2, 3], [3, 4]]
       );
       const mainResource = networkRecords[0];
-      const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+      const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
       assert.deepEqual(criticalChains, {
         0: {
           request: networkRecords[0],
@@ -118,7 +119,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
   it('returns correct data for two parallel chains', () => {
     const networkRecords = mockTracingData([HIGH, HIGH, HIGH, HIGH], [[0, 2], [1, 3]]);
     const mainResource = networkRecords[0];
-    const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {
       0: {
         request: networkRecords[0],
@@ -144,7 +145,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
   it('returns correct data for fork at non root', () => {
     const networkRecords = mockTracingData([HIGH, HIGH, HIGH, HIGH], [[0, 1], [1, 2], [1, 3]]);
     const mainResource = networkRecords[0];
-    const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {
       0: {
         request: networkRecords[0],
@@ -170,21 +171,21 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
   it('returns empty chain list when no critical request', () => {
     const networkRecords = mockTracingData([LOW, LOW], [[0, 1]]);
     const mainResource = networkRecords[0];
-    const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {});
   });
 
   it('returns empty chain list when no request whatsoever', () => {
     const networkRecords = mockTracingData([], []);
     const mainResource = networkRecords[0];
-    const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {});
   });
 
   it('returns two single node chains for two independent requests', () => {
     const networkRecords = mockTracingData([HIGH, HIGH], []);
     const mainResource = networkRecords[0];
-    const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {
       0: {
         request: networkRecords[0],
@@ -203,7 +204,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
       [[0, 1], [1, 2], [1, 3], [4, 5], [5, 7], [7, 8], [5, 6]]
     );
     const mainResource = networkRecords[0];
-    const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {
       0: {
         request: networkRecords[0],
@@ -257,7 +258,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
     networkRecords[1].requestId = '1:redirected.0';
     networkRecords[2].requestId = '1';
 
-    const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {
       0: {
         request: networkRecords[0],
@@ -282,24 +283,24 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
 
     // 2nd record is a favicon
     networkRecords[1]._url = 'https://example.com/favicon.ico';
-    networkRecords[1].mimeType = 'image/x-icon';
+    networkRecords[1]._mimeType = 'image/x-icon';
     networkRecords[1].parsedURL = {
       lastPathComponent: 'favicon.ico',
     };
     // 3rd record is a favicon
     networkRecords[2].url = 'https://example.com/favicon-32x32.png';
-    networkRecords[2].mimeType = 'image/png';
+    networkRecords[2]._mimeType = 'image/png';
     networkRecords[2].parsedURL = {
       lastPathComponent: 'favicon-32x32.png',
     };
     // 4th record is a favicon
     networkRecords[3].url = 'https://example.com/android-chrome-192x192.png';
-    networkRecords[3].mimeType = 'image/png';
+    networkRecords[3]._mimeType = 'image/png';
     networkRecords[3].parsedURL = {
       lastPathComponent: 'android-chrome-192x192.png',
     };
 
-    const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {
       0: {
         request: networkRecords[0],
@@ -314,20 +315,20 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
 
     // 1th record is the root document
     networkRecords[0]._url = 'https://example.com';
-    networkRecords[0].mimeType = 'text/html';
+    networkRecords[0]._mimeType = 'text/html';
     networkRecords[0]._resourceType = WebInspector.resourceTypes.Document;
     // 2nd record is an iframe in the page
     networkRecords[1]._url = 'https://example.com/iframe.html';
-    networkRecords[1].mimeType = 'text/html';
+    networkRecords[1]._mimeType = 'text/html';
     networkRecords[1]._resourceType = WebInspector.resourceTypes.Document;
-    networkRecords[1].frameId = '2';
+    networkRecords[1]._frameId = '2';
     // 3rd record is an iframe loaded by a script
     networkRecords[2]._url = 'https://youtube.com/';
-    networkRecords[2].mimeType = 'text/html';
+    networkRecords[2]._mimeType = 'text/html';
     networkRecords[2]._resourceType = WebInspector.resourceTypes.Document;
-    networkRecords[2].frameId = '3';
+    networkRecords[2]._frameId = '3';
 
-    const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {
       0: {
         request: networkRecords[0],
@@ -342,7 +343,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
 
     // Reverse the records so we force nodes to be made early.
     networkRecords.reverse();
-    const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+    const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {
       0: {
         request: networkRecords[1],
@@ -364,7 +365,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
       );
       networkRecords[1]._isLinkPreload = true;
       const mainResource = networkRecords[0];
-      const criticalChains = CriticalRequestChains.extractChain([networkRecords, mainResource]);
+      const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
       assert.deepEqual(criticalChains, {
         0: {
           request: networkRecords[0],

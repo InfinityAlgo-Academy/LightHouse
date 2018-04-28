@@ -23,86 +23,96 @@ class ManifestValues extends ComputedArtifact {
     return ['hasManifest', 'hasParseableManifest'];
   }
 
+  /** @typedef {(val: NonNullable<LH.Artifacts.Manifest['value']>) => boolean} Validator */
+
+  /**
+   * @return {Array<{id: string, failureText: string, validate: Validator}>}
+   */
   static get manifestChecks() {
     return [
       {
         id: 'hasStartUrl',
         failureText: 'Manifest does not contain a `start_url`',
-        validate: manifest => !!manifest.value.start_url.value,
+        validate: manifestValue => !!manifestValue.start_url.value,
       },
       {
         id: 'hasIconsAtLeast192px',
         failureText: 'Manifest does not have icons at least 192px',
-        validate: manifest => icons.doExist(manifest.value) &&
-            icons.sizeAtLeast(192, /** @type {!Manifest} */ (manifest.value)).length > 0,
+        validate: manifestValue => icons.doExist(manifestValue) &&
+            icons.sizeAtLeast(192, manifestValue).length > 0,
       },
       {
         id: 'hasIconsAtLeast512px',
         failureText: 'Manifest does not have icons at least 512px',
-        validate: manifest => icons.doExist(manifest.value) &&
-            icons.sizeAtLeast(512, /** @type {!Manifest} */ (manifest.value)).length > 0,
+        validate: manifestValue => icons.doExist(manifestValue) &&
+            icons.sizeAtLeast(512, manifestValue).length > 0,
       },
       {
         id: 'hasPWADisplayValue',
         failureText: 'Manifest\'s `display` value is not one of: ' + PWA_DISPLAY_VALUES.join(' | '),
-        validate: manifest => PWA_DISPLAY_VALUES.includes(manifest.value.display.value),
+        validate: manifestValue => PWA_DISPLAY_VALUES.includes(manifestValue.display.value),
       },
       {
         id: 'hasBackgroundColor',
         failureText: 'Manifest does not have `background_color`',
-        validate: manifest => !!manifest.value.background_color.value,
+        validate: manifestValue => !!manifestValue.background_color.value,
       },
       {
         id: 'hasThemeColor',
         failureText: 'Manifest does not have `theme_color`',
-        validate: manifest => !!manifest.value.theme_color.value,
+        validate: manifestValue => !!manifestValue.theme_color.value,
       },
       {
         id: 'hasShortName',
         failureText: 'Manifest does not have `short_name`',
-        validate: manifest => !!manifest.value.short_name.value,
+        validate: manifestValue => !!manifestValue.short_name.value,
       },
       {
         id: 'shortNameLength',
         failureText: 'Manifest `short_name` will be truncated when displayed on the homescreen',
-        validate: manifest => !!manifest.value.short_name.value &&
-            manifest.value.short_name.value.length <= SUGGESTED_SHORTNAME_LENGTH,
+        validate: manifestValue => !!manifestValue.short_name.value &&
+            manifestValue.short_name.value.length <= SUGGESTED_SHORTNAME_LENGTH,
       },
       {
         id: 'hasName',
         failureText: 'Manifest does not have `name`',
-        validate: manifest => !!manifest.value.name.value,
+        validate: manifestValue => !!manifestValue.name.value,
       },
     ];
   }
 
   /**
    * Returns results of all manifest checks
-   * @param {Manifest} manifest
-   * @return {{isParseFailure: !boolean, parseFailureReason: ?string, allChecks: !Array}}
+   * @param {LH.Artifacts['Manifest']} manifest
+   * @return {Promise<LH.Artifacts.ManifestValues>}
    */
-  compute_(manifest) {
+  async compute_(manifest) {
     // if the manifest isn't there or is invalid json, we report that and bail
     let parseFailureReason;
 
     if (manifest === null) {
-      parseFailureReason = 'No manifest was fetched';
-    }
-    if (manifest && manifest.value === undefined) {
-      parseFailureReason = 'Manifest failed to parse as valid JSON';
-    }
-    if (parseFailureReason) {
       return {
         isParseFailure: true,
-        parseFailureReason,
+        parseFailureReason: 'No manifest was fetched',
+        allChecks: [],
+      };
+    }
+    const manifestValue = manifest.value;
+    if (manifestValue === undefined) {
+      return {
+        isParseFailure: true,
+        parseFailureReason: 'Manifest failed to parse as valid JSON',
         allChecks: [],
       };
     }
 
     // manifest is valid, so do the rest of the checks
     const remainingChecks = ManifestValues.manifestChecks.map(item => {
-      item.passing = item.validate(manifest);
-      return item;
+      return {
+        id: item.id,
+        failureText: item.failureText,
+        passing: item.validate(manifestValue),
+      };
     });
 
     return {

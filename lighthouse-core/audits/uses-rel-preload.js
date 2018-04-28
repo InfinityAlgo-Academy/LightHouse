@@ -23,7 +23,7 @@ class UsesRelPreloadAudit extends Audit {
       informative: true,
       helpText: 'Consider using <link rel=preload> to prioritize fetching late-discovered ' +
         'resources sooner. [Learn more](https://developers.google.com/web/updates/2016/03/link-rel-preload).',
-      requiredArtifacts: ['devtoolsLogs', 'traces'],
+      requiredArtifacts: ['devtoolsLogs', 'traces', 'URL'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
   }
@@ -55,11 +55,12 @@ class UsesRelPreloadAudit extends Audit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
-    const devtoolsLogs = artifacts.devtoolsLogs[UsesRelPreloadAudit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreloadAudit.DEFAULT_PASS];
+    const URL = artifacts.URL;
 
     return Promise.all([
-      artifacts.requestCriticalRequestChains(devtoolsLogs),
-      artifacts.requestMainResource(devtoolsLogs),
+      artifacts.requestCriticalRequestChains({devtoolsLog, URL}),
+      artifacts.requestMainResource({devtoolsLog, URL}),
     ]).then(([critChains, mainResource]) => {
       const results = [];
       let maxWasted = 0;

@@ -30,32 +30,32 @@ function noUrlManifestParser(manifestSrc) {
 
 /* eslint-env mocha */
 describe('ManifestValues computed artifact', () => {
-  it('reports a parse failure if page had no manifest', () => {
+  it('reports a parse failure if page had no manifest', async () => {
     const manifestArtifact = null;
-    const results = manifestValues.compute_(manifestArtifact);
+    const results = await manifestValues.compute_(manifestArtifact);
     assert.equal(results.isParseFailure, true);
     assert.ok(results.parseFailureReason, 'No manifest was fetched');
     assert.equal(results.allChecks.length, 0);
   });
 
-  it('reports a parse failure if page had an unparseable manifest', () => {
+  it('reports a parse failure if page had an unparseable manifest', async () => {
     const manifestArtifact = noUrlManifestParser('{:,}');
-    const results = manifestValues.compute_(manifestArtifact);
+    const results = await manifestValues.compute_(manifestArtifact);
     assert.equal(results.isParseFailure, true);
     assert.ok(results.parseFailureReason.includes('failed to parse as valid JSON'));
     assert.equal(results.allChecks.length, 0);
   });
 
-  it('passes the parsing checks on an empty manifest', () => {
+  it('passes the parsing checks on an empty manifest', async () => {
     const manifestArtifact = noUrlManifestParser('{}');
-    const results = manifestValues.compute_(manifestArtifact);
+    const results = await manifestValues.compute_(manifestArtifact);
     assert.equal(results.isParseFailure, false);
     assert.equal(results.parseFailureReason, undefined);
   });
 
-  it('passes the all checks with fixture manifest', () => {
+  it('passes the all checks with fixture manifest', async () => {
     const manifestArtifact = noUrlManifestParser(manifestSrc);
-    const results = manifestValues.compute_(manifestArtifact);
+    const results = await manifestValues.compute_(manifestArtifact);
     assert.equal(results.isParseFailure, false);
     assert.equal(results.parseFailureReason, undefined);
 
@@ -63,34 +63,34 @@ describe('ManifestValues computed artifact', () => {
     assert.equal(results.allChecks.every(i => i.passing), true, 'not all checks passed');
   });
 
-  describe('color checks', () => {
-    it('fails when a minimal manifest contains no background_color', () => {
+  describe('color checks', async () => {
+    it('fails when a minimal manifest contains no background_color', async () => {
       const Manifest = noUrlManifestParser(JSON.stringify({
         start_url: '/',
       }));
-      const results = manifestValues.compute_(Manifest);
+      const results = await manifestValues.compute_(Manifest);
       const colorResults = results.allChecks.filter(i => i.id.includes('Color'));
       assert.equal(colorResults.every(i => i.passing === false), true);
     });
 
-    it('fails when a minimal manifest contains an invalid background_color', () => {
+    it('fails when a minimal manifest contains an invalid background_color', async () => {
       const Manifest = noUrlManifestParser(JSON.stringify({
         background_color: 'no',
         theme_color: 'no',
       }));
 
-      const results = manifestValues.compute_(Manifest);
+      const results = await manifestValues.compute_(Manifest);
       const colorResults = results.allChecks.filter(i => i.id.includes('Color'));
       assert.equal(colorResults.every(i => i.passing === false), true);
     });
 
-    it('succeeds when a minimal manifest contains a valid background_color', () => {
+    it('succeeds when a minimal manifest contains a valid background_color', async () => {
       const Manifest = noUrlManifestParser(JSON.stringify({
         background_color: '#FAFAFA',
         theme_color: '#FAFAFA',
       }));
 
-      const results = manifestValues.compute_(Manifest);
+      const results = await manifestValues.compute_(Manifest);
       const colorResults = results.allChecks.filter(i => i.id.includes('Color'));
       assert.equal(colorResults.every(i => i.passing === true), true);
     });
@@ -102,59 +102,59 @@ describe('ManifestValues computed artifact', () => {
     it('passes accepted values', () => {
       let Manifest;
       Manifest = noUrlManifestParser(JSON.stringify({display: 'minimal-ui'}));
-      assert.equal(check.validate(Manifest), true, 'doesnt pass minimal-ui');
+      assert.equal(check.validate(Manifest.value), true, 'doesnt pass minimal-ui');
       Manifest = noUrlManifestParser(JSON.stringify({display: 'standalone'}));
-      assert.equal(check.validate(Manifest), true, 'doesnt pass standalone');
+      assert.equal(check.validate(Manifest.value), true, 'doesnt pass standalone');
       Manifest = noUrlManifestParser(JSON.stringify({display: 'fullscreen'}));
-      assert.equal(check.validate(Manifest), true, 'doesnt pass fullscreen');
+      assert.equal(check.validate(Manifest.value), true, 'doesnt pass fullscreen');
     });
     it('fails invalid values', () => {
       let Manifest;
       Manifest = noUrlManifestParser(JSON.stringify({display: 'display'}));
-      assert.equal(check.validate(Manifest), false, 'doesnt fail display');
+      assert.equal(check.validate(Manifest.value), false, 'doesnt fail display');
       Manifest = noUrlManifestParser(JSON.stringify({display: ''}));
-      assert.equal(check.validate(Manifest), false, 'doesnt fail empty string');
+      assert.equal(check.validate(Manifest.value), false, 'doesnt fail empty string');
     });
   });
 
-  describe('icons checks', () => {
+  describe('icons checks', async () => {
     describe('icons exist check', () => {
-      it('fails when a manifest contains no icons array', () => {
+      it('fails when a manifest contains no icons array', async () => {
         const manifestSrc = JSON.stringify({
           name: 'NoIconsHere',
         });
         const Manifest = noUrlManifestParser(manifestSrc);
-        const results = manifestValues.compute_(Manifest);
+        const results = await manifestValues.compute_(Manifest);
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
         assert.equal(iconResults.every(i => i.passing === false), true);
       });
 
-      it('fails when a manifest contains no icons', () => {
+      it('fails when a manifest contains no icons', async () => {
         const manifestSrc = JSON.stringify({
           icons: [],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
-        const results = manifestValues.compute_(Manifest);
+        const results = await manifestValues.compute_(Manifest);
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
         assert.equal(iconResults.every(i => i.passing === false), true);
       });
     });
 
     describe('icons at least X size check', () => {
-      it('fails when a manifest contains an icon with no size', () => {
+      it('fails when a manifest contains an icon with no size', async () => {
         const manifestSrc = JSON.stringify({
           icons: [{
             src: 'icon.png',
           }],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
-        const results = manifestValues.compute_(Manifest);
+        const results = await manifestValues.compute_(Manifest);
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
 
         assert.equal(iconResults.every(i => i.passing === false), true);
       });
 
-      it('succeeds when there\'s one icon with multiple sizes, and one is valid', () => {
+      it('succeeds when there\'s one icon with multiple sizes, and one is valid', async () => {
         const manifestSrc = JSON.stringify({
           icons: [{
             src: 'icon.png',
@@ -162,13 +162,13 @@ describe('ManifestValues computed artifact', () => {
           }],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
-        const results = manifestValues.compute_(Manifest);
+        const results = await manifestValues.compute_(Manifest);
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
 
         assert.equal(iconResults.every(i => i.passing === true), true);
       });
 
-      it('succeeds when there\'s two icons, one without sizes; the other with a valid size', () => {
+      it('succeeds when there\'s two icons, one with and one without valid size', async () => {
         const manifestSrc = JSON.stringify({
           icons: [{
             src: 'icon.png',
@@ -178,13 +178,13 @@ describe('ManifestValues computed artifact', () => {
           }],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
-        const results = manifestValues.compute_(Manifest);
+        const results = await manifestValues.compute_(Manifest);
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
 
         assert.equal(iconResults.every(i => i.passing === true), true);
       });
 
-      it('fails when an icon has a valid size, though it\'s non-square.', () => {
+      it('fails when an icon has a valid size, though it\'s non-square.', async () => {
         // See also: https://code.google.com/p/chromium/codesearch#chromium/src/chrome/browser/banners/app_banner_data_fetcher_unittest.cc&sq=package:chromium&type=cs&q=%22Non-square%20is%20okay%22%20file:%5Esrc/chrome/browser/banners/
         const manifestSrc = JSON.stringify({
           icons: [{
@@ -193,7 +193,7 @@ describe('ManifestValues computed artifact', () => {
           }],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
-        const results = manifestValues.compute_(Manifest);
+        const results = await manifestValues.compute_(Manifest);
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
 
         assert.equal(iconResults.every(i => i.passing === false), true);

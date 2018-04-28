@@ -37,15 +37,18 @@ declare global {
       failed?: boolean;
       localizedFailDescription?: string;
 
-      _initiator: NetworkRequestInitiator;
-      initiatorRequest(): NetworkRequest,
-      _timing: NetworkRequestTiming;
+      _initiator: Crdp.Network.Initiator;
+      _timing: Crdp.Network.ResourceTiming;
       _resourceType: ResourceType;
       _mimeType: string;
       priority(): 'VeryHigh' | 'High' | 'Medium' | 'Low';
       _responseHeaders?: {name: string, value: string}[];
 
       _fetchedViaServiceWorker?: boolean;
+      _frameId: Crdp.Page.FrameId;
+      _isLinkPreload?: boolean;
+      initiatorRequest(): NetworkRequest | null;
+      redirects?: NetworkRequest[];
     }
 
     export interface ParsedURL {
@@ -53,27 +56,16 @@ declare global {
       host: string;
     }
 
-    export interface NetworkRequestInitiator {
-      type: 'script' | 'parser';
-    }
-
-    export interface NetworkRequestTiming {
-      dnsStart: number;
-      dnsEnd: number;
-      connectStart: number;
-      connectEnd: number;
-      sslStart: number;
-      sslEnd: number;
-      sendStart: number;
-      sendEnd: number;
-      receiveHeadersEnd: number;
-    }
-
     export interface ResourceType {
+      _category: ResourceCategory;
       name(): string;
       _name: string;
       title(): string;
       isTextType(): boolean;
+    }
+
+    export interface ResourceCategory {
+      title: string;
     }
   }
 }

@@ -81,7 +81,9 @@ declare global {
       }
 
       // TODO(bckenny): we likely don't want to require all these
-      export type Settings = Required<SettingsJson>;
+      export interface Settings extends Required<SettingsJson> {
+        throttling: Required<ThrottlingSettings>;
+      }
 
       export interface Pass extends Required<PassJson> {
         gatherers: GathererDefn[];

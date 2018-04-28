@@ -29,7 +29,8 @@ class Redirects extends Audit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
-    return artifacts.requestMainResource(artifacts.devtoolsLogs[Audit.DEFAULT_PASS])
+    const data = {URL: artifacts.URL, devtoolsLog: artifacts.devtoolsLogs[Audit.DEFAULT_PASS]};
+    return artifacts.requestMainResource(data)
       .then(mainResource => {
         // redirects is only available when redirects happens
         const redirectRequests = Array.from(mainResource.redirects || []);

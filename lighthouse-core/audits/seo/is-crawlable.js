@@ -68,7 +68,7 @@ class IsCrawlable extends Audit {
       helpText: 'Search engines are unable to include your pages in search results ' +
           'if they don\'t have permission to crawl them. [Learn ' +
           'more](https://developers.google.com/web/tools/lighthouse/audits/indexing).',
-      requiredArtifacts: ['MetaRobots', 'RobotsTxt'],
+      requiredArtifacts: ['MetaRobots', 'RobotsTxt', 'URL'],
     };
   }
 
@@ -77,7 +77,9 @@ class IsCrawlable extends Audit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
-    return artifacts.requestMainResource(artifacts.devtoolsLogs[Audit.DEFAULT_PASS])
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+
+    return artifacts.requestMainResource({devtoolsLog, URL: artifacts.URL})
       .then(mainResource => {
         const blockingDirectives = [];
 

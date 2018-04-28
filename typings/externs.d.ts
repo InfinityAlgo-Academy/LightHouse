@@ -22,6 +22,10 @@ declare global {
     [P in K]+?: T[P]
   }
 
+  /** Obtain the type of the first parameter of a function. */
+  type FirstParamType<T extends (arg1: any, ...args: any[]) => any> =
+    T extends (arg1: infer P, ...args: any[]) => any ? P : any;
+
   module LH {
     // re-export useful type modules under global LH module.
     export import Crdp = _Crdp;
@@ -121,11 +125,22 @@ declare global {
 
     export interface TraceEvent {
       name: string;
+      cat: string;
       args: {
         data?: {
-          url?: string
+          page?: string;
+          readyState?: number;
+          requestId?: string;
+          stackTrace?: {
+            url: string
+          }[];
+          styleSheetUrl?: string;
+          timerId?: string;
+          url?: string;
         };
+        frame?: string;
       };
+      pid: number;
       tid: number;
       ts: number;
       dur: number;

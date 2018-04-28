@@ -15,7 +15,7 @@ const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtoo
 describe('Metrics: Lantern TTFCPUI', () => {
   it('should compute predicted value', async () => {
     const artifacts = Runner.instantiateComputedArtifacts();
-    const result = await artifacts.requestLanternFirstCPUIdle({trace, devtoolsLog});
+    const result = await artifacts.requestLanternFirstCPUIdle({trace, devtoolsLog, settings: {}});
 
     assert.equal(Math.round(result.timing), 5308);
     assert.equal(Math.round(result.optimisticEstimate.timeInMs), 2451);

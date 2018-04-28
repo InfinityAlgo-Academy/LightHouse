@@ -12,9 +12,9 @@ const assert = require('assert');
 
 describe('NetworkThroughput', () => {
   const compute = NetworkThroughput.getThroughput;
-  function createRecord(responseReceivedTime, endTime, extras) {
+  function createRecord(_responseReceivedTime, endTime, extras) {
     return Object.assign({
-      responseReceivedTime,
+      _responseReceivedTime,
       endTime,
       transferSize: 1000,
       finished: true,

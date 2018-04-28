@@ -15,12 +15,12 @@ class LoadSimulatorArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {{devtoolsLog: Array, settings: LH.ConfigSettings|undefined}} data
-   * @param {!Artifacts} artifacts
-   * @return {!Promise}
+   * @param {{devtoolsLog: LH.DevtoolsLog, settings: LH.Config.Settings}} data
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<Simulator>}
    */
   async compute_(data, artifacts) {
-    const {throttlingMethod, throttling} = data.settings || {};
+    const {throttlingMethod, throttling} = data.settings;
     const networkAnalysis = await artifacts.requestNetworkAnalysis(data.devtoolsLog);
 
     const options = {

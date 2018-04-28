@@ -3,35 +3,44 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-// @ts-nocheck
 'use strict';
 
 const ArbitraryEqualityMap = require('../../lib/arbitrary-equality-map');
 
 class ComputedArtifact {
   /**
-   * @param {!ComputedArtifacts} allComputedArtifacts
+   * @param {LH.ComputedArtifacts} allComputedArtifacts
    */
   constructor(allComputedArtifacts) {
-    /** @private {!Map} */
-    this._cache = new ArbitraryEqualityMap();
-    this._cache.setEqualityFn(ArbitraryEqualityMap.deepEquals);
+    const cache = new ArbitraryEqualityMap();
+    cache.setEqualityFn(ArbitraryEqualityMap.deepEquals);
 
-    /** @private {!ComputedArtifacts} */
+    /** @type {Map<FirstParamType<this['compute_']>, Promise<ReturnType<this['compute_']>>>} */
+    // @ts-ignore cache is close enough to a Map for our purposes (but e.g. no [Symbol.toStringTag])
+    this._cache = cache;
+
+    /** @type {LH.ComputedArtifacts} */
     this._allComputedArtifacts = allComputedArtifacts;
+  }
+
+  /**
+   * @return {string}
+   */
+  get name() {
+    throw new Error('name getter not implemented for computed artifact ' + this.constructor.name);
   }
 
   /* eslint-disable no-unused-vars */
 
   /**
-   * Override to implement a computed artifact. Can return a Promise or the
-   * computed artifact itself.
+   * Override with more specific `artifact` and return type to implement a
+   * computed artifact.
    * @param {*} artifact Input to computation.
-   * @param {!ComputedArtifacts} allComputedArtifacts Access to all computed artifacts.
-   * @return {*}
+   * @param {LH.ComputedArtifacts} allComputedArtifacts Access to all computed artifacts.
+   * @return {Promise<*>}
    * @throws {Error}
    */
-  compute_(artifact, allComputedArtifacts) {
+  async compute_(artifact, allComputedArtifacts) {
     throw new Error('compute_() not implemented for computed artifact ' + this.name);
   }
 
@@ -39,17 +48,22 @@ class ComputedArtifact {
 
   /**
    * Request a computed artifact, caching the result on the input artifact.
-   * @param {*} artifacts
-   * @return {!Promise<*>}
+   * Types of `requiredArtifacts` and the return value are derived from the
+   * `compute_` method on classes derived from ComputedArtifact.
+   * @param {FirstParamType<this['compute_']>} requiredArtifacts
+   * @return {Promise<ReturnType<this['compute_']>>}
    */
-  request(artifacts) {
-    if (this._cache.has(artifacts)) {
-      return Promise.resolve(this._cache.get(artifacts));
+  async request(requiredArtifacts) {
+    const computed = this._cache.get(requiredArtifacts);
+    if (computed) {
+      return computed;
     }
 
-    const artifactPromise = Promise.resolve()
-      .then(_ => this.compute_(artifacts, this._allComputedArtifacts));
-    this._cache.set(artifacts, artifactPromise);
+    // Need to cast since `this.compute_(...)` returns the concrete return type
+    // of the base class's compute_, not the called derived class's.
+    const artifactPromise = /** @type {ReturnType<this['compute_']>} */ (
+      this.compute_(requiredArtifacts, this._allComputedArtifacts));
+    this._cache.set(requiredArtifacts, artifactPromise);
 
     return artifactPromise;
   }

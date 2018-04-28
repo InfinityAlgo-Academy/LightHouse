@@ -5,10 +5,14 @@
  */
 
 import * as parseManifest from '../lighthouse-core/lib/manifest-parser.js';
+import * as _LanternSimulator from '../lighthouse-core/lib/dependency-graph/simulator/simulator.js';
+import speedline = require('speedline');
+
+type LanternSimulator = InstanceType<typeof _LanternSimulator>;
 
 declare global {
   module LH {
-    export interface Artifacts {
+    export interface Artifacts extends ComputedArtifacts {
       // Created by by gather-runner
       fetchedAt: string;
       LighthouseRunWarnings: string[];
@@ -57,7 +61,7 @@ declare global {
       /** JS coverage information for code used during page load. */
       JsUsage: Crdp.Profiler.ScriptCoverage[];
       /** Parsed version of the page's Web App Manifest, or null if none found. */
-      Manifest: ReturnType<typeof parseManifest> | null;
+      Manifest: Artifacts.Manifest | null;
       /** The value of the <meta name="description">'s content attribute, or null. */
       MetaDescription: string|null;
       /** The value of the <meta name="robots">'s content attribute, or null. */
@@ -92,11 +96,37 @@ declare global {
       ViewportDimensions: Artifacts.ViewportDimensions;
       /** WebSQL database information for the page or null if none was found. */
       WebSQL: Crdp.Database.Database | null;
+    }
 
-      // TODO(bckenny): remove this for real computed artifacts approach
-      requestTraceOfTab(trace: Trace): Promise<Artifacts.TraceOfTab>
-      requestNetworkRecords(devtoolsLogs: DevtoolsLog): Promise<WebInspector.NetworkRequest[]>
-      requestMainResource(devtoolsLogs: DevtoolsLog): Promise<WebInspector.NetworkRequest>
+    export interface ComputedArtifacts {
+      requestDevtoolsTimelineModel(trace: Trace): Promise<{filmStripModel(): Artifacts.DevtoolsTimelineFilmStripModel}>;
+      requestLoadSimulator(data: {devtoolsLog: DevtoolsLog, settings: Config.Settings}): Promise<LanternSimulator>;
+      requestMainResource(data: {devtoolsLog: DevtoolsLog, URL: Artifacts['URL']}): Promise<WebInspector.NetworkRequest>;
+      requestManifestValues(manifest: LH.Artifacts['Manifest']): Promise<LH.Artifacts.ManifestValues>;
+      requestNetworkAnalysis(devtoolsLog: DevtoolsLog): Promise<LH.Artifacts.NetworkAnalysis>;
+      requestNetworkThroughput(devtoolsLog: DevtoolsLog): Promise<number>;
+      requestNetworkRecords(devtoolsLog: DevtoolsLog): Promise<WebInspector.NetworkRequest[]>;
+      requestPageDependencyGraph(data: {trace: Trace, devtoolsLog: DevtoolsLog}): Promise<Gatherer.Simulation.GraphNode>;
+      requestPushedRequests(devtoolsLogs: DevtoolsLog): Promise<WebInspector.NetworkRequest[]>;
+      requestTraceOfTab(trace: Trace): Promise<Artifacts.TraceOfTab>;
+      requestScreenshots(trace: Trace): Promise<{timestamp: number, datauri: string}[]>;
+      requestSpeedline(trace: Trace): Promise<LH.Artifacts.Speedline>;
+
+      // Metrics.
+      requestConsistentlyInteractive(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
+      requestEstimatedInputLatency(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
+      requestFirstContentfulPaint(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
+      requestFirstCPUIdle(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
+      requestFirstMeaningfulPaint(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
+      requestSpeedIndex(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
+
+      // Lantern metrics.
+      requestLanternConsistentlyInteractive(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
+      requestLanternEstimatedInputLatency(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
+      requestLanternFirstContentfulPaint(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
+      requestLanternFirstCPUIdle(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
+      requestLanternFirstMeaningfulPaint(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
+      requestLanternSpeedIndex(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
     }
 
     module Artifacts {
@@ -172,6 +202,9 @@ declare global {
         }
       }
 
+      // TODO(bckenny): real type for parsed manifest.
+      export type Manifest = ReturnType<typeof parseManifest>;
+
       export interface SingleImageUsage {
         src: string;
         clientWidth: number;
@@ -230,6 +263,31 @@ declare global {
         devicePixelRatio: number;
       }
 
+      // Computed artifact types below.
+      export type CriticalRequestNode = {
+        [id: string]: {
+          request: WebInspector.NetworkRequest;
+          children: CriticalRequestNode;
+        }
+      }
+
+      export interface DevtoolsTimelineFilmStripModel {
+        frames(): Array<{
+          imageDataPromise(): Promise<string>;
+          timestamp: number;
+        }>;
+      }
+
+      export interface ManifestValues {
+        isParseFailure: boolean;
+        parseFailureReason: string | undefined;
+        allChecks: {
+          id: string;
+          failureText: string;
+          passing: boolean;
+        }[];
+      }
+
       export interface MetricComputationDataInput {
         devtoolsLog: DevtoolsLog;
         trace: Trace;
@@ -239,11 +297,19 @@ declare global {
       export interface MetricComputationData extends MetricComputationDataInput {
         networkRecords: Array<WebInspector.NetworkRequest>;
         traceOfTab: TraceOfTab;
+        simulator?: LanternSimulator;
       }
 
       export interface Metric {
         timing: number;
         timestamp?: number;
+      }
+
+      export interface NetworkAnalysis {
+        rtt: number;
+        additionalRttByOrigin: Map<string, number>;
+        serverResponseTimeByOrigin: Map<string, number>;
+        throughput: number;
       }
 
       export interface LanternMetric {
@@ -254,16 +320,20 @@ declare global {
         pessimisticGraph: Gatherer.Simulation.GraphNode;
       }
 
+      export type Speedline = ReturnType<typeof speedline>;
+
+      // TODO(bckenny): all but navigationStart could actually be undefined.
       export interface TraceTimes {
         navigationStart: number;
         firstPaint: number;
         firstContentfulPaint: number;
         firstMeaningfulPaint: number;
         traceEnd: number;
-        onLoad: number;
+        load: number;
         domContentLoaded: number;
       }
 
+      // TODO(bckenny): events other than started and navStart could be undefined.
       export interface TraceOfTab {
         timings: TraceTimes;
         timestamps: TraceTimes;
@@ -274,7 +344,8 @@ declare global {
         firstPaintEvt: TraceEvent;
         firstContentfulPaintEvt: TraceEvent;
         firstMeaningfulPaintEvt: TraceEvent;
-        onLoadEvt: TraceEvent;
+        loadEvt: TraceEvent;
+        domContentLoadedEvt: TraceEvent;
         fmpFellBack: boolean;
       }
     }

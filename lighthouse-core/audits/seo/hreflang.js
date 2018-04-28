@@ -63,7 +63,7 @@ class Hreflang extends Audit {
       helpText: 'hreflang links tell search engines what version of a page they should ' +
         'list in search results for a given language or region. [Learn more]' +
         '(https://developers.google.com/web/tools/lighthouse/audits/hreflang).',
-      requiredArtifacts: ['Hreflang'],
+      requiredArtifacts: ['Hreflang', 'URL'],
     };
   }
 
@@ -72,9 +72,10 @@ class Hreflang extends Audit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
-    const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const URL = artifacts.URL;
 
-    return artifacts.requestMainResource(devtoolsLogs)
+    return artifacts.requestMainResource({devtoolsLog, URL})
       .then(mainResource => {
         /** @type {Array<{source: string|{type: string, snippet: string}}>} */
         const invalidHreflangs = [];

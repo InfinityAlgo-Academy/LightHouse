@@ -15,7 +15,7 @@ const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtoo
 describe('Metrics: Lantern Speed Index', () => {
   it('should compute predicted value', async () => {
     const artifacts = Runner.instantiateComputedArtifacts();
-    const result = await artifacts.requestLanternSpeedIndex({trace, devtoolsLog});
+    const result = await artifacts.requestLanternSpeedIndex({trace, devtoolsLog, settings: {}});
 
     assert.equal(Math.round(result.timing), 2063);
     assert.equal(Math.round(result.optimisticEstimate.timeInMs), 605);

@@ -21,7 +21,7 @@ class HTTPStatusCode extends Audit {
       helpText: 'Pages with unsuccessful HTTP status codes may not be indexed properly. ' +
       '[Learn more]' +
       '(https://developers.google.com/web/tools/lighthouse/audits/successful-http-code).',
-      requiredArtifacts: ['devtoolsLogs'],
+      requiredArtifacts: ['devtoolsLogs', 'URL'],
     };
   }
 
@@ -30,9 +30,10 @@ class HTTPStatusCode extends Audit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
-    const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const URL = artifacts.URL;
 
-    return artifacts.requestMainResource(devtoolsLogs)
+    return artifacts.requestMainResource({devtoolsLog, URL})
       .then(mainResource => {
         const statusCode = mainResource.statusCode;
 

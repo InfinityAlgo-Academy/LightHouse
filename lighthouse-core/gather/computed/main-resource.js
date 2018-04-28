@@ -17,14 +17,15 @@ class MainResource extends ComputedArtifact {
   }
 
   /**
-   * @param {!DevtoolsLog} devtoolsLog
-   * @param {!ComputedArtifacts} artifacts
-   * @return {LH.WebInspector.NetworkRequest}
+   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
+   * @param {LH.ComputedArtifacts} artifacts
+   * @return {Promise<LH.WebInspector.NetworkRequest>}
    */
-  compute_(devtoolsLog, artifacts) {
+  compute_(data, artifacts) {
+    const {URL, devtoolsLog} = data;
     return artifacts.requestNetworkRecords(devtoolsLog)
       .then(requests => {
-        const mainResource = requests.find(request => request.url === artifacts.URL.finalUrl);
+        const mainResource = requests.find(request => request.url === URL.finalUrl);
 
         if (!mainResource) {
           throw new Error('Unable to identify the main resource');

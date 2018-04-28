@@ -12,6 +12,10 @@ class ScreenshotFilmstrip extends ComputedArtifact {
     return 'Screenshots';
   }
 
+  /**
+   * @param {{imageDataPromise: function(): Promise<string>}} frame
+   * @return {Promise<string>}
+   */
   fetchScreenshot(frame) {
     return frame
       .imageDataPromise()
@@ -19,12 +23,12 @@ class ScreenshotFilmstrip extends ComputedArtifact {
   }
 
   /**
-   * @param {{traceEvents: !Array}} trace
-   * @param {!Artifacts} trace
-   * @return {!Promise}
+   * @param {LH.Trace} trace
+   * @param {LH.ComputedArtifacts} computedArtifacts
+   * @return {Promise<Array<{timestamp: number, datauri: string}>>}
   */
-  compute_(trace, artifacts) {
-    return artifacts.requestDevtoolsTimelineModel(trace).then(model => {
+  compute_(trace, computedArtifacts) {
+    return computedArtifacts.requestDevtoolsTimelineModel(trace).then(model => {
       const filmStripFrames = model.filmStripModel().frames();
       const frameFetches = filmStripFrames.map(frame => this.fetchScreenshot(frame));
 

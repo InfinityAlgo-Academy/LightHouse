@@ -25,16 +25,17 @@ class ComputedMetric extends ComputedArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
-   * @param {Object} artifacts
+   * @param {LH.ComputedArtifacts} artifacts
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   computeSimulatedMetric(data, artifacts) {
+    // @ts-ignore TODO(bckenny): allow string constuction access to lantern metric.
     return artifacts[`requestLantern${this.name}`](data);
   }
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
-   * @param {Object} artifacts
+   * @param {LH.ComputedArtifacts} artifacts
    * @return {Promise<LH.Artifacts.Metric>}
    */
   computeObservedMetric(data, artifacts) { // eslint-disable-line no-unused-vars
@@ -43,26 +44,26 @@ class ComputedMetric extends ComputedArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {Object} artifacts
+   * @param {LH.ComputedArtifacts} computedArtifacts
    * @return {Promise<LH.Artifacts.LanternMetric|LH.Artifacts.Metric>}
    */
-  async compute_(data, artifacts) {
+  async compute_(data, computedArtifacts) {
     const {trace, devtoolsLog, settings} = data;
     if (!trace || !devtoolsLog || !settings) {
       throw new Error('Did not provide necessary metric computation data');
     }
 
     const augmentedData = Object.assign({
-      networkRecords: await artifacts.requestNetworkRecords(devtoolsLog),
-      traceOfTab: await artifacts.requestTraceOfTab(trace),
+      networkRecords: await computedArtifacts.requestNetworkRecords(devtoolsLog),
+      traceOfTab: await computedArtifacts.requestTraceOfTab(trace),
     }, data);
 
     switch (settings.throttlingMethod) {
       case 'simulate':
-        return this.computeSimulatedMetric(augmentedData, artifacts);
+        return this.computeSimulatedMetric(augmentedData, computedArtifacts);
       case 'provided':
       case 'devtools':
-        return this.computeObservedMetric(augmentedData, artifacts);
+        return this.computeObservedMetric(augmentedData, computedArtifacts);
       default:
         throw new TypeError(`Unrecognized throttling method: ${settings.throttlingMethod}`);
     }

@@ -19,8 +19,8 @@ const backgroundTabTrace = require('../../fixtures/traces/backgrounded-tab-missi
 
 /* eslint-env mocha */
 describe('Trace of Tab computed artifact:', () => {
-  it('gathers the events from the tab\'s process', () => {
-    const trace = traceOfTab.compute_(lateTracingStartedTrace);
+  it('gathers the events from the tab\'s process', async () => {
+    const trace = await traceOfTab.compute_(lateTracingStartedTrace);
 
     const firstEvt = trace.processEvents[0];
     trace.processEvents.forEach(evt => {
@@ -33,8 +33,8 @@ describe('Trace of Tab computed artifact:', () => {
     assert.ok(firstEvt.pid === trace.firstMeaningfulPaintEvt.pid);
   });
 
-  it('computes timings of each event', () => {
-    const trace = traceOfTab.compute_(lateTracingStartedTrace);
+  it('computes timings of each event', async () => {
+    const trace = await traceOfTab.compute_(lateTracingStartedTrace);
     assert.equal(Math.round(trace.timings.navigationStart), 0);
     assert.equal(Math.round(trace.timings.firstPaint), 80);
     assert.equal(Math.round(trace.timings.firstContentfulPaint), 80);
@@ -42,8 +42,8 @@ describe('Trace of Tab computed artifact:', () => {
     assert.equal(Math.round(trace.timings.traceEnd), 649);
   });
 
-  it('computes timestamps of each event', () => {
-    const trace = traceOfTab.compute_(lateTracingStartedTrace);
+  it('computes timestamps of each event', async () => {
+    const trace = await traceOfTab.compute_(lateTracingStartedTrace);
     assert.equal(Math.round(trace.timestamps.navigationStart), 29343540951);
     assert.equal(Math.round(trace.timestamps.firstPaint), 29343620997);
     assert.equal(Math.round(trace.timestamps.firstContentfulPaint), 29343621005);
@@ -52,8 +52,8 @@ describe('Trace of Tab computed artifact:', () => {
   });
 
   describe('finds correct FMP', () => {
-    it('if there was a tracingStartedInPage after the frame\'s navStart', () => {
-      const trace = traceOfTab.compute_(lateTracingStartedTrace);
+    it('if there was a tracingStartedInPage after the frame\'s navStart', async () => {
+      const trace = await traceOfTab.compute_(lateTracingStartedTrace);
       assert.equal(trace.startedInPageEvt.ts, 29343544280);
       assert.equal(trace.navigationStartEvt.ts, 29343540951);
       assert.equal(trace.firstContentfulPaintEvt.ts, 29343621005);
@@ -61,8 +61,8 @@ describe('Trace of Tab computed artifact:', () => {
       assert.ok(!trace.fmpFellBack);
     });
 
-    it('if there was a tracingStartedInPage after the frame\'s navStart #2', () => {
-      const trace = traceOfTab.compute_(badNavStartTrace);
+    it('if there was a tracingStartedInPage after the frame\'s navStart #2', async () => {
+      const trace = await traceOfTab.compute_(badNavStartTrace);
       assert.equal(trace.startedInPageEvt.ts, 8885435611);
       assert.equal(trace.navigationStartEvt.ts, 8885424467);
       assert.equal(trace.firstContentfulPaintEvt.ts, 8886056886);
@@ -70,8 +70,8 @@ describe('Trace of Tab computed artifact:', () => {
       assert.ok(!trace.fmpFellBack);
     });
 
-    it('if it appears slightly before the fCP', () => {
-      const trace = traceOfTab.compute_(preactTrace);
+    it('if it appears slightly before the fCP', async () => {
+      const trace = await traceOfTab.compute_(preactTrace);
       assert.equal(trace.startedInPageEvt.ts, 1805796376829);
       assert.equal(trace.navigationStartEvt.ts, 1805796384607);
       assert.equal(trace.firstContentfulPaintEvt.ts, 1805797263653);
@@ -79,8 +79,8 @@ describe('Trace of Tab computed artifact:', () => {
       assert.ok(!trace.fmpFellBack);
     });
 
-    it('from candidates if no defined FMP exists', () => {
-      const trace = traceOfTab.compute_(noFMPtrace);
+    it('from candidates if no defined FMP exists', async () => {
+      const trace = await traceOfTab.compute_(noFMPtrace);
       assert.equal(trace.startedInPageEvt.ts, 2146735802456);
       assert.equal(trace.navigationStartEvt.ts, 2146735807738);
       assert.equal(trace.firstContentfulPaintEvt.ts, 2146737302468);
@@ -89,8 +89,8 @@ describe('Trace of Tab computed artifact:', () => {
     });
   });
 
-  it('handles traces missing an FCP', () => {
-    const trace = traceOfTab.compute_(noFCPtrace);
+  it('handles traces missing an FCP', async () => {
+    const trace = await traceOfTab.compute_(noFCPtrace);
     assert.equal(trace.startedInPageEvt.ts, 2149509117532, 'bad tracingstartedInPage');
     assert.equal(trace.navigationStartEvt.ts, 2149509122585, 'bad navStart');
     assert.equal(trace.firstContentfulPaintEvt, undefined, 'bad fcp');
@@ -98,8 +98,8 @@ describe('Trace of Tab computed artifact:', () => {
     assert.ok(trace.fmpFellBack);
   });
 
-  it('handles traces missing a paints (captured in background tab)', () => {
-    const trace = traceOfTab.compute_(backgroundTabTrace);
+  it('handles traces missing a paints (captured in background tab)', async () => {
+    const trace = await traceOfTab.compute_(backgroundTabTrace);
     assert.equal(trace.startedInPageEvt.ts, 1966813248134);
     assert.notEqual(trace.navigationStartEvt.ts, 1966813346529, 'picked wrong frame');
     assert.notEqual(trace.navigationStartEvt.ts, 1966813520313, 'picked wrong frame');
@@ -112,10 +112,10 @@ describe('Trace of Tab computed artifact:', () => {
     assert.equal(trace.firstMeaningfulPaintEvt, undefined, 'bad fmp');
   });
 
-  it('stably sorts events', () => {
+  it('stably sorts events', async () => {
     const traceJson = fs.readFileSync(__dirname +
         '/../../fixtures/traces/tracingstarted-after-navstart.json', 'utf8');
-    const trace = traceOfTab.compute_(JSON.parse(traceJson));
+    const trace = await traceOfTab.compute_(JSON.parse(traceJson));
     const mainPid = trace.mainThreadEvents[0].pid;
 
     const freshProcessEvents = JSON.parse(traceJson).traceEvents

@@ -176,7 +176,7 @@ class Runner {
    */
   static async _runAudits(settings, audits, artifacts) {
     log.log('status', 'Analyzing and running audits...');
-    artifacts = Object.assign(Runner.instantiateComputedArtifacts(), artifacts);
+    artifacts = Object.assign({}, Runner.instantiateComputedArtifacts(), artifacts);
 
     if (artifacts.settings) {
       const overrides = {gatherMode: undefined, auditMode: undefined, output: undefined};
@@ -344,7 +344,8 @@ class Runner {
   }
 
   /**
-   * TODO(bckenny): computed artifact types
+   * TODO(bckenny): refactor artifact types
+   * @return {LH.ComputedArtifacts}
    */
   static instantiateComputedArtifacts() {
     const computedArtifacts = {};
@@ -357,7 +358,7 @@ class Runner {
       computedArtifacts['request' + artifact.name] = artifact.request.bind(artifact);
     });
 
-    return computedArtifacts;
+    return /** @type {LH.ComputedArtifacts} */ (computedArtifacts);
   }
 
   /**

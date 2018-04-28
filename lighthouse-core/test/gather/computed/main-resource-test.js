@@ -26,9 +26,9 @@ describe('MainResource computed artifact', () => {
       record,
     ];
     computedArtifacts.requestNetworkRecords = _ => Promise.resolve(networkRecords);
-    computedArtifacts.URL = {finalUrl: 'https://example.com'};
+    const URL = {finalUrl: 'https://example.com'};
 
-    return computedArtifacts.requestMainResource({}).then(output => {
+    return computedArtifacts.requestMainResource({URL}).then(output => {
       assert.equal(output, record);
     });
   });
@@ -38,9 +38,9 @@ describe('MainResource computed artifact', () => {
       {url: 'https://example.com'},
     ];
     computedArtifacts.requestNetworkRecords = _ => Promise.resolve(networkRecords);
-    computedArtifacts.URL = {finalUrl: 'https://m.example.com'};
+    const URL = {finalUrl: 'https://m.example.com'};
 
-    return computedArtifacts.requestMainResource({}).then(() => {
+    return computedArtifacts.requestMainResource({URL}).then(() => {
       assert.ok(false, 'should have thrown');
     }).catch(err => {
       assert.equal(err.message, 'Unable to identify the main resource');
@@ -49,9 +49,10 @@ describe('MainResource computed artifact', () => {
 
   it('should identify correct main resource in the wikipedia fixture', () => {
     const wikiDevtoolsLog = require('../../fixtures/wikipedia-redirect.devtoolslog.json');
-    computedArtifacts.URL = {finalUrl: 'https://en.m.wikipedia.org/wiki/Main_Page'};
+    const URL = {finalUrl: 'https://en.m.wikipedia.org/wiki/Main_Page'};
+    const artifacts = {devtoolsLog: wikiDevtoolsLog, URL};
 
-    return computedArtifacts.requestMainResource(wikiDevtoolsLog).then(output => {
+    return computedArtifacts.requestMainResource(artifacts).then(output => {
       assert.equal(output.url, 'https://en.m.wikipedia.org/wiki/Main_Page');
     });
   });

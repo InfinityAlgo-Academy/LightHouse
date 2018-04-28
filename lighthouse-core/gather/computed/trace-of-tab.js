@@ -34,12 +34,13 @@ class TraceOfTab extends ComputedArtifact {
   /**
    * Finds key trace events, identifies main process/thread, and returns timings of trace events
    * in milliseconds since navigation start in addition to the standard microsecond monotonic timestamps.
-   * @param {{traceEvents: !Array}} trace
-   * @return {LH.Artifacts.TraceOfTab}
+   * @param {LH.Trace} trace
+   * @return {Promise<LH.Artifacts.TraceOfTab>}
   */
-  compute_(trace) {
+  async compute_(trace) {
     // Parse the trace for our key events and sort them by timestamp. Note: sort
     // *must* be stable to keep events correctly nested.
+    /** @type Array<LH.TraceEvent> */
     const keyEvents = trace.traceEvents
       .filter(e => {
         return e.cat.includes('blink.user_timing') ||
@@ -47,14 +48,17 @@ class TraceOfTab extends ComputedArtifact {
           e.cat.includes('devtools.timeline') ||
           e.name === 'TracingStartedInPage';
       })
+      // @ts-ignore - stableSort added to Array by WebInspector.
       .stableSort((event0, event1) => event0.ts - event1.ts);
 
     // The first TracingStartedInPage in the trace is definitely our renderer thread of interest
     // Beware: the tracingStartedInPage event can appear slightly after a navigationStart
     const startedInPageEvt = keyEvents.find(e => e.name === 'TracingStartedInPage');
     if (!startedInPageEvt) throw new LHError(LHError.errors.NO_TRACING_STARTED);
+    // @ts-ignore - property chain exists for 'TracingStartedInPage' event.
+    const frameId = startedInPageEvt.args.data.page;
     // Filter to just events matching the frame ID for sanity
-    const frameEvents = keyEvents.filter(e => e.args.frame === startedInPageEvt.args.data.page);
+    const frameEvents = keyEvents.filter(e => e.args.frame === frameId);
 
     // Our navStart will be the last frame navigation in the trace
     const navigationStart = frameEvents.filter(e => e.name === 'navigationStart').pop();
@@ -80,6 +84,7 @@ class TraceOfTab extends ComputedArtifact {
     // However, if no candidates were found (a bogus trace, likely), we fail.
     if (!firstMeaningfulPaint) {
       // Track this with Sentry since it's likely a bug we should investigate.
+      // @ts-ignore TODO(bckenny): Sentry type checking
       Sentry.captureMessage('No firstMeaningfulPaint found, using fallback', {level: 'warning'});
 
       const fmpCand = 'firstMeaningfulPaintCandidate';
@@ -99,8 +104,10 @@ class TraceOfTab extends ComputedArtifact {
 
     // subset all trace events to just our tab's process (incl threads other than main)
     // stable-sort events to keep them correctly nested.
+    /** @type Array<LH.TraceEvent> */
     const processEvents = trace.traceEvents
       .filter(e => e.pid === startedInPageEvt.pid)
+      // @ts-ignore - stableSort added to Array by WebInspector.
       .stableSort((event0, event1) => event0.ts - event1.ts);
 
     const mainThreadEvents = processEvents
@@ -128,9 +135,12 @@ class TraceOfTab extends ComputedArtifact {
       timings[metric] = (timestamps[metric] - navigationStart.ts) / 1000;
     });
 
+    // @ts-ignore - TODO(bckenny): many of these are actually `|undefined`, but
+    // undefined case needs to be handled throughout codebase. See also note for
+    // LH.Artifacts.TraceOfTab.
     return {
-      timings,
-      timestamps,
+      timings: /** @type {LH.Artifacts.TraceTimes} */ (timings),
+      timestamps: /** @type {LH.Artifacts.TraceTimes} */ (timestamps),
       processEvents,
       mainThreadEvents,
       startedInPageEvt,

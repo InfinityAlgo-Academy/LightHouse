@@ -14,7 +14,7 @@ class SpeedIndex extends MetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
-   * @param {Object} artifacts
+   * @param {LH.ComputedArtifacts} artifacts
    * @return {Promise<LH.Artifacts.Metric>}
    */
   async computeObservedMetric(data, artifacts) {

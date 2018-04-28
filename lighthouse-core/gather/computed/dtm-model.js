@@ -14,11 +14,11 @@ class DevtoolsTimelineModel extends ComputedArtifact {
   }
 
   /**
-   * @param {Object} trace
-   * @return {Object}
+   * @param {LH.Trace} trace
+   * @return {Promise<DTM>}
    */
-  compute_(trace) {
-    return Promise.resolve(new DTM(trace));
+  async compute_(trace) {
+    return new DTM(trace);
   }
 }
 

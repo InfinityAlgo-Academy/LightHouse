@@ -65,7 +65,7 @@ class Canonical extends Audit {
       failureDescription: 'Document does not have a valid `rel=canonical`',
       helpText: 'Canonical links suggest which URL to show in search results. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/canonical).',
-      requiredArtifacts: ['Canonical', 'Hreflang'],
+      requiredArtifacts: ['Canonical', 'Hreflang', 'URL'],
     };
   }
 
@@ -74,9 +74,9 @@ class Canonical extends Audit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
-    const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
 
-    return artifacts.requestMainResource(devtoolsLogs)
+    return artifacts.requestMainResource({devtoolsLog, URL: artifacts.URL})
       .then(mainResource => {
         const baseURL = new URL(mainResource.url);
         let canonicals = [];
