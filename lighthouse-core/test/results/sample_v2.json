@@ -1781,6 +1781,78 @@
       "title": "Avoids enormous network payloads",
       "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).",
       "score": 1,
+<<<<<<< 5869d365b95c6e16aa6ecc7675e0554ae26f0d49
+=======
+      "displayValue": "Total size was 157 KB",
+      "rawValue": 160738,
+      "extendedInfo": {
+        "value": {
+          "results": [
+            {
+              "url": "http://localhost:10200/zone.js",
+              "totalBytes": 71654,
+              "totalMs": 409.9376550703614,
+              "flagged": false
+            },
+            {
+              "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+              "totalBytes": 30174,
+              "totalMs": 172.62761051850677,
+              "flagged": false
+            },
+            {
+              "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+              "totalBytes": 24741,
+              "totalMs": 141.54502922510693,
+              "flagged": false
+            },
+            {
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "totalBytes": 12640,
+              "totalMs": 72.31434337356418,
+              "flagged": false
+            },
+            {
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "totalBytes": 12640,
+              "totalMs": 72.31434337356418,
+              "flagged": false
+            },
+            {
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+              "totalBytes": 1703,
+              "totalMs": 9.74298471243511,
+              "flagged": false
+            },
+            {
+              "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
+              "totalBytes": 1108,
+              "totalMs": 6.338947188125721,
+              "flagged": false
+            },
+            {
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
+              "totalBytes": 821,
+              "totalMs": 4.696999676400015,
+              "flagged": false
+            },
+            {
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
+              "totalBytes": 821,
+              "totalMs": 4.696999676400015,
+              "flagged": false
+            },
+            {
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
+              "totalBytes": 821,
+              "totalMs": 4.696999676400015,
+              "flagged": false
+            }
+          ],
+          "totalCompletedRequests": 18
+        }
+      },
+>>>>>>> fix lhr sample
       "scoreDisplayMode": "numeric",
       "rawValue": 160738,
       "displayValue": "Total size was 157 KB",
@@ -1802,52 +1874,62 @@
           {
             "url": "http://localhost:10200/zone.js",
             "totalBytes": 71654,
-            "totalMs": 409.9376550703614
+            "totalMs": 409.9376550703614,
+            "flagged": false
           },
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
             "totalBytes": 30174,
-            "totalMs": 172.62761051850677
+            "totalMs": 172.62761051850677,
+            "flagged": false
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
             "totalBytes": 24741,
-            "totalMs": 141.54502922510693
+            "totalMs": 141.54502922510693,
+            "flagged": false
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "totalBytes": 12640,
-            "totalMs": 72.31434337356418
+            "totalMs": 72.31434337356418,
+            "flagged": false
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "totalBytes": 12640,
-            "totalMs": 72.31434337356418
+            "totalMs": 72.31434337356418,
+            "flagged": false
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
             "totalBytes": 1703,
-            "totalMs": 9.74298471243511
+            "totalMs": 9.74298471243511,
+            "flagged": false
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
             "totalBytes": 1108,
-            "totalMs": 6.338947188125721
+            "totalMs": 6.338947188125721,
+            "flagged": false
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
             "totalBytes": 821,
-            "totalMs": 4.696999676400015
+            "totalMs": 4.696999676400015,
+            "flagged": false
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
             "totalBytes": 821,
-            "totalMs": 4.696999676400015
+            "totalMs": 4.696999676400015,
+            "flagged": false
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
             "totalBytes": 821,
-            "totalMs": 4.696999676400015
+            "totalMs": 4.696999676400015,
+            "flagged": false
           }
         ]
       }
