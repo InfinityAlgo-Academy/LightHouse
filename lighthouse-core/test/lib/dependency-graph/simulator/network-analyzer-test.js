@@ -19,7 +19,8 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
 
   function addOriginToRecord(record) {
     const parsed = record.parsedURL || {};
-    record.origin = `${parsed.scheme}://${parsed.host}`;
+    parsed.securityOrigin = () => `${parsed.scheme}://${parsed.host}`;
+    if (!record.parsedURL) record.parsedURL = parsed;
   }
 
   function createRecord(opts) {
@@ -27,7 +28,6 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     return Object.assign(
       {
         url,
-        origin: url.match(/.*\.com/)[0],
         requestId: recordId++,
         connectionId: 0,
         connectionReused: false,
@@ -35,7 +35,7 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
         endTime: 0.01,
         transferSize: 0,
         protocol: 'http/1.1',
-        parsedURL: {scheme: url.match(/https?/)[0]},
+        parsedURL: {scheme: url.match(/https?/)[0], securityOrigin: () => url.match(/.*\.com/)[0]},
         _timing: opts.timing || null,
       },
       opts

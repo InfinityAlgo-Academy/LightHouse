@@ -51,7 +51,8 @@ describe('Render blocking resources audit', () => {
     beforeEach(() => {
       requestId = 1;
       record = props => {
-        const ret = Object.assign({parsedURL: {}, requestId: requestId++}, props);
+        const parsedURL = {securityOrigin: () => 'http://example.com'};
+        const ret = Object.assign({parsedURL, requestId: requestId++}, props);
         Object.defineProperty(ret, 'transferSize', {
           get() {
             return ret._transferSize;
@@ -62,7 +63,7 @@ describe('Render blocking resources audit', () => {
     });
 
     it('computes savings from deferring', () => {
-      const serverResponseTimeByOrigin = new Map([['undefined://undefined', 100]]);
+      const serverResponseTimeByOrigin = new Map([['http://example.com', 100]]);
       const simulator = new Simulator({rtt: 1000, serverResponseTimeByOrigin});
       const documentNode = new NetworkNode(record({_transferSize: 4000}));
       const styleNode = new NetworkNode(record({_transferSize: 3000}));
@@ -81,7 +82,7 @@ describe('Render blocking resources audit', () => {
     });
 
     it('computes savings from inlining', () => {
-      const serverResponseTimeByOrigin = new Map([['undefined://undefined', 100]]);
+      const serverResponseTimeByOrigin = new Map([['http://example.com', 100]]);
       const simulator = new Simulator({rtt: 1000, serverResponseTimeByOrigin});
       const documentNode = new NetworkNode(record({_transferSize: 10 * 1000}));
       const styleNode = new NetworkNode(

@@ -42,13 +42,6 @@ class NetworkNode extends Node {
    * @return {LH.WebInspector.NetworkRequest}
    */
   get record() {
-    // Ensure that the record has an origin value
-    if (this._record.origin === undefined) {
-      this._record.origin = this._record.parsedURL
-        ? `${this._record.parsedURL.scheme}://${this._record.parsedURL.host}`
-        : null;
-    }
-
     return this._record;
   }
 

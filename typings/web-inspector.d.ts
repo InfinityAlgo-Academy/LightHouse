@@ -17,7 +17,6 @@ declare global {
       url: string;
       _url: string;
       protocol: string;
-      origin: string | null;
       parsedURL: ParsedURL;
 
       startTime: number;
@@ -54,6 +53,7 @@ declare global {
     export interface ParsedURL {
       scheme: string;
       host: string;
+      securityOrigin(): string;
     }
 
     export interface ResourceType {

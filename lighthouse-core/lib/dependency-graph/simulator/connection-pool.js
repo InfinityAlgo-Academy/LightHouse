@@ -96,7 +96,7 @@ module.exports = class ConnectionPool {
       return this._connectionsByRecord.get(record);
     }
 
-    const origin = String(record.origin);
+    const origin = String(record.parsedURL.securityOrigin());
     /** @type {TcpConnection[]} */
     const connections = this._connectionsByOrigin.get(origin) || [];
     const wasConnectionWarm = !!this._connectionReusedByRequestId.get(record.requestId);

@@ -22,7 +22,7 @@ class NetworkAnalyzer {
   static groupByOrigin(records) {
     const grouped = new Map();
     records.forEach(item => {
-      const key = item.origin;
+      const key = item.parsedURL.securityOrigin();
       const group = grouped.get(key) || [];
       group.push(item);
       grouped.set(key, group);
@@ -179,7 +179,7 @@ class NetworkAnalyzer {
       if (!Number.isFinite(timing.sendEnd) || timing.sendEnd < 0) return;
 
       const ttfb = timing.receiveHeadersEnd - timing.sendEnd;
-      const origin = record.origin;
+      const origin = record.parsedURL.securityOrigin();
       const rtt = rttByOrigin.get(origin) || rttByOrigin.get(NetworkAnalyzer.SUMMARY) || 0;
       return Math.max(ttfb - rtt, 0);
     });
