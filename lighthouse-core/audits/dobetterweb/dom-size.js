@@ -25,7 +25,7 @@ class DOMSize extends Audit {
   }
 
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -58,9 +58,9 @@ class DOMSize extends Audit {
 
 
   /**
-   * @param {!Artifacts} artifacts
+   * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {!AuditResult}
+   * @return {LH.Audit.Product}
    */
   static audit(artifacts, context) {
     const stats = artifacts.DOMStats;

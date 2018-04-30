@@ -18,6 +18,7 @@
     "lighthouse-cli/**/*.js",
     "lighthouse-core/audits/audit.js",
     "lighthouse-core/audits/accessibility/**/*.js",
+    "lighthouse-core/audits/dobetterweb/**/*.js",
     "lighthouse-core/audits/manual/**/*.js",
     "lighthouse-core/audits/seo/manual/*.js",
     "lighthouse-core/audits/seo/robots-txt.js",

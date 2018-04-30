@@ -9,7 +9,7 @@ const Audit = require('../audit');
 
 class PasswordInputsCanBePastedIntoAudit extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -23,15 +23,19 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
     const passwordInputsWithPreventedPaste = artifacts.PasswordInputsWithPreventedPaste;
 
-    const items = passwordInputsWithPreventedPaste.map(input => ({
-      node: {type: 'node', snippet: input.snippet},
-    }));
+    /** @type {Array<{node: LH.Audit.DetailsRendererNodeDetailsJSON}>} */
+    const items = [];
+    passwordInputsWithPreventedPaste.forEach(input => {
+      items.push({
+        node: {type: 'node', snippet: input.snippet},
+      });
+    });
 
     const headings = [
       {key: 'node', itemType: 'node', text: 'Failing Elements'},

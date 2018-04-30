@@ -9,9 +9,9 @@ const Audit = require('./audit');
 
 class ViolationAudit extends Audit {
   /**
-   * @param {!Artifacts} artifacts
-   * @param {!RegExp} pattern
-   * @return {!Array}
+   * @param {LH.Artifacts} artifacts
+   * @param {RegExp} pattern
+   * @return {Array<LH.Crdp.Log.LogEntry & {label: string}>}
    */
   static getViolationResults(artifacts, pattern) {
     return artifacts.ChromeConsoleMessages

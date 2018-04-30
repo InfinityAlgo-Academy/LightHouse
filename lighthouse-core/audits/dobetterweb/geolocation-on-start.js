@@ -15,7 +15,7 @@ const ViolationAudit = require('../violation-audit');
 
 class GeolocationOnStart extends ViolationAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -30,8 +30,8 @@ class GeolocationOnStart extends ViolationAudit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
     // 'Only request geolocation information in response to a user gesture.'
@@ -41,6 +41,8 @@ class GeolocationOnStart extends ViolationAudit {
       {key: 'url', itemType: 'url', text: 'URL'},
       {key: 'label', itemType: 'text', text: 'Location'},
     ];
+    // TODO(bckenny): there should actually be a ts error here. results[0].stackTrace
+    // should violate the results type. Shouldn't be removed from details items regardless.
     const details = ViolationAudit.makeTableDetails(headings, results);
 
     return {

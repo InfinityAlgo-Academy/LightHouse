@@ -7,7 +7,7 @@
 declare global {
   module LH.Audit {
     export interface Context {
-      options: Object; // audit options
+      options: Record<string, any>; // audit options
       settings: Config.Settings;
     }
 
@@ -57,9 +57,12 @@ declare global {
     export interface DetailsRendererDetailsJSON {
       type: 'table';
       headings: Array<Audit.Heading>;
-      items: Array<{[x: string]: string|number|DetailsRendererNodeDetailsJSON}>;
+      items: Array<{[x: string]: DetailsItem}>;
       summary?: DetailsRendererDetailsSummary;
     }
+
+    export type DetailsItem = string | number | DetailsRendererNodeDetailsJSON |
+      DetailsRendererLinkDetailsJSON;
 
     export interface DetailsRendererNodeDetailsJSON {
       type: 'node';
@@ -68,16 +71,22 @@ declare global {
       snippet?: string;
     }
 
+    export interface DetailsRendererLinkDetailsJSON {
+      type: 'link';
+      text: string;
+      url: string;
+    }
+
     // Type returned by Audit.audit(). Only rawValue is required.
     export interface Product {
       rawValue: boolean | number | null;
       displayValue?: string;
       debugString?: string;
       score?: number;
-      extendedInfo?: {value: any};
+      extendedInfo?: {[p: string]: any};
       notApplicable?: boolean;
       error?: boolean;
-      // TODO: define details
+      // TODO(bckenny): define details
       details?: object;
     }
 
@@ -89,14 +98,14 @@ declare global {
       score: number;
       scoreDisplayMode: ScoringModeValue;
       description: string;
-      extendedInfo?: {value: any};
+      extendedInfo?: {[p: string]: any};
       notApplicable?: boolean;
       error?: boolean;
       name: string;
       helpText?: string;
       informative?: boolean;
       manual?: boolean;
-      // TODO: define details
+      // TODO(bckenny): define details
       details?: object;
     }
 

@@ -14,7 +14,7 @@ const ViolationAudit = require('../violation-audit');
 
 class NoDocWriteAudit extends ViolationAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -29,8 +29,8 @@ class NoDocWriteAudit extends ViolationAudit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
     const results = ViolationAudit.getViolationResults(artifacts, /document\.write/);
@@ -39,6 +39,7 @@ class NoDocWriteAudit extends ViolationAudit {
       {key: 'url', itemType: 'url', text: 'URL'},
       {key: 'label', itemType: 'text', text: 'Location'},
     ];
+    // TODO(bckenny): see TODO in geolocation-on-start
     const details = ViolationAudit.makeTableDetails(headings, results);
 
     return {

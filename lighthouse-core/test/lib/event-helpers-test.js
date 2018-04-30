@@ -14,13 +14,10 @@ const eventListeners = require('../fixtures/page-level-event-listeners.json');
 
 describe('event helpers', () => {
   describe('addFormattedCodeSnippet()', function() {
-    it('adds label and code snippet and returns new object', () => {
+    it('adds code snippet and returns new object', () => {
       eventListeners.forEach(listener => {
         const obj = EventHelpers.addFormattedCodeSnippet(listener);
-        assert.ok('label' in obj, 'helper adds a label property');
         assert.ok('pre' in obj, 'helper adds a pre property');
-        assert.ok(obj.label.match(/line: (?:\d+), col: (?:\d+)/),
-                  'label is not formatted correctly');
         const regEx = new RegExp(`.addEventListener\\('${listener.type}', `);
         assert.ok(obj.pre.match(regEx), 'code snippet is not formatted correctly');
       });
@@ -46,8 +43,9 @@ describe('event helpers', () => {
 
       const set = new Set();
       groupedListeners.forEach(l => {
-        assert.ok(!set.has(l.label), 'all line/col are unique');
-        set.add(l.label);
+        const lineColkey = `line: ${l.line}, col: ${l.col}`;
+        assert.ok(!set.has(lineColkey), 'all line/col are unique');
+        set.add(lineColkey);
       });
     });
   });

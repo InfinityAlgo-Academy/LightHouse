@@ -5,20 +5,23 @@
  */
 'use strict';
 
+/** @typedef {LH.Artifacts['EventListeners'][0]} ListenerArtifact */
+/** @typedef {ListenerArtifact & {pre: string}} ListenerArtifactExt */
+/** @typedef {{line: number, col: number, url: string, type: string, pre: string}} SlimListener */
+
 /**
  * Adds line/col information to an event listener object along with a formatted
  * code snippet of violation.
  *
- * @param {!Object} listener A modified EventListener object as returned
+ * @param {ListenerArtifact} listener A modified EventListener object as returned
  *     by the driver in the all events gatherer.
- * @return {!Object} A copy of the original listener object with the added
+ * @return {ListenerArtifactExt} A copy of the original listener object with the added
  *     properties.
  */
 function addFormattedCodeSnippet(listener) {
   const handler = listener.handler ? listener.handler.description : '...';
   const objectName = listener.objectName.toLowerCase().replace('#document', 'document');
   return Object.assign({
-    label: `line: ${listener.line}, col: ${listener.col}`,
     pre: `${objectName}.addEventListener('${listener.type}', ${handler})`,
   }, listener);
 }
@@ -35,36 +38,25 @@ function addFormattedCodeSnippet(listener) {
  * handlers so the user doesn't see a redundant list of url/line/col from the
  * same location.
  *
- * @param {!Array<!Object>} listeners Results from the event listener gatherer.
- * @return {!Array<{line: number, col: number, url: string, type: string, pre: string, label: string}>}
- *     A list of slimmed down listener objects.
+ * @param {Array<ListenerArtifactExt>} listeners Results from the event listener gatherer.
+ * @return {Array<SlimListener>} A list of slimmed down listener objects.
  */
 function groupCodeSnippetsByLocation(listeners) {
-  const locToListenersMap = new Map();
+  /** @type {Map<string, SlimListener>} */
+  const locToListenerMap = new Map();
+
+  // Listeners share all returned properties but pre. Dedupe them and accumulate pre.
   listeners.forEach(loc => {
-    const key = JSON.stringify({line: loc.line, col: loc.col, url: loc.url, type: loc.type});
-    if (locToListenersMap.has(key)) {
-      locToListenersMap.get(key).push(loc);
-    } else {
-      locToListenersMap.set(key, [loc]);
-    }
+    const accPre = loc.pre.trim() + '\n\n';
+    const simplifiedLoc = {line: loc.line, col: loc.col, url: loc.url, type: loc.type, pre: ''};
+
+    const key = JSON.stringify(simplifiedLoc);
+    const accListener = locToListenerMap.get(key) || simplifiedLoc;
+    accListener.pre += accPre;
+    locToListenerMap.set(key, accListener);
   });
 
-  const results = [];
-  locToListenersMap.forEach((listenersForLocation, key) => {
-    const lineColUrlObj = JSON.parse(key);
-    // Aggregate the code snippets.
-    const codeSnippets = listenersForLocation.reduce((prev, loc) => {
-      return prev + loc.pre.trim() + '\n\n';
-    }, '');
-    lineColUrlObj.pre = codeSnippets;
-    // All listeners under this bucket have the same line/col. We use the first's
-    // label as the label for all of them.
-    lineColUrlObj.label = listenersForLocation[0].label;
-    results.push(lineColUrlObj);
-  });
-
-  return results;
+  return [...locToListenerMap.values()];
 }
 
 module.exports = {

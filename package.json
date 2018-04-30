@@ -73,6 +73,7 @@
     "@types/lodash.isequal": "^4.5.2",
     "@types/node": "*",
     "@types/opn": "^3.0.28",
+    "@types/semver": "^5.5.0",
     "@types/update-notifier": "^1.0.2",
     "@types/ws": "^4.0.1",
     "@types/yargs": "^8.0.2",

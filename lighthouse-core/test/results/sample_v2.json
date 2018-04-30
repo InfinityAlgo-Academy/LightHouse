@@ -3721,48 +3721,42 @@
               "col": 50,
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "type": "DOMNodeInserted",
-              "pre": "section#touchmove-section.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted on element');\n  })\n\n",
-              "label": "line: 206, col: 50"
+              "pre": "section#touchmove-section.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted on element');\n  })\n\n"
             },
             {
               "line": 200,
               "col": 61,
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "type": "DOMNodeInserted",
-              "pre": "body.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n",
-              "label": "line: 200, col: 61"
+              "pre": "body.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
             },
             {
               "line": 20,
               "col": 56,
               "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
               "type": "DOMNodeInserted",
-              "pre": "document.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n",
-              "label": "line: 20, col: 56"
+              "pre": "document.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
             },
             {
               "line": 190,
               "col": 56,
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "type": "DOMNodeInserted",
-              "pre": "document.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n",
-              "label": "line: 190, col: 56"
+              "pre": "document.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
             },
             {
               "line": 195,
               "col": 55,
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "type": "DOMNodeRemoved",
-              "pre": "document.addEventListener('DOMNodeRemoved', function(e) {\n    console.log('DOMNodeRemoved');\n  })\n\n",
-              "label": "line: 195, col: 55"
+              "pre": "document.addEventListener('DOMNodeRemoved', function(e) {\n    console.log('DOMNodeRemoved');\n  })\n\n"
             },
             {
               "line": 211,
               "col": 54,
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "type": "DOMNodeInserted",
-              "pre": "window.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n",
-              "label": "line: 211, col: 54"
+              "pre": "window.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
             }
           ]
         }
@@ -3806,48 +3800,42 @@
             "col": 50,
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "type": "DOMNodeInserted",
-            "pre": "section#touchmove-section.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted on element');\n  })\n\n",
-            "label": "line: 206, col: 50"
+            "pre": "section#touchmove-section.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted on element');\n  })\n\n"
           },
           {
             "line": 200,
             "col": 61,
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "type": "DOMNodeInserted",
-            "pre": "body.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n",
-            "label": "line: 200, col: 61"
+            "pre": "body.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
           },
           {
             "line": 20,
             "col": 56,
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
             "type": "DOMNodeInserted",
-            "pre": "document.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n",
-            "label": "line: 20, col: 56"
+            "pre": "document.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
           },
           {
             "line": 190,
             "col": 56,
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "type": "DOMNodeInserted",
-            "pre": "document.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n",
-            "label": "line: 190, col: 56"
+            "pre": "document.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
           },
           {
             "line": 195,
             "col": 55,
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "type": "DOMNodeRemoved",
-            "pre": "document.addEventListener('DOMNodeRemoved', function(e) {\n    console.log('DOMNodeRemoved');\n  })\n\n",
-            "label": "line: 195, col: 55"
+            "pre": "document.addEventListener('DOMNodeRemoved', function(e) {\n    console.log('DOMNodeRemoved');\n  })\n\n"
           },
           {
             "line": 211,
             "col": 54,
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "type": "DOMNodeInserted",
-            "pre": "window.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n",
-            "label": "line: 211, col: 54"
+            "pre": "window.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
           }
         ]
       }
@@ -3860,9 +3848,8 @@
         "jsLibs": [
           {
             "name": "jQuery",
-            "version": "2.1.1",
             "npmPkgName": "jquery",
-            "pkgLink": "https://snyk.io/vuln/npm:jquery?lh@2.1.1",
+            "version": "2.1.1",
             "vulns": [
               {
                 "severity": "medium",
@@ -3877,37 +3864,13 @@
                 "url": "https://snyk.io/vuln/npm:jquery:20160529"
               }
             ],
-            "vulnCount": 2,
-            "highestSeverity": "Medium",
-            "detectedLib": {
-              "text": "jQuery@2.1.1",
-              "url": "https://snyk.io/vuln/npm:jquery?lh@2.1.1",
-              "type": "link"
-            }
+            "highestSeverity": "Medium"
           }
         ],
         "vulnerabilities": [
           {
-            "name": "jQuery",
-            "version": "2.1.1",
-            "npmPkgName": "jquery",
-            "pkgLink": "https://snyk.io/vuln/npm:jquery?lh@2.1.1",
-            "vulns": [
-              {
-                "severity": "medium",
-                "numericSeverity": 2,
-                "library": "jQuery@2.1.1",
-                "url": "https://snyk.io/vuln/npm:jquery:20150627"
-              },
-              {
-                "severity": "low",
-                "numericSeverity": 1,
-                "library": "jQuery@2.1.1",
-                "url": "https://snyk.io/vuln/npm:jquery:20160529"
-              }
-            ],
-            "vulnCount": 2,
             "highestSeverity": "Medium",
+            "vulnCount": 2,
             "detectedLib": {
               "text": "jQuery@2.1.1",
               "url": "https://snyk.io/vuln/npm:jquery?lh@2.1.1",
@@ -3941,26 +3904,8 @@
         ],
         "items": [
           {
-            "name": "jQuery",
-            "version": "2.1.1",
-            "npmPkgName": "jquery",
-            "pkgLink": "https://snyk.io/vuln/npm:jquery?lh@2.1.1",
-            "vulns": [
-              {
-                "severity": "medium",
-                "numericSeverity": 2,
-                "library": "jQuery@2.1.1",
-                "url": "https://snyk.io/vuln/npm:jquery:20150627"
-              },
-              {
-                "severity": "low",
-                "numericSeverity": 1,
-                "library": "jQuery@2.1.1",
-                "url": "https://snyk.io/vuln/npm:jquery:20160529"
-              }
-            ],
-            "vulnCount": 2,
             "highestSeverity": "Medium",
+            "vulnCount": 2,
             "detectedLib": {
               "text": "jQuery@2.1.1",
               "url": "https://snyk.io/vuln/npm:jquery?lh@2.1.1",
