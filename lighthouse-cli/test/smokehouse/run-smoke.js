@@ -75,8 +75,8 @@ const SMOKETESTS = [{
   config: 'lighthouse-core/config/perf-config.js',
   batch: 'perf-metric',
 }, {
-  id: 'ttci',
-  expectations: 'tricky-ttci/expectations.js',
+  id: 'tti',
+  expectations: 'tricky-tti/expectations.js',
   config: 'lighthouse-core/config/default-config.js',
   batch: 'parallel-second',
 }];

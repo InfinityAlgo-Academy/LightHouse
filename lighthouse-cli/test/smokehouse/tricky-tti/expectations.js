@@ -10,14 +10,14 @@
  */
 module.exports = [
   {
-    initialUrl: 'http://localhost:10200/tricky-ttci.html',
-    url: 'http://localhost:10200/tricky-ttci.html',
+    initialUrl: 'http://localhost:10200/tricky-tti.html',
+    url: 'http://localhost:10200/tricky-tti.html',
     audits: {
       'first-cpu-idle': {
         score: '<75',
         rawValue: '>9000',
       },
-      'consistently-interactive': {
+      'interactive': {
         score: '<75',
         rawValue: '>9000',
       },

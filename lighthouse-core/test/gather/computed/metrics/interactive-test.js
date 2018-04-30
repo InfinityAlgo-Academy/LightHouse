@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const ConsistentlyInteractive = require('../../../../gather/computed/metrics/consistently-interactive'); // eslint-disable-line
+const Interactive = require('../../../../gather/computed/metrics/interactive'); // eslint-disable-line
 
 const Runner = require('../../../../runner');
 const assert = require('assert');
@@ -28,11 +28,11 @@ function generateNetworkRecords(records, navStart) {
 }
 
 /* eslint-env mocha */
-describe('Metrics: TTCI', () => {
+describe('Metrics: TTI', () => {
   it('should compute a simulated value', async () => {
     const artifacts = Runner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'simulate'};
-    const result = await artifacts.requestConsistentlyInteractive({trace, devtoolsLog, settings});
+    const result = await artifacts.requestInteractive({trace, devtoolsLog, settings});
 
     assert.equal(Math.round(result.timing), 5308);
     assert.equal(Math.round(result.optimisticEstimate.timeInMs), 2451);
@@ -46,7 +46,7 @@ describe('Metrics: TTCI', () => {
   it('should compute an observed value', async () => {
     const artifacts = Runner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'provided'};
-    const result = await artifacts.requestConsistentlyInteractive({trace, devtoolsLog, settings});
+    const result = await artifacts.requestInteractive({trace, devtoolsLog, settings});
 
     assert.equal(Math.round(result.timing), 1582);
     assert.equal(result.timestamp, 225415754204);
@@ -62,7 +62,7 @@ describe('Metrics: TTCI', () => {
       const cpu = [];
       const network = generateNetworkRecords([], navigationStart);
 
-      const result = ConsistentlyInteractive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
+      const result = Interactive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
       assert.deepEqual(result.cpuQuietPeriod, {start: 0, end: traceEnd / 1000});
       assert.deepEqual(result.networkQuietPeriod, {start: 0, end: traceEnd / 1000});
     });
@@ -77,7 +77,7 @@ describe('Metrics: TTCI', () => {
       const network = generateNetworkRecords([], navigationStart);
 
       assert.throws(() => {
-        ConsistentlyInteractive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
+        Interactive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
       }, /NO.*IDLE_PERIOD/);
     });
 
@@ -96,7 +96,7 @@ describe('Metrics: TTCI', () => {
       ], navigationStart);
 
       assert.throws(() => {
-        ConsistentlyInteractive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
+        Interactive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
       }, /NO.*NETWORK_IDLE_PERIOD/);
     });
 
@@ -114,7 +114,7 @@ describe('Metrics: TTCI', () => {
       ], navigationStart);
 
       assert.throws(() => {
-        ConsistentlyInteractive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
+        Interactive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
       }, /NO.*CPU_IDLE_PERIOD/);
     });
 
@@ -134,7 +134,7 @@ describe('Metrics: TTCI', () => {
       // Triple the requests to ensure it's not just the 2-quiet kicking in
       network = network.concat(network).concat(network);
 
-      const result = ConsistentlyInteractive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
+      const result = Interactive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
       assert.deepEqual(result.cpuQuietPeriod, {start: 0, end: traceEnd / 1000});
       assert.deepEqual(result.networkQuietPeriod, {start: 0, end: traceEnd / 1000});
     });
@@ -173,7 +173,7 @@ describe('Metrics: TTCI', () => {
         // final quiet period
       ], navigationStart);
 
-      const result = ConsistentlyInteractive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
+      const result = Interactive.findOverlappingQuietPeriods(cpu, network, traceOfTab);
       assert.deepEqual(result.cpuQuietPeriod, {
         start: 34000 + navigationStart / 1000,
         end: traceEnd / 1000,

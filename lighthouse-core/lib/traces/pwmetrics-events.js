@@ -73,10 +73,10 @@ class Metrics {
         getTiming: findValueInMetricsAuditFn('firstCPUIdle', 'timing'),
       },
       {
-        name: 'Time to Interactive',
-        id: 'ttci',
-        getTs: findValueInMetricsAuditFn('timeToInteractive', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('timeToInteractive', 'timing'),
+        name: 'Interactive',
+        id: 'tti',
+        getTs: findValueInMetricsAuditFn('interactive', 'timestamp'),
+        getTiming: findValueInMetricsAuditFn('interactive', 'timing'),
       },
       {
         name: 'End of Trace',

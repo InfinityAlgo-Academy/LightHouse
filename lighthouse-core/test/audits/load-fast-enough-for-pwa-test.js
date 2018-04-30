@@ -22,7 +22,7 @@ function generateArtifacts(ttiValue) {
     traces: {
       [Audit.DEFAULT_PASS]: {traceEvents: []},
     },
-    requestConsistentlyInteractive: () => Promise.resolve({
+    requestInteractive: () => Promise.resolve({
       timing: ttiValue,
     }),
   };

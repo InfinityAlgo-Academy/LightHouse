@@ -55,7 +55,7 @@ class LoadFastEnough4Pwa extends Audit {
         : Object.assign({}, context.settings, settingOverrides);
 
     const metricComputationData = {trace, devtoolsLog, settings};
-    const tti = await artifacts.requestConsistentlyInteractive(metricComputationData);
+    const tti = await artifacts.requestInteractive(metricComputationData);
 
     const score = Number(tti.timing < MAXIMUM_TTI);
 

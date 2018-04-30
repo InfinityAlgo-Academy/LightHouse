@@ -10,9 +10,9 @@ const CPUNode = require('../../../lib/dependency-graph/cpu-node'); // eslint-dis
 const NetworkNode = require('../../../lib/dependency-graph/network-node'); // eslint-disable-line no-unused-vars
 
 const FirstCPUIdle = require('./first-cpu-idle');
-const LanternConsistentlyInteractive = require('./lantern-consistently-interactive');
+const LanternInteractive = require('./lantern-interactive');
 
-class LanternFirstCPUIdle extends LanternConsistentlyInteractive {
+class LanternFirstCPUIdle extends LanternInteractive {
   get name() {
     return 'LanternFirstCPUIdle';
   }

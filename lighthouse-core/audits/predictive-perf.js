@@ -39,8 +39,7 @@ class PredictivePerf extends Audit {
     const settings = {}; // Use default settings.
     const fcp = await artifacts.requestLanternFirstContentfulPaint({trace, devtoolsLog, settings});
     const fmp = await artifacts.requestLanternFirstMeaningfulPaint({trace, devtoolsLog, settings});
-    const ttci = await artifacts.requestLanternConsistentlyInteractive({trace, devtoolsLog,
-      settings});
+    const tti = await artifacts.requestLanternInteractive({trace, devtoolsLog, settings});
     const ttfcpui = await artifacts.requestLanternFirstCPUIdle({trace, devtoolsLog, settings});
     const si = await artifacts.requestLanternSpeedIndex({trace, devtoolsLog, settings});
     const eil = await artifacts.requestLanternEstimatedInputLatency({trace, devtoolsLog, settings});
@@ -54,9 +53,9 @@ class PredictivePerf extends Audit {
       optimisticFMP: fmp.optimisticEstimate.timeInMs,
       pessimisticFMP: fmp.pessimisticEstimate.timeInMs,
 
-      roughEstimateOfTTCI: ttci.timing,
-      optimisticTTCI: ttci.optimisticEstimate.timeInMs,
-      pessimisticTTCI: ttci.pessimisticEstimate.timeInMs,
+      roughEstimateOfTTI: tti.timing,
+      optimisticTTI: tti.optimisticEstimate.timeInMs,
+      pessimisticTTI: tti.pessimisticEstimate.timeInMs,
 
       roughEstimateOfTTFCPUI: ttfcpui.timing,
       optimisticTTFCPUI: ttfcpui.optimisticEstimate.timeInMs,
@@ -72,15 +71,15 @@ class PredictivePerf extends Audit {
     };
 
     const score = Audit.computeLogNormalScore(
-      values.roughEstimateOfTTCI,
+      values.roughEstimateOfTTI,
       SCORING_POINT_OF_DIMINISHING_RETURNS,
       SCORING_MEDIAN
     );
 
     return {
       score,
-      rawValue: values.roughEstimateOfTTCI,
-      displayValue: Util.formatMilliseconds(values.roughEstimateOfTTCI),
+      rawValue: values.roughEstimateOfTTI,
+      displayValue: Util.formatMilliseconds(values.roughEstimateOfTTI),
       extendedInfo: {value: values},
     };
   }

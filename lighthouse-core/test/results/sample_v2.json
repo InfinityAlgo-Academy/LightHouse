@@ -275,7 +275,7 @@
       "description": "First CPU Idle",
       "helpText": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive)."
     },
-    "consistently-interactive": {
+    "interactive": {
       "score": 0.69,
       "displayValue": "4,930 ms",
       "rawValue": 4927.278,
@@ -286,9 +286,9 @@
         }
       },
       "scoreDisplayMode": "numeric",
-      "name": "consistently-interactive",
-      "description": "Consistently Interactive (beta)",
-      "helpText": "Consistently Interactive marks the time at which the page is fully interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
+      "name": "interactive",
+      "description": "Time to Interactive",
+      "helpText": "Interactive marks the time at which the page is fully interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
     },
     "user-timings": {
       "score": 1,
@@ -1526,7 +1526,7 @@
             "timestamp": 185608247190
           },
           {
-            "metricName": "timeToInteractive",
+            "metricName": "interactive",
             "timing": 4927,
             "timestamp": 185608247190
           },
@@ -4650,7 +4650,7 @@
           "group": "perf-metric"
         },
         {
-          "id": "consistently-interactive",
+          "id": "interactive",
           "weight": 5,
           "group": "perf-metric"
         },

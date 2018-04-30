@@ -22,7 +22,7 @@ module.exports = [
       'first-cpu-idle': {
         score: '>=0.90',
       },
-      'consistently-interactive': {
+      'interactive': {
         score: '>=0.90',
       },
       'time-to-first-byte': {

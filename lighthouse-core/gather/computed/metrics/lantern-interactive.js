@@ -14,9 +14,9 @@ const WebInspector = require('../../../lib/web-inspector');
 // Any CPU task of 20 ms or more will end up being a critical long task on mobile
 const CRITICAL_LONG_TASK_THRESHOLD = 20;
 
-class ConsistentlyInteractive extends MetricArtifact {
+class Interactive extends MetricArtifact {
   get name() {
-    return 'LanternConsistentlyInteractive';
+    return 'LanternInteractive';
   }
 
   /**
@@ -71,7 +71,7 @@ class ConsistentlyInteractive extends MetricArtifact {
    * @return {LH.Gatherer.Simulation.Result}
    */
   getEstimateFromSimulation(simulationResult, extras) {
-    const lastTaskAt = ConsistentlyInteractive.getLastLongTaskEndTime(simulationResult.nodeTimings);
+    const lastTaskAt = Interactive.getLastLongTaskEndTime(simulationResult.nodeTimings);
     const minimumTime = extras.optimistic
       ? extras.fmpResult.optimisticEstimate.timeInMs
       : extras.fmpResult.pessimisticEstimate.timeInMs;
@@ -110,4 +110,4 @@ class ConsistentlyInteractive extends MetricArtifact {
   }
 }
 
-module.exports = ConsistentlyInteractive;
+module.exports = Interactive;

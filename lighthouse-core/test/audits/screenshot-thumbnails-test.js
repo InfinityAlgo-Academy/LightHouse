@@ -46,7 +46,7 @@ describe('Screenshot thumbnails', () => {
     });
   }).timeout(10000);
 
-  it('should scale the timeline to TTCI when observed', () => {
+  it('should scale the timeline to TTI when observed', () => {
     const settings = {throttlingMethod: 'devtools'};
     const artifacts = Object.assign({
       traces: {defaultPass: pwaTrace},
@@ -64,12 +64,12 @@ describe('Screenshot thumbnails', () => {
     });
   });
 
-  it('should not scale the timeline to TTCI when simulate', () => {
+  it('should not scale the timeline to TTI when simulate', () => {
     const settings = {throttlingMethod: 'simulate'};
     const artifacts = Object.assign({
       traces: {defaultPass: pwaTrace},
     }, computedArtifacts);
-    computedArtifacts.requestConsistentlyInteractive = () => ({timing: 20000});
+    computedArtifacts.requestInteractive = () => ({timing: 20000});
 
     return ScreenshotThumbnailsAudit.audit(artifacts, {settings}).then(results => {
       assert.equal(results.details.items[0].timing, 82);
@@ -82,7 +82,7 @@ describe('Screenshot thumbnails', () => {
     const artifacts = {
       traces: {},
       requestSpeedline: () => ({frames: [], complete: false, beginning: -1}),
-      requestConsistentlyInteractive: () => ({timing: NaN}),
+      requestInteractive: () => ({timing: NaN}),
     };
 
     try {

@@ -16,7 +16,7 @@ module.exports = {
       // disabled for now because their results are not meaningful/cannot be computed anymore
       'first-meaningful-paint',
       'first-cpu-idle',
-      'consistently-interactive',
+      'interactive',
       'estimated-input-latency',
       'speed-index',
       'offscreen-images',

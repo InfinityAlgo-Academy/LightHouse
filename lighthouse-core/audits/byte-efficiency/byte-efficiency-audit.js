@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('../audit');
-const ConsistentlyInteractive = require('../../gather/computed/metrics/lantern-consistently-interactive'); // eslint-disable-line max-len
+const Interactive = require('../../gather/computed/metrics/lantern-interactive'); // eslint-disable-line max-len
 const Simulator = require('../../lib/dependency-graph/simulator/simulator'); // eslint-disable-line no-unused-vars
 
 const KB_IN_BYTES = 1024;
@@ -129,8 +129,8 @@ class UnusedBytes extends Audit {
     });
 
     const savingsOnTTI = Math.max(
-      ConsistentlyInteractive.getLastLongTaskEndTime(simulationBeforeChanges.nodeTimings) -
-        ConsistentlyInteractive.getLastLongTaskEndTime(simulationAfterChanges.nodeTimings),
+      Interactive.getLastLongTaskEndTime(simulationBeforeChanges.nodeTimings) -
+        Interactive.getLastLongTaskEndTime(simulationAfterChanges.nodeTimings),
       0
     );
 

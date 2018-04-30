@@ -36,9 +36,9 @@ describe('Performance: predictive performance audit', () => {
       assert.equal(valueOf('roughEstimateOfFMP'), 2851);
       assert.equal(valueOf('optimisticFMP'), 911);
       assert.equal(valueOf('pessimisticFMP'), 1198);
-      assert.equal(valueOf('roughEstimateOfTTCI'), 5308);
-      assert.equal(valueOf('optimisticTTCI'), 2451);
-      assert.equal(valueOf('pessimisticTTCI'), 2752);
+      assert.equal(valueOf('roughEstimateOfTTI'), 5308);
+      assert.equal(valueOf('optimisticTTI'), 2451);
+      assert.equal(valueOf('pessimisticTTI'), 2752);
     });
   });
 });

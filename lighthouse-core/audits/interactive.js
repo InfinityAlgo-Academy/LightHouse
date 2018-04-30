@@ -14,16 +14,15 @@ const Util = require('../report/html/renderer/util');
  * and returns the timestamp of the beginning of the CPU quiet period.
  * @see https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#
  */
-class ConsistentlyInteractiveMetric extends Audit {
+class InteractiveMetric extends Audit {
   /**
    * @return {!AuditMeta}
    */
   static get meta() {
     return {
-      name: 'consistently-interactive',
-      description: 'Consistently Interactive (beta)',
-      helpText: 'Consistently Interactive marks the time at which the page is ' +
-          'fully interactive. ' +
+      name: 'interactive',
+      description: 'Time to Interactive',
+      helpText: 'Interactive marks the time at which the page is fully interactive. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],
@@ -52,7 +51,7 @@ class ConsistentlyInteractiveMetric extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
-    const metricResult = await artifacts.requestConsistentlyInteractive(metricComputationData);
+    const metricResult = await artifacts.requestInteractive(metricComputationData);
     const timeInMs = metricResult.timing;
     const extendedInfo = {
       timeInMs,
@@ -76,4 +75,4 @@ class ConsistentlyInteractiveMetric extends Audit {
   }
 }
 
-module.exports = ConsistentlyInteractiveMetric;
+module.exports = InteractiveMetric;

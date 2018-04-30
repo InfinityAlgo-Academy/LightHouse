@@ -19,9 +19,9 @@ const ALLOWED_CONCURRENT_REQUESTS = 2;
  * resources and is mostly idle.
  * @see https://docs.google.com/document/d/1yE4YWsusi5wVXrnwhR61j-QyjK9tzENIzfxrCjA1NAk/edit#heading=h.yozfsuqcgpc4
  */
-class ConsistentlyInteractive extends MetricArtifact {
+class Interactive extends MetricArtifact {
   get name() {
-    return 'ConsistentlyInteractive';
+    return 'Interactive';
   }
 
   /**
@@ -158,7 +158,7 @@ class ConsistentlyInteractive extends MetricArtifact {
 
     const longTasks = TracingProcessor.getMainThreadTopLevelEvents(traceOfTab)
         .filter(event => event.duration >= 50);
-    const quietPeriodInfo = ConsistentlyInteractive.findOverlappingQuietPeriods(
+    const quietPeriodInfo = Interactive.findOverlappingQuietPeriods(
       longTasks,
       networkRecords,
       traceOfTab
@@ -176,7 +176,7 @@ class ConsistentlyInteractive extends MetricArtifact {
   }
 }
 
-module.exports = ConsistentlyInteractive;
+module.exports = Interactive;
 
 /**
  * @typedef TimePeriod

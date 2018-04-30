@@ -76,7 +76,7 @@ const ERRORS = {
   NO_FMP: {message: strings.badTraceRecording},
   NO_DCL: {message: strings.badTraceRecording},
 
-  // TTFI/TTCI calculation failures
+  // TTI calculation failures
   FMP_TOO_LATE_FOR_FCPUI: {message: strings.pageLoadTookTooLong},
   NO_FCPUI_IDLE_PERIOD: {message: strings.pageLoadTookTooLong},
   NO_TTI_CPU_IDLE_PERIOD: {message: strings.pageLoadTookTooLong},

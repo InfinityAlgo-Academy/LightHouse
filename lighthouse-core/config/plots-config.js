@@ -12,7 +12,7 @@ module.exports = {
       'speed-index',
       'estimated-input-latency',
       'first-cpu-idle',
-      'consistently-interactive',
+      'interactive',
     ],
   },
 };
