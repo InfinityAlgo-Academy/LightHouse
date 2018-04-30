@@ -22,6 +22,7 @@
   --section-indent: 16px;
   --audit-group-indent: 16px;
   --audit-indent: 16px;
+  --text-indent: 8px;
   --expandable-indent: 20px;
   --secondary-text-color: #565656;
   /*--accent-color: #3879d9;*/
@@ -352,12 +353,14 @@ summary {
 }
 
 .lh-perf-metric {
-  position: relative;
+  border-top: 1px solid var(--report-secondary-border-color);
+}
+
+.lh-perf-metric__innerwrap {
   display: flex;
   justify-content: space-between;
-
-  padding: calc(2 * var(--lh-audit-vpadding)) 0;
-  border-top: 1px solid var(--report-secondary-border-color);
+  margin: var(--lh-audit-vpadding) 0;
+  padding: var(--lh-audit-vpadding) var(--text-indent);
 }
 
 .lh-perf-metric__header {
@@ -941,11 +944,15 @@ summary.lh-passed-audits-summary {
   opacity: 0;
 }
 
+.tooltip-boundary:hover {
+  background-color: #F8F9FA;
+}
+
 .tooltip-boundary:hover .tooltip {
   display: block;
   animation: fadeInTooltip 150ms;
   animation-fill-mode: forwards;
-  animation-delay: 500ms;
+  animation-delay: 900ms;
   min-width: 15em;
   background: #ffffff;
   padding: 15px;
@@ -962,6 +969,7 @@ summary.lh-passed-audits-summary {
   border-width: 10px;
   position: absolute;
   bottom: -20px;
+  right: 6px;
   transform: rotate(180deg);
   pointer-events: none;
 }
