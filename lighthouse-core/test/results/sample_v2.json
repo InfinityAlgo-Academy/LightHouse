@@ -651,17 +651,13 @@
       "score": 0,
       "displayValue": "",
       "rawValue": false,
-      "debugString": "Failures: No manifest was fetched, Site does not register a service worker, Service worker does not successfully serve the manifest's start_url, No start URL to fetch: No usable web app manifest found on page http://localhost:10200/dobetterweb/dbw_tester.html.",
+      "debugString": "Failures: No manifest was fetched, Site does not register a service worker.",
       "extendedInfo": {
         "value": {
-          "warnings": [
-            "No start URL to fetch: No usable web app manifest found on page http://localhost:10200/dobetterweb/dbw_tester.html"
-          ],
+          "warnings": [],
           "failures": [
             "No manifest was fetched",
-            "Site does not register a service worker",
-            "Service worker does not successfully serve the manifest's start_url",
-            "No start URL to fetch: No usable web app manifest found on page http://localhost:10200/dobetterweb/dbw_tester.html"
+            "Site does not register a service worker"
           ],
           "manifestValues": {
             "isParseFailure": true,

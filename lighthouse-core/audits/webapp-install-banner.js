@@ -44,13 +44,12 @@ class WebappInstallBanner extends MultiCheckAudit {
     };
   }
 
-  static assessManifest(artifacts, result) {
-    const {manifestValues, failures} = result;
+  static assessManifest(manifestValues) {
     if (manifestValues.isParseFailure) {
-      failures.push(manifestValues.parseFailureReason);
-      return;
+      return [manifestValues.parseFailureReason];
     }
 
+    const failures = [];
     const bannerCheckIds = [
       'hasName',
       'hasShortName',
@@ -65,40 +64,62 @@ class WebappInstallBanner extends MultiCheckAudit {
           failures.push(item.failureText);
         }
       });
+
+    return failures;
   }
 
 
-  static assessServiceWorker(artifacts, result) {
+  static assessServiceWorker(artifacts) {
+    const failures = [];
     const hasServiceWorker = SWAudit.audit(artifacts).rawValue;
     if (!hasServiceWorker) {
-      result.failures.push('Site does not register a service worker');
+      failures.push('Site does not register a service worker');
     }
+
+    return failures;
   }
 
-  static assessOfflineStartUrl(artifacts, result) {
+  static assessOfflineStartUrl(artifacts) {
+    const failures = [];
+    const warnings = [];
     const hasOfflineStartUrl = artifacts.StartUrl.statusCode === 200;
 
     if (!hasOfflineStartUrl) {
-      result.failures.push('Service worker does not successfully serve the manifest\'s start_url');
-      if (artifacts.StartUrl.debugString) result.failures.push(artifacts.StartUrl.debugString);
+      failures.push('Service worker does not successfully serve the manifest\'s start_url');
+      if (artifacts.StartUrl.debugString) {
+        failures.push(artifacts.StartUrl.debugString);
+      }
     }
 
     if (artifacts.StartUrl.debugString) {
-      result.warnings.push(artifacts.StartUrl.debugString);
+      warnings.push(artifacts.StartUrl.debugString);
     }
+
+    return {failures, warnings};
   }
 
   static audit_(artifacts) {
-    const failures = [];
-    const warnings = [];
+    let offlineFailures = [];
+    let offlineWarnings = [];
 
     return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {
-      const result = {warnings, failures, manifestValues};
-      WebappInstallBanner.assessManifest(artifacts, result);
-      WebappInstallBanner.assessServiceWorker(artifacts, result);
-      WebappInstallBanner.assessOfflineStartUrl(artifacts, result);
+      const manifestFailures = WebappInstallBanner.assessManifest(manifestValues);
+      const swFailures = WebappInstallBanner.assessServiceWorker(artifacts);
+      if (!swFailures.length) {
+        const {failures, warnings} = WebappInstallBanner.assessOfflineStartUrl(artifacts);
+        offlineFailures = failures;
+        offlineWarnings = warnings;
+      }
 
-      return result;
+      return {
+        warnings: offlineWarnings,
+        failures: [
+          ...manifestFailures,
+          ...swFailures,
+          ...offlineFailures,
+        ],
+        manifestValues,
+      };
     });
   }
 }
