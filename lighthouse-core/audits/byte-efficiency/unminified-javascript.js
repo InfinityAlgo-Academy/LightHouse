@@ -6,6 +6,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
+// @ts-ignore - TODO: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/25410
 const esprima = require('esprima');
 
 const IGNORE_THRESHOLD_IN_PERCENT = 10;
@@ -23,7 +24,7 @@ const IGNORE_THRESHOLD_IN_BYTES = 2048;
  */
 class UnminifiedJavaScript extends ByteEfficiencyAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -39,7 +40,8 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
 
   /**
    * @param {string} scriptContent
-   * @return {{minifiedLength: number, contentLength: number}}
+   * @param {LH.WebInspector.NetworkRequest} networkRecord
+   * @return {{url: string, totalBytes: number, wastedBytes: number, wastedPercent: number}}
    */
   static computeWaste(scriptContent, networkRecord) {
     const contentLength = scriptContent.length;
@@ -68,10 +70,12 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!Audit.HeadingsResult}
+   * @param {LH.Artifacts} artifacts
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @return {LH.Audit.ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
+    /** @type {Array<LH.Audit.ByteEfficiencyResult>} */
     const results = [];
     let debugString;
     for (const requestId of Object.keys(artifacts.Scripts)) {

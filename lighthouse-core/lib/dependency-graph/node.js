@@ -19,7 +19,7 @@
  */
 class Node {
   /**
-   * @param {string|number} id
+   * @param {string} id
    */
   constructor(id) {
     this._id = id;
@@ -30,7 +30,7 @@ class Node {
   }
 
   /**
-   * @return {string|number}
+   * @return {string}
    */
   get id() {
     return this._id;

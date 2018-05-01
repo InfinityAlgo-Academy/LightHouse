@@ -16,7 +16,7 @@ const IGNORE_THRESHOLD_IN_BYTES = 2048;
  */
 class UnminifiedCSS extends ByteEfficiencyAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -92,15 +92,16 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {{content: string, header: {sourceURL: string}}} stylesheet
-   * @param {?LH.WebInspector.NetworkRequest} networkRecord
+   * @param {LH.Artifacts.CSSStyleSheetInfo} stylesheet
+   * @param {LH.WebInspector.NetworkRequest=} networkRecord
    * @param {string} pageUrl
-   * @return {{minifiedLength: number, contentLength: number}}
+   * @return {{url: string|LH.Audit.DetailsRendererCodeDetailJSON, totalBytes: number, wastedBytes: number, wastedPercent: number}}
    */
   static computeWaste(stylesheet, networkRecord, pageUrl) {
     const content = stylesheet.content;
     const totalTokenLength = UnminifiedCSS.computeTokenLength(content);
 
+    /** @type {LH.Audit.ByteEfficiencyResult['url']} */
     let url = stylesheet.header.sourceURL;
     if (!url || url === pageUrl) {
       const contentPreview = UnusedCSSRules.determineContentPreview(stylesheet.content);
@@ -121,8 +122,9 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!Audit.HeadingsResult}
+   * @param {LH.Artifacts} artifacts
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @return {LH.Audit.ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
     const pageUrl = artifacts.URL.finalUrl;

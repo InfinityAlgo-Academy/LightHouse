@@ -7,7 +7,6 @@
 /**
  * @fileoverview Audit a page to see if it does have resources that are blocking first paint
  */
-
 'use strict';
 
 const Audit = require('../audit');
@@ -15,6 +14,9 @@ const Node = require('../../lib/dependency-graph/node');
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const UnusedCSS = require('./unused-css-rules');
 const WebInspector = require('../../lib/web-inspector');
+
+const Simulator = require('../../lib/dependency-graph/simulator/simulator'); // eslint-disable-line no-unused-vars
+const NetworkNode = require('../../lib/dependency-graph/network-node.js'); // eslint-disable-line no-unused-vars
 
 // Because of the way we detect blocking stylesheets, asynchronously loaded
 // CSS with link[rel=preload] and an onload handler (see https://github.com/filamentgroup/loadCSS)
@@ -27,17 +29,25 @@ const MINIMUM_WASTED_MS = 50;
  * @param {LH.Gatherer.Simulation.Result['nodeTimings']} nodeTimings
  * @return {Object<string, {node: Node, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>}
  */
-const getNodesAndTimingByUrl = nodeTimings => {
+function getNodesAndTimingByUrl(nodeTimings) {
+  /** @type {Object<string, {node: Node, nodeTiming: LH.Gatherer.Simulation.NodeTiming}>} */
+  const urlMap = {};
   const nodes = Array.from(nodeTimings.keys());
-  return nodes.reduce((map, node) => {
-    map[node.record && node.record.url] = {node, nodeTiming: nodeTimings.get(node)};
-    return map;
-  }, {});
-};
+  nodes.forEach(node => {
+    if (node.type !== 'network') return;
+    const networkNode = /** @type {NetworkNode} */ (node);
+    const nodeTiming = nodeTimings.get(node);
+    if (!nodeTiming) return;
+
+    urlMap[networkNode.record.url] = {node, nodeTiming};
+  });
+
+  return urlMap;
+}
 
 class RenderBlockingResources extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -57,8 +67,9 @@ class RenderBlockingResources extends Audit {
   }
 
   /**
-   * @param {Artifacts} artifacts
+   * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
+   * @return {Promise<{wastedMs: number, results: Array<{url: string, totalBytes: number, wastedMs: number}>}>}
    */
   static async computeResults(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
@@ -70,6 +81,7 @@ class RenderBlockingResources extends Audit {
 
     const metricSettings = {throttlingMethod: 'simulate'};
     const metricComputationData = {trace, devtoolsLog, simulator, settings: metricSettings};
+    // @ts-ignore - TODO(bckenny): allow optional `throttling` settings
     const fcpSimulation = await artifacts.requestFirstContentfulPaint(metricComputationData);
     const fcpTsInMs = traceOfTab.timestamps.firstContentfulPaint / 1000;
 
@@ -91,6 +103,7 @@ class RenderBlockingResources extends Audit {
       node.traverse(node => deferredNodeIds.add(node.id));
 
       // "wastedMs" is the download time of the network request, responseReceived - requestSent
+      // @ts-ignore - TODO(phulce): nodeTiming.startTime/endTime shouldn't be optional by this point?
       const wastedMs = Math.round(nodeTiming.endTime - nodeTiming.startTime);
       if (wastedMs < MINIMUM_WASTED_MS) continue;
 
@@ -135,38 +148,43 @@ class RenderBlockingResources extends Audit {
     const originalEstimate = simulator.simulate(fcpGraph).timeInMs;
 
     let totalChildNetworkBytes = 0;
-    const minimalFCPGraph = fcpGraph.cloneWithRelationships(node => {
+    const minimalFCPGraph = /** @type {NetworkNode} */ (fcpGraph.cloneWithRelationships(node => {
+      // If a node can be deferred, exclude it from the new FCP graph
       const canDeferRequest = deferredIds.has(node.id);
+      if (node.type !== Node.TYPES.NETWORK) return !canDeferRequest;
+
+      const networkNode = /** @type {NetworkNode} */ (node);
+
       const isStylesheet =
-        node.type === Node.TYPES.NETWORK &&
-        node.record._resourceType === WebInspector.resourceTypes.Stylesheet;
+        networkNode.record._resourceType === WebInspector.resourceTypes.Stylesheet;
       if (canDeferRequest && isStylesheet) {
         // We'll inline the used bytes of the stylesheet and assume the rest can be deferred
-        const wastedBytes = wastedCssBytesByUrl.get(node.record.url) || 0;
-        totalChildNetworkBytes += node.record._transferSize - wastedBytes;
+        const wastedBytes = wastedCssBytesByUrl.get(networkNode.record.url) || 0;
+        totalChildNetworkBytes += (networkNode.record._transferSize || 0) - wastedBytes;
       }
-
-      // If a node can be deferred, exclude it from the new FCP graph
       return !canDeferRequest;
-    });
+    }));
 
     // Add the inlined bytes to the HTML response
-    minimalFCPGraph.record._transferSize += totalChildNetworkBytes;
+    const originalTransferSize = minimalFCPGraph.record._transferSize;
+    const safeTransferSize = originalTransferSize || 0;
+    minimalFCPGraph.record._transferSize = safeTransferSize + totalChildNetworkBytes;
     const estimateAfterInline = simulator.simulate(minimalFCPGraph).timeInMs;
-    minimalFCPGraph.record._transferSize -= totalChildNetworkBytes;
+    minimalFCPGraph.record._transferSize = originalTransferSize;
     return Math.round(Math.max(originalEstimate - estimateAfterInline, 0));
   }
 
   /**
-   * @param {!Artifacts} artifacts
+   * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {Map<string, number>}
+   * @return {Promise<Map<string, number>>}
    */
   static async computeWastedCSSBytes(artifacts, context) {
     const wastedBytesByUrl = new Map();
     try {
       // TODO(phulce): pull this out into computed artifact
       const results = await UnusedCSS.audit(artifacts, context);
+      // @ts-ignore - TODO(bckenny): details types.
       for (const item of results.details.items) {
         wastedBytesByUrl.set(item.url, item.wastedBytes);
       }
@@ -176,9 +194,9 @@ class RenderBlockingResources extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
+   * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {AuditResult}
+   * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
     const {results, wastedMs} = await RenderBlockingResources.computeResults(artifacts, context);

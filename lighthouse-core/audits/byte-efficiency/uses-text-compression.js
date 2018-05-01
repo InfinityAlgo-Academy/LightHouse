@@ -17,7 +17,7 @@ const IGNORE_THRESHOLD_IN_PERCENT = 0.1;
 
 class ResponsesAreCompressed extends ByteEfficiencyAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -33,13 +33,13 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @param {number} networkThroughput
-   * @return {!Audit.HeadingsResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Audit.ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
     const uncompressedResponses = artifacts.ResponseCompression;
 
+    /** @type {Array<LH.Audit.ByteEfficiencyResult>} */
     const results = [];
     uncompressedResponses.forEach(record => {
       const originalSize = record.resourceSize;

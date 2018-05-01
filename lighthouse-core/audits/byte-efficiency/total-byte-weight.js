@@ -10,7 +10,7 @@ const Util = require('../../report/html/renderer/util');
 
 class TotalByteWeight extends ByteEfficiencyAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -39,9 +39,9 @@ class TotalByteWeight extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
+   * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {!Promise<!AuditResult>}
+   * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
@@ -50,11 +50,12 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       artifacts.requestNetworkThroughput(devtoolsLogs),
     ]).then(([networkRecords, networkThroughput]) => {
       let totalBytes = 0;
+      /** @type {Array<{url: string, totalBytes: number, totalMs: number}>} */
       let results = [];
       networkRecords.forEach(record => {
         // exclude data URIs since their size is reflected in other resources
         // exclude unfinished requests since they won't have transfer size information
-        if (record.scheme === 'data' || !record.finished) return;
+        if (record.parsedURL.scheme === 'data' || !record.finished) return;
 
         const result = {
           url: record.url,

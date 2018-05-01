@@ -11,7 +11,7 @@ const IGNORE_THRESHOLD_IN_BYTES = 2048;
 
 class UnusedJavaScript extends ByteEfficiencyAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -25,7 +25,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!JsUsageArtifact} script
+   * @param {LH.Crdp.Profiler.ScriptCoverage} script
    * @return {{unusedLength: number, contentLength: number}}
    */
   static computeWaste(script) {
@@ -61,9 +61,9 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!Array<{unusedLength: number, contentLength: number}>} wasteData
+   * @param {Array<{unusedLength: number, contentLength: number}>} wasteData
    * @param {LH.WebInspector.NetworkRequest} networkRecord
-   * @return {{url: string, totalBytes: number, wastedBytes: number, wastedPercent: number}}
+   * @return {LH.Audit.ByteEfficiencyResult}
    */
   static mergeWaste(wasteData, networkRecord) {
     let unusedLength = 0;
@@ -87,10 +87,12 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!Audit.HeadingsResult}
+   * @param {LH.Artifacts} artifacts
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @return {LH.Audit.ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
+    /** @type {Map<string, Array<LH.Crdp.Profiler.ScriptCoverage>>} */
     const scriptsByUrl = new Map();
     for (const script of artifacts.JsUsage) {
       const scripts = scriptsByUrl.get(script.url) || [];
@@ -98,6 +100,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       scriptsByUrl.set(script.url, scripts);
     }
 
+    /** @type {Array<LH.Audit.ByteEfficiencyResult>} */
     const results = [];
     for (const [url, scripts] of scriptsByUrl.entries()) {
       const networkRecord = networkRecords.find(record => record.url === url);

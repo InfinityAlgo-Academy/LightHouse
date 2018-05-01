@@ -18,11 +18,10 @@ const Sentry = require('../../lib/sentry');
 const URL = require('../../lib/url-shim');
 
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
-const WASTEFUL_THRESHOLD_IN_BYTES = 25 * 1024;
 
 class UsesResponsiveImages extends ByteEfficiencyAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -39,9 +38,9 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!Object} image
+   * @param {LH.Artifacts.SingleImageUsage} image
    * @param {number} DPR devicePixelRatio
-   * @return {?Object}
+   * @return {null|Error|LH.Audit.ByteEfficiencyResult};
    */
   static computeWaste(image, DPR) {
     const url = URL.elideDataURI(image.src);
@@ -66,19 +65,19 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
       totalBytes,
       wastedBytes,
       wastedPercent: 100 * wastedRatio,
-      isWasteful: wastedBytes > WASTEFUL_THRESHOLD_IN_BYTES,
     };
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!Audit.HeadingsResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Audit.ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
     const images = artifacts.ImageUsage;
     const DPR = artifacts.ViewportDimensions.devicePixelRatio;
 
     let debugString;
+    /** @type {Map<LH.Audit.ByteEfficiencyResult['url'], LH.Audit.ByteEfficiencyResult>} */
     const resultsMap = new Map();
     images.forEach(image => {
       // TODO: give SVG a free pass until a detail per pixel metric is available
@@ -91,6 +90,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
 
       if (processed instanceof Error) {
         debugString = processed.message;
+        // @ts-ignore TODO(bckenny): Sentry type checking
         Sentry.captureException(processed, {tags: {audit: this.meta.name}, level: 'warning'});
         return;
       }

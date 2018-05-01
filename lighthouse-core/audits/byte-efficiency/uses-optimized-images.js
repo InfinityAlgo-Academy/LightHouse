@@ -7,6 +7,7 @@
  * @fileoverview This audit determines if the images used are sufficiently larger
  * than JPEG compressed images without metadata at quality 85.
  */
+// @ts-nocheck - TODO(bckenny)
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
@@ -16,7 +17,7 @@ const IGNORE_THRESHOLD_IN_BYTES = 4096;
 
 class UsesOptimizedImages extends ByteEfficiencyAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -31,19 +32,18 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {{originalSize: number, webpSize: number, jpegSize: number}} image
-   * @param {string} type
+   * @param {{originalSize: number, jpegSize: number}} image
    * @return {{bytes: number, percent: number}}
    */
-  static computeSavings(image, type) {
-    const bytes = image.originalSize - image[type + 'Size'];
+  static computeSavings(image) {
+    const bytes = image.originalSize - image.jpegSize;
     const percent = 100 * bytes / image.originalSize;
     return {bytes, percent};
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!Audit.HeadingsResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Audit.ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
     const images = artifacts.OptimizedImages;
@@ -60,7 +60,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
       }
 
       const url = URL.elideDataURI(image.url);
-      const jpegSavings = UsesOptimizedImages.computeSavings(image, 'jpeg');
+      const jpegSavings = UsesOptimizedImages.computeSavings(image);
 
       results.push({
         url,

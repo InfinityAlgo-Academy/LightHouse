@@ -76,7 +76,7 @@ describe('Byte efficiency base audit', () => {
   });
 
   it('should format details', () => {
-    const result = ByteEfficiencyAudit.createAuditResult({
+    const result = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       results: [],
     }, graph, simulator);
@@ -85,7 +85,7 @@ describe('Byte efficiency base audit', () => {
   });
 
   it('should set the rawValue', () => {
-    const result = ByteEfficiencyAudit.createAuditResult(
+    const result = ByteEfficiencyAudit.createAuditProduct(
       {
         headings: baseHeadings,
         results: [
@@ -101,22 +101,22 @@ describe('Byte efficiency base audit', () => {
   });
 
   it('should score the wastedMs', () => {
-    const perfectResult = ByteEfficiencyAudit.createAuditResult({
+    const perfectResult = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       results: [{url: 'http://example.com/', wastedBytes: 1 * 1000}],
     }, graph, simulator);
 
-    const goodResult = ByteEfficiencyAudit.createAuditResult({
+    const goodResult = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       results: [{url: 'http://example.com/', wastedBytes: 20 * 1000}],
     }, graph, simulator);
 
-    const averageResult = ByteEfficiencyAudit.createAuditResult({
+    const averageResult = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       results: [{url: 'http://example.com/', wastedBytes: 100 * 1000}],
     }, graph, simulator);
 
-    const failingResult = ByteEfficiencyAudit.createAuditResult({
+    const failingResult = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       results: [{url: 'http://example.com/', wastedBytes: 400 * 1000}],
     }, graph, simulator);
@@ -129,7 +129,7 @@ describe('Byte efficiency base audit', () => {
 
   it('should throw on invalid graph', () => {
     assert.throws(() => {
-      ByteEfficiencyAudit.createAuditResult({
+      ByteEfficiencyAudit.createAuditProduct({
         headings: baseHeadings,
         results: [{wastedBytes: 350, totalBytes: 700, wastedPercent: 50}],
       }, null);
@@ -137,7 +137,7 @@ describe('Byte efficiency base audit', () => {
   });
 
   it('should populate KB', () => {
-    const result = ByteEfficiencyAudit.createAuditResult({
+    const result = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       results: [
         {wastedBytes: 2048, totalBytes: 4096, wastedPercent: 50},
@@ -152,7 +152,7 @@ describe('Byte efficiency base audit', () => {
   });
 
   it('should sort on wastedBytes', () => {
-    const result = ByteEfficiencyAudit.createAuditResult({
+    const result = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       results: [
         {wastedBytes: 350, totalBytes: 700, wastedPercent: 50},
@@ -167,7 +167,7 @@ describe('Byte efficiency base audit', () => {
   });
 
   it('should create a display value', () => {
-    const result = ByteEfficiencyAudit.createAuditResult({
+    const result = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       results: [
         {wastedBytes: 512, totalBytes: 700, wastedPercent: 50},
@@ -185,7 +185,7 @@ describe('Byte efficiency base audit', () => {
     const artifacts = Runner.instantiateComputedArtifacts();
     const graph = await artifacts.requestPageDependencyGraph({trace, devtoolsLog});
     const simulator = await artifacts.requestLoadSimulator({devtoolsLog, settings});
-    const result = ByteEfficiencyAudit.createAuditResult(
+    const result = ByteEfficiencyAudit.createAuditProduct(
       {
         headings: [{key: 'value', text: 'Label'}],
         results: [

@@ -16,23 +16,22 @@ describe('Page uses videos for animated GIFs', () => {
     const networkRecords = [
       {
         _resourceType: WebInspector.resourceTypes.Image,
-        mimeType: 'image/gif',
-        resourceSize: 100240,
+        _mimeType: 'image/gif',
+        _resourceSize: 100240,
         url: 'https://example.com/example.gif',
       },
       {
         _resourceType: WebInspector.resourceTypes.Image,
-        mimeType: 'image/gif',
-        resourceSize: 110000,
+        _mimeType: 'image/gif',
+        _resourceSize: 110000,
         url: 'https://example.com/example2.gif',
       },
     ];
     const artifacts = {
       devtoolsLogs: {[EfficientAnimatedContent.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
     };
 
-    const {results} = await EfficientAnimatedContent.audit_(artifacts);
+    const {results} = await EfficientAnimatedContent.audit_(artifacts, networkRecords);
     assert.equal(results.length, 1);
     assert.equal(results[0].url, 'https://example.com/example2.gif');
     assert.equal(results[0].totalBytes, 110000);
@@ -49,10 +48,9 @@ describe('Page uses videos for animated GIFs', () => {
     ];
     const artifacts = {
       devtoolsLogs: {[EfficientAnimatedContent.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
     };
 
-    const {results} = await EfficientAnimatedContent.audit_(artifacts);
+    const {results} = await EfficientAnimatedContent.audit_(artifacts, networkRecords);
     assert.equal(results.length, 0);
   });
 
@@ -71,10 +69,9 @@ describe('Page uses videos for animated GIFs', () => {
     ];
     const artifacts = {
       devtoolsLogs: {[EfficientAnimatedContent.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
     };
 
-    const {results} = await EfficientAnimatedContent.audit_(artifacts);
+    const {results} = await EfficientAnimatedContent.audit_(artifacts, networkRecords);
     assert.equal(results.length, 0);
   });
 });

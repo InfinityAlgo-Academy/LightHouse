@@ -42,26 +42,25 @@ class EfficientAnimatedContent extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!LH.Artifacts} artifacts
-   * @return {Promise<LH.Audit.Product>}
+   * @param {LH.Artifacts} artifacts
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @return {LH.Audit.ByteEfficiencyProduct}
    */
-  static async audit_(artifacts) {
-    const devtoolsLogs = artifacts.devtoolsLogs[EfficientAnimatedContent.DEFAULT_PASS];
-
-    const networkRecords = await artifacts.requestNetworkRecords(devtoolsLogs);
+  static audit_(artifacts, networkRecords) {
     const unoptimizedContent = networkRecords.filter(
-      record => record.mimeType === 'image/gif' &&
+      record => record._mimeType === 'image/gif' &&
         record._resourceType === WebInspector.resourceTypes.Image &&
-        record.resourceSize > GIF_BYTE_THRESHOLD
+        (record._resourceSize || 0) > GIF_BYTE_THRESHOLD
     );
 
     /** @type {Array<{url: string, totalBytes: number, wastedBytes: number}>}*/
     const results = unoptimizedContent.map(record => {
+      const resourceSize = record._resourceSize || 0;
       return {
         url: record.url,
-        totalBytes: record.resourceSize,
-        wastedBytes: Math.round(record.resourceSize *
-          EfficientAnimatedContent.getPercentSavings(record.resourceSize)),
+        totalBytes: resourceSize,
+        wastedBytes: Math.round(resourceSize *
+          EfficientAnimatedContent.getPercentSavings(resourceSize)),
       };
     });
 

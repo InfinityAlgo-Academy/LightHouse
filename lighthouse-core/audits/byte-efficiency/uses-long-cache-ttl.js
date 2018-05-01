@@ -6,6 +6,7 @@
 'use strict';
 
 const assert = require('assert');
+// @ts-ignore - typed where used.
 const parseCacheControl = require('parse-cache-control');
 const Audit = require('../audit');
 const WebInspector = require('../../lib/web-inspector');
@@ -16,11 +17,10 @@ const IGNORE_THRESHOLD_IN_PERCENT = 0.925;
 
 class CacheHeaders extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      category: 'Caching',
       name: 'uses-long-cache-ttl',
       description: 'Uses efficient cache policy on static assets',
       failureDescription: 'Uses inefficient cache policy on static assets',
@@ -103,22 +103,24 @@ class CacheHeaders extends Audit {
    * Computes the user-specified cache lifetime, 0 if explicit no-cache policy is in effect, and null if not
    * user-specified. See https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
    *
-   * @param {!Map<string,string>} headers
-   * @param {!Object} cacheControl Follows the potential settings of cache-control, see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
+   * @param {Map<string, string>} headers
+   * @param {{'no-cache'?: boolean,'no-store'?: boolean, 'max-age'?: number}} cacheControl Follows the potential settings of cache-control, see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
    * @return {?number}
    */
   static computeCacheLifetimeInSeconds(headers, cacheControl) {
     if (cacheControl) {
       // Cache-Control takes precendence over expires
       if (cacheControl['no-cache'] || cacheControl['no-store']) return 0;
-      if (Number.isFinite(cacheControl['max-age'])) return Math.max(cacheControl['max-age'], 0);
+      const maxAge = cacheControl['max-age'];
+      if (maxAge !== undefined && Number.isFinite(maxAge)) return Math.max(maxAge, 0);
     } else if ((headers.get('pragma') || '').includes('no-cache')) {
       // The HTTP/1.0 Pragma header can disable caching if cache-control is not set, see https://tools.ietf.org/html/rfc7234#section-5.4
       return 0;
     }
 
-    if (headers.has('expires')) {
-      const expires = new Date(headers.get('expires')).getTime();
+    const expiresHeaders = headers.get('expires');
+    if (expiresHeaders) {
+      const expires = new Date(expiresHeaders).getTime();
       // Invalid expires values MUST be treated as already expired
       if (!expires) return 0;
       return Math.max(0, Math.ceil((expires - Date.now()) / 1000));
@@ -162,9 +164,9 @@ class CacheHeaders extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
+   * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {!AuditResult}
+   * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
@@ -176,8 +178,9 @@ class CacheHeaders extends Audit {
       for (const record of records) {
         if (!CacheHeaders.isCacheableAsset(record)) continue;
 
+        /** @type {Map<string, string>} */
         const headers = new Map();
-        for (const header of record._responseHeaders) {
+        for (const header of record._responseHeaders || []) {
           headers.set(header.name.toLowerCase(), header.value);
         }
 
@@ -195,7 +198,7 @@ class CacheHeaders extends Audit {
         if (cacheHitProbability > IGNORE_THRESHOLD_IN_PERCENT) continue;
 
         const url = URL.elideDataURI(record._url);
-        const totalBytes = record._transferSize;
+        const totalBytes = record._transferSize || 0;
         const wastedBytes = (1 - cacheHitProbability) * totalBytes;
 
         totalWastedBytes += wastedBytes;

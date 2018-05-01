@@ -26,7 +26,9 @@ declare global {
       _responseReceivedTime: number;
 
       transferSize: number;
+      /** Should use a default of 0 if not defined */
       _transferSize?: number;
+      /** Should use a default of 0 if not defined */
       _resourceSize?: number;
 
       finished: boolean;

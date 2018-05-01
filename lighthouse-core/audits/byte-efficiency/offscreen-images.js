@@ -21,7 +21,7 @@ const IGNORE_THRESHOLD_IN_PERCENT = 75;
 
 class OffscreenImages extends ByteEfficiencyAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -38,7 +38,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!ClientRect} imageRect
+   * @param {ClientRect} imageRect
    * @param {{innerWidth: number, innerHeight: number}} viewportDimensions
    * @return {number}
    */
@@ -82,8 +82,10 @@ class OffscreenImages extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!Audit.HeadingsResult}
+   * @param {LH.Artifacts} artifacts
+   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.ByteEfficiencyProduct>}
    */
   static audit_(artifacts, networkRecords, context) {
     const images = artifacts.ImageUsage;
@@ -91,6 +93,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     const trace = artifacts.traces[ByteEfficiencyAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
 
+    /** @type {string|undefined} */
     let debugString;
     const resultsMap = images.reduce((results, image) => {
       if (!image.networkRecord) {
@@ -100,6 +103,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       const processed = OffscreenImages.computeWaste(image, viewportDimensions);
       if (processed instanceof Error) {
         debugString = processed.message;
+        // @ts-ignore TODO(bckenny): Sentry type checking
         Sentry.captureException(processed, {tags: {audit: this.meta.name}, level: 'warning'});
         return results;
       }
@@ -116,6 +120,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     // TODO(phulce): move this to always use lantern
     const settings = context.settings;
     return artifacts.requestFirstCPUIdle({trace, devtoolsLog, settings}).then(firstInteractive => {
+      // @ts-ignore - see above TODO.
       const ttiTimestamp = firstInteractive.timestamp / 1000000;
       const results = Array.from(resultsMap.values()).filter(item => {
         const isWasteful =

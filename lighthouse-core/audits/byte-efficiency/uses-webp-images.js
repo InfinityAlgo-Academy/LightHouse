@@ -6,17 +6,17 @@
 /*
  * @fileoverview This audit determines if the images could be smaller when compressed with WebP.
  */
+// @ts-nocheck - TODO(bckenny)
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const OptimizedImages = require('./uses-optimized-images');
 const URL = require('../../lib/url-shim');
 
 const IGNORE_THRESHOLD_IN_BYTES = 8192;
 
 class UsesWebPImages extends ByteEfficiencyAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -32,8 +32,18 @@ class UsesWebPImages extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!Audit.HeadingsResult}
+   * @param {{originalSize: number, webpSize: number}} image
+   * @return {{bytes: number, percent: number}}
+   */
+  static computeSavings(image) {
+    const bytes = image.originalSize - image.webpSize;
+    const percent = 100 * bytes / image.originalSize;
+    return {bytes, percent};
+  }
+
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Audit.ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
     const images = artifacts.OptimizedImages;
@@ -49,7 +59,7 @@ class UsesWebPImages extends ByteEfficiencyAudit {
       }
 
       const url = URL.elideDataURI(image.url);
-      const webpSavings = OptimizedImages.computeSavings(image, 'webp');
+      const webpSavings = UsesWebPImages.computeSavings(image);
 
       results.push({
         url,

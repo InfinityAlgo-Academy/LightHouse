@@ -7,17 +7,23 @@
 
 const TotalByteWeight = require('../../../audits/byte-efficiency/total-byte-weight.js');
 const assert = require('assert');
+const URL = require('url').URL;
 const options = TotalByteWeight.defaultOptions;
 
 /* eslint-env mocha */
 
 function generateRequest(url, size, baseUrl = 'http://google.com/') {
+  const parsedUrl = new URL(url, baseUrl);
+  const scheme = parsedUrl.protocol.slice(0, -1);
   return {
-    url: `${baseUrl}${url}`,
+    url: parsedUrl.href,
     finished: true,
     transferSize: size * 1024,
     responseReceivedTime: 1000,
     endTime: 2000,
+    parsedURL: {
+      scheme,
+    },
   };
 }
 
@@ -25,6 +31,7 @@ function generateArtifacts(records) {
   if (records[0] && records[0].length > 1) {
     records = records.map(args => generateRequest(...args));
   }
+
   return {
     devtoolsLogs: {defaultPass: []},
     requestNetworkRecords: () => Promise.resolve(records),
