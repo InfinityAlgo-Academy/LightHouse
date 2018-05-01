@@ -320,7 +320,7 @@ declare global {
         pessimisticGraph: Gatherer.Simulation.GraphNode;
       }
 
-      export type Speedline = ReturnType<typeof speedline>;
+      export type Speedline = speedline.Output<'speedIndex'>;
 
       // TODO(bckenny): all but navigationStart could actually be undefined.
       export interface TraceTimes {
