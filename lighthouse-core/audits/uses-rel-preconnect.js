@@ -15,6 +15,8 @@ const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
 // @see https://github.com/GoogleChrome/lighthouse/issues/3106#issuecomment-333653747
 const PRECONNECT_SOCKET_MAX_IDLE = 15;
 
+const IGNORE_THRESHOLD_IN_MS = 50;
+
 class UsesRelPreconnectAudit extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -65,17 +67,22 @@ class UsesRelPreconnectAudit extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit(artifacts) {
+  static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreconnectAudit.DEFAULT_PASS];
     const URL = artifacts.URL;
+    const settings = context.settings;
     let maxWasted = 0;
 
-    const [networkRecords, mainResource] = await Promise.all([
+    const [networkRecords, mainResource, loadSimulator] = await Promise.all([
       artifacts.requestNetworkRecords(devtoolsLog),
       artifacts.requestMainResource({devtoolsLog, URL}),
+      artifacts.requestLoadSimulator({devtoolsLog, settings}),
     ]);
+
+    const {rtt, additionalRttByOrigin} = loadSimulator.getOptions();
 
     /** @type {Map<string, LH.WebInspector.NetworkRequest[]>}  */
     const origins = new Map();
@@ -113,17 +120,27 @@ class UsesRelPreconnectAudit extends Audit {
         return (record.startTime < firstRecord.startTime) ? record: firstRecord;
       });
 
-      const connectionTime =
-        firstRecordOfOrigin._timing.connectEnd - firstRecordOfOrigin._timing.dnsStart;
+      const securityOrigin = firstRecordOfOrigin.parsedURL.securityOrigin();
+
+      // Approximate the connection time with the duration of TCP (+potentially SSL) handshake
+      // DNS time can be large but can also be 0 if a commonly used origin that's cached, so make
+      // no assumption about DNS.
+      const additionalRtt = additionalRttByOrigin.get(securityOrigin) || 0;
+      let connectionTime = rtt + additionalRtt;
+      // TCP Handshake will be at least 2 RTTs for TLS connections
+      if (firstRecordOfOrigin.parsedURL.scheme === 'https') connectionTime = connectionTime * 2;
+
       const timeBetweenMainResourceAndDnsStart =
         firstRecordOfOrigin.startTime * 1000 -
         mainResource.endTime * 1000 +
         firstRecordOfOrigin._timing.dnsStart;
+
       const wastedMs = Math.min(connectionTime, timeBetweenMainResourceAndDnsStart);
+      if (wastedMs < IGNORE_THRESHOLD_IN_MS) return;
+
       maxWasted = Math.max(wastedMs, maxWasted);
       results.push({
-        url: firstRecordOfOrigin.parsedURL.securityOrigin(),
-        type: 'ms',
+        url: securityOrigin,
         wastedMs: wastedMs,
       });
     });

@@ -18,6 +18,8 @@ declare global {
       _url: string;
       protocol: string;
       parsedURL: ParsedURL;
+      // Use parsedURL.securityOrigin() instead
+      origin: never;
 
       startTime: number;
       endTime: number;

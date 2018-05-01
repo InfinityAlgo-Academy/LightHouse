@@ -41,7 +41,6 @@ declare global {
       export interface Options {
         rtt?: number;
         throughput?: number;
-        fallbackTTFB?: number;
         maximumConcurrentRequests?: number;
         cpuSlowdownMultiplier?: number;
         layoutTaskMultiplier?: number;

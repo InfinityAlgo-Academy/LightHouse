@@ -31,6 +31,7 @@ class Simulator {
    * @param {LH.Gatherer.Simulation.Options} [options]
    */
   constructor(options) {
+    /** @type {Required<LH.Gatherer.Simulation.Options>} */
     this._options = Object.assign(
       {
         rtt: mobile3G.rttMs,
@@ -38,6 +39,8 @@ class Simulator {
         maximumConcurrentRequests: DEFAULT_MAXIMUM_CONCURRENT_REQUESTS,
         cpuSlowdownMultiplier: mobile3G.cpuSlowdownMultiplier,
         layoutTaskMultiplier: DEFAULT_LAYOUT_TASK_MULTIPLIER,
+        additionalRttByOrigin: new Map(),
+        serverResponseTimeByOrigin: new Map(),
       },
       options
     );
@@ -276,6 +279,13 @@ class Simulator {
       timingData.timeElapsedOvershoot += calculation.timeElapsed - timePeriodLength;
       timingData.bytesDownloaded += calculation.bytesDownloaded;
     }
+  }
+
+  /**
+   * @return {Required<LH.Gatherer.Simulation.Options>}
+   */
+  getOptions() {
+    return this._options;
   }
 
   /**
