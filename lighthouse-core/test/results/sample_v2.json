@@ -3838,7 +3838,7 @@
     },
     "no-vulnerable-libraries": {
       "score": 0,
-      "displayValue": "2 vulnerabilities detected.",
+      "displayValue": "1 vulnerability was detected.",
       "rawValue": false,
       "extendedInfo": {
         "jsLibs": [
@@ -3852,12 +3852,6 @@
                 "numericSeverity": 2,
                 "library": "jQuery@2.1.1",
                 "url": "https://snyk.io/vuln/npm:jquery:20150627"
-              },
-              {
-                "severity": "low",
-                "numericSeverity": 1,
-                "library": "jQuery@2.1.1",
-                "url": "https://snyk.io/vuln/npm:jquery:20160529"
               }
             ],
             "highestSeverity": "Medium"
@@ -3866,7 +3860,7 @@
         "vulnerabilities": [
           {
             "highestSeverity": "Medium",
-            "vulnCount": 2,
+            "vulnCount": 1,
             "detectedLib": {
               "text": "jQuery@2.1.1",
               "url": "https://snyk.io/vuln/npm:jquery?lh@2.1.1",
@@ -3901,7 +3895,7 @@
         "items": [
           {
             "highestSeverity": "Medium",
-            "vulnCount": 2,
+            "vulnCount": 1,
             "detectedLib": {
               "text": "jQuery@2.1.1",
               "url": "https://snyk.io/vuln/npm:jquery?lh@2.1.1",
@@ -5246,5 +5240,8 @@
       "title": "Additional items to manually check",
       "description": "Run these additional validators on your site to check additional SEO best practices."
     }
+  },
+  "timing": {
+    "total": 667
   }
 }
