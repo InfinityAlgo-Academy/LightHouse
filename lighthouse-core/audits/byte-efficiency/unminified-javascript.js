@@ -84,7 +84,8 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
         // If the ratio is minimal, the file is likely already minified, so ignore it.
         // If the total number of bytes to be saved is quite small, it's also safe to ignore.
         if (result.wastedPercent < IGNORE_THRESHOLD_IN_PERCENT ||
-          result.wastedBytes < IGNORE_THRESHOLD_IN_BYTES) continue;
+          result.wastedBytes < IGNORE_THRESHOLD_IN_BYTES ||
+          !Number.isFinite(result.wastedBytes)) continue;
         results.push(result);
       } catch (err) {
         debugString = `Unable to process ${networkRecord._url}: ${err.message}`;

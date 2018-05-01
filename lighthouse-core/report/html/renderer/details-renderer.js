@@ -203,7 +203,7 @@ class DetailsRenderer {
       for (const heading of details.headings) {
         const value = /** @type {number|string|!DetailsRenderer.DetailsJSON} */ (row[heading.key]);
 
-        if (typeof value === 'undefined') {
+        if (typeof value === 'undefined' || value === null) {
           this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty');
           continue;
         }
