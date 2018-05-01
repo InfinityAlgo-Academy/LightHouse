@@ -113,7 +113,7 @@ declare global {
       requestSpeedline(trace: Trace): Promise<LH.Artifacts.Speedline>;
 
       // Metrics.
-      requestConsistentlyInteractive(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
+      requestInteractive(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
       requestEstimatedInputLatency(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
       requestFirstContentfulPaint(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
       requestFirstCPUIdle(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
@@ -121,7 +121,7 @@ declare global {
       requestSpeedIndex(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
 
       // Lantern metrics.
-      requestLanternConsistentlyInteractive(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
+      requestLanternInteractive(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
       requestLanternEstimatedInputLatency(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
       requestLanternFirstContentfulPaint(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
       requestLanternFirstCPUIdle(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;

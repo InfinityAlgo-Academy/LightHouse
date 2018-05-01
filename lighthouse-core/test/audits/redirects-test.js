@@ -11,7 +11,7 @@ const assert = require('assert');
 /* eslint-env mocha */
 const FAILING_THREE_REDIRECTS = {
   startTime: 17,
-  url: 'http://exampel.com/',
+  url: 'https://m.example.com/final',
   redirects: [
     {
       startTime: 0,
@@ -30,25 +30,25 @@ const FAILING_THREE_REDIRECTS = {
 
 const FAILING_TWO_REDIRECTS = {
   startTime: 446.286,
-  url: 'http://lisairish.com/',
+  url: 'https://www.lisairish.com/',
   redirects: [
     {
       startTime: 445.648,
-      url: 'https://lisairish.com/',
+      url: 'http://lisairish.com/',
     },
     {
       startTime: 445.757,
-      url: 'https://www.lisairish.com/',
+      url: 'https://lisairish.com/',
     },
   ],
 };
 
 const SUCCESS_ONE_REDIRECT = {
   startTime: 136.383,
-  url: 'https://lisairish.com/',
+  url: 'https://www.lisairish.com/',
   redirects: [{
     startTime: 135.873,
-    url: 'https://www.lisairish.com/',
+    url: 'https://lisairish.com/',
   }],
 };
 
@@ -58,30 +58,45 @@ const SUCCESS_NOREDIRECT = {
   redirects: [],
 };
 
-const mockArtifacts = (mockChain) => {
-  return {
-    devtoolsLogs: {
-      [Audit.DEFAULT_PASS]: [],
-    },
-    requestNetworkRecords: () => {
-      return Promise.resolve([]);
-    },
-    requestMainResource: function() {
-      return Promise.resolve(mockChain);
-    },
-  };
-};
-
 describe('Performance: Redirects audit', () => {
+  let nodeTimings;
+
+  const mockArtifacts = (mockChain) => {
+    return {
+      traces: {},
+      devtoolsLogs: {},
+      requestLanternInteractive: () => ({pessimisticEstimate: {nodeTimings}}),
+      requestTraceOfTab: () => {},
+      requestNetworkRecords: () => [],
+      requestMainResource: function() {
+        return Promise.resolve(mockChain);
+      },
+    };
+  };
+
   it('fails when 3 redirects detected', () => {
-    return Audit.audit(mockArtifacts(FAILING_THREE_REDIRECTS)).then(output => {
+    nodeTimings = new Map([
+      [{type: 'network', record: {url: 'http://example.com/'}}, {startTime: 0}],
+      [{type: 'network', record: {url: 'https://example.com/'}}, {startTime: 5000}],
+      [{type: 'network', record: {url: 'https://m.example.com/'}}, {startTime: 10000}],
+      [{type: 'network', record: {url: 'https://m.example.com/final'}}, {startTime: 17000}],
+    ]);
+
+    return Audit.audit(mockArtifacts(FAILING_THREE_REDIRECTS), {}).then(output => {
       assert.equal(output.score, 0);
       assert.equal(output.details.items.length, 4);
       assert.equal(output.rawValue, 17000);
     });
   });
+
   it('fails when 2 redirects detected', () => {
-    return Audit.audit(mockArtifacts(FAILING_TWO_REDIRECTS)).then(output => {
+    nodeTimings = new Map([
+      [{type: 'network', record: {url: 'http://lisairish.com/'}}, {startTime: 0}],
+      [{type: 'network', record: {url: 'https://lisairish.com/'}}, {startTime: 300}],
+      [{type: 'network', record: {url: 'https://www.lisairish.com/'}}, {startTime: 638}],
+    ]);
+
+    return Audit.audit(mockArtifacts(FAILING_TWO_REDIRECTS), {}).then(output => {
       assert.equal(output.score, 0.65);
       assert.equal(output.details.items.length, 3);
       assert.equal(Math.round(output.rawValue), 638);
@@ -89,7 +104,12 @@ describe('Performance: Redirects audit', () => {
   });
 
   it('passes when one redirect detected', () => {
-    return Audit.audit(mockArtifacts(SUCCESS_ONE_REDIRECT)).then(output => {
+    nodeTimings = new Map([
+      [{type: 'network', record: {url: 'https://lisairish.com/'}}, {startTime: 0}],
+      [{type: 'network', record: {url: 'https://www.lisairish.com/'}}, {startTime: 510}],
+    ]);
+
+    return Audit.audit(mockArtifacts(SUCCESS_ONE_REDIRECT), {}).then(output => {
       // If === 1 redirect, perfect score is expected, regardless of latency
       assert.equal(output.score, 1);
       // We will still generate a table and show wasted time
@@ -99,7 +119,7 @@ describe('Performance: Redirects audit', () => {
   });
 
   it('passes when no redirect detected', () => {
-    return Audit.audit(mockArtifacts(SUCCESS_NOREDIRECT)).then(output => {
+    return Audit.audit(mockArtifacts(SUCCESS_NOREDIRECT), {}).then(output => {
       assert.equal(output.score, 1);
       assert.equal(output.details.items.length, 0);
       assert.equal(output.rawValue, 0);
