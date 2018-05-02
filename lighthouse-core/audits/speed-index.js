@@ -10,7 +10,7 @@ const Util = require('../report/html/renderer/util');
 
 class SpeedIndex extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -39,9 +39,9 @@ class SpeedIndex extends Audit {
   /**
    * Audits the page to give a score for the Speed Index.
    * @see https://github.com/GoogleChrome/lighthouse/issues/197
-   * @param {Artifacts} artifacts The artifacts from the gather phase.
+   * @param {LH.Artifacts} artifacts The artifacts from the gather phase.
    * @param {LH.Audit.Context} context
-   * @return {Promise<AuditResult>}
+   * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];

@@ -45,4 +45,25 @@ describe('Performance: time-to-first-byte audit', () => {
       assert.strictEqual(result.score, 1);
     });
   });
+
+  it('throws when somehow finalUrl is not in network records', async () => {
+    const networkRecords = [
+      {_url: 'https://example.com/', _requestId: '0', _timing: {receiveHeadersEnd: 400, sendEnd: 200}},
+      {_url: 'https://google.com/styles.css', _requestId: '1', _timing: {receiveHeadersEnd: 850, sendEnd: 200}},
+      {_url: 'https://google.com/image.jpg', _requestId: '2', _timing: {receiveHeadersEnd: 1000, sendEnd: 400}},
+    ];
+    const badFinalUrl = 'https://badexample.com/';
+    const artifacts = {
+      devtoolsLogs: {[TimeToFirstByte.DEFAULT_PASS]: []},
+      requestNetworkRecords: () => Promise.resolve(networkRecords),
+      URL: {finalUrl: badFinalUrl},
+    };
+
+    try {
+      await TimeToFirstByte.audit(artifacts);
+      throw new Error('TimeToFirstByte did not throw');
+    } catch (e) {
+      assert.ok(e.message.includes(badFinalUrl));
+    }
+  });
 });

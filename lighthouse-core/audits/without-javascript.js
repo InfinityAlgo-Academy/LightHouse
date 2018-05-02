@@ -9,7 +9,7 @@ const Audit = require('./audit');
 
 class WithoutJavaScript extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -24,8 +24,8 @@ class WithoutJavaScript extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
     const artifact = artifacts.HTMLWithoutJavaScript;

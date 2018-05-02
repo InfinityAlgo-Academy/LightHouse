@@ -12,7 +12,7 @@ const TTFB_THRESHOLD = 600;
 
 class TTFBMetric extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -25,6 +25,9 @@ class TTFBMetric extends Audit {
     };
   }
 
+  /**
+   * @param {LH.WebInspector.NetworkRequest} record
+   */
   static caclulateTTFB(record) {
     const timing = record._timing;
 
@@ -32,8 +35,8 @@ class TTFBMetric extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
@@ -44,6 +47,9 @@ class TTFBMetric extends Audit {
 
         const finalUrl = artifacts.URL.finalUrl;
         const finalUrlRequest = networkRecords.find(record => record._url === finalUrl);
+        if (!finalUrlRequest) {
+          throw new Error(`finalUrl '${finalUrl} not found in network records.`);
+        }
         const ttfb = TTFBMetric.caclulateTTFB(finalUrlRequest);
         const passed = ttfb < TTFB_THRESHOLD;
 

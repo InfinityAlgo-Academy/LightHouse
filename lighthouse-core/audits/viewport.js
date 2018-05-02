@@ -10,7 +10,7 @@ const Parser = require('metaviewport-parser');
 
 class Viewport extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -25,8 +25,8 @@ class Viewport extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
     if (artifacts.Viewport === null) {

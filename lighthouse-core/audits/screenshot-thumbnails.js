@@ -12,9 +12,11 @@ const jpeg = require('jpeg-js');
 const NUMBER_OF_THUMBNAILS = 10;
 const THUMBNAIL_WIDTH = 120;
 
+/** @typedef {LH.Artifacts.Speedline['frames'][0]} SpeedlineFrame */
+
 class ScreenshotThumbnails extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -30,8 +32,8 @@ class ScreenshotThumbnails extends Audit {
    * Scales down an image to THUMBNAIL_WIDTH using nearest neighbor for speed, maintains aspect
    * ratio of the original thumbnail.
    *
-   * @param {{width: number, height: number, data: !Array<number>}} imageData
-   * @return {{width: number, height: number, data: !Array<number>}}
+   * @param {ReturnType<SpeedlineFrame['getParsedImage']>} imageData
+   * @return {{width: number, height: number, data: Uint8Array}}
    */
   static scaleImageToThumbnail(imageData) {
     const scaledWidth = THUMBNAIL_WIDTH;
@@ -63,11 +65,13 @@ class ScreenshotThumbnails extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    /** @type {Map<SpeedlineFrame, string>} */
     const cachedThumbnails = new Map();
 
     const speedline = await artifacts.requestSpeedline(trace);
@@ -99,6 +103,8 @@ class ScreenshotThumbnails extends Audit {
     for (let i = 1; i <= NUMBER_OF_THUMBNAILS; i++) {
       const targetTimestamp = speedline.beginning + timelineEnd * i / NUMBER_OF_THUMBNAILS;
 
+      /** @type {SpeedlineFrame} */
+      // @ts-ignore - there will always be at least one frame by this point. TODO: use nonnullable assertion in TS2.9
       let frameForTimestamp = null;
       if (i === NUMBER_OF_THUMBNAILS) {
         frameForTimestamp = analyzedFrames[analyzedFrames.length - 1];

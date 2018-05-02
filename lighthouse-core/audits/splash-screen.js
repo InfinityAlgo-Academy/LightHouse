@@ -22,7 +22,7 @@ const MultiCheckAudit = require('./multi-check-audit');
 
 class SplashScreen extends MultiCheckAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -36,8 +36,12 @@ class SplashScreen extends MultiCheckAudit {
     };
   }
 
+  /**
+   * @param {LH.Artifacts.ManifestValues} manifestValues
+   * @param {Array<string>} failures
+   */
   static assessManifest(manifestValues, failures) {
-    if (manifestValues.isParseFailure) {
+    if (manifestValues.isParseFailure && manifestValues.parseFailureReason) {
       failures.push(manifestValues.parseFailureReason);
       return;
     }
@@ -58,8 +62,12 @@ class SplashScreen extends MultiCheckAudit {
       });
   }
 
-
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<{failures: Array<string>, manifestValues: LH.Artifacts.ManifestValues}>}
+   */
   static audit_(artifacts) {
+    /** @type {Array<string>} */
     const failures = [];
 
     return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {

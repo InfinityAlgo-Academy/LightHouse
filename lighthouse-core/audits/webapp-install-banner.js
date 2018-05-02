@@ -30,7 +30,7 @@ const SWAudit = require('./service-worker');
 
 class WebappInstallBanner extends MultiCheckAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -44,11 +44,16 @@ class WebappInstallBanner extends MultiCheckAudit {
     };
   }
 
+  /**
+   * @param {LH.Artifacts.ManifestValues} manifestValues
+   * @return {Array<string>}
+   */
   static assessManifest(manifestValues) {
-    if (manifestValues.isParseFailure) {
+    if (manifestValues.isParseFailure && manifestValues.parseFailureReason) {
       return [manifestValues.parseFailureReason];
     }
 
+    /** @type {Array<string>} */
     const failures = [];
     const bannerCheckIds = [
       'hasName',
@@ -68,7 +73,10 @@ class WebappInstallBanner extends MultiCheckAudit {
     return failures;
   }
 
-
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @return {Array<string>}
+   */
   static assessServiceWorker(artifacts) {
     const failures = [];
     const hasServiceWorker = SWAudit.audit(artifacts).rawValue;
@@ -79,6 +87,10 @@ class WebappInstallBanner extends MultiCheckAudit {
     return failures;
   }
 
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @return {{failures: Array<string>, warnings: Array<string>}}
+   */
   static assessOfflineStartUrl(artifacts) {
     const failures = [];
     const warnings = [];
@@ -98,8 +110,14 @@ class WebappInstallBanner extends MultiCheckAudit {
     return {failures, warnings};
   }
 
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<{failures: Array<string>, warnings: Array<string>, manifestValues: LH.Artifacts.ManifestValues}>}
+   */
   static audit_(artifacts) {
+    /** @type {Array<string>} */
     let offlineFailures = [];
+    /** @type {Array<string>} */
     let offlineWarnings = [];
 
     return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {

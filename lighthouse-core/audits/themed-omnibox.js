@@ -20,7 +20,7 @@ const validColor = require('../lib/web-inspector').Color.parse;
 
 class ThemedOmnibox extends MultiCheckAudit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -33,6 +33,10 @@ class ThemedOmnibox extends MultiCheckAudit {
     };
   }
 
+  /**
+   * @param {LH.Artifacts['ThemeColor']} themeColorMeta
+   * @param {Array<string>} failures
+   */
   static assessMetaThemecolor(themeColorMeta, failures) {
     if (themeColorMeta === null) {
       failures.push('No `<meta name="theme-color">` tag found');
@@ -41,19 +45,28 @@ class ThemedOmnibox extends MultiCheckAudit {
     }
   }
 
+  /**
+   * @param {LH.Artifacts.ManifestValues} manifestValues
+   * @param {Array<string>} failures
+   */
   static assessManifest(manifestValues, failures) {
-    if (manifestValues.isParseFailure) {
+    if (manifestValues.isParseFailure && manifestValues.parseFailureReason) {
       failures.push(manifestValues.parseFailureReason);
       return;
     }
 
     const themeColorCheck = manifestValues.allChecks.find(i => i.id === 'hasThemeColor');
-    if (!themeColorCheck.passing) {
+    if (themeColorCheck && !themeColorCheck.passing) {
       failures.push(themeColorCheck.failureText);
     }
   }
 
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<{failures: Array<string>, manifestValues: LH.Artifacts.ManifestValues, themeColor: ?string}>}
+   */
   static audit_(artifacts) {
+    /** @type {Array<string>} */
     const failures = [];
 
     return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {

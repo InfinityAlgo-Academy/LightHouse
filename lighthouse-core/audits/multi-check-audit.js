@@ -13,18 +13,18 @@ const Audit = require('./audit');
 
 class MultiCheckAudit extends Audit {
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts) {
-    return Promise.resolve(this.audit_(artifacts)).then(result => this.createAuditResult(result));
+    return Promise.resolve(this.audit_(artifacts)).then(result => this.createAuditProduct(result));
   }
 
   /**
-   * @param {!{failures: !Array<!string>, themeColor: ?string, manifestValues: ?Object, }} result
-   * @return {!AuditResult}
+   * @param {{failures: Array<string>, warnings?: Array<string>, manifestValues?: LH.Artifacts.ManifestValues}} result
+   * @return {LH.Audit.Product}
    */
-  static createAuditResult(result) {
+  static createAuditProduct(result) {
     const extendedInfo = {
       value: result,
     };
@@ -51,12 +51,17 @@ class MultiCheckAudit extends Audit {
     };
   }
 
+  /* eslint-disable no-unused-vars */
+
   /**
-   * @param {!Artifacts} artifacts
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<{failures: Array<string>, warnings?: Array<string>, manifestValues?: LH.Artifacts.ManifestValues}>}
    */
-  static audit_() {
+  static audit_(artifacts) {
     throw new Error('audit_ unimplemented');
   }
+
+  /* eslint-enable no-unused-vars */
 }
 
 module.exports = MultiCheckAudit;
