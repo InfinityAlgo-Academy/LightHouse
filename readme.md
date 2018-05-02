@@ -220,10 +220,6 @@ cd lighthouse
 yarn
 yarn install-all
 yarn build-all
-
-# The CLI is authored in TypeScript and requires compilation.
-# If you need to make changes to the CLI, run the TS compiler in watch mode:
-# cd lighthouse-cli && yarn dev
 ```
 
 ### Run
