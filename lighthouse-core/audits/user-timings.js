@@ -7,9 +7,12 @@
 
 const Audit = require('./audit');
 
+/** @typedef {{name: string, isMark: true, args: LH.TraceEvent['args'], startTime: number}} MarkEvent */
+/** @typedef {{name: string, isMark: false, args: LH.TraceEvent['args'], startTime: number, endTime: number, duration: number}} MeasureEvent */
+
 class UserTimings extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -24,10 +27,11 @@ class UserTimings extends Audit {
   }
 
   /**
-   * @param {!Object} tabTrace
-   * @return {!Array<!UserTimingsExtendedInfo>}
+   * @param {LH.Artifacts.TraceOfTab} tabTrace
+   * @return {Array<MarkEvent|MeasureEvent>}
    */
   static filterTrace(tabTrace) {
+    /** @type {Array<MarkEvent|MeasureEvent>} */
     const userTimings = [];
     const measuresStartTimes = {};
 
@@ -69,6 +73,7 @@ class UserTimings extends Audit {
           args: ut.args,
           startTime: measuresStartTimes[ut.name],
           endTime: ut.ts,
+          duration: ut.ts - measuresStartTimes[ut.name],
         });
       }
     });
@@ -78,15 +83,15 @@ class UserTimings extends Audit {
       ut.startTime = (ut.startTime - tabTrace.navigationStartEvt.ts) / 1000;
       if (!ut.isMark) {
         ut.endTime = (ut.endTime - tabTrace.navigationStartEvt.ts) / 1000;
-        ut.duration = ut.endTime - ut.startTime;
+        ut.duration = ut.duration / 1000;
       }
     });
 
     return userTimings;
   }
 
-  /*
-   * @return {!Array<string>}
+  /**
+   * @return {Array<string>}
    */
   static get blacklistedPrefixes() {
     return ['goog_'];
@@ -94,16 +99,16 @@ class UserTimings extends Audit {
 
   /**
    * We remove mark/measures entered by third parties not of interest to the user
-   * @param {!UserTimingsExtendedInfo} artifacts
+   * @param {MarkEvent|MeasureEvent} evt
    * @return {boolean}
    */
-  static excludeBlacklisted(timing) {
-    return UserTimings.blacklistedPrefixes.every(prefix => !timing.name.startsWith(prefix));
+  static excludeBlacklisted(evt) {
+    return UserTimings.blacklistedPrefixes.every(prefix => !evt.name.startsWith(prefix));
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
@@ -139,7 +144,7 @@ class UserTimings extends Audit {
       return {
         // mark the audit as failed if there are user timings to display
         rawValue: userTimings.length === 0,
-        displayValue: userTimings.length,
+        displayValue: userTimings.length ? `${userTimings.length}` : '',
         extendedInfo: {
           value: userTimings,
         },

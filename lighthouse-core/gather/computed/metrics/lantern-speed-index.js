@@ -58,7 +58,7 @@ class SpeedIndex extends MetricArtifact {
   }
 
   /**
-   * @param {LH.Artifacts.MetricComputationData} data
+   * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.ComputedArtifacts} artifacts
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */

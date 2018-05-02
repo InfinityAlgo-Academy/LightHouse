@@ -15,7 +15,7 @@ const SCORING_MEDIAN = 10000;
 
 class PredictivePerf extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -31,11 +31,13 @@ class PredictivePerf extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {!AuditResult}
+   * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    /** @type {LH.Config.Settings} */
+    // @ts-ignore - TODO(bckenny): allow optional `throttling` settings
     const settings = {}; // Use default settings.
     const fcp = await artifacts.requestLanternFirstContentfulPaint({trace, devtoolsLog, settings});
     const fmp = await artifacts.requestLanternFirstMeaningfulPaint({trace, devtoolsLog, settings});

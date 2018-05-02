@@ -122,12 +122,12 @@ declare global {
       requestSpeedIndex(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
 
       // Lantern metrics.
-      requestLanternInteractive(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
-      requestLanternEstimatedInputLatency(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
-      requestLanternFirstContentfulPaint(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
-      requestLanternFirstCPUIdle(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
-      requestLanternFirstMeaningfulPaint(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
-      requestLanternSpeedIndex(data: LH.Artifacts.MetricComputationData): Promise<Artifacts.LanternMetric>;
+      requestLanternInteractive(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric>;
+      requestLanternEstimatedInputLatency(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric>;
+      requestLanternFirstContentfulPaint(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric>;
+      requestLanternFirstCPUIdle(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric>;
+      requestLanternFirstMeaningfulPaint(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric>;
+      requestLanternSpeedIndex(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric>;
     }
 
     module Artifacts {
@@ -307,12 +307,12 @@ declare global {
         devtoolsLog: DevtoolsLog;
         trace: Trace;
         settings: Config.Settings;
+        simulator?: LanternSimulator;
       }
 
       export interface MetricComputationData extends MetricComputationDataInput {
         networkRecords: Array<WebInspector.NetworkRequest>;
         traceOfTab: TraceOfTab;
-        simulator?: LanternSimulator;
       }
 
       export interface Metric {
@@ -329,6 +329,7 @@ declare global {
 
       export interface LanternMetric {
         timing: number;
+        timestamp?: never;
         optimisticEstimate: Gatherer.Simulation.Result
         pessimisticEstimate: Gatherer.Simulation.Result;
         optimisticGraph: Gatherer.Simulation.GraphNode;

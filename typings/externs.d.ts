@@ -123,6 +123,9 @@ declare global {
       [futureProps: string]: any;
     }
 
+    /**
+     * @see https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview
+     */
     export interface TraceEvent {
       name: string;
       cat: string;
@@ -144,6 +147,7 @@ declare global {
       tid: number;
       ts: number;
       dur: number;
+      ph: 'B'|'b'|'D'|'E'|'e'|'F'|'I'|'M'|'N'|'n'|'O'|'R'|'S'|'T'|'X';
     }
 
     export interface DevToolsJsonTarget {

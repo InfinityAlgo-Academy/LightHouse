@@ -16,7 +16,7 @@ const Util = require('../report/html/renderer/util');
  */
 class InteractiveMetric extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -43,9 +43,9 @@ class InteractiveMetric extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
+   * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {!Promise<!AuditResult>}
+   * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
@@ -56,7 +56,9 @@ class InteractiveMetric extends Audit {
     const extendedInfo = {
       timeInMs,
       timestamp: metricResult.timestamp,
+      // @ts-ignore - TODO(bckenny): make lantern metric/metric a discriminated union.
       optimistic: metricResult.optimisticEstimate && metricResult.optimisticEstimate.timeInMs,
+      // @ts-ignore
       pessimistic: metricResult.pessimisticEstimate && metricResult.pessimisticEstimate.timeInMs,
     };
 

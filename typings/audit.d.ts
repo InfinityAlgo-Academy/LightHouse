@@ -127,6 +127,19 @@ declare global {
     export interface Results {
       [metric: string]: Result;
     }
+
+    export type SimpleCriticalRequestNode = {
+      [id: string]: {
+        request: {
+          url: string;
+          startTime: number;
+          endTime: number;
+          _responseReceivedTime: number;
+          transferSize: number;
+        };
+        children: SimpleCriticalRequestNode;
+      }
+    }
   }
 }
 

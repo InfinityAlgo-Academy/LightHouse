@@ -36,8 +36,8 @@ class UsesRelPreconnectAudit extends Audit {
 
   /**
    * Check if record has valid timing
-   * @param {!LH.WebInspector.NetworkRequest} record
-   * @return {!boolean}
+   * @param {LH.WebInspector.NetworkRequest} record
+   * @return {boolean}
    */
   static hasValidTiming(record) {
     return record._timing && record._timing.connectEnd > 0 && record._timing.connectStart > 0;
@@ -45,8 +45,8 @@ class UsesRelPreconnectAudit extends Audit {
 
   /**
    * Check is the connection is already open
-   * @param {!LH.WebInspector.NetworkRequest} record
-   * @return {!boolean}
+   * @param {LH.WebInspector.NetworkRequest} record
+   * @return {boolean}
    */
   static hasAlreadyConnectedToOrigin(record) {
     return (
@@ -57,9 +57,9 @@ class UsesRelPreconnectAudit extends Audit {
 
   /**
    * Check is the connection has started before the socket idle time
-   * @param {!LH.WebInspector.NetworkRequest} record
-   * @param {!LH.WebInspector.NetworkRequest} mainResource
-   * @return {!boolean}
+   * @param {LH.WebInspector.NetworkRequest} record
+   * @param {LH.WebInspector.NetworkRequest} mainResource
+   * @return {boolean}
    */
   static socketStartTimeIsBelowThreshold(record, mainResource) {
     return Math.max(0, record.startTime - mainResource.endTime) < PRECONNECT_SOCKET_MAX_IDLE;
@@ -111,7 +111,7 @@ class UsesRelPreconnectAudit extends Audit {
         origins.set(securityOrigin, records);
       });
 
-    /** @type {Array<{url: string, type: 'ms', wastedMs: number}>}*/
+    /** @type {Array<{url: string, wastedMs: number}>}*/
     let results = [];
     origins.forEach(records => {
       // Sometimes requests are done simultaneous and the connection has not been made

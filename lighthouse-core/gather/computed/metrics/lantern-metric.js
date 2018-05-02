@@ -66,7 +66,7 @@ class LanternMetricArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {LH.Artifacts.MetricComputationData} data
+   * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.ComputedArtifacts} artifacts
    * @param {any=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
@@ -110,7 +110,7 @@ class LanternMetricArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {LH.Artifacts.MetricComputationData} data
+   * @param {LH.Artifacts.MetricComputationDataInput} data
    * @param {LH.ComputedArtifacts} computedArtifacts
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
