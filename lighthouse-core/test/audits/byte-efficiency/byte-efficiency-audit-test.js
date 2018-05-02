@@ -218,11 +218,41 @@ describe('Byte efficiency base audit', () => {
     let settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
     let result = await MockAudit.audit(artifacts, {settings});
     // expect modest savings
-    assert.equal(result.rawValue, 800);
+    assert.equal(result.rawValue, 1480);
 
     settings = {throttlingMethod: 'simulate', throttling: ultraSlowThrottling};
     result = await MockAudit.audit(artifacts, {settings});
     // expect lots of savings
     assert.equal(result.rawValue, 22350);
+  });
+
+  it('should allow overriding of computeWasteWithTTIGraph', async () => {
+    class MockAudit extends ByteEfficiencyAudit {
+      static audit_(artifacts, records) {
+        return {
+          results: records.map(record => ({url: record.url, wastedBytes: record.transferSize})),
+          headings: [],
+        };
+      }
+    }
+
+    class MockJustTTIAudit extends MockAudit {
+      static computeWasteWithTTIGraph(results, graph, simulator) {
+        return ByteEfficiencyAudit.computeWasteWithTTIGraph(results, graph, simulator,
+          {includeLoad: false});
+      }
+    }
+
+    const artifacts = Runner.instantiateComputedArtifacts();
+    artifacts.traces = {defaultPass: trace};
+    artifacts.devtoolsLogs = {defaultPass: devtoolsLog};
+
+    const modestThrottling = {rttMs: 150, throughputKbps: 1000, cpuSlowdownMultiplier: 2};
+    const settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
+    const result = await MockAudit.audit(artifacts, {settings});
+    const resultTti = await MockJustTTIAudit.audit(artifacts, {settings});
+    // expect more savings from default
+    assert.equal(result.rawValue, 1480);
+    assert.equal(resultTti.rawValue, 800);
   });
 });

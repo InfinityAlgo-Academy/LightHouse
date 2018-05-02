@@ -16,8 +16,7 @@ class Redirects extends Audit {
   static get meta() {
     return {
       name: 'redirects',
-      description: 'Avoids page redirects',
-      failureDescription: 'Has multiple page redirects',
+      description: 'Avoid multiple page redirects',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       helpText: 'Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/speed/docs/insights/AvoidRedirects).',
       requiredArtifacts: ['URL', 'devtoolsLogs', 'traces'],

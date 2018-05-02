@@ -636,7 +636,7 @@
       },
       "scoreDisplayMode": "numeric",
       "name": "redirects",
-      "description": "Avoids page redirects",
+      "description": "Avoid multiple page redirects",
       "helpText": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/speed/docs/insights/AvoidRedirects).",
       "details": {
         "type": "table",
@@ -2843,8 +2843,8 @@
       "scoreDisplayMode": "numeric",
       "informative": true,
       "name": "offscreen-images",
-      "description": "Offscreen images",
-      "helpText": "Consider lazy-loading offscreen and hidden images to improve page load speed and time to interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).",
+      "description": "Defer offscreen images",
+      "helpText": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).",
       "details": {
         "type": "table",
         "headings": [],
@@ -3111,7 +3111,7 @@
       "scoreDisplayMode": "numeric",
       "informative": true,
       "name": "uses-optimized-images",
-      "description": "Optimize images",
+      "description": "Efficiently encode images",
       "helpText": "Optimized images load faster and consume less cellular data. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/optimize-images).",
       "details": {
         "type": "table",

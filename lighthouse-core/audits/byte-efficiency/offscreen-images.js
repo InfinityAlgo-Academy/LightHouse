@@ -26,12 +26,12 @@ class OffscreenImages extends ByteEfficiencyAudit {
   static get meta() {
     return {
       name: 'offscreen-images',
-      description: 'Offscreen images',
+      description: 'Defer offscreen images',
       informative: true,
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       helpText:
-        'Consider lazy-loading offscreen and hidden images to improve page load speed ' +
-        'and time to interactive. ' +
+        'Consider lazy-loading offscreen and hidden images after all critical resources have ' +
+        'finished loading to lower time to interactive. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).',
       requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'traces', 'devtoolsLogs'],
     };
@@ -82,6 +82,21 @@ class OffscreenImages extends ByteEfficiencyAudit {
   }
 
   /**
+   * The default byte efficiency audit will report max(TTI, load), since lazy-loading offscreen
+   * images won't reduce the overall time and the wasted bytes are really only "wasted" for TTI,
+   * override the function to just look at TTI savings.
+   *
+   * @param {Array<LH.Audit.ByteEfficiencyResult>} results
+   * @param {LH.Gatherer.Simulation.GraphNode} graph
+   * @param {LH.Gatherer.Simulation.Simulator} simulator
+   * @return {number}
+   */
+  static computeWasteWithTTIGraph(results, graph, simulator) {
+    return ByteEfficiencyAudit.computeWasteWithTTIGraph(results, graph, simulator,
+      {includeLoad: false});
+  }
+
+  /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
@@ -117,11 +132,13 @@ class OffscreenImages extends ByteEfficiencyAudit {
       return results;
     }, new Map());
 
-    // TODO(phulce): move this to always use lantern
     const settings = context.settings;
     return artifacts.requestFirstCPUIdle({trace, devtoolsLog, settings}).then(firstInteractive => {
-      // @ts-ignore - see above TODO.
-      const ttiTimestamp = firstInteractive.timestamp / 1000000;
+      // The filter below is just to be extra safe that we exclude images that were loaded post-TTI.
+      // If we're in the Lantern case and `timestamp` isn't available, we just have to rely on the
+      // graph simulation doing the right thing.
+      const ttiTimestamp = firstInteractive.timestamp ? firstInteractive.timestamp / 1e6 : Infinity;
+
       const results = Array.from(resultsMap.values()).filter(item => {
         const isWasteful =
           item.wastedBytes > IGNORE_THRESHOLD_IN_BYTES &&

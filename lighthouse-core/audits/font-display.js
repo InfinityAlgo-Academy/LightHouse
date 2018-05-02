@@ -17,7 +17,7 @@ class FontDisplay extends Audit {
     return {
       name: 'font-display',
       description: 'All text remains visible during webfont loads',
-      failureDescription: 'Avoid invisible text while webfonts are loading',
+      failureDescription: 'Text is invisible while webfonts are loading',
       helpText: 'Leverage the font-display CSS feature to ensure text is user-visible while ' +
         'webfonts are loading. ' +
         '[Learn more](https://developers.google.com/web/updates/2016/02/font-display).',

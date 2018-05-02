@@ -7,6 +7,7 @@
 import * as _Node from '../lighthouse-core/lib/dependency-graph/node';
 import * as _NetworkNode from '../lighthouse-core/lib/dependency-graph/network-node';
 import * as _CPUNode from '../lighthouse-core/lib/dependency-graph/cpu-node';
+import * as _Simulator from '../lighthouse-core/lib/dependency-graph/simulator/simulator';
 import * as Driver from '../lighthouse-core/gather/driver';
 
 declare global {
@@ -31,6 +32,7 @@ declare global {
       export type GraphNode = InstanceType<typeof _Node>;
       export type GraphNetworkNode = InstanceType<typeof _NetworkNode>;
       export type GraphCPUNode = InstanceType<typeof _CPUNode>;
+      export type Simulator = InstanceType<typeof _Simulator>;
 
       export interface MetricCoefficients {
         intercept: number;

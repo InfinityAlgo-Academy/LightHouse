@@ -164,6 +164,8 @@ module.exports = [
         },
       },
       'efficient-animated-content': {
+        score: '<1',
+        rawValue: '>2000',
         extendedInfo: {
           value: {
             wastedKb: 666,

@@ -99,15 +99,20 @@ class UnusedBytes extends Audit {
   }
 
   /**
-   * Computes the estimated effect of all the byte savings on the last long task
-   * in the provided graph.
+   * Computes the estimated effect of all the byte savings on the maximum of the following:
+   *
+   * - end time of the last long task in the provided graph
+   * - (if includeLoad is true or not provided) end time of the last node in the graph
    *
    * @param {Array<LH.Audit.ByteEfficiencyResult>} results The array of byte savings results per resource
    * @param {Node} graph
    * @param {Simulator} simulator
+   * @param {{includeLoad?: boolean}=} options
    * @return {number}
    */
-  static computeWasteWithTTIGraph(results, graph, simulator) {
+  static computeWasteWithTTIGraph(results, graph, simulator, options) {
+    options = Object.assign({includeLoad: true}, options);
+
     const simulationBeforeChanges = simulator.simulate(graph);
     /** @type {Map<LH.Audit.ByteEfficiencyResult['url'], LH.Audit.ByteEfficiencyResult>} */
     const resultsByUrl = new Map();
@@ -142,14 +147,15 @@ class UnusedBytes extends Audit {
       networkNode.record._transferSize = originalTransferSize;
     });
 
-    const savingsOnTTI = Math.max(
-      Interactive.getLastLongTaskEndTime(simulationBeforeChanges.nodeTimings) -
-        Interactive.getLastLongTaskEndTime(simulationAfterChanges.nodeTimings),
-      0
-    );
+    const savingsOnOverallLoad = simulationBeforeChanges.timeInMs - simulationAfterChanges.timeInMs;
+    const savingsOnTTI = Interactive.getLastLongTaskEndTime(simulationBeforeChanges.nodeTimings) -
+      Interactive.getLastLongTaskEndTime(simulationAfterChanges.nodeTimings);
+
+    let savings = savingsOnTTI;
+    if (options.includeLoad) savings = Math.max(savings, savingsOnOverallLoad);
 
     // Round waste to nearest 10ms
-    return Math.round(savingsOnTTI / 10) * 10;
+    return Math.round(Math.max(savings, 0) / 10) * 10;
   }
 
   /**
@@ -164,7 +170,7 @@ class UnusedBytes extends Audit {
 
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
     const wastedKb = Math.round(wastedBytes / KB_IN_BYTES);
-    const wastedMs = UnusedBytes.computeWasteWithTTIGraph(results, graph, simulator);
+    const wastedMs = this.computeWasteWithTTIGraph(results, graph, simulator);
 
     let displayValue = result.displayValue || '';
     if (typeof result.displayValue === 'undefined' && wastedBytes) {
