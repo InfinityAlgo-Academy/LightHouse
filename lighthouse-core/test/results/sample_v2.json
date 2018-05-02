@@ -112,7 +112,7 @@
       "helpText": "A fast page load over a 3G network ensures a good mobile user experience. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)."
     },
     "speed-index": {
-      "score": 0.67,
+      "score": 0.74,
       "displayValue": "4,420 ms",
       "rawValue": 4417,
       "scoreDisplayMode": "numeric",
@@ -267,7 +267,7 @@
       }
     },
     "first-cpu-idle": {
-      "score": 0.65,
+      "score": 0.72,
       "displayValue": "4,930 ms",
       "rawValue": 4927.278,
       "scoreDisplayMode": "numeric",
@@ -276,7 +276,7 @@
       "helpText": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive)."
     },
     "interactive": {
-      "score": 0.69,
+      "score": 0.78,
       "displayValue": "4,930 ms",
       "rawValue": 4927.278,
       "extendedInfo": {
@@ -4723,7 +4723,7 @@
         }
       ],
       "id": "performance",
-      "score": 0.63
+      "score": 0.69
     },
     {
       "name": "Progressive Web App",

@@ -28,10 +28,10 @@ class FirstMeaningfulPaint extends Audit {
    */
   static get defaultOptions() {
     return {
-      // 75th and 90th percentiles HTTPArchive -> 50 and 75
+      // 75th and 95th percentiles HTTPArchive -> median and PODR
       // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
-      // see https://www.desmos.com/calculator/trv2goqvsd
-      scorePODR: 1400,
+      // see https://www.desmos.com/calculator/2t1ugwykrl
+      scorePODR: 2000,
       scoreMedian: 4000,
     };
   }

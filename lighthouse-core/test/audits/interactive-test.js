@@ -31,7 +31,7 @@ describe('Performance: interactive audit', () => {
 
     const settings = {throttlingMethod: 'provided'};
     return Interactive.audit(artifacts, {options, settings}).then(output => {
-      assert.equal(output.score, 0.97);
+      assert.equal(output.score, 1);
       assert.equal(Math.round(output.rawValue), 1582);
       assert.equal(output.displayValue, '1,580\xa0ms');
     });
@@ -49,7 +49,7 @@ describe('Performance: interactive audit', () => {
 
     const settings = {throttlingMethod: 'provided'};
     return Interactive.audit(artifacts, {options, settings}).then(output => {
-      assert.equal(output.score, 0.89);
+      assert.equal(output.score, 0.97);
       assert.equal(Math.round(output.rawValue), 2712);
       assert.equal(output.displayValue, '2,710\xa0ms');
     });

@@ -34,10 +34,10 @@ class InteractiveMetric extends Audit {
    */
   static get defaultOptions() {
     return {
-      // 75th and 90th percentiles HTTPArchive -> 50 and 75
+      // 75th and 95th percentiles HTTPArchive -> median and PODR
       // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
-      // see https://www.desmos.com/calculator/dohd3b0sbr
-      scorePODR: 1200,
+      // see https://www.desmos.com/calculator/5xgy0pyrbp
+      scorePODR: 2900,
       scoreMedian: 7300,
     };
   }

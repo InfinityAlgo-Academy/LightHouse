@@ -1,10 +1,10 @@
 # Goal
 The goal of this document is to explain how scoring works in Lighthouse and what to do to improve your Lighthouse scores across the four sections of the report.
 
-Note 1: if you want a **nice spreadsheet** version of this doc to understand weighting and scoring, check out the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=0)
+Note 1: if you want a **nice spreadsheet** version of this doc to understand weighting and scoring, check out the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=0)
 
 ![alt text](https://user-images.githubusercontent.com/39191/32397461-2d20c87a-c0a7-11e7-99d8-61576113a710.png)
-*Screenshot of the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=0)*
+*Screenshot of the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=0)*
 
 Note 2: if you receive a **score of 0** in any Lighthouse category, that usually indicates an error on our part. Please file an [issue](https://github.com/GoogleChrome/lighthouse/issues) so our team can look into it.
 
@@ -58,7 +58,7 @@ The PWA score is calculated based on the [Baseline PWA checklist](https://develo
 
 # Accessibility
 ### How is the accessibility score calculated?
-The accessibility score is a weighted average of all the different audits (the weights for each audit can be found in [the scoring spreadsheet](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=0)). Each audit is a pass/fail (meaning there is no room for partial points for getting an audit half-right). For example, that means if half your buttons have screenreader friendly names, and half don't, you don't get "half" of the weighted average-you get a 0 because it needs to be implemented *throughout* the page.
+The accessibility score is a weighted average of all the different audits (the weights for each audit can be found in [the scoring spreadsheet](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=0)). Each audit is a pass/fail (meaning there is no room for partial points for getting an audit half-right). For example, that means if half your buttons have screenreader friendly names, and half don't, you don't get "half" of the weighted average-you get a 0 because it needs to be implemented *throughout* the page.
 
 # Best Practices
 ### How is the Best Practices score calculated?
