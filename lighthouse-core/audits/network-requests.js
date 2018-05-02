@@ -10,7 +10,7 @@ const URL = require('../lib/url-shim');
 
 class NetworkRequests extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -23,8 +23,8 @@ class NetworkRequests extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
@@ -41,7 +41,7 @@ class NetworkRequests extends Audit {
           endTime: (record.endTime - earliestStartTime) * 1000,
           transferSize: record.transferSize,
           statusCode: record.statusCode,
-          mimeType: record.mimeType,
+          mimeType: record._mimeType,
           resourceType: record._resourceType && record._resourceType._name,
         };
       });

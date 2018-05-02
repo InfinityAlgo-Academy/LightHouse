@@ -9,7 +9,7 @@ const Audit = require('./audit');
 
 class ManifestShortNameLength extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -25,8 +25,8 @@ class ManifestShortNameLength extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts) {
     return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {
@@ -36,17 +36,17 @@ class ManifestShortNameLength extends Audit {
         };
       }
 
-      const hasShortName = manifestValues.allChecks.find(i => i.id === 'hasShortName').passing;
-      if (!hasShortName) {
+      const hasShortName = manifestValues.allChecks.find(i => i.id === 'hasShortName');
+      if (!hasShortName || !hasShortName.passing) {
         return {
           rawValue: false,
           debugString: 'No short_name found in manifest.',
         };
       }
 
-      const isShortEnough = manifestValues.allChecks.find(i => i.id === 'shortNameLength').passing;
+      const isShortEnough = manifestValues.allChecks.find(i => i.id === 'shortNameLength');
       return {
-        rawValue: isShortEnough,
+        rawValue: !!isShortEnough && isShortEnough.passing,
       };
     });
   }

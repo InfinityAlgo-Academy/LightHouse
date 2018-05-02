@@ -17,11 +17,10 @@ const {taskToGroup} = require('../lib/task-groups');
 
 class MainThreadWorkBreakdown extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'mainthread-work-breakdown',
       description: 'Minimizes main thread work',
       failureDescription: 'Has significant main thread work',
@@ -44,8 +43,8 @@ class MainThreadWorkBreakdown extends Audit {
   }
 
   /**
-   * @param {!DevtoolsTimelineModel} timelineModel
-   * @return {!Map<string, number>}
+   * @param {LH.Artifacts.DevtoolsTimelineModel} timelineModel
+   * @return {Map<string, number>}
    */
   static getExecutionTimingsByCategory(timelineModel) {
     const bottomUpByName = timelineModel.bottomUpGroupBy('EventName');
@@ -58,9 +57,9 @@ class MainThreadWorkBreakdown extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
+   * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {!AuditResult}
+   * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts, context) {
     const trace = artifacts.traces[MainThreadWorkBreakdown.DEFAULT_PASS];
@@ -94,6 +93,7 @@ class MainThreadWorkBreakdown extends Audit {
           {key: 'category', itemType: 'text', text: 'Work'},
           {key: 'duration', itemType: 'text', text: 'Time spent'},
         ];
+        // @ts-ignore - stableSort added to Array by WebInspector
         results.stableSort((a, b) => categoryTotals[b.group] - categoryTotals[a.group]);
         const tableDetails = MainThreadWorkBreakdown.makeTableDetails(headings, results);
 

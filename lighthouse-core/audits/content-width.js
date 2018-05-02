@@ -9,7 +9,7 @@ const Audit = require('./audit');
 
 class ContentWidth extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -24,8 +24,8 @@ class ContentWidth extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
     const viewportWidth = artifacts.ViewportDimensions.innerWidth;
@@ -38,6 +38,11 @@ class ContentWidth extends Audit {
     };
   }
 
+  /**
+   * @param {boolean} match
+   * @param {LH.Artifacts.ViewportDimensions} artifact
+   * @return {string}
+   */
   static createDebugString(match, artifact) {
     if (match) {
       return '';

@@ -10,7 +10,7 @@ const Util = require('../report/html/renderer/util');
 
 class EstimatedInputLatency extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {

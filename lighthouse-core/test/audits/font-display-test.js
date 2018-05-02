@@ -50,12 +50,12 @@ describe('Performance: Font Display audit', () => {
     return Audit.audit(getArtifacts([
       {
         url: openSansFont.src[0],
-        _endTime: 3, _startTime: 1,
+        endTime: 3, startTime: 1,
         _resourceType: WebInspector.resourceTypes.Font,
       },
       {
         url: openSansFontBold.src[0],
-        _endTime: 3, _startTime: 1,
+        endTime: 3, startTime: 1,
         _resourceType: WebInspector.resourceTypes.Font,
       },
     ], webFonts)).then(result => {
@@ -77,12 +77,12 @@ describe('Performance: Font Display audit', () => {
     return Audit.audit(getArtifacts([
       {
         url: openSansFont.src[0],
-        _endTime: 3, _startTime: 1,
+        endTime: 3, startTime: 1,
         _resourceType: WebInspector.resourceTypes.Font,
       },
       {
         url: openSansFontBold.src[0],
-        _endTime: 3, _startTime: 1,
+        endTime: 3, startTime: 1,
         _resourceType: WebInspector.resourceTypes.Font,
       },
     ], webFonts)).then(result => {

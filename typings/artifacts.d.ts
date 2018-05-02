@@ -99,7 +99,8 @@ declare global {
     }
 
     export interface ComputedArtifacts {
-      requestDevtoolsTimelineModel(trace: Trace): Promise<{filmStripModel(): Artifacts.DevtoolsTimelineFilmStripModel}>;
+      requestCriticalRequestChains(data: {devtoolsLog: DevtoolsLog, URL: Artifacts['URL']}): Promise<Artifacts.CriticalRequestNode>;
+      requestDevtoolsTimelineModel(trace: Trace): Promise<Artifacts.DevtoolsTimelineModel>;
       requestLoadSimulator(data: {devtoolsLog: DevtoolsLog, settings: Config.Settings}): Promise<LanternSimulator>;
       requestMainResource(data: {devtoolsLog: DevtoolsLog, URL: Artifacts['URL']}): Promise<WebInspector.NetworkRequest>;
       requestManifestValues(manifest: LH.Artifacts['Manifest']): Promise<LH.Artifacts.ManifestValues>;
@@ -276,6 +277,20 @@ declare global {
           imageDataPromise(): Promise<string>;
           timestamp: number;
         }>;
+      }
+
+      export interface DevtoolsTimelineModelNode {
+        children: Map<string, DevtoolsTimelineModelNode>;
+        selfTime: number;
+        // SDK.TracingModel.Event
+        event: {
+          name: string;
+        };
+      }
+
+      export interface DevtoolsTimelineModel {
+        filmStripModel(): Artifacts.DevtoolsTimelineFilmStripModel;
+        bottomUpGroupBy(grouping: string): DevtoolsTimelineModelNode;
       }
 
       export interface ManifestValues {

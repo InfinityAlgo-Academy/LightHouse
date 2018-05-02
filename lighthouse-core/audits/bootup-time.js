@@ -13,11 +13,10 @@ const THRESHOLD_IN_MS = 10;
 
 class BootupTime extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      category: 'Performance',
       name: 'bootup-time',
       description: 'JavaScript boot-up time',
       failureDescription: 'JavaScript boot-up time is too high',
@@ -42,11 +41,13 @@ class BootupTime extends Audit {
   }
 
   /**
-   * @param {DevtoolsTimelineModel} timelineModel
-   * @return {!Map<string, Number>}
+   * Returns a mapping of URL to counts of event groups.
+   * @param {LH.Artifacts.DevtoolsTimelineModel} timelineModel
+   * @return {Map<string, Object<string, number>>}
    */
   static getExecutionTimingsByURL(timelineModel) {
     const bottomUpByURL = timelineModel.bottomUpGroupBy('URL');
+    /** @type {Map<string, Object<string, number>>} */
     const result = new Map();
 
     bottomUpByURL.children.forEach((perUrlNode, url) => {
@@ -55,6 +56,7 @@ class BootupTime extends Audit {
         return;
       }
 
+      /** @type {Object<string, number>} */
       const taskGroups = {};
       perUrlNode.children.forEach((perTaskPerUrlNode) => {
         // eventStyle() returns a string like 'Evaluate Script'
@@ -71,15 +73,16 @@ class BootupTime extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
+   * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {!AuditResult}
+   * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts, context) {
     const trace = artifacts.traces[BootupTime.DEFAULT_PASS];
     return artifacts.requestDevtoolsTimelineModel(trace).then(devtoolsTimelineModel => {
       const executionTimings = BootupTime.getExecutionTimingsByURL(devtoolsTimelineModel);
       let totalBootupTime = 0;
+      /** @type {Object<string, Object<string, number>>} */
       const extendedInfo = {};
 
       const headings = [

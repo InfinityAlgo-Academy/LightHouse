@@ -22,7 +22,7 @@ const MAXIMUM_TTI = 10 * 1000;
 
 class LoadFastEnough4Pwa extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -39,7 +39,7 @@ class LoadFastEnough4Pwa extends Audit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {LH.AuditResult}
+   * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];

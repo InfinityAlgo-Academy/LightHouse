@@ -9,7 +9,7 @@ const Audit = require('./audit');
 
 class Metrics extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -22,8 +22,9 @@ class Metrics extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
@@ -59,7 +60,9 @@ class Metrics extends Audit {
     }
 
     // Include all timestamps of interest from trace of tab
-    for (const [traceEventName, timing] of Object.entries(traceOfTab.timings)) {
+    const timingsEntries = /** @type {Array<[keyof LH.Artifacts.TraceTimes, number]>} */
+      (Object.entries(traceOfTab.timings));
+    for (const [traceEventName, timing] of timingsEntries) {
       const uppercased = traceEventName.slice(0, 1).toUpperCase() + traceEventName.slice(1);
       const metricName = `observed${uppercased}`;
       const timestamp = traceOfTab.timestamps[traceEventName];

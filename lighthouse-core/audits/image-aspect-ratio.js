@@ -9,6 +9,7 @@
  *   audit will list all images that don't match with their display size
  *   aspect ratio.
  */
+// @ts-nocheck - TODO(bckenny): fix optional width/height in ImageUsage artifact
 'use strict';
 
 const Audit = require('./audit');
@@ -18,7 +19,7 @@ const THRESHOLD = 0.05;
 
 class ImageAspectRatio extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -31,8 +32,8 @@ class ImageAspectRatio extends Audit {
   }
 
   /**
-   * @param {!Object} image
-   * @return {?Object}
+   * @param {Required<LH.Artifacts.SingleImageUsage>} image
+   * @return {Error|{url: string, displayedAspectRatio: string, actualAspectRatio: string, doRatiosMatch: boolean}}
    */
   static computeAspectRatios(image) {
     const url = URL.elideDataURI(image.src);
@@ -56,13 +57,14 @@ class ImageAspectRatio extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
     const images = artifacts.ImageUsage;
 
     let debugString;
+    /** @type {Array<{url: string, displayedAspectRatio: string, actualAspectRatio: string, doRatiosMatch: boolean}>} */
     const results = [];
     images.filter(image => {
       // - filter out images that don't have following properties:
@@ -74,7 +76,8 @@ class ImageAspectRatio extends Audit {
         image.height &&
         !image.usesObjectFit;
     }).forEach(image => {
-      const processed = ImageAspectRatio.computeAspectRatios(image);
+      const wellDefinedImage = /** @type {Required<LH.Artifacts.SingleImageUsage>} */ (image);
+      const processed = ImageAspectRatio.computeAspectRatios(wellDefinedImage);
       if (processed instanceof Error) {
         debugString = processed.message;
         return;
