@@ -4571,17 +4571,17 @@
       "audits": [
         {
           "id": "first-contentful-paint",
-          "weight": 5,
-          "group": "perf-metric"
-        },
-        {
-          "id": "first-meaningful-paint",
           "weight": 3,
           "group": "perf-metric"
         },
         {
-          "id": "first-cpu-idle",
-          "weight": 5,
+          "id": "first-meaningful-paint",
+          "weight": 1,
+          "group": "perf-metric"
+        },
+        {
+          "id": "speed-index",
+          "weight": 4,
           "group": "perf-metric"
         },
         {
@@ -4590,13 +4590,13 @@
           "group": "perf-metric"
         },
         {
-          "id": "speed-index",
-          "weight": 1,
+          "id": "first-cpu-idle",
+          "weight": 2,
           "group": "perf-metric"
         },
         {
           "id": "estimated-input-latency",
-          "weight": 1,
+          "weight": 0,
           "group": "perf-metric"
         },
         {
@@ -4723,7 +4723,7 @@
         }
       ],
       "id": "performance",
-      "score": 0.62
+      "score": 0.63
     },
     {
       "name": "Progressive Web App",
@@ -5240,8 +5240,5 @@
       "title": "Additional items to manually check",
       "description": "Run these additional validators on your site to check additional SEO best practices."
     }
-  },
-  "timing": {
-    "total": 667
   }
 }

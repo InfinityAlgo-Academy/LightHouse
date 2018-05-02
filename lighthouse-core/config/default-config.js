@@ -265,12 +265,13 @@ module.exports = {
       name: 'Performance',
       description: 'These encapsulate your web app\'s current performance and opportunities to improve it.',
       audits: [
-        {id: 'first-contentful-paint', weight: 5, group: 'perf-metric'},
-        {id: 'first-meaningful-paint', weight: 3, group: 'perf-metric'},
-        {id: 'first-cpu-idle', weight: 5, group: 'perf-metric'},
+        {id: 'first-contentful-paint', weight: 3, group: 'perf-metric'},
+        {id: 'first-meaningful-paint', weight: 1, group: 'perf-metric'},
+        {id: 'speed-index', weight: 4, group: 'perf-metric'},
         {id: 'interactive', weight: 5, group: 'perf-metric'},
-        {id: 'speed-index', weight: 1, group: 'perf-metric'},
-        {id: 'estimated-input-latency', weight: 1, group: 'perf-metric'},
+        {id: 'first-cpu-idle', weight: 2, group: 'perf-metric'},
+        {id: 'estimated-input-latency', weight: 0, group: 'perf-metric'},
+
         {id: 'render-blocking-resources', weight: 0, group: 'perf-hint'},
         {id: 'uses-responsive-images', weight: 0, group: 'perf-hint'},
         {id: 'offscreen-images', weight: 0, group: 'perf-hint'},
