@@ -9,7 +9,6 @@ const RawProtocol = require('../../../lighthouse-core/gather/connections/raw');
 const Runner = require('../../../lighthouse-core/runner');
 const Config = require('../../../lighthouse-core/config/config');
 const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
-const fastConfig = require('../../../lighthouse-core/config/fast-config.js');
 const log = require('lighthouse-logger');
 
 /**
@@ -22,7 +21,7 @@ const log = require('lighthouse-logger');
 window.runLighthouseForConnection = function(
     connection, url, options, categoryIDs,
     updateBadgeFn = function() { }) {
-  const config = options && options.fastMode ? new Config(fastConfig, options.flags) : new Config({
+  const config = new Config({
     extends: 'lighthouse:default',
     settings: {onlyCategories: categoryIDs},
   }, options.flags);

@@ -74,6 +74,7 @@ declare global {
       listAllAudits: boolean;
       listTraceCategories: boolean;
       configPath?: string;
+      preset?: 'full'|'mixed-content'|'perf';
       perf: boolean;
       mixedContent: boolean;
       verbose: boolean;

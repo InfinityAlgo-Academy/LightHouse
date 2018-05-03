@@ -45,7 +45,7 @@ declare global {
         blockedUrlPatterns?: string[];
         blankPage?: string;
         blankDuration?: number;
-        gatherers: GathererJson[];
+        gatherers?: GathererJson[];
       }
 
       export type GathererJson = {

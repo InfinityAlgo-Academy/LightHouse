@@ -11,10 +11,6 @@ module.exports = {
   // (2) Re-load page but attempt to upgrade each request to HTTPS.
   passes: [{
     passName: 'defaultPass',
-    // overwrite the throttling and load wait parameters to regular pass defaults
-    pauseAfterLoadMs: 0,
-    networkQuietThresholdMs: 0,
-    cpuQuietThresholdMs: 0,
     gatherers: ['url'],
   }, {
     passName: 'mixedContentPass',

@@ -63,7 +63,7 @@ const SMOKETESTS = [{
   id: 'offline',
   expectations: 'offline-local/offline-expectations.js',
   config: smokehouseDir + 'offline-config.js',
-  batch: 'parallel-second',
+  batch: 'offline',
 }, {
   id: 'byte',
   expectations: 'byte-efficiency/expectations.js',
@@ -77,7 +77,7 @@ const SMOKETESTS = [{
 }, {
   id: 'tti',
   expectations: 'tricky-tti/expectations.js',
-  config: 'lighthouse-core/config/default-config.js',
+  config: 'lighthouse-core/config/perf-config.js',
   batch: 'parallel-second',
 }];
 

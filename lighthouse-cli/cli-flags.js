@@ -58,7 +58,7 @@ function getFlags(manualArgv) {
       .group(
         [
           'save-assets', 'list-all-audits', 'list-trace-categories', 'additional-trace-categories',
-          'config-path', 'chrome-flags', 'perf', 'mixed-content', 'port', 'hostname',
+          'config-path', 'preset', 'chrome-flags', 'port', 'hostname',
           'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
           'only-audits', 'only-categories', 'skip-audits',
         ],
@@ -86,11 +86,10 @@ function getFlags(manualArgv) {
         'additional-trace-categories':
             'Additional categories to capture with the trace (comma-delimited).',
         'config-path': 'The path to the config JSON.',
-        'mixed-content': 'Use the mixed-content auditing configuration.',
+        'preset': 'Use a built-in configuration.',
         'chrome-flags':
             `Custom flags to pass to Chrome (space-delimited). For a full list of flags, see http://bit.ly/chrome-flags
             Additionally, use the CHROME_PATH environment variable to use a specific Chrome binary. Requires Chromium version 54.0 or later. If omitted, any detected Chrome Canary or Chrome stable will be used.`,
-        'perf': 'Use a performance-test-only configuration',
         'hostname': 'The hostname to use for the debugging protocol.',
         'port': 'The port to use for the debugging protocol. Use 0 for a random port',
         'max-wait-for-load':
@@ -117,11 +116,11 @@ function getFlags(manualArgv) {
       // boolean values
       .boolean([
         'disable-storage-reset', 'disable-device-emulation', 'save-assets', 'list-all-audits',
-        'list-trace-categories', 'perf', 'view', 'verbose', 'quiet', 'help',
-        'mixed-content',
+        'list-trace-categories', 'view', 'verbose', 'quiet', 'help',
       ])
       .choices('output', printer.getValidOutputOptions())
       .choices('throttling-method', ['devtools', 'provided', 'simulate'])
+      .choices('preset', ['full', 'perf', 'mixed-content'])
       // force as an array
       // note MUST use camelcase versions or only the kebab-case version will be forced
       .array('blockedUrlPatterns')

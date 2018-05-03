@@ -14,8 +14,6 @@ const getFlags = require('./cli-flags.js').getFlags;
 const runLighthouse = require('./run').runLighthouse;
 
 const log = require('lighthouse-logger');
-const perfOnlyConfig = require('../lighthouse-core/config/perf-config.js');
-const mixedContentConfig = require('../lighthouse-core/config/mixed-content-config.js');
 // @ts-ignore
 const pkg = require('../package.json');
 const Sentry = require('../lighthouse-core/lib/sentry');
@@ -54,12 +52,13 @@ if (cliFlags.configPath) {
   // Resolve the config file path relative to where cli was called.
   cliFlags.configPath = path.resolve(process.cwd(), cliFlags.configPath);
   config = /** @type {LH.Config.Json} */ (require(cliFlags.configPath));
-} else if (cliFlags.perf) {
-  config = perfOnlyConfig;
-} else if (cliFlags.mixedContent) {
-  config = mixedContentConfig;
-  // The mixed-content audits require headless Chrome (https://crbug.com/764505).
-  cliFlags.chromeFlags = `${cliFlags.chromeFlags} --headless`;
+} else if (cliFlags.preset) {
+  if (cliFlags.preset === 'mixed-content') {
+    // The mixed-content audits require headless Chrome (https://crbug.com/764505).
+    cliFlags.chromeFlags = `${cliFlags.chromeFlags} --headless`;
+  }
+
+  config = require(`../lighthouse-core/config/${cliFlags.preset}-config.js`);
 }
 
 // set logging preferences

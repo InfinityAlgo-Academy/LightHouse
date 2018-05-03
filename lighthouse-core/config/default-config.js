@@ -15,9 +15,9 @@ module.exports = {
     passName: 'defaultPass',
     recordTrace: true,
     useThrottling: true,
-    pauseAfterLoadMs: 5250,
-    networkQuietThresholdMs: 5250,
-    cpuQuietThresholdMs: 5250,
+    pauseAfterLoadMs: 1000,
+    networkQuietThresholdMs: 1000,
+    cpuQuietThresholdMs: 1000,
     gatherers: [
       'url',
       'scripts',

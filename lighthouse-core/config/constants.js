@@ -30,7 +30,7 @@ const throttling = {
 const defaultSettings = {
   output: 'json',
   maxWaitForLoad: 45 * 1000,
-  throttlingMethod: 'devtools',
+  throttlingMethod: 'simulate',
   throttling: throttling.mobile3G,
   auditMode: false,
   gatherMode: false,
@@ -60,8 +60,15 @@ const defaultPassConfig = {
   gatherers: [],
 };
 
+const nonSimulatedPassConfigOverrides = {
+  pauseAfterLoadMs: 5250,
+  networkQuietThresholdMs: 5250,
+  cpuQuietThresholdMs: 5250,
+};
+
 module.exports = {
   throttling,
   defaultSettings,
   defaultPassConfig,
+  nonSimulatedPassConfigOverrides,
 };
