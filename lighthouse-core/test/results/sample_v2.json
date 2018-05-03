@@ -4728,6 +4728,7 @@
     {
       "name": "Progressive Web App",
       "description": "These checks validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).",
+      "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
       "audits": [
         {
           "id": "service-worker",
@@ -4775,18 +4776,15 @@
         },
         {
           "id": "pwa-cross-browser",
-          "weight": 0,
-          "group": "manual-pwa-checks"
+          "weight": 0
         },
         {
           "id": "pwa-page-transitions",
-          "weight": 0,
-          "group": "manual-pwa-checks"
+          "weight": 0
         },
         {
           "id": "pwa-each-page-has-url",
-          "weight": 0,
-          "group": "manual-pwa-checks"
+          "weight": 0
         }
       ],
       "id": "pwa",
@@ -4795,6 +4793,7 @@
     {
       "name": "Accessibility",
       "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
+      "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
       "audits": [
         {
           "id": "accesskeys",
@@ -4973,53 +4972,43 @@
         },
         {
           "id": "logical-tab-order",
-          "weight": 0,
-          "group": "manual-a11y-checks"
+          "weight": 0
         },
         {
           "id": "focusable-controls",
-          "weight": 0,
-          "group": "manual-a11y-checks"
+          "weight": 0
         },
         {
           "id": "managed-focus",
-          "weight": 0,
-          "group": "manual-a11y-checks"
+          "weight": 0
         },
         {
           "id": "focus-traps",
-          "weight": 0,
-          "group": "manual-a11y-checks"
+          "weight": 0
         },
         {
           "id": "custom-controls-labels",
-          "weight": 0,
-          "group": "manual-a11y-checks"
+          "weight": 0
         },
         {
           "id": "custom-controls-roles",
-          "weight": 0,
-          "group": "manual-a11y-checks"
+          "weight": 0
         },
         {
           "id": "visual-order-follows-dom",
-          "weight": 0,
-          "group": "manual-a11y-checks"
+          "weight": 0
         },
         {
           "id": "offscreen-content-hidden",
-          "weight": 0,
-          "group": "manual-a11y-checks"
+          "weight": 0
         },
         {
           "id": "heading-levels",
-          "weight": 0,
-          "group": "manual-a11y-checks"
+          "weight": 0
         },
         {
           "id": "use-landmarks",
-          "weight": 0,
-          "group": "manual-a11y-checks"
+          "weight": 0
         }
       ],
       "id": "accessibility",
@@ -5100,6 +5089,7 @@
     {
       "name": "SEO",
       "description": "These checks ensure that your page is optimized for search engine results ranking. There are additional factors Lighthouse does not check that may affect your search ranking. [Learn more](https://support.google.com/webmasters/answer/35769).",
+      "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
       "audits": [
         {
           "id": "viewport",
@@ -5158,13 +5148,11 @@
         },
         {
           "id": "mobile-friendly",
-          "weight": 0,
-          "group": "manual-seo-checks"
+          "weight": 0
         },
         {
           "id": "structured-data",
-          "weight": 0,
-          "group": "manual-seo-checks"
+          "weight": 0
         }
       ],
       "id": "seo",
@@ -5216,14 +5204,6 @@
       "title": "Meta Tags Used Properly",
       "description": "These are opportunities to improve the user experience of your site."
     },
-    "manual-a11y-checks": {
-      "title": "Additional items to manually check",
-      "description": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review)."
-    },
-    "manual-pwa-checks": {
-      "title": "Additional items to manually check",
-      "description": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually."
-    },
     "seo-mobile": {
       "title": "Mobile Friendly",
       "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
@@ -5235,10 +5215,6 @@
     "seo-crawl": {
       "title": "Crawling and Indexing",
       "description": "To appear in search results, crawlers need access to your app."
-    },
-    "manual-seo-checks": {
-      "title": "Additional items to manually check",
-      "description": "Run these additional validators on your site to check additional SEO best practices."
     }
   }
 }

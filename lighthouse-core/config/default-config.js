@@ -232,16 +232,6 @@ module.exports = {
       title: 'Meta Tags Used Properly',
       description: 'These are opportunities to improve the user experience of your site.',
     },
-    'manual-a11y-checks': {
-      title: 'Additional items to manually check',
-      description: 'These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).',
-    },
-    'manual-pwa-checks': {
-      title: 'Additional items to manually check',
-      description: 'These checks are required by the baseline ' +
-          '[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are ' +
-          'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.',
-    },
     'seo-mobile': {
       title: 'Mobile Friendly',
       description: 'Make sure your pages are mobile friendly so users don’t have to pinch or zoom ' +
@@ -254,10 +244,6 @@ module.exports = {
     'seo-crawl': {
       title: 'Crawling and Indexing',
       description: 'To appear in search results, crawlers need access to your app.',
-    },
-    'manual-seo-checks': {
-      title: 'Additional items to manually check',
-      description: 'Run these additional validators on your site to check additional SEO best practices.',
     },
   },
   categories: {
@@ -302,6 +288,9 @@ module.exports = {
     'pwa': {
       name: 'Progressive Web App',
       description: 'These checks validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).',
+      manualDescription: 'These checks are required by the baseline ' +
+          '[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are ' +
+          'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.',
       audits: [
         {id: 'service-worker', weight: 1},
         {id: 'works-offline', weight: 1},
@@ -314,14 +303,16 @@ module.exports = {
         {id: 'themed-omnibox', weight: 1},
         {id: 'viewport', weight: 1},
         {id: 'content-width', weight: 1},
-        {id: 'pwa-cross-browser', weight: 0, group: 'manual-pwa-checks'},
-        {id: 'pwa-page-transitions', weight: 0, group: 'manual-pwa-checks'},
-        {id: 'pwa-each-page-has-url', weight: 0, group: 'manual-pwa-checks'},
+        // Manual audits
+        {id: 'pwa-cross-browser', weight: 0},
+        {id: 'pwa-page-transitions', weight: 0},
+        {id: 'pwa-each-page-has-url', weight: 0},
       ],
     },
     'accessibility': {
       name: 'Accessibility',
       description: 'These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.',
+      manualDescription: 'These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).',
       audits: [
         {id: 'accesskeys', weight: 1, group: 'a11y-correct-attributes'},
         {id: 'aria-allowed-attr', weight: 3, group: 'a11y-aria'},
@@ -358,16 +349,17 @@ module.exports = {
         {id: 'valid-lang', weight: 1, group: 'a11y-language'},
         {id: 'video-caption', weight: 4, group: 'a11y-describe-contents'},
         {id: 'video-description', weight: 3, group: 'a11y-describe-contents'},
-        {id: 'logical-tab-order', weight: 0, group: 'manual-a11y-checks'},
-        {id: 'focusable-controls', weight: 0, group: 'manual-a11y-checks'},
-        {id: 'managed-focus', weight: 0, group: 'manual-a11y-checks'},
-        {id: 'focus-traps', weight: 0, group: 'manual-a11y-checks'},
-        {id: 'custom-controls-labels', weight: 0, group: 'manual-a11y-checks'},
-        {id: 'custom-controls-roles', weight: 0, group: 'manual-a11y-checks'},
-        {id: 'visual-order-follows-dom', weight: 0, group: 'manual-a11y-checks'},
-        {id: 'offscreen-content-hidden', weight: 0, group: 'manual-a11y-checks'},
-        {id: 'heading-levels', weight: 0, group: 'manual-a11y-checks'},
-        {id: 'use-landmarks', weight: 0, group: 'manual-a11y-checks'},
+        // Manual audits
+        {id: 'logical-tab-order', weight: 0},
+        {id: 'focusable-controls', weight: 0},
+        {id: 'managed-focus', weight: 0},
+        {id: 'focus-traps', weight: 0},
+        {id: 'custom-controls-labels', weight: 0},
+        {id: 'custom-controls-roles', weight: 0},
+        {id: 'visual-order-follows-dom', weight: 0},
+        {id: 'offscreen-content-hidden', weight: 0},
+        {id: 'heading-levels', weight: 0},
+        {id: 'use-landmarks', weight: 0},
       ],
     },
     'best-practices': {
@@ -397,6 +389,7 @@ module.exports = {
       description: 'These checks ensure that your page is optimized for search engine results ranking. ' +
           'There are additional factors Lighthouse does not check that may affect your search ranking. ' +
           '[Learn more](https://support.google.com/webmasters/answer/35769).',
+      manualDescription: 'Run these additional validators on your site to check additional SEO best practices.',
       audits: [
         {id: 'viewport', weight: 1, group: 'seo-mobile'},
         {id: 'document-title', weight: 1, group: 'seo-content'},
@@ -409,8 +402,9 @@ module.exports = {
         {id: 'canonical', weight: 1, group: 'seo-content'},
         {id: 'font-size', weight: 1, group: 'seo-mobile'},
         {id: 'plugins', weight: 1, group: 'seo-content'},
-        {id: 'mobile-friendly', weight: 0, group: 'manual-seo-checks'},
-        {id: 'structured-data', weight: 0, group: 'manual-seo-checks'},
+        // Manual audits
+        {id: 'mobile-friendly', weight: 0},
+        {id: 'structured-data', weight: 0},
       ],
     },
   },

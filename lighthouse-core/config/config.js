@@ -51,23 +51,24 @@ function validateCategories(categories, audits, groups) {
     return;
   }
 
-  const auditIds = audits.map(audit => audit.implementation.meta.name);
   Object.keys(categories).forEach(categoryId => {
-    categories[categoryId].audits.forEach((audit, index) => {
-      if (!audit.id) {
+    categories[categoryId].audits.forEach((auditRef, index) => {
+      if (!auditRef.id) {
         throw new Error(`missing an audit id at ${categoryId}[${index}]`);
       }
 
-      if (!auditIds.includes(audit.id)) {
-        throw new Error(`could not find ${audit.id} audit for category ${categoryId}`);
+      const audit = audits.find(a => a.implementation.meta.name === auditRef.id);
+      if (!audit) {
+        throw new Error(`could not find ${auditRef.id} audit for category ${categoryId}`);
       }
 
-      if (categoryId === 'accessibility' && !audit.group) {
-        throw new Error(`${audit.id} accessibility audit does not have a group`);
+      const auditImpl = audit.implementation;
+      if (categoryId === 'accessibility' && !auditRef.group && !auditImpl.meta.manual) {
+        throw new Error(`${auditRef.id} accessibility audit does not have a group`);
       }
 
-      if (audit.group && !groups[audit.group]) {
-        throw new Error(`${audit.id} references unknown group ${audit.group}`);
+      if (auditRef.group && !groups[auditRef.group]) {
+        throw new Error(`${auditRef.id} references unknown group ${auditRef.group}`);
       }
     });
   });
