@@ -235,7 +235,7 @@ describe('Config', () => {
           ],
         },
       },
-    }), 'missing an audit id at pwa[0]');
+    }), /missing an audit id at pwa\[0\]/);
   });
 
   it('throws when an accessibility audit does not have a group', () => {
