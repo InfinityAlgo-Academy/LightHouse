@@ -16,21 +16,25 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-perf-metric', this.templateContext);
     const element = this.dom.find('.lh-perf-metric', tmpl);
     element.id = audit.result.name;
+    // FIXME(paulirish): currently this sets a 'lh-perf-metric--fail' class on error'd audits
     element.classList.add(`lh-perf-metric--${Util.calculateRating(audit.result.score)}`);
 
     const titleEl = this.dom.find('.lh-perf-metric__title', tmpl);
     titleEl.textContent = audit.result.description;
 
-    const valueEl = this.dom.find('.lh-perf-metric__value span', tmpl);
+    const valueEl = this.dom.find('.lh-perf-metric__value', tmpl);
     valueEl.textContent = audit.result.displayValue;
 
     const descriptionEl = this.dom.find('.lh-perf-metric__description', tmpl);
     descriptionEl.appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.helpText));
 
-    if (typeof audit.result.rawValue !== 'number') {
-      const debugStrEl = this.dom.createChildOf(element, 'div', 'lh-debug');
-      debugStrEl.textContent = audit.result.debugString || 'Report error: no metric information';
-      return element;
+    if (audit.result.error) {
+      element.classList.remove(`lh-perf-metric--fail`);
+      element.classList.add(`lh-perf-metric--error`);
+      descriptionEl.textContent = '';
+      valueEl.textContent = 'Error!';
+      const tooltip = this.dom.createChildOf(descriptionEl, 'span', 'lh-error-tooltip-content');
+      tooltip.textContent = audit.result.debugString || 'Report error: no metric information';
     }
 
     return element;

@@ -56,8 +56,8 @@
   --lh-audit-hgap: 12px;
   --lh-audit-group-vpadding: 12px;
   --lh-section-vpadding: 12px;
-  --pass-icon-url: url('data:image/svg+xml;utf8,<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path stroke="%23007F04" stroke-width="1.5" d="M1 5.75l3.5 3.5 6.5-6.5" fill="none" fill-rule="evenodd"/></svg>');
-  --fail-icon-url: url('data:image/svg+xml;utf8,<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><g stroke="%23EE1D0A" stroke-width="1.5" fill="none" fill-rule="evenodd"><path d="M2 10l8-8M10 10L2 2"/></g></svg>');
+  --pass-icon-url: url('data:image/svg+xml;utf8,<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path stroke="hsl(139, 70%, 30%)" stroke-width="1.5" d="M1 5.75l3.5 3.5 6.5-6.5" fill="none" fill-rule="evenodd"/></svg>');
+  --fail-icon-url: url('data:image/svg+xml;utf8,<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><g stroke="hsl(1, 73%, 45%)" stroke-width="1.5" fill="none" fill-rule="evenodd"><path d="M2 10l8-8M10 10L2 2"/></g></svg>');
   --collapsed-icon-url: url('data:image/svg+xml;utf8,<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="none" d="M0 0h12v12H0z"/><path fill="hsl(0, 0%, 60%)" d="M3 2l6 4-6 4z"/></g></svg>');
   --expanded-icon-url: url('data:image/svg+xml;utf8,<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="none" d="M0 0h12v12H0z"/><path fill="hsl(0, 0%, 60%)" d="M10 3L6 9 2 3z"/></g></svg>');
 }
@@ -202,29 +202,9 @@ summary {
   width: 16px;
 }
 
-.lh-audit--informative .lh-score__value {
-  color: var(--informative-color);
-  border-radius: 50%;
-  top: 3px;
-}
-
-.lh-audit--informative .lh-score__value::after {
+.lh-audit--informative .lh-score__value,
+.lh-audit--manual .lh-score__value {
   display: none;
-  background: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>info</title><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="hsl(218, 89%, 41%)"/></svg>') no-repeat 50% 50%;
-  background-size: var(--lh-score-icon-background-size);
-}
-
-.lh-audit--manual .lh-score__value::after {
-  background: url('data:image/svg+xml;utf8,<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><title>manual</title><path d="M2 5h8v2H2z" fill="hsl(0, 0%, 100%)" fill-rule="evenodd"/></svg>') no-repeat 50% 50%;
-  background-size: 18px;
-  background-color: var(--medium-75-gray);
-  width: 20px;
-  height:  20px;
-  position: relative;
-}
-
-.lh-score__value--binary {
-  color: transparent !important;
 }
 
 /* No icon for audits with number scores. */
@@ -261,6 +241,11 @@ summary {
 
 .lh-score__value--fail::after {
   background: var(--fail-icon-url) no-repeat center center / 12px 12px;
+}
+
+/* This must override the above styles */
+.lh-audit .lh-score__value--binary {
+  color: transparent;
 }
 
 .lh-audit__description, .lh-category-header__description  {
@@ -390,7 +375,7 @@ summary {
   color: var(--pass-color);
 }
 
-.lh-perf-metric .lh-perf-metric__value span::after {
+.lh-perf-metric .lh-perf-metric__value::after {
   content: '';
   width: var(--body-font-size);
   height: var(--body-font-size);
@@ -400,7 +385,7 @@ summary {
   margin-left: calc(var(--body-font-size) / 2);
 }
 
-.lh-perf-metric--pass .lh-perf-metric__value span::after {
+.lh-perf-metric--pass .lh-perf-metric__value::after {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>check</title><path fill="hsl(139, 70%, 30%)" d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/></svg>') no-repeat 50% 50%;
 }
 
@@ -408,7 +393,7 @@ summary {
 .lh-perf-metric--average .lh-perf-metric__value {
   color: var(--average-color);
 }
-.lh-perf-metric--average .lh-perf-metric__value span::after {
+.lh-perf-metric--average .lh-perf-metric__value::after {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>info</title><path fill="hsl(31, 100%, 45%)" d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm2 30h-4V22h4v12zm0-16h-4v-4h4v4z"/></svg>') no-repeat 50% 50%;
 }
 
@@ -416,12 +401,18 @@ summary {
 .lh-perf-metric--fail .lh-perf-metric__value {
   color: var(--fail-color);
 }
-.lh-perf-metric--fail .lh-perf-metric__value span::after {
+.lh-perf-metric--fail .lh-perf-metric__value::after {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>warn</title><path fill="hsl(1, 73%, 45%)" d="M2 42h44L24 4 2 42zm24-6h-4v-4h4v4zm0-8h-4v-8h4v8z"/></svg>') no-repeat 50% 50%;
 }
 
-.lh-perf-metric .lh-debug {
-  margin-left: var(--expandable-indent);
+.lh-perf-metric--error .lh-perf-metric__value,
+.lh-perf-metric--error .lh-perf-metric__description {
+  color: var(--fail-color);
+}
+
+/* Hide icon if there was an error */
+.lh-perf-metric--error .lh-perf-metric__value::after {
+  display: none;
 }
 
 /* Perf Hint */
@@ -599,6 +590,11 @@ summary {
 .lh-audit .lh-debug {
   margin-left: var(--expandable-indent);
   margin-right: var(--lh-audit-score-width);
+}
+
+.lh-audit--error .lh-score__value {
+  color: var(--fail-color);
+  font-weight: normal;
 }
 
 /* Audit Group */
@@ -953,13 +949,14 @@ summary.lh-passed-audits-summary {
   animation: fadeInTooltip 150ms;
   animation-fill-mode: forwards;
   animation-delay: 900ms;
-  min-width: 15em;
+  min-width: 23em;
   background: #ffffff;
   padding: 15px;
   border-radius: 5px;
   bottom: 100%;
   z-index: 1;
   will-change: opacity;
+  right: 0;
 }
 
 .tooltip::before {

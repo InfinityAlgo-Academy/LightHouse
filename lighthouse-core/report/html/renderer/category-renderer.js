@@ -31,19 +31,16 @@ class CategoryRenderer {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-audit', this.templateContext);
     const auditEl = this.dom.find('.lh-audit', tmpl);
     auditEl.id = audit.result.name;
-
     const scoreDisplayMode = audit.result.scoreDisplayMode;
-    const description = audit.result.helpText;
     let title = audit.result.description;
-
     if (audit.result.displayValue) {
       title += `:  ${audit.result.displayValue}`;
     }
 
-    if (audit.result.debugString) {
-      const debugStrEl = auditEl.appendChild(this.dom.createElement('div', 'lh-debug'));
-      debugStrEl.textContent = audit.result.debugString;
-    }
+    this.dom.find('.lh-audit__title', auditEl).appendChild(
+      this.dom.convertMarkdownCodeSnippets(title));
+    this.dom.find('.lh-audit__description', auditEl)
+      .appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.helpText));
 
     // Append audit details to header section so the entire audit is within a <details>.
     const header = /** @type {!HTMLDetailsElement} */ (this.dom.find('.lh-audit__header', auditEl));
@@ -58,29 +55,36 @@ class CategoryRenderer {
       auditEl.classList.add('lh-audit--manual');
     }
 
-    return this._populateScore(auditEl, audit.result.score, scoreDisplayMode, title, description);
+    this._populateScore(auditEl, audit.result.score, scoreDisplayMode, audit.result.error);
+
+    if (audit.result.error) {
+      auditEl.classList.add(`lh-audit--error`);
+      const valueEl = this.dom.find('.lh-score__value', auditEl);
+      valueEl.textContent = 'Error';
+      valueEl.classList.add('tooltip-boundary');
+      const tooltip = this.dom.createChildOf(valueEl, 'div', 'lh-error-tooltip-content tooltip');
+      tooltip.textContent = audit.result.debugString || 'Report error: no audit information';
+    } else if (audit.result.debugString) {
+      const debugStrEl = auditEl.appendChild(this.dom.createElement('div', 'lh-debug'));
+      debugStrEl.textContent = audit.result.debugString;
+    }
+    return auditEl;
   }
 
   /**
    * @param {!DocumentFragment|!Element} element DOM node to populate with values.
    * @param {number} score
    * @param {string} scoreDisplayMode
-   * @param {string} title
-   * @param {string} description
+   * @param {boolean} isError
    * @return {!Element}
    */
-  _populateScore(element, score, scoreDisplayMode, title, description) {
-    // Fill in the blanks.
+  _populateScore(element, score, scoreDisplayMode, isError) {
     const scoreOutOf100 = Math.round(score * 100);
     const valueEl = this.dom.find('.lh-score__value', element);
     valueEl.textContent = Util.formatNumber(scoreOutOf100);
-    valueEl.classList.add(`lh-score__value--${Util.calculateRating(score)}`,
-        `lh-score__value--${scoreDisplayMode}`);
-
-    this.dom.find('.lh-audit__title, .lh-category-header__title', element).appendChild(
-        this.dom.convertMarkdownCodeSnippets(title));
-    this.dom.find('.lh-audit__description, .lh-category-header__description', element)
-        .appendChild(this.dom.convertMarkdownLinkSnippets(description));
+    // FIXME(paulirish): this'll have to deal with null scores and scoreDisplayMode stuff..
+    const rating = isError ? 'error' : Util.calculateRating(score);
+    valueEl.classList.add(`lh-score__value--${rating}`, `lh-score__value--${scoreDisplayMode}`);
 
     return /** @type {!Element} **/ (element);
   }
@@ -96,8 +100,12 @@ class CategoryRenderer {
     const gaugeEl = this.renderScoreGauge(category);
     gaugeContainerEl.appendChild(gaugeEl);
 
-    const {score, name, description} = category;
-    return this._populateScore(tmpl, score, 'numeric', name, description);
+    this.dom.find('.lh-category-header__title', tmpl).appendChild(
+      this.dom.convertMarkdownCodeSnippets(category.name));
+    this.dom.find('.lh-category-header__description', tmpl)
+      .appendChild(this.dom.convertMarkdownLinkSnippets(category.description));
+
+    return this._populateScore(tmpl, category.score, 'numeric', false);
   }
 
   /**
