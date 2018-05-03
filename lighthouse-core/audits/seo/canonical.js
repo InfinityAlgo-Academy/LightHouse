@@ -56,7 +56,7 @@ function getPrimaryDomain(url) {
 
 class Canonical extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -70,8 +70,8 @@ class Canonical extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
@@ -79,17 +79,23 @@ class Canonical extends Audit {
     return artifacts.requestMainResource({devtoolsLog, URL: artifacts.URL})
       .then(mainResource => {
         const baseURL = new URL(mainResource.url);
+        /** @type {Array<string>} */
         let canonicals = [];
+        /** @type {Array<string>} */
         let hreflangs = [];
 
-        mainResource.responseHeaders
+        mainResource._responseHeaders && mainResource._responseHeaders
           .filter(h => h.name.toLowerCase() === LINK_HEADER)
           .forEach(h => {
             canonicals = canonicals.concat(getCanonicalLinksFromHeader(h.value));
             hreflangs = hreflangs.concat(getHreflangsFromHeader(h.value));
           });
 
-        canonicals = canonicals.concat(artifacts.Canonical);
+        for (const canonical of artifacts.Canonical) {
+          if (canonical !== null) {
+            canonicals.push(canonical);
+          }
+        }
         // we should only fail if there are multiple conflicting URLs
         // see: https://github.com/GoogleChrome/lighthouse/issues/3178#issuecomment-381181762
         canonicals = Array.from(new Set(canonicals));

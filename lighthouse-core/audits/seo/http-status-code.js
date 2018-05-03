@@ -11,7 +11,7 @@ const HTTP_UNSUCCESSFUL_CODE_HIGH = 599;
 
 class HTTPStatusCode extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -26,8 +26,8 @@ class HTTPStatusCode extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];

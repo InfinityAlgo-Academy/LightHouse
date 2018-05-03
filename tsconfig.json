@@ -16,20 +16,14 @@
   },
   "include": [
     "lighthouse-cli/**/*.js",
-    "lighthouse-core/audits/*.js",
-    "lighthouse-core/audits/accessibility/**/*.js",
-    "lighthouse-core/audits/dobetterweb/**/*.js",
-    "lighthouse-core/audits/byte-efficiency/**/*.js",
-    "lighthouse-core/audits/manual/**/*.js",
-    "lighthouse-core/audits/seo/manual/*.js",
-    "lighthouse-core/audits/seo/robots-txt.js",
-    "lighthouse-core/lib/dependency-graph/**/*.js",
-    "lighthouse-core/lib/emulation.js",
-    "lighthouse-core/gather/**/*.js",
-    "lighthouse-core/scripts/*.js",
+    "lighthouse-core/**/*.js",
     "./typings/*.d.ts"
   ],
   "exclude": [
-    "lighthouse-cli/test/**/*.js"
+    "lighthouse-cli/test/**/*.js",
+    "lighthouse-core/test/**/*.js",
+    "lighthouse-core/closure/**/*.js",
+    "lighthouse-core/third_party/src/**/*.js",
+    "lighthouse-core/report/html/renderer/**/*.js",
   ]
 }

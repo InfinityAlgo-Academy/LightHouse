@@ -58,7 +58,7 @@ function hasUserAgent(directives) {
 
 class IsCrawlable extends Audit {
   /**
-   * @return {!AuditMeta}
+   * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
@@ -73,14 +73,15 @@ class IsCrawlable extends Audit {
   }
 
   /**
-   * @param {!Artifacts} artifacts
-   * @return {!AuditResult}
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
 
     return artifacts.requestMainResource({devtoolsLog, URL: artifacts.URL})
       .then(mainResource => {
+        /** @type {Array<Object<string, LH.Audit.DetailsItem>>} */
         const blockingDirectives = [];
 
         if (artifacts.MetaRobots) {
@@ -89,14 +90,14 @@ class IsCrawlable extends Audit {
           if (isBlocking) {
             blockingDirectives.push({
               source: {
-                type: 'node',
+                type: /** @type {'node'} */ ('node'),
                 snippet: `<meta name="robots" content="${artifacts.MetaRobots}" />`,
               },
             });
           }
         }
 
-        mainResource.responseHeaders
+        mainResource._responseHeaders && mainResource._responseHeaders
           .filter(h => h.name.toLowerCase() === ROBOTS_HEADER && !hasUserAgent(h.value) &&
             hasBlockingDirective(h.value))
           .forEach(h => blockingDirectives.push({source: `${h.name}: ${h.value}`}));
@@ -108,7 +109,7 @@ class IsCrawlable extends Audit {
           if (!robotsTxt.isAllowed(mainResource.url)) {
             blockingDirectives.push({
               source: {
-                type: 'url',
+                type: /** @type {'url'} */ ('url'),
                 value: robotsFileUrl.href,
               },
             });

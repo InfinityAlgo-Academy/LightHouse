@@ -182,18 +182,18 @@ declare global {
         failingTextLength: number;
         visitedTextLength: number;
         analyzedFailingTextLength: number;
-        analyzedFailingNodesData: {
+        analyzedFailingNodesData: Array<{
           fontSize: number;
           textLength: number;
           node: FontSize.DomNodeWithParent;
           cssRule: {
-            type: string;
+            type: 'Regular' | 'Inline' | 'Attributes';
             range: {startLine: number, startColumn: number};
-            parentRule: {origin: string, selectors: {text: string}[]};
+            parentRule: {origin: Crdp.CSS.StyleSheetOrigin, selectors: {text: string}[]};
             styleSheetId: string;
             stylesheet: Crdp.CSS.CSSStyleSheetHeader;
           }
-        }
+        }>
       }
 
       export module FontSize {

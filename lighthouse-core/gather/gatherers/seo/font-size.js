@@ -152,7 +152,7 @@ function isNonEmptyTextNode(node) {
 class FontSize extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {!Promise<{totalTextLength: number, failingTextLength: number, visitedTextLength: number, analyzedFailingTextLength: number, analyzedFailingNodesData: Array<{fontSize: number, textLength: number, node: Node, cssRule: SimplifiedStyleDeclaration}>}>} font-size analysis
+   * @return {Promise<LH.Artifacts.FontSize>} font-size analysis
    */
   afterPass(passContext) {
     /** @type {Map<string, LH.Crdp.CSS.CSSStyleSheetHeader>} */
