@@ -9,56 +9,114 @@
 /* eslint-env mocha */
 
 const UsesRelPreload = require('../../audits/uses-rel-preload.js');
+const NetworkNode = require('../../lib/dependency-graph/network-node');
 const assert = require('assert');
+
+const Runner = require('../../runner');
+const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
+const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+
 const defaultMainResource = {
   _endTime: 1,
 };
 
-const mockArtifacts = (networkRecords, mockChain, mainResource = defaultMainResource) => {
-  return {
-    devtoolsLogs: {
-      [UsesRelPreload.DEFAULT_PASS]: [],
-    },
-    requestCriticalRequestChains: () => {
-      return Promise.resolve(mockChain);
-    },
-    requestNetworkRecords: () => networkRecords,
-    requestMainResource: () => {
-      return Promise.resolve(mainResource);
-    },
-  };
-};
-
 describe('Performance: uses-rel-preload audit', () => {
-  it(`should suggest preload resource`, () => {
+  let mockGraph;
+  let mockSimulator;
+
+  const mockArtifacts = (networkRecords, mockChain, mainResource = defaultMainResource) => {
+    return {
+      traces: {[UsesRelPreload.DEFAULT_PASS]: {traceEvents: []}},
+      devtoolsLogs: {[UsesRelPreload.DEFAULT_PASS]: []},
+      requestCriticalRequestChains: () => {
+        return Promise.resolve(mockChain);
+      },
+      requestLoadSimulator: () => mockSimulator,
+      requestPageDependencyGraph: () => mockGraph,
+      requestNetworkRecords: () => networkRecords,
+      requestMainResource: () => {
+        return Promise.resolve(mainResource);
+      },
+    };
+  };
+
+  function buildNode(requestId, url) {
+    return new NetworkNode({url, requestId});
+  }
+
+  afterEach(() => {
+    mockSimulator = undefined;
+  });
+
+  it('should suggest preload resource', () => {
+    const rootNode = buildNode(1, 'http://example.com');
+    const mainDocumentNode = buildNode(2, 'http://www.example.com');
+    const scriptNode = buildNode(3, 'http://www.example.com/script.js');
+    const scriptAddedNode = buildNode(4, 'http://www.example.com/script-added.js');
+
+    mainDocumentNode.addDependency(rootNode);
+    scriptNode.addDependency(mainDocumentNode);
+    scriptAddedNode.addDependency(scriptNode);
+
+    mockGraph = rootNode;
+    mockSimulator = {
+      simulate(graph) {
+        const nodesByUrl = new Map();
+        graph.traverse(node => nodesByUrl.set(node.record.url, node));
+
+        const rootNodeLocal = nodesByUrl.get(rootNode.record.url);
+        const mainDocumentNodeLocal = nodesByUrl.get(mainDocumentNode.record.url);
+        const scriptNodeLocal = nodesByUrl.get(scriptNode.record.url);
+        const scriptAddedNodeLocal = nodesByUrl.get(scriptAddedNode.record.url);
+
+        const nodeTimings = new Map([
+          [rootNodeLocal, {starTime: 0, endTime: 500}],
+          [mainDocumentNodeLocal, {startTime: 500, endTime: 1000}],
+          [scriptNodeLocal, {startTime: 1000, endTime: 2000}],
+          [scriptAddedNodeLocal, {startTime: 2000, endTime: 3250}],
+        ]);
+
+        if (scriptAddedNodeLocal.getDependencies()[0] === mainDocumentNodeLocal) {
+          nodeTimings.set(scriptAddedNodeLocal, {startTime: 1000, endTime: 2000});
+        }
+
+        return {timeInMs: 3250, nodeTimings};
+      },
+    };
+
     const mainResource = Object.assign({}, defaultMainResource, {
+      url: 'http://www.example.com',
       redirects: [''],
     });
     const networkRecords = [
       {
         requestId: '2',
-        _endTime: 1,
         _isLinkPreload: false,
         _url: 'http://www.example.com',
       },
       {
         requestId: '3',
-        _startTime: 10,
-        _endTime: 19,
         _isLinkPreload: false,
         _url: 'http://www.example.com/script.js',
       },
+      {
+        requestId: '4',
+        _isLinkPreload: false,
+        _url: 'http://www.example.com/script-added.js',
+      },
     ];
+
     const chains = {
       '1': {
         children: {
           '2': {
+            request: networkRecords[0],
             children: {
               '3': {
-                request: networkRecords[0],
+                request: networkRecords[1],
                 children: {
                   '4': {
-                    request: networkRecords[1],
+                    request: networkRecords[2],
                     children: {},
                   },
                 },
@@ -69,11 +127,12 @@ describe('Performance: uses-rel-preload audit', () => {
       },
     };
 
-    return UsesRelPreload.audit(mockArtifacts(networkRecords, chains, mainResource))
-      .then(output => {
-        assert.equal(output.rawValue, 9000);
+    return UsesRelPreload.audit(mockArtifacts(networkRecords, chains, mainResource), {}).then(
+      output => {
+        assert.equal(output.rawValue, 1250);
         assert.equal(output.details.items.length, 1);
-      });
+      }
+    );
   });
 
   it(`shouldn't suggest preload for already preloaded records`, () => {
@@ -100,7 +159,7 @@ describe('Performance: uses-rel-preload audit', () => {
       },
     };
 
-    return UsesRelPreload.audit(mockArtifacts(networkRecords, chains)).then(output => {
+    return UsesRelPreload.audit(mockArtifacts(networkRecords, chains), {}).then(output => {
       assert.equal(output.rawValue, 0);
       assert.equal(output.details.items.length, 0);
     });
@@ -130,9 +189,26 @@ describe('Performance: uses-rel-preload audit', () => {
       },
     };
 
-    return UsesRelPreload.audit(mockArtifacts(networkRecords, chains)).then(output => {
+    return UsesRelPreload.audit(mockArtifacts(networkRecords, chains), {}).then(output => {
       assert.equal(output.rawValue, 0);
       assert.equal(output.details.items.length, 0);
     });
+  });
+
+  it('does no throw on a real trace/devtools log', async () => {
+    const artifacts = Object.assign({
+      URL: {finalUrl: 'https://pwa.rocks/'},
+      traces: {
+        [UsesRelPreload.DEFAULT_PASS]: pwaTrace,
+      },
+      devtoolsLogs: {
+        [UsesRelPreload.DEFAULT_PASS]: pwaDevtoolsLog,
+      },
+    }, Runner.instantiateComputedArtifacts());
+
+    const settings = {throttlingMethod: 'provided'};
+    const result = await UsesRelPreload.audit(artifacts, {settings});
+    assert.equal(result.score, 1);
+    assert.equal(result.rawValue, 0);
   });
 });

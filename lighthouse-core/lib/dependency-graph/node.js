@@ -111,6 +111,31 @@ class Node {
   }
 
   /**
+   * @param {Node} node
+   */
+  removeDependent(node) {
+    node.removeDependency(this);
+  }
+
+  /**
+   * @param {Node} node
+   */
+  removeDependency(node) {
+    if (!this._dependencies.includes(node)) {
+      return;
+    }
+
+    node._dependents.splice(node._dependents.indexOf(this), 1);
+    this._dependencies.splice(this._dependencies.indexOf(node), 1);
+  }
+
+  removeAllDependencies() {
+    for (const node of this._dependencies.slice()) {
+      this.removeDependency(node);
+    }
+  }
+
+  /**
    * Clones the node's information without adding any dependencies/dependents.
    * @return {Node}
    */

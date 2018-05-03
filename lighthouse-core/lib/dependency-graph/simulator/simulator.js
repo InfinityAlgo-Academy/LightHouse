@@ -55,6 +55,7 @@ class Simulator {
     this._layoutTaskMultiplier = this._cpuSlowdownMultiplier * this._options.layoutTaskMultiplier;
 
     // Properties reset on every `.simulate` call but duplicated here for type checking
+    this._flexibleOrdering = false;
     this._nodeTimings = new Map();
     this._numberInProgressByType = new Map();
     this._nodes = {};
@@ -151,6 +152,16 @@ class Simulator {
   }
 
   /**
+   * @param {LH.WebInspector.NetworkRequest} record
+   * @return {?TcpConnection}
+   */
+  _acquireConnection(record) {
+    return this._connectionPool.acquire(record, {
+      ignoreConnectionReused: this._flexibleOrdering,
+    });
+  }
+
+  /**
    * @param {Node} node
    * @param {number} totalElapsedTime
    */
@@ -170,7 +181,7 @@ class Simulator {
     // Start a network request if we're not at max requests and a connection is available
     const numberOfActiveRequests = this._numberInProgress(node.type);
     if (numberOfActiveRequests >= this._maximumConcurrentRequests) return;
-    const connection = this._connectionPool.acquire(/** @type {NetworkNode} */ (node).record);
+    const connection = this._acquireConnection(/** @type {NetworkNode} */ (node).record);
     if (!connection) return;
 
     this._markNodeAsInProgress(node, totalElapsedTime);
@@ -215,7 +226,8 @@ class Simulator {
 
     const record = /** @type {NetworkNode} */ (node).record;
     const timingData = this._nodeTimings.get(node);
-    const connection = /** @type {TcpConnection} */ (this._connectionPool.acquire(record));
+    // If we're estimating time remaining, we already acquired a connection for this record, definitely non-null
+    const connection = /** @type {TcpConnection} */ (this._acquireConnection(record));
     const calculation = connection.simulateDownloadUntil(
       record.transferSize - timingData.bytesDownloaded,
       {timeAlreadyElapsed: timingData.timeElapsed, maximumTimeToElapse: Infinity}
@@ -258,7 +270,8 @@ class Simulator {
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
     const record = /** @type {NetworkNode} */ (node).record;
-    const connection = /** @type {TcpConnection} */ (this._connectionPool.acquire(record));
+    // If we're updating the progress, we already acquired a connection for this record, definitely non-null
+    const connection = /** @type {TcpConnection} */ (this._acquireConnection(record));
     const calculation = connection.simulateDownloadUntil(
       record.transferSize - timingData.bytesDownloaded,
       {
@@ -289,12 +302,22 @@ class Simulator {
   }
 
   /**
-   * Estimates the time taken to process all of the graph's nodes.
+   * Estimates the time taken to process all of the graph's nodes, returns the overall time along with
+   * each node annotated by start/end times.
+   *
+   * If flexibleOrdering is set, simulator/connection pool are allowed to deviate from what was
+   * observed in the trace/devtoolsLog and start requests as soon as they are queued (i.e. do not
+   * wait around for a warm connection to be available if the original record was fetched on a warm
+   * connection).
+   *
    * @param {Node} graph
+   * @param {{flexibleOrdering?: boolean}=} options
    * @return {LH.Gatherer.Simulation.Result}
    */
-  simulate(graph) {
+  simulate(graph, options) {
+    options = Object.assign({flexibleOrdering: false}, options);
     // initialize the necessary data containers
+    this._flexibleOrdering = options.flexibleOrdering;
     this._initializeConnectionPool(graph);
     this._initializeAuxiliaryData();
 
@@ -316,6 +339,10 @@ class Simulator {
       // move all possible queued nodes to in progress
       for (const node of nodesReadyToStart) {
         this._startNodeIfPossible(node, totalElapsedTime);
+      }
+
+      if (!nodesInProgress.size) {
+        throw new Error('Failed to start a node, potential mismatch in original execution');
       }
 
       // set the available throughput for all connections based on # inflight

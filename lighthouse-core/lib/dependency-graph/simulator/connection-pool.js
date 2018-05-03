@@ -11,6 +11,10 @@ const TcpConnection = require('./tcp-connection');
 const DEFAULT_SERVER_RESPONSE_TIME = 30;
 const TLS_SCHEMES = ['https', 'wss'];
 
+// Each origin can have 6 simulatenous connections open
+// https://cs.chromium.org/chromium/src/net/socket/client_socket_pool_manager.cc?type=cs&q="int+g_max_sockets_per_group"
+const CONNECTIONS_PER_ORIGIN = 6;
+
 module.exports = class ConnectionPool {
   /**
    * @param {LH.WebInspector.NetworkRequest[]} records
@@ -82,15 +86,26 @@ module.exports = class ConnectionPool {
         throw new Error(`Could not find a connection for origin: ${origin}`);
       }
 
+      // Make sure each origin has minimum number of connections available for max throughput
+      while (connections.length < CONNECTIONS_PER_ORIGIN) connections.push(connections[0].clone());
+
       this._connectionsByOrigin.set(origin, connections);
     }
   }
 
   /**
+   * This method finds an available connection to the origin specified by the network record or null
+   * if no connection was available. If returned, connection will not be available for other network
+   * records until release is called.
+   *
+   * If ignoreConnectionReused is true, acquire will consider all connections not in use as available.
+   * Otherwise, only connections that have matching "warmth" are considered available.
+   *
    * @param {LH.WebInspector.NetworkRequest} record
+   * @param {{ignoreConnectionReused?: boolean}} options
    * @return {?TcpConnection}
    */
-  acquire(record) {
+  acquire(record, options = {}) {
     if (this._connectionsByRecord.has(record)) {
       // @ts-ignore
       return this._connectionsByRecord.get(record);
@@ -99,16 +114,26 @@ module.exports = class ConnectionPool {
     const origin = String(record.parsedURL.securityOrigin());
     /** @type {TcpConnection[]} */
     const connections = this._connectionsByOrigin.get(origin) || [];
-    const wasConnectionWarm = !!this._connectionReusedByRequestId.get(record.requestId);
-    const connection = connections.find(connection => {
-      const meetsWarmRequirement = wasConnectionWarm === connection.isWarm();
-      return meetsWarmRequirement && !this._connectionsInUse.has(connection);
-    });
+    // Sort connections by decreasing congestion window, i.e. warmest to coldest
+    const availableConnections = connections
+      .filter(connection => !this._connectionsInUse.has(connection))
+      .sort((a, b) => b.congestionWindow - a.congestionWindow);
 
-    if (!connection) return null;
-    this._connectionsInUse.add(connection);
-    this._connectionsByRecord.set(record, connection);
-    return connection;
+    const observedConnectionWasReused = !!this._connectionReusedByRequestId.get(record.requestId);
+
+    /** @type {TcpConnection|undefined} */
+    let connectionToUse = availableConnections[0];
+    if (!options.ignoreConnectionReused) {
+      connectionToUse = availableConnections.find(
+        connection => connection.isWarm() === observedConnectionWasReused
+      );
+    }
+
+    if (!connectionToUse) return null;
+
+    this._connectionsInUse.add(connectionToUse);
+    this._connectionsByRecord.set(record, connectionToUse);
+    return connectionToUse;
   }
 
   /**

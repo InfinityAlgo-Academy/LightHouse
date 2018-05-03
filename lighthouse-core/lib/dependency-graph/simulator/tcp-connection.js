@@ -79,6 +79,20 @@ class TcpConnection {
   }
 
   /**
+   * @return {boolean}
+   */
+  isH2() {
+    return this._h2;
+  }
+
+  /**
+   * @return {number}
+   */
+  get congestionWindow() {
+    return this._congestionWindow;
+  }
+
+  /**
    * Sets the number of excess bytes that are available to this connection on future downloads, only
    * applies to H2 connections.
    * @param {number} bytes
@@ -86,6 +100,13 @@ class TcpConnection {
   setH2OverflowBytesDownloaded(bytes) {
     if (!this._h2) return;
     this._h2OverflowBytesDownloaded = bytes;
+  }
+
+  /**
+   * @return {TcpConnection}
+   */
+  clone() {
+    return Object.assign(new TcpConnection(this._rtt, this._throughput), this);
   }
 
   /**
