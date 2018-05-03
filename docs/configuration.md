@@ -153,9 +153,9 @@ The categories property controls how to score and organize the audit results in 
       name: 'Performance',
       description: 'This category judges your performance',
       audits: [
-        {id: 'first-meaningful-paint', weight: 2, group: 'perf-metric'},
-        {id: 'first-interactive', weight: 3, group: 'perf-metric'},
-        {id: 'consistently-interactive', weight: 5, group: 'perf-metric'},
+        {id: 'first-meaningful-paint', weight: 2, group: 'metrics'},
+        {id: 'first-interactive', weight: 3, group: 'metrics'},
+        {id: 'consistently-interactive', weight: 5, group: 'metrics'},
       ],
     }
   }
@@ -184,12 +184,12 @@ The groups property controls how to visually group audits within a category. For
   categories: {
     performance: {
       audits: [
-        {id: 'my-performance-metric', weight: 2, group: 'perf-metric'},
+        {id: 'my-performance-metric', weight: 2, group: 'metrics'},
       ],
     }
   },
   groups: {
-    'perf-metric': {
+    'metrics': {
       title: 'Metrics',
       description: 'These metrics encapsulate your web app\'s performance across a number of dimensions.'
     },

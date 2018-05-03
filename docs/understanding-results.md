@@ -226,7 +226,7 @@ An object containing the display groups of audits for the report, keyed by the g
 ### Example
 ```json
 {
-  "perf-metric": {
+  "metrics": {
     "title": "Metrics",
     "description": "These metrics are super cool."
   },

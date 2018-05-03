@@ -117,8 +117,8 @@ describe('Lighthouse chrome extension', function() {
 
 
   const selectors = {
-    audits: '.lh-audit,.lh-perf-metric,.lh-perf-hint',
-    titles: '.lh-audit__title, .lh-perf-hint__title, .lh-perf-metric__title',
+    audits: '.lh-audit,.lh-metric,.lh-load-opportunity',
+    titles: '.lh-audit__title, .lh-load-opportunity__title, .lh-metric__title',
   };
 
   it('should contain all categories', async () => {
