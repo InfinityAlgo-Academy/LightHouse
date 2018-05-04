@@ -117,6 +117,16 @@ class Util {
   }
 
   /**
+   * @param {number} ms
+   * @param {number=} granularity Controls how coarse the displayed value is, defaults to 0.1
+   * @return {string}
+   */
+  static formatSeconds(ms, granularity = 0.1) {
+    const coarseTime = Math.round(ms / 1000 / granularity) * granularity;
+    return `${coarseTime.toLocaleString()}${NBSP}s`;
+  }
+
+  /**
    * Format time.
    * @param {string} date
    * @return {string}

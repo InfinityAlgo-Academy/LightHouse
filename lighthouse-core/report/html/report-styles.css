@@ -31,6 +31,7 @@
   --pass-color: hsl(139, 70%, 30%);
   --informative-color: #0c50c7;
   --medium-75-gray: #757575;
+  --medium-50-gray: hsl(210, 17%, 98%);
   --warning-color: #ffab00; /* md amber a700 */
   --report-border-color: #ccc;
   --report-secondary-border-color: #ebebeb;
@@ -279,7 +280,8 @@
 }
 
 .lh-audit-group[open] > .lh-audit-group__summary > .lh-toggle-arrow,
-.lh-expandable-details[open] > .lh-expandable-details__summary > .lh-toggle-arrow {
+.lh-expandable-details[open] > .lh-expandable-details__summary > .lh-toggle-arrow,
+.lh-expandable-details[open] > .lh-expandable-details__summary > div > .lh-toggle-arrow {
   transform: rotateZ(-90deg);
 }
 
@@ -406,22 +408,43 @@
 .lh-load-opportunity {
   padding-top: var(--lh-audit-vpadding);
   padding-bottom: var(--lh-audit-vpadding);
-  border-top: 1px solid var(--report-secondary-border-color);
+  border-bottom: 1px solid var(--report-secondary-border-color);
 }
 
 .lh-load-opportunity:last-of-type {
   border-bottom: none;
 }
 
-.lh-load-opportunity__summary {
+.lh-load-opportunity__cols {
   display: flex;
   align-items: flex-start;
-  flex-wrap: wrap;
-  min-height: calc(var(--body-line-height) + var(--caption-line-height));
 }
 
-.lh-load-opportunity__summary .lh-toggle-arrow {
-  margin-top: calc((var(--subheader-line-height) - 12px) / 2);
+.lh-load-opportunity__header .lh-load-opportunity__col {
+  background-color: var(--medium-50-gray);
+  color: var(--medium-75-gray);
+  text-align: center;
+  display: unset;
+  line-height: calc(3 * var(--body-font-size));
+}
+
+.lh-load-opportunity__summary {
+  padding-right: var(--text-indent);
+}
+
+.lh-load-opportunity__col {
+  display: flex;
+  justify-content: space-between;
+}
+.lh-load-opportunity__col > * {
+  margin: 0 5px;
+}
+.lh-load-opportunity__col--one {
+  flex: 5;
+  margin-right: 2px;
+}
+.lh-load-opportunity__col--two {
+  flex: 4;
 }
 
 .lh-load-opportunity__summary .lh-debug {
@@ -434,30 +457,12 @@
   flex: 10;
 }
 
-.lh-load-opportunity__sparkline {
-  flex: 0 0 50%;
-  margin-top: calc((var(--body-line-height) - var(--lh-sparkline-height)) / 2);
-}
 
-.lh-load-opportunity__sparkline .lh-sparkline {
-  width: 100%;
-  float: right;
-  margin: 0;
-}
-
-.lh-load-opportunity__stats {
+.lh-load-opportunity__wasted-stat {
   text-align: right;
-  flex: 0 0 calc(5 * var(--body-font-size));
-}
-
-.lh-load-opportunity__primary-stat {
+  flex: 0 0 calc(3 * var(--body-font-size));
   font-size: var(--body-font-size);
   line-height: var(--body-line-height);
-}
-
-.lh-load-opportunity__secondary-stat {
-  font-size: var(--caption-font-size);
-  line-height: var(--caption-line-height);
 }
 
 .lh-load-opportunity__description {
@@ -465,7 +470,7 @@
   margin-top: calc(var(--default-padding) / 2);
 }
 
-.lh-load-opportunity--pass .lh-load-opportunity__stats {
+.lh-load-opportunity--pass .lh-load-opportunity__wasted-stat {
   color: var(--pass-color);
 }
 
@@ -477,7 +482,7 @@
   background: var(--average-color);
 }
 
-.lh-load-opportunity--average .lh-load-opportunity__stats {
+.lh-load-opportunity--average .lh-load-opportunity__wasted-stat {
   color: var(--average-color);
 }
 
@@ -485,9 +490,29 @@
   background: var(--fail-color);
 }
 
-.lh-load-opportunity--fail .lh-load-opportunity__stats {
+.lh-load-opportunity--fail .lh-load-opportunity__wasted-stat {
   color: var(--fail-color);
 }
+
+
+/* Sparkline */
+
+.lh-load-opportunity__sparkline {
+  flex: 1;
+  margin-top: calc((var(--body-line-height) - var(--lh-sparkline-height)) / 2);
+}
+
+.lh-sparkline {
+  height: var(--lh-sparkline-height);
+  width: 100%;
+}
+
+.lh-sparkline__bar {
+  background: var(--informative-color);
+  height: 100%;
+  float: right;
+}
+
 
 /* Filmstrip */
 
@@ -525,39 +550,6 @@
   border: 1px solid var(--report-secondary-border-color);
   max-height: 100px;
   max-width: 60px;
-}
-
-/* Sparkline */
-
-.lh-sparkline {
-  margin: 5px;
-  height: var(--lh-sparkline-height);
-  width: 100%;
-}
-
-.lh-sparkline--thin {
-  height: calc(var(--lh-sparkline-height) / 2);
-}
-
-.lh-sparkline__bar {
-  background: var(--warning-color);
-  height: 100%;
-  float: right;
-  position: relative;
-}
-
-/* correlate metric end location with sparkline */
-.lh-metric:hover .lh-sparkline__bar::after {
-  content: '';
-  height: 100vh;
-  width: 2px;
-  background: inherit;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  opacity: 0;
-  animation: fadeIn 150ms;
-  animation-fill-mode: forwards;
 }
 
 /* Audit */

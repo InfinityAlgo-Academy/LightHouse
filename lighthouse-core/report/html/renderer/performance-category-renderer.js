@@ -47,64 +47,38 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
    * @return {!Element}
    */
   _renderOpportunity(audit, index, scale) {
-    const element = this.dom.createElement('details', [
-      'lh-load-opportunity',
-      `lh-load-opportunity--${Util.calculateRating(audit.result.score)}`,
-      'lh-expandable-details',
-    ].join(' '));
+    const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity', this.templateContext);
+    const element = this.dom.find('.lh-load-opportunity', tmpl);
+    element.classList.add(`lh-load-opportunity--${Util.calculateRating(audit.result.score)}`);
     element.id = audit.result.name;
 
-    // TODO(paulirish): use a template instead.
-    const summary = this.dom.createChildOf(element, 'summary', 'lh-load-opportunity__summary ' +
-    'lh-expandable-details__summary');
-    const titleEl = this.dom.createChildOf(summary, 'div', 'lh-load-opportunity__title');
+    const summary = this.dom.find('.lh-load-opportunity__summary', tmpl);
+    const titleEl = this.dom.find('.lh-load-opportunity__title', tmpl);
     titleEl.textContent = audit.result.description;
+    this.dom.find('.lh-audit__index', element).textContent = `${index + 1}`;
 
-    this.dom.createChildOf(summary, 'div', 'lh-toggle-arrow', {title: 'See resources'});
-
-    if (audit.result.error) {
+    if (audit.result.debugString || audit.result.error) {
       const debugStrEl = this.dom.createChildOf(summary, 'div', 'lh-debug');
       debugStrEl.textContent = audit.result.debugString || 'Audit error';
-      return element;
     }
+    if (audit.result.error) return element;
 
     const details = audit.result.details;
     const summaryInfo = /** @type {!DetailsRenderer.OpportunitySummary}
     */ (details && details.summary);
-    // eslint-disable-next-line no-console
-    console.assert(summaryInfo, 'Missing `summary` for load-opportunities audit');
-    // eslint-disable-next-line no-console
-    console.assert(typeof summaryInfo.wastedMs === 'number',
-    'Missing numeric `summary.wastedMs` for load-opportunities audit');
     if (!summaryInfo || !summaryInfo.wastedMs) {
       return element;
     }
 
-    const elemAttrs = {title: Util.formatDisplayValue(audit.result.displayValue)};
-    const sparklineContainerEl = this.dom.createChildOf(summary, 'div',
-        'lh-load-opportunity__sparkline', elemAttrs);
-    const sparklineEl = this.dom.createChildOf(sparklineContainerEl, 'div', 'lh-sparkline');
-    const sparklineBarEl = this.dom.createChildOf(sparklineEl, 'div', 'lh-sparkline__bar');
-    sparklineBarEl.style.width = summaryInfo.wastedMs / scale * 100 + '%';
-
-    const statsEl = this.dom.createChildOf(summary, 'div', 'lh-load-opportunity__stats', elemAttrs);
-    const statsMsEl = this.dom.createChildOf(statsEl, 'div', 'lh-load-opportunity__primary-stat');
-    statsMsEl.textContent = Util.formatMilliseconds(summaryInfo.wastedMs);
-
-    if (summaryInfo.wastedBytes) {
-      const statsKbEl = this.dom.createChildOf(statsEl, 'div',
-          'lh-load-opportunity__secondary-stat');
-      statsKbEl.textContent = Util.formatBytesToKB(summaryInfo.wastedBytes);
-    }
-
-    const descriptionEl = this.dom.createChildOf(element, 'div',
-        'lh-load-opportunity__description');
-    descriptionEl.appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.helpText));
-
-    if (audit.result.debugString) {
-      const debugStrEl = this.dom.createChildOf(summary, 'div', 'lh-debug');
-      debugStrEl.textContent = audit.result.debugString;
-    }
+    const displayValue = Util.formatDisplayValue(audit.result.displayValue);
+    const sparklineWidthPct = `${summaryInfo.wastedMs / scale * 100}%`;
+    const wastedMs = Util.formatSeconds(summaryInfo.wastedMs, 0.01);
+    const auditDescription = this.dom.convertMarkdownLinkSnippets(audit.result.helpText);
+    this.dom.find('.lh-load-opportunity__sparkline', tmpl).title = displayValue;
+    this.dom.find('.lh-load-opportunity__wasted-stat', tmpl).title = displayValue;
+    this.dom.find('.lh-sparkline__bar', tmpl).style.width = sparklineWidthPct;
+    this.dom.find('.lh-load-opportunity__wasted-stat', tmpl).textContent = wastedMs;
+    this.dom.find('.lh-load-opportunity__description', tmpl).appendChild(auditDescription);
 
     // If there's no `type`, then we only used details for `summary`
     if (details.type) {
@@ -163,6 +137,9 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const maxWaste = Math.max(...opportunityAudits.map(audit => audit.result.rawValue));
       const scale = Math.ceil(maxWaste / 1000) * 1000;
       const groupEl = this.renderAuditGroup(groups['load-opportunities'], {expandable: false});
+      const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity-header', this.templateContext);
+      const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
+      groupEl.appendChild(headerEl);
       opportunityAudits.forEach((item, i) =>
           groupEl.appendChild(this._renderOpportunity(item, i, scale)));
       groupEl.open = true;
