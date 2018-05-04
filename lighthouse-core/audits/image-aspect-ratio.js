@@ -9,13 +9,14 @@
  *   audit will list all images that don't match with their display size
  *   aspect ratio.
  */
-// @ts-nocheck - TODO(bckenny): fix optional width/height in ImageUsage artifact
 'use strict';
 
 const Audit = require('./audit');
 
 const URL = require('../lib/url-shim');
 const THRESHOLD = 0.05;
+
+/** @typedef {Required<LH.Artifacts.SingleImageUsage>} WellDefinedImage */
 
 class ImageAspectRatio extends Audit {
   /**
@@ -32,7 +33,7 @@ class ImageAspectRatio extends Audit {
   }
 
   /**
-   * @param {Required<LH.Artifacts.SingleImageUsage>} image
+   * @param {WellDefinedImage} image
    * @return {Error|{url: string, displayedAspectRatio: string, actualAspectRatio: string, doRatiosMatch: boolean}}
    */
   static computeAspectRatios(image) {
@@ -76,7 +77,7 @@ class ImageAspectRatio extends Audit {
         image.height &&
         !image.usesObjectFit;
     }).forEach(image => {
-      const wellDefinedImage = /** @type {Required<LH.Artifacts.SingleImageUsage>} */ (image);
+      const wellDefinedImage = /** @type {WellDefinedImage} */ (image);
       const processed = ImageAspectRatio.computeAspectRatios(wellDefinedImage);
       if (processed instanceof Error) {
         debugString = processed.message;

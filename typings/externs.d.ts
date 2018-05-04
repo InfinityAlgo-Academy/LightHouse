@@ -22,6 +22,9 @@ declare global {
     [P in K]+?: T[P]
   }
 
+  /** Remove properties K from T. */
+  type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
   /** Obtain the type of the first parameter of a function. */
   type FirstParamType<T extends (arg1: any, ...args: any[]) => any> =
     T extends (arg1: infer P, ...args: any[]) => any ? P : any;

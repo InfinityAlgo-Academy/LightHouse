@@ -19,6 +19,8 @@ const ALLOWABLE_OFFSCREEN_Y = 200;
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
 const IGNORE_THRESHOLD_IN_PERCENT = 75;
 
+/** @typedef {{url: string, requestStartTime: number, totalBytes: number, wastedBytes: number, wastedPercent: number}} WasteResult */
+
 class OffscreenImages extends ByteEfficiencyAudit {
   /**
    * @return {LH.Audit.Meta}
@@ -38,7 +40,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {ClientRect} imageRect
+   * @param {{top: number, bottom: number, left: number, right: number}} imageRect
    * @param {{innerWidth: number, innerHeight: number}} viewportDimensions
    * @return {number}
    */
@@ -55,11 +57,15 @@ class OffscreenImages extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {!Object} image
+   * @param {LH.Artifacts.SingleImageUsage} image
    * @param {{innerWidth: number, innerHeight: number}} viewportDimensions
-   * @return {?Object}
+   * @return {null|Error|WasteResult}
    */
   static computeWaste(image, viewportDimensions) {
+    if (!image.networkRecord) {
+      return null;
+    }
+
     const url = URL.elideDataURI(image.src);
     const totalPixels = image.clientWidth * image.clientHeight;
     const visiblePixels = this.computeVisiblePixels(image.clientRect, viewportDimensions);
@@ -111,11 +117,11 @@ class OffscreenImages extends ByteEfficiencyAudit {
     /** @type {string|undefined} */
     let debugString;
     const resultsMap = images.reduce((results, image) => {
-      if (!image.networkRecord) {
+      const processed = OffscreenImages.computeWaste(image, viewportDimensions);
+      if (processed === null) {
         return results;
       }
 
-      const processed = OffscreenImages.computeWaste(image, viewportDimensions);
       if (processed instanceof Error) {
         debugString = processed.message;
         // @ts-ignore TODO(bckenny): Sentry type checking
@@ -130,7 +136,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       }
 
       return results;
-    }, new Map());
+    }, /** @type {Map<string, WasteResult>} */ (new Map()));
 
     const settings = context.settings;
     return artifacts.requestFirstCPUIdle({trace, devtoolsLog, settings}).then(firstInteractive => {

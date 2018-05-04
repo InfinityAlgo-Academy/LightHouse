@@ -110,12 +110,18 @@ module.exports = [
         },
       },
       'uses-responsive-images': {
+        displayValue: [
+          'Potential savings of %d\xa0KB',
+          75,
+        ],
         extendedInfo: {
           value: {
             wastedKb: '>50',
-            results: {
-              length: 3,
-            },
+            results: [
+              {wastedPercent: '<60'},
+              {wastedPercent: '<60'},
+              {wastedPercent: '<60'},
+            ],
           },
         },
       },

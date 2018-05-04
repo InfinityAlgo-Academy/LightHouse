@@ -221,14 +221,16 @@ declare global {
           left: number;
           right: number;
         };
-        networkRecord: {
+        networkRecord?: {
           url: string;
           resourceSize: number;
           startTime: number;
           endTime: number;
           responseReceivedTime: number;
           mimeType: string;
-        }
+        };
+        width?: number;
+        height?: number;
       }
 
       export interface OptimizedImage {
