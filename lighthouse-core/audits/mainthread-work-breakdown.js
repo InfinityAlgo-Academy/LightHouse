@@ -106,7 +106,7 @@ class MainThreadWorkBreakdown extends Audit {
         return {
           score,
           rawValue: totalExecutionTime,
-          displayValue: Util.formatMilliseconds(totalExecutionTime),
+          displayValue: ['%d\xa0ms', totalExecutionTime],
           details: tableDetails,
           extendedInfo: {
             value: extendedInfo,

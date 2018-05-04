@@ -25,7 +25,7 @@ describe('Num DOM nodes audit', () => {
     const auditResult = DOMSize.audit(artifact, {options});
     assert.equal(auditResult.score, 0.43);
     assert.equal(auditResult.rawValue, numNodes);
-    assert.equal(auditResult.displayValue, `${numNodes.toLocaleString()} nodes`);
+    assert.deepEqual(auditResult.displayValue, ['%d nodes', numNodes]);
     assert.equal(auditResult.details.items[0].totalNodes, numNodes.toLocaleString());
     assert.equal(auditResult.details.items[0].depth, '1');
     assert.equal(auditResult.details.items[0].width, '2');

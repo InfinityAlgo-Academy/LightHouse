@@ -34,7 +34,7 @@ class CategoryRenderer {
     const scoreDisplayMode = audit.result.scoreDisplayMode;
     let title = audit.result.description;
     if (audit.result.displayValue) {
-      title += `:  ${audit.result.displayValue}`;
+      title += `:  ${Util.formatDisplayValue(audit.result.displayValue)}`;
     }
 
     this.dom.find('.lh-audit__title', auditEl).appendChild(

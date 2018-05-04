@@ -6,7 +6,6 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/html/renderer/util');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
 const THRESHOLD_IN_MS = 100;
 
@@ -183,7 +182,7 @@ class UsesRelPreloadAudit extends Audit {
       return {
         score: UnusedBytes.scoreForWastedMs(wastedMs),
         rawValue: wastedMs,
-        displayValue: Util.formatMilliseconds(wastedMs),
+        displayValue: ['Potential savings of %10d\xa0ms', wastedMs],
         extendedInfo: {
           value: results,
         },

@@ -211,7 +211,7 @@ if (typeof module !== 'undefined' && module.exports) {
  *     manual: (boolean|undefined),
  *     notApplicable: (boolean|undefined),
  *     debugString: (string|undefined),
- *     displayValue: string,
+ *     displayValue: (string|Array<string|number>),
  *     helpText: string,
  *     scoreDisplayMode: string,
  *     extendedInfo: Object,

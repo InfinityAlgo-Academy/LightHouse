@@ -124,7 +124,7 @@ class BootupTime extends Audit {
       return {
         score,
         rawValue: totalBootupTime,
-        displayValue: Util.formatMilliseconds(totalBootupTime),
+        displayValue: [Util.MS_DISPLAY_VALUE, totalBootupTime],
         details,
         extendedInfo: {
           value: extendedInfo,

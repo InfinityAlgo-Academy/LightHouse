@@ -6,7 +6,6 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/html/renderer/util');
 
 class EstimatedInputLatency extends Audit {
   /**
@@ -57,7 +56,7 @@ class EstimatedInputLatency extends Audit {
         context.options.scoreMedian
       ),
       rawValue: metricResult.timing,
-      displayValue: Util.formatMilliseconds(metricResult.timing, 1),
+      displayValue: ['%d\xa0ms', metricResult.timing],
     };
   }
 }

@@ -6,7 +6,6 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const Util = require('../../report/html/renderer/util');
 
 class TotalByteWeight extends ByteEfficiencyAudit {
   /**
@@ -92,7 +91,10 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       return {
         score,
         rawValue: totalBytes,
-        displayValue: `Total size was ${Util.formatBytesToKB(totalBytes, 1)}`,
+        displayValue: [
+          'Total size was %d\xa0KB',
+          totalBytes / 1024,
+        ],
         extendedInfo: {
           value: {
             results,

@@ -69,7 +69,7 @@ class InteractiveMetric extends Audit {
         context.options.scoreMedian
       ),
       rawValue: timeInMs,
-      displayValue: Util.formatMilliseconds(timeInMs),
+      displayValue: [Util.MS_DISPLAY_VALUE, timeInMs],
       extendedInfo: {
         value: extendedInfo,
       },

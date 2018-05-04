@@ -93,7 +93,7 @@ class DOMSize extends Audit {
     return {
       score,
       rawValue: stats.totalDOMNodes,
-      displayValue: `${Util.formatNumber(stats.totalDOMNodes)} nodes`,
+      displayValue: ['%d nodes', stats.totalDOMNodes],
       extendedInfo: {
         value: items,
       },

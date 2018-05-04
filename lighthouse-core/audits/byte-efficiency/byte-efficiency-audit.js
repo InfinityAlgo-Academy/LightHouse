@@ -172,9 +172,10 @@ class UnusedBytes extends Audit {
     const wastedKb = Math.round(wastedBytes / KB_IN_BYTES);
     const wastedMs = this.computeWasteWithTTIGraph(results, graph, simulator);
 
+    /** @type {LH.Audit.DisplayValue} */
     let displayValue = result.displayValue || '';
-    if (typeof result.displayValue === 'undefined' && wastedBytes) {
-      displayValue = `Potential savings of ${wastedBytes} bytes`;
+    if (typeof result.displayValue === 'undefined' && wastedKb) {
+      displayValue = ['Potential savings of %d\xa0KB', wastedKb];
     }
 
     const summary = {

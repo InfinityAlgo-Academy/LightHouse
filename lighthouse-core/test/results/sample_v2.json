@@ -86,7 +86,10 @@
     },
     "first-contentful-paint": {
       "score": 0.51,
-      "displayValue": "3,970 ms",
+      "displayValue": [
+        "%10d ms",
+        3969.135
+      ],
       "rawValue": 3969.135,
       "scoreDisplayMode": "numeric",
       "name": "first-contentful-paint",
@@ -95,7 +98,10 @@
     },
     "first-meaningful-paint": {
       "score": 0.51,
-      "displayValue": "3,970 ms",
+      "displayValue": [
+        "%10d ms",
+        3969.136
+      ],
       "rawValue": 3969.136,
       "scoreDisplayMode": "numeric",
       "name": "first-meaningful-paint",
@@ -113,7 +119,10 @@
     },
     "speed-index": {
       "score": 0.74,
-      "displayValue": "4,420 ms",
+      "displayValue": [
+        "%10d ms",
+        4417
+      ],
       "rawValue": 4417,
       "scoreDisplayMode": "numeric",
       "name": "speed-index",
@@ -188,7 +197,10 @@
     },
     "estimated-input-latency": {
       "score": 1,
-      "displayValue": "16 ms",
+      "displayValue": [
+        "%d ms",
+        16
+      ],
       "rawValue": 16,
       "scoreDisplayMode": "numeric",
       "name": "estimated-input-latency",
@@ -268,7 +280,10 @@
     },
     "first-cpu-idle": {
       "score": 0.72,
-      "displayValue": "4,930 ms",
+      "displayValue": [
+        "%10d ms",
+        4927.278
+      ],
       "rawValue": 4927.278,
       "scoreDisplayMode": "numeric",
       "name": "first-cpu-idle",
@@ -277,7 +292,10 @@
     },
     "interactive": {
       "score": 0.78,
-      "displayValue": "4,930 ms",
+      "displayValue": [
+        "%10d ms",
+        4927.278
+      ],
       "rawValue": 4927.278,
       "extendedInfo": {
         "value": {
@@ -627,7 +645,10 @@
     },
     "redirects": {
       "score": 1,
-      "displayValue": "0 ms",
+      "displayValue": [
+        "%d ms",
+        0
+      ],
       "rawValue": 0,
       "extendedInfo": {
         "value": {
@@ -849,7 +870,10 @@
     },
     "mainthread-work-breakdown": {
       "score": 0.98,
-      "displayValue": "1,360 ms",
+      "displayValue": [
+        "%d ms",
+        1359.7759999930859
+      ],
       "rawValue": 1359.7759999930859,
       "extendedInfo": {
         "value": {
@@ -968,7 +992,10 @@
     },
     "bootup-time": {
       "score": 0.9,
-      "displayValue": "1,300 ms",
+      "displayValue": [
+        "%10d ms",
+        1302.3579999804497
+      ],
       "rawValue": 1302.3579999804497,
       "extendedInfo": {
         "value": {
@@ -1043,7 +1070,10 @@
     },
     "uses-rel-preload": {
       "score": 1,
-      "displayValue": "0 ms",
+      "displayValue": [
+        "Potential savings of %10d ms",
+        0
+      ],
       "rawValue": 0,
       "extendedInfo": {
         "value": []
@@ -1064,7 +1094,10 @@
     },
     "uses-rel-preconnect": {
       "score": 1,
-      "displayValue": "0 ms",
+      "displayValue": [
+        "Potential savings of %10d ms",
+        0
+      ],
       "rawValue": 0,
       "extendedInfo": {
         "value": []
@@ -2691,7 +2724,10 @@
     },
     "total-byte-weight": {
       "score": 1,
-      "displayValue": "Total size was 157 KB",
+      "displayValue": [
+        "Total size was %d KB",
+        156.970703125
+      ],
       "rawValue": 160738,
       "extendedInfo": {
         "value": {
@@ -2946,7 +2982,10 @@
     },
     "unminified-javascript": {
       "score": 1,
-      "displayValue": "Potential savings of 30470 bytes",
+      "displayValue": [
+        "Potential savings of %d KB",
+        30
+      ],
       "rawValue": 0,
       "extendedInfo": {
         "value": {
@@ -3032,7 +3071,10 @@
     },
     "uses-webp-images": {
       "score": 1,
-      "displayValue": "Potential savings of 8526 bytes",
+      "displayValue": [
+        "Potential savings of %d KB",
+        8
+      ],
       "rawValue": 0,
       "extendedInfo": {
         "value": {
@@ -3125,7 +3167,10 @@
     },
     "uses-text-compression": {
       "score": 0.9,
-      "displayValue": "Potential savings of 64646 bytes",
+      "displayValue": [
+        "Potential savings of %d KB",
+        63
+      ],
       "rawValue": 150,
       "extendedInfo": {
         "value": {
@@ -3254,7 +3299,10 @@
     },
     "dom-size": {
       "score": 1,
-      "displayValue": "53 nodes",
+      "displayValue": [
+        "%d nodes",
+        53
+      ],
       "rawValue": 53,
       "extendedInfo": {
         "value": [

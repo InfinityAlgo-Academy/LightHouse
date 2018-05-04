@@ -23,6 +23,8 @@ declare global {
 
     export type ScoringModeValue = Audit.ScoringModes[keyof Audit.ScoringModes];
 
+    export type DisplayValue = string | Array<string|number>;
+
     export interface Meta {
       name: string;
       description: string;
@@ -100,7 +102,7 @@ declare global {
     // Type returned by Audit.audit(). Only rawValue is required.
     export interface Product {
       rawValue: boolean | number | null;
-      displayValue?: string;
+      displayValue?: DisplayValue;
       debugString?: string;
       score?: number;
       extendedInfo?: {[p: string]: any};
@@ -113,7 +115,7 @@ declare global {
     /* Audit result returned in Lighthouse report. All audits offer a description and score of 0-1 */
     export interface Result {
       rawValue: boolean | number | null;
-      displayValue: string;
+      displayValue: DisplayValue;
       debugString?: string;
       score: number;
       scoreDisplayMode: ScoringModeValue;

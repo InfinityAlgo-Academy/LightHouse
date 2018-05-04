@@ -6,7 +6,6 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/html/renderer/util');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
 
 class Redirects extends Audit {
@@ -97,7 +96,7 @@ class Redirects extends Audit {
       // We award a passing grade if you only have 1 redirect
       score: redirectRequests.length <= 2 ? 1 : UnusedBytes.scoreForWastedMs(totalWastedMs),
       rawValue: totalWastedMs,
-      displayValue: Util.formatMilliseconds(totalWastedMs, 1),
+      displayValue: ['%d\xa0ms', totalWastedMs],
       extendedInfo: {
         value: {
           wastedMs: totalWastedMs,

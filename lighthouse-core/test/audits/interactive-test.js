@@ -7,6 +7,7 @@
 
 const Interactive = require('../../audits/interactive.js');
 const Runner = require('../../runner.js');
+const Util = require('../../report/html/renderer/util');
 const assert = require('assert');
 const options = Interactive.defaultOptions;
 
@@ -33,7 +34,7 @@ describe('Performance: interactive audit', () => {
     return Interactive.audit(artifacts, {options, settings}).then(output => {
       assert.equal(output.score, 1);
       assert.equal(Math.round(output.rawValue), 1582);
-      assert.equal(output.displayValue, '1,580\xa0ms');
+      assert.equal(Util.formatDisplayValue(output.displayValue), '1,580\xa0ms');
     });
   });
 
@@ -51,7 +52,7 @@ describe('Performance: interactive audit', () => {
     return Interactive.audit(artifacts, {options, settings}).then(output => {
       assert.equal(output.score, 0.97);
       assert.equal(Math.round(output.rawValue), 2712);
-      assert.equal(output.displayValue, '2,710\xa0ms');
+      assert.equal(Util.formatDisplayValue(output.displayValue), '2,710\xa0ms');
     });
   });
 });

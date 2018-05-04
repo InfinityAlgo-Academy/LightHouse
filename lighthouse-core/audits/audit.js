@@ -166,8 +166,6 @@ class Audit {
       result.rawValue = true;
     }
 
-    const displayValue = result.displayValue ? `${result.displayValue}` : '';
-
     let auditDescription = audit.meta.description;
     if (audit.meta.failureDescription) {
       if (score < Util.PASS_THRESHOLD) {
@@ -177,7 +175,7 @@ class Audit {
 
     return {
       score,
-      displayValue,
+      displayValue: result.displayValue || '',
       rawValue: result.rawValue,
       error: result.error,
       debugString: result.debugString,

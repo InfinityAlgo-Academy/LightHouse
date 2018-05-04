@@ -23,7 +23,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     titleEl.textContent = audit.result.description;
 
     const valueEl = this.dom.find('.lh-metric__value', tmpl);
-    valueEl.textContent = audit.result.displayValue;
+    valueEl.textContent = Util.formatDisplayValue(audit.result.displayValue);
 
     const descriptionEl = this.dom.find('.lh-metric__description', tmpl);
     descriptionEl.appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.helpText));
@@ -78,7 +78,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       return element;
     }
 
-    const elemAttrs = {title: audit.result.displayValue};
+    const elemAttrs = {title: Util.formatDisplayValue(audit.result.displayValue)};
     const sparklineContainerEl = this.dom.createChildOf(summary, 'div',
         'lh-load-opportunity__sparkline', elemAttrs);
     const sparklineEl = this.dom.createChildOf(sparklineContainerEl, 'div', 'lh-sparkline');

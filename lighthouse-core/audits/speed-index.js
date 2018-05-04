@@ -56,7 +56,7 @@ class SpeedIndex extends Audit {
         context.options.scoreMedian
       ),
       rawValue: metricResult.timing,
-      displayValue: Util.formatMilliseconds(metricResult.timing),
+      displayValue: [Util.MS_DISPLAY_VALUE, metricResult.timing],
     };
   }
 }

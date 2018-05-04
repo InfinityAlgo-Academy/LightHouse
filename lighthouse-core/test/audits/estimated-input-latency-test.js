@@ -7,6 +7,7 @@
 
 const Audit = require('../../audits/estimated-input-latency');
 const Runner = require('../../runner');
+const Util = require('../../report/html/renderer/util');
 const assert = require('assert');
 const options = Audit.defaultOptions;
 
@@ -29,7 +30,7 @@ describe('Performance: estimated-input-latency audit', () => {
     return Audit.audit(artifacts, {options, settings}).then(output => {
       assert.equal(output.debugString, undefined);
       assert.equal(Math.round(output.rawValue * 10) / 10, 17.1);
-      assert.equal(output.displayValue, '17\xa0ms');
+      assert.equal(Util.formatDisplayValue(output.displayValue), '17\xa0ms');
       assert.equal(output.score, 1);
     });
   });
