@@ -34,7 +34,7 @@ describe('CLI run', function() {
       assert.equal(results.audits.viewport.rawValue, false);
 
       // passed results match saved results
-      assert.strictEqual(results.fetchedAt, lhr.fetchedAt);
+      assert.strictEqual(results.fetchTime, lhr.fetchTime);
       assert.strictEqual(results.url, lhr.url);
       assert.strictEqual(results.audits.viewport.rawValue, lhr.audits.viewport.rawValue);
       assert.strictEqual(

@@ -14,7 +14,7 @@ declare global {
   module LH {
     export interface Artifacts extends ComputedArtifacts {
       // Created by by gather-runner
-      fetchedAt: string;
+      fetchTime: string;
       LighthouseRunWarnings: string[];
       UserAgent: string;
       traces: {[passName: string]: Trace};

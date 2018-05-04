@@ -413,7 +413,7 @@ class GatherRunner {
     /** @type {GathererResults} */
     const gathererResults = {
       LighthouseRunWarnings: [],
-      fetchedAt: [(new Date()).toJSON()],
+      fetchTime: [(new Date()).toJSON()],
     };
 
     return driver.connect()

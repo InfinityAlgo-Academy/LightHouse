@@ -15,7 +15,7 @@ declare global {
       /** The post-redirects URL that Lighthouse loaded. */
       url: string;
       /** The ISO-8601 timestamp of when the results were generated. */
-      fetchedAt: string;
+      fetchTime: string;
       /** The version of Lighthouse with which these results were generated. */
       lighthouseVersion: string;
       /** An object containing the results of the audits, keyed by the audits' `id` identifier. */
@@ -33,8 +33,6 @@ declare global {
       runWarnings: string[];
       /** The User-Agent string of the browser used run Lighthouse for these results. */
       userAgent: string;
-      /** Deprecated. Use fetchedAt instead. */
-      generatedTime?: string;
     }
 
     // Result namespace

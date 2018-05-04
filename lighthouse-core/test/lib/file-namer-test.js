@@ -13,7 +13,7 @@ describe('file-namer helper', () => {
   it('generates filename prefixes', () => {
     const results = {
       url: 'https://testexample.com',
-      fetchedAt: '2017-01-06T02:34:56.217Z',
+      fetchTime: '2017-01-06T02:34:56.217Z',
     };
     const str = getFilenamePrefix(results);
     // we want the filename to match user timezone, however these tests will run on multiple TZs

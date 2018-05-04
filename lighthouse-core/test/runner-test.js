@@ -411,7 +411,7 @@ describe('Runner', () => {
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
       assert.ok(results.lhr.lighthouseVersion);
-      assert.ok(results.lhr.fetchedAt);
+      assert.ok(results.lhr.fetchTime);
       assert.equal(results.lhr.initialUrl, url);
       assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
       assert.equal(results.lhr.audits['content-width'].name, 'content-width');
@@ -441,7 +441,7 @@ describe('Runner', () => {
 
     return Runner.run(null, {url, config, driverMock}).then(results => {
       assert.ok(results.lhr.lighthouseVersion);
-      assert.ok(results.lhr.fetchedAt);
+      assert.ok(results.lhr.fetchTime);
       assert.equal(results.lhr.initialUrl, url);
       assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
       assert.equal(results.lhr.audits['content-width'].name, 'content-width');

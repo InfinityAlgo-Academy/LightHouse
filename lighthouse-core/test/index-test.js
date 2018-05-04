@@ -102,7 +102,7 @@ describe('Module Tests', function() {
       assert.ok(/<html/.test(results.report), 'did not create html report');
       assert.ok(results.artifacts.ViewportDimensions, 'did not set artifacts');
       assert.ok(results.lhr.lighthouseVersion);
-      assert.ok(results.lhr.fetchedAt);
+      assert.ok(results.lhr.fetchTime);
       assert.equal(results.lhr.url, exampleUrl);
       assert.equal(results.lhr.initialUrl, exampleUrl);
       assert.ok(Array.isArray(results.lhr.reportCategories));

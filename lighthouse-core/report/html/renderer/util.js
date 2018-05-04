@@ -39,7 +39,7 @@ class Util {
     if (typeof displayValue === 'string') return displayValue;
 
     const replacementRegex = /%([0-9]*(\.[0-9]+)?d|s)/;
-    const template = /** @type {string} */ displayValue.shift();
+    const template = /** @type {string} */ (displayValue.shift());
     if (typeof template !== 'string') {
       // First value should always be the format string, but we don't want to fail to build
       // a report, return a placeholder.

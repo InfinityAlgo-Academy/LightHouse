@@ -11,7 +11,7 @@ The top-level Lighthouse Result object (LHR) is what the lighthouse node module 
 | Name | Description |
 | - | - |
 | lighthouseVersion | The version of Lighthouse with which this result were generated. |
-| fetchedAt | The ISO-8601 timestamp of when the result was generated. |
+| fetchTime | The ISO-8601 timestamp of when the result was generated. |
 | userAgent | The user agent string of the version of Chrome that was used by Lighthouse. |
 | initialUrl | The URL that was supplied to Lighthouse and initially navigated to. |
 | url | The URL that Lighthouse ended up auditing after redirects were followed. |
@@ -26,7 +26,7 @@ The top-level Lighthouse Result object (LHR) is what the lighthouse node module 
 ```json
 {
   "lighthouseVersion": "2.4.0",
-  "fetchedAt": "2017-10-05T20:50:54.185Z",
+  "fetchTime": "2017-10-05T20:50:54.185Z",
   "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3233.0 Safari/537.36",
   "initialUrl": "http://example.com",
   "url": "https://www.example.com/",
