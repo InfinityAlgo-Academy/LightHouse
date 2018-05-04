@@ -22,7 +22,6 @@ class UsesWebPImages extends ByteEfficiencyAudit {
     return {
       name: 'uses-webp-images',
       description: 'Serve images in next-gen formats',
-      informative: true,
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       helpText: 'Image formats like JPEG 2000, JPEG XR, and WebP often provide better ' +
         'compression than PNG or JPEG, which means faster downloads and less data consumption. ' +

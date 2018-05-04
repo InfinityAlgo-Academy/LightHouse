@@ -15,7 +15,7 @@ class NetworkRequests extends Audit {
   static get meta() {
     return {
       name: 'network-requests',
-      informative: true,
+      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       description: 'Network Requests',
       helpText: 'Lists the network requests that were made during page load.',
       requiredArtifacts: ['devtoolsLogs'],

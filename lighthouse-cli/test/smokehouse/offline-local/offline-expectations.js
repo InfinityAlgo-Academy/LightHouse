@@ -81,22 +81,22 @@ module.exports = [
         score: 0,
       },
       'aria-valid-attr': {
-        notApplicable: true,
+        scoreDisplayMode: 'not-applicable',
       },
       'aria-allowed-attr': {
-        notApplicable: true,
+        scoreDisplayMode: 'not-applicable',
       },
       'color-contrast': {
         score: 1,
       },
       'image-alt': {
-        notApplicable: true,
+        scoreDisplayMode: 'not-applicable',
       },
       'label': {
-        notApplicable: true,
+        scoreDisplayMode: 'not-applicable',
       },
       'tabindex': {
-        notApplicable: true,
+        scoreDisplayMode: 'not-applicable',
       },
       'content-width': {
         score: 1,
@@ -144,10 +144,10 @@ module.exports = [
         score: 0,
       },
       'aria-valid-attr': {
-        notApplicable: true,
+        scoreDisplayMode: 'not-applicable',
       },
       'aria-allowed-attr': {
-        notApplicable: true,
+        scoreDisplayMode: 'not-applicable',
       },
       'color-contrast': {
         score: 1,
@@ -156,10 +156,10 @@ module.exports = [
         score: 0,
       },
       'label': {
-        notApplicable: true,
+        scoreDisplayMode: 'not-applicable',
       },
       'tabindex': {
-        notApplicable: true,
+        scoreDisplayMode: 'not-applicable',
       },
       'content-width': {
         score: 1,

@@ -90,6 +90,6 @@ describe('Audit', () => {
     const providedResult = {rawValue: true, notApplicable: true};
     const result = Audit.generateAuditResult(B, providedResult);
     assert.equal(result.score, 1);
-    assert.equal(result.informative, true);
+    assert.equal(result.scoreDisplayMode, 'not-applicable');
   });
 });

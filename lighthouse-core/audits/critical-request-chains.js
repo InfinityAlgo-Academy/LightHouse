@@ -16,7 +16,7 @@ class CriticalRequestChains extends Audit {
     return {
       name: 'critical-request-chains',
       description: 'Critical Request Chains',
-      informative: true,
+      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       helpText: 'The Critical Request Chains below show you what resources are ' +
           'issued with a high priority. Consider reducing ' +
           'the length of chains, reducing the download size of resources, or ' +

@@ -14,7 +14,7 @@ class Metrics extends Audit {
   static get meta() {
     return {
       name: 'metrics',
-      informative: true,
+      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       description: 'Metrics',
       helpText: 'Collects all available metrics.',
       requiredArtifacts: ['traces', 'devtoolsLogs'],

@@ -24,7 +24,6 @@ class MixedContent extends Audit {
     return {
       name: 'mixed-content',
       description: 'All resources loaded are secure',
-      informative: true,
       failureDescription: 'Some insecure resources can be upgraded to HTTPS',
       helpText: `Mixed content warnings can prevent you from upgrading to HTTPS.
       This audit shows which insecure resources this page uses that can be

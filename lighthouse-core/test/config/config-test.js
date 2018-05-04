@@ -271,6 +271,19 @@ describe('Config', () => {
     }), /unknown group missing-group/);
   });
 
+  it('throws when a manual audit has weight', () => {
+    return assert.throws(_ => new Config({
+      audits: ['manual/pwa-cross-browser'],
+      categories: {
+        accessibility: {
+          audits: [
+            {id: 'pwa-cross-browser', weight: 10},
+          ],
+        },
+      },
+    }), /cross-browser .*has a positive weight/);
+  });
+
   it('filters the config', () => {
     const config = new Config({
       settings: {

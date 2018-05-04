@@ -150,8 +150,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const diagnosticAudits = category.audits
         .filter(audit => audit.group === 'diagnostics' && audit.result.score < 1)
         .sort((a, b) => {
-          const scoreA = a.result.informative ? 100 : a.result.score;
-          const scoreB = b.result.informative ? 100 : b.result.score;
+          const scoreA = a.result.scoreDisplayMode === 'informative' ? 100 : a.result.score;
+          const scoreB = b.result.scoreDisplayMode === 'informative' ? 100 : b.result.score;
           return scoreA - scoreB;
         });
 

@@ -26,12 +26,15 @@ class Audit {
   }
 
   /**
-   * @return {LH.Audit.ScoringModes}
+   * @return {LH.Audit.ScoreDisplayModes}
    */
   static get SCORING_MODES() {
     return {
       NUMERIC: 'numeric',
       BINARY: 'binary',
+      MANUAL: 'manual',
+      INFORMATIVE: 'informative',
+      NOT_APPLICABLE: 'not-applicable',
     };
   }
 
@@ -125,7 +128,7 @@ class Audit {
   /**
    * @param {typeof Audit} audit
    * @param {LH.Audit.Product} result
-   * @return {{score: number, scoreDisplayMode: LH.Audit.ScoringModeValue}}
+   * @return {{score: number, scoreDisplayMode: LH.Audit.ScoreDisplayMode}}
    */
   static _normalizeAuditScore(audit, result) {
     // Cast true/false to 1/0
@@ -155,14 +158,12 @@ class Audit {
       throw new Error('generateAuditResult requires a rawValue');
     }
 
-    // eslint-disable-next-line prefer-const
     let {score, scoreDisplayMode} = Audit._normalizeAuditScore(audit, result);
 
     // If the audit was determined to not apply to the page, we'll reset it as informative only
-    let informative = audit.meta.informative;
     if (result.notApplicable) {
       score = 1;
-      informative = true;
+      scoreDisplayMode = Audit.SCORING_MODES.NOT_APPLICABLE;
       result.rawValue = true;
     }
 
@@ -181,9 +182,6 @@ class Audit {
       debugString: result.debugString,
       extendedInfo: result.extendedInfo,
       scoreDisplayMode,
-      informative,
-      manual: audit.meta.manual,
-      notApplicable: result.notApplicable,
       name: audit.meta.name,
       description: auditDescription,
       helpText: audit.meta.helpText,

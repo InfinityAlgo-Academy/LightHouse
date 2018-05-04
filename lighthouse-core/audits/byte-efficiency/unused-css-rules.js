@@ -20,7 +20,6 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
     return {
       name: 'unused-css-rules',
       description: 'Unused CSS rules',
-      informative: true,
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       helpText: 'Remove unused rules from stylesheets to reduce unnecessary ' +
           'bytes consumed by network activity. ' +

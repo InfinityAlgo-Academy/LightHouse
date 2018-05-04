@@ -29,7 +29,6 @@ class OffscreenImages extends ByteEfficiencyAudit {
     return {
       name: 'offscreen-images',
       description: 'Defer offscreen images',
-      informative: true,
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       helpText:
         'Consider lazy-loading offscreen and hidden images after all critical resources have ' +

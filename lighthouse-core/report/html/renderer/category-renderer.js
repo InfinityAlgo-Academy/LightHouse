@@ -50,14 +50,9 @@ class CategoryRenderer {
       header.appendChild(this.detailsRenderer.render(audit.result.details));
     }
 
-    this.dom.find('.lh-audit__index', auditEl).textContent = `${index + 1}`;
+    auditEl.classList.add(`lh-audit--${audit.result.scoreDisplayMode}`);
 
-    if (audit.result.informative) {
-      auditEl.classList.add('lh-audit--informative');
-    }
-    if (audit.result.manual) {
-      auditEl.classList.add('lh-audit--manual');
-    }
+    this.dom.find('.lh-audit__index', auditEl).textContent = `${index + 1}`;
 
     this._setRatingClass(auditEl, audit.result.score, scoreDisplayMode, audit.result.error);
 
@@ -255,7 +250,7 @@ class CategoryRenderer {
     this.createPermalinkSpan(element, category.id);
     element.appendChild(this.renderCategoryScore(category));
 
-    const manualAudits = category.audits.filter(audit => audit.result.manual);
+    const manualAudits = category.audits.filter(item => item.result.scoreDisplayMode === 'manual');
     const nonManualAudits = category.audits.filter(audit => !manualAudits.includes(audit));
 
     const auditsGroupedByGroup = /** @type {!Object<string,
@@ -280,7 +275,7 @@ class CategoryRenderer {
         group = auditsUngrouped;
       }
 
-      if (audit.result.notApplicable) {
+      if (audit.result.scoreDisplayMode === 'not-applicable') {
         group.notApplicable.push(audit);
       } else if (audit.result.score === 1 && !audit.result.debugString) {
         group.passed.push(audit);

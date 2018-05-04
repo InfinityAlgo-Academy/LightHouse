@@ -6,6 +6,8 @@
 
 'use strict';
 
+const Audit = require('./audits/audit');
+
 /**
  * Clamp figure to 2 decimal places
  * @param {number} val
@@ -54,7 +56,7 @@ class ReportScoring {
         // will still be included in the final report json and displayed in the report as
         // "Not Applicable".
         const result = resultsByAuditId[member.id];
-        if (result.notApplicable) {
+        if (result.scoreDisplayMode === Audit.SCORING_MODES.NOT_APPLICABLE) {
           member.weight = 0;
         }
         return member;

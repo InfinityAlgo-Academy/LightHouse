@@ -64,9 +64,9 @@ describe('ReportScoring', () => {
 
     it('should weight notApplicable audits as 0', () => {
       const resultsByAuditId = {
-        'my-boolean-audit': {score: 1, extendedInfo: {}, notApplicable: true},
+        'my-boolean-audit': {score: 1, extendedInfo: {}, scoreDisplayMode: 'not-applicable'},
         'my-scored-audit': {score: 1},
-        'my-failed-audit': {score: 0.2, notApplicable: true},
+        'my-failed-audit': {score: 0.2, scoreDisplayMode: 'not-applicable'},
         'my-boolean-failed-audit': {score: 0},
       };
 

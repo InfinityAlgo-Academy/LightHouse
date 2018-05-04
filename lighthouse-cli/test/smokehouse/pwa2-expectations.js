@@ -104,15 +104,15 @@ module.exports = [
       // "manual" audits. Just verify in the results.
       'pwa-cross-browser': {
         score: 0,
-        manual: true,
+        scoreDisplayMode: 'manual',
       },
       'pwa-page-transitions': {
         score: 0,
-        manual: true,
+        scoreDisplayMode: 'manual',
       },
       'pwa-each-page-has-url': {
         score: 0,
-        manual: true,
+        scoreDisplayMode: 'manual',
       },
     },
   },
@@ -215,15 +215,15 @@ module.exports = [
       // "manual" audits. Just verify in the results.
       'pwa-cross-browser': {
         score: 0,
-        manual: true,
+        scoreDisplayMode: 'manual',
       },
       'pwa-page-transitions': {
         score: 0,
-        manual: true,
+        scoreDisplayMode: 'manual',
       },
       'pwa-each-page-has-url': {
         score: 0,
-        manual: true,
+        scoreDisplayMode: 'manual',
       },
     },
   },

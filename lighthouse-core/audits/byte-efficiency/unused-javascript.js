@@ -17,7 +17,6 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     return {
       name: 'unused-javascript',
       description: 'Unused JavaScript',
-      informative: true,
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       helpText: 'Remove unused JavaScript to reduce bytes consumed by network activity.',
       requiredArtifacts: ['JsUsage', 'devtoolsLogs'],

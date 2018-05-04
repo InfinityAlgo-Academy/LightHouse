@@ -53,7 +53,6 @@ class RenderBlockingResources extends Audit {
     return {
       name: 'render-blocking-resources',
       description: 'Eliminate render-blocking resources',
-      informative: true,
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       helpText:
         'Resources are blocking the first paint of your page. Consider ' +

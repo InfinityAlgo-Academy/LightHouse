@@ -21,7 +21,7 @@ class ScreenshotThumbnails extends Audit {
   static get meta() {
     return {
       name: 'screenshot-thumbnails',
-      informative: true,
+      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       description: 'Screenshot Thumbnails',
       helpText: 'This is what the load of your site looked like.',
       requiredArtifacts: ['traces', 'devtoolsLogs'],

@@ -27,7 +27,6 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     return {
       name: 'uses-responsive-images',
       description: 'Properly size images',
-      informative: true,
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       helpText:
         'Serve images that are appropriately-sized to save cellular data ' +

@@ -24,7 +24,6 @@ class UsesRelPreconnectAudit extends Audit {
     return {
       name: 'uses-rel-preconnect',
       description: 'Avoid multiple, costly round trips to any origin',
-      informative: true,
       helpText:
         'Consider adding preconnect or dns-prefetch resource hints to establish early ' +
         `connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).`,
