@@ -61,58 +61,56 @@ class MainThreadWorkBreakdown extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const trace = artifacts.traces[MainThreadWorkBreakdown.DEFAULT_PASS];
 
-    return artifacts.requestDevtoolsTimelineModel(trace)
-      .then(devtoolsTimelineModel => {
-        const executionTimings = MainThreadWorkBreakdown.getExecutionTimingsByCategory(
-          devtoolsTimelineModel
-        );
-        let totalExecutionTime = 0;
+    const devtoolsTimelineModel = await artifacts.requestDevtoolsTimelineModel(trace);
+    const executionTimings = MainThreadWorkBreakdown.getExecutionTimingsByCategory(
+      devtoolsTimelineModel
+    );
+    let totalExecutionTime = 0;
 
-        const extendedInfo = {};
-        const categoryTotals = {};
-        const results = Array.from(executionTimings).map(([eventName, duration]) => {
-          totalExecutionTime += duration;
-          extendedInfo[eventName] = duration;
-          const groupName = taskToGroup[eventName];
+    const extendedInfo = {};
+    const categoryTotals = {};
+    const results = Array.from(executionTimings).map(([eventName, duration]) => {
+      totalExecutionTime += duration;
+      extendedInfo[eventName] = duration;
+      const groupName = taskToGroup[eventName];
 
-          const categoryTotal = categoryTotals[groupName] || 0;
-          categoryTotals[groupName] = categoryTotal + duration;
+      const categoryTotal = categoryTotals[groupName] || 0;
+      categoryTotals[groupName] = categoryTotal + duration;
 
-          return {
-            category: eventName,
-            group: groupName,
-            duration: Util.formatMilliseconds(duration, 1),
-          };
-        });
+      return {
+        category: eventName,
+        group: groupName,
+        duration: Util.formatMilliseconds(duration, 1),
+      };
+    });
 
-        const headings = [
-          {key: 'group', itemType: 'text', text: 'Category'},
-          {key: 'category', itemType: 'text', text: 'Work'},
-          {key: 'duration', itemType: 'text', text: 'Time spent'},
-        ];
-        // @ts-ignore - stableSort added to Array by WebInspector
-        results.stableSort((a, b) => categoryTotals[b.group] - categoryTotals[a.group]);
-        const tableDetails = MainThreadWorkBreakdown.makeTableDetails(headings, results);
+    const headings = [
+      {key: 'group', itemType: 'text', text: 'Category'},
+      {key: 'category', itemType: 'text', text: 'Work'},
+      {key: 'duration', itemType: 'text', text: 'Time spent'},
+    ];
+    // @ts-ignore - stableSort added to Array by WebInspector
+    results.stableSort((a, b) => categoryTotals[b.group] - categoryTotals[a.group]);
+    const tableDetails = MainThreadWorkBreakdown.makeTableDetails(headings, results);
 
-        const score = Audit.computeLogNormalScore(
-          totalExecutionTime,
-          context.options.scorePODR,
-          context.options.scoreMedian
-        );
+    const score = Audit.computeLogNormalScore(
+      totalExecutionTime,
+      context.options.scorePODR,
+      context.options.scoreMedian
+    );
 
-        return {
-          score,
-          rawValue: totalExecutionTime,
-          displayValue: ['%d\xa0ms', totalExecutionTime],
-          details: tableDetails,
-          extendedInfo: {
-            value: extendedInfo,
-          },
-        };
-      });
+    return {
+      score,
+      rawValue: totalExecutionTime,
+      displayValue: ['%d\xa0ms', totalExecutionTime],
+      details: tableDetails,
+      extendedInfo: {
+        value: extendedInfo,
+      },
+    };
   }
 }
 

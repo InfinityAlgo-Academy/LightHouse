@@ -77,60 +77,59 @@ class BootupTime extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const trace = artifacts.traces[BootupTime.DEFAULT_PASS];
-    return artifacts.requestDevtoolsTimelineModel(trace).then(devtoolsTimelineModel => {
-      const executionTimings = BootupTime.getExecutionTimingsByURL(devtoolsTimelineModel);
-      let totalBootupTime = 0;
-      /** @type {Object<string, Object<string, number>>} */
-      const extendedInfo = {};
+    const devtoolsTimelineModel = await artifacts.requestDevtoolsTimelineModel(trace);
+    const executionTimings = BootupTime.getExecutionTimingsByURL(devtoolsTimelineModel);
+    let totalBootupTime = 0;
+    /** @type {Object<string, Object<string, number>>} */
+    const extendedInfo = {};
 
-      const headings = [
-        {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'scripting', itemType: 'text', text: groupIdToName.scripting},
-        {key: 'scriptParseCompile', itemType: 'text', text: groupIdToName.scriptParseCompile},
-      ];
+    const headings = [
+      {key: 'url', itemType: 'url', text: 'URL'},
+      {key: 'scripting', itemType: 'text', text: groupIdToName.scripting},
+      {key: 'scriptParseCompile', itemType: 'text', text: groupIdToName.scriptParseCompile},
+    ];
 
-      // map data in correct format to create a table
-      const results = Array.from(executionTimings)
-        .map(([url, groups]) => {
-          // Add up the totalBootupTime for all the taskGroups
-          totalBootupTime += Object.keys(groups).reduce((sum, name) => sum += groups[name], 0);
-          extendedInfo[url] = groups;
+    // map data in correct format to create a table
+    const results = Array.from(executionTimings)
+      .map(([url, groups]) => {
+        // Add up the totalBootupTime for all the taskGroups
+        totalBootupTime += Object.keys(groups).reduce((sum, name) => sum += groups[name], 0);
+        extendedInfo[url] = groups;
 
-          const scriptingTotal = groups[groupIdToName.scripting] || 0;
-          const parseCompileTotal = groups[groupIdToName.scriptParseCompile] || 0;
-          return {
-            url: url,
-            sum: scriptingTotal + parseCompileTotal,
-            // Only reveal the javascript task costs
-            // Later we can account for forced layout costs, etc.
-            scripting: Util.formatMilliseconds(scriptingTotal, 1),
-            scriptParseCompile: Util.formatMilliseconds(parseCompileTotal, 1),
-          };
-        })
-        .filter(result => result.sum >= THRESHOLD_IN_MS)
-        .sort((a, b) => b.sum - a.sum);
+        const scriptingTotal = groups[groupIdToName.scripting] || 0;
+        const parseCompileTotal = groups[groupIdToName.scriptParseCompile] || 0;
+        return {
+          url: url,
+          sum: scriptingTotal + parseCompileTotal,
+          // Only reveal the javascript task costs
+          // Later we can account for forced layout costs, etc.
+          scripting: Util.formatMilliseconds(scriptingTotal, 1),
+          scriptParseCompile: Util.formatMilliseconds(parseCompileTotal, 1),
+        };
+      })
+      .filter(result => result.sum >= THRESHOLD_IN_MS)
+      .sort((a, b) => b.sum - a.sum);
 
-      const summary = {wastedMs: totalBootupTime};
-      const details = BootupTime.makeTableDetails(headings, results, summary);
+    const summary = {wastedMs: totalBootupTime};
+    const details = BootupTime.makeTableDetails(headings, results, summary);
 
-      const score = Audit.computeLogNormalScore(
-        totalBootupTime,
-        context.options.scorePODR,
-        context.options.scoreMedian
-      );
+    const score = Audit.computeLogNormalScore(
+      totalBootupTime,
+      context.options.scorePODR,
+      context.options.scoreMedian
+    );
 
-      return {
-        score,
-        rawValue: totalBootupTime,
-        displayValue: [Util.MS_DISPLAY_VALUE, totalBootupTime],
-        details,
-        extendedInfo: {
-          value: extendedInfo,
-        },
-      };
-    });
+    return {
+      score,
+      rawValue: totalBootupTime,
+      displayValue: [Util.MS_DISPLAY_VALUE, totalBootupTime],
+      details,
+      extendedInfo: {
+        value: extendedInfo,
+      },
+    };
   }
 }
 

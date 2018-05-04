@@ -42,68 +42,68 @@ class TotalByteWeight extends ByteEfficiencyAudit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
-    return Promise.all([
+    const [networkRecords, networkThroughput] = await Promise.all([
       artifacts.requestNetworkRecords(devtoolsLogs),
       artifacts.requestNetworkThroughput(devtoolsLogs),
-    ]).then(([networkRecords, networkThroughput]) => {
-      let totalBytes = 0;
-      /** @type {Array<{url: string, totalBytes: number, totalMs: number}>} */
-      let results = [];
-      networkRecords.forEach(record => {
-        // exclude data URIs since their size is reflected in other resources
-        // exclude unfinished requests since they won't have transfer size information
-        if (record.parsedURL.scheme === 'data' || !record.finished) return;
+    ]);
 
-        const result = {
-          url: record.url,
-          totalBytes: record.transferSize,
-          totalMs: ByteEfficiencyAudit.bytesToMs(record.transferSize, networkThroughput),
-        };
+    let totalBytes = 0;
+    /** @type {Array<{url: string, totalBytes: number, totalMs: number}>} */
+    let results = [];
+    networkRecords.forEach(record => {
+      // exclude data URIs since their size is reflected in other resources
+      // exclude unfinished requests since they won't have transfer size information
+      if (record.parsedURL.scheme === 'data' || !record.finished) return;
 
-        totalBytes += result.totalBytes;
-        results.push(result);
-      });
-      const totalCompletedRequests = results.length;
-      results = results.sort((itemA, itemB) => itemB.totalBytes - itemA.totalBytes).slice(0, 10);
-
-      const score = ByteEfficiencyAudit.computeLogNormalScore(
-        totalBytes,
-        context.options.scorePODR,
-        context.options.scoreMedian
-      );
-
-      const headings = [
-        {key: 'url', itemType: 'url', text: 'URL'},
-        {
-          key: 'totalBytes',
-          itemType: 'bytes',
-          displayUnit: 'kb',
-          granularity: 1,
-          text: 'Total Size',
-        },
-        {key: 'totalMs', itemType: 'ms', text: 'Transfer Time'},
-      ];
-
-      const tableDetails = ByteEfficiencyAudit.makeTableDetails(headings, results);
-
-      return {
-        score,
-        rawValue: totalBytes,
-        displayValue: [
-          'Total size was %d\xa0KB',
-          totalBytes / 1024,
-        ],
-        extendedInfo: {
-          value: {
-            results,
-            totalCompletedRequests,
-          },
-        },
-        details: tableDetails,
+      const result = {
+        url: record.url,
+        totalBytes: record.transferSize,
+        totalMs: ByteEfficiencyAudit.bytesToMs(record.transferSize, networkThroughput),
       };
+
+      totalBytes += result.totalBytes;
+      results.push(result);
     });
+    const totalCompletedRequests = results.length;
+    results = results.sort((itemA, itemB) => itemB.totalBytes - itemA.totalBytes).slice(0, 10);
+
+    const score = ByteEfficiencyAudit.computeLogNormalScore(
+      totalBytes,
+      context.options.scorePODR,
+      context.options.scoreMedian
+    );
+
+    const headings = [
+      {key: 'url', itemType: 'url', text: 'URL'},
+      {
+        key: 'totalBytes',
+        itemType: 'bytes',
+        displayUnit: 'kb',
+        granularity: 1,
+        text: 'Total Size',
+      },
+      {key: 'totalMs', itemType: 'ms', text: 'Transfer Time'},
+    ];
+
+    const tableDetails = ByteEfficiencyAudit.makeTableDetails(headings, results);
+
+    return {
+      score,
+      rawValue: totalBytes,
+      displayValue: [
+        'Total size was %d\xa0KB',
+        totalBytes / 1024,
+      ],
+      extendedInfo: {
+        value: {
+          results,
+          totalCompletedRequests,
+        },
+      },
+      details: tableDetails,
+    };
   }
 }
 

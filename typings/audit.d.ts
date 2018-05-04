@@ -23,7 +23,11 @@ declare global {
 
     export type ScoringModeValue = Audit.ScoringModes[keyof Audit.ScoringModes];
 
-    export type DisplayValue = string | Array<string|number>;
+    interface DisplayValueArray extends Array<string|number> {
+      0: string;
+    }
+
+    export type DisplayValue = string | DisplayValueArray;
 
     export interface Meta {
       name: string;
