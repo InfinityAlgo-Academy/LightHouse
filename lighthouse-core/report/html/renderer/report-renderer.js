@@ -106,7 +106,7 @@ class ReportRenderer {
 
       this._dom.find('.leftnav-item__category', navItem).textContent = category.name;
       const score = this._dom.find('.leftnav-item__score', navItem);
-      score.classList.add(`lh-score__value--${Util.calculateRating(category.score)}`);
+      score.classList.add(`lh-audit--${Util.calculateRating(category.score)}`);
       score.textContent = Math.round(100 * category.score);
       nav.appendChild(navItem);
     }

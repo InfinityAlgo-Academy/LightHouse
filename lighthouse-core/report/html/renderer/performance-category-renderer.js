@@ -42,10 +42,11 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
   /**
    * @param {!ReportRenderer.AuditJSON} audit
+   * @param {number} index
    * @param {number} scale
    * @return {!Element}
    */
-  _renderOpportunity(audit, scale) {
+  _renderOpportunity(audit, index, scale) {
     const element = this.dom.createElement('details', [
       'lh-load-opportunity',
       `lh-load-opportunity--${Util.calculateRating(audit.result.score)}`,
@@ -53,6 +54,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     ].join(' '));
     element.id = audit.result.name;
 
+    // TODO(paulirish): use a template instead.
     const summary = this.dom.createChildOf(element, 'summary', 'lh-load-opportunity__summary ' +
     'lh-expandable-details__summary');
     const titleEl = this.dom.createChildOf(summary, 'div', 'lh-load-opportunity__title');
@@ -161,17 +163,24 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const maxWaste = Math.max(...opportunityAudits.map(audit => audit.result.rawValue));
       const scale = Math.ceil(maxWaste / 1000) * 1000;
       const groupEl = this.renderAuditGroup(groups['load-opportunities'], {expandable: false});
-      opportunityAudits.forEach(item => groupEl.appendChild(this._renderOpportunity(item, scale)));
+      opportunityAudits.forEach((item, i) =>
+          groupEl.appendChild(this._renderOpportunity(item, i, scale)));
       groupEl.open = true;
       element.appendChild(groupEl);
     }
 
     // Diagnostics
     const diagnosticAudits = category.audits
-        .filter(audit => audit.group === 'diagnostics' && audit.result.score < 1);
+        .filter(audit => audit.group === 'diagnostics' && audit.result.score < 1)
+        .sort((a, b) => {
+          const scoreA = a.result.informative ? 100 : a.result.score;
+          const scoreB = b.result.informative ? 100 : b.result.score;
+          return scoreA - scoreB;
+        });
+
     if (diagnosticAudits.length) {
       const groupEl = this.renderAuditGroup(groups['diagnostics'], {expandable: false});
-      diagnosticAudits.forEach(item => groupEl.appendChild(this.renderAudit(item)));
+      diagnosticAudits.forEach((item, i) => groupEl.appendChild(this.renderAudit(item, i)));
       groupEl.open = true;
       element.appendChild(groupEl);
     }
@@ -179,7 +188,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const passedElements = category.audits
         .filter(audit => (audit.group === 'load-opportunities' || audit.group === 'diagnostics') &&
             audit.result.score === 1)
-        .map(audit => this.renderAudit(audit));
+        .map((audit, i) => this.renderAudit(audit, i));
 
     if (!passedElements.length) return element;
 
