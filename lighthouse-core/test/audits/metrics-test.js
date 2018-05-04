@@ -29,32 +29,39 @@ describe('Performance: metrics', () => {
     const result = await Audit.audit(artifacts, {settings});
 
     assert.deepStrictEqual(result.details.items[0], {
-      metricName: 'firstContentfulPaint',
-      timing: 2038,
-      timestamp: undefined,
-    });
-
-    const metrics = {};
-    result.details.items.forEach(item => metrics[item.metricName] = Math.round(item.timing));
-
-    assert.deepStrictEqual(metrics, {
       firstContentfulPaint: 2038,
+      firstContentfulPaintTs: undefined,
       firstMeaningfulPaint: 2851,
+      firstMeaningfulPaintTs: undefined,
       firstCPUIdle: 5308,
+      firstCPUIdleTs: undefined,
       interactive: 5308,
+      interactiveTs: undefined,
       speedIndex: 2063,
+      speedIndexTs: undefined,
       estimatedInputLatency: 104,
+      estimatedInputLatencyTs: undefined,
 
       observedNavigationStart: 0,
+      observedNavigationStartTs: 225414172015,
       observedFirstPaint: 499,
+      observedFirstPaintTs: 225414670868,
       observedFirstContentfulPaint: 499,
+      observedFirstContentfulPaintTs: 225414670885,
       observedFirstMeaningfulPaint: 783,
+      observedFirstMeaningfulPaintTs: 225414955343,
       observedTraceEnd: 12540,
+      observedTraceEndTs: 225426711887,
       observedLoad: 2199,
+      observedLoadTs: 225416370913,
       observedDomContentLoaded: 560,
+      observedDomContentLoadedTs: 225414732309,
       observedFirstVisualChange: 520,
+      observedFirstVisualChangeTs: 225414692015,
       observedLastVisualChange: 818,
+      observedLastVisualChangeTs: 225414990015,
       observedSpeedIndex: 605,
+      observedSpeedIndexTs: 225414776724,
     });
   });
 });

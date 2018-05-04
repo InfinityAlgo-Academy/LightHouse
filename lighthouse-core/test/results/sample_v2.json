@@ -1523,99 +1523,39 @@
       "description": "Metrics",
       "helpText": "Collects all available metrics.",
       "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "metricName",
-            "itemType": "text",
-            "text": "Name"
-          },
-          {
-            "key": "timing",
-            "itemType": "ms",
-            "granularity": 10,
-            "text": "Value (ms)"
-          }
-        ],
         "items": [
           {
-            "metricName": "firstContentfulPaint",
-            "timing": 3969,
-            "timestamp": 185607289047
-          },
-          {
-            "metricName": "firstMeaningfulPaint",
-            "timing": 3969,
-            "timestamp": 185607289048
-          },
-          {
-            "metricName": "firstCPUIdle",
-            "timing": 4927,
-            "timestamp": 185608247190
-          },
-          {
-            "metricName": "interactive",
-            "timing": 4927,
-            "timestamp": 185608247190
-          },
-          {
-            "metricName": "speedIndex",
-            "timing": 4417,
-            "timestamp": 185607736912
-          },
-          {
-            "metricName": "estimatedInputLatency",
-            "timing": 16
-          },
-          {
-            "metricName": "observedNavigationStart",
-            "timing": 0,
-            "timestamp": 185603319912
-          },
-          {
-            "metricName": "observedFirstPaint",
-            "timing": 3969.131,
-            "timestamp": 185607289043
-          },
-          {
-            "metricName": "observedFirstContentfulPaint",
-            "timing": 3969.135,
-            "timestamp": 185607289047
-          },
-          {
-            "metricName": "observedFirstMeaningfulPaint",
-            "timing": 3969.136,
-            "timestamp": 185607289048
-          },
-          {
-            "metricName": "observedTraceEnd",
-            "timing": 10281.277,
-            "timestamp": 185613601189
-          },
-          {
-            "metricName": "observedLoad",
-            "timing": 4924.462,
-            "timestamp": 185608244374
-          },
-          {
-            "metricName": "observedDomContentLoaded",
-            "timing": 4900.822,
-            "timestamp": 185608220734
-          },
-          {
-            "metricName": "observedFirstVisualChange",
-            "timing": 3969,
-            "timestamp": 185607288912
-          },
-          {
-            "metricName": "observedLastVisualChange",
-            "timing": 4791,
-            "timestamp": 185608110912
-          },
-          {
-            "metricName": "observedSpeedIndex",
-            "timing": 4416.851239995658,
-            "timestamp": 185607736763.24002
+            "firstContentfulPaint": 3969,
+            "firstContentfulPaintTs": 185607289047,
+            "firstMeaningfulPaint": 3969,
+            "firstMeaningfulPaintTs": 185607289048,
+            "firstCPUIdle": 4927,
+            "firstCPUIdleTs": 185608247190,
+            "interactive": 4927,
+            "interactiveTs": 185608247190,
+            "speedIndex": 4417,
+            "speedIndexTs": 185607736912,
+            "estimatedInputLatency": 16,
+            "observedNavigationStart": 0,
+            "observedNavigationStartTs": 185603319912,
+            "observedFirstPaint": 3969,
+            "observedFirstPaintTs": 185607289043,
+            "observedFirstContentfulPaint": 3969,
+            "observedFirstContentfulPaintTs": 185607289047,
+            "observedFirstMeaningfulPaint": 3969,
+            "observedFirstMeaningfulPaintTs": 185607289048,
+            "observedTraceEnd": 10281,
+            "observedTraceEndTs": 185613601189,
+            "observedLoad": 4924,
+            "observedLoadTs": 185608244374,
+            "observedDomContentLoaded": 4901,
+            "observedDomContentLoadedTs": 185608220734,
+            "observedFirstVisualChange": 3969,
+            "observedFirstVisualChangeTs": 185607288912,
+            "observedLastVisualChange": 4791,
+            "observedLastVisualChangeTs": 185608110912,
+            "observedSpeedIndex": 4417,
+            "observedSpeedIndexTs": 185607736763
           }
         ]
       }

@@ -8,13 +8,15 @@
 
 const log = require('lighthouse-logger');
 
-function findValueInMetricsAuditFn(metricName, timingOrTimestamp) {
+// TODO: rework this file to not need this function
+// see https://github.com/GoogleChrome/lighthouse/pull/5101/files#r186168840
+function findValueInMetricsAuditFn(metricName) {
   return auditResults => {
     const metricsAudit = auditResults.metrics;
     if (!metricsAudit || !metricsAudit.details || !metricsAudit.details.items) return;
 
-    const values = metricsAudit.details.items.find(item => item.metricName === metricName);
-    return values && values[timingOrTimestamp];
+    const values = metricsAudit.details.items[0];
+    return values && values[metricName];
   };
 }
 
@@ -33,68 +35,68 @@ class Metrics {
       {
         name: 'Navigation Start',
         id: 'navstart',
-        getTs: findValueInMetricsAuditFn('observedNavigationStart', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('observedNavigationStart', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedNavigationStartTs'),
+        getTiming: findValueInMetricsAuditFn('observedNavigationStart'),
       },
       {
         name: 'First Contentful Paint',
         id: 'ttfcp',
-        getTs: findValueInMetricsAuditFn('observedFirstContentfulPaint', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('observedFirstContentfulPaint', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedFirstContentfulPaintTs'),
+        getTiming: findValueInMetricsAuditFn('observedFirstContentfulPaint'),
       },
       {
         name: 'First Meaningful Paint',
         id: 'ttfmp',
-        getTs: findValueInMetricsAuditFn('observedFirstMeaningfulPaint', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('observedFirstMeaningfulPaint', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedFirstMeaningfulPaintTs'),
+        getTiming: findValueInMetricsAuditFn('observedFirstMeaningfulPaint'),
       },
       {
         name: 'Speed Index',
         id: 'si',
-        getTs: findValueInMetricsAuditFn('observedSpeedIndex', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('observedSpeedIndex', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedSpeedIndexTs'),
+        getTiming: findValueInMetricsAuditFn('observedSpeedIndex'),
       },
       {
         name: 'First Visual Change',
         id: 'fv',
-        getTs: findValueInMetricsAuditFn('observedFirstVisualChange', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('observedFirstVisualChange', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedFirstVisualChangeTs'),
+        getTiming: findValueInMetricsAuditFn('observedFirstVisualChange'),
       },
       {
         name: 'Visually Complete 100%',
         id: 'vc100',
-        getTs: findValueInMetricsAuditFn('observedLastVisualChange', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('observedLastVisualChange', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedLastVisualChangeTs'),
+        getTiming: findValueInMetricsAuditFn('observedLastVisualChange'),
       },
       {
         name: 'First CPU Idle',
         id: 'ttfi',
-        getTs: findValueInMetricsAuditFn('firstCPUIdle', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('firstCPUIdle', 'timing'),
+        getTs: findValueInMetricsAuditFn('firstCPUIdleTs'),
+        getTiming: findValueInMetricsAuditFn('firstCPUIdle'),
       },
       {
         name: 'Interactive',
         id: 'tti',
-        getTs: findValueInMetricsAuditFn('interactive', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('interactive', 'timing'),
+        getTs: findValueInMetricsAuditFn('interactiveTs'),
+        getTiming: findValueInMetricsAuditFn('interactive'),
       },
       {
         name: 'End of Trace',
         id: 'eot',
-        getTs: findValueInMetricsAuditFn('observedTraceEnd', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('observedTraceEnd', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedTraceEndTs'),
+        getTiming: findValueInMetricsAuditFn('observedTraceEnd'),
       },
       {
         name: 'On Load',
         id: 'onload',
-        getTs: findValueInMetricsAuditFn('observedLoad', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('observedLoad', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedLoadTs'),
+        getTiming: findValueInMetricsAuditFn('observedLoad'),
       },
       {
         name: 'DOM Content Loaded',
         id: 'dcl',
-        getTs: findValueInMetricsAuditFn('observedDomContentLoaded', 'timestamp'),
-        getTiming: findValueInMetricsAuditFn('observedDomContentLoaded', 'timing'),
+        getTs: findValueInMetricsAuditFn('observedDomContentLoadedTs'),
+        getTiming: findValueInMetricsAuditFn('observedDomContentLoaded'),
       },
     ];
   }
