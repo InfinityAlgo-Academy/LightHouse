@@ -262,4 +262,12 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       });
     });
   });
+
+  describe('#findMainDocument', () => {
+    it('should find the main document', async () => {
+      const records = await computedArtifacts.requestNetworkRecords(devtoolsLog);
+      const mainDocument = NetworkAnalyzer.findMainDocument(records);
+      assert.equal(mainDocument.url, 'https://pwa.rocks/');
+    });
+  });
 });

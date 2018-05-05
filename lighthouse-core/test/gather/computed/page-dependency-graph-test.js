@@ -15,7 +15,13 @@ const sampleDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.dev
 
 const assert = require('assert');
 
-function createRequest(requestId, url, startTime = 0, _initiator = null, _resourceType = null) {
+function createRequest(
+  requestId,
+  url,
+  startTime = 0,
+  _initiator = null,
+  _resourceType = WebInspector.resourceTypes.Document
+) {
   startTime = startTime / 1000;
   const endTime = startTime + 0.05;
   return {requestId, url, startTime, endTime, _initiator, _resourceType};
@@ -248,6 +254,20 @@ describe('PageDependencyGraph computed artifact:', () => {
       assert.deepEqual(getDependencyIds(nodes[4]), [1]);
       assert.deepEqual(getDependencyIds(nodes[5]), [1]);
       assert.deepEqual(getDependencyIds(nodes[6]), [4]);
+    });
+
+    it('should set isMainDocument on first document request', () => {
+      const request1 = createRequest(1, '1', 0, null, WebInspector.resourceTypes.Image);
+      const request2 = createRequest(2, '2', 5);
+      const networkRecords = [request1, request2];
+
+      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const nodes = [];
+      graph.traverse(node => nodes.push(node));
+
+      assert.equal(nodes.length, 2);
+      assert.equal(nodes[0].isMainDocument(), false);
+      assert.equal(nodes[1].isMainDocument(), true);
     });
   });
 });

@@ -23,6 +23,7 @@ class Node {
    */
   constructor(id) {
     this._id = id;
+    this._isMainDocument = false;
     /** @type {Node[]} */
     this._dependents = [];
     /** @type {Node[]} */
@@ -55,6 +56,20 @@ class Node {
    */
   get endTime() {
     throw new Error('Unimplemented');
+  }
+
+  /**
+   * @param {boolean} value
+   */
+  setIsMainDocument(value) {
+    this._isMainDocument = value;
+  }
+
+  /**
+   * @return {boolean}
+   */
+  isMainDocument() {
+    return this._isMainDocument;
   }
 
   /**

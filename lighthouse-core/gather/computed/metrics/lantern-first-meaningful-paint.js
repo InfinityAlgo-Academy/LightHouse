@@ -40,7 +40,7 @@ class FirstMeaningfulPaint extends MetricArtifact {
     });
 
     return dependencyGraph.cloneWithRelationships(node => {
-      if (node.endTime > fmp) return false;
+      if (node.endTime > fmp && !node.isMainDocument()) return false;
       // Include EvaluateScript tasks for blocking scripts
       if (node.type === Node.TYPES.CPU) {
         return /** @type {CPUNode} */ (node).isEvaluateScriptFor(blockingScriptUrls);
@@ -64,7 +64,7 @@ class FirstMeaningfulPaint extends MetricArtifact {
     });
 
     return dependencyGraph.cloneWithRelationships(node => {
-      if (node.endTime > fmp) return false;
+      if (node.endTime > fmp && !node.isMainDocument()) return false;
 
       // Include CPU tasks that performed a layout or were evaluations of required scripts
       if (node.type === Node.TYPES.CPU) {

@@ -8,6 +8,7 @@
 const ComputedArtifact = require('./computed-artifact');
 const NetworkNode = require('../../lib/dependency-graph/network-node');
 const CPUNode = require('../../lib/dependency-graph/cpu-node');
+const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer');
 const TracingProcessor = require('../../lib/traces/tracing-processor');
 const WebInspector = require('../../lib/web-inspector');
 
@@ -268,14 +269,17 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
 
     const rootRequest = networkRecords.reduce((min, r) => (min.startTime < r.startTime ? min : r));
     const rootNode = networkNodeOutput.idToNodeMap.get(rootRequest.requestId);
+    const mainDocumentRequest = NetworkAnalyzer.findMainDocument(networkRecords);
+    const mainDocumentNode = networkNodeOutput.idToNodeMap.get(mainDocumentRequest.requestId);
 
-    if (!rootNode) {
+    if (!rootNode || !mainDocumentNode) {
       // Should always be found.
-      throw new Error('rootNode not found.');
+      throw new Error(`${rootNode ? 'mainDocument' : 'root'}Node not found.`);
     }
 
     PageDependencyGraphArtifact.linkNetworkNodes(rootNode, networkNodeOutput);
     PageDependencyGraphArtifact.linkCPUNodes(rootNode, networkNodeOutput, cpuNodes);
+    mainDocumentNode.setIsMainDocument(true);
 
     if (NetworkNode.hasCycle(rootNode)) {
       throw new Error('Invalid dependency graph created, cycle detected');

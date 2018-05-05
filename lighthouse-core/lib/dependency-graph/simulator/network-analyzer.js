@@ -6,6 +6,7 @@
 'use strict';
 
 const INITIAL_CWD = 14 * 1024;
+const WebInspector = require('../../web-inspector');
 
 class NetworkAnalyzer {
   /**
@@ -318,6 +319,17 @@ class NetworkAnalyzer {
 
     const estimatesByOrigin = NetworkAnalyzer._estimateResponseTimeByOrigin(records, rttByOrigin);
     return NetworkAnalyzer.summarize(estimatesByOrigin);
+  }
+
+  /**
+   * @param {Array<LH.WebInspector.NetworkRequest>} records
+   * @return {LH.WebInspector.NetworkRequest}
+   */
+  static findMainDocument(records) {
+    // TODO(phulce): handle more edge cases like client redirects, or plumb through finalUrl
+    const documentRequests = records.filter(record => record._resourceType ===
+        WebInspector.resourceTypes.Document);
+    return documentRequests.sort((a, b) => a.startTime - b.startTime)[0];
   }
 }
 
