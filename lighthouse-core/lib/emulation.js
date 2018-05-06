@@ -8,8 +8,6 @@
 const Driver = require('../gather/driver'); // eslint-disable-line no-unused-vars
 const mobile3G = require('../config/constants').throttling.mobile3G;
 
-const NBSP = '\xa0';
-
 /**
  * Nexus 5X metrics adapted from emulated_devices/module.json
  * @type {LH.Crdp.Emulation.SetDeviceMetricsOverrideRequest}
@@ -130,49 +128,6 @@ function disableCPUThrottling(driver) {
   return driver.sendCommand('Emulation.setCPUThrottlingRate', NO_CPU_THROTTLE_METRICS);
 }
 
-/**
- * @param {LH.Config.Settings} settings
- * @return {{deviceEmulation: string, cpuThrottling: string, networkThrottling: string}}
- */
-function getEmulationDesc(settings) {
-  let cpuThrottling;
-  let networkThrottling;
-
-  /** @type {LH.ThrottlingSettings} */
-  const throttling = settings.throttling || {};
-
-  switch (settings.throttlingMethod) {
-    case 'provided':
-      cpuThrottling = 'Provided by environment';
-      networkThrottling = 'Provided by environment';
-      break;
-    case 'devtools': {
-      const {cpuSlowdownMultiplier, requestLatencyMs} = throttling;
-      cpuThrottling = `${cpuSlowdownMultiplier}x slowdown (DevTools)`;
-      networkThrottling = `${requestLatencyMs}${NBSP}ms HTTP RTT, ` +
-        `${throttling.downloadThroughputKbps}${NBSP}Kbps down, ` +
-        `${throttling.uploadThroughputKbps}${NBSP}Kbps up (DevTools)`;
-      break;
-    }
-    case 'simulate': {
-      const {cpuSlowdownMultiplier, rttMs, throughputKbps} = throttling;
-      cpuThrottling = `${cpuSlowdownMultiplier}x slowdown (Simulated)`;
-      networkThrottling = `${rttMs}${NBSP}ms TCP RTT, ` +
-        `${throughputKbps}${NBSP}Kbps throughput (Simulated)`;
-      break;
-    }
-    default:
-      cpuThrottling = 'Unknown';
-      networkThrottling = 'Unknown';
-  }
-
-  return {
-    deviceEmulation: settings.disableDeviceEmulation ? 'Disabled' : 'Nexus 5X',
-    cpuThrottling,
-    networkThrottling,
-  };
-}
-
 module.exports = {
   enableNexus5X,
   enableNetworkThrottling,
@@ -180,5 +135,4 @@ module.exports = {
   enableCPUThrottling,
   disableCPUThrottling,
   goOffline,
-  getEmulationDesc,
 };

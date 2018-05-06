@@ -4432,23 +4432,27 @@
       "helpText": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://developers.google.com/search/docs/guides/mark-up-content)."
     }
   },
-  "runtimeConfig": {
-    "environment": [
-      {
-        "name": "Device Emulation",
-        "description": "Nexus 5X"
-      },
-      {
-        "name": "Network Throttling",
-        "description": "562.5 ms HTTP RTT, 1474.5600000000002 Kbps down, 675 Kbps up (DevTools)"
-      },
-      {
-        "name": "CPU Throttling",
-        "description": "4x slowdown (DevTools)"
-      }
-    ],
-    "blockedUrlPatterns": [],
-    "extraHeaders": {}
+  "configSettings": {
+    "output": "json",
+    "maxWaitForLoad": 45000,
+    "throttlingMethod": "devtools",
+    "throttling": {
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "requestLatencyMs": 562.5,
+      "downloadThroughputKbps": 1474.5600000000002,
+      "uploadThroughputKbps": 675,
+      "cpuSlowdownMultiplier": 4
+    },
+    "gatherMode": false,
+    "disableStorageReset": false,
+    "disableDeviceEmulation": false,
+    "blockedUrlPatterns": null,
+    "additionalTraceCategories": null,
+    "extraHeaders": null,
+    "onlyAudits": null,
+    "onlyCategories": null,
+    "skipAudits": null
   },
   "reportCategories": [
     {

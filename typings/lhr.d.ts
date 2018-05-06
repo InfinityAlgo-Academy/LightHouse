@@ -27,8 +27,8 @@ declare global {
 
 
       // Additional non-LHR-lite information.
-      /** Description of the runtime configuration used for gathering these results. */
-      runtimeConfig: Result.RuntimeConfig;
+      /** The config settings used for these results. */
+      configSettings: Config.Settings;
       /** List of top-level warnings for this Lighthouse run. */
       runWarnings: string[];
       /** The User-Agent string of the browser used run Lighthouse for these results. */

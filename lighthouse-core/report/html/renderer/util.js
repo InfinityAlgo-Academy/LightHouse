@@ -271,6 +271,71 @@ class Util {
   static chainDuration(startTime, endTime) {
     return Util.formatNumber((endTime - startTime) * 1000);
   }
+
+  /**
+   * @param {LH.Config.Settings} settings
+   * @return {Array<{name: string, description: string}>}
+   */
+  static getEnvironmentDisplayValues(settings) {
+    const emulationDesc = Util.getEmulationDescriptions(settings);
+
+    return [
+      {
+        name: 'Device Emulation',
+        description: emulationDesc.deviceEmulation,
+      },
+      {
+        name: 'Network Throttling',
+        description: emulationDesc.networkThrottling,
+      },
+      {
+        name: 'CPU Throttling',
+        description: emulationDesc.cpuThrottling,
+      },
+    ];
+  }
+
+  /**
+   * @param {LH.Config.Settings} settings
+   * @return {{deviceEmulation: string, networkThrottling: string, cpuThrottling: string}}
+   */
+  static getEmulationDescriptions(settings) {
+    let cpuThrottling;
+    let networkThrottling;
+
+    const throttling = settings.throttling;
+
+    switch (settings.throttlingMethod) {
+      case 'provided':
+        cpuThrottling = 'Provided by environment';
+        networkThrottling = 'Provided by environment';
+        break;
+      case 'devtools': {
+        const {cpuSlowdownMultiplier, requestLatencyMs} = throttling;
+        cpuThrottling = `${Util.formatNumber(cpuSlowdownMultiplier)}x slowdown (DevTools)`;
+        networkThrottling = `${Util.formatNumber(requestLatencyMs)}${NBSP}ms HTTP RTT, ` +
+          `${Util.formatNumber(throttling.downloadThroughputKbps)}${NBSP}Kbps down, ` +
+          `${Util.formatNumber(throttling.uploadThroughputKbps)}${NBSP}Kbps up (DevTools)`;
+        break;
+      }
+      case 'simulate': {
+        const {cpuSlowdownMultiplier, rttMs, throughputKbps} = throttling;
+        cpuThrottling = `${Util.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
+        networkThrottling = `${Util.formatNumber(rttMs)}${NBSP}ms TCP RTT, ` +
+          `${Util.formatNumber(throughputKbps)}${NBSP}Kbps throughput (Simulated)`;
+        break;
+      }
+      default:
+        cpuThrottling = 'Unknown';
+        networkThrottling = 'Unknown';
+    }
+
+    return {
+      deviceEmulation: settings.disableDeviceEmulation ? 'Disabled' : 'Nexus 5X',
+      cpuThrottling,
+      networkThrottling,
+    };
+  }
 }
 
 if (typeof module !== 'undefined' && module.exports) {

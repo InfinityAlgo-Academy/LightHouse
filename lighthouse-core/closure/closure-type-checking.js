@@ -22,6 +22,7 @@ gulp.task('compile-report', () => {
     // externs
     'closure/third_party/commonjs.js',
     'closure/typedefs/viewer-externs.js',
+    'closure/typedefs/devtools-externs.js',
 
     'lib/file-namer.js',
     'report/html/renderer/*.js',

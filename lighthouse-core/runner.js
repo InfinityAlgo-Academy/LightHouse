@@ -10,7 +10,6 @@ const Driver = require('./gather/driver.js');
 const GatherRunner = require('./gather/gather-runner');
 const ReportScoring = require('./scoring');
 const Audit = require('./audits/audit');
-const emulation = require('./lib/emulation');
 const log = require('lighthouse-logger');
 const assetSaver = require('./lib/asset-saver');
 const fs = require('fs');
@@ -127,7 +126,7 @@ class Runner {
         url: opts.url,
         runWarnings: lighthouseRunWarnings,
         audits: resultsById,
-        runtimeConfig: Runner.getRuntimeConfig(settings),
+        configSettings: settings,
         reportCategories,
         reportGroups: opts.config.groups,
         timing: {total: Date.now() - startTime},
@@ -404,34 +403,6 @@ class Runner {
     } catch (requireError) {}
 
     throw new Error(errorString + ` and '${relativePath}')`);
-  }
-
-  /**
-   * Get runtime configuration specified by the flags
-   * @param {LH.Config.Settings} settings
-   * @return {LH.Result.RuntimeConfig}
-   */
-  static getRuntimeConfig(settings) {
-    const emulationDesc = emulation.getEmulationDesc(settings);
-
-    return {
-      environment: [
-        {
-          name: 'Device Emulation',
-          description: emulationDesc['deviceEmulation'],
-        },
-        {
-          name: 'Network Throttling',
-          description: emulationDesc['networkThrottling'],
-        },
-        {
-          name: 'CPU Throttling',
-          description: emulationDesc['cpuThrottling'],
-        },
-      ],
-      blockedUrlPatterns: settings.blockedUrlPatterns || [],
-      extraHeaders: settings.extraHeaders || {},
-    };
   }
 
   /**

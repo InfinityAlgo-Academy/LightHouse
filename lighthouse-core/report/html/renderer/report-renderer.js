@@ -65,7 +65,8 @@ class ReportRenderer {
     this._dom.find('.lh-env__item__ua', header).textContent = report.userAgent;
 
     const env = this._dom.find('.lh-env__items', header);
-    report.runtimeConfig.environment.forEach(runtime => {
+    const environment = Util.getEnvironmentDisplayValues(report.configSettings || {});
+    environment.forEach(runtime => {
       const item = this._dom.cloneTemplate('#tmpl-lh-env__items', env);
       this._dom.find('.lh-env__name', item).textContent = runtime.name;
       this._dom.find('.lh-env__description', item).textContent = runtime.description;
@@ -263,11 +264,7 @@ ReportRenderer.GroupJSON; // eslint-disable-line no-unused-expressions
  *     audits: !Object<string, !ReportRenderer.AuditResultJSON>,
  *     reportCategories: !Array<!ReportRenderer.CategoryJSON>,
  *     reportGroups: !Object<string, !ReportRenderer.GroupJSON>,
- *     runtimeConfig: {
- *       blockedUrlPatterns: !Array<string>,
- *       extraHeaders: !Object<string, string>,
- *       environment: !Array<{description: string, enabled: boolean, name: string}>
- *     }
+ *     configSettings: !LH.Config.Settings,
  * }}
  */
 ReportRenderer.ReportJSON; // eslint-disable-line no-unused-expressions

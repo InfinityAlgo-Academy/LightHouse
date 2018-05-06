@@ -24,6 +24,7 @@ writeFileSync(filename, cleanAndFormatLHR(data), 'utf8');
  */
 function cleanAndFormatLHR(lhrString) {
   const lhr = JSON.parse(lhrString);
+  delete lhr.configSettings.auditMode;
   delete lhr.timing;
   if (extraFlag !== '--only-remove-timing') {
     for (const auditResult of Object.values(lhr.audits)) {
