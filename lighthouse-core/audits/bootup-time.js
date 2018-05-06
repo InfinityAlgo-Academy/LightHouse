@@ -9,7 +9,6 @@ const Audit = require('./audit');
 const WebInspector = require('../lib/web-inspector');
 const Util = require('../report/html/renderer/util');
 const {groupIdToName, taskToGroup} = require('../lib/task-groups');
-const THRESHOLD_IN_MS = 10;
 
 class BootupTime extends Audit {
   /**
@@ -29,7 +28,7 @@ class BootupTime extends Audit {
   }
 
   /**
-   * @return {LH.Audit.ScoreOptions}
+   * @return {LH.Audit.ScoreOptions & {thresholdInMs: number}}
    */
   static get defaultOptions() {
     return {
@@ -37,6 +36,7 @@ class BootupTime extends Audit {
       // <500ms ~= 100, >2s is yellow, >3.5s is red
       scorePODR: 600,
       scoreMedian: 3500,
+      thresholdInMs: 50,
     };
   }
 
@@ -78,6 +78,7 @@ class BootupTime extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    const settings = context.settings || {};
     const trace = artifacts.traces[BootupTime.DEFAULT_PASS];
     const devtoolsTimelineModel = await artifacts.requestDevtoolsTimelineModel(trace);
     const executionTimings = BootupTime.getExecutionTimingsByURL(devtoolsTimelineModel);
@@ -87,15 +88,22 @@ class BootupTime extends Audit {
 
     const headings = [
       {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'scripting', itemType: 'text', text: groupIdToName.scripting},
-      {key: 'scriptParseCompile', itemType: 'text', text: groupIdToName.scriptParseCompile},
+      {key: 'scripting', granularity: 1, itemType: 'ms', text: groupIdToName.scripting},
+      {key: 'scriptParseCompile', granularity: 1, itemType: 'ms',
+        text: groupIdToName.scriptParseCompile},
     ];
 
+    const multiplier = settings.throttlingMethod === 'simulate' ?
+      settings.throttling.cpuSlowdownMultiplier : 1;
     // map data in correct format to create a table
     const results = Array.from(executionTimings)
       .map(([url, groups]) => {
         // Add up the totalBootupTime for all the taskGroups
-        totalBootupTime += Object.keys(groups).reduce((sum, name) => sum += groups[name], 0);
+        for (const [name, value] of Object.entries(groups)) {
+          groups[name] = value * multiplier;
+          totalBootupTime += value * multiplier;
+        }
+
         extendedInfo[url] = groups;
 
         const scriptingTotal = groups[groupIdToName.scripting] || 0;
@@ -105,11 +113,11 @@ class BootupTime extends Audit {
           sum: scriptingTotal + parseCompileTotal,
           // Only reveal the javascript task costs
           // Later we can account for forced layout costs, etc.
-          scripting: Util.formatMilliseconds(scriptingTotal, 1),
-          scriptParseCompile: Util.formatMilliseconds(parseCompileTotal, 1),
+          scripting: scriptingTotal,
+          scriptParseCompile: parseCompileTotal,
         };
       })
-      .filter(result => result.sum >= THRESHOLD_IN_MS)
+      .filter(result => result.sum >= context.options.thresholdInMs)
       .sort((a, b) => b.sum - a.sum);
 
     const summary = {wastedMs: totalBootupTime};

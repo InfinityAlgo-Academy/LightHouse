@@ -866,7 +866,7 @@
     "mainthread-work-breakdown": {
       "score": 0.98,
       "displayValue": [
-        "%d ms",
+        "%10d ms",
         1359.7759999930859
       ],
       "rawValue": 1359.7759999930859,
@@ -907,7 +907,8 @@
           },
           {
             "key": "duration",
-            "itemType": "text",
+            "itemType": "ms",
+            "granularity": 1,
             "text": "Time spent"
           }
         ],
@@ -915,72 +916,72 @@
           {
             "category": "Evaluate Script",
             "group": "Script Evaluation",
-            "duration": "1,121 ms"
+            "duration": 1121.2470000088215
           },
           {
             "category": "Run Microtasks",
             "group": "Script Evaluation",
-            "duration": "7 ms"
+            "duration": 6.680999994277954
           },
           {
             "category": "XHR Ready State Change",
             "group": "Script Evaluation",
-            "duration": "0 ms"
+            "duration": 0.026999980211257935
           },
           {
             "category": "XHR Load",
             "group": "Script Evaluation",
-            "duration": "0 ms"
+            "duration": 0.011000007390975952
           },
           {
             "category": "Layout",
             "group": "Style & Layout",
-            "duration": "89 ms"
+            "duration": 89.00499999523163
           },
           {
             "category": "Recalculate Style",
             "group": "Style & Layout",
-            "duration": "33 ms"
+            "duration": 32.57899996638298
           },
           {
             "category": "Parse HTML",
             "group": "Parsing HTML & CSS",
-            "duration": "63 ms"
+            "duration": 63.04200002551079
           },
           {
             "category": "Parse Stylesheet",
             "group": "Parsing HTML & CSS",
-            "duration": "1 ms"
+            "duration": 1.3200000524520874
           },
           {
             "category": "Minor GC",
             "group": "Garbage collection",
-            "duration": "20 ms"
+            "duration": 19.94599997997284
           },
           {
             "category": "DOM GC",
             "group": "Garbage collection",
-            "duration": "6 ms"
+            "duration": 6.252999991178513
           },
           {
             "category": "Compile Script",
             "group": "Script Parsing & Compile",
-            "duration": "8 ms"
+            "duration": 7.7519999742507935
           },
           {
             "category": "Update Layer Tree",
             "group": "Compositing",
-            "duration": "4 ms"
+            "duration": 4.238999992609024
           },
           {
             "category": "Composite Layers",
             "group": "Compositing",
-            "duration": "3 ms"
+            "duration": 2.732000023126602
           },
           {
             "category": "Paint",
             "group": "Paint",
-            "duration": "5 ms"
+            "duration": 4.94200000166893
           }
         ]
       }
@@ -1029,12 +1030,14 @@
           },
           {
             "key": "scripting",
-            "itemType": "text",
+            "granularity": 1,
+            "itemType": "ms",
             "text": "Script Evaluation"
           },
           {
             "key": "scriptParseCompile",
-            "itemType": "text",
+            "granularity": 1,
+            "itemType": "ms",
             "text": "Script Parsing & Compile"
           }
         ],
@@ -1042,20 +1045,20 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "sum": 957.277999997139,
-            "scripting": "955 ms",
-            "scriptParseCompile": "3 ms"
+            "scripting": 954.5010000169277,
+            "scriptParseCompile": 2.776999980211258
           },
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
             "sum": 81.23699998855591,
-            "scripting": "80 ms",
-            "scriptParseCompile": "1 ms"
+            "scripting": 80.03200000524521,
+            "scriptParseCompile": 1.2049999833106995
           },
           {
             "url": "http://localhost:10200/zone.js",
             "sum": 78.23800000548363,
-            "scripting": "77 ms",
-            "scriptParseCompile": "2 ms"
+            "scripting": 76.56400001049042,
+            "scriptParseCompile": 1.6739999949932098
           }
         ],
         "summary": {

@@ -83,6 +83,29 @@ describe('Performance: page execution timings audit', () => {
     });
   });
 
+  it('should compute the correct values when simulated', async () => {
+    const artifacts = Object.assign({
+      traces: {defaultPass: acceptableTrace},
+    }, Runner.instantiateComputedArtifacts());
+
+    const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 3}};
+    const output = await PageExecutionTimings.audit(artifacts, {options, settings});
+    const valueOf = name => Math.round(output.extendedInfo.value[name]);
+
+    assert.equal(output.details.items.length, 12);
+    assert.equal(output.score, 0.93);
+    assert.equal(Math.round(output.rawValue), 1832);
+
+    for (const category in output.extendedInfo.value) {
+      if (output.extendedInfo.value[category]) {
+        assert.ok(
+          Math.abs(valueOf(category) - 3 * acceptableTraceExpectations[category]) < 2,
+          'should have multiplied value by slowdown multiplier'
+        );
+      }
+    }
+  });
+
   it('should compute the correct pageExecutionTiming values for the redirect trace', () => {
     const artifacts = Object.assign({
       traces: {

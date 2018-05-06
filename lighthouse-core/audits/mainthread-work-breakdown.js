@@ -62,6 +62,7 @@ class MainThreadWorkBreakdown extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    const settings = context.settings || {};
     const trace = artifacts.traces[MainThreadWorkBreakdown.DEFAULT_PASS];
 
     const devtoolsTimelineModel = await artifacts.requestDevtoolsTimelineModel(trace);
@@ -70,9 +71,13 @@ class MainThreadWorkBreakdown extends Audit {
     );
     let totalExecutionTime = 0;
 
+    const multiplier = settings.throttlingMethod === 'simulate' ?
+      settings.throttling.cpuSlowdownMultiplier : 1;
+
     const extendedInfo = {};
     const categoryTotals = {};
     const results = Array.from(executionTimings).map(([eventName, duration]) => {
+      duration *= multiplier;
       totalExecutionTime += duration;
       extendedInfo[eventName] = duration;
       const groupName = taskToGroup[eventName];
@@ -83,14 +88,14 @@ class MainThreadWorkBreakdown extends Audit {
       return {
         category: eventName,
         group: groupName,
-        duration: Util.formatMilliseconds(duration, 1),
+        duration: duration,
       };
     });
 
     const headings = [
       {key: 'group', itemType: 'text', text: 'Category'},
       {key: 'category', itemType: 'text', text: 'Work'},
-      {key: 'duration', itemType: 'text', text: 'Time spent'},
+      {key: 'duration', itemType: 'ms', granularity: 1, text: 'Time spent'},
     ];
     // @ts-ignore - stableSort added to Array by WebInspector
     results.stableSort((a, b) => categoryTotals[b.group] - categoryTotals[a.group]);
@@ -105,7 +110,7 @@ class MainThreadWorkBreakdown extends Audit {
     return {
       score,
       rawValue: totalExecutionTime,
-      displayValue: ['%d\xa0ms', totalExecutionTime],
+      displayValue: [Util.MS_DISPLAY_VALUE, totalExecutionTime],
       details: tableDetails,
       extendedInfo: {
         value: extendedInfo,
