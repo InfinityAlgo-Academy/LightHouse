@@ -41,7 +41,7 @@ test_script:
   # FIXME: Exclude Appveyor from running `perf` smoketest until we fix the flake.
   #     https://github.com/GoogleChrome/lighthouse/issues/5053
   # - yarn smoke
-  - yarn smoke ally pwa pwa2 pwa3 dbw redirects seo offline byte ttci
+  - yarn smoke ally pwa pwa2 pwa3 dbw redirects seo offline byte tti
 
 cache:
   #- chrome-win32 -> appveyor.yml,package.json
