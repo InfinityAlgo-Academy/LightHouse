@@ -10,8 +10,8 @@
  */
 module.exports = [
   {
-    initialUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-    url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+    requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+    finalUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
     audits: {
       'errors-in-console': {
         score: 0,

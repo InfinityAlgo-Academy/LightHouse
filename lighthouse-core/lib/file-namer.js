@@ -16,11 +16,11 @@
  * Generate a filenamePrefix of hostname_YYYY-MM-DD_HH-MM-SS
  * Date/time uses the local timezone, however Node has unreliable ICU
  * support, so we must construct a YYYY-MM-DD date format manually. :/
- * @param {{url: string, fetchTime: string}} lhr
+ * @param {{finalUrl: string, fetchTime: string}} lhr
  * @return {string}
  */
 function getFilenamePrefix(lhr) {
-  const hostname = new (getUrlConstructor())(lhr.url).hostname;
+  const hostname = new (getUrlConstructor())(lhr.finalUrl).hostname;
   const date = (lhr.fetchTime && new Date(lhr.fetchTime)) || new Date();
 
   const timeStr = date.toLocaleTimeString('en-US', {hour12: false});

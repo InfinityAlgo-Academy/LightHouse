@@ -11,8 +11,8 @@
  */
 module.exports = [
   {
-    initialUrl: 'https://pwa.rocks',
-    url: 'https://pwa.rocks/',
+    requestedUrl: 'https://pwa.rocks',
+    finalUrl: 'https://pwa.rocks/',
     audits: {
       'is-on-https': {
         score: 1,

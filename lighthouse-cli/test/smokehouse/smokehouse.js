@@ -194,8 +194,8 @@ function findDifference(path, actual, expected) {
 
 /**
  * Collate results into comparisons of actual and expected scores on each audit.
- * @param {{url: string, audits: !Array}} actual
- * @param {{url: string, audits: !Array}} expected
+ * @param {{finalUrl: string, audits: !Array}} actual
+ * @param {{finalUrl: string, audits: !Array}} expected
  * @return {{finalUrl: !Object, audits: !Array<!Object>}}
  */
 function collateResults(actual, expected) {
@@ -221,9 +221,9 @@ function collateResults(actual, expected) {
   return {
     finalUrl: {
       category: 'final url',
-      actual: actual.url,
-      expected: expected.url,
-      equal: actual.url === expected.url,
+      actual: actual.finalUrl,
+      expected: expected.finalUrl,
+      equal: actual.finalUrl === expected.finalUrl,
     },
     audits: collatedAudits,
   };
@@ -316,10 +316,10 @@ const expectations = require(resolveLocalOrCwd(cli['expectations-path']));
 let passingCount = 0;
 let failingCount = 0;
 expectations.forEach(expected => {
-  console.log(`Doing a run of '${expected.initialUrl}'...`);
-  const results = runLighthouse(expected.initialUrl, configPath, cli.debug);
+  console.log(`Doing a run of '${expected.requestedUrl}'...`);
+  const results = runLighthouse(expected.requestedUrl, configPath, cli.debug);
 
-  console.log(`Asserting expected results match those found. (${expected.initialUrl})`);
+  console.log(`Asserting expected results match those found. (${expected.requestedUrl})`);
   const collated = collateResults(results, expected);
   const counts = report(collated);
   passingCount += counts.passed;

@@ -16,17 +16,17 @@ describe('Offline: works-offline audit', () => {
   it('correctly audits a 200 code', () => {
     const output = Audit.audit({
       Offline: 200,
-      URL: {initialUrl: URL, finalUrl: URL},
+      URL: {requestedUrl: URL, finalUrl: URL},
     });
 
     assert.equal(output.rawValue, true);
     assert.ok(!output.debugString);
   });
 
-  it('warns if initial url does not match final url', () => {
+  it('warns if requested url does not match final url', () => {
     const output = Audit.audit({
       Offline: 404,
-      URL: {initialUrl: URL, finalUrl: `${URL}/features`},
+      URL: {requestedUrl: URL, finalUrl: `${URL}/features`},
     });
 
     assert.equal(output.rawValue, false);
@@ -36,7 +36,7 @@ describe('Offline: works-offline audit', () => {
   it('correctly audits a non-200 code', () => {
     const output = Audit.audit({
       Offline: 203,
-      URL: {initialUrl: URL, finalUrl: URL},
+      URL: {requestedUrl: URL, finalUrl: URL},
     });
 
     assert.equal(output.rawValue, false);

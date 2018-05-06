@@ -331,7 +331,7 @@ class ReportUIFeatures {
    */
   _saveFile(blob) {
     const filename = getFilenamePrefix({
-      url: this.json.url,
+      finalUrl: this.json.finalUrl,
       fetchTime: this.json.fetchTime,
     });
 

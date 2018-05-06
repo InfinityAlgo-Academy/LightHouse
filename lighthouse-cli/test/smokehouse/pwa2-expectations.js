@@ -11,8 +11,8 @@
  */
 module.exports = [
   {
-    initialUrl: 'https://jakearchibald.github.io/svgomg/',
-    url: 'https://jakearchibald.github.io/svgomg/',
+    requestedUrl: 'https://jakearchibald.github.io/svgomg/',
+    finalUrl: 'https://jakearchibald.github.io/svgomg/',
     audits: {
       'is-on-https': {
         score: 1,
@@ -118,8 +118,8 @@ module.exports = [
   },
 
   {
-    initialUrl: 'https://shop.polymer-project.org/',
-    url: 'https://shop.polymer-project.org/',
+    requestedUrl: 'https://shop.polymer-project.org/',
+    finalUrl: 'https://shop.polymer-project.org/',
     audits: {
       'is-on-https': {
         score: 1,

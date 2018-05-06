@@ -10,8 +10,8 @@
  */
 module.exports = [
   {
-    initialUrl: 'http://localhost:10200/preload.html',
-    url: 'http://localhost:10200/preload.html',
+    requestedUrl: 'http://localhost:10200/preload.html',
+    finalUrl: 'http://localhost:10200/preload.html',
     audits: {
       'speed-index': {
         score: '>=0.80',
@@ -56,8 +56,8 @@ module.exports = [
     },
   },
   {
-    initialUrl: 'http://localhost:10200/perf/fonts.html',
-    url: 'http://localhost:10200/perf/fonts.html',
+    requestedUrl: 'http://localhost:10200/perf/fonts.html',
+    finalUrl: 'http://localhost:10200/perf/fonts.html',
     audits: {
       'font-display': {
         score: 0,

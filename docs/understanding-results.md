@@ -13,8 +13,8 @@ The top-level Lighthouse Result object (LHR) is what the lighthouse node module 
 | lighthouseVersion | The version of Lighthouse with which this result were generated. |
 | fetchTime | The ISO-8601 timestamp of when the result was generated. |
 | userAgent | The user agent string of the version of Chrome that was used by Lighthouse. |
-| initialUrl | The URL that was supplied to Lighthouse and initially navigated to. |
-| url | The URL that Lighthouse ended up auditing after redirects were followed. |
+| requestedUrl | The URL that was supplied to Lighthouse and initially navigated to. |
+| finalUrl | The URL that Lighthouse ended up auditing after redirects were followed. |
 | [audits](#audits) | An object containing the results of the audits. |
 | [runtimeConfig](#runtime-config) | An object containing information about the configuration used by Lighthouse. |
 | [timing](#timing) | An object containing information about how long Lighthouse spent auditing. |
@@ -28,8 +28,8 @@ The top-level Lighthouse Result object (LHR) is what the lighthouse node module 
   "lighthouseVersion": "2.4.0",
   "fetchTime": "2017-10-05T20:50:54.185Z",
   "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3233.0 Safari/537.36",
-  "initialUrl": "http://example.com",
-  "url": "https://www.example.com/",
+  "requestedUrl": "http://example.com",
+  "finalUrl": "https://www.example.com/",
   "score": 50,
   "audits": {...},
   "runtimeConfig": {...},

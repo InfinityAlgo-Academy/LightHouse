@@ -23,7 +23,7 @@ const Connection = require('./gather/connections/connection.js'); // eslint-disa
 class Runner {
   /**
    * @param {Connection} connection
-   * @param {{config: LH.Config, url: string, initialUrl?: string, driverMock?: Driver}} opts
+   * @param {{config: LH.Config, url: string, driverMock?: Driver}} opts
    * @return {Promise<LH.RunnerResult|undefined>}
    */
   static async run(connection, opts) {
@@ -37,9 +37,9 @@ class Runner {
        */
       const lighthouseRunWarnings = [];
 
-      // save the initialUrl provided by the user
-      opts.initialUrl = opts.url;
-      if (typeof opts.initialUrl !== 'string' || opts.initialUrl.length === 0) {
+      // save the requestedUrl provided by the user
+      const rawRequestedUrl = opts.url;
+      if (typeof rawRequestedUrl !== 'string' || rawRequestedUrl.length === 0) {
         throw new Error('You must provide a url to the runner');
       }
 
@@ -66,7 +66,7 @@ class Runner {
       }
 
       // canonicalize URL with any trailing slashes neccessary
-      opts.url = parsedURL.href;
+      const requestedUrl = parsedURL.href;
 
       // User can run -G solo, -A solo, or -GA together
       // -G and -A will run partial lighthouse pipelines,
@@ -80,7 +80,7 @@ class Runner {
         const path = Runner._getArtifactsPath(settings);
         artifacts = await assetSaver.loadArtifacts(path);
       } else {
-        artifacts = await Runner._gatherArtifactsFromBrowser(opts, connection);
+        artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, opts, connection);
         // -G means save these to ./latest-run, etc.
         if (settings.gatherMode) {
           const path = Runner._getArtifactsPath(settings);
@@ -122,8 +122,8 @@ class Runner {
         userAgent: artifacts.UserAgent,
         lighthouseVersion,
         fetchTime: artifacts.fetchTime,
-        initialUrl: opts.initialUrl,
-        url: opts.url,
+        requestedUrl: requestedUrl,
+        finalUrl: artifacts.URL.finalUrl,
         runWarnings: lighthouseRunWarnings,
         audits: resultsById,
         configSettings: settings,
@@ -143,11 +143,12 @@ class Runner {
 
   /**
    * Establish connection, load page and collect all required artifacts
-   * @param {{config: LH.Config, url: string, initialUrl?: string, driverMock?: Driver}} runnerOpts
+   * @param {string} requestedUrl
+   * @param {{config: LH.Config, driverMock?: Driver}} runnerOpts
    * @param {Connection} connection
    * @return {Promise<LH.Artifacts>}
    */
-  static async _gatherArtifactsFromBrowser(runnerOpts, connection) {
+  static async _gatherArtifactsFromBrowser(requestedUrl, runnerOpts, connection) {
     if (!runnerOpts.config.passes) {
       throw new Error('No browser artifacts are either provided or requested.');
     }
@@ -155,13 +156,10 @@ class Runner {
     const driver = runnerOpts.driverMock || new Driver(connection);
     const gatherOpts = {
       driver,
-      initialUrl: runnerOpts.initialUrl,
-      url: runnerOpts.url,
+      requestedUrl,
       settings: runnerOpts.config.settings,
     };
     const artifacts = await GatherRunner.run(runnerOpts.config.passes, gatherOpts);
-    // TODO(bckenny): transition to using finalUrl in artifacts rather than on opts.
-    runnerOpts.url = gatherOpts.url;
     return artifacts;
   }
 

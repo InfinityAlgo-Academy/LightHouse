@@ -11,9 +11,9 @@ declare global {
      */
     export interface Result {
       /** The URL that was supplied to Lighthouse and initially navigated to. */
-      initialUrl: string;
+      requestedUrl: string;
       /** The post-redirects URL that Lighthouse loaded. */
-      url: string;
+      finalUrl: string;
       /** The ISO-8601 timestamp of when the results were generated. */
       fetchTime: string;
       /** The version of Lighthouse with which these results were generated. */

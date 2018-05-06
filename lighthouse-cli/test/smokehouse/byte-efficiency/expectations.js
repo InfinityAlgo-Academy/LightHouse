@@ -13,8 +13,8 @@
  */
 module.exports = [
   {
-    initialUrl: 'http://localhost:10200/byte-efficiency/tester.html',
-    url: 'http://localhost:10200/byte-efficiency/tester.html',
+    requestedUrl: 'http://localhost:10200/byte-efficiency/tester.html',
+    finalUrl: 'http://localhost:10200/byte-efficiency/tester.html',
     audits: {
       'unminified-css': {
         extendedInfo: {

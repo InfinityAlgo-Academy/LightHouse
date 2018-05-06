@@ -12,8 +12,8 @@
  */
 module.exports = [
   {
-    initialUrl: 'http://localhost:10200/online-only.html',
-    url: 'http://localhost:10200/online-only.html',
+    requestedUrl: 'http://localhost:10200/online-only.html',
+    finalUrl: 'http://localhost:10200/online-only.html',
     audits: {
       'is-on-https': {
         score: 1,
@@ -105,8 +105,8 @@ module.exports = [
   },
 
   {
-    initialUrl: 'http://localhost:10503/offline-ready.html',
-    url: 'http://localhost:10503/offline-ready.html',
+    requestedUrl: 'http://localhost:10503/offline-ready.html',
+    finalUrl: 'http://localhost:10503/offline-ready.html',
     audits: {
       'is-on-https': {
         score: 1,

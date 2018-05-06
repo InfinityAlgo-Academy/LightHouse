@@ -33,8 +33,8 @@ const passHeaders = headersParam([[
  */
 module.exports = [
   {
-    initialUrl: BASE_URL + 'seo-tester.html?' + passHeaders,
-    url: BASE_URL + 'seo-tester.html?' + passHeaders,
+    requestedUrl: BASE_URL + 'seo-tester.html?' + passHeaders,
+    finalUrl: BASE_URL + 'seo-tester.html?' + passHeaders,
     audits: {
       'viewport': {
         score: 1,
@@ -78,8 +78,8 @@ module.exports = [
     },
   },
   {
-    initialUrl: BASE_URL + 'seo-failure-cases.html?status_code=403&' + failureHeaders,
-    url: BASE_URL + 'seo-failure-cases.html?status_code=403&' + failureHeaders,
+    requestedUrl: BASE_URL + 'seo-failure-cases.html?status_code=403&' + failureHeaders,
+    finalUrl: BASE_URL + 'seo-failure-cases.html?status_code=403&' + failureHeaders,
     audits: {
       'viewport': {
         score: 0,

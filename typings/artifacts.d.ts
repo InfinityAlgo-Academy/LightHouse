@@ -20,6 +20,8 @@ declare global {
       traces: {[passName: string]: Trace};
       devtoolsLogs: {[passName: string]: DevtoolsLog};
       settings: Config.Settings;
+      /** The URL initially requested and the post-redirects URL that was actually loaded. */
+      URL: {requestedUrl: string, finalUrl: string};
 
       // Remaining are provided by default gatherers.
       /** The results of running the aXe accessibility tests on the page. */
@@ -88,8 +90,6 @@ declare global {
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** The value of the <meta name="theme=color">'s content attribute, or null. */
       ThemeColor: string|null;
-      /** The URL initially supplied to be loaded and the post-redirects URL that was loaded. */
-      URL: {initialUrl: string, finalUrl: string};
       /** The value of the <meta name="viewport">'s content attribute, or null. */
       Viewport: string|null;
       /** The dimensions and devicePixelRatio of the loaded viewport. */

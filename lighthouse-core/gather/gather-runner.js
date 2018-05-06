@@ -81,7 +81,7 @@ class GatherRunner {
   /**
    * Loads options.url with specified options. If the main document URL
    * redirects, options.url will be updated accordingly. As such, options.url
-   * will always represent the post-redirected URL. options.initialUrl is the
+   * will always represent the post-redirected URL. options.requestedUrl is the
    * pre-redirect starting URL.
    * @param {Driver} driver
    * @param {LH.Gatherer.PassContext} passContext
@@ -99,14 +99,14 @@ class GatherRunner {
   /**
    * @param {Driver} driver
    * @param {GathererResults} gathererResults
-   * @param {{url: string, settings: LH.Config.Settings}} options
+   * @param {{requestedUrl: string, settings: LH.Config.Settings}} options
    * @return {Promise<void>}
    */
   static setupDriver(driver, gathererResults, options) {
     log.log('status', 'Initializing…');
     const resetStorage = !options.settings.disableStorageReset;
     // Enable emulation based on settings
-    return driver.assertNoSameOriginServiceWorkerClients(options.url)
+    return driver.assertNoSameOriginServiceWorkerClients(options.requestedUrl)
       .then(_ => driver.getUserAgent())
       .then(userAgent => {
         gathererResults.UserAgent = [userAgent];
@@ -118,7 +118,7 @@ class GatherRunner {
       .then(_ => driver.registerPerformanceObserver())
       .then(_ => driver.dismissJavaScriptDialogs())
       .then(_ => {
-        if (resetStorage) return driver.clearDataForOrigin(options.url);
+        if (resetStorage) return driver.clearDataForOrigin(options.requestedUrl);
       });
   }
 
@@ -399,7 +399,7 @@ class GatherRunner {
 
   /**
    * @param {Array<LH.Config.Pass>} passes
-   * @param {{driver: Driver, url: string, settings: LH.Config.Settings}} options
+   * @param {{driver: Driver, requestedUrl: string, settings: LH.Config.Settings}} options
    * @return {Promise<LH.Artifacts>}
    */
   static run(passes, options) {
@@ -414,6 +414,7 @@ class GatherRunner {
     const gathererResults = {
       LighthouseRunWarnings: [],
       fetchTime: [(new Date()).toJSON()],
+      URL: [{requestedUrl: options.requestedUrl, finalUrl: ''}],
     };
 
     return driver.connect()
@@ -422,10 +423,15 @@ class GatherRunner {
 
       // Run each pass
       .then(_ => {
-        // If the main document redirects, we'll update this to keep track
-        let urlAfterRedirects = options.url;
         return passes.reduce((chain, passConfig, passIndex) => {
-          const passContext = Object.assign({}, options, {passConfig});
+          const passContext = {
+            driver: options.driver,
+            // If the main document redirects, we'll update this to keep track
+            url: options.requestedUrl,
+            settings: options.settings,
+            passConfig,
+          };
+
           return chain
             .then(_ => driver.setThrottling(options.settings, passConfig))
             .then(_ => GatherRunner.beforePass(passContext, gathererResults))
@@ -441,12 +447,11 @@ class GatherRunner {
               }
 
               if (passIndex === 0) {
-                urlAfterRedirects = passContext.url;
+                // Copy redirected URL to artifact in the first pass only.
+                gathererResults.URL[0].finalUrl = passContext.url;
               }
             });
-        }, Promise.resolve()).then(_ => {
-          options.url = urlAfterRedirects;
-        });
+        }, Promise.resolve());
       })
       .then(_ => GatherRunner.disposeDriver(driver))
       .then(_ => GatherRunner.collectArtifacts(gathererResults, tracingData, options.settings))

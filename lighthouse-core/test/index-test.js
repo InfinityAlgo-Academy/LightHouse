@@ -73,7 +73,7 @@ describe('Module Tests', function() {
     return lighthouse('SOME_URL', {}, {
       passes: [{
         gatherers: [
-          'url',
+          'viewport',
         ],
       }],
       audits: [
@@ -88,7 +88,7 @@ describe('Module Tests', function() {
   });
 
   it('should return formatted LHR when given no categories', function() {
-    const exampleUrl = 'https://example.com/';
+    const exampleUrl = 'https://www.reddit.com/r/nba';
     return lighthouse(exampleUrl, {
       output: 'html',
     }, {
@@ -103,8 +103,8 @@ describe('Module Tests', function() {
       assert.ok(results.artifacts.ViewportDimensions, 'did not set artifacts');
       assert.ok(results.lhr.lighthouseVersion);
       assert.ok(results.lhr.fetchTime);
-      assert.equal(results.lhr.url, exampleUrl);
-      assert.equal(results.lhr.initialUrl, exampleUrl);
+      assert.equal(results.lhr.finalUrl, exampleUrl);
+      assert.equal(results.lhr.requestedUrl, exampleUrl);
       assert.ok(Array.isArray(results.lhr.reportCategories));
       assert.equal(results.lhr.reportCategories.length, 0);
       assert.ok(results.lhr.audits.viewport);

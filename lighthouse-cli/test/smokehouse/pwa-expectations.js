@@ -11,8 +11,8 @@
  */
 module.exports = [
   {
-    initialUrl: 'https://airhorner.com',
-    url: 'https://airhorner.com/',
+    requestedUrl: 'https://airhorner.com',
+    finalUrl: 'https://airhorner.com/',
     audits: {
       'is-on-https': {
         score: 1,
@@ -116,8 +116,8 @@ module.exports = [
   },
 
   {
-    initialUrl: 'https://www.chromestatus.com/',
-    url: 'https://www.chromestatus.com/features',
+    requestedUrl: 'https://www.chromestatus.com/',
+    finalUrl: 'https://www.chromestatus.com/features',
     audits: {
       'is-on-https': {
         score: 1,

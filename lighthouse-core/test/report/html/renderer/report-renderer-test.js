@@ -97,10 +97,10 @@ describe('ReportRenderer', () => {
 
       assert.ok(header.querySelector('.lh-config__timestamp').textContent.match(TIMESTAMP_REGEX),
           'formats the generated datetime');
-      assert.equal(header.querySelector('.lh-metadata__url').textContent, sampleResults.url);
+      assert.equal(header.querySelector('.lh-metadata__url').textContent, sampleResults.finalUrl);
       const url = header.querySelector('.lh-metadata__url');
-      assert.equal(url.textContent, sampleResults.url);
-      assert.equal(url.href, sampleResults.url);
+      assert.equal(url.textContent, sampleResults.finalUrl);
+      assert.equal(url.href, sampleResults.finalUrl);
 
       const userAgent = header.querySelector('.lh-env__item__ua');
       assert.equal(userAgent.textContent, sampleResults.userAgent, 'user agent populated');

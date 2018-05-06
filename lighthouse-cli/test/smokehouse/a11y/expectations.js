@@ -10,8 +10,8 @@
  */
 module.exports = [
   {
-    initialUrl: 'http://localhost:10200/a11y/a11y_tester.html',
-    url: 'http://localhost:10200/a11y/a11y_tester.html',
+    requestedUrl: 'http://localhost:10200/a11y/a11y_tester.html',
+    finalUrl: 'http://localhost:10200/a11y/a11y_tester.html',
     audits: {
       'accesskeys': {
         score: 0,

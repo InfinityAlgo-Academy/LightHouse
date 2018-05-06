@@ -19,7 +19,6 @@ module.exports = {
     networkQuietThresholdMs: 1000,
     cpuQuietThresholdMs: 1000,
     gatherers: [
-      'url',
       'scripts',
       'css-usage',
       'viewport',

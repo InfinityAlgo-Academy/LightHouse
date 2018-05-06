@@ -10,8 +10,8 @@
  */
 module.exports = [
   {
-    initialUrl: 'http://localhost:10200/tricky-tti.html',
-    url: 'http://localhost:10200/tricky-tti.html',
+    requestedUrl: 'http://localhost:10200/tricky-tti.html',
+    finalUrl: 'http://localhost:10200/tricky-tti.html',
     audits: {
       'first-cpu-idle': {
         score: '<75',

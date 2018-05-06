@@ -86,7 +86,7 @@ function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn,
 }
 
 describe('GatherRunner', function() {
-  it('loads a page and updates URL on redirect', () => {
+  it('loads a page and updates passContext.URL on redirect', () => {
     const url1 = 'https://example.com';
     const url2 = 'https://example.com/interstitial';
     const driver = {
@@ -95,14 +95,14 @@ describe('GatherRunner', function() {
       },
     };
 
-    const options = {
-      url: url1,
+    const passContext = {
+      requestedUrl: url1,
       settings: {},
       passConfig: {},
     };
 
-    return GatherRunner.loadPage(driver, options).then(_ => {
-      assert.equal(options.url, url2);
+    return GatherRunner.loadPage(driver, passContext).then(_ => {
+      assert.equal(passContext.url, url2);
     });
   });
 
@@ -115,6 +115,24 @@ describe('GatherRunner', function() {
 
     return GatherRunner.run([], options).then(results => {
       assert.equal(results.UserAgent, 'Fake user agent', 'did not find expected user agent string');
+    });
+  });
+
+  it('collects requested and final URLs as an artifact', () => {
+    const requestedUrl = 'https://example.com';
+    const finalUrl = 'https://example.com/interstitial';
+    const driver = Object.assign({}, fakeDriver, {
+      gotoURL() {
+        return Promise.resolve(finalUrl);
+      },
+    });
+    const config = new Config({passes: [{}]});
+    const settings = {};
+    const options = {requestedUrl, driver, config, settings};
+
+    return GatherRunner.run(config.passes, options).then(artifacts => {
+      assert.deepStrictEqual(artifacts.URL, {requestedUrl, finalUrl},
+        'did not find expected URL artifact');
     });
   });
 
@@ -514,7 +532,7 @@ describe('GatherRunner', function() {
 
     return GatherRunner.run(passes, {
       driver: fakeDriver,
-      url: 'https://example.com',
+      requestedUrl: 'https://example.com',
       settings,
       config,
     }).then(_ => {
@@ -535,7 +553,7 @@ describe('GatherRunner', function() {
       passName: 'secondPass',
       gatherers: [{instance: new TestGatherer()}],
     }];
-    const options = {driver: fakeDriver, url: 'https://example.com', settings: {}, config: {}};
+    const options = {driver: fakeDriver, requestedUrl: 'https://example.com', settings: {}, config: {}};
 
     return GatherRunner.run(passes, options)
       .then(artifacts => {
@@ -558,7 +576,7 @@ describe('GatherRunner', function() {
       passName: 'secondPass',
       gatherers: [{instance: new TestGatherer()}],
     }];
-    const options = {driver: fakeDriver, url: 'https://example.com', settings: {}, config: {}};
+    const options = {driver: fakeDriver, requestedUrl: 'https://example.com', settings: {}, config: {}};
 
     return GatherRunner.run(passes, options)
       .then(artifacts => {
@@ -667,7 +685,7 @@ describe('GatherRunner', function() {
 
       const artifacts = await GatherRunner.run(passes, {
         driver: fakeDriver,
-        url: 'https://example.com',
+        requestedUrl: 'https://example.com',
         settings: {},
       });
 
@@ -721,7 +739,7 @@ describe('GatherRunner', function() {
 
       return GatherRunner.run(passes, {
         driver: fakeDriver,
-        url: 'https://example.com',
+        requestedUrl: 'https://example.com',
         settings: {},
         config: new Config({}),
       }).then(artifacts => {
@@ -755,7 +773,7 @@ describe('GatherRunner', function() {
       const passes = [{blankDuration: 0, gatherers}];
       return GatherRunner.run(passes, {
         driver: fakeDriver,
-        url: 'https://example.com',
+        requestedUrl: 'https://example.com',
         settings: {},
         config: new Config({}),
       }).then(artifacts => {
@@ -881,7 +899,7 @@ describe('GatherRunner', function() {
 
       return GatherRunner.run(passes, {
         driver: fakeDriver,
-        url: 'https://example.com',
+        requestedUrl: 'https://example.com',
         settings: {},
         config: new Config({}),
       }).then(artifacts => {
@@ -917,7 +935,7 @@ describe('GatherRunner', function() {
 
       return GatherRunner.run(passes, {
         driver: fakeDriver,
-        url: 'https://example.com',
+        requestedUrl: 'https://example.com',
         settings: {},
         config: new Config({}),
       }).then(
@@ -937,7 +955,7 @@ describe('GatherRunner', function() {
 
       return GatherRunner.run(passes, {
         driver: fakeDriver,
-        url: 'https://example.com',
+        requestedUrl: 'https://example.com',
         settings: {},
         config: new Config({}),
       }).then(_ => assert.ok(false), _ => assert.ok(true));

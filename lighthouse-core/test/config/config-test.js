@@ -68,7 +68,7 @@ describe('Config', () => {
     const configJson = {
       passes: [{
         passName: unlikelyPassName,
-        gatherers: ['url'],
+        gatherers: ['viewport'],
       }, {
         passName: unlikelyPassName,
         gatherers: ['viewport-dimensions'],
@@ -112,7 +112,7 @@ describe('Config', () => {
     const configJSON = {
       passes: [{
         gatherers: [
-          'url',
+          'viewport-dimensions',
           'viewport',
         ],
       }],

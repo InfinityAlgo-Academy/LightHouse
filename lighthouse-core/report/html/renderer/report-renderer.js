@@ -59,8 +59,8 @@ class ReportRenderer {
     this._dom.find('.lh-config__timestamp', header).textContent =
         Util.formatDateTime(report.fetchTime);
     const url = this._dom.find('.lh-metadata__url', header);
-    url.href = report.url;
-    url.textContent = report.url;
+    url.href = report.finalUrl;
+    url.textContent = report.finalUrl;
 
     this._dom.find('.lh-env__item__ua', header).textContent = report.userAgent;
 
@@ -257,8 +257,8 @@ ReportRenderer.GroupJSON; // eslint-disable-line no-unused-expressions
  *     userAgent: string,
  *     fetchTime: string,
  *     timing: {total: number},
- *     initialUrl: string,
- *     url: string,
+ *     requestedUrl: string,
+ *     finalUrl: string,
  *     runWarnings: (!Array<string>|undefined),
  *     artifacts: {traces: {defaultPass: {traceEvents: !Array}}},
  *     audits: !Object<string, !ReportRenderer.AuditResultJSON>,
