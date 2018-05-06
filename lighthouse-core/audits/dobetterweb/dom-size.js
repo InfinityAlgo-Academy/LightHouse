@@ -85,8 +85,14 @@ class DOMSize extends Audit {
       },
       {
         totalNodes: '',
-        depth: stats.depth.snippet,
-        width: stats.width.snippet,
+        depth: {
+          type: 'code',
+          value: stats.depth.snippet,
+        },
+        width: {
+          type: 'code',
+          value: stats.width.snippet,
+        },
       },
     ];
 

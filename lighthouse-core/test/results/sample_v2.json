@@ -3156,7 +3156,13 @@
             "width": "22"
           },
           {
-            "totalNodes": ""
+            "totalNodes": "",
+            "depth": {
+              "type": "code"
+            },
+            "width": {
+              "type": "code"
+            }
           }
         ]
       },
@@ -3190,7 +3196,13 @@
             "width": "22"
           },
           {
-            "totalNodes": ""
+            "totalNodes": "",
+            "depth": {
+              "type": "code"
+            },
+            "width": {
+              "type": "code"
+            }
           }
         ]
       }

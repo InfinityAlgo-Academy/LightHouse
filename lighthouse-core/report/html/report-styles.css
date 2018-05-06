@@ -657,14 +657,11 @@
   font-size: large;
 }
 
-.lh-text {
-  white-space: nowrap;
-}
-
 .lh-code {
   white-space: normal;
   margin-top: 0;
   font-size: 85%;
+  word-break: break-word;
 }
 
 .lh-run-warnings {
@@ -895,7 +892,7 @@ summary.lh-passed-audits-summary {
 }
 
 .lh-text__url > .lh-text, .lh-text__url-host {
-  display: inline;
+  display: inline-block;
 }
 
 .lh-text__url-host {
