@@ -91,8 +91,7 @@ describe('DetailsRenderer', () => {
 
   it('renders tree structure', () => {
     const el = CriticalRequestChainRenderer.render(dom, dom.document(), DETAILS);
-    const details = el.querySelector('.lh-details');
-    const chains = details.querySelectorAll('.crc-node');
+    const chains = el.querySelectorAll('.crc-node');
 
     // Main request
     assert.equal(chains.length, 4, 'generates correct number of chain nodes');

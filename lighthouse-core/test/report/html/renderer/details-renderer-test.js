@@ -110,8 +110,7 @@ describe('DetailsRenderer', () => {
         ],
       });
 
-      assert.equal(el.localName, 'details');
-      assert.ok(el.querySelector('table'), 'did not render table');
+      assert.equal(el.localName, 'table', 'did not render table');
       assert.ok(el.querySelector('img'), 'did not render recursive items');
       assert.equal(el.querySelectorAll('th').length, 3, 'did not render header items');
       assert.equal(el.querySelectorAll('td').length, 6, 'did not render table cells');

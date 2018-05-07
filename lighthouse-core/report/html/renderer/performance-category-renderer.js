@@ -79,7 +79,9 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // If there's no `type`, then we only used details for `summary`
     if (details.type) {
-      element.appendChild(this.detailsRenderer.render(details));
+      const detailsElem = this.detailsRenderer.render(details);
+      detailsElem.classList.add('lh-details');
+      element.appendChild(detailsElem);
     }
 
     return element;

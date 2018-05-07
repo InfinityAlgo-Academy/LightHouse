@@ -27,7 +27,7 @@ class DetailsRenderer {
 
   /**
    * @param {!DetailsRenderer.DetailsJSON} details
-   * @return {!Node}
+   * @return {!Element}
    */
   render(details) {
     switch (details.type) {
@@ -180,11 +180,7 @@ class DetailsRenderer {
   _renderTable(details) {
     if (!details.items.length) return this._dom.createElement('span');
 
-    const element = this._dom.createElement('details', 'lh-details');
-    element.open = true;
-    element.appendChild(this._dom.createElement('summary')).textContent = 'View Details';
-
-    const tableElem = this._dom.createChildOf(element, 'table', 'lh-table');
+    const tableElem = this._dom.createElement('table', 'lh-table');
     const theadElem = this._dom.createChildOf(tableElem, 'thead');
     const theadTrElem = this._dom.createChildOf(theadElem, 'tr');
 
@@ -226,7 +222,7 @@ class DetailsRenderer {
         this._dom.createChildOf(rowElem, 'td', classes).appendChild(this.render(item));
       }
     }
-    return element;
+    return tableElem;
   }
 
   /**
