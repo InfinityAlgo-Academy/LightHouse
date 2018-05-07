@@ -43,7 +43,7 @@ describe('PWA: splash screen audit', () => {
 
       return SplashScreenAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('No manifest was fetched'), result.debugString);
+        assert.ok(result.explanation.includes('No manifest was fetched'), result.explanation);
       });
     });
 
@@ -52,7 +52,7 @@ describe('PWA: splash screen audit', () => {
       artifacts.Manifest = manifestParser('{,:}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       return SplashScreenAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('failed to parse as valid JSON'));
+        assert.ok(result.explanation.includes('failed to parse as valid JSON'));
       });
     });
 
@@ -61,15 +61,15 @@ describe('PWA: splash screen audit', () => {
       artifacts.Manifest = manifestParser('{}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       return SplashScreenAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString);
+        assert.ok(result.explanation);
         assert.strictEqual(result.extendedInfo.value.failures.length, 4);
       });
     });
 
     it('passes with complete manifest and SW', () => {
       return SplashScreenAudit.audit(generateMockArtifacts()).then(result => {
-        assert.strictEqual(result.rawValue, true, result.debugString);
-        assert.strictEqual(result.debugString, undefined, result.debugString);
+        assert.strictEqual(result.rawValue, true, result.explanation);
+        assert.strictEqual(result.explanation, undefined, result.explanation);
       });
     });
   });
@@ -81,7 +81,7 @@ describe('PWA: splash screen audit', () => {
 
       return SplashScreenAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('name'), result.debugString);
+        assert.ok(result.explanation.includes('name'), result.explanation);
       });
     });
 
@@ -91,7 +91,7 @@ describe('PWA: splash screen audit', () => {
 
       return SplashScreenAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('background_color'), result.debugString);
+        assert.ok(result.explanation.includes('background_color'), result.explanation);
       });
     });
 
@@ -103,7 +103,7 @@ describe('PWA: splash screen audit', () => {
 
       return SplashScreenAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('background_color'), result.debugString);
+        assert.ok(result.explanation.includes('background_color'), result.explanation);
       });
     });
 
@@ -113,7 +113,7 @@ describe('PWA: splash screen audit', () => {
 
       return SplashScreenAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('theme_color'), result.debugString);
+        assert.ok(result.explanation.includes('theme_color'), result.explanation);
       });
     });
 
@@ -123,7 +123,7 @@ describe('PWA: splash screen audit', () => {
 
       return SplashScreenAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('icons'), result.debugString);
+        assert.ok(result.explanation.includes('icons'), result.explanation);
       });
     });
   });

@@ -109,7 +109,7 @@ describe('Module Tests', function() {
       assert.equal(results.lhr.reportCategories.length, 0);
       assert.ok(results.lhr.audits.viewport);
       assert.strictEqual(results.lhr.audits.viewport.score, 0);
-      assert.ok(results.lhr.audits.viewport.debugString);
+      assert.ok(results.lhr.audits.viewport.explanation);
       assert.ok(results.lhr.timing);
       assert.equal(typeof results.lhr.timing.total, 'number');
     });

@@ -33,12 +33,11 @@ class AppCacheManifestAttr extends Audit {
    */
   static audit(artifacts) {
     const usingAppcache = artifacts.AppCacheManifest !== null;
-    const debugString = usingAppcache ?
-        `Found <html manifest="${artifacts.AppCacheManifest}">.` : '';
+    const displayValue = usingAppcache ? `Found "${artifacts.AppCacheManifest}"` : '';
 
     return {
       rawValue: !usingAppcache,
-      debugString,
+      displayValue,
     };
   }
 }

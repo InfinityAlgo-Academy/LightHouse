@@ -203,7 +203,7 @@ class FontSize extends Audit {
     if (!hasViewportSet) {
       return {
         rawValue: false,
-        debugString: 'Text is illegible because of a missing viewport config',
+        explanation: 'Text is illegible because of a missing viewport config',
       };
     }
 
@@ -268,10 +268,12 @@ class FontSize extends Audit {
       });
     }
 
+    /** @type {LH.Audit.DisplayValue} */
+    const displayValue = ['%.1d% legible text', percentageOfPassingText];
     const details = Audit.makeTableDetails(headings, tableData);
     const passed = percentageOfPassingText >= MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT;
-    let debugString;
 
+    let explanation;
     if (!passed) {
       const percentageOfFailingText = parseFloat((100 - percentageOfPassingText).toFixed(2));
       let disclaimer = '';
@@ -282,13 +284,14 @@ class FontSize extends Audit {
         disclaimer = ` (based on ${percentageOfVisitedText.toFixed()}% sample)`;
       }
 
-      debugString = `${percentageOfFailingText}% of text is too small${disclaimer}.`;
+      explanation = `${percentageOfFailingText}% of text is too small${disclaimer}.`;
     }
 
     return {
       rawValue: passed,
       details,
-      debugString,
+      displayValue,
+      explanation,
     };
   }
 }

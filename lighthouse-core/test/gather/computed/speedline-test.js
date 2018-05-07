@@ -20,7 +20,7 @@ describe('Speedline gatherer', () => {
     computedArtifacts = Runner.instantiateComputedArtifacts();
   });
 
-  it('returns an error debugString on faulty trace data', () => {
+  it('returns an error message on faulty trace data', () => {
     return computedArtifacts.requestSpeedline({traceEvents: {boo: 'ya'}}).then(_ => {
       assert.fail(true, true, 'Invalid trace did not throw exception in speedline');
     }, err => {

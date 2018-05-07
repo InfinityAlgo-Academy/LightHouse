@@ -16,7 +16,6 @@ describe('Console deprecations audit', () => {
       ChromeConsoleMessages: [],
     });
     assert.equal(auditResult.rawValue, true);
-    assert.ok(!auditResult.debugString);
     assert.equal(auditResult.details.items.length, 0);
   });
 

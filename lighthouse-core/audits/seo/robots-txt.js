@@ -182,7 +182,7 @@ class RobotsTxt extends Audit {
     if (!status) {
       return {
         rawValue: false,
-        debugString: 'Lighthouse was unable to download your robots.txt file',
+        explanation: 'Lighthouse was unable to download your robots.txt file',
       };
     }
 

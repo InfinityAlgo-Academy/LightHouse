@@ -20,7 +20,7 @@ describe('Progressive Enhancement: without javascript audit', () => {
 
     const result = withoutJsAudit.audit(artifacts);
     assert.equal(result.rawValue, false);
-    assert.ok(result.debugString);
+    assert.ok(result.explanation);
   });
 
   it('fails when the js-less body is whitespace', () => {
@@ -32,7 +32,7 @@ describe('Progressive Enhancement: without javascript audit', () => {
 
     const result = withoutJsAudit.audit(artifacts);
     assert.equal(result.rawValue, false);
-    assert.ok(result.debugString);
+    assert.ok(result.explanation);
   });
 
   it('succeeds when the js-less body contains some content', () => {

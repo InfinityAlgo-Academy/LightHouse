@@ -40,7 +40,7 @@ class ManifestShortNameLength extends Audit {
       if (!hasShortName || !hasShortName.passing) {
         return {
           rawValue: false,
-          debugString: 'No short_name found in manifest.',
+          explanation: 'No short_name found in manifest.',
         };
       }
 

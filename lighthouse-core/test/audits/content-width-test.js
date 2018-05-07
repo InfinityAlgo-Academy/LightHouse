@@ -20,7 +20,7 @@ describe('Mobile-friendly: content-width audit', () => {
     });
 
     assert.equal(result.rawValue, false);
-    assert.ok(result.debugString);
+    assert.ok(result.explanation);
   });
 
   it('passes when widths match', () => {

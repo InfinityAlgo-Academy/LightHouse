@@ -98,6 +98,7 @@ class WebappInstallBanner extends MultiCheckAudit {
 
     if (!hasOfflineStartUrl) {
       failures.push('Service worker does not successfully serve the manifest\'s start_url');
+      // TODO(phulce): align gatherer `debugString` with `explanation`
       if (artifacts.StartUrl.debugString) {
         failures.push(artifacts.StartUrl.debugString);
       }

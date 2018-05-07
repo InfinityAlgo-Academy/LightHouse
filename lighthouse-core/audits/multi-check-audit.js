@@ -33,21 +33,16 @@ class MultiCheckAudit extends Audit {
     if (result.failures.length > 0) {
       return {
         rawValue: false,
-        debugString: `Failures: ${result.failures.join(', ')}.`,
+        explanation: `Failures: ${result.failures.join(',\n')}.`,
         extendedInfo,
       };
-    }
-
-    let debugString;
-    if (result.warnings && result.warnings.length > 0) {
-      debugString = `Warnings: ${result.warnings.join(', ')}`;
     }
 
     // Otherwise, we pass
     return {
       rawValue: true,
       extendedInfo,
-      debugString,
+      warnings: result.warnings,
     };
   }
 

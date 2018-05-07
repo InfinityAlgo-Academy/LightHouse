@@ -33,7 +33,7 @@ class WithoutJavaScript extends Audit {
     if (artifact.value.trim() === '') {
       return {
         rawValue: false,
-        debugString: 'The page body should render some content if its scripts are not available.',
+        explanation: 'The page body should render some content if its scripts are not available.',
       };
     }
 

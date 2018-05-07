@@ -94,7 +94,7 @@ describe('Audit', () => {
   });
 
   it('sets state of failed audits', () => {
-    const providedResult = {rawValue: true, error: true};
+    const providedResult = {rawValue: true, errorMessage: 'It did not work'};
     const result = Audit.generateAuditResult(B, providedResult);
     assert.equal(result.score, null);
     assert.equal(result.scoreDisplayMode, 'error');

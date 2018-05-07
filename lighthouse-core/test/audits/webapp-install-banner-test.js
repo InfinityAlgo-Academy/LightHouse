@@ -42,7 +42,7 @@ describe('PWA: webapp install banner audit', () => {
 
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('No manifest was fetched'), result.debugString);
+        assert.ok(result.explanation.includes('No manifest was fetched'), result.explanation);
       });
     });
 
@@ -51,7 +51,7 @@ describe('PWA: webapp install banner audit', () => {
       artifacts.Manifest = manifestParser('{,:}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('failed to parse as valid JSON'));
+        assert.ok(result.explanation.includes('failed to parse as valid JSON'));
       });
     });
 
@@ -60,15 +60,15 @@ describe('PWA: webapp install banner audit', () => {
       artifacts.Manifest = manifestParser('{}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString);
+        assert.ok(result.explanation);
         assert.strictEqual(result.extendedInfo.value.failures.length, 4);
       });
     });
 
     it('passes with complete manifest and SW', () => {
       return WebappInstallBannerAudit.audit(generateMockArtifacts()).then(result => {
-        assert.strictEqual(result.rawValue, true, result.debugString);
-        assert.strictEqual(result.debugString, undefined, result.debugString);
+        assert.strictEqual(result.rawValue, true, result.explanation);
+        assert.strictEqual(result.explanation, undefined, result.explanation);
       });
     });
   });
@@ -81,7 +81,7 @@ describe('PWA: webapp install banner audit', () => {
 
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('start_url'), result.debugString);
+        assert.ok(result.explanation.includes('start_url'), result.explanation);
         const failures = result.extendedInfo.value.failures;
         assert.strictEqual(failures.length, 1, failures);
       });
@@ -94,7 +94,7 @@ describe('PWA: webapp install banner audit', () => {
 
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('short_name'), result.debugString);
+        assert.ok(result.explanation.includes('short_name'), result.explanation);
         const failures = result.extendedInfo.value.failures;
         assert.strictEqual(failures.length, 1, failures);
       });
@@ -106,7 +106,7 @@ describe('PWA: webapp install banner audit', () => {
 
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('name'), result.debugString);
+        assert.ok(result.explanation.includes('name'), result.explanation);
         const failures = result.extendedInfo.value.failures;
         assert.strictEqual(failures.length, 1, failures);
       });
@@ -118,7 +118,7 @@ describe('PWA: webapp install banner audit', () => {
 
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.debugString.includes('icons'), result.debugString);
+        assert.ok(result.explanation.includes('icons'), result.explanation);
         const failures = result.extendedInfo.value.failures;
         assert.strictEqual(failures.length, 1, failures);
       });
@@ -132,7 +132,7 @@ describe('PWA: webapp install banner audit', () => {
 
     return WebappInstallBannerAudit.audit(artifacts).then(result => {
       assert.strictEqual(result.rawValue, false);
-      assert.ok(result.debugString.includes('service worker'), result.debugString);
+      assert.ok(result.explanation.includes('service worker'), result.explanation);
       const failures = result.extendedInfo.value.failures;
       assert.strictEqual(failures.length, 1, failures);
     });
@@ -144,19 +144,19 @@ describe('PWA: webapp install banner audit', () => {
 
     return WebappInstallBannerAudit.audit(artifacts).then(result => {
       assert.strictEqual(result.rawValue, false);
-      assert.ok(result.debugString.includes('start_url'), result.debugString);
+      assert.ok(result.explanation.includes('start_url'), result.explanation);
       const failures = result.extendedInfo.value.failures;
       assert.strictEqual(failures.length, 1, failures);
     });
   });
 
-  it('includes debugString from start_url', () => {
+  it('includes warning from start_url', () => {
     const artifacts = generateMockArtifacts();
     artifacts.StartUrl = {statusCode: 200, debugString: 'Warning!'};
 
     return WebappInstallBannerAudit.audit(artifacts).then(result => {
       assert.strictEqual(result.rawValue, true);
-      assert.equal(result.debugString, 'Warnings: Warning!');
+      assert.equal(result.warnings[0], 'Warning!');
     });
   });
 });

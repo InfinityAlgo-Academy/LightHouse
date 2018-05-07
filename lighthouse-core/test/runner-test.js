@@ -247,8 +247,8 @@ describe('Runner', () => {
       return Runner.run({}, {url, config}).then(results => {
         const auditResult = results.lhr.audits['user-timings'];
         assert.strictEqual(auditResult.rawValue, null);
-        assert.strictEqual(auditResult.error, true);
-        assert.ok(auditResult.debugString.includes('traces'));
+        assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+        assert.ok(auditResult.errorMessage.includes('traces'));
       });
     });
 
@@ -267,8 +267,8 @@ describe('Runner', () => {
       return Runner.run({}, {url, config}).then(results => {
         const auditResult = results.lhr.audits['content-width'];
         assert.strictEqual(auditResult.rawValue, null);
-        assert.strictEqual(auditResult.error, true);
-        assert.ok(auditResult.debugString.includes('ViewportDimensions'));
+        assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+        assert.ok(auditResult.errorMessage.includes('ViewportDimensions'));
       });
     });
 
@@ -295,8 +295,8 @@ describe('Runner', () => {
       return Runner.run({}, {url, config}).then(results => {
         const auditResult = results.lhr.audits['content-width'];
         assert.strictEqual(auditResult.rawValue, null);
-        assert.strictEqual(auditResult.error, true);
-        assert.ok(auditResult.debugString.includes(errorMessage));
+        assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+        assert.ok(auditResult.errorMessage.includes(errorMessage));
       });
     });
   });
@@ -332,8 +332,8 @@ describe('Runner', () => {
       return Runner.run({}, {url, config}).then(results => {
         const auditResult = results.lhr.audits['throwy-audit'];
         assert.strictEqual(auditResult.rawValue, null);
-        assert.strictEqual(auditResult.error, true);
-        assert.ok(auditResult.debugString.includes(errorMessage));
+        assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+        assert.ok(auditResult.errorMessage.includes(errorMessage));
       });
     });
 

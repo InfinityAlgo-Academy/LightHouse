@@ -52,7 +52,7 @@ describe('Page uses optimized responses', () => {
       {requestId: '123.4', url: 'invalid.js', _transferSize: 100 * KB, _resourceType},
     ]);
 
-    assert.ok(auditResult.debugString);
+    assert.ok(auditResult.warnings.length);
     assert.equal(auditResult.results.length, 3);
     assert.equal(auditResult.results[0].url, 'foo.js');
     assert.equal(Math.round(auditResult.results[0].wastedPercent), 57);

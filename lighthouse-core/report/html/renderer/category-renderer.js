@@ -58,16 +58,16 @@ class CategoryRenderer {
 
     this._setRatingClass(auditEl, audit.result.score, scoreDisplayMode);
 
-    if (audit.result.error) {
+    if (audit.result.scoreDisplayMode === 'error') {
       auditEl.classList.add(`lh-audit--error`);
       const textEl = this.dom.find('.lh-audit__display-text', auditEl);
       textEl.textContent = 'Error!';
       textEl.classList.add('tooltip-boundary');
       const tooltip = this.dom.createChildOf(textEl, 'div', 'lh-error-tooltip-content tooltip');
-      tooltip.textContent = audit.result.debugString || 'Report error: no audit information';
-    } else if (audit.result.debugString) {
-      const debugStrEl = this.dom.createChildOf(titleEl, 'div', 'lh-debug');
-      debugStrEl.textContent = audit.result.debugString;
+      tooltip.textContent = audit.result.errorMessage || 'Report error: no audit information';
+    } else if (audit.result.explanation) {
+      const explanationEl = this.dom.createChildOf(titleEl, 'div', 'lh-debug');
+      explanationEl.textContent = audit.result.explanation;
     }
     return auditEl;
   }

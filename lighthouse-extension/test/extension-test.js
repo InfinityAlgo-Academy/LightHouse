@@ -154,6 +154,7 @@ describe('Lighthouse chrome extension', function() {
   });
 
   it('should not have any audit errors', async () => {
+    // TODO(phulce): rework these to look at the tooltips
     function getDebugStrings(elems, selectors) {
       return elems.map(el => {
         const audit = el.closest(selectors.audits);

@@ -47,8 +47,7 @@ module.exports = [
       },
       'external-anchors-use-rel-noopener': {
         score: 0,
-        debugString: 'Lighthouse was unable to determine the destination of some anchor tags. ' +
-                     'If they are not used as hyperlinks, consider removing the _blank target.',
+        warnings: [/Unable to determine/],
         extendedInfo: {
           value: {
             length: 3,
@@ -62,7 +61,7 @@ module.exports = [
       },
       'appcache-manifest': {
         score: 0,
-        debugString: 'Found <html manifest="clock.appcache">.',
+        displayValue: 'Found "clock.appcache"',
       },
       'geolocation-on-start': {
         score: 0,
@@ -105,7 +104,7 @@ module.exports = [
       },
       'no-websql': {
         score: 0,
-        debugString: 'Found database "mydb", version: 1.0.',
+        displayValue: 'Found "mydb" (v1.0)',
       },
       'notification-on-start': {
         score: 0,

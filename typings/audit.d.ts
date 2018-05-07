@@ -54,7 +54,8 @@ declare global {
       results: Array<ByteEfficiencyResult>;
       headings: Array<Audit.Heading>;
       displayValue?: string;
-      debugString?: string;
+      explanation?: string;
+      warnings?: string[];
     }
 
     export interface ByteEfficiencyResult {
@@ -109,12 +110,13 @@ declare global {
     export interface Product {
       rawValue: boolean | number | null;
       displayValue?: DisplayValue;
-      debugString?: string;
+      explanation?: string;
+      errorMessage?: string;
+      warnings?: string[];
       score?: number;
       extendedInfo?: {[p: string]: any};
       /** Overrides scoreDisplayMode with not-applicable if set to true */
       notApplicable?: boolean;
-      error?: boolean;
       // TODO(bckenny): define details
       details?: object;
     }
@@ -122,13 +124,14 @@ declare global {
     /* Audit result returned in Lighthouse report. All audits offer a description and score of 0-1 */
     export interface Result {
       rawValue: boolean | number | null;
-      displayValue: DisplayValue;
-      debugString?: string;
+      displayValue?: DisplayValue;
+      explanation?: string;
+      errorMessage?: string;
+      warnings?: string[];
       score: number|null;
       scoreDisplayMode: ScoreDisplayMode;
       description: string;
       extendedInfo?: {[p: string]: any};
-      error?: boolean;
       name: string;
       helpText?: string;
       // TODO(bckenny): define details

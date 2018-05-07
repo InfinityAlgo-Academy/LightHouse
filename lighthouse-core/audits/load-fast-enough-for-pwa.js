@@ -8,13 +8,12 @@
 /** @fileoverview
  *  This audit evaluates if a page's load performance is fast enough for it to be considered a PWA.
  *  We are doublechecking that the network requests were throttled (or slow on their own)
- *  Afterwards, we report if the TTFI is less than 10 seconds.
+ *  Afterwards, we report if the TTI is less than 10 seconds.
  */
 
 const isDeepEqual = require('lodash.isequal');
 const Audit = require('./audit');
 const mobile3GThrottling = require('../config/constants').throttling.mobile3G;
-const Util = require('../report/html/renderer/util.js');
 
 // Maximum TTI to be considered "fast" for PWA baseline checklist
 //   https://developers.google.com/web/progressive-web-apps/checklist
@@ -59,15 +58,21 @@ class LoadFastEnough4Pwa extends Audit {
 
     const score = Number(tti.timing < MAXIMUM_TTI);
 
-    let debugString;
+    /** @type {LH.Audit.DisplayValue|undefined} */
+    let displayValue;
+    /** @type {string|undefined} */
+    let explanation;
     if (!score) {
-      // eslint-disable-next-line max-len
-      debugString = `First Interactive was ${Util.formatMilliseconds(tti.timing)}. More details in the "Performance" section.`;
+      displayValue = [`Interactive at %d\xa0s`, tti.timing / 1000];
+      explanation = 'Your page loads too slowly and is not interactive within 10 seconds. ' +
+        'Look at the opportunities and diagnostics in the "Performance" section to learn how to ' +
+        'improve.';
     }
 
     return {
       score,
-      debugString,
+      displayValue,
+      explanation,
       rawValue: tti.timing,
     };
   }

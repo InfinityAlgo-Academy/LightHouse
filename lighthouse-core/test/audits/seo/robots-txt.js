@@ -21,7 +21,7 @@ describe('SEO: robots.txt audit', () => {
 
     const auditResult = RobotsTxtAudit.audit(artifacts);
     assert.equal(auditResult.rawValue, false);
-    assert.ok(auditResult.debugString);
+    assert.ok(auditResult.explanation);
   });
 
   it('fails when request for /robots.txt returns a HTTP500+ error', () => {

@@ -99,31 +99,12 @@ describe('PerfCategoryRenderer', () => {
     assert.ok(oppSparklineElement.title, 'did not set tooltip on sparkline');
   });
 
-  it('renders the performance opportunities with a debug string', () => {
+  it('renders performance opportunities with an errorMessage', () => {
     const auditWithDebug = {
       score: 0,
       group: 'load-opportunities',
       result: {
-        rawValue: 100, debugString: 'Yikes!', description: 'Bug',
-        helpText: '', score: 0.32,
-        details: {summary: {wastedMs: 3223}},
-      },
-    };
-
-    const fakeCategory = Object.assign({}, category, {audits: [auditWithDebug]});
-    const categoryDOM = renderer.render(fakeCategory, sampleResults.reportGroups);
-
-    const debugEl = categoryDOM.querySelector('.lh-load-opportunity .lh-debug');
-    assert.ok(debugEl, 'did not render debug');
-  });
-
-  it('renders errored performance opportunities with a debug string', () => {
-    const auditWithDebug = {
-      score: 0,
-      group: 'load-opportunities',
-      result: {
-        error: true, score: 0,
-        rawValue: 100, debugString: 'Yikes!!', description: 'Bug #2',
+        score: null, scoreDisplayMode: 'error', errorMessage: 'Yikes!!', description: 'Bug #2',
       },
     };
 

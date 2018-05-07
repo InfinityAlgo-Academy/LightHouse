@@ -34,12 +34,12 @@ class NoWebSQLAudit extends Audit {
    */
   static audit(artifacts) {
     const db = artifacts.WebSQL;
-    const debugString = (db ?
-        `Found database "${db.name}", version: ${db.version}.` : '');
+    const displayValue = (db ?
+        `Found "${db.name}" (v${db.version})` : '');
 
     return {
       rawValue: !db,
-      debugString,
+      displayValue,
     };
   }
 }

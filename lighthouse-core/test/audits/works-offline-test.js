@@ -20,7 +20,7 @@ describe('Offline: works-offline audit', () => {
     });
 
     assert.equal(output.rawValue, true);
-    assert.ok(!output.debugString);
+    assert.ok(!output.explanation);
   });
 
   it('warns if requested url does not match final url', () => {
@@ -30,7 +30,7 @@ describe('Offline: works-offline audit', () => {
     });
 
     assert.equal(output.rawValue, false);
-    assert.ok(output.debugString);
+    assert.ok(output.warnings[0]);
   });
 
   it('correctly audits a non-200 code', () => {
@@ -40,6 +40,6 @@ describe('Offline: works-offline audit', () => {
     });
 
     assert.equal(output.rawValue, false);
-    assert.ok(!output.debugString);
+    assert.ok(!output.explanation);
   });
 });

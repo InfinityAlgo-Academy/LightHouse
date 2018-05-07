@@ -80,7 +80,8 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     const images = artifacts.ImageUsage;
     const DPR = artifacts.ViewportDimensions.devicePixelRatio;
 
-    let debugString;
+    /** @type {string[]} */
+    const warnings = [];
     /** @type {Map<LH.Audit.ByteEfficiencyResult['url'], LH.Audit.ByteEfficiencyResult>} */
     const resultsMap = new Map();
     images.forEach(image => {
@@ -93,7 +94,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
       if (!processed) return;
 
       if (processed instanceof Error) {
-        debugString = processed.message;
+        warnings.push(processed.message);
         // @ts-ignore TODO(bckenny): Sentry type checking
         Sentry.captureException(processed, {tags: {audit: this.meta.name}, level: 'warning'});
         return;
@@ -118,7 +119,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     ];
 
     return {
-      debugString,
+      warnings,
       results,
       headings,
     };

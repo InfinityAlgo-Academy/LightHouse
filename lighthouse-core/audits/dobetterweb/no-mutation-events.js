@@ -49,7 +49,8 @@ class NoMutationEventsAudit extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    let debugString;
+    /** @type {string[]} */
+    const warnings = [];
     const listeners = artifacts.EventListeners;
 
     const results = listeners.filter(loc => {
@@ -58,7 +59,7 @@ class NoMutationEventsAudit extends Audit {
 
       if (!URL.isValid(loc.url) && isMutationEvent) {
         sameHost = true;
-        debugString = URL.INVALID_URL_DEBUG_STRING;
+        warnings.push(URL.INVALID_URL_DEBUG_STRING);
       }
 
       return sameHost && isMutationEvent;
@@ -83,7 +84,7 @@ class NoMutationEventsAudit extends Audit {
         },
       },
       details,
-      debugString,
+      warnings,
     };
   }
 }

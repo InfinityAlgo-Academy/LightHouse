@@ -34,7 +34,7 @@ class ContentWidth extends Audit {
 
     return {
       rawValue: widthsMatch,
-      debugString: this.createDebugString(widthsMatch, artifacts.ViewportDimensions),
+      explanation: this.createExplanation(widthsMatch, artifacts.ViewportDimensions),
     };
   }
 
@@ -43,7 +43,7 @@ class ContentWidth extends Audit {
    * @param {LH.Artifacts.ViewportDimensions} artifact
    * @return {string}
    */
-  static createDebugString(match, artifact) {
+  static createExplanation(match, artifact) {
     if (match) {
       return '';
     }

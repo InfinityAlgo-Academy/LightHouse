@@ -28,7 +28,6 @@ describe('Performance: estimated-input-latency audit', () => {
     const artifacts = generateArtifactsWithTrace(pwaTrace);
     const settings = {throttlingMethod: 'provided'};
     return Audit.audit(artifacts, {options, settings}).then(output => {
-      assert.equal(output.debugString, undefined);
       assert.equal(Math.round(output.rawValue * 10) / 10, 17.1);
       assert.equal(Util.formatDisplayValue(output.displayValue), '17\xa0ms');
       assert.equal(output.score, 1);

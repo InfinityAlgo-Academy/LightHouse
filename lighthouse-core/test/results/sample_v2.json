@@ -4,12 +4,14 @@
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "requestedUrl": "http://localhost/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
-  "runWarnings": [],
+  "runWarnings": [
+    "Links to cross-origin destinations are unsafe: Unable to determine the destination for anchor tag. If not used as a hyperlink, consider removing target=_blank."
+  ],
   "audits": {
     "is-on-https": {
       "score": 0,
-      "displayValue": "1 insecure request found",
       "rawValue": false,
+      "displayValue": "1 insecure request found",
       "extendedInfo": {
         "value": [
           {
@@ -39,7 +41,6 @@
     },
     "redirects-http": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "binary",
       "name": "redirects-http",
@@ -48,7 +49,6 @@
     },
     "service-worker": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "binary",
       "name": "service-worker",
@@ -57,8 +57,8 @@
     },
     "works-offline": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
+      "warnings": [],
       "scoreDisplayMode": "binary",
       "name": "works-offline",
       "description": "Does not respond with a 200 when offline",
@@ -66,9 +66,8 @@
     },
     "viewport": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
-      "debugString": "",
+      "warnings": [],
       "scoreDisplayMode": "binary",
       "name": "viewport",
       "description": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`",
@@ -76,7 +75,6 @@
     },
     "without-javascript": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "binary",
       "name": "without-javascript",
@@ -85,11 +83,11 @@
     },
     "first-contentful-paint": {
       "score": 0.51,
+      "rawValue": 3969.135,
       "displayValue": [
         "%10d ms",
         3969.135
       ],
-      "rawValue": 3969.135,
       "scoreDisplayMode": "numeric",
       "name": "first-contentful-paint",
       "description": "First Contentful Paint",
@@ -97,11 +95,11 @@
     },
     "first-meaningful-paint": {
       "score": 0.51,
+      "rawValue": 3969.136,
       "displayValue": [
         "%10d ms",
         3969.136
       ],
-      "rawValue": 3969.136,
       "scoreDisplayMode": "numeric",
       "name": "first-meaningful-paint",
       "description": "First Meaningful Paint",
@@ -109,7 +107,6 @@
     },
     "load-fast-enough-for-pwa": {
       "score": 1,
-      "displayValue": "",
       "rawValue": 4927.278,
       "scoreDisplayMode": "binary",
       "name": "load-fast-enough-for-pwa",
@@ -118,11 +115,11 @@
     },
     "speed-index": {
       "score": 0.74,
+      "rawValue": 4417,
       "displayValue": [
         "%10d ms",
         4417
       ],
-      "rawValue": 4417,
       "scoreDisplayMode": "numeric",
       "name": "speed-index",
       "description": "Speed Index",
@@ -130,7 +127,6 @@
     },
     "screenshot-thumbnails": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "informative",
       "name": "screenshot-thumbnails",
@@ -195,11 +191,11 @@
     },
     "estimated-input-latency": {
       "score": 1,
+      "rawValue": 16,
       "displayValue": [
         "%d ms",
         16
       ],
-      "rawValue": 16,
       "scoreDisplayMode": "numeric",
       "name": "estimated-input-latency",
       "description": "Estimated Input Latency",
@@ -207,7 +203,6 @@
     },
     "errors-in-console": {
       "score": 0,
-      "displayValue": "",
       "rawValue": 5,
       "scoreDisplayMode": "binary",
       "name": "errors-in-console",
@@ -258,8 +253,8 @@
     },
     "time-to-first-byte": {
       "score": 1,
-      "displayValue": "",
       "rawValue": 570.5630000000001,
+      "displayValue": "",
       "extendedInfo": {
         "value": {
           "wastedMs": -29.436999999999898
@@ -277,11 +272,11 @@
     },
     "first-cpu-idle": {
       "score": 0.72,
+      "rawValue": 4927.278,
       "displayValue": [
         "%10d ms",
         4927.278
       ],
-      "rawValue": 4927.278,
       "scoreDisplayMode": "numeric",
       "name": "first-cpu-idle",
       "description": "First CPU Idle",
@@ -289,11 +284,11 @@
     },
     "interactive": {
       "score": 0.78,
+      "rawValue": 4927.278,
       "displayValue": [
         "%10d ms",
         4927.278
       ],
-      "rawValue": 4927.278,
       "extendedInfo": {
         "value": {
           "timeInMs": 4927.278,
@@ -307,8 +302,8 @@
     },
     "user-timings": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
+      "displayValue": "",
       "extendedInfo": {
         "value": []
       },
@@ -324,8 +319,8 @@
     },
     "critical-request-chains": {
       "score": null,
-      "displayValue": "12 chains found",
       "rawValue": false,
+      "displayValue": "12 chains found",
       "extendedInfo": {
         "value": {
           "chains": {
@@ -640,11 +635,11 @@
     },
     "redirects": {
       "score": 1,
+      "rawValue": 0,
       "displayValue": [
         "%d ms",
         0
       ],
-      "rawValue": 0,
       "extendedInfo": {
         "value": {
           "wastedMs": 0
@@ -665,9 +660,8 @@
     },
     "webapp-install-banner": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
-      "debugString": "Failures: No manifest was fetched, Site does not register a service worker.",
+      "explanation": "Failures: No manifest was fetched,\nSite does not register a service worker.",
       "extendedInfo": {
         "value": {
           "warnings": [],
@@ -689,9 +683,8 @@
     },
     "splash-screen": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
-      "debugString": "Failures: No manifest was fetched.",
+      "explanation": "Failures: No manifest was fetched.",
       "extendedInfo": {
         "value": {
           "failures": [
@@ -711,9 +704,8 @@
     },
     "themed-omnibox": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
-      "debugString": "Failures: No manifest was fetched, No `<meta name=\"theme-color\">` tag found.",
+      "explanation": "Failures: No manifest was fetched,\nNo `<meta name=\"theme-color\">` tag found.",
       "extendedInfo": {
         "value": {
           "failures": [
@@ -735,7 +727,6 @@
     },
     "manifest-short-name-length": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "binary",
       "name": "manifest-short-name-length",
@@ -744,9 +735,8 @@
     },
     "content-width": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
-      "debugString": "",
+      "explanation": "",
       "scoreDisplayMode": "binary",
       "name": "content-width",
       "description": "Content is sized correctly for the viewport",
@@ -754,8 +744,8 @@
     },
     "image-aspect-ratio": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
+      "warnings": [],
       "scoreDisplayMode": "binary",
       "name": "image-aspect-ratio",
       "description": "Displays images with incorrect aspect ratio",
@@ -796,8 +786,8 @@
     },
     "deprecations": {
       "score": 0,
-      "displayValue": "3 warnings found",
       "rawValue": false,
+      "displayValue": "3 warnings found",
       "extendedInfo": {
         "value": [
           {
@@ -865,11 +855,11 @@
     },
     "mainthread-work-breakdown": {
       "score": 0.98,
+      "rawValue": 1359.7759999930859,
       "displayValue": [
         "%10d ms",
         1359.7759999930859
       ],
-      "rawValue": 1359.7759999930859,
       "extendedInfo": {
         "value": {
           "Evaluate Script": 1121.2470000088215,
@@ -988,11 +978,11 @@
     },
     "bootup-time": {
       "score": 0.9,
+      "rawValue": 1302.3579999804497,
       "displayValue": [
         "%10d ms",
         1302.3579999804497
       ],
-      "rawValue": 1302.3579999804497,
       "extendedInfo": {
         "value": {
           "http://localhost:10200/dobetterweb/dbw_tester.html": {
@@ -1068,11 +1058,11 @@
     },
     "uses-rel-preload": {
       "score": 1,
+      "rawValue": 0,
       "displayValue": [
         "Potential savings of %10d ms",
         0
       ],
-      "rawValue": 0,
       "extendedInfo": {
         "value": []
       },
@@ -1091,11 +1081,11 @@
     },
     "uses-rel-preconnect": {
       "score": 1,
+      "rawValue": 0,
       "displayValue": [
         "Potential savings of %10d ms",
         0
       ],
-      "rawValue": 0,
       "extendedInfo": {
         "value": []
       },
@@ -1114,7 +1104,6 @@
     },
     "font-display": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "binary",
       "name": "font-display",
@@ -1128,7 +1117,6 @@
     },
     "network-requests": {
       "score": null,
-      "displayValue": "",
       "rawValue": 18,
       "extendedInfo": {
         "value": [
@@ -1511,7 +1499,6 @@
     },
     "metrics": {
       "score": null,
-      "displayValue": "",
       "rawValue": 4927.278,
       "scoreDisplayMode": "informative",
       "name": "metrics",
@@ -1557,7 +1544,6 @@
     },
     "pwa-cross-browser": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "pwa-cross-browser",
@@ -1566,7 +1552,6 @@
     },
     "pwa-page-transitions": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "pwa-page-transitions",
@@ -1575,7 +1560,6 @@
     },
     "pwa-each-page-has-url": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "pwa-each-page-has-url",
@@ -1584,7 +1568,6 @@
     },
     "accesskeys": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "accesskeys",
@@ -1593,7 +1576,6 @@
     },
     "aria-allowed-attr": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "aria-allowed-attr",
@@ -1602,7 +1584,6 @@
     },
     "aria-required-attr": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "aria-required-attr",
@@ -1611,7 +1592,6 @@
     },
     "aria-required-children": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "aria-required-children",
@@ -1620,7 +1600,6 @@
     },
     "aria-required-parent": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "aria-required-parent",
@@ -1629,7 +1608,6 @@
     },
     "aria-roles": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "aria-roles",
@@ -1638,7 +1616,6 @@
     },
     "aria-valid-attr-value": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "aria-valid-attr-value",
@@ -1647,7 +1624,6 @@
     },
     "aria-valid-attr": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "aria-valid-attr",
@@ -1656,7 +1632,6 @@
     },
     "audio-caption": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "audio-caption",
@@ -1665,7 +1640,6 @@
     },
     "button-name": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "button-name",
@@ -1674,7 +1648,6 @@
     },
     "bypass": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
       "extendedInfo": {},
       "scoreDisplayMode": "binary",
@@ -1689,7 +1662,6 @@
     },
     "color-contrast": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
         "value": {
@@ -1762,7 +1734,6 @@
     },
     "definition-list": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "definition-list",
@@ -1771,7 +1742,6 @@
     },
     "dlitem": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "dlitem",
@@ -1780,7 +1750,6 @@
     },
     "document-title": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
       "extendedInfo": {},
       "scoreDisplayMode": "binary",
@@ -1795,7 +1764,6 @@
     },
     "duplicate-id": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
       "extendedInfo": {},
       "scoreDisplayMode": "binary",
@@ -1810,7 +1778,6 @@
     },
     "frame-title": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "frame-title",
@@ -1819,7 +1786,6 @@
     },
     "html-has-lang": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
         "value": {
@@ -1874,7 +1840,6 @@
     },
     "html-lang-valid": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "html-lang-valid",
@@ -1883,7 +1848,6 @@
     },
     "image-alt": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
         "value": {
@@ -1976,7 +1940,6 @@
     },
     "input-image-alt": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "input-image-alt",
@@ -1985,7 +1948,6 @@
     },
     "label": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
         "value": {
@@ -2079,7 +2041,6 @@
     },
     "layout-table": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "layout-table",
@@ -2088,7 +2049,6 @@
     },
     "link-name": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
         "value": {
@@ -2165,7 +2125,6 @@
     },
     "list": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "list",
@@ -2174,7 +2133,6 @@
     },
     "listitem": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "listitem",
@@ -2183,7 +2141,6 @@
     },
     "meta-refresh": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "meta-refresh",
@@ -2192,7 +2149,6 @@
     },
     "meta-viewport": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
       "extendedInfo": {},
       "scoreDisplayMode": "binary",
@@ -2207,7 +2163,6 @@
     },
     "object-alt": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "object-alt",
@@ -2216,7 +2171,6 @@
     },
     "tabindex": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "tabindex",
@@ -2225,7 +2179,6 @@
     },
     "td-headers-attr": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "td-headers-attr",
@@ -2234,7 +2187,6 @@
     },
     "th-has-data-cells": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "th-has-data-cells",
@@ -2243,7 +2195,6 @@
     },
     "valid-lang": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "valid-lang",
@@ -2252,7 +2203,6 @@
     },
     "video-caption": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "video-caption",
@@ -2261,7 +2211,6 @@
     },
     "video-description": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "video-description",
@@ -2270,7 +2219,6 @@
     },
     "custom-controls-labels": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "custom-controls-labels",
@@ -2279,7 +2227,6 @@
     },
     "custom-controls-roles": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "custom-controls-roles",
@@ -2288,7 +2235,6 @@
     },
     "focus-traps": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "focus-traps",
@@ -2297,7 +2243,6 @@
     },
     "focusable-controls": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "focusable-controls",
@@ -2306,7 +2251,6 @@
     },
     "heading-levels": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "heading-levels",
@@ -2315,7 +2259,6 @@
     },
     "logical-tab-order": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "logical-tab-order",
@@ -2324,7 +2267,6 @@
     },
     "managed-focus": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "managed-focus",
@@ -2333,7 +2275,6 @@
     },
     "offscreen-content-hidden": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "offscreen-content-hidden",
@@ -2342,7 +2283,6 @@
     },
     "use-landmarks": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "use-landmarks",
@@ -2351,7 +2291,6 @@
     },
     "visual-order-follows-dom": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "visual-order-follows-dom",
@@ -2360,8 +2299,8 @@
     },
     "uses-long-cache-ttl": {
       "score": 0.58,
-      "displayValue": "11 assets found",
       "rawValue": 103455,
+      "displayValue": "11 assets found",
       "extendedInfo": {
         "value": {
           "results": [
@@ -2580,11 +2519,11 @@
     },
     "total-byte-weight": {
       "score": 1,
+      "rawValue": 160738,
       "displayValue": [
         "Total size was %d KB",
         156.970703125
       ],
-      "rawValue": 160738,
       "extendedInfo": {
         "value": {
           "results": [
@@ -2723,8 +2662,9 @@
     },
     "offscreen-images": {
       "score": 1,
-      "displayValue": "",
       "rawValue": 0,
+      "displayValue": "",
+      "warnings": [],
       "extendedInfo": {
         "value": {
           "wastedMs": 0,
@@ -2748,8 +2688,8 @@
     },
     "render-blocking-resources": {
       "score": 0,
-      "displayValue": "5 resources delayed first paint by 1129ms",
       "rawValue": 1129,
+      "displayValue": "5 resources delayed first paint by 1129ms",
       "scoreDisplayMode": "numeric",
       "name": "render-blocking-resources",
       "description": "Eliminate render-blocking resources",
@@ -2810,8 +2750,8 @@
     },
     "unminified-css": {
       "score": 1,
-      "displayValue": "",
       "rawValue": 0,
+      "displayValue": "",
       "extendedInfo": {
         "value": {
           "wastedMs": 0,
@@ -2835,11 +2775,12 @@
     },
     "unminified-javascript": {
       "score": 1,
+      "rawValue": 0,
       "displayValue": [
         "Potential savings of %d KB",
         30
       ],
-      "rawValue": 0,
+      "warnings": [],
       "extendedInfo": {
         "value": {
           "wastedMs": 0,
@@ -2897,8 +2838,8 @@
     },
     "unused-css-rules": {
       "score": 1,
-      "displayValue": "",
       "rawValue": 0,
+      "displayValue": "",
       "extendedInfo": {
         "value": {
           "wastedMs": 0,
@@ -2922,11 +2863,12 @@
     },
     "uses-webp-images": {
       "score": 1,
+      "rawValue": 0,
       "displayValue": [
         "Potential savings of %d KB",
         8
       ],
-      "rawValue": 0,
+      "warnings": [],
       "extendedInfo": {
         "value": {
           "wastedMs": 0,
@@ -2991,8 +2933,9 @@
     },
     "uses-optimized-images": {
       "score": 1,
-      "displayValue": "",
       "rawValue": 0,
+      "displayValue": "",
+      "warnings": [],
       "extendedInfo": {
         "value": {
           "wastedMs": 0,
@@ -3016,11 +2959,11 @@
     },
     "uses-text-compression": {
       "score": 0.9,
+      "rawValue": 150,
       "displayValue": [
         "Potential savings of %d KB",
         63
       ],
-      "rawValue": 150,
       "extendedInfo": {
         "value": {
           "wastedMs": 150,
@@ -3086,8 +3029,9 @@
     },
     "uses-responsive-images": {
       "score": 1,
-      "displayValue": "",
       "rawValue": 0,
+      "displayValue": "",
+      "warnings": [],
       "extendedInfo": {
         "value": {
           "wastedMs": 0,
@@ -3111,8 +3055,8 @@
     },
     "efficient-animated-content": {
       "score": 1,
-      "displayValue": "",
       "rawValue": 0,
+      "displayValue": "",
       "extendedInfo": {
         "value": {
           "wastedMs": 0,
@@ -3136,9 +3080,8 @@
     },
     "appcache-manifest": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
-      "debugString": "Found <html manifest=\"clock.appcache\">.",
+      "displayValue": "Found \"clock.appcache\"",
       "scoreDisplayMode": "binary",
       "name": "appcache-manifest",
       "description": "Uses Application Cache",
@@ -3146,11 +3089,11 @@
     },
     "dom-size": {
       "score": 1,
+      "rawValue": 53,
       "displayValue": [
         "%d nodes",
         53
       ],
-      "rawValue": 53,
       "extendedInfo": {
         "value": [
           {
@@ -3212,9 +3155,10 @@
     },
     "external-anchors-use-rel-noopener": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
-      "debugString": "Lighthouse was unable to determine the destination of some anchor tags. If they are not used as hyperlinks, consider removing the _blank target.",
+      "warnings": [
+        "Unable to determine the destination for anchor tag. If not used as a hyperlink, consider removing target=_blank."
+      ],
       "extendedInfo": {
         "value": [
           {
@@ -3284,7 +3228,6 @@
     },
     "geolocation-on-start": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
         "value": [
@@ -3422,7 +3365,6 @@
     },
     "no-document-write": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
         "value": [
@@ -3614,8 +3556,8 @@
     },
     "no-mutation-events": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
+      "warnings": [],
       "extendedInfo": {
         "value": {
           "results": [
@@ -3745,8 +3687,8 @@
     },
     "no-vulnerable-libraries": {
       "score": 0,
-      "displayValue": "1 vulnerability was detected.",
       "rawValue": false,
+      "displayValue": "1 vulnerability was detected.",
       "extendedInfo": {
         "jsLibs": [
           {
@@ -3815,9 +3757,8 @@
     },
     "no-websql": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
-      "debugString": "Found database \"mydb\", version: 1.0.",
+      "displayValue": "Found \"mydb\" (v1.0)",
       "scoreDisplayMode": "binary",
       "name": "no-websql",
       "description": "Uses WebSQL DB",
@@ -3825,7 +3766,6 @@
     },
     "notification-on-start": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
         "value": [
@@ -3909,7 +3849,6 @@
     },
     "password-inputs-can-be-pasted-into": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
         "value": [
@@ -3952,8 +3891,8 @@
     },
     "uses-http2": {
       "score": 0,
-      "displayValue": "15 requests were not handled over HTTP/2",
       "rawValue": false,
+      "displayValue": "15 requests were not handled over HTTP/2",
       "extendedInfo": {
         "value": {
           "results": [
@@ -4104,7 +4043,6 @@
     },
     "uses-passive-event-listeners": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "extendedInfo": {
         "value": [
@@ -4296,7 +4234,6 @@
     },
     "meta-description": {
       "score": 0,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "binary",
       "name": "meta-description",
@@ -4305,7 +4242,6 @@
     },
     "http-status-code": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "binary",
       "name": "http-status-code",
@@ -4314,8 +4250,11 @@
     },
     "font-size": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
+      "displayValue": [
+        "%.1d% legible text",
+        100
+      ],
       "scoreDisplayMode": "binary",
       "name": "font-size",
       "description": "Document uses legible font sizes",
@@ -4356,7 +4295,6 @@
     },
     "link-text": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "binary",
       "name": "link-text",
@@ -4371,10 +4309,8 @@
     },
     "is-crawlable": {
       "score": null,
-      "displayValue": "",
       "rawValue": null,
-      "error": true,
-      "debugString": "Audit error: Required RobotsTxt gatherer did not run.",
+      "errorMessage": "Audit error: Required RobotsTxt gatherer did not run.",
       "scoreDisplayMode": "error",
       "name": "is-crawlable",
       "description": "Page is blocked from indexing",
@@ -4382,10 +4318,8 @@
     },
     "robots-txt": {
       "score": null,
-      "displayValue": "",
       "rawValue": null,
-      "error": true,
-      "debugString": "Audit error: Required RobotsTxt gatherer did not run.",
+      "errorMessage": "Audit error: Required RobotsTxt gatherer did not run.",
       "scoreDisplayMode": "error",
       "name": "robots-txt",
       "description": "robots.txt is not valid",
@@ -4393,7 +4327,6 @@
     },
     "hreflang": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "binary",
       "name": "hreflang",
@@ -4407,7 +4340,6 @@
     },
     "plugins": {
       "score": 1,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "binary",
       "name": "plugins",
@@ -4421,7 +4353,6 @@
     },
     "canonical": {
       "score": null,
-      "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
       "name": "canonical",
@@ -4430,7 +4361,6 @@
     },
     "mobile-friendly": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "mobile-friendly",
@@ -4439,7 +4369,6 @@
     },
     "structured-data": {
       "score": null,
-      "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
       "name": "structured-data",

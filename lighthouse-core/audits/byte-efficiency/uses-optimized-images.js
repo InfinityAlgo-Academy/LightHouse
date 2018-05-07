@@ -48,10 +48,10 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
 
     /** @type {Array<{url: string, fromProtocol: boolean, isCrossOrigin: boolean, totalBytes: number, wastedBytes: number}>} */
     const results = [];
-    const failedImages = [];
+    const warnings = [];
     for (const image of images) {
       if (image.failed) {
-        failedImages.push(image);
+        warnings.push(`Unable to decode ${URL.getURLDisplayName(image.url)}`);
         continue;
       } else if (/(jpeg|bmp)/.test(image.mimeType) === false ||
                  image.originalSize < image.jpegSize + IGNORE_THRESHOLD_IN_BYTES) {
@@ -70,12 +70,6 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
       });
     }
 
-    let debugString;
-    if (failedImages.length) {
-      const urls = failedImages.map(image => URL.getURLDisplayName(image.url));
-      debugString = `Lighthouse was unable to decode some of your images: ${urls.join(', ')}`;
-    }
-
     const headings = [
       {key: 'url', itemType: 'thumbnail', text: ''},
       {key: 'url', itemType: 'url', text: 'URL'},
@@ -85,7 +79,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
     ];
 
     return {
-      debugString,
+      warnings,
       results,
       headings,
     };

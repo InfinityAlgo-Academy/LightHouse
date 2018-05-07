@@ -63,10 +63,10 @@ describe('CategoryRenderer', () => {
     assert.ok(auditDOM.classList.contains(`lh-audit--${audit.result.scoreDisplayMode}`));
   });
 
-  it('renders an audit debug str when appropriate', () => {
+  it('renders an audit explanation when appropriate', () => {
     const audit1 = renderer.renderAudit({
       scoreDisplayMode: 'binary', score: 0,
-      result: {helpText: 'help text', debugString: 'Debug string', description: 'Audit title'},
+      result: {helpText: 'help text', explanation: 'A reason', description: 'Audit title'},
     });
     assert.ok(audit1.querySelector('.lh-debug'));
 
@@ -111,6 +111,23 @@ describe('CategoryRenderer', () => {
     const description = categoryDOM.querySelector('.lh-category-header__description');
     assert.ok(description.querySelector('a'), 'description contains converted markdown links');
     category.description = prevDesc;
+  });
+
+  // TODO(phulce): revisit if top-level warnings approach is too noisy
+  it.skip('renders audits with warnings as failed', () => {
+    const auditResult = {
+      description: 'Audit',
+      helpText: 'Learn more',
+      warnings: ['It may not have worked!'],
+      score: 1,
+    };
+    const audit = {result: auditResult, score: 1};
+    const category = {name: 'Fake', description: '', score: 1, audits: [audit]};
+    const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+    assert.ok(categoryDOM.querySelector(
+        '.lh-category > .lh-audit-group:not(.lh-passed-audits) > .lh-audit'),
+        'did not render as failed');
+    assert.ok(categoryDOM.querySelector('.lh-debug'), 'did not render debug message');
   });
 
   it('renders manual audits if the category contains them', () => {

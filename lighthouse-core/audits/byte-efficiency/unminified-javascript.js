@@ -77,7 +77,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
   static audit_(artifacts, networkRecords) {
     /** @type {Array<LH.Audit.ByteEfficiencyResult>} */
     const results = [];
-    let debugString;
+    const warnings = [];
     for (const requestId of Object.keys(artifacts.Scripts)) {
       const scriptContent = artifacts.Scripts[requestId];
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
@@ -92,13 +92,13 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
           !Number.isFinite(result.wastedBytes)) continue;
         results.push(result);
       } catch (err) {
-        debugString = `Unable to process ${networkRecord._url}: ${err.message}`;
+        warnings.push(`Unable to process ${networkRecord._url}: ${err.message}`);
       }
     }
 
     return {
       results,
-      debugString,
+      warnings,
       headings: [
         {key: 'url', itemType: 'url', text: 'URL'},
         {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},

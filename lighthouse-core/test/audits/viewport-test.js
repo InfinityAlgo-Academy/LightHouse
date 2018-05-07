@@ -22,7 +22,7 @@ describe('Mobile-friendly: viewport audit', () => {
     assert.equal(Audit.audit({Viewport: viewport}).rawValue, false);
     assert.equal(Audit.audit({
       Viewport: viewport,
-    }).debugString, '');
+    }).warnings[0], undefined);
   });
 
   it('fails when HTML contains an invalid viewport meta tag key', () => {
@@ -30,7 +30,7 @@ describe('Mobile-friendly: viewport audit', () => {
     assert.equal(Audit.audit({Viewport: viewport}).rawValue, false);
     assert.equal(Audit.audit({
       Viewport: viewport,
-    }).debugString, 'Invalid properties found: {"nonsense":"true"}.');
+    }).warnings[0], 'Invalid properties found: {"nonsense":"true"}.');
   });
 
   it('fails when HTML contains an invalid viewport meta tag value', () => {
@@ -38,16 +38,15 @@ describe('Mobile-friendly: viewport audit', () => {
     assert.equal(Audit.audit({Viewport: viewport}).rawValue, false);
     assert.equal(Audit.audit({
       Viewport: viewport,
-    }).debugString, 'Invalid values found: {"initial-scale":"microscopic"}.');
+    }).warnings[0], 'Invalid values found: {"initial-scale":"microscopic"}.');
   });
 
   it('fails when HTML contains an invalid viewport meta tag key and value', () => {
     const viewport = 'nonsense=true, initial-scale=microscopic';
-    assert.equal(Audit.audit({Viewport: viewport}).rawValue, false);
-    assert.equal(Audit.audit({
-      Viewport: viewport,
-    }).debugString, 'Invalid properties found: {"nonsense":"true"}. ' +
-        'Invalid values found: {"initial-scale":"microscopic"}.');
+    const {rawValue, warnings} = Audit.audit({Viewport: viewport});
+    assert.equal(rawValue, false);
+    assert.equal(warnings[0], 'Invalid properties found: {"nonsense":"true"}.');
+    assert.equal(warnings[1], 'Invalid values found: {"initial-scale":"microscopic"}.');
   });
 
   it('passes when a valid viewport is provided', () => {
@@ -72,7 +71,7 @@ describe('Mobile-friendly: viewport audit', () => {
     viewports.forEach(viewport => {
       const result = Audit.audit({Viewport: viewport});
       assert.equal(result.rawValue, true);
-      assert.equal(result.debugString, '');
+      assert.equal(result.warnings[0], undefined);
     });
   });
 });

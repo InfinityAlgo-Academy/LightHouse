@@ -29,18 +29,18 @@ class WorksOffline extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    let debugString;
+    const warnings = [];
     const passed = artifacts.Offline === 200;
     if (!passed &&
         !URL.equalWithExcludedFragments(artifacts.URL.requestedUrl, artifacts.URL.finalUrl)) {
-      debugString = 'WARNING: You may be failing this check because your test URL ' +
+      warnings.push('You may be not loading offline because your test URL ' +
           `(${artifacts.URL.requestedUrl}) was redirected to "${artifacts.URL.finalUrl}". ` +
-          'Try testing the second URL directly.';
+          'Try testing the second URL directly.');
     }
 
     return {
       rawValue: passed,
-      debugString,
+      warnings,
     };
   }
 }

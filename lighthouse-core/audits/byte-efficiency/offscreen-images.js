@@ -113,8 +113,8 @@ class OffscreenImages extends ByteEfficiencyAudit {
     const trace = artifacts.traces[ByteEfficiencyAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
 
-    /** @type {string|undefined} */
-    let debugString;
+    /** @type {string[]} */
+    const warnings = [];
     const resultsMap = images.reduce((results, image) => {
       const processed = OffscreenImages.computeWaste(image, viewportDimensions);
       if (processed === null) {
@@ -122,7 +122,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       }
 
       if (processed instanceof Error) {
-        debugString = processed.message;
+        warnings.push(processed.message);
         // @ts-ignore TODO(bckenny): Sentry type checking
         Sentry.captureException(processed, {tags: {audit: this.meta.name}, level: 'warning'});
         return results;
@@ -166,7 +166,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       ];
 
       return {
-        debugString,
+        warnings,
         results,
         headings,
       };

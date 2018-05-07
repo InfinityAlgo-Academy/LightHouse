@@ -101,7 +101,7 @@ module.exports = [
       },
       'font-size': {
         rawValue: false,
-        debugString: 'Text is illegible because of a missing viewport config',
+        explanation: 'Text is illegible because of a missing viewport config',
       },
       'link-text': {
         score: 0,
@@ -138,7 +138,7 @@ module.exports = [
       },
       'canonical': {
         score: 0,
-        debugString: 'Multiple conflicting URLs (https://example.com, https://example.com/)',
+        explanation: 'Multiple conflicting URLs (https://example.com, https://example.com/)',
       },
     },
   },

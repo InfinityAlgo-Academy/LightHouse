@@ -37,7 +37,7 @@ class Description extends Audit {
     if (artifacts.MetaDescription.trim().length === 0) {
       return {
         rawValue: false,
-        debugString: 'Description text is empty.',
+        explanation: 'Description text is empty.',
       };
     }
 

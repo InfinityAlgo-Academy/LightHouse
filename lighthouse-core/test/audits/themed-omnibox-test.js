@@ -43,7 +43,7 @@ describe('PWA: themed omnibox audit', () => {
 
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
       assert.strictEqual(result.rawValue, false);
-      assert.ok(result.debugString.includes('No manifest was fetched'), result.debugString);
+      assert.ok(result.explanation.includes('No manifest was fetched'), result.explanation);
     });
   });
 
@@ -57,7 +57,7 @@ describe('PWA: themed omnibox audit', () => {
 
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, false);
-      assert.ok(result.debugString);
+      assert.ok(result.explanation);
     });
   });
 
@@ -68,7 +68,7 @@ describe('PWA: themed omnibox audit', () => {
     }));
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, true);
-      assert.equal(result.debugString, undefined);
+      assert.equal(result.explanation, undefined);
     });
   });
 
@@ -77,7 +77,7 @@ describe('PWA: themed omnibox audit', () => {
     const artifacts = generateMockArtifacts();
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, true);
-      assert.equal(result.debugString, undefined);
+      assert.equal(result.explanation, undefined);
     });
   });
 
@@ -86,7 +86,7 @@ describe('PWA: themed omnibox audit', () => {
     artifacts.ThemeColor = null;
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, false);
-      assert.ok(result.debugString);
+      assert.ok(result.explanation);
     });
   });
 
@@ -95,7 +95,7 @@ describe('PWA: themed omnibox audit', () => {
     artifacts.ThemeColor = '#1234567';
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, false);
-      assert.ok(result.debugString.includes('valid CSS color'));
+      assert.ok(result.explanation.includes('valid CSS color'));
     });
   });
 
@@ -104,7 +104,7 @@ describe('PWA: themed omnibox audit', () => {
     artifacts.ThemeColor = '#fafa33';
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, true);
-      assert.equal(result.debugString, undefined);
+      assert.equal(result.explanation, undefined);
     });
   });
 
@@ -113,7 +113,7 @@ describe('PWA: themed omnibox audit', () => {
     artifacts.ThemeColor = 'red';
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, true);
-      assert.equal(result.debugString, undefined);
+      assert.equal(result.explanation, undefined);
     });
   });
 
@@ -125,7 +125,7 @@ describe('PWA: themed omnibox audit', () => {
     }));
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, false);
-      assert.ok(result.debugString.includes('does not have `theme_color`'), result.debugString);
+      assert.ok(result.explanation.includes('does not have `theme_color`'), result.explanation);
     });
   });
 
@@ -134,7 +134,7 @@ describe('PWA: themed omnibox audit', () => {
     artifacts.ThemeColor = 'not a color';
     return ThemedOmniboxAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, false);
-      assert.ok(result.debugString.includes('theme-color meta tag'), result.debugString);
+      assert.ok(result.explanation.includes('theme-color meta tag'), result.explanation);
     });
   });
 });

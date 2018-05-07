@@ -110,7 +110,14 @@ class Runner {
 
       /** @type {Object<string, LH.Audit.Result>} */
       const resultsById = {};
-      for (const audit of auditResults) resultsById[audit.name] = audit;
+      for (const audit of auditResults) {
+        resultsById[audit.name] = audit;
+
+        if (audit.warnings && audit.warnings.length) {
+          const prefixedWarnings = audit.warnings.map(msg => `${audit.description}: ${msg}`);
+          lighthouseRunWarnings.push(...prefixedWarnings);
+        }
+      }
 
       /** @type {Array<LH.Result.Category>} */
       let reportCategories = [];
@@ -263,10 +270,10 @@ class Runner {
       // @ts-ignore TODO(bckenny): Sentry type checking
       Sentry.captureException(err, {tags: {audit: audit.meta.name}, level: 'error'});
       // Non-fatal error become error audit result.
-      const debugString = err.friendlyMessage ?
+      const errorMessage = err.friendlyMessage ?
         `${err.friendlyMessage} (${err.message})` :
         `Audit error: ${err.message}`;
-      auditResult = Audit.generateErrorAuditResult(audit, debugString);
+      auditResult = Audit.generateErrorAuditResult(audit, errorMessage);
     }
 
     log.verbose('statusEnd', status);

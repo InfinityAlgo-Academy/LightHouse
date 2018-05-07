@@ -75,12 +75,10 @@ class Util {
    * Used to determine if the "passed" for the purposes of showing up in the "failed" or "passed"
    * sections of the report.
    *
-   * @param {{score: (number|null), scoreDisplayMode: string, debugString: (string|undefined)}} audit
+   * @param {{score: (number|null), scoreDisplayMode: string}} audit
    * @return {boolean}
    */
   static showAsPassed(audit) {
-    if (audit.debugString) return false;
-
     switch (audit.scoreDisplayMode) {
       case 'manual':
       case 'not-applicable':

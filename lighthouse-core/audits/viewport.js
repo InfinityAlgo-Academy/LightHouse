@@ -31,28 +31,27 @@ class Viewport extends Audit {
   static audit(artifacts) {
     if (artifacts.Viewport === null) {
       return {
-        debugString: 'No viewport meta tag found',
+        explanation: 'No viewport meta tag found',
         rawValue: false,
       };
     }
 
-    let debugString = '';
+    const warnings = [];
     const parsedProps = Parser.parseMetaViewPortContent(artifacts.Viewport);
 
     if (Object.keys(parsedProps.unknownProperties).length) {
-      debugString += `Invalid properties found: ${JSON.stringify(parsedProps.unknownProperties)}. `;
+      warnings.push(`Invalid properties found: ${JSON.stringify(parsedProps.unknownProperties)}.`);
     }
     if (Object.keys(parsedProps.invalidValues).length) {
-      debugString += `Invalid values found: ${JSON.stringify(parsedProps.invalidValues)}. `;
+      warnings.push(`Invalid values found: ${JSON.stringify(parsedProps.invalidValues)}.`);
     }
-    debugString = debugString.trim();
 
     const viewportProps = parsedProps.validProperties;
     const hasMobileViewport = viewportProps.width || viewportProps['initial-scale'];
 
     return {
       rawValue: !!hasMobileViewport,
-      debugString,
+      warnings,
     };
   }
 }

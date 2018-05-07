@@ -165,7 +165,6 @@ class UnusedBytes extends Audit {
    * @return {LH.Audit.Product}
    */
   static createAuditProduct(result, graph, simulator) {
-    const debugString = result.debugString;
     const results = result.results.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
 
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
@@ -187,7 +186,8 @@ class UnusedBytes extends Audit {
     const details = Audit.makeTableDetails(result.headings, results, summary);
 
     return {
-      debugString,
+      explanation: result.explanation,
+      warnings: result.warnings,
       displayValue,
       rawValue: wastedMs,
       score: UnusedBytes.scoreForWastedMs(wastedMs),

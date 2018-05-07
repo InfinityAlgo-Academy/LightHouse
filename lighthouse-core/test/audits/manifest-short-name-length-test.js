@@ -25,13 +25,13 @@ function generateMockArtifacts() {
 /* eslint-env mocha */
 
 describe('Manifest: short_name_length audit', () => {
-  it('fails with no debugString if page had no manifest', () => {
+  it('fails with no explanation if page had no manifest', () => {
     const artifacts = generateMockArtifacts();
     artifacts.Manifest = null;
 
     return ManifestShortNameLengthAudit.audit(artifacts).then(result => {
       assert.strictEqual(result.rawValue, false);
-      assert.strictEqual(result.debugString, undefined);
+      assert.strictEqual(result.explanation, undefined);
     });
   });
 
@@ -40,7 +40,7 @@ describe('Manifest: short_name_length audit', () => {
     artifacts.Manifest = manifestParser('{}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
     return ManifestShortNameLengthAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, false);
-      assert.equal(result.debugString, 'No short_name found in manifest.');
+      assert.equal(result.explanation, 'No short_name found in manifest.');
     });
   });
 
@@ -52,7 +52,7 @@ describe('Manifest: short_name_length audit', () => {
     artifacts.Manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
     return ManifestShortNameLengthAudit.audit(artifacts).then(result => {
       assert.equal(result.rawValue, false);
-      assert.notEqual(result.debugString, undefined);
+      assert.notEqual(result.explanation, undefined);
     });
   });
 

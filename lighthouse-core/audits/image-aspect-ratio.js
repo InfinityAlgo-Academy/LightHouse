@@ -64,7 +64,8 @@ class ImageAspectRatio extends Audit {
   static audit(artifacts) {
     const images = artifacts.ImageUsage;
 
-    let debugString;
+    /** @type {string[]} */
+    const warnings = [];
     /** @type {Array<{url: string, displayedAspectRatio: string, actualAspectRatio: string, doRatiosMatch: boolean}>} */
     const results = [];
     images.filter(image => {
@@ -80,7 +81,7 @@ class ImageAspectRatio extends Audit {
       const wellDefinedImage = /** @type {WellDefinedImage} */ (image);
       const processed = ImageAspectRatio.computeAspectRatios(wellDefinedImage);
       if (processed instanceof Error) {
-        debugString = processed.message;
+        warnings.push(processed.message);
         return;
       }
 
@@ -96,7 +97,7 @@ class ImageAspectRatio extends Audit {
 
     return {
       rawValue: results.length === 0,
-      debugString,
+      warnings,
       details: Audit.makeTableDetails(headings, results),
     };
   }

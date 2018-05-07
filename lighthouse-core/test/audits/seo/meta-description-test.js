@@ -23,7 +23,7 @@ describe('SEO: description audit', () => {
       MetaDescription: '',
     });
     assert.equal(auditResult.rawValue, false);
-    assert.ok(auditResult.debugString.includes('empty'), auditResult.debugString);
+    assert.ok(auditResult.explanation.includes('empty'), auditResult.explanation);
   });
 
   it('fails when description consists only of whitespace', () => {
@@ -31,7 +31,7 @@ describe('SEO: description audit', () => {
       MetaDescription: '\t\xa0',
     });
     assert.equal(auditResult.rawValue, false);
-    assert.ok(auditResult.debugString.includes('empty'), auditResult.debugString);
+    assert.ok(auditResult.explanation.includes('empty'), auditResult.explanation);
   });
 
   it('passes when a description text is provided', () => {

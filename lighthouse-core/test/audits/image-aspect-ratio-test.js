@@ -39,7 +39,11 @@ describe('Images: aspect-ratio audit', () => {
       });
 
       assert.strictEqual(result.rawValue, data.rawValue, 'rawValue does not match');
-      assert.strictEqual(result.debugString, data.debugString, 'debugString does not match');
+      if (data.warning) {
+        assert.strictEqual(result.warnings[0], data.warning);
+      } else {
+        assert.ok(!result.warnings || result.warnings.length === 0, 'should not have warnings');
+      }
     });
   }
 
@@ -125,7 +129,7 @@ describe('Images: aspect-ratio audit', () => {
 
   testImage('has invalid natural sizing information', {
     rawValue: true,
-    debugString: 'Invalid image sizing information https://google.com/logo.png',
+    warning: 'Invalid image sizing information https://google.com/logo.png',
     clientSize: [100, 100],
     naturalSize: [0, 0],
     props: {
@@ -153,6 +157,6 @@ describe('Images: aspect-ratio audit', () => {
     });
 
     assert.strictEqual(result.rawValue, true, 'rawValue does not match');
-    assert.strictEqual(result.debugString, undefined, 'debugString does not match');
+    assert.equal(result.warnings.length, 0, 'should not have warnings');
   });
 });

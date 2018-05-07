@@ -16,7 +16,7 @@ describe('Appcache manifest audit', () => {
       AppCacheManifest: 'manifest-name',
     });
     assert.equal(auditResult.rawValue, false);
-    assert.ok(auditResult.debugString);
+    assert.ok(/manifest-name/.test(auditResult.displayValue));
   });
 
   it('passes when <html> does not contain a manifest attribute', () => {

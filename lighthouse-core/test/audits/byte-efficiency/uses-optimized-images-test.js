@@ -88,6 +88,6 @@ describe('Page uses optimized images', () => {
       OptimizedImages: [{failed: true, url: 'http://localhost/image.jpg'}],
     });
 
-    assert.ok(/image.jpg/.test(auditResult.debugString));
+    assert.ok(/image.jpg/.test(auditResult.warnings[0]));
   });
 });
