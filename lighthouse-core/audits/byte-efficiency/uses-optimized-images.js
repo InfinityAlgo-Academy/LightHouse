@@ -7,7 +7,6 @@
  * @fileoverview This audit determines if the images used are sufficiently larger
  * than JPEG compressed images without metadata at quality 85.
  */
-// @ts-nocheck - TODO(bckenny)
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
@@ -47,15 +46,16 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
   static audit_(artifacts) {
     const images = artifacts.OptimizedImages;
 
-    const failedImages = [];
+    /** @type {Array<{url: string, fromProtocol: boolean, isCrossOrigin: boolean, totalBytes: number, wastedBytes: number}>} */
     const results = [];
-    images.forEach(image => {
+    const failedImages = [];
+    for (const image of images) {
       if (image.failed) {
         failedImages.push(image);
-        return;
+        continue;
       } else if (/(jpeg|bmp)/.test(image.mimeType) === false ||
                  image.originalSize < image.jpegSize + IGNORE_THRESHOLD_IN_BYTES) {
-        return;
+        continue;
       }
 
       const url = URL.elideDataURI(image.url);
@@ -68,7 +68,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
         totalBytes: image.originalSize,
         wastedBytes: jpegSavings.bytes,
       });
-    });
+    }
 
     let debugString;
     if (failedImages.length) {

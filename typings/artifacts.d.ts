@@ -71,7 +71,7 @@ declare global {
       /** The status code of the attempted load of the page while network access is disabled. */
       Offline: number;
       /** Size and compression opportunity information for all the images in the page. */
-      OptimizedImages: Artifacts.OptimizedImage[];
+      OptimizedImages: Array<Artifacts.OptimizedImage | Artifacts.OptimizedImageError>;
       /** HTML snippets from any password inputs that prevent pasting. */
       PasswordInputsWithPreventedPaste: {snippet: string}[];
       /** Size info of all network records sent without compression and their size after gzipping. */
@@ -234,18 +234,30 @@ declare global {
       }
 
       export interface OptimizedImage {
+        failed: false;
+        fromProtocol: boolean;
+        originalSize: number;
+        jpegSize: number;
+        webpSize: number;
+
         isSameOrigin: boolean;
         isBase64DataUri: boolean;
         requestId: string;
         url: string;
         mimeType: string;
         resourceSize: number;
-        fromProtocol?: boolean;
-        originalSize?: number;
-        jpegSize?: number;
-        webpSize?: number;
-        failed?: boolean;
-        err?: Error;
+      }
+
+      export interface OptimizedImageError {
+        failed: true;
+        errMsg: string;
+
+        isSameOrigin: boolean;
+        isBase64DataUri: boolean;
+        requestId: string;
+        url: string;
+        mimeType: string;
+        resourceSize: number;
       }
 
       export interface TagBlockingFirstPaint {

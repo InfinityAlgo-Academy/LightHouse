@@ -20,12 +20,14 @@ const WEBP_QUALITY = 0.85;
 
 const MINIMUM_IMAGE_SIZE = 4096; // savings of <4 KB will be ignored in the audit anyway
 
+/** @typedef {{isSameOrigin: boolean, isBase64DataUri: boolean, requestId: string, url: string, mimeType: string, resourceSize: number}} SimplifiedNetworkRecord */
+
 /* global document, Image, atob */
 
 /**
  * Runs in the context of the browser
  * @param {string} url
- * @return {Promise<{jpeg: Object, webp: Object}>}
+ * @return {Promise<{jpeg: {base64: number, binary: number}, webp: {base64: number, binary: number}}>}
  */
 /* istanbul ignore next */
 function getOptimizedNumBytes(url) {
@@ -40,6 +42,7 @@ function getOptimizedNumBytes(url) {
     /**
      * @param {'image/jpeg'|'image/webp'} type
      * @param {number} quality
+     * @return {{base64: number, binary: number}}
      */
     function getTypeStats(type, quality) {
       const dataURI = canvas.toDataURL(type, quality);
@@ -74,6 +77,7 @@ class OptimizedImages extends Gatherer {
    * @return {Array<SimplifiedNetworkRecord>}
    */
   static filterImageRequests(pageUrl, networkRecords) {
+    /** @type {Set<string>} */
     const seenUrls = new Set();
     return networkRecords.reduce((prev, record) => {
       if (seenUrls.has(record._url) || !record.finished) {
@@ -169,36 +173,40 @@ class OptimizedImages extends Gatherer {
    * @param {Array<SimplifiedNetworkRecord>} imageRecords
    * @return {Promise<LH.Artifacts['OptimizedImages']>}
    */
-  computeOptimizedImages(driver, imageRecords) {
+  async computeOptimizedImages(driver, imageRecords) {
     /** @type {LH.Artifacts['OptimizedImages']} */
-    const result = [];
+    const results = [];
 
-    return imageRecords.reduce((promise, record) => {
-      return promise.then(results => {
-        return this.calculateImageStats(driver, record)
-          .catch(err => {
-            // Track this with Sentry since these errors aren't surfaced anywhere else, but we don't
-            // want to tank the entire run due to a single image.
-            // @ts-ignore TODO(bckenny): Sentry type checking
-            Sentry.captureException(err, {
-              tags: {gatherer: 'OptimizedImages'},
-              extra: {imageUrl: URL.elideDataURI(record.url)},
-              level: 'warning',
-            });
-            return {failed: true, err};
-          })
-          .then(stats => {
-            if (!stats) {
-              return results;
-            }
+    for (const record of imageRecords) {
+      try {
+        const stats = await this.calculateImageStats(driver, record);
+        if (stats === null) {
+          continue;
+        }
 
-            return results.concat(Object.assign(stats, record));
-          });
-      });
-    }, Promise.resolve(result));
+        /** @type {LH.Artifacts.OptimizedImage} */
+        // @ts-ignore TODO(bckenny): fix browserify/Object.spread. See https://github.com/GoogleChrome/lighthouse/issues/5152
+        const image = Object.assign({failed: false}, stats, record);
+        results.push(image);
+      } catch (err) {
+        // Track this with Sentry since these errors aren't surfaced anywhere else, but we don't
+        // want to tank the entire run due to a single image.
+        // @ts-ignore TODO(bckenny): Sentry type checking
+        Sentry.captureException(err, {
+          tags: {gatherer: 'OptimizedImages'},
+          extra: {imageUrl: URL.elideDataURI(record.url)},
+          level: 'warning',
+        });
+
+        /** @type {LH.Artifacts.OptimizedImageError} */
+        // @ts-ignore TODO(bckenny): see above browserify/Object.spread TODO.
+        const imageError = Object.assign({failed: true, errMsg: err.message}, record);
+        results.push(imageError);
+      }
+    }
+
+    return results;
   }
-
-  /** @typedef {{isSameOrigin: boolean, isBase64DataUri: boolean, requestId: string, url: string, mimeType: string, resourceSize: number}} SimplifiedNetworkRecord */
 
   /**
    * @param {LH.Gatherer.PassContext} passContext

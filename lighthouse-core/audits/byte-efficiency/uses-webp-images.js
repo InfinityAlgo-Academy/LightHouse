@@ -6,7 +6,6 @@
 /*
  * @fileoverview This audit determines if the images could be smaller when compressed with WebP.
  */
-// @ts-nocheck - TODO(bckenny)
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
@@ -47,14 +46,15 @@ class UsesWebPImages extends ByteEfficiencyAudit {
   static audit_(artifacts) {
     const images = artifacts.OptimizedImages;
 
-    const failedImages = [];
+    /** @type {Array<{url: string, fromProtocol: boolean, isCrossOrigin: boolean, totalBytes: number, wastedBytes: number}>} */
     const results = [];
-    images.forEach(image => {
+    const failedImages = [];
+    for (const image of images) {
       if (image.failed) {
         failedImages.push(image);
-        return;
+        continue;
       } else if (image.originalSize < image.webpSize + IGNORE_THRESHOLD_IN_BYTES) {
-        return;
+        continue;
       }
 
       const url = URL.elideDataURI(image.url);
@@ -67,7 +67,7 @@ class UsesWebPImages extends ByteEfficiencyAudit {
         totalBytes: image.originalSize,
         wastedBytes: webpSavings.bytes,
       });
-    });
+    }
 
     let debugString;
     if (failedImages.length) {

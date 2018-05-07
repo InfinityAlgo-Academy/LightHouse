@@ -157,7 +157,7 @@ describe('Optimized images', () => {
 
       assert.equal(artifact.length, 4);
       assert.ok(failed, 'passed along failure');
-      assert.ok(/whoops/.test(failed.err.message), 'passed along error message');
+      assert.ok(/whoops/.test(failed.errMsg), 'passed along error message');
     });
   });
 
