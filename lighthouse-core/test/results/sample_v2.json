@@ -104,8 +104,8 @@
       "rawValue": 3969.136,
       "scoreDisplayMode": "numeric",
       "name": "first-meaningful-paint",
-      "description": "First meaningful paint",
-      "helpText": "First meaningful paint measures when the primary content of a page is visible. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)."
+      "description": "First Meaningful Paint",
+      "helpText": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)."
     },
     "load-fast-enough-for-pwa": {
       "score": 1,
@@ -4472,7 +4472,6 @@
   "reportCategories": [
     {
       "name": "Performance",
-      "description": "These encapsulate your web app's current performance and opportunities to improve it.",
       "audits": [
         {
           "id": "first-contentful-paint",
@@ -4921,7 +4920,6 @@
     },
     {
       "name": "Best Practices",
-      "description": "We've compiled some recommendations for modernizing your web app and avoiding performance pitfalls.",
       "audits": [
         {
           "id": "appcache-manifest",
@@ -5066,8 +5064,7 @@
   ],
   "reportGroups": {
     "metrics": {
-      "title": "Metrics",
-      "description": "These metrics encapsulate your web app's performance across a number of dimensions."
+      "title": "Metrics"
     },
     "load-opportunities": {
       "title": "Opportunities",

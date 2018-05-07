@@ -39,8 +39,8 @@ class CategoryRenderer {
       this.dom.find('.lh-audit__display-text', auditEl).textContent = displayValue;
     }
 
-    this.dom.find('.lh-audit__title', auditEl).appendChild(
-      this.dom.convertMarkdownCodeSnippets(audit.result.description));
+    const titleEl = this.dom.find('.lh-audit__title', auditEl);
+    titleEl.appendChild(this.dom.convertMarkdownCodeSnippets(audit.result.description));
     this.dom.find('.lh-audit__description', auditEl)
       .appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.helpText));
 
@@ -64,7 +64,7 @@ class CategoryRenderer {
       const tooltip = this.dom.createChildOf(textEl, 'div', 'lh-error-tooltip-content tooltip');
       tooltip.textContent = audit.result.debugString || 'Report error: no audit information';
     } else if (audit.result.debugString) {
-      const debugStrEl = auditEl.appendChild(this.dom.createElement('div', 'lh-debug'));
+      const debugStrEl = this.dom.createChildOf(titleEl, 'div', 'lh-debug');
       debugStrEl.textContent = audit.result.debugString;
     }
     return auditEl;
@@ -86,7 +86,7 @@ class CategoryRenderer {
    * @param {!ReportRenderer.CategoryJSON} category
    * @return {!Element}
    */
-  renderCategoryScore(category) {
+  renderCategoryHeader(category) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-category-header', this.templateContext);
 
     const gaugeContainerEl = this.dom.find('.lh-score__gauge', tmpl);
@@ -95,8 +95,11 @@ class CategoryRenderer {
 
     this.dom.find('.lh-category-header__title', tmpl).appendChild(
       this.dom.convertMarkdownCodeSnippets(category.name));
-    this.dom.find('.lh-category-header__description', tmpl)
-      .appendChild(this.dom.convertMarkdownLinkSnippets(category.description));
+    if (category.description) {
+      const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
+      this.dom.find('.lh-category-header__description', tmpl).appendChild(descEl);
+    }
+
 
     return /** @type {!Element} */ (tmpl.firstElementChild);
   }
@@ -157,9 +160,7 @@ class CategoryRenderer {
    * @return {!Element}
    */
   _renderFailedAuditsSection(elements) {
-    const failedElem = this.renderAuditGroup({
-      title: `Failed audits`,
-    }, {expandable: false, itemCount: this._getTotalAuditsLength(elements)});
+    const failedElem = this.dom.createElement('div');
     failedElem.classList.add('lh-failed-audits');
     elements.forEach(elem => failedElem.appendChild(elem));
     return failedElem;
@@ -253,7 +254,7 @@ class CategoryRenderer {
   render(category, groupDefinitions) {
     const element = this.dom.createElement('div', 'lh-category');
     this.createPermalinkSpan(element, category.id);
-    element.appendChild(this.renderCategoryScore(category));
+    element.appendChild(this.renderCategoryHeader(category));
 
     const manualAudits = category.audits.filter(item => item.result.scoreDisplayMode === 'manual');
     const nonManualAudits = category.audits.filter(audit => !manualAudits.includes(audit));
@@ -300,8 +301,6 @@ class CategoryRenderer {
     auditsUngrouped.notApplicable.forEach((/** @type {!ReportRenderer.AuditJSON} */ audit, i) =>
       notApplicableElements.push(this.renderAudit(audit, i)));
 
-    let hasFailedGroups = false;
-
     Object.keys(auditsGroupedByGroup).forEach(groupId => {
       const group = groupDefinitions[groupId];
       const groups = auditsGroupedByGroup[groupId];
@@ -309,15 +308,15 @@ class CategoryRenderer {
       if (groups.failed.length) {
         const auditGroupElem = this.renderAuditGroup(group, {expandable: false});
         groups.failed.forEach((item, i) => auditGroupElem.appendChild(this.renderAudit(item, i)));
+        auditGroupElem.classList.add('lh-audit-group--unadorned');
         auditGroupElem.open = true;
         failedElements.push(auditGroupElem);
-
-        hasFailedGroups = true;
       }
 
       if (groups.passed.length) {
         const auditGroupElem = this.renderAuditGroup(group, {expandable: true});
         groups.passed.forEach((item, i) => auditGroupElem.appendChild(this.renderAudit(item, i)));
+        auditGroupElem.classList.add('lh-audit-group--unadorned');
         passedElements.push(auditGroupElem);
       }
 
@@ -325,18 +324,14 @@ class CategoryRenderer {
         const auditGroupElem = this.renderAuditGroup(group, {expandable: true});
         groups.notApplicable.forEach((item, i) =>
             auditGroupElem.appendChild(this.renderAudit(item, i)));
+        auditGroupElem.classList.add('lh-audit-group--unadorned');
         notApplicableElements.push(auditGroupElem);
       }
     });
 
     if (failedElements.length) {
-      // if failed audits are grouped skip the 'X Failed Audits' header
-      if (hasFailedGroups) {
-        failedElements.forEach(elem => element.appendChild(elem));
-      } else {
-        const failedElem = this._renderFailedAuditsSection(failedElements);
-        element.appendChild(failedElem);
-      }
+      const failedElem = this._renderFailedAuditsSection(failedElements);
+      element.appendChild(failedElem);
     }
 
     if (manualAudits.length) {

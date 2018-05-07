@@ -50,13 +50,12 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     element.classList.add(`lh-load-opportunity--${Util.calculateRating(audit.result.score)}`);
     element.id = audit.result.name;
 
-    const summary = this.dom.find('.lh-load-opportunity__summary', tmpl);
     const titleEl = this.dom.find('.lh-load-opportunity__title', tmpl);
     titleEl.textContent = audit.result.description;
     this.dom.find('.lh-audit__index', element).textContent = `${index + 1}`;
 
     if (audit.result.debugString || audit.result.error) {
-      const debugStrEl = this.dom.createChildOf(summary, 'div', 'lh-debug');
+      const debugStrEl = this.dom.createChildOf(titleEl, 'div', 'lh-debug');
       debugStrEl.textContent = audit.result.debugString || 'Audit error';
     }
     if (audit.result.error) return element;
@@ -87,17 +86,36 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   }
 
   /**
+   * Get an audit's wastedMs to sort the opportunity by, and scale the sparkline width
+   * Opportunties with an error won't have a summary object, so MIN_VALUE is returned to keep any
+   * erroring opportunities last in sort order.
+   * @param {!ReportRenderer.AuditJSON} audit
+   * @return {number}
+   */
+  _getWastedMs(audit) {
+    if (
+      audit.result.details &&
+      audit.result.details.summary &&
+      typeof audit.result.details.summary.wastedMs === 'number'
+    ) {
+      return audit.result.details.summary.wastedMs;
+    } else {
+      return Number.MIN_VALUE;
+    }
+  }
+
+  /**
    * @override
    */
   render(category, groups) {
     const element = this.dom.createElement('div', 'lh-category');
     this.createPermalinkSpan(element, category.id);
-    element.appendChild(this.renderCategoryScore(category));
+    element.appendChild(this.renderCategoryHeader(category));
 
+    // Metrics
     const metricAudits = category.audits.filter(audit => audit.group === 'metrics');
     const metricAuditsEl = this.renderAuditGroup(groups['metrics'], {expandable: false});
 
-    // Metrics
     const keyMetrics = metricAudits.filter(a => a.weight >= 3);
     const otherMetrics = metricAudits.filter(a => a.weight < 3);
 
@@ -111,9 +129,16 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     otherMetrics.forEach(item => {
       metricsColumn2El.appendChild(this._renderMetric(item));
     });
+    const estValuesEl = this.dom.createChildOf(metricsColumn2El, 'div',
+        'lh-metrics__disclaimer lh-metrics__disclaimer');
+    estValuesEl.textContent = 'Values are estimated and may vary.';
+
+    metricAuditsEl.open = true;
+    metricAuditsEl.classList.add('lh-audit-group--metrics');
+    element.appendChild(metricAuditsEl);
 
     // Filmstrip
-    const timelineEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-timeline');
+    const timelineEl = this.dom.createChildOf(element, 'div', 'lh-filmstrip-container');
     const thumbnailAudit = category.audits.find(audit => audit.id === 'screenshot-thumbnails');
     const thumbnailResult = thumbnailAudit && thumbnailAudit.result;
     if (thumbnailResult && thumbnailResult.details) {
@@ -124,15 +149,14 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       timelineEl.appendChild(filmstripEl);
     }
 
-    metricAuditsEl.open = true;
-    element.appendChild(metricAuditsEl);
-
     // Opportunities
     const opportunityAudits = category.audits
         .filter(audit => audit.group === 'load-opportunities' && !Util.showAsPassed(audit.result))
-        .sort((auditA, auditB) => auditB.result.rawValue - auditA.result.rawValue);
+        .sort((auditA, auditB) => this._getWastedMs(auditB) - this._getWastedMs(auditA));
+
     if (opportunityAudits.length) {
-      const maxWaste = Math.max(...opportunityAudits.map(audit => audit.result.rawValue));
+      const wastedMsValues = opportunityAudits.map(audit => this._getWastedMs(audit));
+      const maxWaste = Math.max(...wastedMsValues);
       const scale = Math.ceil(maxWaste / 1000) * 1000;
       const groupEl = this.renderAuditGroup(groups['load-opportunities'], {expandable: false});
       const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity-header', this.templateContext);
@@ -141,6 +165,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       opportunityAudits.forEach((item, i) =>
           groupEl.appendChild(this._renderOpportunity(item, i, scale)));
       groupEl.open = true;
+      groupEl.classList.add('lh-audit-group--opportunities');
       element.appendChild(groupEl);
     }
 
@@ -157,9 +182,11 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const groupEl = this.renderAuditGroup(groups['diagnostics'], {expandable: false});
       diagnosticAudits.forEach((item, i) => groupEl.appendChild(this.renderAudit(item, i)));
       groupEl.open = true;
+      groupEl.classList.add('lh-audit-group--diagnostics');
       element.appendChild(groupEl);
     }
 
+    // Passed audits
     const passedElements = category.audits
         .filter(audit => (audit.group === 'load-opportunities' || audit.group === 'diagnostics') &&
             Util.showAsPassed(audit.result))

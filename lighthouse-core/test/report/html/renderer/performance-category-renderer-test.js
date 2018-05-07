@@ -154,4 +154,19 @@ describe('PerfCategoryRenderer', () => {
     const passedElements = passedSection.querySelectorAll('.lh-audit');
     assert.equal(passedElements.length, passedAudits.length);
   });
+
+  describe('getWastedMs', () => {
+    it('handles erroring opportunities', () => {
+      const auditWithDebug = {
+        score: 0,
+        group: 'load-opportunities',
+        result: {
+          error: true, score: 0,
+          rawValue: 100, debugString: 'Yikes!!', description: 'Bug #2',
+        },
+      };
+      const wastedMs = renderer._getWastedMs(auditWithDebug);
+      assert.ok(Number.isFinite(wastedMs), 'Finite number not returned by wastedMs');
+    });
+  });
 });

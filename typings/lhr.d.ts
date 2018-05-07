@@ -43,7 +43,7 @@ declare global {
         /** The human-friendly name of the category */
         name: string;
         /** A more detailed description of the category and its importance. */
-        description: string;
+        description?: string;
         /** A description for the manual audits in the category. */
         manualDescription?: string;
         /** The overall score of the category, the weighted average of all its audits. */

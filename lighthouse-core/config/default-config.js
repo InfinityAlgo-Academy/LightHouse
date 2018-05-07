@@ -189,7 +189,6 @@ module.exports = {
   groups: {
     'metrics': {
       title: 'Metrics',
-      description: 'These metrics encapsulate your web app\'s performance across a number of dimensions.',
     },
     'load-opportunities': {
       title: 'Opportunities',
@@ -248,7 +247,6 @@ module.exports = {
   categories: {
     'performance': {
       name: 'Performance',
-      description: 'These encapsulate your web app\'s current performance and opportunities to improve it.',
       audits: [
         {id: 'first-contentful-paint', weight: 3, group: 'metrics'},
         {id: 'first-meaningful-paint', weight: 1, group: 'metrics'},
@@ -363,7 +361,6 @@ module.exports = {
     },
     'best-practices': {
       name: 'Best Practices',
-      description: 'We\'ve compiled some recommendations for modernizing your web app and avoiding performance pitfalls.',
       audits: [
         {id: 'appcache-manifest', weight: 1},
         {id: 'no-websql', weight: 1},

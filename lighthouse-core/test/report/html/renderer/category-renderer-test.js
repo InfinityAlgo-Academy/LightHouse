@@ -113,22 +113,6 @@ describe('CategoryRenderer', () => {
     category.description = prevDesc;
   });
 
-  it('renders audits with debugString as failed', () => {
-    const auditResult = {
-      description: 'Audit',
-      helpText: 'Learn more',
-      debugString: 'It may not have worked!',
-      score: 1,
-    };
-    const audit = {result: auditResult, score: 1};
-    const category = {name: 'Fake', description: '', score: 1, audits: [audit]};
-    const categoryDOM = renderer.render(category, sampleResults.reportGroups);
-    assert.ok(categoryDOM.querySelector(
-        '.lh-category > .lh-audit-group:not(.lh-passed-audits) > .lh-audit'),
-        'did not render as failed');
-    assert.ok(categoryDOM.querySelector('.lh-debug'), 'did not render debug message');
-  });
-
   it('renders manual audits if the category contains them', () => {
     const pwaCategory = sampleResults.reportCategories.find(cat => cat.id === 'pwa');
     const categoryDOM = renderer.render(pwaCategory, sampleResults.reportGroups);
@@ -214,8 +198,8 @@ describe('CategoryRenderer', () => {
     it('separates audits in the DOM', () => {
       const category = sampleResults.reportCategories.find(c => c.id === 'pwa');
       const elem = renderer.render(category, sampleResults.reportGroups);
-      const passedAudits = elem.querySelectorAll('.lh-passed-audits > .lh-audit');
-      const failedAudits = elem.querySelectorAll('.lh-failed-audits > .lh-audit');
+      const passedAudits = elem.querySelectorAll('.lh-passed-audits .lh-audit');
+      const failedAudits = elem.querySelectorAll('.lh-failed-audits .lh-audit');
       const manualAudits = elem.querySelectorAll('.lh-audit-group--manual .lh-audit');
 
       assert.equal(passedAudits.length, 4);

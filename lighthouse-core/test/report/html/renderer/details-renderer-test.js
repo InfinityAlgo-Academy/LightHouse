@@ -81,8 +81,6 @@ describe('DetailsRenderer', () => {
 
       const frames = [...el.querySelectorAll('.lh-filmstrip__frame')];
       assert.equal(frames.length, 2);
-      assert.equal(frames[0].textContent, '1 s');
-      assert.equal(frames[1].textContent, '3 s');
 
       const thumbnails = [...el.querySelectorAll('.lh-filmstrip__thumbnail')];
       assert.equal(thumbnails.length, 2);
