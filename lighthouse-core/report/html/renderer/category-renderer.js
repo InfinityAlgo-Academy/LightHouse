@@ -54,7 +54,7 @@ class CategoryRenderer {
 
     this.dom.find('.lh-audit__index', auditEl).textContent = `${index + 1}`;
 
-    this._setRatingClass(auditEl, audit.result.score, scoreDisplayMode, audit.result.error);
+    this._setRatingClass(auditEl, audit.result.score, scoreDisplayMode);
 
     if (audit.result.error) {
       auditEl.classList.add(`lh-audit--error`);
@@ -72,16 +72,13 @@ class CategoryRenderer {
 
   /**
    * @param {!Element} element DOM node to populate with values.
-   * @param {number} score
+   * @param {number|null} score
    * @param {string} scoreDisplayMode
-   * @param {boolean} isError
    * @return {!Element}
    */
-  _setRatingClass(element, score, scoreDisplayMode, isError) {
-    // FIXME(paulirish): this'll have to deal with null scores and scoreDisplayMode stuff..
-    const rating = isError ? 'error' : Util.calculateRating(score);
-    element.classList.add(`lh-audit--${rating}`,
-        `lh-audit--${scoreDisplayMode}`);
+  _setRatingClass(element, score, scoreDisplayMode) {
+    const rating = Util.calculateRating(score, scoreDisplayMode);
+    element.classList.add(`lh-audit--${rating}`, `lh-audit--${scoreDisplayMode}`);
     return element;
   }
 
@@ -189,7 +186,7 @@ class CategoryRenderer {
     const notApplicableElem = this.renderAuditGroup({
       title: `Not applicable`,
     }, {expandable: true, itemCount: this._getTotalAuditsLength(elements)});
-    notApplicableElem.classList.add('lh-audit-group--notapplicable');
+    notApplicableElem.classList.add('lh-audit-group--not-applicable');
     elements.forEach(elem => notApplicableElem.appendChild(elem));
     return notApplicableElem;
   }
@@ -228,14 +225,22 @@ class CategoryRenderer {
     wrapper.href = `#${category.id}`;
     wrapper.classList.add(`lh-gauge__wrapper--${Util.calculateRating(category.score)}`);
 
+    // Cast `null` to 0
+    const numericScore = Number(category.score);
     const gauge = this.dom.find('.lh-gauge', tmpl);
     // 329 is ~= 2 * Math.PI * gauge radius (53)
     // https://codepen.io/xgad/post/svg-radial-progress-meters
     // score of 50: `stroke-dasharray: 164.5 329`;
-    this.dom.find('.lh-gauge-arc', gauge).style.strokeDasharray = `${category.score * 329} 329`;
+    this.dom.find('.lh-gauge-arc', gauge).style.strokeDasharray = `${numericScore * 329} 329`;
 
-    const scoreOutOf100 = Math.round(category.score * 100);
-    this.dom.find('.lh-gauge__percentage', tmpl).textContent = scoreOutOf100;
+    const scoreOutOf100 = Math.round(numericScore * 100);
+    const percentageEl = this.dom.find('.lh-gauge__percentage', tmpl);
+    percentageEl.textContent = scoreOutOf100;
+    if (category.score === null) {
+      percentageEl.textContent = '?';
+      percentageEl.title = 'Errors occurred while auditing';
+    }
+
     this.dom.find('.lh-gauge__label', tmpl).textContent = category.name;
     return tmpl;
   }
@@ -259,11 +264,11 @@ class CategoryRenderer {
       notApplicable: !Array<!ReportRenderer.AuditJSON>}>} */ ({});
     const auditsUngrouped = {passed: [], failed: [], notApplicable: []};
 
-    nonManualAudits.forEach(audit => {
+    nonManualAudits.forEach(auditRef => {
       let group;
 
-      if (audit.group) {
-        const groupId = audit.group;
+      if (auditRef.group) {
+        const groupId = auditRef.group;
 
         if (auditsGroupedByGroup[groupId]) {
           group = auditsGroupedByGroup[groupId];
@@ -275,12 +280,12 @@ class CategoryRenderer {
         group = auditsUngrouped;
       }
 
-      if (audit.result.scoreDisplayMode === 'not-applicable') {
-        group.notApplicable.push(audit);
-      } else if (audit.result.score === 1 && !audit.result.debugString) {
-        group.passed.push(audit);
+      if (auditRef.result.scoreDisplayMode === 'not-applicable') {
+        group.notApplicable.push(auditRef);
+      } else if (Util.showAsPassed(auditRef.result)) {
+        group.passed.push(auditRef);
       } else {
-        group.failed.push(audit);
+        group.failed.push(auditRef);
       }
     });
 

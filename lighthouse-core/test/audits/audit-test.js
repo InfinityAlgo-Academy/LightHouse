@@ -89,7 +89,14 @@ describe('Audit', () => {
   it('sets state of non-applicable audits', () => {
     const providedResult = {rawValue: true, notApplicable: true};
     const result = Audit.generateAuditResult(B, providedResult);
-    assert.equal(result.score, 1);
+    assert.equal(result.score, null);
     assert.equal(result.scoreDisplayMode, 'not-applicable');
+  });
+
+  it('sets state of failed audits', () => {
+    const providedResult = {rawValue: true, error: true};
+    const result = Audit.generateAuditResult(B, providedResult);
+    assert.equal(result.score, null);
+    assert.equal(result.scoreDisplayMode, 'error');
   });
 });

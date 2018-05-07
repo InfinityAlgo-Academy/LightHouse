@@ -22,6 +22,7 @@ declare global {
       MANUAL: 'manual';
       INFORMATIVE: 'informative';
       NOT_APPLICABLE: 'not-applicable';
+      ERROR: 'error';
     }
 
     export type ScoreDisplayMode = Audit.ScoreDisplayModes[keyof Audit.ScoreDisplayModes];
@@ -123,7 +124,7 @@ declare global {
       rawValue: boolean | number | null;
       displayValue: DisplayValue;
       debugString?: string;
-      score: number;
+      score: number|null;
       scoreDisplayMode: ScoreDisplayMode;
       description: string;
       extendedInfo?: {[p: string]: any};

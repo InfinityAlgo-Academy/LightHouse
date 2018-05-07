@@ -144,19 +144,20 @@ describe('CategoryRenderer', () => {
   it('renders not applicable audits if the category contains them', () => {
     const a11yCategory = sampleResults.reportCategories.find(cat => cat.id === 'accessibility');
     const categoryDOM = renderer.render(a11yCategory, sampleResults.reportGroups);
-    assert.ok(categoryDOM.querySelector('.lh-audit-group--notapplicable .lh-audit-group__summary'));
+    assert.ok(categoryDOM.querySelector(
+        '.lh-audit-group--not-applicable .lh-audit-group__summary'));
 
     const notApplicableCount = a11yCategory.audits.reduce((sum, audit) =>
         sum += audit.result.scoreDisplayMode === 'not-applicable' ? 1 : 0, 0);
     assert.equal(
-      categoryDOM.querySelectorAll('.lh-audit-group--notapplicable .lh-audit').length,
+      categoryDOM.querySelectorAll('.lh-audit-group--not-applicable .lh-audit').length,
       notApplicableCount,
       'score shows informative and dash icon'
     );
 
-    const perfCategory = sampleResults.reportCategories.find(cat => cat.id === 'performance');
-    const categoryDOM2 = renderer.render(perfCategory, sampleResults.reportGroups);
-    assert.ok(!categoryDOM2.querySelector('.lh-audit-group--notapplicable'));
+    const bestPracticeCat = sampleResults.reportCategories.find(cat => cat.id === 'best-practices');
+    const categoryDOM2 = renderer.render(bestPracticeCat, sampleResults.reportGroups);
+    assert.ok(!categoryDOM2.querySelector('.lh-audit-group--not-applicable'));
   });
 
   describe('category with groups', () => {

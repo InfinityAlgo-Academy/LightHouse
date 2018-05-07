@@ -124,7 +124,6 @@ describe('PerfCategoryRenderer', () => {
       result: {
         error: true, score: 0,
         rawValue: 100, debugString: 'Yikes!!', description: 'Bug #2',
-
       },
     };
 
@@ -140,7 +139,7 @@ describe('PerfCategoryRenderer', () => {
     const diagnosticSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[2];
 
     const diagnosticAudits = category.audits.filter(audit => audit.group === 'diagnostics' &&
-        audit.result.score !== 1);
+        audit.result.score !== 1 && audit.result.scoreDisplayMode !== 'not-applicable');
     const diagnosticElements = diagnosticSection.querySelectorAll('.lh-audit');
     assert.equal(diagnosticElements.length, diagnosticAudits.length);
   });
@@ -151,7 +150,7 @@ describe('PerfCategoryRenderer', () => {
 
     const passedAudits = category.audits.filter(audit =>
         audit.group && audit.group !== 'metrics' &&
-        audit.result.score === 1);
+        (audit.result.score === 1 || audit.result.scoreDisplayMode === 'not-applicable'));
     const passedElements = passedSection.querySelectorAll('.lh-audit');
     assert.equal(passedElements.length, passedAudits.length);
   });

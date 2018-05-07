@@ -47,7 +47,7 @@ declare global {
         /** A description for the manual audits in the category. */
         manualDescription?: string;
         /** The overall score of the category, the weighted average of all its audits. */
-        score: number;
+        score: number|null;
         /** An array of references to all the audit members of this category. */
         audits: CategoryMember[];
       }

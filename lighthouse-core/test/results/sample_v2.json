@@ -129,7 +129,7 @@
       "helpText": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index)."
     },
     "screenshot-thumbnails": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "informative",
@@ -306,13 +306,13 @@
       "helpText": "Interactive marks the time at which the page is fully interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
     },
     "user-timings": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "extendedInfo": {
         "value": []
       },
-      "scoreDisplayMode": "informative",
+      "scoreDisplayMode": "not-applicable",
       "name": "user-timings",
       "description": "User Timing marks and measures",
       "helpText": "Consider instrumenting your app with the User Timing API to create custom, real-world measurements of key user experiences. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).",
@@ -323,7 +323,7 @@
       }
     },
     "critical-request-chains": {
-      "score": 0,
+      "score": null,
       "displayValue": "12 chains found",
       "rawValue": false,
       "extendedInfo": {
@@ -1127,7 +1127,7 @@
       }
     },
     "network-requests": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": 18,
       "extendedInfo": {
@@ -1510,7 +1510,7 @@
       }
     },
     "metrics": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": 4927.278,
       "scoreDisplayMode": "informative",
@@ -1556,7 +1556,7 @@
       }
     },
     "pwa-cross-browser": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -1565,7 +1565,7 @@
       "helpText": "To reach the most number of users, sites should work across every major browser. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#site-works-cross-browser)."
     },
     "pwa-page-transitions": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -1574,7 +1574,7 @@
       "helpText": "Transitions should feel snappy as you tap around, even on a slow network, a key to perceived performance. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network)."
     },
     "pwa-each-page-has-url": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -1583,7 +1583,7 @@
       "helpText": "Ensure individual pages are deep linkable via the URLs and that URLs are unique for the purpose of shareability on social media. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url)."
     },
     "accesskeys": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1592,7 +1592,7 @@
       "helpText": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/2.2/accesskeys?application=lighthouse)."
     },
     "aria-allowed-attr": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1601,7 +1601,7 @@
       "helpText": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-allowed-attr?application=lighthouse)."
     },
     "aria-required-attr": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1610,7 +1610,7 @@
       "helpText": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-required-attr?application=lighthouse)."
     },
     "aria-required-children": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1619,7 +1619,7 @@
       "helpText": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-required-children?application=lighthouse)."
     },
     "aria-required-parent": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1628,7 +1628,7 @@
       "helpText": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-required-parent?application=lighthouse)."
     },
     "aria-roles": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1637,7 +1637,7 @@
       "helpText": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-roles?application=lighthouse)."
     },
     "aria-valid-attr-value": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1646,7 +1646,7 @@
       "helpText": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr-value?application=lighthouse)."
     },
     "aria-valid-attr": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1655,7 +1655,7 @@
       "helpText": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid names. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr?application=lighthouse)."
     },
     "audio-caption": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1664,7 +1664,7 @@
       "helpText": "Captions make audio elements usable for deaf or hearing-impaired users, providing critical information such as who is talking, what they're saying, and other non-speech information. [Learn more](https://dequeuniversity.com/rules/axe/2.2/audio-caption?application=lighthouse)."
     },
     "button-name": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1761,7 +1761,7 @@
       }
     },
     "definition-list": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1770,7 +1770,7 @@
       "helpText": "When definition lists are not properly marked up, screen readers may produce confusing or inaccurate output. [Learn more](https://dequeuniversity.com/rules/axe/2.2/definition-list?application=lighthouse)."
     },
     "dlitem": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1809,7 +1809,7 @@
       }
     },
     "frame-title": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1873,7 +1873,7 @@
       }
     },
     "html-lang-valid": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -1975,7 +1975,7 @@
       }
     },
     "input-image-alt": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -2078,7 +2078,7 @@
       }
     },
     "layout-table": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -2164,7 +2164,7 @@
       }
     },
     "list": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -2173,7 +2173,7 @@
       "helpText": "Screen readers have a specific way of announcing lists. Ensuring proper list structure aids screen reader output. [Learn more](https://dequeuniversity.com/rules/axe/2.2/list?application=lighthouse)."
     },
     "listitem": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -2182,7 +2182,7 @@
       "helpText": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>` or `<ol>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/2.2/listitem?application=lighthouse)."
     },
     "meta-refresh": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -2206,7 +2206,7 @@
       }
     },
     "object-alt": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -2215,7 +2215,7 @@
       "helpText": "Screen readers cannot translate non-text content. Adding alt text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://dequeuniversity.com/rules/axe/2.2/object-alt?application=lighthouse)."
     },
     "tabindex": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -2224,7 +2224,7 @@
       "helpText": "A value greater than 0 implies an explicit navigation ordering. Although technically valid, this often creates frustrating experiences for users who rely on assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/2.2/tabindex?application=lighthouse)."
     },
     "td-headers-attr": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -2233,7 +2233,7 @@
       "helpText": "Screen readers have features to make navigating tables easier. Ensuring `<td>` cells using the `[headers]` attribute only refer to other cells in the same table may improve the experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/2.2/td-headers-attr?application=lighthouse)."
     },
     "th-has-data-cells": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -2242,7 +2242,7 @@
       "helpText": "Screen readers have features to make navigating tables easier. Ensuring table headers always refer to some set of cells may improve the experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/2.2/th-has-data-cells?application=lighthouse)."
     },
     "valid-lang": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -2251,7 +2251,7 @@
       "helpText": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) on elements helps ensure that text is pronounced correctly by a screen reader. [Learn more](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse)."
     },
     "video-caption": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -2260,7 +2260,7 @@
       "helpText": "When a video provides a caption it is easier for deaf and hearing impaired users to access its information. [Learn more](https://dequeuniversity.com/rules/axe/2.2/video-caption?application=lighthouse)."
     },
     "video-description": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -2269,7 +2269,7 @@
       "helpText": "Audio descriptions provide relevant information for videos that dialogue cannot, such as facial expressions and scenes. [Learn more](https://dequeuniversity.com/rules/axe/2.2/video-description?application=lighthouse)."
     },
     "custom-controls-labels": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -2278,7 +2278,7 @@
       "helpText": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader)."
     },
     "custom-controls-roles": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -2287,7 +2287,7 @@
       "helpText": "Custom interactive controls have appropriate ARIA roles. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader)."
     },
     "focus-traps": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -2296,7 +2296,7 @@
       "helpText": "A user can tab into and out of any control or region without accidentally trapping their focus. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#start_with_the_keyboard)."
     },
     "focusable-controls": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -2305,7 +2305,7 @@
       "helpText": "Custom interactive controls are keyboard focusable and display a focus indicator. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#start_with_the_keyboard)."
     },
     "heading-levels": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -2314,7 +2314,7 @@
       "helpText": "Headings are used to create an outline for the page and heading levels are not skipped. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#take_advantage_of_headings_and_landmarks)."
     },
     "logical-tab-order": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -2323,7 +2323,7 @@
       "helpText": "Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#start_with_the_keyboard)."
     },
     "managed-focus": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -2332,7 +2332,7 @@
       "helpText": "If new content, such as a dialog, is added to the page, the user's focus is directed to it. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#start_with_the_keyboard)."
     },
     "offscreen-content-hidden": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -2341,7 +2341,7 @@
       "helpText": "Offscreen content is hidden with display: none or aria-hidden=true. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader)."
     },
     "use-landmarks": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -2350,7 +2350,7 @@
       "helpText": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#take_advantage_of_headings_and_landmarks)."
     },
     "visual-order-follows-dom": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -4370,23 +4370,23 @@
       }
     },
     "is-crawlable": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": null,
       "error": true,
       "debugString": "Audit error: Required RobotsTxt gatherer did not run.",
-      "scoreDisplayMode": "binary",
+      "scoreDisplayMode": "error",
       "name": "is-crawlable",
       "description": "Page is blocked from indexing",
       "helpText": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/indexing)."
     },
     "robots-txt": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": null,
       "error": true,
       "debugString": "Audit error: Required RobotsTxt gatherer did not run.",
-      "scoreDisplayMode": "binary",
+      "scoreDisplayMode": "error",
       "name": "robots-txt",
       "description": "robots.txt is not valid",
       "helpText": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed."
@@ -4420,7 +4420,7 @@
       }
     },
     "canonical": {
-      "score": 1,
+      "score": null,
       "displayValue": "",
       "rawValue": true,
       "scoreDisplayMode": "not-applicable",
@@ -4429,7 +4429,7 @@
       "helpText": "Canonical links suggest which URL to show in search results. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/canonical)."
     },
     "mobile-friendly": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -4438,7 +4438,7 @@
       "helpText": "Take the [Mobile-Friendly Test](https://search.google.com/test/mobile-friendly) to check for audits not covered by Lighthouse, like sizing tap targets appropriately. [Learn more](https://developers.google.com/search/mobile-sites/)."
     },
     "structured-data": {
-      "score": 0,
+      "score": null,
       "displayValue": "",
       "rawValue": false,
       "scoreDisplayMode": "manual",
@@ -5061,7 +5061,7 @@
         }
       ],
       "id": "seo",
-      "score": 0.7
+      "score": null
     }
   ],
   "reportGroups": {

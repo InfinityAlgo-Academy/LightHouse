@@ -183,6 +183,7 @@ class CriticalRequestChains extends Audit {
 
       return {
         rawValue: chainCount === 0,
+        notApplicable: chainCount === 0,
         displayValue: chainCount ? `${Util.formatNumber(chainCount)} chains found`: '',
         extendedInfo: {
           value: {

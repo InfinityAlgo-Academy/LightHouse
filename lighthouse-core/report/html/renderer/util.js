@@ -15,6 +15,7 @@ const RATINGS = {
   PASS: {label: 'pass', minScore: PASS_THRESHOLD},
   AVERAGE: {label: 'average', minScore: 0.45},
   FAIL: {label: 'fail'},
+  ERROR: {label: 'error'},
 };
 
 /**
@@ -71,11 +72,49 @@ class Util {
   }
 
   /**
+   * Used to determine if the "passed" for the purposes of showing up in the "failed" or "passed"
+   * sections of the report.
+   *
+   * @param {{score: (number|null), scoreDisplayMode: string, debugString: (string|undefined)}} audit
+   * @return {boolean}
+   */
+  static showAsPassed(audit) {
+    if (audit.debugString) return false;
+
+    switch (audit.scoreDisplayMode) {
+      case 'manual':
+      case 'not-applicable':
+        return true;
+      case 'error':
+      case 'informative':
+        return false;
+      case 'numeric':
+      case 'binary':
+      default:
+        // Numeric audits that are within PASS_THRESHOLD will still show up with failing.
+        // For opportunities, we want to have them show up with other failing for contrast.
+        // For diagnostics, we sort by score so they'll be lowest priority.
+        return Number(audit.score) === 1;
+    }
+  }
+
+  /**
    * Convert a score to a rating label.
-   * @param {number} score
+   * @param {number|null} score
+   * @param {string=} scoreDisplayMode
    * @return {string}
    */
-  static calculateRating(score) {
+  static calculateRating(score, scoreDisplayMode) {
+    // Handle edge cases first, manual and not applicable receive 'pass', errored audits receive 'error'
+    if (scoreDisplayMode === 'manual' || scoreDisplayMode === 'not-applicable') {
+      return RATINGS.PASS.label;
+    } else if (scoreDisplayMode === 'error') {
+      return RATINGS.ERROR.label;
+    } else if (score === null) {
+      return RATINGS.FAIL.label;
+    }
+
+    // At this point, we're rating a standard binary/numeric audit
     let rating = RATINGS.FAIL.label;
     if (score >= RATINGS.PASS.minScore) {
       rating = RATINGS.PASS.label;

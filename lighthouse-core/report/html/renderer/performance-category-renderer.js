@@ -16,8 +16,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-metric', this.templateContext);
     const element = this.dom.find('.lh-metric', tmpl);
     element.id = audit.result.name;
-    // FIXME(paulirish): currently this sets a 'lh-metric--fail' class on error'd audits
-    element.classList.add(`lh-metric--${Util.calculateRating(audit.result.score)}`);
+    const rating = Util.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
+    element.classList.add(`lh-metric--${rating}`);
 
     const titleEl = this.dom.find('.lh-metric__title', tmpl);
     titleEl.textContent = audit.result.description;
@@ -29,8 +29,6 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     descriptionEl.appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.helpText));
 
     if (audit.result.error) {
-      element.classList.remove(`lh-metric--fail`);
-      element.classList.add(`lh-metric--error`);
       descriptionEl.textContent = '';
       valueEl.textContent = 'Error!';
       const tooltip = this.dom.createChildOf(descriptionEl, 'span', 'lh-error-tooltip-content');
@@ -131,7 +129,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Opportunities
     const opportunityAudits = category.audits
-        .filter(audit => audit.group === 'load-opportunities' && audit.result.score < 1)
+        .filter(audit => audit.group === 'load-opportunities' && !Util.showAsPassed(audit.result))
         .sort((auditA, auditB) => auditB.result.rawValue - auditA.result.rawValue);
     if (opportunityAudits.length) {
       const maxWaste = Math.max(...opportunityAudits.map(audit => audit.result.rawValue));
@@ -148,10 +146,10 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Diagnostics
     const diagnosticAudits = category.audits
-        .filter(audit => audit.group === 'diagnostics' && audit.result.score < 1)
+        .filter(audit => audit.group === 'diagnostics' && !Util.showAsPassed(audit.result))
         .sort((a, b) => {
-          const scoreA = a.result.scoreDisplayMode === 'informative' ? 100 : a.result.score;
-          const scoreB = b.result.scoreDisplayMode === 'informative' ? 100 : b.result.score;
+          const scoreA = a.result.scoreDisplayMode === 'informative' ? 100 : Number(a.result.score);
+          const scoreB = b.result.scoreDisplayMode === 'informative' ? 100 : Number(b.result.score);
           return scoreA - scoreB;
         });
 
@@ -164,7 +162,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     const passedElements = category.audits
         .filter(audit => (audit.group === 'load-opportunities' || audit.group === 'diagnostics') &&
-            audit.result.score === 1)
+            Util.showAsPassed(audit.result))
         .map((audit, i) => this.renderAudit(audit, i));
 
     if (!passedElements.length) return element;

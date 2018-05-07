@@ -142,8 +142,9 @@ class UserTimings extends Audit {
       const details = Audit.makeTableDetails(headings, tableRows);
 
       return {
-        // mark the audit as failed if there are user timings to display
+        // mark the audit as notApplicable if there were no user timings
         rawValue: userTimings.length === 0,
+        notApplicable: userTimings.length === 0,
         displayValue: userTimings.length ? `${userTimings.length}` : '',
         extendedInfo: {
           value: userTimings,

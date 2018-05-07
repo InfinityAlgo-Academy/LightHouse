@@ -35,6 +35,7 @@ class Audit {
       MANUAL: 'manual',
       INFORMATIVE: 'informative',
       NOT_APPLICABLE: 'not-applicable',
+      ERROR: 'error',
     };
   }
 
@@ -128,7 +129,7 @@ class Audit {
   /**
    * @param {typeof Audit} audit
    * @param {LH.Audit.Product} result
-   * @return {{score: number, scoreDisplayMode: LH.Audit.ScoreDisplayMode}}
+   * @return {{score: number|null, scoreDisplayMode: LH.Audit.ScoreDisplayMode}}
    */
   static _normalizeAuditScore(audit, result) {
     // Cast true/false to 1/0
@@ -160,18 +161,26 @@ class Audit {
 
     let {score, scoreDisplayMode} = Audit._normalizeAuditScore(audit, result);
 
-    // If the audit was determined to not apply to the page, we'll reset it as informative only
+    // If the audit was determined to not apply to the page, set score display mode appropriately
     if (result.notApplicable) {
-      score = 1;
       scoreDisplayMode = Audit.SCORING_MODES.NOT_APPLICABLE;
       result.rawValue = true;
     }
 
+    if (result.error) {
+      scoreDisplayMode = Audit.SCORING_MODES.ERROR;
+    }
+
     let auditDescription = audit.meta.description;
     if (audit.meta.failureDescription) {
-      if (score < Util.PASS_THRESHOLD) {
+      if (Number(score) < Util.PASS_THRESHOLD) {
         auditDescription = audit.meta.failureDescription;
       }
+    }
+
+    if (scoreDisplayMode !== Audit.SCORING_MODES.BINARY &&
+        scoreDisplayMode !== Audit.SCORING_MODES.NUMERIC) {
+      score = null;
     }
 
     return {
