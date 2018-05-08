@@ -39,8 +39,8 @@ describe('Performance: first-meaningful-paint audit', () => {
     const context = {options, settings: {throttlingMethod: 'simulate'}};
     const fmpResult = await FMPAudit.audit(artifacts, context);
 
-    assert.equal(fmpResult.score, 0.79);
-    assert.equal(Util.formatDisplayValue(fmpResult.displayValue), '2,850\xa0ms');
-    assert.equal(Math.round(fmpResult.rawValue), 2851);
+    assert.equal(fmpResult.score, 0.95);
+    assert.equal(Util.formatDisplayValue(fmpResult.displayValue), '2,030\xa0ms');
+    assert.equal(Math.round(fmpResult.rawValue), 2029);
   });
 });

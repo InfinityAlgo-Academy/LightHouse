@@ -24,9 +24,9 @@ class Interactive extends MetricArtifact {
    */
   get COEFFICIENTS() {
     return {
-      intercept: 1582,
-      optimistic: 0.97,
-      pessimistic: 0.49,
+      intercept: 1600,
+      optimistic: 0.6,
+      pessimistic: 0.45,
     };
   }
 

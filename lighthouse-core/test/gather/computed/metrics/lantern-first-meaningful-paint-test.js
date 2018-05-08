@@ -18,7 +18,7 @@ describe('Metrics: Lantern FMP', () => {
     const result = await artifacts.requestLanternFirstMeaningfulPaint({trace, devtoolsLog,
       settings: {}});
 
-    assert.equal(Math.round(result.timing), 2851);
+    assert.equal(Math.round(result.timing), 2029);
     assert.equal(Math.round(result.optimisticEstimate.timeInMs), 911);
     assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 1198);
     assert.equal(result.optimisticEstimate.nodeTimings.size, 4);

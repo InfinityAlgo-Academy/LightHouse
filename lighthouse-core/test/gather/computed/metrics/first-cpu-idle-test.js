@@ -63,7 +63,7 @@ describe('FirstInteractive computed artifact:', () => {
     const artifacts = Runner.instantiateComputedArtifacts();
     const result = await artifacts.requestFirstCPUIdle({trace, devtoolsLog, settings});
 
-    assert.equal(Math.round(result.timing), 5308);
+    assert.equal(Math.round(result.timing), 4309);
     assert.equal(Math.round(result.optimisticEstimate.timeInMs), 2451);
     assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 2752);
     assert.equal(result.optimisticEstimate.nodeTimings.size, 19);

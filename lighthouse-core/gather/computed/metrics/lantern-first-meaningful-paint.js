@@ -20,9 +20,9 @@ class FirstMeaningfulPaint extends MetricArtifact {
    */
   get COEFFICIENTS() {
     return {
-      intercept: 1532,
-      optimistic: -0.3,
-      pessimistic: 1.33,
+      intercept: 900,
+      optimistic: 0.45,
+      pessimistic: 0.6,
     };
   }
 

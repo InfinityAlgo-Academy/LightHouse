@@ -2735,7 +2735,7 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
             "totalBytes": 736,
-            "wastedMs": 723
+            "wastedMs": 873
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",

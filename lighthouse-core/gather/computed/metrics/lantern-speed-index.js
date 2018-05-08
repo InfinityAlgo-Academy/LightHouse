@@ -19,9 +19,12 @@ class SpeedIndex extends MetricArtifact {
    */
   get COEFFICIENTS() {
     return {
-      intercept: 200,
-      optimistic: 1.16,
-      pessimistic: 0.57,
+      // Negative intercept is OK because estimate is Math.max(FCP, Speed Index) and
+      // the optimistic estimate is based on the real observed speed index rather than a real
+      // lantern graph.
+      intercept: -250,
+      optimistic: 1.4,
+      pessimistic: 0.65,
     };
   }
 
