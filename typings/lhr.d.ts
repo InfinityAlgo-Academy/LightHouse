@@ -21,9 +21,9 @@ declare global {
       /** An object containing the results of the audits, keyed by the audits' `id` identifier. */
       audits: Record<string, Audit.Result>;
       /** The top-level categories, their overall scores, and member audits. */
-      reportCategories: Result.Category[];
+      categories: Record<string, Result.Category>;
       /** Descriptions of the groups referenced by CategoryMembers. */
-      reportGroups?: Record<string, Result.Group>;
+      categoryGroups?: Record<string, Result.ReportGroup>;
 
 
       // Additional non-LHR-lite information.
@@ -33,6 +33,8 @@ declare global {
       runWarnings: string[];
       /** The User-Agent string of the browser used run Lighthouse for these results. */
       userAgent: string;
+      /** Execution timings for the Lighthouse run */
+      timing: {total: number, [t: string]: number};
     }
 
     // Result namespace
@@ -61,7 +63,7 @@ declare global {
         group?: string;
       }
 
-      export interface Group {
+      export interface ReportGroup {
         /** The title of the display group. */
         title: string;
         /** A brief description of the purpose of the display group. */

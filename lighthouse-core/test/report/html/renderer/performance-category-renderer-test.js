@@ -24,6 +24,7 @@ const TEMPLATE_FILE = fs.readFileSync(__dirname +
     '/../../../../report/html/templates.html', 'utf8');
 
 describe('PerfCategoryRenderer', () => {
+  let category;
   let renderer;
 
   before(() => {
@@ -39,6 +40,8 @@ describe('PerfCategoryRenderer', () => {
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
     renderer = new PerformanceCategoryRenderer(dom, detailsRenderer);
+    sampleResults.reportCategories = Object.values(sampleResults.categories);
+    category = sampleResults.reportCategories.find(cat => cat.id === 'performance');
     ReportRenderer.smooshAuditResultsIntoCategories(sampleResults.audits,
       sampleResults.reportCategories);
   });
@@ -50,10 +53,8 @@ describe('PerfCategoryRenderer', () => {
     global.CategoryRenderer = undefined;
   });
 
-  const category = sampleResults.reportCategories.find(cat => cat.id === 'performance');
-
   it('renders the category header', () => {
-    const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const score = categoryDOM.querySelector('.lh-category-header');
     const value = categoryDOM.querySelector('.lh-category-header  .lh-gauge__percentage');
     const title = score.querySelector('.lh-category-header__title');
@@ -65,13 +66,13 @@ describe('PerfCategoryRenderer', () => {
   });
 
   it('renders the sections', () => {
-    const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const sections = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group');
     assert.equal(sections.length, 4);
   });
 
   it('renders the metrics', () => {
-    const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const metricsSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[0];
 
     const metricAudits = category.audits.filter(audit => audit.group === 'metrics');
@@ -81,7 +82,7 @@ describe('PerfCategoryRenderer', () => {
   });
 
   it('renders the failing performance opportunities', () => {
-    const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
     const oppAudits = category.audits.filter(audit => audit.group === 'load-opportunities' &&
         audit.result.score !== 1);
@@ -109,14 +110,14 @@ describe('PerfCategoryRenderer', () => {
     };
 
     const fakeCategory = Object.assign({}, category, {audits: [auditWithDebug]});
-    const categoryDOM = renderer.render(fakeCategory, sampleResults.reportGroups);
+    const categoryDOM = renderer.render(fakeCategory, sampleResults.categoryGroups);
 
     const debugEl = categoryDOM.querySelector('.lh-load-opportunity .lh-debug');
     assert.ok(debugEl, 'did not render debug');
   });
 
   it('renders the failing diagnostics', () => {
-    const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const diagnosticSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[2];
 
     const diagnosticAudits = category.audits.filter(audit => audit.group === 'diagnostics' &&
@@ -126,7 +127,7 @@ describe('PerfCategoryRenderer', () => {
   });
 
   it('renders the passed audits', () => {
-    const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const passedSection = categoryDOM.querySelector('.lh-category > .lh-passed-audits');
 
     const passedAudits = category.audits.filter(audit =>

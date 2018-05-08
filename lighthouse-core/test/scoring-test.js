@@ -56,10 +56,10 @@ describe('ReportScoring', () => {
 
       const scoredCategories = ReportScoring.scoreAllCategories(categories, resultsByAuditId);
 
-      assert.equal(scoredCategories[0].id, 'categoryA');
-      assert.equal(scoredCategories[0].score, 0);
-      assert.equal(scoredCategories[1].id, 'categoryB');
-      assert.equal(scoredCategories[1].score, 0.55);
+      assert.equal(scoredCategories.categoryA.id, 'categoryA');
+      assert.equal(scoredCategories.categoryA.score, 0);
+      assert.equal(scoredCategories.categoryB.id, 'categoryB');
+      assert.equal(scoredCategories.categoryB.score, 0.55);
     });
 
     it('should weight notApplicable audits as 0', () => {
@@ -83,8 +83,8 @@ describe('ReportScoring', () => {
 
       const scoredCategories = ReportScoring.scoreAllCategories(categories, resultsByAuditId);
 
-      assert.equal(scoredCategories[0].id, 'categoryA');
-      assert.equal(scoredCategories[0].score, 0.5);
+      assert.equal(scoredCategories.categoryA.id, 'categoryA');
+      assert.equal(scoredCategories.categoryA.score, 0.5);
     });
   });
 });

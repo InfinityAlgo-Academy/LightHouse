@@ -47,10 +47,10 @@ class ReportScoring {
    * Returns the report JSON object with computed scores.
    * @param {Object<string, LH.Config.Category>} configCategories
    * @param {Object<string, LH.Audit.Result>} resultsByAuditId
-   * @return {Array<LH.Result.Category>}
+   * @return {Object<string, LH.Result.Category>}
    */
   static scoreAllCategories(configCategories, resultsByAuditId) {
-    const scoredCategories = [];
+    const scoredCategories = {};
 
     for (const [categoryId, configCategory] of Object.entries(configCategories)) {
       // Copy category audit members
@@ -77,12 +77,12 @@ class ReportScoring {
       }));
       const score = ReportScoring.arithmeticMean(scores);
 
-      scoredCategories.push({
+      scoredCategories[categoryId] = {
         ...configCategory,
         audits,
         id: categoryId,
         score,
-      });
+      };
     }
 
     return scoredCategories;

@@ -105,8 +105,7 @@ describe('Module Tests', function() {
       assert.ok(results.lhr.fetchTime);
       assert.equal(results.lhr.finalUrl, exampleUrl);
       assert.equal(results.lhr.requestedUrl, exampleUrl);
-      assert.ok(Array.isArray(results.lhr.reportCategories));
-      assert.equal(results.lhr.reportCategories.length, 0);
+      assert.equal(Object.values(results.lhr.categories).length, 0);
       assert.ok(results.lhr.audits.viewport);
       assert.strictEqual(results.lhr.audits.viewport.score, 0);
       assert.ok(results.lhr.audits.viewport.explanation);

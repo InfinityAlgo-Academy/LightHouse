@@ -119,12 +119,13 @@ class Runner {
         }
       }
 
-      /** @type {Array<LH.Result.Category>} */
-      let reportCategories = [];
+      /** @type {Object<string, LH.Result.Category>} */
+      let categories = {};
       if (opts.config.categories) {
-        reportCategories = ReportScoring.scoreAllCategories(opts.config.categories, resultsById);
+        categories = ReportScoring.scoreAllCategories(opts.config.categories, resultsById);
       }
 
+      /** @type {LH.Result} */
       const lhr = {
         userAgent: artifacts.UserAgent,
         lighthouseVersion,
@@ -134,8 +135,8 @@ class Runner {
         runWarnings: lighthouseRunWarnings,
         audits: resultsById,
         configSettings: settings,
-        reportCategories,
-        reportGroups: opts.config.groups,
+        categories,
+        categoryGroups: opts.config.groups,
         timing: {total: Date.now() - startTime},
       };
 

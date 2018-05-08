@@ -57,6 +57,7 @@ describe('ReportRenderer', () => {
     const detailsRenderer = new DetailsRenderer(dom);
     const categoryRenderer = new CategoryRenderer(dom, detailsRenderer);
     renderer = new ReportRenderer(dom, categoryRenderer);
+    sampleResults.reportCategories = Object.values(sampleResults.categories);
   });
 
   after(() => {

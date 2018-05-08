@@ -33,7 +33,9 @@ class ReportRenderer {
     // If any mutations happen to the report within the renderers, we want the original object untouched
     const clone = /** @type {!ReportRenderer.ReportJSON} */ (JSON.parse(JSON.stringify(report)));
 
-    if (!Array.isArray(clone.reportCategories)) throw new Error('No reportCategories provided.');
+    // TODO(phulce): we all agree this is technical debt we should fix
+    if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
+    clone.reportCategories = Object.values(clone.categories);
     ReportRenderer.smooshAuditResultsIntoCategories(clone.audits, clone.reportCategories);
 
     container.textContent = ''; // Remove previous report.
@@ -169,7 +171,7 @@ class ReportRenderer {
       if (category.id === 'performance') {
         renderer = perfCategoryRenderer;
       }
-      categories.appendChild(renderer.render(category, report.reportGroups));
+      categories.appendChild(renderer.render(category, report.categoryGroups));
     }
 
     if (scoreHeader) {
@@ -263,8 +265,9 @@ ReportRenderer.GroupJSON; // eslint-disable-line no-unused-expressions
  *     runWarnings: (!Array<string>|undefined),
  *     artifacts: {traces: {defaultPass: {traceEvents: !Array}}},
  *     audits: !Object<string, !ReportRenderer.AuditResultJSON>,
+ *     categories: !Object<string, !ReportRenderer.CategoryJSON>,
  *     reportCategories: !Array<!ReportRenderer.CategoryJSON>,
- *     reportGroups: !Object<string, !ReportRenderer.GroupJSON>,
+ *     categoryGroups: !Object<string, !ReportRenderer.GroupJSON>,
  *     configSettings: !LH.Config.Settings,
  * }}
  */

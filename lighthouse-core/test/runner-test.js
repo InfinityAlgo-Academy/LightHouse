@@ -419,7 +419,7 @@ describe('Runner', () => {
   });
 
 
-  it('returns reportCategories', () => {
+  it('returns categories', () => {
     const url = 'https://example.com/';
     const config = new Config({
       passes: [{
@@ -446,8 +446,8 @@ describe('Runner', () => {
       assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
       assert.equal(results.lhr.audits['content-width'].name, 'content-width');
       assert.equal(results.lhr.audits['content-width'].score, 1);
-      assert.equal(results.lhr.reportCategories[0].score, 1);
-      assert.equal(results.lhr.reportCategories[0].audits[0].id, 'content-width');
+      assert.equal(results.lhr.categories.category.score, 1);
+      assert.equal(results.lhr.categories.category.audits[0].id, 'content-width');
     });
   });
 

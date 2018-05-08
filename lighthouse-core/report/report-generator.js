@@ -69,7 +69,7 @@ class ReportGenerator {
 
     // Possible TODO: tightly couple headers and row values
     const header = ['category', 'name', 'title', 'type', 'score'];
-    const table = lhr.reportCategories.map(category => {
+    const table = Object.values(lhr.categories).map(category => {
       return category.audits.map(catAudit => {
         const audit = lhr.audits[catAudit.id];
         // CSV validator wants all scores to be numeric, use -1 for now

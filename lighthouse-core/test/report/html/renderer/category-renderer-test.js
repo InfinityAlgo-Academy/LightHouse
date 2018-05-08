@@ -36,6 +36,7 @@ describe('CategoryRenderer', () => {
     const detailsRenderer = new DetailsRenderer(dom);
     renderer = new CategoryRenderer(dom, detailsRenderer);
 
+    sampleResults.reportCategories = Object.values(sampleResults.categories);
     ReportRenderer.smooshAuditResultsIntoCategories(sampleResults.audits,
       sampleResults.reportCategories);
   });
@@ -88,7 +89,7 @@ describe('CategoryRenderer', () => {
 
   it('renders a category', () => {
     const category = sampleResults.reportCategories.find(c => c.id === 'pwa');
-    const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
     const categoryEl = categoryDOM.querySelector('.lh-category-header');
     const value = categoryDOM.querySelector('.lh-gauge__percentage');
@@ -107,7 +108,7 @@ describe('CategoryRenderer', () => {
     const category = sampleResults.reportCategories.find(c => c.id === 'pwa');
     const prevDesc = category.description;
     category.description += ' [link text](http://example.com).';
-    const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const description = categoryDOM.querySelector('.lh-category-header__description');
     assert.ok(description.querySelector('a'), 'description contains converted markdown links');
     category.description = prevDesc;
@@ -132,19 +133,19 @@ describe('CategoryRenderer', () => {
 
   it('renders manual audits if the category contains them', () => {
     const pwaCategory = sampleResults.reportCategories.find(cat => cat.id === 'pwa');
-    const categoryDOM = renderer.render(pwaCategory, sampleResults.reportGroups);
+    const categoryDOM = renderer.render(pwaCategory, sampleResults.categoryGroups);
     assert.ok(categoryDOM.querySelector('.lh-audit-group--manual .lh-audit-group__summary'));
     assert.equal(categoryDOM.querySelectorAll('.lh-audit--manual').length, 3,
         'score shows informative and dash icon');
 
     const perfCategory = sampleResults.reportCategories.find(cat => cat.id === 'performance');
-    const categoryDOM2 = renderer.render(perfCategory, sampleResults.reportGroups);
+    const categoryDOM2 = renderer.render(perfCategory, sampleResults.categoryGroups);
     assert.ok(!categoryDOM2.querySelector('.lh-audit-group--manual'));
   });
 
   it('renders not applicable audits if the category contains them', () => {
     const a11yCategory = sampleResults.reportCategories.find(cat => cat.id === 'accessibility');
-    const categoryDOM = renderer.render(a11yCategory, sampleResults.reportGroups);
+    const categoryDOM = renderer.render(a11yCategory, sampleResults.categoryGroups);
     assert.ok(categoryDOM.querySelector(
         '.lh-audit-group--not-applicable .lh-audit-group__summary'));
 
@@ -157,15 +158,19 @@ describe('CategoryRenderer', () => {
     );
 
     const bestPracticeCat = sampleResults.reportCategories.find(cat => cat.id === 'best-practices');
-    const categoryDOM2 = renderer.render(bestPracticeCat, sampleResults.reportGroups);
+    const categoryDOM2 = renderer.render(bestPracticeCat, sampleResults.categoryGroups);
     assert.ok(!categoryDOM2.querySelector('.lh-audit-group--not-applicable'));
   });
 
   describe('category with groups', () => {
-    const category = sampleResults.reportCategories.find(cat => cat.id === 'accessibility');
+    let category;
+
+    beforeEach(() => {
+      category = sampleResults.reportCategories.find(cat => cat.id === 'accessibility');
+    });
 
     it('renders the category header', () => {
-      const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+      const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
       const gauge = categoryDOM.querySelector('.lh-gauge__percentage');
       assert.equal(gauge.textContent.trim(), '35', 'score is 0-100');
@@ -184,7 +189,7 @@ describe('CategoryRenderer', () => {
 
     // TODO waiting for decision regarding this header
     it.skip('renders the failed audits grouped by group', () => {
-      const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+      const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const failedAudits = category.audits.filter(audit => {
         return audit.result.score !== 1 && !audit.result.scoreDisplayMode === 'not-applicable';
       });
@@ -195,7 +200,7 @@ describe('CategoryRenderer', () => {
     });
 
     it('renders the passed audits grouped by group', () => {
-      const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+      const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const passedAudits = category.audits.filter(audit =>
           audit.result.scoreDisplayMode !== 'not-applicable' && audit.result.score === 1);
       const passedAuditTags = new Set(passedAudits.map(audit => audit.group));
@@ -205,7 +210,7 @@ describe('CategoryRenderer', () => {
     });
 
     it('renders all the audits', () => {
-      const categoryDOM = renderer.render(category, sampleResults.reportGroups);
+      const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const auditsElements = categoryDOM.querySelectorAll('.lh-audit');
       assert.equal(auditsElements.length, category.audits.length);
     });
@@ -214,7 +219,7 @@ describe('CategoryRenderer', () => {
   describe('grouping passed/failed/manual', () => {
     it('separates audits in the DOM', () => {
       const category = sampleResults.reportCategories.find(c => c.id === 'pwa');
-      const elem = renderer.render(category, sampleResults.reportGroups);
+      const elem = renderer.render(category, sampleResults.categoryGroups);
       const passedAudits = elem.querySelectorAll('.lh-passed-audits .lh-audit');
       const failedAudits = elem.querySelectorAll('.lh-failed-audits .lh-audit');
       const manualAudits = elem.querySelectorAll('.lh-audit-group--manual .lh-audit');
@@ -228,7 +233,7 @@ describe('CategoryRenderer', () => {
       const origCategory = sampleResults.reportCategories.find(c => c.id === 'pwa');
       const category = JSON.parse(JSON.stringify(origCategory));
       category.audits.forEach(audit => audit.result.score = 0);
-      const elem = renderer.render(category, sampleResults.reportGroups);
+      const elem = renderer.render(category, sampleResults.categoryGroups);
       const passedAudits = elem.querySelectorAll('.lh-passed-audits > .lh-audit');
       const failedAudits = elem.querySelectorAll('.lh-failed-audits > .lh-audit');
 
