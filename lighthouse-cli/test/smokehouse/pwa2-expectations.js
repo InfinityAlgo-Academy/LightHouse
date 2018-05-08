@@ -143,15 +143,9 @@ module.exports = [
         // Ignore speed test; just verify that it ran.
       },
       'webapp-install-banner': {
-        // FIXME(bckenny): This is a lie, the site should pass this. Issue #4898
-        score: 0,
+        score: 1,
         extendedInfo: {
           value: {
-            // FIXME(bckenny): There should not be any failures Issue #4898
-            failures: [
-              'Service worker does not successfully serve the manifest\'s start_url',
-              'Unable to fetch start URL via service worker',
-            ],
             manifestValues: {
               allChecks: [
                 {id: 'hasStartUrl', passing: true},

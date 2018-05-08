@@ -97,7 +97,7 @@ class StartUrl extends Gatherer {
     });
 
     return driver
-      .evaluateAsync(`fetch('${startUrl}')`)
+      .evaluateAsync(`window.location = '${startUrl}'`)
       .then(() => Promise.race([fetchPromise, timeoutPromise]));
   }
 }
