@@ -60,9 +60,9 @@ declare global {
       } | string;
 
       export interface CategoryJson {
-        name: string;
+        title: string;
         description: string;
-        audits: CategoryMemberJson[];
+        auditRefs: AuditRefJson[];
       }
 
       export interface GroupJson {
@@ -74,7 +74,7 @@ declare global {
        * Reference to an audit member of a category and how its score should be
        * weighted and how its results grouped with other members.
        */
-      export interface CategoryMemberJson {
+      export interface AuditRefJson {
         id: string;
         weight: number;
         group?: string;
@@ -101,9 +101,9 @@ declare global {
       }
 
       // TODO: For now, these are unchanged from JSON and Result versions. Need to harmonize.
-      export interface CategoryMember extends CategoryMemberJson {}
+      export interface AuditRef extends AuditRefJson {}
       export interface Category extends CategoryJson {
-        audits: CategoryMember[];
+        auditRefs: AuditRef[];
       }
       export interface Group extends GroupJson {}
     }

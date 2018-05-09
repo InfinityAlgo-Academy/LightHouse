@@ -177,7 +177,7 @@ class ReportRenderer {
    */
   static smooshAuditResultsIntoCategories(audits, reportCategories) {
     for (const category of reportCategories) {
-      category.audits.forEach(auditMeta => {
+      category.auditRefs.forEach(auditMeta => {
         const result = audits[auditMeta.id];
         auditMeta.result = result;
       });
@@ -221,12 +221,12 @@ ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{
- *     name: string,
+ *     title: string,
  *     id: string,
  *     score: (number|null),
  *     description: (string|undefined),
  *     manualDescription: string,
- *     audits: !Array<!ReportRenderer.AuditJSON>
+ *     auditRefs: !Array<!ReportRenderer.AuditJSON>
  * }}
  */
 ReportRenderer.CategoryJSON; // eslint-disable-line no-unused-expressions

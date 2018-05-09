@@ -115,7 +115,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     element.appendChild(this.renderCategoryHeader(category));
 
     // Metrics
-    const metricAudits = category.audits.filter(audit => audit.group === 'metrics');
+    const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
     const metricAuditsEl = this.renderAuditGroup(groups['metrics'], {expandable: false});
 
     const keyMetrics = metricAudits.filter(a => a.weight >= 3);
@@ -141,7 +141,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Filmstrip
     const timelineEl = this.dom.createChildOf(element, 'div', 'lh-filmstrip-container');
-    const thumbnailAudit = category.audits.find(audit => audit.id === 'screenshot-thumbnails');
+    const thumbnailAudit = category.auditRefs.find(audit => audit.id === 'screenshot-thumbnails');
     const thumbnailResult = thumbnailAudit && thumbnailAudit.result;
     if (thumbnailResult && thumbnailResult.details) {
       timelineEl.id = thumbnailResult.name;
@@ -152,7 +152,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Opportunities
-    const opportunityAudits = category.audits
+    const opportunityAudits = category.auditRefs
         .filter(audit => audit.group === 'load-opportunities' && !Util.showAsPassed(audit.result))
         .sort((auditA, auditB) => this._getWastedMs(auditB) - this._getWastedMs(auditA));
 
@@ -172,7 +172,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Diagnostics
-    const diagnosticAudits = category.audits
+    const diagnosticAudits = category.auditRefs
         .filter(audit => audit.group === 'diagnostics' && !Util.showAsPassed(audit.result))
         .sort((a, b) => {
           const scoreA = a.result.scoreDisplayMode === 'informative' ? 100 : Number(a.result.score);
@@ -189,7 +189,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Passed audits
-    const passedElements = category.audits
+    const passedElements = category.auditRefs
         .filter(audit => (audit.group === 'load-opportunities' || audit.group === 'diagnostics') &&
             Util.showAsPassed(audit.result))
         .map((audit, i) => this.renderAudit(audit, i));

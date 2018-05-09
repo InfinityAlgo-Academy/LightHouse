@@ -15,7 +15,7 @@ const puppeteer = require('../../node_modules/puppeteer/index.js');
 const lighthouseExtensionPath = path.resolve(__dirname, '../dist');
 const config = require(path.resolve(__dirname, '../../lighthouse-core/config/default-config.js'));
 
-const getAuditsOfCategory = category => config.categories[category].audits;
+const getAuditsOfCategory = category => config.categories[category].auditRefs;
 
 describe('Lighthouse chrome extension', function() {
   // eslint-disable-next-line no-console

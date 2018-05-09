@@ -52,7 +52,7 @@ function validateCategories(categories, audits, groups) {
   }
 
   Object.keys(categories).forEach(categoryId => {
-    categories[categoryId].audits.forEach((auditRef, index) => {
+    categories[categoryId].auditRefs.forEach((auditRef, index) => {
       if (!auditRef.id) {
         throw new Error(`missing an audit id at ${categoryId}[${index}]`);
       }
@@ -460,7 +460,7 @@ class Config {
 
   /**
    * Filter out any unrequested categories or audits from the categories object.
-   * @param {!Object<string, {audits: !Array<{id: string}>}>} categories
+   * @param {!Object<string, {auditRefs: !Array<{id: string}>}>} categories
    * @param {!Array<string>=} categoryIds
    * @param {!Array<string>=} auditIds
    * @param {!Array<string>=} skipAuditIds
@@ -489,8 +489,8 @@ class Config {
     const auditsToValidate = new Set(auditIds.concat(skipAuditIds));
     for (const auditId of auditsToValidate) {
       const foundCategory = Object.keys(oldCategories).find(categoryId => {
-        const audits = oldCategories[categoryId].audits;
-        return audits.find(candidate => candidate.id === auditId);
+        const auditRefs = oldCategories[categoryId].auditRefs;
+        return auditRefs.find(candidate => candidate.id === auditId);
       });
 
       if (!foundCategory) {
@@ -513,7 +513,7 @@ class Config {
       if (filterByIncludedCategory && filterByIncludedAudit) {
         // If we're filtering to the category and audit whitelist, include the union of the two
         if (!categoryIds.includes(categoryId)) {
-          category.audits = category.audits.filter(audit => auditIds.includes(audit.id));
+          category.auditRefs = category.auditRefs.filter(audit => auditIds.includes(audit.id));
         }
       } else if (filterByIncludedCategory) {
         // If we're filtering to just the category whitelist and the category is not included, skip it
@@ -521,15 +521,15 @@ class Config {
           return;
         }
       } else if (filterByIncludedAudit) {
-        category.audits = category.audits.filter(audit => auditIds.includes(audit.id));
+        category.auditRefs = category.auditRefs.filter(audit => auditIds.includes(audit.id));
       }
 
       // always filter to the audit blacklist
-      category.audits = category.audits.filter(audit => !skipAuditIds.includes(audit.id));
+      category.auditRefs = category.auditRefs.filter(audit => !skipAuditIds.includes(audit.id));
 
-      if (category.audits.length) {
+      if (category.auditRefs.length) {
         categories[categoryId] = category;
-        category.audits.forEach(audit => includedAudits.add(audit.id));
+        category.auditRefs.forEach(audit => includedAudits.add(audit.id));
       }
     });
 
@@ -537,13 +537,13 @@ class Config {
   }
 
   /**
-   * @param {{categories: !Object<string, {name: string}>}} config
-   * @return {!Array<{id: string, name: string}>}
+   * @param {{categories: !Object<string, {title: string}>}} config
+   * @return {!Array<{id: string, title: string}>}
    */
   static getCategories(config) {
     return Object.keys(config.categories).map(id => {
-      const name = config.categories[id].name;
-      return {id, name};
+      const title = config.categories[id].title;
+      return {id, title};
     });
   }
 

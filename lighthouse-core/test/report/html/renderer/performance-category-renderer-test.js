@@ -62,7 +62,7 @@ describe('PerfCategoryRenderer', () => {
     assert.deepEqual(score, score.firstElementChild, 'first child is a score');
     const scoreInDom = Number(value.textContent);
     assert.ok(Number.isInteger(scoreInDom) && scoreInDom > 10, 'category score is rounded');
-    assert.equal(title.textContent, category.name, 'title is set');
+    assert.equal(title.textContent, category.title, 'title is set');
   });
 
   it('renders the sections', () => {
@@ -75,7 +75,7 @@ describe('PerfCategoryRenderer', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const metricsSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[0];
 
-    const metricAudits = category.audits.filter(audit => audit.group === 'metrics');
+    const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
     const timelineElements = metricsSection.querySelectorAll('.lh-metric');
     const nontimelineElements = metricsSection.querySelectorAll('.lh-audit');
     assert.equal(timelineElements.length + nontimelineElements.length, metricAudits.length);
@@ -84,7 +84,7 @@ describe('PerfCategoryRenderer', () => {
   it('renders the failing performance opportunities', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
-    const oppAudits = category.audits.filter(audit => audit.group === 'load-opportunities' &&
+    const oppAudits = category.auditRefs.filter(audit => audit.group === 'load-opportunities' &&
         audit.result.score !== 1);
     const oppElements = categoryDOM.querySelectorAll('.lh-load-opportunity');
     assert.equal(oppElements.length, oppAudits.length);
@@ -109,7 +109,7 @@ describe('PerfCategoryRenderer', () => {
       },
     };
 
-    const fakeCategory = Object.assign({}, category, {audits: [auditWithDebug]});
+    const fakeCategory = Object.assign({}, category, {auditRefs: [auditWithDebug]});
     const categoryDOM = renderer.render(fakeCategory, sampleResults.categoryGroups);
 
     const debugEl = categoryDOM.querySelector('.lh-load-opportunity .lh-debug');
@@ -120,7 +120,7 @@ describe('PerfCategoryRenderer', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const diagnosticSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[2];
 
-    const diagnosticAudits = category.audits.filter(audit => audit.group === 'diagnostics' &&
+    const diagnosticAudits = category.auditRefs.filter(audit => audit.group === 'diagnostics' &&
         audit.result.score !== 1 && audit.result.scoreDisplayMode !== 'not-applicable');
     const diagnosticElements = diagnosticSection.querySelectorAll('.lh-audit');
     assert.equal(diagnosticElements.length, diagnosticAudits.length);
@@ -130,7 +130,7 @@ describe('PerfCategoryRenderer', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const passedSection = categoryDOM.querySelector('.lh-category > .lh-passed-audits');
 
-    const passedAudits = category.audits.filter(audit =>
+    const passedAudits = category.auditRefs.filter(audit =>
         audit.group && audit.group !== 'metrics' &&
         (audit.result.score === 1 || audit.result.scoreDisplayMode === 'not-applicable'));
     const passedElements = passedSection.querySelectorAll('.lh-audit');

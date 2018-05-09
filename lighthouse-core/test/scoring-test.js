@@ -43,9 +43,9 @@ describe('ReportScoring', () => {
       };
 
       const categories = {
-        categoryA: {audits: [{id: 'my-audit'}]},
+        categoryA: {auditRefs: [{id: 'my-audit'}]},
         categoryB: {
-          audits: [
+          auditRefs: [
             {id: 'my-boolean-audit', weight: 1},
             {id: 'my-scored-audit', weight: 1},
             {id: 'my-failed-audit', weight: 1},
@@ -72,7 +72,7 @@ describe('ReportScoring', () => {
 
       const categories = {
         categoryA: {
-          audits: [
+          auditRefs: [
             {id: 'my-boolean-audit', weight: 1},
             {id: 'my-scored-audit', weight: 1},
             {id: 'my-failed-audit', weight: 1},

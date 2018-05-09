@@ -18,7 +18,7 @@ const sampleLhr = __dirname + '/../../lighthouse-core/test/results/sample_v2.jso
 
 const config = require(path.resolve(__dirname, '../../lighthouse-core/config/default-config.js'));
 const lighthouseCategories = Object.keys(config.categories);
-const getAuditsOfCategory = category => config.categories[category].audits;
+const getAuditsOfCategory = category => config.categories[category].auditRefs;
 
 // TODO: should be combined in some way with lighthouse-extension/test/extension-test.js
 describe('Lighthouse Viewer', function() {

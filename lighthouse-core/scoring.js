@@ -54,7 +54,7 @@ class ReportScoring {
 
     for (const [categoryId, configCategory] of Object.entries(configCategories)) {
       // Copy category audit members
-      const audits = configCategory.audits.map(configMember => {
+      const auditRefs = configCategory.auditRefs.map(configMember => {
         const member = {...configMember};
 
         // If a result was not applicable, meaning its checks did not run against anything on
@@ -71,7 +71,7 @@ class ReportScoring {
         return member;
       });
 
-      const scores = audits.map(auditRef => ({
+      const scores = auditRefs.map(auditRef => ({
         score: resultsByAuditId[auditRef.id].score,
         weight: auditRef.weight,
       }));
@@ -79,7 +79,7 @@ class ReportScoring {
 
       scoredCategories[categoryId] = {
         ...configCategory,
-        audits,
+        auditRefs,
         id: categoryId,
         score,
       };

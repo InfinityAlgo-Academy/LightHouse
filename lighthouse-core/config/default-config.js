@@ -15,7 +15,7 @@ module.exports = {
     passName: 'defaultPass',
     recordTrace: true,
     useThrottling: true,
-    pauseAfterLoadMs: 1000,
+    pauseAfterLoadMs: 10000,
     networkQuietThresholdMs: 1000,
     cpuQuietThresholdMs: 1000,
     gatherers: [
@@ -246,8 +246,8 @@ module.exports = {
   },
   categories: {
     'performance': {
-      name: 'Performance',
-      audits: [
+      title: 'Performance',
+      auditRefs: [
         {id: 'first-contentful-paint', weight: 3, group: 'metrics'},
         {id: 'first-meaningful-paint', weight: 1, group: 'metrics'},
         {id: 'speed-index', weight: 4, group: 'metrics'},
@@ -283,12 +283,12 @@ module.exports = {
       ],
     },
     'pwa': {
-      name: 'Progressive Web App',
+      title: 'Progressive Web App',
       description: 'These checks validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).',
       manualDescription: 'These checks are required by the baseline ' +
           '[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are ' +
           'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.',
-      audits: [
+      auditRefs: [
         {id: 'service-worker', weight: 1},
         {id: 'works-offline', weight: 1},
         {id: 'without-javascript', weight: 1},
@@ -307,10 +307,10 @@ module.exports = {
       ],
     },
     'accessibility': {
-      name: 'Accessibility',
+      title: 'Accessibility',
       description: 'These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.',
       manualDescription: 'These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).',
-      audits: [
+      auditRefs: [
         {id: 'accesskeys', weight: 1, group: 'a11y-correct-attributes'},
         {id: 'aria-allowed-attr', weight: 3, group: 'a11y-aria'},
         {id: 'aria-required-attr', weight: 2, group: 'a11y-aria'},
@@ -360,8 +360,8 @@ module.exports = {
       ],
     },
     'best-practices': {
-      name: 'Best Practices',
-      audits: [
+      title: 'Best Practices',
+      auditRefs: [
         {id: 'appcache-manifest', weight: 1},
         {id: 'no-websql', weight: 1},
         {id: 'is-on-https', weight: 1},
@@ -381,12 +381,12 @@ module.exports = {
       ],
     },
     'seo': {
-      name: 'SEO',
+      title: 'SEO',
       description: 'These checks ensure that your page is optimized for search engine results ranking. ' +
           'There are additional factors Lighthouse does not check that may affect your search ranking. ' +
           '[Learn more](https://support.google.com/webmasters/answer/35769).',
       manualDescription: 'Run these additional validators on your site to check additional SEO best practices.',
-      audits: [
+      auditRefs: [
         {id: 'viewport', weight: 1, group: 'seo-mobile'},
         {id: 'document-title', weight: 1, group: 'seo-content'},
         {id: 'meta-description', weight: 1, group: 'seo-content'},

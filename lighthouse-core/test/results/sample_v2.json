@@ -3054,8 +3054,8 @@
   },
   "categories": {
     "performance": {
-      "name": "Performance",
-      "audits": [
+      "title": "Performance",
+      "auditRefs": [
         {
           "id": "first-contentful-paint",
           "weight": 3,
@@ -3213,10 +3213,10 @@
       "score": 0.69
     },
     "pwa": {
-      "name": "Progressive Web App",
+      "title": "Progressive Web App",
       "description": "These checks validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).",
       "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
-      "audits": [
+      "auditRefs": [
         {
           "id": "service-worker",
           "weight": 1
@@ -3278,10 +3278,10 @@
       "score": 0.36
     },
     "accessibility": {
-      "name": "Accessibility",
+      "title": "Accessibility",
       "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
       "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
-      "audits": [
+      "auditRefs": [
         {
           "id": "accesskeys",
           "weight": 0,
@@ -3502,8 +3502,8 @@
       "score": 0.35
     },
     "best-practices": {
-      "name": "Best Practices",
-      "audits": [
+      "title": "Best Practices",
+      "auditRefs": [
         {
           "id": "appcache-manifest",
           "weight": 1
@@ -3573,10 +3573,10 @@
       "score": 0
     },
     "seo": {
-      "name": "SEO",
+      "title": "SEO",
       "description": "These checks ensure that your page is optimized for search engine results ranking. There are additional factors Lighthouse does not check that may affect your search ranking. [Learn more](https://support.google.com/webmasters/answer/35769).",
       "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
-      "audits": [
+      "auditRefs": [
         {
           "id": "viewport",
           "weight": 1,

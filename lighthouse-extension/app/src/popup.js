@@ -165,7 +165,7 @@ function generateOptionsList(background, selectedCategories) {
 
   background.getDefaultCategories().forEach(category => {
     const isChecked = selectedCategories.includes(category.id);
-    frag.appendChild(createOptionItem(category.name, category.id, isChecked));
+    frag.appendChild(createOptionItem(category.title, category.id, isChecked));
   });
 
   const optionsList = document.querySelector('.options__list');

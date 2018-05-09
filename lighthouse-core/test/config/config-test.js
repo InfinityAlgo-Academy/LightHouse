@@ -217,7 +217,7 @@ describe('Config', () => {
       audits: [],
       categories: {
         pwa: {
-          audits: [
+          auditRefs: [
             {id: 'missing-audit'},
           ],
         },
@@ -230,7 +230,7 @@ describe('Config', () => {
       audits: [],
       categories: {
         pwa: {
-          audits: [
+          auditRefs: [
             'oops-wrong-format',
           ],
         },
@@ -243,7 +243,7 @@ describe('Config', () => {
       audits: ['accessibility/color-contrast'],
       categories: {
         accessibility: {
-          audits: [
+          auditRefs: [
             {id: 'color-contrast'},
           ],
         },
@@ -262,7 +262,7 @@ describe('Config', () => {
       audits: ['first-meaningful-paint'],
       categories: {
         pwa: {
-          audits: [
+          auditRefs: [
             {id: 'first-meaningful-paint', group: 'group-a'},
             {id: 'first-meaningful-paint', group: 'missing-group'},
           ],
@@ -276,7 +276,7 @@ describe('Config', () => {
       audits: ['manual/pwa-cross-browser'],
       categories: {
         accessibility: {
-          audits: [
+          auditRefs: [
             {id: 'pwa-cross-browser', weight: 10},
           ],
         },
@@ -302,19 +302,19 @@ describe('Config', () => {
       ],
       categories: {
         'needed-category': {
-          audits: [
+          auditRefs: [
             {id: 'first-meaningful-paint'},
             {id: 'first-cpu-idle'},
           ],
         },
         'other-category': {
-          audits: [
+          auditRefs: [
             {id: 'color-contrast'},
             {id: 'estimated-input-latency'},
           ],
         },
         'unused-category': {
-          audits: [
+          auditRefs: [
             {id: 'estimated-input-latency'},
           ],
         },
@@ -325,8 +325,8 @@ describe('Config', () => {
     assert.equal(config.passes.length, 2, 'preserves both passes');
     assert.ok(config.passes[0].recordTrace, 'preserves recordTrace pass');
     assert.ok(!config.categories['unused-category'], 'removes unused categories');
-    assert.equal(config.categories['needed-category'].audits.length, 2);
-    assert.equal(config.categories['other-category'].audits.length, 1);
+    assert.equal(config.categories['needed-category'].auditRefs.length, 2);
+    assert.equal(config.categories['other-category'].auditRefs.length, 1);
   });
 
   it('filters the config w/ skipAudits', () => {
@@ -346,14 +346,14 @@ describe('Config', () => {
       ],
       categories: {
         'needed-category': {
-          audits: [
+          auditRefs: [
             {id: 'first-meaningful-paint'},
             {id: 'first-cpu-idle'},
             {id: 'color-contrast'},
           ],
         },
         'other-category': {
-          audits: [
+          auditRefs: [
             {id: 'color-contrast'},
             {id: 'estimated-input-latency'},
           ],
@@ -364,7 +364,7 @@ describe('Config', () => {
     assert.equal(config.audits.length, 3, 'skips the FMP audit');
     assert.equal(config.passes.length, 2, 'preserves both passes');
     assert.ok(config.passes[0].recordTrace, 'preserves recordTrace pass');
-    assert.equal(config.categories['needed-category'].audits.length, 2,
+    assert.equal(config.categories['needed-category'].auditRefs.length, 2,
       'removes skipped audit from category');
   });
 
@@ -397,7 +397,7 @@ describe('Config', () => {
     });
 
     assert.ok(config.audits.length, 'inherited audits by extension');
-    assert.equal(config.audits.length, origConfig.categories.performance.audits.length + 1);
+    assert.equal(config.audits.length, origConfig.categories.performance.auditRefs.length + 1);
     assert.equal(config.passes.length, 1, 'filtered out passes');
   });
 
@@ -564,13 +564,13 @@ describe('Config', () => {
     });
 
     it('should merge categories', () => {
-      const configA = {categories: {A: {name: 'Acat'}, B: {name: 'Bcat'}}};
-      const configB = {categories: {C: {name: 'Ccat'}}};
+      const configA = {categories: {A: {title: 'Acat'}, B: {title: 'Bcat'}}};
+      const configB = {categories: {C: {title: 'Ccat'}}};
       const merged = Config.extendConfigJSON(configA, configB);
       assert.deepStrictEqual(merged.categories, {
-        A: {name: 'Acat'},
-        B: {name: 'Bcat'},
-        C: {name: 'Ccat'},
+        A: {title: 'Acat'},
+        B: {title: 'Bcat'},
+        C: {title: 'Ccat'},
       });
     });
 
@@ -592,9 +592,9 @@ describe('Config', () => {
       const categories = Config.getCategories(origConfig);
       assert.equal(Array.isArray(categories), true);
       assert.equal(categories.length, 5, 'Found the correct number of categories');
-      const haveName = categories.every(cat => cat.name.length);
+      const haveName = categories.every(cat => cat.title.length);
       const haveID = categories.every(cat => cat.id.length);
-      assert.equal(haveName === haveID === true, true, 'they have IDs and names');
+      assert.equal(haveName === haveID === true, true, 'they have IDs and titles');
     });
   });
 
@@ -631,7 +631,7 @@ describe('Config', () => {
     it('should only run audits for ones named by the category', () => {
       const config = Config.generateNewFilteredConfig(origConfig, ['performance']);
       const selectedCategory = origConfig.categories.performance;
-      const auditCount = Object.keys(selectedCategory.audits).length;
+      const auditCount = Object.keys(selectedCategory.auditRefs).length;
 
       assert.equal(config.audits.length, auditCount, '# of audits match category list');
     });
@@ -646,7 +646,7 @@ describe('Config', () => {
       const config = Config.generateNewFilteredConfig(origConfig, ['performance'],
           ['works-offline']);
       const selectedCategory = origConfig.categories.performance;
-      const auditCount = Object.keys(selectedCategory.audits).length + 1;
+      const auditCount = Object.keys(selectedCategory.auditRefs).length + 1;
       assert.equal(config.passes.length, 2, 'incorrect # of passes');
       assert.equal(config.audits.length, auditCount, 'audit filtering failed');
     });
@@ -654,7 +654,7 @@ describe('Config', () => {
     it('should support redundant filtering', () => {
       const config = Config.generateNewFilteredConfig(origConfig, ['pwa'], ['is-on-https']);
       const selectedCategory = origConfig.categories.pwa;
-      const auditCount = Object.keys(selectedCategory.audits).length;
+      const auditCount = Object.keys(selectedCategory.auditRefs).length;
       assert.equal(config.passes.length, 3, 'incorrect # of passes');
       assert.equal(config.audits.length, auditCount, 'audit filtering failed');
     });

@@ -57,7 +57,7 @@ window.runLighthouseInWorker = function(port, url, options, categoryIDs) {
 
 /**
  * Returns list of top-level categories from the default config.
- * @return {!Array<{name: string, id: string}>}
+ * @return {!Array<{title: string, id: string}>}
  */
 window.getDefaultCategories = function() {
   return Config.getCategories(defaultConfig);

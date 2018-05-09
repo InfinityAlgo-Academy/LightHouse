@@ -96,7 +96,7 @@ class CategoryRenderer {
     gaugeContainerEl.appendChild(gaugeEl);
 
     this.dom.find('.lh-category-header__title', tmpl).appendChild(
-      this.dom.convertMarkdownCodeSnippets(category.name));
+      this.dom.convertMarkdownCodeSnippets(category.title));
     if (category.description) {
       const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
       this.dom.find('.lh-category-header__description', tmpl).appendChild(descEl);
@@ -244,7 +244,7 @@ class CategoryRenderer {
       percentageEl.title = 'Errors occurred while auditing';
     }
 
-    this.dom.find('.lh-gauge__label', tmpl).textContent = category.name;
+    this.dom.find('.lh-gauge__label', tmpl).textContent = category.title;
     return tmpl;
   }
 
@@ -258,8 +258,9 @@ class CategoryRenderer {
     this.createPermalinkSpan(element, category.id);
     element.appendChild(this.renderCategoryHeader(category));
 
-    const manualAudits = category.audits.filter(item => item.result.scoreDisplayMode === 'manual');
-    const nonManualAudits = category.audits.filter(audit => !manualAudits.includes(audit));
+    const auditRefs = category.auditRefs;
+    const manualAudits = auditRefs.filter(audit => audit.result.scoreDisplayMode === 'manual');
+    const nonManualAudits = auditRefs.filter(audit => !manualAudits.includes(audit));
 
     const auditsGroupedByGroup = /** @type {!Object<string,
       {passed: !Array<!ReportRenderer.AuditJSON>,

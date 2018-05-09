@@ -24,11 +24,11 @@ module.exports = {
 
   categories: {
     mixedContent: {
-      name: 'Mixed Content',
+      title: 'Mixed Content',
       description: 'These audits check which resources support HTTPS and ' +
         'which are potentially blocking the page from switching to HTTPS due ' +
         'to mixed-content warnings.',
-      audits: [
+      auditRefs: [
         {id: 'is-on-https', weight: 1},
         {id: 'mixed-content', weight: 1},
       ],
