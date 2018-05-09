@@ -76,6 +76,22 @@ html, body {
   text-overflow: ellipsis;
 }
 
+.header-titles__throttling {
+  position: relative;
+  margin-top: 5px;
+  padding-left: 20px;
+}
+
+.header-titles__throttling input {
+  position: absolute;
+  left: 0;
+}
+
+.header-titles__new-adornment {
+  color: coral;
+  font-weight: bold;
+}
+
 .main {
   height: 70px;
   display: flex;

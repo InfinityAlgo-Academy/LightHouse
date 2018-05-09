@@ -115,20 +115,20 @@ function createOptionItem(text, id, isChecked) {
 /**
  * Click event handler for Generate Report button.
  * @param {!Window} background Reference to the extension's background page.
- * @param {!Object<boolean>} selectedCategories
+ * @param {{selectedCategories: !Object<boolean>, useDevTools: boolean}} settings
  */
-function onGenerateReportButtonClick(background, selectedCategories) {
+function onGenerateReportButtonClick(background, settings) {
   showRunningSubpage();
 
   const feedbackEl = document.querySelector('.feedback');
   feedbackEl.textContent = '';
 
-  const categoryIDs = Object.keys(selectedCategories)
-      .filter(key => !!selectedCategories[key]);
+  const {selectedCategories, useDevTools} = settings;
 
   background.runLighthouseInExtension({
     restoreCleanState: true,
-  }, categoryIDs).catch(err => {
+    flags: {throttlingMethod: useDevTools ? 'devtools' : 'simulate'},
+  }, selectedCategories).catch(err => {
     let message = err.message;
     let includeReportLink = true;
 
@@ -158,13 +158,13 @@ function onGenerateReportButtonClick(background, selectedCategories) {
  * Generates a document fragment containing a list of checkboxes and labels
  * for the categories.
  * @param {!Window} background Reference to the extension's background page.
- * @param {!Object<boolean>} selectedCategories
+ * @param {!Array<string>} selectedCategories
  */
 function generateOptionsList(background, selectedCategories) {
   const frag = document.createDocumentFragment();
 
   background.getDefaultCategories().forEach(category => {
-    const isChecked = selectedCategories[category.id];
+    const isChecked = selectedCategories.includes(category.id);
     frag.appendChild(createOptionItem(category.name, category.id, isChecked));
   });
 
@@ -194,13 +194,22 @@ function initPopup() {
     background.loadSettings().then(settings => {
       generateOptionsList(background, settings.selectedCategories);
       document.querySelector('.setting-disable-extensions').checked = settings.disableExtensions;
+      document.querySelector('#lantern-checkbox').checked = !settings.useDevTools;
+    });
+
+    // bind throttling control button
+    const lanternCheckbox = document.getElementById('lantern-checkbox');
+    lanternCheckbox.addEventListener('change', async () => {
+      const settings = await background.loadSettings();
+      settings.useDevTools = !lanternCheckbox.checked;
+      background.saveSettings(settings);
     });
 
     // bind Generate Report button
     const generateReportButton = document.getElementById('generate-report');
     generateReportButton.addEventListener('click', () => {
       background.loadSettings().then(settings => {
-        onGenerateReportButtonClick(background, settings.selectedCategories);
+        onGenerateReportButtonClick(background, settings);
       });
     });
 
@@ -219,7 +228,11 @@ function initPopup() {
           .map(input => input.value);
       const disableExtensions = document.querySelector('.setting-disable-extensions').checked;
 
-      background.saveSettings({selectedCategories, disableExtensions});
+      background.saveSettings({
+        useDevTools: !lanternCheckbox.checked,
+        selectedCategories,
+        disableExtensions,
+      });
 
       optionsEl.classList.remove(subpageVisibleClass);
     });

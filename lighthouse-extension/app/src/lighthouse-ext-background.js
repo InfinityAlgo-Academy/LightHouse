@@ -144,7 +144,7 @@ window.createReportPageAsBlob = function(runnerResult) {
 
 /**
  * Save currently selected set of category categories to local storage.
- * @param {{selectedCategories: !Array<string>, disableExtensions: boolean}} settings
+ * @param {{selectedCategories: !Array<string>, disableExtensions: boolean, useDevTools: boolean}} settings
  */
 window.saveSettings = function(settings) {
   const storage = {
@@ -161,13 +161,16 @@ window.saveSettings = function(settings) {
   disableExtensionsDuringRun = settings.disableExtensions;
   storage[SETTINGS_KEY].disableExtensions = disableExtensionsDuringRun;
 
+  // Stash throttling setting.
+  storage[SETTINGS_KEY].useDevTools = settings.useDevTools;
+
   // Save object to chrome local storage.
   chrome.storage.local.set(storage);
 };
 
 /**
  * Load selected category categories from local storage.
- * @return {!Promise<{selectedCategories: !Object<boolean>, disableExtensions: boolean}>}
+ * @return {!Promise<{selectedCategories: !Array<string>, disableExtensions: boolean, useDevTools: boolean}>}
  */
 window.loadSettings = function() {
   return new Promise(resolve => {
@@ -186,12 +189,14 @@ window.loadSettings = function() {
       const savedCategories = Object.assign(defaultCategories, result[STORAGE_KEY]);
 
       const defaultSettings = {
+        useDevTools: false,
         disableExtensions: disableExtensionsDuringRun,
       };
       const savedSettings = Object.assign(defaultSettings, result[SETTINGS_KEY]);
 
       resolve({
-        selectedCategories: savedCategories,
+        useDevTools: savedSettings.useDevTools,
+        selectedCategories: Object.keys(savedCategories).filter(cat => savedCategories[cat]),
         disableExtensions: savedSettings.disableExtensions,
       });
     });
