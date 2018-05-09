@@ -47,8 +47,10 @@ declare global {
       cpuSlowdownMultiplier?: number
     }
 
+    export type OutputMode = 'json' | 'html' | 'csv';
+
     interface SharedFlagsSettings {
-      output?: 'json' | 'html' | 'csv';
+      output?: OutputMode|OutputMode[];
       maxWaitForLoad?: number;
       blockedUrlPatterns?: string[] | null;
       additionalTraceCategories?: string | null;
@@ -88,7 +90,7 @@ declare global {
 
     export interface RunnerResult {
       lhr: Result;
-      report: string;
+      report: string|string[];
       artifacts: Artifacts;
     }
 

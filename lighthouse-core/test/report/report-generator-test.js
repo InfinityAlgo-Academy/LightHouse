@@ -114,4 +114,11 @@ describe('ReportGenerator', () => {
       assert.ok(outputCheck.test(htmlOutput));
     });
   });
+
+  it('handles array of outputs', () => {
+    const [json, html] = ReportGenerator.generateReport(sampleResults, ['json', 'html']);
+    assert.doesNotThrow(_ => JSON.parse(json));
+    assert.ok(/<!doctype/gim.test(html));
+    assert.ok(/<html lang="en"/gim.test(html));
+  });
 });

@@ -99,13 +99,12 @@ function handleError(err) {
  * @param {!LH.Flags} flags
  * @return {Promise<void>}
  */
-function saveResults(runnerResult, flags) {
+async function saveResults(runnerResult, flags) {
   const cwd = process.cwd();
-  let promise = Promise.resolve();
 
   const shouldSaveResults = flags.auditMode || (flags.gatherMode === flags.auditMode);
-  if (!shouldSaveResults) return promise;
-  const {lhr, artifacts} = runnerResult;
+  if (!shouldSaveResults) return;
+  const {lhr, artifacts, report} = runnerResult;
 
   // Use the output path as the prefix for all generated files.
   // If no output path is set, generate a file prefix using the URL and date.
@@ -115,34 +114,26 @@ function saveResults(runnerResult, flags) {
   const resolvedPath = path.resolve(cwd, configuredPath);
 
   if (flags.saveAssets) {
-    promise = promise.then(_ => assetSaver.saveAssets(artifacts, lhr.audits, resolvedPath));
+    await assetSaver.saveAssets(artifacts, lhr.audits, resolvedPath);
   }
 
-  return promise.then(_ => {
-    if (Array.isArray(flags.output)) {
-      return flags.output.reduce((innerPromise, outputType) => {
-        const extension = outputType;
-        const outputPath = `${resolvedPath}.report.${extension}`;
-        return innerPromise.then(() => Printer.write(runnerResult, outputType, outputPath));
-      }, Promise.resolve());
-    } else {
-      const extension = flags.output;
-      const outputPath =
-          flags.outputPath || `${resolvedPath}.report.${extension}`;
-      return Printer.write(runnerResult, flags.output, outputPath).then(_ => {
-        if (flags.output === Printer.OutputMode[Printer.OutputMode.html]) {
-          if (flags.view) {
-            opn(outputPath, {wait: false});
-          } else {
-            log.log(
-                'CLI',
-                // eslint-disable-next-line max-len
-                'Protip: Run lighthouse with `--view` to immediately open the HTML report in your browser');
-          }
-        }
-      });
+  for (const outputType of flags.output) {
+    const extension = outputType;
+    const output = report[flags.output.indexOf(outputType)];
+    let outputPath = `${resolvedPath}.report.${extension}`;
+    // If there was only a single output and the user specified an outputPath, force usage of it.
+    if (flags.outputPath && flags.output.length === 1) outputPath = flags.outputPath;
+    await Printer.write(output, outputType, outputPath);
+
+    if (outputType === Printer.OutputMode[Printer.OutputMode.html]) {
+      if (flags.view) {
+        opn(outputPath, {wait: false});
+      } else {
+        // eslint-disable-next-line max-len
+        log.log('CLI', 'Protip: Run lighthouse with `--view` to immediately open the HTML report in your browser');
+      }
     }
-  });
+  }
 }
 
 /**

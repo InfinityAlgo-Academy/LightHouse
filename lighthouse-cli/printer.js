@@ -69,26 +69,17 @@ function writeFile(filePath, output, outputMode) {
 }
 
 /**
- * Writes the results.
- * @param {LH.RunnerResult} results
+ * Writes the output.
+ * @param {string} output
  * @param {string} mode
  * @param {string} path
- * @return {Promise<LH.RunnerResult>}
+ * @return {Promise<void>}
  */
-function write(results, mode, path) {
-  return new Promise((resolve, reject) => {
-    const outputPath = checkOutputPath(path);
-    const output = results.report;
-
-    if (outputPath === 'stdout') {
-      return writeToStdout(output).then(_ => resolve(results));
-    }
-    return writeFile(outputPath, output, mode)
-      .then(_ => {
-        resolve(results);
-      })
-      .catch(err => reject(err));
-  });
+async function write(output, mode, path) {
+  const outputPath = checkOutputPath(path);
+  return outputPath === 'stdout' ?
+    writeToStdout(output) :
+    writeFile(outputPath, output, mode);
 }
 
 /**

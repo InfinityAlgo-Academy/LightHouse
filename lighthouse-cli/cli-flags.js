@@ -127,11 +127,12 @@ function getFlags(manualArgv) {
       .array('onlyAudits')
       .array('onlyCategories')
       .array('skipAudits')
+      .array('output')
       .string('extraHeaders')
 
       // default values
       .default('chrome-flags', '')
-      .default('output', 'html')
+      .default('output', ['html'])
       .default('port', 0)
       .default('hostname', 'localhost')
       .check(/** @param {!LH.Flags} argv */ (argv) => {

@@ -436,6 +436,11 @@ describe('Config', () => {
     assert.ok(config.settings.nonsense === undefined, 'did not cleanup settings');
   });
 
+  it('allows overriding of array-typed settings', () => {
+    const config = new Config({extends: true}, {output: ['html']});
+    assert.deepStrictEqual(config.settings.output, ['html']);
+  });
+
   it('extends the full config', () => {
     class CustomAudit extends Audit {
       static get meta() {

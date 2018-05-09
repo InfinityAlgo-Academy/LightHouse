@@ -70,7 +70,11 @@ if (cliFlags.verbose) {
 }
 log.setLevel(cliFlags.logLevel);
 
-if (cliFlags.output === printer.OutputMode.json && !cliFlags.outputPath) {
+if (
+  cliFlags.output.length === 1 &&
+  cliFlags.output[0] === printer.OutputMode.json &&
+  !cliFlags.outputPath
+) {
   cliFlags.outputPath = 'stdout';
 }
 

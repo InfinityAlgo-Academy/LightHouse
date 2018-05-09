@@ -3029,7 +3029,9 @@
     }
   },
   "configSettings": {
-    "output": "json",
+    "output": [
+      "json"
+    ],
     "maxWaitForLoad": 45000,
     "throttlingMethod": "devtools",
     "throttling": {

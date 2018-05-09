@@ -543,4 +543,21 @@ describe('Runner', () => {
       ]);
     });
   });
+
+  it('can handle array of outputs', async () => {
+    const url = 'https://example.com';
+    const config = new Config({
+      extends: 'lighthouse:default',
+      settings: {
+        onlyCategories: ['performance'],
+        output: ['json', 'html'],
+      },
+    });
+
+    const results = await Runner.run(null, {url, config, driverMock});
+    assert.ok(Array.isArray(results.report) && results.report.length === 2,
+      'did not return multiple reports');
+    assert.ok(JSON.parse(results.report[0]), 'did not return json output');
+    assert.ok(/<!doctype/.test(results.report[1]), 'did not return html output');
+  });
 });

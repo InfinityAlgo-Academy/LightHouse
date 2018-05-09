@@ -21,6 +21,7 @@ last-run-results.html
 *.report.html
 *.report.dom.html
 *.report.json
+*.report.csv
 *.report.pretty
 *.artifacts.log
 

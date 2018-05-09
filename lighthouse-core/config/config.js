@@ -154,13 +154,15 @@ function cleanFlagsForSettings(flags = {}) {
   return settings;
 }
 
-function merge(base, extension) {
+// TODO(phulce): disentangle this merge function
+function merge(base, extension, overwriteArrays = false) {
   // If the default value doesn't exist or is explicitly null, defer to the extending value
   if (typeof base === 'undefined' || base === null) {
     return extension;
   } else if (typeof extension === 'undefined') {
     return base;
   } else if (Array.isArray(extension)) {
+    if (overwriteArrays) return extension;
     if (!Array.isArray(base)) throw new TypeError(`Expected array but got ${typeof base}`);
     const merged = base.slice();
     extension.forEach(item => {
@@ -171,7 +173,9 @@ function merge(base, extension) {
   } else if (typeof extension === 'object') {
     if (typeof base !== 'object') throw new TypeError(`Expected object but got ${typeof base}`);
     Object.keys(extension).forEach(key => {
-      base[key] = merge(base[key], extension[key]);
+      const localOverwriteArrays = overwriteArrays ||
+        (key === 'settings' && typeof base[key] === 'object');
+      base[key] = merge(base[key], extension[key], localOverwriteArrays);
     });
     return base;
   }
@@ -241,7 +245,7 @@ class Config {
     configJSON.passes = Config.expandGathererShorthandAndMergeOptions(configJSON.passes);
 
     // Override any applicable settings with CLI flags
-    configJSON.settings = merge(configJSON.settings || {}, cleanFlagsForSettings(flags));
+    configJSON.settings = merge(configJSON.settings || {}, cleanFlagsForSettings(flags), true);
 
     // Generate a limited config if specified
     if (Array.isArray(configJSON.settings.onlyCategories) ||
@@ -301,7 +305,7 @@ class Config {
    */
   static augmentWithDefaults(config) {
     const {defaultSettings, defaultPassConfig} = constants;
-    config.settings = merge(deepClone(defaultSettings), config.settings);
+    config.settings = merge(deepClone(defaultSettings), config.settings, true);
     if (config.passes) {
       config.passes = config.passes.map(pass => merge(deepClone(defaultPassConfig), pass));
     }

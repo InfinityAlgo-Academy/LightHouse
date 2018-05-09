@@ -25,7 +25,7 @@ describe('Printer', () => {
   it('writes file for results', () => {
     const path = './.test-file.json';
     const report = JSON.stringify(sampleResults);
-    return Printer.write({report}, 'json', path).then(_ => {
+    return Printer.write(report, 'json', path).then(_ => {
       const fileContents = fs.readFileSync(path, 'utf8');
       assert.ok(/lighthouseVersion/gim.test(fileContents));
       fs.unlinkSync(path);
@@ -35,7 +35,7 @@ describe('Printer', () => {
   it('throws for invalid paths', () => {
     const path = '!/#@.json';
     const report = JSON.stringify(sampleResults);
-    return Printer.write({report}, 'html', path).catch(err => {
+    return Printer.write(report, 'html', path).catch(err => {
       assert.ok(err.code === 'ENOENT');
     });
   });
