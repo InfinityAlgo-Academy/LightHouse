@@ -36,64 +36,16 @@ module.exports = [
         // Ignore speed test; just verify that it ran .
       },
       'webapp-install-banner': {
+        // TODO(phulce): assert the checks when we put them in details
         score: 1,
-        extendedInfo: {
-          value: {
-            manifestValues: {
-              allChecks: [
-                {id: 'hasStartUrl', passing: true},
-                {id: 'hasIconsAtLeast192px', passing: true},
-                {id: 'hasIconsAtLeast512px', passing: false},
-                {id: 'hasPWADisplayValue', passing: true},
-                {id: 'hasBackgroundColor', passing: true},
-                {id: 'hasThemeColor', passing: true},
-                {id: 'hasShortName', passing: true},
-                {id: 'shortNameLength', passing: true},
-                {id: 'hasName', passing: true},
-              ],
-            },
-          },
-        },
       },
       'splash-screen': {
+        // TODO(phulce): assert the checks when we put them in details
         score: 0,
-        extendedInfo: {
-          value: {
-            manifestValues: {
-              allChecks: [
-                {id: 'hasStartUrl', passing: true},
-                {id: 'hasIconsAtLeast192px', passing: true},
-                {id: 'hasIconsAtLeast512px', passing: false},
-                {id: 'hasPWADisplayValue', passing: true},
-                {id: 'hasBackgroundColor', passing: true},
-                {id: 'hasThemeColor', passing: true},
-                {id: 'hasShortName', passing: true},
-                {id: 'shortNameLength', passing: true},
-                {id: 'hasName', passing: true},
-              ],
-            },
-          },
-        },
       },
       'themed-omnibox': {
+        // TODO(phulce): assert the checks when we put them in details
         score: 0,
-        extendedInfo: {
-          value: {
-            manifestValues: {
-              allChecks: [
-                {id: 'hasStartUrl', passing: true},
-                {id: 'hasIconsAtLeast192px', passing: true},
-                {id: 'hasIconsAtLeast512px', passing: false},
-                {id: 'hasPWADisplayValue', passing: true},
-                {id: 'hasBackgroundColor', passing: true},
-                {id: 'hasThemeColor', passing: true},
-                {id: 'hasShortName', passing: true},
-                {id: 'shortNameLength', passing: true},
-                {id: 'hasName', passing: true},
-              ],
-            },
-          },
-        },
       },
       'content-width': {
         score: 1,

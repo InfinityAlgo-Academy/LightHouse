@@ -15,7 +15,6 @@ module.exports = [
     audits: {
       'errors-in-console': {
         score: 0,
-        rawValue: '>3',
         details: {
           items: {
             length: '>3',
@@ -24,21 +23,14 @@ module.exports = [
       },
       'is-on-https': {
         score: 0,
-        extendedInfo: {
-          value: {
+        details: {
+          items: {
             length: 1,
           },
         },
       },
       'uses-http2': {
         score: 0,
-        extendedInfo: {
-          value: {
-            results: {
-              length: '>15',
-            },
-          },
-        },
         details: {
           items: {
             length: '>15',
@@ -48,11 +40,6 @@ module.exports = [
       'external-anchors-use-rel-noopener': {
         score: 0,
         warnings: [/Unable to determine/],
-        extendedInfo: {
-          value: {
-            length: 3,
-          },
-        },
         details: {
           items: {
             length: 3,
@@ -68,11 +55,6 @@ module.exports = [
       },
       'no-document-write': {
         score: 0,
-        extendedInfo: {
-          value: {
-            length: 3,
-          },
-        },
         details: {
           items: {
             length: 3,
@@ -81,13 +63,6 @@ module.exports = [
       },
       'no-mutation-events': {
         score: 0,
-        extendedInfo: {
-          value: {
-            results: {
-              length: 6,
-            },
-          },
-        },
         details: {
           items: {
             length: 6,
@@ -120,8 +95,8 @@ module.exports = [
       },
       'uses-passive-event-listeners': {
         score: 0,
-        extendedInfo: {
-          value: {
+        details: {
+          items: {
             // Note: Originally this was 7 but M56 defaults document-level
             // listeners to passive. See https://www.chromestatus.com/features/5093566007214080
             // Note: It was 4, but {passive:false} doesn't get a warning as of M63: crbug.com/770208
@@ -132,11 +107,6 @@ module.exports = [
       },
       'deprecations': {
         score: 0,
-        extendedInfo: {
-          value: {
-            length: 3,
-          },
-        },
         details: {
           items: {
             length: 3,
@@ -145,8 +115,8 @@ module.exports = [
       },
       'password-inputs-can-be-pasted-into': {
         score: 0,
-        extendedInfo: {
-          value: {
+        details: {
+          items: {
             length: 2,
           },
         },
@@ -163,14 +133,11 @@ module.exports = [
         },
       },
       'efficient-animated-content': {
-        score: '<1',
-        rawValue: '>2000',
-        extendedInfo: {
-          value: {
-            wastedKb: 666,
-          },
-        },
+        score: 0,
         details: {
+          summary: {
+            wastedMs: '>2000',
+          },
           items: [
             {
               url: 'http://localhost:10200/dobetterweb/lighthouse-rotating.gif',

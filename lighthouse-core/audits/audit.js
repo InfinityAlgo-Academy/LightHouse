@@ -192,7 +192,6 @@ class Audit {
       errorMessage: result.errorMessage,
       warnings: result.warnings,
 
-      extendedInfo: result.extendedInfo,
       scoreDisplayMode,
       name: audit.meta.name,
       description: auditDescription,

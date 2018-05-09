@@ -86,11 +86,6 @@ module.exports = [
       },
       'document-title': {
         score: 0,
-        extendedInfo: {
-          value: {
-            id: 'document-title',
-          },
-        },
       },
       'meta-description': {
         score: 0,

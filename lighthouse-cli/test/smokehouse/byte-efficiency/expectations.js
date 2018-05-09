@@ -17,95 +17,93 @@ module.exports = [
     finalUrl: 'http://localhost:10200/byte-efficiency/tester.html',
     audits: {
       'unminified-css': {
-        extendedInfo: {
-          value: {
-            wastedKb: 17,
-            results: {
-              length: 1,
-            },
+        details: {
+          summary: {
+            wastedBytes: '>17000',
+          },
+          items: {
+            length: 1,
           },
         },
       },
       'unminified-javascript': {
         score: '<1',
-        extendedInfo: {
-          value: {
-            wastedKb: 45,
+        details: {
+          summary: {
+            wastedBytes: '>45000',
             wastedMs: '>500',
-            results: {
-              length: 1,
-            },
+          },
+          items: {
+            length: 1,
           },
         },
       },
       'unused-css-rules': {
-        extendedInfo: {
-          value: {
-            wastedKb: 39,
-            results: {
-              length: 2,
-            },
+        details: {
+          summary: {
+            wastedBytes: '>39000',
+          },
+          items: {
+            length: 2,
           },
         },
       },
       'unused-javascript': {
         score: '<1',
-        extendedInfo: {
-          value: {
-            wastedKb: '>=25',
+        details: {
+          summary: {
+            wastedBytes: '>=25000',
             wastedMs: '>300',
-            results: {
-              length: 2,
-            },
+          },
+          items: {
+            length: 2,
           },
         },
       },
       'offscreen-images': {
-        extendedInfo: {
-          value: {
-            results: [
-              {
-                url: /lighthouse-unoptimized.jpg$/,
-              }, {
-                url: /lighthouse-480x320.webp$/,
-              }, {
-                url: /lighthouse-480x320.webp\?invisible$/,
-              }, {
-                url: /large.svg$/,
-              },
-            ],
-          },
+        details: {
+          items: [
+            {
+              url: /lighthouse-unoptimized.jpg$/,
+            }, {
+              url: /lighthouse-480x320.webp$/,
+            }, {
+              url: /lighthouse-480x320.webp\?invisible$/,
+            }, {
+              url: /large.svg$/,
+            },
+          ],
         },
       },
       'uses-webp-images': {
-        extendedInfo: {
-          value: {
-            wastedKb: '>60',
-            results: {
-              length: 4,
-            },
+        details: {
+          summary: {
+            wastedBytes: '>60000',
+          },
+          items: {
+            length: 4,
           },
         },
       },
       'uses-text-compression': {
         score: '<1',
-        extendedInfo: {
-          value: {
+        details: {
+          summary: {
             wastedMs: '>700',
-            wastedKb: '>50',
-            results: {
-              length: 2,
-            },
+            wastedBytes: '>50000',
+          },
+          items: {
+            length: 2,
           },
         },
       },
       'uses-optimized-images': {
-        extendedInfo: {
-          value: {
-            wastedKb: '>10',
-            results: {
-              length: 1,
-            },
+        details: {
+          summary: {
+            wastedBytes: '>10000',
+          },
+          items: {
+            length: 1,
           },
         },
       },
@@ -114,15 +112,15 @@ module.exports = [
           'Potential savings of %d\xa0KB',
           75,
         ],
-        extendedInfo: {
-          value: {
-            wastedKb: '>50',
-            results: [
-              {wastedPercent: '<60'},
-              {wastedPercent: '<60'},
-              {wastedPercent: '<60'},
-            ],
+        details: {
+          summary: {
+            wastedBytes: '>75000',
           },
+          items: [
+            {wastedPercent: '<60'},
+            {wastedPercent: '<60'},
+            {wastedPercent: '<60'},
+          ],
         },
       },
     },

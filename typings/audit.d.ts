@@ -131,7 +131,6 @@ declare global {
       score: number|null;
       scoreDisplayMode: ScoreDisplayMode;
       description: string;
-      extendedInfo?: {[p: string]: any};
       name: string;
       helpText?: string;
       // TODO(bckenny): define details

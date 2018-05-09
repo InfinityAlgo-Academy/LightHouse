@@ -12,13 +12,6 @@
       "score": 0,
       "rawValue": false,
       "displayValue": "1 insecure request found",
-      "extendedInfo": {
-        "value": [
-          {
-            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"
-          }
-        ]
-      },
       "scoreDisplayMode": "binary",
       "name": "is-on-https",
       "description": "Does not use HTTPS",
@@ -255,11 +248,6 @@
       "score": 1,
       "rawValue": 570.5630000000001,
       "displayValue": "",
-      "extendedInfo": {
-        "value": {
-          "wastedMs": -29.436999999999898
-        }
-      },
       "scoreDisplayMode": "binary",
       "name": "time-to-first-byte",
       "description": "Keep server response times low (TTFB)",
@@ -289,12 +277,6 @@
         "%10d ms",
         4927.278
       ],
-      "extendedInfo": {
-        "value": {
-          "timeInMs": 4927.278,
-          "timestamp": 185608247190
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "interactive",
       "description": "Time to Interactive",
@@ -304,9 +286,6 @@
       "score": null,
       "rawValue": true,
       "displayValue": "",
-      "extendedInfo": {
-        "value": []
-      },
       "scoreDisplayMode": "not-applicable",
       "name": "user-timings",
       "description": "User Timing marks and measures",
@@ -321,158 +300,6 @@
       "score": null,
       "rawValue": false,
       "displayValue": "12 chains found",
-      "extendedInfo": {
-        "value": {
-          "chains": {
-            "F3B687683512E0F003DD41EB23E2091A": {
-              "request": {
-                "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                "startTime": 185603.321221,
-                "endTime": 185603.961376,
-                "_responseReceivedTime": 185603.89718499998,
-                "transferSize": 12640
-              },
-              "children": {
-                "75994.3": {
-                  "request": {
-                    "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
-                    "startTime": 185603.956717,
-                    "endTime": 185604.52588,
-                    "_responseReceivedTime": 185604.52470399998,
-                    "transferSize": 821
-                  },
-                  "children": {}
-                },
-                "75994.4": {
-                  "request": {
-                    "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-                    "startTime": 185603.957861,
-                    "endTime": 185604.534512,
-                    "_responseReceivedTime": 185604.532778,
-                    "transferSize": 139
-                  },
-                  "children": {}
-                },
-                "75994.5": {
-                  "request": {
-                    "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-                    "startTime": 185603.959225,
-                    "endTime": 185606.170588,
-                    "_responseReceivedTime": 185606.169761,
-                    "transferSize": 821
-                  },
-                  "children": {}
-                },
-                "75994.6": {
-                  "request": {
-                    "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
-                    "startTime": 185603.960011,
-                    "endTime": 185604.541262,
-                    "_responseReceivedTime": 185604.54052399998,
-                    "transferSize": 1108
-                  },
-                  "children": {}
-                },
-                "75994.7": {
-                  "request": {
-                    "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
-                    "startTime": 185603.961819,
-                    "endTime": 185604.549739,
-                    "_responseReceivedTime": 185604.54903999998,
-                    "transferSize": 736
-                  },
-                  "children": {}
-                },
-                "75994.8": {
-                  "request": {
-                    "url": "http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync",
-                    "startTime": 185603.962566,
-                    "endTime": 185605.097653,
-                    "_responseReceivedTime": 185605.096858,
-                    "transferSize": 733
-                  },
-                  "children": {}
-                },
-                "75994.9": {
-                  "request": {
-                    "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
-                    "startTime": 185603.964089,
-                    "endTime": 185607.537382,
-                    "_responseReceivedTime": 185607.53660999998,
-                    "transferSize": 821
-                  },
-                  "children": {}
-                },
-                "75994.10": {
-                  "request": {
-                    "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-                    "startTime": 185603.965303,
-                    "endTime": 185605.113307,
-                    "_responseReceivedTime": 185605.104776,
-                    "transferSize": 1703
-                  },
-                  "children": {}
-                },
-                "75994.11": {
-                  "request": {
-                    "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
-                    "startTime": 185603.96675,
-                    "endTime": 185604.557407,
-                    "_responseReceivedTime": 185604.556719,
-                    "transferSize": 144
-                  },
-                  "children": {}
-                },
-                "75994.21": {
-                  "request": {
-                    "url": "http://localhost:10200/zone.js",
-                    "startTime": 185606.170955,
-                    "endTime": 185607.28227,
-                    "_responseReceivedTime": 185606.742005,
-                    "transferSize": 71654
-                  },
-                  "children": {}
-                },
-                "75994.22": {
-                  "request": {
-                    "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-                    "startTime": 185607.195975,
-                    "endTime": 185608.117509,
-                    "_responseReceivedTime": 185607.822806,
-                    "transferSize": 30174
-                  },
-                  "children": {}
-                },
-                "75994.28": {
-                  "request": {
-                    "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
-                    "startTime": 185606.245562,
-                    "endTime": 185607.285454,
-                    "_responseReceivedTime": 185606.82147599998,
-                    "transferSize": 821
-                  },
-                  "children": {}
-                }
-              }
-            },
-            "75994.33": {
-              "request": {
-                "url": "http://localhost:10200/favicon.ico",
-                "startTime": 185608.288594,
-                "endTime": 185608.857719,
-                "_responseReceivedTime": 185608.85586200003,
-                "transferSize": 221
-              },
-              "children": {}
-            }
-          },
-          "longestChain": {
-            "duration": 5536.498000001302,
-            "length": 1,
-            "transferSize": 221
-          }
-        }
-      },
       "scoreDisplayMode": "informative",
       "name": "critical-request-chains",
       "description": "Critical Request Chains",
@@ -640,11 +467,6 @@
         "%d ms",
         0
       ],
-      "extendedInfo": {
-        "value": {
-          "wastedMs": 0
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "redirects",
       "description": "Avoid multiple page redirects",
@@ -662,20 +484,6 @@
       "score": 0,
       "rawValue": false,
       "explanation": "Failures: No manifest was fetched,\nSite does not register a service worker.",
-      "extendedInfo": {
-        "value": {
-          "warnings": [],
-          "failures": [
-            "No manifest was fetched",
-            "Site does not register a service worker"
-          ],
-          "manifestValues": {
-            "isParseFailure": true,
-            "parseFailureReason": "No manifest was fetched",
-            "allChecks": []
-          }
-        }
-      },
       "scoreDisplayMode": "binary",
       "name": "webapp-install-banner",
       "description": "User will not be prompted to Install the Web App",
@@ -685,18 +493,6 @@
       "score": 0,
       "rawValue": false,
       "explanation": "Failures: No manifest was fetched.",
-      "extendedInfo": {
-        "value": {
-          "failures": [
-            "No manifest was fetched"
-          ],
-          "manifestValues": {
-            "isParseFailure": true,
-            "parseFailureReason": "No manifest was fetched",
-            "allChecks": []
-          }
-        }
-      },
       "scoreDisplayMode": "binary",
       "name": "splash-screen",
       "description": "Is not configured for a custom splash screen",
@@ -706,20 +502,6 @@
       "score": 0,
       "rawValue": false,
       "explanation": "Failures: No manifest was fetched,\nNo `<meta name=\"theme-color\">` tag found.",
-      "extendedInfo": {
-        "value": {
-          "failures": [
-            "No manifest was fetched",
-            "No `<meta name=\"theme-color\">` tag found"
-          ],
-          "manifestValues": {
-            "isParseFailure": true,
-            "parseFailureReason": "No manifest was fetched",
-            "allChecks": []
-          },
-          "themeColor": null
-        }
-      },
       "scoreDisplayMode": "binary",
       "name": "themed-omnibox",
       "description": "Address bar does not match brand colors",
@@ -788,27 +570,6 @@
       "score": 0,
       "rawValue": false,
       "displayValue": "3 warnings found",
-      "extendedInfo": {
-        "value": [
-          {
-            "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "source": "deprecation",
-            "lineNumber": 322
-          },
-          {
-            "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "source": "deprecation",
-            "lineNumber": 325
-          },
-          {
-            "value": "/deep/ combinator is no longer supported in CSS dynamic profile.It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details.",
-            "url": "",
-            "source": "deprecation"
-          }
-        ]
-      },
       "scoreDisplayMode": "binary",
       "name": "deprecations",
       "description": "Uses deprecated API's",
@@ -860,24 +621,6 @@
         "%10d ms",
         1359.7759999930859
       ],
-      "extendedInfo": {
-        "value": {
-          "Evaluate Script": 1121.2470000088215,
-          "Layout": 89.00499999523163,
-          "Parse HTML": 63.04200002551079,
-          "Recalculate Style": 32.57899996638298,
-          "Minor GC": 19.94599997997284,
-          "Compile Script": 7.7519999742507935,
-          "Run Microtasks": 6.680999994277954,
-          "DOM GC": 6.252999991178513,
-          "Paint": 4.94200000166893,
-          "Update Layer Tree": 4.238999992609024,
-          "Composite Layers": 2.732000023126602,
-          "Parse Stylesheet": 1.3200000524520874,
-          "XHR Ready State Change": 0.026999980211257935,
-          "XHR Load": 0.011000007390975952
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "mainthread-work-breakdown",
       "description": "Minimizes main thread work",
@@ -983,29 +726,6 @@
         "%10d ms",
         1302.3579999804497
       ],
-      "extendedInfo": {
-        "value": {
-          "http://localhost:10200/dobetterweb/dbw_tester.html": {
-            "Script Evaluation": 954.5010000169277,
-            "Style & Layout": 116.7219999730587,
-            "Parsing HTML & CSS": 63.04200002551079,
-            "Script Parsing & Compile": 2.776999980211258
-          },
-          "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js": {
-            "Script Evaluation": 80.03200000524521,
-            "Script Parsing & Compile": 1.2049999833106995,
-            "Style & Layout": 0.03799998760223389
-          },
-          "http://localhost:10200/zone.js": {
-            "Script Evaluation": 76.56400001049042,
-            "Script Parsing & Compile": 1.6739999949932098
-          },
-          "http://localhost:10200/dobetterweb/dbw_tester.js": {
-            "Script Evaluation": 3.79899999499321,
-            "Script Parsing & Compile": 2.0040000081062317
-          }
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "bootup-time",
       "description": "JavaScript boot-up time",
@@ -1063,9 +783,6 @@
         "Potential savings of %10d ms",
         0
       ],
-      "extendedInfo": {
-        "value": []
-      },
       "scoreDisplayMode": "numeric",
       "name": "uses-rel-preload",
       "description": "Preload key requests",
@@ -1086,9 +803,6 @@
         "Potential savings of %10d ms",
         0
       ],
-      "extendedInfo": {
-        "value": []
-      },
       "scoreDisplayMode": "numeric",
       "name": "uses-rel-preconnect",
       "description": "Avoid multiple, costly round trips to any origin",
@@ -1118,172 +832,6 @@
     "network-requests": {
       "score": null,
       "rawValue": 18,
-      "extendedInfo": {
-        "value": [
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "startTime": 0,
-            "endTime": 640.1550000009593,
-            "transferSize": 12640,
-            "statusCode": 200,
-            "mimeType": "text/html",
-            "resourceType": "document"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
-            "startTime": 630.2950000099372,
-            "endTime": 2635.035000013886,
-            "transferSize": 821,
-            "statusCode": 200,
-            "mimeType": "text/css",
-            "resourceType": "stylesheet"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
-            "startTime": 635.496000002604,
-            "endTime": 1204.6590000099968,
-            "transferSize": 821,
-            "statusCode": 200,
-            "mimeType": "text/css",
-            "resourceType": "stylesheet"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-            "startTime": 636.6400000115391,
-            "endTime": 1213.2910000218544,
-            "transferSize": 139,
-            "statusCode": 404,
-            "mimeType": "text/css",
-            "resourceType": "stylesheet"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-            "startTime": 638.0040000076406,
-            "endTime": 2849.3670000170823,
-            "transferSize": 821,
-            "statusCode": 200,
-            "mimeType": "text/css",
-            "resourceType": "stylesheet"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
-            "startTime": 638.7899999972433,
-            "endTime": 1220.04100002232,
-            "transferSize": 1108,
-            "statusCode": 200,
-            "mimeType": "text/css",
-            "resourceType": "stylesheet"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
-            "startTime": 640.5979999981355,
-            "endTime": 1228.5180000180844,
-            "transferSize": 736,
-            "statusCode": 200,
-            "mimeType": "text/html",
-            "resourceType": "document"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync",
-            "startTime": 641.3450000109151,
-            "endTime": 1776.4320000133011,
-            "transferSize": 733,
-            "statusCode": 200,
-            "mimeType": "text/html",
-            "resourceType": "document"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
-            "startTime": 642.8679999953602,
-            "endTime": 4216.161000018474,
-            "transferSize": 821,
-            "statusCode": 200,
-            "mimeType": "text/css",
-            "resourceType": "stylesheet"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "startTime": 644.0820000134408,
-            "endTime": 1792.0860000012908,
-            "transferSize": 1703,
-            "statusCode": 200,
-            "mimeType": "text/javascript",
-            "resourceType": "script"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
-            "startTime": 645.529000001261,
-            "endTime": 1236.1859999946319,
-            "transferSize": 144,
-            "statusCode": 200,
-            "mimeType": "text/javascript",
-            "resourceType": "script"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-            "startTime": 3951.6250000160653,
-            "endTime": 4779.641000000993,
-            "transferSize": 24741,
-            "statusCode": 200,
-            "mimeType": "image/jpeg",
-            "resourceType": "image"
-          },
-          {
-            "url": "http://localhost:10200/zone.js",
-            "startTime": 2849.7340000176337,
-            "endTime": 3961.049000005005,
-            "transferSize": 71654,
-            "statusCode": 200,
-            "mimeType": "text/javascript",
-            "resourceType": "script"
-          },
-          {
-            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-            "startTime": 3874.7540000185836,
-            "endTime": 4796.288000012282,
-            "transferSize": 30174,
-            "statusCode": 200,
-            "mimeType": "text/javascript",
-            "resourceType": "script"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
-            "startTime": 2924.34100000537,
-            "endTime": 3964.233000006061,
-            "transferSize": 821,
-            "statusCode": 200,
-            "mimeType": "text/css",
-            "resourceType": "stylesheet"
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "startTime": 3066.252999997232,
-            "endTime": 3772.7560000203084,
-            "transferSize": 12640,
-            "statusCode": 200,
-            "mimeType": "text/html",
-            "resourceType": "xhr"
-          },
-          {
-            "url": "blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277",
-            "startTime": 3829.6360000094865,
-            "endTime": 3968.59800000675,
-            "transferSize": 0,
-            "statusCode": 200,
-            "mimeType": "text/plain",
-            "resourceType": "image"
-          },
-          {
-            "url": "http://localhost:10200/favicon.ico",
-            "startTime": 4967.373000021325,
-            "endTime": 5536.498000001302,
-            "transferSize": 221,
-            "statusCode": 404,
-            "mimeType": "text/plain",
-            "resourceType": "other"
-          }
-        ]
-      },
       "scoreDisplayMode": "informative",
       "name": "network-requests",
       "description": "Network Requests",
@@ -1649,7 +1197,6 @@
     "bypass": {
       "score": 1,
       "rawValue": true,
-      "extendedInfo": {},
       "scoreDisplayMode": "binary",
       "name": "bypass",
       "description": "The page contains a heading, skip link, or landmark region",
@@ -1663,42 +1210,6 @@
     "color-contrast": {
       "score": 0,
       "rawValue": false,
-      "extendedInfo": {
-        "value": {
-          "id": "color-contrast",
-          "impact": "serious",
-          "tags": [
-            "cat.color",
-            "wcag2aa",
-            "wcag143"
-          ],
-          "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
-          "help": "Elements must have sufficient color contrast",
-          "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/color-contrast?application=axeAPI",
-          "nodes": [
-            {
-              "impact": "serious",
-              "html": "<h2>Do better web tester page</h2>",
-              "target": [
-                "div > h2"
-              ],
-              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
-              "path": "3,HTML,1,BODY,0,DIV,0,H2",
-              "snippet": "<h2>"
-            },
-            {
-              "impact": "serious",
-              "html": "<span>Hi there!</span>",
-              "target": [
-                "div > span"
-              ],
-              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
-              "path": "3,HTML,1,BODY,0,DIV,1,SPAN",
-              "snippet": "<span>"
-            }
-          ]
-        }
-      },
       "scoreDisplayMode": "binary",
       "name": "color-contrast",
       "description": "Background and foreground colors do not have a sufficient contrast ratio.",
@@ -1751,7 +1262,6 @@
     "document-title": {
       "score": 1,
       "rawValue": true,
-      "extendedInfo": {},
       "scoreDisplayMode": "binary",
       "name": "document-title",
       "description": "Document has a `<title>` element",
@@ -1765,7 +1275,6 @@
     "duplicate-id": {
       "score": 1,
       "rawValue": true,
-      "extendedInfo": {},
       "scoreDisplayMode": "binary",
       "name": "duplicate-id",
       "description": "`[id]` attributes on the page are unique",
@@ -1787,32 +1296,6 @@
     "html-has-lang": {
       "score": 0,
       "rawValue": false,
-      "extendedInfo": {
-        "value": {
-          "id": "html-has-lang",
-          "impact": "serious",
-          "tags": [
-            "cat.language",
-            "wcag2a",
-            "wcag311"
-          ],
-          "description": "Ensures every HTML document has a lang attribute",
-          "help": "<html> element must have a lang attribute",
-          "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/html-has-lang?application=axeAPI",
-          "nodes": [
-            {
-              "impact": "serious",
-              "html": "<html manifest=\"clock.appcache\">",
-              "target": [
-                "html"
-              ],
-              "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute",
-              "path": "3,HTML",
-              "snippet": "<html manifest=\"clock.appcache\">"
-            }
-          ]
-        }
-      },
       "scoreDisplayMode": "binary",
       "name": "html-has-lang",
       "description": "`<html>` element does not have a `[lang]` attribute",
@@ -1849,54 +1332,6 @@
     "image-alt": {
       "score": 0,
       "rawValue": false,
-      "extendedInfo": {
-        "value": {
-          "id": "image-alt",
-          "impact": "critical",
-          "tags": [
-            "cat.text-alternatives",
-            "wcag2a",
-            "wcag111",
-            "section508",
-            "section508.22.a"
-          ],
-          "description": "Ensures <img> elements have alternate text or a role of none or presentation",
-          "help": "Images must have alternate text",
-          "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/image-alt?application=axeAPI",
-          "nodes": [
-            {
-              "impact": "critical",
-              "html": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
-              "target": [
-                "body > img[src$=\"lighthouse-480x318.jpg\"]:nth-child(5)"
-              ],
-              "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "path": "3,HTML,1,BODY,5,IMG",
-              "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">"
-            },
-            {
-              "impact": "critical",
-              "html": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
-              "target": [
-                "body > img[src$=\"lighthouse-480x318.jpg\"]:nth-child(6)"
-              ],
-              "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "path": "3,HTML,1,BODY,7,IMG",
-              "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">"
-            },
-            {
-              "impact": "critical",
-              "html": "<img src=\"blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277\">",
-              "target": [
-                "body > img:nth-child(20)"
-              ],
-              "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "path": "3,HTML,1,BODY,36,IMG",
-              "snippet": "<img src=\"blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277\">"
-            }
-          ]
-        }
-      },
       "scoreDisplayMode": "binary",
       "name": "image-alt",
       "description": "Image elements do not have `[alt]` attributes",
@@ -1949,55 +1384,6 @@
     "label": {
       "score": 0,
       "rawValue": false,
-      "extendedInfo": {
-        "value": {
-          "id": "label",
-          "impact": "critical",
-          "tags": [
-            "cat.forms",
-            "wcag2a",
-            "wcag332",
-            "wcag131",
-            "section508",
-            "section508.22.n"
-          ],
-          "description": "Ensures every form element has a label",
-          "help": "Form elements must have labels",
-          "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/label?application=axeAPI",
-          "nodes": [
-            {
-              "impact": "critical",
-              "html": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
-              "target": [
-                "body > input[type=\"password\"]:nth-child(17)"
-              ],
-              "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-              "path": "3,HTML,1,BODY,31,INPUT",
-              "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">"
-            },
-            {
-              "impact": "critical",
-              "html": "<input type=\"password\">",
-              "target": [
-                "body > input[type=\"password\"]:nth-child(18)"
-              ],
-              "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-              "path": "3,HTML,1,BODY,33,INPUT",
-              "snippet": "<input type=\"password\">"
-            },
-            {
-              "impact": "critical",
-              "html": "<input type=\"password\" onpaste=\"return false;\">",
-              "target": [
-                "body > input[type=\"password\"]:nth-child(19)"
-              ],
-              "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-              "path": "3,HTML,1,BODY,35,INPUT",
-              "snippet": "<input type=\"password\" onpaste=\"return false;\">"
-            }
-          ]
-        }
-      },
       "scoreDisplayMode": "binary",
       "name": "label",
       "description": "Form elements do not have associated labels",
@@ -2050,46 +1436,6 @@
     "link-name": {
       "score": 0,
       "rawValue": false,
-      "extendedInfo": {
-        "value": {
-          "id": "link-name",
-          "impact": "serious",
-          "tags": [
-            "cat.name-role-value",
-            "wcag2a",
-            "wcag111",
-            "wcag412",
-            "wcag244",
-            "section508",
-            "section508.22.a"
-          ],
-          "description": "Ensures links have discernible text",
-          "help": "Links must have discernible text",
-          "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/link-name?application=axeAPI",
-          "nodes": [
-            {
-              "impact": "serious",
-              "html": "<a href=\"javascript:void(0)\" target=\"_blank\"></a>",
-              "target": [
-                "body > a:nth-child(15)"
-              ],
-              "failureSummary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "path": "3,HTML,1,BODY,27,A",
-              "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">"
-            },
-            {
-              "impact": "serious",
-              "html": "<a href=\"mailto:inbox@email.com\" target=\"_blank\"></a>",
-              "target": [
-                "body > a[href$=\"mailto:inbox@email.com\"]"
-              ],
-              "failureSummary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-              "path": "3,HTML,1,BODY,29,A",
-              "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">"
-            }
-          ]
-        }
-      },
       "scoreDisplayMode": "binary",
       "name": "link-name",
       "description": "Links do not have a discernible name",
@@ -2150,7 +1496,6 @@
     "meta-viewport": {
       "score": 1,
       "rawValue": true,
-      "extendedInfo": {},
       "scoreDisplayMode": "binary",
       "name": "meta-viewport",
       "description": "`[user-scalable=\"no\"]` is not used in the `<meta name=\"viewport\">` element and the `[maximum-scale]` attribute is not less than 5.",
@@ -2301,101 +1646,6 @@
       "score": 0.58,
       "rawValue": 103455,
       "displayValue": "11 assets found",
-      "extendedInfo": {
-        "value": {
-          "results": [
-            {
-              "url": "http://localhost:10200/zone.js",
-              "cacheControl": null,
-              "cacheLifetimeMs": 0,
-              "cacheHitProbability": 0,
-              "totalBytes": 71654,
-              "wastedBytes": 71654
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-              "cacheControl": null,
-              "cacheLifetimeMs": 0,
-              "cacheHitProbability": 0,
-              "totalBytes": 24741,
-              "wastedBytes": 24741
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-              "cacheControl": null,
-              "cacheLifetimeMs": 0,
-              "cacheHitProbability": 0,
-              "totalBytes": 1703,
-              "wastedBytes": 1703
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
-              "cacheControl": null,
-              "cacheLifetimeMs": 0,
-              "cacheHitProbability": 0,
-              "totalBytes": 1108,
-              "wastedBytes": 1108
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
-              "cacheControl": null,
-              "cacheLifetimeMs": 0,
-              "cacheHitProbability": 0,
-              "totalBytes": 821,
-              "wastedBytes": 821
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
-              "cacheControl": null,
-              "cacheLifetimeMs": 0,
-              "cacheHitProbability": 0,
-              "totalBytes": 821,
-              "wastedBytes": 821
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
-              "cacheControl": null,
-              "cacheLifetimeMs": 0,
-              "cacheHitProbability": 0,
-              "totalBytes": 821,
-              "wastedBytes": 821
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-              "cacheControl": null,
-              "cacheLifetimeMs": 0,
-              "cacheHitProbability": 0,
-              "totalBytes": 821,
-              "wastedBytes": 821
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
-              "cacheControl": null,
-              "cacheLifetimeMs": 0,
-              "cacheHitProbability": 0,
-              "totalBytes": 821,
-              "wastedBytes": 821
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
-              "cacheControl": null,
-              "cacheLifetimeMs": 0,
-              "cacheHitProbability": 0,
-              "totalBytes": 144,
-              "wastedBytes": 144
-            },
-            {
-              "url": "blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277",
-              "cacheControl": null,
-              "cacheLifetimeMs": 0,
-              "cacheHitProbability": 0,
-              "totalBytes": 0,
-              "wastedBytes": 0
-            }
-          ],
-          "queryStringCount": 7
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "uses-long-cache-ttl",
       "description": "Uses inefficient cache policy on static assets",
@@ -2524,63 +1774,6 @@
         "Total size was %d KB",
         156.970703125
       ],
-      "extendedInfo": {
-        "value": {
-          "results": [
-            {
-              "url": "http://localhost:10200/zone.js",
-              "totalBytes": 71654,
-              "totalMs": 409.9376550703614
-            },
-            {
-              "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-              "totalBytes": 30174,
-              "totalMs": 172.62761051850677
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-              "totalBytes": 24741,
-              "totalMs": 141.54502922510693
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "totalBytes": 12640,
-              "totalMs": 72.31434337356418
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "totalBytes": 12640,
-              "totalMs": 72.31434337356418
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-              "totalBytes": 1703,
-              "totalMs": 9.74298471243511
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
-              "totalBytes": 1108,
-              "totalMs": 6.338947188125721
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-              "totalBytes": 821,
-              "totalMs": 4.696999676400015
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
-              "totalBytes": 821,
-              "totalMs": 4.696999676400015
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
-              "totalBytes": 821,
-              "totalMs": 4.696999676400015
-            }
-          ],
-          "totalCompletedRequests": 18
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "total-byte-weight",
       "description": "Avoids enormous network payloads",
@@ -2665,13 +1858,6 @@
       "rawValue": 0,
       "displayValue": "",
       "warnings": [],
-      "extendedInfo": {
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 0,
-          "results": []
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "offscreen-images",
       "description": "Defer offscreen images",
@@ -2752,13 +1938,6 @@
       "score": 1,
       "rawValue": 0,
       "displayValue": "",
-      "extendedInfo": {
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 0,
-          "results": []
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "unminified-css",
       "description": "Minify CSS",
@@ -2781,20 +1960,6 @@
         30
       ],
       "warnings": [],
-      "extendedInfo": {
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 30,
-          "results": [
-            {
-              "url": "http://localhost:10200/zone.js",
-              "totalBytes": 71654,
-              "wastedBytes": 30470,
-              "wastedPercent": 42.52388078488413
-            }
-          ]
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "unminified-javascript",
       "description": "Minify JavaScript",
@@ -2840,13 +2005,6 @@
       "score": 1,
       "rawValue": 0,
       "displayValue": "",
-      "extendedInfo": {
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 0,
-          "results": []
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "unused-css-rules",
       "description": "Unused CSS rules",
@@ -2869,21 +2027,6 @@
         8
       ],
       "warnings": [],
-      "extendedInfo": {
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 8,
-          "results": [
-            {
-              "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-              "fromProtocol": true,
-              "isCrossOrigin": false,
-              "totalBytes": 24620,
-              "wastedBytes": 8526
-            }
-          ]
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "uses-webp-images",
       "description": "Serve images in next-gen formats",
@@ -2936,13 +2079,6 @@
       "rawValue": 0,
       "displayValue": "",
       "warnings": [],
-      "extendedInfo": {
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 0,
-          "results": []
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "uses-optimized-images",
       "description": "Efficiently encode images",
@@ -2964,24 +2100,6 @@
         "Potential savings of %d KB",
         63
       ],
-      "extendedInfo": {
-        "value": {
-          "wastedMs": 150,
-          "wastedKb": 63,
-          "results": [
-            {
-              "url": "http://localhost:10200/zone.js",
-              "totalBytes": 71501,
-              "wastedBytes": 56204
-            },
-            {
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "totalBytes": 12519,
-              "wastedBytes": 8442
-            }
-          ]
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "uses-text-compression",
       "description": "Enable text compression",
@@ -3032,13 +2150,6 @@
       "rawValue": 0,
       "displayValue": "",
       "warnings": [],
-      "extendedInfo": {
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 0,
-          "results": []
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "uses-responsive-images",
       "description": "Properly size images",
@@ -3057,13 +2168,6 @@
       "score": 1,
       "rawValue": 0,
       "displayValue": "",
-      "extendedInfo": {
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 0,
-          "results": []
-        }
-      },
       "scoreDisplayMode": "numeric",
       "name": "efficient-animated-content",
       "description": "Use video formats for animated content",
@@ -3094,24 +2198,6 @@
         "%d nodes",
         53
       ],
-      "extendedInfo": {
-        "value": [
-          {
-            "totalNodes": "53",
-            "depth": "4",
-            "width": "22"
-          },
-          {
-            "totalNodes": "",
-            "depth": {
-              "type": "code"
-            },
-            "width": {
-              "type": "code"
-            }
-          }
-        ]
-      },
       "scoreDisplayMode": "numeric",
       "name": "dom-size",
       "description": "Avoids an excessive DOM size",
@@ -3159,28 +2245,6 @@
       "warnings": [
         "Unable to determine the destination for anchor tag. If not used as a hyperlink, consider removing target=_blank."
       ],
-      "extendedInfo": {
-        "value": [
-          {
-            "href": "https://www.google.com/",
-            "target": "_blank",
-            "rel": "",
-            "url": "<a href=\"https://www.google.com/\" target=\"_blank\">"
-          },
-          {
-            "href": "Unknown",
-            "target": "_blank",
-            "rel": "",
-            "url": "<a target=\"_blank\">"
-          },
-          {
-            "href": "https://www.google.com/",
-            "target": "_blank",
-            "rel": "nofollow",
-            "url": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">"
-          }
-        ]
-      },
       "scoreDisplayMode": "binary",
       "name": "external-anchors-use-rel-noopener",
       "description": "Links to cross-origin destinations are unsafe",
@@ -3229,64 +2293,6 @@
     "geolocation-on-start": {
       "score": 0,
       "rawValue": false,
-      "extendedInfo": {
-        "value": [
-          {
-            "label": "line: 277",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Only request geolocation information in response to a user gesture.",
-            "timestamp": 1519974785839.5,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 277,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "geolocationOnStartTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 277,
-                  "columnNumber": 24
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 345,
-                  "columnNumber": 2
-                }
-              ]
-            }
-          },
-          {
-            "label": "line: 281",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Only request geolocation information in response to a user gesture.",
-            "timestamp": 1519974785840.8,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 281,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "geolocationOnStartTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 281,
-                  "columnNumber": 40
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 345,
-                  "columnNumber": 2
-                }
-              ]
-            }
-          }
-        ]
-      },
       "scoreDisplayMode": "binary",
       "name": "geolocation-on-start",
       "description": "Requests the geolocation permission on page load",
@@ -3366,91 +2372,6 @@
     "no-document-write": {
       "score": 0,
       "rawValue": false,
-      "extendedInfo": {
-        "value": [
-          {
-            "label": "line: 178",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Avoid using document.write().",
-            "timestamp": 1519974785808.58,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 178,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "documentWriteTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 178,
-                  "columnNumber": 11
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 339,
-                  "columnNumber": 2
-                }
-              ]
-            }
-          },
-          {
-            "label": "line: 179",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Avoid using document.write().",
-            "timestamp": 1519974785809.4,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 179,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "documentWriteTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 179,
-                  "columnNumber": 11
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 339,
-                  "columnNumber": 2
-                }
-              ]
-            }
-          },
-          {
-            "label": "line: 180",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Avoid using document.write().",
-            "timestamp": 1519974785810.25,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 180,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "documentWriteTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 180,
-                  "columnNumber": 11
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 339,
-                  "columnNumber": 2
-                }
-              ]
-            }
-          }
-        ]
-      },
       "scoreDisplayMode": "binary",
       "name": "no-document-write",
       "description": "Uses `document.write()`",
@@ -3558,54 +2479,6 @@
       "score": 0,
       "rawValue": false,
       "warnings": [],
-      "extendedInfo": {
-        "value": {
-          "results": [
-            {
-              "line": 206,
-              "col": 50,
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "type": "DOMNodeInserted",
-              "pre": "section#touchmove-section.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted on element');\n  })\n\n"
-            },
-            {
-              "line": 200,
-              "col": 61,
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "type": "DOMNodeInserted",
-              "pre": "body.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
-            },
-            {
-              "line": 20,
-              "col": 56,
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-              "type": "DOMNodeInserted",
-              "pre": "document.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
-            },
-            {
-              "line": 190,
-              "col": 56,
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "type": "DOMNodeInserted",
-              "pre": "document.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
-            },
-            {
-              "line": 195,
-              "col": 55,
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "type": "DOMNodeRemoved",
-              "pre": "document.addEventListener('DOMNodeRemoved', function(e) {\n    console.log('DOMNodeRemoved');\n  })\n\n"
-            },
-            {
-              "line": 211,
-              "col": 54,
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "type": "DOMNodeInserted",
-              "pre": "window.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
-            }
-          ]
-        }
-      },
       "scoreDisplayMode": "binary",
       "name": "no-mutation-events",
       "description": "Uses Mutation Events in its own scripts",
@@ -3689,35 +2562,6 @@
       "score": 0,
       "rawValue": false,
       "displayValue": "1 vulnerability was detected.",
-      "extendedInfo": {
-        "jsLibs": [
-          {
-            "name": "jQuery",
-            "npmPkgName": "jquery",
-            "version": "2.1.1",
-            "vulns": [
-              {
-                "severity": "medium",
-                "numericSeverity": 2,
-                "library": "jQuery@2.1.1",
-                "url": "https://snyk.io/vuln/npm:jquery:20150627"
-              }
-            ],
-            "highestSeverity": "Medium"
-          }
-        ],
-        "vulnerabilities": [
-          {
-            "highestSeverity": "Medium",
-            "vulnCount": 1,
-            "detectedLib": {
-              "text": "jQuery@2.1.1",
-              "url": "https://snyk.io/vuln/npm:jquery?lh@2.1.1",
-              "type": "link"
-            }
-          }
-        ]
-      },
       "scoreDisplayMode": "binary",
       "name": "no-vulnerable-libraries",
       "description": "Includes front-end JavaScript libraries with known security vulnerabilities",
@@ -3767,37 +2611,6 @@
     "notification-on-start": {
       "score": 0,
       "rawValue": false,
-      "extendedInfo": {
-        "value": [
-          {
-            "label": "line: 287",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Only request notification permission in response to a user gesture.",
-            "timestamp": 1519974785841.72,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 287,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "notificationOnStartTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 287,
-                  "columnNumber": 15
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 346,
-                  "columnNumber": 2
-                }
-              ]
-            }
-          }
-        ]
-      },
       "scoreDisplayMode": "binary",
       "name": "notification-on-start",
       "description": "Requests the notification permission on page load",
@@ -3850,16 +2663,6 @@
     "password-inputs-can-be-pasted-into": {
       "score": 0,
       "rawValue": false,
-      "extendedInfo": {
-        "value": [
-          {
-            "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">"
-          },
-          {
-            "snippet": "<input type=\"password\" onpaste=\"return false;\">"
-          }
-        ]
-      },
       "scoreDisplayMode": "binary",
       "name": "password-inputs-can-be-pasted-into",
       "description": "Prevents users to paste into password fields",
@@ -3893,72 +2696,6 @@
       "score": 0,
       "rawValue": false,
       "displayValue": "15 requests were not handled over HTTP/2",
-      "extendedInfo": {
-        "value": {
-          "results": [
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.js"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/zone.js"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200"
-            },
-            {
-              "protocol": "http/1.1",
-              "url": "http://localhost:10200/favicon.ico"
-            }
-          ]
-        }
-      },
       "scoreDisplayMode": "binary",
       "name": "uses-http2",
       "description": "Does not use HTTP/2 for all of its resources",
@@ -4044,91 +2781,6 @@
     "uses-passive-event-listeners": {
       "score": 0,
       "rawValue": false,
-      "extendedInfo": {
-        "value": [
-          {
-            "label": "line: 26",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Added non-passive event listener to a scroll-blocking 'wheel' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952",
-            "timestamp": 1519974785779.5,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "lineNumber": 26,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "",
-                  "scriptId": "25",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-                  "lineNumber": 26,
-                  "columnNumber": 11
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "25",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-                  "lineNumber": 39,
-                  "columnNumber": 2
-                }
-              ]
-            }
-          },
-          {
-            "label": "line: 222",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Added non-passive event listener to a scroll-blocking 'wheel' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952",
-            "timestamp": 1519974785837.14,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 222,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "passiveEventsListenerTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 222,
-                  "columnNumber": 9
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 344,
-                  "columnNumber": 2
-                }
-              ]
-            }
-          },
-          {
-            "label": "line: 248",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Added non-passive event listener to a scroll-blocking 'touchmove' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952",
-            "timestamp": 1519974785837.83,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 248,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "passiveEventsListenerTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 248,
-                  "columnNumber": 5
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 344,
-                  "columnNumber": 2
-                }
-              ]
-            }
-          }
-        ]
-      },
       "scoreDisplayMode": "binary",
       "name": "uses-passive-event-listeners",
       "description": "Does not use passive listeners to improve scrolling performance",

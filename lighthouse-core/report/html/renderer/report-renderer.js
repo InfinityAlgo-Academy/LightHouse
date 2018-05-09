@@ -215,7 +215,6 @@ if (typeof module !== 'undefined' && module.exports) {
  *     displayValue: (string|Array<string|number>|undefined),
  *     helpText: string,
  *     scoreDisplayMode: string,
- *     extendedInfo: Object,
  *     error: boolean,
  *     score: (number|null),
  *     details: (!DetailsRenderer.DetailsJSON|undefined),
