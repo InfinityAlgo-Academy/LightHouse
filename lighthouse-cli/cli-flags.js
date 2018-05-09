@@ -23,7 +23,7 @@ function getFlags(manualArgv) {
       .version(() => pkg.version)
       .showHelpOnFail(false, 'Specify --help for available options')
 
-      .usage('lighthouse <url>')
+      .usage('lighthouse <url> <options>')
       .example(
           'lighthouse <url> --view', 'Opens the HTML report in a browser after the run completes')
       .example(
