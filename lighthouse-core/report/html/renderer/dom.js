@@ -39,6 +39,13 @@ class DOM {
   }
 
   /**
+   * @return {!DocumentFragment}
+   */
+  createFragment() {
+    return this._document.createDocumentFragment();
+  }
+
+  /**
    * @param {!Element} parentElem
    * @param {string} elementName
    * @param {string=} className

@@ -7,12 +7,14 @@
 .lh-vars {
   --text-font-family: Roboto, Helvetica, Arial, sans-serif;
   --monospace-font-family: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
+  --body-background-color: #fff;
   --body-font-size: 14px;
   --body-line-height: 18px;
   --subheader-font-size: 14px;
   --subheader-line-height: 20px;
   --subheader-color: hsl(206, 6%, 25%);
-  --header-font-size: 16px;
+  --header-bg-color: #f1f3f4;
+  --header-font-size: 20px;
   --header-line-height: 24px;
   --title-font-size: 24px;
   --title-line-height: 28px;
@@ -41,8 +43,9 @@
   --metric-timeline-rule-color: #b3b3b3;
   --display-value-gray: hsl(216, 5%, 39%);
   --report-width: calc(60 * var(--body-font-size));
-  --report-menu-width: calc(20 * var(--body-font-size));
-  --report-content-width: calc(var(--report-width) + var(--report-menu-width));
+  --report-content-width: calc(var(--report-width));
+  --report-header-height: 202px;
+  --report-header-color: #202124;
   --navitem-font-size: var(--body-font-size);
   --navitem-line-height: var(--body-line-height);
   --navitem-hpadding: var(--body-font-size);
@@ -102,6 +105,7 @@
   --lh-section-vpadding: 8px;
 }
 
+
 @keyframes fadeIn {
   0% { opacity: 0;}
   100% { opacity: 0.6;}
@@ -116,7 +120,7 @@
   font-size: var(--body-font-size);
   margin: 0;
   line-height: var(--body-line-height);
-  background: #f5f5f5;
+  background: var(--body-background-color);
   scroll-behavior: smooth;
 }
 
@@ -673,10 +677,16 @@
   margin: 0 auto;
 }
 
+.lh-header-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  will-change: transform;
+}
+
 .lh-report {
-  margin-left: var(--report-menu-width);
   background-color: #fff;
-  padding-top: var(--report-header-height);
 }
 @media screen {
   .lh-report {
@@ -708,14 +718,12 @@
 .lh-run-warnings::before {
   display: inline-block;
 }
-
 .lh-scores-header {
   display: flex;
   justify-content: center;
   overflow-x: hidden;
-  padding: var(--section-padding) var(--section-padding) calc(var(--section-padding) * 3);
-  border-bottom: 1px solid var(--report-border-color);
   position: relative;
+  padding-bottom: calc(var(--section-indent) * 2);
 }
 .lh-scores-header__solo {
   padding: 0;
@@ -723,10 +731,10 @@
 }
 
 .lh-scorescale {
-  position: absolute;
-  right: var(--section-padding);
-  bottom: var(--section-padding);
   color: var(--medium-75-gray);
+  padding: 0 var(--section-indent) 0 0;
+  text-align: right;
+  transform-origin: bottom right;
 }
 
 .lh-scorescale-range {

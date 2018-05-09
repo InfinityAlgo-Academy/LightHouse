@@ -39,8 +39,8 @@ class ReportRenderer {
     ReportRenderer.smooshAuditResultsIntoCategories(clone.audits, clone.reportCategories);
 
     container.textContent = ''; // Remove previous report.
-    const element = container.appendChild(this._renderReport(clone));
-    return /** @type {!Element} **/ (element);
+    container.appendChild(this._renderReport(clone));
+    return /** @type {!Element} **/ (container);
   }
 
   /**
@@ -60,9 +60,13 @@ class ReportRenderer {
     const header = this._dom.cloneTemplate('#tmpl-lh-heading', this._templateContext);
     this._dom.find('.lh-config__timestamp', header).textContent =
         Util.formatDateTime(report.fetchTime);
+    this._dom.find('.lh-product-info__version', header).textContent = report.lighthouseVersion;
     const url = this._dom.find('.lh-metadata__url', header);
     url.href = report.finalUrl;
     url.textContent = report.finalUrl;
+    const toolbarUrl = this._dom.find('.lh-toolbar__url', header);
+    toolbarUrl.href = report.finalUrl;
+    toolbarUrl.textContent = report.finalUrl;
 
     this._dom.find('.lh-env__item__ua', header).textContent = report.userAgent;
 
@@ -91,32 +95,6 @@ class ReportRenderer {
   }
 
   /**
-   * @param {!ReportRenderer.ReportJSON} report
-   * @return {!DocumentFragment}
-   */
-  _renderReportNav(report) {
-    const leftNav = this._dom.cloneTemplate('#tmpl-lh-leftnav', this._templateContext);
-
-    this._dom.find('.leftnav__header__version', leftNav).textContent =
-        `Version: ${report.lighthouseVersion}`;
-
-    const nav = this._dom.find('.lh-leftnav', leftNav);
-    for (const category of report.reportCategories) {
-      const itemsTmpl = this._dom.cloneTemplate('#tmpl-lh-leftnav__items', leftNav);
-
-      const navItem = this._dom.find('.lh-leftnav__item', itemsTmpl);
-      navItem.href = `#${category.id}`;
-
-      this._dom.find('.leftnav-item__category', navItem).textContent = category.name;
-      const score = this._dom.find('.leftnav-item__score', navItem);
-      score.classList.add(`lh-audit--${Util.calculateRating(category.score)}`);
-      score.textContent = Math.round(100 * category.score);
-      nav.appendChild(navItem);
-    }
-    return leftNav;
-  }
-
-  /**
    * Returns a div with a list of top-level warnings, or an empty div if no warnings.
    * @param {!ReportRenderer.ReportJSON} report
    * @return {!Node}
@@ -138,12 +116,15 @@ class ReportRenderer {
 
   /**
    * @param {!ReportRenderer.ReportJSON} report
-   * @return {!Element}
+   * @return {!DocumentFragment}
    */
   _renderReport(report) {
+    const headerStickyContainer = this._dom.createElement('div', 'lh-header-sticky');
+    headerStickyContainer.appendChild(this._renderReportHeader(report));
+    const scoreContainer = this._dom.find('.lh-scores-container', headerStickyContainer);
+
     const container = this._dom.createElement('div', 'lh-container');
-    container.appendChild(this._renderReportHeader(report)); // sticky header goes at the top.
-    container.appendChild(this._renderReportNav(report));
+
     const reportSection = container.appendChild(this._dom.createElement('div', 'lh-report'));
 
     reportSection.appendChild(this._renderReportWarnings(report));
@@ -151,7 +132,7 @@ class ReportRenderer {
     let scoreHeader;
     const isSoloCategory = report.reportCategories.length === 1;
     if (!isSoloCategory) {
-      scoreHeader = reportSection.appendChild(this._dom.createElement('div', 'lh-scores-header'));
+      scoreHeader = this._dom.createElement('div', 'lh-scores-header');
     }
 
     const detailsRenderer = new DetailsRenderer(this._dom);
@@ -176,12 +157,17 @@ class ReportRenderer {
 
     if (scoreHeader) {
       const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
-      scoreHeader.appendChild(scoreScale);
+      scoreContainer.appendChild(scoreHeader);
+      scoreContainer.appendChild(scoreScale);
     }
 
     reportSection.appendChild(this._renderReportFooter(report));
 
-    return container;
+    const reportFragment = this._dom.createFragment();
+    reportFragment.appendChild(headerStickyContainer);
+    reportFragment.appendChild(container);
+
+    return reportFragment;
   }
 
   /**

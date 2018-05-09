@@ -76,9 +76,7 @@ describe('ReportRenderer', () => {
     it('should render a report', () => {
       const container = renderer._dom._document.body;
       const output = renderer.renderReport(sampleResults, container);
-      assert.ok(container.contains(output), 'report appended to container');
-      assert.ok(output.classList.contains('lh-container'));
-      assert.ok(output.querySelector('.lh-header'), 'has a header');
+      assert.ok(output.querySelector('.lh-header-sticky'), 'has a header');
       assert.ok(output.querySelector('.lh-report'), 'has report body');
       assert.equal(output.querySelectorAll('.lh-gauge').length,
           sampleResults.reportCategories.length * 2, 'renders category gauges');
@@ -86,10 +84,11 @@ describe('ReportRenderer', () => {
 
     it('renders additional reports by replacing the existing one', () => {
       const container = renderer._dom._document.body;
-      const oldReport = renderer.renderReport(sampleResults, container);
-      const newReport = renderer.renderReport(sampleResults, container);
-      assert.ok(!container.contains(oldReport), 'old report was removed');
-      assert.ok(container.contains(newReport), 'new report appended to container');
+      const oldReport = Array.from(renderer.renderReport(sampleResults, container).children);
+      const newReport = Array.from(renderer.renderReport(sampleResults, container).children);
+      assert.ok(!oldReport.find(node => container.contains(node)), 'old report was removed');
+      assert.ok(newReport.find(node => container.contains(node)),
+        'new report appended to container');
     });
 
     it('renders a header', () => {
@@ -123,19 +122,6 @@ describe('ReportRenderer', () => {
       renderer.renderReport(sampleResults, container);
       assert.deepStrictEqual(sampleResults, originalResults);
     }).timeout(2000);
-
-    it('renders a left nav', () => {
-      const header = renderer._renderReportNav(sampleResults);
-      const categoryCount = sampleResults.reportCategories.length;
-      assert.equal(header.querySelectorAll('.lh-leftnav__item').length, categoryCount);
-
-      const categories = header.querySelectorAll('.leftnav-item__category');
-      const scores = header.querySelectorAll('.leftnav-item__score');
-      sampleResults.reportCategories.forEach((cat, i) => {
-        assert.equal(categories[i].textContent, cat.name);
-        assert.equal(Number(scores[i].textContent), cat.score * 100);
-      });
-    });
 
     it('renders no warning section when no lighthouseRunWarnings occur', () => {
       const warningResults = Object.assign({}, sampleResults, {runWarnings: []});
