@@ -15,6 +15,9 @@ lighthouse-extension/
 lighthouse-cli/results/
 lighthouse-logger/
 
+# keep the chrome launcher script
+!lighthouse-core/scripts/manual-chrome-launcher.js
+
 # excluding cli/test minus smokehouse
 lighthouse-cli/test
 !lighthouse-cli/test/smokehouse
