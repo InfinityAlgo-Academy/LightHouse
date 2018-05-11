@@ -24,13 +24,14 @@ describe('Screenshot thumbnails', () => {
   });
 
   it('should extract thumbnails from a trace', () => {
+    const options = {minimumTimelineDuration: 500};
     const settings = {throttlingMethod: 'provided'};
     const artifacts = Object.assign({
       traces: {defaultPass: pwaTrace},
       devtoolsLogs: {}, // empty devtools logs to test just thumbnails without TTI behavior
     }, computedArtifacts);
 
-    return ScreenshotThumbnailsAudit.audit(artifacts, {settings}).then(results => {
+    return ScreenshotThumbnailsAudit.audit(artifacts, {settings, options}).then(results => {
       results.details.items.forEach((result, index) => {
         const framePath = path.join(__dirname,
             `../fixtures/traces/screenshots/progressive-app-frame-${index}.jpg`);
@@ -47,13 +48,14 @@ describe('Screenshot thumbnails', () => {
   }).timeout(10000);
 
   it('should scale the timeline to TTI when observed', () => {
+    const options = {minimumTimelineDuration: 500};
     const settings = {throttlingMethod: 'devtools'};
     const artifacts = Object.assign({
       traces: {defaultPass: pwaTrace},
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
     }, computedArtifacts);
 
-    return ScreenshotThumbnailsAudit.audit(artifacts, {settings}).then(results => {
+    return ScreenshotThumbnailsAudit.audit(artifacts, {settings, options}).then(results => {
       assert.equal(results.details.items[0].timing, 158);
       assert.equal(results.details.items[9].timing, 1582);
 
@@ -65,15 +67,28 @@ describe('Screenshot thumbnails', () => {
   });
 
   it('should not scale the timeline to TTI when simulate', () => {
+    const options = {minimumTimelineDuration: 500};
     const settings = {throttlingMethod: 'simulate'};
     const artifacts = Object.assign({
       traces: {defaultPass: pwaTrace},
     }, computedArtifacts);
     computedArtifacts.requestInteractive = () => ({timing: 20000});
 
-    return ScreenshotThumbnailsAudit.audit(artifacts, {settings}).then(results => {
+    return ScreenshotThumbnailsAudit.audit(artifacts, {settings, options}).then(results => {
       assert.equal(results.details.items[0].timing, 82);
       assert.equal(results.details.items[9].timing, 818);
+    });
+  });
+
+  it('should scale the timeline to minimumTimelineDuration', () => {
+    const settings = {throttlingMethod: 'simulate'};
+    const artifacts = Object.assign({
+      traces: {defaultPass: pwaTrace},
+    }, computedArtifacts);
+
+    return ScreenshotThumbnailsAudit.audit(artifacts, {settings, options: {}}).then(results => {
+      assert.equal(results.details.items[0].timing, 300);
+      assert.equal(results.details.items[9].timing, 3000);
     });
   });
 
@@ -86,7 +101,7 @@ describe('Screenshot thumbnails', () => {
     };
 
     try {
-      await ScreenshotThumbnailsAudit.audit(artifacts, {settings});
+      await ScreenshotThumbnailsAudit.audit(artifacts, {settings, options: {}});
       assert.fail('should have thrown');
     } catch (err) {
       assert.equal(err.message, 'INVALID_SPEEDLINE');

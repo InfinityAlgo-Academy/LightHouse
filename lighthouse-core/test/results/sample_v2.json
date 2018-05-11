@@ -2007,7 +2007,7 @@
       "displayValue": "",
       "scoreDisplayMode": "numeric",
       "name": "unused-css-rules",
-      "description": "Unused CSS rules",
+      "description": "Defer unused CSS",
       "helpText": "Remove unused rules from stylesheets to reduce unnecessary bytes consumed by network activity. [Learn more](https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery).",
       "details": {
         "type": "table",
