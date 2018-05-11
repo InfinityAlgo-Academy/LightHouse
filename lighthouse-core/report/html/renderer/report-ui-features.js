@@ -234,6 +234,8 @@ class ReportUIFeatures {
     scoresContainer.style.marginBottom = `${delta}px`;
     this.toolbar.style.transform = `translateY(${headerTransitionHeightDiff *
       animateScrollPercentage}px)`;
+    this.exportButton.parentElement.style.transform = `translateY(${headerTransitionHeightDiff *
+      animateScrollPercentage}px)`;
     this.exportButton.style.transform = `scale(${1 - 0.2 * animateScrollPercentage})`;
     // start showing the productinfo when we are at the 50% mark of our animation
     this.productInfo.style.opacity = this.toolbarMetadata.style.opacity =

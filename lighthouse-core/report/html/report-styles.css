@@ -684,6 +684,13 @@
   z-index: 2;
   will-change: transform;
 }
+.lh-header-container {
+  display: block;
+  margin: 0 auto;
+  max-width: var(--report-content-width);
+  position: relative;
+  word-wrap: break-word;
+}
 
 .lh-report {
   background-color: #fff;
