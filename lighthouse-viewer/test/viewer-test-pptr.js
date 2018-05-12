@@ -66,6 +66,10 @@ describe('Lighthouse Viewer', function() {
   });
 
   after(async function() {
+    // Log any page load errors encountered in case before() failed.
+    // eslint-disable-next-line no-console
+    console.error(pageErrors);
+
     await Promise.all([
       new Promise(resolve => server.close(resolve)),
       browser && browser.close(),
