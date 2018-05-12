@@ -6,6 +6,7 @@
 'use strict';
 
 const Node = require('../../../lib/dependency-graph/node');
+const NetworkNode = require('../../../lib/dependency-graph/network-node');
 
 const assert = require('assert');
 
@@ -102,6 +103,16 @@ describe('DependencyGraph/Node', () => {
       assert.equal(clone.id, 1);
       assert.notEqual(node, clone);
       assert.equal(clone.getDependencies().length, 0);
+    });
+
+    it('should copy isMainDocument', () => {
+      const node = new Node(1);
+      node.setIsMainDocument(true);
+      const networkNode = new NetworkNode({});
+      networkNode.setIsMainDocument(true);
+
+      assert.ok(node.cloneWithoutRelationships().isMainDocument());
+      assert.ok(networkNode.cloneWithoutRelationships().isMainDocument());
     });
   });
 
@@ -241,6 +252,7 @@ describe('DependencyGraph/Node', () => {
     });
 
     it('should return true for basic cycles', () => {
+      // A - B - C - A!
       const nodeA = new Node('A');
       const nodeB = new Node('B');
       const nodeC = new Node('C');
@@ -250,6 +262,21 @@ describe('DependencyGraph/Node', () => {
       nodeC.addDependent(nodeA);
 
       assert.equal(Node.hasCycle(nodeA), true);
+    });
+
+    it('should return true for children', () => {
+      //       A!
+      //      /
+      // A - B - C
+      const nodeA = new Node('A');
+      const nodeB = new Node('B');
+      const nodeC = new Node('C');
+
+      nodeA.addDependent(nodeB);
+      nodeB.addDependent(nodeC);
+      nodeB.addDependent(nodeA);
+
+      assert.equal(Node.hasCycle(nodeC), true);
     });
 
     it('should return true for complex cycles', () => {
@@ -276,6 +303,13 @@ describe('DependencyGraph/Node', () => {
       nodeG.addDependent(nodeC);
 
       assert.equal(Node.hasCycle(nodeA), true);
+      assert.equal(Node.hasCycle(nodeB), true);
+      assert.equal(Node.hasCycle(nodeC), true);
+      assert.equal(Node.hasCycle(nodeD), true);
+      assert.equal(Node.hasCycle(nodeE), true);
+      assert.equal(Node.hasCycle(nodeF), true);
+      assert.equal(Node.hasCycle(nodeG), true);
+      assert.equal(Node.hasCycle(nodeH), true);
     });
 
     it('works for very large graphs', () => {

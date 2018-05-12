@@ -68,7 +68,9 @@ class NetworkNode extends Node {
    * @return {NetworkNode}
    */
   cloneWithoutRelationships() {
-    return new NetworkNode(this._record);
+    const node = new NetworkNode(this._record);
+    node.setIsMainDocument(this._isMainDocument);
+    return node;
   }
 }
 

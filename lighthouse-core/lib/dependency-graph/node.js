@@ -155,7 +155,9 @@ class Node {
    * @return {Node}
    */
   cloneWithoutRelationships() {
-    return new Node(this.id);
+    const node = new Node(this.id);
+    node.setIsMainDocument(this._isMainDocument);
+    return node;
   }
 
   /**
@@ -256,9 +258,15 @@ class Node {
   /**
    * Returns whether the given node has a cycle in its dependent graph by performing a DFS.
    * @param {Node} node
+   * @param {'dependents'|'dependencies'|'both'} [direction]
    * @return {boolean}
    */
-  static hasCycle(node) {
+  static hasCycle(node, direction = 'both') {
+    // Checking 'both' is the default entrypoint to recursively check both directions
+    if (direction === 'both') {
+      return Node.hasCycle(node, 'dependents') || Node.hasCycle(node, 'dependencies');
+    }
+
     const visited = new Set();
     /** @type {Node[]} */
     const currentPath = [];
@@ -286,10 +294,13 @@ class Node {
       currentPath.push(currentNode);
 
       // Add all of its dependents to our toVisit stack
-      for (const dependent of currentNode._dependents) {
-        if (toVisit.includes(dependent)) continue;
-        toVisit.push(dependent);
-        depthAdded.set(dependent, currentPath.length);
+      const nodesToExplore = direction === 'dependents' ?
+        currentNode._dependents :
+        currentNode._dependencies;
+      for (const nextNode of nodesToExplore) {
+        if (toVisit.includes(nextNode)) continue;
+        toVisit.push(nextNode);
+        depthAdded.set(nextNode, currentPath.length);
       }
     }
 

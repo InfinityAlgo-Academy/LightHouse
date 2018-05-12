@@ -62,10 +62,9 @@ class UsesRelPreloadAudit extends Audit {
    * @param {Set<string>} urls The array of byte savings results per resource
    * @param {LH.Gatherer.Simulation.GraphNode} graph
    * @param {LH.Gatherer.Simulation.Simulator} simulator
-   * @param {LH.WebInspector.NetworkRequest} mainResource
    * @return {{wastedMs: number, results: Array<{url: string, wastedMs: number}>}}
    */
-  static computeWasteWithGraph(urls, graph, simulator, mainResource) {
+  static computeWasteWithGraph(urls, graph, simulator) {
     if (!urls.size) {
       return {wastedMs: 0, results: []};
     }
@@ -73,7 +72,6 @@ class UsesRelPreloadAudit extends Audit {
     // Preload changes the ordering of requests, simulate the original graph with flexible ordering
     // to have a reasonable baseline for comparison.
     const simulationBeforeChanges = simulator.simulate(graph, {flexibleOrdering: true});
-
     const modifiedGraph = graph.cloneWithRelationships();
 
     /** @type {Array<LH.Gatherer.Simulation.GraphNetworkNode>} */
@@ -84,12 +82,10 @@ class UsesRelPreloadAudit extends Audit {
       if (node.type !== 'network') return;
 
       const networkNode = /** @type {LH.Gatherer.Simulation.GraphNetworkNode} */ (node);
-      if (networkNode.record && urls.has(networkNode.record.url)) {
-        nodesToPreload.push(networkNode);
-      }
-
-      if (networkNode.record && networkNode.record.url === mainResource.url) {
+      if (node.isMainDocument()) {
         mainDocumentNode = networkNode;
+      } else if (networkNode.record && urls.has(networkNode.record.url)) {
+        nodesToPreload.push(networkNode);
       }
     });
 
@@ -167,8 +163,7 @@ class UsesRelPreloadAudit extends Audit {
       }
     }
 
-    const {results, wastedMs} = UsesRelPreloadAudit.computeWasteWithGraph(urls, graph, simulator,
-        mainResource);
+    const {results, wastedMs} = UsesRelPreloadAudit.computeWasteWithGraph(urls, graph, simulator);
     // sort results by wastedTime DESC
     results.sort((a, b) => b.wastedMs - a.wastedMs);
 

@@ -315,6 +315,10 @@ class Simulator {
    * @return {LH.Gatherer.Simulation.Result}
    */
   simulate(graph, options) {
+    if (Node.hasCycle(graph)) {
+      throw new Error('Cannot simulate graph with cycle');
+    }
+
     options = Object.assign({flexibleOrdering: false}, options);
     // initialize the necessary data containers
     this._flexibleOrdering = options.flexibleOrdering;
@@ -327,7 +331,6 @@ class Simulator {
 
     const rootNode = graph.getRootNode();
     rootNode.traverse(node => nodesNotReadyToStart.add(node));
-
     let totalElapsedTime = 0;
     let iteration = 0;
 

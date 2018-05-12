@@ -212,5 +212,15 @@ describe('DependencyGraph/Simulator', () => {
       // should be 800ms for E and 800ms for F/G
       assert.equal(resultB.timeInMs, 800 + 800);
     });
+
+    it('should throw (not hang) on graphs with cycles', () => {
+      const rootNode = new NetworkNode(request({}));
+      const depNode = new NetworkNode(request({}));
+      rootNode.addDependency(depNode);
+      depNode.addDependency(rootNode);
+
+      const simulator = new Simulator({serverResponseTimeByOrigin});
+      assert.throws(() => simulator.simulate(rootNode), /cycle/);
+    });
   });
 });

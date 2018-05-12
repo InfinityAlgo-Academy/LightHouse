@@ -54,6 +54,7 @@ describe('Performance: uses-rel-preload audit', () => {
     const scriptNode = buildNode(3, 'http://www.example.com/script.js');
     const scriptAddedNode = buildNode(4, 'http://www.example.com/script-added.js');
 
+    mainDocumentNode.setIsMainDocument(true);
     mainDocumentNode.addDependency(rootNode);
     scriptNode.addDependency(mainDocumentNode);
     scriptAddedNode.addDependency(scriptNode);
@@ -195,7 +196,7 @@ describe('Performance: uses-rel-preload audit', () => {
     });
   });
 
-  it('does no throw on a real trace/devtools log', async () => {
+  it('does not throw on a real trace/devtools log', async () => {
     const artifacts = Object.assign({
       URL: {finalUrl: 'https://pwa.rocks/'},
       traces: {
