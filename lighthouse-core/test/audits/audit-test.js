@@ -82,7 +82,7 @@ describe('Audit', () => {
       const auditResult = Audit.generateAuditResult(FailingAudit, {rawValue: false});
       assert.ok(Number.isFinite(auditResult.score));
       assert.equal(auditResult.score, 0);
-      assert.equal(auditResult.description, 'Failing');
+      assert.equal(auditResult.title, 'Failing');
     });
   });
 

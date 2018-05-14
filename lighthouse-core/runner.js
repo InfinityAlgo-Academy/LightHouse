@@ -111,10 +111,10 @@ class Runner {
       /** @type {Object<string, LH.Audit.Result>} */
       const resultsById = {};
       for (const audit of auditResults) {
-        resultsById[audit.name] = audit;
+        resultsById[audit.id] = audit;
 
         if (audit.warnings && audit.warnings.length) {
-          const prefixedWarnings = audit.warnings.map(msg => `${audit.description}: ${msg}`);
+          const prefixedWarnings = audit.warnings.map(msg => `${audit.title}: ${msg}`);
           lighthouseRunWarnings.push(...prefixedWarnings);
         }
       }

@@ -184,7 +184,12 @@ class Audit {
     }
 
     return {
+      id: audit.meta.name,
+      title: auditDescription,
+      description: audit.meta.helpText,
+
       score,
+      scoreDisplayMode,
       rawValue: result.rawValue,
 
       displayValue: result.displayValue,
@@ -192,10 +197,6 @@ class Audit {
       errorMessage: result.errorMessage,
       warnings: result.warnings,
 
-      scoreDisplayMode,
-      name: audit.meta.name,
-      description: auditDescription,
-      helpText: audit.meta.helpText,
       details: result.details,
     };
   }

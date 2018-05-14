@@ -414,7 +414,7 @@ describe('Runner', () => {
       assert.ok(results.lhr.fetchTime);
       assert.equal(results.lhr.requestedUrl, url);
       assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
-      assert.equal(results.lhr.audits['content-width'].name, 'content-width');
+      assert.equal(results.lhr.audits['content-width'].id, 'content-width');
     });
   });
 
@@ -444,7 +444,7 @@ describe('Runner', () => {
       assert.ok(results.lhr.fetchTime);
       assert.equal(results.lhr.requestedUrl, url);
       assert.equal(gatherRunnerRunSpy.called, true, 'GatherRunner.run was not called');
-      assert.equal(results.lhr.audits['content-width'].name, 'content-width');
+      assert.equal(results.lhr.audits['content-width'].id, 'content-width');
       assert.equal(results.lhr.audits['content-width'].score, 1);
       assert.equal(results.lhr.categories.category.score, 1);
       assert.equal(results.lhr.categories.category.auditRefs[0].id, 'content-width');

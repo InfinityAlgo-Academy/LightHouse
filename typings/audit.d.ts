@@ -130,9 +130,9 @@ declare global {
       warnings?: string[];
       score: number|null;
       scoreDisplayMode: ScoreDisplayMode;
-      description: string;
-      name: string;
-      helpText?: string;
+      title: string;
+      id: string;
+      description?: string;
       // TODO(bckenny): define details
       details?: object;
     }

@@ -58,7 +58,7 @@ describe('CategoryRenderer', () => {
     const title = auditDOM.querySelector('.lh-audit__title');
     const description = auditDOM.querySelector('.lh-audit__description');
 
-    assert.equal(title.textContent, auditRef.result.description);
+    assert.equal(title.textContent, auditRef.result.title);
     assert.ok(description.querySelector('a'), 'audit help text contains coverted markdown links');
     assert.ok(auditDOM.classList.contains('lh-audit--fail'));
     assert.ok(auditDOM.classList.contains(`lh-audit--${auditRef.result.scoreDisplayMode}`));
@@ -67,13 +67,13 @@ describe('CategoryRenderer', () => {
   it('renders an audit explanation when appropriate', () => {
     const audit1 = renderer.renderAudit({
       scoreDisplayMode: 'binary', score: 0,
-      result: {helpText: 'help text', explanation: 'A reason', description: 'Audit title'},
+      result: {description: 'help text', explanation: 'A reason', title: 'Audit title'},
     });
     assert.ok(audit1.querySelector('.lh-debug'));
 
     const audit2 = renderer.renderAudit({
       scoreDisplayMode: 'binary', score: 0,
-      result: {helpText: 'help text', description: 'Audit title'},
+      result: {description: 'help text', title: 'Audit title'},
     });
     assert.ok(!audit2.querySelector('.lh-debug'));
   });
@@ -81,7 +81,7 @@ describe('CategoryRenderer', () => {
   it('renders an informative audit', () => {
     const auditDOM = renderer.renderAudit({
       id: 'informative', score: 0,
-      result: {description: 'It informs', helpText: 'help text', scoreDisplayMode: 'informative'},
+      result: {title: 'It informs', description: 'help text', scoreDisplayMode: 'informative'},
     });
 
     assert.ok(auditDOM.matches('.lh-audit--informative'));
@@ -117,8 +117,8 @@ describe('CategoryRenderer', () => {
   // TODO(phulce): revisit if top-level warnings approach is too noisy
   it.skip('renders audits with warnings as failed', () => {
     const auditResult = {
-      description: 'Audit',
-      helpText: 'Learn more',
+      title: 'Audit',
+      description: 'Learn more',
       warnings: ['It may not have worked!'],
       score: 1,
     };
