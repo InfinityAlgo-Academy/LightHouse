@@ -18,6 +18,7 @@ describe('Page uses passive events listeners where applicable', () => {
       ChromeConsoleMessages: [
         {entry: {source: 'violation', url: 'https://example.com/', text}},
         {entry: {source: 'violation', url: 'https://example2.com/two', text}},
+        {entry: {source: 'violation', url: 'https://example2.com/two', text}}, // duplicate
         {entry: {source: 'violation', url: 'http://abc.com/', text: 'No document.write'}},
         {entry: {source: 'deprecation', url: 'https://example.com/two'}},
       ],

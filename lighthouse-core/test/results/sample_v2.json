@@ -2314,57 +2314,11 @@
         "items": [
           {
             "label": "line: 277",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Only request geolocation information in response to a user gesture.",
-            "timestamp": 1519974785839.5,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 277,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "geolocationOnStartTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 277,
-                  "columnNumber": 24
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 345,
-                  "columnNumber": 2
-                }
-              ]
-            }
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "label": "line: 281",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Only request geolocation information in response to a user gesture.",
-            "timestamp": 1519974785840.8,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 281,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "geolocationOnStartTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 281,
-                  "columnNumber": 40
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 345,
-                  "columnNumber": 2
-                }
-              ]
-            }
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -2393,84 +2347,15 @@
         "items": [
           {
             "label": "line: 178",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Avoid using document.write().",
-            "timestamp": 1519974785808.58,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 178,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "documentWriteTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 178,
-                  "columnNumber": 11
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 339,
-                  "columnNumber": 2
-                }
-              ]
-            }
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "label": "line: 179",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Avoid using document.write().",
-            "timestamp": 1519974785809.4,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 179,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "documentWriteTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 179,
-                  "columnNumber": 11
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 339,
-                  "columnNumber": 2
-                }
-              ]
-            }
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "label": "line: 180",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Avoid using document.write().",
-            "timestamp": 1519974785810.25,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 180,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "documentWriteTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 180,
-                  "columnNumber": 11
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 339,
-                  "columnNumber": 2
-                }
-              ]
-            }
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -2632,30 +2517,7 @@
         "items": [
           {
             "label": "line: 287",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Only request notification permission in response to a user gesture.",
-            "timestamp": 1519974785841.72,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 287,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "notificationOnStartTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 287,
-                  "columnNumber": 15
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 346,
-                  "columnNumber": 2
-                }
-              ]
-            }
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -2802,84 +2664,15 @@
         "items": [
           {
             "label": "line: 26",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Added non-passive event listener to a scroll-blocking 'wheel' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952",
-            "timestamp": 1519974785779.5,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "lineNumber": 26,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "",
-                  "scriptId": "25",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-                  "lineNumber": 26,
-                  "columnNumber": 11
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "25",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-                  "lineNumber": 39,
-                  "columnNumber": 2
-                }
-              ]
-            }
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js"
           },
           {
             "label": "line: 222",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Added non-passive event listener to a scroll-blocking 'wheel' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952",
-            "timestamp": 1519974785837.14,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 222,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "passiveEventsListenerTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 222,
-                  "columnNumber": 9
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 344,
-                  "columnNumber": 2
-                }
-              ]
-            }
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "label": "line: 248",
-            "source": "violation",
-            "level": "verbose",
-            "text": "Added non-passive event listener to a scroll-blocking 'touchmove' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952",
-            "timestamp": 1519974785837.83,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "lineNumber": 248,
-            "stackTrace": {
-              "callFrames": [
-                {
-                  "functionName": "passiveEventsListenerTest",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 248,
-                  "columnNumber": 5
-                },
-                {
-                  "functionName": "",
-                  "scriptId": "29",
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-                  "lineNumber": 344,
-                  "columnNumber": 2
-                }
-              ]
-            }
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
