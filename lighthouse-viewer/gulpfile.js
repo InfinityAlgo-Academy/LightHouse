@@ -167,7 +167,7 @@ gulp.task('create-dir-for-gh-pages', () => {
   del.sync([`dist/viewer`]);
 
   return gulp.src(`dist/**/*`)
-    .pipe(gulp.dest(`dist/viewer/viewer`));
+    .pipe(gulp.dest(`dist/viewer/viewer2x`));
 });
 
 gulp.task('deploy', cb => {
