@@ -49,13 +49,6 @@ class ViewerUIFeatures extends ReportUIFeatures {
   /**
    * @override
    */
-  openTabAndSendJsonReport() {
-    throw new Error('Cannot send JSON to Viewer from Viewer.');
-  }
-
-  /**
-   * @override
-   */
   saveAsGist() {
     if (this._saveGistCallback) {
       this._saveGistCallback(this.json);
