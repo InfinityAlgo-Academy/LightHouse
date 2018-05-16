@@ -275,7 +275,7 @@ This section details projects that have integrated Lighthouse. If you're working
 * **[lighthouse-batch](https://www.npmjs.com/package/lighthouse-batch)** - run Lighthouse over a number of sites and generate a summary of their metrics/scores.
 * **[lighthouse-cron](https://github.com/thearegee/lighthouse-cron)** - Cron multiple batch Lighthouse audits and emit results for sending to remote server.
 * **[lightcrawler](https://github.com/github/lightcrawler)** - Crawl a website and run each page found through Lighthouse.
-
+* **[lighthouse-lambda](https://github.com/joytocode/lighthouse-lambda)** - Run Lighthouse on AWS Lambda with prebuilt stable desktop Headless Chrome.
 
 ## FAQ
 
