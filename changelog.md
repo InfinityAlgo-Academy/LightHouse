@@ -1,3 +1,37 @@
+ <a name="3.0.0-alpha.2"></a>
+# 3.0.0-alpha.2 (2018-05-16)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v3.0.0-alpha...v3.0.0-alpha.2)
+
+## Core
+
+* lhr: audit id, title, description ([#5190](https://github.com/googlechrome/lighthouse/pull/5190))
+* lhr: revert default wait bump ([06205ef](https://github.com/googlechrome/lighthouse/commit/06205ef))
+* uses-preload: prevent infinite loop ([#5184](https://github.com/googlechrome/lighthouse/pull/5184))
+* violation-audit: de-dupe items by URL and label ([#5219](https://github.com/googlechrome/lighthouse/pull/5219))
+
+## Docs
+
+* readme: add lighthouse-lambda to related projects ([#5227](https://github.com/googlechrome/lighthouse/pull/5227))
+
+## Report
+
+* dom-size: use correct learn more link ([#5192](https://github.com/googlechrome/lighthouse/pull/5192))
+* header: fix stacking contexts within header ([#5185](https://github.com/googlechrome/lighthouse/pull/5185))
+* minimum time scale for opportunities & filmstrip ([#5183](https://github.com/googlechrome/lighthouse/pull/5183))
+
+## Tests
+
+* compile: fix broken compile-devtools script ([#5234](https://github.com/googlechrome/lighthouse/pull/5234))
+* viewer: upgrade pptr to handle new CSSOM use in the report ([#5191](https://github.com/googlechrome/lighthouse/pull/5191))
+
+## Misc
+
+* npmignore: include chrome launcher script ([aa0e089](https://github.com/googlechrome/lighthouse/commit/aa0e089))
+* viewer: switch to 2x viewer within the same tab ([#5231](https://github.com/googlechrome/lighthouse/pull/5231))
+* viewer: support legacy 2.x reports in viewer ([#5204](https://github.com/googlechrome/lighthouse/pull/5204))
+* closure cleanup in viewer from #5231 ([#5235](https://github.com/googlechrome/lighthouse/pull/5235))
+* 3.0.0-alpha.1 ([c7c0044](https://github.com/googlechrome/lighthouse/commit/c7c0044))
+
  <a name="3.0.0-alpha"></a>
 # 3.0.0-alpha (2018-05-09)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v2.9.1...v3.0.0-alpha)
