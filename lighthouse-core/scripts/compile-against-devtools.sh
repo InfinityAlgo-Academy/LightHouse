@@ -10,6 +10,7 @@
 # usage
 #    yarn compile-devtools
 
+set -x
 
 # This the text here will override the renderer/ files in in the scripts[] array:
 #     https://github.com/ChromeDevTools/devtools-frontend/blob/master/front_end/audits2/module.json#L20
@@ -21,10 +22,13 @@ files_to_include="\"lighthouse\/renderer\/util.js\", \"lighthouse\/renderer\/dom
 
 # paths
 local_script_path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-lhroot_path="$local_script_path/../../"
+lhroot_path="$local_script_path/../.."
+module_path="$lhroot_path/node_modules/lh-compile-devtools"
 
-frontend_path="$lhroot_path/node_modules/temp-devtoolsfrontend"
-protocol_path="$lhroot_path/node_modules/temp-devtoolsprotocol"
+# extra deep frontend_path used because of the hardcoded os.pardir's here:
+# https://github.com/ChromeDevTools/devtools-frontend/blob/157d472fd748/scripts/build/generate_protocol_externs.py#L39-L43
+frontend_path="$module_path/two-more/almost-there/devtools-frontend"
+protocol_path="$module_path/devtools-protocol"
 
 # clone if they're not there
 if [ ! -d "$frontend_path" ]; then
@@ -37,10 +41,15 @@ fi
 # update to latest
 cd "$frontend_path" && git reset --hard && git fetch origin master && git checkout --quiet --force origin/master
 cd "$protocol_path" && git reset --hard && git fetch origin master && git checkout --quiet --force origin/master
+# initialize the inspector_protocol submodule
+git -C "$protocol_path" submodule update --init
+
+# Copy it to location generate_protocol_externs.py will import the pdl module from
+# https://github.com/ChromeDevTools/devtools-frontend/blob/157d472fd748/scripts/build/generate_protocol_externs.py#L39-L44
+cp -fRp "$protocol_path/scripts/inspector_protocol" "$module_path"
 
 
 cd "$lhroot_path" || exit 1
-
 # copy renderer and lh backgrond into this devtools checkout
 yarn devtools "$frontend_path/front_end/"
 
