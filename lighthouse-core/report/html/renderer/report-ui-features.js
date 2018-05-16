@@ -10,8 +10,6 @@
  * the report.
  */
 
-const VIEWER_ORIGIN = 'https://googlechrome.github.io';
-
 /* globals self URL Blob CustomEvent getFilenamePrefix window */
 
 class ReportUIFeatures {
@@ -353,25 +351,20 @@ class ReportUIFeatures {
    * @protected
    */
   static openTabAndSendJsonReport(reportJson, viewerPath) {
-    let resolve;
-    const p = new Promise(res => resolve = res);
+    const VIEWER_ORIGIN = 'https://googlechrome.github.io';
     // Chrome doesn't allow us to immediately postMessage to a popup right
     // after it's created. Normally, we could also listen for the popup window's
     // load event, however it is cross-domain and won't fire. Instead, listen
     // for a message from the target app saying "I'm open".
     const json = reportJson;
     window.addEventListener('message', function msgHandler(/** @type {!Event} */ e) {
-      const messageEvent = /** @type {!MessageEvent<{opened: boolean, rendered: boolean}>} */ (e);
+      const messageEvent = /** @type {!MessageEvent<{opened: boolean}>} */ (e);
       if (messageEvent.origin !== VIEWER_ORIGIN) {
         return;
       }
-      // Most recent deployment
       if (messageEvent.data.opened) {
         popup.postMessage({lhresults: json}, VIEWER_ORIGIN);
-      }
-      if (messageEvent.data.rendered) {
         window.removeEventListener('message', msgHandler);
-        resolve(popup);
       }
     });
 
@@ -379,8 +372,6 @@ class ReportUIFeatures {
     const fetchTime = json.fetchTime || json.generatedTime;
     const windowName = `${json.lighthouseVersion}-${json.requestedUrl}-${fetchTime}`;
     const popup = /** @type {!Window} */ (window.open(`${VIEWER_ORIGIN}${viewerPath}`, windowName));
-
-    return p;
   }
 
   /**
