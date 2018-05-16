@@ -113,6 +113,11 @@ class LighthouseReportViewer {
   _replaceReportHtml(json) {
     this._validateReportJson(json);
 
+    if (!json.lighthouseVersion.startsWith('3')) {
+      this._loadInLegacyViewerVersion(json);
+      return;
+    }
+
     const dom = new DOM(document);
     const renderer = new ReportRenderer(dom);
 
@@ -164,10 +169,26 @@ class LighthouseReportViewer {
       } catch (e) {
         throw new Error('Could not parse JSON file.');
       }
-
       this._reportIsFromGist = false;
       this._replaceReportHtml(json);
     }).catch(err => logger.error(err.message));
+  }
+
+  /**
+   * Opens new tab with compatible report viewer version
+   * @param {!ReportRenderer.ReportJSON} reportJson
+   * @private
+   */
+  _loadInLegacyViewerVersion(json) {
+    const warnMsg = `Version mismatch between viewer and JSON.
+    Opening new tab with compatible viewer.`;
+    const viewerPath = '/lighthouse/viewer2x/';
+
+    logger.log(warnMsg, false);
+    ViewerUIFeatures.openTabAndSendJsonReport(json, viewerPath).then(_ => {
+      window.close();
+      logger.log(`${warnMsg} You can close this tab.`, false);
+    });
   }
 
   /**
@@ -296,6 +317,10 @@ class LighthouseReportViewer {
       if (e.source === self.opener && e.data.lhresults) {
         this._reportIsFromGist = false;
         this._replaceReportHtml(e.data.lhresults);
+
+        if (self.opener && !self.opener.closed) {
+          self.opener.postMessage({rendered: true}, '*');
+        }
         if (window.ga) {
           window.ga('send', 'event', 'report', 'open in viewer');
         }
