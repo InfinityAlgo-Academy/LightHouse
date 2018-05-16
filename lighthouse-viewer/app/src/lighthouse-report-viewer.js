@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global DOM, ViewerUIFeatures, ReportRenderer, DragAndDrop, GithubApi, logger */
+/* global DOM, ViewerUIFeatures, ReportRenderer, DragAndDrop, GithubApi, idbKeyval, logger */
 
 /**
  * Class that manages viewing Lighthouse reports.
@@ -28,6 +28,7 @@ class LighthouseReportViewer {
 
     this._addEventListeners();
     this._loadFromDeepLink();
+    this._loadFromIDB();
     this._listenForMessages();
   }
 
@@ -78,6 +79,21 @@ class LighthouseReportViewer {
       this._replaceReportHtml(reportJson);
     }).catch(err => logger.error(err.message));
   }
+
+  /**
+   * Attempts to read v2.x report from IDB (saved in latest viewer) and render report
+   * @return {!Promise<undefined>}
+   * @private
+   */
+  _loadFromIDB() {
+    return idbKeyval.get('2xreport').then(json => {
+      if (!json) return;
+      return idbKeyval.delete('2xreport').then(_ => {
+        this._replaceReportHtml(json);
+      });
+    }).catch(err => logger.error(err.message));
+  }
+
 
   /**
    * Basic Lighthouse report JSON validation.
@@ -297,9 +313,6 @@ class LighthouseReportViewer {
         this._reportIsFromGist = false;
         this._replaceReportHtml(e.data.lhresults);
 
-        if (self.opener && !self.opener.closed) {
-          self.opener.postMessage({rendered: true}, '*');
-        }
         if (window.ga) {
           window.ga('send', 'event', 'report', 'open in viewer');
         }
