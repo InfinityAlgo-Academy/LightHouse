@@ -321,7 +321,7 @@ class Simulator {
 
     options = Object.assign({flexibleOrdering: false}, options);
     // initialize the necessary data containers
-    this._flexibleOrdering = options.flexibleOrdering;
+    this._flexibleOrdering = !!options.flexibleOrdering;
     this._initializeConnectionPool(graph);
     this._initializeAuxiliaryData();
 

@@ -35,7 +35,6 @@ script:
   - yarn lint
   - yarn unit:silentcoverage
   - yarn type-check
-  - yarn closure
   - yarn diff:sample-json
   - yarn smoke:silentcoverage
   - yarn test-extension

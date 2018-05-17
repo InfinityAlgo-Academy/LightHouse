@@ -12,26 +12,29 @@
  * Dummy text for ensuring report robustness: </script> pre$`post %%LIGHTHOUSE_JSON%%
  */
 
+/** @typedef {import('./dom.js')} DOM */
+/** @typedef {import('./details-renderer.js').DetailsJSON} DetailsJSON */
+
 /* globals self, Util, DetailsRenderer, CategoryRenderer, PerformanceCategoryRenderer */
 
 class ReportRenderer {
   /**
-   * @param {!DOM} dom
+   * @param {DOM} dom
    */
   constructor(dom) {
-    /** @private {!DOM} */
+    /** @type {DOM} */
     this._dom = dom;
-    /** @private {!Document|!Element} */
+    /** @type {ParentNode} */
     this._templateContext = this._dom.document();
   }
 
   /**
-   * @param {!ReportRenderer.ReportJSON} report
-   * @param {!Element} container Parent element to render the report into.
+   * @param {ReportJSON} report
+   * @param {Element} container Parent element to render the report into.
    */
   renderReport(report, container) {
     // If any mutations happen to the report within the renderers, we want the original object untouched
-    const clone = /** @type {!ReportRenderer.ReportJSON} */ (JSON.parse(JSON.stringify(report)));
+    const clone = /** @type {ReportJSON} */ (JSON.parse(JSON.stringify(report)));
 
     // TODO(phulce): we all agree this is technical debt we should fix
     if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
@@ -40,31 +43,31 @@ class ReportRenderer {
 
     container.textContent = ''; // Remove previous report.
     container.appendChild(this._renderReport(clone));
-    return /** @type {!Element} **/ (container);
+    return /** @type {Element} **/ (container);
   }
 
   /**
    * Define a custom element for <templates> to be extracted from. For example:
    *     this.setTemplateContext(new DOMParser().parseFromString(htmlStr, 'text/html'))
-   * @param {!Document|!Element} context
+   * @param {ParentNode} context
    */
   setTemplateContext(context) {
     this._templateContext = context;
   }
 
   /**
-   * @param {!ReportRenderer.ReportJSON} report
-   * @return {!DocumentFragment}
+   * @param {ReportJSON} report
+   * @return {DocumentFragment}
    */
   _renderReportHeader(report) {
     const header = this._dom.cloneTemplate('#tmpl-lh-heading', this._templateContext);
     this._dom.find('.lh-config__timestamp', header).textContent =
         Util.formatDateTime(report.fetchTime);
     this._dom.find('.lh-product-info__version', header).textContent = report.lighthouseVersion;
-    const url = this._dom.find('.lh-metadata__url', header);
+    const url = /** @type {HTMLAnchorElement} */ (this._dom.find('.lh-metadata__url', header));
     url.href = report.finalUrl;
     url.textContent = report.finalUrl;
-    const toolbarUrl = this._dom.find('.lh-toolbar__url', header);
+    const toolbarUrl = /** @type {HTMLAnchorElement}*/ (this._dom.find('.lh-toolbar__url', header));
     toolbarUrl.href = report.finalUrl;
     toolbarUrl.textContent = report.finalUrl;
 
@@ -83,8 +86,8 @@ class ReportRenderer {
   }
 
   /**
-   * @param {!ReportRenderer.ReportJSON} report
-   * @return {!DocumentFragment}
+   * @param {ReportJSON} report
+   * @return {DocumentFragment}
    */
   _renderReportFooter(report) {
     const footer = this._dom.cloneTemplate('#tmpl-lh-footer', this._templateContext);
@@ -96,8 +99,8 @@ class ReportRenderer {
 
   /**
    * Returns a div with a list of top-level warnings, or an empty div if no warnings.
-   * @param {!ReportRenderer.ReportJSON} report
-   * @return {!Node}
+   * @param {ReportJSON} report
+   * @return {Node}
    */
   _renderReportWarnings(report) {
     if (!report.runWarnings || report.runWarnings.length === 0) {
@@ -115,8 +118,8 @@ class ReportRenderer {
   }
 
   /**
-   * @param {!ReportRenderer.ReportJSON} report
-   * @return {!DocumentFragment}
+   * @param {ReportJSON} report
+   * @return {DocumentFragment}
    */
   _renderReport(report) {
     const headerStickyContainer = this._dom.createElement('div', 'lh-header-sticky');
@@ -172,8 +175,8 @@ class ReportRenderer {
 
   /**
    * Place the AuditResult into the auditDfn (which has just weight & group)
-   * @param {!Object<string, !ReportRenderer.AuditResultJSON>} audits
-   * @param {!Array<!ReportRenderer.CategoryJSON>} reportCategories
+   * @param {Object<string, AuditResultJSON>} audits
+   * @param {Array<CategoryJSON>} reportCategories
    */
   static smooshAuditResultsIntoCategories(audits, reportCategories) {
     for (const category of reportCategories) {
@@ -193,67 +196,62 @@ if (typeof module !== 'undefined' && module.exports) {
 
 /**
  * @typedef {{
- *     rawValue: (number|boolean|undefined),
- *     id: string,
- *     title: string,
- *     description: string,
- *     explanation: (string|undefined),
- *     errorMessage: (string|undefined),
- *     displayValue: (string|Array<string|number>|undefined),
- *     scoreDisplayMode: string,
- *     error: boolean,
- *     score: (number|null),
- *     details: (!DetailsRenderer.DetailsJSON|undefined),
- * }}
+      rawValue: (number|boolean|undefined),
+      id: string,
+      title: string,
+      description: string,
+      explanation?: string,
+      errorMessage?: string,
+      displayValue?: string|Array<string|number>,
+      scoreDisplayMode: string,
+      error: boolean,
+      score: (number|null),
+      details?: DetailsJSON,
+  }} AuditResultJSON
  */
-ReportRenderer.AuditResultJSON; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{
- *     id: string,
- *     score: (number|null),
- *     weight: number,
- *     group: (string|undefined),
- *     result: ReportRenderer.AuditResultJSON
- * }}
+      id: string,
+      score: (number|null),
+      weight: number,
+      group?: string,
+      result: AuditResultJSON
+  }} AuditJSON
  */
-ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{
- *     title: string,
- *     id: string,
- *     score: (number|null),
- *     description: (string|undefined),
- *     manualDescription: string,
- *     auditRefs: !Array<!ReportRenderer.AuditJSON>
- * }}
+      title: string,
+      id: string,
+      score: (number|null),
+      description?: string,
+      manualDescription: string,
+      auditRefs: Array<AuditJSON>
+  }} CategoryJSON
  */
-ReportRenderer.CategoryJSON; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{
- *     title: string,
- *     description: (string|undefined),
- * }}
+      title: string,
+      description?: string,
+  }} GroupJSON
  */
-ReportRenderer.GroupJSON; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{
- *     lighthouseVersion: string,
- *     userAgent: string,
- *     fetchTime: string,
- *     timing: {total: number},
- *     requestedUrl: string,
- *     finalUrl: string,
- *     runWarnings: (!Array<string>|undefined),
- *     artifacts: {traces: {defaultPass: {traceEvents: !Array}}},
- *     audits: !Object<string, !ReportRenderer.AuditResultJSON>,
- *     categories: !Object<string, !ReportRenderer.CategoryJSON>,
- *     reportCategories: !Array<!ReportRenderer.CategoryJSON>,
- *     categoryGroups: !Object<string, !ReportRenderer.GroupJSON>,
- *     configSettings: !LH.Config.Settings,
- * }}
+      lighthouseVersion: string,
+      userAgent: string,
+      fetchTime: string,
+      timing: {total: number},
+      requestedUrl: string,
+      finalUrl: string,
+      runWarnings?: Array<string>,
+      artifacts: {traces: {defaultPass: {traceEvents: Array}}},
+      audits: Object<string, AuditResultJSON>,
+      categories: Object<string, CategoryJSON>,
+      reportCategories: Array<CategoryJSON>,
+      categoryGroups: Object<string, GroupJSON>,
+      configSettings: LH.Config.Settings,
+  }} ReportJSON
  */
-ReportRenderer.ReportJSON; // eslint-disable-line no-unused-expressions

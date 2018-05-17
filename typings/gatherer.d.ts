@@ -4,11 +4,11 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import * as _Node from '../lighthouse-core/lib/dependency-graph/node';
-import * as _NetworkNode from '../lighthouse-core/lib/dependency-graph/network-node';
-import * as _CPUNode from '../lighthouse-core/lib/dependency-graph/cpu-node';
-import * as _Simulator from '../lighthouse-core/lib/dependency-graph/simulator/simulator';
-import * as Driver from '../lighthouse-core/gather/driver';
+import _Node = require('../lighthouse-core/lib/dependency-graph/node');
+import _NetworkNode = require('../lighthouse-core/lib/dependency-graph/network-node');
+import _CPUNode = require('../lighthouse-core/lib/dependency-graph/cpu-node');
+import _Simulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator');
+import Driver = require('../lighthouse-core/gather/driver');
 
 declare global {
   module LH.Gatherer {

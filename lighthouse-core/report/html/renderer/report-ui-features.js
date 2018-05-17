@@ -12,40 +12,43 @@
 
 /* globals self URL Blob CustomEvent getFilenamePrefix window */
 
+/** @typedef {import('./dom.js')} DOM */
+/** @typedef {import('./report-renderer.js').ReportJSON} ReportJSON */
+
 class ReportUIFeatures {
   /**
-   * @param {!DOM} dom
+   * @param {DOM} dom
    */
   constructor(dom) {
-    /** @type {!ReportRenderer.ReportJSON} */
+    /** @type {ReportJSON} */
     this.json; // eslint-disable-line no-unused-expressions
-    /** @protected {!DOM} */
+    /** @type {DOM} */
     this._dom = dom;
-    /** @protected {!Document} */
+    /** @type {Document} */
     this._document = this._dom.document();
-    /** @private {boolean} */
+    /** @type {boolean} */
     this._copyAttempt = false;
-    /** @type {!Element} */
+    /** @type {HTMLElement} */
     this.exportButton; // eslint-disable-line no-unused-expressions
-    /** @type {!Element} */
+    /** @type {HTMLElement} */
     this.headerSticky; // eslint-disable-line no-unused-expressions
-    /** @type {!Element} */
+    /** @type {HTMLElement} */
     this.headerBackground; // eslint-disable-line no-unused-expressions
-    /** @type {!Element} */
+    /** @type {HTMLElement} */
     this.lighthouseIcon; // eslint-disable-line no-unused-expressions
-    /** @type {!Element} */
+    /** @type {HTMLElement} */
     this.scoresShadowWrapper; // eslint-disable-line no-unused-expressions
-    /** @type {!Element} */
+    /** @type {HTMLElement} */
     this.productInfo; // eslint-disable-line no-unused-expressions
-    /** @type {!Element} */
+    /** @type {HTMLElement} */
     this.toolbar; // eslint-disable-line no-unused-expressions
-    /** @type {!Element} */
+    /** @type {HTMLElement} */
     this.toolbarMetadata; // eslint-disable-line no-unused-expressions
-    /** @type {!Element} */
+    /** @type {HTMLElement} */
     this.env; // eslint-disable-line no-unused-expressions
-    /** @type {!number} */
+    /** @type {number} */
     this.headerOverlap = 0;
-    /** @type {!number} */
+    /** @type {number} */
     this.headerHeight = 0;
     /** @type {number} */
     this.latestKnownScrollY = 0;
@@ -65,7 +68,7 @@ class ReportUIFeatures {
   /**
    * Adds export button, print, and other functionality to the report. The method
    * should be called whenever the report needs to be re-rendered.
-   * @param {!ReportRenderer.ReportJSON} report
+   * @param {ReportJSON} report
    */
   initFeatures(report) {
     this.json = report;
@@ -75,17 +78,18 @@ class ReportUIFeatures {
     this._setupHeaderAnimation();
     this._resetUIState();
     this._document.addEventListener('keydown', this.printShortCutDetect);
+    // @ts-ignore - tsc thinks document can't listen for `copy`
     this._document.addEventListener('copy', this.onCopy);
   }
 
   /**
    * Fires a custom DOM event on target.
    * @param {string} name Name of the event.
-   * @param {!Node=} target DOM node to fire the event on.
+   * @param {Node=} target DOM node to fire the event on.
    * @param {*=} detail Custom data to include.
    */
   _fireEventOn(name, target = this._document, detail) {
-    const event = new CustomEvent(name, detail ? {detail} : null);
+    const event = new CustomEvent(name, detail ? {detail} : undefined);
     target.dispatchEvent(event);
   }
 
@@ -98,7 +102,7 @@ class ReportUIFeatures {
 
   /**
    * Handle media query change events.
-   * @param {!MediaQueryList} mql
+   * @param {MediaQueryList} mql
    */
   onMediaQueryChange(mql) {
     const root = this._dom.find('.lh-root', this._document);
@@ -114,9 +118,9 @@ class ReportUIFeatures {
   }
 
   _setupHeaderAnimation() {
-    /** @type {!Element} **/
     const scoresWrapper = this._dom.find('.lh-scores-wrapper', this._document);
-    this.headerOverlap = /** @type {!number} */
+    this.headerOverlap = /** @type {number} */
+      // @ts-ignore - TODO: move off CSSOM to support other browsers
       (scoresWrapper.computedStyleMap().get('margin-top').value);
 
     this.headerSticky = this._dom.find('.lh-header-sticky', this._document);
@@ -128,6 +132,7 @@ class ReportUIFeatures {
     this.toolbarMetadata = this._dom.find('.lh-toolbar__metadata', this._document);
     this.env = this._dom.find('.lh-env', this._document);
 
+    // @ts-ignore - TODO: move off CSSOM to support other browsers
     this.headerHeight = this.headerBackground.computedStyleMap().get('height').value;
 
     this._document.addEventListener('scroll', this.onScroll, {passive: true});
@@ -138,7 +143,7 @@ class ReportUIFeatures {
 
   /**
    * Handle copy events.
-   * @param {!Event} e
+   * @param {ClipboardEvent} e
    */
   onCopy(e) {
     // Only handle copy button presses (e.g. ignore the user copying page text).
@@ -157,7 +162,6 @@ class ReportUIFeatures {
 
   /**
    * Copies the report JSON to the clipboard (if supported by the browser).
-   * @suppress {reportUnknownTypes}
    */
   onCopyButtonClick() {
     this._fireEventOn('lh-analytics', this._document, {
@@ -179,7 +183,7 @@ class ReportUIFeatures {
           });
         }
       }
-    } catch (/** @type {!Error} */ e) {
+    } catch (/** @type {Error} */ e) {
       this._copyAttempt = false;
       this._fireEventOn('lh-log', this._document, {cmd: 'log', msg: e.message});
     }
@@ -200,7 +204,7 @@ class ReportUIFeatures {
     if (toggle.hasAttribute('open')) {
       toggle.removeAttribute('open');
     } else {
-      toggle.setAttribute('open', true);
+      toggle.setAttribute('open', 'true');
     }
   }
 
@@ -220,26 +224,30 @@ class ReportUIFeatures {
       `translate3d(calc(var(--report-content-width) / 2),` +
       ` calc(-100% - ${animateScrollPercentage * this.headerOverlap * -1}px), 0) scale(${1 -
         animateScrollPercentage})`;
-    this.lighthouseIcon.style.opacity = Math.max(0, 1 - animateScrollPercentage);
-    this.scoresShadowWrapper.style.opacity = 1 - animateScrollPercentage;
-    const scoresContainer = this.scoresShadowWrapper.parentElement;
+    this.lighthouseIcon.style.opacity = Math.max(0, 1 - animateScrollPercentage).toString();
+    this.scoresShadowWrapper.style.opacity = (1 - animateScrollPercentage).toString();
+    const scoresContainer = /** @type {HTMLElement} */ (this.scoresShadowWrapper.parentElement);
     scoresContainer.style.borderRadius = (1 - animateScrollPercentage) * 8 + 'px';
     scoresContainer.style.boxShadow =
         `0 4px 2px -2px rgba(0, 0, 0, ${animateScrollPercentage * 0.2})`;
-    const scoreScale = scoresContainer.querySelector('.lh-scorescale');
+    const scoreScale = this._dom.find('.lh-scorescale', scoresContainer);
     scoreScale.style.opacity = `${1 - animateScrollPercentage}`;
-    const scoreHeader = scoresContainer.querySelector('.lh-scores-header');
+    const scoreHeader = this._dom.find('.lh-scores-header', scoresContainer);
     const delta = 32 * animateScrollPercentage;
     scoreHeader.style.paddingBottom = `${32 - delta}px`;
     scoresContainer.style.marginBottom = `${delta}px`;
     this.toolbar.style.transform = `translateY(${headerTransitionHeightDiff *
       animateScrollPercentage}px)`;
-    this.exportButton.parentElement.style.transform = `translateY(${headerTransitionHeightDiff *
-      animateScrollPercentage}px)`;
     this.exportButton.style.transform = `scale(${1 - 0.2 * animateScrollPercentage})`;
+    // fix stacking context
+    const exportParent = this.exportButton.parentElement;
+    if (exportParent) {
+      exportParent.style.transform = `translateY(${headerTransitionHeightDiff *
+        animateScrollPercentage}px)`;
+    }
     // start showing the productinfo when we are at the 50% mark of our animation
-    this.productInfo.style.opacity = this.toolbarMetadata.style.opacity =
-      animateScrollPercentage < 0.5 ? 0 : (animateScrollPercentage - 0.5) * 2;
+    const opacity = animateScrollPercentage < 0.5 ? 0 : (animateScrollPercentage - 0.5) * 2;
+    this.productInfo.style.opacity = this.toolbarMetadata.style.opacity = opacity.toString();
     this.env.style.transform = `translateY(${Math.max(
       0,
       headerTransitionHeightDiff * animateScrollPercentage - 6
@@ -255,11 +263,11 @@ class ReportUIFeatures {
 
   /**
    * Click handler for export button.
-   * @param {!Event} e
+   * @param {Event} e
    */
   onExportButtonClick(e) {
     e.preventDefault();
-    const el = /** @type {!Element} */ (e.target);
+    const el = /** @type {Element} */ (e.target);
     el.classList.toggle('active');
     this._document.addEventListener('keydown', this.onKeyDown);
   }
@@ -276,14 +284,14 @@ class ReportUIFeatures {
 
   /**
    * Handler for "export as" button.
-   * @param {!Event} e
+   * @param {Event} e
    */
   onExport(e) {
     e.preventDefault();
 
-    const el = /** @type {!Element} */ (e.target);
+    const el = /** @type {?Element} */ (e.target);
 
-    if (!el.hasAttribute('data-action')) {
+    if (!el || el.hasAttribute('data-action')) {
       return;
     }
 
@@ -310,7 +318,7 @@ class ReportUIFeatures {
         const htmlStr = this.getReportHtml();
         try {
           this._saveFile(new Blob([htmlStr], {type: 'text/html'}));
-        } catch (/** @type {!Error} */ e) {
+        } catch (/** @type {Error} */ e) {
           this._fireEventOn('lh-log', this._document, {
             cmd: 'error', msg: 'Could not export as HTML. ' + e.message,
           });
@@ -334,7 +342,7 @@ class ReportUIFeatures {
 
   /**
    * Keydown handler for the document.
-   * @param {!Event} e
+   * @param {KeyboardEvent} e
    */
   onKeyDown(e) {
     if (e.keyCode === 27) { // ESC
@@ -345,9 +353,8 @@ class ReportUIFeatures {
   /**
    * Opens a new tab to the online viewer and sends the local page's JSON results
    * to the online viewer using postMessage.
-   * @param {!ReportRenderer.ReportJSON} reportJson
+   * @param {ReportJSON} reportJson
    * @param {string} viewerPath
-   * @suppress {reportUnknownTypes}
    * @protected
    */
   static openTabAndSendJsonReport(reportJson, viewerPath) {
@@ -357,26 +364,28 @@ class ReportUIFeatures {
     // load event, however it is cross-domain and won't fire. Instead, listen
     // for a message from the target app saying "I'm open".
     const json = reportJson;
-    window.addEventListener('message', function msgHandler(/** @type {!Event} */ e) {
-      const messageEvent = /** @type {!MessageEvent<{opened: boolean}>} */ (e);
+    window.addEventListener('message', function msgHandler(/** @type {Event} */ e) {
+      const messageEvent = /** @type {MessageEvent} */ (e);
       if (messageEvent.origin !== VIEWER_ORIGIN) {
         return;
       }
-      if (messageEvent.data.opened) {
+      if (popup && messageEvent.data.opened) {
         popup.postMessage({lhresults: json}, VIEWER_ORIGIN);
         window.removeEventListener('message', msgHandler);
       }
     });
 
     // The popup's window.name is keyed by version+url+fetchTime, so we reuse/select tabs correctly
-    const fetchTime = json.fetchTime || json.generatedTime;
+    // @ts-ignore - If this is a v2 LHR, use old `generatedTime`.
+    const fallbackFetchTime = /** @type {string} */ (json.generatedTime);
+    const fetchTime = json.fetchTime || fallbackFetchTime;
     const windowName = `${json.lighthouseVersion}-${json.requestedUrl}-${fetchTime}`;
-    const popup = /** @type {!Window} */ (window.open(`${VIEWER_ORIGIN}${viewerPath}`, windowName));
+    const popup = window.open(`${VIEWER_ORIGIN}${viewerPath}`, windowName);
   }
 
   /**
    * Expands audit details when user prints via keyboard shortcut.
-   * @param {!Event} e
+   * @param {KeyboardEvent} e
    */
   printShortCutDetect(e) {
     if ((e.ctrlKey || e.metaKey) && e.keyCode === 80) { // Ctrl+P
@@ -390,7 +399,8 @@ class ReportUIFeatures {
    * open a `<details>` element.
    */
   expandAllDetails() {
-    const details = this._dom.findAll('.lh-categories details', this._document);
+    const details = /** @type {Array<HTMLDetailsElement>} */ (this._dom.findAll(
+        '.lh-categories details', this._document));
     details.map(detail => detail.open = true);
   }
 
@@ -399,7 +409,8 @@ class ReportUIFeatures {
    * open a `<details>` element.
    */
   collapseAllDetails() {
-    const details = this._dom.findAll('.lh-categories details', this._document);
+    const details = /** @type {Array<HTMLDetailsElement>} */ (this._dom.findAll(
+        '.lh-categories details', this._document));
     details.map(detail => detail.open = false);
   }
 
@@ -412,9 +423,10 @@ class ReportUIFeatures {
     if ('onbeforeprint' in self) {
       self.addEventListener('afterprint', this.collapseAllDetails);
     } else {
+      const win = /** @type {Window} */ (self);
       // Note: FF implements both window.onbeforeprint and media listeners. However,
       // it doesn't matchMedia doesn't fire when matching 'print'.
-      self.matchMedia('print').addListener(mql => {
+      win.matchMedia('print').addListener(mql => {
         if (mql.matches) {
           this.expandAllDetails();
         } else {
@@ -444,7 +456,7 @@ class ReportUIFeatures {
 
   /**
    * Downloads a file (blob) using a[download].
-   * @param {!Blob|!File} blob The file to save.
+   * @param {Blob|File} blob The file to save.
    * @private
    */
   _saveFile(blob) {
@@ -456,7 +468,7 @@ class ReportUIFeatures {
     const ext = blob.type.match('json') ? '.json' : '.html';
     const href = URL.createObjectURL(blob);
 
-    const a = /** @type {!HTMLAnchorElement} */ (this._dom.createElement('a'));
+    const a = /** @type {HTMLAnchorElement} */ (this._dom.createElement('a'));
     a.download = `${filename}${ext}`;
     a.href = href;
     this._document.body.appendChild(a); // Firefox requires anchor to be in the DOM.

@@ -18,10 +18,6 @@ const RATINGS = {
   ERROR: {label: 'error'},
 };
 
-/**
- * @fileoverview
- * @suppress {reportUnknownTypes} see https://github.com/GoogleChrome/lighthouse/pull/4778#issuecomment-373549391
- */
 class Util {
   static get PASS_THRESHOLD() {
     return PASS_THRESHOLD;
@@ -195,9 +191,9 @@ class Util {
       return 'None';
     }
 
-    /** @type {!Array<string>} */
+    /** @type {Array<string>} */
     const parts = [];
-    const unitLabels = /** @type {!Object<string, number>} */ ({
+    const unitLabels = /** @type {Object<string, number>} */ ({
       d: 60 * 60 * 24,
       h: 60 * 60,
       m: 60,
@@ -217,8 +213,8 @@ class Util {
   }
 
   /**
-   * @param {!URL} parsedUrl
-   * @param {{numPathParts: (number|undefined), preserveQuery: (boolean|undefined), preserveHost: (boolean|undefined)}=} options
+   * @param {URL} parsedUrl
+   * @param {{numPathParts?: number, preserveQuery?: boolean, preserveHost?: boolean}=} options
    * @return {string}
    */
   static getURLDisplayName(parsedUrl, options) {
@@ -378,6 +374,5 @@ class Util {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = Util;
 } else {
-  // @ts-ignore
   self.Util = Util;
 }

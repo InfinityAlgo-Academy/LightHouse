@@ -28,7 +28,7 @@
 
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
     "start": "node ./lighthouse-cli/index.js",
-    "test": "yarn lint --quiet && yarn unit && yarn type-check && yarn closure && yarn diff:sample-json",
+    "test": "yarn lint --quiet && yarn unit && yarn type-check && yarn diff:sample-json",
     "test-extension": "cd lighthouse-extension && yarn test",
     "test-viewer": "cd lighthouse-viewer && yarn pptr-test",
 
@@ -48,7 +48,6 @@
     "coveralls": "cat unit-coverage.lcov | coveralls",
     "codecov": "codecov -f unit-coverage.lcov -F unit && codecov -f smoke-coverage.lcov -F smoke",
 
-    "closure": "cd lighthouse-core && node closure/closure-type-checking.js",
     "devtools": "bash lighthouse-core/scripts/roll-to-devtools.sh",
     "compile-devtools": "bash lighthouse-core/scripts/compile-against-devtools.sh",
     "chrome": "node lighthouse-core/scripts/manual-chrome-launcher.js",
@@ -88,7 +87,6 @@
     "cz-customizable": "^5.2.0",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
-    "google-closure-compiler": "^20170521.0.0",
     "gulp": "^3.9.1",
     "gulp-replace": "^0.5.4",
     "gulp-util": "^3.0.7",
@@ -99,7 +97,7 @@
     "postinstall-prepare": "^1.0.1",
     "puppeteer": "1.4.0",
     "sinon": "^2.3.5",
-    "typescript": "2.9.0-dev.20180323",
+    "typescript": "2.9.1-insiders.20180516",
     "vscode-chrome-debug-core": "^3.23.8",
     "zone.js": "^0.7.3"
   },

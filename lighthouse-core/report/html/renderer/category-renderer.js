@@ -7,26 +7,34 @@
 
 /* globals self, Util */
 
+/** @typedef {import('./dom.js')} DOM */
+/** @typedef {import('./report-renderer.js')} ReportRenderer */
+/** @typedef {import('./report-renderer.js').AuditJSON} AuditJSON */
+/** @typedef {import('./report-renderer.js').CategoryJSON} CategoryJSON */
+/** @typedef {import('./report-renderer.js').GroupJSON} GroupJSON */
+/** @typedef {import('./details-renderer.js')} DetailsRenderer */
+/** @typedef {import('./util.js')} Util */
+
 class CategoryRenderer {
   /**
-   * @param {!DOM} dom
-   * @param {!DetailsRenderer} detailsRenderer
+   * @param {DOM} dom
+   * @param {DetailsRenderer} detailsRenderer
    */
   constructor(dom, detailsRenderer) {
-    /** @protected {!DOM} */
+    /** @type {DOM} */
     this.dom = dom;
-    /** @protected {!DetailsRenderer} */
+    /** @type {DetailsRenderer} */
     this.detailsRenderer = detailsRenderer;
-    /** @protected {!Document|!Element} */
+    /** @type {ParentNode} */
     this.templateContext = this.dom.document();
 
     this.detailsRenderer.setTemplateContext(this.templateContext);
   }
 
   /**
-   * @param {!ReportRenderer.AuditJSON} audit
+   * @param {AuditJSON} audit
    * @param {number} index
-   * @return {!Element}
+   * @return {Element}
    */
   renderAudit(audit, index) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-audit', this.templateContext);
@@ -45,7 +53,7 @@ class CategoryRenderer {
       .appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.description));
 
     // Append audit details to header section so the entire audit is within a <details>.
-    const header = /** @type {!HTMLDetailsElement} */ (this.dom.find('details', auditEl));
+    const header = /** @type {HTMLDetailsElement} */ (this.dom.find('details', auditEl));
     if (audit.result.details && audit.result.details.type) {
       const elem = this.detailsRenderer.render(audit.result.details);
       elem.classList.add('lh-details');
@@ -73,10 +81,10 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {!Element} element DOM node to populate with values.
+   * @param {Element} element DOM node to populate with values.
    * @param {number|null} score
    * @param {string} scoreDisplayMode
-   * @return {!Element}
+   * @return {Element}
    */
   _setRatingClass(element, score, scoreDisplayMode) {
     const rating = Util.calculateRating(score, scoreDisplayMode);
@@ -85,8 +93,8 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {!ReportRenderer.CategoryJSON} category
-   * @return {!Element}
+   * @param {CategoryJSON} category
+   * @return {Element}
    */
   renderCategoryHeader(category) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-category-header', this.templateContext);
@@ -102,16 +110,15 @@ class CategoryRenderer {
       this.dom.find('.lh-category-header__description', tmpl).appendChild(descEl);
     }
 
-
-    return /** @type {!Element} */ (tmpl.firstElementChild);
+    return /** @type {Element} */ (tmpl.firstElementChild);
   }
 
   /**
    * Renders the group container for a group of audits. Individual audit elements can be added
    * directly to the returned element.
-   * @param {!ReportRenderer.GroupJSON} group
-   * @param {{expandable: boolean, itemCount: (number|undefined)}} opts
-   * @return {!Element}
+   * @param {GroupJSON} group
+   * @param {{expandable: boolean, itemCount?: number}} opts
+   * @return {Element}
    */
   renderAuditGroup(group, opts) {
     const expandable = opts.expandable;
@@ -140,7 +147,7 @@ class CategoryRenderer {
   /**
    * Find the total number of audits contained within a section.
    * Accounts for nested subsections like Accessibility.
-   * @param {!Array<!Element>} elements
+   * @param {Array<Element>} elements
    * @return {number}
    */
   _getTotalAuditsLength(elements) {
@@ -158,8 +165,8 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {!Array<!Element>} elements
-   * @return {!Element}
+   * @param {Array<Element>} elements
+   * @return {Element}
    */
   _renderFailedAuditsSection(elements) {
     const failedElem = this.dom.createElement('div');
@@ -169,8 +176,8 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {!Array<!Element>} elements
-   * @return {!Element}
+   * @param {Array<Element>} elements
+   * @return {Element}
    */
   renderPassedAuditsSection(elements) {
     const passedElem = this.renderAuditGroup({
@@ -182,8 +189,8 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {!Array<!Element>} elements
-   * @return {!Element}
+   * @param {Array<Element>} elements
+   * @return {Element}
    */
   _renderNotApplicableAuditsSection(elements) {
     const notApplicableElem = this.renderAuditGroup({
@@ -195,9 +202,9 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {!Array<!ReportRenderer.AuditJSON>} manualAudits
+   * @param {Array<AuditJSON>} manualAudits
    * @param {string} manualDescription
-   * @return {!Element}
+   * @return {Element}
    */
   _renderManualAudits(manualAudits, manualDescription) {
     const group = {title: 'Additional items to manually check', description: manualDescription};
@@ -211,7 +218,7 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {!Document|!Element} context
+   * @param {ParentNode} context
    */
   setTemplateContext(context) {
     this.templateContext = context;
@@ -219,12 +226,12 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {!ReportRenderer.CategoryJSON} category
-   * @return {!DocumentFragment}
+   * @param {CategoryJSON} category
+   * @return {DocumentFragment}
    */
   renderScoreGauge(category) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge', this.templateContext);
-    const wrapper = this.dom.find('.lh-gauge__wrapper', tmpl);
+    const wrapper = /** @type {HTMLAnchorElement} */ (this.dom.find('.lh-gauge__wrapper', tmpl));
     wrapper.href = `#${category.id}`;
     wrapper.classList.add(`lh-gauge__wrapper--${Util.calculateRating(category.score)}`);
 
@@ -234,11 +241,15 @@ class CategoryRenderer {
     // 329 is ~= 2 * Math.PI * gauge radius (53)
     // https://codepen.io/xgad/post/svg-radial-progress-meters
     // score of 50: `stroke-dasharray: 164.5 329`;
-    this.dom.find('.lh-gauge-arc', gauge).style.strokeDasharray = `${numericScore * 329} 329`;
+    /** @type {?SVGCircleElement} */
+    const gaugeArc = gauge.querySelector('.lh-gauge-arc');
+    if (gaugeArc) {
+      gaugeArc.style.strokeDasharray = `${numericScore * 329} 329`;
+    }
 
     const scoreOutOf100 = Math.round(numericScore * 100);
     const percentageEl = this.dom.find('.lh-gauge__percentage', tmpl);
-    percentageEl.textContent = scoreOutOf100;
+    percentageEl.textContent = scoreOutOf100.toString();
     if (category.score === null) {
       percentageEl.textContent = '?';
       percentageEl.title = 'Errors occurred while auditing';
@@ -249,9 +260,9 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {!ReportRenderer.CategoryJSON} category
-   * @param {!Object<string, !ReportRenderer.GroupJSON>} groupDefinitions
-   * @return {!Element}
+   * @param {CategoryJSON} category
+   * @param {Object<string, GroupJSON>} groupDefinitions
+   * @return {Element}
    */
   render(category, groupDefinitions) {
     const element = this.dom.createElement('div', 'lh-category');
@@ -262,10 +273,8 @@ class CategoryRenderer {
     const manualAudits = auditRefs.filter(audit => audit.result.scoreDisplayMode === 'manual');
     const nonManualAudits = auditRefs.filter(audit => !manualAudits.includes(audit));
 
-    const auditsGroupedByGroup = /** @type {!Object<string,
-      {passed: !Array<!ReportRenderer.AuditJSON>,
-      failed: !Array<!ReportRenderer.AuditJSON>,
-      notApplicable: !Array<!ReportRenderer.AuditJSON>}>} */ ({});
+    /** @type {Object<string, {passed: Array<AuditJSON>, failed: Array<AuditJSON>, notApplicable: Array<AuditJSON>}>} */
+    const auditsGroupedByGroup = {};
     const auditsUngrouped = {passed: [], failed: [], notApplicable: []};
 
     nonManualAudits.forEach(auditRef => {
@@ -293,15 +302,15 @@ class CategoryRenderer {
       }
     });
 
-    const failedElements = /** @type {!Array<!Element>} */ ([]);
-    const passedElements = /** @type {!Array<!Element>} */ ([]);
-    const notApplicableElements = /** @type {!Array<!Element>} */ ([]);
+    const failedElements = /** @type {Array<Element>} */ ([]);
+    const passedElements = /** @type {Array<Element>} */ ([]);
+    const notApplicableElements = /** @type {Array<Element>} */ ([]);
 
-    auditsUngrouped.failed.forEach((/** @type {!ReportRenderer.AuditJSON} */ audit, i) =>
+    auditsUngrouped.failed.forEach((/** @type {AuditJSON} */ audit, i) =>
       failedElements.push(this.renderAudit(audit, i)));
-    auditsUngrouped.passed.forEach((/** @type {!ReportRenderer.AuditJSON} */ audit, i) =>
+    auditsUngrouped.passed.forEach((/** @type {AuditJSON} */ audit, i) =>
       passedElements.push(this.renderAudit(audit, i)));
-    auditsUngrouped.notApplicable.forEach((/** @type {!ReportRenderer.AuditJSON} */ audit, i) =>
+    auditsUngrouped.notApplicable.forEach((/** @type {AuditJSON} */ audit, i) =>
       notApplicableElements.push(this.renderAudit(audit, i)));
 
     Object.keys(auditsGroupedByGroup).forEach(groupId => {
@@ -312,7 +321,6 @@ class CategoryRenderer {
         const auditGroupElem = this.renderAuditGroup(group, {expandable: false});
         groups.failed.forEach((item, i) => auditGroupElem.appendChild(this.renderAudit(item, i)));
         auditGroupElem.classList.add('lh-audit-group--unadorned');
-        auditGroupElem.open = true;
         failedElements.push(auditGroupElem);
       }
 
@@ -357,7 +365,7 @@ class CategoryRenderer {
 
   /**
    * Create a non-semantic span used for hash navigation of categories
-   * @param {!Element} element
+   * @param {Element} element
    * @param {string} id
    */
   createPermalinkSpan(element, id) {

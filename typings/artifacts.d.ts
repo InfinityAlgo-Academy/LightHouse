@@ -4,8 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import * as parseManifest from '../lighthouse-core/lib/manifest-parser.js';
-import * as _LanternSimulator from '../lighthouse-core/lib/dependency-graph/simulator/simulator.js';
+import parseManifest = require('../lighthouse-core/lib/manifest-parser.js');
+import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator.js');
 import speedline = require('speedline');
 
 type LanternSimulator = InstanceType<typeof _LanternSimulator>;
