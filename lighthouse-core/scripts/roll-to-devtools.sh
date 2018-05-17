@@ -18,7 +18,7 @@ chromium_dir="$HOME/chromium/src"
 if [[ -n "$1" ]]; then
   frontend_dir="$1"
 else
-  frontend_dir="$chromium_dir/third_party/WebKit/Source/devtools/front_end"
+  frontend_dir="$chromium_dir/third_party/blink/renderer/devtools/front_end"
 fi
 
 if [[ ! -d "$frontend_dir" || ! -a "$frontend_dir/Runtime.js" ]]; then

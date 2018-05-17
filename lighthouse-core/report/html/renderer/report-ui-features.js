@@ -291,7 +291,7 @@ class ReportUIFeatures {
 
     const el = /** @type {?Element} */ (e.target);
 
-    if (!el || el.hasAttribute('data-action')) {
+    if (!el || !el.hasAttribute('data-action')) {
       return;
     }
 

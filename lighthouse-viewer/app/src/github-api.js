@@ -36,7 +36,7 @@ class GithubApi {
     return this._auth.getAccessToken()
       .then(accessToken => {
         const filename = getFilenamePrefix({
-          url: jsonFile.url,
+          finalUrl: jsonFile.finalUrl,
           fetchTime: jsonFile.fetchTime,
         });
         const body = {
