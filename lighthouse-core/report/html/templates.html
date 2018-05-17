@@ -54,24 +54,26 @@
 
 <!-- Lighthouse perf opportunity -->
 <template id="tmpl-lh-opportunity">
-  <details class="lh-load-opportunity lh-expandable-details">
-    <summary class="lh-load-opportunity__summary lh-expandable-details__summary">
-      <div class="lh-load-opportunity__cols">
-        <div class="lh-load-opportunity__col lh-load-opportunity__col--one">
-          <span class="lh-audit__index"></span>
-          <div class="lh-load-opportunity__title"></div>
-        </div>
-        <div class="lh-load-opportunity__col lh-load-opportunity__col--two">
-          <div class="lh-load-opportunity__sparkline">
-            <div class="lh-sparkline"><div class="lh-sparkline__bar"></div></div>
+  <div class="lh-audit lh-audit--load-opportunity">
+    <details class="lh-expandable-details">
+      <summary class="lh-audit__header lh-expandable-details__summary">
+        <div class="lh-load-opportunity__cols">
+          <div class="lh-load-opportunity__col lh-load-opportunity__col--one">
+            <span class="lh-audit__index"></span>
+            <div class="lh-audit__title"></div>
           </div>
-          <div class="lh-load-opportunity__wasted-stat"></div>
-          <div class="lh-toggle-arrow" title="See resources"></div>
+          <div class="lh-load-opportunity__col lh-load-opportunity__col--two">
+            <div class="lh-load-opportunity__sparkline">
+              <div class="lh-sparkline"><div class="lh-sparkline__bar"></div></div>
+            </div>
+            <div class="lh-audit__display-text"></div>
+            <div class="lh-toggle-arrow" title="See resources"></div>
+          </div>
         </div>
-      </div>
-    </summary>
-    <div class="lh-load-opportunity__description"></div>
-  </details>
+      </summary>
+      <div class="lh-audit__description"></div>
+    </details>
+  </div>
 </template>
 
 

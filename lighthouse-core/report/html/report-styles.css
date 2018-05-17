@@ -141,9 +141,6 @@
   color: #0c50c7;
 }
 
-.lh-root details summary {
-  cursor: pointer;
-}
 
 .lh-audit__description,
 .lh-load-opportunity__description,
@@ -259,14 +256,19 @@
   margin: calc(var(--default-padding) / 2) 0 var(--default-padding);
 }
 
-.lh-audit__header > div,
-.lh-audit__header > span {
+
+.lh-audit__index,
+.lh-audit__title,
+.lh-audit__display-text,
+.lh-audit__score-icon,
+.lh-load-opportunity__sparkline,
+.lh-toggle-arrow {
   margin: 0 var(--audit-item-gap);
 }
-.lh-audit__header > div:first-child, .lh-audit__header > span:first-child {
+.lh-audit__index {
   margin-left: 0;
 }
-.lh-audit__header > div:last-child, .lh-audit__header > span:last-child {
+.lh-toggle-arrow {
   margin-right: 0;
 }
 
@@ -296,19 +298,16 @@
 }
 
 /* Expandable Details (Audit Groups, Audits) */
-
-.lh-expandable-details {
-
-}
-
-.lh-expandable-details__summary {
-  cursor: pointer;
-}
-
 .lh-audit__header {
   display: flex;
   padding: var(--lh-audit-vpadding) var(--text-indent);
+  cursor: pointer;
 }
+
+.lh-audit--load-opportunity .lh-audit__header {
+  display: block;
+}
+
 .lh-audit__header:hover {
   background-color: #F8F9FA;
 }
@@ -316,7 +315,8 @@
 
 .lh-audit-group[open] > .lh-audit-group__summary > .lh-toggle-arrow,
 .lh-expandable-details[open] > .lh-expandable-details__summary > .lh-toggle-arrow,
-.lh-expandable-details[open] > .lh-expandable-details__summary > div > .lh-toggle-arrow {
+.lh-expandable-details[open] > .lh-expandable-details__summary > div > .lh-toggle-arrow,
+.lh-expandable-details[open] > .lh-expandable-details__summary > div > div > .lh-toggle-arrow {
   transform: rotateZ(-90deg);
 }
 
@@ -428,14 +428,6 @@
 
 /* Perf load opportunity */
 
-.lh-load-opportunity {
-  border-bottom: 1px solid var(--report-secondary-border-color);
-}
-
-.lh-load-opportunity:last-of-type {
-  border-bottom: none;
-}
-
 .lh-load-opportunity__cols {
   display: flex;
   align-items: flex-start;
@@ -449,20 +441,11 @@
   line-height: calc(2.3 * var(--body-font-size));
 }
 
-.lh-load-opportunity__summary {
-  padding: var(--lh-audit-vpadding) var(--text-indent);
-}
-.lh-load-opportunity__summary:hover {
-  background-color: #F8F9FA;
-}
-
 .lh-load-opportunity__col {
   display: flex;
   justify-content: space-between;
 }
-.lh-load-opportunity__col > * {
-  margin: 0 5px;
-}
+
 .lh-load-opportunity__col--one {
   flex: 5;
   margin-right: 2px;
@@ -471,46 +454,9 @@
   flex: 4;
 }
 
-.lh-load-opportunity__title {
-  font-size: var(--body-font-size);
-  flex: 10;
-}
-
-
-.lh-load-opportunity__wasted-stat {
+.lh-audit--load-opportunity .lh-audit__display-text {
   text-align: right;
   flex: 0 0 calc(3 * var(--body-font-size));
-  font-size: var(--body-font-size);
-  line-height: var(--body-line-height);
-}
-
-.lh-load-opportunity__description {
-  color: var(--secondary-text-color);
-  margin-top: calc(var(--default-padding) / 2);
-}
-
-.lh-load-opportunity--pass .lh-load-opportunity__wasted-stat {
-  color: var(--pass-color);
-}
-
-.lh-load-opportunity--pass .lh-sparkline__bar {
-  background: var(--pass-color);
-}
-
-.lh-load-opportunity--average .lh-sparkline__bar {
-  background: var(--average-color);
-}
-
-.lh-load-opportunity--average .lh-load-opportunity__wasted-stat {
-  color: var(--average-color);
-}
-
-.lh-load-opportunity--fail .lh-sparkline__bar {
-  background: var(--fail-color);
-}
-
-.lh-load-opportunity--fail .lh-load-opportunity__wasted-stat {
-  color: var(--fail-color);
 }
 
 
@@ -530,6 +476,19 @@
   height: 100%;
   float: right;
 }
+
+.lh-audit--pass .lh-sparkline__bar {
+  background: var(--pass-color);
+}
+
+.lh-audit--average .lh-sparkline__bar {
+  background: var(--average-color);
+}
+
+.lh-audit--fail .lh-sparkline__bar {
+  background: var(--fail-color);
+}
+
 
 
 /* Filmstrip */
@@ -562,7 +521,6 @@
 
 .lh-audit {
   border-bottom: 1px solid var(--report-secondary-border-color);
-  font-size: var(--body-font-size);
 }
 
 .lh-audit:last-child  {
@@ -664,7 +622,7 @@
   font-size: var(--caption-font-size);
   line-height: var(--caption-line-height);
   color: var(--fail-color);
-  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 
@@ -973,6 +931,12 @@ summary.lh-passed-audits-summary {
   position: absolute;
   display: none; /* Don't retain these layers when not needed */
   opacity: 0;
+
+  background: #ffffff;
+  min-width: 23em;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: initial;
 }
 
 .tooltip-boundary:hover {
@@ -984,10 +948,6 @@ summary.lh-passed-audits-summary {
   animation: fadeInTooltip 250ms;
   animation-fill-mode: forwards;
   animation-delay: 850ms;
-  min-width: 23em;
-  background: #ffffff;
-  padding: 15px;
-  border-radius: 5px;
   bottom: 100%;
   z-index: 1;
   will-change: opacity;

@@ -135,4 +135,11 @@ describe('util helpers', () => {
       'Too many replacements given',
     ]);
   });
+
+  it('does not mutate the provided array', () => {
+    const displayValue = ['one:%s, two:%s', 'foo', 'bar'];
+    const cloned = JSON.parse(JSON.stringify(displayValue));
+    Util.formatDisplayValue(displayValue);
+    assert.deepStrictEqual(displayValue, cloned, 'displayValue was mutated');
+  });
 });

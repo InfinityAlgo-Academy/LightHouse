@@ -78,8 +78,8 @@ describe('Lighthouse Viewer', function() {
 
 
   const selectors = {
-    audits: '.lh-audit, .lh-metric, .lh-load-opportunity',
-    titles: '.lh-audit__title, .lh-load-opportunity__title, .lh-metric__title',
+    audits: '.lh-audit, .lh-metric',
+    titles: '.lh-audit__title, .lh-metric__title',
   };
 
   it('should load with no errors', async () => {
