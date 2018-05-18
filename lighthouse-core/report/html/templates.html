@@ -16,6 +16,16 @@
   </div>
 </template>
 
+<!-- Toggle arrow chevron -->
+<template id="tmpl-lh-chevron">
+  <svg class="lh-chevron" title="See audits" xmlns="http://www.w3.org/2000/svg"  viewbox="0 0 100 100">
+    <g class="lh-chevron__lines">
+      <path class="lh-chevron__line lh-chevron__line-left" d="M10 50h40" stroke="#707173"/>
+      <path class="lh-chevron__line lh-chevron__line-right" d="M90 50H50" stroke="#707173"/>
+    </g>
+  </svg>
+</template>
+
 <!-- Lighthouse category header -->
 <template id="tmpl-lh-category-header">
   <div class="lh-category-header">
@@ -34,7 +44,7 @@
         <span class="lh-audit__title"></span>
         <span class="lh-audit__display-text"></span>
         <div class="lh-audit__score-icon"></div>
-        <div class="lh-toggle-arrow" title="See audits"></div>
+        <div class="lh-chevron-container"></div>
       </summary>
       <div class="lh-audit__description"></div>
     </details>
@@ -67,7 +77,7 @@
               <div class="lh-sparkline"><div class="lh-sparkline__bar"></div></div>
             </div>
             <div class="lh-audit__display-text"></div>
-            <div class="lh-toggle-arrow" title="See resources"></div>
+            <div class="lh-chevron-container" title="See resources"></div>
           </div>
         </div>
       </summary>
@@ -297,20 +307,6 @@
       display: flex;
       align-items: center;
     }
-    .lh-config__settings-toggle .lh-toggle-arrow {
-      width: 16px;
-      height: 16px;
-      margin-left: 2px;
-    }
-    .lh-config__settings-toggle[open] .lh-toggle-arrow {
-      transform: rotateZ(90deg);
-    }
-    .lh-config__settings-toggle summary::-moz-list-bullet {
-      display: none;
-    }
-    .lh-config__settings-toggle summary::-webkit-details-marker {
-      display: none;
-    }
     @media screen and (max-width: 964px) {
       .lh-export__dropdown {
         right: 0;
@@ -340,7 +336,6 @@
           <details class="lh-config__settings-toggle">
             <summary>
               <span>Runtime settings</span>
-              <span class="lh-toggle-arrow" title="See report's runtime settings"></span>
             </summary>
             <div class="lh-env">
               <div class="lh-env__title">Runtime environment</div>
