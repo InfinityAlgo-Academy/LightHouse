@@ -11,3 +11,4 @@
 url="https://snyk.io/partners/api/v2/vulndb/clientside.json"
 
 wget "$url" -O snyk-snapshot.json && mv snyk-snapshot.json ./third-party/snyk/snapshot.json
+node ./lighthouse-core/scripts/cleanup-vuln-snapshot.js ./third-party/snyk/snapshot.json

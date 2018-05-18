@@ -3989,6 +3989,10 @@ pretty-hrtime@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.2.tgz#70ca96f4d0628a443b918758f79416a9a7bc9fa8"
 
+pretty-json-stringify@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/pretty-json-stringify/-/pretty-json-stringify-0.0.2.tgz#dc0f1dbeab6bc1ab15f40d4cce4f38b75b17a334"
+
 prettycli@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/prettycli/-/prettycli-1.4.3.tgz#b28ec2aad9de07ae1fd75ef294fb54cbdee07ed5"
