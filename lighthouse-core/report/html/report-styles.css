@@ -325,10 +325,6 @@
   padding: 11px var(--text-indent);
 }
 
-.lh-metric__header {
-  display: flex;
-}
-
 .lh-metric__details {
   order: -1;
 }
@@ -558,7 +554,7 @@
 .lh-audit-group--metrics .lh-audit-group__header::before {
   background-image: var(--av-timer-icon-url);
 }
-.lh-audit-group--notapplicable .lh-audit-group__header::before {
+.lh-audit-group--not-applicable .lh-audit-group__header::before {
   background-image: var(--remove-circle-icon-url);
 }
 
