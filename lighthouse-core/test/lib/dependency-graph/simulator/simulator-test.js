@@ -91,6 +91,19 @@ describe('DependencyGraph/Simulator', () => {
       assertNodeTiming(result, nodeD, {startTime: 2400, endTime: 3200});
     });
 
+    it('should simulate cached network graphs', () => {
+      const nodeA = new NetworkNode(request({startTime: 0, endTime: 1, _fromDiskCache: true}));
+      const nodeB = new NetworkNode(request({startTime: 0, endTime: 3, _fromDiskCache: true}));
+      nodeA.addDependent(nodeB);
+
+      const simulator = new Simulator({serverResponseTimeByOrigin});
+      const result = simulator.simulate(nodeA);
+      // should be ~8ms each for A, B
+      assert.equal(result.timeInMs, 16);
+      assertNodeTiming(result, nodeA, {startTime: 0, endTime: 8});
+      assertNodeTiming(result, nodeB, {startTime: 8, endTime: 16});
+    });
+
     it('should simulate basic CPU queue graphs', () => {
       const nodeA = new NetworkNode(request({}));
       const nodeB = new CpuNode(cpuTask({duration: 100}));

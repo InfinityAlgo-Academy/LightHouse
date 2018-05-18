@@ -178,11 +178,15 @@ class Simulator {
 
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
-    // Start a network request if we're not at max requests and a connection is available
-    const numberOfActiveRequests = this._numberInProgress(node.type);
-    if (numberOfActiveRequests >= this._maximumConcurrentRequests) return;
-    const connection = this._acquireConnection(/** @type {NetworkNode} */ (node).record);
-    if (!connection) return;
+    const networkNode = /** @type {NetworkNode} */ (node);
+    // If a network request is cached, we can always start it, so skip the connection checks
+    if (!networkNode.fromDiskCache) {
+      // Start a network request if we're not at max requests and a connection is available
+      const numberOfActiveRequests = this._numberInProgress(node.type);
+      if (numberOfActiveRequests >= this._maximumConcurrentRequests) return;
+      const connection = this._acquireConnection(networkNode.record);
+      if (!connection) return;
+    }
 
     this._markNodeAsInProgress(node, totalElapsedTime);
     this._setTimingData(node, {
@@ -209,32 +213,58 @@ class Simulator {
    */
   _estimateTimeRemaining(node) {
     if (node.type === Node.TYPES.CPU) {
-      const timingData = this._nodeTimings.get(node);
-      const multiplier = /** @type {CpuNode} */ (node).didPerformLayout()
-        ? this._layoutTaskMultiplier
-        : this._cpuSlowdownMultiplier;
-      const totalDuration = Math.min(
-        Math.round(/** @type {CpuNode} */ (node).event.dur / 1000 * multiplier),
-        DEFAULT_MAXIMUM_CPU_TASK_DURATION
+      return this._estimateCPUTimeRemaining(/** @type {CpuNode} */ (node));
+    } else if (node.type === Node.TYPES.NETWORK) {
+      return this._estimateNetworkTimeRemaining(/** @type {NetworkNode} */ (node));
+    } else {
+      throw new Error('Unsupported');
+    }
+  }
+
+  /**
+   * @param {CpuNode} cpuNode
+   * @return {number}
+   */
+  _estimateCPUTimeRemaining(cpuNode) {
+    const timingData = this._nodeTimings.get(cpuNode);
+    const multiplier = cpuNode.didPerformLayout()
+      ? this._layoutTaskMultiplier
+      : this._cpuSlowdownMultiplier;
+    const totalDuration = Math.min(
+      Math.round(cpuNode.event.dur / 1000 * multiplier),
+      DEFAULT_MAXIMUM_CPU_TASK_DURATION
+    );
+    const estimatedTimeElapsed = totalDuration - timingData.timeElapsed;
+    this._setTimingData(cpuNode, {estimatedTimeElapsed});
+    return estimatedTimeElapsed;
+  }
+
+  /**
+   * @param {NetworkNode} networkNode
+   * @return {number}
+   */
+  _estimateNetworkTimeRemaining(networkNode) {
+    const timingData = this._nodeTimings.get(networkNode);
+
+    let timeElapsed = 0;
+    if (networkNode.fromDiskCache) {
+      // Rough access time for seeking to location on disk and reading sequentially
+      // @see http://norvig.com/21-days.html#answers
+      const sizeInMb = (networkNode.record._resourceSize || 0) / 1024 / 1024;
+      timeElapsed = 8 + 20 * sizeInMb - timingData.timeElapsed;
+    } else {
+      // If we're estimating time remaining, we already acquired a connection for this record, definitely non-null
+      const connection = /** @type {TcpConnection} */ (this._acquireConnection(networkNode.record));
+      const calculation = connection.simulateDownloadUntil(
+        networkNode.record.transferSize - timingData.bytesDownloaded,
+        {timeAlreadyElapsed: timingData.timeElapsed, maximumTimeToElapse: Infinity}
       );
-      const estimatedTimeElapsed = totalDuration - timingData.timeElapsed;
-      this._setTimingData(node, {estimatedTimeElapsed});
-      return estimatedTimeElapsed;
+
+      timeElapsed = calculation.timeElapsed;
     }
 
-    if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
-
-    const record = /** @type {NetworkNode} */ (node).record;
-    const timingData = this._nodeTimings.get(node);
-    // If we're estimating time remaining, we already acquired a connection for this record, definitely non-null
-    const connection = /** @type {TcpConnection} */ (this._acquireConnection(record));
-    const calculation = connection.simulateDownloadUntil(
-      record.transferSize - timingData.bytesDownloaded,
-      {timeAlreadyElapsed: timingData.timeElapsed, maximumTimeToElapse: Infinity}
-    );
-
-    const estimatedTimeElapsed = calculation.timeElapsed + timingData.timeElapsedOvershoot;
-    this._setTimingData(node, {estimatedTimeElapsed});
+    const estimatedTimeElapsed = timeElapsed + timingData.timeElapsedOvershoot;
+    this._setTimingData(networkNode, {estimatedTimeElapsed});
     return estimatedTimeElapsed;
   }
 
@@ -261,7 +291,9 @@ class Simulator {
     const timingData = this._nodeTimings.get(node);
     const isFinished = timingData.estimatedTimeElapsed === timePeriodLength;
 
-    if (node.type === Node.TYPES.CPU) {
+    const networkNode = /** @type {NetworkNode} */ (node);
+
+    if (node.type === Node.TYPES.CPU || networkNode.fromDiskCache) {
       return isFinished
         ? this._markNodeAsComplete(node, totalElapsedTime)
         : (timingData.timeElapsed += timePeriodLength);
@@ -269,7 +301,7 @@ class Simulator {
 
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
-    const record = /** @type {NetworkNode} */ (node).record;
+    const record = networkNode.record;
     // If we're updating the progress, we already acquired a connection for this record, definitely non-null
     const connection = /** @type {TcpConnection} */ (this._acquireConnection(record));
     const calculation = connection.simulateDownloadUntil(
@@ -345,7 +377,11 @@ class Simulator {
       }
 
       if (!nodesInProgress.size) {
-        throw new Error('Failed to start a node, potential mismatch in original execution');
+        // interplay between fromDiskCache and connectionReused can be incorrect
+        // proceed with flexibleOrdering if we can, otherwise give up
+        if (this._flexibleOrdering) throw new Error('Failed to start a node');
+        this._flexibleOrdering = true;
+        continue;
       }
 
       // set the available throughput for all connections based on # inflight

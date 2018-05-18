@@ -50,7 +50,7 @@ class SpeedIndex extends MetricArtifact {
    * @return {LH.Gatherer.Simulation.Result}
    */
   getEstimateFromSimulation(simulationResult, extras) {
-    const fcpTimeInMs = extras.fcpResult.timing;
+    const fcpTimeInMs = extras.fcpResult.pessimisticEstimate.timeInMs;
     const estimate = extras.optimistic
       ? extras.speedline.speedIndex
       : SpeedIndex.computeLayoutBasedSpeedIndex(simulationResult.nodeTimings, fcpTimeInMs);

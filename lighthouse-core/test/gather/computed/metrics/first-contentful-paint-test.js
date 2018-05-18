@@ -19,7 +19,7 @@ describe('Metrics: FCP', () => {
     const settings = {throttlingMethod: 'simulate'};
     const result = await artifacts.requestFirstContentfulPaint({trace, devtoolsLog, settings});
 
-    assert.equal(Math.round(result.timing), 1272);
+    assert.equal(Math.round(result.timing), 1038);
     assert.equal(Math.round(result.optimisticEstimate.timeInMs), 611);
     assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 611);
     assert.equal(result.optimisticEstimate.nodeTimings.size, 2);

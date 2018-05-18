@@ -30,6 +30,7 @@ declare global {
       _transferSize?: number;
       /** Should use a default of 0 if not defined */
       _resourceSize?: number;
+      _fromDiskCache?: boolean;
 
       finished: boolean;
       requestMethod: string;

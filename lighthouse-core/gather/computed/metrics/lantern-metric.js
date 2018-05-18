@@ -97,8 +97,11 @@ class LanternMetricArtifact extends ComputedArtifact {
       Object.assign({}, extras, {optimistic: false})
     );
 
+    // Estimates under 1s don't really follow the normal curve fit, minimize the impact of the intercept
+    const interceptMultiplier = this.COEFFICIENTS.intercept > 0 ?
+      Math.min(1, optimisticEstimate.timeInMs / 1000) : 1;
     const timing =
-      this.COEFFICIENTS.intercept +
+      this.COEFFICIENTS.intercept * interceptMultiplier +
       this.COEFFICIENTS.optimistic * optimisticEstimate.timeInMs +
       this.COEFFICIENTS.pessimistic * pessimisticEstimate.timeInMs;
 
