@@ -9,9 +9,6 @@
 
 /** @typedef {import('./dom.js')} DOM */
 /** @typedef {import('./report-renderer.js')} ReportRenderer */
-/** @typedef {import('./report-renderer.js').AuditJSON} AuditJSON */
-/** @typedef {import('./report-renderer.js').CategoryJSON} CategoryJSON */
-/** @typedef {import('./report-renderer.js').GroupJSON} GroupJSON */
 /** @typedef {import('./details-renderer.js')} DetailsRenderer */
 /** @typedef {import('./util.js')} Util */
 
@@ -32,7 +29,7 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {AuditJSON} audit
+   * @param {LH.ReportResult.AuditRef} audit
    * @param {number} index
    * @return {Element}
    */
@@ -43,7 +40,7 @@ class CategoryRenderer {
 
   /**
    * Populate an DOM tree with audit details. Used by renderAudit and renderOpportunity
-   * @param {AuditJSON} audit
+   * @param {LH.ReportResult.AuditRef} audit
    * @param {number} index
    * @param {DocumentFragment} tmpl
    * @return {Element}
@@ -128,7 +125,7 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {CategoryJSON} category
+   * @param {LH.ReportResult.Category} category
    * @return {Element}
    */
   renderCategoryHeader(category) {
@@ -151,7 +148,7 @@ class CategoryRenderer {
   /**
    * Renders the group container for a group of audits. Individual audit elements can be added
    * directly to the returned element.
-   * @param {GroupJSON} group
+   * @param {LH.Result.ReportGroup} group
    * @param {{expandable: boolean, itemCount?: number}} opts
    * @return {Element}
    */
@@ -237,8 +234,8 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {Array<AuditJSON>} manualAudits
-   * @param {string} manualDescription
+   * @param {Array<LH.ReportResult.AuditRef>} manualAudits
+   * @param {string} [manualDescription]
    * @return {Element}
    */
   _renderManualAudits(manualAudits, manualDescription) {
@@ -261,7 +258,7 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {CategoryJSON} category
+   * @param {LH.ReportResult.Category} category
    * @return {DocumentFragment}
    */
   renderScoreGauge(category) {
@@ -295,8 +292,8 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {CategoryJSON} category
-   * @param {Object<string, GroupJSON>} groupDefinitions
+   * @param {LH.ReportResult.Category} category
+   * @param {Object<string, LH.Result.ReportGroup>} [groupDefinitions]
    * @return {Element}
    */
   render(category, groupDefinitions) {
@@ -308,7 +305,7 @@ class CategoryRenderer {
     const manualAudits = auditRefs.filter(audit => audit.result.scoreDisplayMode === 'manual');
     const nonManualAudits = auditRefs.filter(audit => !manualAudits.includes(audit));
 
-    /** @type {Object<string, {passed: Array<AuditJSON>, failed: Array<AuditJSON>, notApplicable: Array<AuditJSON>}>} */
+    /** @type {Object<string, {passed: Array<LH.ReportResult.AuditRef>, failed: Array<LH.ReportResult.AuditRef>, notApplicable: Array<LH.ReportResult.AuditRef>}>} */
     const auditsGroupedByGroup = {};
     const auditsUngrouped = {passed: [], failed: [], notApplicable: []};
 
@@ -341,14 +338,16 @@ class CategoryRenderer {
     const passedElements = /** @type {Array<Element>} */ ([]);
     const notApplicableElements = /** @type {Array<Element>} */ ([]);
 
-    auditsUngrouped.failed.forEach((/** @type {AuditJSON} */ audit, i) =>
+    auditsUngrouped.failed.forEach((/** @type {LH.ReportResult.AuditRef} */ audit, i) =>
       failedElements.push(this.renderAudit(audit, i)));
-    auditsUngrouped.passed.forEach((/** @type {AuditJSON} */ audit, i) =>
+    auditsUngrouped.passed.forEach((/** @type {LH.ReportResult.AuditRef} */ audit, i) =>
       passedElements.push(this.renderAudit(audit, i)));
-    auditsUngrouped.notApplicable.forEach((/** @type {AuditJSON} */ audit, i) =>
+    auditsUngrouped.notApplicable.forEach((/** @type {LH.ReportResult.AuditRef} */ audit, i) =>
       notApplicableElements.push(this.renderAudit(audit, i)));
 
     Object.keys(auditsGroupedByGroup).forEach(groupId => {
+      if (!groupDefinitions) return; // We never reach here if there aren't groups, but TSC needs convincing
+
       const group = groupDefinitions[groupId];
       const groups = auditsGroupedByGroup[groupId];
 

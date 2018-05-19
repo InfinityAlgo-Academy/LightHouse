@@ -35,6 +35,21 @@ declare global {
     ReportUIFeatures: typeof _ReportUIFeatures;
     Util: typeof _Util;
   }
+
+  module LH {
+    export interface ReportResult extends Result {
+      categories: Record<string, ReportResult.Category>;
+      reportCategories: Array<ReportResult.Category>;
+    }
+    export module ReportResult {
+      export interface Category extends Result.Category {
+        auditRefs: Array<AuditRef>
+      }
+      export interface AuditRef extends Result.AuditRef {
+        result: Audit.Result
+      }
+    }
+  }
 }
 
 // empty export to keep file a module
