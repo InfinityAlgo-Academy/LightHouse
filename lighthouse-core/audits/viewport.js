@@ -40,10 +40,10 @@ class Viewport extends Audit {
     const parsedProps = Parser.parseMetaViewPortContent(artifacts.Viewport);
 
     if (Object.keys(parsedProps.unknownProperties).length) {
-      warnings.push(`Invalid properties found: ${JSON.stringify(parsedProps.unknownProperties)}.`);
+      warnings.push(`Invalid properties found: ${JSON.stringify(parsedProps.unknownProperties)}`);
     }
     if (Object.keys(parsedProps.invalidValues).length) {
-      warnings.push(`Invalid values found: ${JSON.stringify(parsedProps.invalidValues)}.`);
+      warnings.push(`Invalid values found: ${JSON.stringify(parsedProps.invalidValues)}`);
     }
 
     const viewportProps = parsedProps.validProperties;

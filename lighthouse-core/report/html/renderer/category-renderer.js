@@ -88,9 +88,20 @@ class CategoryRenderer {
       const explEl = this.dom.createChildOf(titleEl, 'div', 'lh-debug lh-debug--explanation');
       explEl.textContent = audit.result.explanation;
     }
-    if (audit.result.warnings && audit.result.warnings.length > 0) {
-      const warningsEl = this.dom.createChildOf(titleEl, 'div', 'lh-debug lh-debug--warnings');
-      warningsEl.textContent = 'Warnings: ' + audit.result.warnings.join(', ');
+    const warnings = audit.result.warnings;
+    if (!warnings || warnings.length === 0) return auditEl;
+
+    // Add list of warnings or singular warning
+    const warningsEl = this.dom.createChildOf(titleEl, 'div', 'lh-debug lh-debug--warnings');
+    if (warnings.length === 1) {
+      warningsEl.textContent = `Warning: ${warnings.join('')}`;
+    } else {
+      warningsEl.textContent = 'Warnings: ';
+      const warningsUl = this.dom.createChildOf(warningsEl, 'ul');
+      for (const warning of warnings) {
+        const item = this.dom.createChildOf(warningsUl, 'li');
+        item.textContent = warning;
+      }
     }
     return auditEl;
   }
