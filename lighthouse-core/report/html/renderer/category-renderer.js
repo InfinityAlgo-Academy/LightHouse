@@ -85,8 +85,12 @@ class CategoryRenderer {
       const tooltip = this.dom.createChildOf(textEl, 'div', 'tooltip lh-debug');
       tooltip.textContent = audit.result.errorMessage || 'Report error: no audit information';
     } else if (audit.result.explanation) {
-      const explanationEl = this.dom.createChildOf(titleEl, 'div', 'lh-debug');
-      explanationEl.textContent = audit.result.explanation;
+      const explEl = this.dom.createChildOf(titleEl, 'div', 'lh-debug lh-debug--explanation');
+      explEl.textContent = audit.result.explanation;
+    }
+    if (audit.result.warnings && audit.result.warnings.length > 0) {
+      const warningsEl = this.dom.createChildOf(titleEl, 'div', 'lh-debug lh-debug--warnings');
+      warningsEl.textContent = 'Warnings: ' + audit.result.warnings.join(', ');
     }
     return auditEl;
   }

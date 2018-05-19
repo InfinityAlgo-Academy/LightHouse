@@ -593,10 +593,17 @@
 .lh-debug {
   font-size: var(--caption-font-size);
   line-height: var(--caption-line-height);
-  color: var(--fail-color);
   margin-bottom: 3px;
 }
 
+.lh-debug--explanation {
+  color: var(--fail-color);
+
+}
+.lh-debug--warnings {
+  color: var(--average-color);
+
+}
 
 /* Report */
 
