@@ -7,6 +7,10 @@
 
 /* global LighthouseReportViewer, Logger */
 
+/**
+ * @param {string} src
+ * @return {Promise}
+ */
 function loadScript(src) {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
@@ -28,19 +32,26 @@ if (!('URLSearchParams' in window)) {
 // Lazy load polyfills that are needed. If any of the load promises fails,
 // stop and don't create a report.
 Promise.all(loadPolyfillPromises).then(_ => {
-  window.logger = new Logger(document.querySelector('#lh-log'));
+  const logEl = document.querySelector('#lh-log');
+  if (!logEl) {
+    throw new Error('logger element not found');
+  }
+  // TODO: switch all global uses of logger to `lh-log` events.
+  window.logger = new Logger(logEl);
 
   // Listen for log events from main report.
   document.addEventListener('lh-log', e => {
-    switch (e.detail.cmd) {
+    const ce = /** @type {CustomEvent<{cmd: string, msg: string}>} */ (e);
+
+    switch (ce.detail.cmd) {
       case 'log':
-        window.logger.log(e.detail.msg);
+        window.logger.log(ce.detail.msg);
         break;
       case 'warn':
-        window.logger.warn(e.detail.msg);
+        window.logger.warn(ce.detail.msg);
         break;
       case 'error':
-        window.logger.error(e.detail.msg);
+        window.logger.error(ce.detail.msg);
         break;
       case 'hide':
         window.logger.hide();
@@ -50,8 +61,11 @@ Promise.all(loadPolyfillPromises).then(_ => {
 
   // Listen for analytics events from main report.
   document.addEventListener('lh-analytics', e => {
+    const ce = /** @type {CustomEvent<{cmd: string, fields: UniversalAnalytics.FieldsObject}>} */
+      (e);
+
     if (window.ga) {
-      window.ga(e.detail.cmd, e.detail.fields);
+      window.ga(ce.detail.cmd, ce.detail.fields);
     }
   });
 

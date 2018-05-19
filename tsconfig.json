@@ -21,7 +21,6 @@
     "lighthouse-cli/**/*.js",
     "lighthouse-core/**/*.js",
     "./typings/*.d.ts",
-    
   ],
   "exclude": [
     "lighthouse-cli/test/**/*.js",

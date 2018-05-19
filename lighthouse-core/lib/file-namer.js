@@ -44,6 +44,7 @@ function getUrlConstructor() {
   }
 }
 
+// @ts-ignore - suppress `module` error for type-checking in a browser context.
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {getFilenamePrefix};
 }
