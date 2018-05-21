@@ -44,7 +44,7 @@
   --display-value-gray: hsl(216, 5%, 39%);
   --report-width: calc(60 * var(--body-font-size));
   --report-content-width: calc(var(--report-width));
-  --report-header-height: 202px;
+  --report-header-height: 161px;
   --report-header-color: #202124;
   --navitem-font-size: var(--body-font-size);
   --navitem-line-height: var(--body-line-height);
@@ -656,7 +656,7 @@
   justify-content: center;
   overflow-x: hidden;
   position: relative;
-  padding-bottom: calc(var(--section-indent) * 2);
+  padding: var(--section-indent) calc(var(--section-indent) / 2) calc(var(--section-indent) * 2);
 }
 .lh-scores-header__solo {
   padding: 0;
@@ -665,9 +665,10 @@
 
 .lh-scorescale {
   color: var(--medium-75-gray);
-  padding: 0 var(--section-indent) 0 0;
+  padding: 0 calc(var(--section-indent) * 1.5) 0;
   text-align: right;
   transform-origin: bottom right;
+  will-change: opacity; /* opacity is changed on scroll */
 }
 
 .lh-scorescale-range {
