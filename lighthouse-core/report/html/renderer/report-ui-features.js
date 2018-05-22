@@ -130,7 +130,6 @@ class ReportUIFeatures {
     this.productInfo = this._dom.find('.lh-product-info', this._document);
     this.toolbar = this._dom.find('.lh-toolbar', this._document);
     this.toolbarMetadata = this._dom.find('.lh-toolbar__metadata', this._document);
-    this.env = this._dom.find('.lh-env', this._document);
 
     // @ts-ignore - TODO: move off CSSOM to support other browsers
     this.headerHeight = this.headerBackground.computedStyleMap().get('height').value;
@@ -246,7 +245,6 @@ class ReportUIFeatures {
     // Start showing the productinfo when we are at the 50% mark of our animation
     const opacity = scrollPct < 0.5 ? 0 : (scrollPct - 0.5) * 2;
     this.productInfo.style.opacity = this.toolbarMetadata.style.opacity = opacity.toString();
-    this.env.style.transform = `translateY(${Math.max(0, heightDiff * scrollPct - 6)}px)`;
 
     this.isAnimatingHeader = false;
   }

@@ -65,23 +65,11 @@ class ReportRenderer {
         Util.formatDateTime(report.fetchTime);
     this._dom.find('.lh-product-info__version', header).textContent = report.lighthouseVersion;
     const url = /** @type {HTMLAnchorElement} */ (this._dom.find('.lh-metadata__url', header));
-    url.href = report.finalUrl;
-    url.textContent = report.finalUrl;
     const toolbarUrl = /** @type {HTMLAnchorElement}*/ (this._dom.find('.lh-toolbar__url', header));
-    toolbarUrl.href = report.finalUrl;
-    toolbarUrl.textContent = report.finalUrl;
+    url.href = url.textContent = toolbarUrl.href = toolbarUrl.textContent = report.finalUrl;
 
-    this._dom.find('.lh-env__item__ua', header).textContent = report.userAgent;
-
-    const env = this._dom.find('.lh-env__items', header);
-    const environment = Util.getEnvironmentDisplayValues(report.configSettings || {});
-    environment.forEach(runtime => {
-      const item = this._dom.cloneTemplate('#tmpl-lh-env__items', env);
-      this._dom.find('.lh-env__name', item).textContent = runtime.name;
-      this._dom.find('.lh-env__description', item).textContent = runtime.description;
-      env.appendChild(item);
-    });
-
+    const emulationDescriptions = Util.getEmulationDescriptions(report.configSettings || {});
+    this._dom.find('.lh-config__emulation', header).textContent = emulationDescriptions.summary;
     return header;
   }
 
@@ -91,9 +79,23 @@ class ReportRenderer {
    */
   _renderReportFooter(report) {
     const footer = this._dom.cloneTemplate('#tmpl-lh-footer', this._templateContext);
+
+    const env = this._dom.find('.lh-env__items', footer);
+    env.id = 'runtime-settings';
+    const envValues = Util.getEnvironmentDisplayValues(report.configSettings || {});
+    [
+      {name: 'URL', description: report.finalUrl},
+      {name: 'Fetch time', description: Util.formatDateTime(report.fetchTime)},
+      ...envValues,
+      {name: 'User agent', description: report.userAgent},
+    ].forEach(runtime => {
+      const item = this._dom.cloneTemplate('#tmpl-lh-env__items', env);
+      this._dom.find('.lh-env__name', item).textContent = `${runtime.name}:`;
+      this._dom.find('.lh-env__description', item).textContent = runtime.description;
+      env.appendChild(item);
+    });
+
     this._dom.find('.lh-footer__version', footer).textContent = report.lighthouseVersion;
-    this._dom.find('.lh-footer__timestamp', footer).textContent =
-        Util.formatDateTime(report.fetchTime);
     return footer;
   }
 

@@ -314,15 +314,15 @@ class Util {
 
     return [
       {
-        name: 'Device Emulation',
+        name: 'Device',
         description: emulationDesc.deviceEmulation,
       },
       {
-        name: 'Network Throttling',
+        name: 'Network throttling',
         description: emulationDesc.networkThrottling,
       },
       {
-        name: 'CPU Throttling',
+        name: 'CPU throttling',
         description: emulationDesc.cpuThrottling,
       },
     ];
@@ -330,11 +330,12 @@ class Util {
 
   /**
    * @param {LH.Config.Settings} settings
-   * @return {{deviceEmulation: string, networkThrottling: string, cpuThrottling: string}}
+   * @return {{deviceEmulation: string, networkThrottling: string, cpuThrottling: string, summary: string}}
    */
   static getEmulationDescriptions(settings) {
     let cpuThrottling;
     let networkThrottling;
+    let summary;
 
     const throttling = settings.throttling;
 
@@ -342,6 +343,7 @@ class Util {
       case 'provided':
         cpuThrottling = 'Provided by environment';
         networkThrottling = 'Provided by environment';
+        summary = 'No throttling applied';
         break;
       case 'devtools': {
         const {cpuSlowdownMultiplier, requestLatencyMs} = throttling;
@@ -349,6 +351,7 @@ class Util {
         networkThrottling = `${Util.formatNumber(requestLatencyMs)}${NBSP}ms HTTP RTT, ` +
           `${Util.formatNumber(throttling.downloadThroughputKbps)}${NBSP}Kbps down, ` +
           `${Util.formatNumber(throttling.uploadThroughputKbps)}${NBSP}Kbps up (DevTools)`;
+        summary = 'Throttled Fast 3G network';
         break;
       }
       case 'simulate': {
@@ -356,17 +359,21 @@ class Util {
         cpuThrottling = `${Util.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
         networkThrottling = `${Util.formatNumber(rttMs)}${NBSP}ms TCP RTT, ` +
           `${Util.formatNumber(throughputKbps)}${NBSP}Kbps throughput (Simulated)`;
+        summary = 'Simulated Fast 3G network';
         break;
       }
       default:
         cpuThrottling = 'Unknown';
         networkThrottling = 'Unknown';
+        summary = 'Unknown';
     }
 
+    const deviceEmulation = settings.disableDeviceEmulation ? 'No emulation' : 'Emulated Nexus 5X';
     return {
-      deviceEmulation: settings.disableDeviceEmulation ? 'Disabled' : 'Nexus 5X',
+      deviceEmulation,
       cpuThrottling,
       networkThrottling,
+      summary: `${deviceEmulation}, ${summary}`,
     };
   }
 }

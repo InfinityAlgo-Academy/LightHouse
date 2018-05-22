@@ -70,8 +70,8 @@ describe('util helpers', () => {
 
   it('builds device emulation string', () => {
     const get = opts => Util.getEmulationDescriptions(opts).deviceEmulation;
-    assert.equal(get({disableDeviceEmulation: true}), 'Disabled');
-    assert.equal(get({disableDeviceEmulation: false}), 'Nexus 5X');
+    assert.equal(get({disableDeviceEmulation: true}), 'No emulation');
+    assert.equal(get({disableDeviceEmulation: false}), 'Emulated Nexus 5X');
   });
 
   it('builds throttling strings when provided', () => {
