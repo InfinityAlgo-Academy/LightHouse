@@ -29,7 +29,7 @@ describe('Performance: predictive performance audit', () => {
       assert.equal(Math.round(output.rawValue), 4309);
       assert.equal(output.displayValue, '4,310\xa0ms');
 
-      const valueOf = name => Math.round(output.extendedInfo.value[name]);
+      const valueOf = name => Math.round(output.details.items[0][name]);
       assert.equal(valueOf('roughEstimateOfFCP'), 1038);
       assert.equal(valueOf('optimisticFCP'), 611);
       assert.equal(valueOf('pessimisticFCP'), 611);
