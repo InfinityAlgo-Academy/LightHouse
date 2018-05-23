@@ -132,6 +132,7 @@ class URLShim extends URL {
   }
 }
 
+URLShim.URL = URL;
 URLShim.URLSearchParams = (typeof self !== 'undefined' && self.URLSearchParams) ||
     require('url').URLSearchParams;
 

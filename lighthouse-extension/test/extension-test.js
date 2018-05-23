@@ -170,4 +170,9 @@ describe('Lighthouse chrome extension', function() {
     const errors = auditErrors.filter(item => item.debugString.includes('Audit error:'));
     assert.deepStrictEqual(errors, [], 'Audit errors found within the report');
   });
+
+  it('should pass the is-crawlable audit', async () => {
+    // this audit has regressed in the extension twice, so make sure it passes
+    assert.ok(await extensionPage.$('#is-crawlable.lh-audit--pass'), 'did not pass is-crawlable');
+  });
 });
