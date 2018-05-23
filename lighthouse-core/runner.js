@@ -40,7 +40,7 @@ class Runner {
       // save the requestedUrl provided by the user
       const rawRequestedUrl = opts.url;
       if (typeof rawRequestedUrl !== 'string' || rawRequestedUrl.length === 0) {
-        throw new Error('You must provide a url to the runner');
+        throw new Error(`You must provide a url to the runner. '${rawRequestedUrl}' provided.`);
       }
 
       let parsedURL;

@@ -122,14 +122,23 @@ class ExtensionConnection extends Connection {
         if (chrome.runtime.lastError) {
           return reject(chrome.runtime.lastError);
         }
+
+        const errMessage = 'Couldn\'t resolve current tab. Check your URL, reload, and try again.';
         if (tabs.length === 0) {
-          const message = 'Couldn\'t resolve current tab. Check your URL, reload, and try again.';
-          return reject(new Error(message));
+          return reject(new Error(errMessage));
         }
         if (tabs.length > 1) {
           log.warn('ExtensionConnection', '_queryCurrentTab returned multiple tabs');
         }
-        resolve(tabs[0]);
+
+        const firstUrledTab = tabs.find(tab => !!tab.url);
+        if (!firstUrledTab) {
+          const tabIds = tabs.map(tab => tab.id).join(', ');
+          const message = errMessage + ` Found ${tabs.length} tab(s) with id(s) [${tabIds}].`;
+          return reject(new Error(message));
+        }
+
+        resolve(firstUrledTab);
       }));
     });
   }
