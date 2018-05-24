@@ -3009,31 +3009,35 @@
       "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
       "auditRefs": [
         {
+          "id": "load-fast-enough-for-pwa",
+          "weight": 7
+        },
+        {
+          "id": "works-offline",
+          "weight": 5
+        },
+        {
+          "id": "webapp-install-banner",
+          "weight": 3
+        },
+        {
+          "id": "is-on-https",
+          "weight": 2
+        },
+        {
+          "id": "redirects-http",
+          "weight": 2
+        },
+        {
+          "id": "viewport",
+          "weight": 2
+        },
+        {
           "id": "service-worker",
           "weight": 1
         },
         {
-          "id": "works-offline",
-          "weight": 1
-        },
-        {
           "id": "without-javascript",
-          "weight": 1
-        },
-        {
-          "id": "is-on-https",
-          "weight": 1
-        },
-        {
-          "id": "redirects-http",
-          "weight": 1
-        },
-        {
-          "id": "load-fast-enough-for-pwa",
-          "weight": 1
-        },
-        {
-          "id": "webapp-install-banner",
           "weight": 1
         },
         {
@@ -3042,10 +3046,6 @@
         },
         {
           "id": "themed-omnibox",
-          "weight": 1
-        },
-        {
-          "id": "viewport",
           "weight": 1
         },
         {
@@ -3066,7 +3066,7 @@
         }
       ],
       "id": "pwa",
-      "score": 0.36
+      "score": 0.42
     },
     "accessibility": {
       "title": "Accessibility",
