@@ -75,7 +75,6 @@ class Redirects extends Audit {
         throw new Error('Could not find redirects in graph');
       }
 
-      // @ts-ignore TODO(phulce): split NodeTiming typedef, these are always defined
       const wastedMs = redirectedTiming.startTime - initialTiming.startTime;
       totalWastedMs += wastedMs;
 

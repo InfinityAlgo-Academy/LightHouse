@@ -102,8 +102,7 @@ class Interactive extends MetricArtifact {
     return Array.from(nodeTimings.entries())
       .filter(([node, timing]) => {
         if (node.type !== Node.TYPES.CPU) return false;
-        if (!timing.endTime || !timing.startTime) return false;
-        return timing.endTime - timing.startTime > duration;
+        return timing.duration > duration;
       })
       .map(([_, timing]) => timing.endTime)
       .reduce((max, x) => Math.max(max || 0, x || 0), 0);

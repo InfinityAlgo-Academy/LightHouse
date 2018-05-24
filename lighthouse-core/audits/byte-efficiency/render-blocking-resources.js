@@ -102,8 +102,7 @@ class RenderBlockingResources extends Audit {
       node.traverse(node => deferredNodeIds.add(node.id));
 
       // "wastedMs" is the download time of the network request, responseReceived - requestSent
-      // @ts-ignore - TODO(phulce): nodeTiming.startTime/endTime shouldn't be optional by this point?
-      const wastedMs = Math.round(nodeTiming.endTime - nodeTiming.startTime);
+      const wastedMs = Math.round(nodeTiming.duration);
       if (wastedMs < MINIMUM_WASTED_MS) continue;
 
       results.push({

@@ -96,7 +96,6 @@ class SpeedIndex extends MetricArtifact {
     const layoutWeights = [];
     for (const [node, timing] of nodeTimings.entries()) {
       if (node.type !== Node.TYPES.CPU) continue;
-      if (!timing.startTime || !timing.endTime) continue;
 
       const cpuNode = /** @type {CPUNode} */ (node);
       if (cpuNode.childEvents.some(x => x.name === 'Layout')) {

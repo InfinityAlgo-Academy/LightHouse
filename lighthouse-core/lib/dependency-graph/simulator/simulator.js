@@ -56,7 +56,9 @@ class Simulator {
 
     // Properties reset on every `.simulate` call but duplicated here for type checking
     this._flexibleOrdering = false;
+    /** @type {Map<Node, NodeTimingIntermediate>} */
     this._nodeTimings = new Map();
+    /** @type {Map<string, number>} */
     this._numberInProgressByType = new Map();
     this._nodes = {};
     // @ts-ignore
@@ -101,12 +103,22 @@ class Simulator {
 
   /**
    * @param {Node} node
-   * @param {LH.Gatherer.Simulation.NodeTiming} values
+   * @param {NodeTimingIntermediate} values
    */
   _setTimingData(node, values) {
     const timingData = this._nodeTimings.get(node) || {};
     Object.assign(timingData, values);
     this._nodeTimings.set(node, timingData);
+  }
+
+  /**
+   * @param {Node} node
+   * @return {NodeTimingIntermediate}
+   */
+  _getTimingData(node) {
+    const timingData = this._nodeTimings.get(node);
+    if (!timingData) throw new Error(`Unable to get timing data for node ${node.id}`);
+    return timingData;
   }
 
   /**
@@ -226,7 +238,7 @@ class Simulator {
    * @return {number}
    */
   _estimateCPUTimeRemaining(cpuNode) {
-    const timingData = this._nodeTimings.get(cpuNode);
+    const timingData = this._getTimingData(cpuNode);
     const multiplier = cpuNode.didPerformLayout()
       ? this._layoutTaskMultiplier
       : this._cpuSlowdownMultiplier;
@@ -244,7 +256,7 @@ class Simulator {
    * @return {number}
    */
   _estimateNetworkTimeRemaining(networkNode) {
-    const timingData = this._nodeTimings.get(networkNode);
+    const timingData = this._getTimingData(networkNode);
 
     let timeElapsed = 0;
     if (networkNode.fromDiskCache) {
@@ -288,7 +300,7 @@ class Simulator {
    * @param {number} totalElapsedTime
    */
   _updateProgressMadeInTimePeriod(node, timePeriodLength, totalElapsedTime) {
-    const timingData = this._nodeTimings.get(node);
+    const timingData = this._getTimingData(node);
     const isFinished = timingData.estimatedTimeElapsed === timePeriodLength;
 
     const networkNode = /** @type {NetworkNode} */ (node);
@@ -324,6 +336,20 @@ class Simulator {
       timingData.timeElapsedOvershoot += calculation.timeElapsed - timePeriodLength;
       timingData.bytesDownloaded += calculation.bytesDownloaded;
     }
+  }
+
+  _computeFinalNodeTimings() {
+    /** @type {Map<Node, LH.Gatherer.Simulation.NodeTiming>} */
+    const nodeTimings = new Map();
+    for (const [node, timing] of this._nodeTimings) {
+      nodeTimings.set(node, {
+        startTime: timing.startTime,
+        endTime: timing.endTime,
+        duration: timing.endTime - timing.startTime,
+      });
+    }
+
+    return nodeTimings;
   }
 
   /**
@@ -405,9 +431,20 @@ class Simulator {
 
     return {
       timeInMs: totalElapsedTime,
-      nodeTimings: this._nodeTimings,
+      nodeTimings: this._computeFinalNodeTimings(),
     };
   }
 }
 
 module.exports = Simulator;
+
+/**
+ * @typedef NodeTimingIntermediate
+ * @property {number} [startTime]
+ * @property {number} [endTime]
+ * @property {number} [queuedTime]
+ * @property {number} [estimatedTimeElapsed]
+ * @property {number} [timeElapsed]
+ * @property {number} [timeElapsedOvershoot]
+ * @property {number} [bytesDownloaded]
+ */

@@ -51,13 +51,9 @@ declare global {
       }
 
       export interface NodeTiming {
-        startTime?: number;
-        endTime?: number;
-        queuedTime?: number;
-        estimatedTimeElapsed?: number;
-        timeElapsed?: number;
-        timeElapsedOvershoot?: number;
-        bytesDownloaded?: number;
+        startTime: number;
+        endTime: number;
+        duration: number;
       }
 
       export interface Result {

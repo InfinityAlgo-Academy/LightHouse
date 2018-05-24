@@ -83,13 +83,12 @@ class LanternEstimatedInputLatency extends LanternMetricArtifact {
     const events = [];
     for (const [node, timing] of nodeTimings.entries()) {
       if (node.type !== Node.TYPES.CPU) continue;
-      if (!timing.endTime || !timing.startTime) continue;
       if (timing.endTime < fmpTimeInMs) continue;
 
       events.push({
         start: timing.startTime,
         end: timing.endTime,
-        duration: timing.endTime - timing.startTime,
+        duration: timing.duration,
       });
     }
 
