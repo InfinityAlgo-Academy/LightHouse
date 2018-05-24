@@ -22,7 +22,7 @@ describe('Resources are fetched over http/2', () => {
       requestNetworkRecords: () => Promise.resolve(networkRecords),
     }).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.displayValue.match('3 requests were not'));
+      assert.ok(auditResult.displayValue.match('3 requests not'));
       assert.equal(auditResult.details.items.length, 3);
       assert.equal(auditResult.details.items[0].url, 'https://webtide.com/wp-content/plugins/wp-pagenavi/pagenavi-css.css?ver=2.70');
       const headers = auditResult.details.headings;
@@ -38,7 +38,7 @@ describe('Resources are fetched over http/2', () => {
       devtoolsLogs: {[UsesHTTP2Audit.DEFAULT_PASS]: []},
       requestNetworkRecords: () => Promise.resolve(entryWithHTTP1),
     }).then(auditResult => {
-      assert.ok(auditResult.displayValue.match('1 request was not'));
+      assert.ok(auditResult.displayValue.match('1 request not'));
     });
   });
 

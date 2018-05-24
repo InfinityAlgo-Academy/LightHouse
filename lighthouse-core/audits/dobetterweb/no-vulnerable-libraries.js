@@ -171,9 +171,9 @@ class NoVulnerableLibrariesAudit extends Audit {
 
     let displayValue = '';
     if (totalVulns > 1) {
-      displayValue = `${totalVulns} vulnerabilities detected.`;
+      displayValue = `${totalVulns} vulnerabilities detected`;
     } else if (totalVulns === 1) {
-      displayValue = `${totalVulns} vulnerability was detected.`;
+      displayValue = `${totalVulns} vulnerability detected`;
     }
 
     const headings = [

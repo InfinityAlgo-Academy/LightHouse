@@ -60,18 +60,34 @@ class ReportRenderer {
    * @return {DocumentFragment}
    */
   _renderReportHeader(report) {
-    const header = this._dom.cloneTemplate('#tmpl-lh-heading', this._templateContext);
-    this._dom.find('.lh-config__timestamp', header).textContent =
+    const el = this._dom.cloneTemplate('#tmpl-lh-heading', this._templateContext);
+    const domFragment = this._dom.cloneTemplate('#tmpl-lh-scores-wrapper', this._templateContext);
+    const placeholder = this._dom.find('.lh-scores-wrapper-placeholder', el);
+    /** @type {HTMLDivElement} */ (placeholder.parentNode).replaceChild(domFragment, placeholder);
+
+    this._dom.find('.lh-config__timestamp', el).textContent =
         Util.formatDateTime(report.fetchTime);
-    this._dom.find('.lh-product-info__version', header).textContent = report.lighthouseVersion;
-    const url = /** @type {HTMLAnchorElement} */ (this._dom.find('.lh-metadata__url', header));
-    const toolbarUrl = /** @type {HTMLAnchorElement}*/ (this._dom.find('.lh-toolbar__url', header));
-    url.href = url.textContent = toolbarUrl.href = toolbarUrl.textContent = report.finalUrl;
+    this._dom.find('.lh-product-info__version', el).textContent = report.lighthouseVersion;
+    const metadataUrl = /** @type {HTMLAnchorElement} */ (this._dom.find('.lh-metadata__url', el));
+    const toolbarUrl = /** @type {HTMLAnchorElement}*/ (this._dom.find('.lh-toolbar__url', el));
+    metadataUrl.href = metadataUrl.textContent = report.finalUrl;
+    toolbarUrl.href = toolbarUrl.textContent = report.finalUrl;
 
     const emulationDescriptions = Util.getEmulationDescriptions(report.configSettings || {});
-    this._dom.find('.lh-config__emulation', header).textContent = emulationDescriptions.summary;
-    return header;
+    this._dom.find('.lh-config__emulation', el).textContent = emulationDescriptions.summary;
+    return el;
   }
+
+  /**
+   * @return {Element}
+   */
+  _renderReportShortHeader() {
+    const shortHeaderContainer = this._dom.createElement('div', 'lh-header-container');
+    const wrapper = this._dom.cloneTemplate('#tmpl-lh-scores-wrapper', this._templateContext);
+    shortHeaderContainer.appendChild(wrapper);
+    return shortHeaderContainer;
+  }
+
 
   /**
    * @param {ReportJSON} report
@@ -124,12 +140,19 @@ class ReportRenderer {
    * @return {DocumentFragment}
    */
   _renderReport(report) {
-    const headerStickyContainer = this._dom.createElement('div', 'lh-header-sticky');
-    headerStickyContainer.appendChild(this._renderReportHeader(report));
-    const scoreContainer = this._dom.find('.lh-scores-container', headerStickyContainer);
+    let header;
+    const headerContainer = this._dom.createElement('div');
+    if (this._dom.isDevTools()) {
+      headerContainer.classList.add('lh-header-plain');
+      header = this._renderReportShortHeader();
+    } else {
+      headerContainer.classList.add('lh-header-sticky');
+      header = this._renderReportHeader(report);
+    }
+    headerContainer.appendChild(header);
+    const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
 
     const container = this._dom.createElement('div', 'lh-container');
-
     const reportSection = container.appendChild(this._dom.createElement('div', 'lh-report'));
 
     reportSection.appendChild(this._renderReportWarnings(report));
@@ -138,6 +161,8 @@ class ReportRenderer {
     const isSoloCategory = report.reportCategories.length === 1;
     if (!isSoloCategory) {
       scoreHeader = this._dom.createElement('div', 'lh-scores-header');
+    } else {
+      headerContainer.classList.add('lh-header--solo-category');
     }
 
     const detailsRenderer = new DetailsRenderer(this._dom);
@@ -162,14 +187,14 @@ class ReportRenderer {
 
     if (scoreHeader) {
       const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
-      scoreContainer.appendChild(scoreHeader);
-      scoreContainer.appendChild(scoreScale);
+      scoresContainer.appendChild(scoreHeader);
+      scoresContainer.appendChild(scoreScale);
     }
 
     reportSection.appendChild(this._renderReportFooter(report));
 
     const reportFragment = this._dom.createFragment();
-    reportFragment.appendChild(headerStickyContainer);
+    reportFragment.appendChild(headerContainer);
     reportFragment.appendChild(container);
 
     return reportFragment;

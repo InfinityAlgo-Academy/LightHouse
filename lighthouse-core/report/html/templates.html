@@ -99,6 +99,39 @@
   </div>
 </template>
 
+
+<!-- Lighthouse score container -->
+<template id="tmpl-lh-scores-wrapper">
+  <style>
+    .lh-scores-wrapper__background,
+    .lh-scores-wrapper__shadow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      border-radius: 8px;
+    }
+    .lh-scores-wrapper__shadow {
+      border-radius: 0;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 0px -2px
+    }
+    .lh-scores-container {
+      padding-bottom: calc(var(--section-indent) / 2);
+      position: relative;
+      width: 100%;
+    }
+  </style>
+  <div class="lh-scores-wrapper">
+    <div class="lh-scores-container">
+      <div class="lh-scores-wrapper__background"></div>
+      <div class="lh-scores-wrapper__shadow"></div>
+    </div>
+  </div>
+</template>
+
+
 <!-- Lighthouse header -->
 <template id="tmpl-lh-heading">
   <style>
@@ -149,39 +182,25 @@
       margin-top: -30px;
       transform: translateZ(1px);
     }
+    .lh-scores-wrapper__shadow {
+      opacity: 0;
+    }
     .lh-scores-wrapper__background,
     .lh-scores-wrapper__shadow {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
       box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
-      opacity: 1;
       border-radius: 8px;
       will-change: opacity, transform;
       transform-origin: top;
     }
-    .lh-scores-wrapper__shadow {
-      opacity: 0;
-      border-radius: 0;
-      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 0px -2px
-    }
-    .lh-scores-container {
-      padding-bottom: calc(var(--section-indent) / 2);
-      position: relative;
-      width: 100%;
-    }
+
     .lh-product-info, .lh-toolbar__metadata {
       align-items: center;
+      white-space: nowrap;
       color: #5F6369;
       display: flex;
-      font-size: 12px;
-      left: var(--section-indent);
+      font-size: calc(var(--body-font-size) * 0.9);
+      margin-left: var(--section-indent);
       opacity: 0;
-      position: absolute;
-      top: 50%;
       transform: translateY(-50%);
       will-change: opacity;
     }
@@ -192,18 +211,20 @@
     .lh-toolbar {
       height: 50px;
       position: absolute;
-      top: 0;
-      width: 100%;
+      top: 25px;
       will-change: transform;
+      display: flex;
+      width: calc(100% - 70px);  /* give room for export */
     }
     .lh-toolbar__metadata {
-      left: 25%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
     }
     .lh-toolbar__url {
       color: currentColor;
       display: block;
       white-space: nowrap;
-      font-size: 14px;
       margin-right: 2px;
     }
     .lh-export {
@@ -355,12 +376,7 @@
       </div>
     </div>
 
-    <div class="lh-scores-wrapper">
-      <div class="lh-scores-container">
-        <div class="lh-scores-wrapper__background"></div>
-        <div class="lh-scores-wrapper__shadow"></div>
-      </div>
-    </div>
+    <div class="lh-scores-wrapper-placeholder"></div>
 
     <div class="lh-toolbar">
       <div class="lh-product-info">
@@ -388,6 +404,7 @@
       </div>
     </div>
 </template>
+
 
 <!-- Lighthouse footer -->
 <template id="tmpl-lh-footer">

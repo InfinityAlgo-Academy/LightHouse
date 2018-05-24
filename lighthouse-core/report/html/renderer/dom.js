@@ -153,6 +153,14 @@ class DOM {
   }
 
   /**
+   * TODO(paulirish): import and conditionally apply the DevTools frontend subclasses instead of this
+   * @return {boolean}
+   */
+  isDevTools() {
+    return !!this._document.querySelector('.lh-devtools');
+  }
+
+  /**
    * Guaranteed context.querySelector. Always returns an element or throws if
    * nothing matches query.
    * @param {string} query

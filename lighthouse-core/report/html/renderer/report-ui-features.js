@@ -71,6 +71,8 @@ class ReportUIFeatures {
    * @param {ReportJSON} report
    */
   initFeatures(report) {
+    if (this._dom.isDevTools()) return;
+
     this.json = report;
     this._setupMediaQueryListeners();
     this._setupExportButton();

@@ -2448,7 +2448,7 @@
       "score": 0,
       "scoreDisplayMode": "binary",
       "rawValue": false,
-      "displayValue": "1 vulnerability was detected.",
+      "displayValue": "1 vulnerability detected",
       "details": {
         "type": "table",
         "headings": [
@@ -2559,7 +2559,7 @@
       "score": 0,
       "scoreDisplayMode": "binary",
       "rawValue": false,
-      "displayValue": "15 requests were not handled over HTTP/2",
+      "displayValue": "15 requests not served via HTTP/2",
       "details": {
         "type": "table",
         "headings": [
