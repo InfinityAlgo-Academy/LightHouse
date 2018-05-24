@@ -1,6 +1,6 @@
 {
   "name": "lighthouse",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-beta.0",
   "description": "Lighthouse",
   "main": "./lighthouse-core/index.js",
   "bin": {
