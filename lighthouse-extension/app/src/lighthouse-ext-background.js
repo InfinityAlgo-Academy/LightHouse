@@ -88,7 +88,7 @@ window.runLighthouseInExtension = function(options, categoryIDs) {
     .then(runnerResult => {
       // return enableOtherChromeExtensions(true).then(_ => {
       const blobURL = window.createReportPageAsBlob(runnerResult, 'extension');
-      chrome.windows.create({url: blobURL});
+      return new Promise(resolve => chrome.windows.create({url: blobURL}, resolve));
       // });
     }).catch(err => {
       // return enableOtherChromeExtensions(true).then(_ => {

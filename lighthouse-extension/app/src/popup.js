@@ -117,7 +117,7 @@ function createOptionItem(text, id, isChecked) {
  * @param {!Window} background Reference to the extension's background page.
  * @param {{selectedCategories: !Object<boolean>, useDevTools: boolean}} settings
  */
-function onGenerateReportButtonClick(background, settings) {
+async function onGenerateReportButtonClick(background, settings) {
   showRunningSubpage();
 
   const feedbackEl = document.querySelector('.feedback');
@@ -125,10 +125,15 @@ function onGenerateReportButtonClick(background, settings) {
 
   const {selectedCategories, useDevTools} = settings;
 
-  background.runLighthouseInExtension({
-    restoreCleanState: true,
-    flags: {throttlingMethod: useDevTools ? 'devtools' : 'simulate'},
-  }, selectedCategories).catch(err => {
+  try {
+    await background.runLighthouseInExtension({
+      restoreCleanState: true,
+      flags: {throttlingMethod: useDevTools ? 'devtools' : 'simulate'},
+    }, selectedCategories);
+
+    // Close popup once report is opened in a new tab
+    window.close();
+  } catch (err) {
     let message = err.message;
     let includeReportLink = true;
 
@@ -151,7 +156,7 @@ function onGenerateReportButtonClick(background, settings) {
 
     hideRunningSubpage();
     background.console.error(err);
-  });
+  }
 }
 
 /**
