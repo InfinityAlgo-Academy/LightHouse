@@ -109,7 +109,7 @@ class ReportRenderer {
       return this._dom.createElement('div');
     }
 
-    const container = this._dom.cloneTemplate('#tmpl-lh-run-warnings', this._templateContext);
+    const container = this._dom.cloneTemplate('#tmpl-lh-warnings--toplevel', this._templateContext);
     const warnings = this._dom.find('ul', container);
     for (const warningString of report.runWarnings) {
       const warning = warnings.appendChild(this._dom.createElement('li'));
@@ -177,7 +177,7 @@ class ReportRenderer {
 
   /**
    * Place the AuditResult into the auditDfn (which has just weight & group)
-   * @param {Object<string, AuditResultJSON>} audits
+   * @param {Object<string, LH.Audit.Result>} audits
    * @param {Array<CategoryJSON>} reportCategories
    */
   static smooshAuditResultsIntoCategories(audits, reportCategories) {
@@ -198,27 +198,11 @@ if (typeof module !== 'undefined' && module.exports) {
 
 /**
  * @typedef {{
-      rawValue: (number|boolean|undefined),
-      id: string,
-      title: string,
-      description: string,
-      explanation?: string,
-      errorMessage?: string,
-      displayValue?: string|Array<string|number>,
-      scoreDisplayMode: string,
-      error: boolean,
-      score: (number|null),
-      details?: DetailsJSON,
-  }} AuditResultJSON
- */
-
-/**
- * @typedef {{
       id: string,
       score: (number|null),
       weight: number,
       group?: string,
-      result: AuditResultJSON
+      result: LH.Audit.Result
   }} AuditJSON
  */
 
@@ -250,7 +234,7 @@ if (typeof module !== 'undefined' && module.exports) {
       finalUrl: string,
       runWarnings?: Array<string>,
       artifacts: {traces: {defaultPass: {traceEvents: Array}}},
-      audits: Object<string, AuditResultJSON>,
+      audits: Object<string, LH.Audit.Result>,
       categories: Object<string, CategoryJSON>,
       reportCategories: Array<CategoryJSON>,
       categoryGroups: Object<string, GroupJSON>,

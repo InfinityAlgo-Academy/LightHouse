@@ -60,10 +60,8 @@ class CategoryRenderer {
 
     const titleEl = this.dom.find('.lh-audit__title', auditEl);
     titleEl.appendChild(this.dom.convertMarkdownCodeSnippets(audit.result.title));
-    if (audit.result.description) {
-      this.dom.find('.lh-audit__description', auditEl)
+    this.dom.find('.lh-audit__description', auditEl)
         .appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.description));
-    }
 
     const header = /** @type {HTMLDetailsElement} */ (this.dom.find('details', auditEl));
     if (audit.result.details && audit.result.details.type) {
@@ -82,11 +80,26 @@ class CategoryRenderer {
       const textEl = this.dom.find('.lh-audit__display-text', auditEl);
       textEl.textContent = 'Error!';
       textEl.classList.add('tooltip-boundary');
-      const tooltip = this.dom.createChildOf(textEl, 'div', 'tooltip lh-debug');
+      const tooltip = this.dom.createChildOf(textEl, 'div', 'tooltip tooltip--error');
       tooltip.textContent = audit.result.errorMessage || 'Report error: no audit information';
     } else if (audit.result.explanation) {
-      const explanationEl = this.dom.createChildOf(titleEl, 'div', 'lh-debug');
-      explanationEl.textContent = audit.result.explanation;
+      const explEl = this.dom.createChildOf(titleEl, 'div', 'lh-audit-explanation');
+      explEl.textContent = audit.result.explanation;
+    }
+    const warnings = audit.result.warnings;
+    if (!warnings || warnings.length === 0) return auditEl;
+
+    // Add list of warnings or singular warning
+    const warningsEl = this.dom.createChildOf(titleEl, 'div', 'lh-warnings');
+    if (warnings.length === 1) {
+      warningsEl.textContent = `Warning: ${warnings.join('')}`;
+    } else {
+      warningsEl.textContent = 'Warnings: ';
+      const warningsUl = this.dom.createChildOf(warningsEl, 'ul');
+      for (const warning of warnings) {
+        const item = this.dom.createChildOf(warningsUl, 'li');
+        item.textContent = warning;
+      }
     }
     return auditEl;
   }

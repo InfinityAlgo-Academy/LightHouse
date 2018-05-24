@@ -166,7 +166,8 @@ describe('Lighthouse chrome extension', function() {
       });
     }
 
-    const auditErrors = await extensionPage.$$eval('.lh-debug', getDebugStrings, selectors);
+    const errorSelectors = '.lh-audit-explanation, .tooltip-error';
+    const auditErrors = await extensionPage.$$eval(errorSelectors, getDebugStrings, selectors);
     const errors = auditErrors.filter(item => item.debugString.includes('Audit error:'));
     assert.deepStrictEqual(errors, [], 'Audit errors found within the report');
   });

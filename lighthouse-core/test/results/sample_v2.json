@@ -4,9 +4,7 @@
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "requestedUrl": "http://localhost/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
-  "runWarnings": [
-    "Links to cross-origin destinations are unsafe: Unable to determine the destination for anchor tag. If not used as a hyperlink, consider removing target=_blank."
-  ],
+  "runWarnings": [],
   "audits": {
     "is-on-https": {
       "id": "is-on-https",

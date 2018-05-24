@@ -132,9 +132,9 @@ declare global {
       scoreDisplayMode: ScoreDisplayMode;
       title: string;
       id: string;
-      description?: string;
+      description: string;
       // TODO(bckenny): define details
-      details?: object;
+      details?: any;
     }
 
     export interface Results {

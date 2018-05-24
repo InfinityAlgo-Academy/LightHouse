@@ -30,7 +30,7 @@ describe('Mobile-friendly: viewport audit', () => {
     assert.equal(Audit.audit({Viewport: viewport}).rawValue, false);
     assert.equal(Audit.audit({
       Viewport: viewport,
-    }).warnings[0], 'Invalid properties found: {"nonsense":"true"}.');
+    }).warnings[0], 'Invalid properties found: {"nonsense":"true"}');
   });
 
   it('fails when HTML contains an invalid viewport meta tag value', () => {
@@ -38,15 +38,15 @@ describe('Mobile-friendly: viewport audit', () => {
     assert.equal(Audit.audit({Viewport: viewport}).rawValue, false);
     assert.equal(Audit.audit({
       Viewport: viewport,
-    }).warnings[0], 'Invalid values found: {"initial-scale":"microscopic"}.');
+    }).warnings[0], 'Invalid values found: {"initial-scale":"microscopic"}');
   });
 
   it('fails when HTML contains an invalid viewport meta tag key and value', () => {
     const viewport = 'nonsense=true, initial-scale=microscopic';
     const {rawValue, warnings} = Audit.audit({Viewport: viewport});
     assert.equal(rawValue, false);
-    assert.equal(warnings[0], 'Invalid properties found: {"nonsense":"true"}.');
-    assert.equal(warnings[1], 'Invalid values found: {"initial-scale":"microscopic"}.');
+    assert.equal(warnings[0], 'Invalid properties found: {"nonsense":"true"}');
+    assert.equal(warnings[1], 'Invalid values found: {"initial-scale":"microscopic"}');
   });
 
   it('passes when a valid viewport is provided', () => {
