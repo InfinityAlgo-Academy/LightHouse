@@ -206,20 +206,14 @@ class RenderBlockingResources extends Audit {
       displayValue = `${results.length} resource delayed first paint by ${wastedMs}ms`;
     }
 
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {
-        key: 'totalBytes',
-        itemType: 'bytes',
-        displayUnit: 'kb',
-        granularity: 0.01,
-        text: 'Size (KB)',
-      },
-      {key: 'wastedMs', itemType: 'ms', text: 'Download Time (ms)', granularity: 1},
+      {key: 'url', valueType: 'url', label: 'URL'},
+      {key: 'totalBytes', valueType: 'bytes', label: 'Size (KB)'},
+      {key: 'wastedMs', valueType: 'timespanMs', label: 'Download Time (ms)'},
     ];
 
-    const summary = {wastedMs};
-    const details = Audit.makeTableDetails(headings, results, summary);
+    const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
     return {
       displayValue,

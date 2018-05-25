@@ -135,9 +135,7 @@ module.exports = [
       'efficient-animated-content': {
         score: 0,
         details: {
-          summary: {
-            wastedMs: '>2000',
-          },
+          overallSavingsMs: '>2000',
           items: [
             {
               url: 'http://localhost:10200/dobetterweb/lighthouse-rotating.gif',

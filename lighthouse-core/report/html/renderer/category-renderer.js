@@ -105,7 +105,7 @@ class CategoryRenderer {
   }
 
   /**
-   * @return {!HTMLElement}
+   * @return {HTMLElement}
    */
   _createChevron() {
     const chevronTmpl = this.dom.cloneTemplate('#tmpl-lh-chevron', this.templateContext);
@@ -114,7 +114,7 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {!Element} element DOM node to populate with values.
+   * @param {Element} element DOM node to populate with values.
    * @param {number|null} score
    * @param {string} scoreDisplayMode
    * @return {Element}

@@ -41,13 +41,13 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.ByteEfficiencyProduct}
+   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
     const images = artifacts.OptimizedImages;
 
     /** @type {Array<{url: string, fromProtocol: boolean, isCrossOrigin: boolean, totalBytes: number, wastedBytes: number}>} */
-    const results = [];
+    const items = [];
     const warnings = [];
     for (const image of images) {
       if (image.failed) {
@@ -61,7 +61,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
       const url = URL.elideDataURI(image.url);
       const jpegSavings = UsesOptimizedImages.computeSavings(image);
 
-      results.push({
+      items.push({
         url,
         fromProtocol: image.fromProtocol,
         isCrossOrigin: !image.isSameOrigin,
@@ -70,17 +70,17 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
       });
     }
 
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
-      {key: 'url', itemType: 'thumbnail', text: ''},
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
-      {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1,
-        text: 'Potential Savings'},
+      {key: 'url', valueType: 'thumbnail', label: ''},
+      {key: 'url', valueType: 'url', label: 'URL'},
+      {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
+      {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings'},
     ];
 
     return {
       warnings,
-      results,
+      items,
       headings,
     };
   }

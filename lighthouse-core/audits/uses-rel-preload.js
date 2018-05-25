@@ -168,12 +168,12 @@ class UsesRelPreloadAudit extends Audit {
     // sort results by wastedTime DESC
     results.sort((a, b) => b.wastedMs - a.wastedMs);
 
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'wastedMs', itemType: 'ms', text: 'Potential Savings', granularity: 10},
+      {key: 'url', valueType: 'url', label: 'URL'},
+      {key: 'wastedMs', valueType: 'timespanMs', label: 'Potential Savings'},
     ];
-    const summary = {wastedMs};
-    const details = Audit.makeTableDetails(headings, results, summary);
+    const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
     return {
       score: UnusedBytes.scoreForWastedMs(wastedMs),

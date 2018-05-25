@@ -18,6 +18,15 @@ const WASTED_MS_FOR_AVERAGE = 300;
 const WASTED_MS_FOR_POOR = 750;
 
 /**
+ * @typedef {object} ByteEfficiencyProduct
+ * @property {Array<LH.Audit.ByteEfficiencyItem>} items
+ * @property {LH.Result.Audit.OpportunityDetails['headings']} headings
+ * @property {string} [displayValue]
+ * @property {string} [explanation]
+ * @property {Array<string>} [warnings]
+ */
+
+/**
  * @overview Used as the base for all byte efficiency audits. Computes total bytes
  *    and estimated time saved. Subclass and override `audit_` to return results.
  */
@@ -104,7 +113,7 @@ class UnusedBytes extends Audit {
    * - end time of the last long task in the provided graph
    * - (if includeLoad is true or not provided) end time of the last node in the graph
    *
-   * @param {Array<LH.Audit.ByteEfficiencyResult>} results The array of byte savings results per resource
+   * @param {Array<LH.Audit.ByteEfficiencyItem>} results The array of byte savings results per resource
    * @param {Node} graph
    * @param {Simulator} simulator
    * @param {{includeLoad?: boolean}=} options
@@ -114,7 +123,7 @@ class UnusedBytes extends Audit {
     options = Object.assign({includeLoad: true}, options);
 
     const simulationBeforeChanges = simulator.simulate(graph);
-    /** @type {Map<LH.Audit.ByteEfficiencyResult['url'], LH.Audit.ByteEfficiencyResult>} */
+    /** @type {Map<string, LH.Audit.ByteEfficiencyItem>} */
     const resultsByUrl = new Map();
     for (const result of results) {
       resultsByUrl.set(result.url, result);
@@ -159,13 +168,13 @@ class UnusedBytes extends Audit {
   }
 
   /**
-   * @param {LH.Audit.ByteEfficiencyProduct} result
+   * @param {ByteEfficiencyProduct} result
    * @param {Node} graph
    * @param {Simulator} simulator
    * @return {LH.Audit.Product}
    */
   static createAuditProduct(result, graph, simulator) {
-    const results = result.results.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
+    const results = result.items.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
 
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
     const wastedKb = Math.round(wastedBytes / KB_IN_BYTES);
@@ -177,13 +186,7 @@ class UnusedBytes extends Audit {
       displayValue = ['Potential savings of %d\xa0KB', wastedKb];
     }
 
-    const summary = {
-      wastedMs,
-      wastedBytes,
-    };
-
-    // @ts-ignore - TODO(bckenny): unify details types. items shouldn't be an indexed type.
-    const details = Audit.makeTableDetails(result.headings, results, summary);
+    const details = Audit.makeOpportunityDetails(result.headings, results, wastedMs, wastedBytes);
 
     return {
       explanation: result.explanation,
@@ -208,7 +211,7 @@ class UnusedBytes extends Audit {
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
-   * @return {LH.Audit.ByteEfficiencyProduct|Promise<LH.Audit.ByteEfficiencyProduct>}
+   * @return {ByteEfficiencyProduct|Promise<ByteEfficiencyProduct>}
    */
   static audit_(artifacts, networkRecords, context) {
     throw new Error('audit_ unimplemented');

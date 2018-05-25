@@ -50,16 +50,8 @@ declare global {
       granularity?: number;
     }
 
-    export interface ByteEfficiencyProduct {
-      results: Array<ByteEfficiencyResult>;
-      headings: Array<Audit.Heading>;
-      displayValue?: string;
-      explanation?: string;
-      warnings?: string[];
-    }
-
-    export interface ByteEfficiencyResult {
-      url: string | DetailsRendererCodeDetailJSON;
+    export interface ByteEfficiencyItem extends Result.Audit.OpportunityDetailsItem {
+      url: string;
       wastedBytes: number;
       totalBytes: number;
       wastedPercent?: number;

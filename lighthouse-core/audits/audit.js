@@ -126,6 +126,23 @@ class Audit {
   }
 
   /**
+   * @param {Array<LH.ResultLite.Audit.ColumnHeading>} headings
+   * @param {Array<LH.ResultLite.Audit.WastedBytesDetailsItem>|Array<LH.ResultLite.Audit.WastedTimeDetailsItem>} items
+   * @param {number} overallSavingsMs
+   * @param {number=} overallSavingsBytes
+   * @return {LH.Result.Audit.OpportunityDetails}
+   */
+  static makeOpportunityDetails(headings, items, overallSavingsMs, overallSavingsBytes) {
+    return {
+      type: 'opportunity',
+      headings: items.length === 0 ? [] : headings,
+      items,
+      overallSavingsMs,
+      overallSavingsBytes,
+    };
+  }
+
+  /**
    * @param {typeof Audit} audit
    * @param {LH.Audit.Product} result
    * @return {{score: number|null, scoreDisplayMode: LH.Audit.ScoreDisplayMode}}

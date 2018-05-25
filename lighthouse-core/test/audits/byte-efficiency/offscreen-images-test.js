@@ -61,7 +61,7 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
       requestFirstCPUIdle: generateInteractiveFunc(2),
     }, [], {}).then(auditResult => {
-      assert.equal(auditResult.results.length, 0);
+      assert.equal(auditResult.items.length, 0);
     });
   });
 
@@ -79,7 +79,7 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
       requestFirstCPUIdle: generateInteractiveFunc(2),
     }, [], {}).then(auditResult => {
-      assert.equal(auditResult.results.length, 0);
+      assert.equal(auditResult.items.length, 0);
     });
   });
 
@@ -103,7 +103,7 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
       requestFirstCPUIdle: generateInteractiveFunc(2),
     }, [], {}).then(auditResult => {
-      assert.equal(auditResult.results.length, 4);
+      assert.equal(auditResult.items.length, 4);
     });
   });
 
@@ -117,7 +117,7 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
       requestFirstCPUIdle: generateInteractiveFunc(2),
     }, [], {}).then(auditResult => {
-      assert.equal(auditResult.results.length, 1);
+      assert.equal(auditResult.items.length, 1);
     });
   });
 
@@ -135,7 +135,7 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
       requestFirstCPUIdle: generateInteractiveFunc(2),
     }, [], {}).then(auditResult => {
-      assert.equal(auditResult.results.length, 1);
+      assert.equal(auditResult.items.length, 1);
     });
   });
 
@@ -150,7 +150,7 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
       requestFirstCPUIdle: generateInteractiveFunc(2),
     }, [], {}, [], {}).then(auditResult => {
-      assert.equal(auditResult.results.length, 0);
+      assert.equal(auditResult.items.length, 0);
     });
   });
 });

@@ -91,7 +91,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
    * images won't reduce the overall time and the wasted bytes are really only "wasted" for TTI,
    * override the function to just look at TTI savings.
    *
-   * @param {Array<LH.Audit.ByteEfficiencyResult>} results
+   * @param {Array<LH.Audit.ByteEfficiencyItem>} results
    * @param {LH.Gatherer.Simulation.GraphNode} graph
    * @param {LH.Gatherer.Simulation.Simulator} simulator
    * @return {number}
@@ -105,7 +105,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
-   * @return {Promise<LH.Audit.ByteEfficiencyProduct>}
+   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
   static audit_(artifacts, networkRecords, context) {
     const images = artifacts.ImageUsage;
@@ -144,7 +144,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       // graph simulation doing the right thing.
       const ttiTimestamp = firstInteractive.timestamp ? firstInteractive.timestamp / 1e6 : Infinity;
 
-      const results = Array.from(resultsMap.values()).filter(item => {
+      const items = Array.from(resultsMap.values()).filter(item => {
         const isWasteful =
           item.wastedBytes > IGNORE_THRESHOLD_IN_BYTES &&
           item.wastedPercent > IGNORE_THRESHOLD_IN_PERCENT;
@@ -152,22 +152,17 @@ class OffscreenImages extends ByteEfficiencyAudit {
         return isWasteful && loadedEarly;
       });
 
+      /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
       const headings = [
-        {key: 'url', itemType: 'thumbnail', text: ''},
-        {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
-        {
-          key: 'wastedBytes',
-          itemType: 'bytes',
-          displayUnit: 'kb',
-          granularity: 1,
-          text: 'Potential Savings',
-        },
+        {key: 'url', valueType: 'thumbnail', label: ''},
+        {key: 'url', valueType: 'url', label: 'URL'},
+        {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
+        {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings'},
       ];
 
       return {
         warnings,
-        results,
+        items,
         headings,
       };
     });

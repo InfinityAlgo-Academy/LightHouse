@@ -39,7 +39,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
   /**
    * @param {LH.Artifacts.SingleImageUsage} image
    * @param {number} DPR devicePixelRatio
-   * @return {null|Error|LH.Audit.ByteEfficiencyResult};
+   * @return {null|Error|LH.Audit.ByteEfficiencyItem};
    */
   static computeWaste(image, DPR) {
     // Nothing can be done without network info.
@@ -74,7 +74,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.ByteEfficiencyProduct}
+   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
     const images = artifacts.ImageUsage;
@@ -82,7 +82,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
 
     /** @type {string[]} */
     const warnings = [];
-    /** @type {Map<LH.Audit.ByteEfficiencyResult['url'], LH.Audit.ByteEfficiencyResult>} */
+    /** @type {Map<string, LH.Audit.ByteEfficiencyItem>} */
     const resultsMap = new Map();
     images.forEach(image => {
       // TODO: give SVG a free pass until a detail per pixel metric is available
@@ -107,20 +107,20 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
       }
     });
 
-    const results = Array.from(resultsMap.values())
+    const items = Array.from(resultsMap.values())
         .filter(item => item.wastedBytes > IGNORE_THRESHOLD_IN_BYTES);
 
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
-      {key: 'url', itemType: 'thumbnail', text: ''},
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
-      {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1,
-        text: 'Potential Savings'},
+      {key: 'url', valueType: 'thumbnail', label: ''},
+      {key: 'url', valueType: 'url', label: 'URL'},
+      {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
+      {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings'},
     ];
 
     return {
       warnings,
-      results,
+      items,
       headings,
     };
   }

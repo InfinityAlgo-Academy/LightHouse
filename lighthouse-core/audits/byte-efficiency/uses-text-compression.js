@@ -33,13 +33,13 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.ByteEfficiencyProduct}
+   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
     const uncompressedResponses = artifacts.ResponseCompression;
 
-    /** @type {Array<LH.Audit.ByteEfficiencyResult>} */
-    const results = [];
+    /** @type {Array<LH.Audit.ByteEfficiencyItem>} */
+    const items = [];
     uncompressedResponses.forEach(record => {
       const originalSize = record.resourceSize;
       const gzipSize = record.gzipSize;
@@ -56,28 +56,28 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
 
       // remove duplicates
       const url = URL.elideDataURI(record.url);
-      const isDuplicate = results.find(res => res.url === url &&
-        res.totalBytes === record.resourceSize);
+      const isDuplicate = items.find(item => item.url === url &&
+        item.totalBytes === record.resourceSize);
       if (isDuplicate) {
         return;
       }
 
-      results.push({
+      items.push({
         url,
         totalBytes: originalSize,
         wastedBytes: gzipSavings,
       });
     });
 
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: 'Uncompressed resource URL'},
-      {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
-      {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1,
-        text: 'GZIP Savings'},
+      {key: 'url', valueType: 'url', label: 'Uncompressed resource URL'},
+      {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
+      {key: 'wastedBytes', valueType: 'bytes', label: 'GZIP Savings'},
     ];
 
     return {
-      results,
+      items,
       headings,
     };
   }

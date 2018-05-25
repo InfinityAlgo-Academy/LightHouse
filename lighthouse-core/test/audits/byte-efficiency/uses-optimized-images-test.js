@@ -36,7 +36,7 @@ describe('Page uses optimized images', () => {
       ],
     });
 
-    assert.equal(auditResult.results.length, 0);
+    assert.equal(auditResult.items.length, 0);
   });
 
   it('flags files when there is only small savings', () => {
@@ -46,7 +46,7 @@ describe('Page uses optimized images', () => {
       ],
     });
 
-    assert.equal(auditResult.results.length, 1);
+    assert.equal(auditResult.items.length, 1);
   });
 
   it('ignores files when no jpeg savings is available', () => {
@@ -56,7 +56,7 @@ describe('Page uses optimized images', () => {
       ],
     });
 
-    assert.equal(auditResult.results.length, 0);
+    assert.equal(auditResult.items.length, 0);
   });
 
   it('passes when all images are sufficiently optimized', () => {
@@ -70,7 +70,7 @@ describe('Page uses optimized images', () => {
       ],
     });
 
-    assert.equal(auditResult.results.length, 0);
+    assert.equal(auditResult.items.length, 0);
   });
 
   it('limits output of data URIs', () => {
@@ -79,7 +79,7 @@ describe('Page uses optimized images', () => {
       OptimizedImages: [image],
     });
 
-    const actualUrl = auditResult.results[0].url;
+    const actualUrl = auditResult.items[0].url;
     assert.ok(actualUrl.length < image.url.length, `${actualUrl} >= ${image.url}`);
   });
 

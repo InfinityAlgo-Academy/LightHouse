@@ -44,7 +44,7 @@ class EfficientAnimatedContent extends ByteEfficiencyAudit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
-   * @return {LH.Audit.ByteEfficiencyProduct}
+   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
     const unoptimizedContent = networkRecords.filter(
@@ -54,7 +54,7 @@ class EfficientAnimatedContent extends ByteEfficiencyAudit {
     );
 
     /** @type {Array<{url: string, totalBytes: number, wastedBytes: number}>}*/
-    const results = unoptimizedContent.map(record => {
+    const items = unoptimizedContent.map(record => {
       const resourceSize = record._resourceSize || 0;
       return {
         url: record.url,
@@ -64,26 +64,15 @@ class EfficientAnimatedContent extends ByteEfficiencyAudit {
       };
     });
 
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {
-        key: 'totalBytes',
-        itemType: 'bytes',
-        displayUnit: 'kb',
-        granularity: 1,
-        text: 'Transfer Size',
-      },
-      {
-        key: 'wastedBytes',
-        itemType: 'bytes',
-        displayUnit: 'kb',
-        granularity: 1,
-        text: 'Byte Savings',
-      },
+      {key: 'url', valueType: 'url', label: 'URL'},
+      {key: 'totalBytes', valueType: 'bytes', label: 'Transfer Size'},
+      {key: 'wastedBytes', valueType: 'bytes', label: 'Byte Savings'},
     ];
 
     return {
-      results,
+      items,
       headings,
     };
   }

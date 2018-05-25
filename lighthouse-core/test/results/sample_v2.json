@@ -251,9 +251,10 @@
       "rawValue": 570.5630000000001,
       "displayValue": "",
       "details": {
-        "summary": {
-          "wastedMs": -29.436999999999898
-        }
+        "type": "opportunity",
+        "overallSavingsMs": -29.436999999999898,
+        "headings": [],
+        "items": []
       }
     },
     "first-cpu-idle": {
@@ -786,12 +787,10 @@
         0
       ],
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [],
         "items": [],
-        "summary": {
-          "wastedMs": 0
-        }
+        "overallSavingsMs": 0
       }
     },
     "uses-rel-preconnect": {
@@ -806,12 +805,10 @@
         0
       ],
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [],
         "items": [],
-        "summary": {
-          "wastedMs": 0
-        }
+        "overallSavingsMs": 0
       }
     },
     "font-display": {
@@ -1861,13 +1858,11 @@
       "displayValue": "",
       "warnings": [],
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [],
         "items": [],
-        "summary": {
-          "wastedMs": 0,
-          "wastedBytes": 0
-        }
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
       }
     },
     "render-blocking-resources": {
@@ -1879,25 +1874,22 @@
       "rawValue": 1129,
       "displayValue": "5 resources delayed first paint by 1129ms",
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [
           {
             "key": "url",
-            "itemType": "url",
-            "text": "URL"
+            "valueType": "url",
+            "label": "URL"
           },
           {
             "key": "totalBytes",
-            "itemType": "bytes",
-            "displayUnit": "kb",
-            "granularity": 0.01,
-            "text": "Size (KB)"
+            "valueType": "bytes",
+            "label": "Size (KB)"
           },
           {
             "key": "wastedMs",
-            "itemType": "ms",
-            "text": "Download Time (ms)",
-            "granularity": 1
+            "valueType": "timespanMs",
+            "label": "Download Time (ms)"
           }
         ],
         "items": [
@@ -1927,9 +1919,7 @@
             "wastedMs": 723
           }
         ],
-        "summary": {
-          "wastedMs": 1129
-        }
+        "overallSavingsMs": 1129
       }
     },
     "unminified-css": {
@@ -1941,13 +1931,11 @@
       "rawValue": 0,
       "displayValue": "",
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [],
         "items": [],
-        "summary": {
-          "wastedMs": 0,
-          "wastedBytes": 0
-        }
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
       }
     },
     "unminified-javascript": {
@@ -1963,26 +1951,22 @@
       ],
       "warnings": [],
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [
           {
             "key": "url",
-            "itemType": "url",
-            "text": "URL"
+            "valueType": "url",
+            "label": "URL"
           },
           {
             "key": "totalBytes",
-            "itemType": "bytes",
-            "displayUnit": "kb",
-            "granularity": 1,
-            "text": "Original"
+            "valueType": "bytes",
+            "label": "Original"
           },
           {
             "key": "wastedBytes",
-            "itemType": "bytes",
-            "displayUnit": "kb",
-            "granularity": 1,
-            "text": "Potential Savings"
+            "valueType": "bytes",
+            "label": "Potential Savings"
           }
         ],
         "items": [
@@ -1993,10 +1977,8 @@
             "wastedPercent": 42.52388078488413
           }
         ],
-        "summary": {
-          "wastedMs": 0,
-          "wastedBytes": 30470
-        }
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 30470
       }
     },
     "unused-css-rules": {
@@ -2008,13 +1990,11 @@
       "rawValue": 0,
       "displayValue": "",
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [],
         "items": [],
-        "summary": {
-          "wastedMs": 0,
-          "wastedBytes": 0
-        }
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
       }
     },
     "uses-webp-images": {
@@ -2030,31 +2010,27 @@
       ],
       "warnings": [],
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [
           {
             "key": "url",
-            "itemType": "thumbnail",
-            "text": ""
+            "valueType": "thumbnail",
+            "label": ""
           },
           {
             "key": "url",
-            "itemType": "url",
-            "text": "URL"
+            "valueType": "url",
+            "label": "URL"
           },
           {
             "key": "totalBytes",
-            "itemType": "bytes",
-            "displayUnit": "kb",
-            "granularity": 1,
-            "text": "Original"
+            "valueType": "bytes",
+            "label": "Original"
           },
           {
             "key": "wastedBytes",
-            "itemType": "bytes",
-            "displayUnit": "kb",
-            "granularity": 1,
-            "text": "Potential Savings"
+            "valueType": "bytes",
+            "label": "Potential Savings"
           }
         ],
         "items": [
@@ -2066,10 +2042,8 @@
             "wastedBytes": 8526
           }
         ],
-        "summary": {
-          "wastedMs": 0,
-          "wastedBytes": 8526
-        }
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 8526
       }
     },
     "uses-optimized-images": {
@@ -2082,13 +2056,11 @@
       "displayValue": "",
       "warnings": [],
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [],
         "items": [],
-        "summary": {
-          "wastedMs": 0,
-          "wastedBytes": 0
-        }
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
       }
     },
     "uses-text-compression": {
@@ -2103,26 +2075,22 @@
         63
       ],
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [
           {
             "key": "url",
-            "itemType": "url",
-            "text": "Uncompressed resource URL"
+            "valueType": "url",
+            "label": "Uncompressed resource URL"
           },
           {
             "key": "totalBytes",
-            "itemType": "bytes",
-            "displayUnit": "kb",
-            "granularity": 1,
-            "text": "Original"
+            "valueType": "bytes",
+            "label": "Original"
           },
           {
             "key": "wastedBytes",
-            "itemType": "bytes",
-            "displayUnit": "kb",
-            "granularity": 1,
-            "text": "GZIP Savings"
+            "valueType": "bytes",
+            "label": "GZIP Savings"
           }
         ],
         "items": [
@@ -2137,10 +2105,8 @@
             "wastedBytes": 8442
           }
         ],
-        "summary": {
-          "wastedMs": 150,
-          "wastedBytes": 64646
-        }
+        "overallSavingsMs": 150,
+        "overallSavingsBytes": 64646
       }
     },
     "uses-responsive-images": {
@@ -2153,13 +2119,11 @@
       "displayValue": "",
       "warnings": [],
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [],
         "items": [],
-        "summary": {
-          "wastedMs": 0,
-          "wastedBytes": 0
-        }
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
       }
     },
     "efficient-animated-content": {
@@ -2171,13 +2135,11 @@
       "rawValue": 0,
       "displayValue": "",
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [],
         "items": [],
-        "summary": {
-          "wastedMs": 0,
-          "wastedBytes": 0
-        }
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
       }
     },
     "appcache-manifest": {

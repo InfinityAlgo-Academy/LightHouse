@@ -53,16 +53,16 @@ describe('Page uses optimized responses', () => {
     ]);
 
     assert.ok(auditResult.warnings.length);
-    assert.equal(auditResult.results.length, 3);
-    assert.equal(auditResult.results[0].url, 'foo.js');
-    assert.equal(Math.round(auditResult.results[0].wastedPercent), 57);
-    assert.equal(Math.round(auditResult.results[0].wastedBytes / 1024), 11);
-    assert.equal(auditResult.results[1].url, 'other.js');
-    assert.equal(Math.round(auditResult.results[1].wastedPercent), 53);
-    assert.equal(Math.round(auditResult.results[1].wastedBytes / 1024), 27);
-    assert.equal(auditResult.results[2].url, 'valid-ish.js');
-    assert.equal(Math.round(auditResult.results[2].wastedPercent), 72);
-    assert.equal(Math.round(auditResult.results[2].wastedBytes / 1024), 72);
+    assert.equal(auditResult.items.length, 3);
+    assert.equal(auditResult.items[0].url, 'foo.js');
+    assert.equal(Math.round(auditResult.items[0].wastedPercent), 57);
+    assert.equal(Math.round(auditResult.items[0].wastedBytes / 1024), 11);
+    assert.equal(auditResult.items[1].url, 'other.js');
+    assert.equal(Math.round(auditResult.items[1].wastedPercent), 53);
+    assert.equal(Math.round(auditResult.items[1].wastedBytes / 1024), 27);
+    assert.equal(auditResult.items[2].url, 'valid-ish.js');
+    assert.equal(Math.round(auditResult.items[2].wastedPercent), 72);
+    assert.equal(Math.round(auditResult.items[2].wastedBytes / 1024), 72);
   });
 
   it('passes when scripts are already minified', () => {
@@ -89,6 +89,6 @@ describe('Page uses optimized responses', () => {
       {requestId: '123.3', url: 'invalid.js', _transferSize: 20 * KB, _resourceType},
     ]);
 
-    assert.equal(auditResult.results.length, 0);
+    assert.equal(auditResult.items.length, 0);
   });
 });
