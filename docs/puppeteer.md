@@ -45,13 +45,13 @@ browser.on('targetchanged', async target => {
 
 // Lighthouse will open URL. Puppeteer observes `targetchanged` and sets up network conditions.
 // Possible race condition.
-const lhr = await lighthouse(url, {
+const {lhr} = await lighthouse(url, {
   port: (new URL(browser.wsEndpoint())).port,
   output: 'json',
   logLevel: 'info',
 });
 
-console.log(`Lighthouse scores: ${lhr.reportCategories.map(c => c.score).join(', ')}`);
+console.log(`Lighthouse scores: ${Object.values(lhr.categories).map(c => c.score).join(', ')}`);
 
 await browser.close();
 })();
@@ -89,8 +89,8 @@ const {webSocketDebuggerUrl} = JSON.parse(resp.body);
 const browser = await puppeteer.connect({browserWSEndpoint: webSocketDebuggerUrl});
 
 // Run Lighthouse.
-const lhr = await lighthouse(URL, opts, null);
-console.log(`Lighthouse scores: ${lhr.reportCategories.map(c => c.score).join(', ')}`);
+const {lhr}  = await lighthouse(URL, opts, null);
+console.log(`Lighthouse scores: ${Object.values(lhr.categories).map(c => c.score).join(', ')}`);
 
 await browser.disconnect();
 await chrome.kill();

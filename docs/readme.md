@@ -15,9 +15,11 @@ function launchChromeAndRunLighthouse(url, opts, config = null) {
   return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
     opts.port = chrome.port;
     return lighthouse(url, opts, config).then(results => {
-      // The gathered artifacts are typically removed as they can be quite large (~50MB+)
-      delete results.artifacts;
-      return chrome.kill().then(() => results)
+      // use results.lhr for the JS-consumeable output
+      // https://github.com/GoogleChrome/lighthouse/blob/master/typings/lhr.d.ts
+      // use results.report for the HTML/JSON/CSV output as a string
+      // use results.artifacts for the trace/screenshots/other specific case you need (rarer)
+      return chrome.kill().then(() => results.lhr)
     });
   });
 }
@@ -39,13 +41,31 @@ Many modules consuming Lighthouse are only interested in the performance numbers
 You can limit the audits you run to a particular category or set of audits.
 
 ```js
-const perfConfig = require('lighthouse/lighthouse-core/config/perf-config.js');
 // ...
-launchChromeAndRunLighthouse(url, flags, perfConfig).then( // ...
+const flags = {onlyCategories: ['performance']};
+launchChromeAndRunLighthouse(url, flags).then( // ...
 ```
 
 You can also craft your own config (e.g. [mixed-content-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/mixed-content-config.js)) for custom runs. Also see the [basic custom audit recipe](https://github.com/GoogleChrome/lighthouse/tree/master/docs/recipes/custom-audit).
 
+### Differences from CLI flags
+
+Note that some flag functionality is only available to the CLI. The set of shared flags that work in both node and CLI can be found [in our typedefs](https://github.com/GoogleChrome/lighthouse/blob/8f500e00243e07ef0a80b39334bedcc8ddc8d3d0/typings/externs.d.ts#L68). In most cases, the functionality is not offered in the node module simply because it is easier and more flexible to do it yourself.
+
+| CLI Flag | Differences in Node |
+| - | - |
+| `port` | Only specifies which port to use, Chrome is not launched for you. |
+| `chromeFlags` | Ignored, Chrome is not launched for you. |
+| `outputPath` | Ignored, output is returned as string in `.report` property. |
+| `saveAssets` | Ignored, artifacts are returned in `.artifacts` property. |
+| `view` | Ignored, use the `opn` npm module if you want this functionality. |
+| `enableErrorReporting` | Ignored, error reporting is always disabled for node. |
+| `listAllAudits` | Ignored, not relevant in programmatic use. |
+| `listTraceCategories` | Ignored, not relevant in programmatic use. |
+| `configPath` | Ignored, pass the config in as the 3rd argument to `lighthouse`. |
+| `preset` | Ignored, pass the config in as the 3rd argument to `lighthouse`. |
+| `verbose` | Ignored, use `logLevel` instead. |
+| `quiet` | Ignored, use `logLevel` instead. |
 
 ### Turn on logging
 
@@ -56,7 +76,7 @@ the `logLevel` flag when calling `lighthouse`.
 ```javascript
 const log = require('lighthouse-logger');
 
-const flags = {logLevel: 'info', output: 'json'};
+const flags = {logLevel: 'info'};
 log.setLevel(flags.logLevel);
 
 launchChromeAndRunLighthouse('https://example.com', flags).then(...);

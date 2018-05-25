@@ -4,7 +4,7 @@ We'd love your help! This doc covers how to become a contributor and submit code
 
 ## Follow the coding style
 
-The `.eslintrc` file defines all. We use [JSDoc](http://usejsdoc.org/) along with [closure annotations](https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler). Annotations are encouraged for all contributions.
+The `.eslintrc` file defines all. We use [JSDoc](http://usejsdoc.org/) with [TypeScript](https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript). Annotations are encouraged for all contributions.
 
 ## Pull request titles
 

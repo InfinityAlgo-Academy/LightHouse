@@ -66,25 +66,25 @@ declare global {
     }
 
     export interface Flags extends SharedFlagsSettings {
-      _: string[];
+      // Used by both core/ and cli/
       port: number;
-      chromeFlags: string;
+      hostname: string;
       output: any;
+      logLevel: 'silent'|'error'|'info'|'verbose';
+
+      // Just used by cli/
+      _: string[];
+      chromeFlags: string;
       outputPath: string;
       saveAssets: boolean;
       view: boolean;
-      logLevel: string;
-      hostname: string;
       enableErrorReporting: boolean;
       listAllAudits: boolean;
       listTraceCategories: boolean;
       configPath?: string;
       preset?: 'full'|'mixed-content'|'perf';
-      perf: boolean;
-      mixedContent: boolean;
       verbose: boolean;
       quiet: boolean;
-
       extraHeaders?: string;
     }
 

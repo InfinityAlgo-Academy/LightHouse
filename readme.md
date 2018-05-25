@@ -8,9 +8,9 @@ Lighthouse is integrated directly into the Chrome Developer Tools, under the "Au
 
 **Installation**: install [Chrome](https://www.google.com/chrome/browser).
 
-**Run it**: open Chrome DevTools, select the Audits panel, and hit "Perform an Audit...".
+**Run it**: open Chrome DevTools, select the Audits panel, and hit "Run audits".
 
-<img width="350px" alt="Lighthouse integration in Chrome DevTools" src="https://cloud.githubusercontent.com/assets/238208/26366636/ada298f8-3fa0-11e7-9da5-ede2c906d10c.png">
+<img width="500px" alt="Lighthouse integration in Chrome DevTools" src="https://user-images.githubusercontent.com/2301202/40556658-4ef7d128-6002-11e8-903e-5224894a7cca.png">
 
 ## Using the Chrome extension
 
@@ -20,7 +20,7 @@ Lighthouse is integrated directly into the Chrome Developer Tools, under the "Au
 
 ## Using the Node CLI
 
-_Lighthouse requires Node 6 or later._
+_Lighthouse requires Node 8 LTS (8.9) or later._
 
 **Installation**:
 
@@ -139,13 +139,13 @@ lighthouse --output-path=./report.json --output json
 You can run a subset of Lighthouse's lifecycle if desired via the `--gather-mode` (`-G`) and  `--audit-mode` (`-A`) CLI flags.
 
 ```sh
-lighthouse -G http://example.com
+lighthouse http://example.com -G
 # launches browser, collects artifacts, saves them to disk (in `./latest-run/`) and quits
 
-lighthouse -A http://example.com
+lighthouse http://example.com -A
 # skips browser interaction, loads artifacts from disk (in `./latest-run/`), runs audits on them, generates report
 
-lighthouse -GA http://example.com
+lighthouse http://example.com -GA
 # Normal gather + audit run, but also saves collected artifacts to disk for subsequent -A runs.
 
 
@@ -164,7 +164,7 @@ Lighthouse can produce a report as JSON or HTML.
 
 HTML report:
 
-![Lighthouse report](https://cloud.githubusercontent.com/assets/238208/26369813/abea39e4-3faa-11e7-8d5c-e116696518b4.png)
+![Lighthouse report](https://user-images.githubusercontent.com/2301202/40556754-b9361c66-6002-11e8-8957-68c7bac85fa4.png)
 
 ### Online Viewer
 
@@ -197,10 +197,14 @@ Useful documentation, examples, and recipes to get you started.
 
 **Videos**
 
+The session from Google I/O 2018 covers the new performance engine, upcoming Lighthouse REST API, and using the Chrome UX report to evaluate real-user data.
+
+[![Lighthouse @ Google I/O 2018](https://img.youtube.com/vi/UvK9zAsSM8Q/0.jpg)](https://www.youtube.com/watch?v=UvK9zAsSM8Q)
+
 The session from Google I/O 2017 covers architecture, writing custom audits,
 GitHub/Travis/CI integration, headless Chrome, and more:
 
-[![Lighthouse @ Google I/O](https://img.youtube.com/vi/NoRYn6gOtVo/0.jpg)](https://www.youtube.com/watch?v=NoRYn6gOtVo)
+[![Lighthouse @ Google I/O 2017](https://img.youtube.com/vi/NoRYn6gOtVo/0.jpg)](https://www.youtube.com/watch?v=NoRYn6gOtVo)
 
 _click to watch the video_
 
@@ -248,10 +252,8 @@ yarn lint
 yarn unit
 yarn smoke
 
-## run closure compiler (on whitelisted files)
-yarn closure
-## import your report renderer into devtools-frontend and run devtools closure compiler
-yarn compile-devtools
+## run tsc compiler
+yarn type-check
 ```
 
 ## Lighthouse Integrations
@@ -278,6 +280,7 @@ Other awesome open source projects that use Lighthouse.
 * **[lighthouse-cron](https://github.com/thearegee/lighthouse-cron)** - Cron multiple batch Lighthouse audits and emit results for sending to remote server.
 * **[lightcrawler](https://github.com/github/lightcrawler)** - Crawl a website and run each page found through Lighthouse.
 * **[lighthouse-lambda](https://github.com/joytocode/lighthouse-lambda)** - Run Lighthouse on AWS Lambda with prebuilt stable desktop Headless Chrome.
+* **[lighthouse-security](https://github.com/voorhoede/lighthouse-security#readme)** - Run a set of security audits along with Lighthouse.
 * **[Garie](https://github.com/boyney123/garie)** — An open source tool for monitoring performance using Lighthouse,  PageSpeed Insights, [Prometheus](https://prometheus.io/), [Grafana](https://grafana.com/) and [Docker](https://www.docker.com/).
 
 ## FAQ
@@ -295,7 +298,7 @@ Yes! Details in [Lighthouse configuration](./docs/configuration.md).
 Good question. Network and CPU throttling are applied by default in a Lighthouse run. The network
 attempts to emulate 3G and the CPU is slowed down 4x from your machine's default speed. If you
 prefer to run Lighthouse without throttling, you'll have to use the CLI and disable it with the
-`--disable-*` flags mentioned above.
+`--throttling.*` flags mentioned above.
 
 Read more in our [guide to network throttling](./docs/throttling.md).
 
