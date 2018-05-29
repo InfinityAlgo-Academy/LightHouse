@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-// @ts-nocheck
 'use strict';
 
 const Runner = require('./runner');
@@ -28,23 +27,25 @@ const Config = require('./config/config');
 
 /**
  * @param {string} url
- * @param {LH.Flags} flags
+ * @param {LH.Flags=} flags
  * @param {LH.Config.Json|undefined} configJSON
- * @return {Promise<LH.RunnerResult>}
+ * @return {Promise<LH.RunnerResult|undefined>}
  */
-function lighthouse(url, flags = {}, configJSON) {
-  return Promise.resolve().then(_ => {
-    // set logging preferences, assume quiet
-    flags.logLevel = flags.logLevel || 'error';
-    log.setLevel(flags.logLevel);
+async function lighthouse(url, flags, configJSON) {
+  // TODO(bckenny): figure out Flags types.
+  flags = flags || /** @type {LH.Flags} */ ({});
 
-    // Use ConfigParser to generate a valid config file
-    const config = new Config(configJSON, flags);
-    const connection = new ChromeProtocol(flags.port, flags.hostname);
+  // set logging preferences, assume quiet
+  flags.logLevel = flags.logLevel || 'error';
+  log.setLevel(flags.logLevel);
 
-    // kick off a lighthouse run
-    return Runner.run(connection, {url, config});
-  });
+  // Use ConfigParser to generate a valid config file
+  // @ts-ignore - TODO(bckenny): type checking for Config
+  const config = /** @type {LH.Config} */ (new Config(configJSON, flags));
+  const connection = new ChromeProtocol(flags.port, flags.hostname);
+
+  // kick off a lighthouse run
+  return Runner.run(connection, {url, config});
 }
 
 lighthouse.getAuditList = Runner.getAuditList;

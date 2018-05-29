@@ -10,22 +10,11 @@ const Connection = require('./connection.js');
 /* eslint-disable no-unused-vars */
 
 /**
- * @interface
+ * @typedef {object} Port
+ * @property {(eventName: 'message'|'close', cb: ((arg: string) => void) | (() => void)) => void} on
+ * @property {(message: string) => void} send
+ * @property {() => void} close
  */
-class Port {
-  /**
-   * @param {'message' | 'close'} eventName
-   * @param {function(string)|function()} cb
-   */
-  on(eventName, cb) { }
-
-  /**
-   * @param {string} message
-   */
-  send(message) { }
-
-  close() { }
-}
 
 /* eslint-enable no-unused-vars */
 

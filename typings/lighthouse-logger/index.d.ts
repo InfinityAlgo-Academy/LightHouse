@@ -12,4 +12,5 @@ declare module 'lighthouse-logger' {
   export function error(title: string, ...args: any[]): void;
   export function verbose(title: string, ...args: any[]): void;
   export function reset(): string;
+  export var events: import('events').EventEmitter;
 }
