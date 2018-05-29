@@ -17,8 +17,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 </head>
 <body class="lh-root lh-vars">
 <div hidden><!-- Lighthouse run warnings -->
-<template id="tmpl-lh-run-warnings">
-  <div class="lh-run-warnings lh-debug">
+<template id="tmpl-lh-warnings--toplevel">
+  <div class="lh-warnings lh-warnings--toplevel">
     <strong>There were issues affecting this run of Lighthouse:</strong>
     <ul></ul>
   </div>
@@ -32,6 +32,16 @@ Unless required by applicable law or agreed to in writing, software distributed 
     <span class="lh-scorescale-range lh-scorescale-range--average">45-74</span>
     <span class="lh-scorescale-range lh-scorescale-range--pass">75-100</span>
   </div>
+</template>
+
+<!-- Toggle arrow chevron -->
+<template id="tmpl-lh-chevron">
+  <svg class="lh-chevron" title="See audits" xmlns="http://www.w3.org/2000/svg"  viewbox="0 0 100 100">
+    <g class="lh-chevron__lines">
+      <path class="lh-chevron__line lh-chevron__line-left" d="M10 50h40" stroke="#707173"/>
+      <path class="lh-chevron__line lh-chevron__line-right" d="M90 50H50" stroke="#707173"/>
+    </g>
+  </svg>
 </template>
 
 <!-- Lighthouse category header -->
@@ -52,7 +62,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
         <span class="lh-audit__title"></span>
         <span class="lh-audit__display-text"></span>
         <div class="lh-audit__score-icon"></div>
-        <div class="lh-toggle-arrow" title="See audits"></div>
+        <div class="lh-chevron-container"></div>
       </summary>
       <div class="lh-audit__description"></div>
     </details>
@@ -72,24 +82,26 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 <!-- Lighthouse perf opportunity -->
 <template id="tmpl-lh-opportunity">
-  <details class="lh-load-opportunity lh-expandable-details">
-    <summary class="lh-load-opportunity__summary lh-expandable-details__summary">
-      <div class="lh-load-opportunity__cols">
-        <div class="lh-load-opportunity__col lh-load-opportunity__col--one">
-          <span class="lh-audit__index"></span>
-          <div class="lh-load-opportunity__title"></div>
-        </div>
-        <div class="lh-load-opportunity__col lh-load-opportunity__col--two">
-          <div class="lh-load-opportunity__sparkline">
-            <div class="lh-sparkline"><div class="lh-sparkline__bar"></div></div>
+  <div class="lh-audit lh-audit--load-opportunity">
+    <details class="lh-expandable-details">
+      <summary class="lh-audit__header lh-expandable-details__summary">
+        <div class="lh-load-opportunity__cols">
+          <div class="lh-load-opportunity__col lh-load-opportunity__col--one">
+            <span class="lh-audit__index"></span>
+            <div class="lh-audit__title"></div>
           </div>
-          <div class="lh-load-opportunity__wasted-stat"></div>
-          <div class="lh-toggle-arrow" title="See resources"></div>
+          <div class="lh-load-opportunity__col lh-load-opportunity__col--two">
+            <div class="lh-load-opportunity__sparkline">
+              <div class="lh-sparkline"><div class="lh-sparkline__bar"></div></div>
+            </div>
+            <div class="lh-audit__display-text"></div>
+            <div class="lh-chevron-container" title="See resources"></div>
+          </div>
         </div>
-      </div>
-    </summary>
-    <div class="lh-load-opportunity__description"></div>
-  </details>
+      </summary>
+      <div class="lh-audit__description"></div>
+    </details>
+  </div>
 </template>
 
 
@@ -104,6 +116,39 @@ Unless required by applicable law or agreed to in writing, software distributed 
     </div>
   </div>
 </template>
+
+
+<!-- Lighthouse score container -->
+<template id="tmpl-lh-scores-wrapper">
+  <style>
+    .lh-scores-wrapper__background,
+    .lh-scores-wrapper__shadow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      border-radius: 8px;
+    }
+    .lh-scores-wrapper__shadow {
+      border-radius: 0;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 0px -2px
+    }
+    .lh-scores-container {
+      padding-bottom: calc(var(--section-indent) / 2);
+      position: relative;
+      width: 100%;
+    }
+  </style>
+  <div class="lh-scores-wrapper">
+    <div class="lh-scores-container">
+      <div class="lh-scores-wrapper__background"></div>
+      <div class="lh-scores-wrapper__shadow"></div>
+    </div>
+  </div>
+</template>
+
 
 <!-- Lighthouse header -->
 <template id="tmpl-lh-heading">
@@ -134,11 +179,11 @@ Unless required by applicable law or agreed to in writing, software distributed 
       height: var(--report-header-height);
       max-width: 100%; /* support text-overflow on url */
       position: relative;
-      padding-top: var(--section-indent);
     }
     .lh-metadata {
       flex: 1 1 0;
-      padding-right: calc(var(--default-padding) / 2);
+      padding: calc(var(--section-padding) / 2);
+      padding-left: var(--section-indent);
       line-height: 20px;
       color: var(--report-header-color);
       z-index: 1;
@@ -156,34 +201,26 @@ Unless required by applicable law or agreed to in writing, software distributed 
       transform: translateZ(1px);
     }
     .lh-scores-wrapper__shadow {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      opacity: 0;
+    }
+    .lh-scores-wrapper__background,
+    .lh-scores-wrapper__shadow {
       box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
-      opacity: 1;
       border-radius: 8px;
-      will-change: opacity;
+      will-change: opacity, transform;
+      transform-origin: top;
     }
-    .lh-scores-container {
-      background: #fff;
-      border-bottom: 1px solid #ebebeb;
-      border-radius: 8px;
-      padding: var(--section-indent) calc(var(--section-indent) / 2) calc(var(--section-indent) / 2);
-      position: relative;
-      width: 100%;
-    }
+
     .lh-product-info, .lh-toolbar__metadata {
       align-items: center;
+      white-space: nowrap;
       color: #5F6369;
       display: flex;
-      font-size: 12px;
-      left: var(--section-indent);
+      font-size: calc(var(--body-font-size) * 0.9);
+      margin-left: var(--section-indent);
       opacity: 0;
-      position: absolute;
-      top: 50%;
       transform: translateY(-50%);
+      will-change: opacity;
     }
     .lh-product-info__icon {
       height: 20px;
@@ -192,19 +229,20 @@ Unless required by applicable law or agreed to in writing, software distributed 
     .lh-toolbar {
       height: 50px;
       position: absolute;
-      top: 0;
-      width: 100%;
+      top: 25px;
       will-change: transform;
+      display: flex;
+      width: calc(100% - 70px);  /* give room for export */
     }
     .lh-toolbar__metadata {
-      left: 50%;
-      transform: translate(-50%, -50%);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
     }
     .lh-toolbar__url {
       color: currentColor;
       display: block;
       white-space: nowrap;
-      font-size: 14px;
       margin-right: 2px;
     }
     .lh-export {
@@ -282,59 +320,20 @@ Unless required by applicable law or agreed to in writing, software distributed 
       display: none;
     }
     .lh-config {
-      display: flex;
-    }
-    .lh-env {
-      padding: var(--default-padding) 0 var(--default-padding) calc(var(--default-padding) * 2);
-      left: 0;
-      top: 100%;
-      position: absolute;
-      width: 100%;
-      background-color: var(--header-bg-color);
-      border-top: 1px solid var(--report-secondary-border-color);
-      border-bottom: 1px solid var(--report-secondary-border-color);
-      font-size: 12px;
-    }
-    .lh-env__items {
-      margin: var(--default-padding) 0 0 0;
-      padding-left: calc(var(--default-padding) * 2);
-    }
-    .lh-config__timestamp {
-      margin-right: 6px;
-    }
-    .lh-config__settings-toggle {
-      margin-left: 6px;
-    }
-    .lh-config__timestamp,
-    .lh-config__settings-toggle summary {
       color: var(--secondary-text-color);
     }
-    .lh-config__settings-toggle summary {
-      display: flex;
-      align-items: center;
+    .lh-config__timestamp {
+      font-size: var(--caption-font-size);
+      display: block;
     }
-    .lh-config__settings-toggle .lh-toggle-arrow {
-      width: 16px;
-      height: 16px;
-      margin-left: 2px;
-    }
-    .lh-config__settings-toggle[open] .lh-toggle-arrow {
-      transform: rotateZ(90deg);
-    }
-    .lh-config__settings-toggle summary::-moz-list-bullet {
-      display: none;
-    }
-    .lh-config__settings-toggle summary::-webkit-details-marker {
-      display: none;
+    a.lh-config__emulation {
+      color: inherit;
+      text-decoration: none;
     }
     @media screen and (max-width: 964px) {
       .lh-export__dropdown {
         right: 0;
         left: initial;
-      }
-      .lh-header {
-        padding: 0 var(--default-padding);
-        margin-left: 0;
       }
     }
     @media print {
@@ -343,46 +342,59 @@ Unless required by applicable law or agreed to in writing, software distributed 
         margin-left: 0;
       }
     }
+/*
+    TODO: Enable animating the clouds
+    .lh-lighthouse__clouds {
+      animation: panacross 30s linear infinite;
+      animation-play-state: paused;
+    }
+    @keyframes panacross {
+      0% { transform: translateX(0px); }
+      77% { transform: translateX(-680px); }
+      77.0001% { transform: translateX(195px); }
+      100% { transform: translateX(0px); }
+    } */
   </style>
   <div class="lh-header-bg"></div>
-  <div class="lh-lighthouse"><svg width="217" height="189" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="a" d="M0 0h284v202H0z"/><linearGradient x1="0%" y1="50%" x2="93.17%" y2="50%" id="c"><stop stop-color="#F1F3F4" offset="0%"/><stop stop-color="#FFF" offset="100%"/></linearGradient></defs><g transform="translate(-56 -13)" fill="none" fill-rule="evenodd"><mask id="b" fill="#fff"><use xlink:href="#a"/></mask><g mask="url(#b)"><g transform="translate(56 70)"><path fill="#EC5548" d="M95 31h24v2H95z"/><path fill="#FBC21B" d="M98 33h18v11H98z"/><path fill="#EC5548" d="M95 43h24v7H95z"/><path fill="#FFF" d="M97.63 50h19.74L120 97H95z"/><path d="M107 22a10 10 0 0 1 10 10v1H97v-1a10 10 0 0 1 10-10zM96.77 66.23l20.97-10.7.63 11.87-22.28 11.87zM95 94.8L119.1 82l.9 14H95z" fill="#EC5548"/><path d="M0 132a177.07 177.07 0 0 1 108.5-37c40.78 0 78.38 13.78 108.5 37H0z" fill="#E8EAED"/><rect fill="#FEF0C8" x="98" y="33" width="10" height="10" rx="5"/><path fill="url(#c)" d="M7 0l91 33.18v10.05L7 77z"/></g></g><g mask="url(#b)" fill="#FFF"><g transform="translate(96 86)"><circle cx="87.5" cy=".5" r="1"/><circle cx="86" cy="20" r="1"/><circle cx="96" cy="40" r="1"/><circle cx="27" cy="68" r="1"/><circle cx="15" cy="44" r="1"/><circle cx="127" cy="64" r="1"/><circle cx="109.5" cy="44.5" r="1"/><circle cx="14.5" cy="54.5" r="1"/><circle cx="8.5" cy="57.5" r="1"/><circle cx=".5" cy="78.5" r="1"/><circle cx="27.5" cy="39.5" r="1"/><circle cx="134.5" cy="41.5" r="1"/><circle cx="97.5" cy="65.5" r="1"/><circle cx="161.5" cy="69.5" r="1"/></g></g><g mask="url(#b)" fill="#FFF"><path d="M101.2 34H70.21A7.42 7.42 0 0 1 69 29.91a7.31 7.31 0 0 1 8.54-7.26v-.11c0-5.27 4.2-9.54 9.39-9.54a9.44 9.44 0 0 1 9.24 7.83 7.24 7.24 0 0 1 7.83 7.35 7.4 7.4 0 0 1-2.8 5.82zM193.53 54h-17.9a4.3 4.3 0 0 1-.63-2.25 4.2 4.2 0 0 1 4.88-4.18v-.07c0-3.04 2.4-5.5 5.36-5.5a5.4 5.4 0 0 1 5.28 4.51l.33-.01a4.2 4.2 0 0 1 4.15 4.25c0 1.3-.57 2.47-1.47 3.25zM219.01 116h-24.16a5.1 5.1 0 0 1-.85-2.81c0-2.94 2.5-5.31 5.6-5.31.33 0 .67.02.99.08v-.08c0-3.8 3.24-6.88 7.24-6.88a7.15 7.15 0 0 1 7.13 5.64l.44-.02c3.1 0 5.6 2.38 5.6 5.32a5.2 5.2 0 0 1-1.99 4.06z"/></g></g></svg></div>
+  <div class="lh-lighthouse">
+    <svg width="217" height="148" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+        <mask id="a" x="-56" y="-54" width="284" height="202" maskUnits="userSpaceOnUse">
+          <path d="M-56-54h284v202H-56z" fill="#fff"/>
+        </mask>
+        <linearGradient id="b" x1="-525.16" y1="560.08" x2="-524.23" y2="560.08" gradientTransform="matrix(91 0 0 -77 47797 43181)" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#f1f3f4"/>
+          <stop offset="1" stop-color="#fff"/>
+        </linearGradient>
+      </defs>
+      <g mask="url(#a)">
+        <path d="M95 47h24v2H95z" fill="#ec5548"/>
+        <path d="M98 49h18v11H98z" fill="#fbc21b"/>
+        <path d="M95 59h24v7H95z" fill="#ec5548"/>
+        <path d="M97.63 66h19.74l2.63 47H95z" fill="#fff"/>
+        <path d="M107 38a10 10 0 0 1 10 10v1H97v-1a10 10 0 0 1 10-10zM96.77 82.23l21-10.7.63 11.87-22.31 11.87zM95 110.8L119.1 98l.9 14H95z" fill="#ec5548"/>
+        <path d="M0 148a177.58 177.58 0 0 1 217 0z" fill="#e8eaed"/>
+        <path d="M103 49a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5z" fill="#fef0c8"/>
+        <path d="M7 16l91 33.18v10L7 93z" fill="url(#b)"/>
+      </g>
+      <g mask="url(#a)" class="lh-lighthouse__clouds">
+        <path d="M60 .19A9.77 9.77 0 0 1 61.93 0a9.44 9.44 0 0 1 9.24 7.83A7.24 7.24 0 0 1 79 14.45v.73A7.37 7.37 0 0 1 76.2 21h-31a7.44 7.44 0 0 1-1.2-4.09 7.31 7.31 0 0 1 7.26-7.36 6.84 6.84 0 0 1 1.28.1v-.11A9.51 9.51 0 0 1 60 .19m79.78 22.31h-17.9a4.37 4.37 0 0 1-.63-2.25 4.2 4.2 0 0 1 4.16-4.25 4.37 4.37 0 0 1 .72.06V16a5.35 5.35 0 0 1 10.64-1h.33a4.2 4.2 0 0 1 4.15 4.25 4.29 4.29 0 0 1-1.47 3.25zM163 62h-24.15a5.1 5.1 0 0 1-.85-2.81 5.65 5.65 0 0 1 6.59-5.19v-.08a7.07 7.07 0 0 1 7.24-6.92 7.15 7.15 0 0 1 7.17 5.64h.44a5.46 5.46 0 0 1 5.6 5.32A5.19 5.19 0 0 1 163 62z" fill="#fff"/>
+      </g>
+    </svg>
+  </div>
 
   <div class="lh-header-container">
     <div class="lh-header">
       <div class="lh-metadata">
         <div class="lh-metadata__results"><a href="" class="lh-metadata__url" target="_blank" rel="noopener"></a></div>
         <div class="lh-config">
-          <span class="lh-config__timestamp"></span> &bullet;
-          <details class="lh-config__settings-toggle">
-            <summary>
-              <span>Runtime settings</span>
-              <span class="lh-toggle-arrow" title="See report's runtime settings"></span>
-            </summary>
-            <div class="lh-env">
-              <div class="lh-env__title">Runtime environment</div>
-              <ul class="lh-env__items">
-                <li class="lh-env__item">
-                  <span class="lh-env__name">User agent:</span>
-                  <b class="lh-env__item__ua"></b>
-                </li>
-                <template id="tmpl-lh-env__items">
-                  <li class="lh-env__item">
-                    <span class="lh-env__name"></span>:
-                    <span class="lh-env__description"></span>
-                  </li>
-                </template>
-              </ul>
-            </div>
-          </details>
+          <span class="lh-config__timestamp"></span>
+          <a href="#runtime-settings" class="lh-config__emulation"></a>
         </div>
       </div>
     </div>
 
-    <div class="lh-scores-wrapper">
-      <div class="lh-scores-container">
-        <div class="lh-scores-wrapper__shadow"></div>
-      </div>
-    </div>
+    <div class="lh-scores-wrapper-placeholder"></div>
 
     <div class="lh-toolbar">
       <div class="lh-product-info">
@@ -411,28 +423,53 @@ Unless required by applicable law or agreed to in writing, software distributed 
     </div>
 </template>
 
+
 <!-- Lighthouse footer -->
 <template id="tmpl-lh-footer">
   <style>
     .lh-footer {
-      min-height: 90px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       background-color: var(--header-bg-color);
       border-top: 1px solid var(--report-secondary-border-color);
+      padding: var(--section-indent) calc(var(--default-padding) * 2);
     }
-
-    .lh-footer span {
+    .lh-footer .lh-generated {
       text-align: center;
+      border-top: 1px solid var(--report-border-color);
+      padding-top: var(--default-padding);
+    }
+    .lh-env {
+      padding: var(--default-padding) 0;
+    }
+    .lh-env__items {
+      padding-left: 16px;
+    }
+    span.lh-env__name {
+      font-weight: bold;
+      color: var(--secondary-text-color);
+    }
+    span.lh-env__description {
+      font-family: var(--monospace-font-family);
+      font-size: var(--caption-font-size);
+      padding-left: 5px;
     }
   </style>
   <footer class="lh-footer">
-    <span>
-      Generated by <b>Lighthouse</b> <span class="lh-footer__version"></span> on
-      <span class="lh-footer__timestamp"></span> |
+    <div class="lh-env">
+      <div class="lh-env__title">Runtime settings</div>
+      <ul class="lh-env__items">
+        <template id="tmpl-lh-env__items">
+          <li class="lh-env__item">
+            <span class="lh-env__name"></span>
+            <span class="lh-env__description"></span>
+          </li>
+        </template>
+      </ul>
+    </div>
+
+    <div class="lh-generated">
+      Generated by <b>Lighthouse</b> <span class="lh-footer__version"></span> |
       <a href="https://github.com/GoogleChrome/Lighthouse/issues" target="_blank" rel="noopener">File an issue</a>
-    </span>
+    </div>
   </footer>
 </template>
 
