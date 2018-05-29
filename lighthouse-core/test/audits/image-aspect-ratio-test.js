@@ -107,6 +107,16 @@ describe('Images: aspect-ratio audit', () => {
     },
   });
 
+  testImage('is almost the right aspect ratio', {
+    rawValue: true,
+    clientSize: [412, 36],
+    naturalSize: [800, 69],
+    props: {
+      isCss: false,
+      usesObjectFit: false,
+    },
+  });
+
   testImage('aspect ratios match', {
     rawValue: true,
     clientSize: [100, 100],
