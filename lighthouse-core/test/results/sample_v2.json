@@ -1869,7 +1869,7 @@
       "id": "render-blocking-resources",
       "title": "Eliminate render-blocking resources",
       "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).",
-      "score": 0,
+      "score": 0.46,
       "scoreDisplayMode": "numeric",
       "rawValue": 1129,
       "displayValue": "5 resources delayed first paint by 1129ms",
@@ -2067,7 +2067,7 @@
       "id": "uses-text-compression",
       "title": "Enable text compression",
       "description": "Text-based responses should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer).",
-      "score": 0.9,
+      "score": 0.88,
       "scoreDisplayMode": "numeric",
       "rawValue": 150,
       "displayValue": [

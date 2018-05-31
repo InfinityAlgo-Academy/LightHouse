@@ -133,7 +133,7 @@ module.exports = [
         },
       },
       'efficient-animated-content': {
-        score: 0,
+        score: '<0.5',
         details: {
           overallSavingsMs: '>2000',
           items: [

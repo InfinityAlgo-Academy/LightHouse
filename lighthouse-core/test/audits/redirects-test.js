@@ -97,7 +97,7 @@ describe('Performance: Redirects audit', () => {
     ]);
 
     return Audit.audit(mockArtifacts(FAILING_TWO_REDIRECTS), {}).then(output => {
-      assert.equal(output.score, 0.65);
+      assert.equal(Math.round(output.score * 100) / 100, 0.56);
       assert.equal(output.details.items.length, 3);
       assert.equal(Math.round(output.rawValue), 638);
     });

@@ -6,6 +6,7 @@
 'use strict';
 
 const Audit = require('../audit');
+const linearInterpolation = require('../../lib/statistics').linearInterpolation;
 const Interactive = require('../../gather/computed/metrics/lantern-interactive'); // eslint-disable-line max-len
 const Simulator = require('../../lib/dependency-graph/simulator/simulator'); // eslint-disable-line no-unused-vars
 const Node = require('../../lib/dependency-graph/node.js'); // eslint-disable-line no-unused-vars
@@ -16,6 +17,7 @@ const KB_IN_BYTES = 1024;
 
 const WASTED_MS_FOR_AVERAGE = 300;
 const WASTED_MS_FOR_POOR = 750;
+const WASTED_MS_FOR_SCORE_OF_ZERO = 5000;
 
 /**
  * @typedef {object} ByteEfficiencyProduct
@@ -32,14 +34,24 @@ const WASTED_MS_FOR_POOR = 750;
  */
 class UnusedBytes extends Audit {
   /**
+   * Creates a score based on the wastedMs value using linear interpolation between control points.
+   *
    * @param {number} wastedMs
    * @return {number}
    */
   static scoreForWastedMs(wastedMs) {
-    if (wastedMs === 0) return 1;
-    else if (wastedMs < WASTED_MS_FOR_AVERAGE) return 0.9;
-    else if (wastedMs < WASTED_MS_FOR_POOR) return 0.65;
-    else return 0;
+    if (wastedMs === 0) {
+      return 1;
+    } else if (wastedMs < WASTED_MS_FOR_AVERAGE) {
+      return linearInterpolation(0, 1, WASTED_MS_FOR_AVERAGE, 0.75, wastedMs);
+    } else if (wastedMs < WASTED_MS_FOR_POOR) {
+      return linearInterpolation(WASTED_MS_FOR_AVERAGE, 0.75, WASTED_MS_FOR_POOR, 0.5, wastedMs);
+    } else {
+      return Math.max(
+        0,
+        linearInterpolation(WASTED_MS_FOR_POOR, 0.5, WASTED_MS_FOR_SCORE_OF_ZERO, 0, wastedMs)
+      );
+    }
   }
 
   /**
