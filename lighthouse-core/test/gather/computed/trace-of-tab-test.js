@@ -112,6 +112,55 @@ describe('Trace of Tab computed artifact:', () => {
     assert.equal(trace.firstMeaningfulPaintEvt, undefined, 'bad fmp');
   });
 
+  it('handles traces with TracingStartedInBrowser events', async () => {
+    const tracingStartedInBrowserTrace = {
+      'traceEvents': [{
+        'pid': 69850,
+        'tid': 69850,
+        'ts': 2193564729582,
+        'ph': 'I',
+        'cat': 'disabled-by-default-devtools.timeline',
+        'name': 'TracingStartedInBrowser',
+        'args': {'data': {
+          'frameTreeNodeId': 1,
+          'frames': [{
+            'frame': 'B192D1F3355A6F961EC8F0B01623C1FB',
+            'url': 'http://www.example.com/',
+            'name': '',
+            'processId': 69920,
+          }],
+        }},
+        'tts': 1085165,
+        's': 't',
+      }, {
+        'pid': 69920,
+        'tid': 1,
+        'ts': 2193564790059,
+        'ph': 'R',
+        'cat': 'blink.user_timing',
+        'name': 'navigationStart',
+        'args': {
+          'frame': 'B192D1F3355A6F961EC8F0B01623C1FB',
+          'data': {
+            'documentLoaderURL': 'http://www.example.com/',
+            'isLoadingMainFrame': true,
+          },
+        },
+        'tts': 141371,
+      }, {
+        'pid': 69920,
+        'tid': 1,
+        'ts': 0,
+        'ph': 'M',
+        'cat': '__metadata',
+        'name': 'thread_name',
+        'args': {'name': 'CrRendererMain'},
+      }]};
+    const trace = await traceOfTab.compute_(tracingStartedInBrowserTrace);
+    assert.equal(trace.startedInPageEvt.ts, 2193564729582);
+    assert.equal(trace.navigationStartEvt.ts, 2193564790059);
+  });
+
   it('stably sorts events', async () => {
     const traceJson = fs.readFileSync(__dirname +
         '/../../fixtures/traces/tracingstarted-after-navstart.json', 'utf8');

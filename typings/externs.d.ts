@@ -137,6 +137,11 @@ declare global {
       cat: string;
       args: {
         data?: {
+          frames?: {
+            frame: string;
+            parent?: string;
+            processId?: number;
+          }[];
           page?: string;
           readyState?: number;
           requestId?: string;
@@ -148,6 +153,7 @@ declare global {
           url?: string;
         };
         frame?: string;
+        name?: string;
       };
       pid: number;
       tid: number;

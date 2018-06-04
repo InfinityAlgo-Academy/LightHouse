@@ -44,19 +44,39 @@ class TraceOfTab extends ComputedArtifact {
     const keyEvents = trace.traceEvents
       .filter(e => {
         return e.cat.includes('blink.user_timing') ||
-          e.cat.includes('loading') ||
-          e.cat.includes('devtools.timeline') ||
-          e.name === 'TracingStartedInPage';
+            e.cat.includes('loading') ||
+            e.cat.includes('devtools.timeline') ||
+            e.cat === '__metadata';
       })
       // @ts-ignore - stableSort added to Array by WebInspector.
       .stableSort((event0, event1) => event0.ts - event1.ts);
 
-    // The first TracingStartedInPage in the trace is definitely our renderer thread of interest
-    // Beware: the tracingStartedInPage event can appear slightly after a navigationStart
-    const startedInPageEvt = keyEvents.find(e => e.name === 'TracingStartedInPage');
+    // Find out the inspected page frame.
+    /** @type {LH.TraceEvent|undefined} */
+    let startedInPageEvt;
+    const startedInBrowserEvt = keyEvents.find(e => e.name === 'TracingStartedInBrowser');
+    if (startedInBrowserEvt && startedInBrowserEvt.args.data &&
+        startedInBrowserEvt.args.data.frames) {
+      const mainFrame = startedInBrowserEvt.args.data.frames.find(frame => !frame.parent);
+      const pid = mainFrame && mainFrame.processId;
+      const threadNameEvt = keyEvents.find(e => e.pid === pid && e.ph === 'M' &&
+        e.cat === '__metadata' && e.name === 'thread_name' && e.args.name === 'CrRendererMain');
+      startedInPageEvt = mainFrame && threadNameEvt ?
+        Object.assign({}, startedInBrowserEvt, {
+          pid, tid: threadNameEvt.tid, name: 'TracingStartedInPage',
+          args: {data: {page: mainFrame.frame}}}) :
+        undefined;
+    }
+    // Support legacy browser versions that do not emit TracingStartedInBrowser event.
+    if (!startedInPageEvt) {
+      // The first TracingStartedInPage in the trace is definitely our renderer thread of interest
+      // Beware: the tracingStartedInPage event can appear slightly after a navigationStart
+      startedInPageEvt = keyEvents.find(e => e.name === 'TracingStartedInPage');
+    }
     if (!startedInPageEvt) throw new LHError(LHError.errors.NO_TRACING_STARTED);
     // @ts-ignore - property chain exists for 'TracingStartedInPage' event.
     const frameId = startedInPageEvt.args.data.page;
+
     // Filter to just events matching the frame ID for sanity
     const frameEvents = keyEvents.filter(e => e.args.frame === frameId);
 
@@ -106,12 +126,12 @@ class TraceOfTab extends ComputedArtifact {
     // stable-sort events to keep them correctly nested.
     /** @type Array<LH.TraceEvent> */
     const processEvents = trace.traceEvents
-      .filter(e => e.pid === startedInPageEvt.pid)
+      .filter(e => e.pid === /** @type {LH.TraceEvent} */ (startedInPageEvt).pid)
       // @ts-ignore - stableSort added to Array by WebInspector.
       .stableSort((event0, event1) => event0.ts - event1.ts);
 
     const mainThreadEvents = processEvents
-      .filter(e => e.tid === startedInPageEvt.tid);
+      .filter(e => e.tid === /** @type {LH.TraceEvent} */ (startedInPageEvt).tid);
 
     const traceEnd = trace.traceEvents.reduce((max, evt) => {
       return max.ts > evt.ts ? max : evt;
