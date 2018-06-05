@@ -7,6 +7,7 @@
 
 const Audit = require('./audit');
 const Util = require('../report/html/renderer/util');
+const URL = require('../lib/url-shim');
 
 const TTFB_THRESHOLD = 600;
 
@@ -45,7 +46,8 @@ class TTFBMetric extends Audit {
         let displayValue = '';
 
         const finalUrl = artifacts.URL.finalUrl;
-        const finalUrlRequest = networkRecords.find(record => record._url === finalUrl);
+        const finalUrlRequest = networkRecords.find(record =>
+            URL.doesNetworkRecordUrlMatchUrl(record._url, finalUrl));
         if (!finalUrlRequest) {
           throw new Error(`finalUrl '${finalUrl} not found in network records.`);
         }

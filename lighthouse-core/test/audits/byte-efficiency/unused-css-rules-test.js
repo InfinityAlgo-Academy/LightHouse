@@ -121,7 +121,7 @@ describe('Best Practices: unused css rules audit', () => {
     const requestNetworkRecords = () => {
       return Promise.resolve([
         {
-          url: 'file://a.css',
+          url: 'http://x.com/a.css',
           _transferSize: 10 * 1024,
           _resourceType: {_name: 'stylesheet'},
         },
@@ -150,11 +150,11 @@ describe('Best Practices: unused css rules audit', () => {
           {styleSheetId: 'b', used: true},
         ], stylesheets: [
           {
-            header: {styleSheetId: 'a', sourceURL: 'file://a.css'},
+            header: {styleSheetId: 'a', sourceURL: 'http://x.com/a.css'},
             content: '.my.selector {color: #ccc;}\n a {color: #fff}',
           },
           {
-            header: {styleSheetId: 'b', sourceURL: 'file://b.css'},
+            header: {styleSheetId: 'b', sourceURL: 'http://x.com/b.css'},
             content: '.my.favorite.selector { rule: content; }',
           },
         ]},
@@ -167,17 +167,17 @@ describe('Best Practices: unused css rules audit', () => {
       return UnusedCSSAudit.audit_({
         devtoolsLogs,
         requestNetworkRecords,
-        URL: {finalUrl: ''},
+        URL: {finalUrl: 'http://x.com/index.html'},
         CSSUsage: {rules: [
           {styleSheetId: 'a', used: true, startOffset: 0, endOffset: 11}, // 44 * 1 / 4
           {styleSheetId: 'b', used: true, startOffset: 0, endOffset: 6000}, // 4000 * 3 / 2
         ], stylesheets: [
           {
-            header: {styleSheetId: 'a', sourceURL: 'file://a.css'},
+            header: {styleSheetId: 'a', sourceURL: 'http://x.com/a.css'},
             content: '.my.selector {color: #ccc;}\n a {color: #fff}',
           },
           {
-            header: {styleSheetId: 'b', sourceURL: 'file://b.css'},
+            header: {styleSheetId: 'b', sourceURL: 'http://x.com/b.css'},
             content: `${generate('123', 4000)}`,
           },
           {
@@ -187,10 +187,18 @@ describe('Best Practices: unused css rules audit', () => {
         ]},
       }).then(result => {
         assert.equal(result.items.length, 2);
-        assert.equal(result.items[0].totalBytes, 10 * 1024);
-        assert.equal(result.items[1].totalBytes, 6000);
-        assert.equal(result.items[0].wastedPercent, 75);
-        assert.equal(result.items[1].wastedPercent, 50);
+        assert.deepStrictEqual(result.items[0], {
+          'url': 'http://x.com/a.css',
+          'wastedBytes': 7680,
+          'wastedPercent': 75,
+          'totalBytes': 10 * 1024,
+        });
+        assert.deepStrictEqual(result.items[1], {
+          'url': 'http://x.com/b.css',
+          'wastedBytes': 3000,
+          'wastedPercent': 50,
+          'totalBytes': 6000,
+        });
       });
     });
 
@@ -204,23 +212,23 @@ describe('Best Practices: unused css rules audit', () => {
           {styleSheetId: 'b', used: true, startOffset: 0, endOffset: 500}, // 500 * 3 / 3
         ], stylesheets: [
           {
-            header: {styleSheetId: 'a', sourceURL: 'file://a.css'},
+            header: {styleSheetId: 'a', sourceURL: 'http://x.com/a.css'},
             content: `${generate('123', 4000)}`,
           },
           {
-            header: {styleSheetId: 'b', sourceURL: 'file://b.css'},
+            header: {styleSheetId: 'b', sourceURL: 'http://x.com/b.css'},
             content: `${generate('123', 500)}`,
           },
           {
-            header: {styleSheetId: 'c', sourceURL: 'file://c.css'},
+            header: {styleSheetId: 'c', sourceURL: 'http://x.com/c.css'},
             content: '@import url(http://googlefonts.com?myfont)',
           },
           {
-            header: {styleSheetId: 'd', sourceURL: 'file://d.css'},
+            header: {styleSheetId: 'd', sourceURL: 'http://x.com/d.css'},
             content: '/* nothing to see here */',
           },
           {
-            header: {styleSheetId: 'e', sourceURL: 'file://e.css'},
+            header: {styleSheetId: 'e', sourceURL: 'http://x.com/e.css'},
             content: '       ',
           },
         ]},

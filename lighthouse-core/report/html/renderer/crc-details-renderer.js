@@ -109,10 +109,12 @@ class CriticalRequestChainRenderer {
     }
 
     // Fill in url, host, and request size information.
-    const {file, hostname} = Util.parseURL(segment.node.request.url);
+    const url = Util.parseURL(segment.node.request.url);
+    const displayUrl = Util.getURLDisplayName(url);
     const treevalEl = dom.find('.crc-node__tree-value', chainsEl);
-    dom.find('.crc-node__tree-file', treevalEl).textContent = `${file}`;
-    dom.find('.crc-node__tree-hostname', treevalEl).textContent = hostname ? `(${hostname})` : '';
+    dom.find('.crc-node__tree-file', treevalEl).textContent = `${displayUrl}`;
+    dom.find('.crc-node__tree-hostname', treevalEl).textContent = url.hostname ?
+        `(${url.hostname})` : '';
 
     if (!segment.hasChildren) {
       const span = dom.createElement('span', 'crc-node__chain-duration');

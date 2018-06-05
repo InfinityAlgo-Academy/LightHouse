@@ -32,11 +32,8 @@ class ServiceWorker extends Audit {
     // Find active service worker for this URL. Match against
     // artifacts.URL.finalUrl so audit accounts for any redirects.
     const versions = artifacts.ServiceWorker.versions;
-    const url = artifacts.URL.finalUrl;
-
-    const origin = new URL(url).origin;
     const matchingSW = versions.filter(v => v.status === 'activated')
-        .find(v => new URL(v.scriptURL).origin === origin);
+        .find(v => URL.originsMatch(artifacts.URL.finalUrl, v.scriptURL));
 
     return {
       rawValue: !!matchingSW,

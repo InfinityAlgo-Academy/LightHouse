@@ -100,10 +100,11 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
     const content = stylesheet.content;
     const totalTokenLength = UnminifiedCSS.computeTokenLength(content);
 
-    let url = stylesheet.header.sourceURL;
-    if (!url || url === pageUrl) {
+    let stylesheetUrl = stylesheet.header.sourceURL;
+    // Both these URLs should include hash fragments so we can do a straight equality comparison
+    if (!stylesheetUrl || stylesheetUrl === pageUrl) {
       const contentPreview = UnusedCSSRules.determineContentPreview(stylesheet.content);
-      url = contentPreview;
+      stylesheetUrl = contentPreview;
     }
 
     const totalBytes = ByteEfficiencyAudit.estimateTransferSize(networkRecord, content.length,
@@ -112,7 +113,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
     const wastedBytes = Math.round(totalBytes * wastedRatio);
 
     return {
-      url,
+      url: stylesheetUrl,
       totalBytes,
       wastedBytes,
       wastedPercent: 100 * wastedRatio,

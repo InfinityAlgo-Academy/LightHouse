@@ -18,6 +18,8 @@ const RATINGS = {
   ERROR: {label: 'error'},
 };
 
+const urlCache = new Map();
+
 class Util {
   static get PASS_THRESHOLD() {
     return PASS_THRESHOLD;
@@ -248,7 +250,8 @@ class Util {
     const MAX_LENGTH = 64;
     // Always elide hexadecimal hash
     name = name.replace(/([a-f0-9]{7})[a-f0-9]{13}[a-f0-9]*/g, `$1${ELLIPSIS}`);
-    // Also elide other hash-like mixed-case strings
+    // Also elide other hash-like mixed-case strings.
+    // FIXME: Use faster regex than with these positive lookaheads
     name = name.replace(/([a-zA-Z0-9-_]{9})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9-_]{10,}/g,
       `$1${ELLIPSIS}`);
     // Also elide long number sequences
@@ -285,15 +288,17 @@ class Util {
   /**
    * Split a URL into a file, hostname and origin for easy display.
    * @param {string} url
-   * @return {{file: string, hostname: string, origin: string}}
+   * @return {URL}
    */
   static parseURL(url) {
-    const parsedUrl = new URL(url);
-    return {
-      file: Util.getURLDisplayName(parsedUrl),
-      hostname: parsedUrl.hostname,
-      origin: parsedUrl.origin,
-    };
+    let ret;
+    if (urlCache.has(url)) {
+      ret = urlCache.get(url);
+    } else {
+      ret = new URL(url);
+      urlCache.set(url, ret);
+    }
+    return ret;
   }
 
   /**

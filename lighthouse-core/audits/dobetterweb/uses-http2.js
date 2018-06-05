@@ -37,16 +37,13 @@ class UsesHTTP2Audit extends Audit {
   static audit(artifacts) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     return artifacts.requestNetworkRecords(devtoolsLogs).then(networkRecords => {
-      const finalHost = new URL(artifacts.URL.finalUrl).host;
-
       const seenURLs = new Set();
       // Filter requests that are on the same host as the page and not over h2.
       const resources = networkRecords.filter(record => {
         // test the protocol first to avoid (potentially) expensive URL parsing
         const isOldHttp = /HTTP\/[01][.\d]?/i.test(record.protocol);
         if (!isOldHttp) return false;
-        const requestHost = new URL(record._url).host;
-        return requestHost === finalHost;
+        return URL.hostsMatch(artifacts.URL.finalUrl, record._url);
       }).map(record => {
         return {
           protocol: record.protocol,

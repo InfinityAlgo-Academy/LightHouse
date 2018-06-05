@@ -25,9 +25,8 @@ class MainResource extends ComputedArtifact {
   async compute_(data, artifacts) {
     const finalUrl = data.URL.finalUrl;
     const requests = await artifacts.requestNetworkRecords(data.devtoolsLog);
-    // equalWithExcludedFragments is expensive, so check that the finalUrl starts with the request first
-    const mainResource = requests.find(request => finalUrl.startsWith(request.url) &&
-      URL.equalWithExcludedFragments(request.url, finalUrl));
+    const mainResource = requests.find(request =>
+        URL.doesNetworkRecordUrlMatchUrl(request.url, finalUrl));
 
     if (!mainResource) {
       throw new Error('Unable to identify the main resource');

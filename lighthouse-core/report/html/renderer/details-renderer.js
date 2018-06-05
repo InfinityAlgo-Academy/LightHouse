@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* globals self CriticalRequestChainRenderer Util URL */
+/* globals self CriticalRequestChainRenderer Util */
 
 /** @typedef {import('./dom.js')} DOM */
 /** @typedef {import('./crc-details-renderer.js')} CRCDetailsJSON */
@@ -110,8 +110,9 @@ class DetailsRenderer {
     let title;
     try {
       const parsed = Util.parseURL(url);
-      displayedPath = parsed.file === '/' ? parsed.origin : parsed.file;
-      displayedHost = parsed.file === '/' ? '' : `(${parsed.hostname})`;
+      const urlDisplayName = Util.getURLDisplayName(parsed);
+      displayedPath = urlDisplayName === '/' ? parsed.origin : urlDisplayName;
+      displayedHost = urlDisplayName === '/' ? '' : `(${parsed.hostname})`;
       title = url;
     } catch (/** @type {!Error} */ e) {
       if (!(e instanceof TypeError)) {
@@ -143,7 +144,7 @@ class DetailsRenderer {
    */
   _renderLink(details) {
     const allowedProtocols = ['https:', 'http:'];
-    const url = new URL(details.url);
+    const url = Util.parseURL(details.url);
     if (!allowedProtocols.includes(url.protocol)) {
       // Fall back to just the link text if protocol not allowed.
       return this._renderText({

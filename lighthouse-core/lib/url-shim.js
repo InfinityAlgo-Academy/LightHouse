@@ -32,7 +32,29 @@ function rewriteChromeInternalUrl(url) {
   return url.replace(/^chrome:\/\/chrome\//, 'chrome://');
 }
 
+const urlCache = new Map();
+
 class URLShim extends URL {
+  /**
+   * Normal URL constructor, but with basic caching added (as the constructor is surprisingly slow)
+   *
+   * Also note that file:// URLs often get unexpected trailing slashes:
+   *    new URL('file://a.css').href ==> file://a.css/
+   * @param {string} url
+   * @param {string=} base
+   */
+  constructor(url, base) {
+    let ret;
+    const cacheKey = `${url},${base}`;
+    if (urlCache.has(cacheKey)) {
+      ret = urlCache.get(cacheKey);
+    } else {
+      ret = super(url, base);
+      urlCache.set(cacheKey, ret);
+    }
+    return ret;
+  }
+
   /**
    * @param {string} url
    * @return {boolean}
@@ -108,6 +130,17 @@ class URLShim extends URL {
     } catch (e) {
       return url;
     }
+  }
+
+  /**
+   * Sugar method for network record URLs since they do not have hash fragments
+   * but the URL they're compared to does. We add a small speed optimization as well.
+   * @param {string} recordUrl
+   * @param {string} url
+   */
+  static doesNetworkRecordUrlMatchUrl(recordUrl, url) {
+    if (!url.startsWith(recordUrl)) return false;
+    return URLShim.equalWithExcludedFragments(recordUrl, url);
   }
 
   /**

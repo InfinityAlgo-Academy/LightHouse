@@ -6,6 +6,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
+const URL = require('../../lib/url-shim');
 
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
 const PREVIEW_LENGTH = 100;
@@ -41,12 +42,30 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
         }, /** @type {Object<string, LH.WebInspector.NetworkRequest>} */ ({}));
 
     return styles.reduce((indexed, stylesheet) => {
+      // FYI: Inline styles will arrive with a sourceURL of ''. This means the estimateTransferSize
+      // call later will ballpark the network size via gzipped size of the uncompressed content.
+      const stylesheetUrl = getURLWithoutFragments(stylesheet.header.sourceURL);
       indexed[stylesheet.header.styleSheetId] = Object.assign({
         usedRules: [],
-        networkRecord: indexedNetworkRecords[stylesheet.header.sourceURL],
+        networkRecord: indexedNetworkRecords[stylesheetUrl],
       }, stylesheet);
       return indexed;
     }, /** @type {Object<string, StyleSheetInfo>} */ ({}));
+
+    /**
+     * @param {string} url
+     * @return {string}
+     */
+    function getURLWithoutFragments(url) {
+      let urlWithoutFragments;
+      try {
+        urlWithoutFragments = new URL(url); // I suspect we need to add a baseUrl a la font-size
+        urlWithoutFragments.hash = '';
+      } catch (err) {
+        return '';
+      }
+      return urlWithoutFragments.toString();
+    }
   }
 
   /**

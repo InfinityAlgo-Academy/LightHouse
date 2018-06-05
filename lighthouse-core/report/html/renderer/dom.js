@@ -115,7 +115,7 @@ class DOM {
         a.rel = 'noopener';
         a.target = '_blank';
         a.textContent = linkText;
-        a.href = (new URL(linkHref)).href;
+        a.href = new URL(linkHref).href;
         element.appendChild(a);
       }
     }
