@@ -18,6 +18,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const TracingProcessor = require('../../lib/traces/tracing-processor');
 
 if (process.argv.length !== 4) {
   console.error('Usage $0: <input file> <output file>');
@@ -76,9 +77,7 @@ const traceEventsToKeepInProcess = new Set([
  * @param {LH.TraceEvent[]} events
  */
 function filterOutUnnecessaryTasksByNameAndDuration(events) {
-  // TODO(phulce): update this once https://github.com/GoogleChrome/lighthouse/pull/5271 lands
-  const startedInPageEvt = events.find(evt => evt.name === 'TracingStartedInPage');
-  if (!startedInPageEvt) throw new Error('Could not find TracingStartedInPage');
+  const {startedInPageEvt} = TracingProcessor.findTracingStartedEvt(events);
 
   return events.filter(evt => {
     if (toplevelTaskNames.has(evt.name) && evt.dur < 1000) return false;

@@ -10,6 +10,7 @@
 const BASE_RESPONSE_LATENCY = 16;
 const SCHEDULABLE_TASK_TITLE = 'TaskQueueManager::ProcessTaskFromWorkQueue';
 const SCHEDULABLE_TASK_TITLE_ALT = 'ThreadControllerImpl::DoWork';
+const LHError = require('../errors');
 
 class TraceProcessor {
   /**
@@ -177,6 +178,43 @@ class TraceProcessor {
     }
 
     return topLevelEvents;
+  }
+
+  /**
+   * @param {LH.TraceEvent[]} events
+   * @return {{startedInPageEvt: LH.TraceEvent, frameId: string}}
+   */
+  static findTracingStartedEvt(events) {
+    /** @type {LH.TraceEvent|undefined} */
+    let startedInPageEvt;
+
+    // Prefer the newer TracingStartedInBrowser event first, if it exists
+    const startedInBrowserEvt = events.find(e => e.name === 'TracingStartedInBrowser');
+    if (startedInBrowserEvt && startedInBrowserEvt.args.data &&
+        startedInBrowserEvt.args.data.frames) {
+      const mainFrame = startedInBrowserEvt.args.data.frames.find(frame => !frame.parent);
+      const pid = mainFrame && mainFrame.processId;
+      const threadNameEvt = events.find(e => e.pid === pid && e.ph === 'M' &&
+        e.cat === '__metadata' && e.name === 'thread_name' && e.args.name === 'CrRendererMain');
+      startedInPageEvt = mainFrame && threadNameEvt ?
+        Object.assign({}, startedInBrowserEvt, {
+          pid, tid: threadNameEvt.tid, name: 'TracingStartedInPage',
+          args: {data: {page: mainFrame.frame}}}) :
+        undefined;
+    }
+
+    // Support legacy browser versions that do not emit TracingStartedInBrowser event.
+    if (!startedInPageEvt) {
+      // The first TracingStartedInPage in the trace is definitely our renderer thread of interest
+      // Beware: the tracingStartedInPage event can appear slightly after a navigationStart
+      startedInPageEvt = events.find(e => e.name === 'TracingStartedInPage');
+    }
+
+    if (!startedInPageEvt) throw new LHError(LHError.errors.NO_TRACING_STARTED);
+
+    // @ts-ignore - property chain exists for 'TracingStartedInPage' event.
+    const frameId = /** @type {string} */ (startedInPageEvt.args.data.page);
+    return {startedInPageEvt, frameId};
   }
 
   /**
