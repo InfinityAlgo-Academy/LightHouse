@@ -50,14 +50,18 @@ describe('Performance: uses-rel-preload audit', () => {
 
   it('should suggest preload resource', () => {
     const rootNode = buildNode(1, 'http://example.com');
-    const mainDocumentNode = buildNode(2, 'http://www.example.com');
+    const mainDocumentNode = buildNode(2, 'http://www.example.com:3000');
     const scriptNode = buildNode(3, 'http://www.example.com/script.js');
     const scriptAddedNode = buildNode(4, 'http://www.example.com/script-added.js');
+    const scriptSubNode = buildNode(5, 'http://sub.example.com/script-sub.js');
+    const scriptOtherNode = buildNode(6, 'http://otherdomain.com/script-other.js');
 
     mainDocumentNode.setIsMainDocument(true);
     mainDocumentNode.addDependency(rootNode);
     scriptNode.addDependency(mainDocumentNode);
     scriptAddedNode.addDependency(scriptNode);
+    scriptSubNode.addDependency(scriptNode);
+    scriptOtherNode.addDependency(scriptNode);
 
     mockGraph = rootNode;
     mockSimulator = {
@@ -69,41 +73,63 @@ describe('Performance: uses-rel-preload audit', () => {
         const mainDocumentNodeLocal = nodesByUrl.get(mainDocumentNode.record.url);
         const scriptNodeLocal = nodesByUrl.get(scriptNode.record.url);
         const scriptAddedNodeLocal = nodesByUrl.get(scriptAddedNode.record.url);
+        const scriptSubNodeLocal = nodesByUrl.get(scriptSubNode.record.url);
+        const scriptOtherNodeLocal = nodesByUrl.get(scriptOtherNode.record.url);
 
         const nodeTimings = new Map([
           [rootNodeLocal, {starTime: 0, endTime: 500}],
           [mainDocumentNodeLocal, {startTime: 500, endTime: 1000}],
           [scriptNodeLocal, {startTime: 1000, endTime: 2000}],
           [scriptAddedNodeLocal, {startTime: 2000, endTime: 3250}],
+          [scriptSubNodeLocal, {startTime: 2000, endTime: 3000}],
+          [scriptOtherNodeLocal, {startTime: 2000, endTime: 3500}],
         ]);
 
         if (scriptAddedNodeLocal.getDependencies()[0] === mainDocumentNodeLocal) {
           nodeTimings.set(scriptAddedNodeLocal, {startTime: 1000, endTime: 2000});
         }
 
-        return {timeInMs: 3250, nodeTimings};
+        if (scriptSubNodeLocal.getDependencies()[0] === mainDocumentNodeLocal) {
+          nodeTimings.set(scriptSubNodeLocal, {startTime: 1000, endTime: 2000});
+        }
+
+        if (scriptOtherNodeLocal.getDependencies()[0] === mainDocumentNodeLocal) {
+          nodeTimings.set(scriptOtherNodeLocal, {startTime: 1000, endTime: 2500});
+        }
+
+        return {timeInMs: 3500, nodeTimings};
       },
     };
 
     const mainResource = Object.assign({}, defaultMainResource, {
-      url: 'http://www.example.com',
+      url: 'http://www.example.com:3000',
       redirects: [''],
     });
     const networkRecords = [
       {
         requestId: '2',
         _isLinkPreload: false,
-        _url: 'http://www.example.com',
+        url: 'http://www.example.com:3000',
       },
       {
         requestId: '3',
         _isLinkPreload: false,
-        _url: 'http://www.example.com/script.js',
+        url: 'http://www.example.com/script.js',
       },
       {
         requestId: '4',
         _isLinkPreload: false,
-        _url: 'http://www.example.com/script-added.js',
+        url: 'http://www.example.com/script-added.js',
+      },
+      {
+        requestId: '5',
+        _isLinkPreload: false,
+        url: 'http://sub.example.com/script-sub.js',
+      },
+      {
+        requestId: '6',
+        _isLinkPreload: false,
+        url: 'http://otherdomain.com/script-other.js',
       },
     ];
 
@@ -120,6 +146,14 @@ describe('Performance: uses-rel-preload audit', () => {
                     request: networkRecords[2],
                     children: {},
                   },
+                  '5': {
+                    request: networkRecords[3],
+                    children: {},
+                  },
+                  '6': {
+                    request: networkRecords[4],
+                    children: {},
+                  },
                 },
               },
             },
@@ -131,7 +165,9 @@ describe('Performance: uses-rel-preload audit', () => {
     return UsesRelPreload.audit(mockArtifacts(networkRecords, chains, mainResource), {}).then(
       output => {
         assert.equal(output.rawValue, 1250);
-        assert.equal(output.details.items.length, 1);
+        assert.equal(output.details.items.length, 2);
+        assert.equal(output.details.items[0].url, 'http://www.example.com/script-added.js');
+        assert.equal(output.details.items[1].url, 'http://sub.example.com/script-sub.js');
       }
     );
   });
