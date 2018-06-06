@@ -7,7 +7,7 @@
   "scripts": {
     "watch": "gulp watch",
     "build": "gulp build:production",
-    "test": "mocha test/extension-test.js"
+    "test": "mocha test/**/*-test.js"
   },
   "devDependencies": {
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",

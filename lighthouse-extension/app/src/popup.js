@@ -247,7 +247,7 @@ async function initPopup() {
   });
 
   // bind throttling control button
-  const lanternCheckbox = /** @type {HTMLInputElement} */ (find('lantern-checkbox'));
+  const lanternCheckbox = /** @type {HTMLInputElement} */ (find('#lantern-checkbox'));
   lanternCheckbox.addEventListener('change', async () => {
     const settings = await background.loadSettings();
     settings.useDevTools = !lanternCheckbox.checked;
@@ -255,7 +255,7 @@ async function initPopup() {
   });
 
   // bind Generate Report button
-  const generateReportButton = find('generate-report');
+  const generateReportButton = find('#generate-report');
   generateReportButton.addEventListener('click', () => {
     background.loadSettings().then(settings => {
       onGenerateReportButtonClick(background, settings);
@@ -263,14 +263,14 @@ async function initPopup() {
   });
 
   // bind View Options button
-  const generateOptionsEl = find('configure-options');
+  const generateOptionsEl = find('#configure-options');
   const optionsEl = find('.options');
   generateOptionsEl.addEventListener('click', () => {
     optionsEl.classList.add(subpageVisibleClass);
   });
 
   // bind Save Options button
-  const okButton = find('ok');
+  const okButton = find('#ok');
   okButton.addEventListener('click', () => {
     // Save settings when options page is closed.
     const checkboxes = /** @type {NodeListOf<HTMLInputElement>} */
