@@ -29,7 +29,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
     if (node.type === 'cpu') {
       // Represent all CPU work that was bundled in a task as an EvaluateScript event
       const cpuNode = /** @type {LH.Gatherer.Simulation.GraphCPUNode} */ (node);
-      traceEvents.push(createFakeTaskEvent(cpuNode, timing));
+      traceEvents.push(...createFakeTaskEvents(cpuNode, timing));
     } else {
       const networkNode = /** @type {LH.Gatherer.Simulation.GraphNetworkNode} */ (node);
       // Ignore data URIs as they don't really add much value
@@ -38,10 +38,11 @@ function convertNodeTimingsToTrace(nodeTimings) {
     }
   }
 
-  // Create a fake evaluate script event ~1s after the trace ends for a sane default bounds in DT
+  // Create a fake task event ~1s after the trace ends for a sane default bounds in DT
   traceEvents.push(
-    createFakeTaskEvent(
-      {childEvents: []},
+    ...createFakeTaskEvents(
+      // @ts-ignore
+      {childEvents: [], event: {}},
       {
         startTime: lastEventEndTime + 1000,
         endTime: lastEventEndTime + 1001,
@@ -76,31 +77,43 @@ function convertNodeTimingsToTrace(nodeTimings) {
   }
 
   /**
-   * @param {{childEvents: LH.TraceEvent[]}} cpuNode
+   * @param {LH.Gatherer.Simulation.GraphCPUNode} cpuNode
    * @param {{startTime: number, endTime: number}} timing
-   * @return {LH.TraceEvent}
+   * @return {LH.TraceEvent[]}
    */
-  function createFakeTaskEvent(cpuNode, timing) {
-    const realEvaluateScriptEvent = cpuNode.childEvents.find(
-      e => e.name === 'EvaluateScript' && !!e.args.data && !!e.args.data.url
-    );
-    // @ts-ignore
-    const scriptUrl = realEvaluateScriptEvent && realEvaluateScriptEvent.args.data.url;
+  function createFakeTaskEvents(cpuNode, timing) {
     const argsData = {
-      url: scriptUrl || '',
+      url: '',
       frame,
       lineNumber: 0,
       columnNumber: 0,
     };
 
-    return {
-      ...baseEvent,
-      ph: 'X',
-      name: 'Task',
-      ts: toMicroseconds(timing.startTime),
-      dur: (timing.endTime - timing.startTime) * 1000,
-      args: {data: argsData},
-    };
+    const eventTs = toMicroseconds(timing.startTime);
+
+    /** @type {LH.TraceEvent[]} */
+    const events = [
+      {
+        ...baseEvent,
+        ph: 'X',
+        name: 'Task',
+        ts: eventTs,
+        dur: (timing.endTime - timing.startTime) * 1000,
+        args: {data: argsData},
+      },
+    ];
+
+    const nestedBaseTs = cpuNode.event.ts || 0;
+    const multiplier = (timing.endTime - timing.startTime) / cpuNode.event.dur;
+    for (let event of cpuNode.childEvents) {
+      if (event.cat !== 'devtools.timeline') continue;
+      const ts = eventTs + (event.ts - nestedBaseTs) * multiplier;
+      const newEvent = {...event, ...baseEvent, ts};
+      if (event.dur) newEvent.dur = event.dur * multiplier;
+      events.push(newEvent);
+    }
+
+    return events;
   }
 
   /**
