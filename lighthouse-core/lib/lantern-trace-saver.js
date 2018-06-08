@@ -29,7 +29,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
     if (node.type === 'cpu') {
       // Represent all CPU work that was bundled in a task as an EvaluateScript event
       const cpuNode = /** @type {LH.Gatherer.Simulation.GraphCPUNode} */ (node);
-      traceEvents.push(createFakeEvaluateScriptEvent(cpuNode, timing));
+      traceEvents.push(createFakeTaskEvent(cpuNode, timing));
     } else {
       const networkNode = /** @type {LH.Gatherer.Simulation.GraphNetworkNode} */ (node);
       // Ignore data URIs as they don't really add much value
@@ -40,7 +40,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
 
   // Create a fake evaluate script event ~1s after the trace ends for a sane default bounds in DT
   traceEvents.push(
-    createFakeEvaluateScriptEvent(
+    createFakeTaskEvent(
       {childEvents: []},
       {
         startTime: lastEventEndTime + 1000,
@@ -80,7 +80,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
    * @param {{startTime: number, endTime: number}} timing
    * @return {LH.TraceEvent}
    */
-  function createFakeEvaluateScriptEvent(cpuNode, timing) {
+  function createFakeTaskEvent(cpuNode, timing) {
     const realEvaluateScriptEvent = cpuNode.childEvents.find(
       e => e.name === 'EvaluateScript' && !!e.args.data && !!e.args.data.url
     );
@@ -96,7 +96,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
     return {
       ...baseEvent,
       ph: 'X',
-      name: 'EvaluateScript',
+      name: 'Task',
       ts: toMicroseconds(timing.startTime),
       dur: (timing.endTime - timing.startTime) * 1000,
       args: {data: argsData},
