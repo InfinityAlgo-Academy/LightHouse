@@ -6,6 +6,7 @@
 'use strict';
 
 const ComputedArtifact = require('./computed-artifact');
+const URL = require('../../lib/url-shim');
 
 /**
  * @fileoverview This artifact identifies the main resource on the page. Current solution assumes
@@ -21,18 +22,18 @@ class MainResource extends ComputedArtifact {
    * @param {LH.ComputedArtifacts} artifacts
    * @return {Promise<LH.WebInspector.NetworkRequest>}
    */
-  compute_(data, artifacts) {
-    const {URL, devtoolsLog} = data;
-    return artifacts.requestNetworkRecords(devtoolsLog)
-      .then(requests => {
-        const mainResource = requests.find(request => request.url === URL.finalUrl);
+  async compute_(data, artifacts) {
+    const finalUrl = data.URL.finalUrl;
+    const requests = await artifacts.requestNetworkRecords(data.devtoolsLog);
+    // equalWithExcludedFragments is expensive, so check that the finalUrl starts with the request first
+    const mainResource = requests.find(request => finalUrl.startsWith(request.url) &&
+      URL.equalWithExcludedFragments(request.url, finalUrl));
 
-        if (!mainResource) {
-          throw new Error('Unable to identify the main resource');
-        }
+    if (!mainResource) {
+      throw new Error('Unable to identify the main resource');
+    }
 
-        return mainResource;
-      });
+    return mainResource;
   }
 }
 

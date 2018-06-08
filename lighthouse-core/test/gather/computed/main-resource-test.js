@@ -56,4 +56,19 @@ describe('MainResource computed artifact', () => {
       assert.equal(output.url, 'https://en.m.wikipedia.org/wiki/Main_Page');
     });
   });
+
+  it('should identify correct main resource with hash URLs', () => {
+    const networkRecords = [
+      {url: 'https://beta.httparchive.org/reports'},
+      {url: 'https://beta.httparchive.org/reports/state-of-the-web'},
+    ];
+
+    computedArtifacts.requestNetworkRecords = _ => Promise.resolve(networkRecords);
+    const URL = {finalUrl: 'https://beta.httparchive.org/reports/state-of-the-web#pctHttps'};
+    const artifacts = {URL};
+
+    return computedArtifacts.requestMainResource(artifacts).then(output => {
+      assert.equal(output.url, 'https://beta.httparchive.org/reports/state-of-the-web');
+    });
+  });
 });

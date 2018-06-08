@@ -54,7 +54,14 @@ class EventListeners extends Gatherer {
       promise = driver.sendCommand('DOM.resolveNode', {
         nodeId: nodeIdOrObject,
         objectGroup: 'event-listeners-gatherer', // populates event handler info.
-      }).then(result => result.object);
+      })
+      .then(result => result.object)
+      .catch(() => {
+        return {
+          objectId: null,
+          description: '',
+        };
+      });
     }
 
     return promise.then(obj => {

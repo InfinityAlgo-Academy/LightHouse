@@ -63,7 +63,8 @@ class Element {
           return null;
         }
         return this.driver.getObjectProperty(resp.object.objectId, propName);
-      });
+      })
+      .catch(() => null);
   }
 }
 
