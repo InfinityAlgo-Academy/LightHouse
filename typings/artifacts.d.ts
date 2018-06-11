@@ -134,10 +134,14 @@ declare global {
       export interface Accessibility {
         violations: {
           id: string;
+          impact: string;
+          tags: string[];
           nodes: {
             path: string;
+            html: string;
             snippet: string;
             target: string[];
+            failureSummary?: string;
           }[];
         }[];
         notApplicable: {
