@@ -194,12 +194,14 @@ async function prepareAssets(artifacts, audits) {
 }
 
 /**
- * Generates a JSON representation of traceData line-by-line to avoid OOM due to
- * very large traces.
+ * Generates a JSON representation of traceData line-by-line to avoid OOM due to very large traces.
+ * COMPAT: As of Node 9, JSON.parse/stringify can handle 256MB+ strings. Once we drop support for
+ * Node 8, we can 'revert' PR #2593. See https://stackoverflow.com/a/47781288/89484
  * @param {LH.Trace} traceData
  * @return {IterableIterator<string>}
  */
 function* traceJsonGenerator(traceData) {
+  const EVENTS_PER_ITERATION = 500;
   const keys = Object.keys(traceData);
 
   yield '{\n';
@@ -211,9 +213,19 @@ function* traceJsonGenerator(traceData) {
     // Emit first item manually to avoid a trailing comma.
     const firstEvent = eventsIterator.next().value;
     yield `  ${JSON.stringify(firstEvent)}`;
+
+    let eventsRemaining = EVENTS_PER_ITERATION;
+    let eventsJSON = '';
     for (const event of eventsIterator) {
-      yield `,\n  ${JSON.stringify(event)}`;
+      eventsJSON += `,\n  ${JSON.stringify(event)}`;
+      eventsRemaining--;
+      if (eventsRemaining === 0) {
+        yield eventsJSON;
+        eventsRemaining = EVENTS_PER_ITERATION;
+        eventsJSON = '';
+      }
     }
+    yield eventsJSON;
   }
   yield '\n]';
 
