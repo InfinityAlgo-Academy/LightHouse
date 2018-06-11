@@ -200,7 +200,7 @@ describe('Runner', () => {
 
     return Runner.run({}, {url, config}).then(results => {
       const audits = results.lhr.audits;
-      assert.equal(audits['user-timings'].displayValue, 2);
+      assert.equal(audits['user-timings'].displayValue[1], 2);
       assert.equal(audits['user-timings'].rawValue, false);
     });
   });

@@ -30,21 +30,17 @@ describe('Performance: user-timings audit', () => {
       assert.equal(blackListedUTs.length, 0, 'Blacklisted usertimings included in results');
 
       assert.equal(auditResult.rawValue, false);
-      assert.equal(auditResult.displayValue, 2);
-
-      assert.equal(auditResult.extendedInfo.value[0].isMark, true);
-      assert.equal(Math.floor(auditResult.extendedInfo.value[0].startTime), 1000);
-      assert.equal(typeof auditResult.extendedInfo.value[0].endTime, 'undefined');
-      assert.equal(typeof auditResult.extendedInfo.value[0].duration, 'undefined');
-
-      assert.equal(auditResult.extendedInfo.value[1].isMark, false);
-      assert.equal(Math.floor(auditResult.extendedInfo.value[1].startTime), 0);
-      assert.equal(Math.floor(auditResult.extendedInfo.value[1].endTime), 1000);
-      assert.equal(Math.floor(auditResult.extendedInfo.value[1].duration), 1000);
+      assert.deepStrictEqual(auditResult.displayValue, ['%d user timings', 2]);
 
       assert.equal(auditResult.details.items[0].name, 'measure_test');
       assert.equal(auditResult.details.items[0].timingType, 'Measure');
-      assert.equal(auditResult.details.items[0].time, 1000.965);
+      assert.equal(auditResult.details.items[0].startTime, 0.002);
+      assert.equal(auditResult.details.items[0].duration, 1000.965);
+
+      assert.equal(auditResult.details.items[1].name, 'mark_test');
+      assert.equal(auditResult.details.items[1].timingType, 'Mark');
+      assert.equal(auditResult.details.items[1].startTime, 1000.954);
+      assert.equal(auditResult.details.items[1].duration, undefined);
     });
   });
 
