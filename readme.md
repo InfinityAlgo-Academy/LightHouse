@@ -56,7 +56,7 @@ Configuration:
 
                                  Environment variables:
                                  CHROME_PATH: Explicit path of intended Chrome binary. If set must point to an executable of a build of
-                                 Chromium version 54.0 or later. By default, any detected Chrome Canary or Chrome (stable) will be launched.
+                                 Chromium version 66.0 or later. By default, any detected Chrome Canary or Chrome (stable) will be launched.
                                                                                                                                        [default: ""]
   --port                         The port to use for the debugging protocol. Use 0 for a random port                                    [default: 0]
   --preset                       Use a built-in configuration.                                            [choices: "full", "perf", "mixed-content"]
