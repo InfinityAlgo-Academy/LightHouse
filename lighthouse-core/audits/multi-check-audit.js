@@ -25,23 +25,36 @@ class MultiCheckAudit extends Audit {
    * @return {LH.Audit.Product}
    */
   static createAuditProduct(result) {
-    const extendedInfo = {
-      value: result,
+    /** @type {LH.Audit.MultiCheckAuditDetails} */
+    const detailsItem = {
+      ...result,
+      ...result.manifestValues,
+      manifestValues: undefined,
+      warnings: undefined,
+      allChecks: undefined,
     };
+
+    if (result.manifestValues && result.manifestValues.allChecks) {
+      result.manifestValues.allChecks.forEach(check => {
+        detailsItem[check.id] = check.passing;
+      });
+    }
+
+    const details = {items: [detailsItem]};
 
     // If we fail, share the failures
     if (result.failures.length > 0) {
       return {
         rawValue: false,
         explanation: `Failures: ${result.failures.join(',\n')}.`,
-        extendedInfo,
+        details,
       };
     }
 
     // Otherwise, we pass
     return {
       rawValue: true,
-      extendedInfo,
+      details,
       warnings: result.warnings,
     };
   }

@@ -61,7 +61,7 @@ describe('PWA: webapp install banner audit', () => {
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
         assert.ok(result.explanation);
-        assert.strictEqual(result.extendedInfo.value.failures.length, 4);
+        assert.strictEqual(result.details.items[0].failures.length, 4);
       });
     });
 
@@ -82,7 +82,7 @@ describe('PWA: webapp install banner audit', () => {
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
         assert.ok(result.explanation.includes('start_url'), result.explanation);
-        const failures = result.extendedInfo.value.failures;
+        const failures = result.details.items[0].failures;
         assert.strictEqual(failures.length, 1, failures);
       });
     });
@@ -95,7 +95,7 @@ describe('PWA: webapp install banner audit', () => {
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
         assert.ok(result.explanation.includes('short_name'), result.explanation);
-        const failures = result.extendedInfo.value.failures;
+        const failures = result.details.items[0].failures;
         assert.strictEqual(failures.length, 1, failures);
       });
     });
@@ -107,7 +107,7 @@ describe('PWA: webapp install banner audit', () => {
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
         assert.ok(result.explanation.includes('name'), result.explanation);
-        const failures = result.extendedInfo.value.failures;
+        const failures = result.details.items[0].failures;
         assert.strictEqual(failures.length, 1, failures);
       });
     });
@@ -119,7 +119,7 @@ describe('PWA: webapp install banner audit', () => {
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
         assert.ok(result.explanation.includes('icons'), result.explanation);
-        const failures = result.extendedInfo.value.failures;
+        const failures = result.details.items[0].failures;
         assert.strictEqual(failures.length, 1, failures);
       });
     });
@@ -133,7 +133,7 @@ describe('PWA: webapp install banner audit', () => {
     return WebappInstallBannerAudit.audit(artifacts).then(result => {
       assert.strictEqual(result.rawValue, false);
       assert.ok(result.explanation.includes('service worker'), result.explanation);
-      const failures = result.extendedInfo.value.failures;
+      const failures = result.details.items[0].failures;
       assert.strictEqual(failures.length, 1, failures);
     });
   });
@@ -145,7 +145,7 @@ describe('PWA: webapp install banner audit', () => {
     return WebappInstallBannerAudit.audit(artifacts).then(result => {
       assert.strictEqual(result.rawValue, false);
       assert.ok(result.explanation.includes('start_url'), result.explanation);
-      const failures = result.extendedInfo.value.failures;
+      const failures = result.details.items[0].failures;
       assert.strictEqual(failures.length, 1, failures);
     });
   });

@@ -486,7 +486,19 @@
       "score": 0,
       "scoreDisplayMode": "binary",
       "rawValue": false,
-      "explanation": "Failures: No manifest was fetched,\nSite does not register a service worker."
+      "explanation": "Failures: No manifest was fetched,\nSite does not register a service worker.",
+      "details": {
+        "items": [
+          {
+            "failures": [
+              "No manifest was fetched",
+              "Site does not register a service worker"
+            ],
+            "isParseFailure": true,
+            "parseFailureReason": "No manifest was fetched"
+          }
+        ]
+      }
     },
     "splash-screen": {
       "id": "splash-screen",
@@ -495,7 +507,18 @@
       "score": 0,
       "scoreDisplayMode": "binary",
       "rawValue": false,
-      "explanation": "Failures: No manifest was fetched."
+      "explanation": "Failures: No manifest was fetched.",
+      "details": {
+        "items": [
+          {
+            "failures": [
+              "No manifest was fetched"
+            ],
+            "isParseFailure": true,
+            "parseFailureReason": "No manifest was fetched"
+          }
+        ]
+      }
     },
     "themed-omnibox": {
       "id": "themed-omnibox",
@@ -504,7 +527,20 @@
       "score": 0,
       "scoreDisplayMode": "binary",
       "rawValue": false,
-      "explanation": "Failures: No manifest was fetched,\nNo `<meta name=\"theme-color\">` tag found."
+      "explanation": "Failures: No manifest was fetched,\nNo `<meta name=\"theme-color\">` tag found.",
+      "details": {
+        "items": [
+          {
+            "failures": [
+              "No manifest was fetched",
+              "No `<meta name=\"theme-color\">` tag found"
+            ],
+            "themeColor": null,
+            "isParseFailure": true,
+            "parseFailureReason": "No manifest was fetched"
+          }
+        ]
+      }
     },
     "manifest-short-name-length": {
       "id": "manifest-short-name-length",

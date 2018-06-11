@@ -5,6 +5,10 @@
  */
 'use strict';
 
+const pwaDetailsExpectations = require('./pwa-expectations').PWA_DETAILS_EXPECTATIONS;
+
+const pwaRocksExpectations = {...pwaDetailsExpectations, hasIconsAtLeast512px: false};
+
 /**
  * Expected Lighthouse audit values for various sites with stable(ish) PWA
  * results.
@@ -36,16 +40,16 @@ module.exports = [
         // Ignore speed test; just verify that it ran .
       },
       'webapp-install-banner': {
-        // TODO(phulce): assert the checks when we put them in details
         score: 1,
+        details: {items: [pwaRocksExpectations]},
       },
       'splash-screen': {
-        // TODO(phulce): assert the checks when we put them in details
         score: 0,
+        details: {items: [pwaRocksExpectations]},
       },
       'themed-omnibox': {
-        // TODO(phulce): assert the checks when we put them in details
         score: 0,
+        details: {items: [pwaRocksExpectations]},
       },
       'content-width': {
         score: 1,
