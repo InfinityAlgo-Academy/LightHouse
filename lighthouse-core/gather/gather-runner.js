@@ -70,12 +70,13 @@ class GatherRunner {
    * @param {number=} duration
    * @return {Promise<void>}
    */
-  static loadBlank(
+  static async loadBlank(
       driver,
       url = constants.defaultPassConfig.blankPage,
       duration = constants.defaultPassConfig.blankDuration
   ) {
-    return driver.gotoURL(url).then(_ => new Promise(resolve => setTimeout(resolve, duration)));
+    await driver.gotoURL(url);
+    await new Promise(resolve => setTimeout(resolve, duration));
   }
 
   /**
@@ -87,13 +88,12 @@ class GatherRunner {
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<void>}
    */
-  static loadPage(driver, passContext) {
-    return driver.gotoURL(passContext.url, {
+  static async loadPage(driver, passContext) {
+    const finalUrl = await driver.gotoURL(passContext.url, {
       waitForLoad: true,
       passContext,
-    }).then(finalUrl => {
-      passContext.url = finalUrl;
     });
+    passContext.url = finalUrl;
   }
 
   /**
@@ -102,24 +102,20 @@ class GatherRunner {
    * @param {{requestedUrl: string, settings: LH.Config.Settings}} options
    * @return {Promise<void>}
    */
-  static setupDriver(driver, gathererResults, options) {
+  static async setupDriver(driver, gathererResults, options) {
     log.log('status', 'Initializing…');
     const resetStorage = !options.settings.disableStorageReset;
     // Enable emulation based on settings
-    return driver.assertNoSameOriginServiceWorkerClients(options.requestedUrl)
-      .then(_ => driver.getUserAgent())
-      .then(userAgent => {
-        gathererResults.UserAgent = [userAgent];
-        GatherRunner.warnOnHeadless(userAgent, gathererResults);
-      })
-      .then(_ => driver.beginEmulation(options.settings))
-      .then(_ => driver.enableRuntimeEvents())
-      .then(_ => driver.cacheNatives())
-      .then(_ => driver.registerPerformanceObserver())
-      .then(_ => driver.dismissJavaScriptDialogs())
-      .then(_ => {
-        if (resetStorage) return driver.clearDataForOrigin(options.requestedUrl);
-      });
+    await driver.assertNoSameOriginServiceWorkerClients(options.requestedUrl);
+    const userAgent = await driver.getUserAgent();
+    gathererResults.UserAgent = [userAgent];
+    GatherRunner.warnOnHeadless(userAgent, gathererResults);
+    await driver.beginEmulation(options.settings);
+    await driver.enableRuntimeEvents();
+    await driver.cacheNatives();
+    await driver.registerPerformanceObserver();
+    await driver.dismissJavaScriptDialogs();
+    if (resetStorage) await driver.clearDataForOrigin(options.requestedUrl);
   }
 
   /**
@@ -204,28 +200,26 @@ class GatherRunner {
    * @param {GathererResults} gathererResults
    * @return {Promise<void>}
    */
-  static beforePass(passContext, gathererResults) {
+  static async beforePass(passContext, gathererResults) {
     const blockedUrls = (passContext.passConfig.blockedUrlPatterns || [])
       .concat(passContext.settings.blockedUrlPatterns || []);
     const blankPage = passContext.passConfig.blankPage;
     const blankDuration = passContext.passConfig.blankDuration;
-    const pass = GatherRunner.loadBlank(passContext.driver, blankPage, blankDuration)
-        // Set request blocking before any network activity
-        // No "clearing" is done at the end of the pass since blockUrlPatterns([]) will unset all if
-        // neccessary at the beginning of the next pass.
-        .then(() => passContext.driver.blockUrlPatterns(blockedUrls))
-        .then(() => passContext.driver.setExtraHTTPHeaders(passContext.settings.extraHeaders));
+    await GatherRunner.loadBlank(passContext.driver, blankPage, blankDuration);
+    // Set request blocking before any network activity
+    // No "clearing" is done at the end of the pass since blockUrlPatterns([]) will unset all if
+    // neccessary at the beginning of the next pass.
+    await passContext.driver.blockUrlPatterns(blockedUrls);
+    await passContext.driver.setExtraHTTPHeaders(passContext.settings.extraHeaders);
 
-    return passContext.passConfig.gatherers.reduce((chain, gathererDefn) => {
-      return chain.then(_ => {
-        const gatherer = gathererDefn.instance;
-        // Abuse the passContext to pass through gatherer options
-        passContext.options = gathererDefn.options || {};
-        const artifactPromise = Promise.resolve().then(_ => gatherer.beforePass(passContext));
-        gathererResults[gatherer.name] = [artifactPromise];
-        return GatherRunner.recoverOrThrow(artifactPromise);
-      });
-    }, pass);
+    for (const gathererDefn of passContext.passConfig.gatherers) {
+      const gatherer = gathererDefn.instance;
+      // Abuse the passContext to pass through gatherer options
+      passContext.options = gathererDefn.options || {};
+      const artifactPromise = Promise.resolve().then(_ => gatherer.beforePass(passContext));
+      gathererResults[gatherer.name] = [artifactPromise];
+      await GatherRunner.recoverOrThrow(artifactPromise);
+    }
   }
 
   /**
@@ -235,7 +229,7 @@ class GatherRunner {
    * @param {GathererResults} gathererResults
    * @return {Promise<void>}
    */
-  static pass(passContext, gathererResults) {
+  static async pass(passContext, gathererResults) {
     const driver = passContext.driver;
     const config = passContext.passConfig;
     const settings = passContext.settings;
@@ -248,31 +242,25 @@ class GatherRunner {
     const status = 'Loading page & waiting for onload';
     log.log('status', status, gatherernames);
 
-    const pass = Promise.resolve()
-      // Clear disk & memory cache if it's a perf run
-      .then(_ => {
-        if (isPerfRun) driver.cleanBrowserCaches();
-      })
-      // Always record devtoolsLog
-      .then(_ => driver.beginDevtoolsLog())
-      // Begin tracing if requested by config.
-      .then(_ => {
-        if (recordTrace) driver.beginTrace(settings);
-      })
-      // Navigate.
-      .then(_ => GatherRunner.loadPage(driver, passContext))
-      .then(_ => log.log('statusEnd', status));
+    // Clear disk & memory cache if it's a perf run
+    if (isPerfRun) await driver.cleanBrowserCaches();
+    // Always record devtoolsLog
+    await driver.beginDevtoolsLog();
+    // Begin tracing if requested by config.
+    if (recordTrace) await driver.beginTrace(settings);
 
-    return gatherers.reduce((chain, gathererDefn) => {
-      return chain.then(_ => {
-        const gatherer = gathererDefn.instance;
-        // Abuse the passContext to pass through gatherer options
-        passContext.options = gathererDefn.options || {};
-        const artifactPromise = Promise.resolve().then(_ => gatherer.pass(passContext));
-        gathererResults[gatherer.name].push(artifactPromise);
-        return GatherRunner.recoverOrThrow(artifactPromise);
-      });
-    }, pass);
+    // Navigate.
+    await GatherRunner.loadPage(driver, passContext);
+    log.log('statusEnd', status);
+
+    for (const gathererDefn of gatherers) {
+      const gatherer = gathererDefn.instance;
+      // Abuse the passContext to pass through gatherer options
+      passContext.options = gathererDefn.options || {};
+      const artifactPromise = Promise.resolve().then(_ => gatherer.pass(passContext));
+      gathererResults[gatherer.name].push(artifactPromise);
+      await GatherRunner.recoverOrThrow(artifactPromise);
+    }
   }
 
   /**
@@ -402,7 +390,7 @@ class GatherRunner {
    * @param {{driver: Driver, requestedUrl: string, settings: LH.Config.Settings}} options
    * @return {Promise<LH.Artifacts>}
    */
-  static run(passes, options) {
+  static async run(passes, options) {
     const driver = options.driver;
     /** @type {TracingData} */
     const tracingData = {
@@ -417,50 +405,46 @@ class GatherRunner {
       URL: [{requestedUrl: options.requestedUrl, finalUrl: ''}],
     };
 
-    return driver.connect()
-      .then(_ => GatherRunner.loadBlank(driver))
-      .then(_ => GatherRunner.setupDriver(driver, gathererResults, options))
-
+    try {
+      await driver.connect();
+      await GatherRunner.loadBlank(driver);
+      await GatherRunner.setupDriver(driver, gathererResults, options);
+      let firstPass = true;
       // Run each pass
-      .then(_ => {
-        return passes.reduce((chain, passConfig, passIndex) => {
-          const passContext = {
-            driver: options.driver,
-            // If the main document redirects, we'll update this to keep track
-            url: options.requestedUrl,
-            settings: options.settings,
-            passConfig,
-          };
+      for (const passConfig of passes) {
+        const passContext = {
+          driver: options.driver,
+          // If the main document redirects, we'll update this to keep track
+          url: options.requestedUrl,
+          settings: options.settings,
+          passConfig,
+        };
 
-          return chain
-            .then(_ => driver.setThrottling(options.settings, passConfig))
-            .then(_ => GatherRunner.beforePass(passContext, gathererResults))
-            .then(_ => GatherRunner.pass(passContext, gathererResults))
-            .then(_ => GatherRunner.afterPass(passContext, gathererResults))
-            .then(passData => {
-              // Save devtoolsLog, but networkRecords are discarded and not added onto artifacts.
-              tracingData.devtoolsLogs[passConfig.passName] = passData.devtoolsLog;
+        await driver.setThrottling(options.settings, passConfig);
+        await GatherRunner.beforePass(passContext, gathererResults);
+        await GatherRunner.pass(passContext, gathererResults);
+        const passData = await GatherRunner.afterPass(passContext, gathererResults);
+        // Save devtoolsLog, but networkRecords are discarded and not added onto artifacts.
+        tracingData.devtoolsLogs[passConfig.passName] = passData.devtoolsLog;
 
-              // If requested by config, save pass's trace.
-              if (passData.trace) {
-                tracingData.traces[passConfig.passName] = passData.trace;
-              }
+        // If requested by config, save pass's trace.
+        if (passData.trace) {
+          tracingData.traces[passConfig.passName] = passData.trace;
+        }
 
-              if (passIndex === 0) {
-                // Copy redirected URL to artifact in the first pass only.
-                gathererResults.URL[0].finalUrl = passContext.url;
-              }
-            });
-        }, Promise.resolve());
-      })
-      .then(_ => GatherRunner.disposeDriver(driver))
-      .then(_ => GatherRunner.collectArtifacts(gathererResults, tracingData, options.settings))
+        if (firstPass) {
+          // Copy redirected URL to artifact in the first pass only.
+          gathererResults.URL[0].finalUrl = passContext.url;
+          firstPass = false;
+        }
+      }
+      await GatherRunner.disposeDriver(driver);
+      return GatherRunner.collectArtifacts(gathererResults, tracingData, options.settings);
+    } catch (err) {
       // cleanup on error
-      .catch(err => {
-        GatherRunner.disposeDriver(driver);
-
-        throw err;
-      });
+      GatherRunner.disposeDriver(driver);
+      throw err;
+    }
   }
 }
 
