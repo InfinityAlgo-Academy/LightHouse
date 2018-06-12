@@ -9,6 +9,8 @@ const fs = require('fs');
 const path = require('path');
 const log = require('lighthouse-logger');
 const stream = require('stream');
+const Simulator = require('./dependency-graph/simulator/simulator');
+const lanternTraceSaver = require('./lantern-trace-saver');
 const Metrics = require('./traces/pwmetrics-events');
 const TraceParser = require('./traces/trace-parser');
 const rimraf = require('rimraf');
@@ -268,6 +270,22 @@ function saveTrace(traceData, traceFilename) {
 }
 
 /**
+ * @param {string} pathWithBasename
+ * @return {Promise<void>}
+ */
+async function saveLanternDebugTraces(pathWithBasename) {
+  if (!process.env.LANTERN_DEBUG) return;
+
+  for (const [label, nodeTimings] of Simulator.ALL_NODE_TIMINGS) {
+    if (lanternTraceSaver.simulationNamesToIgnore.includes(label)) continue;
+
+    const traceFilename = `${pathWithBasename}-${label}${traceSuffix}`;
+    await saveTrace(lanternTraceSaver.convertNodeTimingsToTrace(nodeTimings), traceFilename);
+    log.log('saveAssets', `${label} lantern trace file streamed to disk: ${traceFilename}`);
+  }
+}
+
+/**
  * Writes trace(s) and associated asset(s) to disk.
  * @param {LH.Artifacts} artifacts
  * @param {LH.Audit.Results} audits
@@ -296,6 +314,7 @@ async function saveAssets(artifacts, audits, pathWithBasename) {
   });
 
   await Promise.all(saveAll);
+  await saveLanternDebugTraces(pathWithBasename);
 }
 
 /**

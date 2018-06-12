@@ -26,6 +26,9 @@ const NodeState = {
   Complete: 3,
 };
 
+/** @type {Map<string, LH.Gatherer.Simulation.Result['nodeTimings']>} */
+const ALL_SIMULATION_NODE_TIMINGS = new Map();
+
 class Simulator {
   /**
    * @param {LH.Gatherer.Simulation.Options} [options]
@@ -369,7 +372,7 @@ class Simulator {
    * connection).
    *
    * @param {Node} graph
-   * @param {{flexibleOrdering?: boolean}=} options
+   * @param {{flexibleOrdering?: boolean, label?: string}=} options
    * @return {LH.Gatherer.Simulation.Result}
    */
   simulate(graph, options) {
@@ -377,7 +380,11 @@ class Simulator {
       throw new Error('Cannot simulate graph with cycle');
     }
 
-    options = Object.assign({flexibleOrdering: false}, options);
+    options = Object.assign({
+      label: undefined,
+      flexibleOrdering: false,
+    }, options);
+
     // initialize the necessary data containers
     this._flexibleOrdering = !!options.flexibleOrdering;
     this._initializeConnectionPool(graph);
@@ -429,10 +436,18 @@ class Simulator {
       }
     }
 
+    const nodeTimings = this._computeFinalNodeTimings();
+    ALL_SIMULATION_NODE_TIMINGS.set(options.label || 'unlabeled', nodeTimings);
+
     return {
       timeInMs: totalElapsedTime,
-      nodeTimings: this._computeFinalNodeTimings(),
+      nodeTimings,
     };
+  }
+
+  /** @return {Map<string, LH.Gatherer.Simulation.Result['nodeTimings']>} */
+  static get ALL_NODE_TIMINGS() {
+    return ALL_SIMULATION_NODE_TIMINGS;
   }
 }
 
