@@ -128,13 +128,15 @@ class UnusedBytes extends Audit {
    * @param {Array<LH.Audit.ByteEfficiencyItem>} results The array of byte savings results per resource
    * @param {Node} graph
    * @param {Simulator} simulator
-   * @param {{includeLoad?: boolean}=} options
+   * @param {{includeLoad?: boolean, label?: string}=} options
    * @return {number}
    */
   static computeWasteWithTTIGraph(results, graph, simulator, options) {
-    options = Object.assign({includeLoad: true}, options);
+    options = Object.assign({includeLoad: true, label: this.meta.name}, options);
+    const beforeLabel = `${options.label}-before`;
+    const afterLabel = `${options.label}-after`;
 
-    const simulationBeforeChanges = simulator.simulate(graph);
+    const simulationBeforeChanges = simulator.simulate(graph, {label: beforeLabel});
     /** @type {Map<string, LH.Audit.ByteEfficiencyItem>} */
     const resultsByUrl = new Map();
     for (const result of results) {
@@ -157,7 +159,7 @@ class UnusedBytes extends Audit {
       networkNode.record._transferSize = Math.max(original - wastedBytes, 0);
     });
 
-    const simulationAfterChanges = simulator.simulate(graph);
+    const simulationAfterChanges = simulator.simulate(graph, {label: afterLabel});
 
     // Restore the original transfer size after we've done our simulation
     graph.traverse(node => {

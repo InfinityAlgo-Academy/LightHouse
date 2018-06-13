@@ -18,6 +18,7 @@ const ALLOWABLE_OFFSCREEN_Y = 200;
 
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
 const IGNORE_THRESHOLD_IN_PERCENT = 75;
+const IGNORE_THRESHOLD_IN_MS = 50;
 
 /** @typedef {{url: string, requestStartTime: number, totalBytes: number, wastedBytes: number, wastedPercent: number}} WasteResult */
 
@@ -87,6 +88,53 @@ class OffscreenImages extends ByteEfficiencyAudit {
   }
 
   /**
+   * Filters out image requests that were requested after the last long task based on lantern timings.
+   *
+   * @param {WasteResult[]} images
+   * @param {LH.Artifacts.LanternMetric} lanternMetricData
+   */
+  static filterLanternResults(images, lanternMetricData) {
+    const nodeTimings = lanternMetricData.pessimisticEstimate.nodeTimings;
+
+    // Find the last long task start time
+    let lastLongTaskStartTime = 0;
+    // Find the start time of all requests
+    /** @type {Map<string, number>} */
+    const startTimesByURL = new Map();
+    for (const [node, timing] of nodeTimings) {
+      if (node.type === 'cpu' && timing.duration >= 50) {
+        lastLongTaskStartTime = Math.max(lastLongTaskStartTime, timing.startTime);
+      } else if (node.type === 'network') {
+        const networkNode = /** @type {LH.Gatherer.Simulation.GraphNetworkNode} */ (node);
+        startTimesByURL.set(networkNode.record.url, timing.startTime);
+      }
+    }
+
+    return images.filter(image => {
+      // Filter out images that had little waste
+      if (image.wastedBytes < IGNORE_THRESHOLD_IN_BYTES) return false;
+      if (image.wastedPercent < IGNORE_THRESHOLD_IN_PERCENT) return false;
+      // Filter out images that started after the last long task
+      const imageRequestStartTime = startTimesByURL.get(image.url) || 0;
+      return imageRequestStartTime < lastLongTaskStartTime - IGNORE_THRESHOLD_IN_MS;
+    });
+  }
+
+  /**
+   * Filters out image requests that were requested after TTI.
+   *
+   * @param {WasteResult[]} images
+   * @param {number} interactiveTimestamp
+   */
+  static filterObservedResults(images, interactiveTimestamp) {
+    return images.filter(image => {
+      if (image.wastedBytes < IGNORE_THRESHOLD_IN_BYTES) return false;
+      if (image.wastedPercent < IGNORE_THRESHOLD_IN_PERCENT) return false;
+      return image.requestStartTime < interactiveTimestamp / 1e6 - IGNORE_THRESHOLD_IN_MS / 1000;
+    });
+  }
+
+  /**
    * The default byte efficiency audit will report max(TTI, load), since lazy-loading offscreen
    * images won't reduce the overall time and the wasted bytes are really only "wasted" for TTI,
    * override the function to just look at TTI savings.
@@ -97,7 +145,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
    * @return {number}
    */
   static computeWasteWithTTIGraph(results, graph, simulator) {
-    return ByteEfficiencyAudit.computeWasteWithTTIGraph(results, graph, simulator,
+    return super.computeWasteWithTTIGraph(results, graph, simulator,
       {includeLoad: false});
   }
 
@@ -138,19 +186,14 @@ class OffscreenImages extends ByteEfficiencyAudit {
     }, /** @type {Map<string, WasteResult>} */ (new Map()));
 
     const settings = context.settings;
-    return artifacts.requestFirstCPUIdle({trace, devtoolsLog, settings}).then(firstInteractive => {
-      // The filter below is just to be extra safe that we exclude images that were loaded post-TTI.
-      // If we're in the Lantern case and `timestamp` isn't available, we just have to rely on the
-      // graph simulation doing the right thing.
-      const ttiTimestamp = firstInteractive.timestamp ? firstInteractive.timestamp / 1e6 : Infinity;
-
-      const items = Array.from(resultsMap.values()).filter(item => {
-        const isWasteful =
-          item.wastedBytes > IGNORE_THRESHOLD_IN_BYTES &&
-          item.wastedPercent > IGNORE_THRESHOLD_IN_PERCENT;
-        const loadedEarly = item.requestStartTime < ttiTimestamp;
-        return isWasteful && loadedEarly;
-      });
+    return artifacts.requestInteractive({trace, devtoolsLog, settings}).then(interactive => {
+      const unfilteredResults = Array.from(resultsMap.values());
+      const lanternInteractive = /** @type {LH.Artifacts.LanternMetric} */ (interactive);
+      // Filter out images that were loaded after all CPU activity
+      const items = context.settings.throttlingMethod === 'simulate' ?
+        OffscreenImages.filterLanternResults(unfilteredResults, lanternInteractive) :
+        // @ts-ignore - .timestamp will exist if throttlingMethod isn't lantern
+        OffscreenImages.filterObservedResults(unfilteredResults, interactive.timestamp);
 
       /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
       const headings = [

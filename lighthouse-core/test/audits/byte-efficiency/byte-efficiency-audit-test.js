@@ -6,7 +6,7 @@
 'use strict';
 
 const Runner = require('../../../runner');
-const ByteEfficiencyAudit = require('../../../audits/byte-efficiency/byte-efficiency-audit');
+const ByteEfficiencyAudit_ = require('../../../audits/byte-efficiency/byte-efficiency-audit');
 const NetworkNode = require('../../../lib/dependency-graph/network-node');
 const CPUNode = require('../../../lib/dependency-graph/cpu-node');
 const Simulator = require('../../../lib/dependency-graph/simulator/simulator');
@@ -20,6 +20,12 @@ const assert = require('assert');
 describe('Byte efficiency base audit', () => {
   let graph;
   let simulator;
+
+  const ByteEfficiencyAudit = class extends ByteEfficiencyAudit_ {
+    static get meta() {
+      return {name: 'test'};
+    }
+  };
 
   beforeEach(() => {
     const networkRecord = {
