@@ -59,7 +59,7 @@
     "changelog": "conventional-changelog --config ./build/changelog-generator/index.js --infile changelog.md --same-file",
     "type-check": "tsc -p . && cd ./lighthouse-viewer && yarn type-check",
     "update:sample-artifacts": "node lighthouse-core/scripts/update-report-fixtures.js -G",
-    "update:sample-json": "node ./lighthouse-cli -A=./lighthouse-core/test/results/artifacts --throttling-method=devtools --output=json --output-path=./lighthouse-core/test/results/sample_v2.json http://localhost/dobetterweb/dbw_tester.html && node lighthouse-core/scripts/cleanup-LHR-for-diff.js ./lighthouse-core/test/results/sample_v2.json --only-remove-timing",
+    "update:sample-json": "node ./lighthouse-cli -A=./lighthouse-core/test/results/artifacts --throttling-method=devtools --output=json --output-path=./lighthouse-core/test/results/sample_v2.json && node lighthouse-core/scripts/cleanup-LHR-for-diff.js ./lighthouse-core/test/results/sample_v2.json --only-remove-timing",
     "diff:sample-json": "bash lighthouse-core/scripts/assert-golden-lhr-unchanged.sh",
     "update:crdp-typings": "node lighthouse-core/scripts/extract-crdp-mapping.js",
     "mixed-content": "./lighthouse-cli/index.js --chrome-flags='--headless' --config-path=./lighthouse-core/config/mixed-content.js",
