@@ -57,6 +57,31 @@ describe('Config', () => {
     assert.equal(MyAudit, newConfig.audits[0].implementation);
   });
 
+  it('doesn\'t change directly injected plugin instances', () => {
+    class MyGatherer extends Gatherer {
+      constructor(secretVal) {
+        super();
+        this.secret = secretVal;
+      }
+    }
+    const myGatherer1 = new MyGatherer(1729);
+    const myGatherer2 = new MyGatherer(6);
+    const config = {
+      passes: [{
+        gatherers: [
+          myGatherer1,
+          {instance: myGatherer2},
+        ],
+      }],
+    };
+    const newConfig = new Config(config);
+    const configGatherers = newConfig.passes[0].gatherers;
+    assert(configGatherers[0].instance instanceof MyGatherer);
+    assert.equal(configGatherers[0].instance.secret, 1729);
+    assert(configGatherers[1].instance instanceof MyGatherer);
+    assert.equal(configGatherers[1].instance.secret, 6);
+  });
+
   it('uses the default config when no config is provided', () => {
     const config = new Config();
     assert.deepStrictEqual(config.categories, origConfig.categories);

@@ -40,8 +40,7 @@ async function lighthouse(url, flags, configJSON) {
   log.setLevel(flags.logLevel);
 
   // Use ConfigParser to generate a valid config file
-  // @ts-ignore - TODO(bckenny): type checking for Config
-  const config = /** @type {LH.Config} */ (new Config(configJSON, flags));
+  const config = new Config(configJSON, flags);
   const connection = new ChromeProtocol(flags.port, flags.hostname);
 
   // kick off a lighthouse run

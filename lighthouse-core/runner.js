@@ -131,7 +131,7 @@ class Runner {
         audits: resultsById,
         configSettings: settings,
         categories,
-        categoryGroups: opts.config.groups,
+        categoryGroups: opts.config.groups || undefined,
         timing: {total: Date.now() - startTime},
       };
 
