@@ -7,8 +7,6 @@
 
 /* global ReportUIFeatures, ReportGenerator */
 
-/** @typedef {import('../../../lighthouse-core/report/html/renderer/report-renderer.js').ReportJSON} ReportJSON */
-
 /**
  * Extends ReportUIFeatures to add an (optional) ability to save to a gist and
  * generates the saved report from a browserified ReportGenerator.
@@ -16,7 +14,7 @@
 class ViewerUIFeatures extends ReportUIFeatures {
   /**
    * @param {DOM} dom
-   * @param {?function(ReportJSON)} saveGistCallback
+   * @param {?function(LH.ReportResult)} saveGistCallback
    */
   constructor(dom, saveGistCallback) {
     super(dom);
@@ -25,7 +23,7 @@ class ViewerUIFeatures extends ReportUIFeatures {
   }
 
   /**
-   * @param {ReportJSON} report
+   * @param {LH.ReportResult} report
    * @override
    */
   initFeatures(report) {
@@ -44,7 +42,6 @@ class ViewerUIFeatures extends ReportUIFeatures {
    * @override
    */
   getReportHtml() {
-    // @ts-ignore - TODO(bckenny): remove ignore when this.json is an LHR instead of ReportJSON.
     return ReportGenerator.generateReportHtml(this.json);
   }
 

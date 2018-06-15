@@ -13,14 +13,13 @@
 /* globals self URL Blob CustomEvent getFilenamePrefix window */
 
 /** @typedef {import('./dom.js')} DOM */
-/** @typedef {import('./report-renderer.js').ReportJSON} ReportJSON */
 
 class ReportUIFeatures {
   /**
    * @param {DOM} dom
    */
   constructor(dom) {
-    /** @type {ReportJSON} */
+    /** @type {LH.ReportResult} */
     this.json; // eslint-disable-line no-unused-expressions
     /** @type {DOM} */
     this._dom = dom;
@@ -68,7 +67,7 @@ class ReportUIFeatures {
   /**
    * Adds export button, print, and other functionality to the report. The method
    * should be called whenever the report needs to be re-rendered.
-   * @param {ReportJSON} report
+   * @param {LH.ReportResult} report
    */
   initFeatures(report) {
     if (this._dom.isDevTools()) return;
@@ -347,7 +346,7 @@ class ReportUIFeatures {
   /**
    * Opens a new tab to the online viewer and sends the local page's JSON results
    * to the online viewer using postMessage.
-   * @param {ReportJSON} reportJson
+   * @param {LH.ReportResult} reportJson
    * @param {string} viewerPath
    * @protected
    */

@@ -67,7 +67,7 @@ declare global {
         /** The title of the display group. */
         title: string;
         /** A brief description of the purpose of the display group. */
-        description: string;
+        description?: string;
       }
 
       /**

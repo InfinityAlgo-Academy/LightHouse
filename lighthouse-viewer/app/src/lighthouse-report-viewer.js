@@ -7,8 +7,6 @@
 
 /* global DOM, ViewerUIFeatures, ReportRenderer, DragAndDrop, GithubApi, logger, idbKeyval */
 
-/** @typedef {import('../../../lighthouse-core/report/html/renderer/report-renderer.js').ReportJSON} ReportJSON */
-
 /**
  * Guaranteed context.querySelector. Always returns an element or throws if
  * nothing matches query.
@@ -109,7 +107,7 @@ class LighthouseReportViewer {
 
   /**
    * Basic Lighthouse report JSON validation.
-   * @param {ReportJSON} reportJson
+   * @param {LH.ReportResult} reportJson
    * @private
    */
   _validateReportJson(reportJson) {
@@ -135,7 +133,7 @@ class LighthouseReportViewer {
   }
 
   /**
-   * @param {ReportJSON} json
+   * @param {LH.ReportResult} json
    * @private
    */
   _replaceReportHtml(json) {
@@ -204,7 +202,7 @@ class LighthouseReportViewer {
 
   /**
    * Stores v2.x report in IDB, then navigates to legacy viewer in current tab
-   * @param {ReportJSON} reportJson
+   * @param {LH.ReportResult} reportJson
    * @private
    */
   _loadInLegacyViewerVersion(reportJson) {
@@ -237,7 +235,7 @@ class LighthouseReportViewer {
 
   /**
    * Saves the current report by creating a gist on GitHub.
-   * @param {ReportJSON} reportJson
+   * @param {LH.ReportResult} reportJson
    * @return {Promise<string|void>} id of the created gist.
    * @private
    */

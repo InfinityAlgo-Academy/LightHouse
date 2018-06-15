@@ -8,15 +8,12 @@
 /* globals self, Util, CategoryRenderer */
 
 /** @typedef {import('./dom.js')} DOM */
-/** @typedef {import('./report-renderer.js').CategoryJSON} CategoryJSON */
-/** @typedef {import('./report-renderer.js').GroupJSON} GroupJSON */
-/** @typedef {import('./report-renderer.js').AuditJSON} AuditJSON */
 /** @typedef {import('./details-renderer.js').FilmstripDetails} FilmstripDetails */
 /** @typedef {LH.Result.Audit.OpportunityDetails} OpportunityDetails */
 
 class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
-   * @param {AuditJSON} audit
+   * @param {LH.ReportResult.AuditRef} audit
    * @return {Element}
    */
   _renderMetric(audit) {
@@ -46,7 +43,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   }
 
   /**
-   * @param {AuditJSON} audit
+   * @param {LH.ReportResult.AuditRef} audit
    * @param {number} index
    * @param {number} scale
    * @return {Element}
@@ -85,7 +82,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
    * Get an audit's wastedMs to sort the opportunity by, and scale the sparkline width
    * Opportunties with an error won't have a details object, so MIN_VALUE is returned to keep any
    * erroring opportunities last in sort order.
-   * @param {AuditJSON} audit
+   * @param {LH.ReportResult.AuditRef} audit
    * @return {number}
    */
   _getWastedMs(audit) {
@@ -102,8 +99,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
   }
 
   /**
-   * @param {CategoryJSON} category
-   * @param {Object<string, GroupJSON>} groups
+   * @param {LH.ReportResult.Category} category
+   * @param {Object<string, LH.Result.ReportGroup>} groups
    * @return {Element}
    * @override
    */
