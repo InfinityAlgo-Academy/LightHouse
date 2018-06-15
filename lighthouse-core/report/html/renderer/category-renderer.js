@@ -338,12 +338,10 @@ class CategoryRenderer {
     const passedElements = /** @type {Array<Element>} */ ([]);
     const notApplicableElements = /** @type {Array<Element>} */ ([]);
 
-    auditsUngrouped.failed.forEach((/** @type {LH.ReportResult.AuditRef} */ audit, i) =>
-      failedElements.push(this.renderAudit(audit, i)));
-    auditsUngrouped.passed.forEach((/** @type {LH.ReportResult.AuditRef} */ audit, i) =>
-      passedElements.push(this.renderAudit(audit, i)));
-    auditsUngrouped.notApplicable.forEach((/** @type {LH.ReportResult.AuditRef} */ audit, i) =>
-      notApplicableElements.push(this.renderAudit(audit, i)));
+    auditsUngrouped.failed.forEach((audit, i) => failedElements.push(this.renderAudit(audit, i)));
+    auditsUngrouped.passed.forEach((audit, i) => passedElements.push(this.renderAudit(audit, i)));
+    auditsUngrouped.notApplicable.forEach((audit, i) => notApplicableElements.push(
+        this.renderAudit(audit, i)));
 
     Object.keys(auditsGroupedByGroup).forEach(groupId => {
       if (!groupDefinitions) return; // We never reach here if there aren't groups, but TSC needs convincing
