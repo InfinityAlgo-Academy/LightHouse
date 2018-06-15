@@ -11,17 +11,20 @@
 const fs = require('fs');
 const path = require('path');
 const execFileSync = require('child_process').execFileSync;
+const constants = require('./constants');
 
-if (!process.argv[2]) throw new Error('Usage $0 <expectations file>');
-
+const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_PATH;
+const SITE_INDEX_PATH = path.resolve(process.cwd(), INPUT_PATH);
+const SITE_INDEX_DIR = path.dirname(SITE_INDEX_PATH);
 const RUN_ONCE_PATH = path.join(__dirname, 'run-once.js');
-const EXPECTATIONS_PATH = path.resolve(process.cwd(), process.argv[2]);
-const EXPECTATIONS_DIR = path.dirname(EXPECTATIONS_PATH);
-const expectations = require(EXPECTATIONS_PATH);
+
+if (!fs.existsSync(SITE_INDEX_PATH)) throw new Error('Usage $0 <expectations file>');
+
+const expectations = require(SITE_INDEX_PATH);
 
 for (const site of expectations.sites) {
-  const trace = path.join(EXPECTATIONS_DIR, site.tracePath);
-  const log = path.join(EXPECTATIONS_DIR, site.devtoolsLogPath);
+  const trace = path.join(SITE_INDEX_DIR, site.unthrottled.tracePath);
+  const log = path.join(SITE_INDEX_DIR, site.unthrottled.devtoolsLogPath);
 
   console.log('Running', site.url, '...');
   const rawOutput = execFileSync(RUN_ONCE_PATH, [trace, log])
@@ -33,5 +36,5 @@ for (const site of expectations.sites) {
   Object.assign(site, {lantern});
 }
 
-const computedSummaryPath = path.join(EXPECTATIONS_DIR, 'lantern-computed.json');
-fs.writeFileSync(computedSummaryPath, JSON.stringify(expectations, null, 2));
+// eslint-disable-next-line max-len
+fs.writeFileSync(constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH, JSON.stringify(expectations, null, 2));

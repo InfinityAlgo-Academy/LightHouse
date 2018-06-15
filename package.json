@@ -31,6 +31,7 @@
     "test": "yarn lint --quiet && yarn unit && yarn type-check && yarn diff:sample-json",
     "test-extension": "cd lighthouse-extension && yarn test",
     "test-viewer": "cd lighthouse-viewer && yarn pptr-test",
+    "test-lantern": "bash lighthouse-core/scripts/test-lantern.sh",
 
     "unit-core": "mocha --reporter dot \"lighthouse-core/test/**/*-test.js\"",
     "unit-cli": "mocha --reporter dot \"lighthouse-cli/test/**/*-test.js\"",

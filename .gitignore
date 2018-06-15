@@ -2,6 +2,7 @@ node_modules
 .DS_Store
 npm-debug.log
 .vscode
+.tmp
 
 lighthouse-extension/dist
 lighthouse-core/third_party/src

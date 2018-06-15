@@ -8,16 +8,20 @@
 
 /* eslint-disable no-console */
 
+const fs = require('fs');
 const path = require('path');
+const constants = require('./constants');
 
 const GOOD_ABSOLUTE_THRESHOLD = 0.2;
 const OK_ABSOLUTE_THRESHOLD = 0.5;
 
 const GOOD_RANK_THRESHOLD = 0.1;
 
-if (!process.argv[2]) throw new Error('Usage $0 <computed summary file>');
+const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH;
+const COMPUTATIONS_PATH = path.resolve(process.cwd(), INPUT_PATH);
 
-const COMPUTATIONS_PATH = path.resolve(process.cwd(), process.argv[2]);
+if (!fs.existsSync(COMPUTATIONS_PATH)) throw new Error('Usage $0 <computed summary file>');
+
 /** @type {{sites: LanternSiteDefinition[]}} */
 const expectations = require(COMPUTATIONS_PATH);
 
@@ -35,7 +39,7 @@ const totalOk = [];
 const totalBad = [];
 
 /**
- * @param {keyof LanternSiteDefinition} metric
+ * @param {keyof TargetMetrics} metric
  * @param {keyof LanternMetrics} lanternMetric
  */
 function evaluateBuckets(metric, lanternMetric) {
@@ -52,8 +56,7 @@ function evaluateBuckets(metric, lanternMetric) {
   const rankErrors = [];
   const percentErrors = [];
   for (const entry of entries) {
-    // @ts-ignore
-    const expected = Math.round(entry[metric]);
+    const expected = Math.round(entry.wpt3g[metric]);
     if (expected === 0) continue;
 
     const expectedRank = sortedByMetric.indexOf(entry);
@@ -122,9 +125,9 @@ evaluateBuckets('speedIndex', 'roughEstimateOfSI');
 
 const total = totalGood.length + totalOk.length + totalBad.length;
 console.log('\n----    Summary Stats    ----');
-console.log(`Good: ${Math.round(totalGood.length / total * 100)}%`);
-console.log(`OK: ${Math.round(totalOk.length / total * 100)}%`);
-console.log(`Bad: ${Math.round(totalBad.length / total * 100)}%`);
+console.log(`Good: ${Math.round((totalGood.length / total) * 100)}%`);
+console.log(`OK: ${Math.round((totalOk.length / total) * 100)}%`);
+console.log(`Bad: ${Math.round((totalBad.length / total) * 100)}%`);
 
 console.log('\n----    Worst10 Sites    ----');
 for (const entry of totalBad.sort((a, b) => b.rankDiff - a.rankDiff).slice(0, 10)) {
@@ -141,14 +144,8 @@ for (const entry of totalBad.sort((a, b) => b.rankDiff - a.rankDiff).slice(0, 10
 /**
  * @typedef LanternSiteDefinition
  * @property {string} url
- * @property {string} tracePath
- * @property {string} devtoolsLogPath
+ * @property {TargetMetrics} wpt3g
  * @property {LanternMetrics} lantern
- * @property {number} [firstContentfulPaint]
- * @property {number} [firstMeaningfulPaint]
- * @property {number} [timeToFirstInteractive]
- * @property {number} [timeToConsistentlyInteractive]
- * @property {number} [speedIndex]
  */
 
 /**
@@ -160,6 +157,15 @@ for (const entry of totalBad.sort((a, b) => b.rankDiff - a.rankDiff).slice(0, 10
  * @property {number} diff
  * @property {number} rankDiff
  * @property {number} rankDiffAsPercent
+ */
+
+/**
+ * @typedef TargetMetrics
+ * @property {number} [firstContentfulPaint]
+ * @property {number} [firstMeaningfulPaint]
+ * @property {number} [timeToFirstInteractive]
+ * @property {number} [timeToConsistentlyInteractive]
+ * @property {number} [speedIndex]
  */
 
 /**
@@ -179,4 +185,4 @@ for (const entry of totalBad.sort((a, b) => b.rankDiff - a.rankDiff).slice(0, 10
  * @property {number} roughEstimateOfSI
  * @property {number} roughEstimateOfTTFCPUI
  * @property {number} roughEstimateOfTTI
-  */
+ */
