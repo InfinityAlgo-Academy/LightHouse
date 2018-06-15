@@ -13,14 +13,14 @@ const constants = require('../config/constants');
 
 const Driver = require('../gather/driver.js'); // eslint-disable-line no-unused-vars
 
+/** @typedef {import('./gatherers/gatherer.js').PhaseResult} PhaseResult */
 /**
  * Each entry in each gatherer result array is the output of a gatherer phase:
  * `beforePass`, `pass`, and `afterPass`. Flattened into an `LH.Artifacts` in
  * `collectArtifacts`.
- * @typedef {{LighthouseRunWarnings: Array<string>, [artifactName: string]: Array<*>}} GathererResults
+ * @typedef {Record<keyof LH.GathererArtifacts, Array<PhaseResult|Promise<PhaseResult>>>} GathererResults
  */
-/** @typedef {{traces: Object<string, LH.Trace>, devtoolsLogs: Object<string, LH.DevtoolsLog>}} TracingData */
-
+/** @typedef {Array<[keyof GathererResults, GathererResults[keyof GathererResults]]>} GathererResultsEntries */
 /**
  * Class that drives browser to load the page and runs gatherer lifecycle hooks.
  * Execution sequence when GatherRunner.run() is called:
@@ -98,18 +98,14 @@ class GatherRunner {
 
   /**
    * @param {Driver} driver
-   * @param {GathererResults} gathererResults
    * @param {{requestedUrl: string, settings: LH.Config.Settings}} options
    * @return {Promise<void>}
    */
-  static async setupDriver(driver, gathererResults, options) {
+  static async setupDriver(driver, options) {
     log.log('status', 'Initializing…');
     const resetStorage = !options.settings.disableStorageReset;
     // Enable emulation based on settings
     await driver.assertNoSameOriginServiceWorkerClients(options.requestedUrl);
-    const userAgent = await driver.getUserAgent();
-    gathererResults.UserAgent = [userAgent];
-    GatherRunner.warnOnHeadless(userAgent, gathererResults);
     await driver.beginEmulation(options.settings);
     await driver.enableRuntimeEvents();
     await driver.cacheNatives();
@@ -176,28 +172,10 @@ class GatherRunner {
   }
 
   /**
-   * Add run warning if running in Headless Chrome.
-   * @param {string} userAgent
-   * @param {GathererResults} gathererResults
-   */
-  static warnOnHeadless(userAgent, gathererResults) {
-    const chromeVersion = userAgent.split(/HeadlessChrome\/(.*) /)[1];
-    // Headless Chrome gained throttling support in Chrome 63.
-    // https://chromium.googlesource.com/chromium/src/+/8931a104b145ccf92390f6f48fba6553a1af92e4
-    const minVersion = '63.0.3239.0';
-    if (chromeVersion && chromeVersion < minVersion) {
-      gathererResults.LighthouseRunWarnings.push('Your site\'s mobile performance may be ' +
-          'worse than the numbers presented in this report. Lighthouse could not test on a ' +
-          'mobile connection because Headless Chrome does not support network throttling ' +
-          'prior to version ' + minVersion + '. The version used was ' + chromeVersion);
-    }
-  }
-
-  /**
    * Navigates to about:blank and calls beforePass() on gatherers before tracing
    * has started and before navigation to the target page.
    * @param {LH.Gatherer.PassContext} passContext
-   * @param {GathererResults} gathererResults
+   * @param {Partial<GathererResults>} gathererResults
    * @return {Promise<void>}
    */
   static async beforePass(passContext, gathererResults) {
@@ -226,7 +204,7 @@ class GatherRunner {
    * Navigates to requested URL and then runs pass() on gatherers while trace
    * (if requested) is still being recorded.
    * @param {LH.Gatherer.PassContext} passContext
-   * @param {GathererResults} gathererResults
+   * @param {Partial<GathererResults>} gathererResults
    * @return {Promise<void>}
    */
   static async pass(passContext, gathererResults) {
@@ -258,7 +236,10 @@ class GatherRunner {
       // Abuse the passContext to pass through gatherer options
       passContext.options = gathererDefn.options || {};
       const artifactPromise = Promise.resolve().then(_ => gatherer.pass(passContext));
-      gathererResults[gatherer.name].push(artifactPromise);
+
+      const gathererResult = gathererResults[gatherer.name] || [];
+      gathererResult.push(artifactPromise);
+      gathererResults[gatherer.name] = gathererResult;
       await GatherRunner.recoverOrThrow(artifactPromise);
     }
   }
@@ -268,7 +249,7 @@ class GatherRunner {
    * afterPass() on gatherers with trace data passed in. Promise resolves with
    * object containing trace and network data.
    * @param {LH.Gatherer.PassContext} passContext
-   * @param {GathererResults} gathererResults
+   * @param {Partial<GathererResults>} gathererResults
    * @return {Promise<LH.Gatherer.LoadData>}
    */
   static async afterPass(passContext, gathererResults) {
@@ -294,7 +275,7 @@ class GatherRunner {
     if (!driver.online) pageLoadError = undefined;
 
     if (pageLoadError) {
-      gathererResults.LighthouseRunWarnings.push('Lighthouse was unable to reliably load the ' +
+      passContext.LighthouseRunWarnings.push('Lighthouse was unable to reliably load the ' +
         'page you requested. Make sure you are testing the correct URL and that the server is ' +
         'properly responding to all requests.');
     }
@@ -323,7 +304,10 @@ class GatherRunner {
         Promise.reject(pageLoadError) :
         // Wrap gatherer response in promise, whether rejected or not.
         Promise.resolve().then(_ => gatherer.afterPass(passContext, passData));
-      gathererResults[gatherer.name].push(artifactPromise);
+
+      const gathererResult = gathererResults[gatherer.name] || [];
+      gathererResult.push(artifactPromise);
+      gathererResults[gatherer.name] = gathererResult;
       await GatherRunner.recoverOrThrow(artifactPromise);
       log.verbose('statusEnd', status);
     }
@@ -337,52 +321,65 @@ class GatherRunner {
    * last produced value (that's not undefined) as the artifact for that
    * gatherer. If a non-fatal error was rejected from a gatherer phase,
    * uses that error object as the artifact instead.
-   * @param {GathererResults} gathererResults
-   * @param {TracingData} tracingData
-   * @param {LH.Config.Settings} settings
+   * @param {Partial<GathererResults>} gathererResults
+   * @param {LH.BaseArtifacts} baseArtifacts
    * @return {Promise<LH.Artifacts>}
    */
-  static async collectArtifacts(gathererResults, tracingData, settings) {
-    // Can't handle dynamic GathererResults -> Artifacts, so explicitly make *
-    // and cast to Artifacts before returning.
-    /** @type {Object<string, *>} */
-    const artifacts = {
-      traces: tracingData.traces,
-      devtoolsLogs: tracingData.devtoolsLogs,
-      settings,
-      // Take only unique LighthouseRunWarnings, if any.
-      LighthouseRunWarnings: Array.from(new Set(gathererResults.LighthouseRunWarnings)),
-    };
+  static async collectArtifacts(gathererResults, baseArtifacts) {
+    /** @type {Partial<LH.GathererArtifacts>} */
+    const gathererArtifacts = {};
 
     const pageLoadFailures = [];
-    for (const [gathererName, phaseResultsPromises] of Object.entries(gathererResults)) {
-      if (artifacts[gathererName] !== undefined) continue;
+    const resultsEntries = /** @type {GathererResultsEntries} */ (Object.entries(gathererResults));
+    for (const [gathererName, phaseResultsPromises] of resultsEntries) {
+      if (gathererArtifacts[gathererName] !== undefined) continue;
 
       try {
         const phaseResults = await Promise.all(phaseResultsPromises);
         // Take last defined pass result as artifact.
         const definedResults = phaseResults.filter(element => element !== undefined);
         const artifact = definedResults[definedResults.length - 1];
-        artifacts[gathererName] = artifact;
+        // Typecast pretends artifact always provided here, but checked below for top-level `throw`.
+        gathererArtifacts[gathererName] = /** @type {NonVoid<PhaseResult>} */ (artifact);
       } catch (err) {
         // An error result must be non-fatal to not have caused an exit by now,
         // so return it to runner to handle turning it into an error audit.
-        artifacts[gathererName] = err;
+        gathererArtifacts[gathererName] = err;
         // Track page load errors separately, so we can fail loudly if needed.
         if (LHError.isPageLoadError(err)) pageLoadFailures.push(err);
       }
 
-      if (artifacts[gathererName] === undefined) {
+      if (gathererArtifacts[gathererName] === undefined) {
         throw new Error(`${gathererName} failed to provide an artifact.`);
       }
 
       // Fail the run if more than 50% of all artifacts failed due to page load failure.
-      if (pageLoadFailures.length > Object.keys(artifacts).length * 0.5) {
+      if (pageLoadFailures.length > Object.keys(gathererArtifacts).length * 0.5) {
         throw pageLoadFailures[0];
       }
     }
 
-    return /** @type {LH.Artifacts } */ (artifacts);
+    // Take only unique LighthouseRunWarnings.
+    baseArtifacts.LighthouseRunWarnings = Array.from(new Set(baseArtifacts.LighthouseRunWarnings));
+
+    // TODO(bckenny): drop cast when ComputedArtifacts not included in Artifacts
+    return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...gathererArtifacts});
+  }
+
+  /**
+   * @param {{driver: Driver, requestedUrl: string, settings: LH.Config.Settings}} options
+   * @return {Promise<LH.BaseArtifacts>}
+   */
+  static async getBaseArtifacts(options) {
+    return {
+      fetchTime: (new Date()).toJSON(),
+      LighthouseRunWarnings: [],
+      UserAgent: await options.driver.getUserAgent(),
+      traces: {},
+      devtoolsLogs: {},
+      settings: options.settings,
+      URL: {requestedUrl: options.requestedUrl, finalUrl: ''},
+    };
   }
 
   /**
@@ -392,25 +389,18 @@ class GatherRunner {
    */
   static async run(passes, options) {
     const driver = options.driver;
-    /** @type {TracingData} */
-    const tracingData = {
-      traces: {},
-      devtoolsLogs: {},
-    };
 
-    /** @type {GathererResults} */
-    const gathererResults = {
-      LighthouseRunWarnings: [],
-      fetchTime: [(new Date()).toJSON()],
-      URL: [{requestedUrl: options.requestedUrl, finalUrl: ''}],
-    };
+    /** @type {Partial<GathererResults>} */
+    const gathererResults = {};
 
     try {
       await driver.connect();
+      const baseArtifacts = await GatherRunner.getBaseArtifacts(options);
       await GatherRunner.loadBlank(driver);
-      await GatherRunner.setupDriver(driver, gathererResults, options);
-      let firstPass = true;
+      await GatherRunner.setupDriver(driver, options);
+
       // Run each pass
+      let firstPass = true;
       for (const passConfig of passes) {
         const passContext = {
           driver: options.driver,
@@ -418,28 +408,31 @@ class GatherRunner {
           url: options.requestedUrl,
           settings: options.settings,
           passConfig,
+          // *pass() functions and gatherers can push to this warnings array.
+          LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,
         };
 
         await driver.setThrottling(options.settings, passConfig);
         await GatherRunner.beforePass(passContext, gathererResults);
         await GatherRunner.pass(passContext, gathererResults);
         const passData = await GatherRunner.afterPass(passContext, gathererResults);
+
         // Save devtoolsLog, but networkRecords are discarded and not added onto artifacts.
-        tracingData.devtoolsLogs[passConfig.passName] = passData.devtoolsLog;
+        baseArtifacts.devtoolsLogs[passConfig.passName] = passData.devtoolsLog;
 
         // If requested by config, save pass's trace.
         if (passData.trace) {
-          tracingData.traces[passConfig.passName] = passData.trace;
+          baseArtifacts.traces[passConfig.passName] = passData.trace;
         }
 
         if (firstPass) {
           // Copy redirected URL to artifact in the first pass only.
-          gathererResults.URL[0].finalUrl = passContext.url;
+          baseArtifacts.URL.finalUrl = passContext.url;
           firstPass = false;
         }
       }
       await GatherRunner.disposeDriver(driver);
-      return GatherRunner.collectArtifacts(gathererResults, tracingData, options.settings);
+      return GatherRunner.collectArtifacts(gathererResults, baseArtifacts);
     } catch (err) {
       // cleanup on error
       GatherRunner.disposeDriver(driver);
