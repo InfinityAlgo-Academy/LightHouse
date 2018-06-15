@@ -131,7 +131,8 @@ describe('Lighthouse Viewer', function() {
       });
     }
 
-    const auditErrors = await viewerPage.$$eval('.lh-debug', getDebugStrings, selectors);
+    const errorSelectors = '.lh-audit-explanation, .tooltip-error';
+    const auditErrors = await viewerPage.$$eval(errorSelectors, getDebugStrings, selectors);
     const errors = auditErrors.filter(item => item.debugString.includes('Audit error:'));
     const unexpectedErrrors = errors.filter(item => {
       return !item.debugString.includes('Required RobotsTxt gatherer did not run');

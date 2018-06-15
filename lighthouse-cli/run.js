@@ -160,8 +160,13 @@ function runLighthouse(url, flags, config) {
   const resultsP = chromeP.then(_ => {
     return lighthouse(url, flags, config).then(runnerResult => {
       return potentiallyKillChrome().then(_ => runnerResult);
-    }).then(runnerResult => {
-      return saveResults(runnerResult, flags).then(_ => runnerResult);
+    }).then(async runnerResult => {
+      // If in gatherMode only, there will be no runnerResult.
+      if (runnerResult) {
+        await saveResults(runnerResult, flags);
+      }
+
+      return runnerResult;
     });
   });
 

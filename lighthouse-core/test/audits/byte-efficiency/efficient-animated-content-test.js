@@ -31,11 +31,11 @@ describe('Page uses videos for animated GIFs', () => {
       devtoolsLogs: {[EfficientAnimatedContent.DEFAULT_PASS]: []},
     };
 
-    const {results} = await EfficientAnimatedContent.audit_(artifacts, networkRecords);
-    assert.equal(results.length, 1);
-    assert.equal(results[0].url, 'https://example.com/example2.gif');
-    assert.equal(results[0].totalBytes, 110000);
-    assert.equal(Math.round(results[0].wastedBytes), 50600);
+    const {items} = await EfficientAnimatedContent.audit_(artifacts, networkRecords);
+    assert.equal(items.length, 1);
+    assert.equal(items[0].url, 'https://example.com/example2.gif');
+    assert.equal(items[0].totalBytes, 110000);
+    assert.equal(Math.round(items[0].wastedBytes), 50600);
   });
 
   it(`shouldn't flag content that looks like a gif but isn't`, async () => {
@@ -50,8 +50,8 @@ describe('Page uses videos for animated GIFs', () => {
       devtoolsLogs: {[EfficientAnimatedContent.DEFAULT_PASS]: []},
     };
 
-    const {results} = await EfficientAnimatedContent.audit_(artifacts, networkRecords);
-    assert.equal(results.length, 0);
+    const {items} = await EfficientAnimatedContent.audit_(artifacts, networkRecords);
+    assert.equal(items.length, 0);
   });
 
   it(`shouldn't flag non gif content`, async () => {
@@ -71,7 +71,7 @@ describe('Page uses videos for animated GIFs', () => {
       devtoolsLogs: {[EfficientAnimatedContent.DEFAULT_PASS]: []},
     };
 
-    const {results} = await EfficientAnimatedContent.audit_(artifacts, networkRecords);
-    assert.equal(results.length, 0);
+    const {items} = await EfficientAnimatedContent.audit_(artifacts, networkRecords);
+    assert.equal(items.length, 0);
   });
 });

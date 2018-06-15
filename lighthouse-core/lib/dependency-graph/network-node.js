@@ -55,6 +55,13 @@ class NetworkNode extends Node {
   /**
    * @return {boolean}
    */
+  get fromDiskCache() {
+    return !!this._record._fromDiskCache;
+  }
+
+  /**
+   * @return {boolean}
+   */
   hasRenderBlockingPriority() {
     const priority = this._record.priority();
     const isScript = this._record._resourceType === WebInspector.resourceTypes.Script;

@@ -6,6 +6,7 @@
 'use strict';
 
 const Audit = require('../audit');
+const linearInterpolation = require('../../lib/statistics').linearInterpolation;
 const Interactive = require('../../gather/computed/metrics/lantern-interactive'); // eslint-disable-line max-len
 const Simulator = require('../../lib/dependency-graph/simulator/simulator'); // eslint-disable-line no-unused-vars
 const Node = require('../../lib/dependency-graph/node.js'); // eslint-disable-line no-unused-vars
@@ -16,6 +17,16 @@ const KB_IN_BYTES = 1024;
 
 const WASTED_MS_FOR_AVERAGE = 300;
 const WASTED_MS_FOR_POOR = 750;
+const WASTED_MS_FOR_SCORE_OF_ZERO = 5000;
+
+/**
+ * @typedef {object} ByteEfficiencyProduct
+ * @property {Array<LH.Audit.ByteEfficiencyItem>} items
+ * @property {LH.Result.Audit.OpportunityDetails['headings']} headings
+ * @property {string} [displayValue]
+ * @property {string} [explanation]
+ * @property {Array<string>} [warnings]
+ */
 
 /**
  * @overview Used as the base for all byte efficiency audits. Computes total bytes
@@ -23,14 +34,24 @@ const WASTED_MS_FOR_POOR = 750;
  */
 class UnusedBytes extends Audit {
   /**
+   * Creates a score based on the wastedMs value using linear interpolation between control points.
+   *
    * @param {number} wastedMs
    * @return {number}
    */
   static scoreForWastedMs(wastedMs) {
-    if (wastedMs === 0) return 1;
-    else if (wastedMs < WASTED_MS_FOR_AVERAGE) return 0.9;
-    else if (wastedMs < WASTED_MS_FOR_POOR) return 0.65;
-    else return 0;
+    if (wastedMs === 0) {
+      return 1;
+    } else if (wastedMs < WASTED_MS_FOR_AVERAGE) {
+      return linearInterpolation(0, 1, WASTED_MS_FOR_AVERAGE, 0.75, wastedMs);
+    } else if (wastedMs < WASTED_MS_FOR_POOR) {
+      return linearInterpolation(WASTED_MS_FOR_AVERAGE, 0.75, WASTED_MS_FOR_POOR, 0.5, wastedMs);
+    } else {
+      return Math.max(
+        0,
+        linearInterpolation(WASTED_MS_FOR_POOR, 0.5, WASTED_MS_FOR_SCORE_OF_ZERO, 0, wastedMs)
+      );
+    }
   }
 
   /**
@@ -104,17 +125,19 @@ class UnusedBytes extends Audit {
    * - end time of the last long task in the provided graph
    * - (if includeLoad is true or not provided) end time of the last node in the graph
    *
-   * @param {Array<LH.Audit.ByteEfficiencyResult>} results The array of byte savings results per resource
+   * @param {Array<LH.Audit.ByteEfficiencyItem>} results The array of byte savings results per resource
    * @param {Node} graph
    * @param {Simulator} simulator
-   * @param {{includeLoad?: boolean}=} options
+   * @param {{includeLoad?: boolean, label?: string}=} options
    * @return {number}
    */
   static computeWasteWithTTIGraph(results, graph, simulator, options) {
-    options = Object.assign({includeLoad: true}, options);
+    options = Object.assign({includeLoad: true, label: this.meta.name}, options);
+    const beforeLabel = `${options.label}-before`;
+    const afterLabel = `${options.label}-after`;
 
-    const simulationBeforeChanges = simulator.simulate(graph);
-    /** @type {Map<LH.Audit.ByteEfficiencyResult['url'], LH.Audit.ByteEfficiencyResult>} */
+    const simulationBeforeChanges = simulator.simulate(graph, {label: beforeLabel});
+    /** @type {Map<string, LH.Audit.ByteEfficiencyItem>} */
     const resultsByUrl = new Map();
     for (const result of results) {
       resultsByUrl.set(result.url, result);
@@ -136,7 +159,7 @@ class UnusedBytes extends Audit {
       networkNode.record._transferSize = Math.max(original - wastedBytes, 0);
     });
 
-    const simulationAfterChanges = simulator.simulate(graph);
+    const simulationAfterChanges = simulator.simulate(graph, {label: afterLabel});
 
     // Restore the original transfer size after we've done our simulation
     graph.traverse(node => {
@@ -159,13 +182,13 @@ class UnusedBytes extends Audit {
   }
 
   /**
-   * @param {LH.Audit.ByteEfficiencyProduct} result
+   * @param {ByteEfficiencyProduct} result
    * @param {Node} graph
    * @param {Simulator} simulator
    * @return {LH.Audit.Product}
    */
   static createAuditProduct(result, graph, simulator) {
-    const results = result.results.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
+    const results = result.items.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
 
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
     const wastedKb = Math.round(wastedBytes / KB_IN_BYTES);
@@ -177,13 +200,7 @@ class UnusedBytes extends Audit {
       displayValue = ['Potential savings of %d\xa0KB', wastedKb];
     }
 
-    const summary = {
-      wastedMs,
-      wastedBytes,
-    };
-
-    // @ts-ignore - TODO(bckenny): unify details types. items shouldn't be an indexed type.
-    const details = Audit.makeTableDetails(result.headings, results, summary);
+    const details = Audit.makeOpportunityDetails(result.headings, results, wastedMs, wastedBytes);
 
     return {
       explanation: result.explanation,
@@ -208,7 +225,7 @@ class UnusedBytes extends Audit {
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
-   * @return {LH.Audit.ByteEfficiencyProduct|Promise<LH.Audit.ByteEfficiencyProduct>}
+   * @return {ByteEfficiencyProduct|Promise<ByteEfficiencyProduct>}
    */
   static audit_(artifacts, networkRecords, context) {
     throw new Error('audit_ unimplemented');

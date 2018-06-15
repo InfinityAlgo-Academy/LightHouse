@@ -26,6 +26,9 @@ const NodeState = {
   Complete: 3,
 };
 
+/** @type {Map<string, LH.Gatherer.Simulation.Result['nodeTimings']>} */
+const ALL_SIMULATION_NODE_TIMINGS = new Map();
+
 class Simulator {
   /**
    * @param {LH.Gatherer.Simulation.Options} [options]
@@ -56,7 +59,9 @@ class Simulator {
 
     // Properties reset on every `.simulate` call but duplicated here for type checking
     this._flexibleOrdering = false;
+    /** @type {Map<Node, NodeTimingIntermediate>} */
     this._nodeTimings = new Map();
+    /** @type {Map<string, number>} */
     this._numberInProgressByType = new Map();
     this._nodes = {};
     // @ts-ignore
@@ -101,12 +106,22 @@ class Simulator {
 
   /**
    * @param {Node} node
-   * @param {LH.Gatherer.Simulation.NodeTiming} values
+   * @param {NodeTimingIntermediate} values
    */
   _setTimingData(node, values) {
     const timingData = this._nodeTimings.get(node) || {};
     Object.assign(timingData, values);
     this._nodeTimings.set(node, timingData);
+  }
+
+  /**
+   * @param {Node} node
+   * @return {NodeTimingIntermediate}
+   */
+  _getTimingData(node) {
+    const timingData = this._nodeTimings.get(node);
+    if (!timingData) throw new Error(`Unable to get timing data for node ${node.id}`);
+    return timingData;
   }
 
   /**
@@ -178,11 +193,15 @@ class Simulator {
 
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
-    // Start a network request if we're not at max requests and a connection is available
-    const numberOfActiveRequests = this._numberInProgress(node.type);
-    if (numberOfActiveRequests >= this._maximumConcurrentRequests) return;
-    const connection = this._acquireConnection(/** @type {NetworkNode} */ (node).record);
-    if (!connection) return;
+    const networkNode = /** @type {NetworkNode} */ (node);
+    // If a network request is cached, we can always start it, so skip the connection checks
+    if (!networkNode.fromDiskCache) {
+      // Start a network request if we're not at max requests and a connection is available
+      const numberOfActiveRequests = this._numberInProgress(node.type);
+      if (numberOfActiveRequests >= this._maximumConcurrentRequests) return;
+      const connection = this._acquireConnection(networkNode.record);
+      if (!connection) return;
+    }
 
     this._markNodeAsInProgress(node, totalElapsedTime);
     this._setTimingData(node, {
@@ -209,32 +228,58 @@ class Simulator {
    */
   _estimateTimeRemaining(node) {
     if (node.type === Node.TYPES.CPU) {
-      const timingData = this._nodeTimings.get(node);
-      const multiplier = /** @type {CpuNode} */ (node).didPerformLayout()
-        ? this._layoutTaskMultiplier
-        : this._cpuSlowdownMultiplier;
-      const totalDuration = Math.min(
-        Math.round(/** @type {CpuNode} */ (node).event.dur / 1000 * multiplier),
-        DEFAULT_MAXIMUM_CPU_TASK_DURATION
+      return this._estimateCPUTimeRemaining(/** @type {CpuNode} */ (node));
+    } else if (node.type === Node.TYPES.NETWORK) {
+      return this._estimateNetworkTimeRemaining(/** @type {NetworkNode} */ (node));
+    } else {
+      throw new Error('Unsupported');
+    }
+  }
+
+  /**
+   * @param {CpuNode} cpuNode
+   * @return {number}
+   */
+  _estimateCPUTimeRemaining(cpuNode) {
+    const timingData = this._getTimingData(cpuNode);
+    const multiplier = cpuNode.didPerformLayout()
+      ? this._layoutTaskMultiplier
+      : this._cpuSlowdownMultiplier;
+    const totalDuration = Math.min(
+      Math.round(cpuNode.event.dur / 1000 * multiplier),
+      DEFAULT_MAXIMUM_CPU_TASK_DURATION
+    );
+    const estimatedTimeElapsed = totalDuration - timingData.timeElapsed;
+    this._setTimingData(cpuNode, {estimatedTimeElapsed});
+    return estimatedTimeElapsed;
+  }
+
+  /**
+   * @param {NetworkNode} networkNode
+   * @return {number}
+   */
+  _estimateNetworkTimeRemaining(networkNode) {
+    const timingData = this._getTimingData(networkNode);
+
+    let timeElapsed = 0;
+    if (networkNode.fromDiskCache) {
+      // Rough access time for seeking to location on disk and reading sequentially
+      // @see http://norvig.com/21-days.html#answers
+      const sizeInMb = (networkNode.record._resourceSize || 0) / 1024 / 1024;
+      timeElapsed = 8 + 20 * sizeInMb - timingData.timeElapsed;
+    } else {
+      // If we're estimating time remaining, we already acquired a connection for this record, definitely non-null
+      const connection = /** @type {TcpConnection} */ (this._acquireConnection(networkNode.record));
+      const calculation = connection.simulateDownloadUntil(
+        networkNode.record.transferSize - timingData.bytesDownloaded,
+        {timeAlreadyElapsed: timingData.timeElapsed, maximumTimeToElapse: Infinity}
       );
-      const estimatedTimeElapsed = totalDuration - timingData.timeElapsed;
-      this._setTimingData(node, {estimatedTimeElapsed});
-      return estimatedTimeElapsed;
+
+      timeElapsed = calculation.timeElapsed;
     }
 
-    if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
-
-    const record = /** @type {NetworkNode} */ (node).record;
-    const timingData = this._nodeTimings.get(node);
-    // If we're estimating time remaining, we already acquired a connection for this record, definitely non-null
-    const connection = /** @type {TcpConnection} */ (this._acquireConnection(record));
-    const calculation = connection.simulateDownloadUntil(
-      record.transferSize - timingData.bytesDownloaded,
-      {timeAlreadyElapsed: timingData.timeElapsed, maximumTimeToElapse: Infinity}
-    );
-
-    const estimatedTimeElapsed = calculation.timeElapsed + timingData.timeElapsedOvershoot;
-    this._setTimingData(node, {estimatedTimeElapsed});
+    const estimatedTimeElapsed = timeElapsed + timingData.timeElapsedOvershoot;
+    this._setTimingData(networkNode, {estimatedTimeElapsed});
     return estimatedTimeElapsed;
   }
 
@@ -258,10 +303,12 @@ class Simulator {
    * @param {number} totalElapsedTime
    */
   _updateProgressMadeInTimePeriod(node, timePeriodLength, totalElapsedTime) {
-    const timingData = this._nodeTimings.get(node);
+    const timingData = this._getTimingData(node);
     const isFinished = timingData.estimatedTimeElapsed === timePeriodLength;
 
-    if (node.type === Node.TYPES.CPU) {
+    const networkNode = /** @type {NetworkNode} */ (node);
+
+    if (node.type === Node.TYPES.CPU || networkNode.fromDiskCache) {
       return isFinished
         ? this._markNodeAsComplete(node, totalElapsedTime)
         : (timingData.timeElapsed += timePeriodLength);
@@ -269,7 +316,7 @@ class Simulator {
 
     if (node.type !== Node.TYPES.NETWORK) throw new Error('Unsupported');
 
-    const record = /** @type {NetworkNode} */ (node).record;
+    const record = networkNode.record;
     // If we're updating the progress, we already acquired a connection for this record, definitely non-null
     const connection = /** @type {TcpConnection} */ (this._acquireConnection(record));
     const calculation = connection.simulateDownloadUntil(
@@ -294,6 +341,20 @@ class Simulator {
     }
   }
 
+  _computeFinalNodeTimings() {
+    /** @type {Map<Node, LH.Gatherer.Simulation.NodeTiming>} */
+    const nodeTimings = new Map();
+    for (const [node, timing] of this._nodeTimings) {
+      nodeTimings.set(node, {
+        startTime: timing.startTime,
+        endTime: timing.endTime,
+        duration: timing.endTime - timing.startTime,
+      });
+    }
+
+    return nodeTimings;
+  }
+
   /**
    * @return {Required<LH.Gatherer.Simulation.Options>}
    */
@@ -311,7 +372,7 @@ class Simulator {
    * connection).
    *
    * @param {Node} graph
-   * @param {{flexibleOrdering?: boolean}=} options
+   * @param {{flexibleOrdering?: boolean, label?: string}=} options
    * @return {LH.Gatherer.Simulation.Result}
    */
   simulate(graph, options) {
@@ -319,7 +380,11 @@ class Simulator {
       throw new Error('Cannot simulate graph with cycle');
     }
 
-    options = Object.assign({flexibleOrdering: false}, options);
+    options = Object.assign({
+      label: undefined,
+      flexibleOrdering: false,
+    }, options);
+
     // initialize the necessary data containers
     this._flexibleOrdering = !!options.flexibleOrdering;
     this._initializeConnectionPool(graph);
@@ -345,7 +410,11 @@ class Simulator {
       }
 
       if (!nodesInProgress.size) {
-        throw new Error('Failed to start a node, potential mismatch in original execution');
+        // interplay between fromDiskCache and connectionReused can be incorrect
+        // proceed with flexibleOrdering if we can, otherwise give up
+        if (this._flexibleOrdering) throw new Error('Failed to start a node');
+        this._flexibleOrdering = true;
+        continue;
       }
 
       // set the available throughput for all connections based on # inflight
@@ -367,11 +436,30 @@ class Simulator {
       }
     }
 
+    const nodeTimings = this._computeFinalNodeTimings();
+    ALL_SIMULATION_NODE_TIMINGS.set(options.label || 'unlabeled', nodeTimings);
+
     return {
       timeInMs: totalElapsedTime,
-      nodeTimings: this._nodeTimings,
+      nodeTimings,
     };
+  }
+
+  /** @return {Map<string, LH.Gatherer.Simulation.Result['nodeTimings']>} */
+  static get ALL_NODE_TIMINGS() {
+    return ALL_SIMULATION_NODE_TIMINGS;
   }
 }
 
 module.exports = Simulator;
+
+/**
+ * @typedef NodeTimingIntermediate
+ * @property {number} [startTime]
+ * @property {number} [endTime]
+ * @property {number} [queuedTime]
+ * @property {number} [estimatedTimeElapsed]
+ * @property {number} [timeElapsed]
+ * @property {number} [timeElapsedOvershoot]
+ * @property {number} [bytesDownloaded]
+ */

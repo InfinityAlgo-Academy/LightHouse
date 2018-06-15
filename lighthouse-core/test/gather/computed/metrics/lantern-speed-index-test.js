@@ -17,8 +17,8 @@ describe('Metrics: Lantern Speed Index', () => {
     const artifacts = Runner.instantiateComputedArtifacts();
     const result = await artifacts.requestLanternSpeedIndex({trace, devtoolsLog, settings: {}});
 
-    assert.equal(Math.round(result.timing), 1501);
+    assert.equal(Math.round(result.timing), 1461);
     assert.equal(Math.round(result.optimisticEstimate.timeInMs), 605);
-    assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 1392);
+    assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 1330);
   });
 });

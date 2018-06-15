@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import _Crdp from '../node_modules/vscode-chrome-debug-core/lib/crdp/crdp';
+import _Crdp from 'vscode-chrome-debug-core/lib/crdp/crdp';
 import _StrictEventEmitter from '../third-party/strict-event-emitter-types/index';
 import { EventEmitter } from 'events';
 
@@ -21,6 +21,11 @@ declare global {
   } & {
     [P in K]+?: T[P]
   }
+
+  /**
+   * Exclude void from T
+   */
+  type NonVoid<T> = T extends void ? never : T;
 
   /** Remove properties K from T. */
   type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -66,25 +71,25 @@ declare global {
     }
 
     export interface Flags extends SharedFlagsSettings {
-      _: string[];
+      // Used by both core/ and cli/
       port: number;
-      chromeFlags: string;
+      hostname: string;
       output: any;
+      logLevel: 'silent'|'error'|'info'|'verbose';
+
+      // Just used by cli/
+      _: string[];
+      chromeFlags: string;
       outputPath: string;
       saveAssets: boolean;
       view: boolean;
-      logLevel: string;
-      hostname: string;
       enableErrorReporting: boolean;
       listAllAudits: boolean;
       listTraceCategories: boolean;
       configPath?: string;
       preset?: 'full'|'mixed-content'|'perf';
-      perf: boolean;
-      mixedContent: boolean;
       verbose: boolean;
       quiet: boolean;
-
       extraHeaders?: string;
     }
 
@@ -137,6 +142,11 @@ declare global {
       cat: string;
       args: {
         data?: {
+          frames?: {
+            frame: string;
+            parent?: string;
+            processId?: number;
+          }[];
           page?: string;
           readyState?: number;
           requestId?: string;
@@ -148,12 +158,14 @@ declare global {
           url?: string;
         };
         frame?: string;
+        name?: string;
       };
       pid: number;
       tid: number;
       ts: number;
       dur: number;
       ph: 'B'|'b'|'D'|'E'|'e'|'F'|'I'|'M'|'N'|'n'|'O'|'R'|'S'|'T'|'X';
+      s?: 't';
     }
 
     export interface DevToolsJsonTarget {

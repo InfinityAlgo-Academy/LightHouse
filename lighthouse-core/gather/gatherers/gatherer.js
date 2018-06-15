@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/** @typedef {void|LH.GathererArtifacts[keyof LH.GathererArtifacts]} PhaseResult */
+
 /**
  * Base class for all gatherers; defines pass lifecycle methods. The artifact
  * from the gatherer is the last not-undefined value returned by a lifecycle
@@ -18,9 +20,10 @@
  */
 class Gatherer {
   /**
-   * @return {string}
+   * @return {keyof LH.GathererArtifacts}
    */
   get name() {
+    // @ts-ignore - assume that class name has been added to LH.GathererArtifacts.
     return this.constructor.name;
   }
 
@@ -29,7 +32,7 @@ class Gatherer {
   /**
    * Called before navigation to target url.
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {*|!Promise<*>}
+   * @return {PhaseResult|Promise<PhaseResult>}
    */
   beforePass(passContext) { }
 
@@ -37,7 +40,7 @@ class Gatherer {
    * Called after target page is loaded. If a trace is enabled for this pass,
    * the trace is still being recorded.
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {*|!Promise<*>}
+   * @return {PhaseResult|Promise<PhaseResult>}
    */
   pass(passContext) { }
 
@@ -47,7 +50,7 @@ class Gatherer {
    * and record of network activity are provided in `loadData`.
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
-   * @return {*|!Promise<*>}
+   * @return {PhaseResult|Promise<PhaseResult>}
    */
   afterPass(passContext, loadData) { }
 

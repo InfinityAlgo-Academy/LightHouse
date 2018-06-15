@@ -44,7 +44,7 @@
   --display-value-gray: hsl(216, 5%, 39%);
   --report-width: calc(60 * var(--body-font-size));
   --report-content-width: calc(var(--report-width));
-  --report-header-height: 202px;
+  --report-header-height: 161px;
   --report-header-color: #202124;
   --navitem-font-size: var(--body-font-size);
   --navitem-line-height: var(--body-line-height);
@@ -66,6 +66,10 @@
   --lh-audit-group-vpadding: 8px;
   --lh-section-vpadding: 12px;
   --chevron-size: 12px;
+
+  /* Voodoo magic here to get narrow columns. 0 doesn't size the column like our friend 1px does */
+  --bytes-col-width: 1px;
+
   --pass-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>check</title><path fill="hsl(139, 70%, 30%)" d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/></svg>');
   --average-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>info</title><path fill="hsl(31, 100%, 45%)" d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm2 30h-4V22h4v12zm0-16h-4v-4h4v4z"/></svg>');
   --fail-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>warn</title><path fill="hsl(1, 73%, 45%)" d="M2 42h44L24 4 2 42zm24-6h-4v-4h4v4zm0-8h-4v-8h4v8z"/></svg>');
@@ -93,8 +97,8 @@
   --caption-font-size: 11px;
   --caption-line-height: 14px;
   --default-padding: 12px;
-  --section-padding: 16px;
-  --section-indent: 16px;
+  --section-padding: 12px;
+  --section-indent: 8px;
   --audit-group-indent: 16px;
   --audit-indent: 16px;
   --expandable-indent: 16px;
@@ -104,7 +108,6 @@
   --lh-audit-group-vpadding: 12px;
   --lh-section-vpadding: 8px;
 }
-
 
 @keyframes fadeIn {
   0% { opacity: 0;}
@@ -323,10 +326,6 @@
   display: flex;
   justify-content: space-between;
   padding: 11px var(--text-indent);
-}
-
-.lh-metric__header {
-  display: flex;
 }
 
 .lh-metric__details {
@@ -558,7 +557,7 @@
 .lh-audit-group--metrics .lh-audit-group__header::before {
   background-image: var(--av-timer-icon-url);
 }
-.lh-audit-group--notapplicable .lh-audit-group__header::before {
+.lh-audit-group--not-applicable .lh-audit-group__header::before {
   background-image: var(--remove-circle-icon-url);
 }
 
@@ -589,25 +588,13 @@
   margin-top: 0;
 }
 
-.lh-audit__title .lh-debug {
-  margin-top: 3px;
-}
-
-.lh-debug {
-  font-size: var(--caption-font-size);
+.lh-audit-explanation {
+  margin: var(--lh-audit-vpadding) 0 calc(var(--lh-audit-vpadding) / 2);
   line-height: var(--caption-line-height);
-  margin-bottom: 3px;
 }
 
-.lh-debug--explanation {
+.lh-audit--fail .lh-audit-explanation {
   color: var(--fail-color);
-
-}
-.lh-debug--warnings {
-  color: var(--average-color);
-}
-.lh-debug--warnings ul {
-  margin: 0;
 }
 
 /* Report */
@@ -626,6 +613,10 @@
   z-index: 2;
   will-change: transform;
 }
+.lh-header-plain {
+  margin-top: var(--section-padding);
+}
+
 .lh-header-container {
   display: block;
   margin: 0 auto;
@@ -654,25 +645,37 @@
   word-break: break-word;
 }
 
-.lh-run-warnings {
-  font-size: var(--body-font-size);
+.lh-warnings {
+  --item-margin: calc(var(--body-line-height) / 6);
+  border: 1px solid var(--average-color);
+  border-radius: 4px;
+  margin: var(--lh-audit-vpadding) 0;
+  padding: calc(var(--lh-audit-vpadding) / 2) var(--lh-audit-vpadding);
+}
+
+.lh-warnings--toplevel {
+  --item-margin: calc(var(--header-line-height) / 4);
+  color: var(--secondary-text-color);
   margin: var(--section-padding);
   padding: var(--section-padding);
-  background-color: hsla(40, 100%, 91%, 1);
-  color: var(--secondary-text-color);
 }
-.lh-run-warnings li {
-  margin-bottom: calc(var(--header-line-height) / 2);
+.lh-warnings ul {
+  padding-left: calc(var(--section-padding) * 2);
+  margin: 0;
 }
-.lh-run-warnings::before {
-  display: inline-block;
+.lh-warnings li {
+  margin: var(--item-margin) 0;
 }
+.lh-warnings li:last-of-type {
+  margin-bottom: 0;
+}
+
 .lh-scores-header {
   display: flex;
   justify-content: center;
   overflow-x: hidden;
   position: relative;
-  padding-bottom: calc(var(--section-indent) * 2);
+  padding: var(--section-indent) calc(var(--section-indent) / 2) calc(var(--section-indent) * 2);
 }
 .lh-scores-header__solo {
   padding: 0;
@@ -681,9 +684,10 @@
 
 .lh-scorescale {
   color: var(--medium-75-gray);
-  padding: 0 var(--section-indent) 0 0;
+  padding: 0 calc(var(--section-indent) * 1.5) 0;
   text-align: right;
   transform-origin: bottom right;
+  will-change: opacity; /* opacity is changed on scroll */
 }
 
 .lh-scorescale-range {
@@ -709,6 +713,11 @@
 
 .lh-scorescale-range--fail::before {
   background-color: var(--fail-color);
+}
+
+/* Hide category score gauages if it's a single category report */
+.lh-header--solo-category .lh-scores-wrapper {
+  display: none;
 }
 
 
@@ -834,8 +843,6 @@ summary.lh-passed-audits-summary {
 .lh-table {
   --image-preview-size: 24px;
   border-collapse: collapse;
-
-  --url-col-max-width: 450px;
 }
 
 .lh-table thead {
@@ -857,6 +864,7 @@ summary.lh-passed-audits-summary {
 
 .lh-table-column--text,
 .lh-table-column--bytes,
+.lh-table-column--timespanMs,
 .lh-table-column--ms {
   text-align: right;
 }
@@ -869,7 +877,13 @@ summary.lh-passed-audits-summary {
   text-align: left;
   min-width: 250px;
   white-space: nowrap;
-  max-width: var(--url-col-max-width);
+  max-width: 0;
+}
+
+/* Keep bytes columns narrow if they follow the URL column */
+.lh-table-column--url + th.lh-table-column--bytes,
+.lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--bytes {
+  width: var(--bytes-col-width);
 }
 
 .lh-table-column--code {
@@ -953,12 +967,21 @@ summary.lh-passed-audits-summary {
   position: absolute;
   display: none; /* Don't retain these layers when not needed */
   opacity: 0;
-
   background: #ffffff;
-  min-width: 23em;
+  min-width: 246px;
+  max-width: 275px;
   padding: 15px;
   border-radius: 5px;
   text-align: initial;
+}
+/* shrink tooltips to not be cutoff on left edge of narrow viewports
+   45vw is chosen to be ~= width of the left column of metrics
+*/
+@media screen and (max-width: 535px) {
+  .tooltip {
+    min-width: 45vw;
+    padding: 3vw;
+  }
 }
 
 .tooltip-boundary:hover {

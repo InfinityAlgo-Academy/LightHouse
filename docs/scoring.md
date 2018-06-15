@@ -6,7 +6,7 @@ Note 1: if you want a **nice spreadsheet** version of this doc to understand wei
 ![alt text](https://user-images.githubusercontent.com/39191/32397461-2d20c87a-c0a7-11e7-99d8-61576113a710.png)
 *Screenshot of the [scoring spreadsheet](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=0)*
 
-Note 2: if you receive a **score of 0** in any Lighthouse category, that usually indicates an error on our part. Please file an [issue](https://github.com/GoogleChrome/lighthouse/issues) so our team can look into it.
+Note 2: receiving a **score of ?** in any Lighthouse category indicates an error occurred. Please file an [issue](https://github.com/GoogleChrome/lighthouse/issues) so our team can look into it.
 
 # Performance
 
@@ -30,11 +30,12 @@ The performance score is determined from the **performance metrics only**. The O
 
 The metric results are not weighted equally. Currently the weights are:
 
-* 5X - first meaningful paint
-* 5X - first interactive
+* 3X - first contentful paint
+* 1X - first meaningful paint
+* 3X - first cpu idle
 * 5X - consistently interactive
-* 1X - perceptual speed index
-* 1X - estimated input latency
+* 4X - speed index
+* 0X - estimated input latency
 
 These weights are heuristics, and the Lighthouse team is working on formalizing the weighting system through more field data.
 
@@ -47,7 +48,7 @@ Once we finish computing the percentile equivalent of your raw performance score
 - Green (good): 75-100.
 
 ### What can developers do to improve their performance score?
-*Note: we've built [a little calculator](https://docs.google.com/spreadsheets/d/1dXH-bXX3gxqqpD1f7rp6ImSOhobsT1gn_GQ2fGZp8UU/edit?ts=59fb61d2#gid=283330180) that can help you understand what thresholds you should be aiming for achieving a certain Lighthouse performance score. *
+*Note: we've built [a little calculator](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=283330180) that can help you understand what thresholds you should be aiming for achieving a certain Lighthouse performance score. *
 
 Lighthouse has a whole section in the report on improving your performance score under the “Opportunities” section. There are detailed suggestions and documentation that explains the different suggestions and how to implement them. Additionally, the diagnostics section lists additional guidance that developers can explore to further experiment and tweak with their performance.
 

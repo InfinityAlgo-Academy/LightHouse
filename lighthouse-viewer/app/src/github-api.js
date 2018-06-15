@@ -7,6 +7,9 @@
 
 /* global logger, FirebaseAuth, idbKeyval, getFilenamePrefix */
 
+/** @typedef {import('../../../lighthouse-core/report/html/renderer/report-renderer.js').ReportJSON} ReportJSON */
+/** @typedef {{etag: ?string, content: ReportJSON}} CachableGist */
+
 /**
  * Wrapper around the GitHub API for reading/writing gists.
  */
@@ -22,8 +25,8 @@ class GithubApi {
 
   /**
    * Creates a gist under the users account.
-   * @param {!ReportRenderer.ReportJSON} jsonFile The gist file body.
-   * @return {!Promise<string>} id of the created gist.
+   * @param {ReportJSON} jsonFile The gist file body.
+   * @return {Promise<string>} id of the created gist.
    */
   createGist(jsonFile) {
     if (this._saving) {
@@ -71,7 +74,7 @@ class GithubApi {
   /**
    * Fetches a Lighthouse report from a gist.
    * @param {string} id The id of a gist.
-   * @return {!Promise<!ReportRenderer.ReportJSON>}
+   * @return {Promise<ReportJSON>}
    */
   getGistFileContentAsJson(id) {
     logger.log('Fetching report from GitHub...', false);
@@ -85,16 +88,16 @@ class GithubApi {
         headers.set('Authorization', `token ${accessToken}`);
       }
 
-      return idbKeyval.get(id).then(cachedGist => {
+      return idbKeyval.get(id).then(/** @param {?CachableGist} cachedGist */ (cachedGist) => {
         if (cachedGist && cachedGist.etag) {
           headers.set('If-None-Match', cachedGist.etag);
         }
 
         // Always make the request to see if there's newer content.
         return fetch(`https://api.github.com/gists/${id}`, {headers}).then(resp => {
-          const remaining = resp.headers.get('X-RateLimit-Remaining');
-          const limit = resp.headers.get('X-RateLimit-Limit');
-          if (Number(remaining) < 10) {
+          const remaining = Number(resp.headers.get('X-RateLimit-Remaining'));
+          const limit = Number(resp.headers.get('X-RateLimit-Limit'));
+          if (remaining < 10) {
             logger.warn('Approaching GitHub\'s rate limit. ' +
                         `${limit - remaining}/${limit} requests used. Consider signing ` +
                         'in to increase this limit.');
@@ -102,7 +105,7 @@ class GithubApi {
 
           if (!resp.ok) {
             if (resp.status === 304) {
-              return cachedGist;
+              return Promise.resolve(cachedGist);
             } else if (resp.status === 404) {
               // Delete the entry from IDB if it no longer exists on the server.
               idbKeyval.delete(id); // Note: async.
@@ -112,9 +115,13 @@ class GithubApi {
 
           const etag = resp.headers.get('ETag');
           return resp.json().then(json => {
+            const gistFiles = Object.keys(json.files);
             // Attempt to use first file in gist with report extension.
-            const filename = Object.keys(json.files)
-                .find(filename => filename.endsWith(GithubApi.LH_JSON_EXT));
+            let filename = gistFiles.find(filename => filename.endsWith(GithubApi.LH_JSON_EXT));
+            // Otherwise, fall back to first json file in gist
+            if (!filename) {
+              filename = gistFiles.find(filename => filename.endsWith('.json'));
+            }
             if (!filename) {
               throw new Error(
                 `Failed to find a Lighthouse report (*${GithubApi.LH_JSON_EXT}) in gist ${id}`
@@ -126,7 +133,8 @@ class GithubApi {
                 .then(resp => resp.json())
                 .then(content => ({etag, content}));
             }
-            return {etag, content: JSON.parse(f.content)};
+            const lhr = /** @type {ReportJSON} */ (JSON.parse(f.content));
+            return {etag, content: lhr};
           });
         });
       });
@@ -136,12 +144,14 @@ class GithubApi {
       // not return a 304 and so will be overwritten.
       return idbKeyval.set(id, response).then(_ => {
         logger.hide();
+        // @ts-ignore - TODO(bckenny): tsc unable to flatten promise chain here
         return response.content;
       });
     });
   }
 }
 
+// @ts-ignore - node export for testing.
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = GithubApi;
 }

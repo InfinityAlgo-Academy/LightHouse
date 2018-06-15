@@ -1,6 +1,6 @@
 {
   "name": "lighthouse",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-beta.0",
   "description": "Lighthouse",
   "main": "./lighthouse-core/index.js",
   "bin": {
@@ -57,12 +57,13 @@
     "bundlesize": "bundlesize",
     "plots-smoke": "bash plots/test/smoke.sh",
     "changelog": "conventional-changelog --config ./build/changelog-generator/index.js --infile changelog.md --same-file",
-    "type-check": "tsc -p .",
+    "type-check": "tsc -p . && cd ./lighthouse-viewer && yarn type-check",
     "update:sample-artifacts": "node lighthouse-core/scripts/update-report-fixtures.js -G",
-    "update:sample-json": "node ./lighthouse-cli -A=./lighthouse-core/test/results/artifacts --throttling-method=devtools --output=json --output-path=./lighthouse-core/test/results/sample_v2.json http://localhost/dobetterweb/dbw_tester.html && node lighthouse-core/scripts/cleanup-LHR-for-diff.js ./lighthouse-core/test/results/sample_v2.json --only-remove-timing",
+    "update:sample-json": "node ./lighthouse-cli -A=./lighthouse-core/test/results/artifacts --throttling-method=devtools --output=json --output-path=./lighthouse-core/test/results/sample_v2.json && node lighthouse-core/scripts/cleanup-LHR-for-diff.js ./lighthouse-core/test/results/sample_v2.json --only-remove-timing",
     "diff:sample-json": "bash lighthouse-core/scripts/assert-golden-lhr-unchanged.sh",
     "update:crdp-typings": "node lighthouse-core/scripts/extract-crdp-mapping.js",
-    "mixed-content": "./lighthouse-cli/index.js --chrome-flags='--headless' --config-path=./lighthouse-core/config/mixed-content.js"
+    "mixed-content": "./lighthouse-cli/index.js --chrome-flags='--headless' --config-path=./lighthouse-core/config/mixed-content.js",
+    "minify-latest-run": "./lighthouse-core/scripts/lantern/minify-trace.js ./latest-run/defaultPass.trace.json ./latest-run/defaultPass.trace.min.json && ./lighthouse-core/scripts/lantern/minify-devtoolslog.js ./latest-run/defaultPass.devtoolslog.json ./latest-run/defaultPass.devtoolslog.min.json"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.60",
@@ -95,6 +96,7 @@
     "npm-run-posix-or-windows": "^2.0.2",
     "nyc": "^11.6.0",
     "postinstall-prepare": "^1.0.1",
+    "pretty-json-stringify": "^0.0.2",
     "puppeteer": "1.4.0",
     "sinon": "^2.3.5",
     "typescript": "2.9.1-insiders.20180516",

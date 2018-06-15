@@ -18,9 +18,7 @@ module.exports = [
     audits: {
       'unminified-css': {
         details: {
-          summary: {
-            wastedBytes: '>17000',
-          },
+          overallSavingsBytes: '>17000',
           items: {
             length: 1,
           },
@@ -29,10 +27,8 @@ module.exports = [
       'unminified-javascript': {
         score: '<1',
         details: {
-          summary: {
-            wastedBytes: '>45000',
-            wastedMs: '>500',
-          },
+          overallSavingsBytes: '>45000',
+          overallSavingsMs: '>500',
           items: {
             length: 1,
           },
@@ -40,9 +36,7 @@ module.exports = [
       },
       'unused-css-rules': {
         details: {
-          summary: {
-            wastedBytes: '>39000',
-          },
+          overallSavingsBytes: '>39000',
           items: {
             length: 2,
           },
@@ -51,10 +45,8 @@ module.exports = [
       'unused-javascript': {
         score: '<1',
         details: {
-          summary: {
-            wastedBytes: '>=25000',
-            wastedMs: '>300',
-          },
+          overallSavingsBytes: '>=25000',
+          overallSavingsMs: '>300',
           items: {
             length: 2,
           },
@@ -77,9 +69,7 @@ module.exports = [
       },
       'uses-webp-images': {
         details: {
-          summary: {
-            wastedBytes: '>60000',
-          },
+          overallSavingsBytes: '>60000',
           items: {
             length: 4,
           },
@@ -88,10 +78,8 @@ module.exports = [
       'uses-text-compression': {
         score: '<1',
         details: {
-          summary: {
-            wastedMs: '>700',
-            wastedBytes: '>50000',
-          },
+          overallSavingsMs: '>700',
+          overallSavingsBytes: '>50000',
           items: {
             length: 2,
           },
@@ -99,9 +87,7 @@ module.exports = [
       },
       'uses-optimized-images': {
         details: {
-          summary: {
-            wastedBytes: '>10000',
-          },
+          overallSavingsBytes: '>10000',
           items: {
             length: 1,
           },
@@ -113,9 +99,7 @@ module.exports = [
           75,
         ],
         details: {
-          summary: {
-            wastedBytes: '>75000',
-          },
+          overallSavingsBytes: '>75000',
           items: [
             {wastedPercent: '<60'},
             {wastedPercent: '<60'},

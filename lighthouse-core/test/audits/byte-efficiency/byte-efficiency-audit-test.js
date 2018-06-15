@@ -6,7 +6,7 @@
 'use strict';
 
 const Runner = require('../../../runner');
-const ByteEfficiencyAudit = require('../../../audits/byte-efficiency/byte-efficiency-audit');
+const ByteEfficiencyAudit_ = require('../../../audits/byte-efficiency/byte-efficiency-audit');
 const NetworkNode = require('../../../lib/dependency-graph/network-node');
 const CPUNode = require('../../../lib/dependency-graph/cpu-node');
 const Simulator = require('../../../lib/dependency-graph/simulator/simulator');
@@ -20,6 +20,12 @@ const assert = require('assert');
 describe('Byte efficiency base audit', () => {
   let graph;
   let simulator;
+
+  const ByteEfficiencyAudit = class extends ByteEfficiencyAudit_ {
+    static get meta() {
+      return {name: 'test'};
+    }
+  };
 
   beforeEach(() => {
     const networkRecord = {
@@ -78,7 +84,7 @@ describe('Byte efficiency base audit', () => {
   it('should format details', () => {
     const result = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
-      results: [],
+      items: [],
     }, graph, simulator);
 
     assert.deepEqual(result.details.items, []);
@@ -88,7 +94,7 @@ describe('Byte efficiency base audit', () => {
     const result = ByteEfficiencyAudit.createAuditProduct(
       {
         headings: baseHeadings,
-        results: [
+        items: [
           {url: 'http://example.com/', wastedBytes: 200 * 1000},
         ],
       },
@@ -103,22 +109,22 @@ describe('Byte efficiency base audit', () => {
   it('should score the wastedMs', () => {
     const perfectResult = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
-      results: [{url: 'http://example.com/', wastedBytes: 1 * 1000}],
+      items: [{url: 'http://example.com/', wastedBytes: 1 * 1000}],
     }, graph, simulator);
 
     const goodResult = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
-      results: [{url: 'http://example.com/', wastedBytes: 20 * 1000}],
+      items: [{url: 'http://example.com/', wastedBytes: 20 * 1000}],
     }, graph, simulator);
 
     const averageResult = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
-      results: [{url: 'http://example.com/', wastedBytes: 100 * 1000}],
+      items: [{url: 'http://example.com/', wastedBytes: 100 * 1000}],
     }, graph, simulator);
 
     const failingResult = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
-      results: [{url: 'http://example.com/', wastedBytes: 400 * 1000}],
+      items: [{url: 'http://example.com/', wastedBytes: 400 * 1000}],
     }, graph, simulator);
 
     assert.equal(perfectResult.score, 1, 'scores perfect wastedMs');
@@ -131,7 +137,7 @@ describe('Byte efficiency base audit', () => {
     assert.throws(() => {
       ByteEfficiencyAudit.createAuditProduct({
         headings: baseHeadings,
-        results: [{wastedBytes: 350, totalBytes: 700, wastedPercent: 50}],
+        items: [{wastedBytes: 350, totalBytes: 700, wastedPercent: 50}],
       }, null);
     });
   });
@@ -139,7 +145,7 @@ describe('Byte efficiency base audit', () => {
   it('should populate KB', () => {
     const result = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
-      results: [
+      items: [
         {wastedBytes: 2048, totalBytes: 4096, wastedPercent: 50},
         {wastedBytes: 1986, totalBytes: 5436},
       ],
@@ -154,7 +160,7 @@ describe('Byte efficiency base audit', () => {
   it('should sort on wastedBytes', () => {
     const result = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
-      results: [
+      items: [
         {wastedBytes: 350, totalBytes: 700, wastedPercent: 50},
         {wastedBytes: 450, totalBytes: 1000, wastedPercent: 50},
         {wastedBytes: 400, totalBytes: 450, wastedPercent: 50},
@@ -169,7 +175,7 @@ describe('Byte efficiency base audit', () => {
   it('should create a display value', () => {
     const result = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
-      results: [
+      items: [
         {wastedBytes: 512, totalBytes: 700, wastedPercent: 50},
         {wastedBytes: 512, totalBytes: 1000, wastedPercent: 50},
         {wastedBytes: 1024, totalBytes: 1200, wastedPercent: 50},
@@ -188,7 +194,7 @@ describe('Byte efficiency base audit', () => {
     const result = ByteEfficiencyAudit.createAuditProduct(
       {
         headings: [{key: 'value', text: 'Label'}],
-        results: [
+        items: [
           {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW', wastedBytes: 30 * 1024},
         ],
       },
@@ -203,7 +209,7 @@ describe('Byte efficiency base audit', () => {
     class MockAudit extends ByteEfficiencyAudit {
       static audit_(artifacts, records) {
         return {
-          results: records.map(record => ({url: record.url, wastedBytes: record.transferSize})),
+          items: records.map(record => ({url: record.url, wastedBytes: record.transferSize})),
           headings: [],
         };
       }
@@ -230,7 +236,7 @@ describe('Byte efficiency base audit', () => {
     class MockAudit extends ByteEfficiencyAudit {
       static audit_(artifacts, records) {
         return {
-          results: records.map(record => ({url: record.url, wastedBytes: record.transferSize})),
+          items: records.map(record => ({url: record.url, wastedBytes: record.transferSize})),
           headings: [],
         };
       }

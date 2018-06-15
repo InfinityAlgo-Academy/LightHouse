@@ -7,9 +7,11 @@
   "scripts": {
     "watch": "gulp watch",
     "build": "gulp build:production",
-    "test": "mocha test/extension-test.js"
+    "debug-build": "node --inspect-brk ./node_modules/.bin/gulp build:production",
+    "test": "mocha test/**/*-test.js"
   },
   "devDependencies": {
+    "acorn": "^5.5.3",
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
     "brfs": "^1.6.1",
     "browserify": "^16.2.0",
@@ -28,7 +30,8 @@
     "through2": "^2.0.1"
   },
   "resolutions": {
-    "browserify/insert-module-globals/lexical-scope/astw": "2.2.0"
+    "browserify/insert-module-globals/lexical-scope/astw": "2.2.0",
+    "**/astw/acorn": "5.5.3"
   },
   "dependencies": {}
 }

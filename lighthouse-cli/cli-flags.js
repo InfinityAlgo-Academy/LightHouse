@@ -89,7 +89,7 @@ function getFlags(manualArgv) {
         'preset': 'Use a built-in configuration.',
         'chrome-flags':
             `Custom flags to pass to Chrome (space-delimited). For a full list of flags, see http://bit.ly/chrome-flags
-            Additionally, use the CHROME_PATH environment variable to use a specific Chrome binary. Requires Chromium version 54.0 or later. If omitted, any detected Chrome Canary or Chrome stable will be used.`,
+            Additionally, use the CHROME_PATH environment variable to use a specific Chrome binary. Requires Chromium version 66.0 or later. If omitted, any detected Chrome Canary or Chrome stable will be used.`,
         'hostname': 'The hostname to use for the debugging protocol.',
         'port': 'The port to use for the debugging protocol. Use 0 for a random port',
         'max-wait-for-load':
@@ -136,9 +136,13 @@ function getFlags(manualArgv) {
       .default('port', 0)
       .default('hostname', 'localhost')
       .check(/** @param {!LH.Flags} argv */ (argv) => {
-        // Make sure lighthouse has been passed a url, or at least one of --list-all-audits
-        // or --list-trace-categories. If not, stop the program and ask for a url
-        if (!argv.listAllAudits && !argv.listTraceCategories && argv._.length === 0) {
+        // Lighthouse doesn't need a URL if...
+        //   - We're in auditMode (and we have artifacts already)
+        //   - We're just listing the available options.
+        // If one of these don't apply, stop the program and ask for a url.
+        const isListMode = argv.listAllAudits || argv.listTraceCategories;
+        const isOnlyAuditMode = !!argv.auditMode && !argv.gatherMode;
+        if (!isListMode && !isOnlyAuditMode && argv._.length === 0) {
           throw new Error('Please provide a url');
         }
 

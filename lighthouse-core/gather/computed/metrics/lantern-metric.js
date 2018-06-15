@@ -73,6 +73,7 @@ class LanternMetricArtifact extends ComputedArtifact {
    */
   async computeMetricWithGraphs(data, artifacts, extras) {
     const {trace, devtoolsLog, settings} = data;
+    const metricName = this.name.replace('Lantern', '');
     const graph = await artifacts.requestPageDependencyGraph({trace, devtoolsLog});
     const traceOfTab = await artifacts.requestTraceOfTab(trace);
     /** @type {Simulator} */
@@ -82,9 +83,14 @@ class LanternMetricArtifact extends ComputedArtifact {
     const optimisticGraph = this.getOptimisticGraph(graph, traceOfTab);
     const pessimisticGraph = this.getPessimisticGraph(graph, traceOfTab);
 
-    const optimisticSimulation = simulator.simulate(optimisticGraph);
-    const optimisticFlexSimulation = simulator.simulate(optimisticGraph, {flexibleOrdering: true});
-    const pessimisticSimulation = simulator.simulate(pessimisticGraph);
+    let simulateOptions = {label: `optimistic${metricName}`};
+    const optimisticSimulation = simulator.simulate(optimisticGraph, simulateOptions);
+
+    simulateOptions = {label: `optimisticFlex${metricName}`, flexibleOrdering: true};
+    const optimisticFlexSimulation = simulator.simulate(optimisticGraph, simulateOptions);
+
+    simulateOptions = {label: `pessimistic${metricName}`};
+    const pessimisticSimulation = simulator.simulate(pessimisticGraph, simulateOptions);
 
     const optimisticEstimate = this.getEstimateFromSimulation(
       optimisticSimulation.timeInMs < optimisticFlexSimulation.timeInMs ?
@@ -97,8 +103,11 @@ class LanternMetricArtifact extends ComputedArtifact {
       Object.assign({}, extras, {optimistic: false})
     );
 
+    // Estimates under 1s don't really follow the normal curve fit, minimize the impact of the intercept
+    const interceptMultiplier = this.COEFFICIENTS.intercept > 0 ?
+      Math.min(1, optimisticEstimate.timeInMs / 1000) : 1;
     const timing =
-      this.COEFFICIENTS.intercept +
+      this.COEFFICIENTS.intercept * interceptMultiplier +
       this.COEFFICIENTS.optimistic * optimisticEstimate.timeInMs +
       this.COEFFICIENTS.pessimistic * pessimisticEstimate.timeInMs;
 

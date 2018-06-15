@@ -92,6 +92,61 @@ describe('URL Shim', () => {
     assert.equal(URL.getOrigin(urlD), null);
   });
 
+  describe('getTld', () => {
+    it('returns the correct tld', () => {
+      assert.equal(URL.getTld('example.com'), '.com');
+      assert.equal(URL.getTld('example.co.uk'), '.co.uk');
+      assert.equal(URL.getTld('example.com.br'), '.com.br');
+      assert.equal(URL.getTld('example.tokyo.jp'), '.jp');
+    });
+  });
+
+  describe('rootDomainsMatch', () => {
+    it('matches a subdomain and a root domain', () => {
+      const urlA = 'http://example.com/js/test.js';
+      const urlB = 'http://example.com/';
+      const urlC = 'http://sub.example.com/js/test.js';
+      const urlD = 'http://sub.otherdomain.com/js/test.js';
+
+      assert.ok(URL.rootDomainsMatch(urlA, urlB));
+      assert.ok(URL.rootDomainsMatch(urlA, urlC));
+      assert.ok(!URL.rootDomainsMatch(urlA, urlD));
+      assert.ok(!URL.rootDomainsMatch(urlB, urlD));
+    });
+
+    it(`doesn't break on urls without a valid host`, () => {
+      const urlA = 'http://example.com/js/test.js';
+      const urlB = 'data:image/jpeg;base64,foobar';
+      const urlC = 'anonymous:90';
+      const urlD = '!!garbage';
+      const urlE = 'file:///opt/lighthouse/index.js';
+
+      assert.ok(!URL.rootDomainsMatch(urlA, urlB));
+      assert.ok(!URL.rootDomainsMatch(urlA, urlC));
+      assert.ok(!URL.rootDomainsMatch(urlA, urlD));
+      assert.ok(!URL.rootDomainsMatch(urlA, urlE));
+      assert.ok(!URL.rootDomainsMatch(urlB, urlC));
+      assert.ok(!URL.rootDomainsMatch(urlB, urlD));
+      assert.ok(!URL.rootDomainsMatch(urlB, urlE));
+    });
+
+    it(`matches tld plus domains`, () => {
+      const coUkA = 'http://example.co.uk/js/test.js';
+      const coUkB = 'http://sub.example.co.uk/js/test.js';
+      const testUkA = 'http://example.test.uk/js/test.js';
+      const testUkB = 'http://sub.example.test.uk/js/test.js';
+      const ltdBrA = 'http://example.ltd.br/js/test.js';
+      const ltdBrB = 'http://sub.example.ltd.br/js/test.js';
+      const privAtA = 'http://examplepriv.at/js/test.js';
+      const privAtB = 'http://sub.examplepriv.at/js/test.js';
+
+      assert.ok(URL.rootDomainsMatch(coUkA, coUkB));
+      assert.ok(URL.rootDomainsMatch(testUkA, testUkB));
+      assert.ok(URL.rootDomainsMatch(ltdBrA, ltdBrB));
+      assert.ok(URL.rootDomainsMatch(privAtA, privAtB));
+    });
+  });
+
   describe('getURLDisplayName', () => {
     it('respects numPathParts option', () => {
       const url = 'http://example.com/a/deep/nested/file.css';

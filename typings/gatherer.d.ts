@@ -19,6 +19,8 @@ declare global {
       passConfig: Config.Pass
       settings: Config.Settings;
       options?: object;
+      /** Push to this array to add top-level warnings to the LHR.  */
+      LighthouseRunWarnings: Array<string>;
     }
 
     export interface LoadData {
@@ -51,13 +53,9 @@ declare global {
       }
 
       export interface NodeTiming {
-        startTime?: number;
-        endTime?: number;
-        queuedTime?: number;
-        estimatedTimeElapsed?: number;
-        timeElapsed?: number;
-        timeElapsedOvershoot?: number;
-        bytesDownloaded?: number;
+        startTime: number;
+        endTime: number;
+        duration: number;
       }
 
       export interface Result {

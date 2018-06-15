@@ -131,23 +131,23 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
   /**
    * @param {StyleSheetInfo} stylesheetInfo The stylesheetInfo object.
    * @param {string} pageUrl The URL of the page, used to identify inline styles.
-   * @return {LH.Audit.ByteEfficiencyResult}
+   * @return {LH.Audit.ByteEfficiencyItem}
    */
   static mapSheetToResult(stylesheetInfo, pageUrl) {
-    /** @type {LH.Audit.ByteEfficiencyResult['url']} */
     let url = stylesheetInfo.header.sourceURL;
     if (!url || url === pageUrl) {
       const contentPreview = UnusedCSSRules.determineContentPreview(stylesheetInfo.content);
-      url = {type: 'code', value: contentPreview};
+      url = contentPreview;
     }
 
     const usage = UnusedCSSRules.computeUsage(stylesheetInfo);
-    return Object.assign({url}, usage);
+    const result = {url}; // Assign to temporary to keep tsc happy about index signature.
+    return Object.assign(result, usage);
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {Promise<LH.Audit.ByteEfficiencyProduct>}
+   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
   static audit_(artifacts) {
     const styles = artifacts.CSSUsage.stylesheets;
@@ -159,19 +159,19 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
       const indexedSheets = UnusedCSSRules.indexStylesheetsById(styles, networkRecords);
       UnusedCSSRules.indexUsedRules(usage, indexedSheets);
 
-      const results = Object.keys(indexedSheets)
+      const items = Object.keys(indexedSheets)
           .map(sheetId => UnusedCSSRules.mapSheetToResult(indexedSheets[sheetId], pageUrl))
           .filter(sheet => sheet && sheet.wastedBytes > IGNORE_THRESHOLD_IN_BYTES);
 
+      /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
       const headings = [
-        {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
-        {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1,
-          text: 'Potential Savings'},
+        {key: 'url', valueType: 'url', label: 'URL'},
+        {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
+        {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings'},
       ];
 
       return {
-        results,
+        items,
         headings,
       };
     });

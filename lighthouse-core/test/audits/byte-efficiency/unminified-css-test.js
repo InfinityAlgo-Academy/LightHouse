@@ -153,13 +153,13 @@ describe('Page uses optimized css', () => {
       ]
     );
 
-    assert.equal(auditResult.results.length, 2);
-    assert.equal(auditResult.results[0].url, 'foo.css');
-    assert.equal(Math.round(auditResult.results[0].wastedPercent), 65);
-    assert.equal(Math.round(auditResult.results[0].wastedBytes / 1024), 13);
-    assert.equal(auditResult.results[1].url, 'other.css');
-    assert.equal(Math.round(auditResult.results[1].wastedPercent), 8);
-    assert.equal(Math.round(auditResult.results[1].wastedBytes / 1024), 4);
+    assert.equal(auditResult.items.length, 2);
+    assert.equal(auditResult.items[0].url, 'foo.css');
+    assert.equal(Math.round(auditResult.items[0].wastedPercent), 65);
+    assert.equal(Math.round(auditResult.items[0].wastedBytes / 1024), 13);
+    assert.equal(auditResult.items[1].url, 'other.css');
+    assert.equal(Math.round(auditResult.items[1].wastedPercent), 8);
+    assert.equal(Math.round(auditResult.items[1].wastedBytes / 1024), 4);
   });
 
   it('passes when stylesheets are already minified', () => {
@@ -190,6 +190,6 @@ describe('Page uses optimized css', () => {
       ]
     );
 
-    assert.equal(auditResult.results.length, 0);
+    assert.equal(auditResult.items.length, 0);
   });
 });

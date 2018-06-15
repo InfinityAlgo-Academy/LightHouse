@@ -56,15 +56,19 @@ class TTFBMetric extends Audit {
           displayValue = `Root document took ${Util.formatMilliseconds(ttfb, 1)} `;
         }
 
+        /** @type {LH.Result.Audit.OpportunityDetails} */
+        const details = {
+          type: 'opportunity',
+          overallSavingsMs: ttfb - TTFB_THRESHOLD,
+          headings: [],
+          items: [],
+        };
+
         return {
           rawValue: ttfb,
           score: Number(passed),
           displayValue,
-          details: {
-            summary: {
-              wastedMs: ttfb - TTFB_THRESHOLD,
-            },
-          },
+          details,
           extendedInfo: {
             value: {
               wastedMs: ttfb - TTFB_THRESHOLD,

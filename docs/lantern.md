@@ -29,7 +29,7 @@ Stats were collected using the [trace-evaluation](https://github.com/patrickhulc
 We conclude that Lantern is ~6-13% more inaccurate than DevTools throttling. When evaluating rank performance, Lantern achieves correlations within ~.04-.07 of DevTools throttling.
 
 * For the single view use case, our original conclusion that Lantern's inaccuracy is roughly equal to the inaccuracy introduced by expected variance seems to hold. The standard deviation of single observations from DevTools throttling is ~9-13%, and given Lantern's much lower variance, single observations from Lantern are not significantly more inaccurate on average than single observations from DevTools throttling.
-* For the repeat view use case, we can conclude that Lantern is systematically off by ~6-13% more than DevTools throttling. 
+* For the repeat view use case, we can conclude that Lantern is systematically off by ~6-13% more than DevTools throttling.
 
 ### Metric Variability Conclusions
 The reference stats demonstrate that there is high degree of variability with the user-centric metrics and strengthens the position that every load is just an observation of a point drawn from a distribution and to understand the entire experience, multiple draws must be taken, i.e. multiple runs are needed to have sufficiently small error bounds on the median load experience.

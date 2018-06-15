@@ -26,7 +26,7 @@ class ManifestValues extends ComputedArtifact {
   /** @typedef {(val: NonNullable<LH.Artifacts.Manifest['value']>) => boolean} Validator */
 
   /**
-   * @return {Array<{id: string, failureText: string, validate: Validator}>}
+   * @return {Array<{id: LH.Artifacts.ManifestValueCheckID, failureText: string, validate: Validator}>}
    */
   static get manifestChecks() {
     return [

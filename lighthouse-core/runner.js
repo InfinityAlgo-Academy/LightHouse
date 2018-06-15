@@ -23,7 +23,7 @@ const Connection = require('./gather/connections/connection.js'); // eslint-disa
 class Runner {
   /**
    * @param {Connection} connection
-   * @param {{config: LH.Config, url: string, driverMock?: Driver}} opts
+   * @param {{config: LH.Config, url?: string, driverMock?: Driver}} opts
    * @return {Promise<LH.RunnerResult|undefined>}
    */
   static async run(connection, opts) {
@@ -37,19 +37,6 @@ class Runner {
        */
       const lighthouseRunWarnings = [];
 
-      // save the requestedUrl provided by the user
-      const rawRequestedUrl = opts.url;
-      if (typeof rawRequestedUrl !== 'string' || rawRequestedUrl.length === 0) {
-        throw new Error('You must provide a url to the runner');
-      }
-
-      let parsedURL;
-      try {
-        parsedURL = new URL(opts.url);
-      } catch (e) {
-        throw new Error('The url provided should have a proper protocol and hostname.');
-      }
-
       const sentryContext = Sentry.getContext();
       // @ts-ignore TODO(bckenny): Sentry type checking
       Sentry.captureBreadcrumb({
@@ -59,15 +46,6 @@ class Runner {
         data: sentryContext && sentryContext.extra,
       });
 
-      // If the URL isn't https and is also not localhost complain to the user.
-      if (parsedURL.protocol !== 'https:' && parsedURL.hostname !== 'localhost') {
-        log.warn('Lighthouse', 'The URL provided should be on HTTPS');
-        log.warn('Lighthouse', 'Performance stats will be skewed redirecting from HTTP to HTTPS.');
-      }
-
-      // canonicalize URL with any trailing slashes neccessary
-      const requestedUrl = parsedURL.href;
-
       // User can run -G solo, -A solo, or -GA together
       // -G and -A will run partial lighthouse pipelines,
       // and -GA will run everything plus save artifacts to disk
@@ -75,11 +53,31 @@ class Runner {
       // Gather phase
       // Either load saved artifacts off disk or from the browser
       let artifacts;
+      let requestedUrl;
       if (settings.auditMode && !settings.gatherMode) {
         // No browser required, just load the artifacts from disk.
         const path = Runner._getArtifactsPath(settings);
         artifacts = await assetSaver.loadArtifacts(path);
+        requestedUrl = artifacts.URL.requestedUrl;
+
+        if (!requestedUrl) {
+          throw new Error('Cannot run audit mode on empty URL');
+        }
+        if (opts.url && opts.url !== requestedUrl) {
+          throw new Error('Cannot run audit mode on different URL');
+        }
       } else {
+        if (typeof opts.url !== 'string' || opts.url.length === 0) {
+          throw new Error(`You must provide a url to the runner. '${opts.url}' provided.`);
+        }
+
+        try {
+          // Use canonicalized URL (with trailing slashes and such)
+          requestedUrl = new URL(opts.url).href;
+        } catch (e) {
+          throw new Error('The url provided should have a proper protocol and hostname.');
+        }
+
         artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, opts, connection);
         // -G means save these to ./latest-run, etc.
         if (settings.gatherMode) {
@@ -131,7 +129,7 @@ class Runner {
         audits: resultsById,
         configSettings: settings,
         categories,
-        categoryGroups: opts.config.groups,
+        categoryGroups: opts.config.groups || undefined,
         timing: {total: Date.now() - startTime},
       };
 

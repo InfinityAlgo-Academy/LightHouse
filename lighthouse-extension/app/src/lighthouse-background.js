@@ -11,16 +11,19 @@ const Config = require('../../../lighthouse-core/config/config');
 const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
 const log = require('lighthouse-logger');
 
+/** @typedef {import('../../../lighthouse-core/gather/connections/connection.js')} Connection */
+
 /**
- * @param {!Connection} connection
+ * @param {Connection} connection
  * @param {string} url
- * @param {!Object} options Lighthouse options.
- * @param {!Array<string>} categoryIDs Name values of categories to include.
- * @return {!Promise}
+ * @param {{flags: LH.Flags}} options Lighthouse options.
+ * @param {Array<string>} categoryIDs Name values of categories to include.
+ * @param {(url?: string) => void} updateBadgeFn
+ * @return {Promise<LH.RunnerResult|void>}
  */
-window.runLighthouseForConnection = function(
-    connection, url, options, categoryIDs,
-    updateBadgeFn = function() { }) {
+function runLighthouseForConnection(
+  connection, url, options, categoryIDs,
+  updateBadgeFn = function() { }) {
   const config = new Config({
     extends: 'lighthouse:default',
     settings: {onlyCategories: categoryIDs},
@@ -39,30 +42,47 @@ window.runLighthouseForConnection = function(
       updateBadgeFn();
       throw err;
     });
-};
+}
 
 /**
- * @param {!RawProtocol.Port} port
+ * @param {RawProtocol.Port} port
  * @param {string} url
- * @param {!Object} options Lighthouse options.
- * @param {!Array<string>} categoryIDs Name values of categories to include.
- * @return {!Promise}
+ * @param {{flags: LH.Flags}} options Lighthouse options.
+ * @param {Array<string>} categoryIDs Name values of categories to include.
+ * @return {Promise<LH.RunnerResult|void>}
  */
-window.runLighthouseInWorker = function(port, url, options, categoryIDs) {
+function runLighthouseInWorker(port, url, options, categoryIDs) {
   // Default to 'info' logging level.
   log.setLevel('info');
   const connection = new RawProtocol(port);
-  return window.runLighthouseForConnection(connection, url, options, categoryIDs);
-};
+  return runLighthouseForConnection(connection, url, options, categoryIDs);
+}
 
 /**
  * Returns list of top-level categories from the default config.
- * @return {!Array<{title: string, id: string}>}
+ * @return {Array<{title: string, id: string}>}
  */
-window.getDefaultCategories = function() {
+function getDefaultCategories() {
   return Config.getCategories(defaultConfig);
-};
+}
 
-window.listenForStatus = function(listenCallback) {
+/** @param {(status: [string, string, string]) => void} listenCallback */
+function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
-};
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  // export for lighthouse-ext-background to require (via browserify).
+  module.exports = {
+    runLighthouseForConnection,
+    runLighthouseInWorker,
+    getDefaultCategories,
+    listenForStatus,
+  };
+} else {
+  // If not require()d, expose on window for devtools, other consumers of file.
+  // @ts-ignore
+  window.runLighthouseInWorker = runLighthouseInWorker;
+  // @ts-ignore
+  window.listenForStatus = listenForStatus;
+}

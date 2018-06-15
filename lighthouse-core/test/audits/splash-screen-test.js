@@ -62,7 +62,7 @@ describe('PWA: splash screen audit', () => {
       return SplashScreenAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
         assert.ok(result.explanation);
-        assert.strictEqual(result.extendedInfo.value.failures.length, 4);
+        assert.strictEqual(result.details.items[0].failures.length, 4);
       });
     });
 

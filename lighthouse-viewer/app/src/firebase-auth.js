@@ -12,12 +12,12 @@
  */
 class FirebaseAuth {
   constructor() {
-    /** @private {?string} */
+    /** @type {?string} */
     this._accessToken = null;
-    /** @private {Object} */
+    /** @type {?import('@firebase/auth-types').User} */
     this._firebaseUser = null;
 
-    /** @private {!Object} */
+    /** @type {import('@firebase/auth-types').GithubAuthProvider} */
     this._provider = new firebase.auth.GithubAuthProvider();
     this._provider.addScope('gist');
 
@@ -32,7 +32,7 @@ class FirebaseAuth {
     /**
      * Promise which resolves after the first check of auth state. After this,
      * _accessToken will be set if user is logged in and has access token.
-     * @private {!Promise<undefined>}
+     * @type {Promise<void>}
      */
     this._ready = Promise.all([
       new Promise(resolve => firebase.auth().onAuthStateChanged(resolve)),
@@ -48,7 +48,7 @@ class FirebaseAuth {
   /**
    * Returns the GitHub access token if already logged in. If not logged in,
    * returns null (and will not trigger sign in).
-   * @return {!Promise<?string>}
+   * @return {Promise<?string>}
    */
   getAccessTokenIfLoggedIn() {
     return this._ready.then(_ => this._accessToken);
@@ -56,7 +56,7 @@ class FirebaseAuth {
 
   /**
    * Returns the GitHub access token, triggering sign in if needed.
-   * @return {!Promise<string>}
+   * @return {Promise<string>}
    */
   getAccessToken() {
     return this._ready.then(_ => this._accessToken ? this._accessToken : this.signIn());
@@ -64,22 +64,24 @@ class FirebaseAuth {
 
   /**
    * Signs in the user to GitHub using the Firebase API.
-   * @return {!Promise<string>} The logged in user.
+   * @return {Promise<string>} The logged in user.
    */
   signIn() {
     return firebase.auth().signInWithPopup(this._provider).then(result => {
-      this._accessToken = result.credential.accessToken;
+      /** @type {string} */
+      const accessToken = result.credential.accessToken;
+      this._accessToken = accessToken;
       this._firebaseUser = result.user;
       // A limitation of firebase auth is that it doesn't return an oauth token
       // after a page refresh. We'll get a firebase token, but not an oauth token
       // for GitHub. Since GitHub's tokens never expire, stash the access token in IDB.
-      return idbKeyval.set('accessToken', this._accessToken).then(_ => this._accessToken);
+      return idbKeyval.set('accessToken', accessToken).then(_ => accessToken);
     });
   }
 
   /**
    * Signs the user out.
-   * @return {!Promise<undefined>}
+   * @return {Promise<void>}
    */
   signOut() {
     return firebase.auth().signOut().then(_ => {
@@ -89,6 +91,7 @@ class FirebaseAuth {
   }
 }
 
+// @ts-ignore - node export for testing.
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = FirebaseAuth;
 }

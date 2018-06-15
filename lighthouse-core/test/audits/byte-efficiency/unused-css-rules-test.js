@@ -109,9 +109,9 @@ describe('Best Practices: unused css rules audit', () => {
     });
 
     it('correctly computes url', () => {
-      const expectedPreview = {type: 'code', value: 'dummy'};
-      assert.deepEqual(map({header: {sourceURL: ''}}).url, expectedPreview);
-      assert.deepEqual(map({header: {sourceURL: 'a'}}, 'http://g.co/a').url, expectedPreview);
+      const expectedPreview = 'dummy';
+      assert.strictEqual(map({header: {sourceURL: ''}}).url, expectedPreview);
+      assert.strictEqual(map({header: {sourceURL: 'a'}}, 'http://g.co/a').url, expectedPreview);
       assert.equal(map({header: {sourceURL: 'foobar'}}).url, 'http://g.co/foobar');
     });
   });
@@ -135,7 +135,7 @@ describe('Best Practices: unused css rules audit', () => {
         URL: {finalUrl: ''},
         CSSUsage: {rules: [{styleSheetId: 'a', used: false}], stylesheets: []},
       }).then(result => {
-        assert.equal(result.results.length, 0);
+        assert.equal(result.items.length, 0);
       });
     });
 
@@ -159,7 +159,7 @@ describe('Best Practices: unused css rules audit', () => {
           },
         ]},
       }).then(result => {
-        assert.equal(result.results.length, 0);
+        assert.equal(result.items.length, 0);
       });
     });
 
@@ -186,11 +186,11 @@ describe('Best Practices: unused css rules audit', () => {
           },
         ]},
       }).then(result => {
-        assert.equal(result.results.length, 2);
-        assert.equal(result.results[0].totalBytes, 10 * 1024);
-        assert.equal(result.results[1].totalBytes, 6000);
-        assert.equal(result.results[0].wastedPercent, 75);
-        assert.equal(result.results[1].wastedPercent, 50);
+        assert.equal(result.items.length, 2);
+        assert.equal(result.items[0].totalBytes, 10 * 1024);
+        assert.equal(result.items[1].totalBytes, 6000);
+        assert.equal(result.items[0].wastedPercent, 75);
+        assert.equal(result.items[1].wastedPercent, 50);
       });
     });
 
@@ -225,8 +225,8 @@ describe('Best Practices: unused css rules audit', () => {
           },
         ]},
       }).then(result => {
-        assert.equal(result.results.length, 1);
-        assert.equal(Math.floor(result.results[0].wastedPercent), 33);
+        assert.equal(result.items.length, 1);
+        assert.equal(Math.floor(result.items[0].wastedPercent), 33);
       });
     });
   });

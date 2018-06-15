@@ -31,6 +31,7 @@ lighthouse-cli/types/*.map
 
 node_modules/
 results/
+lantern-data/
 
 plots/
 

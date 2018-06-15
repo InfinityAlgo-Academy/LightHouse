@@ -31,7 +31,7 @@ describe('Page uses optimized responses', () => {
       ],
     });
 
-    assert.equal(auditResult.results.length, 2);
+    assert.equal(auditResult.items.length, 2);
   });
 
   it('passes when all responses are sufficiently optimized', () => {
@@ -45,6 +45,6 @@ describe('Page uses optimized responses', () => {
       ],
     });
 
-    assert.equal(auditResult.results.length, 1);
+    assert.equal(auditResult.items.length, 1);
   });
 });

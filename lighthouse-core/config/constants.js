@@ -47,6 +47,7 @@ const defaultSettings = {
   skipAudits: null,
 };
 
+/** @type {LH.Config.Pass} */
 const defaultPassConfig = {
   passName: 'defaultPass',
   recordTrace: false,

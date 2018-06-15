@@ -39,7 +39,7 @@ describe('Metrics: FMP', () => {
 
     const result = await artifacts.requestFirstMeaningfulPaint({trace, devtoolsLog, settings});
 
-    assert.equal(Math.round(result.timing), 2029);
+    assert.equal(Math.round(result.timing), 1949);
     assert.equal(Math.round(result.optimisticEstimate.timeInMs), 911);
     assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 1198);
     assert.equal(result.optimisticEstimate.nodeTimings.size, 4);

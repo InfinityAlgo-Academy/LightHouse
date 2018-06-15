@@ -86,14 +86,14 @@ describe('UnusedJavaScript audit', () => {
     );
 
     it('should merge duplicates', () => {
-      assert.equal(result.results.length, 2);
+      assert.equal(result.items.length, 2);
 
-      const scriptBWaste = result.results[0];
+      const scriptBWaste = result.items[0];
       assert.equal(scriptBWaste.totalBytes, 50000);
       assert.equal(scriptBWaste.wastedBytes, 12500);
       assert.equal(scriptBWaste.wastedPercent, 25);
 
-      const inlineWaste = result.results[1];
+      const inlineWaste = result.items[1];
       assert.equal(inlineWaste.totalBytes, 21000);
       assert.equal(inlineWaste.wastedBytes, 6000);
       assert.equal(Math.round(inlineWaste.wastedPercent), 29);

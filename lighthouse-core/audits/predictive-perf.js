@@ -82,7 +82,7 @@ class PredictivePerf extends Audit {
       score,
       rawValue: values.roughEstimateOfTTI,
       displayValue: Util.formatMilliseconds(values.roughEstimateOfTTI),
-      extendedInfo: {value: values},
+      details: {items: [values]},
     };
   }
 }

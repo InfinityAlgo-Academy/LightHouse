@@ -11,6 +11,7 @@ const parseCacheControl = require('parse-cache-control');
 const Audit = require('../audit');
 const WebInspector = require('../../lib/web-inspector');
 const URL = require('../../lib/url-shim');
+const linearInterpolation = require('../../lib/statistics').linearInterpolation;
 
 // Ignore assets that have very high likelihood of cache hit
 const IGNORE_THRESHOLD_IN_PERCENT = 0.925;
@@ -46,20 +47,6 @@ class CacheHeaders extends Audit {
   }
 
   /**
-   * Interpolates the y value at a point x on the line defined by (x0, y0) and (x1, y1)
-   * @param {number} x0
-   * @param {number} y0
-   * @param {number} x1
-   * @param {number} y1
-   * @param {number} x
-   * @return {number}
-   */
-  static linearInterpolation(x0, y0, x1, y1, x) {
-    const slope = (y1 - y0) / (x1 - x0);
-    return y0 + (x - x0) * slope;
-  }
-
-  /**
    * Computes the percent likelihood that a return visit will be within the cache lifetime, based on
    * Chrome UMA stats see the note below.
    * @param {number} maxAgeInSeconds
@@ -90,7 +77,7 @@ class CacheHeaders extends Audit {
     const lowerDecile = (upperDecileIndex - 1) / 10;
 
     // Approximate the real likelihood with linear interpolation
-    return CacheHeaders.linearInterpolation(
+    return linearInterpolation(
       lowerDecileValue,
       lowerDecile,
       upperDecileValue,

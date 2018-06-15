@@ -43,8 +43,7 @@ class LanternFirstCPUIdle extends LanternInteractive {
     const longTasks = [];
     for (const [node, timing] of nodeTimings.entries()) {
       if (node.type !== Node.TYPES.CPU) continue;
-      if (!timing.endTime || !timing.startTime) continue;
-      if (timing.endTime - timing.startTime < longTaskLength) continue;
+      if (timing.duration < longTaskLength) continue;
       longTasks.push({start: timing.startTime, end: timing.endTime});
     }
 

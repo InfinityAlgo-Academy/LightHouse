@@ -289,16 +289,20 @@ module.exports = {
           '[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are ' +
           'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.',
       auditRefs: [
+        // Most difficult and critical for good UX
+        {id: 'load-fast-enough-for-pwa', weight: 7}, // can't be green in the category without being fast
+        {id: 'works-offline', weight: 5},
+        // Encompasses most of the other checks
+        {id: 'webapp-install-banner', weight: 3},
+        // Important but not too difficult
+        {id: 'is-on-https', weight: 2},
+        {id: 'redirects-http', weight: 2},
+        {id: 'viewport', weight: 2},
+        // Relatively easy checkboxes to tick with minimal value on their own
         {id: 'service-worker', weight: 1},
-        {id: 'works-offline', weight: 1},
         {id: 'without-javascript', weight: 1},
-        {id: 'is-on-https', weight: 1},
-        {id: 'redirects-http', weight: 1},
-        {id: 'load-fast-enough-for-pwa', weight: 1},
-        {id: 'webapp-install-banner', weight: 1},
         {id: 'splash-screen', weight: 1},
         {id: 'themed-omnibox', weight: 1},
-        {id: 'viewport', weight: 1},
         {id: 'content-width', weight: 1},
         // Manual audits
         {id: 'pwa-cross-browser', weight: 0},

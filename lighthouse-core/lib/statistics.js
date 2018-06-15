@@ -59,6 +59,21 @@ function getLogNormalDistribution(median, falloff) {
   };
 }
 
+/**
+ * Interpolates the y value at a point x on the line defined by (x0, y0) and (x1, y1)
+ * @param {number} x0
+ * @param {number} y0
+ * @param {number} x1
+ * @param {number} y1
+ * @param {number} x
+ * @return {number}
+ */
+function linearInterpolation(x0, y0, x1, y1, x) {
+  const slope = (y1 - y0) / (x1 - x0);
+  return y0 + (x - x0) * slope;
+}
+
 module.exports = {
+  linearInterpolation,
   getLogNormalDistribution,
 };

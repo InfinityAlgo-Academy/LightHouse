@@ -7,24 +7,25 @@
 
 /* global ReportUIFeatures, ReportGenerator */
 
+/** @typedef {import('../../../lighthouse-core/report/html/renderer/report-renderer.js').ReportJSON} ReportJSON */
+
 /**
  * Extends ReportUIFeatures to add an (optional) ability to save to a gist and
  * generates the saved report from a browserified ReportGenerator.
  */
 class ViewerUIFeatures extends ReportUIFeatures {
   /**
-   * @param {!DOM} dom
-   * @param {?function(!ReportRenderer.ReportJSON)} saveGistCallback
+   * @param {DOM} dom
+   * @param {?function(ReportJSON)} saveGistCallback
    */
   constructor(dom, saveGistCallback) {
     super(dom);
 
-    /** @private {?function(!ReportRenderer.ReportJSON)} */
     this._saveGistCallback = saveGistCallback;
   }
 
   /**
-   * @param {!ReportRenderer.ReportJSON} report
+   * @param {ReportJSON} report
    * @override
    */
   initFeatures(report) {
@@ -33,7 +34,7 @@ class ViewerUIFeatures extends ReportUIFeatures {
     // Disable option to save as gist if no callback for saving.
     if (!this._saveGistCallback) {
       const saveGistItem = this._dom.find('.lh-export--gist', this._document);
-      saveGistItem.setAttribute('disabled', true);
+      saveGistItem.setAttribute('disabled', 'true');
     }
   }
 
@@ -43,6 +44,7 @@ class ViewerUIFeatures extends ReportUIFeatures {
    * @override
    */
   getReportHtml() {
+    // @ts-ignore - TODO(bckenny): remove ignore when this.json is an LHR instead of ReportJSON.
     return ReportGenerator.generateReportHtml(this.json);
   }
 
@@ -59,10 +61,11 @@ class ViewerUIFeatures extends ReportUIFeatures {
 
     // Disable save-as-gist option after saving.
     const saveGistItem = this._dom.find('.lh-export--gist', this._document);
-    saveGistItem.setAttribute('disabled', true);
+    saveGistItem.setAttribute('disabled', 'true');
   }
 }
 
+// @ts-ignore - node export for testing.
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = ViewerUIFeatures;
 }

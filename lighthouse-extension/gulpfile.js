@@ -1,6 +1,20 @@
 // generated on 2016-03-19 using generator-chrome-extension 0.5.4
 
 'use strict';
+
+const fs = require('fs');
+// HACK: patch astw before it's required to use acorn with ES2018
+// We add the right acorn version to package.json deps, resolve the path to it here,
+// and then inject the modified require statement into astw's code.
+// see https://github.com/GoogleChrome/lighthouse/issues/5152
+const acornPath = require.resolve('acorn');
+const astwPath = require.resolve('astw/index.js');
+const astwOriginalContent = fs.readFileSync(astwPath, 'utf8');
+const astwPatchedContent = astwOriginalContent
+  .replace('ecmaVersion: opts.ecmaVersion || 8', 'ecmaVersion: 2018')
+  .replace(`require('acorn')`, `require(${JSON.stringify(acornPath)})`);
+fs.writeFileSync(astwPath, astwPatchedContent);
+
 const del = require('del');
 const gutil = require('gulp-util');
 const runSequence = require('run-sequence');
@@ -83,9 +97,6 @@ gulp.task('chromeManifest', () => {
     buildnumber: false,
     background: {
       target: 'scripts/lighthouse-ext-background.js',
-      exclude: [
-        'scripts/chromereload.js',
-      ],
     },
   };
   return gulp.src('app/manifest.json')
@@ -111,7 +122,7 @@ gulp.task('browserify-lighthouse', () => {
       let bundle = browserify(file.path); // , {debug: true}); // for sourcemaps
       bundle = applyBrowserifyTransforms(bundle);
 
-      // lighthouse-background will need some additional transforms, ignores and requires…
+      // scripts will need some additional transforms, ignores and requires…
 
       // Do the additional transform to convert references of devtools-timeline-model
       // to the modified version internal to Lighthouse.
@@ -141,6 +152,12 @@ gulp.task('browserify-lighthouse', () => {
         bundle = bundle.require(artifact, {expose: artifact.replace(corePath, './')});
       });
 
+      // browerify's url shim doesn't work with .URL in node_modules,
+      // and within robots-parser, it does `var URL = require('url').URL`, so we expose our own.
+      // @see https://github.com/GoogleChrome/lighthouse/issues/5273
+      const pathToURLShim = require.resolve('../lighthouse-core/lib/url-shim.js');
+      bundle = bundle.require(pathToURLShim, {expose: 'url'});
+
       // Inject the new browserified contents back into our gulp pipeline
       file.contents = bundle.bundle();
     }))
@@ -151,7 +168,6 @@ gulp.task('browserify-lighthouse', () => {
 gulp.task('browserify-other', () => {
   return gulp.src([
     'app/src/popup.js',
-    'app/src/chromereload.js',
   ], {read: false})
     .pipe(tap(file => {
       let bundle = browserify(file.path); // , {debug: true}); // for sourcemaps

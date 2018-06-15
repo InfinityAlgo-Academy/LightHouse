@@ -146,12 +146,12 @@ class UsesRelPreconnectAudit extends Audit {
     results = results
       .sort((a, b) => b.wastedMs - a.wastedMs);
 
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: 'Origin'},
-      {key: 'wastedMs', itemType: 'ms', text: 'Potential Savings'},
+      {key: 'url', valueType: 'url', label: 'Origin'},
+      {key: 'wastedMs', valueType: 'timespanMs', label: 'Potential Savings'},
     ];
-    const summary = {wastedMs: maxWasted};
-    const details = Audit.makeTableDetails(headings, results, summary);
+    const details = Audit.makeOpportunityDetails(headings, results, maxWasted);
 
     return {
       score: UnusedBytes.scoreForWastedMs(maxWasted),

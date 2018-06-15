@@ -102,8 +102,7 @@ class RenderBlockingResources extends Audit {
       node.traverse(node => deferredNodeIds.add(node.id));
 
       // "wastedMs" is the download time of the network request, responseReceived - requestSent
-      // @ts-ignore - TODO(phulce): nodeTiming.startTime/endTime shouldn't be optional by this point?
-      const wastedMs = Math.round(nodeTiming.endTime - nodeTiming.startTime);
+      const wastedMs = Math.round(nodeTiming.duration);
       if (wastedMs < MINIMUM_WASTED_MS) continue;
 
       results.push({
@@ -207,20 +206,14 @@ class RenderBlockingResources extends Audit {
       displayValue = `${results.length} resource delayed first paint by ${wastedMs}ms`;
     }
 
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {
-        key: 'totalBytes',
-        itemType: 'bytes',
-        displayUnit: 'kb',
-        granularity: 0.01,
-        text: 'Size (KB)',
-      },
-      {key: 'wastedMs', itemType: 'ms', text: 'Download Time (ms)', granularity: 1},
+      {key: 'url', valueType: 'url', label: 'URL'},
+      {key: 'totalBytes', valueType: 'bytes', label: 'Size (KB)'},
+      {key: 'wastedMs', valueType: 'timespanMs', label: 'Download Time (ms)'},
     ];
 
-    const summary = {wastedMs};
-    const details = Audit.makeTableDetails(headings, results, summary);
+    const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
     return {
       displayValue,

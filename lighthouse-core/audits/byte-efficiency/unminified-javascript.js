@@ -72,11 +72,11 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
-   * @return {LH.Audit.ByteEfficiencyProduct}
+   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
-    /** @type {Array<LH.Audit.ByteEfficiencyResult>} */
-    const results = [];
+    /** @type {Array<LH.Audit.ByteEfficiencyItem>} */
+    const items = [];
     const warnings = [];
     for (const requestId of Object.keys(artifacts.Scripts)) {
       const scriptContent = artifacts.Scripts[requestId];
@@ -90,20 +90,19 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
         if (result.wastedPercent < IGNORE_THRESHOLD_IN_PERCENT ||
           result.wastedBytes < IGNORE_THRESHOLD_IN_BYTES ||
           !Number.isFinite(result.wastedBytes)) continue;
-        results.push(result);
+        items.push(result);
       } catch (err) {
         warnings.push(`Unable to process ${networkRecord._url}: ${err.message}`);
       }
     }
 
     return {
-      results,
+      items,
       warnings,
       headings: [
-        {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
-        {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1,
-          text: 'Potential Savings'},
+        {key: 'url', valueType: 'url', label: 'URL'},
+        {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
+        {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings'},
       ],
     };
   }

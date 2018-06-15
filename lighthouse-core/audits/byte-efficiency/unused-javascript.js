@@ -62,7 +62,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
   /**
    * @param {Array<{unusedLength: number, contentLength: number}>} wasteData
    * @param {LH.WebInspector.NetworkRequest} networkRecord
-   * @return {LH.Audit.ByteEfficiencyResult}
+   * @return {LH.Audit.ByteEfficiencyItem}
    */
   static mergeWaste(wasteData, networkRecord) {
     let unusedLength = 0;
@@ -88,7 +88,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
-   * @return {LH.Audit.ByteEfficiencyProduct}
+   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
     /** @type {Map<string, Array<LH.Crdp.Profiler.ScriptCoverage>>} */
@@ -99,24 +99,22 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       scriptsByUrl.set(script.url, scripts);
     }
 
-    /** @type {Array<LH.Audit.ByteEfficiencyResult>} */
-    const results = [];
+    const items = [];
     for (const [url, scripts] of scriptsByUrl.entries()) {
       const networkRecord = networkRecords.find(record => record.url === url);
       if (!networkRecord) continue;
       const wasteData = scripts.map(UnusedJavaScript.computeWaste);
-      const result = UnusedJavaScript.mergeWaste(wasteData, networkRecord);
-      if (result.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES) continue;
-      results.push(result);
+      const item = UnusedJavaScript.mergeWaste(wasteData, networkRecord);
+      if (item.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES) continue;
+      items.push(item);
     }
 
     return {
-      results,
+      items,
       headings: [
-        {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'totalBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: 'Original'},
-        {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1,
-          text: 'Potential Savings'},
+        {key: 'url', valueType: 'url', label: 'URL'},
+        {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
+        {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings'},
       ],
     };
   }

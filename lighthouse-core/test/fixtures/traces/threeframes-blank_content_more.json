@@ -20,7 +20,7 @@
 				"tid": 1295,
 				"ts": 900000000000,
 				"ph": "X",
-				"cat": "toplevel",
+				"cat": "devtools.timeline",
 				"name": "TracingStartedInPage",
 				"args": {
 					"data": {

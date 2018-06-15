@@ -19,9 +19,9 @@ describe('Metrics: Speed Index', () => {
     const settings = {throttlingMethod: 'simulate'};
     const result = await artifacts.requestSpeedIndex({trace, devtoolsLog, settings});
 
-    assert.equal(Math.round(result.timing), 1501);
+    assert.equal(Math.round(result.timing), 1461);
     assert.equal(Math.round(result.optimisticEstimate.timeInMs), 605);
-    assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 1392);
+    assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 1330);
   });
 
   it('should compute an observed value', async () => {

@@ -72,7 +72,7 @@ describe('Runner', () => {
 
     // uses the files on disk from the -G test. ;)
     it('-A audits from saved artifacts and doesn\'t gather', () => {
-      const opts = {url, config: generateConfig({auditMode: artifactsPath}), driverMock};
+      const opts = {config: generateConfig({auditMode: artifactsPath}), driverMock};
       return Runner.run(null, opts).then(_ => {
         assert.equal(loadArtifactsSpy.called, true, 'loadArtifacts was not called');
         assert.equal(gatherRunnerRunSpy.called, false, 'GatherRunner.run was called');
@@ -83,12 +83,23 @@ describe('Runner', () => {
 
     it('-A throws if the settings change', async () => {
       const settings = {auditMode: artifactsPath, disableDeviceEmulation: true};
-      const opts = {url, config: generateConfig(settings), driverMock};
+      const opts = {config: generateConfig(settings), driverMock};
       try {
         await Runner.run(null, opts);
         assert.fail('should have thrown');
       } catch (err) {
         assert.ok(/Cannot change settings/.test(err.message), 'should have prevented run');
+      }
+    });
+
+    it('-A throws if the URL changes', async () => {
+      const settings = {auditMode: artifactsPath, disableDeviceEmulation: true};
+      const opts = {url: 'https://example.com', config: generateConfig(settings), driverMock};
+      try {
+        await Runner.run(null, opts);
+        assert.fail('should have thrown');
+      } catch (err) {
+        assert.ok(/different URL/.test(err.message), 'should have prevented run');
       }
     });
 
@@ -187,8 +198,6 @@ describe('Runner', () => {
   });
 
   it('accepts trace artifacts as paths and outputs appropriate data', () => {
-    const url = 'https://example.com/';
-
     const config = new Config({
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
@@ -198,9 +207,9 @@ describe('Runner', () => {
       ],
     });
 
-    return Runner.run({}, {url, config}).then(results => {
+    return Runner.run({}, {config}).then(results => {
       const audits = results.lhr.audits;
-      assert.equal(audits['user-timings'].displayValue, 2);
+      assert.equal(audits['user-timings'].displayValue[1], 2);
       assert.equal(audits['user-timings'].rawValue, false);
     });
   });
@@ -233,7 +242,6 @@ describe('Runner', () => {
 
   describe('Bad required artifact handling', () => {
     it('outputs an error audit result when trace required but not provided', () => {
-      const url = 'https://example.com';
       const config = new Config({
         settings: {
           auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
@@ -244,7 +252,7 @@ describe('Runner', () => {
         ],
       });
 
-      return Runner.run({}, {url, config}).then(results => {
+      return Runner.run({}, {config}).then(results => {
         const auditResult = results.lhr.audits['user-timings'];
         assert.strictEqual(auditResult.rawValue, null);
         assert.strictEqual(auditResult.scoreDisplayMode, 'error');
@@ -253,7 +261,6 @@ describe('Runner', () => {
     });
 
     it('outputs an error audit result when missing a required artifact', () => {
-      const url = 'https://example.com';
       const config = new Config({
         settings: {
           auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
@@ -264,7 +271,7 @@ describe('Runner', () => {
         ],
       });
 
-      return Runner.run({}, {url, config}).then(results => {
+      return Runner.run({}, {config}).then(results => {
         const auditResult = results.lhr.audits['content-width'];
         assert.strictEqual(auditResult.rawValue, null);
         assert.strictEqual(auditResult.scoreDisplayMode, 'error');
@@ -312,7 +319,6 @@ describe('Runner', () => {
 
     it('produces an error audit result when an audit throws a non-fatal Error', () => {
       const errorMessage = 'Audit yourself';
-      const url = 'https://example.com';
       const config = new Config({
         settings: {
           auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
@@ -329,7 +335,7 @@ describe('Runner', () => {
         ],
       });
 
-      return Runner.run({}, {url, config}).then(results => {
+      return Runner.run({}, {config}).then(results => {
         const auditResult = results.lhr.audits['throwy-audit'];
         assert.strictEqual(auditResult.rawValue, null);
         assert.strictEqual(auditResult.scoreDisplayMode, 'error');
@@ -339,7 +345,6 @@ describe('Runner', () => {
 
     it('rejects if an audit throws a fatal error', () => {
       const errorMessage = 'Uh oh';
-      const url = 'https://example.com';
       const config = new Config({
         settings: {
           auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
@@ -358,14 +363,13 @@ describe('Runner', () => {
         ],
       });
 
-      return Runner.run({}, {url, config}).then(
+      return Runner.run({}, {config}).then(
         _ => assert.ok(false),
         err => assert.strictEqual(err.message, errorMessage));
     });
   });
 
   it('accepts devtoolsLog in artifacts', () => {
-    const url = 'https://example.com';
     const config = new Config({
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
@@ -375,7 +379,7 @@ describe('Runner', () => {
       ],
     });
 
-    return Runner.run({}, {url, config}).then(results => {
+    return Runner.run({}, {config}).then(results => {
       const audits = results.lhr.audits;
       assert.equal(audits['critical-request-chains'].displayValue, '5 chains found');
       assert.equal(audits['critical-request-chains'].rawValue, false);
@@ -487,7 +491,6 @@ describe('Runner', () => {
   });
 
   it('results include artifacts when given artifacts and audits', () => {
-    const url = 'https://example.com';
     const config = new Config({
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
@@ -497,7 +500,7 @@ describe('Runner', () => {
       ],
     });
 
-    return Runner.run({}, {url, config}).then(results => {
+    return Runner.run({}, {config}).then(results => {
       assert.strictEqual(results.artifacts.ViewportDimensions.innerWidth, 412);
       assert.strictEqual(results.artifacts.ViewportDimensions.innerHeight, 732);
     });
@@ -528,7 +531,6 @@ describe('Runner', () => {
   });
 
   it('includes any LighthouseRunWarnings from artifacts in output', () => {
-    const url = 'https://example.com';
     const config = new Config({
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
@@ -536,7 +538,7 @@ describe('Runner', () => {
       audits: [],
     });
 
-    return Runner.run(null, {url, config, driverMock}).then(results => {
+    return Runner.run(null, {config, driverMock}).then(results => {
       assert.deepStrictEqual(results.lhr.runWarnings, [
         'I\'m a warning!',
         'Also a warning',

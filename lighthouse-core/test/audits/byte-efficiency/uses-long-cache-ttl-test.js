@@ -39,22 +39,6 @@ describe('Cache headers audit', () => {
     };
   });
 
-  describe('#linearInterpolation', () => {
-    it('correctly interpolates when slope is 2', () => {
-      const slopeOf2 = x => CacheHeadersAudit.linearInterpolation(0, 0, 10, 20, x);
-      assert.equal(slopeOf2(-10), -20);
-      assert.equal(slopeOf2(5), 10);
-      assert.equal(slopeOf2(10), 20);
-    });
-
-    it('correctly interpolates when slope is 0', () => {
-      const slopeOf0 = x => CacheHeadersAudit.linearInterpolation(0, 0, 10, 0, x);
-      assert.equal(slopeOf0(-10), 0);
-      assert.equal(slopeOf0(5), 0);
-      assert.equal(slopeOf0(10), 0);
-    });
-  });
-
   it('detects missing cache headers', () => {
     networkRecords = [networkRecord()];
     return CacheHeadersAudit.audit(artifacts, {options}).then(result => {

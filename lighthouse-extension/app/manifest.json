@@ -1,7 +1,7 @@
 {
   "name": "__MSG_appName__",
-  "version": "2.10.0.3002",
-  "minimum_chrome_version": "56",
+  "version": "2.10.1.3000",
+  "minimum_chrome_version": "66",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -11,7 +11,6 @@
   "default_locale": "en",
   "background": {
     "scripts": [
-      "scripts/chromereload.js",
       "scripts/lighthouse-ext-background.js"
     ],
     "persistent": false

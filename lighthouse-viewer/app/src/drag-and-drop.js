@@ -10,10 +10,15 @@
  */
 class DragAndDrop {
   /**
-   * @param {function(!File)} fileHandlerCallback Invoked when the user chooses a new file.
+   * @param {function(File)} fileHandlerCallback Invoked when the user chooses a new file.
    */
   constructor(fileHandlerCallback) {
-    this._dropZone = document.querySelector('.drop_zone');
+    const dropZone = document.querySelector('.drop_zone');
+    if (!dropZone) {
+      throw new Error('Drag and drop `.drop_zone` element not found in page');
+    }
+
+    this._dropZone = dropZone;
     this._fileHandlerCallback = fileHandlerCallback;
     this._dragging = false;
 

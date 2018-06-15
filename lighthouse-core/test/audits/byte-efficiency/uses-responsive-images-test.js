@@ -48,9 +48,9 @@ describe('Page uses responsive images', () => {
         ],
       });
 
-      assert.equal(result.results.length, data.listed ? 1 : 0);
+      assert.equal(result.items.length, data.listed ? 1 : 0);
       if (data.listed) {
-        assert.equal(Math.round(result.results[0].wastedBytes / 1024), data.expectedWaste);
+        assert.equal(Math.round(result.items[0].wastedBytes / 1024), data.expectedWaste);
       }
     });
   }
@@ -101,7 +101,7 @@ describe('Page uses responsive images', () => {
       ],
     });
 
-    assert.equal(auditResult.results.length, 0);
+    assert.equal(auditResult.items.length, 0);
   });
 
   it('identifies when images are not wasteful', () => {
@@ -129,7 +129,7 @@ describe('Page uses responsive images', () => {
       ],
     });
 
-    assert.equal(auditResult.results.length, 2);
+    assert.equal(auditResult.items.length, 2);
   });
 
   it('ignores vectors', () => {
@@ -144,7 +144,7 @@ describe('Page uses responsive images', () => {
       ],
     });
 
-    assert.equal(auditResult.results.length, 0);
+    assert.equal(auditResult.items.length, 0);
   });
 
   it('de-dupes images', () => {
@@ -166,7 +166,7 @@ describe('Page uses responsive images', () => {
       ],
     });
 
-    assert.equal(auditResult.results.length, 1);
-    assert.equal(auditResult.results[0].wastedPercent, 75, 'correctly computes wastedPercent');
+    assert.equal(auditResult.items.length, 1);
+    assert.equal(auditResult.items[0].wastedPercent, 75, 'correctly computes wastedPercent');
   });
 });

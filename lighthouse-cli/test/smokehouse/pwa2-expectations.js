@@ -5,6 +5,10 @@
  */
 'use strict';
 
+const pwaDetailsExpectations = require('./pwa-expectations').PWA_DETAILS_EXPECTATIONS;
+
+const jakeExpectations = {...pwaDetailsExpectations, hasShortName: false};
+
 /**
  * Expected Lighthouse audit values for various sites with stable(ish) PWA
  * results.
@@ -38,16 +42,16 @@ module.exports = [
         // Ignore speed test; just verify that it ran.
       },
       'webapp-install-banner': {
-        // TODO(phulce): assert the checks when we put them in details
         score: 0,
+        details: {items: [jakeExpectations]},
       },
       'splash-screen': {
-        // TODO(phulce): assert the checks when we put them in details
         score: 1,
+        details: {items: [jakeExpectations]},
       },
       'themed-omnibox': {
-        // TODO(phulce): assert the checks when we put them in details
         score: 1,
+        details: {items: [jakeExpectations]},
       },
       'content-width': {
         score: 1,
@@ -95,16 +99,16 @@ module.exports = [
         // Ignore speed test; just verify that it ran.
       },
       'webapp-install-banner': {
-        // TODO(phulce): assert the checks when we put them in details
         score: 1,
+        details: {items: [pwaDetailsExpectations]},
       },
       'splash-screen': {
-        // TODO(phulce): assert the checks when we put them in details
         score: 1,
+        details: {items: [pwaDetailsExpectations]},
       },
       'themed-omnibox': {
-        // TODO(phulce): assert the checks when we put them in details
         score: 1,
+        details: {items: [pwaDetailsExpectations]},
       },
       'content-width': {
         score: 1,
