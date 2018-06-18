@@ -15,13 +15,6 @@ if (location.search === '' || params.has('dateNow')) {
   const d = Date.now();
 }
 
-if (location.search === '' || params.has('mutationEvents')) {
-  // FAIL - MutationEvent usage in another file.
-  document.addEventListener('DOMNodeInserted', function(e) {
-    console.log('DOMNodeInserted');
-  });
-}
-
 if (location.search === '' || params.has('passiveEvents')) {
   // FAIL - non-passive listener usage in another file.
   document.addEventListener('wheel', e => {

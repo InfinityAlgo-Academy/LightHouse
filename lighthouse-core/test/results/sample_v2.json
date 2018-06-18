@@ -2405,89 +2405,6 @@
         ]
       }
     },
-    "no-mutation-events": {
-      "id": "no-mutation-events",
-      "title": "Uses Mutation Events in its own scripts",
-      "description": "Mutation Events are deprecated and harm performance. Consider using Mutation Observers instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/mutation-events).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "rawValue": false,
-      "warnings": [],
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "type",
-            "itemType": "code",
-            "text": "Event"
-          },
-          {
-            "key": "line",
-            "itemType": "text",
-            "text": "Line"
-          },
-          {
-            "key": "col",
-            "itemType": "text",
-            "text": "Col"
-          },
-          {
-            "key": "pre",
-            "itemType": "code",
-            "text": "Snippet"
-          }
-        ],
-        "items": [
-          {
-            "line": 206,
-            "col": 50,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "type": "DOMNodeInserted",
-            "pre": "section#touchmove-section.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted on element');\n  })\n\n"
-          },
-          {
-            "line": 200,
-            "col": 61,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "type": "DOMNodeInserted",
-            "pre": "body.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
-          },
-          {
-            "line": 20,
-            "col": 56,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "type": "DOMNodeInserted",
-            "pre": "document.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
-          },
-          {
-            "line": 190,
-            "col": 56,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "type": "DOMNodeInserted",
-            "pre": "document.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
-          },
-          {
-            "line": 195,
-            "col": 55,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "type": "DOMNodeRemoved",
-            "pre": "document.addEventListener('DOMNodeRemoved', function(e) {\n    console.log('DOMNodeRemoved');\n  })\n\n"
-          },
-          {
-            "line": 211,
-            "col": 54,
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "type": "DOMNodeInserted",
-            "pre": "window.addEventListener('DOMNodeInserted', function(e) {\n    console.log('DOMNodeInserted');\n  })\n\n"
-          }
-        ]
-      }
-    },
     "no-vulnerable-libraries": {
       "id": "no-vulnerable-libraries",
       "title": "Includes front-end JavaScript libraries with known security vulnerabilities",
@@ -3360,10 +3277,6 @@
         },
         {
           "id": "uses-passive-event-listeners",
-          "weight": 1
-        },
-        {
-          "id": "no-mutation-events",
           "weight": 1
         },
         {

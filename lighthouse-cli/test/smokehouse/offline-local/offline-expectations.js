@@ -36,9 +36,6 @@ module.exports = [
       'no-document-write': {
         score: 1,
       },
-      'no-mutation-events': {
-        score: 1,
-      },
       'no-websql': {
         score: 1,
       },

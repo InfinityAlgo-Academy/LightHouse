@@ -61,14 +61,6 @@ module.exports = [
           },
         },
       },
-      'no-mutation-events': {
-        score: 0,
-        details: {
-          items: {
-            length: 6,
-          },
-        },
-      },
       'no-vulnerable-libraries': {
         score: 0,
         details: {

@@ -57,8 +57,6 @@ declare global {
       DOMStats: Artifacts.DOMStats;
       /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
       EmbeddedContent: Artifacts.EmbeddedContentInfo[];
-      /** Information on all event listeners in the page. */
-      EventListeners: {url: string, type: string, handler?: {description?: string}, objectName: string, line: number, col: number}[];
       /** Information for font faces used in the page. */
       Fonts: Artifacts.Font[];
       /** Information on poorly sized font usage and the text affected by it. */

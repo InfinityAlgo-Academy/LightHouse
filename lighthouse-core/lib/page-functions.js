@@ -6,74 +6,11 @@
 // @ts-nocheck
 'use strict';
 
+/* global window */
+
 /**
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
  */
-
-/**
- * Tracks function call usage. Used by captureJSCalls to inject code into the page.
- * @param {function(...*): *} funcRef The function call to track.
- * @param {!Set} set An empty set to populate with stack traces. Should be
- *     on the global object.
- * @return {function(...*): *} A wrapper around the original function.
- */
-/* istanbul ignore next */
-function captureJSCallUsage(funcRef, set) {
-  /* global window */
-  const __nativeError = window.__nativeError || Error;
-  const originalFunc = funcRef;
-  const originalPrepareStackTrace = __nativeError.prepareStackTrace;
-
-  return function(...args) {
-    // Note: this function runs in the context of the page that is being audited.
-
-    // See v8's Stack Trace API https://github.com/v8/v8/wiki/Stack-Trace-API#customizing-stack-traces
-    __nativeError.prepareStackTrace = function(error, structStackTrace) {
-      // First frame is the function we injected (the one that just threw).
-      // Second, is the actual callsite of the funcRef we're after.
-      const callFrame = structStackTrace[1];
-      let url = callFrame.getFileName() || callFrame.getEvalOrigin();
-      const line = callFrame.getLineNumber();
-      const col = callFrame.getColumnNumber();
-      const isEval = callFrame.isEval();
-      let isExtension = false;
-      const stackTrace = structStackTrace.slice(1).map(callsite => callsite.toString());
-
-      // If we don't have an URL, (e.g. eval'd code), use the 2nd entry in the
-      // stack trace. First is eval context: eval(<context>):<line>:<col>.
-      // Second is the callsite where eval was called.
-      // See https://crbug.com/646849.
-      if (isEval) {
-        url = stackTrace[1];
-      }
-
-      // Chrome extension content scripts can produce an empty .url and
-      // "<anonymous>:line:col" for the first entry in the stack trace.
-      if (stackTrace[0].startsWith('<anonymous>')) {
-        // Note: Although captureFunctionCallSites filters out crx usage,
-        // filling url here provides context. We may want to keep those results
-        // some day.
-        url = stackTrace[0];
-        isExtension = true;
-      }
-
-      // TODO: add back when we want stack traces.
-      // Stack traces were removed from the return object in
-      // https://github.com/GoogleChrome/lighthouse/issues/957 so callsites
-      // would be unique.
-      return {url, args, line, col, isEval, isExtension}; // return value is e.stack
-    };
-    const e = new __nativeError(`__called ${funcRef.name}__`);
-    set.add(JSON.stringify(e.stack));
-
-    // Restore prepareStackTrace so future errors use v8's formatter and not
-    // our custom one.
-    __nativeError.prepareStackTrace = originalPrepareStackTrace;
-
-    // eslint-disable-next-line no-invalid-this
-    return originalFunc.apply(this, args);
-  };
-}
 
 /**
  * The `exceptionDetails` provided by the debugger protocol does not contain the useful
@@ -142,7 +79,6 @@ function checkTimeSinceLastLongTask() {
 }
 
 module.exports = {
-  captureJSCallUsage,
   wrapRuntimeEvalErrorInBrowser,
   registerPerformanceObserverInPage,
   checkTimeSinceLastLongTask,

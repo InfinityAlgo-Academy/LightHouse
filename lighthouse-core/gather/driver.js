@@ -1078,38 +1078,6 @@ class Driver {
   }
 
   /**
-   * Keeps track of calls to a JS function and returns a list of {url, line, col}
-   * of the usage. Should be called before page load (in beforePass).
-   * @param {string} funcName The function name to track ('Date.now', 'console.time').
-   * @return {function(): Promise<Array<{url: string, line: number, col: number}>>}
-   *     Call this method when you want results.
-   */
-  captureFunctionCallSites(funcName) {
-    const globalVarToPopulate = `window['__${funcName}StackTraces']`;
-    const collectUsage = () => {
-      return this.evaluateAsync(
-          `Array.from(${globalVarToPopulate}).map(item => JSON.parse(item))`)
-        .then(result => {
-          if (!Array.isArray(result)) {
-            throw new Error(
-                'Driver failure: Expected evaluateAsync results to be an array ' +
-                `but got "${JSON.stringify(result)}" instead.`);
-          }
-          // Filter out usage from extension content scripts.
-          return result.filter(item => !item.isExtension);
-        });
-    };
-
-    const funcBody = pageFunctions.captureJSCallUsage.toString();
-
-    this.evaluteScriptOnNewDocument(`
-        ${globalVarToPopulate} = new Set();
-        (${funcName} = ${funcBody}(${funcName}, ${globalVarToPopulate}))`);
-
-    return collectUsage;
-  }
-
-  /**
    * @param {Array<string>} urls URL patterns to block. Wildcards ('*') are allowed.
    * @return {Promise<void>}
    */
