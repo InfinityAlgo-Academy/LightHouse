@@ -31,7 +31,7 @@ class FirstContentfulPaint extends Audit {
       // 75th and 95th percentiles HTTPArchive -> median and PODR
       // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
       // see https://www.desmos.com/calculator/2t1ugwykrl
-      scorePODR: 2900,
+      scorePODR: 2000,
       scoreMedian: 4000,
     };
   }
