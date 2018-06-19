@@ -27,7 +27,8 @@ class ImageAspectRatio extends Audit {
       name: 'image-aspect-ratio',
       description: 'Displays images with correct aspect ratio',
       failureDescription: 'Displays images with incorrect aspect ratio',
-      helpText: 'Image display dimensions should match natural aspect ratio.',
+      helpText: 'Image display dimensions should match natural aspect ratio. ' +
+        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/aspect-ratio).',
       requiredArtifacts: ['ImageUsage'],
     };
   }

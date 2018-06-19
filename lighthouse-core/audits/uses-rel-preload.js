@@ -19,7 +19,7 @@ class UsesRelPreloadAudit extends Audit {
       name: 'uses-rel-preload',
       description: 'Preload key requests',
       helpText: 'Consider using <link rel=preload> to prioritize fetching late-discovered ' +
-        'resources sooner. [Learn more](https://developers.google.com/web/updates/2016/03/link-rel-preload).',
+        'resources sooner. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).',
       requiredArtifacts: ['devtoolsLogs', 'traces', 'URL'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };

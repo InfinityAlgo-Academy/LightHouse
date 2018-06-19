@@ -27,7 +27,7 @@ class CacheHeaders extends Audit {
       failureDescription: 'Uses inefficient cache policy on static assets',
       helpText:
         'A long cache lifetime can speed up repeat visits to your page. ' +
-        '[Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#cache-control).',
+        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy).',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['devtoolsLogs'],
     };
