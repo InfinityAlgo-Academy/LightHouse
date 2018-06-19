@@ -10,50 +10,60 @@
 
 const fs = require('fs');
 const path = require('path');
-const execSync = require('child_process').execSync;
 const constants = require('./constants');
+const chalk = require('chalk').default;
 
 const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH;
 const HEAD_PATH = path.resolve(process.cwd(), INPUT_PATH);
 const MASTER_PATH = constants.MASTER_COMPUTED_PATH;
 
-const TMP_DIR = path.join(__dirname, '../../../.tmp');
-const TMP_HEAD_PATH = path.join(TMP_DIR, 'HEAD-for-diff.json');
-const TMP_MASTER_PATH = path.join(TMP_DIR, 'master-for-diff.json');
-
-if (!fs.existsSync(TMP_DIR)) fs.mkdirSync(TMP_DIR);
-
 if (!fs.existsSync(HEAD_PATH) || !fs.existsSync(MASTER_PATH)) {
   throw new Error('Usage $0 <computed file>');
 }
 
-let exitCode = 0;
+const computedResults = require(HEAD_PATH);
+const expectedResults = require(MASTER_PATH);
 
-try {
-  const computedResults = require(HEAD_PATH);
-  const expectedResults = require(MASTER_PATH);
+/** @type {Array<{url: string, maxDiff: number, diffsForSite: Array<DiffForSite>}>} */
+const diffs = [];
+for (const entry of computedResults.sites) {
+  // @ts-ignore - over-aggressive implicit any on candidate
+  const expectedLantern = expectedResults.sites.find(candidate => entry.url === candidate.url);
+  const actualLantern = entry.lantern;
 
-  const sites = [];
-  for (const entry of computedResults.sites) {
-    const lanternValues = entry.lantern;
-    Object.keys(lanternValues).forEach(key => lanternValues[key] = Math.round(lanternValues[key]));
-    sites.push({url: entry.url, ...lanternValues});
-  }
+  let maxDiff = 0;
+  /** @type {DiffForSite[]} */
+  const diffsForSite = [];
+  Object.keys(actualLantern).forEach(metricName => {
+    const actual = Math.round(actualLantern[metricName]);
+    const expected = Math.round(expectedLantern[metricName]);
+    const diff = actual - expected;
+    if (Math.abs(diff) > 0) {
+      maxDiff = Math.max(maxDiff, Math.abs(diff));
+      diffsForSite.push({metricName, actual, expected, diff});
+    }
+  });
 
-  fs.writeFileSync(TMP_HEAD_PATH, JSON.stringify({sites}, null, 2));
-  fs.writeFileSync(TMP_MASTER_PATH, JSON.stringify(expectedResults, null, 2));
-
-  try {
-    execSync(`git --no-pager diff --color=always --no-index ${TMP_MASTER_PATH} ${TMP_HEAD_PATH}`);
-    console.log('✅  PASS    No changes between expected and computed!');
-  } catch (err) {
-    console.log('❌  FAIL    Changes between expected and computed!\n');
-    console.log(err.stdout.toString());
-    exitCode = 1;
-  }
-} finally {
-  fs.unlinkSync(TMP_HEAD_PATH);
-  fs.unlinkSync(TMP_MASTER_PATH);
+  if (maxDiff > 0) diffs.push({url: entry.url, maxDiff, diffsForSite});
 }
 
-process.exit(exitCode);
+if (diffs.length) {
+  console.log(`❌  FAIL    ${diffs.length} change(s) between expected and computed!\n`);
+
+  diffs.sort((a, b) => b.maxDiff - a.maxDiff).forEach(site => {
+    console.log(chalk.magenta(site.url));
+    site.diffsForSite.sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff)).forEach(entry => {
+      const metric = `    - ${entry.metricName.padEnd(25)}`;
+      const diff = entry.diff > 0 ? chalk.yellow(`+${entry.diff}`) : chalk.cyan(`${entry.diff}`);
+      const actual = `${entry.actual} ${chalk.gray('(HEAD)')}`;
+      const expected = `${entry.expected} ${chalk.gray('(master)')}`;
+      console.log(`${metric}${diff}\t${actual}\tvs.\t${expected}`);
+    });
+  });
+
+  process.exit(1);
+} else {
+  console.log('✅  PASS    No changes between expected and computed!');
+}
+
+/** @typedef {{metricName: string, actual: number, expected: number, diff: number}} DiffForSite */
