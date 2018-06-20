@@ -245,7 +245,7 @@
     "time-to-first-byte": {
       "id": "time-to-first-byte",
       "title": "Keep server response times low (TTFB)",
-      "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/chrome-devtools/network-performance/issues).",
+      "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "rawValue": 570.5630000000001,
@@ -461,7 +461,7 @@
     "redirects": {
       "id": "redirects",
       "title": "Avoid multiple page redirects",
-      "description": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/speed/docs/insights/AvoidRedirects).",
+      "description": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "rawValue": 0,
@@ -561,7 +561,7 @@
     "image-aspect-ratio": {
       "id": "image-aspect-ratio",
       "title": "Displays images with incorrect aspect ratio",
-      "description": "Image display dimensions should match natural aspect ratio.",
+      "description": "Image display dimensions should match natural aspect ratio. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/aspect-ratio).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "rawValue": false,
@@ -813,7 +813,7 @@
     "uses-rel-preload": {
       "id": "uses-rel-preload",
       "title": "Preload key requests",
-      "description": "Consider using <link rel=preload> to prioritize fetching late-discovered resources sooner. [Learn more](https://developers.google.com/web/updates/2016/03/link-rel-preload).",
+      "description": "Consider using <link rel=preload> to prioritize fetching late-discovered resources sooner. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "rawValue": 0,
@@ -1725,7 +1725,7 @@
     "uses-long-cache-ttl": {
       "id": "uses-long-cache-ttl",
       "title": "Uses inefficient cache policy on static assets",
-      "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#cache-control).",
+      "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy).",
       "score": 0.58,
       "scoreDisplayMode": "numeric",
       "rawValue": 103455,
@@ -2010,7 +2010,7 @@
     "unminified-css": {
       "id": "unminified-css",
       "title": "Minify CSS",
-      "description": "Minifying CSS files can reduce network payload sizes. [Learn more](https://developers.google.com/speed/docs/insights/MinifyResources).",
+      "description": "Minifying CSS files can reduce network payload sizes. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/minify-css).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "rawValue": 0,
@@ -2151,7 +2151,7 @@
     "uses-text-compression": {
       "id": "uses-text-compression",
       "title": "Enable text compression",
-      "description": "Text-based responses should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer).",
+      "description": "Text-based responses should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/text-compression).",
       "score": 0.88,
       "scoreDisplayMode": "numeric",
       "rawValue": 150,
@@ -2408,7 +2408,7 @@
     "no-vulnerable-libraries": {
       "id": "no-vulnerable-libraries",
       "title": "Includes front-end JavaScript libraries with known security vulnerabilities",
-      "description": "Some third-party scripts may contain known security vulnerabilities  that are easily identified and exploited by attackers.",
+      "description": "Some third-party scripts may contain known security vulnerabilities that are easily identified and exploited by attackers. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "rawValue": false,
@@ -2487,7 +2487,7 @@
     "password-inputs-can-be-pasted-into": {
       "id": "password-inputs-can-be-pasted-into",
       "title": "Prevents users to paste into password fields",
-      "description": "Preventing password pasting undermines good security policy. [Learn more](https://www.ncsc.gov.uk/blog-post/let-them-paste-passwords).",
+      "description": "Preventing password pasting undermines good security policy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/password-pasting).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "rawValue": false,
