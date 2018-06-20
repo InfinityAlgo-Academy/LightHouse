@@ -19,7 +19,7 @@ class TTFBMetric extends Audit {
       name: 'time-to-first-byte',
       description: 'Keep server response times low (TTFB)',
       helpText: 'Time To First Byte identifies the time at which your server sends a response.' +
-        ' [Learn more](https://developers.google.com/web/tools/chrome-devtools/network-performance/issues).',
+        ' [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).',
       requiredArtifacts: ['devtoolsLogs', 'URL'],
     };
   }

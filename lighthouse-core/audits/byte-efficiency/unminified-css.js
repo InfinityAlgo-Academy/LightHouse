@@ -24,7 +24,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
       description: 'Minify CSS',
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       helpText: 'Minifying CSS files can reduce network payload sizes. ' +
-        '[Learn more](https://developers.google.com/speed/docs/insights/MinifyResources).',
+        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/minify-css).',
       requiredArtifacts: ['CSSUsage', 'devtoolsLogs'],
     };
   }

@@ -35,7 +35,8 @@ class NoVulnerableLibrariesAudit extends Audit {
       failureDescription: 'Includes front-end JavaScript libraries'
         + ' with known security vulnerabilities',
       helpText: 'Some third-party scripts may contain known security vulnerabilities ' +
-        ' that are easily identified and exploited by attackers.',
+        'that are easily identified and exploited by attackers. ' +
+        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities).',
       requiredArtifacts: ['JSLibraries'],
     };
   }

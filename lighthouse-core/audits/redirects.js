@@ -17,7 +17,7 @@ class Redirects extends Audit {
       name: 'redirects',
       description: 'Avoid multiple page redirects',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      helpText: 'Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/speed/docs/insights/AvoidRedirects).',
+      helpText: 'Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).',
       requiredArtifacts: ['URL', 'devtoolsLogs', 'traces'],
     };
   }
