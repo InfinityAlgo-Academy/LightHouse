@@ -82,11 +82,11 @@ class UnusedBytes extends Audit {
       return Math.round(totalBytes * compressionRatio);
     } else if (networkRecord._resourceType && networkRecord._resourceType._name === resourceType) {
       // This was a regular standalone asset, just use the transfer size.
-      return networkRecord._transferSize || 0;
+      return networkRecord.transferSize || 0;
     } else {
       // This was an asset that was inlined in a different resource type (e.g. HTML document).
       // Use the compression ratio of the resource to estimate the total transferred bytes.
-      const transferSize = networkRecord._transferSize || 0;
+      const transferSize = networkRecord.transferSize || 0;
       const resourceSize = networkRecord._resourceSize;
       const compressionRatio = resourceSize !== undefined ? (transferSize / resourceSize) : 1;
       return Math.round(totalBytes * compressionRatio);
@@ -151,12 +151,12 @@ class UnusedBytes extends Audit {
       const networkNode = /** @type {NetworkNode} */ (node);
       const result = resultsByUrl.get(networkNode.record.url);
       if (!result) return;
+
       const original = networkNode.record.transferSize;
-      // cloning NetworkRequest objects is difficult, so just stash the original transfer size
       originalTransferSizes.set(networkNode.record.requestId, original);
 
       const wastedBytes = result.wastedBytes;
-      networkNode.record._transferSize = Math.max(original - wastedBytes, 0);
+      networkNode.record.transferSize = Math.max(original - wastedBytes, 0);
     });
 
     const simulationAfterChanges = simulator.simulate(graph, {label: afterLabel});
@@ -167,7 +167,7 @@ class UnusedBytes extends Audit {
       const networkNode = /** @type {NetworkNode} */ (node);
       const originalTransferSize = originalTransferSizes.get(networkNode.record.requestId);
       if (originalTransferSize === undefined) return;
-      networkNode.record._transferSize = originalTransferSize;
+      networkNode.record.transferSize = originalTransferSize;
     });
 
     const savingsOnOverallLoad = simulationBeforeChanges.timeInMs - simulationAfterChanges.timeInMs;

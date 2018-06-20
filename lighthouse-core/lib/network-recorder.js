@@ -6,6 +6,7 @@
 'use strict';
 
 const NetworkManager = require('./web-inspector').NetworkManager;
+const NetworkRequest = require('./network-request');
 const EventEmitter = require('events').EventEmitter;
 const log = require('lighthouse-logger');
 
@@ -16,22 +17,18 @@ const IGNORED_NETWORK_SCHEMES = ['data', 'ws'];
 class NetworkRecorder extends EventEmitter {
   /**
    * Creates an instance of NetworkRecorder.
-   * @param {Array<LH.WebInspector.NetworkRequest>} recordArray
    */
-  constructor(recordArray) {
+  constructor() {
     super();
 
-    this._records = recordArray;
-    this.networkManager = NetworkManager.createWithFakeTarget();
+    /** @type {NetworkRequest[]} */
+    this._records = [];
+    /** @type {Map<string, NetworkRequest>} */
+    this._recordsById = new Map();
+  }
 
-    this.networkManager.addEventListener(
-      this.EventTypes.RequestStarted,
-      this.onRequestStarted.bind(this)
-    );
-    this.networkManager.addEventListener(
-      this.EventTypes.RequestFinished,
-      this.onRequestFinished.bind(this)
-    );
+  getRecords() {
+    return Array.from(this._records);
   }
 
   /**
@@ -162,91 +159,124 @@ class NetworkRecorder extends EventEmitter {
   /**
    * Listener for the DevTools SDK NetworkManager's RequestStarted event, which includes both
    * web socket and normal request creation.
-   * @param {{data: LH.WebInspector.NetworkRequest}} request
+   * @param {NetworkRequest} request
    * @private
    */
   onRequestStarted(request) {
-    this._records.push(request.data);
+    this._records.push(request);
+    this._recordsById.set(request.requestId, request);
+
     this._emitNetworkStatus();
   }
 
   /**
    * Listener for the DevTools SDK NetworkManager's RequestFinished event, which includes
    * request finish, failure, and redirect, as well as the closing of web sockets.
-   * @param {{data: LH.WebInspector.NetworkRequest}} request
+   * @param {NetworkRequest} request
    * @private
    */
   onRequestFinished(request) {
-    this.emit('requestloaded', request.data);
+    this.emit('requestloaded', request);
     this._emitNetworkStatus();
   }
 
-  // The below methods proxy network data into the DevTools SDK network layer.
-  // There are a few differences between the debugging protocol naming and
-  // the parameter naming used in NetworkManager. These are noted below.
+  // The below methods proxy network data into the NetworkRequest object which mimics the
+  // DevTools SDK network layer.
 
   /**
    * @param {LH.Crdp.Network.RequestWillBeSentEvent} data
    */
   onRequestWillBeSent(data) {
-    // NOTE: data.timestamp -> time, data.type -> resourceType
-    this.networkManager._dispatcher.requestWillBeSent(data.requestId,
-        data.frameId, data.loaderId, data.documentURL, data.request,
-        data.timestamp, data.wallTime, data.initiator, data.redirectResponse,
-        data.type);
+    const originalRequest = this._findRealRequest(data.requestId);
+    // This is a simple new request, create the NetworkRequest object and finish.
+    if (!originalRequest) {
+      const request = new NetworkRequest();
+      request.onRequestWillBeSent(data);
+      this.onRequestStarted(request);
+      return;
+    }
+
+    // TODO(phulce): log these to sentry?
+    if (!data.redirectResponse) {
+      return;
+    }
+
+    // On redirect, another requestWillBeSent message is fired for the same requestId.
+    // Update/finish the previous network request and create a new one for the redirect.
+    const modifiedData = {
+      ...data,
+      // Copy over the initiator as well to match DevTools behavior
+      // TODO(phulce): abandon this DT hack and update Lantern graph to handle it
+      initiator: originalRequest._initiator,
+      requestId: `${originalRequest.requestId}:redirect`,
+    };
+    const redirectedRequest = new NetworkRequest();
+
+    redirectedRequest.onRequestWillBeSent(modifiedData);
+    originalRequest.onRedirectResponse(data);
+
+    originalRequest.redirectDestination = redirectedRequest;
+    redirectedRequest.redirectSource = originalRequest;
+
+    // Start the redirect request before finishing the original so we don't get erroneous quiet periods
+    this.onRequestStarted(redirectedRequest);
+    this.onRequestFinished(originalRequest);
   }
 
   /**
    * @param {LH.Crdp.Network.RequestServedFromCacheEvent} data
    */
   onRequestServedFromCache(data) {
-    this.networkManager._dispatcher.requestServedFromCache(data.requestId);
+    const request = this._findRealRequest(data.requestId);
+    if (!request) return;
+    request.onRequestServedFromCache();
   }
 
   /**
    * @param {LH.Crdp.Network.ResponseReceivedEvent} data
    */
   onResponseReceived(data) {
-    // NOTE: data.timestamp -> time, data.type -> resourceType
-    this.networkManager._dispatcher.responseReceived(data.requestId,
-        data.frameId, data.loaderId, data.timestamp, data.type, data.response);
+    const request = this._findRealRequest(data.requestId);
+    if (!request) return;
+    request.onResponseReceived(data);
   }
 
   /**
    * @param {LH.Crdp.Network.DataReceivedEvent} data
    */
   onDataReceived(data) {
-    // NOTE: data.timestamp -> time
-    this.networkManager._dispatcher.dataReceived(data.requestId, data.timestamp,
-        data.dataLength, data.encodedDataLength);
+    const request = this._findRealRequest(data.requestId);
+    if (!request) return;
+    request.onDataReceived(data);
   }
 
   /**
    * @param {LH.Crdp.Network.LoadingFinishedEvent} data
    */
   onLoadingFinished(data) {
-    // NOTE: data.timestamp -> finishTime
-    this.networkManager._dispatcher.loadingFinished(data.requestId,
-        data.timestamp, data.encodedDataLength);
+    const request = this._findRealRequest(data.requestId);
+    if (!request) return;
+    request.onLoadingFinished(data);
+    this.onRequestFinished(request);
   }
 
   /**
    * @param {LH.Crdp.Network.LoadingFailedEvent} data
    */
   onLoadingFailed(data) {
-    // NOTE: data.timestamp -> time, data.type -> resourceType,
-    // data.errorText -> localizedDescription
-    this.networkManager._dispatcher.loadingFailed(data.requestId,
-        data.timestamp, data.type, data.errorText, data.canceled,
-        data.blockedReason);
+    const request = this._findRealRequest(data.requestId);
+    if (!request) return;
+    request.onLoadingFailed(data);
+    this.onRequestFinished(request);
   }
 
   /**
    * @param {LH.Crdp.Network.ResourceChangedPriorityEvent} data
    */
   onResourceChangedPriority(data) {
-    this.networkManager._dispatcher.resourceChangedPriority(data.requestId,
-        data.newPriority, data.timestamp);
+    const request = this._findRealRequest(data.requestId);
+    if (!request) return;
+    request.onResourceChangedPriority(data);
   }
 
   /**
@@ -271,17 +301,70 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
+   * Redirected requests all have identical requestIds over the protocol. Once a request has been
+   * redirected all future messages referrencing that requestId are about the new destination, not
+   * the original. This method is a helper for finding the real request object to which the current
+   * message is referring.
+   *
+   * @param {string} requestId
+   * @return {NetworkRequest|undefined}
+   */
+  _findRealRequest(requestId) {
+    let request = this._recordsById.get(requestId);
+    if (!request) return undefined;
+
+    while (request.redirectDestination) {
+      request = request.redirectDestination;
+    }
+
+    return request;
+  }
+
+  /**
    * Construct network records from a log of devtools protocol messages.
    * @param {LH.DevtoolsLog} devtoolsLog
    * @return {Array<LH.WebInspector.NetworkRequest>}
    */
   static recordsFromLogs(devtoolsLog) {
-    /** @type {Array<LH.WebInspector.NetworkRequest>} */
-    const records = [];
-    const nr = new NetworkRecorder(records);
-    devtoolsLog.forEach(message => {
-      nr.dispatch(message);
-    });
+    const networkRecorder = new NetworkRecorder();
+    // playback all the devtools messages to recreate network records
+    devtoolsLog.forEach(message => networkRecorder.dispatch(message));
+
+    // get out the list of records
+    const records = networkRecorder.getRecords();
+
+    // create a map of all the records by URL to link up initiator
+    const recordsByURL = new Map();
+    for (const record of records) {
+      if (recordsByURL.has(record.url)) continue;
+      recordsByURL.set(record.url, record);
+    }
+
+    // set the initiator and redirects array
+    for (const record of records) {
+      const stackFrames = (record._initiator.stack && record._initiator.stack.callFrames) || [];
+      const initiatorURL = record._initiator.url || (stackFrames[0] && stackFrames[0].url);
+      const initiator = recordsByURL.get(initiatorURL) || record.redirectSource;
+      if (initiator) {
+        record.setInitiatorRequest(initiator);
+      }
+
+      let finalRecord = record;
+      while (finalRecord.redirectDestination) finalRecord = finalRecord.redirectDestination;
+      if (finalRecord === record || finalRecord.redirects) continue;
+
+      const redirects = [];
+      for (
+        let redirect = finalRecord.redirectSource;
+        redirect;
+        redirect = redirect.redirectSource
+      ) {
+        redirects.unshift(redirect);
+      }
+
+      finalRecord.redirects = redirects;
+    }
+
     return records;
   }
 }

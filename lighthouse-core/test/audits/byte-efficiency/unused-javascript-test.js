@@ -10,9 +10,9 @@ const assert = require('assert');
 
 /* eslint-env mocha */
 
-function generateRecord(url, _transferSize, _resourceType) {
+function generateRecord(url, transferSize, _resourceType) {
   url = `https://google.com/${url}`;
-  return {url, _transferSize, _resourceType};
+  return {url, transferSize, _resourceType};
 }
 
 function generateScript(url, ranges, transferSize = 1000) {

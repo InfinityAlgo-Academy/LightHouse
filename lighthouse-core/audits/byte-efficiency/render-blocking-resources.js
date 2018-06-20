@@ -158,17 +158,17 @@ class RenderBlockingResources extends Audit {
       if (canDeferRequest && isStylesheet) {
         // We'll inline the used bytes of the stylesheet and assume the rest can be deferred
         const wastedBytes = wastedCssBytesByUrl.get(networkNode.record.url) || 0;
-        totalChildNetworkBytes += (networkNode.record._transferSize || 0) - wastedBytes;
+        totalChildNetworkBytes += (networkNode.record.transferSize || 0) - wastedBytes;
       }
       return !canDeferRequest;
     }));
 
     // Add the inlined bytes to the HTML response
-    const originalTransferSize = minimalFCPGraph.record._transferSize;
+    const originalTransferSize = minimalFCPGraph.record.transferSize;
     const safeTransferSize = originalTransferSize || 0;
-    minimalFCPGraph.record._transferSize = safeTransferSize + totalChildNetworkBytes;
+    minimalFCPGraph.record.transferSize = safeTransferSize + totalChildNetworkBytes;
     const estimateAfterInline = simulator.simulate(minimalFCPGraph).timeInMs;
-    minimalFCPGraph.record._transferSize = originalTransferSize;
+    minimalFCPGraph.record.transferSize = originalTransferSize;
     return Math.round(Math.max(originalEstimate - estimateAfterInline, 0));
   }
 

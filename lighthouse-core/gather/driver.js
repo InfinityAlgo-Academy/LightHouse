@@ -586,7 +586,7 @@ class Driver {
    * @private
    */
   _beginNetworkStatusMonitoring(startingUrl) {
-    this._networkStatusMonitor = new NetworkRecorder([]);
+    this._networkStatusMonitor = new NetworkRecorder();
 
     // Update startingUrl if it's ever redirected.
     this._monitoredUrl = startingUrl;

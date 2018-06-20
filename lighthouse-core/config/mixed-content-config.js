@@ -11,7 +11,7 @@ module.exports = {
   // (2) Re-load page but attempt to upgrade each request to HTTPS.
   passes: [{
     passName: 'defaultPass',
-    gatherers: ['url'],
+    gatherers: [],
   }, {
     passName: 'mixedContentPass',
     gatherers: ['mixed-content'],

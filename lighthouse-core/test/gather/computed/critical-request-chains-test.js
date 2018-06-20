@@ -57,7 +57,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
     const networkPromise = computedArtifacts.requestNetworkRecords(wikiDevtoolsLog);
     const CRCPromise = computedArtifacts.requestCriticalRequestChains({devtoolsLog: wikiDevtoolsLog,
       URL});
-    Promise.all([CRCPromise, networkPromise]).then(([chains, networkRecords]) => {
+    return Promise.all([CRCPromise, networkPromise]).then(([chains, networkRecords]) => {
       // set all network requests based on requestid
       replaceChain(wikiChains, networkRecords);
       assert.deepEqual(chains, wikiChains);

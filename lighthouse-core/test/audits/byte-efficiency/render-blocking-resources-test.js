@@ -52,22 +52,16 @@ describe('Render blocking resources audit', () => {
       requestId = 1;
       record = props => {
         const parsedURL = {securityOrigin: () => 'http://example.com'};
-        const ret = Object.assign({parsedURL, requestId: requestId++}, props);
-        Object.defineProperty(ret, 'transferSize', {
-          get() {
-            return ret._transferSize;
-          },
-        });
-        return ret;
+        return Object.assign({parsedURL, requestId: requestId++}, props);
       };
     });
 
     it('computes savings from deferring', () => {
       const serverResponseTimeByOrigin = new Map([['http://example.com', 100]]);
       const simulator = new Simulator({rtt: 1000, serverResponseTimeByOrigin});
-      const documentNode = new NetworkNode(record({_transferSize: 4000}));
-      const styleNode = new NetworkNode(record({_transferSize: 3000}));
-      const scriptNode = new NetworkNode(record({_transferSize: 1000}));
+      const documentNode = new NetworkNode(record({transferSize: 4000}));
+      const styleNode = new NetworkNode(record({transferSize: 3000}));
+      const scriptNode = new NetworkNode(record({transferSize: 1000}));
       const scriptExecution = new CPUNode({tid: 1, ts: 1, dur: 50 * 1000}, []);
       const deferredIds = new Set([2, 3]);
       const wastedBytesMap = new Map();
@@ -84,9 +78,9 @@ describe('Render blocking resources audit', () => {
     it('computes savings from inlining', () => {
       const serverResponseTimeByOrigin = new Map([['http://example.com', 100]]);
       const simulator = new Simulator({rtt: 1000, serverResponseTimeByOrigin});
-      const documentNode = new NetworkNode(record({_transferSize: 10 * 1000}));
+      const documentNode = new NetworkNode(record({transferSize: 10 * 1000}));
       const styleNode = new NetworkNode(
-        record({_transferSize: 23 * 1000, _resourceType: WebInspector.resourceTypes.Stylesheet})
+        record({transferSize: 23 * 1000, _resourceType: WebInspector.resourceTypes.Stylesheet})
       ); // pushes document over 14KB
       const deferredIds = new Set([2]);
       const wastedBytesMap = new Map([[undefined, 18 * 1000]]);

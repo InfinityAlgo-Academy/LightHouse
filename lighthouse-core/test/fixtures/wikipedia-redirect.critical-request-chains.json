@@ -1,11 +1,11 @@
 {
-  "33097.1:redirected.0": {
+  "33097.1": {
     "children": {
-      "33097.1:redirected.1": {
+      "33097.1:redirect": {
         "children": {
-          "33097.1:redirected.2": {
+          "33097.1:redirect:redirect": {
             "children": {
-              "33097.1": {
+              "33097.1:redirect:redirect:redirect": {
                 "children": {
                   "33097.3": {
                     "children": {}

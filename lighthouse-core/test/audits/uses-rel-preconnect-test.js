@@ -59,7 +59,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       mainResource,
       {
         url: 'https://cdn.example.com/request',
-        initiatorRequest: () => mainResource,
+        _initiator: mainResource,
       },
     ];
     const artifacts = {
@@ -80,7 +80,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       mainResource,
       {
         url: 'data:text/plain;base64,hello',
-        initiatorRequest: () => null,
+        _initiator: {},
       },
     ];
     const artifacts = {
@@ -101,7 +101,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       mainResource,
       {
         url: 'https://cdn.example.com/request',
-        initiatorRequest: () => null,
+        _initiator: {},
         _timing: {
           dnsStart: -1,
           dnsEnd: -1,
@@ -128,7 +128,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       mainResource,
       {
         url: 'https://cdn.example.com/request',
-        initiatorRequest: () => null,
+        _initiator: {},
         _startTime: 16,
       },
     ];
@@ -150,7 +150,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       mainResource,
       {
         url: 'https://cdn.example.com/first',
-        initiatorRequest: () => null,
+        _initiator: {},
         parsedURL: {
           scheme: 'https',
           securityOrigin: () => 'https://cdn.example.com',
@@ -164,7 +164,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       },
       {
         url: 'https://cdn.example.com/second',
-        initiatorRequest: () => null,
+        _initiator: {},
         parsedURL: {
           scheme: 'https',
           securityOrigin: () => 'https://cdn.example.com',
@@ -197,7 +197,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       mainResource,
       {
         url: 'https://cdn.example.com/first',
-        initiatorRequest: () => null,
+        _initiator: {},
         parsedURL: {
           scheme: 'http',
           securityOrigin: () => 'http://cdn.example.com',
@@ -211,7 +211,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       },
       {
         url: 'https://othercdn.example.com/second',
-        initiatorRequest: () => null,
+        _initiator: {},
         parsedURL: {
           scheme: 'https',
           securityOrigin: () => 'https://othercdn.example.com',

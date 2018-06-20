@@ -100,67 +100,13 @@ module.exports = (function() {
     return this._moduleSettings[settingName];
   };
 
-  // Enum from chromium//src/third_party/WebKit/Source/core/loader/MixedContentChecker.h
-  global.NetworkAgent = {
-    RequestMixedContentType: {
-      Blockable: 'blockable',
-      OptionallyBlockable: 'optionally-blockable',
-      None: 'none',
-    },
-    BlockedReason: {
-      CSP: 'csp',
-      MixedContent: 'mixed-content',
-      Origin: 'origin',
-      Inspector: 'inspector',
-      Other: 'other',
-    },
-    InitiatorType: {
-      Other: 'other',
-      Parser: 'parser',
-      Redirect: 'redirect',
-      Script: 'script',
-    },
-  };
-
-  // Enum from SecurityState enum in protocol's Security domain
-  global.SecurityAgent = {
-    SecurityState: {
-      Unknown: 'unknown',
-      Neutral: 'neutral',
-      Insecure: 'insecure',
-      Warning: 'warning',
-      Secure: 'secure',
-      Info: 'info',
-    },
-  };
-  // From https://chromium.googlesource.com/chromium/src/third_party/WebKit/Source/devtools/+/master/protocol.json#93
-  global.PageAgent = {
-    ResourceType: {
-      Document: 'document',
-      Stylesheet: 'stylesheet',
-      Image: 'image',
-      Media: 'media',
-      Font: 'font',
-      Script: 'script',
-      TextTrack: 'texttrack',
-      XHR: 'xhr',
-      Fetch: 'fetch',
-      EventSource: 'eventsource',
-      WebSocket: 'websocket',
-      Manifest: 'manifest',
-      Other: 'other',
-    },
-  };
-  // Dependencies for network-recorder
+  // Shared Dependencies
   require('chrome-devtools-frontend/front_end/common/Object.js');
   require('chrome-devtools-frontend/front_end/common/ParsedURL.js');
-  require('chrome-devtools-frontend/front_end/common/ResourceType.js');
   require('chrome-devtools-frontend/front_end/common/UIString.js');
   require('chrome-devtools-frontend/front_end/platform/utilities.js');
   require('chrome-devtools-frontend/front_end/sdk/Target.js');
   require('chrome-devtools-frontend/front_end/sdk/TargetManager.js');
-  require('chrome-devtools-frontend/front_end/sdk/NetworkManager.js');
-  require('chrome-devtools-frontend/front_end/sdk/NetworkRequest.js');
 
   // Dependencies for timeline-model
   WebInspector.targetManager = {
@@ -226,77 +172,8 @@ module.exports = (function() {
     Log: 'log',
   };
 
-  // Mock NetworkLog
-  WebInspector.NetworkLog = function(target) {
-    this._requests = new Map();
-    target.networkManager.addEventListener(
-      WebInspector.NetworkManager.Events.RequestStarted, this._onRequestStarted, this);
-  };
-
-  WebInspector.NetworkLog.prototype = {
-    requestForURL: function(url) {
-      return this._requests.get(url) || null;
-    },
-
-    _onRequestStarted: function(event) {
-      const request = event.data;
-      if (this._requests.has(request.url)) {
-        return;
-      }
-      this._requests.set(request.url, request);
-    },
-  };
-
   // Dependencies for color parsing.
   require('chrome-devtools-frontend/front_end/common/Color.js');
-
-  // Monkey patch update so we don't lose request information
-  // TODO: Remove when we update to a devtools version that has isLinkPreload
-  const Dispatcher = WebInspector.NetworkDispatcher;
-  const origUpdateRequest = Dispatcher.prototype._updateNetworkRequestWithRequest;
-  Dispatcher.prototype._updateNetworkRequestWithRequest = function(netRecord, request) {
-    origUpdateRequest.apply(this, arguments); // eslint-disable-line
-    netRecord.isLinkPreload = Boolean(request.isLinkPreload);
-    netRecord._isLinkPreload = Boolean(request.isLinkPreload);
-  };
-
-  /**
-   * Creates a new WebInspector NetworkManager using a mocked Target.
-   * @return {!WebInspector.NetworkManager}
-   */
-  WebInspector.NetworkManager.createWithFakeTarget = function() {
-    // Mocked-up WebInspector Target for NetworkManager
-    const fakeNetworkAgent = {
-      enable() {},
-      getResponseBody() {
-        throw new Error('Use driver.getRequestContent() for network request content');
-      },
-    };
-    const fakeConsoleModel = {
-      addMessage() {},
-      target() {},
-    };
-    const fakeTarget = {
-      _modelByConstructor: new Map(),
-      get consoleModel() {
-        return fakeConsoleModel;
-      },
-      networkAgent() {
-        return fakeNetworkAgent;
-      },
-      registerNetworkDispatcher() { },
-      model() { },
-    };
-
-    fakeTarget.networkManager = new WebInspector.NetworkManager(fakeTarget);
-    fakeTarget.networkLog = new WebInspector.NetworkLog(fakeTarget);
-
-    WebInspector.NetworkLog.fromTarget = () => {
-      return fakeTarget.networkLog;
-    };
-
-    return fakeTarget.networkManager;
-  };
 
   // Dependencies for effective CSS rule calculation.
   require('chrome-devtools-frontend/front_end/common/TextRange.js');
@@ -317,5 +194,7 @@ module.exports = (function() {
   // Restore setImmediate, see comment at top.
   global.setImmediate = _setImmediate;
 
+  // TODO(phulce): replace client requires to not need this
+  WebInspector.resourceTypes = require('../../third-party/devtools/ResourceType').TYPES;
   return WebInspector;
 })();

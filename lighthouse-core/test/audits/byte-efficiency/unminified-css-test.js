@@ -148,8 +148,8 @@ describe('Page uses optimized css', () => {
         ]},
       },
       [
-        {url: 'foo.css', _transferSize: 20 * KB, _resourceType},
-        {url: 'other.css', _transferSize: 50 * KB, _resourceType},
+        {url: 'foo.css', transferSize: 20 * KB, _resourceType},
+        {url: 'other.css', transferSize: 50 * KB, _resourceType},
       ]
     );
 
@@ -184,9 +184,9 @@ describe('Page uses optimized css', () => {
         ]},
       },
       [
-        {url: 'foo.css', _transferSize: 20 * KB, _resourceType},
-        {url: 'other.css', _transferSize: 512, _resourceType},
-        {url: 'invalid.css', _transferSize: 20 * KB, _resourceType},
+        {url: 'foo.css', transferSize: 20 * KB, _resourceType},
+        {url: 'other.css', transferSize: 512, _resourceType},
+        {url: 'invalid.css', transferSize: 20 * KB, _resourceType},
       ]
     );
 

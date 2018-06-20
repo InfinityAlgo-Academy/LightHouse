@@ -22,7 +22,7 @@ const traceData = {
       _mimeType: 'text/javascript',
       _requestId: 0,
       _resourceSize: 9,
-      _transferSize: 10,
+      transferSize: 10,
       _resourceType: {
         _isTextType: true,
       },
@@ -39,7 +39,7 @@ const traceData = {
       _mimeType: 'text/css',
       _requestId: 1,
       _resourceSize: 6,
-      _transferSize: 7,
+      transferSize: 7,
       _resourceType: {
         _isTextType: true,
       },
@@ -53,7 +53,7 @@ const traceData = {
       _mimeType: 'application/json',
       _requestId: 2,
       _resourceSize: 7,
-      _transferSize: 8,
+      transferSize: 8,
       _resourceType: {
         _isTextType: true,
       },
@@ -67,7 +67,7 @@ const traceData = {
       _mimeType: 'application/json',
       _requestId: 22,
       _resourceSize: 7,
-      _transferSize: 7,
+      transferSize: 7,
       _resourceType: {
         _isTextType: true,
       },
@@ -81,7 +81,7 @@ const traceData = {
       _mimeType: 'application/json',
       _requestId: 23,
       _resourceSize: 7,
-      _transferSize: 8,
+      transferSize: 8,
       _resourceType: {
         _isTextType: true,
       },
@@ -95,7 +95,7 @@ const traceData = {
       _mimeType: 'image/jpg',
       _requestId: 3,
       _resourceSize: 10,
-      _transferSize: 10,
+      transferSize: 10,
       _resourceType: {
         _isTextType: false,
       },
@@ -109,7 +109,7 @@ const traceData = {
       _mimeType: 'video/mp4',
       _requestId: 4,
       _resourceSize: 100,
-      _transferSize: 100,
+      transferSize: 100,
       _resourceType: {
         _isTextType: false,
       },
@@ -162,7 +162,7 @@ describe('Optimized responses', () => {
           _mimeType: 'text/css',
           _requestId: 1,
           _resourceSize: 10,
-          _transferSize: 10,
+          transferSize: 10,
           _resourceType: {
             _isTextType: true,
           },
@@ -175,7 +175,7 @@ describe('Optimized responses', () => {
           _mimeType: 'text/css',
           _requestId: 1,
           _resourceSize: 123,
-          _transferSize: 123,
+          transferSize: 123,
           _resourceType: {
             _isTextType: true,
           },
@@ -200,7 +200,7 @@ describe('Optimized responses', () => {
       record.statusCode = record._statusCode;
       record.mimeType = record._mimeType;
       record.resourceSize = record._resourceSize;
-      record.transferSize = record._transferSize;
+      record.transferSize = record.transferSize;
       record.responseHeaders = record._responseHeaders;
       record.requestId = record._requestId;
       record._resourceType = Object.assign(

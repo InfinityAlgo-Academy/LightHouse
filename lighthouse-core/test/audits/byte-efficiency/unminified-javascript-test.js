@@ -46,10 +46,10 @@ describe('Page uses optimized responses', () => {
         '123.4': '#$*% non sense',
       },
     }, [
-      {requestId: '123.1', url: 'foo.js', _transferSize: 20 * KB, _resourceType},
-      {requestId: '123.2', url: 'other.js', _transferSize: 50 * KB, _resourceType},
-      {requestId: '123.3', url: 'valid-ish.js', _transferSize: 100 * KB, _resourceType},
-      {requestId: '123.4', url: 'invalid.js', _transferSize: 100 * KB, _resourceType},
+      {requestId: '123.1', url: 'foo.js', transferSize: 20 * KB, _resourceType},
+      {requestId: '123.2', url: 'other.js', transferSize: 50 * KB, _resourceType},
+      {requestId: '123.3', url: 'valid-ish.js', transferSize: 100 * KB, _resourceType},
+      {requestId: '123.4', url: 'invalid.js', transferSize: 100 * KB, _resourceType},
     ]);
 
     assert.ok(auditResult.warnings.length);
@@ -84,9 +84,9 @@ describe('Page uses optimized responses', () => {
           'for{(wtf',
       },
     }, [
-      {requestId: '123.1', url: 'foo.js', _transferSize: 20 * KB, _resourceType},
-      {requestId: '123.2', url: 'other.js', _transferSize: 3 * KB, _resourceType},
-      {requestId: '123.3', url: 'invalid.js', _transferSize: 20 * KB, _resourceType},
+      {requestId: '123.1', url: 'foo.js', transferSize: 20 * KB, _resourceType},
+      {requestId: '123.2', url: 'other.js', transferSize: 3 * KB, _resourceType},
+      {requestId: '123.3', url: 'invalid.js', transferSize: 20 * KB, _resourceType},
     ]);
 
     assert.equal(auditResult.items.length, 0);

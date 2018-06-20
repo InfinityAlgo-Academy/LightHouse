@@ -22,7 +22,7 @@ function networkRecord(options = {}) {
     _url: options.url || 'https://example.com/asset',
     statusCode: options.statusCode || 200,
     _resourceType: options.resourceType || WebInspector.resourceTypes.Script,
-    _transferSize: options.transferSize || 10000,
+    transferSize: options.transferSize || 10000,
     _responseHeaders: headers,
   };
 }

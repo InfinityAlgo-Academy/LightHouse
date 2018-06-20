@@ -6,7 +6,6 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/html/renderer/util');
 
 const TTFB_THRESHOLD = 600;
 
@@ -29,8 +28,7 @@ class TTFBMetric extends Audit {
    */
   static caclulateTTFB(record) {
     const timing = record._timing;
-
-    return timing.receiveHeadersEnd - timing.sendEnd;
+    return timing ? timing.receiveHeadersEnd - timing.sendEnd : 0;
   }
 
   /**
@@ -42,6 +40,7 @@ class TTFBMetric extends Audit {
 
     return artifacts.requestNetworkRecords(devtoolsLogs)
       .then((networkRecords) => {
+        /** @type {LH.Audit.DisplayValue} */
         let displayValue = '';
 
         const finalUrl = artifacts.URL.finalUrl;
@@ -53,7 +52,7 @@ class TTFBMetric extends Audit {
         const passed = ttfb < TTFB_THRESHOLD;
 
         if (!passed) {
-          displayValue = `Root document took ${Util.formatMilliseconds(ttfb, 1)} `;
+          displayValue = ['Root document took %10d', ttfb];
         }
 
         /** @type {LH.Result.Audit.OpportunityDetails} */

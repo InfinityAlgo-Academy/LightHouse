@@ -17,7 +17,6 @@ describe('Web Inspector lib', function() {
     assert.ok(WebInspector.FilmStripModel);
     assert.ok(WebInspector.TimelineProfileTree);
     assert.ok(WebInspector.TimelineAggregator);
-    assert.ok(WebInspector.NetworkManager);
     assert.ok(WebInspector.Color);
     assert.ok(WebInspector.CSSMetadata);
   });

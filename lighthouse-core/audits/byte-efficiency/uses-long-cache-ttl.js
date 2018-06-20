@@ -185,7 +185,7 @@ class CacheHeaders extends Audit {
         if (cacheHitProbability > IGNORE_THRESHOLD_IN_PERCENT) continue;
 
         const url = URL.elideDataURI(record._url);
-        const totalBytes = record._transferSize || 0;
+        const totalBytes = record.transferSize || 0;
         const wastedBytes = (1 - cacheHitProbability) * totalBytes;
 
         totalWastedBytes += wastedBytes;

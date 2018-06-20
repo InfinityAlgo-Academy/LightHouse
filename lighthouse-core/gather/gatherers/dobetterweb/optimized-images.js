@@ -91,7 +91,7 @@ class OptimizedImages extends Gatherer {
       const isSameOrigin = URL.originsMatch(pageUrl, record._url);
       const isBase64DataUri = /^data:.{2,40}base64\s*,/.test(record._url);
 
-      const actualResourceSize = Math.min(record._resourceSize || 0, record._transferSize || 0);
+      const actualResourceSize = Math.min(record._resourceSize || 0, record.transferSize || 0);
       if (isOptimizableImage && actualResourceSize > MINIMUM_IMAGE_SIZE) {
         prev.push({
           isSameOrigin,

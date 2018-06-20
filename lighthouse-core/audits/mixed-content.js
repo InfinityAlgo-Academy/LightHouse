@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-// @ts-nocheck
 'use strict';
 
 const Audit = require('./audit');
@@ -30,18 +29,6 @@ class MixedContent extends Audit {
       upgraded to HTTPS. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/mixed-content)`,
       requiredArtifacts: ['devtoolsLogs', 'MixedContent'],
     };
-  }
-
-  /**
-   * Checks whether the resource was securely loaded.
-   * We special-case data: URLs, as they inherit the security state of their
-   * referring document url, and so are trivially "upgradeable" for mixed-content purposes.
-   *
-   * @param {{scheme: string, protocol: string, securityState: function}} record
-   * @return {boolean}
-   */
-  static isSecureRecord(record) {
-    return record.securityState() === 'secure' || record.protocol === 'data';
   }
 
   /**
@@ -72,10 +59,10 @@ class MixedContent extends Audit {
   /**
    * Simplifies a URL string for display.
    *
-   * @param {string} url
+   * @param {string=} url
    * @return {string}
    */
-  static displayURL(url) {
+  static displayURL(url = '') {
     const displayOptions = {
       numPathParts: 4,
       preserveQuery: false,
@@ -100,15 +87,15 @@ class MixedContent extends Audit {
 
     return Promise.all(computedArtifacts).then(([defaultRecords, upgradedRecords]) => {
       const insecureRecords = defaultRecords.filter(
-          record => !MixedContent.isSecureRecord(record));
+          record => !record.isSecure);
       const secureRecords = defaultRecords.filter(
-          record => MixedContent.isSecureRecord(record));
+          record => record.isSecure);
 
       const upgradePassHosts = new Set();
       const upgradePassSecureHosts = new Set();
       upgradedRecords.forEach(record => {
         upgradePassHosts.add(new URL(record.url).hostname);
-        if (MixedContent.isSecureRecord(record) && record.finished && !record.failed) {
+        if (record.isSecure && record.finished && !record.failed) {
           upgradePassSecureHosts.add(new URL(record.url).hostname);
         }
       });
@@ -127,7 +114,7 @@ class MixedContent extends Audit {
         const resource = {
           host: new URL(record.url).hostname,
           fullUrl: record.url,
-          referrerDocUrl: this.displayURL(record._documentURL),
+          referrerDocUrl: this.displayURL(record.documentURL),
         };
         // Exclude any records that aren't on an upgradeable secure host
         if (!upgradePassSecureHosts.has(resource.host)) continue;

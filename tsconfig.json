@@ -17,6 +17,7 @@
   "include": [
     // TODO(bckenny): unnecessary workaround until https://github.com/Microsoft/TypeScript/issues/24062
     "node_modules/@types/node/index.d.ts",
+    "third-party/devtools/*.js",
 
     "lighthouse-cli/**/*.js",
     "lighthouse-core/**/*.js",

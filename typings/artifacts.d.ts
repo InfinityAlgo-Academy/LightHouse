@@ -79,6 +79,8 @@ declare global {
       MetaDescription: string|null;
       /** The value of the <meta name="robots">'s content attribute, or null. */
       MetaRobots: string|null;
+      /** The URL loaded with interception */
+      MixedContent: {url: string};
       /** The status code of the attempted load of the page while network access is disabled. */
       Offline: number;
       /** Size and compression opportunity information for all the images in the page. */

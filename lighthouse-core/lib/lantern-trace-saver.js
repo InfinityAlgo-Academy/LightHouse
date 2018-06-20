@@ -147,7 +147,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       ...requestData,
       statusCode: record.statusCode,
       mimeType: record._mimeType,
-      encodedDataLength: record._transferSize,
+      encodedDataLength: record.transferSize,
       fromCache: record._fromDiskCache,
       fromServiceWorker: record._fetchedViaServiceWorker,
     };

@@ -38,7 +38,7 @@ class UsesRelPreconnectAudit extends Audit {
    * @return {boolean}
    */
   static hasValidTiming(record) {
-    return record._timing && record._timing.connectEnd > 0 && record._timing.connectStart > 0;
+    return !!record._timing && record._timing.connectEnd > 0 && record._timing.connectStart > 0;
   }
 
   /**
@@ -48,6 +48,7 @@ class UsesRelPreconnectAudit extends Audit {
    */
   static hasAlreadyConnectedToOrigin(record) {
     return (
+      !!record._timing &&
       record._timing.dnsEnd - record._timing.dnsStart === 0 &&
       record._timing.connectEnd - record._timing.connectStart === 0
     );
@@ -90,7 +91,7 @@ class UsesRelPreconnectAudit extends Audit {
           // filter out all resources where timing info was invalid
           !UsesRelPreconnectAudit.hasValidTiming(record) ||
           // filter out all resources that are loaded by the document
-          record.initiatorRequest() === mainResource ||
+          record._initiator.url === mainResource.url ||
           // filter out urls that do not have an origin (data, ...)
           !record.parsedURL || !record.parsedURL.securityOrigin() ||
           // filter out all resources that have the same origin
@@ -117,6 +118,9 @@ class UsesRelPreconnectAudit extends Audit {
       const firstRecordOfOrigin = records.reduce((firstRecord, record) => {
         return (record.startTime < firstRecord.startTime) ? record: firstRecord;
       });
+
+      // Skip the origin if we don't have timing information
+      if (!firstRecordOfOrigin._timing) return;
 
       const securityOrigin = firstRecordOfOrigin.parsedURL.securityOrigin();
 
