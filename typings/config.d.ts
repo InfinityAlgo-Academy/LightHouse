@@ -9,17 +9,6 @@ import Audit = require('../lighthouse-core/audits/audit.js');
 
 declare global {
   module LH {
-    /**
-     * The full, normalized Lighthouse Config.
-     */
-    export interface Config extends Config.Json {
-      settings: Config.Settings;
-      passes: Config.Pass[] | null;
-      audits: Config.AuditDefn[] | null;
-      categories: Record<string, Config.Category> | null;
-      groups: Record<string, Config.Group> | null;
-    }
-
     module Config {
       /**
        * The pre-normalization Lighthouse Config format.

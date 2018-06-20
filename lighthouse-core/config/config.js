@@ -20,8 +20,8 @@ const Runner = require('../runner');
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
 /**
- * @param {LH.Config['passes']} passes
- * @param {LH.Config['audits']} audits
+ * @param {Config['passes']} passes
+ * @param {Config['audits']} audits
  */
 function validatePasses(passes, audits) {
   if (!Array.isArray(passes)) {
@@ -54,9 +54,9 @@ function validatePasses(passes, audits) {
 }
 
 /**
- * @param {LH.Config['categories']} categories
- * @param {LH.Config['audits']} audits
- * @param {LH.Config['groups']} groups
+ * @param {Config['categories']} categories
+ * @param {Config['audits']} audits
+ * @param {Config['groups']} groups
  */
 function validateCategories(categories, audits, groups) {
   if (!categories) {
@@ -303,6 +303,7 @@ const mergeOptionsOfItems = (function(items) {
 class Config {
   /**
    * @constructor
+   * @implements {LH.Config.Json}
    * @param {LH.Config.Json=} configJSON
    * @param {LH.Flags=} flags
    */
@@ -340,21 +341,25 @@ class Config {
     Config.adjustDefaultPassForThrottling(settings, passesWithDefaults);
     const passes = Config.requireGatherers(passesWithDefaults, configDir);
 
-    /** @type {LH.Config['settings']} */
+    /** @type {LH.Config.Settings} */
     this.settings = settings;
-    /** @type {LH.Config['passes']} */
+    /** @type {?Array<LH.Config.Pass>} */
     this.passes = passes;
-    /** @type {LH.Config['audits']} */
+    /** @type {?Array<LH.Config.AuditDefn>} */
     this.audits = Config.requireAudits(configJSON.audits, configDir);
-    /** @type {LH.Config['categories']} */
+    /** @type {?Record<string, LH.Config.Category>} */
     this.categories = configJSON.categories || null;
-    /** @type {LH.Config['groups']} */
+    /** @type {?Record<string, LH.Config.Group>} */
     this.groups = configJSON.groups || null;
 
     Config.filterConfigIfNeeded(this);
 
     validatePasses(this.passes, this.audits);
     validateCategories(this.categories, this.audits, this.groups);
+
+    // TODO(bckenny): until tsc adds @implements support, assert that Config is a ConfigJson.
+    /** @type {LH.Config.Json} */
+    const configJson = this; // eslint-disable-line no-unused-vars
   }
 
   /**
@@ -535,9 +540,9 @@ class Config {
 
   /**
    * Filter out any unrequested categories or audits from the categories object.
-   * @param {LH.Config['categories']} oldCategories
+   * @param {Config['categories']} oldCategories
    * @param {LH.Config.Settings} settings
-   * @return {{categories: LH.Config['categories'], requestedAuditNames: Set<string>}}
+   * @return {{categories: Config['categories'], requestedAuditNames: Set<string>}}
    */
   static filterCategoriesAndAudits(oldCategories, settings) {
     if (!oldCategories) {
@@ -548,7 +553,7 @@ class Config {
       throw new Error('Cannot set both skipAudits and onlyAudits');
     }
 
-    /** @type {NonNullable<LH.Config['categories']>} */
+    /** @type {NonNullable<Config['categories']>} */
     const categories = {};
     const filterByIncludedCategory = !!settings.onlyCategories;
     const filterByIncludedAudit = !!settings.onlyAudits;
@@ -630,7 +635,7 @@ class Config {
 
   /**
    * From some requested audits, return names of all required artifacts
-   * @param {LH.Config['audits']} audits
+   * @param {Config['audits']} audits
    * @return {Set<string>}
    */
   static getGatherersNeededByAudits(audits) {
@@ -648,9 +653,9 @@ class Config {
 
   /**
    * Filters to only required passes and gatherers, returning a new passes array.
-   * @param {LH.Config['passes']} passes
+   * @param {Config['passes']} passes
    * @param {Set<string>} requiredGatherers
-   * @return {LH.Config['passes']}
+   * @return {Config['passes']}
    */
   static generatePassesNeededByGatherers(passes, requiredGatherers) {
     if (!passes) {
@@ -689,7 +694,7 @@ class Config {
    * leaving only an array of AuditDefns.
    * @param {LH.Config.Json['audits']} audits
    * @param {string=} configPath
-   * @return {LH.Config['audits']}
+   * @return {Config['audits']}
    */
   static requireAudits(audits, configPath) {
     const expandedAudits = Config.expandAuditShorthand(audits);
@@ -758,7 +763,7 @@ class Config {
    * provided) using `Runner.resolvePlugin`, returning an array of full Passes.
    * @param {?Array<Required<LH.Config.PassJson>>} passes
    * @param {string=} configPath
-   * @return {LH.Config['passes']}
+   * @return {Config['passes']}
    */
   static requireGatherers(passes, configPath) {
     if (!passes) {

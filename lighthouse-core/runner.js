@@ -18,12 +18,13 @@ const URL = require('./lib/url-shim');
 const Sentry = require('./lib/sentry');
 const generateReport = require('./report/report-generator').generateReport;
 
-const Connection = require('./gather/connections/connection.js'); // eslint-disable-line no-unused-vars
+/** @typedef {import('./gather/connections/connection.js')} Connection */
+/** @typedef {import('./config/config.js')} Config */
 
 class Runner {
   /**
    * @param {Connection} connection
-   * @param {{config: LH.Config, url?: string, driverMock?: Driver}} opts
+   * @param {{config: Config, url?: string, driverMock?: Driver}} opts
    * @return {Promise<LH.RunnerResult|undefined>}
    */
   static async run(connection, opts) {
@@ -145,7 +146,7 @@ class Runner {
   /**
    * Establish connection, load page and collect all required artifacts
    * @param {string} requestedUrl
-   * @param {{config: LH.Config, driverMock?: Driver}} runnerOpts
+   * @param {{config: Config, driverMock?: Driver}} runnerOpts
    * @param {Connection} connection
    * @return {Promise<LH.Artifacts>}
    */
