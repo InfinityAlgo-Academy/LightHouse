@@ -24,10 +24,25 @@ describe('Network requests audit', () => {
       assert.equal(output.score, 1);
       assert.equal(output.rawValue, 66);
       assert.equal(output.details.items.length, 66);
-      assert.equal(output.extendedInfo.value[0].url, 'https://pwa.rocks/');
-      assert.equal(output.extendedInfo.value[0].startTime, 0);
-      assert.equal(output.extendedInfo.value[0].statusCode, 200);
-      assert.equal(output.extendedInfo.value[0].transferSize, 5368);
+      assert.equal(output.details.items[0].url, 'https://pwa.rocks/');
+      assert.equal(output.details.items[0].startTime, 0);
+      assert.equal(Math.round(output.details.items[0].endTime), 280);
+      assert.equal(output.details.items[0].statusCode, 200);
+      assert.equal(output.details.items[0].transferSize, 5368);
     });
+  });
+
+  it('should handle times correctly', async () => {
+    const records = [
+      {url: 'https://example.com/0', startTime: 15.0, endTime: 15.5},
+      {url: 'https://example.com/1', startTime: 15.5, endTime: -1},
+    ];
+
+    const artifacts = {devtoolsLogs: {}, requestNetworkRecords: () => Promise.resolve(records)};
+    const output = await NetworkRequests.audit(artifacts);
+    assert.equal(output.details.items[0].startTime, 0);
+    assert.equal(output.details.items[0].endTime, 500);
+    assert.equal(output.details.items[1].startTime, 500);
+    assert.equal(output.details.items[1].endTime, undefined);
   });
 });

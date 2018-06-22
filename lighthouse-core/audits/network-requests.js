@@ -34,11 +34,15 @@ class NetworkRequests extends Audit {
         Infinity
       );
 
+      /** @param {number} time */
+      const timeToMs = time => time < earliestStartTime || !Number.isFinite(time) ?
+        undefined : (time - earliestStartTime) * 1000;
+
       const results = records.map(record => {
         return {
           url: URL.elideDataURI(record.url),
-          startTime: (record.startTime - earliestStartTime) * 1000,
-          endTime: (record.endTime - earliestStartTime) * 1000,
+          startTime: timeToMs(record.startTime),
+          endTime: timeToMs(record.endTime),
           transferSize: record.transferSize,
           statusCode: record.statusCode,
           mimeType: record._mimeType,
@@ -67,7 +71,6 @@ class NetworkRequests extends Audit {
       return {
         score: 1,
         rawValue: results.length,
-        extendedInfo: {value: results},
         details: tableDetails,
       };
     });
