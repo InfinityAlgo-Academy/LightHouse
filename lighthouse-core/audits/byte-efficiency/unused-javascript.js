@@ -15,10 +15,10 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      name: 'unused-javascript',
-      description: 'Unused JavaScript',
+      id: 'unused-javascript',
+      title: 'Unused JavaScript',
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      helpText: 'Remove unused JavaScript to reduce bytes consumed by network activity.',
+      description: 'Remove unused JavaScript to reduce bytes consumed by network activity.',
       requiredArtifacts: ['JsUsage', 'devtoolsLogs'],
     };
   }

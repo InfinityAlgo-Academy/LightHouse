@@ -14,9 +14,9 @@ class FirstCPUIdle extends Audit {
    */
   static get meta() {
     return {
-      name: 'first-cpu-idle',
-      description: 'First CPU Idle',
-      helpText: 'First CPU Idle marks the first time at which the page\'s main thread is ' +
+      id: 'first-cpu-idle',
+      title: 'First CPU Idle',
+      description: 'First CPU Idle marks the first time at which the page\'s main thread is ' +
           'quiet enough to handle input. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive).',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,

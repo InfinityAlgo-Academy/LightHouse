@@ -14,10 +14,10 @@ class FirstContentfulPaint extends Audit {
    */
   static get meta() {
     return {
-      name: 'first-contentful-paint',
-      description: 'First Contentful Paint',
-      helpText: 'First contentful paint marks the time at which the first text/image is painted. ' +
-          `[Learn more](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint).`,
+      id: 'first-contentful-paint',
+      title: 'First Contentful Paint',
+      description: 'First contentful paint marks the time at which the first text/image is ' +
+          `painted. [Learn more](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint).`,
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],
     };

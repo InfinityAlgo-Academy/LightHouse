@@ -18,10 +18,10 @@ class DuplicateId extends AxeAudit {
    */
   static get meta() {
     return {
-      name: 'duplicate-id',
-      description: '`[id]` attributes on the page are unique',
-      failureDescription: '`[id]` attributes on the page are not unique',
-      helpText: 'The value of an id attribute must be unique to prevent ' +
+      id: 'duplicate-id',
+      title: '`[id]` attributes on the page are unique',
+      failureTitle: '`[id]` attributes on the page are not unique',
+      description: 'The value of an id attribute must be unique to prevent ' +
           'other instances from being overlooked by assistive technologies. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/duplicate-id?application=lighthouse).',
       requiredArtifacts: ['Accessibility'],

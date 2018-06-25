@@ -160,10 +160,10 @@ class RobotsTxt extends Audit {
    */
   static get meta() {
     return {
-      name: 'robots-txt',
-      description: 'robots.txt is valid',
-      failureDescription: 'robots.txt is not valid',
-      helpText: 'If your robots.txt file is malformed, crawlers may not be able to understand ' +
+      id: 'robots-txt',
+      title: 'robots.txt is valid',
+      failureTitle: 'robots.txt is not valid',
+      description: 'If your robots.txt file is malformed, crawlers may not be able to understand ' +
       'how you want your website to be crawled or indexed.',
       requiredArtifacts: ['RobotsTxt'],
     };

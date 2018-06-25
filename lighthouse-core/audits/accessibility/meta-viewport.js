@@ -18,13 +18,13 @@ class MetaViewport extends AxeAudit {
    */
   static get meta() {
     return {
-      name: 'meta-viewport',
-      description: '`[user-scalable="no"]` is not used in the `<meta name="viewport">` ' +
+      id: 'meta-viewport',
+      title: '`[user-scalable="no"]` is not used in the `<meta name="viewport">` ' +
           'element and the `[maximum-scale]` attribute is not less than 5.',
-      failureDescription: '`[user-scalable="no"]` is used in the `<meta name="viewport">` ' +
+      failureTitle: '`[user-scalable="no"]` is used in the `<meta name="viewport">` ' +
           'element or the `[maximum-scale]` attribute is less than 5.',
-      helpText: 'Disabling zooming is problematic for users with low vision who rely on screen ' +
-          'magnification to properly see the contents of a web page. ' +
+      description: 'Disabling zooming is problematic for users with low vision who rely on ' +
+          'screen magnification to properly see the contents of a web page. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/meta-viewport?application=lighthouse).',
       requiredArtifacts: ['Accessibility'],
     };

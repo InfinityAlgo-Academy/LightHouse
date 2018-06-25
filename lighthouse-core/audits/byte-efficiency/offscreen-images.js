@@ -28,10 +28,10 @@ class OffscreenImages extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      name: 'offscreen-images',
-      description: 'Defer offscreen images',
+      id: 'offscreen-images',
+      title: 'Defer offscreen images',
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      helpText:
+      description:
         'Consider lazy-loading offscreen and hidden images after all critical resources have ' +
         'finished loading to lower time to interactive. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).',
@@ -172,7 +172,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       if (processed instanceof Error) {
         warnings.push(processed.message);
         // @ts-ignore TODO(bckenny): Sentry type checking
-        Sentry.captureException(processed, {tags: {audit: this.meta.name}, level: 'warning'});
+        Sentry.captureException(processed, {tags: {audit: this.meta.id}, level: 'warning'});
         return results;
       }
 

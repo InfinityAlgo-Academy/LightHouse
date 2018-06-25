@@ -13,9 +13,9 @@ class EstimatedInputLatency extends Audit {
    */
   static get meta() {
     return {
-      name: 'estimated-input-latency',
-      description: 'Estimated Input Latency',
-      helpText: 'The score above is an estimate of how long your app takes to respond to user ' +
+      id: 'estimated-input-latency',
+      title: 'Estimated Input Latency',
+      description: 'The score above is an estimate of how long your app takes to respond to user ' +
           'input, in milliseconds, during the busiest 5s window of page load. If your ' +
           'latency is higher than 50 ms, users may perceive your app as laggy. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).',

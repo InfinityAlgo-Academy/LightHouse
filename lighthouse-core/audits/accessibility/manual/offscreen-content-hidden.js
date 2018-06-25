@@ -19,9 +19,9 @@ class OffscreenContentHidden extends ManualAudit {
    */
   static get meta() {
     return Object.assign({
-      name: 'offscreen-content-hidden',
-      helpText: 'Offscreen content is hidden with display: none or aria-hidden=true. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).',
-      description: 'Offscreen content is hidden from assistive technology',
+      id: 'offscreen-content-hidden',
+      description: 'Offscreen content is hidden with display: none or aria-hidden=true. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).',
+      title: 'Offscreen content is hidden from assistive technology',
     }, super.partialMeta);
   }
 }

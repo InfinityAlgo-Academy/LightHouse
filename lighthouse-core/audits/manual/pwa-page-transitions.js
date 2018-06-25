@@ -17,10 +17,10 @@ class PWAPageTransitions extends ManualAudit {
    */
   static get meta() {
     return Object.assign({
-      name: 'pwa-page-transitions',
-      helpText: 'Transitions should feel snappy as you tap around, even on a slow network, a key ' +
-          'to perceived performance. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network).',
-      description: 'Page transitions don\'t feel like they block on the network',
+      id: 'pwa-page-transitions',
+      description: 'Transitions should feel snappy as you tap around, even on a slow network, a ' +
+          'key to perceived performance. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network).',
+      title: 'Page transitions don\'t feel like they block on the network',
     }, super.partialMeta);
   }
 }

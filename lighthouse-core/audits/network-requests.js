@@ -14,10 +14,10 @@ class NetworkRequests extends Audit {
    */
   static get meta() {
     return {
-      name: 'network-requests',
+      id: 'network-requests',
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      description: 'Network Requests',
-      helpText: 'Lists the network requests that were made during page load.',
+      title: 'Network Requests',
+      description: 'Lists the network requests that were made during page load.',
       requiredArtifacts: ['devtoolsLogs'],
     };
   }

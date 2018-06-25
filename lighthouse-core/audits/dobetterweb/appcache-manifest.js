@@ -18,10 +18,10 @@ class AppCacheManifestAttr extends Audit {
    */
   static get meta() {
     return {
-      name: 'appcache-manifest',
-      description: 'Avoids Application Cache',
-      failureDescription: 'Uses Application Cache',
-      helpText: 'Application Cache is deprecated. ' +
+      id: 'appcache-manifest',
+      title: 'Avoids Application Cache',
+      failureTitle: 'Uses Application Cache',
+      description: 'Application Cache is deprecated. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/appcache).',
       requiredArtifacts: ['AppCacheManifest'],
     };

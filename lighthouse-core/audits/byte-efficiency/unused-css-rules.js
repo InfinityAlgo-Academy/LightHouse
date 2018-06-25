@@ -18,10 +18,10 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      name: 'unused-css-rules',
-      description: 'Defer unused CSS',
+      id: 'unused-css-rules',
+      title: 'Defer unused CSS',
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      helpText: 'Remove unused rules from stylesheets to reduce unnecessary ' +
+      description: 'Remove unused rules from stylesheets to reduce unnecessary ' +
           'bytes consumed by network activity. ' +
           '[Learn more](https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery).',
       requiredArtifacts: ['CSSUsage', 'URL', 'devtoolsLogs'],

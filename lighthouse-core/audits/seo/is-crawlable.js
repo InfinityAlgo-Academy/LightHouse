@@ -62,10 +62,10 @@ class IsCrawlable extends Audit {
    */
   static get meta() {
     return {
-      name: 'is-crawlable',
-      description: 'Page isn’t blocked from indexing',
-      failureDescription: 'Page is blocked from indexing',
-      helpText: 'Search engines are unable to include your pages in search results ' +
+      id: 'is-crawlable',
+      title: 'Page isn’t blocked from indexing',
+      failureTitle: 'Page is blocked from indexing',
+      description: 'Search engines are unable to include your pages in search results ' +
           'if they don\'t have permission to crawl them. [Learn ' +
           'more](https://developers.google.com/web/tools/lighthouse/audits/indexing).',
       requiredArtifacts: ['MetaRobots', 'RobotsTxt', 'URL'],

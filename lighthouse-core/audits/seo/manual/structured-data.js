@@ -17,9 +17,9 @@ class StructuredData extends ManualAudit {
    */
   static get meta() {
     return Object.assign({
-      name: 'structured-data',
-      helpText: 'Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://developers.google.com/search/docs/guides/mark-up-content).',
-      description: 'Structured data is valid',
+      id: 'structured-data',
+      description: 'Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://developers.google.com/search/docs/guides/mark-up-content).',
+      title: 'Structured data is valid',
     }, super.partialMeta);
   }
 }

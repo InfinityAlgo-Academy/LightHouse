@@ -72,10 +72,10 @@ class Plugins extends Audit {
    */
   static get meta() {
     return {
-      name: 'plugins',
-      description: 'Document avoids plugins',
-      failureDescription: 'Document uses plugins',
-      helpText: 'Search engines can\'t index plugin content, and ' +
+      id: 'plugins',
+      title: 'Document avoids plugins',
+      failureTitle: 'Document uses plugins',
+      description: 'Search engines can\'t index plugin content, and ' +
         'many devices restrict plugins or don\'t support them. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/plugins).',
       requiredArtifacts: ['EmbeddedContent'],

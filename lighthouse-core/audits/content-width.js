@@ -13,10 +13,10 @@ class ContentWidth extends Audit {
    */
   static get meta() {
     return {
-      name: 'content-width',
-      description: 'Content is sized correctly for the viewport',
-      failureDescription: 'Content is not sized correctly for the viewport',
-      helpText: 'If the width of your app\'s content doesn\'t match the width ' +
+      id: 'content-width',
+      title: 'Content is sized correctly for the viewport',
+      failureTitle: 'Content is not sized correctly for the viewport',
+      description: 'If the width of your app\'s content doesn\'t match the width ' +
           'of the viewport, your app might not be optimized for mobile screens. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/content-sized-correctly-for-viewport).',
       requiredArtifacts: ['ViewportDimensions'],

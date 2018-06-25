@@ -60,10 +60,10 @@ class Canonical extends Audit {
    */
   static get meta() {
     return {
-      name: 'canonical',
-      description: 'Document has a valid `rel=canonical`',
-      failureDescription: 'Document does not have a valid `rel=canonical`',
-      helpText: 'Canonical links suggest which URL to show in search results. ' +
+      id: 'canonical',
+      title: 'Document has a valid `rel=canonical`',
+      failureTitle: 'Document does not have a valid `rel=canonical`',
+      description: 'Canonical links suggest which URL to show in search results. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/canonical).',
       requiredArtifacts: ['Canonical', 'Hreflang', 'URL'],
     };

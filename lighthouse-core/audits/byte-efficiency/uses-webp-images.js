@@ -19,10 +19,10 @@ class UsesWebPImages extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      name: 'uses-webp-images',
-      description: 'Serve images in next-gen formats',
+      id: 'uses-webp-images',
+      title: 'Serve images in next-gen formats',
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      helpText: 'Image formats like JPEG 2000, JPEG XR, and WebP often provide better ' +
+      description: 'Image formats like JPEG 2000, JPEG XR, and WebP often provide better ' +
         'compression than PNG or JPEG, which means faster downloads and less data consumption. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/webp).',
       requiredArtifacts: ['OptimizedImages', 'devtoolsLogs'],

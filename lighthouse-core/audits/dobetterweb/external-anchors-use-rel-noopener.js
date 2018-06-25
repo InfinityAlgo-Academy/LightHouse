@@ -14,10 +14,10 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
    */
   static get meta() {
     return {
-      name: 'external-anchors-use-rel-noopener',
-      description: 'Links to cross-origin destinations are safe',
-      failureDescription: 'Links to cross-origin destinations are unsafe',
-      helpText: 'Add `rel="noopener"` or `rel="noreferrer"` to any external links to improve ' +
+      id: 'external-anchors-use-rel-noopener',
+      title: 'Links to cross-origin destinations are safe',
+      failureTitle: 'Links to cross-origin destinations are unsafe',
+      description: 'Add `rel="noopener"` or `rel="noreferrer"` to any external links to improve ' +
           'performance and prevent security vulnerabilities. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/noopener).',
       requiredArtifacts: ['URL', 'AnchorsWithNoRelNoopener'],

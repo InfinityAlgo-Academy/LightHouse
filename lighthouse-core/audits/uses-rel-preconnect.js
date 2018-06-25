@@ -22,9 +22,9 @@ class UsesRelPreconnectAudit extends Audit {
    */
   static get meta() {
     return {
-      name: 'uses-rel-preconnect',
-      description: 'Avoid multiple, costly round trips to any origin',
-      helpText:
+      id: 'uses-rel-preconnect',
+      title: 'Avoid multiple, costly round trips to any origin',
+      description:
         'Consider adding preconnect or dns-prefetch resource hints to establish early ' +
         `connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).`,
       requiredArtifacts: ['devtoolsLogs', 'URL'],

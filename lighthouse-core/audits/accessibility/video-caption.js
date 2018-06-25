@@ -18,11 +18,11 @@ class VideoCaption extends AxeAudit {
    */
   static get meta() {
     return {
-      name: 'video-caption',
-      description: '`<video>` elements contain a `<track>` element with `[kind="captions"]`',
-      failureDescription: '`<video>` elements do not contain a `<track>` element ' +
+      id: 'video-caption',
+      title: '`<video>` elements contain a `<track>` element with `[kind="captions"]`',
+      failureTitle: '`<video>` elements do not contain a `<track>` element ' +
           'with `[kind="captions"]`.',
-      helpText: 'When a video provides a caption it is easier for deaf and hearing impaired ' +
+      description: 'When a video provides a caption it is easier for deaf and hearing impaired ' +
           'users to access its information. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/video-caption?application=lighthouse).',
       requiredArtifacts: ['Accessibility'],

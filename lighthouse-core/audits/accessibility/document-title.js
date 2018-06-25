@@ -18,10 +18,10 @@ class DocumentTitle extends AxeAudit {
    */
   static get meta() {
     return {
-      name: 'document-title',
-      description: 'Document has a `<title>` element',
-      failureDescription: 'Document doesn\'t have a `<title>` element',
-      helpText: 'The title gives screen reader users an overview of the page, and search ' +
+      id: 'document-title',
+      title: 'Document has a `<title>` element',
+      failureTitle: 'Document doesn\'t have a `<title>` element',
+      description: 'The title gives screen reader users an overview of the page, and search ' +
           'engine users rely on it heavily to determine if a page is relevant to their search. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/title).',
       requiredArtifacts: ['Accessibility'],

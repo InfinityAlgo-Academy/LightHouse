@@ -21,11 +21,11 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      name: 'uses-text-compression',
+      id: 'uses-text-compression',
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      description: 'Enable text compression',
-      helpText: 'Text-based responses should be served with compression (gzip, deflate or brotli)' +
-        ' to minimize total network bytes.' +
+      title: 'Enable text compression',
+      description: 'Text-based responses should be served with compression (gzip, deflate or' +
+        ' brotli) to minimize total network bytes.' +
         ' [Learn more](https://developers.google.com/web/tools/lighthouse/audits/text-compression).',
       requiredArtifacts: ['ResponseCompression', 'devtoolsLogs'],
     };

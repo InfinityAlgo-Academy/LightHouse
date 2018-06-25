@@ -11,10 +11,10 @@ const LighthouseAudit = require('../../audits/audit');
 class ValidCustomAudit extends LighthouseAudit {
   static get meta() {
     return {
-      name: 'valid-audit',
-      description: 'Valid Audit',
-      failureDescription: 'Valid failing Audit',
-      helpText: 'Valid-sounding helpText',
+      id: 'valid-audit',
+      title: 'Valid Audit',
+      failureTitle: 'Valid failing Audit',
+      description: 'Valid-sounding description',
       requiredArtifacts: ['HTML'],
     };
   }

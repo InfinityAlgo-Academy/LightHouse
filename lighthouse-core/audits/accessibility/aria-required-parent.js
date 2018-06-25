@@ -19,10 +19,10 @@ class AriaRequiredParent extends AxeAudit {
    */
   static get meta() {
     return {
-      name: 'aria-required-parent',
-      description: '`[role]`s are contained by their required parent element',
-      failureDescription: '`[role]`s are not contained by their required parent element',
-      helpText: 'Some ARIA child roles must be contained by specific parent roles to ' +
+      id: 'aria-required-parent',
+      title: '`[role]`s are contained by their required parent element',
+      failureTitle: '`[role]`s are not contained by their required parent element',
+      description: 'Some ARIA child roles must be contained by specific parent roles to ' +
           'properly perform their intended accessibility functions. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-required-parent?application=lighthouse).',
       requiredArtifacts: ['Accessibility'],

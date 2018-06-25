@@ -20,10 +20,10 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      name: 'uses-optimized-images',
-      description: 'Efficiently encode images',
+      id: 'uses-optimized-images',
+      title: 'Efficiently encode images',
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      helpText: 'Optimized images load faster and consume less cellular data. ' +
+      description: 'Optimized images load faster and consume less cellular data. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/optimize-images).',
       requiredArtifacts: ['OptimizedImages', 'devtoolsLogs'],
     };

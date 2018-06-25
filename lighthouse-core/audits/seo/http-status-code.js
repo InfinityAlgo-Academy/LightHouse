@@ -15,10 +15,10 @@ class HTTPStatusCode extends Audit {
    */
   static get meta() {
     return {
-      name: 'http-status-code',
-      description: 'Page has successful HTTP status code',
-      failureDescription: 'Page has unsuccessful HTTP status code',
-      helpText: 'Pages with unsuccessful HTTP status codes may not be indexed properly. ' +
+      id: 'http-status-code',
+      title: 'Page has successful HTTP status code',
+      failureTitle: 'Page has unsuccessful HTTP status code',
+      description: 'Pages with unsuccessful HTTP status codes may not be indexed properly. ' +
       '[Learn more]' +
       '(https://developers.google.com/web/tools/lighthouse/audits/successful-http-code).',
       requiredArtifacts: ['devtoolsLogs', 'URL'],

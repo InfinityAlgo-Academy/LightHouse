@@ -22,10 +22,10 @@ class CacheHeaders extends Audit {
    */
   static get meta() {
     return {
-      name: 'uses-long-cache-ttl',
-      description: 'Uses efficient cache policy on static assets',
-      failureDescription: 'Uses inefficient cache policy on static assets',
-      helpText:
+      id: 'uses-long-cache-ttl',
+      title: 'Uses efficient cache policy on static assets',
+      failureTitle: 'Uses inefficient cache policy on static assets',
+      description:
         'A long cache lifetime can speed up repeat visits to your page. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy).',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,

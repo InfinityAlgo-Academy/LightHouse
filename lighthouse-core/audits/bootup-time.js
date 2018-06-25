@@ -16,11 +16,11 @@ class BootupTime extends Audit {
    */
   static get meta() {
     return {
-      name: 'bootup-time',
-      description: 'JavaScript boot-up time',
-      failureDescription: 'JavaScript boot-up time is too high',
+      id: 'bootup-time',
+      title: 'JavaScript boot-up time',
+      failureTitle: 'JavaScript boot-up time is too high',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      helpText: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
+      description: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
         'You may find delivering smaller JS payloads helps with this. [Learn ' +
         'more](https://developers.google.com/web/tools/lighthouse/audits/bootup).',
       requiredArtifacts: ['traces'],

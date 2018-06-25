@@ -19,9 +19,9 @@ class PredictivePerf extends Audit {
    */
   static get meta() {
     return {
-      name: 'predictive-perf',
-      description: 'Predicted Performance (beta)',
-      helpText:
+      id: 'predictive-perf',
+      title: 'Predicted Performance (beta)',
+      description:
         'Predicted performance evaluates how your site will perform under ' +
         'a 3G connection on a mobile device.',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,

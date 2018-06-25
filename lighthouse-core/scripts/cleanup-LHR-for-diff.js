@@ -29,7 +29,6 @@ function cleanAndFormatLHR(lhrString) {
   if (extraFlag !== '--only-remove-timing') {
     for (const auditResult of Object.values(lhr.audits)) {
       auditResult.description = '**Excluded from diff**';
-      auditResult.helpText = '**Excluded from diff**';
     }
   }
   return JSON.stringify(lhr, null, 2);

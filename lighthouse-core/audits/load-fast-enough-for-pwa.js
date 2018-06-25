@@ -25,10 +25,10 @@ class LoadFastEnough4Pwa extends Audit {
    */
   static get meta() {
     return {
-      name: 'load-fast-enough-for-pwa',
-      description: 'Page load is fast enough on 3G',
-      failureDescription: 'Page load is not fast enough on 3G',
-      helpText:
+      id: 'load-fast-enough-for-pwa',
+      title: 'Page load is fast enough on 3G',
+      failureTitle: 'Page load is not fast enough on 3G',
+      description:
         'A fast page load over a 3G network ensures a good mobile user experience. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g).',
       requiredArtifacts: ['traces', 'devtoolsLogs'],

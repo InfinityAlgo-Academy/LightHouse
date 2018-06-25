@@ -152,8 +152,8 @@ class Audit {
     let score = result.score === undefined ? Number(result.rawValue) : result.score;
 
     if (!Number.isFinite(score)) throw new Error(`Invalid score: ${score}`);
-    if (score > 1) throw new Error(`Audit score for ${audit.meta.name} is > 1`);
-    if (score < 0) throw new Error(`Audit score for ${audit.meta.name} is < 0`);
+    if (score > 1) throw new Error(`Audit score for ${audit.meta.id} is > 1`);
+    if (score < 0) throw new Error(`Audit score for ${audit.meta.id} is < 0`);
 
     score = clampTo2Decimals(score);
 
@@ -188,10 +188,10 @@ class Audit {
       scoreDisplayMode = Audit.SCORING_MODES.ERROR;
     }
 
-    let auditDescription = audit.meta.description;
-    if (audit.meta.failureDescription) {
+    let auditTitle = audit.meta.title;
+    if (audit.meta.failureTitle) {
       if (Number(score) < Util.PASS_THRESHOLD) {
-        auditDescription = audit.meta.failureDescription;
+        auditTitle = audit.meta.failureTitle;
       }
     }
 
@@ -201,9 +201,9 @@ class Audit {
     }
 
     return {
-      id: audit.meta.name,
-      title: auditDescription,
-      description: audit.meta.helpText,
+      id: audit.meta.id,
+      title: auditTitle,
+      description: audit.meta.description,
 
       score,
       scoreDisplayMode,

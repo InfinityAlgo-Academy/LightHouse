@@ -20,9 +20,9 @@ class InteractiveMetric extends Audit {
    */
   static get meta() {
     return {
-      name: 'interactive',
-      description: 'Time to Interactive',
-      helpText: 'Interactive marks the time at which the page is fully interactive. ' +
+      id: 'interactive',
+      title: 'Time to Interactive',
+      description: 'Interactive marks the time at which the page is fully interactive. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],

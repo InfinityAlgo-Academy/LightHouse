@@ -34,10 +34,10 @@ class WebappInstallBanner extends MultiCheckAudit {
    */
   static get meta() {
     return {
-      name: 'webapp-install-banner',
-      description: 'User can be prompted to Install the Web App',
-      failureDescription: 'User will not be prompted to Install the Web App',
-      helpText: 'Browsers can proactively prompt users to add your app to their homescreen, ' +
+      id: 'webapp-install-banner',
+      title: 'User can be prompted to Install the Web App',
+      failureTitle: 'User will not be prompted to Install the Web App',
+      description: 'Browsers can proactively prompt users to add your app to their homescreen, ' +
           'which can lead to higher engagement. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/install-prompt).',
       requiredArtifacts: ['URL', 'ServiceWorker', 'Manifest', 'StartUrl'],

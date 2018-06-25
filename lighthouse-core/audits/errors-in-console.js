@@ -18,11 +18,11 @@ class ErrorLogs extends Audit {
    */
   static get meta() {
     return {
-      name: 'errors-in-console',
-      description: 'No browser errors logged to the console',
-      helpText: 'Errors logged to the console indicate unresolved problems. ' +
+      id: 'errors-in-console',
+      title: 'No browser errors logged to the console',
+      description: 'Errors logged to the console indicate unresolved problems. ' +
         'They can come from network request failures and other browser concerns.',
-      failureDescription: 'Browser errors were logged to the console',
+      failureTitle: 'Browser errors were logged to the console',
       requiredArtifacts: ['ChromeConsoleMessages', 'RuntimeExceptions'],
     };
   }

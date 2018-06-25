@@ -166,10 +166,10 @@ describe('Runner', () => {
     class EavesdropAudit extends Audit {
       static get meta() {
         return {
-          name: 'eavesdrop-audit',
-          description: 'It eavesdrops',
-          failureDescription: 'It does not',
-          helpText: 'Helpful when eavesdropping',
+          id: 'eavesdrop-audit',
+          title: 'It eavesdrops',
+          failureTitle: 'It does not',
+          description: 'Helpful when eavesdropping',
           requiredArtifacts: [],
         };
       }
@@ -310,10 +310,10 @@ describe('Runner', () => {
 
   describe('Bad audit behavior handling', () => {
     const testAuditMeta = {
-      name: 'throwy-audit',
-      description: 'Always throws',
-      failureDescription: 'Always throws is failing, natch',
-      helpText: 'Test for always throwing',
+      id: 'throwy-audit',
+      title: 'Always throws',
+      failureTitle: 'Always throws is failing, natch',
+      description: 'Test for always throwing',
       requiredArtifacts: [],
     };
 
@@ -478,7 +478,7 @@ describe('Runner', () => {
       const auditPath = '../audits/' + auditFilename;
       const auditExpectedName = path.basename(auditFilename, '.js');
       const AuditClass = require(auditPath);
-      assert.strictEqual(AuditClass.meta.name, auditExpectedName);
+      assert.strictEqual(AuditClass.meta.id, auditExpectedName);
     });
   });
 

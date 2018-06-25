@@ -24,10 +24,10 @@ class ThemedOmnibox extends MultiCheckAudit {
    */
   static get meta() {
     return {
-      name: 'themed-omnibox',
-      description: 'Address bar matches brand colors',
-      failureDescription: 'Address bar does not match brand colors',
-      helpText: 'The browser address bar can be themed to match your site. ' +
+      id: 'themed-omnibox',
+      title: 'Address bar matches brand colors',
+      failureTitle: 'Address bar does not match brand colors',
+      description: 'The browser address bar can be themed to match your site. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/address-bar).',
       requiredArtifacts: ['Manifest', 'ThemeColor'],
     };

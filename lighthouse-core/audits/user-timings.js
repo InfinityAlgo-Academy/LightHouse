@@ -16,10 +16,10 @@ class UserTimings extends Audit {
    */
   static get meta() {
     return {
-      name: 'user-timings',
+      id: 'user-timings',
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      description: 'User Timing marks and measures',
-      helpText: 'Consider instrumenting your app with the User Timing API to create custom, ' +
+      title: 'User Timing marks and measures',
+      description: 'Consider instrumenting your app with the User Timing API to create custom, ' +
           'real-world measurements of key user experiences. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).',
       requiredArtifacts: ['traces'],

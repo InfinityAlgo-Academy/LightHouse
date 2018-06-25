@@ -18,12 +18,12 @@ class List extends AxeAudit {
    */
   static get meta() {
     return {
-      name: 'list',
-      description: 'Lists contain only `<li>` elements and script supporting elements ' +
+      id: 'list',
+      title: 'Lists contain only `<li>` elements and script supporting elements ' +
           '(`<script>` and `<template>`).',
-      failureDescription: 'Lists do not contain only `<li>` elements and script ' +
+      failureTitle: 'Lists do not contain only `<li>` elements and script ' +
           'supporting elements (`<script>` and `<template>`).',
-      helpText: 'Screen readers have a specific way of announcing lists. Ensuring proper list ' +
+      description: 'Screen readers have a specific way of announcing lists. Ensuring proper list ' +
           'structure aids screen reader output. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/list?application=lighthouse).',
       requiredArtifacts: ['Accessibility'],

@@ -29,10 +29,10 @@ class DOMSize extends Audit {
    */
   static get meta() {
     return {
-      name: 'dom-size',
-      description: 'Avoids an excessive DOM size',
-      failureDescription: 'Uses an excessive DOM size',
-      helpText: 'Browser engineers recommend pages contain fewer than ' +
+      id: 'dom-size',
+      title: 'Avoids an excessive DOM size',
+      failureTitle: 'Uses an excessive DOM size',
+      description: 'Browser engineers recommend pages contain fewer than ' +
         `~${Util.formatNumber(DOMSize.MAX_DOM_NODES)} DOM nodes. The sweet spot is a tree ` +
         `depth < ${MAX_DOM_TREE_DEPTH} elements and fewer than ${MAX_DOM_TREE_WIDTH} ` +
         'children/parent element. A large DOM can increase memory usage, cause longer ' +

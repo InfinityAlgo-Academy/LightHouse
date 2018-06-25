@@ -25,10 +25,10 @@ class LinkText extends Audit {
    */
   static get meta() {
     return {
-      name: 'link-text',
-      description: 'Links have descriptive text',
-      failureDescription: 'Links do not have descriptive text',
-      helpText: 'Descriptive link text helps search engines understand your content. ' +
+      id: 'link-text',
+      title: 'Links have descriptive text',
+      failureTitle: 'Links do not have descriptive text',
+      description: 'Descriptive link text helps search engines understand your content. ' +
       '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text).',
       requiredArtifacts: ['URL', 'CrawlableLinks'],
     };

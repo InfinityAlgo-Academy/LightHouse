@@ -184,10 +184,10 @@ class FontSize extends Audit {
    */
   static get meta() {
     return {
-      name: 'font-size',
-      description: 'Document uses legible font sizes',
-      failureDescription: 'Document doesn\'t use legible font sizes',
-      helpText: 'Font sizes less than 12px are too small to be legible and require mobile ' +
+      id: 'font-size',
+      title: 'Document uses legible font sizes',
+      failureTitle: 'Document doesn\'t use legible font sizes',
+      description: 'Font sizes less than 12px are too small to be legible and require mobile ' +
       'visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. ' +
       '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).',
       requiredArtifacts: ['FontSize', 'URL', 'Viewport'],

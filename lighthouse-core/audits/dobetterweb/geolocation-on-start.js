@@ -19,10 +19,10 @@ class GeolocationOnStart extends ViolationAudit {
    */
   static get meta() {
     return {
-      name: 'geolocation-on-start',
-      description: 'Avoids requesting the geolocation permission on page load',
-      failureDescription: 'Requests the geolocation permission on page load',
-      helpText: 'Users are mistrustful of or confused by sites that request their ' +
+      id: 'geolocation-on-start',
+      title: 'Avoids requesting the geolocation permission on page load',
+      failureTitle: 'Requests the geolocation permission on page load',
+      description: 'Users are mistrustful of or confused by sites that request their ' +
           'location without context. Consider tying the request to user gestures instead. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).',
       requiredArtifacts: ['ChromeConsoleMessages'],

@@ -24,10 +24,10 @@ class ImageAspectRatio extends Audit {
    */
   static get meta() {
     return {
-      name: 'image-aspect-ratio',
-      description: 'Displays images with correct aspect ratio',
-      failureDescription: 'Displays images with incorrect aspect ratio',
-      helpText: 'Image display dimensions should match natural aspect ratio. ' +
+      id: 'image-aspect-ratio',
+      title: 'Displays images with correct aspect ratio',
+      failureTitle: 'Displays images with incorrect aspect ratio',
+      description: 'Image display dimensions should match natural aspect ratio. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/aspect-ratio).',
       requiredArtifacts: ['ImageUsage'],
     };

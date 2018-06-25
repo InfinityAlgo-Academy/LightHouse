@@ -11,9 +11,9 @@ const LighthouseAudit = require('../terrible/path/come/on/audit');
 class RequireErrorAudit extends LighthouseAudit {
   static get meta() {
     return {
-      name: 'require-error',
-      description: 'Require Error',
-      helpText: 'This one has a bad require()',
+      id: 'require-error',
+      title: 'Require Error',
+      description: 'This one has a bad require()',
       requiredArtifacts: ['HTML'],
     };
   }

@@ -21,10 +21,10 @@ class EfficientAnimatedContent extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      name: 'efficient-animated-content',
+      id: 'efficient-animated-content',
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      description: 'Use video formats for animated content',
-      helpText: 'Large GIFs are inefficient for delivering animated content. Consider using ' +
+      title: 'Use video formats for animated content',
+      description: 'Large GIFs are inefficient for delivering animated content. Consider using ' +
         'MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save ' +
         'network bytes. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/)',
       requiredArtifacts: ['devtoolsLogs'],

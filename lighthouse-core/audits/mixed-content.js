@@ -21,10 +21,10 @@ class MixedContent extends Audit {
    */
   static get meta() {
     return {
-      name: 'mixed-content',
-      description: 'All resources loaded are secure',
-      failureDescription: 'Some insecure resources can be upgraded to HTTPS',
-      helpText: `Mixed content warnings can prevent you from upgrading to HTTPS.
+      id: 'mixed-content',
+      title: 'All resources loaded are secure',
+      failureTitle: 'Some insecure resources can be upgraded to HTTPS',
+      description: `Mixed content warnings can prevent you from upgrading to HTTPS.
       This audit shows which insecure resources this page uses that can be
       upgraded to HTTPS. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/mixed-content)`,
       requiredArtifacts: ['devtoolsLogs', 'MixedContent'],

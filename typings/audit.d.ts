@@ -34,11 +34,11 @@ declare global {
     export type DisplayValue = string | DisplayValueArray;
 
     export interface Meta {
-      name: string;
+      id: string;
+      title: string;
+      failureTitle?: string;
       description: string;
-      helpText: string;
       requiredArtifacts: Array<keyof Artifacts>;
-      failureDescription?: string;
       scoreDisplayMode?: Audit.ScoreDisplayMode;
     }
 

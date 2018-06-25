@@ -18,10 +18,10 @@ class PWACrossBrowser extends ManualAudit {
    */
   static get meta() {
     return Object.assign({
-      name: 'pwa-cross-browser',
-      helpText: 'To reach the most number of users, sites should work across ' +
+      id: 'pwa-cross-browser',
+      description: 'To reach the most number of users, sites should work across ' +
       'every major browser. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#site-works-cross-browser).',
-      description: 'Site works cross-browser',
+      title: 'Site works cross-browser',
     }, super.partialMeta);
   }
 }

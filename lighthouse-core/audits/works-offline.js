@@ -14,11 +14,11 @@ class WorksOffline extends Audit {
    */
   static get meta() {
     return {
-      name: 'works-offline',
-      description: 'Responds with a 200 when offline',
-      failureDescription: 'Does not respond with a 200 when offline',
-      helpText: 'If you\'re building a Progressive Web App, consider using a service worker so ' +
-          'that your app can work offline. ' +
+      id: 'works-offline',
+      title: 'Responds with a 200 when offline',
+      failureTitle: 'Does not respond with a 200 when offline',
+      description: 'If you\'re building a Progressive Web App, consider using a service worker ' +
+          'so that your app can work offline. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).',
       requiredArtifacts: ['Offline', 'URL'],
     };

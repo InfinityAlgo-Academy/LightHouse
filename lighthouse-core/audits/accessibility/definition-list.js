@@ -18,12 +18,12 @@ class DefinitionList extends AxeAudit {
    */
   static get meta() {
     return {
-      name: 'definition-list',
-      description: '`<dl>`\'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>` ' +
+      id: 'definition-list',
+      title: '`<dl>`\'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>` ' +
           'or `<template>` elements.',
-      failureDescription: '`<dl>`\'s do not contain only properly-ordered `<dt>` and `<dd>` ' +
+      failureTitle: '`<dl>`\'s do not contain only properly-ordered `<dt>` and `<dd>` ' +
           'groups, `<script>` or `<template>` elements.',
-      helpText: 'When definition lists are not properly marked up, screen readers may produce ' +
+      description: 'When definition lists are not properly marked up, screen readers may produce ' +
           'confusing or inaccurate output. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/definition-list?application=lighthouse).',
       requiredArtifacts: ['Accessibility'],

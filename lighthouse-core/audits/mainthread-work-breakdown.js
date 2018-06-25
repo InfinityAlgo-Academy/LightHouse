@@ -21,11 +21,11 @@ class MainThreadWorkBreakdown extends Audit {
    */
   static get meta() {
     return {
-      name: 'mainthread-work-breakdown',
-      description: 'Minimizes main thread work',
-      failureDescription: 'Has significant main thread work',
+      id: 'mainthread-work-breakdown',
+      title: 'Minimizes main thread work',
+      failureTitle: 'Has significant main thread work',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      helpText: 'Consider reducing the time spent parsing, compiling and executing JS. ' +
+      description: 'Consider reducing the time spent parsing, compiling and executing JS. ' +
         'You may find delivering smaller JS payloads helps with this.',
       requiredArtifacts: ['traces'],
     };

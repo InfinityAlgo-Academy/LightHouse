@@ -25,10 +25,10 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      name: 'uses-responsive-images',
-      description: 'Properly size images',
+      id: 'uses-responsive-images',
+      title: 'Properly size images',
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      helpText:
+      description:
         'Serve images that are appropriately-sized to save cellular data ' +
         'and improve load time. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/oversized-images).',
@@ -96,7 +96,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
       if (processed instanceof Error) {
         warnings.push(processed.message);
         // @ts-ignore TODO(bckenny): Sentry type checking
-        Sentry.captureException(processed, {tags: {audit: this.meta.name}, level: 'warning'});
+        Sentry.captureException(processed, {tags: {audit: this.meta.id}, level: 'warning'});
         return;
       }
 

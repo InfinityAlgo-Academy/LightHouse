@@ -51,10 +51,10 @@ class RenderBlockingResources extends Audit {
    */
   static get meta() {
     return {
-      name: 'render-blocking-resources',
-      description: 'Eliminate render-blocking resources',
+      id: 'render-blocking-resources',
+      title: 'Eliminate render-blocking resources',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      helpText:
+      description:
         'Resources are blocking the first paint of your page. Consider ' +
         'delivering critical JS/CSS inline and deferring all non-critical ' +
         'JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).',

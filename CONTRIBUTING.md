@@ -45,10 +45,10 @@ If you have a contribution for our [documentation](https://developers.google.com
 1. Ensure that your code adheres to the existing style in the sample to which you are contributing.
 1. Submit a pull request.
 
-## helpText guidelines
+## description guidelines
 
-Keep the `helpText` of an audit as short as possible. When a reference doc for the audit exists on
-developers.google.com/web, the `helpText` should only explain *why* the user should care
+Keep the `description` of an audit as short as possible. When a reference doc for the audit exists on
+developers.google.com/web, the `description` should only explain *why* the user should care
 about the audit, not *how* to fix it.
 
 Do:
@@ -61,7 +61,7 @@ Don't:
     Serve images that are smaller than the user's viewport to save cellular data and
     improve load time. Consider using responsive images and client hints.
 
-If no reference doc exists yet, then you can use the `helpText` as a stopgap for explaining
+If no reference doc exists yet, then you can use the `description` as a stopgap for explaining
 both why the audit is important and how to fix it.
 
 ## Tracking Errors

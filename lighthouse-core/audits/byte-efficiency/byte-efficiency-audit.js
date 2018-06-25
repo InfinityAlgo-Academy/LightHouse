@@ -132,7 +132,7 @@ class UnusedBytes extends Audit {
    * @return {number}
    */
   static computeWasteWithTTIGraph(results, graph, simulator, options) {
-    options = Object.assign({includeLoad: true, label: this.meta.name}, options);
+    options = Object.assign({includeLoad: true, label: this.meta.id}, options);
     const beforeLabel = `${options.label}-before`;
     const afterLabel = `${options.label}-after`;
 

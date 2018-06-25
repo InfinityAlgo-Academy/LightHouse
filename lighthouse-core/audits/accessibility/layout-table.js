@@ -19,12 +19,12 @@ class LayoutTable extends AxeAudit {
    */
   static get meta() {
     return {
-      name: 'layout-table',
-      description: 'Presentational `<table>` elements avoid using `<th>`, `<caption>` or the ' +
+      id: 'layout-table',
+      title: 'Presentational `<table>` elements avoid using `<th>`, `<caption>` or the ' +
           '`[summary]` attribute.',
-      failureDescription: 'Presentational `<table>` elements do not avoid using `<th>`, ' +
+      failureTitle: 'Presentational `<table>` elements do not avoid using `<th>`, ' +
           '`<caption>` or the `[summary]` attribute.',
-      helpText: 'A table being used for layout purposes should not include data elements, ' +
+      description: 'A table being used for layout purposes should not include data elements, ' +
           'such as the th or caption elements or the summary attribute, because this can ' +
           'create a confusing experience for screen reader users. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/layout-table?application=lighthouse).',

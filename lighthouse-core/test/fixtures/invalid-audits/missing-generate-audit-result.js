@@ -6,12 +6,12 @@
 
 'use strict';
 
-class MissingRequiredArtifacts {
+class MissingGenerateAuditResult {
   static get meta() {
     return {
-      name: 'missing-required-artifacts',
-      description: 'Missing required artifacts',
-      helpText: 'This is missing required artifacts',
+      id: 'missing-required-artifacts',
+      title: 'Missing required artifacts',
+      description: 'This is missing required artifacts',
       requiredArtifacts: ['HTML'],
     };
   }
@@ -23,4 +23,4 @@ class MissingRequiredArtifacts {
   }
 }
 
-module.exports = MissingRequiredArtifacts;
+module.exports = MissingGenerateAuditResult;

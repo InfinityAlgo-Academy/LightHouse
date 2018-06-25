@@ -8,11 +8,11 @@
 
 const LighthouseAudit = require('../../../audits/audit');
 
-class MissingRequiredArtifacts extends LighthouseAudit {
+class MissingID extends LighthouseAudit {
   static get meta() {
     return {
-      description: 'Missing name',
-      helpText: 'This is missing required name',
+      title: 'Missing id',
+      description: 'This is missing required id',
       requiredArtifacts: ['HTML'],
     };
   }
@@ -24,4 +24,4 @@ class MissingRequiredArtifacts extends LighthouseAudit {
   }
 }
 
-module.exports = MissingRequiredArtifacts;
+module.exports = MissingID;

@@ -18,10 +18,10 @@ class MetaRefresh extends AxeAudit {
    */
   static get meta() {
     return {
-      name: 'meta-refresh',
-      description: 'The document does not use `<meta http-equiv="refresh">`',
-      failureDescription: 'The document uses `<meta http-equiv="refresh">`',
-      helpText: 'Users do not expect a page to refresh automatically, and doing so will move ' +
+      id: 'meta-refresh',
+      title: 'The document does not use `<meta http-equiv="refresh">`',
+      failureTitle: 'The document uses `<meta http-equiv="refresh">`',
+      description: 'Users do not expect a page to refresh automatically, and doing so will move ' +
           'focus back to the top of the page. This may create a frustrating or ' +
           'confusing experience. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/meta-refresh?application=lighthouse).',

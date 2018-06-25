@@ -17,10 +17,10 @@ class PWAEachPageHasURL extends ManualAudit {
    */
   static get meta() {
     return Object.assign({
-      name: 'pwa-each-page-has-url',
-      helpText: 'Ensure individual pages are deep linkable via the URLs and that URLs are ' +
+      id: 'pwa-each-page-has-url',
+      description: 'Ensure individual pages are deep linkable via the URLs and that URLs are ' +
           'unique for the purpose of shareability on social media. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url).',
-      description: 'Each page has a URL',
+      title: 'Each page has a URL',
     }, super.partialMeta);
   }
 }

@@ -63,10 +63,10 @@ class Hreflang extends Audit {
    */
   static get meta() {
     return {
-      name: 'hreflang',
-      description: 'Document has a valid `hreflang`',
-      failureDescription: 'Document doesn\'t have a valid `hreflang`',
-      helpText: 'hreflang links tell search engines what version of a page they should ' +
+      id: 'hreflang',
+      title: 'Document has a valid `hreflang`',
+      failureTitle: 'Document doesn\'t have a valid `hreflang`',
+      description: 'hreflang links tell search engines what version of a page they should ' +
         'list in search results for a given language or region. [Learn more]' +
         '(https://developers.google.com/web/tools/lighthouse/audits/hreflang).',
       requiredArtifacts: ['Hreflang', 'URL'],

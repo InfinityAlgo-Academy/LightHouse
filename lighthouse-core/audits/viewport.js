@@ -14,11 +14,11 @@ class Viewport extends Audit {
    */
   static get meta() {
     return {
-      name: 'viewport',
-      description: 'Has a `<meta name="viewport">` tag with `width` or `initial-scale`',
-      failureDescription: 'Does not have a `<meta name="viewport">` tag with `width` ' +
+      id: 'viewport',
+      title: 'Has a `<meta name="viewport">` tag with `width` or `initial-scale`',
+      failureTitle: 'Does not have a `<meta name="viewport">` tag with `width` ' +
           'or `initial-scale`',
-      helpText: 'Add a viewport meta tag to optimize your app for mobile screens. ' +
+      description: 'Add a viewport meta tag to optimize your app for mobile screens. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/has-viewport-meta-tag).',
       requiredArtifacts: ['Viewport'],
     };

@@ -34,10 +34,10 @@ describe('Config', () => {
     class MyAudit extends Audit {
       static get meta() {
         return {
-          name: 'my-audit',
-          description: 'My audit',
-          failureDescription: 'My failing audit',
-          helpText: '.',
+          id: 'my-audit',
+          title: 'My audit',
+          failureTitle: 'My failing audit',
+          description: '.',
           requiredArtifacts: ['MyGatherer'],
         };
       }
@@ -221,21 +221,21 @@ describe('Config', () => {
     }), /audit\(\) method/);
 
     assert.throws(_ => new Config({
-      audits: [basePath + '/missing-name'],
-    }), /meta.name property/);
+      audits: [basePath + '/missing-id'],
+    }), /meta.id property/);
 
     assert.throws(_ => new Config({
-      audits: [basePath + '/missing-description'],
-    }), /meta.description property/);
+      audits: [basePath + '/missing-title'],
+    }), /meta.title property/);
 
     assert.throws(_ => new Config({
       audits: [
-        class BinaryButNoFailureDescAudit extends Audit {
+        class BinaryButNoFailureTitleAudit extends Audit {
           static get meta() {
             return {
-              name: 'no-failure-description',
-              description: 'description',
-              helpText: 'help',
+              id: 'no-failure-title',
+              title: 'title',
+              description: 'help',
               requiredArtifacts: [],
               scoreDisplayMode: 'binary',
             };
@@ -246,20 +246,20 @@ describe('Config', () => {
           }
         },
       ],
-    }), /no failureDescription and should/);
+    }), /no failureTitle and should/);
 
     assert.throws(_ => new Config({
-      audits: [basePath + '/missing-help-text'],
-    }), /meta.helpText property/);
+      audits: [basePath + '/missing-description'],
+    }), /meta.description property/);
 
     assert.throws(_ => new Config({
       audits: [
-        class EmptyStringHelpTextAudit extends Audit {
+        class EmptyStringDescriptionAudit extends Audit {
           static get meta() {
             return {
-              name: 'empty-string-help-text',
-              description: 'description',
-              helpText: '',
+              id: 'empty-string-description',
+              title: 'title',
+              description: '',
               requiredArtifacts: [],
             };
           }
@@ -269,7 +269,7 @@ describe('Config', () => {
           }
         },
       ],
-    }), /empty meta.helpText string/);
+    }), /empty meta.description string/);
 
     assert.throws(_ => new Config({
       audits: [basePath + '/missing-required-artifacts'],
@@ -509,10 +509,10 @@ describe('Config', () => {
     class CustomAudit extends Audit {
       static get meta() {
         return {
-          name: 'custom-audit',
+          id: 'custom-audit',
+          title: 'none',
+          failureTitle: 'none',
           description: 'none',
-          failureDescription: 'none',
-          helpText: 'none',
           requiredArtifacts: [],
         };
       }
@@ -529,7 +529,7 @@ describe('Config', () => {
       ],
     });
 
-    const auditNames = new Set(config.audits.map(audit => audit.implementation.meta.name));
+    const auditNames = new Set(config.audits.map(audit => audit.implementation.meta.id));
     assert.ok(config, 'failed to generate config');
     assert.ok(auditNames.has('custom-audit'), 'did not include custom audit');
     assert.ok(auditNames.has('unused-javascript'), 'did not include full audits');

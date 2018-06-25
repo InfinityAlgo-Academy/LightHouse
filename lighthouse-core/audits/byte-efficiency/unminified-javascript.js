@@ -28,11 +28,11 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      name: 'unminified-javascript',
-      description: 'Minify JavaScript',
+      id: 'unminified-javascript',
+      title: 'Minify JavaScript',
 
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      helpText: 'Minifying JavaScript files can reduce payload sizes and script parse time. ' +
+      description: 'Minifying JavaScript files can reduce payload sizes and script parse time. ' +
         '[Learn more](https://developers.google.com/speed/docs/insights/MinifyResources).',
       requiredArtifacts: ['Scripts', 'devtoolsLogs'],
     };

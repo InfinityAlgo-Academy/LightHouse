@@ -18,10 +18,10 @@ class LinkName extends AxeAudit {
    */
   static get meta() {
     return {
-      name: 'link-name',
-      description: 'Links have a discernible name',
-      failureDescription: 'Links do not have a discernible name',
-      helpText: 'Link text (and alternate text for images, when used as links) that is ' +
+      id: 'link-name',
+      title: 'Links have a discernible name',
+      failureTitle: 'Links do not have a discernible name',
+      description: 'Link text (and alternate text for images, when used as links) that is ' +
           'discernible, unique, and focusable improves the navigation experience for ' +
           'screen reader users. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/link-name?application=lighthouse).',

@@ -13,8 +13,8 @@ const constants = require('./constants');
 const isDeepEqual = require('lodash.isequal');
 const log = require('lighthouse-logger');
 const path = require('path');
-const Audit = require('../audits/audit');
-const Runner = require('../runner');
+const Audit = require('../audits/audit.js');
+const Runner = require('../runner.js');
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
@@ -69,7 +69,7 @@ function validateCategories(categories, audits, groups) {
         throw new Error(`missing an audit id at ${categoryId}[${index}]`);
       }
 
-      const audit = audits && audits.find(a => a.implementation.meta.name === auditRef.id);
+      const audit = audits && audits.find(a => a.implementation.meta.id === auditRef.id);
       if (!audit) {
         throw new Error(`could not find ${auditRef.id} audit for category ${categoryId}`);
       }
@@ -97,35 +97,35 @@ function validateCategories(categories, audits, groups) {
  */
 function assertValidAudit(auditDefinition, auditPath) {
   const auditName = auditPath ||
-    (auditDefinition && auditDefinition.meta && auditDefinition.meta.name);
+    (auditDefinition && auditDefinition.meta && auditDefinition.meta.id);
 
   if (typeof auditDefinition.audit !== 'function' || auditDefinition.audit === Audit.audit) {
     throw new Error(`${auditName} has no audit() method.`);
   }
 
-  if (typeof auditDefinition.meta.name !== 'string') {
-    throw new Error(`${auditName} has no meta.name property, or the property is not a string.`);
+  if (typeof auditDefinition.meta.id !== 'string') {
+    throw new Error(`${auditName} has no meta.id property, or the property is not a string.`);
+  }
+
+  if (typeof auditDefinition.meta.title !== 'string') {
+    throw new Error(
+      `${auditName} has no meta.title property, or the property is not a string.`
+    );
+  }
+
+  // If it'll have a ✔ or ✖ displayed alongside the result, it should have failureTitle
+  if (typeof auditDefinition.meta.failureTitle !== 'string' &&
+    auditDefinition.meta.scoreDisplayMode === Audit.SCORING_MODES.BINARY) {
+    throw new Error(`${auditName} has no failureTitle and should.`);
   }
 
   if (typeof auditDefinition.meta.description !== 'string') {
     throw new Error(
       `${auditName} has no meta.description property, or the property is not a string.`
     );
-  }
-
-  // If it'll have a ✔ or ✖ displayed alongside the result, it should have failureDescription
-  if (typeof auditDefinition.meta.failureDescription !== 'string' &&
-    auditDefinition.meta.scoreDisplayMode === Audit.SCORING_MODES.BINARY) {
-    throw new Error(`${auditName} has no failureDescription and should.`);
-  }
-
-  if (typeof auditDefinition.meta.helpText !== 'string') {
+  } else if (auditDefinition.meta.description === '') {
     throw new Error(
-      `${auditName} has no meta.helpText property, or the property is not a string.`
-    );
-  } else if (auditDefinition.meta.helpText === '') {
-    throw new Error(
-      `${auditName} has an empty meta.helpText string. Please add a description for the UI.`
+      `${auditName} has an empty meta.description string. Please add a description for the UI.`
     );
   }
 
@@ -525,7 +525,7 @@ class Config {
 
     // 2. Resolve which audits will need to run
     const audits = config.audits && config.audits.filter(auditDefn =>
-        requestedAuditNames.has(auditDefn.implementation.meta.name));
+        requestedAuditNames.has(auditDefn.implementation.meta.id));
 
     // 3. Resolve which gatherers will need to run
     const requiredGathererIds = Config.getGatherersNeededByAudits(audits);

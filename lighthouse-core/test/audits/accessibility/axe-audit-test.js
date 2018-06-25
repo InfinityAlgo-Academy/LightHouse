@@ -16,8 +16,8 @@ describe('Accessibility: axe-audit', () => {
       class FakeA11yAudit extends AxeAudit {
         static get meta() {
           return {
-            name: 'fake-aria-fail',
-            description: 'You have an aria-* issue',
+            id: 'fake-aria-fail',
+            title: 'You have an aria-* issue',
             requiredArtifacts: ['Accessibility'],
           };
         }

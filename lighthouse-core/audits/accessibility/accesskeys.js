@@ -18,10 +18,10 @@ class Accesskeys extends AxeAudit {
    */
   static get meta() {
     return {
-      name: 'accesskeys',
-      description: '`[accesskey]` values are unique',
-      failureDescription: '`[accesskey]` values are not unique',
-      helpText: 'Access keys let users quickly focus a part of the page. For proper ' +
+      id: 'accesskeys',
+      title: '`[accesskey]` values are unique',
+      failureTitle: '`[accesskey]` values are not unique',
+      description: 'Access keys let users quickly focus a part of the page. For proper ' +
           'navigation, each access key must be unique. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/2.2/accesskeys?application=lighthouse).',
       requiredArtifacts: ['Accessibility'],

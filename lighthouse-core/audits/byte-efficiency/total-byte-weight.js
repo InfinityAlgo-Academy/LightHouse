@@ -13,11 +13,11 @@ class TotalByteWeight extends ByteEfficiencyAudit {
    */
   static get meta() {
     return {
-      name: 'total-byte-weight',
-      description: 'Avoids enormous network payloads',
-      failureDescription: 'Has enormous network payloads',
+      id: 'total-byte-weight',
+      title: 'Avoids enormous network payloads',
+      failureTitle: 'Has enormous network payloads',
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      helpText:
+      description:
         'Large network payloads cost users real money and are highly correlated with ' +
         'long load times. [Learn ' +
         'more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).',
