@@ -5,17 +5,18 @@
  */
 'use strict';
 
-const Interactive = require('../../audits/interactive.js');
-const Runner = require('../../runner.js');
-const Util = require('../../report/html/renderer/util');
+const Interactive = require('../../../audits/metrics/interactive.js');
+const Runner = require('../../../runner.js');
+const Util = require('../../../report/html/renderer/util');
 const assert = require('assert');
 const options = Interactive.defaultOptions;
 
-const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
-const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const acceptableTrace = require('../../fixtures/traces/progressive-app-m60.json');
+const acceptableDevToolsLog =
+    require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
-const redirectTrace = require('../fixtures/traces/site-with-redirect.json');
-const redirectDevToolsLog = require('../fixtures/traces/site-with-redirect.devtools.log.json');
+const redirectTrace = require('../../fixtures/traces/site-with-redirect.json');
+const redirectDevToolsLog = require('../../fixtures/traces/site-with-redirect.devtools.log.json');
 
 
 /* eslint-env mocha */

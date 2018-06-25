@@ -1,25 +1,25 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 Google Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const Audit = require('./audit');
-const Util = require('../report/html/renderer/util');
+const Audit = require('../audit');
+const Util = require('../../report/html/renderer/util.js');
 
-class FirstMeaningfulPaint extends Audit {
+class FirstContentfulPaint extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'first-meaningful-paint',
-      title: 'First Meaningful Paint',
-      description: 'First Meaningful Paint measures when the primary content of a page is ' +
-          'visible. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint).',
+      id: 'first-contentful-paint',
+      title: 'First Contentful Paint',
+      description: 'First contentful paint marks the time at which the first text/image is ' +
+          `painted. [Learn more](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint).`,
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
   }
 
@@ -37,10 +37,7 @@ class FirstMeaningfulPaint extends Audit {
   }
 
   /**
-   * Audits the page to give a score for First Meaningful Paint.
-   * @see https://github.com/GoogleChrome/lighthouse/issues/26
-   * @see https://docs.google.com/document/d/1BR94tJdZLsin5poeet0XoTW60M0SjvOJQttKT-JK8HI/view
-   * @param {LH.Artifacts} artifacts The artifacts from the gather phase.
+   * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
@@ -48,7 +45,7 @@ class FirstMeaningfulPaint extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
-    const metricResult = await artifacts.requestFirstMeaningfulPaint(metricComputationData);
+    const metricResult = await artifacts.requestFirstContentfulPaint(metricComputationData);
 
     return {
       score: Audit.computeLogNormalScore(
@@ -62,4 +59,4 @@ class FirstMeaningfulPaint extends Audit {
   }
 }
 
-module.exports = FirstMeaningfulPaint;
+module.exports = FirstContentfulPaint;

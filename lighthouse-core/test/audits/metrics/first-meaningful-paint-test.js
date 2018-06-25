@@ -5,15 +5,15 @@
  */
 'use strict';
 
-const FMPAudit = require('../../audits/first-meaningful-paint.js');
-const Audit = require('../../audits/audit.js');
-const Util = require('../../report/html/renderer/util');
+const FMPAudit = require('../../../audits/metrics/first-meaningful-paint.js');
+const Audit = require('../../../audits/audit.js');
+const Util = require('../../../report/html/renderer/util');
 const assert = require('assert');
 const options = FMPAudit.defaultOptions;
-const trace = require('../fixtures/traces/progressive-app-m60.json');
-const devtoolsLogs = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const trace = require('../../fixtures/traces/progressive-app-m60.json');
+const devtoolsLogs = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
-const Runner = require('../../runner.js');
+const Runner = require('../../../runner.js');
 const computedArtifacts = Runner.instantiateComputedArtifacts();
 
 /* eslint-env mocha */

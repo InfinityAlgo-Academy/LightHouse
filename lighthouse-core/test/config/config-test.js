@@ -323,7 +323,7 @@ describe('Config', () => {
           description: 'The best group around.',
         },
       },
-      audits: ['first-meaningful-paint'],
+      audits: ['metrics/first-meaningful-paint'],
       categories: {
         pwa: {
           auditRefs: [
@@ -360,9 +360,9 @@ describe('Config', () => {
       ],
       audits: [
         'accessibility/color-contrast',
-        'first-meaningful-paint',
-        'first-cpu-idle',
-        'estimated-input-latency',
+        'metrics/first-meaningful-paint',
+        'metrics/first-cpu-idle',
+        'metrics/estimated-input-latency',
       ],
       categories: {
         'needed-category': {
@@ -404,9 +404,9 @@ describe('Config', () => {
       ],
       audits: [
         'accessibility/color-contrast',
-        'first-meaningful-paint',
-        'first-cpu-idle',
-        'estimated-input-latency',
+        'metrics/first-meaningful-paint',
+        'metrics/first-cpu-idle',
+        'metrics/estimated-input-latency',
       ],
       categories: {
         'needed-category': {

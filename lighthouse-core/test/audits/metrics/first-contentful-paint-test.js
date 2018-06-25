@@ -4,14 +4,13 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
-
-const Audit = require('../../audits/first-contentful-paint.js');
-const Runner = require('../../runner.js');
+const Audit = require('../../../audits/metrics/first-contentful-paint');
+const Runner = require('../../../runner.js');
 const assert = require('assert');
 const options = Audit.defaultOptions;
 
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
+const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 /* eslint-env mocha */
 
