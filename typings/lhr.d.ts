@@ -83,6 +83,8 @@ declare global {
       }
 
       export module Audit {
+        export type MetricDetails = ResultLite.Audit.MetricDetails;
+
         export interface OpportunityDetailsItem {
           url: string;
           wastedBytes?: number;
