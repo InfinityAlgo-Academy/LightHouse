@@ -173,7 +173,7 @@ class Driver {
    * @param {string} scriptSource
    * @return {Promise<LH.Crdp.Page.AddScriptToEvaluateOnLoadResponse>} Identifier of the added script.
    */
-  evaluteScriptOnNewDocument(scriptSource) {
+  evaluateScriptOnNewDocument(scriptSource) {
     return this.sendCommand('Page.addScriptToEvaluateOnLoad', {
       scriptSource,
     });
@@ -1064,7 +1064,7 @@ class Driver {
    * @return {Promise<void>}
    */
   async cacheNatives() {
-    await this.evaluteScriptOnNewDocument(`window.__nativePromise = Promise;
+    await this.evaluateScriptOnNewDocument(`window.__nativePromise = Promise;
         window.__nativeError = Error;`);
   }
 
@@ -1074,7 +1074,7 @@ class Driver {
    */
   async registerPerformanceObserver() {
     const scriptStr = `(${pageFunctions.registerPerformanceObserverInPage.toString()})()`;
-    await this.evaluteScriptOnNewDocument(scriptStr);
+    await this.evaluateScriptOnNewDocument(scriptStr);
   }
 
   /**
