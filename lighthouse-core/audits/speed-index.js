@@ -57,6 +57,10 @@ class SpeedIndex extends Audit {
       ),
       rawValue: metricResult.timing,
       displayValue: [Util.MS_DISPLAY_VALUE, metricResult.timing],
+      details: {
+        type: 'metric',
+        timespanMs: metricResult.timing,
+      },
     };
   }
 }

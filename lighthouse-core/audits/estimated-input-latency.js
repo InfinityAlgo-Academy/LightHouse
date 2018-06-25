@@ -57,6 +57,10 @@ class EstimatedInputLatency extends Audit {
       ),
       rawValue: metricResult.timing,
       displayValue: ['%d\xa0ms', metricResult.timing],
+      details: {
+        type: 'metric',
+        timespanMs: metricResult.timing,
+      },
     };
   }
 }

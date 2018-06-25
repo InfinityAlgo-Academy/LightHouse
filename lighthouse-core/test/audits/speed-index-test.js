@@ -26,6 +26,8 @@ describe('Performance: speed-index audit', () => {
     return Audit.audit(artifacts, {options, settings}).then(result => {
       assert.equal(result.score, 1);
       assert.equal(result.rawValue, 605);
+      assert.equal(result.details.timespanMs, 605);
+      assert.equal(result.details.type, 'metric');
     });
   }).timeout(10000);
 

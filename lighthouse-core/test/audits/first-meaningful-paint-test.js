@@ -42,5 +42,7 @@ describe('Performance: first-meaningful-paint audit', () => {
     assert.equal(fmpResult.score, 0.96);
     assert.equal(Util.formatDisplayValue(fmpResult.displayValue), '1,950\xa0ms');
     assert.equal(Math.round(fmpResult.rawValue), 1949);
+    assert.equal(Math.round(fmpResult.details.timespanMs), 1949);
+    assert.equal(fmpResult.details.type, 'metric');
   });
 });

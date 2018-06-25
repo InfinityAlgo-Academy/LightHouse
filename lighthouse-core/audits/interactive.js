@@ -73,6 +73,10 @@ class InteractiveMetric extends Audit {
       extendedInfo: {
         value: extendedInfo,
       },
+      details: {
+        type: 'metric',
+        timespanMs: timeInMs,
+      },
     };
   }
 }

@@ -30,5 +30,7 @@ describe('Performance: first-contentful-paint audit', () => {
     const result = await Audit.audit(artifacts, {settings, options});
     assert.equal(result.score, 1);
     assert.equal(result.rawValue, 498.87);
+    assert.equal(result.details.timespanMs, 498.87);
+    assert.equal(result.details.type, 'metric');
   });
 });

@@ -29,6 +29,8 @@ describe('Performance: estimated-input-latency audit', () => {
     const settings = {throttlingMethod: 'provided'};
     return Audit.audit(artifacts, {options, settings}).then(output => {
       assert.equal(Math.round(output.rawValue * 10) / 10, 17.1);
+      assert.equal(output.details.type, 'metric');
+      assert.equal(Math.round(output.details.timespanMs * 10) / 10, 17.1);
       assert.equal(Util.formatDisplayValue(output.displayValue), '17\xa0ms');
       assert.equal(output.score, 1);
     });

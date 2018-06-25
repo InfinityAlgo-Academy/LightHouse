@@ -34,6 +34,8 @@ describe('Performance: interactive audit', () => {
     return Interactive.audit(artifacts, {options, settings}).then(output => {
       assert.equal(output.score, 1);
       assert.equal(Math.round(output.rawValue), 1582);
+      assert.equal(Math.round(output.details.timespanMs), 1582);
+      assert.equal(output.details.type, 'metric');
       assert.equal(Util.formatDisplayValue(output.displayValue), '1,580\xa0ms');
     });
   });
