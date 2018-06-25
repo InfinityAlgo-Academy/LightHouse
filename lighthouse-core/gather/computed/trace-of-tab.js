@@ -33,6 +33,35 @@ class TraceOfTab extends ComputedArtifact {
   }
 
   /**
+   * @param {LH.TraceEvent[]} traceEvents
+   * @param {(e: LH.TraceEvent) => boolean} filter
+   */
+  static filteredStableSort(traceEvents, filter) {
+    // create an array of the indices that we want to keep
+    const indices = [];
+    for (let srcIndex = 0; srcIndex < traceEvents.length; srcIndex++) {
+      if (filter(traceEvents[srcIndex])) {
+        indices.push(srcIndex);
+      }
+    }
+
+    // sort by ts, if there's no ts difference sort by index
+    indices.sort((indexA, indexB) => {
+      const result = traceEvents[indexA].ts - traceEvents[indexB].ts;
+      return result ? result : indexA - indexB;
+    });
+
+    // create a new array using the target indices from previous sort step
+    const sorted = [];
+    for (let i = 0; i < indices.length; i++) {
+      sorted.push(traceEvents[indices[i]]);
+    }
+
+    return sorted;
+  }
+
+
+  /**
    * Finds key trace events, identifies main process/thread, and returns timings of trace events
    * in milliseconds since navigation start in addition to the standard microsecond monotonic timestamps.
    * @param {LH.Trace} trace
@@ -41,16 +70,12 @@ class TraceOfTab extends ComputedArtifact {
   async compute_(trace) {
     // Parse the trace for our key events and sort them by timestamp. Note: sort
     // *must* be stable to keep events correctly nested.
-    /** @type Array<LH.TraceEvent> */
-    const keyEvents = trace.traceEvents
-      .filter(e => {
-        return e.cat.includes('blink.user_timing') ||
-            e.cat.includes('loading') ||
-            e.cat.includes('devtools.timeline') ||
-            e.cat === '__metadata';
-      })
-      // @ts-ignore - stableSort added to Array by WebInspector.
-      .stableSort((event0, event1) => event0.ts - event1.ts);
+    const keyEvents = TraceOfTab.filteredStableSort(trace.traceEvents, e => {
+      return e.cat.includes('blink.user_timing') ||
+          e.cat.includes('loading') ||
+          e.cat.includes('devtools.timeline') ||
+          e.cat === '__metadata';
+    });
 
     // Find the inspected frame
     const {startedInPageEvt, frameId} = TracingProcessor.findTracingStartedEvt(keyEvents);
@@ -102,14 +127,11 @@ class TraceOfTab extends ComputedArtifact {
 
     // subset all trace events to just our tab's process (incl threads other than main)
     // stable-sort events to keep them correctly nested.
-    /** @type Array<LH.TraceEvent> */
-    const processEvents = trace.traceEvents
-      .filter(e => e.pid === /** @type {LH.TraceEvent} */ (startedInPageEvt).pid)
-      // @ts-ignore - stableSort added to Array by WebInspector.
-      .stableSort((event0, event1) => event0.ts - event1.ts);
+    const processEvents = TraceOfTab
+      .filteredStableSort(trace.traceEvents, e => e.pid === startedInPageEvt.pid);
 
     const mainThreadEvents = processEvents
-      .filter(e => e.tid === /** @type {LH.TraceEvent} */ (startedInPageEvt).tid);
+      .filter(e => e.tid === startedInPageEvt.tid);
 
     const traceEnd = trace.traceEvents.reduce((max, evt) => {
       return max.ts > evt.ts ? max : evt;
