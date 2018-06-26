@@ -208,7 +208,7 @@ class Runner {
    */
   static async _runAudit(auditDefn, artifacts, settings) {
     const audit = auditDefn.implementation;
-    const status = `Evaluating: ${audit.meta.description}`;
+    const status = `Evaluating: ${audit.meta.title}`;
 
     log.log('status', status);
     let auditResult;
