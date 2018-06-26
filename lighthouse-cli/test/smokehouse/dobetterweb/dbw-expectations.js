@@ -17,7 +17,7 @@ module.exports = [
         score: 0,
         details: {
           items: {
-            length: '>3',
+            length: 6,
           },
         },
       },

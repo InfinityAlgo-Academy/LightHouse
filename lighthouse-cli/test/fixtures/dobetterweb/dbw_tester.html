@@ -302,11 +302,6 @@ function deprecationsTest() {
 
   // TODO: some deprecated API messages are not currently being logged correctly.
   // See: https://crbug.com/680832
-  try {
-    MediaStreamTrack.getSources(); // Should eventually FAIL
-  } catch(e) {}
-
-  console.timeline(); // Should eventually FAIL
 
   // FAIL
   const xhr = new XMLHttpRequest();
