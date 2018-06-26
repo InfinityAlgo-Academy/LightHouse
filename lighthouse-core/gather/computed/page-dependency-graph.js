@@ -12,7 +12,7 @@ const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-an
 const TracingProcessor = require('../../lib/traces/tracing-processor');
 const WebInspector = require('../../lib/web-inspector');
 
-const Node = require('../../lib/dependency-graph/node.js'); // eslint-disable-line no-unused-vars
+/** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
 // Tasks smaller than 10 ms have minimal impact on simulation
 const MINIMUM_TASK_DURATION_OF_INTEREST = 10;

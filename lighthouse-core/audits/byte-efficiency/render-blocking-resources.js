@@ -10,13 +10,14 @@
 'use strict';
 
 const Audit = require('../audit');
-const Node = require('../../lib/dependency-graph/node');
+const BaseNode = require('../../lib/dependency-graph/base-node');
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const UnusedCSS = require('./unused-css-rules');
 const WebInspector = require('../../lib/web-inspector');
 
-const Simulator = require('../../lib/dependency-graph/simulator/simulator'); // eslint-disable-line no-unused-vars
-const NetworkNode = require('../../lib/dependency-graph/network-node.js'); // eslint-disable-line no-unused-vars
+/** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
+/** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
+/** @typedef {import('../../lib/dependency-graph/network-node.js')} NetworkNode */
 
 // Because of the way we detect blocking stylesheets, asynchronously loaded
 // CSS with link[rel=preload] and an onload handler (see https://github.com/filamentgroup/loadCSS)
@@ -35,11 +36,10 @@ function getNodesAndTimingByUrl(nodeTimings) {
   const nodes = Array.from(nodeTimings.keys());
   nodes.forEach(node => {
     if (node.type !== 'network') return;
-    const networkNode = /** @type {NetworkNode} */ (node);
     const nodeTiming = nodeTimings.get(node);
     if (!nodeTiming) return;
 
-    urlMap[networkNode.record.url] = {node, nodeTiming};
+    urlMap[node.record.url] = {node, nodeTiming};
   });
 
   return urlMap;
@@ -149,16 +149,14 @@ class RenderBlockingResources extends Audit {
     const minimalFCPGraph = /** @type {NetworkNode} */ (fcpGraph.cloneWithRelationships(node => {
       // If a node can be deferred, exclude it from the new FCP graph
       const canDeferRequest = deferredIds.has(node.id);
-      if (node.type !== Node.TYPES.NETWORK) return !canDeferRequest;
-
-      const networkNode = /** @type {NetworkNode} */ (node);
+      if (node.type !== BaseNode.TYPES.NETWORK) return !canDeferRequest;
 
       const isStylesheet =
-        networkNode.record._resourceType === WebInspector.resourceTypes.Stylesheet;
+        node.record._resourceType === WebInspector.resourceTypes.Stylesheet;
       if (canDeferRequest && isStylesheet) {
         // We'll inline the used bytes of the stylesheet and assume the rest can be deferred
-        const wastedBytes = wastedCssBytesByUrl.get(networkNode.record.url) || 0;
-        totalChildNetworkBytes += (networkNode.record.transferSize || 0) - wastedBytes;
+        const wastedBytes = wastedCssBytesByUrl.get(node.record.url) || 0;
+        totalChildNetworkBytes += (node.record.transferSize || 0) - wastedBytes;
       }
       return !canDeferRequest;
     }));

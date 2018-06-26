@@ -7,11 +7,10 @@
 
 const Audit = require('../audit');
 const linearInterpolation = require('../../lib/statistics').linearInterpolation;
-const Interactive = require('../../gather/computed/metrics/lantern-interactive'); // eslint-disable-line max-len
-const Simulator = require('../../lib/dependency-graph/simulator/simulator'); // eslint-disable-line no-unused-vars
-const Node = require('../../lib/dependency-graph/node.js'); // eslint-disable-line no-unused-vars
+const Interactive = require('../../gather/computed/metrics/lantern-interactive');
 
-const NetworkNode = require('../../lib/dependency-graph/network-node.js'); // eslint-disable-line no-unused-vars
+/** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
+/** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
 const KB_IN_BYTES = 1024;
 
@@ -148,15 +147,14 @@ class UnusedBytes extends Audit {
     const originalTransferSizes = new Map();
     graph.traverse(node => {
       if (node.type !== 'network') return;
-      const networkNode = /** @type {NetworkNode} */ (node);
-      const result = resultsByUrl.get(networkNode.record.url);
+      const result = resultsByUrl.get(node.record.url);
       if (!result) return;
 
-      const original = networkNode.record.transferSize;
-      originalTransferSizes.set(networkNode.record.requestId, original);
+      const original = node.record.transferSize;
+      originalTransferSizes.set(node.record.requestId, original);
 
       const wastedBytes = result.wastedBytes;
-      networkNode.record.transferSize = Math.max(original - wastedBytes, 0);
+      node.record.transferSize = Math.max(original - wastedBytes, 0);
     });
 
     const simulationAfterChanges = simulator.simulate(graph, {label: afterLabel});
@@ -164,10 +162,9 @@ class UnusedBytes extends Audit {
     // Restore the original transfer size after we've done our simulation
     graph.traverse(node => {
       if (node.type !== 'network') return;
-      const networkNode = /** @type {NetworkNode} */ (node);
-      const originalTransferSize = originalTransferSizes.get(networkNode.record.requestId);
+      const originalTransferSize = originalTransferSizes.get(node.record.requestId);
       if (originalTransferSize === undefined) return;
-      networkNode.record.transferSize = originalTransferSize;
+      node.record.transferSize = originalTransferSize;
     });
 
     const savingsOnOverallLoad = simulationBeforeChanges.timeInMs - simulationAfterChanges.timeInMs;

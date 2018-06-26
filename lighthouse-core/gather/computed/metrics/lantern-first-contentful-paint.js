@@ -6,9 +6,9 @@
 'use strict';
 
 const MetricArtifact = require('./lantern-metric');
-const Node = require('../../../lib/dependency-graph/node');
-const CPUNode = require('../../../lib/dependency-graph/cpu-node'); // eslint-disable-line no-unused-vars
-const NetworkNode = require('../../../lib/dependency-graph/network-node'); // eslint-disable-line no-unused-vars
+const BaseNode = require('../../../lib/dependency-graph/base-node');
+
+/** @typedef {BaseNode.Node} Node */
 
 class FirstContentfulPaint extends MetricArtifact {
   get name() {
@@ -42,13 +42,12 @@ class FirstContentfulPaint extends MetricArtifact {
     return dependencyGraph.cloneWithRelationships(node => {
       if (node.endTime > fcp && !node.isMainDocument()) return false;
       // Include EvaluateScript tasks for blocking scripts
-      if (node.type === Node.TYPES.CPU) {
-        return /** @type {CPUNode} */ (node).isEvaluateScriptFor(blockingScriptUrls);
+      if (node.type === BaseNode.TYPES.CPU) {
+        return node.isEvaluateScriptFor(blockingScriptUrls);
       }
 
-      const asNetworkNode = /** @type {NetworkNode} */ (node);
       // Include non-script-initiated network requests with a render-blocking priority
-      return asNetworkNode.hasRenderBlockingPriority() && asNetworkNode.initiatorType !== 'script';
+      return node.hasRenderBlockingPriority() && node.initiatorType !== 'script';
     });
   }
 
@@ -66,12 +65,12 @@ class FirstContentfulPaint extends MetricArtifact {
     return dependencyGraph.cloneWithRelationships(node => {
       if (node.endTime > fcp && !node.isMainDocument()) return false;
       // Include EvaluateScript tasks for blocking scripts
-      if (node.type === Node.TYPES.CPU) {
-        return /** @type {CPUNode} */ (node).isEvaluateScriptFor(blockingScriptUrls);
+      if (node.type === BaseNode.TYPES.CPU) {
+        return node.isEvaluateScriptFor(blockingScriptUrls);
       }
 
       // Include non-script-initiated network requests with a render-blocking priority
-      return /** @type {NetworkNode} */ (node).hasRenderBlockingPriority();
+      return node.hasRenderBlockingPriority();
     });
   }
 }

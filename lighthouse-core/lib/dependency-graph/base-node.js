@@ -6,6 +6,12 @@
 'use strict';
 
 /**
+ * A union of all types derived from BaseNode, allowing type check discrimination
+ * based on `node.type`. If a new node type is created, it should be added here.
+ * @typedef {import('./cpu-node.js') | import('./network-node.js')} Node
+ */
+
+/**
  * @fileoverview This class encapsulates logic for handling resources and tasks used to model the
  * execution dependency graph of the page. A node has a unique identifier and can depend on other
  * nodes/be depended on. The construction of the graph maintains some important invariants that are
@@ -17,7 +23,7 @@
  * This allows particular optimizations in this class so that we do no need to check for cycles as
  * these methods are called and we can always start traversal at the root node.
  */
-class Node {
+class BaseNode {
   /**
    * @param {string} id
    */
@@ -38,7 +44,7 @@ class Node {
   }
 
   /**
-   * @return {string}
+   * @return {typeof BaseNode.TYPES[keyof typeof BaseNode.TYPES]}
    */
   get type() {
     throw new Error('Unimplemented');
@@ -97,8 +103,7 @@ class Node {
    * @return {Node}
    */
   getRootNode() {
-    /** @type {Node} */
-    let rootNode = this;
+    let rootNode = /** @type {Node} */ (/** @type {BaseNode} */ (this));
     while (rootNode._dependencies.length) {
       rootNode = rootNode._dependencies[0];
     }
@@ -110,7 +115,7 @@ class Node {
    * @param {Node} node
    */
   addDependent(node) {
-    node.addDependency(this);
+    node.addDependency(/** @type {Node} */ (/** @type {BaseNode} */ (this)));
   }
 
   /**
@@ -121,7 +126,7 @@ class Node {
       return;
     }
 
-    node._dependents.push(this);
+    node._dependents.push(/** @type {Node} */ (/** @type {BaseNode} */ (this)));
     this._dependencies.push(node);
   }
 
@@ -129,7 +134,7 @@ class Node {
    * @param {Node} node
    */
   removeDependent(node) {
-    node.removeDependency(this);
+    node.removeDependency(/** @type {Node} */ (/** @type {BaseNode} */ (this)));
   }
 
   /**
@@ -140,7 +145,8 @@ class Node {
       return;
     }
 
-    node._dependents.splice(node._dependents.indexOf(this), 1);
+    const thisIndex = node._dependents.indexOf(/** @type {Node} */ (/** @type {BaseNode} */(this)));
+    node._dependents.splice(thisIndex, 1);
     this._dependencies.splice(this._dependencies.indexOf(node), 1);
   }
 
@@ -155,7 +161,7 @@ class Node {
    * @return {Node}
    */
   cloneWithoutRelationships() {
-    const node = new Node(this.id);
+    const node = /** @type {Node} */ (new BaseNode(this.id));
     node.setIsMainDocument(this._isMainDocument);
     return node;
   }
@@ -210,12 +216,11 @@ class Node {
   /**
    * Traverses all paths in the graph, calling iterator on each node visited. Decides which nodes to
    * visit with the getNext function.
-   * @param {function(Node,Node[])} iterator
-   * @param {function(Node):Node[]} getNext
+   * @param {function(Node, Node[])} iterator
+   * @param {function(Node): Node[]} getNext
    */
   _traversePaths(iterator, getNext) {
-    /** @type {Node[][]} */
-    const stack = [[this]];
+    const stack = [[/** @type {Node} */(/** @type {BaseNode} */(this))]];
     while (stack.length) {
       /** @type {Node[]} */
       // @ts-ignore - stack has length so it's guaranteed to have an item
@@ -233,8 +238,8 @@ class Node {
   /**
    * Traverses all connected nodes exactly once, calling iterator on each. Decides which nodes to
    * visit with the getNext function.
-   * @param {function(Node,Node[])} iterator
-   * @param {function(Node):Node[]} [getNext] Defaults to returning the dependents.
+   * @param {function(Node, Node[])} iterator
+   * @param {function(Node): Node[]} [getNext] Defaults to returning the dependents.
    */
   traverse(iterator, getNext) {
     if (!getNext) {
@@ -264,7 +269,7 @@ class Node {
   static hasCycle(node, direction = 'both') {
     // Checking 'both' is the default entrypoint to recursively check both directions
     if (direction === 'both') {
-      return Node.hasCycle(node, 'dependents') || Node.hasCycle(node, 'dependencies');
+      return BaseNode.hasCycle(node, 'dependents') || BaseNode.hasCycle(node, 'dependencies');
     }
 
     const visited = new Set();
@@ -308,9 +313,9 @@ class Node {
   }
 }
 
-Node.TYPES = {
+BaseNode.TYPES = /** @type {{NETWORK: 'network', CPU: 'cpu'}} */({
   NETWORK: 'network',
   CPU: 'cpu',
-};
+});
 
-module.exports = Node;
+module.exports = BaseNode;

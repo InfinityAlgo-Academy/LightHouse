@@ -6,8 +6,10 @@
 'use strict';
 
 const LanternMetricArtifact = require('./lantern-metric');
-const Node = require('../../../lib/dependency-graph/node');
+const BaseNode = require('../../../lib/dependency-graph/base-node');
 const EstimatedInputLatency = require('./estimated-input-latency');
+
+/** @typedef {BaseNode.Node} Node */
 
 class LanternEstimatedInputLatency extends LanternMetricArtifact {
   get name() {
@@ -82,7 +84,7 @@ class LanternEstimatedInputLatency extends LanternMetricArtifact {
     /** @type {Array<{start: number, end: number, duration: number}>} */
     const events = [];
     for (const [node, timing] of nodeTimings.entries()) {
-      if (node.type !== Node.TYPES.CPU) continue;
+      if (node.type !== BaseNode.TYPES.CPU) continue;
       if (timing.endTime < fmpTimeInMs) continue;
 
       events.push({

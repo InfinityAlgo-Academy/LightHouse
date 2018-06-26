@@ -6,7 +6,7 @@
 'use strict';
 
 const PageDependencyGraph = require('../../../gather/computed/page-dependency-graph');
-const Node = require('../../../lib/dependency-graph/node');
+const BaseNode = require('../../../lib/dependency-graph/base-node');
 const Runner = require('../../../runner.js');
 const WebInspector = require('../../../lib/web-inspector');
 
@@ -65,7 +65,7 @@ describe('PageDependencyGraph computed artifact:', () => {
         trace: sampleTrace,
         devtoolsLog: sampleDevtoolsLog,
       }).then(output => {
-        assert.ok(output instanceof Node, 'did not return a graph');
+        assert.ok(output instanceof BaseNode, 'did not return a graph');
 
         const dependents = output.getDependents();
         const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);

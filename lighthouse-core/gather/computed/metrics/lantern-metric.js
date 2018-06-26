@@ -6,10 +6,12 @@
 'use strict';
 
 const ComputedArtifact = require('../computed-artifact');
-const Node = require('../../../lib/dependency-graph/node');
-const NetworkNode = require('../../../lib/dependency-graph/network-node'); // eslint-disable-line no-unused-vars
-const Simulator = require('../../../lib/dependency-graph/simulator/simulator'); // eslint-disable-line no-unused-vars
-const WebInspector = require('../../../lib/web-inspector');
+const BaseNode = require('../../../lib/dependency-graph/base-node');
+const ResourceType = require('../../../../third-party/devtools/ResourceType');
+
+/** @typedef {BaseNode.Node} Node */
+/** @typedef {import('../../../lib/dependency-graph/network-node')} NetworkNode */
+/** @typedef {import('../../../lib/dependency-graph/simulator/simulator')} Simulator */
 
 class LanternMetricArtifact extends ComputedArtifact {
   /**
@@ -18,14 +20,14 @@ class LanternMetricArtifact extends ComputedArtifact {
    * @return {Set<string>}
    */
   static getScriptUrls(dependencyGraph, condition) {
+    /** @type {Set<string>} */
     const scriptUrls = new Set();
 
     dependencyGraph.traverse(node => {
-      if (node.type === Node.TYPES.CPU) return;
-      const asNetworkNode = /** @type {NetworkNode} */ (node);
-      if (asNetworkNode.record._resourceType !== WebInspector.resourceTypes.Script) return;
-      if (condition && !condition(asNetworkNode)) return;
-      scriptUrls.add(asNetworkNode.record.url);
+      if (node.type === BaseNode.TYPES.CPU) return;
+      if (node.record._resourceType !== ResourceType.TYPES.Script) return;
+      if (condition && !condition(node)) return;
+      scriptUrls.add(node.record.url);
     });
 
     return scriptUrls;

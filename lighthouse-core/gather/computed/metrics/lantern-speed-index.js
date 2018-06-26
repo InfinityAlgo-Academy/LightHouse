@@ -6,8 +6,9 @@
 'use strict';
 
 const MetricArtifact = require('./lantern-metric');
-const Node = require('../../../lib/dependency-graph/node');
-const CPUNode = require('../../../lib/dependency-graph/cpu-node'); // eslint-disable-line no-unused-vars
+const BaseNode = require('../../../lib/dependency-graph/base-node');
+
+/** @typedef {BaseNode.Node} Node */
 
 class SpeedIndex extends MetricArtifact {
   get name() {
@@ -95,10 +96,9 @@ class SpeedIndex extends MetricArtifact {
     /** @type {Array<{time: number, weight: number}>} */
     const layoutWeights = [];
     for (const [node, timing] of nodeTimings.entries()) {
-      if (node.type !== Node.TYPES.CPU) continue;
+      if (node.type !== BaseNode.TYPES.CPU) continue;
 
-      const cpuNode = /** @type {CPUNode} */ (node);
-      if (cpuNode.childEvents.some(x => x.name === 'Layout')) {
+      if (node.childEvents.some(x => x.name === 'Layout')) {
         const timingWeight = Math.max(Math.log2(timing.endTime - timing.startTime), 0);
         layoutWeights.push({time: timing.endTime, weight: timingWeight});
       }
