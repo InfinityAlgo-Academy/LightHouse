@@ -81,7 +81,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
     }
 
     const totalTransferredBytes = ByteEfficiencyAudit.estimateTransferSize(
-        stylesheetInfo.networkRecord, totalUncompressedBytes, 'stylesheet');
+        stylesheetInfo.networkRecord, totalUncompressedBytes, 'Stylesheet');
     const percentUnused = (totalUncompressedBytes - usedUncompressedBytes) / totalUncompressedBytes;
     const wastedBytes = Math.round(percentUnused * totalTransferredBytes);
 

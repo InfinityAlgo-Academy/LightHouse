@@ -7,7 +7,7 @@
 
 const MetricArtifact = require('./lantern-metric');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
-const WebInspector = require('../../../lib/web-inspector');
+const NetworkRequest = require('../../../lib/network-request');
 
 /** @typedef {BaseNode.Node} Node */
 
@@ -45,8 +45,8 @@ class Interactive extends MetricArtifact {
       }
 
       // Include all scripts and high priority requests, exclude all images
-      const isImage = node.record._resourceType === WebInspector.resourceTypes.Image;
-      const isScript = node.record._resourceType === WebInspector.resourceTypes.Script;
+      const isImage = node.record._resourceType === NetworkRequest.TYPES.Image;
+      const isScript = node.record._resourceType === NetworkRequest.TYPES.Script;
       return (
         !isImage &&
         (isScript ||

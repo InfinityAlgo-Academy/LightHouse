@@ -11,12 +11,21 @@
 'use strict';
 
 const Gatherer = require('../gatherer');
+const NetworkRequest = require('../../../lib/network-request');
 const gzip = require('zlib').gzip;
 
+const CHROME_EXTENSION_PROTOCOL = 'chrome-extension:';
 const compressionHeaders = ['content-encoding', 'x-original-content-encoding'];
 const compressionTypes = ['gzip', 'br', 'deflate'];
 const binaryMimeTypes = ['image', 'audio', 'video'];
-const CHROME_EXTENSION_PROTOCOL = 'chrome-extension:';
+const textResourceTypes = [
+  NetworkRequest.TYPES.Document,
+  NetworkRequest.TYPES.Script,
+  NetworkRequest.TYPES.Stylesheet,
+  NetworkRequest.TYPES.XHR,
+  NetworkRequest.TYPES.Fetch,
+  NetworkRequest.TYPES.EventSource,
+];
 
 class ResponseCompression extends Gatherer {
   /**
@@ -29,14 +38,14 @@ class ResponseCompression extends Gatherer {
 
     networkRecords.forEach(record => {
       const mimeType = record._mimeType;
-      const resourceType = record._resourceType;
+      const resourceType = record._resourceType || NetworkRequest.TYPES.Other;
       const resourceSize = record._resourceSize;
 
       const isBinaryResource = mimeType && binaryMimeTypes.some(type => mimeType.startsWith(type));
-      const isTextBasedResource = !isBinaryResource && resourceType && resourceType.isTextType();
+      const isTextResource = !isBinaryResource && textResourceTypes.includes(resourceType);
       const isChromeExtensionResource = record.url.startsWith(CHROME_EXTENSION_PROTOCOL);
 
-      if (!isTextBasedResource || !resourceSize || !record.finished ||
+      if (!isTextResource || !resourceSize || !record.finished ||
         isChromeExtensionResource || !record.transferSize || record.statusCode === 304) {
         return;
       }

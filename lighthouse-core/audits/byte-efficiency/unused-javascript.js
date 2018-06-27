@@ -73,7 +73,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     }
 
     const totalBytes = ByteEfficiencyAudit.estimateTransferSize(networkRecord, contentLength,
-        'script');
+        'Script');
     const wastedRatio = (unusedLength / contentLength) || 0;
     const wastedBytes = Math.round(totalBytes * wastedRatio);
 

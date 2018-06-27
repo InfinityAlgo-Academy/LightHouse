@@ -57,7 +57,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
     }
 
     const totalBytes = ByteEfficiencyAudit.estimateTransferSize(networkRecord, contentLength,
-      'script');
+      'Script');
     const wastedRatio = 1 - totalTokenLength / contentLength;
     const wastedBytes = Math.round(totalBytes * wastedRatio);
 

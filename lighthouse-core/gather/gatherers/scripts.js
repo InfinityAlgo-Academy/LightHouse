@@ -6,7 +6,7 @@
 'use strict';
 
 const Gatherer = require('./gatherer');
-const WebInspector = require('../../lib/web-inspector');
+const NetworkRequest = require('../../lib/network-request');
 
 /**
  * @fileoverview Gets JavaScript file contents.
@@ -23,7 +23,7 @@ class Scripts extends Gatherer {
     /** @type {Object<string, string>} */
     const scriptContentMap = {};
     const scriptRecords = loadData.networkRecords
-      .filter(record => record._resourceType === WebInspector.resourceTypes.Script);
+      .filter(record => record._resourceType === NetworkRequest.TYPES.Script);
 
     for (const record of scriptRecords) {
       try {

@@ -24,7 +24,7 @@ const traceData = {
       _mimeType: 'image/jpeg',
       _resourceSize: 10000,
       transferSize: 20000,
-      _resourceType: {_name: 'image'},
+      _resourceType: 'Image',
       finished: true,
     },
     {
@@ -32,7 +32,7 @@ const traceData = {
       _mimeType: 'image/png',
       _resourceSize: 11000,
       transferSize: 20000,
-      _resourceType: {_name: 'image'},
+      _resourceType: 'Image',
       finished: true,
     },
     {
@@ -40,7 +40,7 @@ const traceData = {
       _mimeType: 'image/bmp',
       _resourceSize: 12000,
       transferSize: 9000, // bitmap was compressed another way
-      _resourceType: {_name: 'image'},
+      _resourceType: 'Image',
       finished: true,
     },
     {
@@ -48,7 +48,7 @@ const traceData = {
       _mimeType: 'image/bmp',
       _resourceSize: 12000,
       transferSize: 20000,
-      _resourceType: {_name: 'image'},
+      _resourceType: 'Image',
       finished: true,
     },
     {
@@ -56,7 +56,7 @@ const traceData = {
       _mimeType: 'image/svg+xml',
       _resourceSize: 13000,
       transferSize: 20000,
-      _resourceType: {_name: 'image'},
+      _resourceType: 'Image',
       finished: true,
     },
     {
@@ -64,13 +64,13 @@ const traceData = {
       _mimeType: 'image/jpeg',
       _resourceSize: 15000,
       transferSize: 20000,
-      _resourceType: {_name: 'image'},
+      _resourceType: 'Image',
       finished: true,
     },
     {
       _url: 'data: image/jpeg ; base64 ,SgVcAT32587935321...',
       _mimeType: 'image/jpeg',
-      _resourceType: {_name: 'image'},
+      _resourceType: 'Image',
       _resourceSize: 14000,
       transferSize: 20000,
       finished: true,
@@ -78,7 +78,7 @@ const traceData = {
     {
       _url: 'http://google.com/big-image.bmp',
       _mimeType: 'image/bmp',
-      _resourceType: {_name: 'image'},
+      _resourceType: 'Image',
       _resourceSize: 12000,
       transferSize: 20000,
       finished: false, // ignore for not finishing
@@ -86,7 +86,7 @@ const traceData = {
     {
       _url: 'http://google.com/not-an-image.bmp',
       _mimeType: 'image/bmp',
-      _resourceType: {_name: 'document'}, // ignore for not really being an image
+      _resourceType: 'Document', // ignore for not really being an image
       _resourceSize: 12000,
       transferSize: 20000,
       finished: true,

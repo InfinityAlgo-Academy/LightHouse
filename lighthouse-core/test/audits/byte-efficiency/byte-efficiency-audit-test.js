@@ -57,19 +57,19 @@ describe('Byte efficiency base audit', () => {
     });
 
     it('should return transferSize when asset matches', () => {
-      const _resourceType = {_name: 'stylesheet'};
-      const result = estimate({transferSize: 1234, _resourceType}, 10000, 'stylesheet');
+      const _resourceType = 'Stylesheet';
+      const result = estimate({transferSize: 1234, _resourceType}, 10000, 'Stylesheet');
       assert.equal(result, 1234);
     });
 
     it('should estimate by network compression ratio when asset does not match', () => {
-      const _resourceType = {_name: 'other'};
+      const _resourceType = 'Other';
       const result = estimate({_resourceSize: 2000, transferSize: 1000, _resourceType}, 100);
       assert.equal(result, 50);
     });
 
     it('should not error when missing resource size', () => {
-      const _resourceType = {_name: 'other'};
+      const _resourceType = 'Other';
       const result = estimate({transferSize: 1000, _resourceType}, 100);
       assert.equal(result, 100);
     });

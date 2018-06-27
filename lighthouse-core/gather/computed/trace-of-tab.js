@@ -25,7 +25,7 @@ const Sentry = require('../../lib/sentry');
 // Bring in web-inspector for side effect of adding [].stableSort
 // See https://github.com/GoogleChrome/lighthouse/pull/2415
 // eslint-disable-next-line no-unused-vars
-const WebInspector = require('../../lib/web-inspector');
+const NetworkRequest = require('../../lib/network-request');
 
 class TraceOfTab extends ComputedArtifact {
   get name() {

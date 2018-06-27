@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('./audit');
-const WebInspector = require('../lib/web-inspector');
+const NetworkRequest = require('../lib/network-request');
 const allowedFontFaceDisplays = ['block', 'fallback', 'optional', 'swap'];
 
 class FontDisplay extends Audit {
@@ -40,7 +40,7 @@ class FontDisplay extends Audit {
 
     return artifacts.requestNetworkRecords(devtoolsLogs).then((networkRecords) => {
       const results = networkRecords.filter(record => {
-        const isFont = record._resourceType === WebInspector.resourceTypes.Font;
+        const isFont = record._resourceType === NetworkRequest.TYPES.Font;
 
         return isFont;
       })

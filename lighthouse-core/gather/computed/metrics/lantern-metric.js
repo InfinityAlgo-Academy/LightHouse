@@ -7,7 +7,7 @@
 
 const ComputedArtifact = require('../computed-artifact');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
-const ResourceType = require('../../../../third-party/devtools/ResourceType');
+const NetworkRequest = require('../../../lib/network-request');
 
 /** @typedef {BaseNode.Node} Node */
 /** @typedef {import('../../../lib/dependency-graph/network-node')} NetworkNode */
@@ -25,7 +25,7 @@ class LanternMetricArtifact extends ComputedArtifact {
 
     dependencyGraph.traverse(node => {
       if (node.type === BaseNode.TYPES.CPU) return;
-      if (node.record._resourceType !== ResourceType.TYPES.Script) return;
+      if (node.record._resourceType !== NetworkRequest.TYPES.Script) return;
       if (condition && !condition(node)) return;
       scriptUrls.add(node.record.url);
     });

@@ -12,7 +12,7 @@ const assert = require('assert');
 
 /* eslint-env mocha */
 
-const _resourceType = {_name: 'script'};
+const _resourceType = 'Script';
 describe('Page uses optimized responses', () => {
   it('fails when given unminified scripts', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({

@@ -9,7 +9,7 @@ const assert = require('assert');
 // @ts-ignore - typed where used.
 const parseCacheControl = require('parse-cache-control');
 const Audit = require('../audit');
-const WebInspector = require('../../lib/web-inspector');
+const NetworkRequest = require('../../lib/network-request');
 const URL = require('../../lib/url-shim');
 const linearInterpolation = require('../../lib/statistics').linearInterpolation;
 
@@ -135,17 +135,17 @@ class CacheHeaders extends Audit {
     const CACHEABLE_STATUS_CODES = new Set([200, 203, 206]);
 
     const STATIC_RESOURCE_TYPES = new Set([
-      WebInspector.resourceTypes.Font,
-      WebInspector.resourceTypes.Image,
-      WebInspector.resourceTypes.Media,
-      WebInspector.resourceTypes.Script,
-      WebInspector.resourceTypes.Stylesheet,
+      NetworkRequest.TYPES.Font,
+      NetworkRequest.TYPES.Image,
+      NetworkRequest.TYPES.Media,
+      NetworkRequest.TYPES.Script,
+      NetworkRequest.TYPES.Stylesheet,
     ]);
 
     const resourceUrl = record._url;
     return (
       CACHEABLE_STATUS_CODES.has(record.statusCode) &&
-      STATIC_RESOURCE_TYPES.has(record._resourceType) &&
+      STATIC_RESOURCE_TYPES.has(record._resourceType || 'Other') &&
       !resourceUrl.includes('data:')
     );
   }

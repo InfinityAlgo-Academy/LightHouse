@@ -69,7 +69,7 @@ class UnusedBytes extends Audit {
    *
    * @param {LH.WebInspector.NetworkRequest=} networkRecord
    * @param {number} totalBytes Uncompressed size of the resource
-   * @param {string=} resourceType
+   * @param {LH.Crdp.Page.ResourceType=} resourceType
    * @param {number=} compressionRatio
    * @return {number}
    */
@@ -79,7 +79,7 @@ class UnusedBytes extends Audit {
       // roughly the size of the content gzipped.
       // See https://discuss.httparchive.org/t/file-size-and-compression-savings/145 for multipliers
       return Math.round(totalBytes * compressionRatio);
-    } else if (networkRecord._resourceType && networkRecord._resourceType._name === resourceType) {
+    } else if (networkRecord._resourceType === resourceType) {
       // This was a regular standalone asset, just use the transfer size.
       return networkRecord.transferSize || 0;
     } else {

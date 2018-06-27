@@ -7,7 +7,7 @@
 
 const CacheHeadersAudit = require('../../../audits/byte-efficiency/uses-long-cache-ttl.js');
 const assert = require('assert');
-const WebInspector = require('../../../lib/web-inspector');
+const NetworkRequest = require('../../../lib/network-request');
 const options = CacheHeadersAudit.defaultOptions;
 
 /* eslint-env mocha */
@@ -21,7 +21,7 @@ function networkRecord(options = {}) {
   return {
     _url: options.url || 'https://example.com/asset',
     statusCode: options.statusCode || 200,
-    _resourceType: options.resourceType || WebInspector.resourceTypes.Script,
+    _resourceType: options.resourceType || NetworkRequest.TYPES.Script,
     transferSize: options.transferSize || 10000,
     _responseHeaders: headers,
   };
@@ -152,7 +152,7 @@ describe('Cache headers audit', () => {
       networkRecord({statusCode: 500}),
       networkRecord({url: 'https://example.com/dynamic.js?userId=crazy', transferSize: 10}),
       networkRecord({url: 'data:image/jpeg;base64,what'}),
-      networkRecord({resourceType: WebInspector.resourceTypes.XHR}),
+      networkRecord({resourceType: NetworkRequest.TYPES.XHR}),
     ];
 
     return CacheHeadersAudit.audit(artifacts, {options}).then(result => {

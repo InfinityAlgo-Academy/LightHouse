@@ -107,7 +107,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
     }
 
     const totalBytes = ByteEfficiencyAudit.estimateTransferSize(networkRecord, content.length,
-      'stylesheet');
+      'Stylesheet');
     const wastedRatio = 1 - totalTokenLength / content.length;
     const wastedBytes = Math.round(totalBytes * wastedRatio);
 

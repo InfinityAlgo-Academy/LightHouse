@@ -76,9 +76,9 @@ describe('UnusedJavaScript audit', () => {
     const scriptB = generateScript('scriptB.js', [[0, 200, true], [0, 50, false]]);
     const inlineA = generateScript('inline.html', [[0, 5000, true], [5000, 6000, false]]);
     const inlineB = generateScript('inline.html', [[0, 15000, true], [0, 5000, false]]);
-    const recordA = generateRecord('scriptA.js', 35000, {_name: 'script'});
-    const recordB = generateRecord('scriptB.js', 50000, {_name: 'script'});
-    const recordInline = generateRecord('inline.html', 1000000, {_name: 'document'});
+    const recordA = generateRecord('scriptA.js', 35000, 'Script');
+    const recordB = generateRecord('scriptB.js', 50000, 'Script');
+    const recordInline = generateRecord('inline.html', 1000000, 'Document');
 
     const result = UnusedJavaScript.audit_(
       {JsUsage: [scriptA, scriptB, scriptUnknown, inlineA, inlineB]},

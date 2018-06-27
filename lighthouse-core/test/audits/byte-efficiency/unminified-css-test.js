@@ -11,7 +11,7 @@ const assert = require('assert');
 
 /* eslint-env mocha */
 
-const _resourceType = {_name: 'stylesheet'};
+const _resourceType = 'Stylesheet';
 describe('Page uses optimized css', () => {
   describe('#computeTokenLength', () => {
     it('should compute length of meaningful content', () => {

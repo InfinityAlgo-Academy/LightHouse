@@ -9,7 +9,7 @@
 
 const assert = require('assert');
 const CriticalRequestChains = require('../../../gather/computed/critical-request-chains');
-const WebInspector = require('../../../lib/web-inspector');
+const NetworkRequest = require('../../../lib/network-request');
 const Runner = require('../../../runner.js');
 
 const HIGH = 'High';
@@ -316,16 +316,16 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
     // 1th record is the root document
     networkRecords[0]._url = 'https://example.com';
     networkRecords[0]._mimeType = 'text/html';
-    networkRecords[0]._resourceType = WebInspector.resourceTypes.Document;
+    networkRecords[0]._resourceType = NetworkRequest.TYPES.Document;
     // 2nd record is an iframe in the page
     networkRecords[1]._url = 'https://example.com/iframe.html';
     networkRecords[1]._mimeType = 'text/html';
-    networkRecords[1]._resourceType = WebInspector.resourceTypes.Document;
+    networkRecords[1]._resourceType = NetworkRequest.TYPES.Document;
     networkRecords[1]._frameId = '2';
     // 3rd record is an iframe loaded by a script
     networkRecords[2]._url = 'https://youtube.com/';
     networkRecords[2]._mimeType = 'text/html';
-    networkRecords[2]._resourceType = WebInspector.resourceTypes.Document;
+    networkRecords[2]._resourceType = NetworkRequest.TYPES.Document;
     networkRecords[2]._frameId = '3';
 
     const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);

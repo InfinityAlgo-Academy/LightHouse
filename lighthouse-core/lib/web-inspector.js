@@ -194,7 +194,5 @@ module.exports = (function() {
   // Restore setImmediate, see comment at top.
   global.setImmediate = _setImmediate;
 
-  // TODO(phulce): replace client requires to not need this
-  WebInspector.resourceTypes = require('../../third-party/devtools/ResourceType').TYPES;
   return WebInspector;
 })();

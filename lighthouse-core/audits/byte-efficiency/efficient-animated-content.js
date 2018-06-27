@@ -8,7 +8,7 @@
  */
 'use strict';
 
-const WebInspector = require('../../lib/web-inspector');
+const NetworkRequest = require('../../lib/network-request');
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 
 // If GIFs are above this size, we'll flag them
@@ -49,7 +49,7 @@ class EfficientAnimatedContent extends ByteEfficiencyAudit {
   static audit_(artifacts, networkRecords) {
     const unoptimizedContent = networkRecords.filter(
       record => record._mimeType === 'image/gif' &&
-        record._resourceType === WebInspector.resourceTypes.Image &&
+        record._resourceType === NetworkRequest.TYPES.Image &&
         (record._resourceSize || 0) > GIF_BYTE_THRESHOLD
     );
 

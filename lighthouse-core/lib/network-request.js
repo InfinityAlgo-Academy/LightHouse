@@ -12,9 +12,25 @@
  */
 
 const URL = require('./url-shim');
-const ResourceType = require('../../third-party/devtools/ResourceType');
 
 const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extension', 'about'];
+
+/** @type {Record<LH.Crdp.Page.ResourceType, LH.Crdp.Page.ResourceType>} */
+const RESOURCE_TYPES = {
+  XHR: 'XHR',
+  Fetch: 'Fetch',
+  EventSource: 'EventSource',
+  Script: 'Script',
+  Stylesheet: 'Stylesheet',
+  Image: 'Image',
+  Media: 'Media',
+  Font: 'Font',
+  Document: 'Document',
+  TextTrack: 'TextTrack',
+  WebSocket: 'WebSocket',
+  Other: 'Other',
+  Manifest: 'Manifest',
+};
 
 module.exports = class NetworkRequest {
   constructor() {
@@ -57,7 +73,7 @@ module.exports = class NetworkRequest {
     this._initiator = /** @type {LH.Crdp.Network.Initiator} */ ({type: 'other'});
     /** @type {LH.Crdp.Network.ResourceTiming|undefined} */
     this._timing = undefined;
-    /** @type {ResourceType|undefined} */
+    /** @type {LH.Crdp.Page.ResourceType|undefined} */
     this._resourceType = undefined;
     this._mimeType = '';
     this.priority = () => /** @type {LH.Crdp.Network.ResourcePriority} */ ('Low');
@@ -107,7 +123,7 @@ module.exports = class NetworkRequest {
     this.requestMethod = data.request.method;
 
     this._initiator = data.initiator;
-    this._resourceType = data.type && ResourceType.TYPES[data.type];
+    this._resourceType = data.type && RESOURCE_TYPES[data.type];
     this.priority = () => data.request.initialPriority;
 
     this._frameId = data.frameId;
@@ -163,7 +179,7 @@ module.exports = class NetworkRequest {
     this.endTime = data.timestamp;
 
     this.failed = true;
-    this._resourceType = data.type && ResourceType.TYPES[data.type];
+    this._resourceType = data.type && RESOURCE_TYPES[data.type];
     this.localizedFailDescription = data.errorText;
 
     this._updateResponseReceivedTimeIfNecessary();
@@ -211,7 +227,7 @@ module.exports = class NetworkRequest {
     this.statusCode = response.status;
 
     this._timing = response.timing;
-    if (resourceType) this._resourceType = ResourceType.TYPES[resourceType];
+    if (resourceType) this._resourceType = RESOURCE_TYPES[resourceType];
     this._mimeType = response.mimeType;
     this._responseHeaders = NetworkRequest._headersDictToHeadersArray(response.headers);
 
@@ -263,5 +279,9 @@ module.exports = class NetworkRequest {
       }
     }
     return result;
+  }
+
+  static get TYPES() {
+    return RESOURCE_TYPES;
   }
 };

@@ -917,7 +917,7 @@
             "transferSize": 12640,
             "statusCode": 200,
             "mimeType": "text/html",
-            "resourceType": "document"
+            "resourceType": "Document"
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
@@ -926,7 +926,7 @@
             "transferSize": 821,
             "statusCode": 200,
             "mimeType": "text/css",
-            "resourceType": "stylesheet"
+            "resourceType": "Stylesheet"
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
@@ -935,7 +935,7 @@
             "transferSize": 821,
             "statusCode": 200,
             "mimeType": "text/css",
-            "resourceType": "stylesheet"
+            "resourceType": "Stylesheet"
           },
           {
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
@@ -944,7 +944,7 @@
             "transferSize": 139,
             "statusCode": 404,
             "mimeType": "text/css",
-            "resourceType": "stylesheet"
+            "resourceType": "Stylesheet"
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
@@ -953,7 +953,7 @@
             "transferSize": 821,
             "statusCode": 200,
             "mimeType": "text/css",
-            "resourceType": "stylesheet"
+            "resourceType": "Stylesheet"
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
@@ -962,7 +962,7 @@
             "transferSize": 1108,
             "statusCode": 200,
             "mimeType": "text/css",
-            "resourceType": "stylesheet"
+            "resourceType": "Stylesheet"
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
@@ -971,7 +971,7 @@
             "transferSize": 736,
             "statusCode": 200,
             "mimeType": "text/html",
-            "resourceType": "document"
+            "resourceType": "Document"
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync",
@@ -980,7 +980,7 @@
             "transferSize": 733,
             "statusCode": 200,
             "mimeType": "text/html",
-            "resourceType": "document"
+            "resourceType": "Document"
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
@@ -989,7 +989,7 @@
             "transferSize": 821,
             "statusCode": 200,
             "mimeType": "text/css",
-            "resourceType": "stylesheet"
+            "resourceType": "Stylesheet"
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
@@ -998,7 +998,7 @@
             "transferSize": 1703,
             "statusCode": 200,
             "mimeType": "text/javascript",
-            "resourceType": "script"
+            "resourceType": "Script"
           },
           {
             "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
@@ -1007,7 +1007,7 @@
             "transferSize": 144,
             "statusCode": 200,
             "mimeType": "text/javascript",
-            "resourceType": "script"
+            "resourceType": "Script"
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
@@ -1016,7 +1016,7 @@
             "transferSize": 24741,
             "statusCode": 200,
             "mimeType": "image/jpeg",
-            "resourceType": "image"
+            "resourceType": "Image"
           },
           {
             "url": "http://localhost:10200/zone.js",
@@ -1025,7 +1025,7 @@
             "transferSize": 71654,
             "statusCode": 200,
             "mimeType": "text/javascript",
-            "resourceType": "script"
+            "resourceType": "Script"
           },
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
@@ -1034,7 +1034,7 @@
             "transferSize": 30174,
             "statusCode": 200,
             "mimeType": "text/javascript",
-            "resourceType": "script"
+            "resourceType": "Script"
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
@@ -1043,7 +1043,7 @@
             "transferSize": 821,
             "statusCode": 200,
             "mimeType": "text/css",
-            "resourceType": "stylesheet"
+            "resourceType": "Stylesheet"
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -1052,7 +1052,7 @@
             "transferSize": 12640,
             "statusCode": 200,
             "mimeType": "text/html",
-            "resourceType": "xhr"
+            "resourceType": "XHR"
           },
           {
             "url": "blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277",
@@ -1061,7 +1061,7 @@
             "transferSize": 0,
             "statusCode": 200,
             "mimeType": "text/plain",
-            "resourceType": "image"
+            "resourceType": "Image"
           },
           {
             "url": "http://localhost:10200/favicon.ico",
@@ -1070,7 +1070,7 @@
             "transferSize": 221,
             "statusCode": 404,
             "mimeType": "text/plain",
-            "resourceType": "other"
+            "resourceType": "Other"
           }
         ]
       }

@@ -8,7 +8,7 @@
 const PageDependencyGraph = require('../../../gather/computed/page-dependency-graph');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
 const Runner = require('../../../runner.js');
-const WebInspector = require('../../../lib/web-inspector');
+const NetworkRequest = require('../../../lib/network-request');
 
 const sampleTrace = require('../../fixtures/traces/progressive-app-m60.json');
 const sampleDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -20,7 +20,7 @@ function createRequest(
   url,
   startTime = 0,
   _initiator = null,
-  _resourceType = WebInspector.resourceTypes.Document
+  _resourceType = NetworkRequest.TYPES.Document
 ) {
   startTime = startTime / 1000;
   const endTime = startTime + 0.05;
@@ -165,7 +165,7 @@ describe('PageDependencyGraph computed artifact:', () => {
       const request1 = createRequest(1, '1', 0);
       const request2 = createRequest(2, '2', 50);
       const request3 = createRequest(3, '3', 50);
-      const request4 = createRequest(4, '4', 300, null, WebInspector.resourceTypes.XHR);
+      const request4 = createRequest(4, '4', 300, null, NetworkRequest.TYPES.XHR);
       const networkRecords = [request1, request2, request3, request4];
 
       addTaskEvents(200, 200, [
@@ -216,10 +216,10 @@ describe('PageDependencyGraph computed artifact:', () => {
 
     it('should be forgiving without cyclic dependencies', () => {
       const request1 = createRequest(1, '1', 0);
-      const request2 = createRequest(2, '2', 250, null, WebInspector.resourceTypes.XHR);
+      const request2 = createRequest(2, '2', 250, null, NetworkRequest.TYPES.XHR);
       const request3 = createRequest(3, '3', 210);
       const request4 = createRequest(4, '4', 590);
-      const request5 = createRequest(5, '5', 595, null, WebInspector.resourceTypes.XHR);
+      const request5 = createRequest(5, '5', 595, null, NetworkRequest.TYPES.XHR);
       const networkRecords = [request1, request2, request3, request4, request5];
 
       addTaskEvents(200, 200, [
@@ -257,7 +257,7 @@ describe('PageDependencyGraph computed artifact:', () => {
     });
 
     it('should set isMainDocument on first document request', () => {
-      const request1 = createRequest(1, '1', 0, null, WebInspector.resourceTypes.Image);
+      const request1 = createRequest(1, '1', 0, null, NetworkRequest.TYPES.Image);
       const request2 = createRequest(2, '2', 5);
       const networkRecords = [request1, request2];
 

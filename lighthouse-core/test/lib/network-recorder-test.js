@@ -42,7 +42,7 @@ describe('network recorder', function() {
     assert.equal(redirectA._resourceType, undefined);
     assert.equal(redirectB._resourceType, undefined);
     assert.equal(redirectC._resourceType, undefined);
-    assert.equal(mainDocument._resourceType._name, 'document');
+    assert.equal(mainDocument._resourceType, 'Document');
   });
 
   describe('#findNetworkQuietPeriods', () => {

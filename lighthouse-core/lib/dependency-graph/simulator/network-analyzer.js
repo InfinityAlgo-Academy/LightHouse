@@ -6,7 +6,7 @@
 'use strict';
 
 const INITIAL_CWD = 14 * 1024;
-const WebInspector = require('../../web-inspector');
+const NetworkRequest = require('../../network-request');
 
 class NetworkAnalyzer {
   /**
@@ -328,7 +328,7 @@ class NetworkAnalyzer {
   static findMainDocument(records) {
     // TODO(phulce): handle more edge cases like client redirects, or plumb through finalUrl
     const documentRequests = records.filter(record => record._resourceType ===
-        WebInspector.resourceTypes.Document);
+        NetworkRequest.TYPES.Document);
     return documentRequests.sort((a, b) => a.startTime - b.startTime)[0];
   }
 }

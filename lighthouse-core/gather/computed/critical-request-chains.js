@@ -6,7 +6,7 @@
 'use strict';
 
 const ComputedArtifact = require('./computed-artifact');
-const WebInspector = require('../../lib/web-inspector');
+const NetworkRequest = require('../../lib/network-request');
 const assert = require('assert');
 
 class CriticalRequestChains extends ComputedArtifact {
@@ -30,19 +30,19 @@ class CriticalRequestChains extends ComputedArtifact {
       return false;
     }
 
-    const resourceTypeCategory = request._resourceType && request._resourceType._category;
-
     // Iframes are considered High Priority but they are not render blocking
-    const isIframe = request._resourceType === WebInspector.resourceTypes.Document
+    const isIframe = request._resourceType === NetworkRequest.TYPES.Document
       && request._frameId !== mainResource._frameId;
     // XHRs are fetched at High priority, but we exclude them, as they are unlikely to be critical
     // Images are also non-critical.
-    // Treat any images missed by category, primarily favicons, as non-critical resources
+    // Treat any missed images, primarily favicons, as non-critical resources
     const nonCriticalResourceTypes = [
-      WebInspector.resourceTypes.Image._category,
-      WebInspector.resourceTypes.XHR._category,
+      NetworkRequest.TYPES.Image,
+      NetworkRequest.TYPES.XHR,
+      NetworkRequest.TYPES.Fetch,
+      NetworkRequest.TYPES.EventSource,
     ];
-    if (nonCriticalResourceTypes.includes(resourceTypeCategory) ||
+    if (nonCriticalResourceTypes.includes(request._resourceType || 'Other') ||
         isIframe ||
         request._mimeType && request._mimeType.startsWith('image/')) {
       return false;
