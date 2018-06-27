@@ -55,8 +55,7 @@
   --lh-score-margin: 12px;
   --lh-table-header-bg: #f8f9fa;
   --lh-table-higlight-bg: hsla(0, 0%, 75%, 0.1);
-  --lh-row-flagged-bg: #f00;
-  --lh-row-flagged-color: #fff;
+  --lh-row-flagged-color: hsl(1, 73%, 45%);
   --lh-sparkline-height: 5px;
   --lh-sparkline-thin-height: 3px;
   --lh-filmstrip-thumbnail-width: 60px;
@@ -864,14 +863,17 @@ summary.lh-passed-audits-summary {
   padding: 8px 6px;
 }
 
-/* double classnames to override the cascade */
-.lh-table-row--flagged,
-.lh-table-row--flagged.lh-table-row--flagged:nth-child(even) {
-  background-color: var(--lh-row-flagged-bg);
-}
-
-.lh-table-row--flagged > td {
+.lh-table-row--flagged > td:last-child .lh-text {
   color: var(--lh-row-flagged-color);
+}
+.lh-table-row--flagged > td:last-child .lh-text:after {
+  background: var(--fail-icon-url) no-repeat center center / contain;
+  content: '';
+  display: inline-block;
+  height: var(--lh-score-icon-width);
+  margin-left: var(--lh-score-margin);
+  vertical-align: middle;
+  width: var(--lh-score-icon-width);
 }
 
 .lh-table-column--text,
