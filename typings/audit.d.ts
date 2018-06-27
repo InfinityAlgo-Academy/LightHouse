@@ -34,11 +34,17 @@ declare global {
     export type DisplayValue = string | DisplayValueArray;
 
     export interface Meta {
+      /** The string identifier of the audit, in kebab case. */
       id: string;
+      /** Short, user-visible title for the audit when successful. */
       title: string;
+      /** Short, user-visible title for the audit when failing. */
       failureTitle?: string;
+      /** Explanation of why the user should care about the audit. */
       description: string;
+      /** A list of the members of LH.Artifacts that must be present for the audit to execute. */
       requiredArtifacts: Array<keyof Artifacts>;
+      /** A string identifying how the score should be interpreted for display. */
       scoreDisplayMode?: Audit.ScoreDisplayMode;
     }
 
@@ -121,9 +127,21 @@ declare global {
       errorMessage?: string;
       warnings?: string[];
       score: number|null;
+      /**
+       * A string identifying how the score should be interpreted:
+       * 'binary': pass/fail audit (0 and 1 are only possible scores).
+       * 'numeric': scores of 0-1 (map to displayed scores of 0-100).
+       * 'informative': the audit is an FYI only, and can't be interpreted as pass/fail. Score is null and should be ignored.
+       * 'not-applicable': the audit turned out to not apply to the page. Score is null and should be ignored.
+       * 'manual': The audit exists only to tell you to review something yourself. Score is null and should be ignored.
+       * 'error': There was an error while running the audit (check `errorMessage` for details). Score is null and should be ignored.
+       */
       scoreDisplayMode: ScoreDisplayMode;
+      /** Short, user-visible title for the audit. The text can change depending on if the audit passed or failed. */
       title: string;
+      /** The string identifier of the audit, in kebab case. */
       id: string;
+      /** A more detailed description that describes why the audit is important and links to Lighthouse documentation on the audit; markdown links supported. */
       description: string;
       // TODO(bckenny): define details
       details?: any;
