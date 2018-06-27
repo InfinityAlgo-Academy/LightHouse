@@ -8,13 +8,13 @@ lighthouse-cli/test/smokehouse/     @patrickhulce       @brendankenny
 
 lighthouse-core/gather/             @patrickhulce       @paulirish
 lighthouse-core/audits/             @patrickhulce       @brendankenny   @paulirish
-lighthouse-core/report/             @vinamratasingal    @paulirish
+lighthouse-core/report/             @paulirish
 
 lighthouse-core/config/             @patrickhulce       @brendankenny
 lighthouse-core/lib/                @brendankenny       @paulirish
 lighthouse-extension/               @paulirish          @patrickhulce
 lighthouse-viewer/                  @ebidel             @brendankenny
 
-docs/                               @vinamratasingal    @paulirish
+docs/                               @paulirish
 
 # no explicit owner for plots, travis, etc
