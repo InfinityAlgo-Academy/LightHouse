@@ -12,6 +12,7 @@
 
 const Gatherer = require('../gatherer');
 const URL = require('../../../lib/url-shim');
+const NetworkRequest = require('../../../lib/network-request');
 const Sentry = require('../../../lib/sentry');
 const Driver = require('../../driver.js'); // eslint-disable-line no-unused-vars
 
@@ -114,6 +115,8 @@ class OptimizedImages extends Gatherer {
    * @return {Promise<LH.Crdp.Audits.GetEncodedResponseResponse>}
    */
   _getEncodedResponse(driver, requestId, encoding) {
+    requestId = NetworkRequest.getRequestIdForBackend(requestId);
+
     const quality = encoding === 'jpeg' ? JPEG_QUALITY : WEBP_QUALITY;
     const params = {requestId, encoding, quality, sizeOnly: true};
     return driver.sendCommand('Audits.getEncodedResponse', params);

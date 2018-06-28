@@ -20,6 +20,7 @@ const fakeImageStats = {
 const traceData = {
   networkRecords: [
     {
+      _requestId: '123.5',
       _url: 'http://google.com/image.jpg',
       _mimeType: 'image/jpeg',
       _resourceSize: 10000,
@@ -28,6 +29,7 @@ const traceData = {
       finished: true,
     },
     {
+      _requestId: '123.6:redirect',
       _url: 'http://google.com/transparent.png',
       _mimeType: 'image/png',
       _resourceSize: 11000,
@@ -36,6 +38,7 @@ const traceData = {
       finished: true,
     },
     {
+      _requestId: '123.5',
       _url: 'http://google.com/image.bmp',
       _mimeType: 'image/bmp',
       _resourceSize: 12000,
@@ -44,6 +47,7 @@ const traceData = {
       finished: true,
     },
     {
+      _requestId: '123.5',
       _url: 'http://google.com/image.bmp',
       _mimeType: 'image/bmp',
       _resourceSize: 12000,
@@ -52,6 +56,7 @@ const traceData = {
       finished: true,
     },
     {
+      _requestId: '123.5',
       _url: 'http://google.com/vector.svg',
       _mimeType: 'image/svg+xml',
       _resourceSize: 13000,
@@ -60,6 +65,7 @@ const traceData = {
       finished: true,
     },
     {
+      _requestId: '123.5',
       _url: 'http://gmail.com/image.jpg',
       _mimeType: 'image/jpeg',
       _resourceSize: 15000,
@@ -68,6 +74,7 @@ const traceData = {
       finished: true,
     },
     {
+      _requestId: '123.5',
       _url: 'data: image/jpeg ; base64 ,SgVcAT32587935321...',
       _mimeType: 'image/jpeg',
       _resourceType: 'Image',
@@ -76,6 +83,7 @@ const traceData = {
       finished: true,
     },
     {
+      _requestId: '123.5',
       _url: 'http://google.com/big-image.bmp',
       _mimeType: 'image/bmp',
       _resourceType: 'Image',
@@ -84,6 +92,7 @@ const traceData = {
       finished: false, // ignore for not finishing
     },
     {
+      _requestId: '123.5',
       _url: 'http://google.com/not-an-image.bmp',
       _mimeType: 'image/bmp',
       _resourceType: 'Document', // ignore for not really being an image
@@ -162,7 +171,9 @@ describe('Optimized images', () => {
   });
 
   it('supports Audits.getEncodedResponse', () => {
+    const calls = [];
     options.driver.sendCommand = (method, params) => {
+      calls.push({method, params});
       const encodedSize = params.encoding === 'webp' ? 60 : 80;
       return Promise.resolve({encodedSize});
     };
@@ -174,6 +185,8 @@ describe('Optimized images', () => {
       assert.equal(artifact[0].jpegSize, 80);
       // supports cross-origin
       assert.ok(/gmail.*image.jpg/.test(artifact[3].url));
+      // strips the :redirect from requestId
+      assert.equal(calls[2].params.requestId, '123.6');
     });
   });
 });

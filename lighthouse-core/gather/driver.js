@@ -9,6 +9,7 @@ const NetworkRecorder = require('../lib/network-recorder');
 const emulation = require('../lib/emulation');
 const Element = require('../lib/element');
 const LHError = require('../lib/errors');
+const NetworkRequest = require('../lib/network-request');
 const EventEmitter = require('events').EventEmitter;
 const URL = require('../lib/url-shim');
 const TraceParser = require('../lib/traces/trace-parser');
@@ -727,6 +728,8 @@ class Driver {
    * @return {Promise<string>}
    */
   getRequestContent(requestId, timeout = 1000) {
+    requestId = NetworkRequest.getRequestIdForBackend(requestId);
+
     return new Promise((resolve, reject) => {
       // If this takes more than 1s, reject the Promise.
       // Why? Encoding issues can lead to hanging getResponseBody calls: https://github.com/GoogleChrome/lighthouse/pull/4718

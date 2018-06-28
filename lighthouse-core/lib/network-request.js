@@ -265,6 +265,16 @@ module.exports = class NetworkRequest {
   }
 
   /**
+   * Convert the requestId to backend-version by removing the `:redirect` portion
+   *
+   * @param {string} requestId
+   * @return {string}
+   */
+  static getRequestIdForBackend(requestId) {
+    return requestId.replace(/(:redirect)+$/, '');
+  }
+
+  /**
    * Based on DevTools NetworkManager.
    * @see https://github.com/ChromeDevTools/devtools-frontend/blob/3415ee28e86a3f4bcc2e15b652d22069938df3a6/front_end/sdk/NetworkManager.js#L285-L297
    * @param {LH.Crdp.Network.Headers} headersDict
