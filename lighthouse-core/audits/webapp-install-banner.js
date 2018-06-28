@@ -57,6 +57,12 @@ class WebappInstallBanner extends MultiCheckAudit {
     const failures = [];
     const bannerCheckIds = [
       'hasName',
+      // Technically shortname isn't required (if name is defined):
+      //   https://cs.chromium.org/chromium/src/chrome/browser/installable/installable_manager.cc?type=cs&q=IsManifestValidForWebApp+f:cc+-f:test&sq=package:chromium&l=473
+      // Despite this, we think it's better to require it anyway.
+      // short_name is preferred for the homescreen icon, but a longer name can be used in
+      // the splash screen and app title. Given the different usecases, we'd like to make it clearer
+      // that the developer has two possible strings to work with.
       'hasShortName',
       'hasStartUrl',
       'hasPWADisplayValue',

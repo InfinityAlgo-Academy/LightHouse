@@ -302,6 +302,7 @@ module.exports = {
         {id: 'splash-screen', weight: 1},
         {id: 'themed-omnibox', weight: 1},
         {id: 'content-width', weight: 1},
+        {id: 'manifest-short-name-length', weight: 0},
         // Manual audits
         {id: 'pwa-cross-browser', weight: 0},
         {id: 'pwa-page-transitions', weight: 0},
@@ -375,7 +376,6 @@ module.exports = {
         {id: 'no-vulnerable-libraries', weight: 1},
         {id: 'notification-on-start', weight: 1},
         {id: 'deprecations', weight: 1},
-        {id: 'manifest-short-name-length', weight: 1},
         {id: 'password-inputs-can-be-pasted-into', weight: 1},
         {id: 'errors-in-console', weight: 1},
         {id: 'image-aspect-ratio', weight: 1},

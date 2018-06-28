@@ -14,9 +14,8 @@ class ManifestShortNameLength extends Audit {
   static get meta() {
     return {
       id: 'manifest-short-name-length',
-      title: 'Manifest\'s `short_name` won\'t be truncated when displayed on homescreen',
-      failureTitle: 'Manifest\'s `short_name` will be truncated when displayed ' +
-          'on homescreen',
+      title: 'The `short_name` won\'t be truncated on the homescreen',
+      failureTitle: 'The `short_name` will be truncated on the homescreen',
       description: 'Make your app\'s `short_name` fewer than 12 characters to ' +
           'ensure that it\'s not truncated on homescreens. [Learn ' +
           'more](https://developers.google.com/web/tools/lighthouse/audits/manifest-short_name-is-not-truncated).',
@@ -28,27 +27,37 @@ class ManifestShortNameLength extends Audit {
    * @param {LH.Artifacts} artifacts
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
-    return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {
-      if (manifestValues.isParseFailure) {
-        return {
-          rawValue: false,
-        };
-      }
-
-      const hasShortName = manifestValues.allChecks.find(i => i.id === 'hasShortName');
-      if (!hasShortName || !hasShortName.passing) {
-        return {
-          rawValue: false,
-          explanation: 'No short_name found in manifest.',
-        };
-      }
-
-      const isShortEnough = manifestValues.allChecks.find(i => i.id === 'shortNameLength');
+  static async audit(artifacts) {
+    const manifestValues = await artifacts.requestManifestValues(artifacts.Manifest);
+    // If there's no valid manifest, this audit is not applicable
+    if (manifestValues.isParseFailure) {
       return {
-        rawValue: !!isShortEnough && isShortEnough.passing,
+        rawValue: true,
+        notApplicable: true,
       };
-    });
+    }
+
+    const shortNameCheck = manifestValues.allChecks.find(i => i.id === 'hasShortName');
+    const shortNameLengthCheck = manifestValues.allChecks.find(i => i.id === 'shortNameLength');
+
+    // If there's no short_name present, this audit is not applicable
+    if (shortNameCheck && !shortNameCheck.passing) {
+      return {
+        rawValue: true,
+        notApplicable: true,
+      };
+    }
+    // Shortname is present, but it's too long
+    if (shortNameLengthCheck && !shortNameLengthCheck.passing) {
+      return {
+        rawValue: false,
+        explanation: `Failure: ${shortNameLengthCheck.failureText}.`,
+      };
+    }
+    // Has a shortname that's under the threshold
+    return {
+      rawValue: true,
+    };
   }
 }
 
