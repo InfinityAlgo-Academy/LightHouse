@@ -8,6 +8,8 @@ import parseManifest = require('../lighthouse-core/lib/manifest-parser.js');
 import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator.js');
 import speedline = require('speedline');
 
+type _TaskNode = import('../lighthouse-core/gather/computed/main-thread-tasks').TaskNode;
+
 type LanternSimulator = InstanceType<typeof _LanternSimulator>;
 
 declare global {
@@ -113,7 +115,6 @@ declare global {
 
     export interface ComputedArtifacts {
       requestCriticalRequestChains(data: {devtoolsLog: DevtoolsLog, URL: Artifacts['URL']}): Promise<Artifacts.CriticalRequestNode>;
-      requestDevtoolsTimelineModel(trace: Trace): Promise<Artifacts.DevtoolsTimelineModel>;
       requestLoadSimulator(data: {devtoolsLog: DevtoolsLog, settings: Config.Settings}): Promise<LanternSimulator>;
       requestMainResource(data: {devtoolsLog: DevtoolsLog, URL: Artifacts['URL']}): Promise<WebInspector.NetworkRequest>;
       requestManifestValues(manifest: LH.Artifacts['Manifest']): Promise<LH.Artifacts.ManifestValues>;
@@ -122,6 +123,7 @@ declare global {
       requestNetworkRecords(devtoolsLog: DevtoolsLog): Promise<WebInspector.NetworkRequest[]>;
       requestPageDependencyGraph(data: {trace: Trace, devtoolsLog: DevtoolsLog}): Promise<Gatherer.Simulation.GraphNode>;
       requestPushedRequests(devtoolsLogs: DevtoolsLog): Promise<WebInspector.NetworkRequest[]>;
+      requestMainThreadTasks(trace: Trace): Promise<Artifacts.TaskNode[]>;
       requestTraceOfTab(trace: Trace): Promise<Artifacts.TraceOfTab>;
       requestScreenshots(trace: Trace): Promise<{timestamp: number, datauri: string}[]>;
       requestSpeedline(trace: Trace): Promise<LH.Artifacts.Speedline>;
@@ -144,6 +146,8 @@ declare global {
     }
 
     module Artifacts {
+      export type TaskNode = _TaskNode;
+
       export interface Accessibility {
         violations: {
           id: string;
@@ -301,27 +305,6 @@ declare global {
           request: WebInspector.NetworkRequest;
           children: CriticalRequestNode;
         }
-      }
-
-      export interface DevtoolsTimelineFilmStripModel {
-        frames(): Array<{
-          imageDataPromise(): Promise<string>;
-          timestamp: number;
-        }>;
-      }
-
-      export interface DevtoolsTimelineModelNode {
-        children: Map<string, DevtoolsTimelineModelNode>;
-        selfTime: number;
-        // SDK.TracingModel.Event
-        event: {
-          name: string;
-        };
-      }
-
-      export interface DevtoolsTimelineModel {
-        filmStripModel(): Artifacts.DevtoolsTimelineFilmStripModel;
-        bottomUpGroupBy(grouping: string): DevtoolsTimelineModelNode;
       }
 
       export type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast192px'|'hasIconsAtLeast512px'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength';

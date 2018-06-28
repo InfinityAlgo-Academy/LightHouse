@@ -202,6 +202,9 @@ describe('TracingProcessor lib', () => {
       assert.equal(durations.filter(dur => isNaN(dur)).length, 0, 'NaN found');
       assert.equal(durations.length, 645);
 
+      const sum = durations.reduce((a, b) => a + b);
+      assert.equal(Math.round(sum), 386);
+
       assert.equal(getDurationFromIndex(50), 0.01);
       assert.equal(getDurationFromIndex(300), 0.04);
       assert.equal(getDurationFromIndex(400), 0.07);

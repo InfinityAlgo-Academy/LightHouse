@@ -104,6 +104,7 @@ module.exports = (function() {
   require('chrome-devtools-frontend/front_end/common/Object.js');
   require('chrome-devtools-frontend/front_end/common/ParsedURL.js');
   require('chrome-devtools-frontend/front_end/common/UIString.js');
+  require('chrome-devtools-frontend/front_end/common/SegmentedRange.js');
   require('chrome-devtools-frontend/front_end/platform/utilities.js');
   require('chrome-devtools-frontend/front_end/sdk/Target.js');
   require('chrome-devtools-frontend/front_end/sdk/TargetManager.js');
@@ -132,33 +133,9 @@ module.exports = (function() {
   WebInspector.ViewportDataGridNode = function() {};
   global.WorkerRuntime.Worker = function() {};
 
-  require('chrome-devtools-frontend/front_end/common/SegmentedRange.js');
-  require('chrome-devtools-frontend/front_end/bindings/TempFile.js');
-  require('chrome-devtools-frontend/front_end/sdk/TracingModel.js');
-  require('chrome-devtools-frontend/front_end/sdk/ProfileTreeModel.js');
-  require('chrome-devtools-frontend/front_end/timeline/TimelineUIUtils.js');
-  require('chrome-devtools-frontend/front_end/timeline_model/TimelineJSProfile.js');
-  require('chrome-devtools-frontend/front_end/sdk/CPUProfileDataModel.js');
-  require('chrome-devtools-frontend/front_end/timeline_model/LayerTreeModel.js');
-  require('chrome-devtools-frontend/front_end/timeline_model/TimelineModel.js');
-  require('chrome-devtools-frontend/front_end/ui_lazy/SortableDataGrid.js');
-  require('chrome-devtools-frontend/front_end/timeline/TimelineTreeView.js');
-
   // used for streaming json parsing
   require('chrome-devtools-frontend/front_end/common/TextUtils.js');
   require('chrome-devtools-frontend/front_end/timeline/TimelineLoader.js');
-
-  require('chrome-devtools-frontend/front_end/timeline_model/TimelineProfileTree.js');
-  require('chrome-devtools-frontend/front_end/components_lazy/FilmStripModel.js');
-  require('chrome-devtools-frontend/front_end/timeline_model/TimelineIRModel.js');
-  require('chrome-devtools-frontend/front_end/timeline_model/TimelineFrameModel.js');
-
-  // DevTools makes a few assumptions about using backing storage to hold traces.
-  WebInspector.DeferredTempFile = function() {};
-  WebInspector.DeferredTempFile.prototype = {
-    write: function() {},
-    finishWriting: function() {},
-  };
 
   // Mock for WebInspector code that writes to console.
   WebInspector.ConsoleMessage = function() {};

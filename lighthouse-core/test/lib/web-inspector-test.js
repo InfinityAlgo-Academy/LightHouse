@@ -12,11 +12,6 @@ const assert = require('assert');
 describe('Web Inspector lib', function() {
   it('WebInspector exported is the real one', () => {
     assert.equal(typeof WebInspector, 'object');
-    assert.ok(WebInspector.TimelineModel);
-    assert.ok(WebInspector.TimelineUIUtils);
-    assert.ok(WebInspector.FilmStripModel);
-    assert.ok(WebInspector.TimelineProfileTree);
-    assert.ok(WebInspector.TimelineAggregator);
     assert.ok(WebInspector.Color);
     assert.ok(WebInspector.CSSMetadata);
   });

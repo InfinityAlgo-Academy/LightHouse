@@ -17,143 +17,106 @@ const loadTrace = require('../fixtures/traces/load.json');
 const errorTrace = require('../fixtures/traces/airhorner_no_fcp.json');
 
 const acceptableTraceExpectations = {
-  'Compile Script': 25,
-  'Composite Layers': 6,
-  'DOM GC': 33,
-  'Evaluate Script': 131,
-  'Image Decode': 1,
-  'Layout': 138,
-  'Major GC': 8,
-  'Minor GC': 7,
-  'Paint': 52,
-  'Parse HTML': 14,
-  'Recalculate Style': 170,
-  'Update Layer Tree': 25,
+  parseHTML: 14,
+  styleLayout: 308,
+  paintCompositeRender: 87,
+  scriptEvaluation: 215,
+  scriptParseCompile: 25,
+  garbageCollection: 48,
+  other: 663,
 };
 const siteWithRedirectTraceExpectations = {
-  'Compile Script': 38,
-  'Composite Layers': 2,
-  'DOM GC': 25,
-  'Evaluate Script': 122,
-  'Image Decode': 0,
-  'Layout': 209,
-  'Major GC': 10,
-  'Minor GC': 11,
-  'Paint': 4,
-  'Parse HTML': 52,
-  'Parse Stylesheet': 51,
-  'Recalculate Style': 66,
-  'Update Layer Tree': 5,
+  parseHTML: 84,
+  styleLayout: 275,
+  paintCompositeRender: 12,
+  scriptEvaluation: 145,
+  scriptParseCompile: 38,
+  garbageCollection: 46,
+  other: 184,
 };
 const loadTraceExpectations = {
-  'Animation Frame Fired': 6,
-  'Composite Layers': 15,
-  'Evaluate Script': 296,
-  'Image Decode': 4,
-  'Layout': 51,
-  'Minor GC': 3,
-  'Paint': 9,
-  'Parse HTML': 25,
-  'Recalculate Style': 80,
-  'Update Layer Tree': 16,
-  'XHR Load': 19,
-  'XHR Ready State Change': 1,
+  parseHTML: 25,
+  styleLayout: 131,
+  paintCompositeRender: 44,
+  scriptEvaluation: 347,
+  garbageCollection: 3,
+  other: 382,
 };
 
 describe('Performance: page execution timings audit', () => {
-  it('should compute the correct pageExecutionTiming values for the pwa trace', () => {
-    const artifacts = Object.assign({
-      traces: {
-        [PageExecutionTimings.DEFAULT_PASS]: acceptableTrace,
-      },
-    }, Runner.instantiateComputedArtifacts());
+  function keyOutput(output) {
+    const keyedOutput = {};
+    for (const item of output.details.items) {
+      keyedOutput[item.group] = Math.round(item.duration);
+    }
+    return keyedOutput;
+  }
 
-    return PageExecutionTimings.audit(artifacts, {options}).then(output => {
-      const valueOf = name => Math.round(output.extendedInfo.value[name]);
+  it('should compute the correct pageExecutionTiming values for the pwa trace', async () => {
+    const artifacts = Object.assign(
+      {traces: {defaultPass: acceptableTrace}},
+      Runner.instantiateComputedArtifacts()
+    );
 
-      assert.equal(output.details.items.length, 12);
-      assert.equal(output.score, 1);
-      assert.equal(Math.round(output.rawValue), 611);
-
-      for (const category in output.extendedInfo.value) {
-        if (output.extendedInfo.value[category]) {
-          assert.equal(valueOf(category), acceptableTraceExpectations[category]);
-        }
-      }
-    });
+    const output = await PageExecutionTimings.audit(artifacts, {options});
+    assert.deepStrictEqual(keyOutput(output), acceptableTraceExpectations);
+    assert.equal(Math.round(output.rawValue), 1360);
+    assert.equal(output.details.items.length, 7);
+    assert.equal(output.score, 0.98);
   });
 
   it('should compute the correct values when simulated', async () => {
-    const artifacts = Object.assign({
-      traces: {defaultPass: acceptableTrace},
-    }, Runner.instantiateComputedArtifacts());
+    const artifacts = Object.assign(
+      {traces: {defaultPass: acceptableTrace}},
+      Runner.instantiateComputedArtifacts()
+    );
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 3}};
     const output = await PageExecutionTimings.audit(artifacts, {options, settings});
-    const valueOf = name => Math.round(output.extendedInfo.value[name]);
 
-    assert.equal(output.details.items.length, 12);
-    assert.equal(output.score, 0.93);
-    assert.equal(Math.round(output.rawValue), 1832);
-
-    for (const category in output.extendedInfo.value) {
-      if (output.extendedInfo.value[category]) {
-        assert.ok(
-          Math.abs(valueOf(category) - 3 * acceptableTraceExpectations[category]) < 2,
-          'should have multiplied value by slowdown multiplier'
-        );
-      }
+    const keyedOutput = keyOutput(output);
+    for (const key of Object.keys(acceptableTraceExpectations)) {
+      const actual = keyedOutput[key];
+      const expected = acceptableTraceExpectations[key] * 3;
+      assert.ok(Math.abs(actual - expected) <= 2, `expected ${expected} got ${actual}`);
     }
+
+    assert.equal(Math.round(output.rawValue), 4081);
+    assert.equal(output.details.items.length, 7);
+    assert.equal(output.score, 0.49);
   });
 
-  it('should compute the correct pageExecutionTiming values for the redirect trace', () => {
-    const artifacts = Object.assign({
-      traces: {
-        [PageExecutionTimings.DEFAULT_PASS]: siteWithRedirectTrace,
-      },
-    }, Runner.instantiateComputedArtifacts());
+  it('should compute the correct values for the redirect trace', async () => {
+    const artifacts = Object.assign(
+      {traces: {defaultPass: siteWithRedirectTrace}},
+      Runner.instantiateComputedArtifacts()
+    );
 
-    return PageExecutionTimings.audit(artifacts, {options}).then(output => {
-      const valueOf = name => Math.round(output.extendedInfo.value[name]);
-      assert.equal(output.details.items.length, 13);
-      assert.equal(output.score, 1);
-      assert.equal(Math.round(output.rawValue), 596);
-
-      for (const category in output.extendedInfo.value) {
-        if (output.extendedInfo.value[category]) {
-          assert.equal(valueOf(category), siteWithRedirectTraceExpectations[category]);
-        }
-      }
-    });
+    const output = await PageExecutionTimings.audit(artifacts, {options});
+    assert.deepStrictEqual(keyOutput(output), siteWithRedirectTraceExpectations);
+    assert.equal(Math.round(output.rawValue), 784);
+    assert.equal(output.details.items.length, 7);
+    assert.equal(output.score, 1);
   });
 
-  it('should compute the correct pageExecutionTiming values for the load trace', () => {
-    const artifacts = Object.assign({
-      traces: {
-        [PageExecutionTimings.DEFAULT_PASS]: loadTrace,
-      },
-    }, Runner.instantiateComputedArtifacts());
+  it('should compute the correct values for the load trace', async () => {
+    const artifacts = Object.assign(
+      {traces: {defaultPass: {traceEvents: loadTrace}}},
+      Runner.instantiateComputedArtifacts()
+    );
 
-    return PageExecutionTimings.audit(artifacts, {options}).then(output => {
-      const valueOf = name => Math.round(output.extendedInfo.value[name]);
-      assert.equal(output.details.items.length, 12);
-      assert.equal(output.score, 1);
-      assert.equal(Math.round(output.rawValue), 524);
-
-      for (const category in output.extendedInfo.value) {
-        if (output.extendedInfo.value[category]) {
-          assert.equal(valueOf(category), loadTraceExpectations[category]);
-        }
-      }
-    });
+    const output = await PageExecutionTimings.audit(artifacts, {options});
+    assert.deepStrictEqual(keyOutput(output), loadTraceExpectations);
+    assert.equal(Math.round(output.rawValue), 933);
+    assert.equal(output.details.items.length, 6);
+    assert.equal(output.score, 1);
   });
 
   it('should get no data when no events are present', () => {
-    const artifacts = Object.assign({
-      traces: {
-        [PageExecutionTimings.DEFAULT_PASS]: errorTrace,
-      },
-    }, Runner.instantiateComputedArtifacts());
+    const artifacts = Object.assign(
+      {traces: {defaultPass: errorTrace}},
+      Runner.instantiateComputedArtifacts()
+    );
 
     return PageExecutionTimings.audit(artifacts, {options}).then(output => {
       assert.equal(output.details.items.length, 0);

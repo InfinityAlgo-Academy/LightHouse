@@ -5,90 +5,108 @@
  */
 'use strict';
 
-const groupIdToName = {
-  loading: 'Network request loading',
-  parseHTML: 'Parsing HTML & CSS',
-  styleLayout: 'Style & Layout',
-  compositing: 'Compositing',
-  painting: 'Paint',
-  gpu: 'GPU',
-  scripting: 'Script Evaluation',
-  scriptParseCompile: 'Script Parsing & Compile',
-  scriptGC: 'Garbage collection',
-  other: 'Other',
-  images: 'Images',
+/**
+ * @typedef TaskGroup
+ * @property {string} id
+ * @property {string} label
+ * @property {string[]} traceEventNames
+ */
+
+/**
+ * Make sure the traceEventNames keep up with the ones in DevTools
+ * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/timeline_model/TimelineModel.js?type=cs&q=TimelineModel.TimelineModel.RecordType+%3D&g=0&l=1156
+ * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/timeline/TimelineUIUtils.js?type=cs&q=_initEventStyles+-f:out+f:devtools&sq=package:chromium&g=0&l=39
+ */
+const taskGroups = {
+  parseHTML: {
+    id: '',
+    label: 'Parse HTML & CSS',
+    traceEventNames: ['ParseHTML', 'ParseAuthorStyleSheet'],
+  },
+  styleLayout: {
+    id: '',
+    label: 'Style & Layout',
+    traceEventNames: [
+      'ScheduleStyleRecalculation',
+      'RecalculateStyles',
+      'UpdateLayoutTree',
+      'InvalidateLayout',
+      'Layout',
+    ],
+  },
+  paintCompositeRender: {
+    id: '',
+    label: 'Rendering',
+    traceEventNames: [
+      'Animation',
+      'RequestMainThreadFrame',
+      'ActivateLayerTree',
+      'DrawFrame',
+      'HitTest',
+      'PaintSetup',
+      'Paint',
+      'PaintImage',
+      'Rasterize',
+      'RasterTask',
+      'ScrollLayer',
+      'UpdateLayer',
+      'UpdateLayerTree',
+      'CompositeLayers',
+    ],
+  },
+  scriptParseCompile: {
+    id: '',
+    label: 'Script Parsing & Compilation',
+    traceEventNames: ['v8.compile', 'v8.compileModule', 'v8.parseOnBackground'],
+  },
+  scriptEvaluation: {
+    id: '',
+    label: 'Script Evaluation',
+    traceEventNames: [
+      'EventDispatch',
+      'EvaluateScript',
+      'v8.evaluateModule',
+      'FunctionCall',
+      'TimerFire',
+      'FireIdleCallback',
+      'FireAnimationFrame',
+      'RunMicrotasks',
+      'V8.Execute',
+    ],
+  },
+  garbageCollection: {
+    id: '',
+    label: 'Garbage Collection',
+    traceEventNames: [
+      'GCEvent',
+      'MinorGC',
+      'MajorGC',
+      'ThreadState::performIdleLazySweep',
+      'ThreadState::completeSweep',
+      'BlinkGCMarking',
+    ],
+  },
+  other: {
+    id: '',
+    label: 'Other',
+    traceEventNames: [
+      'MessageLoop::RunTask',
+      'TaskQueueManager::ProcessTaskFromWorkQueue',
+      'ThreadControllerImpl::DoWork',
+    ],
+  },
 };
 
-const taskToGroup = {
-  'Animation': groupIdToName.painting,
-  'Async Task': groupIdToName.other,
-  'Frame Start': groupIdToName.painting,
-  'Frame Start (main thread)': groupIdToName.painting,
-  'Cancel Animation Frame': groupIdToName.scripting,
-  'Cancel Idle Callback': groupIdToName.scripting,
-  'Compile Script': groupIdToName.scriptParseCompile,
-  'Composite Layers': groupIdToName.compositing,
-  'Console Time': groupIdToName.scripting,
-  'Image Decode': groupIdToName.images,
-  'Draw Frame': groupIdToName.painting,
-  'Embedder Callback': groupIdToName.scripting,
-  'Evaluate Script': groupIdToName.scripting,
-  'Event': groupIdToName.scripting,
-  'Animation Frame Fired': groupIdToName.scripting,
-  'Fire Idle Callback': groupIdToName.scripting,
-  'Function Call': groupIdToName.scripting,
-  'DOM GC': groupIdToName.scriptGC,
-  'GC Event': groupIdToName.scriptGC,
-  'GPU': groupIdToName.gpu,
-  'Hit Test': groupIdToName.compositing,
-  'Invalidate Layout': groupIdToName.styleLayout,
-  'JS Frame': groupIdToName.scripting,
-  'Input Latency': groupIdToName.scripting,
-  'Layout': groupIdToName.styleLayout,
-  'Major GC': groupIdToName.scriptGC,
-  'DOMContentLoaded event': groupIdToName.scripting,
-  'First paint': groupIdToName.painting,
-  'FMP': groupIdToName.painting,
-  'FMP candidate': groupIdToName.painting,
-  'Load event': groupIdToName.scripting,
-  'Minor GC': groupIdToName.scriptGC,
-  'Paint': groupIdToName.painting,
-  'Paint Image': groupIdToName.images,
-  'Paint Setup': groupIdToName.painting,
-  'Parse Stylesheet': groupIdToName.parseHTML,
-  'Parse HTML': groupIdToName.parseHTML,
-  'Parse Script': groupIdToName.scriptParseCompile,
-  'Other': groupIdToName.other,
-  'Rasterize Paint': groupIdToName.painting,
-  'Recalculate Style': groupIdToName.styleLayout,
-  'Request Animation Frame': groupIdToName.scripting,
-  'Request Idle Callback': groupIdToName.scripting,
-  'Request Main Thread Frame': groupIdToName.painting,
-  'Image Resize': groupIdToName.images,
-  'Finish Loading': groupIdToName.loading,
-  'Receive Data': groupIdToName.loading,
-  'Receive Response': groupIdToName.loading,
-  'Send Request': groupIdToName.loading,
-  'Run Microtasks': groupIdToName.scripting,
-  'Schedule Style Recalculation': groupIdToName.styleLayout,
-  'Scroll': groupIdToName.compositing,
-  'Task': groupIdToName.other,
-  'Timer Fired': groupIdToName.scripting,
-  'Install Timer': groupIdToName.scripting,
-  'Remove Timer': groupIdToName.scripting,
-  'Timestamp': groupIdToName.scripting,
-  'Update Layer': groupIdToName.compositing,
-  'Update Layer Tree': groupIdToName.compositing,
-  'User Timing': groupIdToName.scripting,
-  'Create WebSocket': groupIdToName.scripting,
-  'Destroy WebSocket': groupIdToName.scripting,
-  'Receive WebSocket Handshake': groupIdToName.scripting,
-  'Send WebSocket Handshake': groupIdToName.scripting,
-  'XHR Load': groupIdToName.scripting,
-  'XHR Ready State Change': groupIdToName.scripting,
-};
+/** @type {Object<string, TaskGroup>} */
+const taskNameToGroup = {};
+for (const [groupId, group] of Object.entries(taskGroups)) {
+  group.id = groupId;
+  for (const traceEventName of group.traceEventNames) {
+    taskNameToGroup[traceEventName] = group;
+  }
+}
 
 module.exports = {
-  groupIdToName,
-  taskToGroup,
+  taskGroups,
+  taskNameToGroup,
 };
