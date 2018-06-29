@@ -79,8 +79,10 @@ if (typeof module !== 'undefined' && module.exports) {
     getDefaultCategories,
     listenForStatus,
   };
-} else {
-  // If not require()d, expose on window for devtools, other consumers of file.
+}
+
+if (typeof window !== 'undefined') {
+  // Expose on window for devtools, other consumers of file.
   // @ts-ignore
   window.runLighthouseInWorker = runLighthouseInWorker;
   // @ts-ignore
