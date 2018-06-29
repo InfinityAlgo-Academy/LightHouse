@@ -16,12 +16,12 @@ const DetailsRenderer = require('../../../../report/html/renderer/details-render
 const TEMPLATE_FILE = fs.readFileSync(__dirname +
     '/../../../../report/html/templates.html', 'utf8');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('DetailsRenderer', () => {
   let renderer;
 
-  before(() => {
+  beforeAll(() => {
     global.URL = URL;
     global.Util = Util;
     const document = jsdom.jsdom(TEMPLATE_FILE);
@@ -29,7 +29,7 @@ describe('DetailsRenderer', () => {
     renderer = new DetailsRenderer(dom);
   });
 
-  after(() => {
+  afterAll(() => {
     global.URL = undefined;
     global.Util = undefined;
   });

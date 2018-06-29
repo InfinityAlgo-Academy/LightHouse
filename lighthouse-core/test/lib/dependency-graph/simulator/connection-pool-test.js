@@ -10,7 +10,7 @@ const ConnectionPool = require('../../../../lib/dependency-graph/simulator/conne
 const assert = require('assert');
 const URL = require('url').URL;
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('DependencyGraph/Simulator/ConnectionPool', () => {
   const rtt = 100;
   const throughput = 10000 * 1024;

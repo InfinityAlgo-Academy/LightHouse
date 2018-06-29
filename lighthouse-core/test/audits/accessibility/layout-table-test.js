@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/layout-table.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: layout-table audit', () => {
   it('generates an audit output', () => {

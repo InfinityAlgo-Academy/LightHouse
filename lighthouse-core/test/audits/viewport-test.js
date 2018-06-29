@@ -8,7 +8,7 @@
 const Audit = require('../../audits/viewport.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Mobile-friendly: viewport audit', () => {
   it('fails when HTML does not contain a viewport meta tag', () => {

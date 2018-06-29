@@ -12,7 +12,7 @@ const assert = require('assert');
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Performance: metrics', () => {
   it('evaluates valid input correctly', async () => {

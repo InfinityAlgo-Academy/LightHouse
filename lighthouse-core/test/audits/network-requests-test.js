@@ -11,7 +11,7 @@ const assert = require('assert');
 
 const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('Network requests audit', () => {
   it('should return network requests', () => {
     const artifacts = Object.assign({

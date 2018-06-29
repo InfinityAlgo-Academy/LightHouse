@@ -8,7 +8,7 @@
 const ImageAspectRatioAudit = require('../../audits/image-aspect-ratio.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 function generateRecord(url = 'https://google.com/logo.png', mimeType = 'image/png') {
   return {
     url,

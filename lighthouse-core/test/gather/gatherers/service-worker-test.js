@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const ServiceWorkerGather = require('../../../gather/gatherers/service-worker');
 const assert = require('assert');

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const ManifestValues = require('../../../gather/computed/manifest-values');
 const assert = require('assert');
@@ -28,7 +28,6 @@ function noUrlManifestParser(manifestSrc) {
   return manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 }
 
-/* eslint-env mocha */
 describe('ManifestValues computed artifact', () => {
   it('reports a parse failure if page had no manifest', async () => {
     const manifestArtifact = null;

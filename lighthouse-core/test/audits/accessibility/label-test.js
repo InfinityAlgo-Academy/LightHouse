@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/label.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: label audit', () => {
   it('generates an audit output', () => {

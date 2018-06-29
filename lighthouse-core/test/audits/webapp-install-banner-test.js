@@ -33,7 +33,7 @@ function generateMockArtifacts() {
   return mockArtifacts;
 }
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('PWA: webapp install banner audit', () => {
   describe('basics', () => {
     it('fails if page had no manifest', () => {

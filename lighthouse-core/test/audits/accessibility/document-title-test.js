@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/document-title.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: document-title audit', () => {
   it('generates an audit output', () => {

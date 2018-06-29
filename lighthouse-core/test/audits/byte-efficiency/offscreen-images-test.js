@@ -11,7 +11,7 @@ const NetworkNode = require('../../../lib/dependency-graph/network-node');
 const CPUNode = require('../../../lib/dependency-graph/cpu-node');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 function generateRecord(resourceSizeInKb, startTime = 0, mimeType = 'image/png') {
   return {
     mimeType,

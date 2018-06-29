@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 const BootupTime = require('../../audits/bootup-time.js');
 const Runner = require('../../runner.js');
 const assert = require('assert');
@@ -40,7 +40,7 @@ describe('Performance: bootup-time audit', () => {
       assert.equal(output.details.items.length, 4);
       assert.equal(output.score, 1);
     });
-  }).timeout(10000);
+  }, 10000);
 
   it('should compute the correct values when simulated', async () => {
     const artifacts = Object.assign({

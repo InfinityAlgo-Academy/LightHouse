@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const assert = require('assert');
 const fs = require('fs');
@@ -77,14 +77,14 @@ const DETAILS = {
 describe('DetailsRenderer', () => {
   let dom;
 
-  before(() => {
+  beforeAll(() => {
     global.URL = URL;
     global.Util = Util;
     const document = jsdom.jsdom(TEMPLATE_FILE);
     dom = new DOM(document);
   });
 
-  after(() => {
+  afterAll(() => {
     global.URL = undefined;
     global.Util = undefined;
   });

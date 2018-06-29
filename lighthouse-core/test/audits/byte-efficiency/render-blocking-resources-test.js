@@ -18,7 +18,7 @@ const assert = require('assert');
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Render blocking resources audit', () => {
   it('evaluates http2 input correctly', async () => {

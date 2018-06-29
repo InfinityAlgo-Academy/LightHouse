@@ -8,7 +8,7 @@
 const CanonicalAudit = require('../../../audits/seo/canonical.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('SEO: Document has valid canonical link', () => {
   it('succeeds when there are no canonical links', () => {

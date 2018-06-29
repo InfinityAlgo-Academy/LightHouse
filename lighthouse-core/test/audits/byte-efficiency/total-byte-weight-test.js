@@ -10,7 +10,7 @@ const assert = require('assert');
 const URL = require('url').URL;
 const options = TotalByteWeight.defaultOptions;
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 function generateRequest(url, size, baseUrl = 'http://google.com/') {
   const parsedUrl = new URL(url, baseUrl);

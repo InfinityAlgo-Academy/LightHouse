@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/audio-caption.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: audio-caption audit', () => {
   it('generates an audit output', () => {

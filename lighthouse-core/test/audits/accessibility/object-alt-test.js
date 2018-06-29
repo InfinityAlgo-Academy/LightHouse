@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/object-alt.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: object-alt audit', () => {
   it('generates an audit output', () => {

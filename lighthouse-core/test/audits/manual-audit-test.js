@@ -8,7 +8,7 @@
 const ManualAudit = require('../../audits/manual/manual-audit.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 // Extend the Audit class but fail to implement meta. It should throw errors.
 class TestAudit extends ManualAudit {

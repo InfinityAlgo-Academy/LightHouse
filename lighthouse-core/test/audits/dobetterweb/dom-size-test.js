@@ -9,7 +9,7 @@ const DOMSize = require('../../../audits/dobetterweb/dom-size.js');
 const assert = require('assert');
 const options = DOMSize.defaultOptions;
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Num DOM nodes audit', () => {
   const numNodes = DOMSize.MAX_DOM_NODES;

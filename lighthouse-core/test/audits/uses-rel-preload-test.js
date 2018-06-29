@@ -6,7 +6,7 @@
 
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const UsesRelPreload = require('../../audits/uses-rel-preload.js');
 const NetworkNode = require('../../lib/dependency-graph/network-node');

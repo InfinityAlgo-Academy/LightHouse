@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const NetworkThroughput = require('../../../gather/computed/network-throughput');
 const assert = require('assert');

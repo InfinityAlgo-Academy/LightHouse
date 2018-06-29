@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const FontSizeGather = require('../../../../gather/gatherers/seo/font-size');
 const assert = require('assert');

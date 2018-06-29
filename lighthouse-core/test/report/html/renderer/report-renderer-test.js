@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const assert = require('assert');
 const fs = require('fs');
@@ -30,7 +30,7 @@ const TEMPLATE_FILE = fs.readFileSync(__dirname +
 describe('ReportRenderer', () => {
   let renderer;
 
-  before(() => {
+  beforeAll(() => {
     global.URL = URL;
     global.Util = Util;
     global.ReportUIFeatures = ReportUIFeatures;
@@ -60,7 +60,7 @@ describe('ReportRenderer', () => {
     sampleResults.reportCategories = Object.values(sampleResults.categories);
   });
 
-  after(() => {
+  afterAll(() => {
     global.self = undefined;
     global.URL = undefined;
     global.Util = undefined;
@@ -108,7 +108,7 @@ describe('ReportRenderer', () => {
       const originalResults = JSON.parse(JSON.stringify(sampleResults));
       renderer.renderReport(sampleResults, container);
       assert.deepStrictEqual(sampleResults, originalResults);
-    }).timeout(2000);
+    }, 2000);
 
     it('renders no warning section when no lighthouseRunWarnings occur', () => {
       const warningResults = Object.assign({}, sampleResults, {runWarnings: []});

@@ -8,7 +8,7 @@
 const Audit = require('../../audits/content-width.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Mobile-friendly: content-width audit', () => {
   it('fails when scroll width differs from viewport width', () => {

@@ -8,7 +8,7 @@
 const Audit = require('../../audits/audit.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 // Extend the Audit class but fail to implement meta. It should throw errors.
 class A extends Audit {}

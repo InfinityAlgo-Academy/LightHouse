@@ -6,7 +6,7 @@
 
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const UsesRelPreconnect = require('../../audits/uses-rel-preconnect.js');
 const assert = require('assert');

@@ -27,7 +27,7 @@ function generateNetworkRecords(records, navStart) {
   });
 }
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('Metrics: TTI', () => {
   it('should compute a simulated value', async () => {
     const artifacts = Runner.instantiateComputedArtifacts();

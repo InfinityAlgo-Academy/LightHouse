@@ -27,7 +27,7 @@ function createRequest(
   return {requestId, url, startTime, endTime, _initiator, _resourceType};
 }
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('PageDependencyGraph computed artifact:', () => {
   let computedArtifacts;
   let traceOfTab;

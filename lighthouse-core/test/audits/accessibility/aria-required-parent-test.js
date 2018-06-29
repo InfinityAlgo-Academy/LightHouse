@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/aria-required-parent.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: aria-required-parent audit', () => {
   it('generates an audit output', () => {

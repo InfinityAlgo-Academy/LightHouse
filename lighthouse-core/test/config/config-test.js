@@ -13,7 +13,7 @@ const log = require('lighthouse-logger');
 const Gatherer = require('../../gather/gatherers/gatherer');
 const Audit = require('../../audits/audit');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Config', () => {
   let origConfig;

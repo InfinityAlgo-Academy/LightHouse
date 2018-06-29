@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const AccessibilityGather = require('../../../gather/gatherers/accessibility');
 const assert = require('assert');

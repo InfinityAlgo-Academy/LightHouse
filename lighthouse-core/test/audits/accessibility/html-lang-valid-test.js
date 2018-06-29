@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/html-lang-valid.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: html-lang-valid audit', () => {
   it('generates an audit output', () => {

@@ -10,7 +10,7 @@ const assert = require('assert');
 const NetworkRequest = require('../../../lib/network-request');
 const options = CacheHeadersAudit.defaultOptions;
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 function networkRecord(options = {}) {
   const headers = [];

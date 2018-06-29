@@ -24,10 +24,10 @@ function assertTraceEventsEqual(traceEventsA, traceEventsB) {
   });
 }
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('asset-saver helper', () => {
   describe('saves files', function() {
-    before(() => {
+    beforeAll(() => {
       const artifacts = {
         devtoolsLogs: {
           [Audit.DEFAULT_PASS]: [{message: 'first'}, {message: 'second'}],
@@ -106,7 +106,7 @@ describe('asset-saver helper', () => {
           const traceEventsFromDisk = JSON.parse(traceFileContents).traceEvents;
           assertTraceEventsEqual(traceEventsFromDisk, fullTraceObj.traceEvents);
         });
-    }).timeout(10000);
+    }, 10000);
 
     it('correctly saves a trace with no trace events to disk', () => {
       const trace = {
@@ -168,6 +168,6 @@ describe('asset-saver helper', () => {
           const fileStats = fs.lstatSync(traceFilename);
           assert.ok(fileStats.size > Math.pow(2, 28));
         });
-    }).timeout(40 * 1000);
+    }, 40 * 1000);
   });
 });

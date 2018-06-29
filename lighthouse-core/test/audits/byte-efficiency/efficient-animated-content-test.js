@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 const EfficientAnimatedContent =
   require('../../../audits/byte-efficiency/efficient-animated-content');
 const NetworkRequest = require('../../../lib/network-request');

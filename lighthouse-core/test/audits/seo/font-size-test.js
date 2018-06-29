@@ -12,7 +12,7 @@ const CSSStyleDeclaration = require('../../../lib/web-inspector').CSSStyleDeclar
 const URL = 'https://example.com';
 const validViewport = 'width=device-width';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('SEO: Font size audit', () => {
   it('fails when viewport is not set', () => {

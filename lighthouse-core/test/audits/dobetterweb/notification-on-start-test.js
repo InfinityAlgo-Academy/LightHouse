@@ -8,7 +8,7 @@
 const NotificationOnStart = require('../../../audits/dobetterweb/notification-on-start.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('UX: notification audit', () => {
   it('fails when notification has been automatically requested', () => {

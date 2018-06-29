@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/list.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: list audit', () => {
   it('generates an audit output', () => {

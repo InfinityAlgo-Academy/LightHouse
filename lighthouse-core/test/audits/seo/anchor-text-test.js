@@ -8,7 +8,7 @@
 const LinkTextAudit = require('../../../audits/seo/link-text.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('SEO: link text audit', () => {
   it('fails when link with non descriptive text is found', () => {

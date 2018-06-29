@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const ManifestGather = require('../../../gather/gatherers/manifest');
 const assert = require('assert');

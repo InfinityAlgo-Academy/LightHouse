@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const MetaDescriptionGather = require('../../../../gather/gatherers/seo/meta-description');
 const assert = require('assert');

@@ -13,7 +13,7 @@ const TEMPLATES_FILE = fs.readFileSync(__dirname + '/../../report/html/templates
 const sampleResults = require('../../../lighthouse-core/test/results/sample_v2.json');
 const csvValidator = require('csv-validator');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('ReportGenerator', () => {
   describe('#replaceStrings', () => {

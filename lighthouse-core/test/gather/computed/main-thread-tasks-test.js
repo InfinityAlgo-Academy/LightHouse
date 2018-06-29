@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const Runner = require('../../../runner.js');
 const taskGroups = require('../../../lib/task-groups.js').taskGroups;

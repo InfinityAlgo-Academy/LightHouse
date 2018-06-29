@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/aria-roles.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: aria-roles audit', () => {
   it('generates an audit output', () => {

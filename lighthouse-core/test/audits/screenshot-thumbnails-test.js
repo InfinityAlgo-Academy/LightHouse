@@ -14,12 +14,12 @@ const ScreenshotThumbnailsAudit = require('../../audits/screenshot-thumbnails');
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Screenshot thumbnails', () => {
   let computedArtifacts;
 
-  before(() => {
+  beforeAll(() => {
     computedArtifacts = Runner.instantiateComputedArtifacts();
   });
 
@@ -45,7 +45,7 @@ describe('Screenshot thumbnails', () => {
       assert.equal(results.details.items[9].timing, 818);
       assert.equal(results.details.items[0].timestamp, 225414253815);
     });
-  }).timeout(10000);
+  }, 10000);
 
   it('should scale the timeline to TTI when observed', () => {
     const options = {minimumTimelineDuration: 500};

@@ -12,7 +12,7 @@ const assert = require('assert');
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Metrics: EIL', () => {
   it('should compute a simulated value', async () => {

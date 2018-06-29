@@ -26,7 +26,7 @@ function generateImage(type, originalSize, webpSize, jpegSize) {
   };
 }
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Page uses optimized images', () => {
   it('ignores files when there is only insignificant savings', () => {

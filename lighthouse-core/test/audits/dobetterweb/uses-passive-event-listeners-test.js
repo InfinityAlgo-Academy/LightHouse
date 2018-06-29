@@ -8,7 +8,7 @@
 const PassiveEventsAudit = require('../../../audits/dobetterweb/uses-passive-event-listeners.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Page uses passive events listeners where applicable', () => {
   it('fails when scroll blocking listeners should be passive', () => {

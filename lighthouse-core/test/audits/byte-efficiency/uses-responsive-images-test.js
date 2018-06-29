@@ -9,7 +9,7 @@ const UsesResponsiveImagesAudit =
     require('../../../audits/byte-efficiency/uses-responsive-images.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 function generateRecord(resourceSizeInKb, durationInMs, mimeType = 'image/png') {
   return {
     mimeType,

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const HTMLWithoutJavaScriptGather = require('../../../gather/gatherers/html-without-javascript');
 const assert = require('assert');

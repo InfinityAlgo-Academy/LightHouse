@@ -19,7 +19,7 @@ const redirectTrace = require('../../fixtures/traces/site-with-redirect.json');
 const redirectDevToolsLog = require('../../fixtures/traces/site-with-redirect.devtools.log.json');
 
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('Performance: interactive audit', () => {
   it('should compute interactive', () => {
     const artifacts = Object.assign({

@@ -5,13 +5,13 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 const assert = require('assert');
-
-require('../../bin.js');
+const getFlags = require('../../cli-flags').getFlags;
 
 describe('CLI bin', function() {
   it('all options should have descriptions', () => {
+    getFlags('chrome://version');
     const yargs = require('yargs');
 
     const optionGroups = yargs.getGroups();

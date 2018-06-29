@@ -8,7 +8,7 @@
 const assert = require('assert');
 const ReportScoring = require('../scoring');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('ReportScoring', () => {
   describe('#arithmeticMean', () => {
     it('should work for empty list', () => {

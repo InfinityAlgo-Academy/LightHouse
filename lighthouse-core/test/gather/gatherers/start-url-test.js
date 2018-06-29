@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const StartUrlGatherer = require('../../../gather/gatherers/start-url');
 const assert = require('assert');

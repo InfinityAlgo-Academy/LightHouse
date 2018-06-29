@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const PasswordInputsWithPreventedPasteGatherer =
   require('../../../../gather/gatherers/dobetterweb/password-inputs-with-prevented-paste');

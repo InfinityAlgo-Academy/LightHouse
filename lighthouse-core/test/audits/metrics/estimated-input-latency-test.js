@@ -21,7 +21,7 @@ function generateArtifactsWithTrace(trace) {
     devtoolsLogs: {[Audit.DEFAULT_PASS]: []},
   }, computedArtifacts);
 }
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Performance: estimated-input-latency audit', () => {
   it('evaluates valid input correctly', () => {

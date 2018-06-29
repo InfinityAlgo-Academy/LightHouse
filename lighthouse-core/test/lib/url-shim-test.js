@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const URL = require('../../lib/url-shim');
 const assert = require('assert');

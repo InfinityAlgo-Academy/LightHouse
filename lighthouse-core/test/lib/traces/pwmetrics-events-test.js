@@ -11,7 +11,7 @@ const assert = require('assert');
 const dbwTrace = require('../../results/artifacts/defaultPass.trace.json');
 const dbwResults = require('../../results/sample_v2.json');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('metrics events class', () => {
   it('exposes metric definitions', () => {
     assert.ok(Metrics.metricsDefinitions.length > 5, 'metrics not exposed');

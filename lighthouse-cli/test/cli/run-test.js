@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 const assert = require('assert');
 const path = require('path');
 const fs = require('fs');
@@ -44,7 +44,7 @@ describe('CLI run', function() {
 
       fs.unlinkSync(filename);
     });
-  }).timeout(20 * 1000);
+  }, 20 * 1000);
 });
 
 describe('flag coercing', () => {

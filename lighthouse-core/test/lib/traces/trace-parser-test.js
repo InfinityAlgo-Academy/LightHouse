@@ -10,7 +10,7 @@ const fs = require('fs');
 const assert = require('assert');
 
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('traceParser parser', () => {
   it('returns preact trace data the same as JSON.parse', (done) => {
     const filename = `${__dirname}/../../fixtures/traces/progressive-app-m60.json`;
@@ -35,7 +35,7 @@ describe('traceParser parser', () => {
 
       done();
     });
-  }).timeout(10000);
+  }, 10000);
 
 
   it('parses a trace > 256mb (slow)', () => {
@@ -89,5 +89,5 @@ describe('traceParser parser', () => {
     assert.deepStrictEqual(
         streamedTrace.traceEvents[events.length - 2],
         events[0]);
-  }).timeout(40 * 1000);
+  }, 40 * 1000);
 });

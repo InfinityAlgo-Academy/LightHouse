@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/tabindex.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: tabindex audit', () => {
   it('generates an audit output', () => {

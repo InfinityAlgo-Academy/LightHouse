@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/button-name.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: button-name audit', () => {
   it('generates an audit output', () => {

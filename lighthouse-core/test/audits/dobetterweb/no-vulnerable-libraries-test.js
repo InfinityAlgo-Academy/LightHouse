@@ -9,7 +9,7 @@ const NoVulnerableLibrariesAudit =
   require('../../../audits/dobetterweb/no-vulnerable-libraries.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('Avoids front-end JavaScript libraries with known vulnerabilities', () => {
   describe('#normalizeVersion', () => {
     it('should leave valid and unsavable versions untouched', () => {

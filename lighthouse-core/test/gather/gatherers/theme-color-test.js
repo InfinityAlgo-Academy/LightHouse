@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const ThemeColorGather = require('../../../gather/gatherers/theme-color');
 const assert = require('assert');

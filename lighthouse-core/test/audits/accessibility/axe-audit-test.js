@@ -8,7 +8,7 @@
 const AxeAudit = require('../../../audits/accessibility/axe-audit');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: axe-audit', () => {
   describe('audit()', () => {

@@ -19,7 +19,7 @@ function generateResponse(options) {
   }, options);
 }
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Page uses optimized responses', () => {
   it('fails when responses are collectively unoptimized', () => {

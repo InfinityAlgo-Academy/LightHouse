@@ -8,7 +8,7 @@
 const Audit = require('../../audits/service-worker.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Offline: service worker audit', () => {
   it('passes when given a matching service worker version', () => {

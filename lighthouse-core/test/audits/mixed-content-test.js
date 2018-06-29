@@ -8,7 +8,7 @@
 const Audit = require('../../audits/mixed-content.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Mixed Content audit', () => {
   function getArtifacts(baseUrl, defaultPassRecords, mixedContentPassRecords) {

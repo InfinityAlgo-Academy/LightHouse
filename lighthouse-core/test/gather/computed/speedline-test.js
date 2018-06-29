@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const assert = require('assert');
 const fs = require('fs');
@@ -43,14 +43,14 @@ describe('Speedline gatherer', () => {
       assert.equal(speedline.perceptualSpeedIndex, undefined);
       assert.equal(Math.floor(speedline.speedIndex), 549);
     });
-  }).timeout(10000);
+  }, 10000);
 
   it('measures SI of 3 frame trace (blank @1s, content @2s, more content @3s)', () => {
     return computedArtifacts.requestSpeedline(threeFrameTrace).then(speedline => {
       assert.equal(speedline.perceptualSpeedIndex, undefined);
       assert.equal(Math.floor(speedline.speedIndex), 2040);
     });
-  }).timeout(10000);
+  }, 10000);
 
   it('uses a cache', () => {
     let start;
@@ -71,7 +71,7 @@ describe('Speedline gatherer', () => {
 
         return assert.equal(Math.floor(speedline.speedIndex), 549);
       });
-  }).timeout(10000);
+  }, 10000);
 
   it('does not change order of events in traces', () => {
     // Use fresh trace in case it has been altered by other require()s.
@@ -87,5 +87,5 @@ describe('Speedline gatherer', () => {
           assert.deepStrictEqual(pwaTrace[i], freshTrace[i]);
         }
       });
-  }).timeout(10000);
+  }, 10000);
 });

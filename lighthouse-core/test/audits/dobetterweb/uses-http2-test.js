@@ -12,7 +12,7 @@ const URL = 'https://webtide.com/http2-push-demo/';
 const networkRecords = require('../../fixtures/networkRecords-mix.json');
 const h2Records = require('../../fixtures/networkRecords-h2push.json');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Resources are fetched over http/2', () => {
   it('fails when some resources were requested via http/1.x', () => {

@@ -8,7 +8,7 @@
 const HreflangAudit = require('../../../audits/seo/hreflang.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('SEO: Document has valid hreflang code', () => {
   it('fails when language code provided in hreflang via link element is invalid', () => {

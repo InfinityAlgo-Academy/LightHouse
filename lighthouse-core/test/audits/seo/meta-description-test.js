@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/seo/meta-description.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('SEO: description audit', () => {
   it('fails when HTML does not contain a description meta tag', () => {

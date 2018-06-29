@@ -8,7 +8,7 @@
 const Audit = require('../../audits/is-on-https.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Security: HTTPS audit', () => {
   function getArtifacts(networkRecords) {

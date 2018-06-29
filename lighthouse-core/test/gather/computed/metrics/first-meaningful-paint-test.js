@@ -18,7 +18,7 @@ const preactTrace = require(`${TRACE_FIXTURES}/preactjs.com_ts_of_undefined.json
 const noFMPtrace = require(`${TRACE_FIXTURES}/no_fmp_event.json`);
 const noFCPtrace = require(`${TRACE_FIXTURES}/airhorner_no_fcp.json`);
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Metrics: FMP', () => {
   let artifacts;

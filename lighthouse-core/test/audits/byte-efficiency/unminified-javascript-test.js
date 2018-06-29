@@ -10,7 +10,7 @@ const UnminifiedJavascriptAudit =
   require('../../../audits/byte-efficiency/unminified-javascript.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const _resourceType = 'Script';
 describe('Page uses optimized responses', () => {

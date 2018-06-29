@@ -33,17 +33,20 @@
     "test-viewer": "cd lighthouse-viewer && yarn pptr-test",
     "test-lantern": "bash lighthouse-core/scripts/test-lantern.sh",
 
-    "unit-core": "mocha --reporter dot \"lighthouse-core/test/**/*-test.js\"",
-    "unit-cli": "mocha --reporter dot \"lighthouse-cli/test/**/*-test.js\"",
+    "unit-core": "jest \"lighthouse-core/\"",
+    "unit-core:ci": "jest --runInBand --coverage --ci \"lighthouse-core/\"",
+    "unit-cli": "jest  --runInBand \"lighthouse-cli/\"",
+    "unit-cli:ci": "jest --runInBand --coverage --ci \"lighthouse-cli/\"",
     "unit-viewer": "mocha --reporter dot \"lighthouse-viewer/test/**/*-test.js\"",
     "unit": "yarn unit-core && yarn unit-cli && yarn unit-viewer",
+    "unit:ci": "yarn unit-core:ci && yarn unit-cli:ci && yarn unit-viewer",
     "core-unit": "yarn unit-core",
     "cli-unit": "yarn unit-cli",
     "viewer-unit": "yarn unit-viewer",
     "watch": "yarn unit-core --watch",
 
-    "unit:silentcoverage": "nyc --silent yarn unit && nyc report --reporter text-lcov > unit-coverage.lcov",
-    "coverage": "nyc yarn unit && nyc report --reporter html",
+    "unit:silentcoverage": "nyc --silent yarn unit:ci && nyc report --reporter text-lcov > unit-coverage.lcov",
+    "coverage": "nyc yarn unit:ci && nyc report --reporter html",
     "smoke:silentcoverage": "nyc --silent yarn smoke && nyc report --reporter text-lcov > smoke-coverage.lcov",
     "coverage:smoke": "nyc yarn smoke && nyc report --reporter html",
     "coveralls": "cat unit-coverage.lcov | coveralls",
@@ -93,6 +96,7 @@
     "gulp": "^3.9.1",
     "gulp-replace": "^0.5.4",
     "gulp-util": "^3.0.7",
+    "jest": "^23.2.0",
     "jsdom": "^9.12.0",
     "mocha": "^3.2.0",
     "npm-run-posix-or-windows": "^2.0.2",
@@ -157,6 +161,8 @@
     }
   ],
   "nyc": {
+    "reporter": ["lcov", "text"],
+    "tempDirectory": "./coverage",
     "exclude": [
       "**/third_party/**",
       "**/test/",

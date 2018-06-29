@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const OptimizedImages =
     require('../../../../gather/gatherers/dobetterweb/optimized-images');

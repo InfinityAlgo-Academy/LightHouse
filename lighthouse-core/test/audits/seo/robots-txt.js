@@ -8,7 +8,7 @@
 const RobotsTxtAudit = require('../../../audits/seo/robots-txt.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('SEO: robots.txt audit', () => {
   it('fails and reports error when no robots.txt was provided', () => {

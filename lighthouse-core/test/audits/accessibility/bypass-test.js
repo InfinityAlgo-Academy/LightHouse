@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/bypass.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: bypass audit', () => {
   it('generates an audit output', () => {

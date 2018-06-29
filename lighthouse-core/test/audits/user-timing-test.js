@@ -20,7 +20,7 @@ function generateArtifactsWithTrace(trace) {
   }, computedArtifacts);
 }
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('Performance: user-timings audit', () => {
   it('evaluates valid input correctly', () => {
     return Audit.audit(generateArtifactsWithTrace(traceEvents)).then(auditResult => {

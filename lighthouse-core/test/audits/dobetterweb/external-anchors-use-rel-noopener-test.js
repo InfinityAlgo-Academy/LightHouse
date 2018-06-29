@@ -11,7 +11,7 @@ const assert = require('assert');
 
 const URL = 'https://google.com/test';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('External anchors use rel="noopener"', () => {
   it('passes when links are from same hosts as the page host', () => {

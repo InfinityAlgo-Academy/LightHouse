@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const ViewportDimensionsGatherer = require('../../../gather/gatherers/viewport-dimensions');
 const assert = require('assert');

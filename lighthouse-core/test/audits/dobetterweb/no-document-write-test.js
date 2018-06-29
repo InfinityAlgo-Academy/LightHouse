@@ -10,7 +10,7 @@ const assert = require('assert');
 
 const URL = 'https://example.com';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Page does not use document.write()', () => {
   it('passes when document.write() is not used', () => {

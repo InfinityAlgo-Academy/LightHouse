@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/video-caption.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: video-caption audit', () => {
   it('generates an audit output', () => {

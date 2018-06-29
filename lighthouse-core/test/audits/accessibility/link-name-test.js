@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/link-name.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: link-name audit', () => {
   it('generates an audit output', () => {

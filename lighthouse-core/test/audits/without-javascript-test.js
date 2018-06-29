@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const withoutJsAudit = require('../../audits/without-javascript.js');
 const assert = require('assert');

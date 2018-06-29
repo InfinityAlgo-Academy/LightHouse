@@ -28,7 +28,7 @@ function generateArtifacts(ttiValue) {
   };
 }
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('PWA: load-fast-enough-for-pwa audit', () => {
   it('returns boolean based on TTI value', () => {
     const settings = {throttlingMethod: 'devtools', throttling: mobile3GThrottling};

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const ResponseCompression =
     require('../../../../gather/gatherers/dobetterweb/response-compression');

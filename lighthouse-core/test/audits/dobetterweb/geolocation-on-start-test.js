@@ -8,7 +8,7 @@
 const GeolocationOnStartAudit = require('../../../audits/dobetterweb/geolocation-on-start.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('UX: geolocation audit', () => {
   it('fails when geolocation has been automatically requested', () => {

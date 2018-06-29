@@ -16,7 +16,7 @@ const devtoolsLogs = require('../../fixtures/traces/progressive-app-m60.devtools
 const Runner = require('../../../runner.js');
 const computedArtifacts = Runner.instantiateComputedArtifacts();
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('Performance: first-meaningful-paint audit', () => {
   it('computes FMP correctly for valid trace', async () => {
     const artifacts = Object.assign({

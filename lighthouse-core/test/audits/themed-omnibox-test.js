@@ -35,7 +35,7 @@ function noUrlManifestParser(manifestSrc) {
   return manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 }
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('PWA: themed omnibox audit', () => {
   it('fails if page had no manifest', () => {
     const artifacts = generateMockArtifacts();

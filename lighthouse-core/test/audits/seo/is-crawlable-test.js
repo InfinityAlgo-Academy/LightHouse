@@ -8,7 +8,7 @@
 const IsCrawlableAudit = require('../../../audits/seo/is-crawlable.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('SEO: Is page crawlable audit', () => {
   it('fails when page is blocked from indexing with a robots metatag', () => {

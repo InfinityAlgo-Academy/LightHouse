@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const OfflineGather = require('../../../gather/gatherers/offline');
 const assert = require('assert');

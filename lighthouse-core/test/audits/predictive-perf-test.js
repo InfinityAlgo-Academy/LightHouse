@@ -12,7 +12,7 @@ const assert = require('assert');
 const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
 const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('Performance: predictive performance audit', () => {
   it('should compute the predicted values', () => {
     const artifacts = Object.assign({

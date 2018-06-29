@@ -8,7 +8,7 @@
 const NoWebSQLAudit = require('../../../audits/dobetterweb/no-websql.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('No websql audit', () => {
   it('passes when no database is created', () => {

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const RuntimeExceptionsGatherer = require('../../../gather/gatherers/runtime-exceptions');
 const assert = require('assert');

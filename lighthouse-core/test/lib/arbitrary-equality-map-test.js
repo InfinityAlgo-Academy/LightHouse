@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const assert = require('assert');
 const ArbitraryEqualityMap = require('../../lib/arbitrary-equality-map.js');
@@ -48,7 +48,7 @@ describe('ArbitraryEqualityMap', () => {
       const i = j % 100;
       assert.equal(map.get({i}), i);
     }
-  }).timeout(1000);
+  }, 1000);
 
   it('is fast for expected usage', () => {
     const map = new ArbitraryEqualityMap();
@@ -59,5 +59,5 @@ describe('ArbitraryEqualityMap', () => {
     for (let i = 0; i < 10000; i++) {
       assert.equal(map.get([trace, {x: i % 2}]), i % 2 ? 'bar' : 'foo');
     }
-  }).timeout(1000);
+  }, 1000);
 });

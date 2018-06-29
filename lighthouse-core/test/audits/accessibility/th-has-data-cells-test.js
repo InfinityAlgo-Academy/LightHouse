@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/th-has-data-cells.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: th-has-data-cells audit', () => {
   it('generates an audit output', () => {

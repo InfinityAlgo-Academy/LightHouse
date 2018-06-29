@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/image-alt.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: image-alt audit', () => {
   it('generates an audit output', () => {

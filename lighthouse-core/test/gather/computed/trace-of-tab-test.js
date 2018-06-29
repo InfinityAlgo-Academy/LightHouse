@@ -17,7 +17,7 @@ const noFMPtrace = require('../../fixtures/traces/no_fmp_event.json');
 const noFCPtrace = require('../../fixtures/traces/airhorner_no_fcp');
 const backgroundTabTrace = require('../../fixtures/traces/backgrounded-tab-missing-paints');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('Trace of Tab computed artifact:', () => {
   it('gathers the events from the tab\'s process', async () => {
     const trace = await traceOfTab.compute_(lateTracingStartedTrace);

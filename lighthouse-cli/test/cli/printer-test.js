@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 const Printer = require('../../printer.js');
 const assert = require('assert');
 const fs = require('fs');

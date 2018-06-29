@@ -8,7 +8,7 @@
 const TimeToFirstByte = require('../../audits/time-to-first-byte.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('Performance: time-to-first-byte audit', () => {
   it('fails when ttfb of root document is higher than 600ms', () => {
     const networkRecords = [

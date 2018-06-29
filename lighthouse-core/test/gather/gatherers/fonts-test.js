@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const FontsGatherer = require('../../../gather/gatherers/fonts');
 const assert = require('assert');

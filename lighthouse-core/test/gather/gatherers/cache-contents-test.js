@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const CacheContentGather = require('../../../gather/gatherers/cache-contents');
 const assert = require('assert');

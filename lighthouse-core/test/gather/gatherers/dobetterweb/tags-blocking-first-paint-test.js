@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const TagsBlockingFirstPaint =
     require('../../../../gather/gatherers/dobetterweb/tags-blocking-first-paint');

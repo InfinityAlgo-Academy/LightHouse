@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const assert = require('assert');
 const CriticalRequestChains = require('../../../gather/computed/critical-request-chains');

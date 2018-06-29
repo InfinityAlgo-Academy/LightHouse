@@ -33,7 +33,7 @@ function cpuTask({tid, ts, duration}) {
   return {tid, ts, dur};
 }
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('DependencyGraph/Simulator', () => {
   describe('.simulate', () => {
     const serverResponseTimeByOrigin = new Map([['http://example.com', 500]]);

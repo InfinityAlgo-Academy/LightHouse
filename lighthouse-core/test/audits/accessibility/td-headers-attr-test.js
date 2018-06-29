@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/td-headers-attr.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: td-headers-attr audit', () => {
   it('generates an audit output', () => {

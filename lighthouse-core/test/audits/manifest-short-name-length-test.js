@@ -22,7 +22,7 @@ function generateMockArtifacts() {
   return mockArtifacts;
 }
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Manifest: short_name_length audit', () => {
   it('marked as notApplicable if page had no manifest', () => {

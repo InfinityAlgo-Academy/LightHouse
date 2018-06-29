@@ -8,7 +8,7 @@
 const Audit = require('../../audits/works-offline.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const URL = 'https://www.chromestatus.com';
 

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha, browser */
+/* eslint-env jest, browser */
 
 const assert = require('assert');
 const fs = require('fs');
@@ -26,7 +26,7 @@ const TEMPLATE_FILE = fs.readFileSync(__dirname +
 describe('CategoryRenderer', () => {
   let renderer;
 
-  before(() => {
+  beforeAll(() => {
     global.URL = URL;
     global.Util = Util;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
@@ -41,7 +41,7 @@ describe('CategoryRenderer', () => {
       sampleResults.reportCategories);
   });
 
-  after(() => {
+  afterAll(() => {
     global.URL = undefined;
     global.Util = undefined;
     global.CriticalRequestChainRenderer = undefined;

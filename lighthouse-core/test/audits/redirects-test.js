@@ -8,7 +8,7 @@
 const Audit = require('../../audits/redirects.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 const FAILING_THREE_REDIRECTS = {
   startTime: 17,
   url: 'https://m.example.com/final',

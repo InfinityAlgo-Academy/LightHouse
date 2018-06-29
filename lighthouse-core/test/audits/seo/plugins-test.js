@@ -8,7 +8,7 @@
 const PluginsAudit = require('../../../audits/seo/plugins.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('SEO: Avoids plugins', () => {
   it('fails when page contains java, silverlight or flash content', () => {

@@ -8,7 +8,7 @@ const assert = global.assert = require('assert');
  * having run.
  */
 
-/* eslint-env mocha */
+/* eslint-env jest */
 let currTest;
 
 // monkey-patch all assert.* methods

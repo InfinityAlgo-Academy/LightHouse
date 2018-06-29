@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/accessibility/meta-viewport.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Accessibility: meta-viewport audit', () => {
   it('generates an audit output', () => {

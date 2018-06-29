@@ -10,7 +10,7 @@ const TcpConnection = require('../../../../lib/dependency-graph/simulator/tcp-co
 
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('DependencyGraph/Simulator/TcpConnection', () => {
   describe('#constructor', () => {
     it('should create the connection', () => {
@@ -84,7 +84,7 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
   });
 
   describe('.simulateDownloadUntil', () => {
-    context('when maximumTime is not set', () => {
+    describe('when maximumTime is not set', () => {
       it('should provide the correct values small payload non-SSL', () => {
         const connection = new TcpConnection(100, Infinity, 0, false);
         assert.deepEqual(connection.simulateDownloadUntil(7300), {
@@ -183,7 +183,7 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
       });
     });
 
-    context('when maximumTime is set', () => {
+    describe('when maximumTime is set', () => {
       it('should provide the correct values less than TTFB', () => {
         const connection = new TcpConnection(100, Infinity, 0, false);
         assert.deepEqual(

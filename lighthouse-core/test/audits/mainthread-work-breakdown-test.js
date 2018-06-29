@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 const PageExecutionTimings = require('../../audits/mainthread-work-breakdown.js');
 const Runner = require('../../runner.js');
 const assert = require('assert');

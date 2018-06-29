@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const ViewportGather = require('../../../gather/gatherers/viewport');
 const assert = require('assert');

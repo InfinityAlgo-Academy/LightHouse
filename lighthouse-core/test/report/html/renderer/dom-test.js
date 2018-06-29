@@ -14,18 +14,18 @@ const DOM = require('../../../../report/html/renderer/dom.js');
 const TEMPLATE_FILE = fs.readFileSync(__dirname +
     '/../../../../report/html/templates.html', 'utf8');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('DOM', () => {
   let dom;
 
-  before(() => {
+  beforeAll(() => {
     global.URL = URL;
     const document = jsdom.jsdom(TEMPLATE_FILE);
     dom = new DOM(document);
   });
 
-  after(() => {
+  afterAll(() => {
     global.URL = undefined;
   });
 

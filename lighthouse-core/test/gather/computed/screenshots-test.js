@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 const ScreenshotsGather = require('../../../gather/computed/screenshots');
 const Runner = require('../../../runner.js');
 const assert = require('assert');

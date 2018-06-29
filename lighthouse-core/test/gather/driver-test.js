@@ -94,7 +94,7 @@ connection.sendCommand = function(command, params) {
   }
 };
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('Browser Driver', () => {
   beforeEach(() => {

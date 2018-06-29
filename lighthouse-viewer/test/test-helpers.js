@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const jsdom = require('jsdom');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const PAGE = fs.readFileSync(path.join(__dirname, '../app/index.html'), 'utf8');
 

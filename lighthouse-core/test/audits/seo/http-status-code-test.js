@@ -8,7 +8,7 @@
 const HTTPStatusCodeAudit = require('../../../audits/seo/http-status-code.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('SEO: HTTP code audit', () => {
   it('fails when status code is unsuccesfull', () => {

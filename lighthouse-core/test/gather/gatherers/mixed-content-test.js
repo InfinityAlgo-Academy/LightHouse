@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const MixedContentGather = require('../../../gather/gatherers/mixed-content');
 const assert = require('assert');

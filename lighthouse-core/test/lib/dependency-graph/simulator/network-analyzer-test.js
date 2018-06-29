@@ -12,7 +12,7 @@ const NetworkAnalyzer = require('../../../../lib/dependency-graph/simulator/netw
 const Runner = require('../../../../runner');
 const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   let computedArtifacts;
   let recordId;
