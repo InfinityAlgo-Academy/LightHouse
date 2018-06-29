@@ -1,3 +1,87 @@
+ <a name="3.0.0"></a>
+# 3.0.0 Final (2018-06-29)
+[Changelog of v3.0.0-beta.0 to 3.0 final](https://github.com/googlechrome/lighthouse/compare/v3.0.0-beta.0...v3.0.0)
+
+## New Contributors!
+Thanks to @underbyte, @nourikhalass and @ernstmul for their first contributions! Awesome stuff.
+
+## Core
+
+* a11y: add back html/tags/impact ([#5439](https://github.com/googlechrome/lighthouse/pull/5439))
+* audit: align meta properties with LHR ([#5540](https://github.com/googlechrome/lighthouse/pull/5540))
+* audit-mode: do not require a URL ([#5495](https://github.com/googlechrome/lighthouse/pull/5495))
+* driver: [minor] fix spelling of evaluate ([#5553](https://github.com/googlechrome/lighthouse/pull/5553))
+* fcp: fix scoring curve ([#5507](https://github.com/googlechrome/lighthouse/pull/5507))
+* image-aspect-ratio: loosen ratio check ([#5358](https://github.com/googlechrome/lighthouse/pull/5358))
+* lhr: migrate opportunity details to new format ([#5296](https://github.com/googlechrome/lighthouse/pull/5296))
+* main-resource: work with hash URLs ([#5422](https://github.com/googlechrome/lighthouse/pull/5422))
+* multi-check: expose manifest checks in details ([#5405](https://github.com/googlechrome/lighthouse/pull/5405))
+* network-requests: handle negative endTime ([#5530](https://github.com/googlechrome/lighthouse/pull/5530))
+* offscreen-images: add lantern filter ([#5361](https://github.com/googlechrome/lighthouse/pull/5361))
+* opportunities: more granular score ([#5331](https://github.com/googlechrome/lighthouse/pull/5331))
+* preload: only allow same origin (domain + subdomains) ([#5065](https://github.com/googlechrome/lighthouse/pull/5065))
+* pwa: revamp and move short_name_length audit ([#4860](https://github.com/googlechrome/lighthouse/pull/4860))
+* pwa: adjust score weights ([#5233](https://github.com/googlechrome/lighthouse/pull/5233))
+* faster saveTrace by streaming 500 events at a time ([#5387](https://github.com/googlechrome/lighthouse/pull/5387))
+* convert requestIds before sending to backend ([#5580](https://github.com/googlechrome/lighthouse/pull/5580))
+* remove dependency on DevtoolsTimelineModel ([#5533](https://github.com/googlechrome/lighthouse/pull/5533))
+* remove no-mutation-events audit ([#5509](https://github.com/googlechrome/lighthouse/pull/5509))
+* remove WebInspector.resourceTypes references ([#5556](https://github.com/googlechrome/lighthouse/pull/5556))
+* [minor] migrate remaining .description -> .title ([cee9d55](https://github.com/googlechrome/lighthouse/commit/cee9d55))
+* support traces with TracingStartedInBrowser event ([#5271](https://github.com/googlechrome/lighthouse/pull/5271))
+* remove dependency on devtools-frontend NetworkRequest ([#5451](https://github.com/googlechrome/lighthouse/pull/5451))
+* convert gather-runner.js to async/await ([#5462](https://github.com/googlechrome/lighthouse/pull/5462))
+* handle DOM.resolveNode errors ([#5427](https://github.com/googlechrome/lighthouse/pull/5427))
+* split out BaseArtifacts, those always provided by LH itself ([#5506](https://github.com/googlechrome/lighthouse/pull/5506))
+* simulator: convert node timings to trace ([#5350](https://github.com/googlechrome/lighthouse/pull/5350))
+* simulator: improved timing typedef ([#5347](https://github.com/googlechrome/lighthouse/pull/5347))
+* trace-of-tab: remove DevTools stableSort dependency ([#5532](https://github.com/googlechrome/lighthouse/pull/5532))
+* traces: move findTracingStartedEvt to tracingProcessor ([4826a77](https://github.com/googlechrome/lighthouse/commit/4826a77))
+* tsc: make CPUNode and NetworkNode a discriminated union ([#5548](https://github.com/googlechrome/lighthouse/pull/5548))
+* tsc: use Config class to define Config type ([#5525](https://github.com/googlechrome/lighthouse/pull/5525))
+* tsc: add initial trivial type info to config.js ([#5481](https://github.com/googlechrome/lighthouse/pull/5481))
+* tsc: refactor config.js (and add type checking) ([#5486](https://github.com/googlechrome/lighthouse/pull/5486))
+* tsc: migrate renderer & viewer off typedefs to .d.ts ([#5342](https://github.com/googlechrome/lighthouse/pull/5342))
+* user-timings: add back startTime ([#5442](https://github.com/googlechrome/lighthouse/pull/5442))
+
+## Deps
+
+* bump gulp's `natives` dep for node 10.4 compat ([#5497](https://github.com/googlechrome/lighthouse/pull/5497))
+
+## Docs
+
+* update required chrome version ([#5425](https://github.com/googlechrome/lighthouse/pull/5425))
+* update docs for v3 ([#5357](https://github.com/googlechrome/lighthouse/pull/5357))
+* audit: add jsdoc descriptions to the audit meta properties ([#5567](https://github.com/googlechrome/lighthouse/pull/5567))
+* readme: lighthouse-ci ([#5410](https://github.com/googlechrome/lighthouse/pull/5410))
+* scoring: update metric explanations ([#5528](https://github.com/googlechrome/lighthouse/pull/5528))
+
+## Extension
+
+* popup: integration test for popup ([#5412](https://github.com/googlechrome/lighthouse/pull/5412))
+* tsc: add type checking to extension entry points ([#5346](https://github.com/googlechrome/lighthouse/pull/5346))
+* expose devtools hooks reliably ([#5579](https://github.com/googlechrome/lighthouse/pull/5579))
+* allow use of ES2018 features ([#5377](https://github.com/googlechrome/lighthouse/pull/5377))
+* update minimum Chrome version to 66 ([#5403](https://github.com/googlechrome/lighthouse/pull/5403))
+* close the popup once the report has opened ([#5341](https://github.com/googlechrome/lighthouse/pull/5341))
+
+## Tests
+
+* lantern: add lantern regression test scripts ([#5435](https://github.com/googlechrome/lighthouse/pull/5435))
+* fix golden LHR ([#5529](https://github.com/googlechrome/lighthouse/pull/5529))
+* smoke: remove console.timeline() call ([#5560](https://github.com/googlechrome/lighthouse/pull/5560))
+
+## Misc
+
+* externs: import crdp from root node_modules ([#5366](https://github.com/googlechrome/lighthouse/pull/5366))
+* golden-lhr: exclude audit descriptions ([#5538](https://github.com/googlechrome/lighthouse/pull/5538))
+* scripts: more useful lantern debugging output ([#5517](https://github.com/googlechrome/lighthouse/pull/5517))
+* viewer: load *.json if no *.lighthouse.report.json ([#5343](https://github.com/googlechrome/lighthouse/pull/5343))
+* update codeowners file ([#5564](https://github.com/googlechrome/lighthouse/pull/5564))
+* move metrics into dedicated metrics/ folder ([9def0a6](https://github.com/googlechrome/lighthouse/commit/9def0a6))
+* needs NPM as well as Node installed ([114ebf5](https://github.com/googlechrome/lighthouse/commit/114ebf5))
+* add links to lighthouse docs ([c7304a7](https://github.com/googlechrome/lighthouse/commit/c7304a7))
+
  <a name="3.0.0-beta.0"></a>
 # 3.0.0-beta.0 (2018-05-24)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v3.0.0-alpha.2...v3.0.0-beta.0)
