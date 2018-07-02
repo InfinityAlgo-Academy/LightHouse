@@ -74,7 +74,7 @@ class Simulator {
    * @param {Node} graph
    */
   _initializeConnectionPool(graph) {
-    /** @type {LH.WebInspector.NetworkRequest[]} */
+    /** @type {LH.Artifacts.NetworkRequest[]} */
     const records = [];
     graph.getRootNode().traverse(node => {
       if (node.type === BaseNode.TYPES.NETWORK) {
@@ -169,7 +169,7 @@ class Simulator {
   }
 
   /**
-   * @param {LH.WebInspector.NetworkRequest} record
+   * @param {LH.Artifacts.NetworkRequest} record
    * @return {?TcpConnection}
    */
   _acquireConnection(record) {
@@ -266,7 +266,7 @@ class Simulator {
     if (networkNode.fromDiskCache) {
       // Rough access time for seeking to location on disk and reading sequentially
       // @see http://norvig.com/21-days.html#answers
-      const sizeInMb = (networkNode.record._resourceSize || 0) / 1024 / 1024;
+      const sizeInMb = (networkNode.record.resourceSize || 0) / 1024 / 1024;
       timeElapsed = 8 + 20 * sizeInMb - timingData.timeElapsed;
     } else {
       // If we're estimating time remaining, we already acquired a connection for this record, definitely non-null

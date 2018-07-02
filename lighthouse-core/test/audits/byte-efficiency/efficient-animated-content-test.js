@@ -15,15 +15,15 @@ describe('Page uses videos for animated GIFs', () => {
   it('should flag gifs above 100kb as unoptimized', async () => {
     const networkRecords = [
       {
-        _resourceType: NetworkRequest.TYPES.Image,
-        _mimeType: 'image/gif',
-        _resourceSize: 100240,
+        resourceType: NetworkRequest.TYPES.Image,
+        mimeType: 'image/gif',
+        resourceSize: 100240,
         url: 'https://example.com/example.gif',
       },
       {
-        _resourceType: NetworkRequest.TYPES.Image,
-        _mimeType: 'image/gif',
-        _resourceSize: 110000,
+        resourceType: NetworkRequest.TYPES.Image,
+        mimeType: 'image/gif',
+        resourceSize: 110000,
         url: 'https://example.com/example2.gif',
       },
     ];
@@ -42,7 +42,7 @@ describe('Page uses videos for animated GIFs', () => {
     const networkRecords = [
       {
         mimeType: 'image/gif',
-        _resourceType: NetworkRequest.TYPES.Media,
+        resourceType: NetworkRequest.TYPES.Media,
         resourceSize: 150000,
       },
     ];
@@ -57,12 +57,12 @@ describe('Page uses videos for animated GIFs', () => {
   it(`shouldn't flag non gif content`, async () => {
     const networkRecords = [
       {
-        _resourceType: NetworkRequest.TYPES.Document,
+        resourceType: NetworkRequest.TYPES.Document,
         mimeType: 'text/html',
         resourceSize: 150000,
       },
       {
-        _resourceType: NetworkRequest.TYPES.Stylesheet,
+        resourceType: NetworkRequest.TYPES.Stylesheet,
         mimeType: 'text/css',
         resourceSize: 150000,
       },

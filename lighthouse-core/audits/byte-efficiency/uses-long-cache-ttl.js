@@ -128,7 +128,7 @@ class CacheHeaders extends Audit {
    *
    * TODO: Investigate impact in HTTPArchive, experiment with this policy to see what changes.
    *
-   * @param {LH.WebInspector.NetworkRequest} record
+   * @param {LH.Artifacts.NetworkRequest} record
    * @return {boolean}
    */
   static isCacheableAsset(record) {
@@ -142,10 +142,10 @@ class CacheHeaders extends Audit {
       NetworkRequest.TYPES.Stylesheet,
     ]);
 
-    const resourceUrl = record._url;
+    const resourceUrl = record.url;
     return (
       CACHEABLE_STATUS_CODES.has(record.statusCode) &&
-      STATIC_RESOURCE_TYPES.has(record._resourceType || 'Other') &&
+      STATIC_RESOURCE_TYPES.has(record.resourceType || 'Other') &&
       !resourceUrl.includes('data:')
     );
   }
@@ -167,7 +167,7 @@ class CacheHeaders extends Audit {
 
         /** @type {Map<string, string>} */
         const headers = new Map();
-        for (const header of record._responseHeaders || []) {
+        for (const header of record.responseHeaders || []) {
           headers.set(header.name.toLowerCase(), header.value);
         }
 
@@ -184,7 +184,7 @@ class CacheHeaders extends Audit {
         const cacheHitProbability = CacheHeaders.getCacheHitProbability(cacheLifetimeInSeconds);
         if (cacheHitProbability > IGNORE_THRESHOLD_IN_PERCENT) continue;
 
-        const url = URL.elideDataURI(record._url);
+        const url = URL.elideDataURI(record.url);
         const totalBytes = record.transferSize || 0;
         const wastedBytes = (1 - cacheHitProbability) * totalBytes;
 

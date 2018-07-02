@@ -14,7 +14,7 @@ class NetworkAnalysis extends ComputedArtifact {
   }
 
   /**
-   * @param {Array<LH.WebInspector.NetworkRequest>} records
+   * @param {Array<LH.Artifacts.NetworkRequest>} records
    * @return {LH.Artifacts.NetworkAnalysis}
    */
   static computeRTTAndServerResponseTime(records) {

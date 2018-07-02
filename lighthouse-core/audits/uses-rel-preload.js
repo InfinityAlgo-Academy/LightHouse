@@ -31,7 +31,7 @@ class UsesRelPreloadAudit extends Audit {
    * @param {number=} minLevel
    */
   static _flattenRequests(chains, maxLevel, minLevel = 0) {
-    /** @type {Array<LH.WebInspector.NetworkRequest>} */
+    /** @type {Array<LH.Artifacts.NetworkRequest>} */
     const requests = [];
 
     /**
@@ -60,12 +60,12 @@ class UsesRelPreloadAudit extends Audit {
 
   /**
    *
-   * @param {LH.WebInspector.NetworkRequest} request
-   * @param {LH.WebInspector.NetworkRequest} mainResource
+   * @param {LH.Artifacts.NetworkRequest} request
+   * @param {LH.Artifacts.NetworkRequest} mainResource
    * @return {boolean}
    */
   static shouldPreload(request, mainResource) {
-    if (request._isLinkPreload || request.protocol === 'data') {
+    if (request.isLinkPreload || request.protocol === 'data') {
       return false;
     }
 

@@ -84,7 +84,7 @@ class Canonical extends Audit {
         /** @type {Array<string>} */
         let hreflangs = [];
 
-        mainResource._responseHeaders && mainResource._responseHeaders
+        mainResource.responseHeaders && mainResource.responseHeaders
           .filter(h => h.name.toLowerCase() === LINK_HEADER)
           .forEach(h => {
             canonicals = canonicals.concat(getCanonicalLinksFromHeader(h.value));

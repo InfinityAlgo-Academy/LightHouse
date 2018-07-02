@@ -61,7 +61,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
   /**
    * @param {Array<{unusedLength: number, contentLength: number}>} wasteData
-   * @param {LH.WebInspector.NetworkRequest} networkRecord
+   * @param {LH.Artifacts.NetworkRequest} networkRecord
    * @return {LH.Audit.ByteEfficiencyItem}
    */
   static mergeWaste(wasteData, networkRecord) {
@@ -87,7 +87,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {

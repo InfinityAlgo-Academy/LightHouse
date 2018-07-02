@@ -20,7 +20,7 @@ class MainResource extends ComputedArtifact {
   /**
    * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
    * @param {LH.ComputedArtifacts} artifacts
-   * @return {Promise<LH.WebInspector.NetworkRequest>}
+   * @return {Promise<LH.Artifacts.NetworkRequest>}
    */
   async compute_(data, artifacts) {
     const finalUrl = data.URL.finalUrl;

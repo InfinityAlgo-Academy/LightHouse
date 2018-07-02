@@ -151,7 +151,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
    * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */

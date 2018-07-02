@@ -26,14 +26,14 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {LH.WebInspector.NetworkRequest} record
+   * @param {LH.Artifacts.NetworkRequest} record
    * @return {Array<string>}
    */
   static getNetworkInitiators(record) {
-    if (!record._initiator) return [];
-    if (record._initiator.url) return [record._initiator.url];
-    if (record._initiator.type === 'script' && record._initiator.stack) {
-      const frames = record._initiator.stack.callFrames;
+    if (!record.initiator) return [];
+    if (record.initiator.url) return [record.initiator.url];
+    if (record.initiator.type === 'script' && record.initiator.stack) {
+      const frames = record.initiator.stack.callFrames;
       return Array.from(new Set(frames.map(frame => frame.url))).filter(Boolean);
     }
 
@@ -41,7 +41,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
   }
 
   /**
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {NetworkNodeOutput}
    */
   static getNetworkNodeOutput(networkRecords) {
@@ -51,12 +51,14 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
     const urlToNodeMap = new Map();
 
     networkRecords.forEach(record => {
-      if (IGNORED_MIME_TYPES_REGEX.test(record._mimeType)) return;
+      if (IGNORED_MIME_TYPES_REGEX.test(record.mimeType)) return;
 
       // Network record requestIds can be duplicated for an unknown reason
       // Suffix all subsequent records with `:duplicate` until it's unique
+      // NOTE: This should never happen with modern NetworkRequest library, but old fixtures
+      // might still have this issue.
       while (idToNodeMap.has(record.requestId)) {
-        record._requestId += ':duplicate';
+        record.requestId += ':duplicate';
       }
 
       const node = new NetworkNode(record);
@@ -155,7 +157,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
       const networkNode = networkNodeOutput.idToNodeMap.get(reqId);
       if (!networkNode ||
           // Ignore all non-XHRs
-          networkNode.record._resourceType !== NetworkRequest.TYPES.XHR ||
+          networkNode.record.resourceType !== NetworkRequest.TYPES.XHR ||
           // Ignore all network nodes that started before this CPU task started
           // A network request that started earlier could not possibly have been started by this task
           networkNode.startTime <= cpuNode.startTime) return;
@@ -260,7 +262,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
 
   /**
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {Node}
    */
   static createGraph(traceOfTab, networkRecords) {
@@ -314,7 +316,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
       const bar = padRight('', offset) + padRight('', length, '=');
 
       // @ts-ignore -- disambiguate displayName from across possible Node types.
-      const displayName = node.record ? node.record._url : node.type;
+      const displayName = node.record ? node.record.url : node.type;
       // eslint-disable-next-line
       console.log(padRight(bar, widthInCharacters), `| ${displayName.slice(0, 30)}`);
     });

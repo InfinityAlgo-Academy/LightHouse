@@ -108,27 +108,27 @@ describe('Performance: uses-rel-preload audit', () => {
     const networkRecords = [
       {
         requestId: '2',
-        _isLinkPreload: false,
+        isLinkPreload: false,
         url: 'http://www.example.com:3000',
       },
       {
         requestId: '3',
-        _isLinkPreload: false,
+        isLinkPreload: false,
         url: 'http://www.example.com/script.js',
       },
       {
         requestId: '4',
-        _isLinkPreload: false,
+        isLinkPreload: false,
         url: 'http://www.example.com/script-added.js',
       },
       {
         requestId: '5',
-        _isLinkPreload: false,
+        isLinkPreload: false,
         url: 'http://sub.example.com/script-sub.js',
       },
       {
         requestId: '6',
-        _isLinkPreload: false,
+        isLinkPreload: false,
         url: 'http://otherdomain.com/script-other.js',
       },
     ];
@@ -177,8 +177,8 @@ describe('Performance: uses-rel-preload audit', () => {
       {
         requestId: '3',
         _startTime: 10,
-        _isLinkPreload: true,
-        _url: 'http://www.example.com/script.js',
+        isLinkPreload: true,
+        url: 'http://www.example.com/script.js',
       },
     ];
     const chains = {

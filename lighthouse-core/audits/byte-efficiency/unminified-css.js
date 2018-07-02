@@ -92,7 +92,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts.CSSStyleSheetInfo} stylesheet
-   * @param {LH.WebInspector.NetworkRequest=} networkRecord
+   * @param {LH.Artifacts.NetworkRequest=} networkRecord
    * @param {string} pageUrl
    * @return {{url: string, totalBytes: number, wastedBytes: number, wastedPercent: number}}
    */
@@ -121,7 +121,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {

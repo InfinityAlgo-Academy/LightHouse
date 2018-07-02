@@ -43,19 +43,19 @@ class EfficientAnimatedContent extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
     const unoptimizedContent = networkRecords.filter(
-      record => record._mimeType === 'image/gif' &&
-        record._resourceType === NetworkRequest.TYPES.Image &&
-        (record._resourceSize || 0) > GIF_BYTE_THRESHOLD
+      record => record.mimeType === 'image/gif' &&
+        record.resourceType === NetworkRequest.TYPES.Image &&
+        (record.resourceSize || 0) > GIF_BYTE_THRESHOLD
     );
 
     /** @type {Array<{url: string, totalBytes: number, wastedBytes: number}>}*/
     const items = unoptimizedContent.map(record => {
-      const resourceSize = record._resourceSize || 0;
+      const resourceSize = record.resourceSize || 0;
       return {
         url: record.url,
         totalBytes: resourceSize,

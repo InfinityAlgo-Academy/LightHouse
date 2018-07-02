@@ -24,10 +24,10 @@ class TTFBMetric extends Audit {
   }
 
   /**
-   * @param {LH.WebInspector.NetworkRequest} record
+   * @param {LH.Artifacts.NetworkRequest} record
    */
   static caclulateTTFB(record) {
-    const timing = record._timing;
+    const timing = record.timing;
     return timing ? timing.receiveHeadersEnd - timing.sendEnd : 0;
   }
 
@@ -44,7 +44,7 @@ class TTFBMetric extends Audit {
         let displayValue = '';
 
         const finalUrl = artifacts.URL.finalUrl;
-        const finalUrlRequest = networkRecords.find(record => record._url === finalUrl);
+        const finalUrlRequest = networkRecords.find(record => record.url === finalUrl);
         if (!finalUrlRequest) {
           throw new Error(`finalUrl '${finalUrl} not found in network records.`);
         }

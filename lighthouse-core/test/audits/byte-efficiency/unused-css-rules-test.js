@@ -123,7 +123,7 @@ describe('Best Practices: unused css rules audit', () => {
         {
           url: 'file://a.css',
           transferSize: 10 * 1024,
-          _resourceType: 'Stylesheet',
+          resourceType: 'Stylesheet',
         },
       ]);
     };

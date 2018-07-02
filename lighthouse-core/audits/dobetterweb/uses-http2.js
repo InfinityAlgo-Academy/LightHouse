@@ -45,12 +45,12 @@ class UsesHTTP2Audit extends Audit {
         // test the protocol first to avoid (potentially) expensive URL parsing
         const isOldHttp = /HTTP\/[01][.\d]?/i.test(record.protocol);
         if (!isOldHttp) return false;
-        const requestHost = new URL(record._url).host;
+        const requestHost = new URL(record.url).host;
         return requestHost === finalHost;
       }).map(record => {
         return {
           protocol: record.protocol,
-          url: record._url,
+          url: record.url,
         };
       }).filter(record => {
         if (seenURLs.has(record.url)) return false;

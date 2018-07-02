@@ -25,7 +25,7 @@ class LanternMetricArtifact extends ComputedArtifact {
 
     dependencyGraph.traverse(node => {
       if (node.type === BaseNode.TYPES.CPU) return;
-      if (node.record._resourceType !== NetworkRequest.TYPES.Script) return;
+      if (node.record.resourceType !== NetworkRequest.TYPES.Script) return;
       if (condition && !condition(node)) return;
       scriptUrls.add(node.record.url);
     });

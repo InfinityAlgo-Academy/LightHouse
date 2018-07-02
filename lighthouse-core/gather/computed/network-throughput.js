@@ -17,7 +17,7 @@ class NetworkThroughput extends ComputedArtifact {
    * Excludes data URI, failed or otherwise incomplete, and cached requests.
    * Returns Infinity if there were no analyzable network records.
    *
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {number}
    */
   static getThroughput(networkRecords) {
@@ -30,7 +30,7 @@ class NetworkThroughput extends ComputedArtifact {
       }
 
       totalBytes += record.transferSize;
-      boundaries.push({time: record._responseReceivedTime, isStart: true});
+      boundaries.push({time: record.responseReceivedTime, isStart: true});
       boundaries.push({time: record.endTime, isStart: false});
       return boundaries;
     }, /** @type {Array<{time: number, isStart: boolean}>} */([])).sort((a, b) => a.time - b.time);

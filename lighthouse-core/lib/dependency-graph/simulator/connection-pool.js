@@ -17,7 +17,7 @@ const CONNECTIONS_PER_ORIGIN = 6;
 
 module.exports = class ConnectionPool {
   /**
-   * @param {LH.WebInspector.NetworkRequest[]} records
+   * @param {LH.Artifacts.NetworkRequest[]} records
    * @param {Object=} options
    */
   constructor(records, options) {
@@ -38,7 +38,7 @@ module.exports = class ConnectionPool {
     this._records = records;
     /** @type {Map<string, TcpConnection[]>} */
     this._connectionsByOrigin = new Map();
-    /** @type {Map<LH.WebInspector.NetworkRequest, TcpConnection>} */
+    /** @type {Map<LH.Artifacts.NetworkRequest, TcpConnection>} */
     this._connectionsByRecord = new Map();
     this._connectionsInUse = new Set();
     this._connectionReusedByRequestId = NetworkAnalyzer.estimateIfConnectionWasReused(records, {
@@ -101,7 +101,7 @@ module.exports = class ConnectionPool {
    * If ignoreConnectionReused is true, acquire will consider all connections not in use as available.
    * Otherwise, only connections that have matching "warmth" are considered available.
    *
-   * @param {LH.WebInspector.NetworkRequest} record
+   * @param {LH.Artifacts.NetworkRequest} record
    * @param {{ignoreConnectionReused?: boolean}} options
    * @return {?TcpConnection}
    */
@@ -111,7 +111,7 @@ module.exports = class ConnectionPool {
       return this._connectionsByRecord.get(record);
     }
 
-    const origin = String(record.parsedURL.securityOrigin());
+    const origin = String(record.parsedURL.securityOrigin);
     /** @type {TcpConnection[]} */
     const connections = this._connectionsByOrigin.get(origin) || [];
     // Sort connections by decreasing congestion window, i.e. warmest to coldest
@@ -137,7 +137,7 @@ module.exports = class ConnectionPool {
   }
 
   /**
-   * @param {LH.WebInspector.NetworkRequest} record
+   * @param {LH.Artifacts.NetworkRequest} record
    */
   release(record) {
     const connection = this._connectionsByRecord.get(record);

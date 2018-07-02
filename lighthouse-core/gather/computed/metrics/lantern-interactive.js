@@ -45,13 +45,13 @@ class Interactive extends MetricArtifact {
       }
 
       // Include all scripts and high priority requests, exclude all images
-      const isImage = node.record._resourceType === NetworkRequest.TYPES.Image;
-      const isScript = node.record._resourceType === NetworkRequest.TYPES.Script;
+      const isImage = node.record.resourceType === NetworkRequest.TYPES.Image;
+      const isScript = node.record.resourceType === NetworkRequest.TYPES.Script;
       return (
         !isImage &&
         (isScript ||
-          node.record.priority() === 'High' ||
-          node.record.priority() === 'VeryHigh')
+          node.record.priority === 'High' ||
+          node.record.priority === 'VeryHigh')
       );
     });
   }

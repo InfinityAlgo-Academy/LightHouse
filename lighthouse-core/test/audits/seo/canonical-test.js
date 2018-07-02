@@ -14,7 +14,7 @@ describe('SEO: Document has valid canonical link', () => {
   it('succeeds when there are no canonical links', () => {
     const mainResource = {
       url: 'https://example.com/',
-      _responseHeaders: [],
+      responseHeaders: [],
     };
     const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: []},
@@ -31,7 +31,7 @@ describe('SEO: Document has valid canonical link', () => {
   it('fails when there are multiple canonical links', () => {
     const mainResource = {
       url: 'http://www.example.com/',
-      _responseHeaders: [{
+      responseHeaders: [{
         name: 'Link',
         value: '<https://example.com>; rel="canonical"',
       }],
@@ -52,7 +52,7 @@ describe('SEO: Document has valid canonical link', () => {
   it('fails when canonical url is invalid', () => {
     const mainResource = {
       url: 'http://www.example.com',
-      _responseHeaders: [],
+      responseHeaders: [],
     };
     const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: []},
@@ -70,7 +70,7 @@ describe('SEO: Document has valid canonical link', () => {
   it('fails when canonical url is relative', () => {
     const mainResource = {
       url: 'https://example.com/de/',
-      _responseHeaders: [],
+      responseHeaders: [],
     };
     const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: []},
@@ -88,7 +88,7 @@ describe('SEO: Document has valid canonical link', () => {
   it('fails when canonical points to a different hreflang', () => {
     const mainResource = {
       url: 'https://example.com',
-      _responseHeaders: [{
+      responseHeaders: [{
         name: 'Link',
         value: '<https://example.com/>; rel="alternate"; hreflang="xx"',
       }],
@@ -109,7 +109,7 @@ describe('SEO: Document has valid canonical link', () => {
   it('fails when canonical points to a different domain', () => {
     const mainResource = {
       url: 'http://localhost.test',
-      _responseHeaders: [],
+      responseHeaders: [],
     };
     const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: []},
@@ -127,7 +127,7 @@ describe('SEO: Document has valid canonical link', () => {
   it('fails when canonical points to the root while current URL is not the root', () => {
     const mainResource = {
       url: 'https://example.com/articles/cats-and-you',
-      _responseHeaders: [],
+      responseHeaders: [],
     };
     const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: []},
@@ -145,7 +145,7 @@ describe('SEO: Document has valid canonical link', () => {
   it('succeeds when there are multiple identical canonical links', () => {
     const mainResource = {
       url: 'http://www.example.com/',
-      _responseHeaders: [{
+      responseHeaders: [{
         name: 'Link',
         value: '<https://www.example.com>; rel="canonical"',
       }],
@@ -165,7 +165,7 @@ describe('SEO: Document has valid canonical link', () => {
   it('succeeds when valid canonical is provided via meta tag', () => {
     const mainResource = {
       url: 'http://example.com/articles/cats-and-you?utm_source=twitter',
-      _responseHeaders: [],
+      responseHeaders: [],
     };
     const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: []},
@@ -182,7 +182,7 @@ describe('SEO: Document has valid canonical link', () => {
   it('succeeds when valid canonical is provided via header', () => {
     const mainResource = {
       url: 'http://example.com/articles/cats-and-you?utm_source=twitter',
-      _responseHeaders: [{
+      responseHeaders: [{
         name: 'Link',
         value: '<http://example.com/articles/cats-and-you>; rel="canonical"',
       }],

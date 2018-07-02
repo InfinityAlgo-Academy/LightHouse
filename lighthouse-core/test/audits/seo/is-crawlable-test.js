@@ -24,7 +24,7 @@ describe('SEO: Is page crawlable audit', () => {
 
     const allRuns = robotsValues.map(robotsValue => {
       const mainResource = {
-        _responseHeaders: [],
+        responseHeaders: [],
       };
       const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
@@ -44,7 +44,7 @@ describe('SEO: Is page crawlable audit', () => {
 
   it('succeeds when there are no blocking directives in the metatag', () => {
     const mainResource = {
-      _responseHeaders: [],
+      responseHeaders: [],
     };
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
@@ -60,7 +60,7 @@ describe('SEO: Is page crawlable audit', () => {
 
   it('succeeds when there is no robots metatag', () => {
     const mainResource = {
-      _responseHeaders: [],
+      responseHeaders: [],
     };
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
@@ -99,7 +99,7 @@ describe('SEO: Is page crawlable audit', () => {
 
     const allRuns = robotsHeaders.map(headers => {
       const mainResource = {
-        _responseHeaders: headers,
+        responseHeaders: headers,
       };
       const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
@@ -119,7 +119,7 @@ describe('SEO: Is page crawlable audit', () => {
 
   it('succeeds when there are no blocking directives in the robots header', () => {
     const mainResource = {
-      _responseHeaders: [
+      responseHeaders: [
         {name: 'X-Robots-Tag', value: 'all, nofollow'},
         {name: 'X-Robots-Tag', value: 'unavailable_after: 25 Jun 2045 15:00:00 PST'},
       ],
@@ -138,7 +138,7 @@ describe('SEO: Is page crawlable audit', () => {
 
   it('succeeds when there is no robots header and robots.txt is unavailable', () => {
     const mainResource = {
-      _responseHeaders: [],
+      responseHeaders: [],
     };
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
@@ -154,7 +154,7 @@ describe('SEO: Is page crawlable audit', () => {
 
   it('ignores UA specific directives', () => {
     const mainResource = {
-      _responseHeaders: [
+      responseHeaders: [
         {name: 'x-robots-tag', value: 'googlebot: unavailable_after: 25 Jun 2007 15:00:00 PST'},
         {name: 'x-robots-tag', value: 'unavailable_after: 25 Jun 2045 15:00:00 PST'},
       ],
@@ -202,7 +202,7 @@ describe('SEO: Is page crawlable audit', () => {
     const allRuns = robotsTxts.map(robotsTxt => {
       const mainResource = {
         url: 'http://example.com/test/page.html',
-        _responseHeaders: [],
+        responseHeaders: [],
       };
       const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
@@ -238,7 +238,7 @@ describe('SEO: Is page crawlable audit', () => {
     const allRuns = robotsTxts.map(robotsTxt => {
       const mainResource = {
         url: 'http://example.com/test/page.html',
-        _responseHeaders: [],
+        responseHeaders: [],
       };
       const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: []},
@@ -258,7 +258,7 @@ describe('SEO: Is page crawlable audit', () => {
   it('returns all failing items', () => {
     const mainResource = {
       url: 'http://example.com/test/page.html',
-      _responseHeaders: [
+      responseHeaders: [
         {name: 'x-robots-tag', value: 'none'},
         {name: 'x-robots-tag', value: 'noindex'},
       ],

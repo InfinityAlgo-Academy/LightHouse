@@ -45,8 +45,8 @@ class NetworkRequests extends Audit {
           endTime: timeToMs(record.endTime),
           transferSize: record.transferSize,
           statusCode: record.statusCode,
-          mimeType: record._mimeType,
-          resourceType: record._resourceType,
+          mimeType: record.mimeType,
+          resourceType: record.resourceType,
         };
       });
 

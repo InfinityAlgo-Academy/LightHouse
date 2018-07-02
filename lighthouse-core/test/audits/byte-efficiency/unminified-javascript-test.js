@@ -12,7 +12,7 @@ const assert = require('assert');
 
 /* eslint-env jest */
 
-const _resourceType = 'Script';
+const resourceType = 'Script';
 describe('Page uses optimized responses', () => {
   it('fails when given unminified scripts', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({
@@ -46,10 +46,10 @@ describe('Page uses optimized responses', () => {
         '123.4': '#$*% non sense',
       },
     }, [
-      {requestId: '123.1', url: 'foo.js', transferSize: 20 * KB, _resourceType},
-      {requestId: '123.2', url: 'other.js', transferSize: 50 * KB, _resourceType},
-      {requestId: '123.3', url: 'valid-ish.js', transferSize: 100 * KB, _resourceType},
-      {requestId: '123.4', url: 'invalid.js', transferSize: 100 * KB, _resourceType},
+      {requestId: '123.1', url: 'foo.js', transferSize: 20 * KB, resourceType},
+      {requestId: '123.2', url: 'other.js', transferSize: 50 * KB, resourceType},
+      {requestId: '123.3', url: 'valid-ish.js', transferSize: 100 * KB, resourceType},
+      {requestId: '123.4', url: 'invalid.js', transferSize: 100 * KB, resourceType},
     ]);
 
     assert.ok(auditResult.warnings.length);
@@ -84,9 +84,9 @@ describe('Page uses optimized responses', () => {
           'for{(wtf',
       },
     }, [
-      {requestId: '123.1', url: 'foo.js', transferSize: 20 * KB, _resourceType},
-      {requestId: '123.2', url: 'other.js', transferSize: 3 * KB, _resourceType},
-      {requestId: '123.3', url: 'invalid.js', transferSize: 20 * KB, _resourceType},
+      {requestId: '123.1', url: 'foo.js', transferSize: 20 * KB, resourceType},
+      {requestId: '123.2', url: 'other.js', transferSize: 3 * KB, resourceType},
+      {requestId: '123.3', url: 'invalid.js', transferSize: 20 * KB, resourceType},
     ]);
 
     assert.equal(auditResult.items.length, 0);

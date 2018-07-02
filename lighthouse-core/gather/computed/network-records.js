@@ -15,7 +15,7 @@ class NetworkRecords extends ComputedArtifact {
 
   /**
    * @param {LH.DevtoolsLog} devtoolsLog
-   * @return {Promise<Array<LH.WebInspector.NetworkRequest>>} networkRecords
+   * @return {Promise<Array<LH.Artifacts.NetworkRequest>>} networkRecords
    */
   async compute_(devtoolsLog) {
     return NetworkRecorder.recordsFromLogs(devtoolsLog);

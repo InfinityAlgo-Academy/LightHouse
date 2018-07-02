@@ -10,7 +10,6 @@ const assert = require('assert');
 
 const URL = 'https://webtide.com/http2-push-demo/';
 const networkRecords = require('../../fixtures/networkRecords-mix.json');
-const h2Records = require('../../fixtures/networkRecords-h2push.json');
 
 /* eslint-env jest */
 
@@ -43,6 +42,11 @@ describe('Resources are fetched over http/2', () => {
   });
 
   it('passes when all resources were requested via http/2', () => {
+    const h2Records = JSON.parse(JSON.stringify(networkRecords));
+    h2Records.forEach(record => {
+      record.protocol = 'h2';
+    });
+
     return UsesHTTP2Audit.audit({
       URL: {finalUrl: URL},
       devtoolsLogs: {[UsesHTTP2Audit.DEFAULT_PASS]: []},

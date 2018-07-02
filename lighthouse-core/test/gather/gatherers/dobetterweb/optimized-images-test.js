@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env jest */
+/* eslint-env mocha */
 
 const OptimizedImages =
     require('../../../../gather/gatherers/dobetterweb/optimized-images');
@@ -20,83 +20,83 @@ const fakeImageStats = {
 const traceData = {
   networkRecords: [
     {
-      _requestId: '123.5',
-      _url: 'http://google.com/image.jpg',
-      _mimeType: 'image/jpeg',
-      _resourceSize: 10000,
+      requestId: '1',
+      url: 'http://google.com/image.jpg',
+      mimeType: 'image/jpeg',
+      resourceSize: 10000,
       transferSize: 20000,
-      _resourceType: 'Image',
+      resourceType: 'Image',
       finished: true,
     },
     {
-      _requestId: '123.6:redirect',
-      _url: 'http://google.com/transparent.png',
-      _mimeType: 'image/png',
-      _resourceSize: 11000,
+      requestId: '1',
+      url: 'http://google.com/transparent.png',
+      mimeType: 'image/png',
+      resourceSize: 11000,
       transferSize: 20000,
-      _resourceType: 'Image',
+      resourceType: 'Image',
       finished: true,
     },
     {
-      _requestId: '123.5',
-      _url: 'http://google.com/image.bmp',
-      _mimeType: 'image/bmp',
-      _resourceSize: 12000,
+      requestId: '1',
+      url: 'http://google.com/image.bmp',
+      mimeType: 'image/bmp',
+      resourceSize: 12000,
       transferSize: 9000, // bitmap was compressed another way
-      _resourceType: 'Image',
+      resourceType: 'Image',
       finished: true,
     },
     {
-      _requestId: '123.5',
-      _url: 'http://google.com/image.bmp',
-      _mimeType: 'image/bmp',
-      _resourceSize: 12000,
+      requestId: '1',
+      url: 'http://google.com/image.bmp',
+      mimeType: 'image/bmp',
+      resourceSize: 12000,
       transferSize: 20000,
-      _resourceType: 'Image',
+      resourceType: 'Image',
       finished: true,
     },
     {
-      _requestId: '123.5',
-      _url: 'http://google.com/vector.svg',
-      _mimeType: 'image/svg+xml',
-      _resourceSize: 13000,
+      requestId: '1',
+      url: 'http://google.com/vector.svg',
+      mimeType: 'image/svg+xml',
+      resourceSize: 13000,
       transferSize: 20000,
-      _resourceType: 'Image',
+      resourceType: 'Image',
       finished: true,
     },
     {
-      _requestId: '123.5',
-      _url: 'http://gmail.com/image.jpg',
-      _mimeType: 'image/jpeg',
-      _resourceSize: 15000,
+      requestId: '1',
+      url: 'http://gmail.com/image.jpg',
+      mimeType: 'image/jpeg',
+      resourceSize: 15000,
       transferSize: 20000,
-      _resourceType: 'Image',
+      resourceType: 'Image',
       finished: true,
     },
     {
-      _requestId: '123.5',
-      _url: 'data: image/jpeg ; base64 ,SgVcAT32587935321...',
-      _mimeType: 'image/jpeg',
-      _resourceType: 'Image',
-      _resourceSize: 14000,
+      requestId: '1',
+      url: 'data: image/jpeg ; base64 ,SgVcAT32587935321...',
+      mimeType: 'image/jpeg',
+      resourceType: 'Image',
+      resourceSize: 14000,
       transferSize: 20000,
       finished: true,
     },
     {
-      _requestId: '123.5',
-      _url: 'http://google.com/big-image.bmp',
-      _mimeType: 'image/bmp',
-      _resourceType: 'Image',
-      _resourceSize: 12000,
+      requestId: '1',
+      url: 'http://google.com/big-image.bmp',
+      mimeType: 'image/bmp',
+      resourceType: 'Image',
+      resourceSize: 12000,
       transferSize: 20000,
       finished: false, // ignore for not finishing
     },
     {
-      _requestId: '123.5',
-      _url: 'http://google.com/not-an-image.bmp',
-      _mimeType: 'image/bmp',
-      _resourceType: 'Document', // ignore for not really being an image
-      _resourceSize: 12000,
+      requestId: '1',
+      url: 'http://google.com/not-an-image.bmp',
+      mimeType: 'image/bmp',
+      resourceType: 'Document', // ignore for not really being an image
+      resourceSize: 12000,
       transferSize: 20000,
       finished: true,
     },
@@ -171,9 +171,7 @@ describe('Optimized images', () => {
   });
 
   it('supports Audits.getEncodedResponse', () => {
-    const calls = [];
     options.driver.sendCommand = (method, params) => {
-      calls.push({method, params});
       const encodedSize = params.encoding === 'webp' ? 60 : 80;
       return Promise.resolve({encodedSize});
     };
@@ -185,8 +183,6 @@ describe('Optimized images', () => {
       assert.equal(artifact[0].jpegSize, 80);
       // supports cross-origin
       assert.ok(/gmail.*image.jpg/.test(artifact[3].url));
-      // strips the :redirect from requestId
-      assert.equal(calls[2].params.requestId, '123.6');
     });
   });
 });

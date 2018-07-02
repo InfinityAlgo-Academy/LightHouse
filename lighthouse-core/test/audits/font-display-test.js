@@ -51,12 +51,12 @@ describe('Performance: Font Display audit', () => {
       {
         url: openSansFont.src[0],
         endTime: 3, startTime: 1,
-        _resourceType: NetworkRequest.TYPES.Font,
+        resourceType: NetworkRequest.TYPES.Font,
       },
       {
         url: openSansFontBold.src[0],
         endTime: 3, startTime: 1,
-        _resourceType: NetworkRequest.TYPES.Font,
+        resourceType: NetworkRequest.TYPES.Font,
       },
     ], webFonts)).then(result => {
       const items = [{
@@ -78,12 +78,12 @@ describe('Performance: Font Display audit', () => {
       {
         url: openSansFont.src[0],
         endTime: 3, startTime: 1,
-        _resourceType: NetworkRequest.TYPES.Font,
+        resourceType: NetworkRequest.TYPES.Font,
       },
       {
         url: openSansFontBold.src[0],
         endTime: 3, startTime: 1,
-        _resourceType: NetworkRequest.TYPES.Font,
+        resourceType: NetworkRequest.TYPES.Font,
       },
     ], webFonts)).then(result => {
       assert.strictEqual(result.rawValue, true);

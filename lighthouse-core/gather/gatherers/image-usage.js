@@ -146,14 +146,14 @@ class ImageUsage extends Gatherer {
   async afterPass(passContext, loadData) {
     const driver = passContext.driver;
     const indexedNetworkRecords = loadData.networkRecords.reduce((map, record) => {
-      if (/^image/.test(record._mimeType) && record.finished) {
-        map[record._url] = {
+      if (/^image/.test(record.mimeType) && record.finished) {
+        map[record.url] = {
           url: record.url,
-          resourceSize: Math.min(record._resourceSize || 0, record.transferSize),
+          resourceSize: Math.min(record.resourceSize || 0, record.transferSize),
           startTime: record.startTime,
           endTime: record.endTime,
-          responseReceivedTime: record._responseReceivedTime,
-          mimeType: record._mimeType,
+          responseReceivedTime: record.responseReceivedTime,
+          mimeType: record.mimeType,
         };
       }
 

@@ -23,7 +23,7 @@ class Scripts extends Gatherer {
     /** @type {Object<string, string>} */
     const scriptContentMap = {};
     const scriptRecords = loadData.networkRecords
-      .filter(record => record._resourceType === NetworkRequest.TYPES.Script);
+      .filter(record => record.resourceType === NetworkRequest.TYPES.Script);
 
     for (const record of scriptRecords) {
       try {

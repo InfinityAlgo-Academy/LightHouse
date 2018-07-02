@@ -23,7 +23,7 @@ declare global {
     }
 
     export interface LoadData {
-      networkRecords: Array<WebInspector.NetworkRequest>;
+      networkRecords: Array<Artifacts.NetworkRequest>;
       devtoolsLog: DevtoolsLog;
       trace?: Trace;
     }

@@ -17,14 +17,14 @@ let responseCompression;
 const traceData = {
   networkRecords: [
     {
-      _url: 'http://google.com/index.js',
+      url: 'http://google.com/index.js',
       _statusCode: 200,
-      _mimeType: 'text/javascript',
-      _requestId: 0,
-      _resourceSize: 9,
+      mimeType: 'text/javascript',
+      requestId: 0,
+      resourceSize: 9,
       transferSize: 10,
-      _resourceType: 'Script',
-      _responseHeaders: [{
+      resourceType: 'Script',
+      responseHeaders: [{
         name: 'Content-Encoding',
         value: 'gzip',
       }],
@@ -32,74 +32,74 @@ const traceData = {
       finished: true,
     },
     {
-      _url: 'http://google.com/index.css',
+      url: 'http://google.com/index.css',
       _statusCode: 200,
-      _mimeType: 'text/css',
-      _requestId: 1,
-      _resourceSize: 6,
+      mimeType: 'text/css',
+      requestId: 1,
+      resourceSize: 6,
       transferSize: 7,
-      _resourceType: 'Stylesheet',
-      _responseHeaders: [],
+      resourceType: 'Stylesheet',
+      responseHeaders: [],
       content: 'abcabc',
       finished: true,
     },
     {
-      _url: 'http://google.com/index.json',
+      url: 'http://google.com/index.json',
       _statusCode: 200,
-      _mimeType: 'application/json',
-      _requestId: 2,
-      _resourceSize: 7,
+      mimeType: 'application/json',
+      requestId: 2,
+      resourceSize: 7,
       transferSize: 8,
-      _resourceType: 'XHR',
-      _responseHeaders: [],
+      resourceType: 'XHR',
+      responseHeaders: [],
       content: '1234567',
       finished: true,
     },
     {
-      _url: 'http://google.com/index.json',
+      url: 'http://google.com/index.json',
       _statusCode: 304, // ignore for being a cache not modified response
-      _mimeType: 'application/json',
-      _requestId: 22,
-      _resourceSize: 7,
+      mimeType: 'application/json',
+      requestId: 22,
+      resourceSize: 7,
       transferSize: 7,
-      _resourceType: 'XHR',
-      _responseHeaders: [],
+      resourceType: 'XHR',
+      responseHeaders: [],
       content: '1234567',
       finished: true,
     },
     {
-      _url: 'http://google.com/other.json',
+      url: 'http://google.com/other.json',
       _statusCode: 200,
-      _mimeType: 'application/json',
-      _requestId: 23,
-      _resourceSize: 7,
+      mimeType: 'application/json',
+      requestId: 23,
+      resourceSize: 7,
       transferSize: 8,
-      _resourceType: 'XHR',
-      _responseHeaders: [],
+      resourceType: 'XHR',
+      responseHeaders: [],
       content: '1234567',
       finished: false, // ignore for not finishing
     },
     {
-      _url: 'http://google.com/index.jpg',
+      url: 'http://google.com/index.jpg',
       _statusCode: 200,
-      _mimeType: 'image/jpg',
-      _requestId: 3,
-      _resourceSize: 10,
+      mimeType: 'image/jpg',
+      requestId: 3,
+      resourceSize: 10,
       transferSize: 10,
-      _resourceType: 'Image',
-      _responseHeaders: [],
+      resourceType: 'Image',
+      responseHeaders: [],
       content: 'aaaaaaaaaa',
       finished: true,
     },
     {
-      _url: 'http://google.com/helloworld.mp4',
+      url: 'http://google.com/helloworld.mp4',
       _statusCode: 200,
-      _mimeType: 'video/mp4',
-      _requestId: 4,
-      _resourceSize: 100,
+      mimeType: 'video/mp4',
+      requestId: 4,
+      resourceSize: 100,
       transferSize: 100,
-      _resourceType: 'Media',
-      _responseHeaders: [],
+      resourceType: 'Media',
+      responseHeaders: [],
       content: 'bbbbbbbb',
       finished: true,
     },
@@ -144,24 +144,24 @@ describe('Optimized responses', () => {
     const traceData = {
       networkRecords: [
         {
-          _url: 'chrome-extension://index.css',
-          _mimeType: 'text/css',
-          _requestId: 1,
-          _resourceSize: 10,
+          url: 'chrome-extension://index.css',
+          mimeType: 'text/css',
+          requestId: 1,
+          resourceSize: 10,
           transferSize: 10,
-          _resourceType: 'Stylesheet',
-          _responseHeaders: [],
+          resourceType: 'Stylesheet',
+          responseHeaders: [],
           content: 'aaaaaaaaaa',
           finished: true,
         },
         {
-          _url: 'http://google.com/chrome-extension.css',
-          _mimeType: 'text/css',
-          _requestId: 1,
-          _resourceSize: 123,
+          url: 'http://google.com/chrome-extension.css',
+          mimeType: 'text/css',
+          requestId: 1,
+          resourceSize: 123,
           transferSize: 123,
-          _resourceType: 'Stylesheet',
-          _responseHeaders: [],
+          resourceType: 'Stylesheet',
+          responseHeaders: [],
           content: 'aaaaaaaaaa',
           finished: true,
         },
@@ -178,13 +178,13 @@ describe('Optimized responses', () => {
   // Change into SDK.networkRequest when examples are ready
   function createNetworkRequests(traceData) {
     traceData.networkRecords = traceData.networkRecords.map(record => {
-      record.url = record._url;
+      record.url = record.url;
       record.statusCode = record._statusCode;
-      record.mimeType = record._mimeType;
-      record.resourceSize = record._resourceSize;
+      record.mimeType = record.mimeType;
+      record.resourceSize = record.resourceSize;
       record.transferSize = record.transferSize;
-      record.responseHeaders = record._responseHeaders;
-      record.requestId = record._requestId;
+      record.responseHeaders = record.responseHeaders;
+      record.requestId = record.requestId;
 
       return record;
     });

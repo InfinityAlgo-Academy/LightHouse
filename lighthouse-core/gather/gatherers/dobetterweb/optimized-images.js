@@ -74,32 +74,32 @@ function getOptimizedNumBytes(url) {
 class OptimizedImages extends Gatherer {
   /**
    * @param {string} pageUrl
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {Array<SimplifiedNetworkRecord>}
    */
   static filterImageRequests(pageUrl, networkRecords) {
     /** @type {Set<string>} */
     const seenUrls = new Set();
     return networkRecords.reduce((prev, record) => {
-      if (seenUrls.has(record._url) || !record.finished) {
+      if (seenUrls.has(record.url) || !record.finished) {
         return prev;
       }
 
-      seenUrls.add(record._url);
-      const isOptimizableImage = record._resourceType &&
-        record._resourceType === 'Image' &&
-        /image\/(png|bmp|jpeg)/.test(record._mimeType);
-      const isSameOrigin = URL.originsMatch(pageUrl, record._url);
-      const isBase64DataUri = /^data:.{2,40}base64\s*,/.test(record._url);
+      seenUrls.add(record.url);
+      const isOptimizableImage = record.resourceType &&
+        record.resourceType === 'Image' &&
+        /image\/(png|bmp|jpeg)/.test(record.mimeType);
+      const isSameOrigin = URL.originsMatch(pageUrl, record.url);
+      const isBase64DataUri = /^data:.{2,40}base64\s*,/.test(record.url);
 
-      const actualResourceSize = Math.min(record._resourceSize || 0, record.transferSize || 0);
+      const actualResourceSize = Math.min(record.resourceSize || 0, record.transferSize || 0);
       if (isOptimizableImage && actualResourceSize > MINIMUM_IMAGE_SIZE) {
         prev.push({
           isSameOrigin,
           isBase64DataUri,
-          requestId: record._requestId,
-          url: record._url,
-          mimeType: record._mimeType,
+          requestId: record.requestId,
+          url: record.url,
+          mimeType: record.mimeType,
           resourceSize: actualResourceSize,
         });
       }

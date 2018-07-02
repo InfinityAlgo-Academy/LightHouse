@@ -23,8 +23,8 @@ class Offline extends Gatherer {
    */
   afterPass(passContext, loadData) {
     const navigationRecord = loadData.networkRecords.filter(record => {
-      return URL.equalWithExcludedFragments(record._url, passContext.url) &&
-        record._fetchedViaServiceWorker;
+      return URL.equalWithExcludedFragments(record.url, passContext.url) &&
+        record.fetchedViaServiceWorker;
     }).pop(); // Take the last record that matches.
 
     return passContext.driver.goOnline(passContext)

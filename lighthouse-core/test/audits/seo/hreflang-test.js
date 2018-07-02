@@ -22,7 +22,7 @@ describe('SEO: Document has valid hreflang code', () => {
 
     const allRuns = hreflangValues.map(hreflangValue => {
       const mainResource = {
-        _responseHeaders: [],
+        responseHeaders: [],
       };
       const artifacts = {
         devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: []},
@@ -44,7 +44,7 @@ describe('SEO: Document has valid hreflang code', () => {
 
   it('succeeds when language code provided via link element is valid', () => {
     const mainResource = {
-      _responseHeaders: [],
+      responseHeaders: [],
     };
     const artifacts = {
       devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: []},
@@ -65,7 +65,7 @@ describe('SEO: Document has valid hreflang code', () => {
 
   it('succeeds when there are no rel=alternate link elements nor headers', () => {
     const mainResource = {
-      _responseHeaders: [],
+      responseHeaders: [],
     };
     const artifacts = {
       devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: []},
@@ -100,7 +100,7 @@ describe('SEO: Document has valid hreflang code', () => {
 
     const allRuns = linkHeaders.map(headers => {
       const mainResource = {
-        _responseHeaders: headers,
+        responseHeaders: headers,
       };
       const artifacts = {
         devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: []},
@@ -119,7 +119,7 @@ describe('SEO: Document has valid hreflang code', () => {
 
   it('succeeds when language codes provided via Link header are valid', () => {
     const mainResource = {
-      _responseHeaders: [
+      responseHeaders: [
         {name: 'link', value: ''},
         {name: 'link', value: 'garbage'},
         {name: 'link', value: '<http://es.example.com/>; rel="example"; hreflang="xx"'},
@@ -141,7 +141,7 @@ describe('SEO: Document has valid hreflang code', () => {
 
   it('returns all failing items', () => {
     const mainResource = {
-      _responseHeaders: [
+      responseHeaders: [
         {name: 'link', value: '<http://xx1.example.com/>; rel="alternate"; hreflang="xx1"'},
         {name: 'Link', value: '<http://xx2.example.com/>; rel="alternate"; hreflang="xx2"'},
       ],

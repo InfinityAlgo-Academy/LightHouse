@@ -21,19 +21,17 @@ const VERY_LOW = 'VeryLow';
 function mockTracingData(prioritiesList, edges) {
   const networkRecords = prioritiesList.map((priority, index) =>
     ({requestId: index.toString(),
-      _resourceType: {
-        _category: 'fake',
-      },
-      _frameId: 1,
+      resourceType: 'fake',
+      frameId: 1,
       finished: true,
-      priority: () => priority,
-      initiatorRequest: () => null,
+      priority,
+      initiatorRequest: null,
     }));
 
   // add mock initiator information
   edges.forEach(edge => {
     const initiator = networkRecords[edge[0]];
-    networkRecords[edge[1]].initiatorRequest = () => initiator;
+    networkRecords[edge[1]].initiatorRequest = initiator;
   });
 
   return networkRecords;
@@ -42,7 +40,7 @@ function mockTracingData(prioritiesList, edges) {
 function replaceChain(chains, networkRecords) {
   Object.keys(chains).forEach(chainId => {
     const chain = chains[chainId];
-    chain.request = networkRecords.find(record => record._requestId === chainId);
+    chain.request = networkRecords.find(record => record.requestId === chainId);
     replaceChain(chain.children, networkRecords);
   });
 }
@@ -282,20 +280,20 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
     const mainResource = networkRecords[0];
 
     // 2nd record is a favicon
-    networkRecords[1]._url = 'https://example.com/favicon.ico';
-    networkRecords[1]._mimeType = 'image/x-icon';
+    networkRecords[1].url = 'https://example.com/favicon.ico';
+    networkRecords[1].mimeType = 'image/x-icon';
     networkRecords[1].parsedURL = {
       lastPathComponent: 'favicon.ico',
     };
     // 3rd record is a favicon
     networkRecords[2].url = 'https://example.com/favicon-32x32.png';
-    networkRecords[2]._mimeType = 'image/png';
+    networkRecords[2].mimeType = 'image/png';
     networkRecords[2].parsedURL = {
       lastPathComponent: 'favicon-32x32.png',
     };
     // 4th record is a favicon
     networkRecords[3].url = 'https://example.com/android-chrome-192x192.png';
-    networkRecords[3]._mimeType = 'image/png';
+    networkRecords[3].mimeType = 'image/png';
     networkRecords[3].parsedURL = {
       lastPathComponent: 'android-chrome-192x192.png',
     };
@@ -314,19 +312,19 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
     const mainResource = networkRecords[0];
 
     // 1th record is the root document
-    networkRecords[0]._url = 'https://example.com';
-    networkRecords[0]._mimeType = 'text/html';
-    networkRecords[0]._resourceType = NetworkRequest.TYPES.Document;
+    networkRecords[0].url = 'https://example.com';
+    networkRecords[0].mimeType = 'text/html';
+    networkRecords[0].resourceType = NetworkRequest.TYPES.Document;
     // 2nd record is an iframe in the page
-    networkRecords[1]._url = 'https://example.com/iframe.html';
-    networkRecords[1]._mimeType = 'text/html';
-    networkRecords[1]._resourceType = NetworkRequest.TYPES.Document;
-    networkRecords[1]._frameId = '2';
+    networkRecords[1].url = 'https://example.com/iframe.html';
+    networkRecords[1].mimeType = 'text/html';
+    networkRecords[1].resourceType = NetworkRequest.TYPES.Document;
+    networkRecords[1].frameId = '2';
     // 3rd record is an iframe loaded by a script
-    networkRecords[2]._url = 'https://youtube.com/';
-    networkRecords[2]._mimeType = 'text/html';
-    networkRecords[2]._resourceType = NetworkRequest.TYPES.Document;
-    networkRecords[2]._frameId = '3';
+    networkRecords[2].url = 'https://youtube.com/';
+    networkRecords[2].mimeType = 'text/html';
+    networkRecords[2].resourceType = NetworkRequest.TYPES.Document;
+    networkRecords[2].frameId = '3';
 
     const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {
@@ -363,7 +361,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
         [HIGH, HIGH],
         [[0, 1]]
       );
-      networkRecords[1]._isLinkPreload = true;
+      networkRecords[1].isLinkPreload = true;
       const mainResource = networkRecords[0];
       const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
       assert.deepEqual(criticalChains, {

@@ -40,7 +40,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
 
   /**
    * @param {string} scriptContent
-   * @param {LH.WebInspector.NetworkRequest} networkRecord
+   * @param {LH.Artifacts.NetworkRequest} networkRecord
    * @return {{url: string, totalBytes: number, wastedBytes: number, wastedPercent: number}}
    */
   static computeWaste(scriptContent, networkRecord) {
@@ -71,7 +71,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
@@ -92,7 +92,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
           !Number.isFinite(result.wastedBytes)) continue;
         items.push(result);
       } catch (err) {
-        warnings.push(`Unable to process ${networkRecord._url}: ${err.message}`);
+        warnings.push(`Unable to process ${networkRecord.url}: ${err.message}`);
       }
     }
 

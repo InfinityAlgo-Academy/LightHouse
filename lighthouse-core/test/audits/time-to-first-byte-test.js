@@ -12,9 +12,9 @@ const assert = require('assert');
 describe('Performance: time-to-first-byte audit', () => {
   it('fails when ttfb of root document is higher than 600ms', () => {
     const networkRecords = [
-      {_url: 'https://example.com/', _requestId: '0', _timing: {receiveHeadersEnd: 830, sendEnd: 200}},
-      {_url: 'https://google.com/styles.css', _requestId: '1', _timing: {receiveHeadersEnd: 450, sendEnd: 200}},
-      {_url: 'https://google.com/image.jpg', _requestId: '2', _timing: {receiveHeadersEnd: 600, sendEnd: 400}},
+      {url: 'https://example.com/', requestId: '0', timing: {receiveHeadersEnd: 830, sendEnd: 200}},
+      {url: 'https://google.com/styles.css', requestId: '1', timing: {receiveHeadersEnd: 450, sendEnd: 200}},
+      {url: 'https://google.com/image.jpg', requestId: '2', timing: {receiveHeadersEnd: 600, sendEnd: 400}},
     ];
     const artifacts = {
       devtoolsLogs: {[TimeToFirstByte.DEFAULT_PASS]: []},
@@ -30,9 +30,9 @@ describe('Performance: time-to-first-byte audit', () => {
 
   it('succeeds when ttfb of root document is lower than 600ms', () => {
     const networkRecords = [
-      {_url: 'https://example.com/', _requestId: '0', _timing: {receiveHeadersEnd: 400, sendEnd: 200}},
-      {_url: 'https://google.com/styles.css', _requestId: '1', _timing: {receiveHeadersEnd: 850, sendEnd: 200}},
-      {_url: 'https://google.com/image.jpg', _requestId: '2', _timing: {receiveHeadersEnd: 1000, sendEnd: 400}},
+      {url: 'https://example.com/', requestId: '0', timing: {receiveHeadersEnd: 400, sendEnd: 200}},
+      {url: 'https://google.com/styles.css', requestId: '1', timing: {receiveHeadersEnd: 850, sendEnd: 200}},
+      {url: 'https://google.com/image.jpg', requestId: '2', timing: {receiveHeadersEnd: 1000, sendEnd: 400}},
     ];
     const artifacts = {
       devtoolsLogs: {[TimeToFirstByte.DEFAULT_PASS]: []},
@@ -48,9 +48,9 @@ describe('Performance: time-to-first-byte audit', () => {
 
   it('throws when somehow finalUrl is not in network records', async () => {
     const networkRecords = [
-      {_url: 'https://example.com/', _requestId: '0', _timing: {receiveHeadersEnd: 400, sendEnd: 200}},
-      {_url: 'https://google.com/styles.css', _requestId: '1', _timing: {receiveHeadersEnd: 850, sendEnd: 200}},
-      {_url: 'https://google.com/image.jpg', _requestId: '2', _timing: {receiveHeadersEnd: 1000, sendEnd: 400}},
+      {url: 'https://example.com/', requestId: '0', timing: {receiveHeadersEnd: 400, sendEnd: 200}},
+      {url: 'https://google.com/styles.css', requestId: '1', timing: {receiveHeadersEnd: 850, sendEnd: 200}},
+      {url: 'https://google.com/image.jpg', requestId: '2', timing: {receiveHeadersEnd: 1000, sendEnd: 400}},
     ];
     const badFinalUrl = 'https://badexample.com/';
     const artifacts = {

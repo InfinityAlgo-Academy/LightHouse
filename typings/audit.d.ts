@@ -157,7 +157,7 @@ declare global {
           url: string;
           startTime: number;
           endTime: number;
-          _responseReceivedTime: number;
+          responseReceivedTime: number;
           transferSize: number;
         };
         children: SimpleCriticalRequestNode;

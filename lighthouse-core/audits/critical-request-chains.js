@@ -108,7 +108,7 @@ class CriticalRequestChains extends Audit {
         url: request.url,
         startTime: request.startTime,
         endTime: request.endTime,
-        _responseReceivedTime: request._responseReceivedTime,
+        responseReceivedTime: request.responseReceivedTime,
         transferSize: request.transferSize,
       };
 

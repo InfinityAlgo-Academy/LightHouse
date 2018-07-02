@@ -17,12 +17,6 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   let computedArtifacts;
   let recordId;
 
-  function addOriginToRecord(record) {
-    const parsed = record.parsedURL || {};
-    parsed.securityOrigin = () => `${parsed.scheme}://${parsed.host}`;
-    if (!record.parsedURL) record.parsedURL = parsed;
-  }
-
   function createRecord(opts) {
     const url = opts.url || 'https://example.com';
     return Object.assign(
@@ -35,8 +29,8 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
         endTime: 0.01,
         transferSize: 0,
         protocol: 'http/1.1',
-        parsedURL: {scheme: url.match(/https?/)[0], securityOrigin: () => url.match(/.*\.com/)[0]},
-        _timing: opts.timing || null,
+        parsedURL: {scheme: url.match(/https?/)[0], securityOrigin: url.match(/.*\.com/)[0]},
+        timing: opts.timing || null,
       },
       opts
     );
@@ -190,7 +184,6 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
 
     it('should work on a real devtoolsLog', () => {
       return computedArtifacts.requestNetworkRecords(devtoolsLog).then(records => {
-        records.forEach(addOriginToRecord);
         const result = NetworkAnalyzer.estimateRTTByOrigin(records);
         assertCloseEnough(result.get('https://pwa.rocks').min, 3);
         assertCloseEnough(result.get('https://www.googletagmanager.com').min, 3);
@@ -240,7 +233,6 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
 
     it('should work on a real devtoolsLog', () => {
       return computedArtifacts.requestNetworkRecords(devtoolsLog).then(records => {
-        records.forEach(addOriginToRecord);
         const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records);
         assertCloseEnough(result.get('https://pwa.rocks').avg, 162);
         assertCloseEnough(result.get('https://www.googletagmanager.com').avg, 153);

@@ -146,7 +146,7 @@ class GatherRunner {
   /**
    * Returns an error if the original network request failed or wasn't found.
    * @param {string} url The URL of the original requested page.
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {LHError|undefined}
    */
   static getPageLoadError(url, networkRecords) {

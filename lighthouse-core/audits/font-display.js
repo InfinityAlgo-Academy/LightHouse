@@ -40,7 +40,7 @@ class FontDisplay extends Audit {
 
     return artifacts.requestNetworkRecords(devtoolsLogs).then((networkRecords) => {
       const results = networkRecords.filter(record => {
-        const isFont = record._resourceType === NetworkRequest.TYPES.Font;
+        const isFont = record.resourceType === NetworkRequest.TYPES.Font;
 
         return isFont;
       })

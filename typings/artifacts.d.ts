@@ -6,6 +6,7 @@
 
 import parseManifest = require('../lighthouse-core/lib/manifest-parser.js');
 import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator.js');
+import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
 import speedline = require('speedline');
 
 type _TaskNode = import('../lighthouse-core/gather/computed/main-thread-tasks').TaskNode;
@@ -116,13 +117,13 @@ declare global {
     export interface ComputedArtifacts {
       requestCriticalRequestChains(data: {devtoolsLog: DevtoolsLog, URL: Artifacts['URL']}): Promise<Artifacts.CriticalRequestNode>;
       requestLoadSimulator(data: {devtoolsLog: DevtoolsLog, settings: Config.Settings}): Promise<LanternSimulator>;
-      requestMainResource(data: {devtoolsLog: DevtoolsLog, URL: Artifacts['URL']}): Promise<WebInspector.NetworkRequest>;
+      requestMainResource(data: {devtoolsLog: DevtoolsLog, URL: Artifacts['URL']}): Promise<Artifacts.NetworkRequest>;
       requestManifestValues(manifest: LH.Artifacts['Manifest']): Promise<LH.Artifacts.ManifestValues>;
       requestNetworkAnalysis(devtoolsLog: DevtoolsLog): Promise<LH.Artifacts.NetworkAnalysis>;
       requestNetworkThroughput(devtoolsLog: DevtoolsLog): Promise<number>;
-      requestNetworkRecords(devtoolsLog: DevtoolsLog): Promise<WebInspector.NetworkRequest[]>;
+      requestNetworkRecords(devtoolsLog: DevtoolsLog): Promise<Artifacts.NetworkRequest[]>;
       requestPageDependencyGraph(data: {trace: Trace, devtoolsLog: DevtoolsLog}): Promise<Gatherer.Simulation.GraphNode>;
-      requestPushedRequests(devtoolsLogs: DevtoolsLog): Promise<WebInspector.NetworkRequest[]>;
+      requestPushedRequests(devtoolsLogs: DevtoolsLog): Promise<Artifacts.NetworkRequest[]>;
       requestMainThreadTasks(trace: Trace): Promise<Artifacts.TaskNode[]>;
       requestTraceOfTab(trace: Trace): Promise<Artifacts.TraceOfTab>;
       requestScreenshots(trace: Trace): Promise<{timestamp: number, datauri: string}[]>;
@@ -146,6 +147,7 @@ declare global {
     }
 
     module Artifacts {
+      export type NetworkRequest = _NetworkRequest;
       export type TaskNode = _TaskNode;
 
       export interface Accessibility {
@@ -302,7 +304,7 @@ declare global {
       // Computed artifact types below.
       export type CriticalRequestNode = {
         [id: string]: {
-          request: WebInspector.NetworkRequest;
+          request: Artifacts.NetworkRequest;
           children: CriticalRequestNode;
         }
       }
@@ -327,7 +329,7 @@ declare global {
       }
 
       export interface MetricComputationData extends MetricComputationDataInput {
-        networkRecords: Array<WebInspector.NetworkRequest>;
+        networkRecords: Array<Artifacts.NetworkRequest>;
         traceOfTab: TraceOfTab;
       }
 

@@ -89,20 +89,20 @@ class NetworkRecorder extends EventEmitter {
   /**
    * QUIC network requests don't always "finish" even when they're done loading data, use recievedHeaders
    * @see https://github.com/GoogleChrome/lighthouse/issues/5254
-   * @param {LH.WebInspector.NetworkRequest} record
+   * @param {LH.Artifacts.NetworkRequest} record
    * @return {boolean}
    */
   static _isQUICAndFinished(record) {
-    const isQUIC = record._responseHeaders && record._responseHeaders
+    const isQUIC = record.responseHeaders && record.responseHeaders
         .some(header => header.name.toLowerCase() === 'alt-svc' && /quic/.test(header.value));
-    const receivedHeaders = record._timing && record._timing.receiveHeadersEnd > 0;
+    const receivedHeaders = record.timing && record.timing.receiveHeadersEnd > 0;
     return !!(isQUIC && receivedHeaders && record.endTime);
   }
 
   /**
    * Finds all time periods where the number of inflight requests is less than or equal to the
    * number of allowed concurrent requests.
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {number} allowedConcurrentRequests
    * @param {number=} endTime
    * @return {Array<{start: number, end: number}>}
@@ -207,7 +207,7 @@ class NetworkRecorder extends EventEmitter {
       ...data,
       // Copy over the initiator as well to match DevTools behavior
       // TODO(phulce): abandon this DT hack and update Lantern graph to handle it
-      initiator: originalRequest._initiator,
+      initiator: originalRequest.initiator,
       requestId: `${originalRequest.requestId}:redirect`,
     };
     const redirectedRequest = new NetworkRequest();
@@ -323,7 +323,7 @@ class NetworkRecorder extends EventEmitter {
   /**
    * Construct network records from a log of devtools protocol messages.
    * @param {LH.DevtoolsLog} devtoolsLog
-   * @return {Array<LH.WebInspector.NetworkRequest>}
+   * @return {Array<LH.Artifacts.NetworkRequest>}
    */
   static recordsFromLogs(devtoolsLog) {
     const networkRecorder = new NetworkRecorder();
@@ -342,8 +342,8 @@ class NetworkRecorder extends EventEmitter {
 
     // set the initiator and redirects array
     for (const record of records) {
-      const stackFrames = (record._initiator.stack && record._initiator.stack.callFrames) || [];
-      const initiatorURL = record._initiator.url || (stackFrames[0] && stackFrames[0].url);
+      const stackFrames = (record.initiator.stack && record.initiator.stack.callFrames) || [];
+      const initiatorURL = record.initiator.url || (stackFrames[0] && stackFrames[0].url);
       const initiator = recordsByURL.get(initiatorURL) || record.redirectSource;
       if (initiator) {
         record.setInitiatorRequest(initiator);

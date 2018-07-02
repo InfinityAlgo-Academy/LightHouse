@@ -25,7 +25,7 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
       requestId: requestId++,
       url,
       protocol: 'http/1.1',
-      parsedURL: {scheme, securityOrigin: () => origin},
+      parsedURL: {scheme, securityOrigin: origin},
     }, data);
   }
 

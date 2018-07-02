@@ -51,7 +51,7 @@ describe('Render blocking resources audit', () => {
     beforeEach(() => {
       requestId = 1;
       record = props => {
-        const parsedURL = {securityOrigin: () => 'http://example.com'};
+        const parsedURL = {securityOrigin: 'http://example.com'};
         return Object.assign({parsedURL, requestId: requestId++}, props);
       };
     });
@@ -80,7 +80,7 @@ describe('Render blocking resources audit', () => {
       const simulator = new Simulator({rtt: 1000, serverResponseTimeByOrigin});
       const documentNode = new NetworkNode(record({transferSize: 10 * 1000}));
       const styleNode = new NetworkNode(
-        record({transferSize: 23 * 1000, _resourceType: NetworkRequest.TYPES.Stylesheet})
+        record({transferSize: 23 * 1000, resourceType: NetworkRequest.TYPES.Stylesheet})
       ); // pushes document over 14KB
       const deferredIds = new Set([2]);
       const wastedBytesMap = new Map([[undefined, 18 * 1000]]);

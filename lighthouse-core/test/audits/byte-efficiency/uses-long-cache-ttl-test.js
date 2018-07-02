@@ -19,11 +19,11 @@ function networkRecord(options = {}) {
   });
 
   return {
-    _url: options.url || 'https://example.com/asset',
+    url: options.url || 'https://example.com/asset',
     statusCode: options.statusCode || 200,
-    _resourceType: options.resourceType || NetworkRequest.TYPES.Script,
+    resourceType: options.resourceType || NetworkRequest.TYPES.Script,
     transferSize: options.transferSize || 10000,
-    _responseHeaders: headers,
+    responseHeaders: headers,
   };
 }
 

@@ -152,7 +152,7 @@ class RenderBlockingResources extends Audit {
       if (node.type !== BaseNode.TYPES.NETWORK) return !canDeferRequest;
 
       const isStylesheet =
-        node.record._resourceType === NetworkRequest.TYPES.Stylesheet;
+        node.record.resourceType === NetworkRequest.TYPES.Stylesheet;
       if (canDeferRequest && isStylesheet) {
         // We'll inline the used bytes of the stylesheet and assume the rest can be deferred
         const wastedBytes = wastedCssBytesByUrl.get(node.record.url) || 0;

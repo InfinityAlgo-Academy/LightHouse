@@ -27,7 +27,7 @@ class Interactive extends MetricArtifact {
   /**
    * Finds all time periods where the number of inflight requests is less than or equal to the
    * number of allowed concurrent requests (2).
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {{timestamps: {traceEnd: number}}} traceOfTab
    * @return {Array<TimePeriod>}
    */
@@ -85,7 +85,7 @@ class Interactive extends MetricArtifact {
   /**
    * Finds the first time period where a network quiet period and a CPU quiet period overlap.
    * @param {Array<TimePeriod>} longTasks
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {{cpuQuietPeriod: TimePeriod, networkQuietPeriod: TimePeriod, cpuQuietPeriods: Array<TimePeriod>, networkQuietPeriods: Array<TimePeriod>}}
    */

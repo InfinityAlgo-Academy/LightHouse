@@ -67,7 +67,7 @@ class UnusedBytes extends Audit {
    * Estimates the number of bytes this network record would have consumed on the network based on the
    * uncompressed size (totalBytes). Uses the actual transfer size from the network record if applicable.
    *
-   * @param {LH.WebInspector.NetworkRequest=} networkRecord
+   * @param {LH.Artifacts.NetworkRequest=} networkRecord
    * @param {number} totalBytes Uncompressed size of the resource
    * @param {LH.Crdp.Page.ResourceType=} resourceType
    * @param {number=} compressionRatio
@@ -79,14 +79,14 @@ class UnusedBytes extends Audit {
       // roughly the size of the content gzipped.
       // See https://discuss.httparchive.org/t/file-size-and-compression-savings/145 for multipliers
       return Math.round(totalBytes * compressionRatio);
-    } else if (networkRecord._resourceType === resourceType) {
+    } else if (networkRecord.resourceType === resourceType) {
       // This was a regular standalone asset, just use the transfer size.
       return networkRecord.transferSize || 0;
     } else {
       // This was an asset that was inlined in a different resource type (e.g. HTML document).
       // Use the compression ratio of the resource to estimate the total transferred bytes.
       const transferSize = networkRecord.transferSize || 0;
-      const resourceSize = networkRecord._resourceSize;
+      const resourceSize = networkRecord.resourceSize;
       const compressionRatio = resourceSize !== undefined ? (transferSize / resourceSize) : 1;
       return Math.round(totalBytes * compressionRatio);
     }
@@ -220,7 +220,7 @@ class UnusedBytes extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
    * @return {ByteEfficiencyProduct|Promise<ByteEfficiencyProduct>}
    */

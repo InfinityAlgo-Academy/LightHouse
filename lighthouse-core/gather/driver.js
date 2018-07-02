@@ -591,7 +591,7 @@ class Driver {
 
     // Update startingUrl if it's ever redirected.
     this._monitoredUrl = startingUrl;
-    /** @param {LH.WebInspector.NetworkRequest} redirectRequest */
+    /** @param {LH.Artifacts.NetworkRequest} redirectRequest */
     const requestLoadedListener = redirectRequest => {
       // Ignore if this is not a redirected request.
       if (!redirectRequest.redirectSource) {

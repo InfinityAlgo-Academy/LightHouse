@@ -19,12 +19,12 @@ function createRequest(
   requestId,
   url,
   startTime = 0,
-  _initiator = null,
-  _resourceType = NetworkRequest.TYPES.Document
+  initiator = null,
+  resourceType = NetworkRequest.TYPES.Document
 ) {
   startTime = startTime / 1000;
   const endTime = startTime + 0.05;
-  return {requestId, url, startTime, endTime, _initiator, _resourceType};
+  return {requestId, url, startTime, endTime, initiator, resourceType};
 }
 
 /* eslint-env jest */

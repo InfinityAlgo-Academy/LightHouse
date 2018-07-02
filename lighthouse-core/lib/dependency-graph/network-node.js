@@ -10,7 +10,7 @@ const NetworkRequest = require('../network-request');
 
 class NetworkNode extends BaseNode {
   /**
-   * @param {LH.WebInspector.NetworkRequest} networkRecord
+   * @param {LH.Artifacts.NetworkRequest} networkRecord
    */
   constructor(networkRecord) {
     super(networkRecord.requestId);
@@ -37,7 +37,7 @@ class NetworkNode extends BaseNode {
   }
 
   /**
-   * @return {LH.WebInspector.NetworkRequest}
+   * @return {LH.Artifacts.NetworkRequest}
    */
   get record() {
     return this._record;
@@ -47,23 +47,23 @@ class NetworkNode extends BaseNode {
    * @return {?string}
    */
   get initiatorType() {
-    return this._record._initiator && this._record._initiator.type;
+    return this._record.initiator && this._record.initiator.type;
   }
 
   /**
    * @return {boolean}
    */
   get fromDiskCache() {
-    return !!this._record._fromDiskCache;
+    return !!this._record.fromDiskCache;
   }
 
   /**
    * @return {boolean}
    */
   hasRenderBlockingPriority() {
-    const priority = this._record.priority();
-    const isScript = this._record._resourceType === NetworkRequest.TYPES.Script;
-    const isDocument = this._record._resourceType === NetworkRequest.TYPES.Document;
+    const priority = this._record.priority;
+    const isScript = this._record.resourceType === NetworkRequest.TYPES.Script;
+    const isDocument = this._record.resourceType === NetworkRequest.TYPES.Document;
     const isBlockingScript = priority === 'High' && isScript;
     const isBlockingHtmlImport = priority === 'High' && isDocument;
     return priority === 'VeryHigh' || isBlockingScript || isBlockingHtmlImport;

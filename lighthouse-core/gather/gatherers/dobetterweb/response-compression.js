@@ -29,7 +29,7 @@ const textResourceTypes = [
 
 class ResponseCompression extends Gatherer {
   /**
-   * @param {Array<LH.WebInspector.NetworkRequest>} networkRecords
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {LH.Artifacts['ResponseCompression']}
    */
   static filterUnoptimizedResponses(networkRecords) {
@@ -37,9 +37,9 @@ class ResponseCompression extends Gatherer {
     const unoptimizedResponses = [];
 
     networkRecords.forEach(record => {
-      const mimeType = record._mimeType;
-      const resourceType = record._resourceType || NetworkRequest.TYPES.Other;
-      const resourceSize = record._resourceSize;
+      const mimeType = record.mimeType;
+      const resourceType = record.resourceType || NetworkRequest.TYPES.Other;
+      const resourceSize = record.resourceSize;
 
       const isBinaryResource = mimeType && binaryMimeTypes.some(type => mimeType.startsWith(type));
       const isTextResource = !isBinaryResource && textResourceTypes.includes(resourceType);
@@ -50,7 +50,7 @@ class ResponseCompression extends Gatherer {
         return;
       }
 
-      const isContentEncoded = (record._responseHeaders || []).find(header =>
+      const isContentEncoded = (record.responseHeaders || []).find(header =>
         compressionHeaders.includes(header.name.toLowerCase()) &&
         compressionTypes.includes(header.value)
       );

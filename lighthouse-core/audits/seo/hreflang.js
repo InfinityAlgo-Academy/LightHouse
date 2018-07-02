@@ -99,7 +99,7 @@ class Hreflang extends Audit {
           });
         }
 
-        mainResource._responseHeaders && mainResource._responseHeaders
+        mainResource.responseHeaders && mainResource.responseHeaders
           .filter(h => h.name.toLowerCase() === LINK_HEADER && !headerHasValidHreflangs(h.value))
           .forEach(h => invalidHreflangs.push({source: `${h.name}: ${h.value}`}));
 

@@ -97,7 +97,7 @@ class IsCrawlable extends Audit {
           }
         }
 
-        mainResource._responseHeaders && mainResource._responseHeaders
+        mainResource.responseHeaders && mainResource.responseHeaders
           .filter(h => h.name.toLowerCase() === ROBOTS_HEADER && !hasUserAgent(h.value) &&
             hasBlockingDirective(h.value))
           .forEach(h => blockingDirectives.push({source: `${h.name}: ${h.value}`}));
