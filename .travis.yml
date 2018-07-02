@@ -33,10 +33,10 @@ before_script:
   - yarn build-all
 script:
   - yarn bundlesize
+  - yarn diff:sample-json
   - yarn lint
   - yarn unit:silentcoverage
   - yarn type-check
-  - yarn diff:sample-json
   - yarn smoke:silentcoverage
   - yarn test-extension
   - yarn test-viewer
