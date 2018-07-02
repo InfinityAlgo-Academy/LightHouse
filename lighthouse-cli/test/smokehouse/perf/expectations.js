@@ -64,7 +64,7 @@ module.exports = [
         rawValue: false,
         details: {
           items: {
-            length: 1,
+            length: 2,
           },
         },
       },

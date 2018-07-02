@@ -60,7 +60,7 @@ function requestHandler(request, response) {
   }
 
   function sendResponse(statusCode, data) {
-    const headers = {};
+    const headers = {'Access-Control-Allow-Origin': '*'};
 
     if (filePath.endsWith('.js')) {
       headers['Content-Type'] = 'text/javascript';

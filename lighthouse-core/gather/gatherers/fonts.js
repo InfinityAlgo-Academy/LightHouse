@@ -13,7 +13,7 @@ const Sentry = require('../../lib/sentry');
 // All the property keys of FontFace where the value is a string and are worth
 // using for finding font matches (see _findSameFontFamily).
 /** @typedef {'family'|'style'|'weight'|'stretch'|'unicodeRange'|'variant'|'featureSettings'|'display'} FontFaceStringKeys */
-/** @typedef {{err: {message: string, stack: string}}} FontGatherError */
+/** @typedef {{err: {message: string, stack?: string}}} FontGatherError */
 
 /** @type {Array<FontFaceStringKeys>} */
 const fontFaceDescriptors = [
@@ -124,11 +124,24 @@ function getFontFaceFromStylesheets() {
     return new Promise(resolve => {
       newNode.addEventListener('load', function onload() {
         newNode.removeEventListener('load', onload);
-        resolve(getFontFaceFromStylesheets());
+        try {
+          const stylesheet = Array.from(document.styleSheets).find(s => s.ownerNode === newNode);
+          if (stylesheet) {
+            const cssStylesheet = /** @type {CSSStyleSheet} */ (stylesheet);
+            resolve(getSheetsFontFaces(cssStylesheet));
+          } else {
+            resolve([{err: {message: 'Could not load stylesheet with CORS'}}]);
+          }
+        } catch (err) {
+          resolve([{err: {message: err.message, stack: err.stack}}]);
+        }
       });
       newNode.crossOrigin = 'anonymous';
       oldNode.parentNode && oldNode.parentNode.insertBefore(newNode, oldNode);
       oldNode.remove();
+
+      // Give each stylesheet 1s to load before giving up
+      setTimeout(() => resolve([{err: {message: 'Could not load stylesheet (timeout)'}}]), 1000);
     });
   }
 
@@ -138,19 +151,28 @@ function getFontFaceFromStylesheets() {
   const corsDataPromises = [];
   // Get all loaded stylesheets
   for (const stylesheet of Array.from(document.styleSheets)) {
+    const cssStylesheet = /** @type {CSSStyleSheet} */ (stylesheet);
+
     try {
-      const cssStylesheet = /** @type {CSSStyleSheet} */ (stylesheet);
-      // Cross-origin stylesheets don't expose cssRules by default. We reload them w/ CORS headers.
-      if (cssStylesheet.cssRules === null && cssStylesheet.href && cssStylesheet.ownerNode &&
-        // @ts-ignore - crossOrigin exists if ownerNode is an HTMLLinkElement
-        !cssStylesheet.ownerNode.crossOrigin) {
+      // cssRules can be null or this access can throw when CORS isn't enabled; throw a matching error message.
+      if (!cssStylesheet.cssRules) {
+        throw new Error('Failed to read cssRules');
+      }
+
+      data.push(...getSheetsFontFaces(cssStylesheet));
+    } catch (err) {
+      const failedToReadRules = /Failed to read.*cssRules/.test(err.message);
+      // @ts-ignore - crossOrigin exists if ownerNode is an HTMLLinkElement
+      const alreadyCORS = !cssStylesheet.ownerNode || !!cssStylesheet.ownerNode.crossOrigin;
+
+      if (failedToReadRules && !alreadyCORS && cssStylesheet.href) {
+        // Cross-origin stylesheets don't expose cssRules by default. We reload them w/ CORS headers.
         const ownerLinkEl = /** @type {HTMLLinkElement} */ (cssStylesheet.ownerNode);
         corsDataPromises.push(loadStylesheetWithCORS(ownerLinkEl));
       } else {
-        data.push(...getSheetsFontFaces(cssStylesheet));
+        // Otherwise this is a legit error we should report back to the gatherer.
+        data.push({err: {message: err.message, stack: err.stack}});
       }
-    } catch (err) {
-      data.push({err: {message: err.message, stack: err.stack}});
     }
   }
   // Flatten results
@@ -194,7 +216,7 @@ class Fonts extends Gatherer {
           const dataError = /** @type {FontGatherError} */ (fontOrError);
           if (dataError.err) {
             const err = new Error(dataError.err.message);
-            err.stack = dataError.err.stack;
+            err.stack = dataError.err.stack || err.stack;
             // @ts-ignore TODO(bckenny): Sentry type checking
             Sentry.captureException(err, {tags: {gatherer: 'Fonts'}, level: 'warning'});
             return false;
