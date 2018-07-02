@@ -1,3 +1,15 @@
+ <a name="3.0.1"></a>
+# 3.0.1 (2018-07-02)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v3.0.0...v3.0.1)
+
+## Core
+
+* fonts: handle CORS cssRules ([#5592](https://github.com/googlechrome/lighthouse/pull/5592))
+
+## Tests
+
+* adopt jest (leaving mocha) for core & cli ([#5386](https://github.com/googlechrome/lighthouse/pull/5386))
+
  <a name="3.0.0"></a>
 # 3.0.0 Final (2018-06-29)
 [Changelog of v3.0.0-beta.0 to 3.0 final](https://github.com/googlechrome/lighthouse/compare/v3.0.0-beta.0...v3.0.0)

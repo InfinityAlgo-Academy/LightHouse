@@ -38,7 +38,8 @@ yarn install-all
 
 # * Bump it *
 yarn version --no-git-tag-version
-# then manually bump extension v in extension/app/manifest.json
+# manually bump extension v in extension/app/manifest.json
+yarn update:sample-json
 
 # * Build it *
 yarn build-all
