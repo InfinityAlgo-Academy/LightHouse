@@ -34,6 +34,8 @@ const subpageVisibleClass = 'subpage--visible';
 
 /** @type {?URL} */
 let siteURL = null;
+/** @type {boolean} */
+let isRunning = false;
 
 function getLighthouseVersion() {
   return chrome.runtime.getManifest().version;
@@ -147,6 +149,11 @@ function createOptionItem(text, id, isChecked) {
  * @param {{selectedCategories: Array<string>, useDevTools: boolean}} settings
  */
 async function onGenerateReportButtonClick(background, settings) {
+  if (isRunning) {
+    return;
+  }
+  isRunning = true;
+
   showRunningSubpage();
 
   const feedbackEl = find('.feedback');
@@ -185,6 +192,8 @@ async function onGenerateReportButtonClick(background, settings) {
     hideRunningSubpage();
     background.console.error(err);
   }
+
+  isRunning = false;
 }
 
 /**
