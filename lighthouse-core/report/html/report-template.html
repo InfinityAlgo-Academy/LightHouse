@@ -34,12 +34,11 @@ limitations under the License.
   <script>%%LIGHTHOUSE_JAVASCRIPT%%
   //# sourceURL=compiled-reportrenderer.js
   </script>
-  <script src="file:///Users/paulirish/code/lighthouse/psi-renderer.js"></script>
   <script>window.__LIGHTHOUSE_JSON__ = %%LIGHTHOUSE_JSON%%;</script>
   <script>
     window.addEventListener('DOMContentLoaded', _ => {
       const dom = new DOM(document);
-      const renderer = new PSIReportRenderer(dom);
+      const renderer = new ReportRenderer(dom);
 
       const container = document.querySelector('main');
       renderer.renderReport(window.__LIGHTHOUSE_JSON__, container);
