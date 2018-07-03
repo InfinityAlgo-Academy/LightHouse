@@ -29,7 +29,7 @@ describe('HTML without JavaScript gatherer', () => {
       disableJavaScript: true,
       driver: {
         evaluateAsync() {
-          return Promise.resolve('Hello!');
+          return Promise.resolve({bodyText: 'Hello!'});
         },
       },
     };
@@ -41,15 +41,16 @@ describe('HTML without JavaScript gatherer', () => {
   });
 
   it('returns an artifact', () => {
-    const innerText = 'Hello!';
+    const bodyText = 'Hello!';
+    const hasNoScript = true;
     return htmlWithoutJavaScriptGather.afterPass({
       driver: {
         evaluateAsync() {
-          return Promise.resolve(innerText);
+          return Promise.resolve({bodyText, hasNoScript});
         },
       },
     }).then(artifact => {
-      assert.strictEqual(artifact.value, innerText);
+      assert.deepStrictEqual(artifact, {bodyText, hasNoScript});
     });
   });
 

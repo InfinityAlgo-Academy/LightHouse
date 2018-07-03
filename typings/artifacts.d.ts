@@ -67,7 +67,7 @@ declare global {
       /** The hreflang and href values of all link[rel=alternate] nodes found in HEAD. */
       Hreflang: {href: string, hreflang: string}[];
       /** The page's document body innerText if loaded with JavaScript disabled. */
-      HTMLWithoutJavaScript: {value: string};
+      HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
       /** Information on size and loading for all the images in the page. */

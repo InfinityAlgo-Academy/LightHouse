@@ -2520,6 +2520,6 @@
     "value": false
   },
   "HTMLWithoutJavaScript": {
-    "value": "Do better web tester page\nHi there!\ntouchmove section\n "
+    "bodyText": "Do better web tester page\nHi there!\ntouchmove section\n "
   }
 }

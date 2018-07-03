@@ -18,7 +18,10 @@ const Gatherer = require('./gatherer');
 function getBodyText() {
   // note: we use innerText, not textContent, because textContent includes the content of <script> elements!
   const body = document.querySelector('body');
-  return Promise.resolve(body ? body.innerText : '');
+  return Promise.resolve({
+    bodyText: body ? body.innerText : '',
+    hasNoScript: !!document.querySelector('noscript'),
+  });
 }
 
 class HTMLWithoutJavaScript extends Gatherer {
@@ -37,13 +40,15 @@ class HTMLWithoutJavaScript extends Gatherer {
     // Reset the JS disable.
     passContext.disableJavaScript = false;
 
-    const bodyText = await passContext.driver.evaluateAsync(`(${getBodyText.toString()}())`);
+    const expression = `(${getBodyText.toString()}())`;
+    const {bodyText, hasNoScript} = await passContext.driver.evaluateAsync(expression);
     if (typeof bodyText !== 'string') {
       throw new Error('document body innerText returned by protocol was not a string');
     }
 
     return {
-      value: bodyText,
+      bodyText,
+      hasNoScript,
     };
   }
 }

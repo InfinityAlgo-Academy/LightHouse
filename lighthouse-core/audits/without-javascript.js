@@ -30,7 +30,8 @@ class WithoutJavaScript extends Audit {
   static audit(artifacts) {
     const artifact = artifacts.HTMLWithoutJavaScript;
 
-    if (artifact.value.trim() === '') {
+    // Fail pages that have empty text and are missing a noscript tag
+    if (artifact.bodyText.trim() === '' && !artifact.hasNoScript) {
       return {
         rawValue: false,
         explanation: 'The page body should render some content if its scripts are not available.',
