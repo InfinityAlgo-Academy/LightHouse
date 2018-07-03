@@ -37,7 +37,8 @@ class LoadAudit extends Audit {
 
     return {
       rawValue: loadMetrics.searchableTime,
-      score: belowThreshold,
+      // Cast true/false to 1/0
+      score: Number(belowThreshold),
     };
   }
 }

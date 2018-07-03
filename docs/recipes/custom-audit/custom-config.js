@@ -25,9 +25,9 @@ module.exports = {
   // 4. Create a new 'My site metrics' section in the default report for our results.
   categories: {
     mysite: {
-      name: 'My site metrics',
+      title: 'My site metrics',
       description: 'Metrics for our super awesome site',
-      audits: [
+      auditRefs: [
         // When we add more custom audits, `weight` controls how they're averaged together.
         {id: 'searchable-audit', weight: 1},
       ],
