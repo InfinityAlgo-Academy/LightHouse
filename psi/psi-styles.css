@@ -18,3 +18,13 @@
   max-width: 100%;
 }
 
+.report-ss-columns {
+  display: flex;
+}
+.ss-column {
+  flex-basis: 175px;
+  padding-top: 40px;
+}
+.ss-column img {
+  max-width: 100%;
+}

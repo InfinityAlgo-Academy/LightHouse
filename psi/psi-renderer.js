@@ -18,6 +18,15 @@ class PSIReportRenderer extends ReportRenderer {
     /** @type {typeof PerformanceCategoryRenderer} */
     this._PerfCategoryRenderer = PSIPerformanceCategoryRenderer;
   }
+
+  /**
+   * @param {LH.ReportResult} report
+   * @return {DocumentFragment}
+   * @override
+   */
+  _renderReportHeader(report) {
+    return this._dom.createFragment();
+  }
 }
 
 

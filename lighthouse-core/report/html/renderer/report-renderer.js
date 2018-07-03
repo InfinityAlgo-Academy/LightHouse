@@ -171,7 +171,6 @@ class ReportRenderer {
       header = this._renderReportHeader(report);
     }
     headerContainer.appendChild(header);
-    const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
 
     const container = this._dom.createElement('div', 'lh-container');
     const reportSection = container.appendChild(this._dom.createElement('div', 'lh-report'));
@@ -210,6 +209,7 @@ class ReportRenderer {
       const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
       this._dom.find('.lh-scorescale-label', scoreScale).textContent =
         Util.UIStrings.scorescaleLabel;
+      const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
       scoresContainer.appendChild(scoreHeader);
       scoresContainer.appendChild(scoreScale);
     }
