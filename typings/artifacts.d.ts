@@ -56,6 +56,9 @@ declare global {
       CrawlableLinks: {href: string, text: string}[];
       /** CSS coverage information for styles used by page's final state. */
       CSSUsage: {rules: Crdp.CSS.RuleUsage[], stylesheets: Artifacts.CSSStyleSheetInfo[]};
+      /** Information on the document's doctype(or null if not present), specifically the name, publicId, and systemId.
+          All properties default to an empty string if not present */
+      Doctype: Artifacts.Doctype | null;
       /** Information on the size of all DOM nodes in the page and the most extreme members. */
       DOMStats: Artifacts.DOMStats;
       /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
@@ -171,6 +174,12 @@ declare global {
       export interface CSSStyleSheetInfo {
         header: Crdp.CSS.CSSStyleSheetHeader;
         content: string;
+      }
+
+      export interface Doctype {
+        name: string;
+        publicId: string;
+        systemId: string;
       }
 
       export interface DOMStats {

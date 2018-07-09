@@ -2202,6 +2202,14 @@
       "rawValue": false,
       "displayValue": "Found \"clock.appcache\""
     },
+    "doctype": {
+      "id": "doctype",
+      "title": "Page has the HTML doctype",
+      "description": "Specifying a doctype prevents the browser from switching to quirks-mode.Read more on the [MDN Web Docs page](https://developer.mozilla.org/en-US/docs/Glossary/Doctype)",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "rawValue": true
+    },
     "dom-size": {
       "id": "dom-size",
       "title": "Avoids an excessive DOM size",
@@ -3262,6 +3270,10 @@
           "weight": 1
         },
         {
+          "id": "doctype",
+          "weight": 1
+        },
+        {
           "id": "no-vulnerable-libraries",
           "weight": 1
         },
@@ -3287,7 +3299,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0
+      "score": 0.07
     },
     "seo": {
       "title": "SEO",

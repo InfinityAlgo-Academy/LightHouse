@@ -2521,5 +2521,10 @@
   },
   "HTMLWithoutJavaScript": {
     "bodyText": "Do better web tester page\nHi there!\ntouchmove section\n "
+  },
+  "Doctype": {
+    "name": "html",
+    "systemId": "",
+    "publicId": ""
   }
 }
