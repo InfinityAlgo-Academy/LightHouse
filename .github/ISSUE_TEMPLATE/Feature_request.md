@@ -8,9 +8,7 @@ about: Suggest an idea to us!
 
 <!-- If this is a new audit please review the audit doc https://github.com/GoogleChrome/lighthouse/blob/master/docs/new-audits.md -->
 
-## Feature request
-
-**Summary**
+**Feature request summary**
 <!-- Describe what you want to be added -->
 <!-- Are you willing to work on this yourself? -->
 

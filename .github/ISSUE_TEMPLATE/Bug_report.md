@@ -6,8 +6,6 @@ about: Report something working incorrectly
 
 <!-- Before creating an issue please make sure you are using the latest version and have checked for duplicate issues. -->
 
-## Bug report
-
 #### Provide the steps to reproduce
 1. Run LH on <affected url>
 
