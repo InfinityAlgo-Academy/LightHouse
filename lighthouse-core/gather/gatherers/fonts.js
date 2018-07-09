@@ -140,8 +140,8 @@ function getFontFaceFromStylesheets() {
       oldNode.parentNode && oldNode.parentNode.insertBefore(newNode, oldNode);
       oldNode.remove();
 
-      // Give each stylesheet 1s to load before giving up
-      setTimeout(() => resolve([{err: {message: 'Could not load stylesheet (timeout)'}}]), 1000);
+      // Give each stylesheet 5s to load before giving up
+      setTimeout(() => resolve([{err: {message: 'Could not load stylesheet (timeout)'}}]), 5000);
     });
   }
 
