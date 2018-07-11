@@ -19,9 +19,11 @@ describe('Metrics: FCP', () => {
     const settings = {throttlingMethod: 'simulate'};
     const result = await artifacts.requestFirstContentfulPaint({trace, devtoolsLog, settings});
 
-    assert.equal(Math.round(result.timing), 1038);
-    assert.equal(Math.round(result.optimisticEstimate.timeInMs), 611);
-    assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 611);
+    expect({
+      timing: Math.round(result.timing),
+      optimistic: Math.round(result.optimisticEstimate.timeInMs),
+      pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
+    }).toMatchSnapshot();
     assert.equal(result.optimisticEstimate.nodeTimings.size, 2);
     assert.equal(result.pessimisticEstimate.nodeTimings.size, 2);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');

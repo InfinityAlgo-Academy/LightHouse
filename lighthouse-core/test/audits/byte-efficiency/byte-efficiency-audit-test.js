@@ -218,12 +218,14 @@ describe('Byte efficiency base audit', () => {
     let settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
     let result = await MockAudit.audit(artifacts, {settings});
     // expect modest savings
-    assert.equal(result.rawValue, 1480);
+    expect(result.rawValue).toBeLessThan(5000);
+    expect(result.rawValue).toMatchSnapshot();
 
     settings = {throttlingMethod: 'simulate', throttling: ultraSlowThrottling};
     result = await MockAudit.audit(artifacts, {settings});
     // expect lots of savings
-    assert.equal(result.rawValue, 22350);
+    expect(result.rawValue).not.toBeLessThan(5000);
+    expect(result.rawValue).toMatchSnapshot();
   });
 
   it('should allow overriding of computeWasteWithTTIGraph', async () => {
@@ -251,8 +253,8 @@ describe('Byte efficiency base audit', () => {
     const settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
     const result = await MockAudit.audit(artifacts, {settings});
     const resultTti = await MockJustTTIAudit.audit(artifacts, {settings});
-    // expect more savings from default
-    assert.equal(result.rawValue, 1480);
-    assert.equal(resultTti.rawValue, 800);
+    // expect less savings with just TTI
+    expect(resultTti.rawValue).toBeLessThan(result.rawValue);
+    expect({default: result.rawValue, justTTI: resultTti.rawValue}).toMatchSnapshot();
   });
 });

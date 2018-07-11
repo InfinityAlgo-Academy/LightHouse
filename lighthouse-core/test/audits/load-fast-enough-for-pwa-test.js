@@ -67,6 +67,7 @@ describe('PWA: load-fast-enough-for-pwa audit', () => {
 
     const settings = {throttlingMethod: 'provided', throttling: {rttMs: 40, throughput: 100000}};
     const result = await FastPWAAudit.audit(artifacts, {settings});
-    assert.equal(Math.round(result.rawValue), 4309);
+    expect(result.rawValue).toBeGreaterThan(2000);
+    expect(Math.round(result.rawValue)).toMatchSnapshot();
   });
 });

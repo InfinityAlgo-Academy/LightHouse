@@ -8,6 +8,7 @@
 const BaseNode = require('../base-node');
 const TcpConnection = require('./tcp-connection');
 const ConnectionPool = require('./connection-pool');
+const DNSCache = require('./dns-cache');
 const mobile3G = require('../../../config/constants').throttling.mobile3G;
 
 /** @typedef {BaseNode.Node} Node */
@@ -66,6 +67,7 @@ class Simulator {
     /** @type {Map<string, number>} */
     this._numberInProgressByType = new Map();
     this._nodes = {};
+    this._dns = new DNSCache({rtt: this._rtt});
     // @ts-ignore
     this._connectionPool = /** @type {ConnectionPool} */ (null);
   }
@@ -260,20 +262,26 @@ class Simulator {
    * @return {number}
    */
   _estimateNetworkTimeRemaining(networkNode) {
+    const record = networkNode.record;
     const timingData = this._getTimingData(networkNode);
 
     let timeElapsed = 0;
     if (networkNode.fromDiskCache) {
-      // Rough access time for seeking to location on disk and reading sequentially
+      // Rough access time for seeking to location on disk and reading sequentially = 8ms + 20ms/MB
       // @see http://norvig.com/21-days.html#answers
-      const sizeInMb = (networkNode.record.resourceSize || 0) / 1024 / 1024;
+      const sizeInMb = (record.resourceSize || 0) / 1024 / 1024;
       timeElapsed = 8 + 20 * sizeInMb - timingData.timeElapsed;
     } else {
       // If we're estimating time remaining, we already acquired a connection for this record, definitely non-null
-      const connection = /** @type {TcpConnection} */ (this._acquireConnection(networkNode.record));
+      const connection = /** @type {TcpConnection} */ (this._acquireConnection(record));
+      const dnsResolutionTime = this._dns.getTimeUntilResolution(record, {
+        requestedAt: timingData.startTime,
+        shouldUpdateCache: true,
+      });
+      const timeAlreadyElapsed = timingData.timeElapsed;
       const calculation = connection.simulateDownloadUntil(
-        networkNode.record.transferSize - timingData.bytesDownloaded,
-        {timeAlreadyElapsed: timingData.timeElapsed, maximumTimeToElapse: Infinity}
+        record.transferSize - timingData.bytesDownloaded,
+        {timeAlreadyElapsed, dnsResolutionTime, maximumTimeToElapse: Infinity}
       );
 
       timeElapsed = calculation.timeElapsed;
@@ -318,9 +326,14 @@ class Simulator {
     const record = node.record;
     // If we're updating the progress, we already acquired a connection for this record, definitely non-null
     const connection = /** @type {TcpConnection} */ (this._acquireConnection(record));
+    const dnsResolutionTime = this._dns.getTimeUntilResolution(record, {
+      requestedAt: timingData.startTime,
+      shouldUpdateCache: true,
+    });
     const calculation = connection.simulateDownloadUntil(
       record.transferSize - timingData.bytesDownloaded,
       {
+        dnsResolutionTime,
         timeAlreadyElapsed: timingData.timeElapsed,
         maximumTimeToElapse: timePeriodLength - timingData.timeElapsedOvershoot,
       }
@@ -386,6 +399,7 @@ class Simulator {
 
     // initialize the necessary data containers
     this._flexibleOrdering = !!options.flexibleOrdering;
+    this._dns = new DNSCache({rtt: this._rtt});
     this._initializeConnectionPool(graph);
     this._initializeAuxiliaryData();
 

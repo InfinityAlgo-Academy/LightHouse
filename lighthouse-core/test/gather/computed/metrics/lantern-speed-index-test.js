@@ -6,7 +6,6 @@
 'use strict';
 
 const Runner = require('../../../../runner');
-const assert = require('assert');
 
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -17,8 +16,10 @@ describe('Metrics: Lantern Speed Index', () => {
     const artifacts = Runner.instantiateComputedArtifacts();
     const result = await artifacts.requestLanternSpeedIndex({trace, devtoolsLog, settings: {}});
 
-    assert.equal(Math.round(result.timing), 1461);
-    assert.equal(Math.round(result.optimisticEstimate.timeInMs), 605);
-    assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 1330);
+    expect({
+      timing: Math.round(result.timing),
+      optimistic: Math.round(result.optimisticEstimate.timeInMs),
+      pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
+    }).toMatchSnapshot();
   });
 });

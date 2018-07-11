@@ -6,7 +6,6 @@
 'use strict';
 
 const Runner = require('../../../../runner');
-const assert = require('assert');
 
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -20,8 +19,10 @@ describe('Metrics: Lantern EIL', () => {
     const data = {trace, devtoolsLog, settings};
     const result = await artifacts.requestLanternEstimatedInputLatency(data);
 
-    assert.equal(Math.round(result.timing), 104);
-    assert.equal(Math.round(result.optimisticEstimate.timeInMs), 101);
-    assert.equal(Math.round(result.pessimisticEstimate.timeInMs), 158);
+    expect({
+      timing: Math.round(result.timing),
+      optimistic: Math.round(result.optimisticEstimate.timeInMs),
+      pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
+    }).toMatchSnapshot();
   });
 });

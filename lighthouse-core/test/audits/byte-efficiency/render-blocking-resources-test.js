@@ -51,7 +51,7 @@ describe('Render blocking resources audit', () => {
     beforeEach(() => {
       requestId = 1;
       record = props => {
-        const parsedURL = {securityOrigin: 'http://example.com'};
+        const parsedURL = {host: 'example.com', securityOrigin: 'http://example.com'};
         return Object.assign({parsedURL, requestId: requestId++}, props);
       };
     });

@@ -121,7 +121,8 @@ class TcpConnection {
    * @return {DownloadResults}
    */
   simulateDownloadUntil(bytesToDownload, options) {
-    const {timeAlreadyElapsed = 0, maximumTimeToElapse = Infinity} = options || {};
+    const {timeAlreadyElapsed = 0, maximumTimeToElapse = Infinity, dnsResolutionTime = 0} =
+      options || {};
 
     if (this._warmed && this._h2) {
       bytesToDownload -= this._h2OverflowBytesDownloaded;
@@ -133,6 +134,8 @@ class TcpConnection {
     let handshakeAndRequest = oneWayLatency;
     if (!this._warmed) {
       handshakeAndRequest =
+        // DNS lookup
+        dnsResolutionTime +
         // SYN
         oneWayLatency +
         // SYN ACK
@@ -188,6 +191,7 @@ module.exports = TcpConnection;
 
 /**
  * @typedef DownloadOptions
+ * @property {number} [dnsResolutionTime]
  * @property {number} [timeAlreadyElapsed]
  * @property {number} [maximumTimeToElapse]
  */

@@ -15,6 +15,18 @@ class LanternFirstCPUIdle extends LanternInteractive {
   }
 
   /**
+   * @return {LH.Gatherer.Simulation.MetricCoefficients}
+   */
+  get COEFFICIENTS() {
+    return {
+      intercept: 0,
+      optimistic: 1,
+      pessimistic: 0,
+    };
+  }
+
+
+  /**
    * @param {LH.Gatherer.Simulation.Result} simulation
    * @param {Object} extras
    * @return {LH.Gatherer.Simulation.Result}

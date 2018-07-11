@@ -8,6 +8,7 @@
 const NetworkNode = require('../../../../lib/dependency-graph/network-node');
 const CpuNode = require('../../../../lib/dependency-graph/cpu-node');
 const Simulator = require('../../../../lib/dependency-graph/simulator/simulator');
+const DNSCache = require('../../../../lib/dependency-graph/simulator/dns-cache');
 
 const assert = require('assert');
 let nextRequestId = 1;
@@ -21,7 +22,7 @@ function request(opts) {
     requestId: opts.requestId || nextRequestId++,
     url,
     transferSize: opts.transferSize || 1000,
-    parsedURL: {scheme, securityOrigin: url},
+    parsedURL: {scheme, host: 'example.com', securityOrigin: url},
     timing: opts.timing,
   }, opts);
 }
@@ -35,6 +36,18 @@ function cpuTask({tid, ts, duration}) {
 
 /* eslint-env jest */
 describe('DependencyGraph/Simulator', () => {
+  // Insulate the simulator tests from DNS multiplier changes
+  let originalDNSMultiplier;
+
+  beforeAll(() => {
+    originalDNSMultiplier = DNSCache.RTT_MULTIPLIER;
+    DNSCache.RTT_MULTIPLIER = 1;
+  });
+
+  afterAll(() => {
+    DNSCache.RTT_MULTIPLIER = originalDNSMultiplier;
+  });
+
   describe('.simulate', () => {
     const serverResponseTimeByOrigin = new Map([['http://example.com', 500]]);
 
@@ -50,9 +63,9 @@ describe('DependencyGraph/Simulator', () => {
       const rootNode = new NetworkNode(request({}));
       const simulator = new Simulator({serverResponseTimeByOrigin});
       const result = simulator.simulate(rootNode);
-      // should be 2 RTTs and 500ms for the server response time
-      assert.equal(result.timeInMs, 300 + 500);
-      assertNodeTiming(result, rootNode, {startTime: 0, endTime: 800});
+      // should be 3 RTTs and 500ms for the server response time
+      assert.equal(result.timeInMs, 450 + 500);
+      assertNodeTiming(result, rootNode, {startTime: 0, endTime: 950});
     });
 
     it('should simulate basic mixed graphs', () => {
@@ -65,10 +78,10 @@ describe('DependencyGraph/Simulator', () => {
         cpuSlowdownMultiplier: 5,
       });
       const result = simulator.simulate(rootNode);
-      // should be 2 RTTs and 500ms for the server response time + 200 CPU
-      assert.equal(result.timeInMs, 300 + 500 + 200);
-      assertNodeTiming(result, rootNode, {startTime: 0, endTime: 800});
-      assertNodeTiming(result, cpuNode, {startTime: 800, endTime: 1000});
+      // should be 3 RTTs and 500ms for the server response time + 200 CPU
+      assert.equal(result.timeInMs, 450 + 500 + 200);
+      assertNodeTiming(result, rootNode, {startTime: 0, endTime: 950});
+      assertNodeTiming(result, cpuNode, {startTime: 950, endTime: 1150});
     });
 
     it('should simulate basic network waterfall graphs', () => {
@@ -83,12 +96,12 @@ describe('DependencyGraph/Simulator', () => {
 
       const simulator = new Simulator({serverResponseTimeByOrigin});
       const result = simulator.simulate(nodeA);
-      // should be 800ms each for A, B, C, D
-      assert.equal(result.timeInMs, 3200);
-      assertNodeTiming(result, nodeA, {startTime: 0, endTime: 800});
-      assertNodeTiming(result, nodeB, {startTime: 800, endTime: 1600});
-      assertNodeTiming(result, nodeC, {startTime: 1600, endTime: 2400});
-      assertNodeTiming(result, nodeD, {startTime: 2400, endTime: 3200});
+      // should be 950ms for A, 800ms each for B, C, D
+      assert.equal(result.timeInMs, 3350);
+      assertNodeTiming(result, nodeA, {startTime: 0, endTime: 950});
+      assertNodeTiming(result, nodeB, {startTime: 950, endTime: 1750});
+      assertNodeTiming(result, nodeC, {startTime: 1750, endTime: 2550});
+      assertNodeTiming(result, nodeD, {startTime: 2550, endTime: 3350});
     });
 
     it('should simulate cached network graphs', () => {
@@ -120,11 +133,11 @@ describe('DependencyGraph/Simulator', () => {
       });
       const result = simulator.simulate(nodeA);
       // should be 800ms A, then 1000 ms total for B, C, D in serial
-      assert.equal(result.timeInMs, 1800);
-      assertNodeTiming(result, nodeA, {startTime: 0, endTime: 800});
-      assertNodeTiming(result, nodeB, {startTime: 800, endTime: 900});
-      assertNodeTiming(result, nodeC, {startTime: 900, endTime: 1500});
-      assertNodeTiming(result, nodeD, {startTime: 1500, endTime: 1800});
+      assert.equal(result.timeInMs, 1950);
+      assertNodeTiming(result, nodeA, {startTime: 0, endTime: 950});
+      assertNodeTiming(result, nodeB, {startTime: 950, endTime: 1050});
+      assertNodeTiming(result, nodeC, {startTime: 1050, endTime: 1650});
+      assertNodeTiming(result, nodeD, {startTime: 1650, endTime: 1950});
     });
 
     it('should simulate basic network waterfall graphs with CPU', () => {
@@ -146,8 +159,8 @@ describe('DependencyGraph/Simulator', () => {
         cpuSlowdownMultiplier: 5,
       });
       const result = simulator.simulate(nodeA);
-      // should be 800ms each for A, B, C, D, with F finishing 400 ms after D
-      assert.equal(result.timeInMs, 3600);
+      // should be 950ms for A, 800ms each for B, C, D, with F finishing 400 ms after D
+      assert.equal(result.timeInMs, 3750);
     });
 
     it('should simulate basic parallel requests', () => {
@@ -162,8 +175,8 @@ describe('DependencyGraph/Simulator', () => {
 
       const simulator = new Simulator({serverResponseTimeByOrigin});
       const result = simulator.simulate(nodeA);
-      // should be 800ms for A and 950ms for C (2 round trips of downloading)
-      assert.equal(result.timeInMs, 800 + 950);
+      // should be 950ms for A and 950ms for C (2 round trips of downloading, but no DNS)
+      assert.equal(result.timeInMs, 950 + 950);
     });
 
     it('should not reuse connections', () => {
@@ -178,24 +191,31 @@ describe('DependencyGraph/Simulator', () => {
 
       const simulator = new Simulator({serverResponseTimeByOrigin});
       const result = simulator.simulate(nodeA);
-      // should be 800ms for A and 650ms for the next 3
-      assert.equal(result.timeInMs, 800 + 650 * 3);
+      // should be 950ms for A and 650ms for the next 3
+      assert.equal(result.timeInMs, 950 + 650 * 3);
     });
 
     it('should adjust throughput based on number of requests', () => {
       const nodeA = new NetworkNode(request({}));
       const nodeB = new NetworkNode(request({}));
-      const nodeC = new NetworkNode(request({transferSize: 15000}));
+      const nodeC = new NetworkNode(request({transferSize: 14000}));
       const nodeD = new NetworkNode(request({}));
 
       nodeA.addDependent(nodeB);
       nodeA.addDependent(nodeC);
       nodeA.addDependent(nodeD);
 
-      const simulator = new Simulator({serverResponseTimeByOrigin});
+      // 80 kbps while all 3 download at 150ms/RT = ~1460 bytes/RT
+      // 240 kbps while the last one finishes at 150ms/RT = ~4380 bytes/RT
+      // ~14000 bytes = 5 RTs
+      // 1 RT 80 kbps b/c its shared
+      // 1 RT 80 kbps b/c it needs to grow congestion window from being shared
+      // 1 RT 160 kbps b/c TCP
+      // 2 RT 240 kbps b/c throughput cap
+      const simulator = new Simulator({serverResponseTimeByOrigin, throughput: 240000});
       const result = simulator.simulate(nodeA);
-      // should be 800ms for A and 950ms for C (2 round trips of downloading)
-      assert.equal(result.timeInMs, 800 + 950);
+      // should be 950ms for A and 1400ms for C (5 round trips of downloading)
+      assert.equal(result.timeInMs, 950 + (150 + 750 + 500));
     });
 
     it('should simulate two graphs in a row', () => {
@@ -211,8 +231,8 @@ describe('DependencyGraph/Simulator', () => {
       nodeA.addDependent(nodeD);
 
       const resultA = simulator.simulate(nodeA);
-      // should be 800ms for A and 950ms for C (2 round trips of downloading)
-      assert.equal(resultA.timeInMs, 800 + 950);
+      // should be 950ms for A and 950ms for C (2 round trips of downloading, no DNS)
+      assert.equal(resultA.timeInMs, 950 + 950);
 
       const nodeE = new NetworkNode(request({}));
       const nodeF = new NetworkNode(request({}));
@@ -222,8 +242,8 @@ describe('DependencyGraph/Simulator', () => {
       nodeE.addDependent(nodeG);
 
       const resultB = simulator.simulate(nodeE);
-      // should be 800ms for E and 800ms for F/G
-      assert.equal(resultB.timeInMs, 800 + 800);
+      // should be 950ms for E and 800ms for F/G
+      assert.equal(resultB.timeInMs, 950 + 800);
     });
 
     it('should throw (not hang) on graphs with cycles', () => {
