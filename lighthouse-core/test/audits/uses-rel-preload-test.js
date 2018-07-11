@@ -232,6 +232,36 @@ describe('Performance: uses-rel-preload audit', () => {
     });
   });
 
+  it(`shouldn't suggest preload for protocol blob`, () => {
+    const networkRecords = [
+      {
+        requestId: '3',
+        protocol: 'blob',
+        _startTime: 10,
+      },
+    ];
+
+    const chains = {
+      '1': {
+        children: {
+          '2': {
+            children: {
+              '3': {
+                request: networkRecords[0],
+                children: {},
+              },
+            },
+          },
+        },
+      },
+    };
+
+    return UsesRelPreload.audit(mockArtifacts(networkRecords, chains), {}).then(output => {
+      assert.equal(output.rawValue, 0);
+      assert.equal(output.details.items.length, 0);
+    });
+  });
+
   it('does not throw on a real trace/devtools log', async () => {
     const artifacts = Object.assign({
       URL: {finalUrl: 'https://pwa.rocks/'},

@@ -190,6 +190,8 @@ URLShim.URL = URL;
 URLShim.URLSearchParams = (typeof self !== 'undefined' && self.URLSearchParams) ||
     require('url').URLSearchParams;
 
+URLShim.NON_NETWORK_PROTOCOLS = ['blob', 'data'];
+
 URLShim.INVALID_URL_DEBUG_STRING =
     'Lighthouse was unable to determine the URL of some script executions. ' +
     'It\'s possible a Chrome extension or other eval\'d code is the source.';
