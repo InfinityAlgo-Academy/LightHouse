@@ -1,3 +1,41 @@
+<a name="3.0.2"></a>
+# 3.0.2 (2018-07-11)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v3.0.1...v3.0.2)
+
+## New Contributors!
+Thanks to @schalkneethling and @eduardosada for their first contributions!
+
+## New Audits
+
+* assert a present and valid doctype ([#5274](https://github.com/googlechrome/lighthouse/pull/5274))
+
+## Core
+
+* fonts: bump gatherer timeout to 5s ([#5643](https://github.com/googlechrome/lighthouse/pull/5643))
+* network-request: cleanup DevTools property names ([#5606](https://github.com/googlechrome/lighthouse/pull/5606))
+* preload: remove blob protocol from preload audit ([#5409](https://github.com/googlechrome/lighthouse/pull/5409))
+* without-javascript: allow noscript pages ([#5571](https://github.com/googlechrome/lighthouse/pull/5571))
+
+## Docs
+
+* architecture: add diagram of module dependencies ([#5615](https://github.com/googlechrome/lighthouse/pull/5615))
+* custom-audit: update custom-audit to 3.0.0 api ([#5612](https://github.com/googlechrome/lighthouse/pull/5612))
+* [minor] issue template tweaks ([#5641](https://github.com/googlechrome/lighthouse/pull/5641))
+
+## Extension
+
+* fix "extension Error: couldn't resolve current tab" ([#5591](https://github.com/googlechrome/lighthouse/pull/5591))
+* 3.0.0 as well ([#5584](https://github.com/googlechrome/lighthouse/pull/5584))
+
+## Tests
+
+* [minor] rename robots.txt test file ([#5610](https://github.com/googlechrome/lighthouse/pull/5610))
+* run the golden LHR check earlier ([#5609](https://github.com/googlechrome/lighthouse/pull/5609))
+
+## Misc
+
+* scripts: more succinct lantern output ([#5523](https://github.com/googlechrome/lighthouse/pull/5523))
+
  <a name="3.0.1"></a>
 # 3.0.1 (2018-07-02)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v3.0.0...v3.0.1)
