@@ -1,3 +1,18 @@
+ <a name="3.0.3"></a>
+# 3.0.3 (2018-07-17)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v3.0.2...v3.0.3)
+
+## Core
+
+* emulation: use setTouchEmulationEnabled ([#5661](https://github.com/googlechrome/lighthouse/pull/5661))
+* response-compression: graceful recovery ([#5578](https://github.com/googlechrome/lighthouse/pull/5578))
+* simulator: add DNS timing ([#5607](https://github.com/googlechrome/lighthouse/pull/5607))
+
+## Misc
+
+* convert strings to NetworkRequest.TYPES ([#5674](https://github.com/googlechrome/lighthouse/pull/5674))
+* sentry: lower "could not load stylesheet" sampling to 0.01 ([#5677](https://github.com/googlechrome/lighthouse/pull/5677))
+
 <a name="3.0.2"></a>
 # 3.0.2 (2018-07-11)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v3.0.1...v3.0.2)
