@@ -41,6 +41,9 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
     /** @type {Array<LH.Audit.ByteEfficiencyItem>} */
     const items = [];
     uncompressedResponses.forEach(record => {
+      // Ignore invalid GZIP size values (undefined, NaN, 0, -n, etc)
+      if (!record.gzipSize || record.gzipSize < 0) return;
+
       const originalSize = record.resourceSize;
       const gzipSize = record.gzipSize;
       const gzipSavings = originalSize - gzipSize;

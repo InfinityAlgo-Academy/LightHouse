@@ -11,6 +11,8 @@
 'use strict';
 
 const Gatherer = require('../gatherer');
+const URL = require('../../../lib/url-shim');
+const Sentry = require('../../../lib/sentry');
 const NetworkRequest = require('../../../lib/network-request');
 const gzip = require('zlib').gzip;
 
@@ -99,6 +101,16 @@ class ResponseCompression extends Gatherer {
             resolve(record);
           });
         });
+      }).catch(err => {
+        // @ts-ignore TODO(bckenny): Sentry type checking
+        Sentry.captureException(err, {
+          tags: {gatherer: 'ResponseCompression'},
+          extra: {url: URL.elideDataURI(record.url)},
+          level: 'warning',
+        });
+
+        record.gzipSize = undefined;
+        return record;
       });
     }));
   }

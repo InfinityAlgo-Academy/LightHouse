@@ -94,7 +94,7 @@ declare global {
       /** HTML snippets from any password inputs that prevent pasting. */
       PasswordInputsWithPreventedPaste: {snippet: string}[];
       /** Size info of all network records sent without compression and their size after gzipping. */
-      ResponseCompression: {requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize: number}[];
+      ResponseCompression: {requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize?: number}[];
       /** Information on fetching and the content of the /robots.txt file. */
       RobotsTxt: {status: number|null, content: string|null};
       /** Set of exceptions thrown during page load. */

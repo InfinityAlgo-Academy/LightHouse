@@ -140,6 +140,16 @@ describe('Optimized responses', () => {
       });
   });
 
+  it('recovers from driver errors', () => {
+    options.driver.getRequestContent = () => Promise.reject(new Error('Failed'));
+    return responseCompression.afterPass(options, createNetworkRequests(traceData))
+      .then(artifact => {
+        assert.equal(artifact.length, 2);
+        assert.equal(artifact[0].resourceSize, 6);
+        assert.equal(artifact[0].gzipSize, undefined);
+      });
+  });
+
   it('ignores responses from installed Chrome extensions', () => {
     const traceData = {
       networkRecords: [
