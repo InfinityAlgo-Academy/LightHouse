@@ -13,7 +13,6 @@
   background-image: var(--charts-icon-url);
 }
 
-
 .lh-audit-group--fielddata .lh-metric-column img {
   max-width: 100%;
 }
@@ -27,4 +26,15 @@
 }
 .ss-column img {
   max-width: 100%;
+}
+
+.lh-gauge__wrapper--huge {
+  --circle-size: 200px;
+  --header-font-size: 80px;
+}
+.lh-gauge__wrapper--huge .lh-gauge__percentage {
+  top: 90px;
+}
+.lh-gauge__wrapper--huge .lh-gauge__label {
+  display: none;
 }
