@@ -16,8 +16,8 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should reduce the size of the network resources required by the page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description:
   'Large network payloads cost users real money and are highly correlated with ' +
-  'long load times. [Learn ' +
-  'more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).',
+  'long load times. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads). ' +
+  'JavaScript files exceeding 170kb are marked below, as they surpass [recommended thresholds](https://infrequently.org/2017/10/can-you-afford-it-real-world-web-performance-budgets/).',
   /** Used to summarize the total byte size of the page and all its network requests. The `{totalBytes}` placeholder will be replaced with the total byte sizes, shown in kilobytes (e.g. 142 KB) */
   displayValue: 'Total size was {totalBytes, number, bytes}\xa0KB',
 };
