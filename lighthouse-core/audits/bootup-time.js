@@ -7,6 +7,7 @@
 
 const Audit = require('./audit');
 const Util = require('../report/html/renderer/util');
+const NetworkRequest = require('../lib/network-request');
 const {taskGroups} = require('../lib/task-groups');
 
 class BootupTime extends Audit {
@@ -46,7 +47,7 @@ class BootupTime extends Audit {
     /** @type {Set<string>} */
     const urls = new Set();
     for (const record of records) {
-      if (record.resourceType && record.resourceType === 'Script') {
+      if (record.resourceType === NetworkRequest.TYPES.Script) {
         urls.add(record.url);
       }
     }
