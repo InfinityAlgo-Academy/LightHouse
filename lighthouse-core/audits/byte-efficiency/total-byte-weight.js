@@ -6,6 +6,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
+const NetworkRequest = require('../../lib/network-request');
 const i18n = require('../../lib/i18n');
 
 const UIStrings = {
@@ -58,11 +59,11 @@ class TotalByteWeight extends ByteEfficiencyAudit {
   /**
    * Checks if record is a javascript asset and if it exceeds our bundle size limit
    *
-   * @param {LH.WebInspector.NetworkRequest} record
+   * @param {LH.Artifacts.NetworkRequest} record
    * @return {boolean}
    */
   static hasExceededJSBundleSize(record) {
-    return record._resourceType === WebInspector.resourceTypes.Script
+    return record.resourceType === NetworkRequest.TYPES.Script
       && record.transferSize > BUNDLE_SIZE_THRESHOLD;
   }
 
