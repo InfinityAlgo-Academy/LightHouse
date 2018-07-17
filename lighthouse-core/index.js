@@ -8,6 +8,7 @@
 const Runner = require('./runner');
 const log = require('lighthouse-logger');
 const ChromeProtocol = require('./gather/connections/cri.js');
+const i18n = require('./lib/i18n');
 const Config = require('./config/config');
 
 /*
@@ -34,6 +35,7 @@ const Config = require('./config/config');
 async function lighthouse(url, flags, configJSON) {
   // TODO(bckenny): figure out Flags types.
   flags = flags || /** @type {LH.Flags} */ ({});
+  i18n.setLocale(flags.locale);
 
   // set logging preferences, assume quiet
   flags.logLevel = flags.logLevel || 'error';

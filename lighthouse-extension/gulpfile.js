@@ -125,6 +125,7 @@ gulp.task('browserify-lighthouse', () => {
       // scripts will need some additional transforms, ignores and requires…
       bundle.ignore('source-map')
       .ignore('debug/node')
+      .ignore('intl')
       .ignore('raven')
       .ignore('mkdirp')
       .ignore('rimraf')

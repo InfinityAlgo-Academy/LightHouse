@@ -64,6 +64,7 @@ function getFlags(manualArgv) {
         ],
         'Configuration:')
       .describe({
+        'locale': 'The locale/language the report should be formatted in',
         'enable-error-reporting':
             'Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://git.io/vFFTO',
         'blocked-url-patterns': 'Block any network requests to the specified URL patterns',
@@ -117,6 +118,10 @@ function getFlags(manualArgv) {
       .boolean([
         'disable-storage-reset', 'disable-device-emulation', 'save-assets', 'list-all-audits',
         'list-trace-categories', 'view', 'verbose', 'quiet', 'help',
+      ])
+      .choices('locale', [
+        'en-US', // English
+        'en-XA', // Accented English, good for testing
       ])
       .choices('output', printer.getValidOutputOptions())
       .choices('throttling-method', ['devtools', 'provided', 'simulate'])

@@ -52,10 +52,13 @@ declare global {
       cpuSlowdownMultiplier?: number
     }
 
+    export type Locale = 'en-US'|'en-XA';
+
     export type OutputMode = 'json' | 'html' | 'csv';
 
     interface SharedFlagsSettings {
       output?: OutputMode|OutputMode[];
+      locale?: Locale | null;
       maxWaitForLoad?: number;
       blockedUrlPatterns?: string[] | null;
       additionalTraceCategories?: string | null;

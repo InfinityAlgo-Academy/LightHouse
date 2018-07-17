@@ -10,6 +10,7 @@
 'use strict';
 
 const Audit = require('../audit');
+const i18n = require('../../lib/i18n');
 const BaseNode = require('../../lib/dependency-graph/base-node');
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const UnusedCSS = require('./unused-css-rules');
@@ -24,6 +25,19 @@ const NetworkRequest = require('../../lib/network-request');
 // can be falsely flagged as blocking. Therefore, ignore stylesheets that loaded fast enough
 // to possibly be non-blocking (and they have minimal impact anyway).
 const MINIMUM_WASTED_MS = 50;
+
+const UIStrings = {
+  title: 'Eliminate render-blocking resources',
+  description: 'Resources are blocking the first paint of your page. Consider ' +
+    'delivering critical JS/CSS inline and deferring all non-critical ' +
+    'JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).',
+  displayValue: `{itemCount, plural,
+    one {1 resource}
+    other {# resources}
+    } delayed first paint by {timeInMs, number, milliseconds} ms`,
+};
+
+const str_ = i18n.createStringFormatter(__filename, UIStrings);
 
 /**
  * Given a simulation's nodeTimings, return an object with the nodes/timing keyed by network URL
@@ -52,12 +66,9 @@ class RenderBlockingResources extends Audit {
   static get meta() {
     return {
       id: 'render-blocking-resources',
-      title: 'Eliminate render-blocking resources',
+      title: str_(UIStrings.title),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      description:
-        'Resources are blocking the first paint of your page. Consider ' +
-        'delivering critical JS/CSS inline and deferring all non-critical ' +
-        'JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).',
+      description: str_(UIStrings.description),
       // This audit also looks at CSSUsage but has a graceful fallback if it failed, so do not mark
       // it as a "requiredArtifact".
       // TODO: look into adding an `optionalArtifacts` property that captures this
@@ -198,17 +209,15 @@ class RenderBlockingResources extends Audit {
     const {results, wastedMs} = await RenderBlockingResources.computeResults(artifacts, context);
 
     let displayValue = '';
-    if (results.length > 1) {
-      displayValue = `${results.length} resources delayed first paint by ${wastedMs}ms`;
-    } else if (results.length === 1) {
-      displayValue = `${results.length} resource delayed first paint by ${wastedMs}ms`;
+    if (results.length > 0) {
+      displayValue = str_(UIStrings.displayValue, {timeInMs: wastedMs, itemCount: results.length});
     }
 
     /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
-      {key: 'url', valueType: 'url', label: 'URL'},
-      {key: 'totalBytes', valueType: 'bytes', label: 'Size (KB)'},
-      {key: 'wastedMs', valueType: 'timespanMs', label: 'Download Time (ms)'},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
+      {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedTime)},
     ];
 
     const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
@@ -223,3 +232,4 @@ class RenderBlockingResources extends Audit {
 }
 
 module.exports = RenderBlockingResources;
+module.exports.UIStrings = UIStrings;

@@ -6,7 +6,15 @@
 'use strict';
 
 const Audit = require('../audit');
-const Util = require('../../report/html/renderer/util');
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'Time to Interactive',
+  description: 'Interactive marks the time at which the page is fully interactive. ' +
+    '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).',
+};
+
+const str_ = i18n.createStringFormatter(__filename, UIStrings);
 
 /**
  * @fileoverview This audit identifies the time the page is "consistently interactive".
@@ -21,9 +29,8 @@ class InteractiveMetric extends Audit {
   static get meta() {
     return {
       id: 'interactive',
-      title: 'Time to Interactive',
-      description: 'Interactive marks the time at which the page is fully interactive. ' +
-          '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
@@ -69,7 +76,7 @@ class InteractiveMetric extends Audit {
         context.options.scoreMedian
       ),
       rawValue: timeInMs,
-      displayValue: [Util.MS_DISPLAY_VALUE, timeInMs],
+      displayValue: str_(i18n.UIStrings.ms, {timeInMs}),
       extendedInfo: {
         value: extendedInfo,
       },
@@ -78,3 +85,4 @@ class InteractiveMetric extends Audit {
 }
 
 module.exports = InteractiveMetric;
+module.exports.UIStrings = UIStrings;

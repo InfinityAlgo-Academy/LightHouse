@@ -276,10 +276,7 @@
       "score": 0.78,
       "scoreDisplayMode": "numeric",
       "rawValue": 4927.278,
-      "displayValue": [
-        "%10d ms",
-        4927.278
-      ]
+      "displayValue": "4,930 ms"
     },
     "user-timings": {
       "id": "user-timings",
@@ -1923,7 +1920,7 @@
       "score": 0.46,
       "scoreDisplayMode": "numeric",
       "rawValue": 1129,
-      "displayValue": "5 resources delayed first paint by 1129ms",
+      "displayValue": "5 resources delayed first paint by 1,130 ms",
       "details": {
         "type": "opportunity",
         "headings": [
@@ -1940,7 +1937,7 @@
           {
             "key": "wastedMs",
             "valueType": "timespanMs",
-            "label": "Download Time (ms)"
+            "label": "Potential Savings (ms)"
           }
         ],
         "items": [
@@ -2774,6 +2771,7 @@
     "gatherMode": false,
     "disableStorageReset": false,
     "disableDeviceEmulation": false,
+    "locale": null,
     "blockedUrlPatterns": null,
     "additionalTraceCategories": null,
     "extraHeaders": null,
