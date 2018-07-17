@@ -22,7 +22,7 @@
   <div class="report-ss-columns">
     <main class="lh-report-root lh-root lh-vars"><!-- report populated here --></main>
     <div class="ss-column">
-      <img src="images/screenshot.jpg">
+
     </div>
   </div>
 
@@ -75,6 +75,14 @@
       // Create a fresh score gauge
       const bigScoreGauge = perfRenderer.renderScoreGauge(perfCategory);
       bigScoreGauge.firstElementChild.classList.add('lh-gauge__wrapper--huge');
+
+      // Add the final screenshot
+      const datauri = PerformanceCategoryRenderer.getLastScreenshot(perfCategory);
+      if (datauri) {
+        const img = document.createElement('img');
+        img.src = datauri;
+        document.querySelector('.ss-column').appendChild(img);
+      }
 
       // Add these elements to the page: big score gauge, field data, then perf category
       const container = document.querySelector('.lh-report-root');

@@ -216,6 +216,19 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     element.appendChild(passedElem);
     return element;
   }
+
+  /**
+   * @param {LH.ReportResult.Category} category
+   * @return {null|string}
+   * @override
+   */
+  static getLastScreenshot(category) {
+    const auditRef = category.auditRefs.find(audit => audit.id === 'screenshot-thumbnails');
+    if (!auditRef || !auditRef.result) return null;
+    const screenshots = auditRef.result.details.items;
+    if (!screenshots.length) return null;
+    return `data:image/jpeg;base64,${screenshots.slice(-1)[0].data}`;
+  }
 }
 
 if (typeof module !== 'undefined' && module.exports) {
