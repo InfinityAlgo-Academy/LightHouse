@@ -23,7 +23,7 @@ class BootupTime extends Audit {
       description: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
         'You may find delivering smaller JS payloads helps with this. [Learn ' +
         'more](https://developers.google.com/web/tools/lighthouse/audits/bootup).',
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['traces', 'LighthouseRunWarnings'],
     };
   }
 
@@ -85,6 +85,7 @@ class BootupTime extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    const runWarnings = artifacts.LighthouseRunWarnings;
     const settings = context.settings || {};
     const trace = artifacts.traces[BootupTime.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[BootupTime.DEFAULT_PASS];
@@ -96,6 +97,7 @@ class BootupTime extends Audit {
     const jsURLs = BootupTime.getJavaScriptURLs(networkRecords);
     const executionTimings = BootupTime.getExecutionTimingsByURL(tasks, jsURLs);
 
+    let hadExcessiveChromeExtension = false;
     let totalBootupTime = 0;
     const results = Array.from(executionTimings)
       .map(([url, timingByGroupId]) => {
@@ -114,6 +116,9 @@ class BootupTime extends Audit {
         const scriptingTotal = timingByGroupId[taskGroups.scriptEvaluation.id] || 0;
         const parseCompileTotal = timingByGroupId[taskGroups.scriptParseCompile.id] || 0;
 
+        hadExcessiveChromeExtension = hadExcessiveChromeExtension ||
+          (url.startsWith('chrome-extension:') && scriptingTotal > 100);
+
         return {
           url: url,
           total: bootupTimeForURL,
@@ -124,6 +129,13 @@ class BootupTime extends Audit {
       })
       .filter(result => result.total >= context.options.thresholdInMs)
       .sort((a, b) => b.total - a.total);
+
+
+    // TODO: consider moving this to core gathering so you don't need to run the audit for warning
+    if (hadExcessiveChromeExtension) {
+      runWarnings.push('Chrome extensions negatively affected this page\'s load performance. ' +
+        'Try auditing the page in incognito mode or from a clean Chrome profile.');
+    }
 
     const summary = {wastedMs: totalBootupTime};
 
