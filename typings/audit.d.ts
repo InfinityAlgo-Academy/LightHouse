@@ -7,8 +7,11 @@
 declare global {
   module LH.Audit {
     export interface Context {
-      options: Record<string, any>; // audit options
+      /** audit options */
+      options: Record<string, any>;
       settings: Config.Settings;
+      /** Push to this array to add top-level warnings to the LHR. */
+      LighthouseRunWarnings: Array<string>;
     }
 
     export interface ScoreOptions {

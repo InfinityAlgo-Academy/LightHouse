@@ -36,6 +36,13 @@ describe('Runner', () => {
     resetSpies();
   });
 
+  const basicAuditMeta = {
+    id: 'test-audit',
+    title: 'A test audit',
+    description: 'An audit for testing',
+    requiredArtifacts: [],
+  };
+
   describe('Gather Mode & Audit Mode', () => {
     const url = 'https://example.com';
     const generateConfig = settings => new Config({
@@ -543,6 +550,58 @@ describe('Runner', () => {
         'I\'m a warning!',
         'Also a warning',
       ]);
+    });
+  });
+
+  it('includes any LighthouseRunWarnings from audits in LHR', () => {
+    const warningString = 'Really important audit warning!';
+
+    const config = new Config({
+      settings: {
+        auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+      },
+      audits: [
+        class WarningAudit extends Audit {
+          static get meta() {
+            return basicAuditMeta;
+          }
+          static audit(artifacts, context) {
+            context.LighthouseRunWarnings.push(warningString);
+            return {
+              rawValue: 5,
+            };
+          }
+        },
+      ],
+    });
+
+    return Runner.run(null, {config, driverMock}).then(results => {
+      assert.deepStrictEqual(results.lhr.runWarnings, [warningString]);
+    });
+  });
+
+  it('includes any LighthouseRunWarnings from errored audits in LHR', () => {
+    const warningString = 'Audit warning just before a terrible error!';
+
+    const config = new Config({
+      settings: {
+        auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+      },
+      audits: [
+        class WarningAudit extends Audit {
+          static get meta() {
+            return basicAuditMeta;
+          }
+          static audit(artifacts, context) {
+            context.LighthouseRunWarnings.push(warningString);
+            throw new Error('Terrible.');
+          }
+        },
+      ],
+    });
+
+    return Runner.run(null, {config, driverMock}).then(results => {
+      assert.deepStrictEqual(results.lhr.runWarnings, [warningString]);
     });
   });
 

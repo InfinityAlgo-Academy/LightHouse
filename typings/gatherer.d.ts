@@ -18,7 +18,7 @@ declare global {
       passConfig: Config.Pass
       settings: Config.Settings;
       options?: object;
-      /** Push to this array to add top-level warnings to the LHR.  */
+      /** Push to this array to add top-level warnings to the LHR. */
       LighthouseRunWarnings: Array<string>;
     }
 

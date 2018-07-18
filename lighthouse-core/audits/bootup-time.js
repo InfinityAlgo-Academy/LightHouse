@@ -23,7 +23,7 @@ class BootupTime extends Audit {
       description: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
         'You may find delivering smaller JS payloads helps with this. [Learn ' +
         'more](https://developers.google.com/web/tools/lighthouse/audits/bootup).',
-      requiredArtifacts: ['traces', 'LighthouseRunWarnings'],
+      requiredArtifacts: ['traces'],
     };
   }
 
@@ -85,7 +85,6 @@ class BootupTime extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const runWarnings = artifacts.LighthouseRunWarnings;
     const settings = context.settings || {};
     const trace = artifacts.traces[BootupTime.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[BootupTime.DEFAULT_PASS];
@@ -133,8 +132,8 @@ class BootupTime extends Audit {
 
     // TODO: consider moving this to core gathering so you don't need to run the audit for warning
     if (hadExcessiveChromeExtension) {
-      runWarnings.push('Chrome extensions negatively affected this page\'s load performance. ' +
-        'Try auditing the page in incognito mode or from a clean Chrome profile.');
+      context.LighthouseRunWarnings.push('Chrome extensions negatively affected this page\'s load' +
+        ' performance. Try auditing the page in incognito mode or from a clean Chrome profile.');
     }
 
     const summary = {wastedMs: totalBootupTime};

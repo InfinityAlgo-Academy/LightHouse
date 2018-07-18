@@ -94,7 +94,8 @@ class Runner {
       if (!opts.config.audits) {
         throw new Error('No audits to evaluate.');
       }
-      const auditResults = await Runner._runAudits(settings, opts.config.audits, artifacts);
+      const auditResults = await Runner._runAudits(settings, opts.config.audits, artifacts,
+          lighthouseRunWarnings);
 
       // LHR construction phase
       log.log('status', 'Generating results...');
@@ -166,13 +167,14 @@ class Runner {
   }
 
   /**
-   * Save collected artifacts to disk
+   * Run all audits with specified settings and artifacts.
    * @param {LH.Config.Settings} settings
    * @param {Array<LH.Config.AuditDefn>} audits
    * @param {LH.Artifacts} artifacts
+   * @param {Array<string>} runWarnings
    * @return {Promise<Array<LH.Audit.Result>>}
    */
-  static async _runAudits(settings, audits, artifacts) {
+  static async _runAudits(settings, audits, artifacts, runWarnings) {
     log.log('status', 'Analyzing and running audits...');
     artifacts = Object.assign({}, Runner.instantiateComputedArtifacts(), artifacts);
 
@@ -190,7 +192,7 @@ class Runner {
     // Run each audit sequentially
     const auditResults = [];
     for (const auditDefn of audits) {
-      const auditResult = await Runner._runAudit(auditDefn, artifacts, settings);
+      const auditResult = await Runner._runAudit(auditDefn, artifacts, settings, runWarnings);
       auditResults.push(auditResult);
     }
 
@@ -203,10 +205,11 @@ class Runner {
    * @param {LH.Config.AuditDefn} auditDefn
    * @param {LH.Artifacts} artifacts
    * @param {LH.Config.Settings} settings
+   * @param {Array<string>} runWarnings
    * @return {Promise<LH.Audit.Result>}
    * @private
    */
-  static async _runAudit(auditDefn, artifacts, settings) {
+  static async _runAudit(auditDefn, artifacts, settings, runWarnings) {
     const audit = auditDefn.implementation;
     const status = `Evaluating: ${audit.meta.title}`;
 
@@ -254,7 +257,13 @@ class Runner {
 
       // all required artifacts are in good shape, so we proceed
       const auditOptions = Object.assign({}, audit.defaultOptions, auditDefn.options);
-      const product = await audit.audit(artifacts, {options: auditOptions, settings: settings});
+      const auditContext = {
+        options: auditOptions,
+        settings,
+        LighthouseRunWarnings: runWarnings,
+      };
+
+      const product = await audit.audit(artifacts, auditContext);
       auditResult = Audit.generateAuditResult(audit, product);
     } catch (err) {
       log.warn(audit.meta.id, `Caught exception: ${err.message}`);
