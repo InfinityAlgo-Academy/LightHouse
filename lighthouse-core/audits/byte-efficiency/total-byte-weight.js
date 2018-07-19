@@ -80,7 +80,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
     ]);
 
     let totalBytes = 0;
-    /** @type {Array<{url: string, totalBytes: number, totalMs: number, flagged: boolean}>} */
+    /** @type {Array<{url: string, totalBytes: number, flagged: boolean}>} */
     let results = [];
     networkRecords.forEach(record => {
       // exclude data URIs since their size is reflected in other resources
