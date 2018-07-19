@@ -8,7 +8,7 @@
 const Audit = require('../../../audits/dobetterweb/doctype.js');
 const assert = require('assert');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('DOBETTERWEB: doctype audit', () => {
   it('fails when document does not contain a doctype', () => {

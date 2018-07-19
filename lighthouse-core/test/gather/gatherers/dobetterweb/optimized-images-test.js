@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const OptimizedImages =
     require('../../../../gather/gatherers/dobetterweb/optimized-images');
@@ -184,5 +184,24 @@ describe('Optimized images', () => {
       // supports cross-origin
       assert.ok(/gmail.*image.jpg/.test(artifact[3].url));
     });
+  });
+
+  it('handles non-standard mime types too', async () => {
+    const traceData = {
+      networkRecords: [
+        {
+          requestId: '1',
+          url: 'http://google.com/image.bmp?x-ms',
+          mimeType: 'image/x-ms-bmp',
+          resourceSize: 12000,
+          transferSize: 20000,
+          resourceType: 'Image',
+          finished: true,
+        },
+      ],
+    };
+
+    const artifact = await optimizedImages.afterPass(options, traceData);
+    expect(artifact).toHaveLength(1);
   });
 });
