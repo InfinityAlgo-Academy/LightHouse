@@ -91,7 +91,7 @@ function writeStringsToLocaleFormat(locale, strings) {
     output[key] = {message};
   }
 
-  fs.writeFileSync(fullPath, JSON.stringify(output, null, 2));
+  fs.writeFileSync(fullPath, JSON.stringify(output, null, 2) + '\n');
 }
 
 const strings = collectAllStringsInDir(path.join(LH_ROOT, 'lighthouse-core'));

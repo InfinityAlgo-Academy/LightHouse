@@ -41,6 +41,7 @@ script:
   - yarn test-extension
   - yarn test-viewer
   - yarn test-lantern
+  - yarn i18n:checks
   # _JAVA_OPTIONS is breaking parsing of compiler output. See #3338.
   - unset _JAVA_OPTIONS
   # FIXME(paulirish): re-enable after a roll of LH->CDT
