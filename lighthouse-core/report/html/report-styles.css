@@ -865,6 +865,7 @@ summary.lh-passed-audits-summary {
 
 .lh-table-row--flagged > td:last-child .lh-text {
   color: var(--lh-row-flagged-color);
+  white-space: nowrap;
 }
 .lh-table-row--flagged > td:last-child .lh-text:after {
   background: var(--fail-icon-url) no-repeat center center / contain;
@@ -872,7 +873,7 @@ summary.lh-passed-audits-summary {
   display: inline-block;
   height: var(--lh-score-icon-width);
   margin-left: var(--lh-score-margin);
-  vertical-align: middle;
+  vertical-align: text-top;
   width: var(--lh-score-icon-width);
 }
 
