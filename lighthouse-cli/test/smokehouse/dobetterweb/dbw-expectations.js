@@ -143,7 +143,7 @@ module.exports = [
           items: {
             1: {
               url: 'http://localhost:10200/dobetterweb/dbw_large-file.js',
-              totalBytes: 181100,
+              totalBytes: '>181000',
               flagged: true,
             },
             2: {

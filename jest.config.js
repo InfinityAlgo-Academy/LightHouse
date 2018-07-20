@@ -11,8 +11,8 @@ module.exports = {
   collectCoverageFrom: [
     '**/lighthouse-core/**/*.js',
     '**/lighthouse-cli/**/*.js',
-    '!**/test/',
-    '!**/scripts/',
+    '!**/test/**/*',
+    '!**/scripts/**/*',
   ],
   setupTestFrameworkScriptFile: './lighthouse-core/test/test-utils.js',
   testEnvironment: 'node',
