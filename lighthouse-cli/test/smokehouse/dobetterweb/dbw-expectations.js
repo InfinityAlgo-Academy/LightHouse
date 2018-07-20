@@ -148,7 +148,7 @@ module.exports = [
             },
             2: {
               url: 'http://localhost:10200/zone.js',
-              totalBytes: 71654,
+              totalBytes: '>71650',
               flagged: false,
             },
             3: {
