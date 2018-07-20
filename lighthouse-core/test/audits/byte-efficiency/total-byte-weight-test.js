@@ -6,7 +6,7 @@
 'use strict';
 
 const TotalByteWeight = require('../../../audits/byte-efficiency/total-byte-weight.js');
-const WebInspector = require('../../../lib/web-inspector');
+const NetworkRequest = require('../../../lib/network-request');
 const assert = require('assert');
 const URL = require('url').URL;
 const options = TotalByteWeight.defaultOptions;
@@ -25,7 +25,7 @@ function generateRequest(url, size, resourceType, baseUrl = 'http://google.com/'
     parsedURL: {
       scheme,
     },
-    _resourceType: resourceType,
+    resourceType: resourceType,
   };
 }
 
@@ -44,9 +44,9 @@ function generateArtifacts(records) {
 describe('Total byte weight audit', () => {
   it('passes when requests are small', () => {
     const artifacts = generateArtifacts([
-      ['file.html', 30, WebInspector.resourceTypes.Document],
-      ['file.js', 50, WebInspector.resourceTypes.Script],
-      ['file.jpg', 70, WebInspector.resourceTypes.Image],
+      ['file.html', 30, NetworkRequest.TYPES.Document],
+      ['file.js', 50, NetworkRequest.TYPES.Script],
+      ['file.jpg', 70, NetworkRequest.TYPES.Image],
     ]);
 
     return TotalByteWeight.audit(artifacts, {options}).then(result => {
@@ -61,17 +61,17 @@ describe('Total byte weight audit', () => {
 
   it('scores in the middle when a mixture of small and large requests are used', () => {
     const artifacts = generateArtifacts([
-      ['file.html', 30, WebInspector.resourceTypes.Document],
-      ['file.js', 50, WebInspector.resourceTypes.Script],
-      ['file.jpg', 70, WebInspector.resourceTypes.Image],
-      ['file-large.jpg', 1000, WebInspector.resourceTypes.Image],
-      ['file-xlarge.jpg', 3000, WebInspector.resourceTypes.Image],
-      ['small1.js', 5, WebInspector.resourceTypes.Script],
-      ['small2.js', 5, WebInspector.resourceTypes.Script],
-      ['small3.js', 5, WebInspector.resourceTypes.Script],
-      ['small4.js', 5, WebInspector.resourceTypes.Script],
-      ['small5.js', 5, WebInspector.resourceTypes.Script],
-      ['small6.js', 5, WebInspector.resourceTypes.Script],
+      ['file.html', 30, NetworkRequest.TYPES.Document],
+      ['file.js', 50, NetworkRequest.TYPES.Script],
+      ['file.jpg', 70, NetworkRequest.TYPES.Image],
+      ['file-large.jpg', 1000, NetworkRequest.TYPES.Image],
+      ['file-xlarge.jpg', 3000, NetworkRequest.TYPES.Image],
+      ['small1.js', 5, NetworkRequest.TYPES.Script],
+      ['small2.js', 5, NetworkRequest.TYPES.Script],
+      ['small3.js', 5, NetworkRequest.TYPES.Script],
+      ['small4.js', 5, NetworkRequest.TYPES.Script],
+      ['small5.js', 5, NetworkRequest.TYPES.Script],
+      ['small6.js', 5, NetworkRequest.TYPES.Script],
     ]);
 
     return TotalByteWeight.audit(artifacts, {options}).then(result => {
@@ -85,13 +85,13 @@ describe('Total byte weight audit', () => {
 
   it('should flag script requests which are exceeding the file size', () => {
     const artifacts = generateArtifacts([
-      ['file.html', 30, WebInspector.resourceTypes.Document],
-      ['file.js', 171, WebInspector.resourceTypes.Script],
-      ['file.js', 100, WebInspector.resourceTypes.Script],
-      ['file.jpg', 70, WebInspector.resourceTypes.Image],
-      ['file-large.jpg', 1000, WebInspector.resourceTypes.Image],
-      ['file-xlarge.jpg', 3000, WebInspector.resourceTypes.Image],
-      ['small1.js', 5, WebInspector.resourceTypes.Script],
+      ['file.html', 30, NetworkRequest.TYPES.Document],
+      ['file.js', 171, NetworkRequest.TYPES.Script],
+      ['file.js', 100, NetworkRequest.TYPES.Script],
+      ['file.jpg', 70, NetworkRequest.TYPES.Image],
+      ['file-large.jpg', 1000, NetworkRequest.TYPES.Image],
+      ['file-xlarge.jpg', 3000, NetworkRequest.TYPES.Image],
+      ['small1.js', 5, NetworkRequest.TYPES.Script],
     ]);
 
     return TotalByteWeight.audit(artifacts, {options}).then(result => {
@@ -104,9 +104,9 @@ describe('Total byte weight audit', () => {
 
   it('fails when requests are huge', () => {
     const artifacts = generateArtifacts([
-      ['file.html', 3000, WebInspector.resourceTypes.Document],
-      ['file.js', 5000, WebInspector.resourceTypes.Script],
-      ['file.jpg', 7000, WebInspector.resourceTypes.Image],
+      ['file.html', 3000, NetworkRequest.TYPES.Document],
+      ['file.js', 5000, NetworkRequest.TYPES.Script],
+      ['file.jpg', 7000, NetworkRequest.TYPES.Image],
     ]);
 
     return TotalByteWeight.audit(artifacts, {options}).then(result => {

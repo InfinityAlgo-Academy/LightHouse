@@ -74,10 +74,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
    */
   static async audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
-    const [networkRecords, networkThroughput] = await Promise.all([
-      artifacts.requestNetworkRecords(devtoolsLogs),
-      artifacts.requestNetworkThroughput(devtoolsLogs),
-    ]);
+    const networkRecords = await artifacts.requestNetworkRecords(devtoolsLogs);
 
     let totalBytes = 0;
     /** @type {Array<{url: string, totalBytes: number, flagged: boolean}>} */
