@@ -326,13 +326,16 @@ async function saveAssets(artifacts, audits, pathWithBasename) {
 async function logAssets(artifacts, audits) {
   const allAssets = await prepareAssets(artifacts, audits);
   allAssets.map(passAssets => {
-    log.log(`devtoolslog-${passAssets.passName}.json`, JSON.stringify(passAssets.devtoolsLog));
+    const dtlogdata=JSON.stringify(passAssets.devtoolsLog);
+    // eslint-disable-next-line no-console
+    console.log(`loggedAsset %%% devtoolslog-${passAssets.passName}.json %%% ${dtlogdata}`);
     const traceIter = traceJsonGenerator(passAssets.traceData);
     let traceJson = '';
     for (const trace of traceIter) {
       traceJson += trace;
     }
-    log.log(`trace-${passAssets.passName}.json`, traceJson);
+    // eslint-disable-next-line no-console
+    console.log(`loggedAsset %%% trace-${passAssets.passName}.json %%% ${traceJson}`);
   });
 }
 
