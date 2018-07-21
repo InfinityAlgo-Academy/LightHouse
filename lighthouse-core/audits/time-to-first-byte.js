@@ -35,46 +35,32 @@ class TTFBMetric extends Audit {
    * @param {LH.Artifacts} artifacts
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
-    const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+  static async audit(artifacts) {
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const mainResource = await artifacts.requestMainResource({devtoolsLog, URL: artifacts.URL});
 
-    return artifacts.requestNetworkRecords(devtoolsLogs)
-      .then((networkRecords) => {
-        /** @type {LH.Audit.DisplayValue} */
-        let displayValue = '';
+    const ttfb = TTFBMetric.caclulateTTFB(mainResource);
+    const passed = ttfb < TTFB_THRESHOLD;
 
-        const finalUrl = artifacts.URL.finalUrl;
-        const finalUrlRequest = networkRecords.find(record => record.url === finalUrl);
-        if (!finalUrlRequest) {
-          throw new Error(`finalUrl '${finalUrl} not found in network records.`);
-        }
-        const ttfb = TTFBMetric.caclulateTTFB(finalUrlRequest);
-        const passed = ttfb < TTFB_THRESHOLD;
+    /** @type {LH.Result.Audit.OpportunityDetails} */
+    const details = {
+      type: 'opportunity',
+      overallSavingsMs: ttfb - TTFB_THRESHOLD,
+      headings: [],
+      items: [],
+    };
 
-        if (!passed) {
-          displayValue = ['Root document took %10d', ttfb];
-        }
-
-        /** @type {LH.Result.Audit.OpportunityDetails} */
-        const details = {
-          type: 'opportunity',
-          overallSavingsMs: ttfb - TTFB_THRESHOLD,
-          headings: [],
-          items: [],
-        };
-
-        return {
-          rawValue: ttfb,
-          score: Number(passed),
-          displayValue,
-          details,
-          extendedInfo: {
-            value: {
-              wastedMs: ttfb - TTFB_THRESHOLD,
-            },
-          },
-        };
-      });
+    return {
+      rawValue: ttfb,
+      score: Number(passed),
+      displayValue: passed ? '' : ['Root document took %10d', ttfb],
+      details,
+      extendedInfo: {
+        value: {
+          wastedMs: ttfb - TTFB_THRESHOLD,
+        },
+      },
+    };
   }
 }
 
