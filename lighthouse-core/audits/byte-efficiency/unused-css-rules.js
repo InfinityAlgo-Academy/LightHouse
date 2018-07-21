@@ -23,7 +23,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       description: 'Remove unused rules from stylesheets to reduce unnecessary ' +
           'bytes consumed by network activity. ' +
-          '[Learn more](https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery).',
+          '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/unused-css).',
       requiredArtifacts: ['CSSUsage', 'URL', 'devtoolsLogs'],
     };
   }
