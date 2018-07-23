@@ -1,29 +1,47 @@
 {
-  "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js!#title": {
+  "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | title": {
     "message": "Eliminate render-blocking resources"
   },
-  "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js!#description": {
+  "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | description": {
     "message": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources)."
   },
-  "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js!#displayValue": {
-    "message": "{itemCount, plural,\n    one {1 resource}\n    other {# resources}\n    } delayed first paint by {timeInMs, number, milliseconds} ms"
-  },
-  "lighthouse-core/audits/metrics/interactive.js!#title": {
+  "lighthouse-core/audits/metrics/interactive.js | title": {
     "message": "Time to Interactive"
   },
-  "lighthouse-core/audits/metrics/interactive.js!#description": {
+  "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Interactive marks the time at which the page is fully interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
   },
-  "lighthouse-core/lib/i18n.js!#ms": {
+  "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
+    "message": "Performance"
+  },
+  "lighthouse-core/config/default-config.js | metricGroupTitle": {
+    "message": "Metrics"
+  },
+  "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
+    "message": "Opportunities"
+  },
+  "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
+    "message": "These are opportunities to speed up your application by optimizing the following resources."
+  },
+  "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
+    "message": "Diagnostics"
+  },
+  "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
+    "message": "More information about the performance of your application."
+  },
+  "lighthouse-core/lib/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js!#columnURL": {
+  "lighthouse-core/lib/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js!#columnSize": {
+  "lighthouse-core/lib/i18n.js | columnSize": {
     "message": "Size (KB)"
   },
-  "lighthouse-core/lib/i18n.js!#columnWastedTime": {
+  "lighthouse-core/lib/i18n.js | columnWastedMs": {
     "message": "Potential Savings (ms)"
+  },
+  "lighthouse-core/lib/i18n.js | displayValueWastedMs": {
+    "message": "Potential savings of {wastedMs, number, milliseconds} ms"
   }
 }

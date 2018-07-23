@@ -7,5 +7,6 @@
 'use strict';
 
 module.exports = {
+  'en-US': require('./en-US.json'),
   'en-XA': require('./en-XA.json'),
 };

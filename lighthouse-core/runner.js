@@ -11,6 +11,7 @@ const GatherRunner = require('./gather/gather-runner');
 const ReportScoring = require('./scoring');
 const Audit = require('./audits/audit');
 const log = require('lighthouse-logger');
+const i18n = require('./lib/i18n');
 const assetSaver = require('./lib/asset-saver');
 const fs = require('fs');
 const path = require('path');
@@ -31,6 +32,7 @@ class Runner {
     try {
       const startTime = Date.now();
       const settings = opts.config.settings;
+      settings.locale = settings.locale || i18n.getDefaultLocale();
 
       /**
        * List of top-level warnings for this Lighthouse run.
@@ -134,6 +136,8 @@ class Runner {
         categoryGroups: opts.config.groups || undefined,
         timing: {total: Date.now() - startTime},
       };
+
+      i18n.replaceIcuMessageInstanceIds(lhr, settings.locale);
 
       const report = generateReport(lhr, settings.output);
       return {lhr, artifacts, report};

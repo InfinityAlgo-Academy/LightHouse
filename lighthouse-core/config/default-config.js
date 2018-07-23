@@ -5,9 +5,21 @@
  */
 'use strict';
 
-const constants = require('./constants');
-
 /* eslint-disable max-len */
+
+const constants = require('./constants');
+const i18n = require('../lib/i18n');
+
+const UIStrings = {
+  performanceCategoryTitle: 'Performance',
+  metricGroupTitle: 'Metrics',
+  loadOpportunitiesGroupTitle: 'Opportunities',
+  loadOpportunitiesGroupDescription: 'These are opportunities to speed up your application by optimizing the following resources.',
+  diagnosticsGroupTitle: 'Diagnostics',
+  diagnosticsGroupDescription: 'More information about the performance of your application.',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 module.exports = {
   settings: constants.defaultSettings,
@@ -188,15 +200,15 @@ module.exports = {
 
   groups: {
     'metrics': {
-      title: 'Metrics',
+      title: str_(UIStrings.metricGroupTitle),
     },
     'load-opportunities': {
-      title: 'Opportunities',
-      description: 'These are opportunities to speed up your application by optimizing the following resources.',
+      title: str_(UIStrings.loadOpportunitiesGroupTitle),
+      description: str_(UIStrings.loadOpportunitiesGroupDescription),
     },
     'diagnostics': {
-      title: 'Diagnostics',
-      description: 'More information about the performance of your application.',
+      title: str_(UIStrings.diagnosticsGroupTitle),
+      description: str_(UIStrings.diagnosticsGroupDescription),
     },
     'a11y-color-contrast': {
       title: 'Color Contrast Is Satisfactory',
@@ -246,7 +258,7 @@ module.exports = {
   },
   categories: {
     'performance': {
-      title: 'Performance',
+      title: str_(UIStrings.performanceCategoryTitle),
       auditRefs: [
         {id: 'first-contentful-paint', weight: 3, group: 'metrics'},
         {id: 'first-meaningful-paint', weight: 1, group: 'metrics'},
@@ -409,3 +421,9 @@ module.exports = {
     },
   },
 };
+
+// Use `defineProperty` so that the strings are accesible from original but ignored when we copy it
+Object.defineProperty(module.exports, 'UIStrings', {
+  enumerable: false,
+  get: () => UIStrings,
+});

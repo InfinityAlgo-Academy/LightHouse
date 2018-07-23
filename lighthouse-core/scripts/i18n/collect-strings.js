@@ -40,7 +40,7 @@ function collectAllStringsInDir(dir, strings = {}) {
         const mod = require(fullPath);
         if (!mod.UIStrings) continue;
         for (const [key, value] of Object.entries(mod.UIStrings)) {
-          strings[`${relativePath}!#${key}`] = value;
+          strings[`${relativePath} | ${key}`] = value;
         }
       }
     }

@@ -31,13 +31,9 @@ const UIStrings = {
   description: 'Resources are blocking the first paint of your page. Consider ' +
     'delivering critical JS/CSS inline and deferring all non-critical ' +
     'JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).',
-  displayValue: `{itemCount, plural,
-    one {1 resource}
-    other {# resources}
-    } delayed first paint by {timeInMs, number, milliseconds} ms`,
 };
 
-const str_ = i18n.createStringFormatter(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
  * Given a simulation's nodeTimings, return an object with the nodes/timing keyed by network URL
@@ -210,14 +206,14 @@ class RenderBlockingResources extends Audit {
 
     let displayValue = '';
     if (results.length > 0) {
-      displayValue = str_(UIStrings.displayValue, {timeInMs: wastedMs, itemCount: results.length});
+      displayValue = str_(i18n.UIStrings.displayValueWastedMs, {wastedMs});
     }
 
     /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
-      {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedTime)},
+      {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
 
     const details = Audit.makeOpportunityDetails(headings, results, wastedMs);

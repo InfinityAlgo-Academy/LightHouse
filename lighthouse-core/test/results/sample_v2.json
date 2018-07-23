@@ -1920,7 +1920,7 @@
       "score": 0.46,
       "scoreDisplayMode": "numeric",
       "rawValue": 1129,
-      "displayValue": "5 resources delayed first paint by 1,130 ms",
+      "displayValue": "Potential savings of 1,130 ms",
       "details": {
         "type": "opportunity",
         "headings": [
@@ -2771,7 +2771,7 @@
     "gatherMode": false,
     "disableStorageReset": false,
     "disableDeviceEmulation": false,
-    "locale": null,
+    "locale": "en-US",
     "blockedUrlPatterns": null,
     "additionalTraceCategories": null,
     "extraHeaders": null,
@@ -3427,6 +3427,65 @@
     "seo-crawl": {
       "title": "Crawling and Indexing",
       "description": "To appear in search results, crawlers need access to your app."
+    }
+  },
+  "i18n": {
+    "icuMessagePaths": {
+      "lighthouse-core/audits/metrics/interactive.js | title": [
+        "audits.interactive.title"
+      ],
+      "lighthouse-core/audits/metrics/interactive.js | description": [
+        "audits.interactive.description"
+      ],
+      "lighthouse-core/lib/i18n.js | ms": [
+        {
+          "values": {
+            "timeInMs": 4927.278
+          },
+          "path": "audits.interactive.displayValue"
+        }
+      ],
+      "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | title": [
+        "audits[render-blocking-resources].title"
+      ],
+      "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | description": [
+        "audits[render-blocking-resources].description"
+      ],
+      "lighthouse-core/lib/i18n.js | displayValueWastedMs": [
+        {
+          "values": {
+            "wastedMs": 1129
+          },
+          "path": "audits[render-blocking-resources].displayValue"
+        }
+      ],
+      "lighthouse-core/lib/i18n.js | columnURL": [
+        "audits[render-blocking-resources].details.headings[0].label"
+      ],
+      "lighthouse-core/lib/i18n.js | columnSize": [
+        "audits[render-blocking-resources].details.headings[1].label"
+      ],
+      "lighthouse-core/lib/i18n.js | columnWastedMs": [
+        "audits[render-blocking-resources].details.headings[2].label"
+      ],
+      "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
+        "categories.performance.title"
+      ],
+      "lighthouse-core/config/default-config.js | metricGroupTitle": [
+        "categoryGroups.metrics.title"
+      ],
+      "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": [
+        "categoryGroups[load-opportunities].title"
+      ],
+      "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": [
+        "categoryGroups[load-opportunities].description"
+      ],
+      "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": [
+        "categoryGroups.diagnostics.title"
+      ],
+      "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": [
+        "categoryGroups.diagnostics.description"
+      ]
     }
   }
 }

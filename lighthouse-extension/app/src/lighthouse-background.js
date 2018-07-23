@@ -8,6 +8,7 @@
 const RawProtocol = require('../../../lighthouse-core/gather/connections/raw');
 const Runner = require('../../../lighthouse-core/runner');
 const Config = require('../../../lighthouse-core/config/config');
+const i18n = require('../../../lighthouse-core/lib/i18n');
 const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
 const log = require('lighthouse-logger');
 
@@ -26,7 +27,10 @@ function runLighthouseForConnection(
   updateBadgeFn = function() { }) {
   const config = new Config({
     extends: 'lighthouse:default',
-    settings: {onlyCategories: categoryIDs},
+    settings: {
+      locale: i18n.getDefaultLocale(),
+      onlyCategories: categoryIDs,
+    },
   }, options.flags);
 
   // Add url and config to fresh options object.
