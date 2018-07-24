@@ -77,7 +77,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
     const networkRecords = await artifacts.requestNetworkRecords(devtoolsLogs);
 
     let totalBytes = 0;
-    /** @type {Array<{url: string, totalBytes: number, flagged: boolean}>} */
+    /** @type {Array<{url: string, totalBytes: number, flagged?: boolean}>} */
     let results = [];
     networkRecords.forEach(record => {
       // exclude data URIs since their size is reflected in other resources
@@ -87,8 +87,12 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       const result = {
         url: record.url,
         totalBytes: record.transferSize,
-        flagged: TotalByteWeight.hasExceededJSBundleSize(record),
       };
+
+      // only set the flagged field when it's true
+      if (TotalByteWeight.hasExceededJSBundleSize(record)) {
+        result.flagged = true;
+      }
 
       totalBytes += result.totalBytes;
       results.push(result);
