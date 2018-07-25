@@ -6,7 +6,15 @@
 'use strict';
 
 const Audit = require('../audit');
-const Util = require('../../report/html/renderer/util.js');
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'First Contentful Paint',
+  description: 'First contentful paint marks the time at which the first text/image is ' +
+      `painted. [Learn more](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint).`,
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class FirstContentfulPaint extends Audit {
   /**
@@ -15,9 +23,8 @@ class FirstContentfulPaint extends Audit {
   static get meta() {
     return {
       id: 'first-contentful-paint',
-      title: 'First Contentful Paint',
-      description: 'First contentful paint marks the time at which the first text/image is ' +
-          `painted. [Learn more](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint).`,
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
@@ -54,9 +61,10 @@ class FirstContentfulPaint extends Audit {
         context.options.scoreMedian
       ),
       rawValue: metricResult.timing,
-      displayValue: [Util.MS_DISPLAY_VALUE, metricResult.timing],
+      displayValue: str_(i18n.UIStrings.ms, {timeInMs: metricResult.timing}),
     };
   }
 }
 
 module.exports = FirstContentfulPaint;
+module.exports.UIStrings = UIStrings;

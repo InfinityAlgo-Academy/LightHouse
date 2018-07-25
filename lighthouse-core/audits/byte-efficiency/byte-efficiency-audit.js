@@ -8,6 +8,9 @@
 const Audit = require('../audit');
 const linearInterpolation = require('../../lib/statistics').linearInterpolation;
 const Interactive = require('../../gather/computed/metrics/lantern-interactive');
+const i18n = require('../../lib/i18n');
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, {});
 
 /** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
@@ -193,8 +196,8 @@ class UnusedBytes extends Audit {
 
     /** @type {LH.Audit.DisplayValue} */
     let displayValue = result.displayValue || '';
-    if (typeof result.displayValue === 'undefined' && wastedKb) {
-      displayValue = ['Potential savings of %d\xa0KB', wastedKb];
+    if (typeof result.displayValue === 'undefined' && wastedBytes) {
+      displayValue = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes});
     }
 
     const details = Audit.makeOpportunityDetails(result.headings, results, wastedMs, wastedBytes);

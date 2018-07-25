@@ -6,7 +6,16 @@
 'use strict';
 
 const Audit = require('../audit');
-const Util = require('../../report/html/renderer/util.js');
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'First CPU Idle',
+  description: 'First CPU Idle marks the first time at which the page\'s main thread is ' +
+    'quiet enough to handle input. ' +
+    '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class FirstCPUIdle extends Audit {
   /**
@@ -15,10 +24,8 @@ class FirstCPUIdle extends Audit {
   static get meta() {
     return {
       id: 'first-cpu-idle',
-      title: 'First CPU Idle',
-      description: 'First CPU Idle marks the first time at which the page\'s main thread is ' +
-          'quiet enough to handle input. ' +
-          '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive).',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces'],
     };
@@ -58,9 +65,10 @@ class FirstCPUIdle extends Audit {
         context.options.scoreMedian
       ),
       rawValue: metricResult.timing,
-      displayValue: [Util.MS_DISPLAY_VALUE, metricResult.timing],
+      displayValue: str_(i18n.UIStrings.ms, {timeInMs: metricResult.timing}),
     };
   }
 }
 
 module.exports = FirstCPUIdle;
+module.exports.UIStrings = UIStrings;

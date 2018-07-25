@@ -8,6 +8,8 @@
 
 const Audit = require('./audit');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
+const i18n = require('../lib/i18n');
+
 // Preconnect establishes a "clean" socket. Chrome's socket manager will keep an unused socket
 // around for 10s. Meaning, the time delta between processing preconnect a request should be <10s,
 // otherwise it's wasted. We add a 5s margin so we are sure to capture all key requests.
@@ -16,6 +18,15 @@ const PRECONNECT_SOCKET_MAX_IDLE = 15;
 
 const IGNORE_THRESHOLD_IN_MS = 50;
 
+const UIStrings = {
+  title: 'Avoid multiple, costly round trips to any origin',
+  description:
+    'Consider adding preconnect or dns-prefetch resource hints to establish early ' +
+    `connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).`,
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
 class UsesRelPreconnectAudit extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -23,10 +34,8 @@ class UsesRelPreconnectAudit extends Audit {
   static get meta() {
     return {
       id: 'uses-rel-preconnect',
-      title: 'Avoid multiple, costly round trips to any origin',
-      description:
-        'Consider adding preconnect or dns-prefetch resource hints to establish early ' +
-        `connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).`,
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['devtoolsLogs', 'URL'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
@@ -152,15 +161,16 @@ class UsesRelPreconnectAudit extends Audit {
 
     /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
-      {key: 'url', valueType: 'url', label: 'Origin'},
-      {key: 'wastedMs', valueType: 'timespanMs', label: 'Potential Savings'},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
+
     const details = Audit.makeOpportunityDetails(headings, results, maxWasted);
 
     return {
       score: UnusedBytes.scoreForWastedMs(maxWasted),
       rawValue: maxWasted,
-      displayValue: ['Potential savings of %10d\xa0ms', maxWasted],
+      displayValue: str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: maxWasted}),
       extendedInfo: {
         value: results,
       },
@@ -170,3 +180,4 @@ class UsesRelPreconnectAudit extends Audit {
 }
 
 module.exports = UsesRelPreconnectAudit;
+module.exports.UIStrings = UIStrings;

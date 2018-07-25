@@ -6,6 +6,20 @@
 'use strict';
 
 const Audit = require('./audit');
+const i18n = require('../lib/i18n');
+
+const UIStrings = {
+  title: 'User Timing marks and measures',
+  description: 'Consider instrumenting your app with the User Timing API to create custom, ' +
+      'real-world measurements of key user experiences. ' +
+      '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).',
+  displayValue: `{itemCount, plural,
+    =1 {1 user timing}
+    other {# user timings}
+    }`,
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /** @typedef {{name: string, isMark: true, args: LH.TraceEvent['args'], startTime: number}} MarkEvent */
 /** @typedef {{name: string, isMark: false, args: LH.TraceEvent['args'], startTime: number, endTime: number, duration: number}} MeasureEvent */
@@ -17,11 +31,9 @@ class UserTimings extends Audit {
   static get meta() {
     return {
       id: 'user-timings',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      title: 'User Timing marks and measures',
-      description: 'Consider instrumenting your app with the User Timing API to create custom, ' +
-          'real-world measurements of key user experiences. ' +
-          '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).',
       requiredArtifacts: ['traces'],
     };
   }
@@ -145,10 +157,7 @@ class UserTimings extends Audit {
       /** @type {LH.Audit.Product['displayValue']} */
       let displayValue;
       if (userTimings.length) {
-        displayValue = [
-          userTimings.length === 1 ? '%d user timing' : '%d user timings',
-          userTimings.length,
-        ];
+        displayValue = str_(UIStrings.displayValue, {itemCount: userTimings.length});
       }
 
       return {
@@ -166,3 +175,4 @@ class UserTimings extends Audit {
 }
 
 module.exports = UserTimings;
+module.exports.UIStrings = UIStrings;

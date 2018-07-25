@@ -7,6 +7,14 @@
 
 const Audit = require('./audit');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
+const i18n = require('../lib/i18n');
+
+const UIStrings = {
+  title: 'Avoid multiple page redirects',
+  description: 'Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class Redirects extends Audit {
   /**
@@ -15,9 +23,9 @@ class Redirects extends Audit {
   static get meta() {
     return {
       id: 'redirects',
-      title: 'Avoid multiple page redirects',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      description: 'Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).',
       requiredArtifacts: ['URL', 'devtoolsLogs', 'traces'],
     };
   }
@@ -85,8 +93,8 @@ class Redirects extends Audit {
     }
 
     const headings = [
-      {key: 'url', itemType: 'text', text: 'Redirected URL'},
-      {key: 'wastedMs', itemType: 'ms', text: 'Time for Redirect'},
+      {key: 'url', itemType: 'text', text: str_(i18n.UIStrings.columnURL)},
+      {key: 'wastedMs', itemType: 'ms', text: str_(i18n.UIStrings.columnTimeSpent)},
     ];
     const summary = {wastedMs: totalWastedMs};
     const details = Audit.makeTableDetails(headings, pageRedirects, summary);
@@ -95,7 +103,9 @@ class Redirects extends Audit {
       // We award a passing grade if you only have 1 redirect
       score: redirectRequests.length <= 2 ? 1 : UnusedBytes.scoreForWastedMs(totalWastedMs),
       rawValue: totalWastedMs,
-      displayValue: ['%d\xa0ms', totalWastedMs],
+      displayValue: totalWastedMs ?
+        str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: totalWastedMs}) :
+        '',
       extendedInfo: {
         value: {
           wastedMs: totalWastedMs,
@@ -107,3 +117,4 @@ class Redirects extends Audit {
 }
 
 module.exports = Redirects;
+module.exports.UIStrings = UIStrings;

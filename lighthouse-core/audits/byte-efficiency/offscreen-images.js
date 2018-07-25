@@ -12,6 +12,17 @@
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const Sentry = require('../../lib/sentry');
 const URL = require('../../lib/url-shim');
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'Defer offscreen images',
+  description:
+    'Consider lazy-loading offscreen and hidden images after all critical resources have ' +
+    'finished loading to lower time to interactive. ' +
+    '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const ALLOWABLE_OFFSCREEN_X = 100;
 const ALLOWABLE_OFFSCREEN_Y = 200;
@@ -29,12 +40,9 @@ class OffscreenImages extends ByteEfficiencyAudit {
   static get meta() {
     return {
       id: 'offscreen-images',
-      title: 'Defer offscreen images',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      description:
-        'Consider lazy-loading offscreen and hidden images after all critical resources have ' +
-        'finished loading to lower time to interactive. ' +
-        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).',
       requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'traces', 'devtoolsLogs'],
     };
   }
@@ -198,9 +206,9 @@ class OffscreenImages extends ByteEfficiencyAudit {
       /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
       const headings = [
         {key: 'url', valueType: 'thumbnail', label: ''},
-        {key: 'url', valueType: 'url', label: 'URL'},
-        {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
-        {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings'},
+        {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+        {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
+        {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
       ];
 
       return {
@@ -213,3 +221,4 @@ class OffscreenImages extends ByteEfficiencyAudit {
 }
 
 module.exports = OffscreenImages;
+module.exports.UIStrings = UIStrings;

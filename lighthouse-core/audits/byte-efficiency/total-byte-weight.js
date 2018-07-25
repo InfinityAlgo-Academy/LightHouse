@@ -6,6 +6,19 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'Avoids enormous network payloads',
+  failureTitle: 'Has enormous network payloads',
+  description:
+  'Large network payloads cost users real money and are highly correlated with ' +
+  'long load times. [Learn ' +
+  'more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).',
+  displayValue: 'Total size was {totalBytes, number, bytes}\xa0KB',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class TotalByteWeight extends ByteEfficiencyAudit {
   /**
@@ -14,13 +27,10 @@ class TotalByteWeight extends ByteEfficiencyAudit {
   static get meta() {
     return {
       id: 'total-byte-weight',
-      title: 'Avoids enormous network payloads',
-      failureTitle: 'Has enormous network payloads',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      description:
-        'Large network payloads cost users real money and are highly correlated with ' +
-        'long load times. [Learn ' +
-        'more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).',
       requiredArtifacts: ['devtoolsLogs'],
     };
   }
@@ -76,15 +86,8 @@ class TotalByteWeight extends ByteEfficiencyAudit {
     );
 
     const headings = [
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {
-        key: 'totalBytes',
-        itemType: 'bytes',
-        displayUnit: 'kb',
-        granularity: 1,
-        text: 'Total Size',
-      },
-      {key: 'totalMs', itemType: 'ms', text: 'Transfer Time'},
+      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
+      {key: 'totalBytes', itemType: 'bytes', text: str_(i18n.UIStrings.columnSize)},
     ];
 
     const tableDetails = ByteEfficiencyAudit.makeTableDetails(headings, results);
@@ -92,10 +95,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
     return {
       score,
       rawValue: totalBytes,
-      displayValue: [
-        'Total size was %d\xa0KB',
-        totalBytes / 1024,
-      ],
+      displayValue: str_(UIStrings.displayValue, {totalBytes}),
       extendedInfo: {
         value: {
           results,
@@ -108,3 +108,4 @@ class TotalByteWeight extends ByteEfficiencyAudit {
 }
 
 module.exports = TotalByteWeight;
+module.exports.UIStrings = UIStrings;

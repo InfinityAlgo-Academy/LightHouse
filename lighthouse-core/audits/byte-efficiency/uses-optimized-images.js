@@ -11,6 +11,15 @@
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const URL = require('../../lib/url-shim');
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'Efficiently encode images',
+  description: 'Optimized images load faster and consume less cellular data. ' +
+  '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/optimize-images).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 4096;
 
@@ -21,10 +30,9 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
   static get meta() {
     return {
       id: 'uses-optimized-images',
-      title: 'Efficiently encode images',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      description: 'Optimized images load faster and consume less cellular data. ' +
-        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/optimize-images).',
       requiredArtifacts: ['OptimizedImages', 'devtoolsLogs'],
     };
   }
@@ -73,9 +81,9 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
     /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
       {key: 'url', valueType: 'thumbnail', label: ''},
-      {key: 'url', valueType: 'url', label: 'URL'},
-      {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
-      {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings'},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
+      {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 
     return {
@@ -87,3 +95,4 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
 }
 
 module.exports = UsesOptimizedImages;
+module.exports.UIStrings = UIStrings;

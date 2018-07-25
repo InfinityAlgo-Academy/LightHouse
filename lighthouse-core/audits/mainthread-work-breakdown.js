@@ -11,8 +11,18 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/html/renderer/util');
 const {taskGroups} = require('../lib/task-groups');
+const i18n = require('../lib/i18n');
+
+const UIStrings = {
+  title: 'Minimizes main thread work',
+  failureTitle: 'Has significant main thread work',
+  description: 'Consider reducing the time spent parsing, compiling and executing JS. ' +
+    'You may find delivering smaller JS payloads helps with this.',
+  columnCategory: 'Category',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class MainThreadWorkBreakdown extends Audit {
   /**
@@ -21,11 +31,10 @@ class MainThreadWorkBreakdown extends Audit {
   static get meta() {
     return {
       id: 'mainthread-work-breakdown',
-      title: 'Minimizes main thread work',
-      failureTitle: 'Has significant main thread work',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      description: 'Consider reducing the time spent parsing, compiling and executing JS. ' +
-        'You may find delivering smaller JS payloads helps with this.',
       requiredArtifacts: ['traces'],
     };
   }
@@ -89,8 +98,8 @@ class MainThreadWorkBreakdown extends Audit {
     });
 
     const headings = [
-      {key: 'groupLabel', itemType: 'text', text: 'Category'},
-      {key: 'duration', itemType: 'ms', granularity: 1, text: 'Time Spent'},
+      {key: 'groupLabel', itemType: 'text', text: str_(UIStrings.columnCategory)},
+      {key: 'duration', itemType: 'ms', granularity: 1, text: str_(i18n.UIStrings.columnTimeSpent)},
     ];
 
     results.sort((a, b) => categoryTotals[b.group] - categoryTotals[a.group]);
@@ -105,10 +114,11 @@ class MainThreadWorkBreakdown extends Audit {
     return {
       score,
       rawValue: totalExecutionTime,
-      displayValue: [Util.MS_DISPLAY_VALUE, totalExecutionTime],
+      displayValue: str_(i18n.UIStrings.ms, {timeInMs: totalExecutionTime}),
       details: tableDetails,
     };
   }
 }
 
 module.exports = MainThreadWorkBreakdown;
+module.exports.UIStrings = UIStrings;

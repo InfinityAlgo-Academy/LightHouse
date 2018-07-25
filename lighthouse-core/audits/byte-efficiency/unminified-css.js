@@ -7,6 +7,15 @@
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const UnusedCSSRules = require('./unused-css-rules');
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'Minify CSS',
+  description: 'Minifying CSS files can reduce network payload sizes. ' +
+  '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/minify-css).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const IGNORE_THRESHOLD_IN_PERCENT = 5;
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
@@ -21,10 +30,9 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
   static get meta() {
     return {
       id: 'unminified-css',
-      title: 'Minify CSS',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      description: 'Minifying CSS files can reduce network payload sizes. ' +
-        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/minify-css).',
       requiredArtifacts: ['CSSUsage', 'devtoolsLogs'],
     };
   }
@@ -142,15 +150,16 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
       items.push(result);
     }
 
-    return {
-      items,
-      headings: [
-        {key: 'url', valueType: 'url', label: 'URL'},
-        {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
-        {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings'},
-      ],
-    };
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
+    const headings = [
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
+      {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
+    ];
+
+    return {items, headings};
   }
 }
 
 module.exports = UnminifiedCSS;
+module.exports.UIStrings = UIStrings;

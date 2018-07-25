@@ -14,10 +14,32 @@
 
 const Audit = require('../audit');
 const Util = require('../../report/html/renderer/util.js');
+const i18n = require('../../lib/i18n');
 
 const MAX_DOM_NODES = 1500;
 const MAX_DOM_TREE_WIDTH = 60;
 const MAX_DOM_TREE_DEPTH = 32;
+
+const UIStrings = {
+  title: 'Avoids an excessive DOM size',
+  failureTitle: 'Uses an excessive DOM size',
+  description: 'Browser engineers recommend pages contain fewer than ' +
+    `~${MAX_DOM_NODES.toLocaleString()} DOM nodes. The sweet spot is a tree ` +
+    `depth < ${MAX_DOM_TREE_DEPTH} elements and fewer than ${MAX_DOM_TREE_WIDTH} ` +
+    'children/parent element. A large DOM can increase memory usage, cause longer ' +
+    '[style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), ' +
+    'and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/tools/lighthouse/audits/dom-size).',
+  columnDOMNodes: 'Total DOM Nodes',
+  columnDOMDepth: 'Maximum DOM Depth',
+  columnDOMWidth: 'Maximum Children',
+  displayValue: `{itemCount, plural,
+    =1 {1 node}
+    other {# nodes}
+    }`,
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
 
 class DOMSize extends Audit {
   static get MAX_DOM_NODES() {
@@ -30,14 +52,9 @@ class DOMSize extends Audit {
   static get meta() {
     return {
       id: 'dom-size',
-      title: 'Avoids an excessive DOM size',
-      failureTitle: 'Uses an excessive DOM size',
-      description: 'Browser engineers recommend pages contain fewer than ' +
-        `~${Util.formatNumber(DOMSize.MAX_DOM_NODES)} DOM nodes. The sweet spot is a tree ` +
-        `depth < ${MAX_DOM_TREE_DEPTH} elements and fewer than ${MAX_DOM_TREE_WIDTH} ` +
-        'children/parent element. A large DOM can increase memory usage, cause longer ' +
-        '[style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), ' +
-        'and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/tools/lighthouse/audits/dom-size).',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['DOMStats'],
     };
@@ -72,9 +89,9 @@ class DOMSize extends Audit {
     );
 
     const headings = [
-      {key: 'totalNodes', itemType: 'text', text: 'Total DOM Nodes'},
-      {key: 'depth', itemType: 'text', text: 'Maximum DOM Depth'},
-      {key: 'width', itemType: 'text', text: 'Maximum Children'},
+      {key: 'totalNodes', itemType: 'text', text: str_(UIStrings.columnDOMNodes)},
+      {key: 'depth', itemType: 'text', text: str_(UIStrings.columnDOMDepth)},
+      {key: 'width', itemType: 'text', text: str_(UIStrings.columnDOMWidth)},
     ];
 
     const items = [
@@ -99,7 +116,7 @@ class DOMSize extends Audit {
     return {
       score,
       rawValue: stats.totalDOMNodes,
-      displayValue: ['%d nodes', stats.totalDOMNodes],
+      displayValue: str_(UIStrings.displayValue, {itemCount: stats.totalDOMNodes}),
       extendedInfo: {
         value: items,
       },
@@ -109,3 +126,4 @@ class DOMSize extends Audit {
 }
 
 module.exports = DOMSize;
+module.exports.UIStrings = UIStrings;

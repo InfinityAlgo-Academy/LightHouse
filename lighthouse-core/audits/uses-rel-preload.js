@@ -8,6 +8,16 @@
 const URL = require('../lib/url-shim');
 const Audit = require('./audit');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
+const i18n = require('../lib/i18n');
+
+const UIStrings = {
+  title: 'Preload key requests',
+  description: 'Consider using <link rel=preload> to prioritize fetching late-discovered ' +
+    'resources sooner. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
 const THRESHOLD_IN_MS = 100;
 
 class UsesRelPreloadAudit extends Audit {
@@ -17,9 +27,8 @@ class UsesRelPreloadAudit extends Audit {
   static get meta() {
     return {
       id: 'uses-rel-preload',
-      title: 'Preload key requests',
-      description: 'Consider using <link rel=preload> to prioritize fetching late-discovered ' +
-        'resources sooner. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['devtoolsLogs', 'traces', 'URL'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
@@ -185,15 +194,15 @@ class UsesRelPreloadAudit extends Audit {
 
     /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
-      {key: 'url', valueType: 'url', label: 'URL'},
-      {key: 'wastedMs', valueType: 'timespanMs', label: 'Potential Savings'},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
     const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
     return {
       score: UnusedBytes.scoreForWastedMs(wastedMs),
       rawValue: wastedMs,
-      displayValue: ['Potential savings of %10d\xa0ms', wastedMs],
+      displayValue: str_(i18n.UIStrings.displayValueMsSavings, {wastedMs}),
       extendedInfo: {
         value: results,
       },
@@ -203,3 +212,4 @@ class UsesRelPreloadAudit extends Audit {
 }
 
 module.exports = UsesRelPreloadAudit;
+module.exports.UIStrings = UIStrings;

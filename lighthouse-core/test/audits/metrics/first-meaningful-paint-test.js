@@ -7,7 +7,6 @@
 
 const FMPAudit = require('../../../audits/metrics/first-meaningful-paint.js');
 const Audit = require('../../../audits/audit.js');
-const Util = require('../../../report/html/renderer/util');
 const assert = require('assert');
 const options = FMPAudit.defaultOptions;
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
@@ -27,8 +26,8 @@ describe('Performance: first-meaningful-paint audit', () => {
     const fmpResult = await FMPAudit.audit(artifacts, context);
 
     assert.equal(fmpResult.score, 1);
-    assert.equal(Util.formatDisplayValue(fmpResult.displayValue), '780\xa0ms');
     assert.equal(fmpResult.rawValue, 783.328);
+    assert.ok(fmpResult.displayValue);
   });
 
   it('computes FMP correctly for simulated', async () => {
@@ -42,7 +41,6 @@ describe('Performance: first-meaningful-paint audit', () => {
     expect({
       score: fmpResult.score,
       rawValue: fmpResult.rawValue,
-      displayValue: fmpResult.displayValue,
     }).toMatchSnapshot();
   });
 });

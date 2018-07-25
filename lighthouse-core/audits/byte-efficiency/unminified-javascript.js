@@ -8,6 +8,15 @@
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 // @ts-ignore - TODO: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/25410
 const esprima = require('esprima');
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'Minify JavaScript',
+  description: 'Minifying JavaScript files can reduce payload sizes and script parse time. ' +
+    '[Learn more](https://developers.google.com/speed/docs/insights/MinifyResources).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const IGNORE_THRESHOLD_IN_PERCENT = 10;
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
@@ -29,11 +38,9 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
   static get meta() {
     return {
       id: 'unminified-javascript',
-      title: 'Minify JavaScript',
-
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      description: 'Minifying JavaScript files can reduce payload sizes and script parse time. ' +
-        '[Learn more](https://developers.google.com/speed/docs/insights/MinifyResources).',
       requiredArtifacts: ['Scripts', 'devtoolsLogs'],
     };
   }
@@ -96,16 +103,20 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
       }
     }
 
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
+    const headings = [
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
+      {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
+    ];
+
     return {
       items,
       warnings,
-      headings: [
-        {key: 'url', valueType: 'url', label: 'URL'},
-        {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
-        {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings'},
-      ],
+      headings,
     };
   }
 }
 
 module.exports = UnminifiedJavaScript;
+module.exports.UIStrings = UIStrings;

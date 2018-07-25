@@ -61,7 +61,7 @@ describe('Performance: Font Display audit', () => {
     ], webFonts)).then(result => {
       const items = [{
         url: openSansFontBold.src[0],
-        wastedTime: 2000,
+        wastedMs: 2000,
       }];
       assert.strictEqual(result.rawValue, false);
       assert.deepEqual(result.details.items, items);

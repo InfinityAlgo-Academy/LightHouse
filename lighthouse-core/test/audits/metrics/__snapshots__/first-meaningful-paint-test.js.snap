@@ -2,10 +2,6 @@
 
 exports[`Performance: first-meaningful-paint audit computes FMP correctly for simulated 1`] = `
 Object {
-  "displayValue": Array [
-    "%10d ms",
-    1354.506000038469,
-  ],
   "rawValue": 1354.506000038469,
   "score": 1,
 }

@@ -176,7 +176,7 @@ describe('Byte efficiency base audit', () => {
       ],
     }, graph, simulator);
 
-    assert.ok(result.displayValue.includes(2), 'contains correct KB');
+    assert.ok(result.displayValue);
   });
 
   it('should work on real graphs', async () => {

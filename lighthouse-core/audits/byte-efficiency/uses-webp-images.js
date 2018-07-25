@@ -10,6 +10,16 @@
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const URL = require('../../lib/url-shim');
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'Serve images in next-gen formats',
+  description: 'Image formats like JPEG 2000, JPEG XR, and WebP often provide better ' +
+    'compression than PNG or JPEG, which means faster downloads and less data consumption. ' +
+    '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/webp).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 8192;
 
@@ -20,11 +30,9 @@ class UsesWebPImages extends ByteEfficiencyAudit {
   static get meta() {
     return {
       id: 'uses-webp-images',
-      title: 'Serve images in next-gen formats',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      description: 'Image formats like JPEG 2000, JPEG XR, and WebP often provide better ' +
-        'compression than PNG or JPEG, which means faster downloads and less data consumption. ' +
-        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/webp).',
       requiredArtifacts: ['OptimizedImages', 'devtoolsLogs'],
     };
   }
@@ -72,9 +80,9 @@ class UsesWebPImages extends ByteEfficiencyAudit {
     /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
       {key: 'url', valueType: 'thumbnail', label: ''},
-      {key: 'url', valueType: 'url', label: 'URL'},
-      {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
-      {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings'},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
+      {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 
     return {
@@ -86,3 +94,4 @@ class UsesWebPImages extends ByteEfficiencyAudit {
 }
 
 module.exports = UsesWebPImages;
+module.exports.UIStrings = UIStrings;

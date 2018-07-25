@@ -6,7 +6,22 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/html/renderer/util');
+const i18n = require('../lib/i18n');
+
+const UIStrings = {
+  title: 'Critical Request Chains',
+  description: 'The Critical Request Chains below show you what resources are ' +
+      'issued with a high priority. Consider reducing ' +
+      'the length of chains, reducing the download size of resources, or ' +
+      'deferring the download of unnecessary resources to improve page load. ' +
+      '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains).',
+  displayValue: `{itemCount, plural,
+    =1 {1 chain found}
+    other {# chains found}
+    }`,
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class CriticalRequestChains extends Audit {
   /**
@@ -15,13 +30,9 @@ class CriticalRequestChains extends Audit {
   static get meta() {
     return {
       id: 'critical-request-chains',
-      title: 'Critical Request Chains',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      description: 'The Critical Request Chains below show you what resources are ' +
-          'issued with a high priority. Consider reducing ' +
-          'the length of chains, reducing the download size of resources, or ' +
-          'deferring the download of unnecessary resources to improve page load. ' +
-          '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains).',
       requiredArtifacts: ['devtoolsLogs', 'URL'],
     };
   }
@@ -184,7 +195,7 @@ class CriticalRequestChains extends Audit {
       return {
         rawValue: chainCount === 0,
         notApplicable: chainCount === 0,
-        displayValue: chainCount ? `${Util.formatNumber(chainCount)} chains found`: '',
+        displayValue: chainCount ? str_(UIStrings.displayValue, {itemCount: chainCount}) : '',
         extendedInfo: {
           value: {
             chains: flattenedChains,
@@ -193,7 +204,6 @@ class CriticalRequestChains extends Audit {
         },
         details: {
           type: 'criticalrequestchain',
-          header: {type: 'text', text: 'View critical network waterfall:'},
           chains: flattenedChains,
           longestChain,
         },
@@ -203,3 +213,4 @@ class CriticalRequestChains extends Audit {
 }
 
 module.exports = CriticalRequestChains;
+module.exports.UIStrings = UIStrings;

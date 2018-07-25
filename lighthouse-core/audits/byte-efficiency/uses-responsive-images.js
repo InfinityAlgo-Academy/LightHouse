@@ -16,6 +16,17 @@
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const Sentry = require('../../lib/sentry');
 const URL = require('../../lib/url-shim');
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'Properly size images',
+  description:
+  'Serve images that are appropriately-sized to save cellular data ' +
+  'and improve load time. ' +
+  '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/oversized-images).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
 
@@ -26,12 +37,9 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
   static get meta() {
     return {
       id: 'uses-responsive-images',
-      title: 'Properly size images',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      description:
-        'Serve images that are appropriately-sized to save cellular data ' +
-        'and improve load time. ' +
-        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/oversized-images).',
       requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'devtoolsLogs'],
     };
   }
@@ -113,9 +121,9 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
       {key: 'url', valueType: 'thumbnail', label: ''},
-      {key: 'url', valueType: 'url', label: 'URL'},
-      {key: 'totalBytes', valueType: 'bytes', label: 'Original'},
-      {key: 'wastedBytes', valueType: 'bytes', label: 'Potential Savings'},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
+      {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 
     return {
@@ -127,3 +135,4 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
 }
 
 module.exports = UsesResponsiveImages;
+module.exports.UIStrings = UIStrings;

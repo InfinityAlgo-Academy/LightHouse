@@ -6,9 +6,24 @@
 'use strict';
 
 const Audit = require('./audit');
-const Util = require('../report/html/renderer/util');
 const NetworkRequest = require('../lib/network-request');
 const {taskGroups} = require('../lib/task-groups');
+const i18n = require('../lib/i18n');
+
+const UIStrings = {
+  title: 'JavaScript boot-up time',
+  failureTitle: 'JavaScript boot-up time is too high',
+  description: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
+    'You may find delivering smaller JS payloads helps with this. [Learn ' +
+    'more](https://developers.google.com/web/tools/lighthouse/audits/bootup).',
+  columnTotal: 'Total',
+  columnScriptEval: 'Script Evaluation',
+  columnScriptParse: 'Script Parse',
+  chromeExtensionsWarning: 'Chrome extensions negatively affected this page\'s load' +
+    ' performance. Try auditing the page in incognito mode or from a clean Chrome profile.',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class BootupTime extends Audit {
   /**
@@ -17,12 +32,10 @@ class BootupTime extends Audit {
   static get meta() {
     return {
       id: 'bootup-time',
-      title: 'JavaScript boot-up time',
-      failureTitle: 'JavaScript boot-up time is too high',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      description: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
-        'You may find delivering smaller JS payloads helps with this. [Learn ' +
-        'more](https://developers.google.com/web/tools/lighthouse/audits/bootup).',
       requiredArtifacts: ['traces'],
     };
   }
@@ -132,18 +145,17 @@ class BootupTime extends Audit {
 
     // TODO: consider moving this to core gathering so you don't need to run the audit for warning
     if (hadExcessiveChromeExtension) {
-      context.LighthouseRunWarnings.push('Chrome extensions negatively affected this page\'s load' +
-        ' performance. Try auditing the page in incognito mode or from a clean Chrome profile.');
+      context.LighthouseRunWarnings.push(str_(UIStrings.chromeExtensionsWarning));
     }
 
     const summary = {wastedMs: totalBootupTime};
 
     const headings = [
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'total', granularity: 1, itemType: 'ms', text: 'Total'},
-      {key: 'scripting', granularity: 1, itemType: 'ms', text: taskGroups.scriptEvaluation.label},
+      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
+      {key: 'total', granularity: 1, itemType: 'ms', text: str_(UIStrings.columnTotal)},
+      {key: 'scripting', granularity: 1, itemType: 'ms', text: str_(UIStrings.columnScriptEval)},
       {key: 'scriptParseCompile', granularity: 1, itemType: 'ms',
-        text: taskGroups.scriptParseCompile.label},
+        text: str_(UIStrings.columnScriptParse)},
     ];
 
     const details = BootupTime.makeTableDetails(headings, results, summary);
@@ -157,10 +169,11 @@ class BootupTime extends Audit {
     return {
       score,
       rawValue: totalBootupTime,
-      displayValue: [Util.MS_DISPLAY_VALUE, totalBootupTime],
+      displayValue: totalBootupTime > 0 ? str_(i18n.UIStrings.ms, {timeInMs: totalBootupTime}) : '',
       details,
     };
   }
 }
 
 module.exports = BootupTime;
+module.exports.UIStrings = UIStrings;

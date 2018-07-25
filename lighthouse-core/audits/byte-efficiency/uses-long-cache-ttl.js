@@ -12,6 +12,21 @@ const Audit = require('../audit');
 const NetworkRequest = require('../../lib/network-request');
 const URL = require('../../lib/url-shim');
 const linearInterpolation = require('../../lib/statistics').linearInterpolation;
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'Uses efficient cache policy on static assets',
+  failureTitle: 'Uses inefficient cache policy on static assets',
+  description:
+    'A long cache lifetime can speed up repeat visits to your page. ' +
+    '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy).',
+  displayValue: `{itemCount, plural,
+    =1 {1 resource found}
+    other {# resources found}
+    }`,
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 // Ignore assets that have very high likelihood of cache hit
 const IGNORE_THRESHOLD_IN_PERCENT = 0.925;
@@ -23,11 +38,9 @@ class CacheHeaders extends Audit {
   static get meta() {
     return {
       id: 'uses-long-cache-ttl',
-      title: 'Uses efficient cache policy on static assets',
-      failureTitle: 'Uses inefficient cache policy on static assets',
-      description:
-        'A long cache lifetime can speed up repeat visits to your page. ' +
-        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy).',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['devtoolsLogs'],
     };
@@ -212,10 +225,12 @@ class CacheHeaders extends Audit {
       );
 
       const headings = [
-        {key: 'url', itemType: 'url', text: 'URL'},
-        {key: 'cacheLifetimeMs', itemType: 'ms', text: 'Cache TTL', displayUnit: 'duration'},
-        {key: 'totalBytes', itemType: 'bytes', text: 'Size (KB)', displayUnit: 'kb',
-          granularity: 1},
+        {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
+        // TODO(i18n): pre-compute localized duration
+        {key: 'cacheLifetimeMs', itemType: 'ms', text: str_(i18n.UIStrings.columnCacheTTL),
+          displayUnit: 'duration'},
+        {key: 'totalBytes', itemType: 'bytes', text: str_(i18n.UIStrings.columnSize),
+          displayUnit: 'kb', granularity: 1},
       ];
 
       const summary = {wastedBytes: totalWastedBytes};
@@ -224,7 +239,7 @@ class CacheHeaders extends Audit {
       return {
         score,
         rawValue: totalWastedBytes,
-        displayValue: `${results.length} asset${results.length !== 1 ? 's' : ''} found`,
+        displayValue: str_(UIStrings.displayValue, {itemCount: results.length}),
         extendedInfo: {
           value: {
             results,
@@ -238,3 +253,4 @@ class CacheHeaders extends Audit {
 }
 
 module.exports = CacheHeaders;
+module.exports.UIStrings = UIStrings;

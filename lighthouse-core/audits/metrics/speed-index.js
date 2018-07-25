@@ -6,7 +6,15 @@
 'use strict';
 
 const Audit = require('../audit');
-const Util = require('../../report/html/renderer/util');
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'Speed Index',
+  description: 'Speed Index shows how quickly the contents of a page are visibly populated. ' +
+      '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class SpeedIndex extends Audit {
   /**
@@ -15,9 +23,8 @@ class SpeedIndex extends Audit {
   static get meta() {
     return {
       id: 'speed-index',
-      title: 'Speed Index',
-      description: 'Speed Index shows how quickly the contents of a page are visibly populated. ' +
-          '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index).',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
@@ -56,9 +63,10 @@ class SpeedIndex extends Audit {
         context.options.scoreMedian
       ),
       rawValue: metricResult.timing,
-      displayValue: [Util.MS_DISPLAY_VALUE, metricResult.timing],
+      displayValue: str_(i18n.UIStrings.ms, {timeInMs: metricResult.timing}),
     };
   }
 }
 
 module.exports = SpeedIndex;
+module.exports.UIStrings = UIStrings;

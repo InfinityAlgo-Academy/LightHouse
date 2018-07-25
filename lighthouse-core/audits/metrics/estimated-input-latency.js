@@ -6,6 +6,17 @@
 'use strict';
 
 const Audit = require('../audit');
+const i18n = require('../../lib/i18n');
+
+const UIStrings = {
+  title: 'Estimated Input Latency',
+  description: 'The score above is an estimate of how long your app takes to respond to user ' +
+      'input, in milliseconds, during the busiest 5s window of page load. If your ' +
+      'latency is higher than 50 ms, users may perceive your app as laggy. ' +
+      '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class EstimatedInputLatency extends Audit {
   /**
@@ -14,11 +25,8 @@ class EstimatedInputLatency extends Audit {
   static get meta() {
     return {
       id: 'estimated-input-latency',
-      title: 'Estimated Input Latency',
-      description: 'The score above is an estimate of how long your app takes to respond to user ' +
-          'input, in milliseconds, during the busiest 5s window of page load. If your ' +
-          'latency is higher than 50 ms, users may perceive your app as laggy. ' +
-          '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces'],
     };
@@ -56,9 +64,10 @@ class EstimatedInputLatency extends Audit {
         context.options.scoreMedian
       ),
       rawValue: metricResult.timing,
-      displayValue: ['%d\xa0ms', metricResult.timing],
+      displayValue: str_(i18n.UIStrings.ms, {timeInMs: metricResult.timing}),
     };
   }
 }
 
 module.exports = EstimatedInputLatency;
+module.exports.UIStrings = UIStrings;

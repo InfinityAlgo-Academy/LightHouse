@@ -6,6 +6,16 @@
 'use strict';
 
 const Audit = require('./audit');
+const i18n = require('../lib/i18n');
+
+const UIStrings = {
+  title: 'Keep server response times low (TTFB)',
+  description: 'Time To First Byte identifies the time at which your server sends a response.' +
+    ' [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).',
+  displayValue: `Root document took {timeInMs, number, milliseconds}\xa0ms`,
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const TTFB_THRESHOLD = 600;
 
@@ -16,9 +26,8 @@ class TTFBMetric extends Audit {
   static get meta() {
     return {
       id: 'time-to-first-byte',
-      title: 'Keep server response times low (TTFB)',
-      description: 'Time To First Byte identifies the time at which your server sends a response.' +
-        ' [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['devtoolsLogs', 'URL'],
     };
   }
@@ -41,6 +50,7 @@ class TTFBMetric extends Audit {
 
     const ttfb = TTFBMetric.caclulateTTFB(mainResource);
     const passed = ttfb < TTFB_THRESHOLD;
+    const displayValue = str_(UIStrings.displayValue, {timeInMs: ttfb});
 
     /** @type {LH.Result.Audit.OpportunityDetails} */
     const details = {
@@ -53,7 +63,7 @@ class TTFBMetric extends Audit {
     return {
       rawValue: ttfb,
       score: Number(passed),
-      displayValue: passed ? '' : ['Root document took %10d', ttfb],
+      displayValue,
       details,
       extendedInfo: {
         value: {
@@ -65,3 +75,4 @@ class TTFBMetric extends Audit {
 }
 
 module.exports = TTFBMetric;
+module.exports.UIStrings = UIStrings;

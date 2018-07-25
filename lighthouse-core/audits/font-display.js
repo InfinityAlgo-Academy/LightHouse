@@ -8,6 +8,17 @@
 const Audit = require('./audit');
 const NetworkRequest = require('../lib/network-request');
 const allowedFontFaceDisplays = ['block', 'fallback', 'optional', 'swap'];
+const i18n = require('../lib/i18n');
+
+const UIStrings = {
+  title: 'All text remains visible during webfont loads',
+  failureTitle: 'Text is invisible while webfonts are loading',
+  description: 'Leverage the font-display CSS feature to ensure text is user-visible while ' +
+    'webfonts are loading. ' +
+    '[Learn more](https://developers.google.com/web/updates/2016/02/font-display).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class FontDisplay extends Audit {
   /**
@@ -16,11 +27,9 @@ class FontDisplay extends Audit {
   static get meta() {
     return {
       id: 'font-display',
-      title: 'All text remains visible during webfont loads',
-      failureTitle: 'Text is invisible while webfonts are loading',
-      description: 'Leverage the font-display CSS feature to ensure text is user-visible while ' +
-        'webfonts are loading. ' +
-        '[Learn more](https://developers.google.com/web/updates/2016/02/font-display).',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['devtoolsLogs', 'Fonts'],
     };
   }
@@ -54,17 +63,17 @@ class FontDisplay extends Audit {
         .map(record => {
           // In reality the end time should be calculated with paint time included
           // all browsers wait 3000ms to block text so we make sure 3000 is our max wasted time
-          const wastedTime = Math.min((record.endTime - record.startTime) * 1000, 3000);
+          const wastedMs = Math.min((record.endTime - record.startTime) * 1000, 3000);
 
           return {
             url: record.url,
-            wastedTime,
+            wastedMs,
           };
         });
 
       const headings = [
-        {key: 'url', itemType: 'url', text: 'Font URL'},
-        {key: 'wastedTime', itemType: 'ms', granularity: 1, text: 'Font download time'},
+        {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
+        {key: 'wastedMs', itemType: 'ms', text: str_(i18n.UIStrings.columnWastedMs)},
       ];
       const details = Audit.makeTableDetails(headings, results);
 
@@ -78,3 +87,4 @@ class FontDisplay extends Audit {
 }
 
 module.exports = FontDisplay;
+module.exports.UIStrings = UIStrings;

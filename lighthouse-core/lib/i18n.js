@@ -35,14 +35,21 @@ const LH_ROOT = path.join(__dirname, '../../');
 
 const UIStrings = {
   ms: '{timeInMs, number, milliseconds}\xa0ms',
+  displayValueByteSavings: 'Potential savings of {wastedBytes, number, bytes}\xa0KB',
+  displayValueMsSavings: 'Potential savings of {wastedMs, number, milliseconds}\xa0ms',
   columnURL: 'URL',
   columnSize: 'Size (KB)',
+  columnCacheTTL: 'Cache TTL',
+  columnWastedBytes: 'Potential Savings (KB)',
   columnWastedMs: 'Potential Savings (ms)',
-  displayValueWastedMs: 'Potential savings of {wastedMs, number, milliseconds}\xa0ms',
+  columnTimeSpent: 'Time Spent',
 };
 
 const formats = {
   number: {
+    bytes: {
+      maximumFractionDigits: 0,
+    },
     milliseconds: {
       maximumFractionDigits: 0,
     },
@@ -58,14 +65,25 @@ function _preprocessMessageValues(icuMessage, values) {
 
   const clonedValues = JSON.parse(JSON.stringify(values));
   const parsed = MessageParser.parse(icuMessage);
+  // Throw an error if a message's value isn't provided
+  parsed.elements
+    .filter(el => el.type === 'argumentElement')
+    .forEach(el => {
+      if (el.id && (el.id in values) === false) {
+        throw new Error('ICU Message contains a value reference that wasn\'t provided');
+      }
+    });
+
   // Round all milliseconds to the nearest 10
   parsed.elements
     .filter(el => el.format && el.format.style === 'milliseconds')
+    // @ts-ignore - el.id is always defined when el.format is defined
     .forEach(el => (clonedValues[el.id] = Math.round(clonedValues[el.id] / 10) * 10));
 
   // Replace all the bytes with KB
   parsed.elements
     .filter(el => el.format && el.format.style === 'bytes')
+    // @ts-ignore - el.id is always defined when el.format is defined
     .forEach(el => (clonedValues[el.id] = clonedValues[el.id] / 1024));
 
   return clonedValues;
