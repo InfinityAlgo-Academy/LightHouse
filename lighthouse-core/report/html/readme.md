@@ -1,8 +1,13 @@
-## HTML Report Generation Overview
+# Lighthouse HTML Report Renderer
+
+[Source on Github](https://github.com/GoogleChrome/lighthouse/tree/master/lighthouse-core/report/html)
+
+
+## Overview
 
 Lighthouse has an indepedent report renderer that takes the **LHR** (Lighthouse Result object) and creates a DOM tree of the report. It's all done client-side.
 
-Example standalone HTML report, delivered by the CLI: [`dbwtest-3.0.0-alpha.html`](https://googlechrome.github.io/lighthouse/reports/dbwtest-3.0.0-alpha.html) _(View the source! 📖)_
+Example standalone HTML report, delivered by the CLI: [`dbwtest-3.0.3.html`](https://googlechrome.github.io/lighthouse/reports/dbwtest-3.0.3.html) _(View the source! 📖)_
 
 ### Report Renderer components
 
@@ -10,7 +15,7 @@ Example standalone HTML report, delivered by the CLI: [`dbwtest-3.0.0-alpha.html
    - It runs natively in Node.js but can run in the browser after a compile step is applied during our bundling pipeline. That compile step uses a browserify transform that takes any `fs.readFileSync()` calls and replaces them with the stringified file content.
 1. [`lighthouse-core/report/html/`](https://github.com/GoogleChrome/lighthouse/tree/master/lighthouse-core/report/html) has everything required to create the HTML report.
 1. [`lighthouse-core/report/html/renderer`](https://github.com/GoogleChrome/lighthouse/tree/master/lighthouse-core/report/html/renderer) are all client-side JS files. They transform an LHR object into a report DOM tree. They are all executed within the browser.
-1. [`lighthouse-core/report/html/report-template.html`](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/report/html/report-template.html) is where the client-side build of the DOM report is typically kicked off ([with these four lines](https://github.com/GoogleChrome/lighthouse/blob/63c999789dc08b9a3b56b22f25f478f13050da29/lighthouse-core/report/html/report-template.html#L27-L31)) However, see _Current Uses.._ below for more possibilities.
+1. [`lighthouse-core/report/html/report-template.html`](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/report/html/report-template.html) is where the client-side build of the DOM report is typically kicked off ([with these four lines](https://github.com/GoogleChrome/lighthouse/blob/eda3a3e2e271249f261655f9504fd542d6acf0f8/lighthouse-core/report/html/report-template.html#L29-L33)) However, see _Current Uses.._ below for more possibilities.
 
 
 ### Data Hydration
