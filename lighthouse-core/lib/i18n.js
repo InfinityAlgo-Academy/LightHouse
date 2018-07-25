@@ -132,6 +132,22 @@ function getDefaultLocale() {
 }
 
 /**
+ * @param {LH.Locale} locale
+ * @return {LH.I18NRendererStrings}
+ */
+function getRendererFormattedStrings(locale) {
+  const icuMessageIds = Object.keys(LOCALES[locale]).filter(f => f.includes('core/report/html/'));
+  const strings = {};
+  for (const icuMessageId of icuMessageIds) {
+    const [filename, varName] = icuMessageId.split(' | ');
+    if (!filename.endsWith('util.js')) throw new Error(`Unexpected message: ${icuMessageId}`);
+    strings[varName] = LOCALES[locale][icuMessageId].message;
+  }
+
+  return strings;
+}
+
+/**
  * @param {string} filename
  * @param {Record<string, string>} fileStrings
  */
@@ -208,13 +224,14 @@ function replaceIcuMessageInstanceIds(lhr, locale) {
 
   const icuMessagePaths = {};
   replaceInObject(lhr, icuMessagePaths);
-  lhr.i18n = {icuMessagePaths};
+  return icuMessagePaths;
 }
 
 module.exports = {
   _formatPathAsString,
   UIStrings,
   getDefaultLocale,
+  getRendererFormattedStrings,
   createMessageInstanceIdFn,
   replaceIcuMessageInstanceIds,
 };

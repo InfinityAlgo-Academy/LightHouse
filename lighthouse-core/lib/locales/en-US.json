@@ -43,5 +43,41 @@
   },
   "lighthouse-core/lib/i18n.js | displayValueWastedMs": {
     "message": "Potential savings of {wastedMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
+    "message": "Values are estimated and may vary."
+  },
+  "lighthouse-core/report/html/renderer/util.js | opportunityResourceColumnLabel": {
+    "message": "Resource to optimize"
+  },
+  "lighthouse-core/report/html/renderer/util.js | opportunitySavingsColumnLabel": {
+    "message": "Estimated Savings"
+  },
+  "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
+    "message": "Report error: no audit information"
+  },
+  "lighthouse-core/report/html/renderer/util.js | errorLabel": {
+    "message": "Error!"
+  },
+  "lighthouse-core/report/html/renderer/util.js | warningHeader": {
+    "message": "Warnings: "
+  },
+  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
+    "message": "Show audits"
+  },
+  "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
+    "message": "Passed audits"
+  },
+  "lighthouse-core/report/html/renderer/util.js | notApplicableAuditsGroupTitle": {
+    "message": "Not applicable"
+  },
+  "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
+    "message": "Additional items to manually check"
+  },
+  "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
+    "message": "There were issues affecting this run of Lighthouse:"
+  },
+  "lighthouse-core/report/html/renderer/util.js | scorescaleLabel": {
+    "message": "Score scale:"
   }
 }

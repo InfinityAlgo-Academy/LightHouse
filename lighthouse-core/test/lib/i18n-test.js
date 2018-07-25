@@ -48,10 +48,17 @@ describe('i18n', () => {
       const reference = templateID + ' # 0';
       const lhr = {audits: {'fake-audit': {title: reference}}};
 
-      i18n.replaceIcuMessageInstanceIds(lhr, 'en-US');
+      const icuMessagePaths = i18n.replaceIcuMessageInstanceIds(lhr, 'en-US');
       expect(lhr.audits['fake-audit'].title).toBe('use me!');
-      expect(lhr.i18n.icuMessagePaths).toEqual({
+      expect(icuMessagePaths).toEqual({
         [templateID]: [{path: 'audits[fake-audit].title', values: {x: 1}}]});
+    });
+  });
+
+  describe('#getRendererFormattedStrings', () => {
+    it('returns icu messages in the specified locale', () => {
+      const strings = i18n.getRendererFormattedStrings('en-XA');
+      expect(strings.passedAuditsGroupTitle).toEqual('P̂áŝśêd́ âúd̂ít̂ś');
     });
   });
 });

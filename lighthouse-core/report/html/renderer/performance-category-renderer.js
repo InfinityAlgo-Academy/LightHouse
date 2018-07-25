@@ -128,7 +128,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     });
     const estValuesEl = this.dom.createChildOf(metricsColumn2El, 'div',
         'lh-metrics__disclaimer lh-metrics__disclaimer');
-    estValuesEl.textContent = 'Values are estimated and may vary.';
+    estValuesEl.textContent = Util.UIStrings.varianceDisclaimer;
 
     metricAuditsEl.classList.add('lh-audit-group--metrics');
     element.appendChild(metricAuditsEl);
@@ -156,6 +156,12 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const scale = Math.max(Math.ceil(maxWaste / 1000) * 1000, minimumScale);
       const groupEl = this.renderAuditGroup(groups['load-opportunities'], {expandable: false});
       const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity-header', this.templateContext);
+
+      this.dom.find('.lh-load-opportunity__col--one', tmpl).textContent =
+        Util.UIStrings.opportunityResourceColumnLabel;
+      this.dom.find('.lh-load-opportunity__col--two', tmpl).textContent =
+        Util.UIStrings.opportunitySavingsColumnLabel;
+
       const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
       groupEl.appendChild(headerEl);
       opportunityAudits.forEach((item, i) =>

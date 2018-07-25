@@ -1,7 +1,7 @@
 <!-- Lighthouse run warnings -->
 <template id="tmpl-lh-warnings--toplevel">
   <div class="lh-warnings lh-warnings--toplevel">
-    <strong>There were issues affecting this run of Lighthouse:</strong>
+    <strong class="lh-warnings__msg"></strong>
     <ul></ul>
   </div>
 </template>
@@ -9,7 +9,7 @@
 <!-- Lighthouse score scale -->
 <template id="tmpl-lh-scorescale">
   <div class="lh-scorescale">
-    <span class="lh-scorescale-label">Score scale:</span>
+    <span class="lh-scorescale-label"></span>
     <span class="lh-scorescale-range lh-scorescale-range--fail">0-44</span>
     <span class="lh-scorescale-range lh-scorescale-range--average">45-74</span>
     <span class="lh-scorescale-range lh-scorescale-range--pass">75-100</span>
@@ -90,12 +90,8 @@
 <!-- Lighthouse perf opportunity header -->
 <template id="tmpl-lh-opportunity-header">
   <div class="lh-load-opportunity__header lh-load-opportunity__cols">
-    <div class="lh-load-opportunity__col lh-load-opportunity__col--one">
-      Resource to optimize
-    </div>
-    <div class="lh-load-opportunity__col lh-load-opportunity__col--two">
-      Estimated Savings
-    </div>
+    <div class="lh-load-opportunity__col lh-load-opportunity__col--one"></div>
+    <div class="lh-load-opportunity__col lh-load-opportunity__col--two"></div>
   </div>
 </template>
 
@@ -394,6 +390,7 @@
     <div class="lh-export">
       <button class="report-icon report-icon--share lh-export__button" title="Export report"></button>
       <div class="lh-export__dropdown">
+        <!-- TODO(i18n): localize export dropdown -->
         <a href="#" class="report-icon report-icon--print" data-action="print-summary">Print Summary</a>
         <a href="#" class="report-icon report-icon--print" data-action="print-expanded">Print Expanded</a>
         <a href="#" class="report-icon report-icon--copy" data-action="copy">Copy JSON</a>
@@ -436,6 +433,7 @@
     }
   </style>
   <footer class="lh-footer">
+    <!-- TODO(i18n): localize runtime settings -->
     <div class="lh-env">
       <div class="lh-env__title">Runtime settings</div>
       <ul class="lh-env__items">
@@ -605,6 +603,7 @@
       }
     </style>
     <div>
+      <!-- TODO(i18n): remove CRC sentences or localize -->
       Longest chain: <b class="lh-crc__longest_duration"><!-- fill me: longestChain.duration --></b>
       over <b class="lh-crc__longest_length"><!-- fill me: longestChain.length --></b> requests, totalling
       <b class="lh-crc__longest_transfersize"><!-- fill me: longestChain.length --></b>

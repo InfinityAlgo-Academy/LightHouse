@@ -43,5 +43,41 @@
   },
   "lighthouse-core/lib/i18n.js | displayValueWastedMs": {
     "message": "P̂ót̂én̂t́îál̂ śâv́îńĝś ôf́ {wastedMs, number, milliseconds} m̂ś"
+  },
+  "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
+    "message": "V̂ál̂úêś âŕê éŝt́îḿât́êd́ âńd̂ ḿâý v̂ár̂ý."
+  },
+  "lighthouse-core/report/html/renderer/util.js | opportunityResourceColumnLabel": {
+    "message": "R̂éŝóûŕĉé t̂ó ôṕt̂ím̂íẑé"
+  },
+  "lighthouse-core/report/html/renderer/util.js | opportunitySavingsColumnLabel": {
+    "message": "Êśt̂ím̂át̂éd̂ Śâv́îńĝś"
+  },
+  "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
+    "message": "R̂ép̂ór̂t́ êŕr̂ór̂: ńô áûd́ît́ îńf̂ór̂ḿât́îón̂"
+  },
+  "lighthouse-core/report/html/renderer/util.js | errorLabel": {
+    "message": "Êŕr̂ór̂!"
+  },
+  "lighthouse-core/report/html/renderer/util.js | warningHeader": {
+    "message": "Ŵár̂ńîńĝś: "
+  },
+  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
+    "message": "Ŝh́ôẃ âúd̂ít̂ś"
+  },
+  "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
+    "message": "P̂áŝśêd́ âúd̂ít̂ś"
+  },
+  "lighthouse-core/report/html/renderer/util.js | notApplicableAuditsGroupTitle": {
+    "message": "N̂ót̂ áp̂ṕl̂íĉáb̂ĺê"
+  },
+  "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
+    "message": "Âd́d̂ít̂íôńâĺ ît́êḿŝ t́ô ḿâńûál̂ĺŷ ćĥéĉḱ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
+    "message": "T̂h́êŕê ẃêŕê íŝśûéŝ áf̂f́êćt̂ín̂ǵ t̂h́îś r̂ún̂ óf̂ Ĺîǵĥt́ĥóûśê:"
+  },
+  "lighthouse-core/report/html/renderer/util.js | scorescaleLabel": {
+    "message": "Ŝćôŕê śĉál̂é:"
   }
 }

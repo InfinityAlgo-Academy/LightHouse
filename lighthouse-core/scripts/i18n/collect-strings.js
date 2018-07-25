@@ -17,9 +17,9 @@ const ignoredPathComponents = [
   '/.git',
   '/scripts',
   '/node_modules',
-  '/renderer',
   '/test/',
   '-test.js',
+  '-renderer.js',
 ];
 
 /**

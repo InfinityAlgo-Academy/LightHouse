@@ -137,7 +137,10 @@ class Runner {
         timing: {total: Date.now() - startTime},
       };
 
-      i18n.replaceIcuMessageInstanceIds(lhr, settings.locale);
+      lhr.i18n = {
+        rendererFormattedStrings: i18n.getRendererFormattedStrings(settings.locale),
+        icuMessagePaths: i18n.replaceIcuMessageInstanceIds(lhr, settings.locale),
+      };
 
       const report = generateReport(lhr, settings.output);
       return {lhr, artifacts, report};

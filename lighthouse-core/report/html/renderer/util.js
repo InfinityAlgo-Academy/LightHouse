@@ -378,6 +378,23 @@ class Util {
   }
 }
 
+Util.UIStrings = {
+  varianceDisclaimer: 'Values are estimated and may vary.',
+  opportunityResourceColumnLabel: 'Resource to optimize',
+  opportunitySavingsColumnLabel: 'Estimated Savings',
+
+  errorMissingAuditInfo: 'Report error: no audit information',
+  errorLabel: 'Error!',
+  warningHeader: 'Warnings: ',
+  auditGroupExpandTooltip: 'Show audits',
+  passedAuditsGroupTitle: 'Passed audits',
+  notApplicableAuditsGroupTitle: 'Not applicable',
+  manualAuditsGroupTitle: 'Additional items to manually check',
+
+  toplevelWarningsMessage: 'There were issues affecting this run of Lighthouse:',
+  scorescaleLabel: 'Score scale:',
+};
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = Util;
 } else {
