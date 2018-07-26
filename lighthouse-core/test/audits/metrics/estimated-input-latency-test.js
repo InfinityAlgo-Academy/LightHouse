@@ -29,7 +29,7 @@ describe('Performance: estimated-input-latency audit', () => {
     return Audit.audit(artifacts, {options, settings}).then(output => {
       assert.equal(Math.round(output.rawValue * 10) / 10, 17.1);
       assert.equal(output.score, 1);
-      assert.ok(output.displayValue);
+      expect(output.displayValue).toBeDisplayString('20\xa0ms');
     });
   });
 });

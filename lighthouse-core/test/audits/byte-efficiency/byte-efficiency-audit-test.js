@@ -176,7 +176,7 @@ describe('Byte efficiency base audit', () => {
       ],
     }, graph, simulator);
 
-    assert.ok(result.displayValue);
+    expect(result.displayValue).toBeDisplayString(/savings of 2/);
   });
 
   it('should work on real graphs', async () => {

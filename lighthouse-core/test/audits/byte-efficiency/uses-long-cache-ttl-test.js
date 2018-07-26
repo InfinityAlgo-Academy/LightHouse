@@ -46,7 +46,7 @@ describe('Cache headers audit', () => {
       assert.equal(items.length, 1);
       assert.equal(items[0].cacheLifetimeMs, 0);
       assert.equal(items[0].wastedBytes, 10000);
-      assert.ok(result.displayValue);
+      expect(result.displayValue).toBeDisplayString('1 resource found');
     });
   });
 
@@ -68,7 +68,7 @@ describe('Cache headers audit', () => {
       assert.equal(Math.round(items[1].wastedBytes), 8000);
       assert.equal(items[2].cacheLifetimeMs, 86400 * 1000);
       assert.equal(Math.round(items[2].wastedBytes), 4000);
-      assert.ok(result.displayValue);
+      expect(result.displayValue).toBeDisplayString('3 resources found');
     });
   });
 

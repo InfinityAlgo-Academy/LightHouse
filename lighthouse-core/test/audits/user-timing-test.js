@@ -30,7 +30,7 @@ describe('Performance: user-timings audit', () => {
       assert.equal(blackListedUTs.length, 0, 'Blacklisted usertimings included in results');
 
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.displayValue);
+      expect(auditResult.displayValue).toBeDisplayString('2 user timings');
 
       assert.equal(auditResult.details.items[0].name, 'measure_test');
       assert.equal(auditResult.details.items[0].timingType, 'Measure');

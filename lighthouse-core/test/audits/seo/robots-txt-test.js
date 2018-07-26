@@ -159,7 +159,7 @@ wrong
 
       assert.equal(auditResult.rawValue, false);
       assert.equal(auditResult.details.items.length, expectedErrors);
-      assert.ok(auditResult.displayValue);
+      expect(auditResult.displayValue).toBeDisplayString(/\d errors? found/);
     });
   });
 

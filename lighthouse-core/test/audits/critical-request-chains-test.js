@@ -86,7 +86,7 @@ const mockArtifacts = (mockChain) => {
 describe('Performance: critical-request-chains audit', () => {
   it('calculates the correct chain result for failing example', () => {
     return CriticalRequestChains.audit(mockArtifacts(FAILING_REQUEST_CHAIN)).then(output => {
-      assert.ok(output.displayValue);
+      expect(output.displayValue).toBeDisplayString('2 chains found');
       assert.equal(output.rawValue, false);
       assert.ok(output.details);
     });
