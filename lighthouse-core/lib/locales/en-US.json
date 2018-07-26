@@ -3,7 +3,7 @@
     "message": "JavaScript boot-up time"
   },
   "lighthouse-core/audits/bootup-time.js | failureTitle": {
-    "message": "JavaScript boot-up time is too high"
+    "message": "Reduce JavaScript boot-up time"
   },
   "lighthouse-core/audits/bootup-time.js | description": {
     "message": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/bootup)."
@@ -42,7 +42,7 @@
     "message": "Avoids enormous network payloads"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
-    "message": "Has enormous network payloads"
+    "message": "Avoid enormous network payloads"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | description": {
     "message": "Large network payloads cost users real money and are highly correlated with long load times. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads)."
@@ -78,7 +78,7 @@
     "message": "Uses efficient cache policy on static assets"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
-    "message": "Uses inefficient cache policy on static assets"
+    "message": "Serve static assets with an efficient cache policy"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy)."
@@ -111,7 +111,7 @@
     "message": "Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/webp)."
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Critical Request Chains"
+    "message": "Minimize Critical Request Chains"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
     "message": "The Critical Request Chains below show you what resources are issued with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
@@ -123,7 +123,7 @@
     "message": "Avoids an excessive DOM size"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
-    "message": "Uses an excessive DOM size"
+    "message": "Avoid an excessive DOM size"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Browser engineers recommend pages contain fewer than ~1,500 DOM nodes. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "All text remains visible during webfont loads"
   },
   "lighthouse-core/audits/font-display.js | failureTitle": {
-    "message": "Text is invisible while webfonts are loading"
+    "message": "Ensure text remains visible during webfont load"
   },
   "lighthouse-core/audits/font-display.js | description": {
     "message": "Leverage the font-display CSS feature to ensure text is user-visible while webfonts are loading. [Learn more](https://developers.google.com/web/updates/2016/02/font-display)."
@@ -153,7 +153,7 @@
     "message": "Minimizes main thread work"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Has significant main thread work"
+    "message": "Minimize main thread work"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | description": {
     "message": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this."
@@ -204,7 +204,10 @@
     "message": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects)."
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "Keep server response times low (TTFB)"
+    "message": "Server response times are low (TTFB)"
+  },
+  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
+    "message": "Reduce server response times (TTFB)"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."

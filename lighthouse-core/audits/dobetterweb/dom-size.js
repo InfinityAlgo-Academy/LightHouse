@@ -22,7 +22,7 @@ const MAX_DOM_TREE_DEPTH = 32;
 
 const UIStrings = {
   title: 'Avoids an excessive DOM size',
-  failureTitle: 'Uses an excessive DOM size',
+  failureTitle: 'Avoid an excessive DOM size',
   description: 'Browser engineers recommend pages contain fewer than ' +
     `~${MAX_DOM_NODES.toLocaleString()} DOM nodes. The sweet spot is a tree ` +
     `depth < ${MAX_DOM_TREE_DEPTH} elements and fewer than ${MAX_DOM_TREE_WIDTH} ` +

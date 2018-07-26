@@ -232,7 +232,7 @@
     },
     "time-to-first-byte": {
       "id": "time-to-first-byte",
-      "title": "Keep server response times low (TTFB)",
+      "title": "Server response times are low (TTFB)",
       "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).",
       "score": 1,
       "scoreDisplayMode": "binary",
@@ -278,7 +278,7 @@
     },
     "critical-request-chains": {
       "id": "critical-request-chains",
-      "title": "Critical Request Chains",
+      "title": "Minimize Critical Request Chains",
       "description": "The Critical Request Chains below show you what resources are issued with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains).",
       "score": null,
       "scoreDisplayMode": "informative",
@@ -1653,7 +1653,7 @@
     },
     "uses-long-cache-ttl": {
       "id": "uses-long-cache-ttl",
-      "title": "Uses inefficient cache policy on static assets",
+      "title": "Serve static assets with an efficient cache policy",
       "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy).",
       "score": 0.58,
       "scoreDisplayMode": "numeric",

@@ -16,7 +16,7 @@ const i18n = require('../lib/i18n');
 
 const UIStrings = {
   title: 'Minimizes main thread work',
-  failureTitle: 'Has significant main thread work',
+  failureTitle: 'Minimize main thread work',
   description: 'Consider reducing the time spent parsing, compiling and executing JS. ' +
     'You may find delivering smaller JS payloads helps with this.',
   columnCategory: 'Category',

@@ -3,7 +3,7 @@
     "message": "Ĵáv̂áŜćr̂íp̂t́ b̂óôt́-ûṕ t̂ím̂é"
   },
   "lighthouse-core/audits/bootup-time.js | failureTitle": {
-    "message": "Ĵáv̂áŜćr̂íp̂t́ b̂óôt́-ûṕ t̂ím̂é îś t̂óô h́îǵĥ"
+    "message": "R̂éd̂úĉé Ĵáv̂áŜćr̂íp̂t́ b̂óôt́-ûṕ t̂ím̂é"
   },
   "lighthouse-core/audits/bootup-time.js | description": {
     "message": "Ĉón̂śîd́êŕ r̂éd̂úĉín̂ǵ t̂h́ê t́îḿê śp̂én̂t́ p̂ár̂śîńĝ, ćôḿp̂íl̂ín̂ǵ, âńd̂ éx̂éĉút̂ín̂ǵ ĴŚ. Ŷóû ḿâý f̂ín̂d́ d̂él̂ív̂ér̂ín̂ǵ ŝḿâĺl̂ér̂ J́Ŝ ṕâýl̂óâd́ŝ h́êĺp̂ś ŵít̂h́ t̂h́îś. [L̂éâŕn̂ ḿôŕê](h́t̂t́p̂ś://d̂év̂él̂óp̂ér̂ś.ĝóôǵl̂é.ĉóm̂/ẃêb́/t̂óôĺŝ/ĺîǵĥt́ĥóûśê/áûd́ît́ŝ/b́ôót̂úp̂)."
@@ -42,7 +42,7 @@
     "message": "Âv́ôíd̂ś êńôŕm̂óûś n̂ét̂ẃôŕk̂ ṕâýl̂óâd́ŝ"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
-    "message": "Ĥáŝ én̂ór̂ḿôúŝ ńêt́ŵór̂ḱ p̂áŷĺôád̂ś"
+    "message": "Âv́ôíd̂ én̂ór̂ḿôúŝ ńêt́ŵór̂ḱ p̂áŷĺôád̂ś"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | description": {
     "message": "L̂ár̂ǵê ńêt́ŵór̂ḱ p̂áŷĺôád̂ś ĉóŝt́ ûśêŕŝ ŕêál̂ ḿôńêý âńd̂ ár̂é ĥíĝh́l̂ý ĉór̂ŕêĺât́êd́ ŵít̂h́ l̂ón̂ǵ l̂óâd́ t̂ím̂éŝ. [Ĺêár̂ń m̂ór̂é](ĥt́t̂ṕŝ://d́êv́êĺôṕêŕŝ.ǵôóĝĺê.ćôḿ/ŵéb̂/t́ôól̂ś/l̂íĝh́t̂h́ôúŝé/âúd̂ít̂ś/n̂ét̂ẃôŕk̂-ṕâýl̂óâd́ŝ)."
@@ -78,7 +78,7 @@
     "message": "Ûśêś êf́f̂íĉíêńt̂ ćâćĥé p̂ól̂íĉý ôń ŝt́ât́îć âśŝét̂ś"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
-    "message": "Ûśêś îńêf́f̂íĉíêńt̂ ćâćĥé p̂ól̂íĉý ôń ŝt́ât́îć âśŝét̂ś"
+    "message": "Ŝér̂v́ê śt̂át̂íĉ áŝśêt́ŝ ẃît́ĥ án̂ éf̂f́îćîén̂t́ ĉáĉh́ê ṕôĺîćŷ"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Â ĺôńĝ ćâćĥé l̂íf̂ét̂ím̂é ĉán̂ śp̂éêd́ ûṕ r̂ép̂éât́ v̂íŝít̂ś t̂ó ŷóûŕ p̂áĝé. [L̂éâŕn̂ ḿôŕê](h́t̂t́p̂ś://d̂év̂él̂óp̂ér̂ś.ĝóôǵl̂é.ĉóm̂/ẃêb́/t̂óôĺŝ/ĺîǵĥt́ĥóûśê/áûd́ît́ŝ/ćâćĥé-p̂ól̂íĉý)."
@@ -111,7 +111,7 @@
     "message": "Îḿâǵê f́ôŕm̂át̂ś l̂ík̂é ĴṔÊǴ 2000, ĴṔÊǴ X̂Ŕ, âńd̂ Ẃêb́P̂ óf̂t́êń p̂ŕôv́îd́ê b́êt́t̂ér̂ ćôḿp̂ŕêśŝíôń t̂h́âń P̂ŃĜ ór̂ J́P̂ÉĜ, ẃĥíĉh́ m̂éâńŝ f́âśt̂ér̂ d́ôẃn̂ĺôád̂ś âńd̂ ĺêśŝ d́ât́â ćôńŝúm̂ṕt̂íôń. [L̂éâŕn̂ ḿôŕê](h́t̂t́p̂ś://d̂év̂él̂óp̂ér̂ś.ĝóôǵl̂é.ĉóm̂/ẃêb́/t̂óôĺŝ/ĺîǵĥt́ĥóûśê/áûd́ît́ŝ/ẃêb́p̂)."
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Ĉŕît́îćâĺ R̂éq̂úêśt̂ Ćĥáîńŝ"
+    "message": "M̂ín̂ím̂íẑé Ĉŕît́îćâĺ R̂éq̂úêśt̂ Ćĥáîńŝ"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
     "message": "T̂h́ê Ćr̂ít̂íĉál̂ Ŕêq́ûéŝt́ Ĉh́âín̂ś b̂él̂óŵ śĥóŵ ýôú ŵh́ât́ r̂éŝóûŕĉéŝ ár̂é îśŝúêd́ ŵít̂h́ â h́îǵĥ ṕr̂íôŕît́ŷ. Ćôńŝíd̂ér̂ ŕêd́ûćîńĝ t́ĥé l̂én̂ǵt̂h́ ôf́ ĉh́âín̂ś, r̂éd̂úĉín̂ǵ t̂h́ê d́ôẃn̂ĺôád̂ śîźê óf̂ ŕêśôúr̂ćêś, ôŕ d̂éf̂ér̂ŕîńĝ t́ĥé d̂óŵńl̂óâd́ ôf́ ûńn̂éĉéŝśâŕŷ ŕêśôúr̂ćêś t̂ó îḿp̂ŕôv́ê ṕâǵê ĺôád̂. [Ĺêár̂ń m̂ór̂é](ĥt́t̂ṕŝ://d́êv́êĺôṕêŕŝ.ǵôóĝĺê.ćôḿ/ŵéb̂/t́ôól̂ś/l̂íĝh́t̂h́ôúŝé/âúd̂ít̂ś/ĉŕît́îćâĺ-r̂éq̂úêśt̂-ćĥáîńŝ)."
@@ -123,7 +123,7 @@
     "message": "Âv́ôíd̂ś âń êx́ĉéŝśîv́ê D́ÔḾ ŝíẑé"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
-    "message": "Ûśêś âń êx́ĉéŝśîv́ê D́ÔḾ ŝíẑé"
+    "message": "Âv́ôíd̂ án̂ éx̂ćêśŝív̂é D̂ÓM̂ śîźê"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "B̂ŕôẃŝér̂ én̂ǵîńêér̂ś r̂éĉóm̂ḿêńd̂ ṕâǵêś ĉón̂t́âín̂ f́êẃêŕ t̂h́âń ~1,500 D̂ÓM̂ ńôd́êś. T̂h́ê śŵéêt́ ŝṕôt́ îś â t́r̂éê d́êṕt̂h́ < 32 êĺêḿêńt̂ś âńd̂ f́êẃêŕ t̂h́âń 60 ĉh́îĺd̂ŕêń/p̂ár̂én̂t́ êĺêḿêńt̂. Á l̂ár̂ǵê D́ÔḾ ĉán̂ ín̂ćr̂éâśê ḿêḿôŕŷ úŝáĝé, ĉáûśê ĺôńĝér̂ [śt̂ýl̂é ĉál̂ćûĺât́îón̂ś](ĥt́t̂ṕŝ://d́êv́êĺôṕêŕŝ.ǵôóĝĺê.ćôḿ/ŵéb̂/f́ûńd̂ám̂én̂t́âĺŝ/ṕêŕf̂ór̂ḿâńĉé/r̂én̂d́êŕîńĝ/ŕêd́ûćê-t́ĥé-ŝćôṕê-án̂d́-ĉóm̂ṕl̂éx̂ít̂ý-ôf́-ŝt́ŷĺê-ćâĺĉúl̂át̂íôńŝ), án̂d́ p̂ŕôd́ûćê ćôśt̂ĺŷ [ĺâýôút̂ ŕêf́l̂óŵś](ĥt́t̂ṕŝ://d́êv́êĺôṕêŕŝ.ǵôóĝĺê.ćôḿ/ŝṕêéd̂/ár̂t́îćl̂éŝ/ŕêf́l̂óŵ). [Ĺêár̂ń m̂ór̂é](ĥt́t̂ṕŝ://d́êv́êĺôṕêŕŝ.ǵôóĝĺê.ćôḿ/ŵéb̂/t́ôól̂ś/l̂íĝh́t̂h́ôúŝé/âúd̂ít̂ś/d̂óm̂-śîźê)."
@@ -144,7 +144,7 @@
     "message": "Âĺl̂ t́êx́t̂ ŕêḿâín̂ś v̂íŝíb̂ĺê d́ûŕîńĝ ẃêb́f̂ón̂t́ l̂óâd́ŝ"
   },
   "lighthouse-core/audits/font-display.js | failureTitle": {
-    "message": "T̂éx̂t́ îś îńv̂íŝíb̂ĺê ẃĥíl̂é ŵéb̂f́ôńt̂ś âŕê ĺôád̂ín̂ǵ"
+    "message": "Êńŝúr̂é t̂éx̂t́ r̂ém̂áîńŝ v́îśîb́l̂é d̂úr̂ín̂ǵ ŵéb̂f́ôńt̂ ĺôád̂"
   },
   "lighthouse-core/audits/font-display.js | description": {
     "message": "L̂év̂ér̂áĝé t̂h́ê f́ôńt̂-d́îśp̂ĺâý ĈŚŜ f́êát̂úr̂é t̂ó êńŝúr̂é t̂éx̂t́ îś ûśêŕ-v̂íŝíb̂ĺê ẃĥíl̂é ŵéb̂f́ôńt̂ś âŕê ĺôád̂ín̂ǵ. [L̂éâŕn̂ ḿôŕê](h́t̂t́p̂ś://d̂év̂él̂óp̂ér̂ś.ĝóôǵl̂é.ĉóm̂/ẃêb́/ûṕd̂át̂éŝ/2016/02/f́ôńt̂-d́îśp̂ĺâý)."
@@ -153,7 +153,7 @@
     "message": "M̂ín̂ím̂íẑéŝ ḿâín̂ t́ĥŕêád̂ ẃôŕk̂"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Ĥáŝ śîǵn̂íf̂íĉán̂t́ m̂áîń t̂h́r̂éâd́ ŵór̂ḱ"
+    "message": "M̂ín̂ím̂íẑé m̂áîń t̂h́r̂éâd́ ŵór̂ḱ"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | description": {
     "message": "Ĉón̂śîd́êŕ r̂éd̂úĉín̂ǵ t̂h́ê t́îḿê śp̂én̂t́ p̂ár̂śîńĝ, ćôḿp̂íl̂ín̂ǵ âńd̂ éx̂éĉút̂ín̂ǵ ĴŚ. Ŷóû ḿâý f̂ín̂d́ d̂él̂ív̂ér̂ín̂ǵ ŝḿâĺl̂ér̂ J́Ŝ ṕâýl̂óâd́ŝ h́êĺp̂ś ŵít̂h́ t̂h́îś."
@@ -204,7 +204,10 @@
     "message": "R̂éd̂ír̂éĉt́ŝ ín̂t́r̂ód̂úĉé âd́d̂ít̂íôńâĺ d̂él̂áŷś b̂éf̂ór̂é t̂h́ê ṕâǵê ćâń b̂é l̂óâd́êd́. [L̂éâŕn̂ ḿôŕê](h́t̂t́p̂ś://d̂év̂él̂óp̂ér̂ś.ĝóôǵl̂é.ĉóm̂/ẃêb́/t̂óôĺŝ/ĺîǵĥt́ĥóûśê/áûd́ît́ŝ/ŕêd́îŕêćt̂ś)."
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
-    "message": "K̂éêṕ ŝér̂v́êŕ r̂éŝṕôńŝé t̂ím̂éŝ ĺôẃ (T̂T́F̂B́)"
+    "message": "Ŝér̂v́êŕ r̂éŝṕôńŝé t̂ím̂éŝ ár̂é l̂óŵ (T́T̂F́B̂)"
+  },
+  "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
+    "message": "R̂éd̂úĉé ŝér̂v́êŕ r̂éŝṕôńŝé t̂ím̂éŝ (T́T̂F́B̂)"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "T̂ím̂é T̂ó F̂ír̂śt̂ B́ŷt́ê íd̂én̂t́îf́îéŝ t́ĥé t̂ím̂é ât́ ŵh́îćĥ ýôúr̂ śêŕv̂ér̂ śêńd̂ś â ŕêśp̂ón̂śê. [Ĺêár̂ń m̂ór̂é](ĥt́t̂ṕŝ://d́êv́êĺôṕêŕŝ.ǵôóĝĺê.ćôḿ/ŵéb̂/t́ôól̂ś/l̂íĝh́t̂h́ôúŝé/âúd̂ít̂ś/t̂t́f̂b́)."

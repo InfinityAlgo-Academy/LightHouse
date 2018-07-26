@@ -12,7 +12,7 @@ const i18n = require('../lib/i18n');
 
 const UIStrings = {
   title: 'JavaScript boot-up time',
-  failureTitle: 'JavaScript boot-up time is too high',
+  failureTitle: 'Reduce JavaScript boot-up time',
   description: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
     'You may find delivering smaller JS payloads helps with this. [Learn ' +
     'more](https://developers.google.com/web/tools/lighthouse/audits/bootup).',

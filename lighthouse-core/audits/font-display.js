@@ -12,7 +12,7 @@ const i18n = require('../lib/i18n');
 
 const UIStrings = {
   title: 'All text remains visible during webfont loads',
-  failureTitle: 'Text is invisible while webfonts are loading',
+  failureTitle: 'Ensure text remains visible during webfont load',
   description: 'Leverage the font-display CSS feature to ensure text is user-visible while ' +
     'webfonts are loading. ' +
     '[Learn more](https://developers.google.com/web/updates/2016/02/font-display).',

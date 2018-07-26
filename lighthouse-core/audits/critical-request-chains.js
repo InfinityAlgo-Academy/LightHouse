@@ -9,7 +9,7 @@ const Audit = require('./audit');
 const i18n = require('../lib/i18n');
 
 const UIStrings = {
-  title: 'Critical Request Chains',
+  title: 'Minimize Critical Request Chains',
   description: 'The Critical Request Chains below show you what resources are ' +
       'issued with a high priority. Consider reducing ' +
       'the length of chains, reducing the download size of resources, or ' +

@@ -10,7 +10,7 @@ const i18n = require('../../lib/i18n');
 
 const UIStrings = {
   title: 'Avoids enormous network payloads',
-  failureTitle: 'Has enormous network payloads',
+  failureTitle: 'Avoid enormous network payloads',
   description:
   'Large network payloads cost users real money and are highly correlated with ' +
   'long load times. [Learn ' +
