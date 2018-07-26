@@ -3,7 +3,8 @@
     "message": "JavaScript boot-up time"
   },
   "lighthouse-core/audits/bootup-time.js | failureTitle": {
-    "message": "Reduce JavaScript boot-up time"
+    "message": "Reduce JavaScript boot-up time",
+    "description": "Shown to users as the title of the audit when it is in a failing state."
   },
   "lighthouse-core/audits/bootup-time.js | description": {
     "message": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/bootup)."
@@ -42,7 +43,8 @@
     "message": "Avoids enormous network payloads"
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | failureTitle": {
-    "message": "Avoid enormous network payloads"
+    "message": "Avoid enormous network payloads",
+    "description": "Shown to users as the title of the audit when it is in a failing state."
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | description": {
     "message": "Large network payloads cost users real money and are highly correlated with long load times. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads)."
@@ -78,7 +80,8 @@
     "message": "Uses efficient cache policy on static assets"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
-    "message": "Serve static assets with an efficient cache policy"
+    "message": "Serve static assets with an efficient cache policy",
+    "description": "Shown to users as the title of the audit when it is in a failing state."
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy)."
@@ -123,7 +126,8 @@
     "message": "Avoids an excessive DOM size"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
-    "message": "Avoid an excessive DOM size"
+    "message": "Avoid an excessive DOM size",
+    "description": "Shown to users as the title of the audit when it is in a failing state."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Browser engineers recommend pages contain fewer than ~1,500 DOM nodes. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +148,8 @@
     "message": "All text remains visible during webfont loads"
   },
   "lighthouse-core/audits/font-display.js | failureTitle": {
-    "message": "Ensure text remains visible during webfont load"
+    "message": "Ensure text remains visible during webfont load",
+    "description": "Shown to users as the title of the audit when it is in a failing state."
   },
   "lighthouse-core/audits/font-display.js | description": {
     "message": "Leverage the font-display CSS feature to ensure text is user-visible while webfonts are loading. [Learn more](https://developers.google.com/web/updates/2016/02/font-display)."
@@ -153,7 +158,8 @@
     "message": "Minimizes main thread work"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Minimize main thread work"
+    "message": "Minimize main thread work",
+    "description": "Shown to users as the title of the audit when it is in a failing state."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | description": {
     "message": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this."
@@ -207,7 +213,8 @@
     "message": "Server response times are low (TTFB)"
   },
   "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Reduce server response times (TTFB)"
+    "message": "Reduce server response times (TTFB)",
+    "description": "Shown to users as the title of the audit when it is in a failing state."
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."
@@ -255,31 +262,40 @@
     "message": "More information about the performance of your application."
   },
   "lighthouse-core/lib/i18n.js | ms": {
-    "message": "{timeInMs, number, milliseconds} ms"
+    "message": "{timeInMs, number, milliseconds} ms",
+    "description": "Used to show the duration in milliseconds that something lasted"
   },
   "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
-    "message": "Potential savings of {wastedBytes, number, bytes} KB"
+    "message": "Potential savings of {wastedBytes, number, bytes} KB",
+    "description": "Used to show how many bytes the user could reduce their page by if they implemented the suggestions"
   },
   "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
-    "message": "Potential savings of {wastedMs, number, milliseconds} ms"
+    "message": "Potential savings of {wastedMs, number, milliseconds} ms",
+    "description": "Used to show how many milliseconds the user could reduce page load by if they implemented the suggestions"
   },
   "lighthouse-core/lib/i18n.js | columnURL": {
-    "message": "URL"
+    "message": "URL",
+    "description": "Label for the URL column in data tables, entries will be the URL of a web resource"
   },
   "lighthouse-core/lib/i18n.js | columnSize": {
-    "message": "Size (KB)"
+    "message": "Size (KB)",
+    "description": "Label for the size column in data tables, entries will be the size of a web resource in kilobytes"
   },
   "lighthouse-core/lib/i18n.js | columnCacheTTL": {
-    "message": "Cache TTL"
+    "message": "Cache TTL",
+    "description": "Label for the TTL column in data tables, entries will be the time to live value of the cache header on a web resource"
   },
   "lighthouse-core/lib/i18n.js | columnWastedBytes": {
-    "message": "Potential Savings (KB)"
+    "message": "Potential Savings (KB)",
+    "description": "Label for the wasted bytes column in data tables, entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions"
   },
   "lighthouse-core/lib/i18n.js | columnWastedMs": {
-    "message": "Potential Savings (ms)"
+    "message": "Potential Savings (ms)",
+    "description": "Label for the wasted bytes column in data tables, entries will be the number of milliseconds the user could reduce page load by if they implemented the suggestions"
   },
   "lighthouse-core/lib/i18n.js | columnTimeSpent": {
-    "message": "Time Spent"
+    "message": "Time Spent",
+    "description": "Label for the time spent column in data tables, entries will be the number of milliseconds the spent during a particular activity"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
     "message": "Values are estimated and may vary."

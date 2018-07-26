@@ -6,7 +6,6 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-// @ts-ignore - TODO: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/25410
 const esprima = require('esprima');
 const i18n = require('../../lib/i18n');
 
@@ -54,7 +53,8 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
     const contentLength = scriptContent.length;
     let totalTokenLength = 0;
 
-    const tokens = esprima.tokenize(scriptContent, {tolerant: true});
+    /** @type {Array<esprima.Token> & {errors: Error[]}} */
+    const tokens = (esprima.tokenize(scriptContent, {tolerant: true}));
     if (!tokens.length && tokens.errors && tokens.errors.length) {
       throw tokens.errors[0];
     }

@@ -10,8 +10,16 @@
 
 const fs = require('fs');
 const path = require('path');
+const esprima = require('esprima');
 
 const LH_ROOT = path.join(__dirname, '../../../');
+const UISTRINGS_REGEX = /UIStrings = (.|\s)*?\};\n/gim;
+
+/**
+ * @typedef ICUMessageDefn
+ * @property {string} message
+ * @property {string} [description]
+ */
 
 const ignoredPathComponents = [
   '/.git',
@@ -22,9 +30,25 @@ const ignoredPathComponents = [
   '-renderer.js',
 ];
 
+const defaultDescriptions = {
+  failureTitle: 'Shown to users as the title of the audit when it is in a failing state.',
+};
+
+// @ts-ignore - @types/esprima lacks all of these
+function computeDescription(ast, property, startRange) {
+  const endRange = property.range[0];
+  for (const comment of ast.comments || []) {
+    if (comment.range[0] < startRange) continue;
+    if (comment.range[0] > endRange) continue;
+    return comment.value.replace('*', '').trim();
+  }
+
+  return defaultDescriptions[property.key.name];
+}
+
 /**
  * @param {string} dir
- * @param {Record<string, string>} strings
+ * @param {Record<string, ICUMessageDefn>} strings
  */
 function collectAllStringsInDir(dir, strings = {}) {
   for (const name of fs.readdirSync(dir)) {
@@ -37,10 +61,38 @@ function collectAllStringsInDir(dir, strings = {}) {
     } else {
       if (name.endsWith('.js')) {
         console.log('Collecting from', relativePath);
-        const mod = require(fullPath);
-        if (!mod.UIStrings) continue;
-        for (const [key, value] of Object.entries(mod.UIStrings)) {
-          strings[`${relativePath} | ${key}`] = value;
+        const content = fs.readFileSync(fullPath, 'utf8');
+        const exportVars = require(fullPath);
+        const regexMatches = !!UISTRINGS_REGEX.test(content);
+        const exportsUIStrings = !!exportVars.UIStrings;
+        if (!regexMatches && !exportsUIStrings) continue;
+
+        if (regexMatches && !exportsUIStrings) {
+          throw new Error('UIStrings defined but not exported');
+        }
+
+        if (exportsUIStrings && !regexMatches) {
+          throw new Error('UIStrings exported but no definition found');
+        }
+
+        // @ts-ignore regex just matched
+        const justUIStrings = 'const ' + content.match(UISTRINGS_REGEX)[0];
+        // just parse the UIStrings substring to avoid ES version issues, save time, etc
+        // @ts-ignore - esprima's type definition is supremely lacking
+        const ast = esprima.parse(justUIStrings, {comment: true, range: true});
+
+        for (const stmt of ast.body) {
+          if (stmt.type !== 'VariableDeclaration') continue;
+          if (stmt.declarations[0].id.name !== 'UIStrings') continue;
+
+          let lastPropertyEndIndex = 0;
+          for (const property of stmt.declarations[0].init.properties) {
+            const key = property.key.name;
+            const message = exportVars.UIStrings[key];
+            const description = computeDescription(ast, property, lastPropertyEndIndex);
+            strings[`${relativePath} | ${key}`] = {message, description};
+            lastPropertyEndIndex = property.range[1];
+          }
         }
       }
     }
@@ -50,16 +102,17 @@ function collectAllStringsInDir(dir, strings = {}) {
 }
 
 /**
- * @param {Record<string, string>} strings
+ * @param {Record<string, ICUMessageDefn>} strings
  */
 function createPsuedoLocaleStrings(strings) {
   const psuedoLocalizedStrings = {};
-  for (const [key, string] of Object.entries(strings)) {
+  for (const [key, defn] of Object.entries(strings)) {
+    const message = defn.message;
     const psuedoLocalizedString = [];
     let braceCount = 0;
     let useHatForAccentMark = true;
-    for (let i = 0; i < string.length; i++) {
-      const char = string.substr(i, 1);
+    for (let i = 0; i < message.length; i++) {
+      const char = message.substr(i, 1);
       psuedoLocalizedString.push(char);
       // Don't touch the characters inside braces
       if (char === '{') {
@@ -74,7 +127,7 @@ function createPsuedoLocaleStrings(strings) {
       }
     }
 
-    psuedoLocalizedStrings[key] = psuedoLocalizedString.join('');
+    psuedoLocalizedStrings[key] = {message: psuedoLocalizedString.join('')};
   }
 
   return psuedoLocalizedStrings;
@@ -82,13 +135,13 @@ function createPsuedoLocaleStrings(strings) {
 
 /**
  * @param {LH.Locale} locale
- * @param {Record<string, string>} strings
+ * @param {Record<string, ICUMessageDefn>} strings
  */
 function writeStringsToLocaleFormat(locale, strings) {
   const fullPath = path.join(LH_ROOT, `lighthouse-core/lib/locales/${locale}.json`);
   const output = {};
-  for (const [key, message] of Object.entries(strings)) {
-    output[key] = {message};
+  for (const [key, defn] of Object.entries(strings)) {
+    output[key] = defn;
   }
 
   fs.writeFileSync(fullPath, JSON.stringify(output, null, 2) + '\n');

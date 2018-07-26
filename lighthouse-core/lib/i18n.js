@@ -35,14 +35,23 @@ const MESSAGE_INSTANCE_ID_REGEX = /(.* \| .*) # (\d+)$/;
 
 
 const UIStrings = {
+  /** Used to show the duration in milliseconds that something lasted */
   ms: '{timeInMs, number, milliseconds}\xa0ms',
+  /** Used to show how many bytes the user could reduce their page by if they implemented the suggestions */
   displayValueByteSavings: 'Potential savings of {wastedBytes, number, bytes}\xa0KB',
+  /** Used to show how many milliseconds the user could reduce page load by if they implemented the suggestions */
   displayValueMsSavings: 'Potential savings of {wastedMs, number, milliseconds}\xa0ms',
+  /** Label for the URL column in data tables, entries will be the URL of a web resource */
   columnURL: 'URL',
+  /** Label for the size column in data tables, entries will be the size of a web resource in kilobytes */
   columnSize: 'Size (KB)',
+  /** Label for the TTL column in data tables, entries will be the time to live value of the cache header on a web resource */
   columnCacheTTL: 'Cache TTL',
+  /** Label for the wasted bytes column in data tables, entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions */
   columnWastedBytes: 'Potential Savings (KB)',
+  /** Label for the wasted bytes column in data tables, entries will be the number of milliseconds the user could reduce page load by if they implemented the suggestions */
   columnWastedMs: 'Potential Savings (ms)',
+  /** Label for the time spent column in data tables, entries will be the number of milliseconds the spent during a particular activity */
   columnTimeSpent: 'Time Spent',
 };
 
