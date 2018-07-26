@@ -13,6 +13,7 @@ const MessageParser = require('intl-messageformat-parser');
 const LOCALES = require('./locales');
 
 const LH_ROOT = path.join(__dirname, '../../');
+const MESSAGE_INSTANCE_ID_REGEX = /(.* \| .*) # (\d+)$/;
 
 (() => {
   // Node usually doesn't come with the locales we want built-in, so load the polyfill if we can.
@@ -197,12 +198,42 @@ function createMessageInstanceIdFn(filename, fileStrings) {
 }
 
 /**
+ * @param {string} icuMessageIdOrRawString
+ * @param {LH.Locale} [locale]
+ * @return {string}
+ */
+function getFormatted(icuMessageIdOrRawString, locale) {
+  if (MESSAGE_INSTANCE_ID_REGEX.test(icuMessageIdOrRawString)) {
+    return _resolveIcuMessageInstanceId(icuMessageIdOrRawString, locale).formattedString;
+  }
+
+  return icuMessageIdOrRawString;
+}
+
+/**
+ * @param {string} icuMessageInstanceId
+ * @param {LH.Locale} [locale]
+ * @return {{icuMessageInstance: IcuMessageInstance, formattedString: string}}
+ */
+function _resolveIcuMessageInstanceId(icuMessageInstanceId, locale = 'en-US') {
+  const matches = icuMessageInstanceId.match(MESSAGE_INSTANCE_ID_REGEX);
+  if (!matches) throw new Error(`${icuMessageInstanceId} is not a valid message instance ID`);
+
+  const [_, icuMessageId, icuMessageInstanceIndex] = matches;
+  const icuMessageInstances = _icuMessageInstanceMap.get(icuMessageId) || [];
+  const icuMessageInstance = icuMessageInstances[Number(icuMessageInstanceIndex)];
+
+  const {formattedString} = _formatIcuMessage(locale, icuMessageId,
+    icuMessageInstance.icuMessage, icuMessageInstance.values);
+
+  return {icuMessageInstance, formattedString};
+}
+
+/**
  * @param {LH.Result} lhr
  * @param {LH.Locale} locale
  */
 function replaceIcuMessageInstanceIds(lhr, locale) {
-  const MESSAGE_INSTANCE_ID_REGEX = /(.* \| .*) # (\d+)$/;
-
   /**
    * @param {*} objectInLHR
    * @param {LH.I18NMessages} icuMessagePaths
@@ -216,11 +247,8 @@ function replaceIcuMessageInstanceIds(lhr, locale) {
 
       // Check to see if the value in the LHR looks like a string reference. If it is, replace it.
       if (typeof value === 'string' && MESSAGE_INSTANCE_ID_REGEX.test(value)) {
-        // @ts-ignore - Guaranteed to match from .test call above
-        const [_, icuMessageId, icuMessageInstanceIndex] = value.match(MESSAGE_INSTANCE_ID_REGEX);
-        const messageInstancesInLHR = icuMessagePaths[icuMessageId] || [];
-        const icuMessageInstances = _icuMessageInstanceMap.get(icuMessageId) || [];
-        const icuMessageInstance = icuMessageInstances[Number(icuMessageInstanceIndex)];
+        const {icuMessageInstance, formattedString} = _resolveIcuMessageInstanceId(value, locale);
+        const messageInstancesInLHR = icuMessagePaths[icuMessageInstance.icuMessageId] || [];
         const currentPathAsString = _formatPathAsString(currentPathInLHR);
 
         messageInstancesInLHR.push(
@@ -229,11 +257,8 @@ function replaceIcuMessageInstanceIds(lhr, locale) {
             currentPathAsString
         );
 
-        const {formattedString} = _formatIcuMessage(locale, icuMessageId,
-          icuMessageInstance.icuMessage, icuMessageInstance.values);
-
         objectInLHR[property] = formattedString;
-        icuMessagePaths[icuMessageId] = messageInstancesInLHR;
+        icuMessagePaths[icuMessageInstance.icuMessageId] = messageInstancesInLHR;
       } else {
         replaceInObject(value, icuMessagePaths, currentPathInLHR);
       }
@@ -251,5 +276,6 @@ module.exports = {
   getDefaultLocale,
   getRendererFormattedStrings,
   createMessageInstanceIdFn,
+  getFormatted,
   replaceIcuMessageInstanceIds,
 };

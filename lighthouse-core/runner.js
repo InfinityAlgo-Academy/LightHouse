@@ -218,7 +218,7 @@ class Runner {
    */
   static async _runAudit(auditDefn, artifacts, settings, runWarnings) {
     const audit = auditDefn.implementation;
-    const status = `Evaluating: ${audit.meta.title}`;
+    const status = `Evaluating: ${i18n.getFormatted(audit.meta.title)}`;
 
     log.log('status', status);
     let auditResult;

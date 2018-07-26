@@ -11,9 +11,7 @@ const i18n = require('../lib/i18n');
 
 expect.extend({
   toBeDisplayString(received, expected) {
-    const obj = {value: received};
-    i18n.replaceIcuMessageInstanceIds(obj, 'en-US');
-    const actual = obj.value;
+    const actual = i18n.getFormatted(received, 'en-US');
     const pass = expected instanceof RegExp ?
       expected.test(actual) :
       actual === expected;
