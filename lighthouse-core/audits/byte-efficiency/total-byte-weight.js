@@ -15,6 +15,7 @@ const UIStrings = {
   'Large network payloads cost users real money and are highly correlated with ' +
   'long load times. [Learn ' +
   'more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).',
+  /** [ICU Syntax] Used to summarize the total byte size of the page and all its network requests */
   displayValue: 'Total size was {totalBytes, number, bytes}\xa0KB',
 };
 

@@ -13,6 +13,7 @@ const UIStrings = {
   failureTitle: 'Reduce server response times (TTFB)',
   description: 'Time To First Byte identifies the time at which your server sends a response.' +
     ' [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).',
+  /** [ICU Syntax] Used to summarize the total Time to First Byte duration for the primary HTML response */
   displayValue: `Root document took {timeInMs, number, milliseconds}\xa0ms`,
 };
 
