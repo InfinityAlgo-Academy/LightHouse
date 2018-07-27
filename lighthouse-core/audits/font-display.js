@@ -11,8 +11,11 @@ const allowedFontFaceDisplays = ['block', 'fallback', 'optional', 'swap'];
 const i18n = require('../lib/i18n');
 
 const UIStrings = {
+  /** Title of a diagnostic audit that provides detail on if all the text on a webpage was visible while the page was loading its webfonts. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
   title: 'All text remains visible during webfont loads',
+  /** Title of a diagnostic audit that provides detail on the load of the page's webfonts. Often the text is invisible for seconds before the webfont resource is loaded. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
   failureTitle: 'Ensure text remains visible during webfont load',
+  /** Description of a Lighthouse audit that tells the user *why* they should use the font-display CSS feature. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Leverage the font-display CSS feature to ensure text is user-visible while ' +
     'webfonts are loading. ' +
     '[Learn more](https://developers.google.com/web/updates/2016/02/font-display).',

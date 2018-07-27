@@ -9,7 +9,9 @@ const Audit = require('../audit');
 const i18n = require('../../lib/i18n');
 
 const UIStrings = {
+  /** The name of the metric that marks the time at which a majority of the content has been painted by the browser. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
   title: 'First Meaningful Paint',
+  /** Description of the First Meaningful Paint (FMP) metric, which marks the time at which a majority of the content has been painted by the browser. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'First Meaningful Paint measures when the primary content of a page is ' +
       'visible. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint).',
 };

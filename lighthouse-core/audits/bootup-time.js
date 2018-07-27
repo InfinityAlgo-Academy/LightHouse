@@ -11,14 +11,21 @@ const {taskGroups} = require('../lib/task-groups');
 const i18n = require('../lib/i18n');
 
 const UIStrings = {
-  title: 'JavaScript boot-up time',
-  failureTitle: 'Reduce JavaScript boot-up time',
+  /** Title of a diagnostic audit that provides detail on the time spent executing javascript files during the load. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
+  title: 'JavaScript execution time',
+  /** Title of a diagnostic audit that provides detail on the time spent executing javascript files during the load. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
+  failureTitle: 'Reduce JavaScript execution time',
+  /** Description of a Lighthouse audit that tells the user that they should reduce the amount of time spent executing javascript and one method of doing so. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
     'You may find delivering smaller JS payloads helps with this. [Learn ' +
     'more](https://developers.google.com/web/tools/lighthouse/audits/bootup).',
+  /** Label for the total time column in a data table; entries will be the number of milliseconds spent executing per resource loaded by the page. */
   columnTotal: 'Total',
+  /** Label for a time column in a data table; entries will be the number of milliseconds spent evaluating script for every script loaded by the page. */
   columnScriptEval: 'Script Evaluation',
+  /** Label for a time column in a data table; entries will be the number of milliseconds spent parsing script files for every script loaded by the page. */
   columnScriptParse: 'Script Parse',
+  /** A message displayed in a Lighthouse audit result warning that Chrome extensions on the user's system substantially affected Lighthouse's measurements and instructs the user on how to run again without those extensions. */
   chromeExtensionsWarning: 'Chrome extensions negatively affected this page\'s load' +
     ' performance. Try auditing the page in incognito mode or from a clean Chrome profile.',
 };

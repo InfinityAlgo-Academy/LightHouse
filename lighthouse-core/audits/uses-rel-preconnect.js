@@ -19,7 +19,9 @@ const PRECONNECT_SOCKET_MAX_IDLE = 15;
 const IGNORE_THRESHOLD_IN_MS = 50;
 
 const UIStrings = {
-  title: 'Avoid multiple, costly round trips to any origin',
+  /** Imperative title of a Lighthouse audit that tells the user to connect early to internet domains that will be used to load page resources. Origin is the correct term, however 'domain name' could be used if neccsesary. This is displayed in a list of audit titles that Lighthouse generates. */
+  title: 'Preconnect to required origins',
+  /** Description of a Lighthouse audit that tells the user how to connect early to third-party domains that will be used to load page resources. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description:
     'Consider adding preconnect or dns-prefetch resource hints to establish early ' +
     `connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).`,

@@ -35,11 +35,11 @@ const MESSAGE_INSTANCE_ID_REGEX = /(.* \| .*) # (\d+)$/;
 
 
 const UIStrings = {
-  /** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
+/** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
   ms: '{timeInMs, number, milliseconds}\xa0ms',
-  /** Used to show how many bytes the user could reduce their page by if they implemented the suggestions. The `{wastedBytes}` placeholder will be replaced with the number of bytes, shown in kilobytes (e.g. 148 KB) */
+  /** Label shown per-audit to show how many bytes smaller the page could be if the user implemented the suggestions. The `{wastedBytes}` placeholder will be replaced with the number of bytes, shown in kilobytes (e.g. 148 KB) */
   displayValueByteSavings: 'Potential savings of {wastedBytes, number, bytes}\xa0KB',
-  /** Used to show how many milliseconds the user could reduce page load by if they implemented the suggestions. The `{wastedMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 140 ms) */
+  /** Label shown per-audit to show how many milliseconds faster the page load could be if the user implemented the suggestions. The `{wastedMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 140 ms) */
   displayValueMsSavings: 'Potential savings of {wastedMs, number, milliseconds}\xa0ms',
   /** Label for the URL column in data tables, entries will be the URL of a web resource */
   columnURL: 'URL',
@@ -51,7 +51,7 @@ const UIStrings = {
   columnWastedBytes: 'Potential Savings (KB)',
   /** Label for the wasted bytes column in data tables, entries will be the number of milliseconds the user could reduce page load by if they implemented the suggestions */
   columnWastedMs: 'Potential Savings (ms)',
-  /** Label for the time spent column in data tables, entries will be the number of milliseconds the spent during a particular activity */
+  /** Label for the time spent column in data tables, entries will be the number of milliseconds spent during a particular activity */
   columnTimeSpent: 'Time Spent',
 };
 

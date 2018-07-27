@@ -21,17 +21,24 @@ const MAX_DOM_TREE_WIDTH = 60;
 const MAX_DOM_TREE_DEPTH = 32;
 
 const UIStrings = {
+  /** Title of a diagnostic audit that provides detail on the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM nodes and greatest DOM depth. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
   title: 'Avoids an excessive DOM size',
+  /** Title of a diagnostic audit that provides detail on the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM nodes and greatest DOM depth. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
   failureTitle: 'Avoid an excessive DOM size',
+  /** Description of a Lighthouse audit that tells the user *why* they should reduce the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM nodes and greatest DOM depth. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Browser engineers recommend pages contain fewer than ' +
     `~${MAX_DOM_NODES.toLocaleString()} DOM nodes. The sweet spot is a tree ` +
     `depth < ${MAX_DOM_TREE_DEPTH} elements and fewer than ${MAX_DOM_TREE_WIDTH} ` +
     'children/parent element. A large DOM can increase memory usage, cause longer ' +
     '[style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), ' +
     'and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/tools/lighthouse/audits/dom-size).',
+  /** Label for the total number of DOM nodes found in the page. */
   columnDOMNodes: 'Total DOM Nodes',
+  /** Label for the numeric value of the maximum depth in the page's DOM tree. */
   columnDOMDepth: 'Maximum DOM Depth',
+  /** Label for the value of the maximum number of children any DOM node in the page has. */
   columnDOMWidth: 'Maximum Children',
+  /** [ICU Syntax] Label for an audit identifying the number of DOM nodes found in the page. */
   displayValue: `{itemCount, plural,
     =1 {1 node}
     other {# nodes}

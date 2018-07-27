@@ -15,10 +15,14 @@ const {taskGroups} = require('../lib/task-groups');
 const i18n = require('../lib/i18n');
 
 const UIStrings = {
+  /** Title of a diagnostic audit that provides detail on the main thread work the browser did to load the page. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
   title: 'Minimizes main thread work',
+  /** Title of a diagnostic audit that provides detail on the main thread work the browser did to load the page. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
   failureTitle: 'Minimize main thread work',
+  /** Description of a Lighthouse audit that tells the user *why* they should reduce JS execution times. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Consider reducing the time spent parsing, compiling and executing JS. ' +
     'You may find delivering smaller JS payloads helps with this.',
+  /** Label for the Main Thread Category column in data tables, rows will have a main thread Category and main thread Task Name. */
   columnCategory: 'Category',
 };
 

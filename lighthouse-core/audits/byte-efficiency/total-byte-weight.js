@@ -9,8 +9,11 @@ const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const i18n = require('../../lib/i18n');
 
 const UIStrings = {
+  /** Title of a diagnostic audit that provides detail on large network resources required during page load. 'Payloads' is roughly equivalent to 'resources'. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
   title: 'Avoids enormous network payloads',
+  /** Title of a diagnostic audit that provides detail on large network resources required during page load. 'Payloads' is roughly equivalent to 'resources'. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
   failureTitle: 'Avoid enormous network payloads',
+  /** Description of a Lighthouse audit that tells the user *why* they should reduce the size of the network resources required by the page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description:
   'Large network payloads cost users real money and are highly correlated with ' +
   'long load times. [Learn ' +

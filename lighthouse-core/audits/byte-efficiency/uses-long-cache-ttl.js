@@ -15,11 +15,15 @@ const linearInterpolation = require('../../lib/statistics').linearInterpolation;
 const i18n = require('../../lib/i18n');
 
 const UIStrings = {
+  /** Title of a diagnostic audit that provides detail on the cache policy applies to the page's static assets. Cache refers to browser disk cache, which keeps old versions of network resources around for future use. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Uses efficient cache policy on static assets',
+  /** Title of a diagnostic audit that provides details on the any page resources that could have been served with more efficient cache policies. Cache refers to browser disk cache, which keeps old versions of network resources around for future use. This imperative title is shown to users when there is a significant amount of assets served with poor cache policies. */
   failureTitle: 'Serve static assets with an efficient cache policy',
+  /** Description of a Lighthouse audit that tells the user *why* they need to adopt a long cache lifetime policy. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description:
     'A long cache lifetime can speed up repeat visits to your page. ' +
     '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy).',
+  /** [ICU Syntax] Label for the audit identifying network resources with inefficient cache values. Clicking this will expand the audit to show the resources. */
   displayValue: `{itemCount, plural,
     =1 {1 resource found}
     other {# resources found}

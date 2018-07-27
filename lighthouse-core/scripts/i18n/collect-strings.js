@@ -30,10 +30,6 @@ const ignoredPathComponents = [
   '-renderer.js',
 ];
 
-const defaultDescriptions = {
-  failureTitle: 'Shown to users as the title of the audit when it is in a failing state.',
-};
-
 // @ts-ignore - @types/esprima lacks all of these
 function computeDescription(ast, property, startRange) {
   const endRange = property.range[0];
@@ -43,7 +39,7 @@ function computeDescription(ast, property, startRange) {
     return comment.value.replace('*', '').trim();
   }
 
-  return defaultDescriptions[property.key.name];
+  return '';
 }
 
 /**

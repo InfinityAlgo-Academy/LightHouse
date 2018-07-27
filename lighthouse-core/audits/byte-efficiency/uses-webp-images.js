@@ -13,7 +13,9 @@ const URL = require('../../lib/url-shim');
 const i18n = require('../../lib/i18n');
 
 const UIStrings = {
+  /** Imperative title of a Lighthouse audit that tells the user to serve images in newer and more efficient image formats in order to enhance the performance of a page. A non-modern image format was designed 20+ years ago. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Serve images in next-gen formats',
+  /** Description of a Lighthouse audit that tells the user *why* they should use newer and more efficient image formats. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Image formats like JPEG 2000, JPEG XR, and WebP often provide better ' +
     'compression than PNG or JPEG, which means faster downloads and less data consumption. ' +
     '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/webp).',

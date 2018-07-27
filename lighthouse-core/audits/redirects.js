@@ -10,7 +10,9 @@ const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
 const i18n = require('../lib/i18n');
 
 const UIStrings = {
+  /** Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates. */
   title: 'Avoid multiple page redirects',
+  /** Description of a Lighthouse audit that tells users why they should reduce the number of server-side redirects on their page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).',
 };
 

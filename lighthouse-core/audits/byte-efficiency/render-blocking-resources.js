@@ -27,7 +27,9 @@ const NetworkRequest = require('../../lib/network-request');
 const MINIMUM_WASTED_MS = 50;
 
 const UIStrings = {
+  /** Imperative title of a Lighthouse audit that tells the user to reduce or remove network resources that block the initial render of the page. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Eliminate render-blocking resources',
+  /** Description of a Lighthouse audit that tells the user *why* they should reduce or remove network resources that block the initial render of the page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Resources are blocking the first paint of your page. Consider ' +
     'delivering critical JS/CSS inline and deferring all non-critical ' +
     'JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).',

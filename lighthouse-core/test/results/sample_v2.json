@@ -75,7 +75,7 @@
     "first-contentful-paint": {
       "id": "first-contentful-paint",
       "title": "First Contentful Paint",
-      "description": "First contentful paint marks the time at which the first text/image is painted. [Learn more](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint).",
+      "description": "First contentful paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint).",
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "rawValue": 3969.135,
@@ -278,7 +278,7 @@
     },
     "critical-request-chains": {
       "id": "critical-request-chains",
-      "title": "Minimize Critical Request Chains",
+      "title": "Minimize Critical Requests Depth",
       "description": "The Critical Request Chains below show you what resources are issued with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains).",
       "score": null,
       "scoreDisplayMode": "informative",
@@ -687,7 +687,7 @@
     },
     "bootup-time": {
       "id": "bootup-time",
-      "title": "JavaScript boot-up time",
+      "title": "JavaScript execution time",
       "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/bootup).",
       "score": 0.92,
       "scoreDisplayMode": "numeric",
@@ -748,7 +748,7 @@
     "uses-rel-preload": {
       "id": "uses-rel-preload",
       "title": "Preload key requests",
-      "description": "Consider using <link rel=preload> to prioritize fetching late-discovered resources sooner. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
+      "description": "Consider using <link rel=preload> to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "rawValue": 0,
@@ -762,7 +762,7 @@
     },
     "uses-rel-preconnect": {
       "id": "uses-rel-preconnect",
-      "title": "Avoid multiple, costly round trips to any origin",
+      "title": "Preconnect to required origins",
       "description": "Consider adding preconnect or dns-prefetch resource hints to establish early connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).",
       "score": 1,
       "scoreDisplayMode": "numeric",
@@ -2064,7 +2064,7 @@
     "uses-text-compression": {
       "id": "uses-text-compression",
       "title": "Enable text compression",
-      "description": "Text-based responses should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/text-compression).",
+      "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/text-compression).",
       "score": 0.88,
       "scoreDisplayMode": "numeric",
       "rawValue": 150,
@@ -3322,7 +3322,7 @@
     },
     "load-opportunities": {
       "title": "Opportunities",
-      "description": "These are opportunities to speed up your application by optimizing the following resources."
+      "description": "These optimizations can speed up your page load."
     },
     "diagnostics": {
       "title": "Diagnostics",
@@ -3376,7 +3376,7 @@
   "i18n": {
     "rendererFormattedStrings": {
       "varianceDisclaimer": "Values are estimated and may vary.",
-      "opportunityResourceColumnLabel": "Resource to optimize",
+      "opportunityResourceColumnLabel": "Opportunity",
       "opportunitySavingsColumnLabel": "Estimated Savings",
       "errorMissingAuditInfo": "Report error: no audit information",
       "errorLabel": "Error!",

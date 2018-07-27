@@ -11,11 +11,17 @@ const constants = require('./constants');
 const i18n = require('../lib/i18n');
 
 const UIStrings = {
+  /** Title of the Performance category of audits. Equivalent to 'Web performance', this term is inclusive of all web page speed and loading optimization topics. Also used as a label of a score gauge; try to limit to 20 characters. */
   performanceCategoryTitle: 'Performance',
+  /** Title of the speed metrics section of the Performance category. Within this section are various speed metrics which quantify the pageload performance into values presented in seconds and milliseconds. */
   metricGroupTitle: 'Metrics',
+  /** Title of the opportunity section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the loading performance of their web page. 'Suggestion'/'Optimization'/'Recommendation' are reasonable synonyms for 'opportunity' in this case. */
   loadOpportunitiesGroupTitle: 'Opportunities',
-  loadOpportunitiesGroupDescription: 'These are opportunities to speed up your application by optimizing the following resources.',
+  /** Description of the opportunity section of the Performance category. 'Optimizations' could also be 'recommendations' or 'suggestions'. Within this section are audits with imperative titles that suggest actions the user can take to improve the loading performance of their web page. */
+  loadOpportunitiesGroupDescription: 'These optimizations can speed up your page load.',
+  /** Title of the diagnostics section of the Performance category. Within this section are audits with non-imperative titles that provide more detail on the page's page load performance characteristics. Whereas the 'Opportunities' suggest an action along with expected time savings, diagnostics do not. Within this section, the user may read the details and deduce additional actions they could take. */
   diagnosticsGroupTitle: 'Diagnostics',
+  /** Description of the diagnostics section of the Performance category. Within this section are audits with non-imperative titles that provide more detail on the page's page load performance characteristics. Whereas the 'Opportunities' suggest an action along with expected time savings, diagnostics do not. Within this section, the user may read the details and deduce additional actions they could take. */
   diagnosticsGroupDescription: 'More information about the performance of your application.',
 };
 
