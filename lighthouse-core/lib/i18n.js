@@ -35,11 +35,11 @@ const MESSAGE_INSTANCE_ID_REGEX = /(.* \| .*) # (\d+)$/;
 
 
 const UIStrings = {
-  /** [ICU Syntax] Used to show the duration in milliseconds that something lasted */
+  /** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
   ms: '{timeInMs, number, milliseconds}\xa0ms',
-  /** [ICU Syntax] Used to show how many bytes the user could reduce their page by if they implemented the suggestions */
+  /** Used to show how many bytes the user could reduce their page by if they implemented the suggestions. The `{wastedBytes}` placeholder will be replaced with the number of bytes, shown in kilobytes (e.g. 148 KB) */
   displayValueByteSavings: 'Potential savings of {wastedBytes, number, bytes}\xa0KB',
-  /** [ICU Syntax] Used to show how many milliseconds the user could reduce page load by if they implemented the suggestions */
+  /** Used to show how many milliseconds the user could reduce page load by if they implemented the suggestions. The `{wastedMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 140 ms) */
   displayValueMsSavings: 'Potential savings of {wastedMs, number, milliseconds}\xa0ms',
   /** Label for the URL column in data tables, entries will be the URL of a web resource */
   columnURL: 'URL',

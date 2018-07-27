@@ -51,7 +51,7 @@
   },
   "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | displayValue": {
     "message": "Total size was {totalBytes, number, bytes} KB",
-    "description": "[ICU Syntax] Used to summarize the total byte size of the page and all its network requests"
+    "description": "Used to summarize the total byte size of the page and all its network requests. The `{totalBytes}` placeholder will be replaced with the total byte sizes, shown in kilobytes (e.g. 142 KB)"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-css.js | title": {
     "message": "Minify CSS"
@@ -222,7 +222,7 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
     "message": "Root document took {timeInMs, number, milliseconds} ms",
-    "description": "[ICU Syntax] Used to summarize the total Time to First Byte duration for the primary HTML response"
+    "description": "Used to summarize the total Time to First Byte duration for the primary HTML response. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 210 ms)"
   },
   "lighthouse-core/audits/user-timings.js | title": {
     "message": "User Timing marks and measures"
@@ -265,15 +265,15 @@
   },
   "lighthouse-core/lib/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms",
-    "description": "[ICU Syntax] Used to show the duration in milliseconds that something lasted"
+    "description": "Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms)"
   },
   "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
     "message": "Potential savings of {wastedBytes, number, bytes} KB",
-    "description": "[ICU Syntax] Used to show how many bytes the user could reduce their page by if they implemented the suggestions"
+    "description": "Used to show how many bytes the user could reduce their page by if they implemented the suggestions. The `{wastedBytes}` placeholder will be replaced with the number of bytes, shown in kilobytes (e.g. 148 KB)"
   },
   "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
     "message": "Potential savings of {wastedMs, number, milliseconds} ms",
-    "description": "[ICU Syntax] Used to show how many milliseconds the user could reduce page load by if they implemented the suggestions"
+    "description": "Used to show how many milliseconds the user could reduce page load by if they implemented the suggestions. The `{wastedMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 140 ms)"
   },
   "lighthouse-core/lib/i18n.js | columnURL": {
     "message": "URL",
