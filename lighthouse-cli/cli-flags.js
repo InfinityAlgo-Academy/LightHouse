@@ -120,8 +120,12 @@ function getFlags(manualArgv) {
         'list-trace-categories', 'view', 'verbose', 'quiet', 'help',
       ])
       .choices('locale', [
+        // Later, this could be Object.keys(require('../lighthouse-core/lib/locales/index.js'))
+        // But we'll curate the list for now..
+
         'en-US', // English
         'en-XA', // Accented English, good for testing
+        'ar-XB', // RTL English, good for testing
       ])
       .choices('output', printer.getValidOutputOptions())
       .choices('throttling-method', ['devtools', 'provided', 'simulate'])

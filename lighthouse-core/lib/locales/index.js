@@ -9,4 +9,5 @@
 module.exports = {
   'en-US': require('./en-US.json'),
   'en-XA': require('./en-XA.json'),
+  'ar-XB': require('./ar-XB.json'),
 };

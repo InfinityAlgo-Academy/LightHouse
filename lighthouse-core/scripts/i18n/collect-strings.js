@@ -102,38 +102,6 @@ function collectAllStringsInDir(dir, strings = {}) {
 }
 
 /**
- * @param {Record<string, ICUMessageDefn>} strings
- */
-function createPsuedoLocaleStrings(strings) {
-  const psuedoLocalizedStrings = {};
-  for (const [key, defn] of Object.entries(strings)) {
-    const message = defn.message;
-    const psuedoLocalizedString = [];
-    let braceCount = 0;
-    let useHatForAccentMark = true;
-    for (let i = 0; i < message.length; i++) {
-      const char = message.substr(i, 1);
-      psuedoLocalizedString.push(char);
-      // Don't touch the characters inside braces
-      if (char === '{') {
-        braceCount++;
-      } else if (char === '}') {
-        braceCount--;
-      } else if (braceCount === 0) {
-        if (/[a-z]/i.test(char)) {
-          psuedoLocalizedString.push(useHatForAccentMark ? `\u0302` : `\u0301`);
-          useHatForAccentMark = !useHatForAccentMark;
-        }
-      }
-    }
-
-    psuedoLocalizedStrings[key] = {message: psuedoLocalizedString.join('')};
-  }
-
-  return psuedoLocalizedStrings;
-}
-
-/**
  * @param {LH.Locale} locale
  * @param {Record<string, ICUMessageDefn>} strings
  */
@@ -148,9 +116,7 @@ function writeStringsToLocaleFormat(locale, strings) {
 }
 
 const strings = collectAllStringsInDir(path.join(LH_ROOT, 'lighthouse-core'));
-const psuedoLocalizedStrings = createPsuedoLocaleStrings(strings);
 console.log('Collected!');
 
 writeStringsToLocaleFormat('en-US', strings);
-writeStringsToLocaleFormat('en-XA', psuedoLocalizedStrings);
 console.log('Written to disk!');

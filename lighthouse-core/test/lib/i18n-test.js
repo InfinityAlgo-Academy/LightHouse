@@ -58,7 +58,8 @@ describe('i18n', () => {
   describe('#getRendererFormattedStrings', () => {
     it('returns icu messages in the specified locale', () => {
       const strings = i18n.getRendererFormattedStrings('en-XA');
-      expect(strings.passedAuditsGroupTitle).toEqual('P̂áŝśêd́ âúd̂ít̂ś');
+      expect(strings.passedAuditsGroupTitle).toEqual('[Þåššéð åûðîţš one two]');
+      expect(strings.scorescaleLabel).toEqual('[Šçöŕé šçåļé: one two]');
     });
   });
 });

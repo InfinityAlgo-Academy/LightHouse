@@ -52,7 +52,7 @@ declare global {
       cpuSlowdownMultiplier?: number
     }
 
-    export type Locale = 'en-US'|'en-XA';
+    export type Locale = 'en-US'|'en-XA'|'ar-XB';
 
     export type OutputMode = 'json' | 'html' | 'csv';
 
