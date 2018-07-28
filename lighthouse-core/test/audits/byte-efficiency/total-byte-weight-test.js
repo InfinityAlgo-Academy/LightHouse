@@ -97,8 +97,8 @@ describe('Total byte weight audit', () => {
     return TotalByteWeight.audit(artifacts, {options}).then(result => {
       const results = result.details.items;
       assert.strictEqual(results[2].flagged, true);
-      assert.strictEqual(results[3].flagged, false);
-      assert.strictEqual(results[4].flagged, false);
+      assert.strictEqual(results[3].flagged, undefined);
+      assert.strictEqual(results[4].flagged, undefined);
     });
   });
 

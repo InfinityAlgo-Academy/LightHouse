@@ -1801,53 +1801,43 @@
         "items": [
           {
             "url": "http://localhost:10200/zone.js",
-            "totalBytes": 71654,
-            "flagged": false
+            "totalBytes": 71654
           },
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-            "totalBytes": 30174,
-            "flagged": false
+            "totalBytes": 30174
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-            "totalBytes": 24741,
-            "flagged": false
+            "totalBytes": 24741
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "totalBytes": 12640,
-            "flagged": false
+            "totalBytes": 12640
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "totalBytes": 12640,
-            "flagged": false
+            "totalBytes": 12640
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "totalBytes": 1703,
-            "flagged": false
+            "totalBytes": 1703
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
-            "totalBytes": 1108,
-            "flagged": false
+            "totalBytes": 1108
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-            "totalBytes": 821,
-            "flagged": false
+            "totalBytes": 821
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
-            "totalBytes": 821,
-            "flagged": false
+            "totalBytes": 821
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
-            "totalBytes": 821,
-            "flagged": false
+            "totalBytes": 821
           }
         ]
       }

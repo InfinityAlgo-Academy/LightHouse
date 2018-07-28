@@ -149,12 +149,10 @@ module.exports = [
             2: {
               url: 'http://localhost:10200/zone.js',
               totalBytes: '>71650',
-              flagged: false,
             },
             3: {
               url: 'http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
               totalBytes: '>30000',
-              flagged: false,
             },
           },
         },
