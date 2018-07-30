@@ -222,6 +222,7 @@ class Driver {
         //    so that they can be serialized properly b/c JSON.stringify(new Error('foo')) === '{}'
         expression: `(function wrapInNativePromise() {
           const __nativePromise = window.__nativePromise || Promise;
+          const URL = window.__nativeURL || window.URL;
           return new __nativePromise(function (resolve) {
             return __nativePromise.resolve()
               .then(_ => ${expression})
@@ -1068,7 +1069,8 @@ class Driver {
    */
   async cacheNatives() {
     await this.evaluateScriptOnNewDocument(`window.__nativePromise = Promise;
-        window.__nativeError = Error;`);
+        window.__nativeError = Error;
+        window.__nativeURL = URL;`);
   }
 
   /**
