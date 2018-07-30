@@ -37,7 +37,7 @@
   </header>
 
   <div class="report-ss-columns">
-    <main class="lh-insertion-root lh-root lh-vars">
+    <main class="lh-root lh-vars lh-container">
       <!-- report populated here -->
     </main>
     <div class="ss-column lh-vars">
@@ -101,7 +101,7 @@
       // Add these elements to the page: big score gauge, field data, then perf category
       renderHeader(document.querySelector('header'), scoreGauge);
 
-      const container = document.querySelector('.lh-insertion-root');
+      const container = document.querySelector('.lh-container');
       container.appendChild(renderFieldDataSection());
       container.appendChild(perfElem);
 

@@ -131,6 +131,11 @@ nav img {
 }
 nav #searchbar img {   height: 146px; }
 
+.lh-container {
+  margin: 0; /* overwrite the center alignment */
+  display: block; /* overwrite the (unncessary?) flex display */
+}
+
 /* field data. these will be set in PSI's styles */
 .lh-audit-group--fielddata {
   padding-bottom: 30px;
