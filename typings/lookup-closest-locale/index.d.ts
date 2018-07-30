@@ -3,17 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/** @typedef {Record<string, {message: string}>} LocaleMessages */
+declare module 'lookup-closest-locale' {
+  function lookupClosestLocale(locale: string|undefined, available: Record<LH.Locale, any>): LH.Locale|undefined;
 
-/** @type {Record<LH.Locale, LocaleMessages>} */
-const locales = {
-  'ar': require('./ar-XB.json'), // TODO: fallback not needed when ar translation available
-  'ar-XB': require('./ar-XB.json'),
-  'en': require('./en-US.json'), // en-* fallback
-  'en-US': require('./en-US.json'),
-  'en-XA': require('./en-XA.json'),
-};
-
-module.exports = locales;
+  export = lookupClosestLocale;
+}

@@ -15,6 +15,12 @@ declare global {
     code?: string;
   }
 
+  // Augment Intl to include
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/getCanonicalLocales
+  namespace Intl {
+    var getCanonicalLocales: (locales?: string | Array<string>) => Array<string>;
+  }
+
   /** Make properties K in T optional. */
   type MakeOptional<T, K extends keyof T> = {
     [P in Exclude<keyof T, K>]: T[P]
@@ -52,13 +58,13 @@ declare global {
       cpuSlowdownMultiplier?: number
     }
 
-    export type Locale = 'en-US'|'en-XA'|'ar-XB';
+    export type Locale = 'ar'|'ar-XB'|'en'|'en-US'|'en-XA';
 
     export type OutputMode = 'json' | 'html' | 'csv';
 
     interface SharedFlagsSettings {
       output?: OutputMode|OutputMode[];
-      locale?: Locale | null;
+      locale?: Locale;
       maxWaitForLoad?: number;
       blockedUrlPatterns?: string[] | null;
       additionalTraceCategories?: string | null;

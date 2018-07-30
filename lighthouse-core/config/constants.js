@@ -39,7 +39,7 @@ const defaultSettings = {
 
   // the following settings have no defaults but we still want ensure that `key in settings`
   // in config will work in a typechecked way
-  locale: null, // default determined by the intl library
+  locale: 'en-US', // actual default determined by Config using lib/i18n
   blockedUrlPatterns: null,
   additionalTraceCategories: null,
   extraHeaders: null,

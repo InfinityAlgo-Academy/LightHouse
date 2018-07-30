@@ -12,6 +12,7 @@ const defaultConfig = require('../../config/default-config.js');
 const log = require('lighthouse-logger');
 const Gatherer = require('../../gather/gatherers/gatherer');
 const Audit = require('../../audits/audit');
+const i18n = require('../../lib/i18n');
 
 /* eslint-env jest */
 
@@ -595,6 +596,29 @@ describe('Config', () => {
   it('inherits default settings when undefined', () => {
     const config = new Config({settings: undefined});
     assert.ok(typeof config.settings.maxWaitForLoad === 'number', 'missing setting from default');
+  });
+
+  describe('locale', () => {
+    it('falls back to default locale if none specified', () => {
+      const config = new Config({settings: undefined});
+      // Don't assert specific locale so it isn't tied to where tests are run, but
+      // check that it's valid and available.
+      assert.ok(config.settings.locale);
+      assert.strictEqual(config.settings.locale, i18n.lookupLocale(config.settings.locale));
+    });
+
+    it('uses config setting for locale if set', () => {
+      const locale = 'ar-XB';
+      const config = new Config({settings: {locale}});
+      assert.strictEqual(config.settings.locale, locale);
+    });
+
+    it('uses flag setting for locale if set', () => {
+      const settingsLocale = 'en-XA';
+      const flagsLocale = 'ar-XB';
+      const config = new Config({settings: {locale: settingsLocale}}, {locale: flagsLocale});
+      assert.strictEqual(config.settings.locale, flagsLocale);
+    });
   });
 
   it('is idempotent when accepting a canonicalized Config as valid ConfigJson input', () => {

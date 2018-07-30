@@ -5,15 +5,23 @@
  */
 'use strict';
 
-/** @typedef {Record<string, {message: string}>} LocaleMessages */
+const locales = require('../../../lib/locales/index.js');
+const assert = require('assert');
 
-/** @type {Record<LH.Locale, LocaleMessages>} */
-const locales = {
-  'ar': require('./ar-XB.json'), // TODO: fallback not needed when ar translation available
-  'ar-XB': require('./ar-XB.json'),
-  'en': require('./en-US.json'), // en-* fallback
-  'en-US': require('./en-US.json'),
-  'en-XA': require('./en-XA.json'),
-};
+/* eslint-env jest */
 
-module.exports = locales;
+describe('locales', () => {
+  it('has only canonical language tags', () => {
+    for (const locale of Object.keys(locales)) {
+      const canonicalLocale = Intl.getCanonicalLocales(locale)[0];
+      assert.strictEqual(locale, canonicalLocale);
+    }
+  });
+
+  it('has a base language prefix fallback for all supported languages', () => {
+    for (const locale of Object.keys(locales)) {
+      const basePrefix = locale.split('-')[0];
+      assert.ok(locales[basePrefix]);
+    }
+  });
+});

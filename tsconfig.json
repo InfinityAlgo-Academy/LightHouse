@@ -13,6 +13,7 @@
       "./typings"
     ],
 
+    "resolveJsonModule": true,
     "diagnostics": true
   },
   "include": [

@@ -32,7 +32,6 @@ class Runner {
     try {
       const startTime = Date.now();
       const settings = opts.config.settings;
-      settings.locale = settings.locale || i18n.getDefaultLocale();
 
       /**
        * List of top-level warnings for this Lighthouse run.
@@ -218,7 +217,7 @@ class Runner {
    */
   static async _runAudit(auditDefn, artifacts, settings, runWarnings) {
     const audit = auditDefn.implementation;
-    const status = `Evaluating: ${i18n.getFormatted(audit.meta.title)}`;
+    const status = `Evaluating: ${i18n.getFormatted(audit.meta.title, 'en-US')}`;
 
     log.log('status', status);
     let auditResult;
