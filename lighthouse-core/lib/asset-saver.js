@@ -172,7 +172,6 @@ async function prepareAssets(artifacts, audits) {
     const Runner = require('../runner.js');
     const computedArtifacts = Runner.instantiateComputedArtifacts();
     /** @type {Array<Screenshot>} */
-    // @ts-ignore TODO(bckenny): need typed computed artifacts
     const screenshots = await computedArtifacts.requestScreenshots(trace);
 
     const traceData = Object.assign({}, trace);

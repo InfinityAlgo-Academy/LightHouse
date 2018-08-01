@@ -7,6 +7,10 @@
 
 const assert = require('assert');
 const Util = require('../../../../report/html/renderer/util.js');
+
+const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
+const sampleResults = require('../../../results/sample_v2.json');
+
 const NBSP = '\xa0';
 
 /* eslint-env jest */
@@ -141,5 +145,38 @@ describe('util helpers', () => {
     const cloned = JSON.parse(JSON.stringify(displayValue));
     Util.formatDisplayValue(displayValue);
     assert.deepStrictEqual(displayValue, cloned, 'displayValue was mutated');
+  });
+
+  describe('getFinalScreenshot', () => {
+    const cloneResults = JSON.parse(JSON.stringify(sampleResults));
+    cloneResults.reportCategories = Object.values(cloneResults.categories);
+    ReportRenderer.smooshAuditResultsIntoCategories(cloneResults.audits,
+      cloneResults.reportCategories);
+
+    it('gets a datauri as a string', () => {
+      const datauri = Util.getFinalScreenshot(cloneResults);
+      assert.equal(typeof datauri, 'string');
+      assert.ok(datauri.startsWith('data:image/jpeg;base64,'));
+    });
+
+    it('returns null if there is no perf category', () => {
+      const lhrWithoutPerf = JSON.parse(JSON.stringify(sampleResults));
+      delete lhrWithoutPerf.categories.performance;
+      lhrWithoutPerf.reportCategories = Object.values(lhrWithoutPerf.categories);
+
+      const datauri = Util.getFinalScreenshot(lhrWithoutPerf);
+      assert.equal(datauri, null);
+    });
+
+    it('returns null if there is no final-screenshot audit', () => {
+      const lhrNoFinalSS = JSON.parse(JSON.stringify(sampleResults));
+      delete lhrNoFinalSS.audits['final-screenshot'];
+      lhrNoFinalSS.reportCategories = Object.values(lhrNoFinalSS.categories);
+      ReportRenderer.smooshAuditResultsIntoCategories(lhrNoFinalSS.audits,
+        lhrNoFinalSS.reportCategories);
+
+      const datauri = Util.getFinalScreenshot(lhrNoFinalSS);
+      assert.equal(datauri, null);
+    });
   });
 });

@@ -147,10 +147,6 @@ describe('CategoryRenderer', () => {
     assert.ok(categoryDOM.querySelector('.lh-audit-group--manual .lh-audit-group__summary'));
     assert.equal(categoryDOM.querySelectorAll('.lh-audit--manual').length, 3,
         'score shows informative and dash icon');
-
-    const perfCategory = sampleResults.reportCategories.find(cat => cat.id === 'performance');
-    const categoryDOM2 = renderer.render(perfCategory, sampleResults.categoryGroups);
-    assert.ok(!categoryDOM2.querySelector('.lh-audit-group--manual'));
   });
 
   it('renders not applicable audits if the category contains them', () => {

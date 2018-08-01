@@ -157,6 +157,10 @@ describe('PerfCategoryRenderer', () => {
     assert.equal(passedElements.length, passedAudits.length);
   });
 
+  // Unsupported by perf cat renderer right now.
+  it.skip('renders any manual audits', () => {
+  });
+
   describe('getWastedMs', () => {
     it('handles erroring opportunities', () => {
       const auditWithDebug = {

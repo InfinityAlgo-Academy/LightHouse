@@ -24,7 +24,7 @@ class ScreenshotFilmstrip extends ComputedArtifact {
       .map(evt => {
         return {
           timestamp: evt.ts / 1000,
-          datauri: `data:image/jpg;base64,${evt.args.snapshot}`,
+          datauri: `data:image/jpeg;base64,${evt.args.snapshot}`,
         };
       });
   }
