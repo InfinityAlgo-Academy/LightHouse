@@ -137,7 +137,7 @@ class Util {
    */
   static formatNumber(number, granularity = 0.1) {
     const coarseValue = Math.round(number / granularity) * granularity;
-    return coarseValue.toLocaleString();
+    return coarseValue.toLocaleString(Util.numberDateLocale);
   }
 
   /**
@@ -146,7 +146,8 @@ class Util {
    * @return {string}
    */
   static formatBytesToKB(size, granularity = 0.1) {
-    const kbs = (Math.round(size / 1024 / granularity) * granularity).toLocaleString();
+    const kbs = (Math.round(size / 1024 / granularity) * granularity)
+      .toLocaleString(Util.numberDateLocale);
     return `${kbs}${NBSP}KB`;
   }
 
@@ -157,7 +158,7 @@ class Util {
    */
   static formatMilliseconds(ms, granularity = 10) {
     const coarseTime = Math.round(ms / granularity) * granularity;
-    return `${coarseTime.toLocaleString()}${NBSP}ms`;
+    return `${coarseTime.toLocaleString(Util.numberDateLocale)}${NBSP}ms`;
   }
 
   /**
@@ -167,7 +168,7 @@ class Util {
    */
   static formatSeconds(ms, granularity = 0.1) {
     const coarseTime = Math.round(ms / 1000 / granularity) * granularity;
-    return `${coarseTime.toLocaleString()}${NBSP}s`;
+    return `${coarseTime.toLocaleString(Util.numberDateLocale)}${NBSP}s`;
   }
 
   /**
@@ -180,14 +181,14 @@ class Util {
       month: 'short', day: 'numeric', year: 'numeric',
       hour: 'numeric', minute: 'numeric', timeZoneName: 'short',
     };
-    let formatter = new Intl.DateTimeFormat('en-US', options);
+    let formatter = new Intl.DateTimeFormat(Util.numberDateLocale, options);
 
     // Force UTC if runtime timezone could not be detected.
     // See https://github.com/GoogleChrome/lighthouse/issues/1056
     const tz = formatter.resolvedOptions().timeZone;
     if (!tz || tz.toLowerCase() === 'etc/unknown') {
       options.timeZone = 'UTC';
-      formatter = new Intl.DateTimeFormat('en-US', options);
+      formatter = new Intl.DateTimeFormat(Util.numberDateLocale, options);
     }
     return formatter.format(new Date(date));
   }
@@ -399,7 +400,25 @@ class Util {
       summary: `${deviceEmulation}, ${summary}`,
     };
   }
+
+  /**
+   * Set the locale to be used for Util's number and date formatting functions.
+   * @param {LH.Locale} locale
+   */
+  static setNumberDateLocale(locale) {
+    Util.numberDateLocale = locale;
+
+    // When testing, use a locale with more exciting numeric formatting
+    // @ts-ignore - TODO: until `de-DE` is in LH.Locale
+    if (Util.numberDateLocale === 'en-XA') Util.numberDateLocale = 'de-DE';
+  }
 }
+
+/**
+ * This value is updated on each run to the locale of the report
+ * @type {LH.Locale}
+ */
+Util.numberDateLocale = 'en-US';
 
 Util.UIStrings = {
   /** Disclaimer shown to users below the metric values (First Contentful Paint, Time to Interactive, etc) to warn them that the numbers they see will likely change slightly the next time they run Lighthouse. */

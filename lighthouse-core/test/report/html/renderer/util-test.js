@@ -62,6 +62,27 @@ describe('util helpers', () => {
     assert.equal(Util.formatDuration(28 * 60 * 60 * 1000 + 5000), `1${NBSP}d 4${NBSP}h 5${NBSP}s`);
   });
 
+  // TODO: need ICU support in node on Travis/Appveyor
+  it.skip('formats based on locale', () => {
+    const number = 12346.858558;
+
+    const originalLocale = Util.numberDateLocale;
+    Util.setNumberDateLocale('de-DE');
+    assert.strictEqual(Util.formatNumber(number), '12.346,9');
+    Util.setNumberDateLocale(originalLocale); // reset
+    assert.strictEqual(Util.formatNumber(number), '12,346.9');
+  });
+
+  it.skip('uses decimal comma with en-XA test locale', () => {
+    const number = 12346.858558;
+
+    const originalLocale = Util.numberDateLocale;
+    Util.setNumberDateLocale('en-XA');
+    assert.strictEqual(Util.formatNumber(number), '12.346,9');
+    Util.setNumberDateLocale(originalLocale); // reset
+    assert.strictEqual(Util.formatNumber(number), '12,346.9');
+  });
+
   it('calculates a score ratings', () => {
     assert.equal(Util.calculateRating(0.0), 'fail');
     assert.equal(Util.calculateRating(0.10), 'fail');
