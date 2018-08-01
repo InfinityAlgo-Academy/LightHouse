@@ -52,7 +52,7 @@
     "jquery":[
       {"id":"npm:jquery:20110606","severity":"medium","semver":{"vulnerable":["<1.6.3"]}},
       {"id":"npm:jquery:20120206","severity":"medium","semver":{"vulnerable":["<1.9.0 >=1.7.1"]}},
-      {"id":"npm:jquery:20140902","severity":"medium","semver":{"vulnerable":["<=1.5.1 >=1.4.2"]}},
+      {"id":"npm:jquery:20140902","severity":"medium","semver":{"vulnerable":[">=1.4.2 <1.6.2"]}},
       {"id":"npm:jquery:20150627","severity":"medium","semver":{"vulnerable":["<3.0.0-beta1 >1.12.3 || <1.12.0 >=1.4.0"]}},
       {"id":"npm:jquery:20160529","severity":"low","semver":{"vulnerable":["=3.0.0-rc.1"]}}
     ],
