@@ -9,6 +9,7 @@ const RawProtocol = require('../../../lighthouse-core/gather/connections/raw');
 const Runner = require('../../../lighthouse-core/runner');
 const Config = require('../../../lighthouse-core/config/config');
 const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
+const i18n = require('../../../lighthouse-core/lib/i18n');
 const log = require('lighthouse-logger');
 
 /** @typedef {import('../../../lighthouse-core/gather/connections/connection.js')} Connection */
@@ -65,7 +66,9 @@ function runLighthouseInWorker(port, url, options, categoryIDs) {
  * @return {Array<{title: string, id: string}>}
  */
 function getDefaultCategories() {
-  return Config.getCategories(defaultConfig);
+  const categories = Config.getCategories(defaultConfig);
+  categories.forEach(cat => cat.title = i18n.getFormatted(cat.title, 'en-US'));
+  return categories;
 }
 
 /** @param {(status: [string, string, string]) => void} listenCallback */
