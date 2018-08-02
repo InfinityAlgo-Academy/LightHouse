@@ -171,6 +171,7 @@ module.exports = {
     'accessibility/manual/focus-traps',
     'accessibility/manual/focusable-controls',
     'accessibility/manual/heading-levels',
+    'accessibility/manual/interactive-element-affordance',
     'accessibility/manual/logical-tab-order',
     'accessibility/manual/managed-focus',
     'accessibility/manual/offscreen-content-hidden',
@@ -382,6 +383,7 @@ module.exports = {
         // Manual audits
         {id: 'logical-tab-order', weight: 0},
         {id: 'focusable-controls', weight: 0},
+        {id: 'interactive-element-affordance', weight: 0},
         {id: 'managed-focus', weight: 0},
         {id: 'focus-traps', weight: 0},
         {id: 'custom-controls-labels', weight: 0},

@@ -1624,6 +1624,14 @@
       "scoreDisplayMode": "manual",
       "rawValue": false
     },
+    "interactive-element-affordance": {
+      "id": "interactive-element-affordance",
+      "title": "Interactive elements indicate their purpose and state",
+      "description": "Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#interactive_elements_like_links_and_buttons_should_indicate_their_purpose_and_state).",
+      "score": null,
+      "scoreDisplayMode": "manual",
+      "rawValue": false
+    },
     "logical-tab-order": {
       "id": "logical-tab-order",
       "title": "The page has a logical tab order",
@@ -3155,6 +3163,10 @@
         },
         {
           "id": "focusable-controls",
+          "weight": 0
+        },
+        {
+          "id": "interactive-element-affordance",
           "weight": 0
         },
         {
