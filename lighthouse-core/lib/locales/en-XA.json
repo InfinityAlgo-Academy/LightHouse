@@ -307,11 +307,5 @@
   },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "[Ţĥéŕé ŵéŕé îššûéš åƒƒéçţîñĝ ţĥîš ŕûñ öƒ Ļîĝĥţĥöûšé: one two three four five six seven eight nine ten eleven]"
-  },
-  "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "[Våļûéš åŕé éšţîmåţéð åñð måý våŕý. one two three four five six seven]"
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningHeader": {
-    "message": "[Ŵåŕñîñĝš:  one two]"
   }
 }

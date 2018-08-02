@@ -3415,7 +3415,9 @@
       "notApplicableAuditsGroupTitle": "Not applicable",
       "manualAuditsGroupTitle": "Additional items to manually check",
       "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
-      "scorescaleLabel": "Score scale:"
+      "scorescaleLabel": "Score scale:",
+      "crcInitialNavigation": "Initial Navigation",
+      "crcLongestDurationLabel": "Maximum critical path latency:"
     },
     "icuMessagePaths": {
       "lighthouse-core/audits/metrics/first-contentful-paint.js | title": [

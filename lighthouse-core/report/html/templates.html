@@ -618,15 +618,17 @@ limitations under the License.
         color: #595959;
         font-style: italic;
       }
+      .lh-crc__summary-value {
+        margin-bottom: 10px;
+      }
     </style>
     <div>
-      <!-- TODO(i18n): remove CRC sentences or localize -->
-      Longest chain: <b class="lh-crc__longest_duration"><!-- fill me: longestChain.duration --></b>
-      over <b class="lh-crc__longest_length"><!-- fill me: longestChain.length --></b> requests, totalling
-      <b class="lh-crc__longest_transfersize"><!-- fill me: longestChain.length --></b>
+      <div class="lh-crc__summary-value">
+        <span class="lh-crc__longest_duration_label"></span> <b class="lh-crc__longest_duration"></b>
+      </div>
     </div>
     <div class="lh-crc">
-      <div class="crc-initial-nav">Initial Navigation</div>
+      <div class="crc-initial-nav"></div>
       <!-- stamp for each chain -->
       <template id="tmpl-lh-crc__chains">
         <div class="crc-node">

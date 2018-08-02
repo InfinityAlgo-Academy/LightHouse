@@ -309,15 +309,6 @@ class Util {
   }
 
   /**
-   * @param {number} startTime
-   * @param {number} endTime
-   * @return {string}
-   */
-  static chainDuration(startTime, endTime) {
-    return Util.formatNumber((endTime - startTime) * 1000);
-  }
-
-  /**
    * @param {LH.Config.Settings} settings
    * @return {Array<{name: string, description: string}>}
    */
@@ -447,6 +438,11 @@ Util.UIStrings = {
   toplevelWarningsMessage: 'There were issues affecting this run of Lighthouse:',
   /** Label preceding a pictorial explanation of the scoring scale: 0-50 is red (bad), 50-90 is orange (ok), 90-100 is green (good). These colors are used throughout the report to provide context for how good/bad a particular result is. */
   scorescaleLabel: 'Score scale:',
+
+  /** String of text shown in a graphical representation of the flow of network requests for the web page. This label represents the initial network request that fetches an HTML page. This navigation may be redirected (eg. Initial navigation to http://example.com redirects to https://www.example.com). */
+  crcInitialNavigation: 'Initial Navigation',
+  /** Label of value shown in the summary of critical request chains. Refers to the total amount of time (milliseconds) of the longest critical path chain/sequence of network requests. Example value: 2310 ms */
+  crcLongestDurationLabel: 'Maximum critical path latency:',
 };
 
 if (typeof module !== 'undefined' && module.exports) {
