@@ -3404,20 +3404,20 @@
   },
   "i18n": {
     "rendererFormattedStrings": {
-      "varianceDisclaimer": "Values are estimated and may vary.",
+      "auditGroupExpandTooltip": "Show audits",
+      "crcInitialNavigation": "Initial Navigation",
+      "crcLongestDurationLabel": "Maximum critical path latency:",
+      "errorLabel": "Error!",
+      "errorMissingAuditInfo": "Report error: no audit information",
+      "manualAuditsGroupTitle": "Additional items to manually check",
+      "notApplicableAuditsGroupTitle": "Not applicable",
       "opportunityResourceColumnLabel": "Opportunity",
       "opportunitySavingsColumnLabel": "Estimated Savings",
-      "errorMissingAuditInfo": "Report error: no audit information",
-      "errorLabel": "Error!",
-      "warningHeader": "Warnings: ",
-      "auditGroupExpandTooltip": "Show audits",
       "passedAuditsGroupTitle": "Passed audits",
-      "notApplicableAuditsGroupTitle": "Not applicable",
-      "manualAuditsGroupTitle": "Additional items to manually check",
-      "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
       "scorescaleLabel": "Score scale:",
-      "crcInitialNavigation": "Initial Navigation",
-      "crcLongestDurationLabel": "Maximum critical path latency:"
+      "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
+      "varianceDisclaimer": "Values are estimated and may vary.",
+      "warningHeader": "Warnings: "
     },
     "icuMessagePaths": {
       "lighthouse-core/audits/metrics/first-contentful-paint.js | title": [
