@@ -1,10 +1,13 @@
 
 .lh-vars {
-  --strong-blue: hsl(217, 89%, 61%);
   --pale-blue: hsl(216, 88%, 91%);
   --subheader-font-size: 18px;
   --lh-audit-group-vpadding: 24px;
   --section-padding: 24px;
+
+  --report-secondary-border-color: hsl(0, 0%, 88%);
+  --lh-table-header-bg: hsl(200, 12%, 95%);
+  --lh-table-higlight-bg: hsl(200, 12%, 95%);
 
   /* redefined purely for a white foreground color */
   --content-paste-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path fill="white" d="M19 2h-4.18C14.4.84 13.3 0 12 0c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 18H5V4h2v3h10V4h2v16z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
@@ -27,7 +30,6 @@
 }
 
 
-
 /* big score gauge */
 .lh-gauge__wrapper--huge {
   --circle-size: 136px;
@@ -48,15 +50,13 @@
 }
 
 
-/* remove top border and paddings */
+/* remove padding on Lab Data section */
 .lh-category {
-  border-top: 0;
   padding-top: 0 !important;
   padding-bottom: 0;
 }
 
-
-/* tweaks to titles and icons */
+/* Group titles and descriptions */
 .lh-audit-group__header {
   font-weight: normal;
 }
@@ -64,13 +64,9 @@
   width: 32px;
   height: 32px;
   background-size: 20px 20px;
-  background-color: var(--strong-blue);
+  background-color: hsl(217, 89%, 61%);
 }
 
-.lh-load-opportunity__header .lh-load-opportunity__col {
-  background-color: var(--pale-blue);
-  color: black;
-}
 .lh-audit-group__itemcount {
   margin-top: 7px;
 }
@@ -78,20 +74,48 @@
   margin-top: 11px;
 }
 
-details:not([open]) > .lh-audit-group__summary {
+.lh-audit-group__description {
+  margin: 0 8px var(--lh-audit-group-vpadding);
+}
+
+
+/* Passed audits header */
+details > .lh-audit-group__summary {
   background-color: hsl(218, 92%, 95%);
   border-radius: 100px;
 }
 
 
+/* Opportunity / Est Savings table headers */
+.lh-load-opportunity__header .lh-load-opportunity__col {
+  background-color: var(--pale-blue);
+  color: black;
+}
 
+.lh-category > .lh-audit-group > summary {
+  margin-bottom: var(--lh-audit-group-vpadding);
+}
 
+/* Audit item display */
+.lh-category-header__description, .lh-audit__description {
+  color: var(--medium-75-gray);
+}
 
+.lh-audit__header:hover {
+  background-color: hsl(218, 92%, 95%)
+}
 
+.lh-audit {
+  border-bottom-color: var(--pale-blue);
+}
 
+.lh-filmstrip__frame {
+  margin: 8px;
+}
 
-
-
+.lh-filmstrip__thumbnail {
+  border-radius: 4px;
+}
 
 
 
