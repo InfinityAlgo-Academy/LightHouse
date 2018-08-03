@@ -94,7 +94,8 @@
     "vue":[
       {"id":"npm:vue:20170401","severity":"medium","semver":{"vulnerable":["<2.3.0-beta.1"]}},
       {"id":"npm:vue:20170829","severity":"medium","semver":{"vulnerable":["<2.4.3"]}},
-      {"id":"npm:vue:20180222","severity":"low","semver":{"vulnerable":["<=2.5.14"]}}
+      {"id":"npm:vue:20180222","severity":"low","semver":{"vulnerable":["<=2.5.14"]}},
+      {"id":"npm:vue:20180802","severity":"medium","semver":{"vulnerable":["<2.5.17"]}}
     ],
     "yui":[
       {"id":"npm:yui:20101025","severity":"medium","semver":{"vulnerable":["<2.8.2 >=2.4.0"]}},
