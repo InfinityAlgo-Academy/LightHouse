@@ -6,7 +6,7 @@
 'use strict';
 
 module.exports = {
-  collectCoverage: true,
+  collectCoverage: false,
   coverageReporters: ['none'],
   collectCoverageFrom: [
     '**/lighthouse-core/**/*.js',
