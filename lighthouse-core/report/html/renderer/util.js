@@ -400,8 +400,7 @@ class Util {
     Util.numberDateLocale = locale;
 
     // When testing, use a locale with more exciting numeric formatting
-    // @ts-ignore - TODO: until `de-DE` is in LH.Locale
-    if (Util.numberDateLocale === 'en-XA') Util.numberDateLocale = 'de-DE';
+    if (Util.numberDateLocale === 'en-XA') Util.numberDateLocale = 'de';
   }
 }
 
@@ -409,7 +408,7 @@ class Util {
  * This value is updated on each run to the locale of the report
  * @type {LH.Locale}
  */
-Util.numberDateLocale = 'en-US';
+Util.numberDateLocale = 'en';
 
 Util.UIStrings = {
   /** Disclaimer shown to users below the metric values (First Contentful Paint, Time to Interactive, etc) to warn them that the numbers they see will likely change slightly the next time they run Lighthouse. */

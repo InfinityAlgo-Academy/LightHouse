@@ -71,7 +71,7 @@ const formats = {
  * Look up the best available locale for the requested language through these fall backs:
  * - exact match
  * - progressively shorter prefixes (`de-CH-1996` -> `de-CH` -> `de`)
- * - the default locale ('en-US') if no match is found
+ * - the default locale ('en') if no match is found
  *
  * If `locale` isn't provided, the default is used.
  * @param {string=} locale
@@ -82,7 +82,7 @@ function lookupLocale(locale) {
   const canonicalLocale = Intl.getCanonicalLocales(locale)[0];
 
   const closestLocale = lookupClosestLocale(canonicalLocale, LOCALES);
-  return closestLocale || 'en-US';
+  return closestLocale || 'en';
 }
 
 /**

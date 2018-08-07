@@ -67,7 +67,7 @@ describe('util helpers', () => {
     const number = 12346.858558;
 
     const originalLocale = Util.numberDateLocale;
-    Util.setNumberDateLocale('de-DE');
+    Util.setNumberDateLocale('de');
     assert.strictEqual(Util.formatNumber(number), '12.346,9');
     Util.setNumberDateLocale(originalLocale); // reset
     assert.strictEqual(Util.formatNumber(number), '12,346.9');

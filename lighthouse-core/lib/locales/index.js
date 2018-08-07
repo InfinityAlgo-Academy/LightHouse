@@ -9,11 +9,64 @@
 
 /** @type {Record<LH.Locale, LocaleMessages>} */
 const locales = {
-  'ar': require('./ar-XB.json'), // TODO: fallback not needed when ar translation available
-  'ar-XB': require('./ar-XB.json'),
-  'en': require('./en-US.json'), // en-* fallback
-  'en-US': require('./en-US.json'),
-  'en-XA': require('./en-XA.json'),
+  'en-US': require('./en-US.json'), // The 'source' strings, with descriptions
+  'en': require('./en-US.json'), // According to CLDR/ICU, 'en' == 'en-US' dates/numbers (Why?!)
+
+  // TODO: en-IE has just ~10 messages that are different from en-US. We should only ship those.
+  'en-AU': require('./en-IE.json'), // Don't fallback to en (which -> en-US)
+  'en-GB': require('./en-IE.json'), // Don't fallback to en (which -> en-US)
+  'en-IE': require('./en-IE.json'), // Don't fallback to en (which -> en-US)
+  'en-SG': require('./en-IE.json'), // Don't fallback to en (which -> en-US)
+  'en-ZA': require('./en-IE.json'), // Don't fallback to en (which -> en-US)
+  'en-IN': require('./en-IE.json'), // Don't fallback to en (which -> en-US)
+
+  'gsw': require('./de.json'), // swiss german. identical (for our purposes) to 'de'
+
+  // All locales from here have a messages file, though we allow fallback to the base locale when the files are identical
+  'ar-XB': require('./ar-XB.json'), // psuedolocalization
+  'ar': require('./ar.json'),
+  'bg': require('./bg.json'),
+  'ca': require('./ca.json'),
+  'cs': require('./cs.json'),
+  'da': require('./da.json'),
+  'de': require('./de.json'), // de-AT, de-CH identical, so they fall back into de
+  'el': require('./el.json'),
+  'en-XA': require('./en-XA.json'), // psuedolocalization
+  'es': require('./es.json'),
+  'fi': require('./fi.json'),
+  'fil': require('./fil.json'),
+  'fr': require('./fr.json'), // fr-CH identical, so it falls back into fr
+  'hi': require('./hi.json'),
+  'hr': require('./hr.json'),
+  'hu': require('./hu.json'),
+  'id': require('./id.json'),
+  'it': require('./it.json'),
+  'iw': require('./iw.json'),
+  'ja': require('./ja.json'),
+  'ko': require('./ko.json'),
+  'lt': require('./lt.json'),
+  'lv': require('./lv.json'),
+  'nl': require('./nl.json'),
+  'no': require('./no.json'),
+  'pl': require('./pl.json'),
+  'pt': require('./pt.json'), // pt-BR identical, so it falls back into pt
+  'pt-PT': require('./pt-PT.json'),
+  'ro': require('./ro.json'),
+  'ru': require('./ru.json'),
+  'sk': require('./sk.json'),
+  'sl': require('./sl.json'),
+  'sr': require('./sr.json'),
+  'sv': require('./sv.json'),
+  'ta': require('./ta.json'),
+  'te': require('./te.json'),
+  'th': require('./th.json'),
+  'tr': require('./tr.json'),
+  'uk': require('./uk.json'),
+  'vi': require('./vi.json'),
+  'zh': require('./zh-CN.json'),
+  'zh-CN': require('./zh-CN.json'),
+  'zh-HK': require('./zh-HK.json'),
+  'zh-TW': require('./zh-TW.json'),
 };
 
 module.exports = locales;

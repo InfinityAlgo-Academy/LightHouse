@@ -21,7 +21,10 @@ describe('locales', () => {
   it('has a base language prefix fallback for all supported languages', () => {
     for (const locale of Object.keys(locales)) {
       const basePrefix = locale.split('-')[0];
-      assert.ok(locales[basePrefix]);
+      // The internet sez there is no canonical Chinese, so we exclude that one.
+      if (basePrefix !== 'zh') {
+        assert.ok(locales[basePrefix], `${locale} is missing a base fallback`);
+      }
     }
   });
 });

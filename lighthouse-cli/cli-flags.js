@@ -64,6 +64,7 @@ function getFlags(manualArgv) {
         ],
         'Configuration:')
       .describe({
+        // We don't allowlist specific locales. Why? So we can support the user who requests 'es-MX' (unsupported) and we'll fall back to 'es' (supported)
         'locale': 'The locale/language the report should be formatted in',
         'enable-error-reporting':
             'Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://git.io/vFFTO',
@@ -118,14 +119,6 @@ function getFlags(manualArgv) {
       .boolean([
         'disable-storage-reset', 'disable-device-emulation', 'save-assets', 'list-all-audits',
         'list-trace-categories', 'view', 'verbose', 'quiet', 'help',
-      ])
-      .choices('locale', [
-        // Later, this could be Object.keys(require('../lighthouse-core/lib/locales/index.js'))
-        // But we'll curate the list for now..
-
-        'en-US', // English
-        'en-XA', // Accented English, good for testing
-        'ar-XB', // RTL English, good for testing
       ])
       .choices('output', printer.getValidOutputOptions())
       .choices('throttling-method', ['devtools', 'provided', 'simulate'])

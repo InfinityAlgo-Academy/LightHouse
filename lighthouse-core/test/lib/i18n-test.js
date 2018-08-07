@@ -72,8 +72,8 @@ describe('i18n', () => {
       expect(i18n.lookupLocale('en-JKJK')).toEqual('en');
     });
 
-    it('falls back to en-US if no match is available', () => {
-      expect(i18n.lookupLocale('jk-Latn-DE-1996-a-ext-x-phonebk-i-klingon')).toEqual('en-US');
+    it('falls back to en if no match is available', () => {
+      expect(i18n.lookupLocale('jk-Latn-DE-1996-a-ext-x-phonebk-i-klingon')).toEqual('en');
     });
   });
 });
