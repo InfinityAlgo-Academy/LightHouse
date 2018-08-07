@@ -40,33 +40,20 @@ class ReportRenderer {
   }
 
   /**
-   * @param {LH.ReportResult} report
+   * @param {LH.Result} result
    * @param {Element} container Parent element to render the report into.
    */
-  renderReport(report, container) {
-    // If any mutations happen to the report within the renderers, we want the original object untouched
-    const clone = /** @type {LH.ReportResult} */ (JSON.parse(JSON.stringify(report)));
+  renderReport(result, container) {
     // Mutate the UIStrings if necessary (while saving originals)
     const originalUIStrings = JSON.parse(JSON.stringify(Util.UIStrings));
-    // If LHR is older (≤3.0.3), it has no locale setting. Set default.
-    if (!clone.configSettings.locale) {
-      clone.configSettings.locale = 'en-US';
-    }
-    Util.setNumberDateLocale(clone.configSettings.locale);
-    if (clone.i18n && clone.i18n.rendererFormattedStrings) {
-      ReportRenderer.updateAllUIStrings(clone.i18n.rendererFormattedStrings);
-    }
 
-    // TODO(phulce): we all agree this is technical debt we should fix
-    if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
-    clone.reportCategories = Object.values(clone.categories);
-    ReportRenderer.smooshAuditResultsIntoCategories(clone.audits, clone.reportCategories);
+    const report = Util.prepareReportResult(result);
 
     container.textContent = ''; // Remove previous report.
-    container.appendChild(this._renderReport(clone));
+    container.appendChild(this._renderReport(report));
 
     // put the UIStrings back into original state
-    ReportRenderer.updateAllUIStrings(originalUIStrings);
+    Util.updateAllUIStrings(originalUIStrings);
 
     return /** @type {Element} **/ (container);
   }
@@ -228,30 +215,6 @@ class ReportRenderer {
     reportFragment.appendChild(container);
 
     return reportFragment;
-  }
-
-  /**
-   * Place the AuditResult into the auditDfn (which has just weight & group)
-   * @param {Object<string, LH.Audit.Result>} audits
-   * @param {Array<LH.ReportResult.Category>} reportCategories
-   */
-  static smooshAuditResultsIntoCategories(audits, reportCategories) {
-    for (const category of reportCategories) {
-      category.auditRefs.forEach(auditMeta => {
-        const result = audits[auditMeta.id];
-        auditMeta.result = result;
-      });
-    }
-  }
-
-  /**
-   * @param {LH.I18NRendererStrings} rendererFormattedStrings
-   */
-  static updateAllUIStrings(rendererFormattedStrings) {
-    // TODO(i18n): don't mutate these here but on the LHR and pass that around everywhere
-    for (const [key, value] of Object.entries(rendererFormattedStrings)) {
-      Util.UIStrings[key] = value;
-    }
   }
 }
 

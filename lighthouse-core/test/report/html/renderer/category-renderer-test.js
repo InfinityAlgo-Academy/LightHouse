@@ -17,14 +17,14 @@ const DetailsRenderer = require('../../../../report/html/renderer/details-render
 const CriticalRequestChainRenderer = require(
     '../../../../report/html/renderer/crc-details-renderer.js');
 const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
-const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
-const sampleResults = require('../../../results/sample_v2.json');
+const sampleResultsOrig = require('../../../results/sample_v2.json');
 
 const TEMPLATE_FILE = fs.readFileSync(__dirname +
     '/../../../../report/html/templates.html', 'utf8');
 
 describe('CategoryRenderer', () => {
   let renderer;
+  let sampleResults;
 
   beforeAll(() => {
     global.URL = URL;
@@ -36,9 +36,7 @@ describe('CategoryRenderer', () => {
     const detailsRenderer = new DetailsRenderer(dom);
     renderer = new CategoryRenderer(dom, detailsRenderer);
 
-    sampleResults.reportCategories = Object.values(sampleResults.categories);
-    ReportRenderer.smooshAuditResultsIntoCategories(sampleResults.audits,
-      sampleResults.reportCategories);
+    sampleResults = Util.prepareReportResult(sampleResultsOrig);
   });
 
   afterAll(() => {

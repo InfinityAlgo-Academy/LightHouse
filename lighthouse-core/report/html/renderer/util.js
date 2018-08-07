@@ -39,6 +39,52 @@ class Util {
   }
 
   /**
+   * Returns a new LHR that's reshaped for slightly better ergonomics within the report rendereer.
+   * Also, sets up the localized UI strings used within renderer and number/date formatting
+   * The LHR passed in is not mutated.
+   * TODO(team): we all agree the LHR shape change is technical debt we should fix
+   * @param {LH.Result} result
+   * @return {LH.ReportResult}
+   */
+  static prepareReportResult(result) {
+    // If any mutations happen to the report within the renderers, we want the original object untouched
+    const clone = /** @type {LH.ReportResult} */ (JSON.parse(JSON.stringify(result)));
+
+    // If LHR is older (≤3.0.3), it has no locale setting. Set default.
+    if (!clone.configSettings.locale) {
+      clone.configSettings.locale = 'en';
+    }
+    Util.setNumberDateLocale(clone.configSettings.locale);
+    if (clone.i18n && clone.i18n.rendererFormattedStrings) {
+      Util.updateAllUIStrings(clone.i18n.rendererFormattedStrings);
+    }
+
+    if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
+    clone.reportCategories = Object.values(clone.categories);
+
+    // For convenience, smoosh all AuditResults into their auditDfn (which has just weight & group)
+    for (const category of clone.reportCategories) {
+      category.auditRefs.forEach(auditMeta => {
+        const result = clone.audits[auditMeta.id];
+        auditMeta.result = result;
+      });
+    }
+
+    return clone;
+  }
+
+
+  /**
+   * @param {LH.I18NRendererStrings} rendererFormattedStrings
+   */
+  static updateAllUIStrings(rendererFormattedStrings) {
+    // TODO(i18n): don't mutate these here but on the LHR and pass that around everywhere
+    for (const [key, value] of Object.entries(rendererFormattedStrings)) {
+      Util.UIStrings[key] = value;
+    }
+  }
+
+  /**
    * @param {string|Array<string|number>=} displayValue
    * @return {string}
    */
