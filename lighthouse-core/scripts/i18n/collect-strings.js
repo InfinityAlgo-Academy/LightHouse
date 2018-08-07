@@ -56,7 +56,7 @@ function collectAllStringsInDir(dir, strings = {}) {
       collectAllStringsInDir(fullPath, strings);
     } else {
       if (name.endsWith('.js')) {
-        console.log('Collecting from', relativePath);
+        if (!process.env.CI) console.log('Collecting from', relativePath);
         const content = fs.readFileSync(fullPath, 'utf8');
         const exportVars = require(fullPath);
         const regexMatches = !!UISTRINGS_REGEX.test(content);
