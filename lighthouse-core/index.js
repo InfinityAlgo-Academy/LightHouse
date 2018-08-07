@@ -26,9 +26,9 @@ const Config = require('./config/config');
  */
 
 /**
- * @param {string} url
+ * @param {string=} url
  * @param {LH.Flags=} flags
- * @param {LH.Config.Json|undefined} configJSON
+ * @param {LH.Config.Json=} configJSON
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function lighthouse(url, flags, configJSON) {

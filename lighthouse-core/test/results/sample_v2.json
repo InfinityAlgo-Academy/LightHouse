@@ -458,12 +458,10 @@
       "rawValue": 0,
       "displayValue": "",
       "details": {
-        "type": "table",
+        "type": "opportunity",
         "headings": [],
         "items": [],
-        "summary": {
-          "wastedMs": 0
-        }
+        "overallSavingsMs": 0
       }
     },
     "webapp-install-banner": {

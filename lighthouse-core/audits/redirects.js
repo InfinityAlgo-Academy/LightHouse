@@ -94,12 +94,12 @@ class Redirects extends Audit {
       });
     }
 
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
-      {key: 'url', itemType: 'text', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'wastedMs', itemType: 'ms', text: str_(i18n.UIStrings.columnTimeSpent)},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnTimeSpent)},
     ];
-    const summary = {wastedMs: totalWastedMs};
-    const details = Audit.makeTableDetails(headings, pageRedirects, summary);
+    const details = Audit.makeOpportunityDetails(headings, pageRedirects, totalWastedMs);
 
     return {
       // We award a passing grade if you only have 1 redirect
