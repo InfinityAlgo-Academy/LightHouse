@@ -40,6 +40,7 @@ class ReportGenerator {
     const sanitizedJavascript = htmlReportAssets.REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
 
     return ReportGenerator.replaceStrings(htmlReportAssets.REPORT_TEMPLATE, [
+      {search: '%%LIGHTHOUSE_LOCALE%%', replacement: lhr.configSettings.locale},
       {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
       {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: sanitizedJavascript},
       {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: htmlReportAssets.REPORT_CSS},
