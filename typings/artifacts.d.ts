@@ -7,7 +7,7 @@
 import parseManifest = require('../lighthouse-core/lib/manifest-parser.js');
 import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator.js');
 import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
-import speedline = require('speedline');
+import speedline = require('speedline-core');
 
 type _TaskNode = import('../lighthouse-core/gather/computed/main-thread-tasks').TaskNode;
 
