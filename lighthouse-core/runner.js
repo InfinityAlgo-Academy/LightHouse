@@ -25,13 +25,13 @@ const generateReport = require('./report/report-generator').generateReport;
 class Runner {
   /**
    * @param {Connection} connection
-   * @param {{config: Config, url?: string, driverMock?: Driver}} opts
+   * @param {{config: Config, url?: string, driverMock?: Driver}} runOpts
    * @return {Promise<LH.RunnerResult|undefined>}
    */
-  static async run(connection, opts) {
+  static async run(connection, runOpts) {
     try {
       const startTime = Date.now();
-      const settings = opts.config.settings;
+      const settings = runOpts.config.settings;
 
       /**
        * List of top-level warnings for this Lighthouse run.
@@ -65,22 +65,22 @@ class Runner {
         if (!requestedUrl) {
           throw new Error('Cannot run audit mode on empty URL');
         }
-        if (opts.url && opts.url !== requestedUrl) {
+        if (runOpts.url && runOpts.url !== requestedUrl) {
           throw new Error('Cannot run audit mode on different URL');
         }
       } else {
-        if (typeof opts.url !== 'string' || opts.url.length === 0) {
-          throw new Error(`You must provide a url to the runner. '${opts.url}' provided.`);
+        if (typeof runOpts.url !== 'string' || runOpts.url.length === 0) {
+          throw new Error(`You must provide a url to the runner. '${runOpts.url}' provided.`);
         }
 
         try {
           // Use canonicalized URL (with trailing slashes and such)
-          requestedUrl = new URL(opts.url).href;
+          requestedUrl = new URL(runOpts.url).href;
         } catch (e) {
           throw new Error('The url provided should have a proper protocol and hostname.');
         }
 
-        artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, opts, connection);
+        artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection);
         // -G means save these to ./latest-run, etc.
         if (settings.gatherMode) {
           const path = Runner._getArtifactsPath(settings);
@@ -92,10 +92,10 @@ class Runner {
       if (settings.gatherMode && !settings.auditMode) return;
 
       // Audit phase
-      if (!opts.config.audits) {
+      if (!runOpts.config.audits) {
         throw new Error('No audits to evaluate.');
       }
-      const auditResults = await Runner._runAudits(settings, opts.config.audits, artifacts,
+      const auditResults = await Runner._runAudits(settings, runOpts.config.audits, artifacts,
           lighthouseRunWarnings);
 
       // LHR construction phase
@@ -117,8 +117,8 @@ class Runner {
 
       /** @type {Object<string, LH.Result.Category>} */
       let categories = {};
-      if (opts.config.categories) {
-        categories = ReportScoring.scoreAllCategories(opts.config.categories, resultsById);
+      if (runOpts.config.categories) {
+        categories = ReportScoring.scoreAllCategories(runOpts.config.categories, resultsById);
       }
 
       /** @type {LH.Result} */
@@ -132,7 +132,7 @@ class Runner {
         audits: resultsById,
         configSettings: settings,
         categories,
-        categoryGroups: opts.config.groups || undefined,
+        categoryGroups: runOpts.config.groups || undefined,
         timing: {total: Date.now() - startTime},
       };
 
