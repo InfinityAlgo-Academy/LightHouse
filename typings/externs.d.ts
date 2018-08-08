@@ -58,7 +58,7 @@ declare global {
       cpuSlowdownMultiplier?: number
     }
 
-    export type Locale = 'en'|'en-GB'|'ar-XB'|'ar'|'bg'|'ca'|'cs'|'da'|'de'|'el'|'en-AU'|'en-IE'|'en-IN'|'en-SG'|'en-US'|'en-XA'|'en-ZA'|'es'|'fi'|'fil'|'fr'|'gsw'|'hi'|'hr'|'hu'|'id'|'it'|'iw'|'ja'|'ko'|'lt'|'lv'|'nl'|'no'|'pl'|'pt-PT'|'pt'|'ro'|'ru'|'sk'|'sl'|'sr'|'sv'|'ta'|'te'|'th'|'tr'|'uk'|'vi'|'zh'|'zh-CN'|'zh-HK'|'zh-TW'
+    export type Locale = 'en-US'|'en'|'en-AU'|'en-GB'|'en-IE'|'en-SG'|'en-ZA'|'en-IN'|'ar-XB'|'ar'|'bg'|'bs'|'ca'|'cs'|'da'|'de'|'el'|'en-XA'|'es'|'fi'|'fil'|'fr'|'he'|'hi'|'hr'|'hu'|'gsw'|'id'|'in'|'it'|'iw'|'ja'|'ko'|'lt'|'lv'|'mo'|'nl'|'nb'|'no'|'pl'|'pt'|'pt-PT'|'ro'|'ru'|'sk'|'sl'|'sr'|'sr-Latn'|'sv'|'ta'|'te'|'th'|'tl'|'tr'|'uk'|'vi'|'zh'|'zh-HK'|'zh-TW';
 
     export type OutputMode = 'json' | 'html' | 'csv';
 

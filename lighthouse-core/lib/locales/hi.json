@@ -21,7 +21,7 @@
     "message": "JavaScript क्रियान्वयन समय"
   },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": {
-    "message": "बड़े GIF ऐनिमेटेड सामग्री डिलीवर करने में नाकाफ़ी होते हैं. नेटवर्क बाइट बचाने के इरादे से GIF का इस्तेमाल करने के बजाय, ऐनिमेशन के लिए MPEG4/WebM वीडियो और स्थिर इमेज के लिए PNG/WebP का इस्तेमाल करने पर विचार करें. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/)"
+    "message": "बड़े जीआईएफ़ ऐनिमेटेड सामग्री डिलीवर करने में नाकाफ़ी होते हैं. नेटवर्क बाइट बचाने के इरादे से जीआईएफ़ का इस्तेमाल करने के बजाय, ऐनिमेशन के लिए MPEG4/WebM वीडियो और स्थिर इमेज के लिए PNG/WebP का इस्तेमाल करने पर विचार करें. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/)"
   },
   "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | title": {
     "message": "ऐनिमेट की गई सामग्री के लिए वीडियो फ़ॉर्मेट का इस्तेमाल करें"
@@ -153,7 +153,7 @@
     "message": "श्रेणी"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | description": {
-    "message": "JS को पार्स करने, कंपाइल करने और एक्ज़ीक्यूट करने में लगने वाला समय कम करने पर विचार करें. आप पाएंगे कि इसके ज़रिए छोटे-छोटे JS पेलोड डिलीवर करने में मदद मिलती है."
+    "message": "JS को पार्स करने, कंपाइल करने और एक्ज़ीक्यूट करने में लगने वाला समय कम करने पर विचार करें. आप देखेंगे कि इसके ज़रिए छोटे-छोटे JS पेलोड डिलीवर करने में मदद मिलती है."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
     "message": "मुख्य थ्रेड काम को कम से कम करें"
@@ -168,22 +168,22 @@
     "message": "अनुमानित इनपुट प्रतीक्षा समय"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "पहला उपयोगी सामग्री वाला पेंट वह समय चिह्नित करता है जब पहले लेख या इमेज को पेंट किया गया हो. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "पहला सार्थक सामग्री वाला पेंट वह समय चिह्नित करता है जब पहले लेख या इमेज को पेंट किया गया हो. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "उपयोगी सामग्री वाला पहला पेंट"
   },
   "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "पहला सीपीयू (CPU) बंद (आइडल) वह पहला समय चिह्नित करता है जब पेज का मुख्य थ्रेड इनपुट को संभालने के लिए काफ़ी होता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/first-interactive)."
+    "message": "इस्तेमाल में नहीं पहला सीपीयू (CPU), वह पहला समय चिह्नित करता है जब पेज का मुख्य थ्रेड इनपुट को संभालने के लिए काफ़ी होता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/first-interactive)."
   },
   "lighthouse-core/audits/metrics/first-cpu-idle.js | title": {
-    "message": "पहला सीपीयू (CPU) बंद (आइडल)"
+    "message": "पहला सीपीयू (CPU) इस्तेमाल में नहीं"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
-    "message": "पहला उपयोगी पेंट उस समय का मापन करता है जब किसी पेज की शुरुआती सामग्री दिखाई देती है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)."
+    "message": "पहला सार्थक पेंट उस समय का मापन करता है जब किसी पेज की शुरुआती सामग्री दिखाई देती है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | title": {
-    "message": "पहला उपयोगी पेंट"
+    "message": "पहला सार्थक पेंट"
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "इंटरेक्टिव वह समय चिह्नित करता है जब पेज पूरी तरह इंटरेक्टिव हो जाता है. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
@@ -216,7 +216,7 @@
     "message": "सर्वर के जवाब देने के समय धीमे हैं (TTFB)"
   },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "प्रमुख उपयोगकर्ता अनुभवों के कस्टम, असली दुनिया के माप तैयार करने के लिए अपने ऐप्लिकेशन को उपयोगकर्ता समय API (एपीआई) के ज़रिए इंस्ट्रुमेंट करने पर विचार करें. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "प्रमुख उपयोगकर्ताओं के पसंद के मुताबिक, असली दुनिया के माप तैयार करने के लिए अपने ऐप्लिकेशन को उपयोगकर्ता समय API (एपीआई) के ज़रिए तैयार करने पर विचार करें. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 उपयोगकर्ता समय}one{# उपयोगकर्ता समय}other{# उपयोगकर्ता समय}}"
@@ -273,7 +273,7 @@
     "message": "आकार (केबी)"
   },
   "lighthouse-core/lib/i18n.js | columnTimeSpent": {
-    "message": "खर्च हुआ समय"
+    "message": "बिताया गया समय"
   },
   "lighthouse-core/lib/i18n.js | columnURL": {
     "message": "यूआरएल"
@@ -312,7 +312,7 @@
     "message": "अवसर"
   },
   "lighthouse-core/report/html/renderer/util.js | opportunitySavingsColumnLabel": {
-    "message": "हो सकने वाली बचत"
+    "message": "अनुमानित बचत"
   },
   "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
     "message": "पास हुए ऑडिट"
@@ -321,7 +321,7 @@
     "message": "स्कोर स्केल:"
   },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
-    "message": "ऐसी समस्या हुईं जिनसे Lighthouse के इस रन पर असर पड़ा है:"
+    "message": "कुछ समस्याएं आने के कारण Lighthouse के इस रन पर असर पड़ा है:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
     "message": "मान अनुमानित हैं और इनमें अंतर हो सकता है."

@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Les extensions Chrome ont eu un impact négatif sur les performances de chargement de la page. Essayez de contrôler la page en mode navigation privée ou depuis un profil Chrome épuré."
+    "message": "Les extensions Chrome ont eu un impact négatif sur les performances de chargement de la page. Essayez de contrôler la page en mode navigation privée ou depuis un profil Chrome vide."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Évaluation des scripts"
@@ -57,7 +57,7 @@
     "message": "Réduisez la taille des ressources CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | description": {
-    "message": "La minimisation des fichiers JavaScript files peut réduire la taille des charges utiles et la durée d'analyse des scripts. [En savoir plus](https://developers.google.com/speed/docs/insights/MinifyResources)."
+    "message": "La minimisation des fichiers JavaScript peut réduire la taille des charges utiles et la durée d'analyse des scripts. [En savoir plus](https://developers.google.com/speed/docs/insights/MinifyResources)."
   },
   "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | title": {
     "message": "Réduisez la taille des ressources JavaScript"
@@ -81,7 +81,7 @@
     "message": "{itemCount,plural, =1{1 ressource trouvée}one{# ressource trouvée}other{# ressources trouvées}}"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": {
-    "message": "Diffuser des éléments statiques grâce à des règles de cache efficaces"
+    "message": "Diffusez des éléments statiques grâce à des règles de cache efficaces"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | title": {
     "message": "Utiliser des règles de cache efficaces sur les éléments statiques"
@@ -144,7 +144,7 @@
     "message": "Utilisez la fonction d'affichage de la police CSS afin que le texte soit visible par l'utilisateur pendant le chargement des polices Web. [En savoir plus](https://developers.google.com/web/updates/2016/02/font-display)."
   },
   "lighthouse-core/audits/font-display.js | failureTitle": {
-    "message": "Garantir que le texte reste visible pendant le chargement des polices Web"
+    "message": "Assurez-vous que le texte reste visible pendant le chargement des polices Web"
   },
   "lighthouse-core/audits/font-display.js | title": {
     "message": "La totalité du texte reste visible pendant le chargement des polices Web"
@@ -156,7 +156,7 @@
     "message": "Envisagez de réduire le temps consacré à l'analyse, la compilation et l'exécution de JavaScript. La livraison de charges utiles JavaScript plus petites peut vous aider."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Réduire le travail du thread principal"
+    "message": "Réduisez le travail du thread principal"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
     "message": "Réduire le travail du thread principal"
@@ -210,7 +210,7 @@
     "message": "Le document racine a pris {timeInMs, number, milliseconds} ms"
   },
   "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
-    "message": "Réduire les délais de réponse du serveur (TTFB)"
+    "message": "Réduisez les délais de réponse du serveur (TTFB)"
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Les délais de réponse du serveur sont faibles (TTFB)"
@@ -234,7 +234,7 @@
     "message": "Envisagez d'utiliser <link rel=preload> pour hiérarchiser la récupération des ressources actuellement requises pour le chargement ultérieur de la page. [En savoir plus](https://developers.google.com/web/ntools/lighthouse/audits/preload)."
   },
   "lighthouse-core/audits/uses-rel-preload.js | title": {
-    "message": "Préchargez les demandes de clé"
+    "message": "Préchargez les demandes clés"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
     "message": "Plus d'informations sur les performances de votre application."

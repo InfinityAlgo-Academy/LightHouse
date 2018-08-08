@@ -99,7 +99,7 @@
     "message": "Atbilstoša lieluma attēli"
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | description": {
-    "message": "Lai samazinātu kopējo tīkla lietojumu (baitos), iesakām izmantojot saspiešanu (Gzip, Deflate or Brotli). [Uzzināt vairāk](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
+    "message": "Lai samazinātu kopējo tīkla lietojumu (baitos), iesakām izmantot saspiešanu (Gzip, Deflate or Brotli). [Uzzināt vairāk](https://developers.google.com/web/tools/lighthouse/audits/text-compression)."
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Iespējojiet teksta saspiešanu"
