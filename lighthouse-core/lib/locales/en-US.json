@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome extensions negatively affected this page's load performance. Try auditing the page in incognito mode or from a clean Chrome profile.",
+    "message": "Chrome extensions negatively affected this page's load performance. Try auditing the page in incognito mode or from a Chrome profile without extensions.",
     "description": "A message displayed in a Lighthouse audit result warning that Chrome extensions on the user's system substantially affected Lighthouse's measurements and instructs the user on how to run again without those extensions."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
@@ -286,6 +286,22 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Server response times are low (TTFB)",
     "description": "Title of a diagnostic audit that provides detail on how long it took from starting a request to when the server started responding. This descriptive title is shown to users when the amount is acceptable and no user action is required."
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Duration",
+    "description": "Label for the Duration column in the User Timing event data table. User Timing API entries are added by the developer of the web page. Durations are only provided for 'Measure' entries. Durations are the number of total number milliseconds from Start Time to their ending point. e.g. '2,020.64 ms'"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Name",
+    "description": "Label for the Name column in the User Timing event data table. User Timing API entries are added by the developer of the web page. An example user timing event name: 'pageload_logoimage_done'"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Start Time",
+    "description": "Label for the Start Time column in the User Timing event data table. User Timing API entries are added by the developer of the web page. Start Times are the number of milliseconds since the page started loading, e.g. '380.26 ms'"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Type",
+    "description": "Label for the Type column in the User Timing event data table. User Timing API entries are added by the developer of the web page. The only possible types are 'Mark' and Measure'."
   },
   "lighthouse-core/audits/user-timings.js | description": {
     "message": "Consider instrumenting your app with the User Timing API to create custom, real-world measurements of key user experiences. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).",

@@ -20,6 +20,14 @@ const UIStrings = {
     =1 {1 user timing}
     other {# user timings}
     }`,
+  /** Label for the Name column in the User Timing event data table. User Timing API entries are added by the developer of the web page. An example user timing event name: 'pageload_logoimage_done' */
+  columnName: 'Name',
+  /** Label for the Type column in the User Timing event data table. User Timing API entries are added by the developer of the web page. The only possible types are 'Mark' and Measure'. */
+  columnType: 'Type',
+  /** Label for the Start Time column in the User Timing event data table. User Timing API entries are added by the developer of the web page. Start Times are the number of milliseconds since the page started loading, e.g. '380.26 ms' */
+  columnStartTime: 'Start Time',
+  /** Label for the Duration column in the User Timing event data table. User Timing API entries are added by the developer of the web page. Durations are only provided for 'Measure' entries. Durations are the number of total number milliseconds from Start Time to their ending point. e.g. '2,020.64 ms' */
+  columnDuration: 'Duration',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -149,10 +157,11 @@ class UserTimings extends Audit {
       });
 
       const headings = [
-        {key: 'name', itemType: 'text', text: 'Name'},
-        {key: 'timingType', itemType: 'text', text: 'Type'},
-        {key: 'startTime', itemType: 'ms', granularity: 0.01, text: 'Start Time'},
-        {key: 'duration', itemType: 'ms', granularity: 0.01, text: 'Duration'},
+        {key: 'name', itemType: 'text', text: str_(UIStrings.columnName)},
+        {key: 'timingType', itemType: 'text', text: str_(UIStrings.columnType)},
+        {key: 'startTime', itemType: 'ms', granularity: 0.01,
+          text: str_(UIStrings.columnStartTime)},
+        {key: 'duration', itemType: 'ms', granularity: 0.01, text: str_(UIStrings.columnDuration)},
       ];
 
       const details = Audit.makeTableDetails(headings, tableRows);
