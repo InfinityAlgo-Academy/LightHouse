@@ -173,17 +173,19 @@ class ExtensionConnection extends Connection {
 }
 
 /**
- * @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]['paramsType']} CommandParamsTypes
- * @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]['returnType']} CommandReturnTypes
+ * @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]} CommandInfo
  */
-// Declared outside class body because function expressions can be typed via more expressive @type
+// Declared outside class body because function expressions can be typed via coercive @type
 /**
  * Looser-typed internal implementation of `ExtensionConnection.sendCommand`
  * which is strictly typed externally on exposed ExtensionConnection interface.
  * See `Driver.sendCommand` for explanation.
- * @type {(this: ExtensionConnection, method: keyof LH.CrdpCommands, params?: CommandParamsTypes) => Promise<CommandReturnTypes>}
+ * @this {ExtensionConnection}
+ * @param {keyof LH.CrdpCommands} method
+ * @param {CommandInfo['paramsType']=} params,
+ * @return {Promise<CommandInfo['returnType']>}
  */
-function _sendCommand(method, params = {}) {
+function _sendCommand(method, params) {
   return new Promise((resolve, reject) => {
     log.formatProtocol('method => browser', {method, params}, 'verbose');
     if (!this._tabId) { // eslint-disable-line no-invalid-this
@@ -192,7 +194,7 @@ function _sendCommand(method, params = {}) {
     }
 
     // eslint-disable-next-line no-invalid-this
-    chrome.debugger.sendCommand({tabId: this._tabId}, method, params, result => {
+    chrome.debugger.sendCommand({tabId: this._tabId}, method, params || {}, result => {
       if (chrome.runtime.lastError) {
         // The error from the extension has a `message` property that is the
         // stringified version of the actual protocol error object.

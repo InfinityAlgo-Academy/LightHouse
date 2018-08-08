@@ -11,6 +11,7 @@
 /** @type {Record<LH.Locale, LocaleMessages>} */
 const locales = {
   'en-US': require('./en-US.json'), // The 'source' strings, with descriptions
+  // @ts-ignore - tsc bug, something about en/en-US pointing to same file
   'en': require('./en-US.json'), // According to CLDR/ICU, 'en' == 'en-US' dates/numbers (Why?!)
 
   // TODO: en-GB has just ~10 messages that are different from en-US. We should only ship those.

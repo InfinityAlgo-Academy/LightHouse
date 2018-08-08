@@ -11,14 +11,14 @@ const LHError = require('../../lib/errors');
 
 /**
  * @typedef {LH.StrictEventEmitter<{'protocolevent': LH.Protocol.RawEventMessage}>} CrdpEventMessageEmitter
- * @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]['paramsType']} CommandParamsTypes
- * @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]['returnType']} CommandReturnTypes
+ * @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]} CommandInfo
+ * @typedef {{resolve: function(Promise<CommandInfo['returnType']>): void, method: keyof LH.CrdpCommands, options: {silent?: boolean}}} CommandCallback
  */
 
 class Connection {
   constructor() {
     this._lastCommandId = 0;
-    /** @type {Map<number, {resolve: function(Promise<CommandReturnTypes>), method: keyof LH.CrdpCommands, options: {silent?: boolean}}>} */
+    /** @type {Map<number, CommandCallback>} */
     this._callbacks = new Map();
 
     /** @type {?CrdpEventMessageEmitter} */
@@ -46,6 +46,22 @@ class Connection {
     return Promise.reject(new Error('Not implemented'));
   }
 
+  /**
+   * Bind listeners for connection events.
+   * @param {'protocolevent'} eventName
+   * @param {function(LH.Protocol.RawEventMessage): void} cb
+   */
+  on(eventName, cb) {
+    if (eventName !== 'protocolevent') {
+      throw new Error('Only supports "protocolevent" events');
+    }
+
+    if (!this._eventEmitter) {
+      throw new Error('Attempted to add event listener after connection disposed.');
+    }
+    this._eventEmitter.on(eventName, cb);
+  }
+
   /* eslint-disable no-unused-vars */
 
   /**
@@ -68,11 +84,9 @@ class Connection {
 
     // Responses to commands carry "id" property, while events do not.
     if (!('id' in object)) {
-      // tsc doesn't currently narrow type in !in branch, so manually cast.
-      const eventMessage = /** @type {LH.Protocol.RawEventMessage} */(object);
       log.formatProtocol('<= event',
-          {method: eventMessage.method, params: eventMessage.params}, 'verbose');
-      this.emitProtocolEvent(eventMessage);
+          {method: object.method, params: object.params}, 'verbose');
+      this.emitProtocolEvent(object);
       return;
     }
 
@@ -124,29 +138,18 @@ class Connection {
   }
 }
 
-// Declared outside class body because function expressions can be typed via more expressive @type
-/**
- * Bind listeners for connection events
- * @type {CrdpEventMessageEmitter['on']}
- */
-Connection.prototype.on = function on(eventName, cb) {
-  if (eventName !== 'protocolevent') {
-    throw new Error('Only supports "protocolevent" events');
-  }
-
-  if (!this._eventEmitter) {
-    throw new Error('Attempted to add event listener after connection disposed.');
-  }
-  this._eventEmitter.on(eventName, cb);
-};
-
+// Declared outside class body because function expressions can be typed via coercive @type
 /**
  * Looser-typed internal implementation of `Connection.sendCommand` which is
  * strictly typed externally on exposed Connection interface. See
  * `Driver.sendCommand` for explanation.
- * @type {(this: Connection, method: keyof LH.CrdpCommands, params?: CommandParamsTypes, cmdOpts?: {silent?: boolean}) => Promise<CommandReturnTypes>}
+ * @this {Connection}
+ * @param {keyof LH.CrdpCommands} method
+ * @param {CommandInfo['paramsType']=} params,
+ * @param {{silent?: boolean}=} cmdOpts
+ * @return {Promise<CommandInfo['returnType']>}
  */
-function _sendCommand(method, params = {}, cmdOpts = {}) {
+function _sendCommand(method, params, cmdOpts = {}) {
   /* eslint-disable no-invalid-this */
   log.formatProtocol('method => browser', {method, params}, 'verbose');
   const id = ++this._lastCommandId;

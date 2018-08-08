@@ -105,7 +105,7 @@
     "pretty-json-stringify": "^0.0.2",
     "puppeteer": "1.4.0",
     "sinon": "^2.3.5",
-    "typescript": "2.9.1-insiders.20180516",
+    "typescript": "3.0.1",
     "vscode-chrome-debug-core": "^3.23.8",
     "zone.js": "^0.7.3"
   },

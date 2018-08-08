@@ -1167,9 +1167,13 @@ Driver.prototype.off = function off(eventName, cb) {
  * Necessitated by `params` only being optional for some values of `method`.
  * See https://github.com/Microsoft/TypeScript/issues/5453 for needed variadic
  * primitive.
- * @type {(this: Driver, method: any, params?: any, cmdOpts?: {silent?: boolean}) => Promise<CommandReturnTypes>}
+ * @this {Driver}
+ * @param {any} method
+ * @param {any=} params,
+ * @param {{silent?: boolean}=} cmdOpts
+ * @return {Promise<CommandReturnTypes>}
  */
-function _sendCommand(method, params = {}, cmdOpts = {}) {
+function _sendCommand(method, params, cmdOpts = {}) {
   const domainCommand = /^(\w+)\.(enable|disable)$/.exec(method);
   if (domainCommand) {
     const enable = domainCommand[2] === 'enable';
