@@ -67,10 +67,9 @@
       // Hack to use a convenient LHR
       // Exposing this as __LIGHTHOUSE_JSON__ isn't neccessary, but just useful for debugging
       window.__LIGHTHOUSE_JSON__ = await fetch('../lighthouse-core/test/results/sample_v2.json').then(r => r.json());
-
-      // Prepare the Lighthouse response for the renderer.
-      // (This bit is usually done within ReportRenderer)
       const LHRStr = JSON.stringify(__LIGHTHOUSE_JSON__);
+
+      // Prepare what the PSI frontend needs
       const {scoreGaugeEl, perfCategoryEl, finalScreenshotDataUri} = prepareLabData(LHRStr, document);
 
       if (finalScreenshotDataUri) {
