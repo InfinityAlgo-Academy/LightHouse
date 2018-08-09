@@ -11,7 +11,7 @@ const fs = require('fs');
 const jsdom = require('jsdom');
 
 const URL = require('../../../../lib/url-shim');
-const PSI = require('../../../../report/html/renderer/psi.js');
+const prepareLabData = require('../../../../report/html/renderer/psi.js');
 const Util = require('../../../../report/html/renderer/util.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const CategoryRenderer = require('../../../../report/html/renderer/category-renderer');
@@ -60,7 +60,7 @@ describe('DOM', () => {
   describe('psi prepareLabData helpers', () => {
     describe('prepareLabData', () => {
       it('reports expected data', () => {
-        const result = PSI.prepareLabData(sampleResultsStr, document);
+        const result = prepareLabData(sampleResultsStr, document);
         assert.ok(result.scoreGaugeEl instanceof document.defaultView.Element);
         assert.equal(result.scoreGaugeEl.querySelector('.lh-gauge__wrapper').href, '');
         assert.ok(result.scoreGaugeEl.outerHTML.includes('<style>'), 'score gauge comes with CSS');
@@ -81,7 +81,7 @@ describe('DOM', () => {
         const lhrWithoutPerfStr = JSON.stringify(lhrWithoutPerf);
 
         assert.throws(() => {
-          PSI.prepareLabData(lhrWithoutPerfStr, document);
+          prepareLabData(lhrWithoutPerfStr, document);
         }, /no performance category/i);
       });
 
@@ -91,17 +91,17 @@ describe('DOM', () => {
         const lhrWithoutGroupsStr = JSON.stringify(lhrWithoutGroups);
 
         assert.throws(() => {
-          PSI.prepareLabData(lhrWithoutGroupsStr, document);
+          prepareLabData(lhrWithoutGroupsStr, document);
         }, /no category groups/i);
       });
     });
   });
 
-  describe('getFinalScreenshot', () => {
+  describe('_getFinalScreenshot', () => {
     it('gets a datauri as a string', () => {
       const cloneResults = Util.prepareReportResult(sampleResults);
       const perfCategory = cloneResults.reportCategories.find(cat => cat.id === 'performance');
-      const datauri = PSI.getFinalScreenshot(perfCategory);
+      const datauri = prepareLabData._getFinalScreenshot(perfCategory);
       assert.equal(typeof datauri, 'string');
       assert.ok(datauri.startsWith('data:image/jpeg;base64,'));
     });
@@ -112,7 +112,7 @@ describe('DOM', () => {
       const lhrNoFinalSS = Util.prepareReportResult(clonedResults);
       const perfCategory = lhrNoFinalSS.reportCategories.find(cat => cat.id === 'performance');
 
-      const datauri = PSI.getFinalScreenshot(perfCategory);
+      const datauri = prepareLabData._getFinalScreenshot(perfCategory);
       assert.equal(datauri, null);
     });
   });

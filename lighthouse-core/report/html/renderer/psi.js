@@ -18,57 +18,59 @@
 
 /* globals self DOM PerformanceCategoryRenderer Util DetailsRenderer */
 
-class PSI {
-  /**
-   * Returns all the elements that PSI needs to render the report
-   * We expose this helper method to minimize the 'public' API surface of the renderer
-   * and allow us to refactor without two-sided patches.
-   *
-   *   const {scoreGaugeEl, perfCategoryEl, finalScreenshotDataUri} = PSI.prepareLabData(
-   *      LHResultJsonString,
-   *      document
-   *   );
-   *
-   * @param {string} LHResultJsonString The stringified version of {LH.Result}
-   * @param {Document} document The host page's window.document
-   * @return {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null}}
-   */
-  static prepareLabData(LHResultJsonString, document) {
-    const lhResult = /** @type {LH.Result} */ JSON.parse(LHResultJsonString);
-    const dom = new DOM(document);
 
-    const reportLHR = Util.prepareReportResult(lhResult);
-    const perfCategory = reportLHR.reportCategories.find(cat => cat.id === 'performance');
-    if (!perfCategory) throw new Error(`No performance category. Can't make lab data section`);
-    if (!reportLHR.categoryGroups) throw new Error(`No category groups found.`);
+/**
+ * Returns all the elements that PSI needs to render the report
+ * We expose this helper method to minimize the 'public' API surface of the renderer
+ * and allow us to refactor without two-sided patches.
+ *
+ *   const {scoreGaugeEl, perfCategoryEl, finalScreenshotDataUri} = prepareLabData(
+ *      LHResultJsonString,
+ *      document
+ *   );
+ *
+ * @param {string} LHResultJsonString The stringified version of {LH.Result}
+ * @param {Document} document The host page's window.document
+ * @return {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null}}
+ */
+function prepareLabData(LHResultJsonString, document) {
+  const lhResult = /** @type {LH.Result} */ JSON.parse(LHResultJsonString);
+  const dom = new DOM(document);
 
-    const perfRenderer = new PerformanceCategoryRenderer(dom, new DetailsRenderer(dom));
-    // PSI environment string will ensure the categoryHeader and permalink elements are excluded
-    const perfCategoryEl = perfRenderer.render(perfCategory, reportLHR.categoryGroups, 'PSI');
+  const reportLHR = Util.prepareReportResult(lhResult);
+  const perfCategory = reportLHR.reportCategories.find(cat => cat.id === 'performance');
+  if (!perfCategory) throw new Error(`No performance category. Can't make lab data section`);
+  if (!reportLHR.categoryGroups) throw new Error(`No category groups found.`);
 
-    const scoreGaugeEl = dom.find('.lh-score__gauge', perfCategoryEl);
-    const scoreGaugeWrapperEl = dom.find('.lh-gauge__wrapper', scoreGaugeEl);
-    scoreGaugeWrapperEl.classList.add('lh-gauge__wrapper--huge');
-    // Remove navigation link on gauge
-    scoreGaugeWrapperEl.removeAttribute('href');
+  const perfRenderer = new PerformanceCategoryRenderer(dom, new DetailsRenderer(dom));
+  // PSI environment string will ensure the categoryHeader and permalink elements are excluded
+  const perfCategoryEl = perfRenderer.render(perfCategory, reportLHR.categoryGroups, 'PSI');
 
-    const finalScreenshotDataUri = PSI.getFinalScreenshot(perfCategory);
-    return {scoreGaugeEl, perfCategoryEl, finalScreenshotDataUri};
-  }
+  const scoreGaugeEl = dom.find('.lh-score__gauge', perfCategoryEl);
+  scoreGaugeEl.remove();
+  const scoreGaugeWrapperEl = dom.find('.lh-gauge__wrapper', scoreGaugeEl);
+  scoreGaugeWrapperEl.classList.add('lh-gauge__wrapper--huge');
+  // Remove navigation link on gauge
+  scoreGaugeWrapperEl.removeAttribute('href');
 
-  /**
-   * @param {LH.ReportResult.Category} perfCategory
-   * @return {null|string}
-   */
-  static getFinalScreenshot(perfCategory) {
-    const auditRef = perfCategory.auditRefs.find(audit => audit.id === 'final-screenshot');
-    if (!auditRef || !auditRef.result || auditRef.result.scoreDisplayMode === 'error') return null;
-    return auditRef.result.details.data;
-  }
+  const finalScreenshotDataUri = _getFinalScreenshot(perfCategory);
+  return {scoreGaugeEl, perfCategoryEl, finalScreenshotDataUri};
+}
+
+/**
+ * @param {LH.ReportResult.Category} perfCategory
+ * @return {null|string}
+ */
+function _getFinalScreenshot(perfCategory) {
+  const auditRef = perfCategory.auditRefs.find(audit => audit.id === 'final-screenshot');
+  if (!auditRef || !auditRef.result || auditRef.result.scoreDisplayMode === 'error') return null;
+  return auditRef.result.details.data;
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = PSI;
+  module.exports = prepareLabData;
+  module.exports._getFinalScreenshot = _getFinalScreenshot;
 } else {
-  self.PSI = PSI;
+  // @ts-ignore we avoid exposing _getFinalScreenshot to the browser
+  self.prepareLabData = prepareLabData;
 }
