@@ -21,6 +21,7 @@
   <script src="../lighthouse-core/report/html/renderer/performance-category-renderer.js" type="text/javascript"></script>
   <script src="../lighthouse-core/report/html/renderer/report-renderer.js" type="text/javascript"></script>
   <script src="../lighthouse-core/report/html/renderer/dom.js" type="text/javascript"></script>
+  <script src="../lighthouse-core/report/html/renderer/psi.js" type="text/javascript"></script>
 
 </head>
 <body class="devsite-chekov devsite-doc-page devsite-header-no-upper-tabs">
@@ -69,43 +70,21 @@
 
       // Prepare the Lighthouse response for the renderer.
       // (This bit is usually done within ReportRenderer)
-      const reportLHR = JSON.parse(JSON.stringify(__LIGHTHOUSE_JSON__));
-      reportLHR.reportCategories = Object.values(reportLHR.categories);
-      ReportRenderer.smooshAuditResultsIntoCategories(reportLHR.audits, reportLHR.reportCategories);
+      const LHRStr = JSON.stringify(__LIGHTHOUSE_JSON__);
+      const {scoreGaugeEl, perfCategoryEl, finalScreenshotDataUri} = prepareLabData(LHRStr, document);
 
-      dom = new DOM(document);
-
-      // Render ONLY the perf category into a fresh element
-      const perfCategory = reportLHR.reportCategories.find(cat => cat.id === 'performance');
-      const perfRenderer = new PerformanceCategoryRenderer(dom, new DetailsRenderer(dom));
-      const perfElem = perfRenderer.render(perfCategory, reportLHR.categoryGroups);
-
-      const scoreGauge = dom.find('.lh-score__gauge', perfElem);
-      const scoreGaugeWrapper = dom.find('.lh-gauge__wrapper', scoreGauge);
-      // Mark as our large gauge
-      scoreGaugeWrapper.classList.add('lh-gauge__wrapper--huge');
-      // Remove the jump link on the score gauge
-      scoreGaugeWrapper.removeAttribute('href')
-      // Drop the rest of the Performance category title header. The gauge will be placed in the
-      // report header section (in the appendChilds below)
-      dom.find('.lh-category-header', perfElem).remove();
-
-      // Add the final screenshot
-      const datauri = PerformanceCategoryRenderer.getLastScreenshot(perfCategory);
-      if (datauri) {
+      if (finalScreenshotDataUri) {
         const img = document.createElement('img');
-        img.src = datauri;
+        img.src = finalScreenshotDataUri;
         document.querySelector('.ss-column').appendChild(img);
       }
 
       // Add these elements to the page: big score gauge, field data, then perf category
-      renderHeader(document.querySelector('header'), scoreGauge);
+      renderHeader(document.querySelector('header'), scoreGaugeEl);
 
       const container = document.querySelector('.lh-container');
       container.appendChild(renderFieldDataSection());
-      container.appendChild(perfElem);
-
-
+      container.appendChild(perfCategoryEl);
 
     });
   </script>

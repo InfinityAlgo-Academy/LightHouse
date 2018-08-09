@@ -1,10 +1,11 @@
 'use strict';
 
 
-/* globals dom */
+/* globals */
 
 // Just placeholder example. This would be built however PSI prefers to do things.
 function renderFieldDataSection() {
+  const dom = new DOM(document);
   const categoryEl = dom.createElement('div', 'lh-category');
   const container = dom.createChildOf(categoryEl, 'div', 'lh-audit-group lh-audit-group--fielddata');
   const headingEl = dom.createChildOf(container, 'div', 'lh-audit-group__header lh-audit-group__header--fielddata');
