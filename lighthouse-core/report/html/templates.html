@@ -164,7 +164,7 @@ limitations under the License.
       position: absolute;
       top: var(--report-header-height);
       right: 50%;
-      transform: translate3d(calc(var(--report-content-width) / 2), -100%, 0);
+      transform: translate3d(calc(var(--report-width) / 2), -100%, 0);
       opacity: 1;
       transform-origin: bottom right;
       will-change: transform, opacity;
@@ -527,11 +527,12 @@ limitations under the License.
 
     .lh-gauge__percentage {
       --spacer: calc((var(--circle-size) - var(--inset-size)) / 2);
-      width: var(--inset-size);
+      width: 100%;
       height: var(--inset-size);
       position: absolute;
       border-radius: inherit;
       font-size: var(--header-font-size);
+      line-height: var(--header-font-size);
       text-align: center;
       top: calc(var(--circle-size) / 3);
     }

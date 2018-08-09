@@ -134,9 +134,9 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const keyMetrics = metricAudits.filter(a => a.weight >= 3);
     const otherMetrics = metricAudits.filter(a => a.weight < 3);
 
-    const metricsBoxesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metric-container');
-    const metricsColumn1El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-metric-column');
-    const metricsColumn2El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-metric-column');
+    const metricsBoxesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-columns');
+    const metricsColumn1El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-column');
+    const metricsColumn2El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-column');
 
     keyMetrics.forEach(item => {
       metricsColumn1El.appendChild(this._renderMetric(item));
