@@ -75,8 +75,7 @@ async function runLighthouseInExtension(flags, categoryIDs) {
  * Run lighthouse for connection and provide similar results as in CLI.
  * @param {Connection} connection
  * @param {string} url
- * @param {LH.Flags} flags Lighthouse flags plus logAssets
-          Specify outputFormat to change the output format.
+ * @param {LH.Flags} flags Lighthouse flags, including `output`
  * @param {Array<string>} categoryIDs Name values of categories to include.
  * @param {{logAssets: boolean}} lrOpts Options coming from Lightrider
  * @return {Promise<string|Array<string>|void>}
