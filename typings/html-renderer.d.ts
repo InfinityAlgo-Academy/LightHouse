@@ -12,7 +12,7 @@ import _PerformanceCategoryRenderer = require('../lighthouse-core/report/html/re
 import _ReportRenderer = require('../lighthouse-core/report/html/renderer/report-renderer.js');
 import _ReportUIFeatures = require('../lighthouse-core/report/html/renderer/report-ui-features.js');
 import _Util = require('../lighthouse-core/report/html/renderer/util.js');
-import _PSI = require('../lighthouse-core/report/html/renderer/psi.js');
+import _prepareLabData = require('../lighthouse-core/report/html/renderer/psi.js');
 import _FileNamer = require('../lighthouse-core/lib/file-namer.js');
 
 declare global {
@@ -25,7 +25,7 @@ declare global {
   var ReportRenderer: typeof _ReportRenderer;
   var ReportUIFeatures: typeof _ReportUIFeatures;
   var Util: typeof _Util;
-  var PSI: typeof _PSI;
+  var prepareLabData: typeof _prepareLabData;
 
   interface Window {
     CategoryRenderer: typeof _CategoryRenderer;
@@ -36,7 +36,7 @@ declare global {
     ReportRenderer: typeof _ReportRenderer;
     ReportUIFeatures: typeof _ReportUIFeatures;
     Util: typeof _Util;
-    PSI: typeof _PSI;
+    prepareLabData: typeof _prepareLabData;
   }
 
   module LH {
