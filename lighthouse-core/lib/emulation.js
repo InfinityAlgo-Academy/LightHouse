@@ -5,8 +5,7 @@
  */
 'use strict';
 
-const Driver = require('../gather/driver'); // eslint-disable-line no-unused-vars
-const mobile3G = require('../config/constants').throttling.mobile3G;
+/** @typedef {import('../gather/driver.js')} Driver */
 
 /**
  * Nexus 5X metrics adapted from emulated_devices/module.json
@@ -51,15 +50,13 @@ const NO_THROTTLING_METRICS = {
 const NO_CPU_THROTTLE_METRICS = {
   rate: 1,
 };
-const CPU_THROTTLE_METRICS = {
-  rate: 4,
-};
 
 /**
  * @param {Driver} driver
+ * @return {Promise<void>}
  */
-function enableNexus5X(driver) {
-  return Promise.all([
+async function enableNexus5X(driver) {
+  await Promise.all([
     driver.sendCommand('Emulation.setDeviceMetricsOverride', NEXUS5X_EMULATION_METRICS),
     // Network.enable must be called for UA overriding to work
     driver.sendCommand('Network.enable'),
@@ -70,10 +67,10 @@ function enableNexus5X(driver) {
 
 /**
  * @param {Driver} driver
- * @param {LH.ThrottlingSettings|undefined} throttlingSettings
+ * @param {Required<LH.ThrottlingSettings>} throttlingSettings
  * @return {Promise<void>}
  */
-function enableNetworkThrottling(driver, throttlingSettings = mobile3G) {
+function enableNetworkThrottling(driver, throttlingSettings) {
   /** @type {LH.Crdp.Network.EmulateNetworkConditionsRequest} */
   const conditions = {
     offline: false,
@@ -106,14 +103,11 @@ function goOffline(driver) {
 
 /**
  * @param {Driver} driver
- * @param {LH.ThrottlingSettings|undefined} throttlingSettings
+ * @param {Required<LH.ThrottlingSettings>} throttlingSettings
  * @return {Promise<void>}
  */
 function enableCPUThrottling(driver, throttlingSettings) {
-  // TODO: cpuSlowdownMultiplier should be a required property by this point
-  const rate = throttlingSettings && throttlingSettings.cpuSlowdownMultiplier !== undefined
-    ? throttlingSettings.cpuSlowdownMultiplier
-    : CPU_THROTTLE_METRICS.rate;
+  const rate = throttlingSettings.cpuSlowdownMultiplier;
   return driver.sendCommand('Emulation.setCPUThrottlingRate', {rate});
 }
 
