@@ -13,7 +13,7 @@ const i18n = require('../lib/i18n');
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to use <link rel=preload> to initiate important network requests earlier during page load. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Preload key requests',
-  /** Description of a Lighthouse audit that tells the user *why* they should preload important network requests. The associated network requests are started halfway through pageload (or later) but should be started at the beginning. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should preload important network requests. The associated network requests are started halfway through pageload (or later) but should be started at the beginning. This is displayed after a user expands the section to see more. No character length limits. '<link rel=preload>' is the html code the user would include in their page and shouldn't be translated. 'Learn More' becomes link text to additional documentation. */
   description: 'Consider using <link rel=preload> to prioritize fetching resources that are ' +
     'currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).',
 };

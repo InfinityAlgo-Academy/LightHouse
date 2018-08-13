@@ -148,7 +148,7 @@
     "description": "Imperative title of a Lighthouse audit that tells the user to serve images in newer and more efficient image formats in order to enhance the performance of a page. A non-modern image format was designed 20+ years ago. This is displayed in a list of audit titles that Lighthouse generates."
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "The Critical Request Chains below show you what resources are issued with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains).",
+    "message": "The Critical Request Chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains).",
     "description": "Description of a Lighthouse audit that tells the user *why* they should reduce the depth of critical network requests to enhance initial load of a page . This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
@@ -208,11 +208,11 @@
     "description": "Description of a Lighthouse audit that tells the user *why* they should reduce JS execution times. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Minimize main thread work",
+    "message": "Minimize main-thread work",
     "description": "Title of a diagnostic audit that provides detail on the main thread work the browser did to load the page. This imperative title is shown to users when there is a significant amount of execution time that could be reduced."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
-    "message": "Minimizes main thread work",
+    "message": "Minimizes main-thread work",
     "description": "Title of a diagnostic audit that provides detail on the main thread work the browser did to load the page. This descriptive title is shown to users when the amount is acceptable and no user action is required."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
@@ -304,7 +304,7 @@
     "description": "Label for the Type column in the User Timing event data table. User Timing API entries are added by the developer of the web page. The only possible types are 'Mark' and Measure'."
   },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Consider instrumenting your app with the User Timing API to create custom, real-world measurements of key user experiences. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).",
+    "message": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).",
     "description": "Description of a Lighthouse audit that tells the user they may want to use the User Timing API to help measure the performance of aspects of their page load and interaction. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
@@ -325,7 +325,7 @@
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Consider using <link rel=preload> to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
-    "description": "Description of a Lighthouse audit that tells the user *why* they should preload important network requests. The associated network requests are started halfway through pageload (or later) but should be started at the beginning. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
+    "description": "Description of a Lighthouse audit that tells the user *why* they should preload important network requests. The associated network requests are started halfway through pageload (or later) but should be started at the beginning. This is displayed after a user expands the section to see more. No character length limits. '<link rel=preload>' is the html code the user would include in their page and shouldn't be translated. 'Learn More' becomes link text to additional documentation."
   },
   "lighthouse-core/audits/uses-rel-preload.js | title": {
     "message": "Preload key requests",

@@ -13,7 +13,7 @@ const UIStrings = {
   title: 'Minimize Critical Requests Depth',
   /** Description of a Lighthouse audit that tells the user *why* they should reduce the depth of critical network requests to enhance initial load of a page . This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'The Critical Request Chains below show you what resources are ' +
-      'issued with a high priority. Consider reducing ' +
+      'loaded with a high priority. Consider reducing ' +
       'the length of chains, reducing the download size of resources, or ' +
       'deferring the download of unnecessary resources to improve page load. ' +
       '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains).',
