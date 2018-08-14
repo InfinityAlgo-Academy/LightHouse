@@ -185,7 +185,13 @@ class CacheHeaders extends Audit {
         /** @type {Map<string, string>} */
         const headers = new Map();
         for (const header of record.responseHeaders || []) {
-          headers.set(header.name.toLowerCase(), header.value);
+          if (headers.has(header.name.toLowerCase())) {
+            const previousHeaderValue = headers.get(header.name.toLowerCase());
+            headers.set(header.name.toLowerCase(),
+              `${previousHeaderValue}, ${header.value}`);
+          } else {
+            headers.set(header.name.toLowerCase(), header.value);
+          }
         }
 
         const cacheControl = parseCacheControl(headers.get('cache-control'));

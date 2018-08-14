@@ -119,6 +119,25 @@ describe('Cache headers audit', () => {
     });
   });
 
+  it('respects multiple cache-control headers', () => {
+    networkRecords = [
+      networkRecord({headers: {
+        'cache-control': 'max-age=31536000, public',
+        'Cache-control': 'no-transform',
+      }}),
+      networkRecord({headers: {
+        'Cache-Control': 'no-transform',
+        'cache-control': 'max-age=3600',
+        'Cache-control': 'public',
+      }}),
+    ];
+
+    return CacheHeadersAudit.audit(artifacts, {options}).then(result => {
+      const items = result.extendedInfo.value.results;
+      assert.equal(items.length, 1);
+    });
+  });
+
   it('catches records with Etags', () => {
     networkRecords = [
       networkRecord({headers: {etag: 'md5hashhere'}}),
