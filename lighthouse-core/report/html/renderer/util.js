@@ -20,11 +20,11 @@
 
 const ELLIPSIS = '\u2026';
 const NBSP = '\xa0';
-const PASS_THRESHOLD = 0.75;
+const PASS_THRESHOLD = 0.9;
 
 const RATINGS = {
   PASS: {label: 'pass', minScore: PASS_THRESHOLD},
-  AVERAGE: {label: 'average', minScore: 0.45},
+  AVERAGE: {label: 'average', minScore: 0.5},
   FAIL: {label: 'fail'},
   ERROR: {label: 'error'},
 };
