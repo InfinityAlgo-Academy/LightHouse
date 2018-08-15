@@ -35,7 +35,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['CSSUsage', 'devtoolsLogs'],
+      requiredArtifacts: ['CSSUsage', 'devtoolsLogs', 'traces'],
     };
   }
 
