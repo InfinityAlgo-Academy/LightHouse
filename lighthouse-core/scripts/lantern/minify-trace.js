@@ -34,6 +34,7 @@ const inputTrace = JSON.parse(inputTraceRaw);
 const toplevelTaskNames = new Set([
   'TaskQueueManager::ProcessTaskFromWorkQueue',
   'ThreadControllerImpl::DoWork',
+  'ThreadControllerImpl::RunTask',
 ]);
 
 const traceEventsToAlwaysKeep = new Set([
