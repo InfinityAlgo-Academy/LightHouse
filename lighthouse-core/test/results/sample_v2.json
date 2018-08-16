@@ -75,7 +75,7 @@
     "first-contentful-paint": {
       "id": "first-contentful-paint",
       "title": "First Contentful Paint",
-      "description": "First contentful paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint).",
+      "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).",
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "rawValue": 3969.135,
