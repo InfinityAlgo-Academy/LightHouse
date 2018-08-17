@@ -131,6 +131,9 @@ gulp.task('browserify-lighthouse', () => {
       .ignore('rimraf')
       .ignore('pako/lib/zlib/inflate.js');
 
+      // Don't include the desktop protocol connection.
+      bundle.ignore(require.resolve('../lighthouse-core/gather/connections/cri.js'));
+
       // Prevent the DevTools background script from getting the stringified HTML.
       if (/lighthouse-background/.test(file.path)) {
         bundle.ignore(require.resolve('../lighthouse-core/report/html/html-report-assets.js'));

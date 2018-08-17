@@ -10,6 +10,8 @@ const log = require('lighthouse-logger');
 const ChromeProtocol = require('./gather/connections/cri.js');
 const Config = require('./config/config');
 
+/** @typedef {import('./gather/connections/connection.js')} Connection */
+
 /*
  * The relationship between these root modules:
  *
@@ -18,27 +20,30 @@ const Config = require('./config/config');
  *   runner.js - marshalls the actions that must be taken (Gather / Audit)
  *               config file is used to determine which of these actions are needed
  *
- *   lighthouse-cli \
- *                   -- index.js  \
- *                                 ----- runner.js ----> [Gather / Audit]
- *           lighthouse-extension /
- *
+ *         lighthouse-cli \
+ *                         -- core/index.js ----> runner.js ----> [Gather / Audit]
+ *   lighthouse-extension /
  */
 
 /**
- * @param {string=} url
- * @param {LH.Flags=} flags
- * @param {LH.Config.Json=} configJSON
+ * Run Lighthouse.
+ * @param {string=} url The URL to test. Optional if running in auditMode.
+ * @param {LH.Flags=} flags Optional settings for the Lighthouse run. If present,
+ *   they will override any settings in the config.
+ * @param {LH.Config.Json=} configJSON Configuration for the Lighthouse run. If
+ *   not present, the default config is used.
+ * @param {Connection=} connection
  * @return {Promise<LH.RunnerResult|undefined>}
  */
-async function lighthouse(url, flags = {}, configJSON) {
+async function lighthouse(url, flags = {}, configJSON, connection) {
   // set logging preferences, assume quiet
   flags.logLevel = flags.logLevel || 'error';
   log.setLevel(flags.logLevel);
 
   // Use ConfigParser to generate a valid config file
   const config = new Config(configJSON, flags);
-  const connection = new ChromeProtocol(flags.port, flags.hostname);
+
+  connection = connection || new ChromeProtocol(flags.port, flags.hostname);
 
   // kick off a lighthouse run
   return Runner.run(connection, {url, config});

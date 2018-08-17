@@ -5,8 +5,8 @@
  */
 'use strict';
 
+const lighthouse = require('../../../lighthouse-core/index');
 const RawProtocol = require('../../../lighthouse-core/gather/connections/raw');
-const Runner = require('../../../lighthouse-core/runner');
 const Config = require('../../../lighthouse-core/config/config');
 const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
 const i18n = require('../../../lighthouse-core/lib/i18n');
@@ -15,32 +15,18 @@ const log = require('lighthouse-logger');
 /** @typedef {import('../../../lighthouse-core/gather/connections/connection.js')} Connection */
 
 /**
- * @param {Connection} connection
- * @param {string} url
- * @param {LH.Flags} flags Lighthouse flags.
- * @param {Array<string>} categoryIDs Name values of categories to include.
- * @param {(url?: string) => void} updateBadgeFn
- * @return {Promise<LH.RunnerResult|void>}
+ * Return a version of the default config, filtered to only run the specified
+ * categories.
+ * @param {Array<string>} categoryIDs
+ * @return {LH.Config.Json}
  */
-function runLighthouseForConnection(connection, url, flags, categoryIDs, updateBadgeFn = _ => {}) {
-  const config = new Config({
+function getDefaultConfigForCategories(categoryIDs) {
+  return {
     extends: 'lighthouse:default',
     settings: {
       onlyCategories: categoryIDs,
     },
-  }, flags);
-
-  updateBadgeFn(url);
-
-  return Runner.run(connection, {url, config}) // Run Lighthouse.
-    .then(result => {
-      updateBadgeFn();
-      return result;
-    })
-    .catch(err => {
-      updateBadgeFn();
-      throw err;
-    });
+  };
 }
 
 /**
@@ -52,9 +38,11 @@ function runLighthouseForConnection(connection, url, flags, categoryIDs, updateB
  */
 function runLighthouseInWorker(port, url, flags, categoryIDs) {
   // Default to 'info' logging level.
-  log.setLevel('info');
+  flags.logLevel = flags.logLevel || 'info';
+  const config = getDefaultConfigForCategories(categoryIDs);
   const connection = new RawProtocol(port);
-  return runLighthouseForConnection(connection, url, flags, categoryIDs);
+
+  return lighthouse(url, flags, config, connection);
 }
 
 /**
@@ -75,7 +63,7 @@ function listenForStatus(listenCallback) {
 if (typeof module !== 'undefined' && module.exports) {
   // export for lighthouse-ext-background to require (via browserify).
   module.exports = {
-    runLighthouseForConnection,
+    getDefaultConfigForCategories,
     runLighthouseInWorker,
     getDefaultCategories,
     listenForStatus,
