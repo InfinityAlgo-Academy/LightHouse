@@ -109,7 +109,7 @@ declare global {
       outputPath: string;
       saveAssets: boolean;
       view: boolean;
-      enableErrorReporting: boolean;
+      enableErrorReporting?: boolean;
       listAllAudits: boolean;
       listTraceCategories: boolean;
       preset?: 'full'|'mixed-content'|'perf';

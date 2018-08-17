@@ -97,6 +97,9 @@ if (cliFlags.extraHeaders) {
 function run() {
   return Promise.resolve()
     .then(_ => {
+      // By default, cliFlags.enableErrorReporting is undefined so the user is
+      // prompted. This can be overriden with an explicit flag or by the cached
+      // answer returned by askPermission().
       if (typeof cliFlags.enableErrorReporting === 'undefined') {
         return askPermission().then(answer => {
           cliFlags.enableErrorReporting = answer;

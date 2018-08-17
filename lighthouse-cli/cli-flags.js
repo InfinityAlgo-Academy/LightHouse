@@ -117,7 +117,7 @@ function getFlags(manualArgv) {
       // boolean values
       .boolean([
         'disable-storage-reset', 'disable-device-emulation', 'save-assets', 'list-all-audits',
-        'list-trace-categories', 'view', 'verbose', 'quiet', 'help', 'enable-error-reporting',
+        'list-trace-categories', 'view', 'verbose', 'quiet', 'help',
       ])
       .choices('output', printer.getValidOutputOptions())
       .choices('throttling-method', ['devtools', 'provided', 'simulate'])
@@ -136,6 +136,7 @@ function getFlags(manualArgv) {
       .default('output', ['html'])
       .default('port', 0)
       .default('hostname', 'localhost')
+      .default('enable-error-reporting', undefined) // Undefined so prompted by default
       .check(/** @param {LH.CliFlags} argv */ (argv) => {
         // Lighthouse doesn't need a URL if...
         //   - We're in auditMode (and we have artifacts already)
