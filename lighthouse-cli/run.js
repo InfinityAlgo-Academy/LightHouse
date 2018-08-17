@@ -26,7 +26,7 @@ const _PROTOCOL_TIMEOUT_EXIT_CODE = 67;
 /**
  * exported for testing
  * @param {string} flags
- * @return {!Array<string>}
+ * @return {Array<string>}
  */
 function parseChromeFlags(flags = '') {
   const parsed = yargsParser(
@@ -49,8 +49,8 @@ function parseChromeFlags(flags = '') {
 /**
  * Attempts to connect to an instance of Chrome with an open remote-debugging
  * port. If none is found, launches a debuggable instance.
- * @param {!LH.Flags} flags
- * @return {Promise<LH.LaunchedChrome>}
+ * @param {LH.CliFlags} flags
+ * @return {Promise<ChromeLauncher.LaunchedChrome>}
  */
 function getDebuggableChrome(flags) {
   return ChromeLauncher.launch({
@@ -71,7 +71,7 @@ function showProtocolTimeoutError() {
 }
 
 /**
- * @param {!LH.LighthouseError} err
+ * @param {LH.LighthouseError} err
  */
 function showRuntimeError(err) {
   console.error('Runtime error encountered:', err.friendlyMessage || err.message);
@@ -82,7 +82,7 @@ function showRuntimeError(err) {
 }
 
 /**
- * @param {!LH.LighthouseError} err
+ * @param {LH.LighthouseError} err
  */
 function handleError(err) {
   if (err.code === 'ECONNREFUSED') {
@@ -95,8 +95,8 @@ function handleError(err) {
 }
 
 /**
- * @param {!LH.RunnerResult} runnerResult
- * @param {!LH.Flags} flags
+ * @param {LH.RunnerResult} runnerResult
+ * @param {LH.CliFlags} flags
  * @return {Promise<void>}
  */
 async function saveResults(runnerResult, flags) {
@@ -138,12 +138,12 @@ async function saveResults(runnerResult, flags) {
 
 /**
  * @param {string} url
- * @param {LH.Flags} flags
+ * @param {LH.CliFlags} flags
  * @param {LH.Config.Json|undefined} config
  * @return {Promise<LH.RunnerResult|void>}
  */
 function runLighthouse(url, flags, config) {
-  /** @type {!LH.LaunchedChrome} */
+  /** @type {ChromeLauncher.LaunchedChrome|undefined} */
   let launchedChrome;
   const shouldGather = flags.gatherMode || flags.gatherMode === flags.auditMode;
   let chromeP = Promise.resolve();

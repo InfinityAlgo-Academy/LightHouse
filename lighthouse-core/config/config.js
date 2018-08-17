@@ -160,18 +160,18 @@ function assertValidGatherer(gathererInstance, gathererName) {
 /**
  * Creates a settings object from potential flags object by dropping all the properties
  * that don't exist on Config.Settings.
- * TODO(bckenny): fix Flags type
  * @param {Partial<LH.Flags>=} flags
- * @return {Partial<LH.Config.Settings>}
- */
+ * @return {RecursivePartial<LH.Config.Settings>}
+*/
 function cleanFlagsForSettings(flags = {}) {
-  /** @type {Partial<LH.Config.Settings>} */
+  /** @type {RecursivePartial<LH.Config.Settings>} */
   const settings = {};
 
   for (const key of Object.keys(flags)) {
     // @ts-ignore - intentionally testing some keys not on defaultSettings to discard them.
     if (typeof constants.defaultSettings[key] !== 'undefined') {
-      const safekey = /** @type {keyof LH.SharedFlagsSettings} */ (key);
+      // Cast since key now must be able to index both Flags and Settings.
+      const safekey = /** @type {Extract<keyof LH.Flags, keyof LH.Config.Settings>} */ (key);
       settings[safekey] = flags[safekey];
     }
   }

@@ -8,13 +8,12 @@
 /* eslint-disable max-len */
 
 const yargs = require('yargs');
-// @ts-ignore
 const pkg = require('../package.json');
 const printer = require('./printer');
 
 /**
  * @param {string=} manualArgv
- * @return {!LH.Flags}
+ * @return {LH.CliFlags}
  */
 function getFlags(manualArgv) {
   // @ts-ignore yargs() is incorrectly typed as not returning itself
@@ -118,7 +117,7 @@ function getFlags(manualArgv) {
       // boolean values
       .boolean([
         'disable-storage-reset', 'disable-device-emulation', 'save-assets', 'list-all-audits',
-        'list-trace-categories', 'view', 'verbose', 'quiet', 'help',
+        'list-trace-categories', 'view', 'verbose', 'quiet', 'help', 'enable-error-reporting',
       ])
       .choices('output', printer.getValidOutputOptions())
       .choices('throttling-method', ['devtools', 'provided', 'simulate'])
@@ -137,7 +136,7 @@ function getFlags(manualArgv) {
       .default('output', ['html'])
       .default('port', 0)
       .default('hostname', 'localhost')
-      .check(/** @param {!LH.Flags} argv */ (argv) => {
+      .check(/** @param {LH.CliFlags} argv */ (argv) => {
         // Lighthouse doesn't need a URL if...
         //   - We're in auditMode (and we have artifacts already)
         //   - We're just listing the available options.

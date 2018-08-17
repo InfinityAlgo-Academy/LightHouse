@@ -13,6 +13,7 @@ const log = require('lighthouse-logger');
  *   'json': JSON formatted results
  *   'html': An HTML report
  *   'csv': CSV formatted results
+ * @type {SelfMap<LH.OutputMode>}
  */
 const OutputMode = {
   json: 'json',
@@ -36,7 +37,7 @@ function checkOutputPath(path) {
 /**
  * Writes the output to stdout.
  * @param {string} output
- * @return {!Promise<undefined>}
+ * @return {Promise<void>}
  */
 function writeToStdout(output) {
   return new Promise(resolve => {
@@ -52,8 +53,8 @@ function writeToStdout(output) {
  * Writes the output to a file.
  * @param {string} filePath
  * @param {string} output
- * @param {string} outputMode
- * @return {!Promise<undefined>}
+ * @param {LH.OutputMode} outputMode
+ * @return {Promise<void>}
  */
 function writeFile(filePath, output, outputMode) {
   return new Promise((resolve, reject) => {
@@ -71,7 +72,7 @@ function writeFile(filePath, output, outputMode) {
 /**
  * Writes the output.
  * @param {string} output
- * @param {string} mode
+ * @param {LH.OutputMode} mode
  * @param {string} path
  * @return {Promise<void>}
  */
@@ -84,7 +85,7 @@ async function write(output, mode, path) {
 
 /**
  * Returns a list of valid output options.
- * @return {!Array<string>}
+ * @return {Array<string>}
  */
 function getValidOutputOptions() {
   return Object.keys(OutputMode);

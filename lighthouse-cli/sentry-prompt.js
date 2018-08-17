@@ -18,7 +18,7 @@ const MESSAGE = `${log.reset}We're constantly trying to improve Lighthouse and i
   ` May we anonymously report runtime exceptions to improve the tool over time? `;
 
 /**
- * @return {!Promise<boolean>}
+ * @return {Promise<boolean>}
  */
 function prompt() {
   if (!process.stdout.isTTY || process.env.CI) {
@@ -58,7 +58,7 @@ function prompt() {
 }
 
 /**
- * @return {!Promise<boolean>}
+ * @return {Promise<boolean>}
  */
 function askPermission() {
   return Promise.resolve().then(_ => {

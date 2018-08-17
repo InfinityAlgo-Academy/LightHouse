@@ -31,10 +31,7 @@ const Config = require('./config/config');
  * @param {LH.Config.Json=} configJSON
  * @return {Promise<LH.RunnerResult|undefined>}
  */
-async function lighthouse(url, flags, configJSON) {
-  // TODO(bckenny): figure out Flags types.
-  flags = flags || /** @type {LH.Flags} */ ({});
-
+async function lighthouse(url, flags = {}, configJSON) {
   // set logging preferences, assume quiet
   flags.logLevel = flags.logLevel || 'error';
   log.setLevel(flags.logLevel);

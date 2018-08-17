@@ -28,6 +28,18 @@ declare global {
     [P in K]+?: T[P]
   }
 
+  /** An object with the keys in the union K mapped to themselves as values. */
+  type SelfMap<K extends string> = {
+    [P in K]: P;
+  };
+
+  /** Make optional all properties on T and any properties on object properties of T. */
+  type RecursivePartial<T> = {
+    [P in keyof T]+?: T[P] extends object ?
+      RecursivePartial<T[P]> :
+      T[P];
+  };
+
   /**
    * Exclude void from T
    */
@@ -77,16 +89,21 @@ declare global {
       onlyAudits?: string[] | null;
       onlyCategories?: string[] | null;
       skipAudits?: string[] | null;
+      extraHeaders?: Crdp.Network.Headers | null; // See extraHeaders TODO in bin.js
     }
 
     export interface Flags extends SharedFlagsSettings {
-      // Used by both core/ and cli/
-      port: number;
-      hostname: string;
-      output: any;
-      logLevel: 'silent'|'error'|'info'|'verbose';
+      port?: number;
+      hostname?: string;
+      logLevel?: 'silent'|'error'|'info'|'verbose';
+      configPath?: string;
+    }
 
-      // Just used by cli/
+    /**
+     * Flags accepted by Lighthouse, plus additional flags just
+     * for controlling the CLI.
+     */
+    export interface CliFlags extends Flags {
       _: string[];
       chromeFlags: string;
       outputPath: string;
@@ -95,11 +112,13 @@ declare global {
       enableErrorReporting: boolean;
       listAllAudits: boolean;
       listTraceCategories: boolean;
-      configPath?: string;
       preset?: 'full'|'mixed-content'|'perf';
       verbose: boolean;
       quiet: boolean;
-      extraHeaders?: string;
+      // following are given defaults in cli-flags, so not optional like in Flags or SharedFlagsSettings
+      output: OutputMode[];
+      port: number;
+      hostname: string;
     }
 
     export interface RunnerResult {
@@ -118,12 +137,6 @@ declare global {
       id: string;
       weight: number;
       group: string;
-    }
-
-    export interface LaunchedChrome {
-      pid: number;
-      port: number;
-      kill: () => Promise<{}>;
     }
 
     export interface LighthouseError extends Error {

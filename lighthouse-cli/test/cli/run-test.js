@@ -70,10 +70,6 @@ describe('Parsing --chrome-flags', () => {
     assert.deepStrictEqual(parseChromeFlags('--debug=false'), ['--debug=false']);
   });
 
-  it('returns empty when passed undefined', () => {
-    assert.deepStrictEqual(parseChromeFlags(), []);
-  });
-
   it('keeps --no-flags untouched, #3003', () => {
     assert.deepStrictEqual(parseChromeFlags('--no-sandbox'), ['--no-sandbox']);
   });

@@ -160,8 +160,8 @@ async function onGenerateReportButtonClick(background, settings) {
   feedbackEl.textContent = '';
 
   const {selectedCategories, useDevTools} = settings;
-  // TODO(bckenny): make flags workable as a type.
-  const flags = /** @type {LH.Flags} */ ({throttlingMethod: useDevTools ? 'devtools' : 'simulate'});
+  /** @type {LH.Flags} */
+  const flags = {throttlingMethod: useDevTools ? 'devtools' : 'simulate'};
 
   try {
     await background.runLighthouseInExtension(flags, selectedCategories);
