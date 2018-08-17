@@ -28,7 +28,7 @@ const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extens
  * @property {string} securityOrigin
  */
 
-/** @type {Record<LH.Crdp.Page.ResourceType, LH.Crdp.Page.ResourceType>} */
+/** @type {SelfMap<LH.Crdp.Page.ResourceType>} */
 const RESOURCE_TYPES = {
   XHR: 'XHR',
   Fetch: 'Fetch',

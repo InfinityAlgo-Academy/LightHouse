@@ -151,6 +151,7 @@ class CacheHeaders extends Audit {
   static isCacheableAsset(record) {
     const CACHEABLE_STATUS_CODES = new Set([200, 203, 206]);
 
+    /** @type {Set<LH.Crdp.Page.ResourceType>} */
     const STATIC_RESOURCE_TYPES = new Set([
       NetworkRequest.TYPES.Font,
       NetworkRequest.TYPES.Image,
