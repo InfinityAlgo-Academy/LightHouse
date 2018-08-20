@@ -5,7 +5,8 @@
  */
 'use strict';
 
-module.exports = {
+/** @type {LH.Config.Json} */
+const mixedContentConfig = {
   // This performs two passes:
   // (1) Gather the default resources requested by the page, and
   // (2) Re-load page but attempt to upgrade each request to HTTPS.
@@ -35,3 +36,5 @@ module.exports = {
     },
   },
 };
+
+module.exports = mixedContentConfig;

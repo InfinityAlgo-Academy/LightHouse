@@ -5,7 +5,8 @@
  */
 'use strict';
 
-module.exports = {
+/** @type {LH.Config.Json} */
+const plotsConfig = {
   extends: 'lighthouse:default',
   settings: {
     onlyAudits: [
@@ -17,3 +18,5 @@ module.exports = {
     ],
   },
 };
+
+module.exports = plotsConfig;

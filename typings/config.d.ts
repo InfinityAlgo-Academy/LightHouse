@@ -52,13 +52,14 @@ declare global {
 
       export interface CategoryJson {
         title: string;
-        description: string;
         auditRefs: AuditRefJson[];
+        description?: string;
+        manualDescription?: string;
       }
 
       export interface GroupJson {
         title: string;
-        description: string;
+        description?: string;
       }
 
       export type AuditJson = {

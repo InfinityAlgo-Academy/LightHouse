@@ -35,7 +35,8 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-module.exports = {
+/** @type {LH.Config.Json} */
+const defaultConfig = {
   settings: constants.defaultSettings,
   passes: [{
     passName: 'defaultPass',
@@ -445,3 +446,5 @@ Object.defineProperty(module.exports, 'UIStrings', {
   enumerable: false,
   get: () => UIStrings,
 });
+
+module.exports = defaultConfig;
