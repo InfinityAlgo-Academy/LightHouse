@@ -5,9 +5,11 @@
  */
 'use strict';
 
+/** @typedef {'parseHTML'|'styleLayout'|'paintCompositeRender'|'scriptParseCompile'|'scriptEvaluation'|'garbageCollection'|'other'} TaskGroupIds */
+
 /**
  * @typedef TaskGroup
- * @property {string} id
+ * @property {TaskGroupIds} id
  * @property {string} label
  * @property {string[]} traceEventNames
  */
@@ -16,15 +18,16 @@
  * Make sure the traceEventNames keep up with the ones in DevTools
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/timeline_model/TimelineModel.js?type=cs&q=TimelineModel.TimelineModel.RecordType+%3D&g=0&l=1156
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/timeline/TimelineUIUtils.js?type=cs&q=_initEventStyles+-f:out+f:devtools&sq=package:chromium&g=0&l=39
+ * @type {{[P in TaskGroupIds]: {id: P, label: string, traceEventNames: Array<string>}}}
  */
 const taskGroups = {
   parseHTML: {
-    id: '',
+    id: 'parseHTML',
     label: 'Parse HTML & CSS',
     traceEventNames: ['ParseHTML', 'ParseAuthorStyleSheet'],
   },
   styleLayout: {
-    id: '',
+    id: 'styleLayout',
     label: 'Style & Layout',
     traceEventNames: [
       'ScheduleStyleRecalculation',
@@ -35,7 +38,7 @@ const taskGroups = {
     ],
   },
   paintCompositeRender: {
-    id: '',
+    id: 'paintCompositeRender',
     label: 'Rendering',
     traceEventNames: [
       'Animation',
@@ -55,12 +58,12 @@ const taskGroups = {
     ],
   },
   scriptParseCompile: {
-    id: '',
+    id: 'scriptParseCompile',
     label: 'Script Parsing & Compilation',
     traceEventNames: ['v8.compile', 'v8.compileModule', 'v8.parseOnBackground'],
   },
   scriptEvaluation: {
-    id: '',
+    id: 'scriptEvaluation',
     label: 'Script Evaluation',
     traceEventNames: [
       'EventDispatch',
@@ -75,7 +78,7 @@ const taskGroups = {
     ],
   },
   garbageCollection: {
-    id: '',
+    id: 'garbageCollection',
     label: 'Garbage Collection',
     traceEventNames: [
       'GCEvent',
@@ -87,7 +90,7 @@ const taskGroups = {
     ],
   },
   other: {
-    id: '',
+    id: 'other',
     label: 'Other',
     traceEventNames: [
       'MessageLoop::RunTask',
@@ -99,8 +102,7 @@ const taskGroups = {
 
 /** @type {Object<string, TaskGroup>} */
 const taskNameToGroup = {};
-for (const [groupId, group] of Object.entries(taskGroups)) {
-  group.id = groupId;
+for (const group of Object.values(taskGroups)) {
   for (const traceEventName of group.traceEventNames) {
     taskNameToGroup[traceEventName] = group;
   }

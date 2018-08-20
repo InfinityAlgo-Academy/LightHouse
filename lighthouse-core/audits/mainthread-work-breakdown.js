@@ -28,6 +28,8 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
+/** @typedef {import('../lib/task-groups.js').TaskGroupIds} TaskGroupIds */
+
 class MainThreadWorkBreakdown extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -56,10 +58,10 @@ class MainThreadWorkBreakdown extends Audit {
 
   /**
    * @param {LH.Artifacts.TaskNode[]} tasks
-   * @return {Map<string, number>}
+   * @return {Map<TaskGroupIds, number>}
    */
   static getExecutionTimingsByGroup(tasks) {
-    /** @type {Map<string, number>} */
+    /** @type {Map<TaskGroupIds, number>} */
     const result = new Map();
 
     for (const task of tasks) {
@@ -86,6 +88,7 @@ class MainThreadWorkBreakdown extends Audit {
     const executionTimings = MainThreadWorkBreakdown.getExecutionTimingsByGroup(tasks);
 
     let totalExecutionTime = 0;
+    /** @type {Record<string, number>} */
     const categoryTotals = {};
     const results = Array.from(executionTimings).map(([groupId, rawDuration]) => {
       const duration = rawDuration * multiplier;
