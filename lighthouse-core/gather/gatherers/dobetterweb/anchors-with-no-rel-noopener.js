@@ -6,7 +6,7 @@
 'use strict';
 
 const Gatherer = require('../gatherer');
-const DOMHelpers = require('../../../lib/dom-helpers.js');
+const pageFunctions = require('../../../lib/page-functions.js');
 
 class AnchorsWithNoRelNoopener extends Gatherer {
   /**
@@ -15,13 +15,15 @@ class AnchorsWithNoRelNoopener extends Gatherer {
    */
   afterPass(passContext) {
     const expression = `(function() {
-      ${DOMHelpers.getElementsInDocumentFnString}; // define function on page
+      ${pageFunctions.getOuterHTMLSnippet.toString()};
+      ${pageFunctions.getElementsInDocument.toString()}; // define function on page
       const selector = 'a[target="_blank"]:not([rel~="noopener"]):not([rel~="noreferrer"])';
       const elements = getElementsInDocument(selector);
       return elements.map(node => ({
         href: node.href,
         rel: node.getAttribute('rel'),
-        target: node.getAttribute('target')
+        target: node.getAttribute('target'),
+        outerHTML: getOuterHTMLSnippet(node),
       }));
     })()`;
 

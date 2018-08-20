@@ -2227,16 +2227,19 @@
   "AnchorsWithNoRelNoopener": [
     {
       "href": "https://www.google.com/",
+      "outerHTML": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
       "rel": null,
       "target": "_blank"
     },
     {
       "href": "",
+      "outerHTML": "<a target=\"blank\">Hello</a>",
       "rel": null,
       "target": "_blank"
     },
     {
       "href": "https://www.google.com/",
+      "outerHTML": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
       "rel": "nofollow",
       "target": "_blank"
     },

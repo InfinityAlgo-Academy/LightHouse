@@ -9,23 +9,12 @@
  * and total number of nodes used on the page.
  */
 
-/* global ShadowRoot */
+/* global ShadowRoot, getOuterHTMLSnippet */
 
 'use strict';
 
 const Gatherer = require('../gatherer');
-
-/**
- * Gets the opening tag text of the given node.
- * @param {Element} element
- * @return {?string}
- */
-/* istanbul ignore next */
-function getOuterHTMLSnippet(element) {
-  const reOpeningTag = /^.*?>/;
-  const match = element.outerHTML.match(reOpeningTag);
-  return match && match[0];
-}
+const pageFunctions = require('../../../lib/page-functions');
 
 /**
  * Constructs a pretty label from element's selectors. For example, given
@@ -151,7 +140,7 @@ class DOMStats extends Gatherer {
    */
   afterPass(passContext) {
     const expression = `(function() {
-      ${getOuterHTMLSnippet.toString()};
+      ${pageFunctions.getOuterHTMLSnippet.toString()};
       ${createSelectorsLabel.toString()};
       ${elementPathInDOM.toString()};
       return (${getDOMStats.toString()}(document.documentElement));

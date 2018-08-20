@@ -10,7 +10,7 @@
 'use strict';
 
 const Gatherer = require('./gatherer');
-const DOMHelpers = require('../../lib/dom-helpers.js');
+const pageFunctions = require('../../lib/page-functions.js');
 const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
 
 /* global window, getElementsInDocument, Image */
@@ -161,7 +161,7 @@ class ImageUsage extends Gatherer {
     }, /** @type {Object<string, LH.Artifacts.SingleImageUsage['networkRecord']>} */ ({}));
 
     const expression = `(function() {
-      ${DOMHelpers.getElementsInDocumentFnString}; // define function on page
+      ${pageFunctions.getElementsInDocument.toString()}; // define function on page
       return (${collectImageElementInfo.toString()})();
     })()`;
 

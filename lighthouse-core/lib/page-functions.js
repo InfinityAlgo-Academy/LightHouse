@@ -6,7 +6,7 @@
 // @ts-nocheck
 'use strict';
 
-/* global window */
+/* global window document */
 
 /**
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
@@ -78,8 +78,49 @@ function checkTimeSinceLastLongTask() {
   });
 }
 
+/**
+ * @param {string=} selector Optional simple CSS selector to filter nodes on.
+ *     Combinators are not supported.
+ * @return {Array<Element>}
+ */
+/* istanbul ignore next */
+function getElementsInDocument(selector) {
+  /** @type {Array<Element>} */
+  const results = [];
+
+  /** @param {NodeListOf<Element>} nodes */
+  const _findAllElements = nodes => {
+    for (let i = 0, el; el = nodes[i]; ++i) {
+      if (!selector || el.matches(selector)) {
+        results.push(el);
+      }
+      // If the element has a shadow root, dig deeper.
+      if (el.shadowRoot) {
+        _findAllElements(el.shadowRoot.querySelectorAll('*'));
+      }
+    }
+  };
+  _findAllElements(document.querySelectorAll('*'));
+
+  return results;
+}
+
+/**
+ * Gets the opening tag text of the given node.
+ * @param {Element} element
+ * @return {string}
+ */
+/* istanbul ignore next */
+function getOuterHTMLSnippet(element) {
+  const reOpeningTag = /^.*?>/;
+  const match = element.outerHTML.match(reOpeningTag);
+  return match && match[0] || '';
+}
+
 module.exports = {
   wrapRuntimeEvalErrorInBrowser,
   registerPerformanceObserverInPage,
   checkTimeSinceLastLongTask,
+  getElementsInDocument,
+  getOuterHTMLSnippet,
 };

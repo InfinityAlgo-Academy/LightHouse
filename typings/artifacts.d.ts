@@ -43,7 +43,7 @@ declare global {
       /** The results of running the aXe accessibility tests on the page. */
       Accessibility: Artifacts.Accessibility;
       /** Information on all anchors in the page that aren't nofollow or noreferrer. */
-      AnchorsWithNoRelNoopener: {href: string; rel: string; target: string}[];
+      AnchorsWithNoRelNoopener: {href: string; rel: string; target: string, outerHTML: string}[];
       /** The value of the page's <html> manifest attribute, or null if not defined */
       AppCacheManifest: string | null;
       /** Array of all URLs cached in CacheStorage. */

@@ -6,7 +6,7 @@
 'use strict';
 
 const Gatherer = require('../gatherer');
-const DOMHelpers = require('../../../lib/dom-helpers.js');
+const pageFunctions = require('../../../lib/page-functions.js');
 
 class EmbeddedContent extends Gatherer {
   /**
@@ -15,7 +15,7 @@ class EmbeddedContent extends Gatherer {
    */
   afterPass(passContext) {
     const expression = `(function() {
-      ${DOMHelpers.getElementsInDocumentFnString}; // define function on page
+      ${pageFunctions.getElementsInDocument.toString()}; // define function on page
       const selector = 'object, embed, applet';
       const elements = getElementsInDocument(selector);
       return elements

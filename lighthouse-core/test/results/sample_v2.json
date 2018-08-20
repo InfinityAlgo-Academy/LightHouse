@@ -2226,7 +2226,7 @@
       "scoreDisplayMode": "binary",
       "rawValue": false,
       "warnings": [
-        "Unable to determine the destination for anchor tag. If not used as a hyperlink, consider removing target=_blank."
+        "Unable to determine the destination for anchor (<a target=\"blank\">Hello</a>). If not used as a hyperlink, consider removing target=_blank."
       ],
       "details": {
         "type": "table",
@@ -2252,19 +2252,19 @@
             "href": "https://www.google.com/",
             "target": "_blank",
             "rel": "",
-            "url": "<a href=\"https://www.google.com/\" target=\"_blank\">"
+            "outerHTML": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
           },
           {
             "href": "Unknown",
             "target": "_blank",
             "rel": "",
-            "url": "<a target=\"_blank\">"
+            "outerHTML": "<a target=\"blank\">Hello</a>"
           },
           {
             "href": "https://www.google.com/",
             "target": "_blank",
             "rel": "nofollow",
-            "url": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">"
+            "outerHTML": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
           }
         ]
       }
