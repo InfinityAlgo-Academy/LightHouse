@@ -441,10 +441,10 @@ const defaultConfig = {
   },
 };
 
+module.exports = defaultConfig;
+
 // Use `defineProperty` so that the strings are accesible from original but ignored when we copy it
 Object.defineProperty(module.exports, 'UIStrings', {
   enumerable: false,
   get: () => UIStrings,
 });
-
-module.exports = defaultConfig;

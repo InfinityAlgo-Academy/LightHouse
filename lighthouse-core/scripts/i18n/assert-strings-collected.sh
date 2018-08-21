@@ -30,7 +30,7 @@ cp "$collectedstringsPath" "$currentstringsPath"
 
 colorText "Collecting strings..." "$purple"
 set -x
-node "$lhroot_path/lighthouse-core/scripts/i18n/collect-strings.js"
+node "$lhroot_path/lighthouse-core/scripts/i18n/collect-strings.js" || exit 1
 set +x
 
 cp "$collectedstringsPath" "$freshstringsPath"
