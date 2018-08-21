@@ -37,6 +37,9 @@ function prepareLabData(LHResultJsonString, document) {
   const lhResult = /** @type {LH.Result} */ JSON.parse(LHResultJsonString);
   const dom = new DOM(document);
 
+  // Assume fresh styles needed on every call, so mark all template styles as unused.
+  dom.resetTemplates();
+
   const reportLHR = Util.prepareReportResult(lhResult);
   const perfCategory = reportLHR.reportCategories.find(cat => cat.id === 'performance');
   if (!perfCategory) throw new Error(`No performance category. Can't make lab data section`);
