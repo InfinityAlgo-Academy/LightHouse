@@ -154,11 +154,14 @@ async function onGenerateReportButtonClick(background, settings) {
   }
   isRunning = true;
 
+  // resetting status message
+  const statusMsg = find('.status__msg');
+  statusMsg.textContent = 'Starting...';
+
   showRunningSubpage();
 
   const feedbackEl = find('.feedback');
   feedbackEl.textContent = '';
-
   const {selectedCategories, useDevTools} = settings;
   /** @type {LH.Flags} */
   const flags = {throttlingMethod: useDevTools ? 'devtools' : 'simulate'};
@@ -185,7 +188,7 @@ async function onGenerateReportButtonClick(background, settings) {
     feedbackEl.textContent = message;
 
     if (includeReportLink) {
-      feedbackEl.className = 'feedback-error';
+      feedbackEl.className = 'feedback feedback-error';
       feedbackEl.appendChild(buildReportErrorLink(err));
     }
 

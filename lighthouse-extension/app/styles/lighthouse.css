@@ -188,20 +188,14 @@ html, body {
   position: absolute;
   color: #fff;
   bottom: 10px;
-  left: 16px;
+  left: 14px; /* 16px - 2px of shadow from the options button */
   width: 180px;
   line-height: 1.45;
 }
 
 .feedback-error {
-  background-color: var(--lh-blue-color);
-  position: absolute;
-  color: #fff;
-  bottom: 10px;
-  left: 16px;
-  width: 180px;
-  line-height: 1.45;
   font-size: .9em;
+  min-height: 38px;
 }
 
 /* 1. scrollbar when extension is too small */
