@@ -5,6 +5,13 @@
  */
 'use strict';
 
+/** @fileoverview
+ * Define message file to be used for a given locale. A few aliases are defined below.
+ *
+ * Google locale inheritance rules: https://goto.google.com/ccssm
+ * CLDR language aliases: https://www.unicode.org/cldr/charts/latest/supplemental/aliases.html
+ */
+
 /** @typedef {Record<string, {message: string}>} LocaleMessages */
 
 // The keys within this const must exactly match the LH.Locale type in externs.d.ts
@@ -48,6 +55,7 @@ const locales = {
   'iw': require('./he.json'), // Alias of 'he'
   'ja': require('./ja.json'),
   'ko': require('./ko.json'),
+  'ln': require('./fr.json'), // Alias of 'fr'
   'lt': require('./lt.json'),
   'lv': require('./lv.json'),
   'mo': require('./ro.json'), // Alias of 'ro'
