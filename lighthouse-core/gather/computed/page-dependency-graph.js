@@ -83,6 +83,8 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
     const nodes = [];
     let i = 0;
 
+    TracingProcessor.assertHasToplevelEvents(traceOfTab.mainThreadEvents);
+
     const minimumEvtDur = MINIMUM_TASK_DURATION_OF_INTEREST * 1000;
     while (i < traceOfTab.mainThreadEvents.length) {
       const evt = traceOfTab.mainThreadEvents[i];

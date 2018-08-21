@@ -6,6 +6,7 @@
 'use strict';
 
 const ComputedArtifact = require('../computed-artifact');
+const TracingProcessor = require('../../../lib/traces/tracing-processor');
 
 /**
  * @fileOverview Encapsulates logic for choosing the correct metric computation method based on the
@@ -57,6 +58,8 @@ class ComputedMetric extends ComputedArtifact {
       networkRecords: await computedArtifacts.requestNetworkRecords(devtoolsLog),
       traceOfTab: await computedArtifacts.requestTraceOfTab(trace),
     }, data);
+
+    TracingProcessor.assertHasToplevelEvents(augmentedData.traceOfTab.mainThreadEvents);
 
     switch (settings.throttlingMethod) {
       case 'simulate':
