@@ -90,7 +90,7 @@ class ReportUIFeatures {
     this._setupHeaderAnimation();
     this._resetUIState();
     this._document.addEventListener('keydown', this.printShortCutDetect);
-    // @ts-ignore - tsc thinks document can't listen for `copy`
+    // @ts-ignore - TODO(bckenny): tsc thinks document can't listen for `copy`. Remove ignore in 3.1.
     this._document.addEventListener('copy', this.onCopy);
   }
 
@@ -447,6 +447,7 @@ class ReportUIFeatures {
    */
   getReportHtml() {
     this._resetUIState();
+    // @ts-ignore - technically documentElement can be null, but that's dumb - https://dom.spec.whatwg.org/#document-element
     return this._document.documentElement.outerHTML;
   }
 

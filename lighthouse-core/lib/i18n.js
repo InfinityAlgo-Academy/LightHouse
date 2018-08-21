@@ -175,6 +175,7 @@ function _formatPathAsString(pathInLHR) {
  */
 function getRendererFormattedStrings(locale) {
   const icuMessageIds = Object.keys(LOCALES[locale]).filter(f => f.includes('core/report/html/'));
+  /** @type {LH.I18NRendererStrings} */
   const strings = {};
   for (const icuMessageId of icuMessageIds) {
     const [filename, varName] = icuMessageId.split(' | ');
@@ -190,6 +191,7 @@ function getRendererFormattedStrings(locale) {
  * @param {Record<string, string>} fileStrings
  */
 function createMessageInstanceIdFn(filename, fileStrings) {
+  /** @type {Record<string, string>} */
   const mergedStrings = {...UIStrings, ...fileStrings};
 
   /** @param {string} icuMessage @param {*} [values] */
@@ -284,6 +286,7 @@ function replaceIcuMessageInstanceIds(lhr, locale) {
     }
   }
 
+  /** @type {LH.I18NMessages} */
   const icuMessagePaths = {};
   replaceInObject(lhr, icuMessagePaths);
   return icuMessagePaths;

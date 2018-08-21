@@ -11,8 +11,11 @@ const NetworkRequest = require('../../network-request');
 // Assume that 40% of TTFB was server response time by default for static assets
 const DEFAULT_SERVER_RESPONSE_PERCENTAGE = 0.4;
 
-// For certain resource types, server response time takes up a greater percentage of TTFB (dynamic
-// assets like HTML documents, XHR/API calls, etc)
+/**
+ * For certain resource types, server response time takes up a greater percentage of TTFB (dynamic
+ * assets like HTML documents, XHR/API calls, etc)
+ * @type {Partial<Record<LH.Crdp.Page.ResourceType, number>>}
+ */
 const SERVER_RESPONSE_PERCENTAGE_OF_TTFB = {
   Document: 0.9,
   XHR: 0.9,
@@ -73,9 +76,11 @@ class NetworkAnalyzer {
     return summaryByKey;
   }
 
+  /** @typedef {{record: LH.Artifacts.NetworkRequest, timing: LH.Crdp.Network.ResourceTiming, connectionReused?: boolean}} RequestInfo */
+
   /**
    * @param {LH.Artifacts.NetworkRequest[]} records
-   * @param {function(any):any} iteratee
+   * @param {(e: RequestInfo) => number | number[] | undefined} iteratee
    * @return {Map<string, number[]>}
    */
   static _estimateValueByOrigin(records, iteratee) {
@@ -190,6 +195,7 @@ class NetworkAnalyzer {
   static _estimateRTTByOriginViaHeadersEndTiming(records) {
     return NetworkAnalyzer._estimateValueByOrigin(records, ({record, timing, connectionReused}) => {
       if (!Number.isFinite(timing.receiveHeadersEnd) || timing.receiveHeadersEnd < 0) return;
+      if (!record.resourceType) return;
 
       const serverResponseTimePercentage = SERVER_RESPONSE_PERCENTAGE_OF_TTFB[record.resourceType]
         || DEFAULT_SERVER_RESPONSE_PERCENTAGE;

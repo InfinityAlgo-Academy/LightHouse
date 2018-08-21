@@ -101,6 +101,7 @@ class DOMSize extends Audit {
       {key: 'width', itemType: 'text', text: str_(UIStrings.columnDOMWidth)},
     ];
 
+    /** @type {Array<Object<string, LH.Audit.DetailsItem>>} */
     const items = [
       {
         totalNodes: Util.formatNumber(stats.totalDOMNodes),

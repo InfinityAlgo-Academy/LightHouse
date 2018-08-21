@@ -170,7 +170,7 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
 
     it('should infer from TTFB when available', () => {
       const timing = {receiveHeadersEnd: 1000};
-      const record = createRecord({startTime: 0, endTime: 1, timing});
+      const record = createRecord({startTime: 0, endTime: 1, timing, resourceType: 'Other'});
       const result = NetworkAnalyzer.estimateRTTByOrigin([record], {
         coarseEstimateMultiplier: 1,
       });

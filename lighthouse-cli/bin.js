@@ -107,6 +107,7 @@ function run() {
       }
     })
     .then(_ => {
+      // @ts-ignore TODO(bckenny): Sentry type checking
       Sentry.init({
         url,
         flags: cliFlags,

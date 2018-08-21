@@ -50,6 +50,7 @@ class ReportScoring {
    * @return {Object<string, LH.Result.Category>}
    */
   static scoreAllCategories(configCategories, resultsByAuditId) {
+    /** @type {Record<string, LH.Result.Category>} */
     const scoredCategories = {};
 
     for (const [categoryId, configCategory] of Object.entries(configCategories)) {

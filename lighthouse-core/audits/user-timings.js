@@ -56,6 +56,7 @@ class UserTimings extends Audit {
   static filterTrace(tabTrace) {
     /** @type {Array<MarkEvent|MeasureEvent>} */
     const userTimings = [];
+    /** @type {Record<string, number>} */
     const measuresStartTimes = {};
 
     // Get all blink.user_timing events

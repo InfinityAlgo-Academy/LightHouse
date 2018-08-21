@@ -122,7 +122,9 @@ function createReportPageAsBlob(reportHtml) {
  */
 function saveSettings(settings) {
   const storage = {
+    /** @type {Record<string, boolean>} */
     [STORAGE_KEY]: {},
+    /** @type {Record<string, boolean>} */
     [SETTINGS_KEY]: {},
   };
 
@@ -149,6 +151,7 @@ function loadSettings() {
     chrome.storage.local.get([STORAGE_KEY, SETTINGS_KEY], result => {
       // Start with list of all default categories set to true so list is
       // always up to date.
+      /** @type {Record<string, boolean>} */
       const defaultCategories = {};
       background.getDefaultCategories().forEach(category => {
         defaultCategories[category.id] = true;

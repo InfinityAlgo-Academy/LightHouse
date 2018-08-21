@@ -103,6 +103,7 @@ function collectAllStringsInDir(dir, strings = {}) {
  */
 function writeStringsToLocaleFormat(locale, strings) {
   const fullPath = path.join(LH_ROOT, `lighthouse-core/lib/locales/${locale}.json`);
+  /** @type {Record<string, ICUMessageDefn>} */
   const output = {};
   const sortedEntries = Object.entries(strings).sort(([keyA], [keyB]) => keyA.localeCompare(keyB));
   for (const [key, defn] of sortedEntries) {

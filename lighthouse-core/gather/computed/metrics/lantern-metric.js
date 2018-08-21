@@ -85,6 +85,7 @@ class LanternMetricArtifact extends ComputedArtifact {
     const optimisticGraph = this.getOptimisticGraph(graph, traceOfTab);
     const pessimisticGraph = this.getPessimisticGraph(graph, traceOfTab);
 
+    /** @type {{flexibleOrdering?: boolean, label?: string}} */
     let simulateOptions = {label: `optimistic${metricName}`};
     const optimisticSimulation = simulator.simulate(optimisticGraph, simulateOptions);
 
