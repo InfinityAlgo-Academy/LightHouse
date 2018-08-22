@@ -154,21 +154,20 @@ describe('Lighthouse chrome extension', function() {
   });
 
   it('should not have any audit errors', async () => {
-    // TODO(phulce): rework these to look at the tooltips
-    function getDebugStrings(elems, selectors) {
+    function getErrors(elems, selectors) {
       return elems.map(el => {
         const audit = el.closest(selectors.audits);
         const auditTitle = audit && audit.querySelector(selectors.titles);
         return {
-          debugString: el.textContent,
+          explanation: el.textContent,
           title: auditTitle ? auditTitle.textContent : 'Audit title unvailable',
         };
       });
     }
 
-    const errorSelectors = '.lh-audit-explanation, .tooltip-error';
-    const auditErrors = await extensionPage.$$eval(errorSelectors, getDebugStrings, selectors);
-    const errors = auditErrors.filter(item => item.debugString.includes('Audit error:'));
+    const errorSelectors = '.lh-audit-explanation, .tooltip--error';
+    const auditErrors = await extensionPage.$$eval(errorSelectors, getErrors, selectors);
+    const errors = auditErrors.filter(item => item.explanation.includes('Audit error:'));
     assert.deepStrictEqual(errors, [], 'Audit errors found within the report');
   });
 

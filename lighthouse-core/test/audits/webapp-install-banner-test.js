@@ -152,7 +152,7 @@ describe('PWA: webapp install banner audit', () => {
 
   it('includes warning from start_url', () => {
     const artifacts = generateMockArtifacts();
-    artifacts.StartUrl = {statusCode: 200, debugString: 'Warning!'};
+    artifacts.StartUrl = {statusCode: 200, explanation: 'Warning!'};
 
     return WebappInstallBannerAudit.audit(artifacts).then(result => {
       assert.strictEqual(result.rawValue, true);

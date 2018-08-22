@@ -167,7 +167,7 @@ describe('PerfCategoryRenderer', () => {
         group: 'load-opportunities',
         result: {
           error: true, score: 0,
-          rawValue: 100, debugString: 'Yikes!!', title: 'Bug #2',
+          rawValue: 100, explanation: 'Yikes!!', title: 'Bug #2',
         },
       };
       const wastedMs = renderer._getWastedMs(auditWithDebug);

@@ -122,7 +122,7 @@ describe('Manifest gatherer', () => {
       url: EXAMPLE_DOC_URL,
     }).then(artifact => {
       assert.ok(typeof artifact.value === 'object');
-      assert.strictEqual(artifact.debugString, undefined);
+      assert.strictEqual(artifact.explanation, undefined);
     });
   });
 });

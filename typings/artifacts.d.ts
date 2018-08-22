@@ -103,8 +103,8 @@ declare global {
       Scripts: Record<string, string>;
       /** Version information for all ServiceWorkers active after the first page load. */
       ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[]};
-      /** The status of an offline fetch of the page's start_url. -1 and a debugString if missing or there was an error. */
-      StartUrl: {statusCode: number, debugString?: string};
+      /** The status of an offline fetch of the page's start_url. -1 and a explanation if missing or there was an error. */
+      StartUrl: {statusCode: number, explanation?: string};
       /** Information on <script> and <link> tags blocking first paint. */
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** The value of the <meta name="theme=color">'s content attribute, or null. */

@@ -27,12 +27,12 @@ function noUrlManifestParser(manifestSrc) {
 describe('Manifest Parser', function() {
   it('should not parse empty string input', function() {
     const parsedManifest = noUrlManifestParser('');
-    assert.ok(parsedManifest.debugString);
+    assert.ok(parsedManifest.warning);
   });
 
   it('accepts empty dictionary', function() {
     const parsedManifest = noUrlManifestParser('{}');
-    assert(!parsedManifest.debugString);
+    assert(!parsedManifest.warning);
     assert.equal(parsedManifest.value.name.value, undefined);
     assert.equal(parsedManifest.value.short_name.value, undefined);
     assert.equal(parsedManifest.value.start_url.value, EXAMPLE_DOC_URL);
@@ -52,38 +52,38 @@ describe('Manifest Parser', function() {
     it('gives an empty array and an error for erroneous icons entry', () => {
       const parsedManifest = manifestParser('{"icons": {"16": "img/icons/icon16.png"}}',
           EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
-      assert.ok(!parsedManifest.debugString);
+      assert.ok(!parsedManifest.warning);
       const icons = parsedManifest.value.icons;
       assert.ok(Array.isArray(icons.value));
       assert.equal(icons.value.length, 0);
-      assert.ok(icons.debugString);
+      assert.ok(icons.warning);
     });
 
     it('gives an empty array and no error for missing icons entry', () => {
       const parsedManifest = manifestParser('{}',
           EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
-      assert.ok(!parsedManifest.debugString);
+      assert.ok(!parsedManifest.warning);
       const icons = parsedManifest.value.icons;
       assert.ok(Array.isArray(icons.value));
       assert.equal(icons.value.length, 0);
-      assert.ok(!icons.debugString);
+      assert.ok(!icons.warning);
     });
 
     it('parses basic string', function() {
       const parsedManifest = manifestParser('{"icons": [{"src": "192.png", "sizes": "192x192"}]}',
           EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
-      assert(!parsedManifest.debugString);
+      assert(!parsedManifest.warning);
       const icons = parsedManifest.value.icons;
-      assert(!icons.debugString);
+      assert(!icons.warning);
       const icon192 = icons.value[0];
-      assert(!icon192.value.sizes.debugString);
+      assert(!icon192.value.sizes.warning);
       assert.equal(icons.value.length, 1);
     });
 
     it('finds four icons in the stub manifest', function() {
       const parsedManifest = manifestParser(JSON.stringify(manifestStub), EXAMPLE_MANIFEST_URL,
           EXAMPLE_DOC_URL);
-      assert(!parsedManifest.debugString);
+      assert(!parsedManifest.warning);
       assert.equal(parsedManifest.value.icons.value.length, 4);
     });
 
@@ -139,23 +139,23 @@ describe('Manifest Parser', function() {
   describe('name parsing', function() {
     it('parses basic string', function() {
       const parsedManifest = noUrlManifestParser('{"name":"foo"}');
-      assert(!parsedManifest.debugString);
+      assert(!parsedManifest.warning);
       assert.equal(parsedManifest.value.name.value, 'foo');
     });
 
     it('trims whitespaces', function() {
       const parsedManifest = noUrlManifestParser('{"name":" foo "}');
-      assert(!parsedManifest.debugString);
+      assert(!parsedManifest.warning);
       assert.equal(parsedManifest.value.name.value, 'foo');
     });
 
     it('doesn\'t parse non-string', function() {
       let parsedManifest = noUrlManifestParser('{"name": {} }');
-      assert(!parsedManifest.debugString);
+      assert(!parsedManifest.warning);
       assert.equal(parsedManifest.value.name.value, undefined);
 
       parsedManifest = noUrlManifestParser('{"name": 42 }');
-      assert(!parsedManifest.debugString);
+      assert(!parsedManifest.warning);
       assert.equal(parsedManifest.value.name.value, undefined);
     });
   });
@@ -163,23 +163,23 @@ describe('Manifest Parser', function() {
   describe('short_name parsing', function() {
     it('parses basic string', function() {
       const parsedManifest = noUrlManifestParser('{"short_name":"foo"}');
-      assert(!parsedManifest.debugString);
+      assert(!parsedManifest.warning);
       assert.equal(parsedManifest.value.short_name.value, 'foo');
     });
 
     it('trims whitespaces', function() {
       const parsedManifest = noUrlManifestParser('{"short_name":" foo "}');
-      assert(!parsedManifest.debugString);
+      assert(!parsedManifest.warning);
       assert.equal(parsedManifest.value.short_name.value, 'foo');
     });
 
     it('doesn\'t parse non-string', function() {
       let parsedManifest = noUrlManifestParser('{"short_name": {} }');
-      assert(!parsedManifest.debugString);
+      assert(!parsedManifest.warning);
       assert.equal(parsedManifest.value.short_name.value, undefined);
 
       parsedManifest = noUrlManifestParser('{"short_name": 42 }');
-      assert(!parsedManifest.debugString);
+      assert(!parsedManifest.warning);
       assert.equal(parsedManifest.value.short_name.value, undefined);
     });
   });
@@ -199,7 +199,7 @@ describe('Manifest Parser', function() {
 
       const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
-      assert.ok(parsedUrl.debugString);
+      assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
     });
 
@@ -212,7 +212,7 @@ describe('Manifest Parser', function() {
 
       const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
-      assert.ok(parsedUrl.debugString);
+      assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
     });
 
@@ -225,7 +225,7 @@ describe('Manifest Parser', function() {
 
       const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
-      assert.ok(parsedUrl.debugString);
+      assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
     });
 
@@ -236,7 +236,7 @@ describe('Manifest Parser', function() {
 
       const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
-      assert.ok(!parsedUrl.debugString);
+      assert.ok(!parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
     });
 
@@ -251,7 +251,7 @@ describe('Manifest Parser', function() {
 
       const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
-      assert.ok(parsedUrl.debugString);
+      assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
     });
 
@@ -265,7 +265,7 @@ describe('Manifest Parser', function() {
 
       const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
-      assert.ok(parsedUrl.debugString);
+      assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
     });
 
@@ -278,7 +278,7 @@ describe('Manifest Parser', function() {
 
       const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
-      assert.ok(parsedUrl.debugString);
+      assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
     });
 
@@ -291,7 +291,7 @@ describe('Manifest Parser', function() {
 
       const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
-      assert.ok(parsedUrl.debugString);
+      assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
     });
 
@@ -304,7 +304,7 @@ describe('Manifest Parser', function() {
 
       const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
-      assert.ok(!parsedUrl.debugString);
+      assert.ok(!parsedUrl.warning);
       assert.equal(parsedUrl.value, 'https://example.com/');
     });
 
@@ -318,7 +318,7 @@ describe('Manifest Parser', function() {
 
       const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
-      assert.ok(!parsedUrl.debugString);
+      assert.ok(!parsedUrl.warning);
       assert.equal(parsedUrl.value, 'https://example.com/start_point.html');
     });
     /* eslint-enable camelcase */
@@ -331,21 +331,21 @@ describe('Manifest Parser', function() {
     it('falls back to \'browser\' and issues a warning for an invalid value', () => {
       const parsedManifest = noUrlManifestParser('{"display": {} }');
       const display = parsedManifest.value.display;
-      assert.ok(display.debugString);
+      assert.ok(display.warning);
       assert.equal(display.value, 'browser');
     });
 
     it('falls back to \'browser\' and issues a warning for an invalid value', () => {
       const parsedManifest = noUrlManifestParser('{"display": 5 }');
       const display = parsedManifest.value.display;
-      assert.ok(display.debugString);
+      assert.ok(display.warning);
       assert.equal(display.value, 'browser');
     });
 
     it('falls back to \'browser\' and issues no warning when undefined', () => {
       const parsedManifest = noUrlManifestParser('{}');
       const display = parsedManifest.value.display;
-      assert.ok(!display.debugString);
+      assert.ok(!display.warning);
       assert.equal(display.value, 'browser');
       assert.equal(display.rawValue, undefined);
     });
@@ -354,7 +354,7 @@ describe('Manifest Parser', function() {
       const displayValue = ' fullscreen     ';
       const parsedManifest = noUrlManifestParser(`{"display": "${displayValue}" }`);
       const display = parsedManifest.value.display;
-      assert.ok(!display.debugString);
+      assert.ok(!display.warning);
       assert.equal(display.value, 'fullscreen');
     });
 
@@ -362,42 +362,42 @@ describe('Manifest Parser', function() {
       const displayValue = 'fUlLScrEEn';
       const parsedManifest = noUrlManifestParser(`{"display": "${displayValue}" }`);
       const display = parsedManifest.value.display;
-      assert.ok(!display.debugString);
+      assert.ok(!display.warning);
       assert.equal(display.value, 'fullscreen');
     });
 
     it('falls back to \'browser\' and issues a warning when a non-existent mode', () => {
       const parsedManifest = noUrlManifestParser('{"display": "fullestscreen" }');
       const display = parsedManifest.value.display;
-      assert.ok(display.debugString);
+      assert.ok(display.warning);
       assert.equal(display.value, 'browser');
     });
 
     it('correctly parses `fullscreen` display mode', () => {
       const parsedManifest = noUrlManifestParser('{"display": "fullscreen" }');
       const display = parsedManifest.value.display;
-      assert.ok(!display.debugString);
+      assert.ok(!display.warning);
       assert.equal(display.value, 'fullscreen');
     });
 
     it('correctly parses `standalone` display mode', () => {
       const parsedManifest = noUrlManifestParser('{"display": "standalone" }');
       const display = parsedManifest.value.display;
-      assert.ok(!display.debugString);
+      assert.ok(!display.warning);
       assert.equal(display.value, 'standalone');
     });
 
     it('correctly parses `minimal-ui` display mode', () => {
       const parsedManifest = noUrlManifestParser('{"display": "minimal-ui" }');
       const display = parsedManifest.value.display;
-      assert.ok(!display.debugString);
+      assert.ok(!display.warning);
       assert.equal(display.value, 'minimal-ui');
     });
 
     it('correctly parses `browser` display mode', () => {
       const parsedManifest = noUrlManifestParser('{"display": "browser" }');
       const display = parsedManifest.value.display;
-      assert.ok(!display.debugString);
+      assert.ok(!display.warning);
       assert.equal(display.value, 'browser');
     });
   });

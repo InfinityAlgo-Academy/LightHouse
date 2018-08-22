@@ -119,23 +119,22 @@ describe('Lighthouse Viewer', function() {
   });
 
   it('should not have any unexpected audit errors', async () => {
-    // TODO(phulce): rework these to look at the tooltips
-    function getDebugStrings(elems, selectors) {
+    function getErrors(elems, selectors) {
       return elems.map(el => {
         const audit = el.closest(selectors.audits);
         const auditTitle = audit && audit.querySelector(selectors.titles);
         return {
-          debugString: el.textContent,
+          explanation: el.textContent,
           title: auditTitle ? auditTitle.textContent : 'Audit title unvailable',
         };
       });
     }
 
-    const errorSelectors = '.lh-audit-explanation, .tooltip-error';
-    const auditErrors = await viewerPage.$$eval(errorSelectors, getDebugStrings, selectors);
-    const errors = auditErrors.filter(item => item.debugString.includes('Audit error:'));
+    const errorSelectors = '.lh-audit-explanation, .tooltip--error';
+    const auditErrors = await viewerPage.$$eval(errorSelectors, getErrors, selectors);
+    const errors = auditErrors.filter(item => item.explanation.includes('Audit error:'));
     const unexpectedErrrors = errors.filter(item => {
-      return !item.debugString.includes('Required RobotsTxt gatherer did not run');
+      return !item.explanation.includes('Required RobotsTxt gatherer did not run');
     });
     assert.deepStrictEqual(unexpectedErrrors, [], 'Audit errors found within the report');
   });

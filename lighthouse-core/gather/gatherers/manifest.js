@@ -19,7 +19,7 @@ const BOM_FIRSTCHAR = 65279;
 class Manifest extends Gatherer {
   /**
    * Returns the parsed manifest or null if the page had no manifest. If the manifest
-   * was unparseable as JSON, manifest.value will be undefined and manifest.debugString
+   * was unparseable as JSON, manifest.value will be undefined and manifest.warning
    * will have the reason. See manifest-parser.js for more information.
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts['Manifest']>}

@@ -37,13 +37,13 @@ const ALLOWED_ORIENTATION_VALUES = [
  */
 function parseString(raw, trim) {
   let value;
-  let debugString;
+  let warning;
 
   if (typeof raw === 'string') {
     value = trim ? raw.trim() : raw;
   } else {
     if (raw !== undefined) {
-      debugString = 'ERROR: expected a string.';
+      warning = 'ERROR: expected a string.';
     }
     value = undefined;
   }
@@ -51,7 +51,7 @@ function parseString(raw, trim) {
   return {
     raw,
     value,
-    debugString,
+    warning,
   };
 }
 
@@ -70,7 +70,7 @@ function parseColor(raw) {
   const validatedColor = validateColor(color.raw);
   if (!validatedColor) {
     color.value = undefined;
-    color.debugString = 'ERROR: color parsing failed.';
+    color.warning = 'ERROR: color parsing failed.';
   }
 
   return color;
@@ -117,7 +117,7 @@ function parseStartUrl(jsonInput, manifestUrl, documentUrl) {
     return {
       raw,
       value: documentUrl,
-      debugString: 'ERROR: start_url string empty',
+      warning: 'ERROR: start_url string empty',
     };
   }
   const parsedAsString = parseString(raw);
@@ -135,7 +135,7 @@ function parseStartUrl(jsonInput, manifestUrl, documentUrl) {
     return {
       raw,
       value: documentUrl,
-      debugString: 'ERROR: invalid start_url relative to ${manifestUrl}',
+      warning: 'ERROR: invalid start_url relative to ${manifestUrl}',
     };
   }
 
@@ -144,7 +144,7 @@ function parseStartUrl(jsonInput, manifestUrl, documentUrl) {
     return {
       raw,
       value: documentUrl,
-      debugString: 'ERROR: start_url must be same-origin as document',
+      warning: 'ERROR: start_url must be same-origin as document',
     };
   }
 
@@ -165,7 +165,7 @@ function parseDisplay(jsonInput) {
     return {
       raw: jsonInput,
       value: DEFAULT_DISPLAY_MODE,
-      debugString: parsedString.debugString,
+      warning: parsedString.warning,
     };
   }
 
@@ -174,7 +174,7 @@ function parseDisplay(jsonInput) {
     return {
       raw: jsonInput,
       value: DEFAULT_DISPLAY_MODE,
-      debugString: 'ERROR: \'display\' has invalid value ' + displayValue +
+      warning: 'ERROR: \'display\' has invalid value ' + displayValue +
         `. will fall back to ${DEFAULT_DISPLAY_MODE}.`,
     };
   }
@@ -182,7 +182,7 @@ function parseDisplay(jsonInput) {
   return {
     raw: jsonInput,
     value: displayValue,
-    debugString: undefined,
+    warning: undefined,
   };
 }
 
@@ -195,7 +195,7 @@ function parseOrientation(jsonInput) {
   if (orientation.value &&
       !ALLOWED_ORIENTATION_VALUES.includes(orientation.value.toLowerCase())) {
     orientation.value = undefined;
-    orientation.debugString = 'ERROR: \'orientation\' has an invalid value, will be ignored.';
+    orientation.warning = 'ERROR: \'orientation\' has an invalid value, will be ignored.';
   }
 
   return orientation;
@@ -223,13 +223,13 @@ function parseIcon(raw, manifestUrl) {
     raw: raw.density,
     value: 1,
     /** @type {string|undefined} */
-    debugString: undefined,
+    warning: undefined,
   };
   if (density.raw !== undefined) {
     density.value = parseFloat(density.raw);
     if (isNaN(density.value) || !isFinite(density.value) || density.value <= 0) {
       density.value = 1;
-      density.debugString = 'ERROR: icon density cannot be NaN, +∞, or less than or equal to +0.';
+      density.warning = 'ERROR: icon density cannot be NaN, +∞, or less than or equal to +0.';
     }
   }
 
@@ -242,7 +242,7 @@ function parseIcon(raw, manifestUrl) {
     sizes = {
       raw: raw.sizes,
       value: set.size > 0 ? Array.from(set) : undefined,
-      debugString: undefined,
+      warning: undefined,
     };
   } else {
     sizes = {...parsedSizes, value: undefined};
@@ -256,7 +256,7 @@ function parseIcon(raw, manifestUrl) {
       density,
       sizes,
     },
-    debugString: undefined,
+    warning: undefined,
   };
 }
 
@@ -272,7 +272,7 @@ function parseIcons(jsonInput, manifestUrl) {
       raw,
       /** @type {Array<ReturnType<typeof parseIcon>>} */
       value: [],
-      debugString: undefined,
+      warning: undefined,
     };
   }
 
@@ -281,7 +281,7 @@ function parseIcons(jsonInput, manifestUrl) {
       raw,
       /** @type {Array<ReturnType<typeof parseIcon>>} */
       value: [],
-      debugString: 'ERROR: \'icons\' expected to be an array but is not.',
+      warning: 'ERROR: \'icons\' expected to be an array but is not.',
     };
   }
 
@@ -298,7 +298,7 @@ function parseIcons(jsonInput, manifestUrl) {
   return {
     raw,
     value,
-    debugString: undefined,
+    warning: undefined,
   };
 }
 
@@ -317,7 +317,7 @@ function parseApplication(raw) {
       appUrl.value = new URL(appUrl.value).href;
     } catch (e) {
       appUrl.value = undefined;
-      appUrl.debugString = 'ERROR: invalid application URL ${raw.url}';
+      appUrl.warning = 'ERROR: invalid application URL ${raw.url}';
     }
   }
 
@@ -328,7 +328,7 @@ function parseApplication(raw) {
       id,
       url: appUrl,
     },
-    debugString: undefined,
+    warning: undefined,
   };
 }
 
@@ -342,7 +342,7 @@ function parseRelatedApplications(jsonInput) {
     return {
       raw,
       value: undefined,
-      debugString: undefined,
+      warning: undefined,
     };
   }
 
@@ -350,7 +350,7 @@ function parseRelatedApplications(jsonInput) {
     return {
       raw,
       value: undefined,
-      debugString: 'ERROR: \'related_applications\' expected to be an array but is not.',
+      warning: 'ERROR: \'related_applications\' expected to be an array but is not.',
     };
   }
 
@@ -364,7 +364,7 @@ function parseRelatedApplications(jsonInput) {
   return {
     raw,
     value,
-    debugString: undefined,
+    warning: undefined,
   };
 }
 
@@ -374,13 +374,13 @@ function parseRelatedApplications(jsonInput) {
 function parsePreferRelatedApplications(jsonInput) {
   const raw = jsonInput.prefer_related_applications;
   let value;
-  let debugString;
+  let warning;
 
   if (typeof raw === 'boolean') {
     value = raw;
   } else {
     if (raw !== undefined) {
-      debugString = 'ERROR: \'prefer_related_applications\' expected to be a boolean.';
+      warning = 'ERROR: \'prefer_related_applications\' expected to be a boolean.';
     }
     value = undefined;
   }
@@ -388,7 +388,7 @@ function parsePreferRelatedApplications(jsonInput) {
   return {
     raw,
     value,
-    debugString,
+    warning,
   };
 }
 
@@ -425,7 +425,7 @@ function parse(string, manifestUrl, documentUrl) {
     return {
       raw: string,
       value: undefined,
-      debugString: 'ERROR: file isn\'t valid JSON: ' + e,
+      warning: 'ERROR: file isn\'t valid JSON: ' + e,
     };
   }
 
@@ -447,7 +447,7 @@ function parse(string, manifestUrl, documentUrl) {
   return {
     raw: string,
     value: manifest,
-    debugString: undefined,
+    warning: undefined,
   };
 }
 
