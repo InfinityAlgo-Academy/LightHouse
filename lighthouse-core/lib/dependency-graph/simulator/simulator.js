@@ -66,6 +66,7 @@ class Simulator {
     this._nodeTimings = new Map();
     /** @type {Map<string, number>} */
     this._numberInProgressByType = new Map();
+    /** @type {Record<number, Set<Node>>} */
     this._nodes = {};
     this._dns = new DNSCache({rtt: this._rtt});
     // @ts-ignore
@@ -95,8 +96,8 @@ class Simulator {
     this._numberInProgressByType = new Map();
 
     this._nodes = {};
-    for (const key of Object.keys(NodeState)) {
-      this._nodes[NodeState[key]] = new Set();
+    for (const state of Object.values(NodeState)) {
+      this._nodes[state] = new Set();
     }
   }
 

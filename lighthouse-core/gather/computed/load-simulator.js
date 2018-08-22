@@ -23,6 +23,7 @@ class LoadSimulatorArtifact extends ComputedArtifact {
     const {throttlingMethod, throttling} = data.settings;
     const networkAnalysis = await artifacts.requestNetworkAnalysis(data.devtoolsLog);
 
+    /** @type {LH.Gatherer.Simulation.Options} */
     const options = {
       additionalRttByOrigin: networkAnalysis.additionalRttByOrigin,
       serverResponseTimeByOrigin: networkAnalysis.serverResponseTimeByOrigin,
