@@ -6,7 +6,6 @@
 'use strict';
 
 const MetricArtifact = require('./metric');
-const LHError = require('../../../lib/errors');
 
 class FirstContentfulPaint extends MetricArtifact {
   get name() {
@@ -17,16 +16,13 @@ class FirstContentfulPaint extends MetricArtifact {
    * @param {LH.Artifacts.MetricComputationData} data
    * @return {Promise<LH.Artifacts.Metric>}
    */
-  computeObservedMetric(data) {
+  async computeObservedMetric(data) {
     const {traceOfTab} = data;
-    if (!traceOfTab.timestamps.firstContentfulPaint) {
-      throw new LHError(LHError.errors.NO_FCP);
-    }
 
-    return Promise.resolve({
+    return {
       timing: traceOfTab.timings.firstContentfulPaint,
       timestamp: traceOfTab.timestamps.firstContentfulPaint,
-    });
+    };
   }
 }
 

@@ -23,6 +23,7 @@ describe('MainResource computed artifact', () => {
     boilerplateTrace = [
       {ph: 'I', name: 'TracingStartedInPage', ts: baseTs, args},
       {ph: 'I', name: 'navigationStart', ts: baseTs, args},
+      {ph: 'R', name: 'firstContentfulPaint', ts: baseTs + 1, args},
     ];
     computedArtifacts = Runner.instantiateComputedArtifacts();
   });
@@ -79,7 +80,7 @@ describe('MainResource computed artifact', () => {
       attributableURLs: [],
 
       children: [taskB],
-      event: traceEvents[2],
+      event: traceEvents[3],
       startTime: 0,
       endTime: 100,
       duration: 100,
@@ -92,7 +93,7 @@ describe('MainResource computed artifact', () => {
       attributableURLs: [],
 
       children: [taskC],
-      event: traceEvents[3],
+      event: traceEvents[4],
       startTime: 5,
       endTime: 55,
       duration: 50,

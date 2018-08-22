@@ -91,7 +91,7 @@
       "cat": "blink.user_timing,rail",
       "name": "firstContentfulPaint",
       "args": {
-        "frame": "0x1aff390e1e30"
+        "frame": "0x53965941e30"
       },
       "tts": 239094,
       "s": "p"

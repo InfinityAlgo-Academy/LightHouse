@@ -365,30 +365,43 @@ declare global {
 
       export type Speedline = speedline.Output<'speedIndex'>;
 
-      // TODO(bckenny): all but navigationStart could actually be undefined.
       export interface TraceTimes {
         navigationStart: number;
-        firstPaint: number;
+        firstPaint?: number;
         firstContentfulPaint: number;
-        firstMeaningfulPaint: number;
+        firstMeaningfulPaint?: number;
         traceEnd: number;
-        load: number;
-        domContentLoaded: number;
+        load?: number;
+        domContentLoaded?: number;
       }
 
-      // TODO(bckenny): events other than started and navStart could be undefined.
       export interface TraceOfTab {
-        timings: TraceTimes;
+        /** The raw timestamps of key metric events, in microseconds. */
         timestamps: TraceTimes;
+        /** The relative times from navigationStart to key metric events, in milliseconds. */
+        timings: TraceTimes;
+        /** The subset of trace events from the page's process, sorted by timestamp. */
         processEvents: Array<TraceEvent>;
+        /** The subset of trace events from the page's main thread, sorted by timestamp. */
         mainThreadEvents: Array<TraceEvent>;
+        /** The event marking the start of tracing in the target browser. */
         startedInPageEvt: TraceEvent;
+        /** The trace event marking navigationStart. */
         navigationStartEvt: TraceEvent;
-        firstPaintEvt: TraceEvent;
+        /** The trace event marking firstPaint, if it was found. */
+        firstPaintEvt?: TraceEvent;
+        /** The trace event marking firstContentfulPaint, if it was found. */
         firstContentfulPaintEvt: TraceEvent;
-        firstMeaningfulPaintEvt: TraceEvent;
-        loadEvt: TraceEvent;
-        domContentLoadedEvt: TraceEvent;
+        /** The trace event marking firstMeaningfulPaint, if it was found. */
+        firstMeaningfulPaintEvt?: TraceEvent;
+        /** The trace event marking loadEventEnd, if it was found. */
+        loadEvt?: TraceEvent;
+        /** The trace event marking domContentLoadedEventEnd, if it was found. */
+        domContentLoadedEvt?: TraceEvent;
+        /**
+         * Whether the firstMeaningfulPaintEvt was the definitive event or a fallback to
+         * firstMeaningfulPaintCandidate events had to be attempted.
+         */
         fmpFellBack: boolean;
       }
     }

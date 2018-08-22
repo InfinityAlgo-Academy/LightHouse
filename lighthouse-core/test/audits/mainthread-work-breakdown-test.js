@@ -14,7 +14,7 @@ const options = PageExecutionTimings.defaultOptions;
 const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
 const siteWithRedirectTrace = require('../fixtures/traces/site-with-redirect.json');
 const loadTrace = require('../fixtures/traces/load.json');
-const errorTrace = require('../fixtures/traces/airhorner_no_fcp.json');
+const errorTrace = require('../fixtures/traces/no_fmp_event.json');
 
 const acceptableTraceExpectations = {
   parseHTML: 14,

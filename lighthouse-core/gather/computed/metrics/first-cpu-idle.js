@@ -177,12 +177,12 @@ class FirstCPUIdle extends MetricArtifact {
     const DCL = traceOfTab.timings.domContentLoaded;
     const traceEnd = traceOfTab.timings.traceEnd;
 
-    if (traceEnd - FMP < MAX_QUIET_WINDOW_SIZE) {
-      throw new LHError(LHError.errors.FMP_TOO_LATE_FOR_FCPUI);
-    }
-
     if (!FMP || !DCL) {
       throw new LHError(FMP ? LHError.errors.NO_DCL : LHError.errors.NO_FMP);
+    }
+
+    if (traceEnd - FMP < MAX_QUIET_WINDOW_SIZE) {
+      throw new LHError(LHError.errors.FMP_TOO_LATE_FOR_FCPUI);
     }
 
     const longTasksAfterFMP = TracingProcessor.getMainThreadTopLevelEvents(traceOfTab, FMP)

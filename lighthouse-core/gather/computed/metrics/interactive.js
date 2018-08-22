@@ -148,9 +148,6 @@ class Interactive extends MetricArtifact {
    */
   computeObservedMetric(data) {
     const {traceOfTab, networkRecords} = data;
-    if (!traceOfTab.timestamps.firstContentfulPaint) {
-      throw new LHError(LHError.errors.NO_FCP);
-    }
 
     if (!traceOfTab.timestamps.domContentLoaded) {
       throw new LHError(LHError.errors.NO_DCL);

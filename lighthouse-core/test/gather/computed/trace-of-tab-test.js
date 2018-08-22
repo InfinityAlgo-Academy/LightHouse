@@ -15,6 +15,7 @@ const lateTracingStartedTrace = require('../../fixtures/traces/tracingstarted-af
 const preactTrace = require('../../fixtures/traces/preactjs.com_ts_of_undefined.json');
 const noFMPtrace = require('../../fixtures/traces/no_fmp_event.json');
 const noFCPtrace = require('../../fixtures/traces/airhorner_no_fcp');
+const noNavStartTrace = require('../../fixtures/traces/no_navstart_event');
 const backgroundTabTrace = require('../../fixtures/traces/backgrounded-tab-missing-paints');
 
 /* eslint-env jest */
@@ -89,15 +90,6 @@ describe('Trace of Tab computed artifact:', () => {
     });
   });
 
-  it('handles traces missing an FCP', async () => {
-    const trace = await traceOfTab.compute_(noFCPtrace);
-    assert.equal(trace.startedInPageEvt.ts, 2149509117532, 'bad tracingstartedInPage');
-    assert.equal(trace.navigationStartEvt.ts, 2149509122585, 'bad navStart');
-    assert.equal(trace.firstContentfulPaintEvt, undefined, 'bad fcp');
-    assert.equal(trace.firstMeaningfulPaintEvt.ts, 2149509604903, 'bad fmp');
-    assert.ok(trace.fmpFellBack);
-  });
-
   it('handles traces missing a paints (captured in background tab)', async () => {
     const trace = await traceOfTab.compute_(backgroundTabTrace);
     assert.equal(trace.startedInPageEvt.ts, 1966813248134);
@@ -108,7 +100,6 @@ describe('Trace of Tab computed artifact:', () => {
       1966813258737,
       'didnt select navStart event with same timestamp as usertiming measure'
     );
-    assert.equal(trace.firstContentfulPaintEvt, undefined, 'bad fcp');
     assert.equal(trace.firstMeaningfulPaintEvt, undefined, 'bad fmp');
   });
 
@@ -147,6 +138,17 @@ describe('Trace of Tab computed artifact:', () => {
           },
         },
         'tts': 141371,
+      }, {
+        'pid': 69920,
+        'tid': 1,
+        'ts': 2193564790060,
+        'ph': 'R',
+        'cat': 'loading,rail,devtools.timeline',
+        'name': 'firstContentfulPaint',
+        'args': {
+          'frame': 'B192D1F3355A6F961EC8F0B01623C1FB',
+        },
+        'tts': 141372,
       }, {
         'pid': 69920,
         'tid': 1,
@@ -189,5 +191,17 @@ describe('Trace of Tab computed artifact:', () => {
       const sortedEvents = trace.processEvents.filter(e => e.ts === ts);
       assert.deepStrictEqual(sortedEvents, tsGroup);
     }
+  });
+
+  it('throws on traces missing a navigationStart', () => {
+    return traceOfTab.compute_(noNavStartTrace)
+      .then(_ => assert(false, 'NO_NAVSTART error not throw'),
+        err => assert.equal(err.message, 'NO_NAVSTART'));
+  });
+
+  it('throws on traces missing an FCP', () => {
+    return traceOfTab.compute_(noFCPtrace)
+      .then(_ => assert(false, 'NO_FCP error not throw'),
+        err => assert.equal(err.message, 'NO_FCP'));
   });
 });

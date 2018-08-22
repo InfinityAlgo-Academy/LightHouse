@@ -16,7 +16,6 @@ const badNavStartTrace = require(`${TRACE_FIXTURES}/bad-nav-start-ts.json`);
 const lateTracingStartedTrace = require(`${TRACE_FIXTURES}/tracingstarted-after-navstart.json`);
 const preactTrace = require(`${TRACE_FIXTURES}/preactjs.com_ts_of_undefined.json`);
 const noFMPtrace = require(`${TRACE_FIXTURES}/no_fmp_event.json`);
-const noFCPtrace = require(`${TRACE_FIXTURES}/airhorner_no_fcp.json`);
 
 /* eslint-env jest */
 
@@ -97,13 +96,5 @@ describe('Metrics: FMP', () => {
     const result = await artifacts.requestFirstMeaningfulPaint({trace, devtoolsLog, settings});
     assert.equal(Math.round(result.timing), 4461);
     assert.equal(result.timestamp, 2146740268666);
-  });
-
-  it('handles cases when no FCP exists', async () => {
-    trace = noFCPtrace;
-    addEmptyTask();
-    const result = await artifacts.requestFirstMeaningfulPaint({trace, devtoolsLog, settings});
-    assert.equal(Math.round(result.timing), 482);
-    assert.equal(result.timestamp, 2149509604903);
   });
 });

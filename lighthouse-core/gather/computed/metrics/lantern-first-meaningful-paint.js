@@ -7,6 +7,7 @@
 
 const MetricArtifact = require('./lantern-metric');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
+const LHError = require('../../../lib/errors');
 
 /** @typedef {BaseNode.Node} Node */
 
@@ -33,6 +34,10 @@ class FirstMeaningfulPaint extends MetricArtifact {
    */
   getOptimisticGraph(dependencyGraph, traceOfTab) {
     const fmp = traceOfTab.timestamps.firstMeaningfulPaint;
+    if (!fmp) {
+      throw new LHError(LHError.errors.NO_FMP);
+    }
+
     const blockingScriptUrls = MetricArtifact.getScriptUrls(dependencyGraph, node => {
       return (
         node.endTime <= fmp && node.hasRenderBlockingPriority() && node.initiatorType !== 'script'
@@ -58,6 +63,10 @@ class FirstMeaningfulPaint extends MetricArtifact {
    */
   getPessimisticGraph(dependencyGraph, traceOfTab) {
     const fmp = traceOfTab.timestamps.firstMeaningfulPaint;
+    if (!fmp) {
+      throw new LHError(LHError.errors.NO_FMP);
+    }
+
     const requiredScriptUrls = MetricArtifact.getScriptUrls(dependencyGraph, node => {
       return node.endTime <= fmp && node.hasRenderBlockingPriority();
     });

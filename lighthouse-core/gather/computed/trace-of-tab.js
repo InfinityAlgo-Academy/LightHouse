@@ -22,11 +22,6 @@ const TracingProcessor = require('../../lib/traces/tracing-processor');
 const LHError = require('../../lib/errors');
 const Sentry = require('../../lib/sentry');
 
-// Bring in web-inspector for side effect of adding [].stableSort
-// See https://github.com/GoogleChrome/lighthouse/pull/2415
-// eslint-disable-next-line no-unused-vars
-const NetworkRequest = require('../../lib/network-request');
-
 class TraceOfTab extends ComputedArtifact {
   get name() {
     return 'TraceOfTab';
@@ -90,10 +85,11 @@ class TraceOfTab extends ComputedArtifact {
     // Find our first paint of this frame
     const firstPaint = frameEvents.find(e => e.name === 'firstPaint' && e.ts > navigationStart.ts);
 
-    // FCP will follow at/after the FP
+    // FCP will follow at/after the FP. Used in so many places we require it.
     const firstContentfulPaint = frameEvents.find(
       e => e.name === 'firstContentfulPaint' && e.ts > navigationStart.ts
     );
+    if (!firstContentfulPaint) throw new LHError(LHError.errors.NO_FCP);
 
     // fMP will follow at/after the FP
     let firstMeaningfulPaint = frameEvents.find(
@@ -133,34 +129,44 @@ class TraceOfTab extends ComputedArtifact {
     const mainThreadEvents = processEvents
       .filter(e => e.tid === startedInPageEvt.tid);
 
+    // traceEnd must exist since at least navigationStart event was verified as existing.
     const traceEnd = trace.traceEvents.reduce((max, evt) => {
       return max.ts > evt.ts ? max : evt;
     });
+    const fakeEndOfTraceEvt = {ts: traceEnd.ts + (traceEnd.dur || 0)};
 
-    const metrics = {
-      navigationStart,
-      firstPaint,
-      firstContentfulPaint,
-      firstMeaningfulPaint,
-      traceEnd: {ts: traceEnd.ts + (traceEnd.dur || 0)},
-      load,
-      domContentLoaded,
+    /** @param {{ts: number}=} event */
+    const getTimestamp = (event) => event && event.ts;
+    /** @type {LH.Artifacts.TraceTimes} */
+    const timestamps = {
+      navigationStart: navigationStart.ts,
+      firstPaint: getTimestamp(firstPaint),
+      firstContentfulPaint: firstContentfulPaint.ts,
+      firstMeaningfulPaint: getTimestamp(firstMeaningfulPaint),
+      traceEnd: fakeEndOfTraceEvt.ts,
+      load: getTimestamp(load),
+      domContentLoaded: getTimestamp(domContentLoaded),
     };
 
-    const timings = {};
-    const timestamps = {};
 
-    Object.keys(metrics).forEach(metric => {
-      timestamps[metric] = metrics[metric] && metrics[metric].ts;
-      timings[metric] = (timestamps[metric] - navigationStart.ts) / 1000;
-    });
+    /** @param {number} ts */
+    const getTiming = (ts) => (ts - navigationStart.ts) / 1000;
+    /** @param {number=} ts */
+    const maybeGetTiming = (ts) => ts === undefined ? undefined : getTiming(ts);
+    /** @type {LH.Artifacts.TraceTimes} */
+    const timings = {
+      navigationStart: 0,
+      firstPaint: maybeGetTiming(timestamps.firstPaint),
+      firstContentfulPaint: getTiming(timestamps.firstContentfulPaint),
+      firstMeaningfulPaint: maybeGetTiming(timestamps.firstMeaningfulPaint),
+      traceEnd: getTiming(timestamps.traceEnd),
+      load: maybeGetTiming(timestamps.load),
+      domContentLoaded: maybeGetTiming(timestamps.domContentLoaded),
+    };
 
-    // @ts-ignore - TODO(bckenny): many of these are actually `|undefined`, but
-    // undefined case needs to be handled throughout codebase. See also note for
-    // LH.Artifacts.TraceOfTab.
     return {
-      timings: /** @type {LH.Artifacts.TraceTimes} */ (timings),
-      timestamps: /** @type {LH.Artifacts.TraceTimes} */ (timestamps),
+      timings,
+      timestamps,
       processEvents,
       mainThreadEvents,
       startedInPageEvt,

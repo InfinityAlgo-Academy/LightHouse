@@ -95,6 +95,7 @@ describe('FirstInteractive computed artifact:', () => {
         computeObservedMetric({
           timings: {
             firstMeaningfulPaint: 3400,
+            domContentLoaded: 2000,
             traceEnd: 4500,
           },
           timestamps: {

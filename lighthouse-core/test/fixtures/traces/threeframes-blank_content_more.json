@@ -46,6 +46,18 @@
 				"tts": 4516530
 			},
 			{
+				"pid": 93449,
+				"tid": 1295,
+				"ts": 900001000000,
+				"ph": "R",
+				"cat": "loading,rail,devtools.timeline",
+				"name": "firstContentfulPaint",
+				"args": {
+					"frame": "dummy"
+				},
+				"tts": 63259760
+			},
+			{
 				"pid": 93267,
 				"tid": 1295,
 				"ts": 900001000000,

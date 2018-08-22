@@ -115,18 +115,18 @@ class Metrics extends Audit {
  * @property {number=} estimatedInputLatencyTs
  * @property {number} observedNavigationStart
  * @property {number} observedNavigationStartTs
- * @property {number} observedFirstPaint
- * @property {number} observedFirstPaintTs
+ * @property {number=} observedFirstPaint
+ * @property {number=} observedFirstPaintTs
  * @property {number} observedFirstContentfulPaint
  * @property {number} observedFirstContentfulPaintTs
- * @property {number} observedFirstMeaningfulPaint
- * @property {number} observedFirstMeaningfulPaintTs
- * @property {number} observedTraceEnd
- * @property {number} observedTraceEndTs
- * @property {number} observedLoad
- * @property {number} observedLoadTs
- * @property {number} observedDomContentLoaded
- * @property {number} observedDomContentLoadedTs
+ * @property {number=} observedFirstMeaningfulPaint
+ * @property {number=} observedFirstMeaningfulPaintTs
+ * @property {number=} observedTraceEnd
+ * @property {number=} observedTraceEndTs
+ * @property {number=} observedLoad
+ * @property {number=} observedLoadTs
+ * @property {number=} observedDomContentLoaded
+ * @property {number=} observedDomContentLoadedTs
  * @property {number} observedFirstVisualChange
  * @property {number} observedFirstVisualChangeTs
  * @property {number} observedLastVisualChange

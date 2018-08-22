@@ -17,16 +17,17 @@ class FirstMeaningfulPaint extends MetricArtifact {
    * @param {LH.Artifacts.MetricComputationData} data
    * @return {Promise<LH.Artifacts.Metric>}
    */
-  computeObservedMetric(data) {
+  async computeObservedMetric(data) {
     const {traceOfTab} = data;
     if (!traceOfTab.timestamps.firstMeaningfulPaint) {
       throw new LHError(LHError.errors.NO_FMP);
     }
 
-    return Promise.resolve({
-      timing: traceOfTab.timings.firstMeaningfulPaint,
+    return {
+      // FMP established as existing, so cast
+      timing: /** @type {number} */ (traceOfTab.timings.firstMeaningfulPaint),
       timestamp: traceOfTab.timestamps.firstMeaningfulPaint,
-    });
+    };
   }
 }
 

@@ -509,6 +509,7 @@
 {"pid":442,"tid":461,"ts":73609802087,"ph":"X","cat":"toplevel","name":"TaskQueueManager::ProcessTaskFromWorkQueue","args":{"src_file":"../../ipc/ipc_channel_proxy.cc","src_func":"OnMessageReceivedNoFilter"},"dur":5851,"tdur":666,"tts":20275155},
 {"pid":442,"tid":461,"ts":73609804410,"ph":"I","cat":"disabled-by-default-devtools.timeline","name":"TracingStartedInPage","args":{"data":{"sessionId":"442.138","page":"0xffffffffa1a94000"}},"tts":20275707,"s":"t"},
 {"pid":442,"tid":461,"ts":73609804410,"ph":"R","cat":"blink.user_timing","name":"navigationStart","args":{"data":{"sessionId":"442.138"},"frame":"0xffffffffa1a94000"},"tts":20275707,"s":"t"},
+{"pid":442,"tid":461,"ts":73609804428,"ph": "R","cat":"loading,rail,devtools.timeline","name": "firstContentfulPaint","args":{"frame":"0xffffffffa1a94000"},"tts":20275720},
 {"pid":442,"tid":461,"ts":73609804428,"ph":"I","cat":"disabled-by-default-devtools.timeline","name":"SetLayerTreeId","args":{"data":{"sessionId":"442.138","layerTreeId":1}},"tts":20275720,"s":"t"},
 {"pid":442,"tid":461,"ts":73609807946,"ph":"X","cat":"toplevel","name":"TaskQueueManager::ProcessTaskFromWorkQueue","args":{"src_file":"../../media/audio/fake_audio_worker.cc","src_func":"DoRead"},"dur":88,"tdur":85,"tts":20275831},
 {"pid":442,"tid":461,"ts":73609808041,"ph":"X","cat":"toplevel","name":"TaskQueueManager::ProcessTaskFromWorkQueue","args":{"src_file":"../../ipc/ipc_channel_proxy.cc","src_func":"OnMessageReceivedNoFilter"},"dur":193,"tdur":116,"tts":20275927},
