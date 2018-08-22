@@ -16,8 +16,8 @@ const strings = require('./strings');
 
 class LighthouseError extends Error {
   /**
-   * @param {!LighthouseErrorDefinition} errorDefinition
-   * @param {!Object=} properties
+   * @param {LighthouseErrorDefinition} errorDefinition
+   * @param {Record<string, string|undefined>=} properties
    */
   constructor(errorDefinition, properties) {
     super(errorDefinition.code);
@@ -30,7 +30,7 @@ class LighthouseError extends Error {
   }
 
   /**
-   * @param {Error} err
+   * @param {{code?: string}} err
    */
   static isPageLoadError(err) {
     return err.code === ERRORS.NO_DOCUMENT_REQUEST.code ||
@@ -40,11 +40,11 @@ class LighthouseError extends Error {
   /**
    * @param {string} method
    * @param {{message: string, data?: string|undefined}} protocolError
-   * @return {!Error|LighthouseError}
+   * @return {Error|LighthouseError}
    */
   static fromProtocolMessage(method, protocolError) {
     // extract all errors with a regex pattern to match against.
-    const protocolErrors = Object.keys(ERRORS).filter(k => ERRORS[k].pattern).map(k => ERRORS[k]);
+    const protocolErrors = Object.values(LighthouseError.errors).filter(e => e.pattern);
     // if we find one, use the friendly LighthouseError definition
     const matchedErrorDefinition = protocolErrors.find(e => e.pattern.test(protocolError.message));
     if (matchedErrorDefinition) {
@@ -64,38 +64,50 @@ class LighthouseError extends Error {
 
 const ERRORS = {
   // Screenshot/speedline errors
-  NO_SPEEDLINE_FRAMES: {message: strings.didntCollectScreenshots},
-  SPEEDINDEX_OF_ZERO: {message: strings.didntCollectScreenshots},
-  NO_SCREENSHOTS: {message: strings.didntCollectScreenshots},
-  INVALID_SPEEDLINE: {message: strings.didntCollectScreenshots},
+  NO_SPEEDLINE_FRAMES: {code: 'NO_SPEEDLINE_FRAMES', message: strings.didntCollectScreenshots},
+  SPEEDINDEX_OF_ZERO: {code: 'SPEEDINDEX_OF_ZERO', message: strings.didntCollectScreenshots},
+  NO_SCREENSHOTS: {code: 'NO_SCREENSHOTS', message: strings.didntCollectScreenshots},
+  INVALID_SPEEDLINE: {code: 'INVALID_SPEEDLINE', message: strings.didntCollectScreenshots},
 
   // Trace parsing errors
-  NO_TRACING_STARTED: {message: strings.badTraceRecording},
-  NO_NAVSTART: {message: strings.badTraceRecording},
-  NO_FCP: {message: strings.badTraceRecording},
-  NO_FMP: {message: strings.badTraceRecording},
-  NO_DCL: {message: strings.badTraceRecording},
+  NO_TRACING_STARTED: {code: 'NO_TRACING_STARTED', message: strings.badTraceRecording},
+  NO_NAVSTART: {code: 'NO_NAVSTART', message: strings.badTraceRecording},
+  NO_FCP: {code: 'NO_FCP', message: strings.badTraceRecording},
+  NO_FMP: {code: 'NO_FMP', message: strings.badTraceRecording},
+  NO_DCL: {code: 'NO_DCL', message: strings.badTraceRecording},
 
   // TTI calculation failures
-  FMP_TOO_LATE_FOR_FCPUI: {message: strings.pageLoadTookTooLong},
-  NO_FCPUI_IDLE_PERIOD: {message: strings.pageLoadTookTooLong},
-  NO_TTI_CPU_IDLE_PERIOD: {message: strings.pageLoadTookTooLong},
-  NO_TTI_NETWORK_IDLE_PERIOD: {message: strings.pageLoadTookTooLong},
+  FMP_TOO_LATE_FOR_FCPUI: {code: 'FMP_TOO_LATE_FOR_FCPUI', message: strings.pageLoadTookTooLong},
+  NO_FCPUI_IDLE_PERIOD: {code: 'NO_FCPUI_IDLE_PERIOD', message: strings.pageLoadTookTooLong},
+  NO_TTI_CPU_IDLE_PERIOD: {code: 'NO_TTI_CPU_IDLE_PERIOD', message: strings.pageLoadTookTooLong},
+  NO_TTI_NETWORK_IDLE_PERIOD: {
+    code: 'NO_TTI_NETWORK_IDLE_PERIOD',
+    message: strings.pageLoadTookTooLong,
+  },
 
   // Page load failures
-  NO_DOCUMENT_REQUEST: {message: strings.pageLoadFailed},
-  FAILED_DOCUMENT_REQUEST: {message: strings.pageLoadFailed},
+  NO_DOCUMENT_REQUEST: {code: 'NO_DOCUMENT_REQUEST', message: strings.pageLoadFailed},
+  FAILED_DOCUMENT_REQUEST: {code: 'FAILED_DOCUMENT_REQUEST', message: strings.pageLoadFailed},
 
   // Protocol internal failures
-  TRACING_ALREADY_STARTED: {message: strings.internalChromeError, pattern: /Tracing.*started/},
-  PARSING_PROBLEM: {message: strings.internalChromeError, pattern: /Parsing problem/},
-  READ_FAILED: {message: strings.internalChromeError, pattern: /Read failed/},
+  TRACING_ALREADY_STARTED: {
+    code: 'TRACING_ALREADY_STARTED',
+    message: strings.internalChromeError,
+    pattern: /Tracing.*started/,
+  },
+  PARSING_PROBLEM: {
+    code: 'PARSING_PROBLEM',
+    message: strings.internalChromeError,
+    pattern: /Parsing problem/,
+  },
+  READ_FAILED: {code: 'READ_FAILED', message: strings.internalChromeError, pattern: /Read failed/},
 
   // Protocol timeout failures
-  REQUEST_CONTENT_TIMEOUT: {message: strings.requestContentTimeout},
+  REQUEST_CONTENT_TIMEOUT: {
+    code: 'REQUEST_CONTENT_TIMEOUT',
+    message: strings.requestContentTimeout,
+  },
 };
-
-Object.keys(ERRORS).forEach(code => ERRORS[code].code = code);
 
 /** @type {Record<keyof typeof ERRORS, LighthouseErrorDefinition>} */
 LighthouseError.errors = ERRORS;
