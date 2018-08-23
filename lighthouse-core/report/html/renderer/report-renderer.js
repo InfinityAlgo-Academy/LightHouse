@@ -115,8 +115,14 @@ class ReportRenderer {
       {name: 'URL', description: report.finalUrl},
       {name: 'Fetch time', description: Util.formatDateTime(report.fetchTime)},
       ...envValues,
-      {name: 'User agent', description: report.userAgent},
+      {name: 'User agent (host)', description: report.userAgent},
+      {name: 'User agent (network)', description: report.environment &&
+        report.environment.networkUserAgent},
+      {name: 'CPU/Memory Power', description: report.environment &&
+        report.environment.benchmarkIndex.toFixed(0)},
     ].forEach(runtime => {
+      if (!runtime.description) return;
+
       const item = this._dom.cloneTemplate('#tmpl-lh-env__items', env);
       this._dom.find('.lh-env__name', item).textContent = `${runtime.name}:`;
       this._dom.find('.lh-env__description', item).textContent = runtime.description;

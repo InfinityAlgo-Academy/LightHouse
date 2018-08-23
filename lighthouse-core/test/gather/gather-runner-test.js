@@ -106,16 +106,37 @@ describe('GatherRunner', function() {
     });
   });
 
-  it('collects user agent as an artifact', () => {
+  it('collects benchmark as an artifact', async () => {
     const url = 'https://example.com';
     const driver = fakeDriver;
     const config = new Config({});
     const settings = {};
     const options = {url, driver, config, settings};
 
-    return GatherRunner.run([], options).then(results => {
-      assert.equal(results.UserAgent, 'Fake user agent', 'did not find expected user agent string');
-    });
+    const results = await GatherRunner.run([], options);
+    expect(Number.isFinite(results.BenchmarkIndex)).toBeTruthy();
+  });
+
+  it('collects host user agent as an artifact', async () => {
+    const url = 'https://example.com';
+    const driver = fakeDriver;
+    const config = new Config({});
+    const settings = {};
+    const options = {url, driver, config, settings};
+
+    const results = await GatherRunner.run([], options);
+    expect(results.HostUserAgent).toEqual('Fake user agent');
+  });
+
+  it('collects network user agent as an artifact', async () => {
+    const url = 'https://example.com';
+    const driver = fakeDriver;
+    const config = new Config({passes: [{}]});
+    const settings = {};
+    const options = {url, driver, config, settings};
+
+    const results = await GatherRunner.run(config.passes, options);
+    expect(results.NetworkUserAgent).toContain('Mozilla');
   });
 
   it('collects requested and final URLs as an artifact', () => {

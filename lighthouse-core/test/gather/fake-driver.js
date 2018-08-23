@@ -9,6 +9,9 @@ module.exports = {
   getUserAgent() {
     return Promise.resolve('Fake user agent');
   },
+  getBenchmarkIndex() {
+    return Promise.resolve(125.2);
+  },
   connect() {
     return Promise.resolve();
   },

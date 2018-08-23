@@ -122,7 +122,12 @@ class Runner {
 
       /** @type {LH.Result} */
       const lhr = {
-        userAgent: artifacts.UserAgent,
+        userAgent: artifacts.HostUserAgent,
+        environment: {
+          networkUserAgent: artifacts.NetworkUserAgent,
+          hostUserAgent: artifacts.HostUserAgent,
+          benchmarkIndex: artifacts.BenchmarkIndex,
+        },
         lighthouseVersion,
         fetchTime: artifacts.fetchTime,
         requestedUrl: requestedUrl,
