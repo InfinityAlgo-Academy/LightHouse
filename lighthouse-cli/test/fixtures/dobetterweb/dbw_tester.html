@@ -209,12 +209,12 @@ function websqlTest() {
 }
 
 function passiveEventsListenerTest() {
-  // FAIL
+  // FAIL or PASS - field trial for document level defaulting to passive M71+
   window.addEventListener('wheel', function(e) {
     console.log('wheel');
   });
 
-  // FAIL
+  // PASS - document level defaults to passive M56+
   window.addEventListener('touchstart', function(e) {
     console.log('touchstart');
   });
@@ -224,12 +224,12 @@ function passiveEventsListenerTest() {
     console.log('mousewheel');
   }, {passive: false});
 
-  // FAIL
+  // PASS - document level defaults to passive M56+
   document.addEventListener('touchstart', function(e) {
     console.log('touchstart document');
   });
 
-  // FAIL
+  // PASS - document level defaults to passive M56+
   document.body.addEventListener('touchmove', function(e) {
     console.log('touchmove');
   });
