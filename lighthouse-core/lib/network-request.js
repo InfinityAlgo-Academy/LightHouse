@@ -93,6 +93,8 @@ module.exports = class NetworkRequest {
     this.initiatorRequest = undefined;
     /** @type {HeaderEntry[]} */
     this.responseHeaders = [];
+    /** @type {string} */
+    this.responseHeadersText = '';
 
     this.fetchedViaServiceWorker = false;
     /** @type {string|undefined} */
@@ -172,6 +174,7 @@ module.exports = class NetworkRequest {
     }
 
     this._updateResponseReceivedTimeIfNecessary();
+    this._updateTransferSizeForLightRiderIfNecessary();
   }
 
   /**
@@ -234,12 +237,15 @@ module.exports = class NetworkRequest {
     this.timing = response.timing;
     if (resourceType) this.resourceType = RESOURCE_TYPES[resourceType];
     this.mimeType = response.mimeType;
+    this.responseHeadersText = response.headersText || '';
     this.responseHeaders = NetworkRequest._headersDictToHeadersArray(response.headers);
 
     this.fetchedViaServiceWorker = !!response.fromServiceWorker;
 
     if (this.fromMemoryCache) this.timing = undefined;
     if (this.timing) this._recomputeTimesWithResourceTiming(this.timing);
+
+    this._updateTransferSizeForLightRiderIfNecessary();
   }
 
   /**
@@ -267,6 +273,28 @@ module.exports = class NetworkRequest {
    */
   _updateResponseReceivedTimeIfNecessary() {
     this.responseReceivedTime = Math.min(this.endTime, this.responseReceivedTime);
+  }
+
+  /**
+   * LR loses transfer size information and passes it in the 'X-Original-Content-Length' header.
+   */
+  _updateTransferSizeForLightRiderIfNecessary() {
+    // Bail if we're not in LightRider, this only applies there.
+    if (!global.isLightRider) return;
+    // Bail if we somehow already have transfer size data.
+    if (this.transferSize) return;
+    // Bail if we didn't get any response headers.
+    if (!this.responseHeadersText) return;
+
+    const originalContentLength = this.responseHeaders.
+      find(item => item.name === 'X-Original-Content-Length');
+    // Bail if the x-original-content-length header was missing.
+    if (!originalContentLength) return;
+
+    // Transfer size is the original content length + length of headers
+    const contentBytes = parseFloat(originalContentLength.value);
+    const headerBytes = this.responseHeadersText.length;
+    this.transferSize = contentBytes + headerBytes;
   }
 
   /**
