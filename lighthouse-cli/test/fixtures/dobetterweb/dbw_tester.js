@@ -10,17 +10,8 @@
 
 const params = new URLSearchParams(location.search);
 
-if (location.search === '' || params.has('dateNow')) {
-  // FAIL - Date.now() usage in another file.
-  const d = Date.now();
-}
-
 if (location.search === '' || params.has('deprecations')) {
-  const div = document.createElement('div');
-  div.createShadowRoot();
-  // FAIL(errors-in-console) - multiple shadow v0 roots.
-  // TODO: disabled until m64 is stable (when moved from deprecation warning to error)
-  // div.createShadowRoot();
+  window.webkitStorageInfo.PERSISTENT; // FAIL(deprecations)
 }
 
 })();
