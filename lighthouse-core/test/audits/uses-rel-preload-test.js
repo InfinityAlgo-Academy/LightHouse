@@ -24,13 +24,10 @@ describe('Performance: uses-rel-preload audit', () => {
   let mockGraph;
   let mockSimulator;
 
-  const mockArtifacts = (networkRecords, mockChain, mainResource = defaultMainResource) => {
+  const mockArtifacts = (networkRecords, mainResource = defaultMainResource) => {
     return {
       traces: {[UsesRelPreload.DEFAULT_PASS]: {traceEvents: []}},
       devtoolsLogs: {[UsesRelPreload.DEFAULT_PASS]: []},
-      requestCriticalRequestChains: () => {
-        return Promise.resolve(mockChain);
-      },
       requestLoadSimulator: () => mockSimulator,
       requestPageDependencyGraph: () => mockGraph,
       requestNetworkRecords: () => networkRecords,
@@ -40,21 +37,69 @@ describe('Performance: uses-rel-preload audit', () => {
     };
   };
 
-  function buildNode(requestId, url) {
-    return new NetworkNode({url, requestId});
-  }
-
   afterEach(() => {
     mockSimulator = undefined;
   });
 
   it('should suggest preload resource', () => {
-    const rootNode = buildNode(1, 'http://example.com');
-    const mainDocumentNode = buildNode(2, 'http://www.example.com:3000');
-    const scriptNode = buildNode(3, 'http://www.example.com/script.js');
-    const scriptAddedNode = buildNode(4, 'http://www.example.com/script-added.js');
-    const scriptSubNode = buildNode(5, 'http://sub.example.com/script-sub.js');
-    const scriptOtherNode = buildNode(6, 'http://otherdomain.com/script-other.js');
+    const mainResource = Object.assign({}, defaultMainResource, {
+      url: 'http://www.example.com:3000',
+      redirects: [''],
+    });
+
+    const networkRecords = [
+      {
+        requestId: '2',
+        resourceType: 'Document',
+        priority: 'High',
+        isLinkPreload: false,
+        url: 'http://example.com:3000',
+        redirects: [''],
+      },
+      {
+        requestId: '2:redirect',
+        resourceType: 'Document',
+        priority: 'High',
+        isLinkPreload: false,
+        url: 'http://www.example.com:3000',
+        redirects: [''],
+      },
+      {
+        requestId: '3',
+        resourceType: 'Script',
+        priority: 'High',
+        isLinkPreload: false,
+        url: 'http://www.example.com/script.js',
+      },
+      {
+        requestId: '4',
+        resourceType: 'Script',
+        priority: 'High',
+        isLinkPreload: false,
+        url: 'http://www.example.com/script-added.js',
+      },
+      {
+        requestId: '5',
+        resourceType: 'Script',
+        priority: 'High',
+        isLinkPreload: false,
+        url: 'http://sub.example.com/script-sub.js',
+      },
+      {
+        requestId: '6',
+        resourceType: 'Script',
+        priority: 'High',
+        isLinkPreload: false,
+        url: 'http://otherdomain.com/script-other.js',
+      },
+    ];
+
+    const rootNode = new NetworkNode(networkRecords[0]);
+    const mainDocumentNode = new NetworkNode(networkRecords[1]);
+    const scriptNode = new NetworkNode(networkRecords[2]);
+    const scriptAddedNode = new NetworkNode(networkRecords[3]);
+    const scriptSubNode = new NetworkNode(networkRecords[4]);
+    const scriptOtherNode = new NetworkNode(networkRecords[5]);
 
     mainDocumentNode.setIsMainDocument(true);
     mainDocumentNode.addDependency(rootNode);
@@ -101,68 +146,7 @@ describe('Performance: uses-rel-preload audit', () => {
       },
     };
 
-    const mainResource = Object.assign({}, defaultMainResource, {
-      url: 'http://www.example.com:3000',
-      redirects: [''],
-    });
-    const networkRecords = [
-      {
-        requestId: '2',
-        isLinkPreload: false,
-        url: 'http://www.example.com:3000',
-      },
-      {
-        requestId: '3',
-        isLinkPreload: false,
-        url: 'http://www.example.com/script.js',
-      },
-      {
-        requestId: '4',
-        isLinkPreload: false,
-        url: 'http://www.example.com/script-added.js',
-      },
-      {
-        requestId: '5',
-        isLinkPreload: false,
-        url: 'http://sub.example.com/script-sub.js',
-      },
-      {
-        requestId: '6',
-        isLinkPreload: false,
-        url: 'http://otherdomain.com/script-other.js',
-      },
-    ];
-
-    const chains = {
-      '1': {
-        children: {
-          '2': {
-            request: networkRecords[0],
-            children: {
-              '3': {
-                request: networkRecords[1],
-                children: {
-                  '4': {
-                    request: networkRecords[2],
-                    children: {},
-                  },
-                  '5': {
-                    request: networkRecords[3],
-                    children: {},
-                  },
-                  '6': {
-                    request: networkRecords[4],
-                    children: {},
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    };
-
-    return UsesRelPreload.audit(mockArtifacts(networkRecords, chains, mainResource), {}).then(
+    return UsesRelPreload.audit(mockArtifacts(networkRecords, mainResource), {}).then(
       output => {
         assert.equal(output.rawValue, 1250);
         assert.equal(output.details.items.length, 2);
@@ -181,22 +165,8 @@ describe('Performance: uses-rel-preload audit', () => {
         url: 'http://www.example.com/script.js',
       },
     ];
-    const chains = {
-      '1': {
-        children: {
-          '2': {
-            children: {
-              '3': {
-                request: networkRecords[0],
-                children: {},
-              },
-            },
-          },
-        },
-      },
-    };
 
-    return UsesRelPreload.audit(mockArtifacts(networkRecords, chains), {}).then(output => {
+    return UsesRelPreload.audit(mockArtifacts(networkRecords), {}).then(output => {
       assert.equal(output.rawValue, 0);
       assert.equal(output.details.items.length, 0);
     });
@@ -211,22 +181,7 @@ describe('Performance: uses-rel-preload audit', () => {
       },
     ];
 
-    const chains = {
-      '1': {
-        children: {
-          '2': {
-            children: {
-              '3': {
-                request: networkRecords[0],
-                children: {},
-              },
-            },
-          },
-        },
-      },
-    };
-
-    return UsesRelPreload.audit(mockArtifacts(networkRecords, chains), {}).then(output => {
+    return UsesRelPreload.audit(mockArtifacts(networkRecords), {}).then(output => {
       assert.equal(output.rawValue, 0);
       assert.equal(output.details.items.length, 0);
     });
@@ -241,22 +196,7 @@ describe('Performance: uses-rel-preload audit', () => {
       },
     ];
 
-    const chains = {
-      '1': {
-        children: {
-          '2': {
-            children: {
-              '3': {
-                request: networkRecords[0],
-                children: {},
-              },
-            },
-          },
-        },
-      },
-    };
-
-    return UsesRelPreload.audit(mockArtifacts(networkRecords, chains), {}).then(output => {
+    return UsesRelPreload.audit(mockArtifacts(networkRecords), {}).then(output => {
       assert.equal(output.rawValue, 0);
       assert.equal(output.details.items.length, 0);
     });
