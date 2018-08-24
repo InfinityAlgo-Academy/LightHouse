@@ -5,12 +5,21 @@
  */
 
 declare module 'lighthouse-logger' {
+  interface Status {
+    msg: string;
+    id: string;
+    args?: any[];
+  }
   export function setLevel(level: string): void;
   export function formatProtocol(prefix: string, data: Object, level?: string): void;
   export function log(title: string, ...args: any[]): void;
   export function warn(title: string, ...args: any[]): void;
   export function error(title: string, ...args: any[]): void;
   export function verbose(title: string, ...args: any[]): void;
+  export function time(status: Status, level?: string): void;
+  export function timeEnd(status: Status, level?: string): void;
   export function reset(): string;
+  /** Retrieves and clears all stored time entries */
+  export function takeTimeEntries(): PerformanceEntry[];
   export var events: import('events').EventEmitter;
 }
