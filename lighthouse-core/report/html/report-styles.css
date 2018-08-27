@@ -213,7 +213,8 @@
   word-break: break-word;
   color: hsl(174, 100%, 27%);
 }
-.lh-node:hover {
+.lh-node:hover,
+div:target {
     background: hsl(0, 0%, 98%);
     border-radius: 2px;
 }

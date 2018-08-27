@@ -89,6 +89,7 @@ class ReportUIFeatures {
     this._setUpCollapseDetailsAfterPrinting();
     this._setupHeaderAnimation();
     this._resetUIState();
+    this._jumpToAudit();
     this._document.addEventListener('keydown', this.printShortCutDetect);
     // @ts-ignore - TODO(bckenny): tsc thinks document can't listen for `copy`. Remove ignore in 3.1.
     this._document.addEventListener('copy', this.onCopy);
@@ -284,6 +285,27 @@ class ReportUIFeatures {
   _resetUIState() {
     this.closeExportDropdown();
     this._dom.resetTemplates();
+  }
+
+  /**
+   * Jumps to respective audit on page load if hash is provided in URL
+   * Collapsed content is opened automatically
+   * Element is highlighted via CSS selector
+   */
+  _jumpToAudit() {
+    const hash = window.location.hash;
+    if (hash) {
+      const audit = document.querySelector(hash);
+      if (audit) {
+        if (audit.firstElementChild) {
+          audit.firstElementChild.setAttribute('open', 'true');
+        }
+        if (audit.parentElement) {
+          audit.parentElement.setAttribute('open', 'true');
+          scroll({top: audit.parentElement.offsetTop, behavior: 'smooth'});
+        }
+      }
+    }
   }
 
   /**
