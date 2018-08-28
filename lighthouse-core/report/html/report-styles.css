@@ -213,8 +213,7 @@
   word-break: break-word;
   color: hsl(174, 100%, 27%);
 }
-.lh-node:hover,
-div:target {
+.lh-node:hover {
     background: hsl(0, 0%, 98%);
     border-radius: 2px;
 }
@@ -316,6 +315,10 @@ div:target {
   display: none;
 }
 
+.lh-audit:target {
+  background: hsl(0, 0%, 98%);
+  border-radius: 2px;
+}
 
 /* Perf Metric */
 

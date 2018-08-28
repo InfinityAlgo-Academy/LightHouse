@@ -294,17 +294,23 @@ class ReportUIFeatures {
    */
   _jumpToAudit() {
     const hash = window.location.hash;
-    if (hash) {
-      const audit = document.querySelector(hash);
-      if (audit) {
-        if (audit.firstElementChild) {
-          audit.firstElementChild.setAttribute('open', 'true');
-        }
-        if (audit.parentElement) {
-          audit.parentElement.setAttribute('open', 'true');
-          scroll({top: audit.parentElement.offsetTop, behavior: 'smooth'});
-        }
-      }
+    if (!hash) {
+      return;
+    }
+    const audit = document.querySelector(hash);
+    if (!audit || !audit.classList.contains('lh-audit')) {
+      return;
+    }
+    if (audit.firstElementChild && audit.firstElementChild.tagName === 'DETAILS') {
+      audit.firstElementChild.setAttribute('open', 'true');
+    }
+    const details = audit.closest('details')
+    if (details) {
+      details.setAttribute('open', 'true');
+      window.scroll({
+        top: details.getBoundingClientRect().top + window.scrollY,
+        behavior: 'smooth'
+      });
     }
   }
 
