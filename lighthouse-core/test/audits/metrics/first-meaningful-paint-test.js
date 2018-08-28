@@ -27,7 +27,7 @@ describe('Performance: first-meaningful-paint audit', () => {
 
     assert.equal(fmpResult.score, 1);
     assert.equal(fmpResult.rawValue, 783.328);
-    expect(fmpResult.displayValue).toBeDisplayString('780\xa0ms');
+    expect(fmpResult.displayValue).toBeDisplayString('0.8\xa0s');
   });
 
   it('computes FMP correctly for simulated', async () => {

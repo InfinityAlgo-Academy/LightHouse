@@ -84,7 +84,7 @@
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "rawValue": 3969.135,
-      "displayValue": "3,970 ms"
+      "displayValue": "4.0 s"
     },
     "first-meaningful-paint": {
       "id": "first-meaningful-paint",
@@ -93,7 +93,7 @@
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "rawValue": 3969.136,
-      "displayValue": "3,970 ms"
+      "displayValue": "4.0 s"
     },
     "load-fast-enough-for-pwa": {
       "id": "load-fast-enough-for-pwa",
@@ -110,7 +110,7 @@
       "score": 0.74,
       "scoreDisplayMode": "numeric",
       "rawValue": 4417,
-      "displayValue": "4,420 ms"
+      "displayValue": "4.4 s"
     },
     "screenshot-thumbnails": {
       "id": "screenshot-thumbnails",
@@ -270,7 +270,7 @@
       "score": 0.72,
       "scoreDisplayMode": "numeric",
       "rawValue": 4927.278,
-      "displayValue": "4,930 ms"
+      "displayValue": "4.9 s"
     },
     "interactive": {
       "id": "interactive",
@@ -279,7 +279,7 @@
       "score": 0.78,
       "scoreDisplayMode": "numeric",
       "rawValue": 4927.278,
-      "displayValue": "4,930 ms"
+      "displayValue": "4.9 s"
     },
     "user-timings": {
       "id": "user-timings",
@@ -646,7 +646,7 @@
       "score": 0.96,
       "scoreDisplayMode": "numeric",
       "rawValue": 1548.5690000000002,
-      "displayValue": "1,550 ms",
+      "displayValue": "1.5 s",
       "details": {
         "type": "table",
         "headings": [
@@ -708,7 +708,7 @@
       "score": 0.92,
       "scoreDisplayMode": "numeric",
       "rawValue": 1150.932,
-      "displayValue": "1,150 ms",
+      "displayValue": "1.2 s",
       "details": {
         "type": "table",
         "headings": [
@@ -3429,7 +3429,7 @@
       "lighthouse-core/audits/metrics/first-contentful-paint.js | description": [
         "audits[first-contentful-paint].description"
       ],
-      "lighthouse-core/lib/i18n.js | ms": [
+      "lighthouse-core/lib/i18n.js | seconds": [
         {
           "values": {
             "timeInMs": 3969.135
@@ -3447,12 +3447,6 @@
             "timeInMs": 4417
           },
           "path": "audits[speed-index].displayValue"
-        },
-        {
-          "values": {
-            "timeInMs": 16
-          },
-          "path": "audits[estimated-input-latency].displayValue"
         },
         {
           "values": {
@@ -3496,6 +3490,14 @@
       ],
       "lighthouse-core/audits/metrics/estimated-input-latency.js | description": [
         "audits[estimated-input-latency].description"
+      ],
+      "lighthouse-core/lib/i18n.js | ms": [
+        {
+          "values": {
+            "timeInMs": 16
+          },
+          "path": "audits[estimated-input-latency].displayValue"
+        }
       ],
       "lighthouse-core/audits/time-to-first-byte.js | title": [
         "audits[time-to-first-byte].title"

@@ -407,6 +407,10 @@
     "message": "{timeInMs, number, milliseconds} ms",
     "description": "Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms)"
   },
+  "lighthouse-core/lib/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s",
+    "description": "Used to show the duration in seconds that something lasted. The {timeInMs} placeholder will be replaced with the time duration, shown in seconds (e.g. 5.2 s)"
+  },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Show audits",
     "description": "The tooltip text on an expandable chevron icon. Clicking the icon expands a section to reveal a list of audit results that was hidden by default."

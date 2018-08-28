@@ -36,8 +36,10 @@ const MESSAGE_INSTANCE_ID_REGEX = /(.* \| .*) # (\d+)$/;
 
 
 const UIStrings = {
-/** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
+  /** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
   ms: '{timeInMs, number, milliseconds}\xa0ms',
+  /** Used to show the duration in seconds that something lasted. The {timeInMs} placeholder will be replaced with the time duration, shown in seconds (e.g. 5.2 s) */
+  seconds: '{timeInMs, number, seconds}\xa0s',
   /** Label shown per-audit to show how many bytes smaller the page could be if the user implemented the suggestions. The `{wastedBytes}` placeholder will be replaced with the number of bytes, shown in kilobytes (e.g. 148 KB) */
   displayValueByteSavings: 'Potential savings of {wastedBytes, number, bytes}\xa0KB',
   /** Label shown per-audit to show how many milliseconds faster the page load could be if the user implemented the suggestions. The `{wastedMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 140 ms) */
@@ -63,6 +65,11 @@ const formats = {
     },
     milliseconds: {
       maximumFractionDigits: 0,
+    },
+    seconds: {
+      // Force the seconds to the tenths place for limited output and ease of scanning
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
     },
   },
 };
@@ -108,6 +115,12 @@ function _preprocessMessageValues(icuMessage, values) {
     .filter(el => el.format && el.format.style === 'milliseconds')
     // @ts-ignore - el.id is always defined when el.format is defined
     .forEach(el => (clonedValues[el.id] = Math.round(clonedValues[el.id] / 10) * 10));
+
+  // Convert all seconds to the correct unit
+  parsed.elements
+    .filter(el => el.format && el.format.style === 'seconds' && el.id === 'timeInMs')
+    // @ts-ignore - el.id is always defined when el.format is defined
+    .forEach(el => (clonedValues[el.id] = Math.round(clonedValues[el.id] / 100) / 10));
 
   // Replace all the bytes with KB
   parsed.elements

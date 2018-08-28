@@ -34,7 +34,7 @@ describe('Performance: interactive audit', () => {
     return Interactive.audit(artifacts, {options, settings}).then(output => {
       assert.equal(output.score, 1);
       assert.equal(Math.round(output.rawValue), 1582);
-      expect(output.displayValue).toBeDisplayString('1,580\xa0ms');
+      expect(output.displayValue).toBeDisplayString('1.6\xa0s');
     });
   });
 
@@ -52,7 +52,7 @@ describe('Performance: interactive audit', () => {
     return Interactive.audit(artifacts, {options, settings}).then(output => {
       assert.equal(output.score, 0.97);
       assert.equal(Math.round(output.rawValue), 2712);
-      expect(output.displayValue).toBeDisplayString('2,710\xa0ms');
+      expect(output.displayValue).toBeDisplayString('2.7\xa0s');
     });
   });
 });

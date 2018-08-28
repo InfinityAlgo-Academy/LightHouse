@@ -67,7 +67,7 @@ class FirstCPUIdle extends Audit {
         context.options.scoreMedian
       ),
       rawValue: metricResult.timing,
-      displayValue: str_(i18n.UIStrings.ms, {timeInMs: metricResult.timing}),
+      displayValue: str_(i18n.UIStrings.seconds, {timeInMs: metricResult.timing}),
     };
   }
 }
