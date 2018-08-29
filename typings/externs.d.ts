@@ -166,6 +166,7 @@ declare global {
         fileName?: string;
         snapshot?: string;
         data?: {
+          documentLoaderURL?: string;
           frames?: {
             frame: string;
             parent?: string;

@@ -22,9 +22,22 @@ const TracingProcessor = require('../../lib/traces/tracing-processor');
 const LHError = require('../../lib/errors');
 const Sentry = require('../../lib/sentry');
 
+const ACCEPTABLE_NAVIGATION_URL_REGEX = /^(chrome|https?):/;
+
 class TraceOfTab extends ComputedArtifact {
   get name() {
     return 'TraceOfTab';
+  }
+
+  /**
+   * Returns true if the event is a navigation start event of a document whose URL seems valid.
+   *
+   * @param {LH.TraceEvent} event
+   */
+  static isNavigationStartOfInterest(event) {
+    return event.name === 'navigationStart' &&
+      (!event.args.data || !event.args.data.documentLoaderURL ||
+        ACCEPTABLE_NAVIGATION_URL_REGEX.test(event.args.data.documentLoaderURL));
   }
 
   /**
@@ -79,7 +92,7 @@ class TraceOfTab extends ComputedArtifact {
     const frameEvents = keyEvents.filter(e => e.args.frame === frameId);
 
     // Our navStart will be the last frame navigation in the trace
-    const navigationStart = frameEvents.filter(e => e.name === 'navigationStart').pop();
+    const navigationStart = frameEvents.filter(TraceOfTab.isNavigationStartOfInterest).pop();
     if (!navigationStart) throw new LHError(LHError.errors.NO_NAVSTART);
 
     // Find our first paint of this frame
