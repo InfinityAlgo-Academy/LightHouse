@@ -38,7 +38,9 @@ class DragAndDrop {
     document.addEventListener('dragover', e => {
       e.stopPropagation();
       e.preventDefault();
-      e.dataTransfer.dropEffect = 'copy'; // Explicitly show as copy action.
+      if (e.dataTransfer) {
+        e.dataTransfer.dropEffect = 'copy'; // Explicitly show as copy action.
+      }
     });
 
     document.addEventListener('dragenter', _ => {
@@ -53,7 +55,9 @@ class DragAndDrop {
       this._resetDraggingUI();
 
       // Note, this ignores multiple files in the drop, only taking the first.
-      this._fileHandlerCallback(e.dataTransfer.files[0]);
+      if (e.dataTransfer) {
+        this._fileHandlerCallback(e.dataTransfer.files[0]);
+      }
     });
   }
 

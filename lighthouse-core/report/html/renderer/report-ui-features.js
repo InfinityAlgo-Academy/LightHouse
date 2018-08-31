@@ -90,7 +90,6 @@ class ReportUIFeatures {
     this._setupHeaderAnimation();
     this._resetUIState();
     this._document.addEventListener('keydown', this.printShortCutDetect);
-    // @ts-ignore - TODO(bckenny): tsc thinks document can't listen for `copy`. Remove ignore in 3.1.
     this._document.addEventListener('copy', this.onCopy);
   }
 
@@ -114,7 +113,7 @@ class ReportUIFeatures {
 
   /**
    * Handle media query change events.
-   * @param {MediaQueryList} mql
+   * @param {MediaQueryList|MediaQueryListEvent} mql
    */
   onMediaQueryChange(mql) {
     const root = this._dom.find('.lh-root', this._document);

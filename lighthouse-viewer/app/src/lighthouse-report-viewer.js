@@ -156,7 +156,7 @@ class LighthouseReportViewer {
       let saveCallback = null;
       if (!this._reportIsFromGist) {
         saveCallback = this._onSaveJson;
-        history.pushState({}, undefined, LighthouseReportViewer.APP_URL);
+        history.pushState({}, '', LighthouseReportViewer.APP_URL);
       }
 
       const features = new ViewerUIFeatures(dom, saveCallback);
@@ -257,7 +257,7 @@ class LighthouseReportViewer {
       }
 
       this._reportIsFromGist = true;
-      history.pushState({}, undefined, `${LighthouseReportViewer.APP_URL}?gist=${id}`);
+      history.pushState({}, '', `${LighthouseReportViewer.APP_URL}?gist=${id}`);
 
       return id;
     }).catch(err => logger.log(err.message));
@@ -335,7 +335,7 @@ class LighthouseReportViewer {
 
       const match = url.pathname.match(/[a-f0-9]{5,}/);
       if (match) {
-        history.pushState({}, undefined, `${LighthouseReportViewer.APP_URL}?gist=${match[0]}`);
+        history.pushState({}, '', `${LighthouseReportViewer.APP_URL}?gist=${match[0]}`);
         this._loadFromDeepLink();
       }
     } catch (err) {
