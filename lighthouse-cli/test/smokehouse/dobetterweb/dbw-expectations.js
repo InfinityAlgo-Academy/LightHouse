@@ -101,7 +101,8 @@ module.exports = [
         score: 0,
         details: {
           items: {
-            length: 3,
+            // Note: HTML Imports added to deprecations in m70, so 3 before, 4 after.
+            length: '>=3',
           },
         },
       },
