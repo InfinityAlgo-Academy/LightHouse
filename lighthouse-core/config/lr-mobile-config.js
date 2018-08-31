@@ -8,7 +8,9 @@
 /** @type {LH.Config.Json} */
 const config = {
   extends: 'lighthouse:default',
-  settings: {},
+  settings: {
+    maxWaitForLoad: 35 * 1000,
+  },
 };
 
 module.exports = config;
