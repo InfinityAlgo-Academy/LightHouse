@@ -43,6 +43,9 @@ const RESOURCE_TYPES = {
   WebSocket: 'WebSocket',
   Other: 'Other',
   Manifest: 'Manifest',
+  SignedExchange: 'SignedExchange',
+  Ping: 'Ping',
+  CSPViolationReport: 'CSPViolationReport',
 };
 
 module.exports = class NetworkRequest {

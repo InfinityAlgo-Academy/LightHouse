@@ -32,7 +32,7 @@ const DEFAULT_NETWORK_QUIET_THRESHOLD = 5000;
 const DEFAULT_CPU_QUIET_THRESHOLD = 0;
 
 /**
- * @typedef {LH.StrictEventEmitter<LH.CrdpEvents>} CrdpEventEmitter
+ * @typedef {LH.Protocol.StrictEventEmitter<LH.CrdpEvents>} CrdpEventEmitter
  */
 
 class Driver {
@@ -43,9 +43,8 @@ class Driver {
     this._traceCategories = Driver.traceCategories;
     /**
      * An event emitter that enforces mapping between Crdp event names and payload types.
-     * @type {CrdpEventEmitter}
      */
-    this._eventEmitter = new EventEmitter();
+    this._eventEmitter = /** @type {CrdpEventEmitter} */ (new EventEmitter());
     this._connection = connection;
     // currently only used by WPT where just Page and Network are needed
     this._devtoolsLog = new DevtoolsLog(/^(Page|Network)\./);
@@ -74,6 +73,10 @@ class Driver {
       if (this._networkStatusMonitor) {
         this._networkStatusMonitor.dispatch(event);
       }
+
+      // @ts-ignore TODO(bckenny): tsc can't type event.params correctly yet,
+      // typing as property of union instead of narrowing from union of
+      // properties. See https://github.com/Microsoft/TypeScript/pull/22348.
       this._eventEmitter.emit(event.method, event.params);
     });
   }
@@ -139,6 +142,52 @@ class Driver {
   }
 
   /**
+   * Bind listeners for protocol events.
+   * @template {keyof LH.CrdpEvents} E
+   * @param {E} eventName
+   * @param {(...args: LH.CrdpEvents[E]) => void} cb
+   */
+  on(eventName, cb) {
+    if (this._eventEmitter === null) {
+      throw new Error('connect() must be called before attempting to listen to events.');
+    }
+
+    // log event listeners being bound
+    log.formatProtocol('listen for event =>', {method: eventName}, 'verbose');
+    this._eventEmitter.on(eventName, cb);
+  }
+
+  /**
+   * Bind a one-time listener for protocol events. Listener is removed once it
+   * has been called.
+   * @template {keyof LH.CrdpEvents} E
+   * @param {E} eventName
+   * @param {(...args: LH.CrdpEvents[E]) => void} cb
+   */
+  once(eventName, cb) {
+    if (this._eventEmitter === null) {
+      throw new Error('connect() must be called before attempting to listen to events.');
+    }
+    // log event listeners being bound
+    log.formatProtocol('listen once for event =>', {method: eventName}, 'verbose');
+    this._eventEmitter.once(eventName, cb);
+  }
+
+  /**
+   * Unbind event listener.
+   * @template {keyof LH.CrdpEvents} E
+   * @param {E} eventName
+   * @param {Function} cb
+   */
+  off(eventName, cb) {
+    if (this._eventEmitter === null) {
+      throw new Error('connect() must be called before attempting to remove an event listener.');
+    }
+
+    this._eventEmitter.removeListener(eventName, cb);
+  }
+
+  /**
    * Debounce enabling or disabling domains to prevent driver users from
    * stomping on each other. Maintains an internal count of the times a domain
    * has been enabled. Returns false if the command would have no effect (domain
@@ -165,6 +214,25 @@ class Driver {
       }
       return false;
     }
+  }
+
+  /**
+   * Call protocol methods.
+   * @template {keyof LH.CrdpCommands} C
+   * @param {C} method
+   * @param {LH.CrdpCommands[C]['paramsType']} params,
+   * @return {Promise<LH.CrdpCommands[C]['returnType']>}
+   */
+  sendCommand(method, ...params) {
+    const domainCommand = /^(\w+)\.(enable|disable)$/.exec(method);
+    if (domainCommand) {
+      const enable = domainCommand[2] === 'enable';
+      if (!this._shouldToggleDomain(domainCommand[1], enable)) {
+        return Promise.resolve();
+      }
+    }
+
+    return this._connection.sendCommand(method, ...params);
   }
 
   /**
@@ -863,28 +931,11 @@ class Driver {
 
     // Enable Page domain to wait for Page.loadEventFired
     return this.sendCommand('Page.enable')
-      // ensure tracing is stopped before we can start
-      // see https://github.com/GoogleChrome/lighthouse/issues/1091
-      .then(_ => this.endTraceIfStarted())
       .then(_ => this.sendCommand('Tracing.start', {
         categories: uniqueCategories.join(','),
         transferMode: 'ReturnAsStream',
         options: 'sampling-frequency=10000', // 1000 is default and too slow.
       }));
-  }
-
-  /**
-   * @return {Promise<void>}
-   */
-  endTraceIfStarted() {
-    return new Promise((resolve) => {
-      const traceCallback = () => resolve();
-      this.once('Tracing.tracingComplete', traceCallback);
-      return this.sendCommand('Tracing.end', undefined, {silent: true}).catch(() => {
-        this.off('Tracing.tracingComplete', traceCallback);
-        traceCallback();
-      });
-    });
   }
 
   /**
@@ -1123,82 +1174,5 @@ class Driver {
     });
   }
 }
-
-// Declared outside class body because function expressions can be typed via more expressive @type
-/**
- * Bind listeners for protocol events.
- * @type {CrdpEventEmitter['on']}
- */
-Driver.prototype.on = function on(eventName, cb) {
-  if (this._eventEmitter === null) {
-    throw new Error('connect() must be called before attempting to listen to events.');
-  }
-
-  // log event listeners being bound
-  log.formatProtocol('listen for event =>', {method: eventName}, 'verbose');
-  this._eventEmitter.on(eventName, cb);
-};
-
-/**
- * Bind a one-time listener for protocol events. Listener is removed once it
- * has been called.
- * @type {CrdpEventEmitter['once']}
- */
-Driver.prototype.once = function once(eventName, cb) {
-  if (this._eventEmitter === null) {
-    throw new Error('connect() must be called before attempting to listen to events.');
-  }
-  // log event listeners being bound
-  log.formatProtocol('listen once for event =>', {method: eventName}, 'verbose');
-  this._eventEmitter.once(eventName, cb);
-};
-
-/**
- * Unbind event listener.
- * @type {CrdpEventEmitter['removeListener']}
- */
-Driver.prototype.off = function off(eventName, cb) {
-  if (this._eventEmitter === null) {
-    throw new Error('connect() must be called before attempting to remove an event listener.');
-  }
-
-  this._eventEmitter.removeListener(eventName, cb);
-};
-
-/** @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]['returnType']} CommandReturnTypes */
-
-/**
- * Loosely-typed internal implementation of `Driver.sendCommand` which is
- * strictly typed externally on exposed Driver interface. Type tightening occurs
- * when assigned to `Driver.prototype` below and typed with
- * `LH.Protocol.SendCommand`.
- * Necessitated by `params` only being optional for some values of `method`.
- * See https://github.com/Microsoft/TypeScript/issues/5453 for needed variadic
- * primitive.
- * @this {Driver}
- * @param {any} method
- * @param {any=} params,
- * @param {{silent?: boolean}=} cmdOpts
- * @return {Promise<CommandReturnTypes>}
- */
-function _sendCommand(method, params, cmdOpts = {}) {
-  const domainCommand = /^(\w+)\.(enable|disable)$/.exec(method);
-  if (domainCommand) {
-    const enable = domainCommand[2] === 'enable';
-    // eslint-disable-next-line no-invalid-this
-    if (!this._shouldToggleDomain(domainCommand[1], enable)) {
-      return Promise.resolve();
-    }
-  }
-
-  // eslint-disable-next-line no-invalid-this
-  return this._connection.sendCommand(method, params, cmdOpts);
-}
-
-/**
- * Call protocol methods.
- * @type {LH.Protocol.SendCommand}
- */
-Driver.prototype.sendCommand = _sendCommand;
 
 module.exports = Driver;

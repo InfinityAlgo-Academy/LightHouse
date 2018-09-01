@@ -62,7 +62,6 @@
     "update:sample-artifacts": "node lighthouse-core/scripts/update-report-fixtures.js -G",
     "update:sample-json": "yarn i18n:collect-strings && node ./lighthouse-cli -A=./lighthouse-core/test/results/artifacts --throttling-method=devtools --output=json --output-path=./lighthouse-core/test/results/sample_v2.json && node lighthouse-core/scripts/cleanup-LHR-for-diff.js ./lighthouse-core/test/results/sample_v2.json --only-remove-timing",
     "diff:sample-json": "yarn i18n:checks && bash lighthouse-core/scripts/assert-golden-lhr-unchanged.sh",
-    "update:crdp-typings": "node lighthouse-core/scripts/extract-crdp-mapping.js",
     "ultradumbBenchmark": "./lighthouse-core/scripts/benchmark.js",
     "mixed-content": "./lighthouse-cli/index.js --chrome-flags='--headless' --preset=mixed-content",
     "minify-latest-run": "./lighthouse-core/scripts/lantern/minify-trace.js ./latest-run/defaultPass.trace.json ./latest-run/defaultPass.trace.min.json && ./lighthouse-core/scripts/lantern/minify-devtoolslog.js ./latest-run/defaultPass.devtoolslog.json ./latest-run/defaultPass.devtoolslog.min.json"
@@ -91,6 +90,7 @@
     "coveralls": "^2.11.9",
     "csv-validator": "^0.0.3",
     "cz-customizable": "^5.2.0",
+    "devtools-protocol": "0.0.588129",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "gulp": "^3.9.1",
@@ -107,7 +107,6 @@
     "puppeteer": "1.4.0",
     "sinon": "^2.3.5",
     "typescript": "3.1.0-dev.20180831",
-    "vscode-chrome-debug-core": "^3.23.8",
     "zone.js": "^0.7.3"
   },
   "dependencies": {

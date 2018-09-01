@@ -223,21 +223,6 @@ describe('Browser Driver', () => {
     });
   });
 
-  it('waits for tracingComplete when tracing already started', () => {
-    const fakeConnection = new Connection();
-    const fakeDriver = new Driver(fakeConnection);
-    const commands = [];
-    fakeConnection.sendCommand = evt => {
-      commands.push(evt);
-      return Promise.resolve();
-    };
-
-    fakeDriver.once = createOnceStub({'Tracing.tracingComplete': {}});
-    return fakeDriver.beginTrace().then(() => {
-      assert.deepEqual(commands, ['Page.enable', 'Tracing.end', 'Tracing.start']);
-    });
-  });
-
   it('will request default traceCategories', () => {
     return driverStub.beginTrace().then(() => {
       const traceCmd = sendCommandParams.find(obj => obj.command === 'Tracing.start');

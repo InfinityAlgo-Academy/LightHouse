@@ -195,10 +195,6 @@
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-5.5.0.tgz#146c2a29ee7d3bae4bf2fcb274636e264c813c45"
 
-"@types/source-map@^0.1.27":
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/@types/source-map/-/source-map-0.1.29.tgz#d7048a60180b09f8aa6d53bda311c6b51cbd7018"
-
 "@types/through@*":
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/through/-/through-0.0.29.tgz#72943aac922e179339c651fa34a4428a4d722f93"
@@ -1696,6 +1692,10 @@ detect-libc@^1.0.2:
 detect-newline@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-2.1.0.tgz#f41f1c10be4b00e87b5f13da680759f2c5bfd3e2"
+
+devtools-protocol@0.0.588129:
+  version "0.0.588129"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.588129.tgz#b93d05b01679471639f2882077f77d4e96eecc18"
 
 devtools-timeline-model@1.1.6:
   version "1.1.6"
@@ -4515,10 +4515,6 @@ node-uuid@~1.4.7:
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/node-uuid/-/node-uuid-1.4.7.tgz#6da5a17668c4b3dd59623bda11cf7fa4c1f60a6f"
 
-noice-json-rpc@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/noice-json-rpc/-/noice-json-rpc-1.0.1.tgz#5e7289a60a1c20880489cb15101552bac392266e"
-
 nopt@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-4.0.1.tgz#d0d4685afd5415193c8c7505602d0d17cd64474d"
@@ -6365,38 +6361,6 @@ vinyl@^0.5.0:
     clone-stats "^0.0.1"
     replace-ext "0.0.1"
 
-vscode-chrome-debug-core@^3.23.8:
-  version "3.23.8"
-  resolved "https://registry.yarnpkg.com/vscode-chrome-debug-core/-/vscode-chrome-debug-core-3.23.8.tgz#f0fd1582b6d7653d327171104b9c8e2eebb6bf41"
-  dependencies:
-    "@types/source-map" "^0.1.27"
-    glob "^7.0.6"
-    noice-json-rpc "1.0.1"
-    source-map "^0.6.1"
-    vscode-debugadapter "^1.28.0-pre.2"
-    vscode-debugprotocol "^1.28.0-pre.1"
-    vscode-nls "^3.2.1"
-    ws "^3.3.2"
-
-vscode-debugadapter@^1.28.0-pre.2:
-  version "1.28.0-pre.2"
-  resolved "https://registry.yarnpkg.com/vscode-debugadapter/-/vscode-debugadapter-1.28.0-pre.2.tgz#165ccd179f5a43319c8d6a3dc77832e9392ae254"
-  dependencies:
-    vscode-debugprotocol "1.28.0-pre.1"
-    vscode-uri "1.0.1"
-
-vscode-debugprotocol@1.28.0-pre.1, vscode-debugprotocol@^1.28.0-pre.1:
-  version "1.28.0-pre.1"
-  resolved "https://registry.yarnpkg.com/vscode-debugprotocol/-/vscode-debugprotocol-1.28.0-pre.1.tgz#2641b753cbb78416e897a2f1653e7bc391d2db0b"
-
-vscode-nls@^3.2.1:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/vscode-nls/-/vscode-nls-3.2.2.tgz#3817eca5b985c2393de325197cf4e15eb2aa5350"
-
-vscode-uri@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/vscode-uri/-/vscode-uri-1.0.1.tgz#11a86befeac3c4aa3ec08623651a3c81a6d0bbc8"
-
 w3c-hr-time@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/w3c-hr-time/-/w3c-hr-time-1.0.1.tgz#82ac2bff63d950ea9e3189a58a65625fedf19045"
@@ -6577,7 +6541,7 @@ ws@3.3.2:
     safe-buffer "~5.1.0"
     ultron "~1.1.0"
 
-ws@^3.0.0, ws@^3.3.2:
+ws@^3.0.0:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/ws/-/ws-3.3.3.tgz#f1cf84fe2d5e901ebce94efaece785f187a228f2"
   dependencies:

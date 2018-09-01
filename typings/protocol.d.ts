@@ -9,12 +9,6 @@ declare global {
     /**
      * Union of raw (over the wire) message format of all possible Crdp events,
      * of the form `{method: 'Domain.event', params: eventPayload}`.
-     * TODO(bckenny): currently any `void` payloads are defined as having value
-     * `undefined`, even though CrdpEventEmitter will treat those payloads as
-     * not existing. This is due to how we have to expose these emitters to JS.
-     * See https://github.com/bterlson/strict-event-emitter-types/issues/1 for
-     * search for the fix here. Complication should be entirely isolated to
-     * connection.js.
      */
     export type RawEventMessage = RawEventMessageRecord[keyof RawEventMessageRecord];
 
@@ -37,12 +31,24 @@ declare global {
     export type RawMessage = RawCommandMessage | RawEventMessage;
 
     /**
-     * Strict overloaded typing for calling protocol methods with and without
-     * params object.
+     * A more strictly-typed EventEmitter interface that checks the association
+     * of event name and listener payload. TEventRecord should be a record mapping
+     * event names to tuples that can contain zero or more items, which will
+     * serve as the arguments to event listener callbacks.
+     * Inspired by work from https://github.com/bterlson/strict-event-emitter-types.
      */
-    export type SendCommand = {
-      <C extends VoidParamsKeys>(method: C, params?: void, cmdOpts?: {silent?: boolean}): Promise<CrdpCommands[C]['returnType']>;
-      <C extends NonVoidParamsKeys>(method: C, params: CrdpCommands[C]['paramsType']): Promise<CrdpCommands[C]['returnType']>
+    export type StrictEventEmitter<TEventRecord extends Record<keyof TEventRecord, any[]>> = {
+      on<E extends keyof TEventRecord>(event: E, listener: (...args: TEventRecord[E]) => void): void;
+
+      addListener<E extends keyof TEventRecord>(event: E, listener: (...args: TEventRecord[E]) => void): void;
+
+      removeListener<E extends keyof TEventRecord>(event: E, listener: Function): void;
+
+      removeAllListeners<E extends keyof TEventRecord>(event?: E): void;
+
+      once<E extends keyof TEventRecord>(event: E, listener: (...args: TEventRecord[E]) => void): void;
+
+      emit<E extends keyof TEventRecord>(event: E, ...request: TEventRecord[E]): void;
     }
   }
 }
@@ -57,28 +63,10 @@ declare global {
 type RawEventMessageRecord = {
   [K in keyof LH.CrdpEvents]: {
     method: K,
-    // Drop void for `undefined` (so a JS value is valid). See above TODO
-    params: LH.CrdpEvents[K] extends void ? undefined: LH.CrdpEvents[K]
+    // Drop [] for `undefined` (so a JS value is valid).
+    params: LH.CrdpEvents[K] extends [] ? undefined: LH.CrdpEvents[K][number]
   };
 }
-
-/**
- * An intermediate type that's the union of all command names where a `params`
- * object is not required (represented by `void` when no params object or a
- * union with `void` if all properties on params object are optional).
- */
-type VoidParamsKeys = {
-  [P in keyof LH.CrdpCommands]: void extends LH.CrdpCommands[P]['paramsType'] ? P : never;
-}[keyof LH.CrdpCommands];
-
-/**
- * An intermediate type that's the union of all command names that require a
- * `params` object (no void in union). Note that `VoidParamsKeys` and
- * `NonVoidParamsKeys` are not disjoint.
- */
-type NonVoidParamsKeys = {
-  [P in keyof LH.CrdpCommands]: LH.CrdpCommands[P]['paramsType'] extends void ? never : P;
-}[keyof LH.CrdpCommands];
 
 // empty export to keep file a module
 export {}
