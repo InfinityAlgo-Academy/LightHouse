@@ -115,7 +115,7 @@ class Driver {
    * @return {Promise<number>}
    */
   getBenchmarkIndex() {
-    return this.evaluateAsync(`(${pageFunctions.ultradumbBenchmark.toString()})()`);
+    return this.evaluateAsync(`(${pageFunctions.ultradumbBenchmarkString})()`);
   }
 
   /**
@@ -302,7 +302,7 @@ class Driver {
           return new __nativePromise(function (resolve) {
             return __nativePromise.resolve()
               .then(_ => ${expression})
-              .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowser.toString()})
+              .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowserString})
               .then(resolve);
           });
         }())`,
@@ -513,7 +513,7 @@ class Driver {
     let lastTimeout;
     let cancelled = false;
 
-    const checkForQuietExpression = `(${pageFunctions.checkTimeSinceLastLongTask.toString()})()`;
+    const checkForQuietExpression = `(${pageFunctions.checkTimeSinceLastLongTaskString})()`;
     /**
      * @param {Driver} driver
      * @param {() => void} resolve
@@ -1137,7 +1137,7 @@ class Driver {
    * @return {Promise<void>}
    */
   async registerPerformanceObserver() {
-    const scriptStr = `(${pageFunctions.registerPerformanceObserverInPage.toString()})()`;
+    const scriptStr = `(${pageFunctions.registerPerformanceObserverInPageString})()`;
     await this.evaluateScriptOnNewDocument(scriptStr);
   }
 
