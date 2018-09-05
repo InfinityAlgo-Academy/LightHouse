@@ -94,6 +94,21 @@ describe('DOM', () => {
           prepareLabData(lhrWithoutGroupsStr, document);
         }, /no category groups/i);
       });
+
+      it('includes custom title and description', () => {
+        const {perfCategoryEl} = prepareLabData(sampleResultsStr, document);
+        const metricsGroupEl = perfCategoryEl.querySelector('.lh-audit-group--metrics');
+
+        // Assume using default locale.
+        const titleEl = metricsGroupEl.querySelector('.lh-audit-group__header');
+        assert.equal(titleEl.textContent, Util.UIStrings.labDataTitle);
+
+        // Description supports markdown links, so take everything after the last link.
+        const descriptionEnd = /[^)]+$/.exec(Util.UIStrings.lsPerformanceCategoryDescription)[0];
+        assert.ok(descriptionEnd.length > 6); // If this gets too short, pick a different comparison :)
+        const descriptionEl = metricsGroupEl.querySelector('.lh-audit-group__description');
+        assert.ok(descriptionEl.textContent.endsWith(descriptionEnd));
+      });
     });
   });
 

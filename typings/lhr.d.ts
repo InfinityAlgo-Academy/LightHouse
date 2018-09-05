@@ -57,7 +57,7 @@ declare global {
       /** Execution timings for the Lighthouse run */
       timing: {total: number, [t: string]: number};
       /** The record of all formatted string locations in the LHR and their corresponding source values. */
-      i18n?: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths: I18NMessages};
+      i18n: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths: I18NMessages};
     }
 
     // Result namespace

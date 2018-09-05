@@ -138,12 +138,14 @@ class Runner {
         categories,
         categoryGroups: runOpts.config.groups || undefined,
         timing: {total: Date.now() - startTime},
+        i18n: {
+          rendererFormattedStrings: i18n.getRendererFormattedStrings(settings.locale),
+          icuMessagePaths: {},
+        },
       };
 
-      lhr.i18n = {
-        rendererFormattedStrings: i18n.getRendererFormattedStrings(settings.locale),
-        icuMessagePaths: i18n.replaceIcuMessageInstanceIds(lhr, settings.locale),
-      };
+      // Replace ICU message references with localized strings; save replaced paths in lhr.
+      lhr.i18n.icuMessagePaths = i18n.replaceIcuMessageInstanceIds(lhr, settings.locale);
 
       const report = generateReport(lhr, settings.output);
       return {lhr, artifacts, report};

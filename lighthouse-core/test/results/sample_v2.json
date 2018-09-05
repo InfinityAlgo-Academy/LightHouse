@@ -3412,6 +3412,8 @@
       "crcLongestDurationLabel": "Maximum critical path latency:",
       "errorLabel": "Error!",
       "errorMissingAuditInfo": "Report error: no audit information",
+      "labDataTitle": "Lab Data",
+      "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on emulated 3G. Values are estimated and may vary.",
       "manualAuditsGroupTitle": "Additional items to manually check",
       "notApplicableAuditsGroupTitle": "Not applicable",
       "opportunityResourceColumnLabel": "Opportunity",
