@@ -593,7 +593,7 @@
     },
     "deprecations": {
       "id": "deprecations",
-      "title": "Uses deprecated API's",
+      "title": "Uses deprecated APIs",
       "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://www.chromestatus.com/features#deprecated).",
       "score": 0,
       "scoreDisplayMode": "binary",
