@@ -101,7 +101,7 @@ describe('Runner', () => {
 
     it('-A throws if the URL changes', async () => {
       const settings = {auditMode: artifactsPath, disableDeviceEmulation: true};
-      const opts = {url: 'https://example.com', config: generateConfig(settings), driverMock};
+      const opts = {url: 'https://differenturl.com', config: generateConfig(settings), driverMock};
       try {
         await Runner.run(null, opts);
         assert.fail('should have thrown');
