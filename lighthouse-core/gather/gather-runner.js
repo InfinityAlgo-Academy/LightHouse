@@ -54,8 +54,9 @@ const Driver = require('../gather/driver.js'); // eslint-disable-line no-unused-
  *     ii. all gatherers' afterPass()
  *
  * 3. Teardown
- *   A. GatherRunner.disposeDriver()
- *   B. collect all artifacts and return them
+ *   A. clearDataForOrigin
+ *   B. GatherRunner.disposeDriver()
+ *   C. collect all artifacts and return them
  *     i. collectArtifacts() from completed passes on each gatherer
  *     ii. add trace data and computed artifact methods
  */
@@ -444,6 +445,8 @@ class GatherRunner {
           firstPass = false;
         }
       }
+      const resetStorage = !options.settings.disableStorageReset;
+      if (resetStorage) await driver.clearDataForOrigin(options.requestedUrl);
       await GatherRunner.disposeDriver(driver);
       return GatherRunner.collectArtifacts(gathererResults, baseArtifacts);
     } catch (err) {
