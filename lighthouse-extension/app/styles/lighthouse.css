@@ -87,11 +87,6 @@ html, body {
   left: 0;
 }
 
-.header-titles__new-adornment {
-  color: coral;
-  font-weight: bold;
-}
-
 .main {
   height: 70px;
   display: flex;
