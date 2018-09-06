@@ -114,14 +114,15 @@ class ScreenshotThumbnails extends Audit {
           }
         });
       }
-
-      const imageData = frameForTimestamp.getParsedImage();
-      const thumbnailImageData = ScreenshotThumbnails.scaleImageToThumbnail(imageData);
-      const base64Data =
-        cachedThumbnails.get(frameForTimestamp) ||
-        jpeg.encode(thumbnailImageData, 90).data.toString('base64');
-
-      cachedThumbnails.set(frameForTimestamp, base64Data);
+      let base64Data;
+      if (cachedThumbnails.has(frameForTimestamp)) {
+        base64Data = cachedThumbnails.get(frameForTimestamp);
+      } else {
+        const imageData = frameForTimestamp.getParsedImage();
+        const thumbnailImageData = ScreenshotThumbnails.scaleImageToThumbnail(imageData);
+        base64Data = jpeg.encode(thumbnailImageData, 90).data.toString('base64');
+        cachedThumbnails.set(frameForTimestamp, base64Data);
+      }
       thumbnails.push({
         timing: Math.round(targetTimestamp - speedline.beginning),
         timestamp: targetTimestamp * 1000,
