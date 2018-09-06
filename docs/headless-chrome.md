@@ -5,12 +5,12 @@
 Setup:
 
 ```sh
-# get node 6
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - &&\
+# Lighthouse requires Node 8 LTS (8.9) or later.
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - &&\
 sudo apt-get install -y nodejs npm
 
 # get chromium (stable)
-apt-get install chromium-browser
+apt-get install chromium
 
 # install lighthouse
 npm i -g lighthouse
