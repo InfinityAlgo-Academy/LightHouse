@@ -31,10 +31,21 @@ class LighthouseError extends Error {
 
   /**
    * @param {{code?: string}} err
+   * @return {err is LighthouseError}
    */
   static isPageLoadError(err) {
     return err.code === ERRORS.NO_DOCUMENT_REQUEST.code ||
       err.code === ERRORS.FAILED_DOCUMENT_REQUEST.code;
+  }
+
+  /**
+   * @param {LighthouseError} err
+   * @return {LighthouseError}
+   */
+  static fromLighthouseError(err) {
+    const {code, friendlyMessage: message, ...rest} = err;
+    // Note: {...rest} convinces tsc 3.1 that it's assignable to a Record.
+    return new LighthouseError({code, message}, {...rest});
   }
 
   /**

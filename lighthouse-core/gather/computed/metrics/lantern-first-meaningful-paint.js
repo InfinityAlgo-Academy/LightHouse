@@ -7,7 +7,7 @@
 
 const MetricArtifact = require('./lantern-metric');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
-const LHError = require('../../../lib/errors');
+const LHError = require('../../../lib/lh-error');
 
 /** @typedef {BaseNode.Node} Node */
 

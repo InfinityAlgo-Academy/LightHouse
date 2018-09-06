@@ -9,7 +9,7 @@ const MetricArtifact = require('./metric');
 
 const NetworkRecorder = require('../../../lib/network-recorder');
 const TracingProcessor = require('../../../lib/traces/tracing-processor');
-const LHError = require('../../../lib/errors');
+const LHError = require('../../../lib/lh-error');
 
 const REQUIRED_QUIET_WINDOW = 5000;
 const ALLOWED_CONCURRENT_REQUESTS = 2;

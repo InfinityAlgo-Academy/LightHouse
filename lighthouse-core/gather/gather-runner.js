@@ -6,7 +6,7 @@
 'use strict';
 
 const log = require('lighthouse-logger');
-const LHError = require('../lib/errors');
+const LHError = require('../lib/lh-error');
 const URL = require('../lib/url-shim');
 const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants');
@@ -356,7 +356,7 @@ class GatherRunner {
 
       // Fail the run if more than 50% of all artifacts failed due to page load failure.
       if (pageLoadFailures.length > Object.keys(gathererArtifacts).length * 0.5) {
-        throw pageLoadFailures[0];
+        throw LHError.fromLighthouseError(pageLoadFailures[0]);
       }
     }
 

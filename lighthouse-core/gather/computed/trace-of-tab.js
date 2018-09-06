@@ -19,7 +19,7 @@
 const ComputedArtifact = require('./computed-artifact');
 const log = require('lighthouse-logger');
 const TracingProcessor = require('../../lib/traces/tracing-processor');
-const LHError = require('../../lib/errors');
+const LHError = require('../../lib/lh-error');
 const Sentry = require('../../lib/sentry');
 
 const ACCEPTABLE_NAVIGATION_URL_REGEX = /^(chrome|https?):/;

@@ -6,7 +6,7 @@
 'use strict';
 
 const MetricArtifact = require('./metric');
-const LHError = require('../../../lib/errors');
+const LHError = require('../../../lib/lh-error');
 
 class FirstMeaningfulPaint extends MetricArtifact {
   get name() {

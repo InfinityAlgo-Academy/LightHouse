@@ -14,7 +14,7 @@ const SCHEDULABLE_TASK_TITLE = 'TaskQueueManager::ProcessTaskFromWorkQueue';
 const SCHEDULABLE_TASK_TITLE_ALT1 = 'ThreadControllerImpl::DoWork';
 // m69+ DoWork is different and we now need RunTask, see https://bugs.chromium.org/p/chromium/issues/detail?id=871204#c11
 const SCHEDULABLE_TASK_TITLE_ALT2 = 'ThreadControllerImpl::RunTask';
-const LHError = require('../errors');
+const LHError = require('../lh-error');
 
 class TraceProcessor {
   /**

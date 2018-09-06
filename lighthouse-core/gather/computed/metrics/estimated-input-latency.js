@@ -6,7 +6,7 @@
 'use strict';
 
 const MetricArtifact = require('./metric');
-const LHError = require('../../../lib/errors');
+const LHError = require('../../../lib/lh-error');
 const TracingProcessor = require('../../../lib/traces/tracing-processor');
 
 const ROLLING_WINDOW_SIZE = 5000;

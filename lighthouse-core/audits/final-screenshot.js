@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('./audit');
-const LHError = require('../lib/errors');
+const LHError = require('../lib/lh-error');
 
 class FinalScreenshot extends Audit {
   /**

@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('./audit');
-const LHError = require('../lib/errors');
+const LHError = require('../lib/lh-error');
 const jpeg = require('jpeg-js');
 
 const NUMBER_OF_THUMBNAILS = 10;
