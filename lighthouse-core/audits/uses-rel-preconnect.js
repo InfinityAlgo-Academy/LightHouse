@@ -172,7 +172,9 @@ class UsesRelPreconnectAudit extends Audit {
     return {
       score: UnusedBytes.scoreForWastedMs(maxWasted),
       rawValue: maxWasted,
-      displayValue: str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: maxWasted}),
+      displayValue: maxWasted ?
+        str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: maxWasted}) :
+        '',
       extendedInfo: {
         value: results,
       },

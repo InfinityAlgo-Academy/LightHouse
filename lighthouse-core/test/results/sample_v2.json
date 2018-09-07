@@ -768,7 +768,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "rawValue": 0,
-      "displayValue": "Potential savings of 0 ms",
+      "displayValue": "",
       "details": {
         "type": "opportunity",
         "headings": [],
@@ -783,7 +783,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "rawValue": 0,
-      "displayValue": "Potential savings of 0 ms",
+      "displayValue": "",
       "details": {
         "type": "opportunity",
         "headings": [],
@@ -3595,26 +3595,6 @@
       "lighthouse-core/audits/uses-rel-preload.js | description": [
         "audits[uses-rel-preload].description"
       ],
-      "lighthouse-core/lib/i18n.js | displayValueMsSavings": [
-        {
-          "values": {
-            "wastedMs": 0
-          },
-          "path": "audits[uses-rel-preload].displayValue"
-        },
-        {
-          "values": {
-            "wastedMs": 0
-          },
-          "path": "audits[uses-rel-preconnect].displayValue"
-        },
-        {
-          "values": {
-            "wastedMs": 1129
-          },
-          "path": "audits[render-blocking-resources].displayValue"
-        }
-      ],
       "lighthouse-core/audits/uses-rel-preconnect.js | title": [
         "audits[uses-rel-preconnect].title"
       ],
@@ -3677,6 +3657,14 @@
       ],
       "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | description": [
         "audits[render-blocking-resources].description"
+      ],
+      "lighthouse-core/lib/i18n.js | displayValueMsSavings": [
+        {
+          "values": {
+            "wastedMs": 1129
+          },
+          "path": "audits[render-blocking-resources].displayValue"
+        }
       ],
       "lighthouse-core/lib/i18n.js | columnWastedMs": [
         "audits[render-blocking-resources].details.headings[2].label"
