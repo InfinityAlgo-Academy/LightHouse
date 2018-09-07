@@ -1,3 +1,9 @@
+ <a name="3.1.1"></a>
+# 3.1.1 (2018-09-07)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v3.1.0...v3.1.1)
+
+* update report score legend to match updated color buckets ([#5985](https://github.com/googlechrome/lighthouse/pull/5985))
+
 <a name="3.1.0"></a>
 # 3.1.0 (2018-09-06)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v3.0.3...v3.1.0)
@@ -6,6 +12,20 @@
 Huge thanks to @midzer and @justinribeiro for being so darn helpful. Great stuff. :D
 
 And thanks to @mettamatt for some helpful documentation. Who doesn't love better docs?!
+
+## Notable changes
+
+* red/orange/green color buckets for scores are tougher now. ([#5831](https://github.com/googlechrome/lighthouse/pull/5831))
+
+| | Previously | Now |
+|-|-|-|
+| Red (bad) | 0-44 | 0-49 |
+| Orange (average)| 45-74 | 50-89 |
+| Green (good)| 75-100 | 90-100 |
+
+Scoring itself hasn't changed; only what color is used to decorate a score.
+
+* trace-processor: fix bug where top-level events weren't being found in the trace ([#5841](https://github.com/googlechrome/lighthouse/pull/5841))
 
 ## Core
 
@@ -32,7 +52,6 @@ And thanks to @mettamatt for some helpful documentation. Who doesn't love better
 * screenshot-thumbnails: improve caching ([#5976](https://github.com/googlechrome/lighthouse/pull/5976))
 * ttfb: reuse requestMainResource ([#5657](https://github.com/googlechrome/lighthouse/pull/5657))
 * trace-of-tab: only use navstart of chrome/http documents ([#5917](https://github.com/googlechrome/lighthouse/pull/5917))
-* trace-processor: use new toplevel task event name ([#5841](https://github.com/googlechrome/lighthouse/pull/5841))
 * tracing-processor: throw on no top level events ([#5878](https://github.com/googlechrome/lighthouse/pull/5878))
 * uses-long-cache-ttl: handle multiple cache-control headers ([#5745](https://github.com/googlechrome/lighthouse/pull/5745))
 
@@ -88,7 +107,6 @@ And thanks to @mettamatt for some helpful documentation. Who doesn't love better
 ## Report
 
 * link to our own "unused css" reference doc ([#5698](https://github.com/googlechrome/lighthouse/pull/5698))
-* make red/orange/green score color thresholds tougher ([#5831](https://github.com/googlechrome/lighthouse/pull/5831))
 * expose prepareLabData directly as a fn ([#5818](https://github.com/googlechrome/lighthouse/pull/5818))
 * responsive styles ([#5706](https://github.com/googlechrome/lighthouse/pull/5706))
 * add PSI.prepareLabData() ([#5804](https://github.com/googlechrome/lighthouse/pull/5804))
