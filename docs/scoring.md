@@ -44,9 +44,9 @@ These weights are heuristics, and the Lighthouse team is working on formalizing 
 Once Lighthouse is done gathering the raw performance metrics for your website (metrics reported in miliseconds), it converts them into a score by mapping the raw performance number to a number between 0-100 by looking where your raw performance metric falls on the Lighthouse scoring distribution. The Lighthouse scoring distribution is a log normal distribution that is derived from the performance metrics of real website performance data (see sample distribution [here](https://www.desmos.com/calculator/zrjq6v1ihi)).
 
 Once we finish computing the percentile equivalent of your raw performance score, we take the weighted average of all the performance metrics (per the weighting above). Finally, we apply a coloring to the score (green, orange, and red) depending on what "bucket" your score falls in. This maps to:
-- Red (poor score): 0-44.
-- Orange (average): 45-74
-- Green (good): 75-100.
+- Red (poor score): 0-49
+- Orange (average): 50-89
+- Green (good): 90-100
 
 ### What can developers do to improve their performance score?
 *Note: we've built [a little calculator](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=283330180) that can help you understand what thresholds you should be aiming for achieving a certain Lighthouse performance score. *
