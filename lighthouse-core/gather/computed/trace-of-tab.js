@@ -116,7 +116,6 @@ class TraceOfTab extends ComputedArtifact {
     // However, if no candidates were found (a bogus trace, likely), we fail.
     if (!firstMeaningfulPaint) {
       // Track this with Sentry since it's likely a bug we should investigate.
-      // @ts-ignore TODO(bckenny): Sentry type checking
       Sentry.captureMessage('No firstMeaningfulPaint found, using fallback', {level: 'warning'});
 
       const fmpCand = 'firstMeaningfulPaintCandidate';

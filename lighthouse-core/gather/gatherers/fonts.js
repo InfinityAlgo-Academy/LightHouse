@@ -211,18 +211,18 @@ class Fonts extends Gatherer {
     return fontData.then(([loadedFonts, fontsAndErrors]) => {
       // Filter out errors from retrieving data on font faces.
       const fontFaces = /** @type {Array<LH.Artifacts.Font>} */ (fontsAndErrors.filter(
-        fontOrError => {
-          // Abuse the type system a bit since `err` property isn't common between types.
-          const dataError = /** @type {FontGatherError} */ (fontOrError);
-          if (dataError.err) {
-            const err = new Error(dataError.err.message);
-            err.stack = dataError.err.stack || err.stack;
-            // @ts-ignore TODO(bckenny): Sentry type checking
-            Sentry.captureException(err, {tags: {gatherer: 'Fonts'}, level: 'warning'});
-            return false;
-          }
-          return true;
-        }));
+        fontOrError => !('err' in fontOrError)));
+
+      const firstFontError = fontsAndErrors.find(fontOrError => 'err' in fontOrError);
+      if (firstFontError) {
+        // Abuse the type system a bit since `err` property isn't common between types.
+        const dataError = /** @type {FontGatherError} */ (firstFontError);
+        if (dataError.err) {
+          const err = new Error(dataError.err.message);
+          err.stack = dataError.err.stack || err.stack;
+          Sentry.captureException(err, {tags: {gatherer: 'Fonts'}, level: 'warning'});
+        }
+      }
 
       return loadedFonts.map(loadedFont => {
         const fontFaceItem = this._findSameFontFamily(loadedFont, fontFaces);

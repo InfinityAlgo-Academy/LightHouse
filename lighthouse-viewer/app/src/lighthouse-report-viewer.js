@@ -56,7 +56,6 @@ class LighthouseReportViewer {
    * @private
    */
   _addEventListeners() {
-    // @ts-ignore - tsc thinks document can't listen for `paste`
     document.addEventListener('paste', this._onPaste);
 
     const gistUrlInput = find('.js-gist-url', document);

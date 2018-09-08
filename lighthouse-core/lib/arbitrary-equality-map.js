@@ -5,7 +5,6 @@
  */
 'use strict';
 
-// @ts-ignore
 const isEqual = require('lodash.isequal');
 
 /**

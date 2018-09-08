@@ -40,11 +40,9 @@ class Runner {
       const lighthouseRunWarnings = [];
 
       const sentryContext = Sentry.getContext();
-      // @ts-ignore TODO(bckenny): Sentry type checking
       Sentry.captureBreadcrumb({
         message: 'Run started',
         category: 'lifecycle',
-        // @ts-ignore TODO(bckenny): Sentry type checking
         data: sentryContext && sentryContext.extra,
       });
 
@@ -150,7 +148,6 @@ class Runner {
       const report = generateReport(lhr, settings.output);
       return {lhr, artifacts, report};
     } catch (err) {
-      // @ts-ignore TODO(bckenny): Sentry type checking
       await Sentry.captureException(err, {level: 'fatal'});
       throw err;
     }
@@ -249,7 +246,6 @@ class Runner {
           // @ts-ignore An artifact *could* be an Error, but caught here, so ignore elsewhere.
           const artifactError = artifacts[artifactName];
 
-          // @ts-ignore TODO(bckenny): Sentry type checking
           Sentry.captureException(artifactError, {
             tags: {gatherer: artifactName},
             level: 'error',
@@ -283,7 +279,6 @@ class Runner {
         throw err;
       }
 
-      // @ts-ignore TODO(bckenny): Sentry type checking
       Sentry.captureException(err, {tags: {audit: audit.meta.id}, level: 'error'});
       // Non-fatal error become error audit result.
       const errorMessage = err.friendlyMessage ?

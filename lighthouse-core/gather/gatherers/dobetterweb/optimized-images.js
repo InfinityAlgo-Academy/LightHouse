@@ -194,7 +194,6 @@ class OptimizedImages extends Gatherer {
       } catch (err) {
         // Track this with Sentry since these errors aren't surfaced anywhere else, but we don't
         // want to tank the entire run due to a single image.
-        // @ts-ignore TODO(bckenny): Sentry type checking
         Sentry.captureException(err, {
           tags: {gatherer: 'OptimizedImages'},
           extra: {imageUrl: URL.elideDataURI(record.url)},

@@ -105,7 +105,6 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
 
       if (processed instanceof Error) {
         warnings.push(processed.message);
-        // @ts-ignore TODO(bckenny): Sentry type checking
         Sentry.captureException(processed, {tags: {audit: this.meta.id}, level: 'warning'});
         return;
       }

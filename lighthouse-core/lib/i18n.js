@@ -25,9 +25,7 @@ const MESSAGE_INSTANCE_ID_REGEX = /(.* \| .*) # (\d+)$/;
     // In browser environments where we don't need the polyfill, this won't exist
     if (!IntlPolyfill.NumberFormat) return;
 
-    // @ts-ignore
     Intl.NumberFormat = IntlPolyfill.NumberFormat;
-    // @ts-ignore
     Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
   } catch (_) {
     log.warn('i18n', 'Failed to install `intl` polyfill');
