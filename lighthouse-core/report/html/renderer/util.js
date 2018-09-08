@@ -142,10 +142,7 @@ class Util {
       case 'numeric':
       case 'binary':
       default:
-        // Numeric audits that are within PASS_THRESHOLD will still show up with failing.
-        // For opportunities, we want to have them show up with other failing for contrast.
-        // For diagnostics, we sort by score so they'll be lowest priority.
-        return Number(audit.score) === 1;
+        return Number(audit.score) >= RATINGS.PASS.minScore;
     }
   }
 
