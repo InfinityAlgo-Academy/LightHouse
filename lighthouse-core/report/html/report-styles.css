@@ -150,11 +150,14 @@
   display: none !important;
 }
 
+.lh-root details > summary {
+  cursor: pointer;
+}
+
 .lh-audit-group a,
 .lh-category-header__description a {
   color: #0c50c7;
 }
-
 
 .lh-audit__description {
   --inner-audit-left-padding: calc(var(--text-indent) + var(--lh-audit-index-width) + 2 * var(--audit-item-gap));
@@ -299,7 +302,6 @@
 .lh-audit__header {
   display: flex;
   padding: var(--lh-audit-vpadding) var(--text-indent);
-  cursor: pointer;
 }
 
 .lh-audit--load-opportunity .lh-audit__header {
