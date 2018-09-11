@@ -169,8 +169,8 @@ async function prepareAssets(artifacts, audits) {
     const devtoolsLog = artifacts.devtoolsLogs[passName];
 
     // Avoid Runner->AssetSaver->Runner circular require by loading Runner here.
-    const Runner = require('../runner.js');
-    const computedArtifacts = Runner.instantiateComputedArtifacts();
+    const AuditRunner = require('../audit-runner.js');
+    const computedArtifacts = AuditRunner.instantiateComputedArtifacts();
     /** @type {Array<Screenshot>} */
     const screenshots = await computedArtifacts.requestScreenshots(trace);
 

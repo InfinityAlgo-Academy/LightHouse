@@ -108,10 +108,10 @@ describe('GatherRunner', function() {
 
   it('collects benchmark as an artifact', async () => {
     const url = 'https://example.com';
-    const driver = fakeDriver;
+    const driverMock = fakeDriver;
     const config = new Config({});
     const settings = {};
-    const options = {url, driver, config, settings};
+    const options = {url, driverMock, config, settings};
 
     const results = await GatherRunner.run([], options);
     expect(Number.isFinite(results.BenchmarkIndex)).toBeTruthy();
@@ -119,10 +119,10 @@ describe('GatherRunner', function() {
 
   it('collects host user agent as an artifact', async () => {
     const url = 'https://example.com';
-    const driver = fakeDriver;
+    const driverMock = fakeDriver;
     const config = new Config({});
     const settings = {};
-    const options = {url, driver, config, settings};
+    const options = {url, driverMock, config, settings};
 
     const results = await GatherRunner.run([], options);
     expect(results.HostUserAgent).toEqual('Fake user agent');
@@ -130,29 +130,29 @@ describe('GatherRunner', function() {
 
   it('collects network user agent as an artifact', async () => {
     const url = 'https://example.com';
-    const driver = fakeDriver;
+    const driverMock = fakeDriver;
     const config = new Config({passes: [{}]});
     const settings = {};
-    const options = {url, driver, config, settings};
+    const options = {url, driverMock, config, settings};
 
     const results = await GatherRunner.run(config.passes, options);
     expect(results.NetworkUserAgent).toContain('Mozilla');
   });
 
   it('collects requested and final URLs as an artifact', () => {
-    const requestedUrl = 'https://example.com';
+    const url = 'https://example.com/';
     const finalUrl = 'https://example.com/interstitial';
-    const driver = Object.assign({}, fakeDriver, {
+    const driverMock = Object.assign({}, fakeDriver, {
       gotoURL() {
         return Promise.resolve(finalUrl);
       },
     });
     const config = new Config({passes: [{}]});
     const settings = {};
-    const options = {requestedUrl, driver, config, settings};
+    const options = {url, driverMock, config, settings};
 
     return GatherRunner.run(config.passes, options).then(artifacts => {
-      assert.deepStrictEqual(artifacts.URL, {requestedUrl, finalUrl},
+      assert.deepStrictEqual(artifacts.URL, {requestedUrl: url, finalUrl},
         'did not find expected URL artifact');
     });
   });
@@ -550,8 +550,8 @@ describe('GatherRunner', function() {
     }];
 
     return GatherRunner.run(passes, {
-      driver: fakeDriver,
-      requestedUrl: 'https://example.com',
+      driverMock: fakeDriver,
+      url: 'https://example.com',
       settings,
       config,
     }).then(_ => {
@@ -572,7 +572,7 @@ describe('GatherRunner', function() {
       passName: 'secondPass',
       gatherers: [{instance: new TestGatherer()}],
     }];
-    const options = {driver: fakeDriver, requestedUrl: 'https://example.com', settings: {}, config: {}};
+    const options = {driverMock: fakeDriver, url: 'https://example.com', settings: {}, config: {}};
 
     return GatherRunner.run(passes, options)
       .then(artifacts => {
@@ -595,7 +595,7 @@ describe('GatherRunner', function() {
       passName: 'secondPass',
       gatherers: [{instance: new TestGatherer()}],
     }];
-    const options = {driver: fakeDriver, requestedUrl: 'https://example.com', settings: {}, config: {}};
+    const options = {driverMock: fakeDriver, url: 'https://example.com', settings: {}, config: {}};
 
     return GatherRunner.run(passes, options)
       .then(artifacts => {
@@ -703,8 +703,8 @@ describe('GatherRunner', function() {
       }];
 
       const artifacts = await GatherRunner.run(passes, {
-        driver: fakeDriver,
-        requestedUrl: 'https://example.com',
+        driverMock: fakeDriver,
+        url: 'https://example.com',
         settings: {},
       });
 
@@ -757,8 +757,8 @@ describe('GatherRunner', function() {
       }];
 
       return GatherRunner.run(passes, {
-        driver: fakeDriver,
-        requestedUrl: 'https://example.com',
+        driverMock: fakeDriver,
+        url: 'https://example.com',
         settings: {},
         config: new Config({}),
       }).then(artifacts => {
@@ -791,8 +791,8 @@ describe('GatherRunner', function() {
 
       const passes = [{blankDuration: 0, gatherers}];
       return GatherRunner.run(passes, {
-        driver: fakeDriver,
-        requestedUrl: 'https://example.com',
+        driverMock: fakeDriver,
+        url: 'https://example.com',
         settings: {},
         config: new Config({}),
       }).then(artifacts => {
@@ -915,8 +915,8 @@ describe('GatherRunner', function() {
       }];
 
       return GatherRunner.run(passes, {
-        driver: fakeDriver,
-        requestedUrl: 'https://example.com',
+        driverMock: fakeDriver,
+        url: 'https://example.com',
         settings: {},
         config: new Config({}),
       }).then(artifacts => {
@@ -951,8 +951,8 @@ describe('GatherRunner', function() {
       }];
 
       return GatherRunner.run(passes, {
-        driver: fakeDriver,
-        requestedUrl: 'https://example.com',
+        driverMock: fakeDriver,
+        url: 'https://example.com',
         settings: {},
         config: new Config({}),
       }).then(
@@ -971,8 +971,8 @@ describe('GatherRunner', function() {
       }];
 
       return GatherRunner.run(passes, {
-        driver: fakeDriver,
-        requestedUrl: 'https://example.com',
+        driverMock: fakeDriver,
+        url: 'https://example.com',
         settings: {},
         config: new Config({}),
       }).then(_ => assert.ok(false), _ => assert.ok(true));
@@ -999,7 +999,7 @@ describe('GatherRunner', function() {
       });
 
       return GatherRunner.run(passes, {
-        driver: unresolvedDriver,
+        driverMock: unresolvedDriver,
         url,
         settings: {},
         config: new Config({}),
@@ -1030,7 +1030,7 @@ describe('GatherRunner', function() {
       });
 
       return GatherRunner.run(passes, {
-        driver: unresolvedDriver,
+        driverMock: unresolvedDriver,
         url,
         settings: {},
         config: new Config({}),

@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
 
-const Runner = require('../../runner.js');
+const AuditRunner = require('../../audit-runner.js');
 const ScreenshotThumbnailsAudit = require('../../audits/screenshot-thumbnails');
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -20,7 +20,7 @@ describe('Screenshot thumbnails', () => {
   let computedArtifacts;
 
   beforeAll(() => {
-    computedArtifacts = Runner.instantiateComputedArtifacts();
+    computedArtifacts = AuditRunner.instantiateComputedArtifacts();
   });
 
   it('should extract thumbnails from a trace', () => {

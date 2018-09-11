@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 const BootupTime = require('../../audits/bootup-time.js');
-const Runner = require('../../runner.js');
+const AuditRunner = require('../../audit-runner.js');
 const assert = require('assert');
 
 const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
@@ -28,7 +28,7 @@ describe('Performance: bootup-time audit', () => {
     const artifacts = Object.assign({
       traces: {[BootupTime.DEFAULT_PASS]: acceptableTrace},
       devtoolsLogs: {[BootupTime.DEFAULT_PASS]: acceptableDevtoolsLogs},
-    }, Runner.instantiateComputedArtifacts());
+    }, AuditRunner.instantiateComputedArtifacts());
 
     return BootupTime.audit(artifacts, {options: auditOptions}).then(output => {
       assert.deepEqual(roundedValueOf(output, 'https://pwa.rocks/script.js'), {scripting: 31.8, scriptParseCompile: 1.3, total: 36.8});
@@ -46,7 +46,7 @@ describe('Performance: bootup-time audit', () => {
     const artifacts = Object.assign({
       traces: {defaultPass: acceptableTrace},
       devtoolsLogs: {defaultPass: acceptableDevtoolsLogs},
-    }, Runner.instantiateComputedArtifacts());
+    }, AuditRunner.instantiateComputedArtifacts());
 
     const options = auditOptions;
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 3}};
@@ -63,7 +63,7 @@ describe('Performance: bootup-time audit', () => {
     const artifacts = Object.assign({
       traces: {defaultPass: errorTrace},
       devtoolsLogs: {defaultPass: []},
-    }, Runner.instantiateComputedArtifacts());
+    }, AuditRunner.instantiateComputedArtifacts());
 
     return BootupTime.audit(artifacts, {options: auditOptions})
       .then(output => {

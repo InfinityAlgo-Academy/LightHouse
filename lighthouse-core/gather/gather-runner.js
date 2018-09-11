@@ -5,15 +5,18 @@
  */
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const log = require('lighthouse-logger');
 const LHError = require('../lib/lh-error');
 const URL = require('../lib/url-shim');
 const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants');
-
-const Driver = require('../gather/driver.js'); // eslint-disable-line no-unused-vars
+const Driver = require('../gather/driver.js');
 
 /** @typedef {import('./gatherers/gatherer.js').PhaseResult} PhaseResult */
+/** @typedef {import('./connections/connection.js')} Connection */
+/** @typedef {import('../config/config.js')} Config */
 /**
  * Each entry in each gatherer result array is the output of a gatherer phase:
  * `beforePass`, `pass`, and `afterPass`. Flattened into an `LH.Artifacts` in
@@ -368,55 +371,66 @@ class GatherRunner {
   }
 
   /**
-   * @param {{driver: Driver, requestedUrl: string, settings: LH.Config.Settings}} options
+   * @param {string} requestedUrl
+   * @param {Driver} driver
+   * @param {LH.Config.Settings} settings
    * @return {Promise<LH.BaseArtifacts>}
    */
-  static async getBaseArtifacts(options) {
+  static async getBaseArtifacts(requestedUrl, driver, settings) {
     return {
       fetchTime: (new Date()).toJSON(),
       LighthouseRunWarnings: [],
-      HostUserAgent: await options.driver.getUserAgent(),
+      HostUserAgent: await driver.getUserAgent(),
       NetworkUserAgent: '', // updated later
       BenchmarkIndex: 0, // updated later
       traces: {},
       devtoolsLogs: {},
-      settings: options.settings,
-      URL: {requestedUrl: options.requestedUrl, finalUrl: ''},
+      settings,
+      URL: {requestedUrl, finalUrl: ''},
     };
   }
 
   /**
    * @param {Array<LH.Config.Pass>} passes
-   * @param {{driver: Driver, requestedUrl: string, settings: LH.Config.Settings}} options
+   * @param {{url: string, settings: LH.Config.Settings, connection: Connection, driverMock?: Driver}} options
    * @return {Promise<LH.Artifacts>}
    */
   static async run(passes, options) {
-    const driver = options.driver;
+    let requestedUrl;
+    try {
+      // Use canonicalized URL (with trailing slashes and such)
+      requestedUrl = new URL(options.url).href;
+    } catch (e) {
+      throw new Error('The url provided should have a proper protocol and hostname.');
+    }
+
+    const driver = options.driverMock || new Driver(options.connection);
+    const settings = options.settings;
 
     /** @type {Partial<GathererResults>} */
     const gathererResults = {};
 
     try {
       await driver.connect();
-      const baseArtifacts = await GatherRunner.getBaseArtifacts(options);
+      const baseArtifacts = await GatherRunner.getBaseArtifacts(requestedUrl, driver, settings);
       await GatherRunner.loadBlank(driver);
-      baseArtifacts.BenchmarkIndex = await options.driver.getBenchmarkIndex();
-      await GatherRunner.setupDriver(driver, options);
+      baseArtifacts.BenchmarkIndex = await driver.getBenchmarkIndex();
+      await GatherRunner.setupDriver(driver, {requestedUrl, settings});
 
       // Run each pass
       let firstPass = true;
       for (const passConfig of passes) {
         const passContext = {
-          driver: options.driver,
+          driver,
           // If the main document redirects, we'll update this to keep track
-          url: options.requestedUrl,
-          settings: options.settings,
+          url: requestedUrl,
+          settings,
           passConfig,
           // *pass() functions and gatherers can push to this warnings array.
           LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,
         };
 
-        await driver.setThrottling(options.settings, passConfig);
+        await driver.setThrottling(settings, passConfig);
         await GatherRunner.beforePass(passContext, gathererResults);
         await GatherRunner.pass(passContext, gathererResults);
         const passData = await GatherRunner.afterPass(passContext, gathererResults);
@@ -445,8 +459,8 @@ class GatherRunner {
           firstPass = false;
         }
       }
-      const resetStorage = !options.settings.disableStorageReset;
-      if (resetStorage) await driver.clearDataForOrigin(options.requestedUrl);
+      const resetStorage = !settings.disableStorageReset;
+      if (resetStorage) await driver.clearDataForOrigin(requestedUrl);
       await GatherRunner.disposeDriver(driver);
       return GatherRunner.collectArtifacts(gathererResults, baseArtifacts);
     } catch (err) {
@@ -454,6 +468,20 @@ class GatherRunner {
       GatherRunner.disposeDriver(driver);
       throw err;
     }
+  }
+
+  /**
+   * Returns list of gatherer names for external querying.
+   * @return {Array<string>}
+   */
+  static getGathererList() {
+    const fileList = [
+      ...fs.readdirSync(path.join(__dirname, './gatherers')),
+      ...fs.readdirSync(path.join(__dirname, './gatherers/seo')).map(f => `seo/${f}`),
+      ...fs.readdirSync(path.join(__dirname, './gatherers/dobetterweb'))
+          .map(f => `dobetterweb/${f}`),
+    ];
+    return fileList.filter(f => /\.js$/.test(f) && f !== 'gatherer.js').sort();
   }
 }
 

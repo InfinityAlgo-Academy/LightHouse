@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Runner = require('../../../runner');
+const AuditRunner = require('../../../audit-runner');
 const ByteEfficiencyAudit_ = require('../../../audits/byte-efficiency/byte-efficiency-audit');
 const NetworkNode = require('../../../lib/dependency-graph/network-node');
 const CPUNode = require('../../../lib/dependency-graph/cpu-node');
@@ -182,7 +182,7 @@ describe('Byte efficiency base audit', () => {
   it('should work on real graphs', async () => {
     const throttling = {rttMs: 150, throughputKbps: 1600, cpuSlowdownMultiplier: 1};
     const settings = {throttlingMethod: 'simulate', throttling};
-    const artifacts = Runner.instantiateComputedArtifacts();
+    const artifacts = AuditRunner.instantiateComputedArtifacts();
     const graph = await artifacts.requestPageDependencyGraph({trace, devtoolsLog});
     const simulator = await artifacts.requestLoadSimulator({devtoolsLog, settings});
     const result = ByteEfficiencyAudit.createAuditProduct(
@@ -209,7 +209,7 @@ describe('Byte efficiency base audit', () => {
       }
     }
 
-    const artifacts = Runner.instantiateComputedArtifacts();
+    const artifacts = AuditRunner.instantiateComputedArtifacts();
     artifacts.traces = {defaultPass: trace};
     artifacts.devtoolsLogs = {defaultPass: devtoolsLog};
 
@@ -245,7 +245,7 @@ describe('Byte efficiency base audit', () => {
       }
     }
 
-    const artifacts = Runner.instantiateComputedArtifacts();
+    const artifacts = AuditRunner.instantiateComputedArtifacts();
     artifacts.traces = {defaultPass: trace};
     artifacts.devtoolsLogs = {defaultPass: devtoolsLog};
 

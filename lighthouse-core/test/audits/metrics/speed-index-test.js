@@ -9,7 +9,7 @@
 
 const Audit = require('../../../audits/metrics/speed-index.js');
 const assert = require('assert');
-const Runner = require('../../../runner.js');
+const AuditRunner = require('../../../audit-runner.js');
 const options = Audit.defaultOptions;
 
 const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
@@ -17,7 +17,7 @@ const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtoo
 
 describe('Performance: speed-index audit', () => {
   it('works on a real trace', () => {
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = Object.assign(AuditRunner.instantiateComputedArtifacts(), {
       traces: {defaultPass: pwaTrace},
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
     });

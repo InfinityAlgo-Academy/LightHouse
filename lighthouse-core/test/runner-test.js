@@ -7,6 +7,7 @@
 
 const Runner = require('../runner');
 const GatherRunner = require('../gather/gather-runner');
+const AuditRunner = require('../audit-runner.js');
 const driverMock = require('./gather/fake-driver');
 const Config = require('../config/config');
 const Audit = require('../audits/audit');
@@ -23,7 +24,7 @@ describe('Runner', () => {
   const saveArtifactsSpy = sinon.spy(assetSaver, 'saveArtifacts');
   const loadArtifactsSpy = sinon.spy(assetSaver, 'loadArtifacts');
   const gatherRunnerRunSpy = sinon.spy(GatherRunner, 'run');
-  const runAuditSpy = sinon.spy(Runner, '_runAudit');
+  const runAuditSpy = sinon.spy(AuditRunner, 'runAudits');
 
   function resetSpies() {
     saveArtifactsSpy.reset();
@@ -150,7 +151,7 @@ describe('Runner', () => {
   });
 
 
-  it('rejects when given neither passes nor artifacts', () => {
+  it.only('rejects when not in gatherMode or given passes in config', () => {
     const url = 'https://example.com';
     const config = new Config({
       audits: [
@@ -162,7 +163,7 @@ describe('Runner', () => {
       .then(_ => {
         assert.ok(false);
       }, err => {
-        assert.ok(/No browser artifacts are either/.test(err.message));
+        assert.ok(/No passes in config to run/.test(err.message));
       });
   });
 
@@ -405,7 +406,7 @@ describe('Runner', () => {
       .then(_ => {
         assert.ok(false);
       }, err => {
-        assert.ok(/No audits to evaluate/.test(err.message));
+        assert.ok(/No audits in config/.test(err.message));
       });
   });
 
@@ -480,7 +481,7 @@ describe('Runner', () => {
   });
 
   it('only supports core audits with names matching their filename', () => {
-    const coreAudits = Runner.getAuditList();
+    const coreAudits = AuditRunner.getAuditList();
     coreAudits.forEach(auditFilename => {
       const auditPath = '../audits/' + auditFilename;
       const auditExpectedName = path.basename(auditFilename, '.js');
@@ -490,7 +491,7 @@ describe('Runner', () => {
   });
 
   it('can create computed artifacts', () => {
-    const computedArtifacts = Runner.instantiateComputedArtifacts();
+    const computedArtifacts = AuditRunner.instantiateComputedArtifacts();
     assert.ok(Object.keys(computedArtifacts).length, 'there are a few computed artifacts');
     Object.keys(computedArtifacts).forEach(artifactRequest => {
       assert.equal(typeof computedArtifacts[artifactRequest], 'function');

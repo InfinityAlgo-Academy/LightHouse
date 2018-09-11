@@ -7,7 +7,7 @@
 
 const Interactive = require('../../../../gather/computed/metrics/interactive'); // eslint-disable-line
 
-const Runner = require('../../../../runner');
+const AuditRunner = require('../../../../audit-runner');
 const assert = require('assert');
 
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
@@ -30,7 +30,7 @@ function generateNetworkRecords(records, navStart) {
 /* eslint-env jest */
 describe('Metrics: TTI', () => {
   it('should compute a simulated value', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
+    const artifacts = AuditRunner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'simulate'};
     const result = await artifacts.requestInteractive({trace, devtoolsLog, settings});
 
@@ -46,7 +46,7 @@ describe('Metrics: TTI', () => {
   });
 
   it('should compute an observed value', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
+    const artifacts = AuditRunner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'provided'};
     const result = await artifacts.requestInteractive({trace, devtoolsLog, settings});
 

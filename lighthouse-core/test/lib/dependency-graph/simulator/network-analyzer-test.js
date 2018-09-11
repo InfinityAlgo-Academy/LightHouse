@@ -9,7 +9,7 @@ const assert = require('assert');
 
 // eslint-disable-next-line
 const NetworkAnalyzer = require('../../../../lib/dependency-graph/simulator/network-analyzer');
-const Runner = require('../../../../runner');
+const AuditRunner = require('../../../../audit-runner');
 const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 /* eslint-env jest */
@@ -38,7 +38,7 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
 
   beforeEach(() => {
     recordId = 1;
-    computedArtifacts = Runner.instantiateComputedArtifacts();
+    computedArtifacts = AuditRunner.instantiateComputedArtifacts();
   });
 
   function assertCloseEnough(valueA, valueB, threshold = 1) {

@@ -12,7 +12,7 @@ const UsesRelPreload = require('../../audits/uses-rel-preload.js');
 const NetworkNode = require('../../lib/dependency-graph/network-node');
 const assert = require('assert');
 
-const Runner = require('../../runner');
+const AuditRunner = require('../../audit-runner');
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
@@ -211,7 +211,7 @@ describe('Performance: uses-rel-preload audit', () => {
       devtoolsLogs: {
         [UsesRelPreload.DEFAULT_PASS]: pwaDevtoolsLog,
       },
-    }, Runner.instantiateComputedArtifacts());
+    }, AuditRunner.instantiateComputedArtifacts());
 
     const settings = {throttlingMethod: 'provided'};
     const result = await UsesRelPreload.audit(artifacts, {settings});

@@ -12,8 +12,8 @@ const options = FMPAudit.defaultOptions;
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLogs = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
-const Runner = require('../../../runner.js');
-const computedArtifacts = Runner.instantiateComputedArtifacts();
+const AuditRunner = require('../../../audit-runner.js');
+const computedArtifacts = AuditRunner.instantiateComputedArtifacts();
 
 /* eslint-env jest */
 describe('Performance: first-meaningful-paint audit', () => {

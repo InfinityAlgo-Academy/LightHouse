@@ -9,6 +9,7 @@ const Runner = require('./runner');
 const log = require('lighthouse-logger');
 const ChromeProtocol = require('./gather/connections/cri.js');
 const Config = require('./config/config');
+const AuditRunner = require('./audit-runner.js');
 
 const URL = require('./lib/url-shim.js');
 const LHError = require('./lib/lh-error.js');
@@ -57,7 +58,7 @@ async function lighthouse(url, flags = {}, configJSON, connection) {
   return Runner.run(connection, {url, config});
 }
 
-lighthouse.getAuditList = Runner.getAuditList;
+lighthouse.getAuditList = AuditRunner.getAuditList;
 lighthouse.traceCategories = require('./gather/driver').traceCategories;
 lighthouse.Audit = require('./audits/audit');
 lighthouse.Gatherer = require('./gather/gatherers/gatherer');

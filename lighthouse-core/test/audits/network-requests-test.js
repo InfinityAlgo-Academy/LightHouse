@@ -6,7 +6,7 @@
 'use strict';
 
 const NetworkRequests = require('../../audits/network-requests');
-const Runner = require('../../runner.js');
+const AuditRunner = require('../../audit-runner.js');
 const assert = require('assert');
 
 const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -18,7 +18,7 @@ describe('Network requests audit', () => {
       devtoolsLogs: {
         [NetworkRequests.DEFAULT_PASS]: acceptableDevToolsLog,
       },
-    }, Runner.instantiateComputedArtifacts());
+    }, AuditRunner.instantiateComputedArtifacts());
 
     return NetworkRequests.audit(artifacts).then(output => {
       assert.equal(output.score, 1);

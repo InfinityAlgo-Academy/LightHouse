@@ -7,7 +7,7 @@
 
 const assert = require('assert');
 
-const Runner = require('../../runner.js');
+const AuditRunner = require('../../audit-runner.js');
 const FinalScreenshotAudit = require('../../audits/final-screenshot');
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 
@@ -17,7 +17,7 @@ describe('Final screenshot', () => {
   let computedArtifacts;
 
   beforeAll(() => {
-    computedArtifacts = Runner.instantiateComputedArtifacts();
+    computedArtifacts = AuditRunner.instantiateComputedArtifacts();
   });
 
   it('should extract a final screenshot from a trace', async () => {

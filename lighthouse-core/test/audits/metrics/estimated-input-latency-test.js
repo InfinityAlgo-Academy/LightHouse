@@ -6,13 +6,13 @@
 'use strict';
 
 const Audit = require('../../../audits/metrics/estimated-input-latency.js');
-const Runner = require('../../../runner');
+const AuditRunner = require('../../../audit-runner');
 const assert = require('assert');
 const options = Audit.defaultOptions;
 
 const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
 
-const computedArtifacts = Runner.instantiateComputedArtifacts();
+const computedArtifacts = AuditRunner.instantiateComputedArtifacts();
 
 function generateArtifactsWithTrace(trace) {
   return Object.assign({

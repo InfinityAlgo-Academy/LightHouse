@@ -5,7 +5,7 @@
  */
 'use strict';
 const Audit = require('../../../audits/metrics/first-contentful-paint');
-const Runner = require('../../../runner.js');
+const AuditRunner = require('../../../audit-runner.js');
 const assert = require('assert');
 const options = Audit.defaultOptions;
 
@@ -23,7 +23,7 @@ describe('Performance: first-contentful-paint audit', () => {
       devtoolsLogs: {
         [Audit.DEFAULT_PASS]: pwaDevtoolsLog,
       },
-    }, Runner.instantiateComputedArtifacts());
+    }, AuditRunner.instantiateComputedArtifacts());
 
     const settings = {throttlingMethod: 'provided'};
     const result = await Audit.audit(artifacts, {settings, options});

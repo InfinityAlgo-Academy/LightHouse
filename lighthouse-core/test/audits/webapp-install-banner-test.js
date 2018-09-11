@@ -14,12 +14,12 @@ const manifestDirtyJpgSrc = JSON.stringify(require('../fixtures/manifest-dirty-j
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
 
-const Runner = require('../../runner.js');
+const AuditRunner = require('../../audit-runner.js');
 
 function generateMockArtifacts(src = manifestSrc) {
   const exampleManifest = manifestParser(src, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 
-  const computedArtifacts = Runner.instantiateComputedArtifacts();
+  const computedArtifacts = AuditRunner.instantiateComputedArtifacts();
   const clonedArtifacts = JSON.parse(JSON.stringify({
     Manifest: exampleManifest,
     ServiceWorker: {

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Runner = require('../../../../runner');
+const AuditRunner = require('../../../../audit-runner');
 const assert = require('assert');
 
 const TRACE_FIXTURES = '../../../fixtures/traces';
@@ -35,7 +35,7 @@ describe('Metrics: FMP', () => {
   }
 
   beforeEach(() => {
-    artifacts = Runner.instantiateComputedArtifacts();
+    artifacts = AuditRunner.instantiateComputedArtifacts();
     settings = {throttlingMethod: 'provided'};
     devtoolsLog = [];
   });

@@ -7,13 +7,13 @@
 
 /* eslint-env jest */
 
-const Runner = require('../../../runner');
+const AuditRunner = require('../../../audit-runner');
 const assert = require('assert');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 describe('Simulator artifact', () => {
   it('returns a simulator for "provided" throttling', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
+    const artifacts = AuditRunner.instantiateComputedArtifacts();
 
     const simulator = await artifacts.requestLoadSimulator({
       devtoolsLog,
@@ -27,7 +27,7 @@ describe('Simulator artifact', () => {
   });
 
   it('returns a simulator for "devtools" throttling', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
+    const artifacts = AuditRunner.instantiateComputedArtifacts();
 
     const throttling = {requestLatencyMs: 375, downloadThroughputKbps: 900};
     const simulator = await artifacts.requestLoadSimulator({
@@ -42,7 +42,7 @@ describe('Simulator artifact', () => {
   });
 
   it('returns a simulator for "simulate" throttling', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
+    const artifacts = AuditRunner.instantiateComputedArtifacts();
 
     const throttling = {rttMs: 120, throughputKbps: 1000, cpuSlowdownMultiplier: 3};
     const simulator = await artifacts.requestLoadSimulator({

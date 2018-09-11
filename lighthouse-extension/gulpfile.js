@@ -29,7 +29,8 @@ const tap = require('gulp-tap');
 const zip = require('gulp-zip');
 const gulpReplace = require('gulp-replace');
 const header = require('gulp-header');
-const LighthouseRunner = require('../lighthouse-core/runner');
+const AuditRunner = require('../lighthouse-core/audit-runner.js');
+const GatherRunner = require('../lighthouse-core/gather/gather-runner.js');
 const pkg = require('../package.json');
 
 const distDir = 'dist';
@@ -41,13 +42,13 @@ const COMMIT_HASH = require('child_process')
 
 const BANNER = `// lighthouse, browserified. ${VERSION} (${COMMIT_HASH})\n`;
 
-const audits = LighthouseRunner.getAuditList()
+const audits = AuditRunner.getAuditList()
     .map(f => '../lighthouse-core/audits/' + f.replace(/\.js$/, ''));
 
-const gatherers = LighthouseRunner.getGathererList()
+const gatherers = GatherRunner.getGathererList()
     .map(f => '../lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
 
-const computedArtifacts = LighthouseRunner.getComputedGathererList()
+const computedArtifacts = AuditRunner.getComputedGathererList()
     .map(f => '../lighthouse-core/gather/computed/' + f.replace(/\.js$/, ''));
 
 gulp.task('extras', () => {
