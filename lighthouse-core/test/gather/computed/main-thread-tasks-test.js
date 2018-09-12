@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const AuditRunner = require('../../../audit-runner.js');
+const Runner = require('../../../runner.js');
 const taskGroups = require('../../../lib/task-groups.js').taskGroups;
 const pwaTrace = require('../../fixtures/traces/progressive-app.json');
 const TracingProcessor = require('../../../lib/traces/tracing-processor.js');
@@ -25,7 +25,7 @@ describe('MainResource computed artifact', () => {
       {ph: 'I', name: 'navigationStart', ts: baseTs, args},
       {ph: 'R', name: 'firstContentfulPaint', ts: baseTs + 1, args},
     ];
-    computedArtifacts = AuditRunner.instantiateComputedArtifacts();
+    computedArtifacts = Runner.instantiateComputedArtifacts();
   });
 
   it('should get all main thread tasks from a trace', async () => {

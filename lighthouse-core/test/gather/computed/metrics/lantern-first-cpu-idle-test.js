@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const AuditRunner = require('../../../../audit-runner');
+const Runner = require('../../../../runner');
 const assert = require('assert');
 
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
@@ -14,7 +14,7 @@ const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtoo
 /* eslint-env jest */
 describe('Metrics: Lantern TTFCPUI', () => {
   it('should compute predicted value', async () => {
-    const artifacts = AuditRunner.instantiateComputedArtifacts();
+    const artifacts = Runner.instantiateComputedArtifacts();
     const result = await artifacts.requestLanternFirstCPUIdle({trace, devtoolsLog, settings: {}});
 
     expect({

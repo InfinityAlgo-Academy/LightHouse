@@ -7,7 +7,7 @@
 
 const PageDependencyGraph = require('../../../gather/computed/page-dependency-graph');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
-const AuditRunner = require('../../../audit-runner.js');
+const Runner = require('../../../runner.js');
 const NetworkRequest = require('../../../lib/network-request');
 
 const sampleTrace = require('../../fixtures/traces/progressive-app-m60.json');
@@ -57,7 +57,7 @@ describe('PageDependencyGraph computed artifact:', () => {
   }
 
   beforeEach(() => {
-    computedArtifacts = AuditRunner.instantiateComputedArtifacts();
+    computedArtifacts = Runner.instantiateComputedArtifacts();
     traceOfTab = {mainThreadEvents: []};
   });
 

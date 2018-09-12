@@ -6,8 +6,9 @@
 'use strict';
 
 const path = require('path');
-const AuditRunner = require('./audit-runner.js');
+const isDeepEqual = require('lodash.isequal');
 const GatherRunner = require('./gather/gather-runner');
+const AuditRunner = require('./audit-runner.js');
 const ReportScoring = require('./scoring');
 const log = require('lighthouse-logger');
 const i18n = require('./lib/i18n');
@@ -24,12 +25,18 @@ const lighthouseVersion = require('../package.json').version;
 class Runner {
   /**
    * @param {Connection} connection
-   * @param {{config: Config, url?: string, driverMock?: Driver}} runOpts
+   * @param {{config: Config, requestedUrl?: string, driverMock?: Driver}} runOpts
    * @return {Promise<LH.RunnerResult|undefined>}
    */
   static async run(connection, runOpts) {
     const config = runOpts.config;
     const settings = config.settings;
+
+    /**
+     * List of top-level warnings for this Lighthouse run.
+     * @type {Array<string>}
+     */
+    const lighthouseRunWarnings = [];
 
     try {
       const startTime = Date.now();
@@ -44,22 +51,21 @@ class Runner {
       // -G and -A will run partial lighthouse pipelines,
       // and -GA will run everything plus save artifacts to disk
 
-      // Gather phase
+      // Gather phase. either load saved artifacts from the browser or off disk.
       let artifacts;
       if (Runner.shouldGather(runOpts.config.settings)) {
-        if (!runOpts.config.passes) throw new Error('No passes in config to run');
-        if (typeof runOpts.url !== 'string' || runOpts.url.length === 0) {
-          throw new Error(`You must provide a url to the runner. '${runOpts.url}' provided.`);
+        if (!runOpts.requestedUrl) {
+          throw new Error(`You must provide a url to the runner.`);
         }
 
         const gatherOpts = {
-          url: runOpts.url,
           settings,
           connection,
           driverMock: runOpts.driverMock,
         };
-        artifacts = await GatherRunner.run(runOpts.config.passes, gatherOpts);
+        artifacts = await GatherRunner.run(runOpts.requestedUrl, config.passes, gatherOpts);
       } else {
+        // TODO(bckenny): move out of core.
         // No browser required, just load the artifacts from disk.
         const path = Runner._getArtifactsPath(runOpts.config.settings);
         artifacts = await assetSaver.loadArtifacts(path);
@@ -69,29 +75,16 @@ class Runner {
       if (settings.gatherMode) {
         const path = Runner._getArtifactsPath(settings);
         await assetSaver.saveArtifacts(artifacts, path);
-
-        // Quit early if that's all that was needed.
-        if (!Runner.shouldAudit(settings)) return;
       }
+
+      // Quit early if that's all that was needed.
+      if (!Runner.shouldAudit(settings)) return;
 
       // Audit phase
-      /**
-       * List of top-level warnings for this Lighthouse run.
-       * @type {Array<string>}
-       */
-      const lighthouseRunWarnings = [];
-
-      if (!config.audits) throw new Error('No audits in config to evaluate');
-      if (runOpts.url && !URL.equalWithExcludedFragments(runOpts.url, artifacts.URL.requestedUrl)) {
-        throw new Error('Cannot run audit mode on different URL than gatherers were');
-      }
-      const auditResults = await AuditRunner.runAudits(settings, config.audits, artifacts,
-          lighthouseRunWarnings);
+      const {auditResults, auditRunWarnings} = await Runner.auditArtifacts(artifacts, runOpts);
 
       // LHR construction phase
       log.log('status', 'Generating results...');
-
-      lighthouseRunWarnings.push(...artifacts.LighthouseRunWarnings || []);
 
       /** @type {Object<string, LH.Audit.Result>} */
       const resultsById = {};
@@ -104,6 +97,8 @@ class Runner {
       if (config.categories) {
         categories = ReportScoring.scoreAllCategories(config.categories, resultsById);
       }
+
+      lighthouseRunWarnings.push(...auditRunWarnings, ...artifacts.LighthouseRunWarnings || []);
 
       /** @type {LH.Result} */
       const lhr = {
@@ -160,6 +155,40 @@ class Runner {
   }
 
   /**
+   * Audit phase.
+   * @param {LH.Artifacts} artifacts
+   * @param {{config: Config, requestedUrl?: string, driverMock?: Driver}} runOpts
+   * @return {Promise<{auditResults: Array<LH.Audit.Result>, auditRunWarnings: Array<string>}>}
+   */
+  static async auditArtifacts(artifacts, runOpts) {
+    const config = runOpts.config;
+    if (!config.audits) throw new Error('No audits in config to evaluate');
+    if (runOpts.requestedUrl && !URL.equalWithExcludedFragments(runOpts.requestedUrl, artifacts.URL.requestedUrl)) {
+      throw new Error('Cannot run audit mode on different URL than gatherers were');
+    }
+
+    // Check that current settings are compatible with settings used to gather artifacts.
+    if (artifacts.settings) {
+      const overrides = {gatherMode: undefined, auditMode: undefined, output: undefined};
+      const normalizedGatherSettings = Object.assign({}, artifacts.settings, overrides);
+      const normalizedAuditSettings = Object.assign({}, config.settings, overrides);
+
+      // TODO(phulce): allow change of throttling method to `simulate`
+      if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
+        throw new Error('Cannot change settings between gathering and auditing');
+      }
+    }
+
+    /** @type {Array<string>} */
+    const auditRunWarnings = [];
+    const fullArtifacts = Object.assign({}, Runner.instantiateComputedArtifacts(), artifacts);
+    const auditResults = await AuditRunner.run(config.settings, config.audits, fullArtifacts,
+        auditRunWarnings);
+
+    return {auditResults, auditRunWarnings};
+  }
+
+  /**
    * Get path to use for -G and -A modes. Defaults to $CWD/latest-run
    * @param {LH.Config.Settings} settings
    * @return {string}
@@ -172,6 +201,25 @@ class Runner {
     if (typeof gatherMode === 'string') return path.resolve(process.cwd(), gatherMode);
 
     return path.join(process.cwd(), 'latest-run');
+  }
+
+  /**
+   * TODO(bckenny): refactor artifact types
+   * @return {LH.ComputedArtifacts}
+   */
+  static instantiateComputedArtifacts() {
+    const computedArtifacts = {};
+    AuditRunner.getComputedGathererList().forEach(function(filename) {
+      // Drop `.js` suffix to keep browserify import happy.
+      filename = filename.replace(/\.js$/, '');
+      const ArtifactClass = require('./gather/computed/' + filename);
+      const artifact = new ArtifactClass(computedArtifacts);
+      // define the request* function that will be exposed on `artifacts`
+      // @ts-ignore - doesn't have an index signature, so can't be set dynamically.
+      computedArtifacts['request' + artifact.name] = artifact.request.bind(artifact);
+    });
+
+    return /** @type {LH.ComputedArtifacts} */ (computedArtifacts);
   }
 }
 

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const AuditRunner = require('../../../../audit-runner');
+const Runner = require('../../../../runner');
 const assert = require('assert');
 
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
@@ -15,7 +15,7 @@ const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtoo
 
 describe('Metrics: FCP', () => {
   it('should compute a simulated value', async () => {
-    const artifacts = AuditRunner.instantiateComputedArtifacts();
+    const artifacts = Runner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'simulate'};
     const result = await artifacts.requestFirstContentfulPaint({trace, devtoolsLog, settings});
 
@@ -31,7 +31,7 @@ describe('Metrics: FCP', () => {
   });
 
   it('should compute an observed value', async () => {
-    const artifacts = AuditRunner.instantiateComputedArtifacts();
+    const artifacts = Runner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'provided'};
     const result = await artifacts.requestFirstContentfulPaint({trace, devtoolsLog, settings});
 

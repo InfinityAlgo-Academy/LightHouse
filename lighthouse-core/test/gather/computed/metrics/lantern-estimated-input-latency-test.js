@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const AuditRunner = require('../../../../audit-runner');
+const Runner = require('../../../../runner');
 
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -14,7 +14,7 @@ const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtoo
 
 describe('Metrics: Lantern EIL', () => {
   it('should compute a simulated value', async () => {
-    const artifacts = AuditRunner.instantiateComputedArtifacts();
+    const artifacts = Runner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'simulate'};
     const data = {trace, devtoolsLog, settings};
     const result = await artifacts.requestLanternEstimatedInputLatency(data);

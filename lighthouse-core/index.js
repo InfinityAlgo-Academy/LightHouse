@@ -41,8 +41,16 @@ const LHError = require('./lib/lh-error.js');
  */
 async function lighthouse(url, flags = {}, configJSON, connection) {
   // verify the url is valid and that protocol is allowed
-  if (url && (!URL.isValid(url) || !URL.isProtocolAllowed(url))) {
-    throw new LHError(LHError.errors.INVALID_URL);
+  let requestedUrl;
+  if (url) {
+    try {
+      if (!URL.isProtocolAllowed(url)) throw new Error();
+
+      // Use canonicalized URL (with trailing slashes and such)
+      requestedUrl = new URL(url).href;
+    } catch (e) {
+      throw new LHError(LHError.errors.INVALID_URL);
+    }
   }
 
   // set logging preferences, assume quiet
@@ -55,7 +63,7 @@ async function lighthouse(url, flags = {}, configJSON, connection) {
   connection = connection || new ChromeProtocol(flags.port, flags.hostname);
 
   // kick off a lighthouse run
-  return Runner.run(connection, {url, config});
+  return Runner.run(connection, {requestedUrl, config});
 }
 
 lighthouse.getAuditList = AuditRunner.getAuditList;

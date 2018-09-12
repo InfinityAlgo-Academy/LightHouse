@@ -11,13 +11,13 @@ const assert = require('assert');
 const fs = require('fs');
 const pwaTrace = require('../../fixtures/traces/progressive-app.json');
 const threeFrameTrace = require('../../fixtures/traces/threeframes-blank_content_more.json');
-const AuditRunner = require('../../../audit-runner.js');
+const Runner = require('../../../runner.js');
 
 describe('Speedline gatherer', () => {
   let computedArtifacts;
 
   beforeEach(() => {
-    computedArtifacts = AuditRunner.instantiateComputedArtifacts();
+    computedArtifacts = Runner.instantiateComputedArtifacts();
   });
 
   it('returns an error message on faulty trace data', () => {

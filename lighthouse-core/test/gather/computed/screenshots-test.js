@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 const ScreenshotsGather = require('../../../gather/computed/screenshots');
-const AuditRunner = require('../../../audit-runner.js');
+const Runner = require('../../../runner.js');
 const assert = require('assert');
 const pwaTrace = require('../../fixtures/traces/progressive-app.json');
 
@@ -19,7 +19,7 @@ describe('Screenshot gatherer', () => {
       traces: {
         [screenshotsGather.DEFAULT_PASS]: pwaTrace,
       },
-    }, AuditRunner.instantiateComputedArtifacts());
+    }, Runner.instantiateComputedArtifacts());
 
     return artifacts.requestScreenshots({traceEvents: pwaTrace}).then(screenshots => {
       assert.ok(Array.isArray(screenshots));

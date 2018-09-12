@@ -9,7 +9,7 @@
 const fs = require('fs');
 const path = require('path');
 const PredictivePerf = require('../../../lighthouse-core/audits/predictive-perf');
-const AuditRunner = require('../../../lighthouse-core/audit-runner');
+const Runner = require('../../../lighthouse-core/runner');
 const Simulator = require('../../../lighthouse-core/lib/dependency-graph/simulator/simulator');
 const traceSaver = require('../../../lighthouse-core/lib/lantern-trace-saver');
 
@@ -19,7 +19,7 @@ async function run() {
   const tracePath = require.resolve(process.argv[2]);
   const traces = {defaultPass: require(tracePath)};
   const devtoolsLogs = {defaultPass: require(process.argv[3])};
-  const artifacts = {traces, devtoolsLogs, ...AuditRunner.instantiateComputedArtifacts()};
+  const artifacts = {traces, devtoolsLogs, ...Runner.instantiateComputedArtifacts()};
 
   // @ts-ignore - We don't need the full artifacts
   const result = await PredictivePerf.audit(artifacts);

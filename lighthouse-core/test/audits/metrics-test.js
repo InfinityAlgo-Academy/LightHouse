@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('../../audits/metrics.js');
-const AuditRunner = require('../../audit-runner.js');
+const Runner = require('../../runner.js');
 
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -22,7 +22,7 @@ describe('Performance: metrics', () => {
       devtoolsLogs: {
         [Audit.DEFAULT_PASS]: pwaDevtoolsLog,
       },
-    }, AuditRunner.instantiateComputedArtifacts());
+    }, Runner.instantiateComputedArtifacts());
 
     const settings = {throttlingMethod: 'simulate'};
     const result = await Audit.audit(artifacts, {settings});

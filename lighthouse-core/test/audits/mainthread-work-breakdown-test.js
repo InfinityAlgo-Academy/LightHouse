@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 const PageExecutionTimings = require('../../audits/mainthread-work-breakdown.js');
-const AuditRunner = require('../../audit-runner.js');
+const Runner = require('../../runner.js');
 const assert = require('assert');
 const options = PageExecutionTimings.defaultOptions;
 
@@ -55,7 +55,7 @@ describe('Performance: page execution timings audit', () => {
   it('should compute the correct pageExecutionTiming values for the pwa trace', async () => {
     const artifacts = Object.assign(
       {traces: {defaultPass: acceptableTrace}},
-      AuditRunner.instantiateComputedArtifacts()
+      Runner.instantiateComputedArtifacts()
     );
 
     const output = await PageExecutionTimings.audit(artifacts, {options});
@@ -68,7 +68,7 @@ describe('Performance: page execution timings audit', () => {
   it('should compute the correct values when simulated', async () => {
     const artifacts = Object.assign(
       {traces: {defaultPass: acceptableTrace}},
-      AuditRunner.instantiateComputedArtifacts()
+      Runner.instantiateComputedArtifacts()
     );
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 3}};
@@ -89,7 +89,7 @@ describe('Performance: page execution timings audit', () => {
   it('should compute the correct values for the redirect trace', async () => {
     const artifacts = Object.assign(
       {traces: {defaultPass: siteWithRedirectTrace}},
-      AuditRunner.instantiateComputedArtifacts()
+      Runner.instantiateComputedArtifacts()
     );
 
     const output = await PageExecutionTimings.audit(artifacts, {options});
@@ -102,7 +102,7 @@ describe('Performance: page execution timings audit', () => {
   it('should compute the correct values for the load trace', async () => {
     const artifacts = Object.assign(
       {traces: {defaultPass: {traceEvents: loadTrace}}},
-      AuditRunner.instantiateComputedArtifacts()
+      Runner.instantiateComputedArtifacts()
     );
 
     const output = await PageExecutionTimings.audit(artifacts, {options});
@@ -115,7 +115,7 @@ describe('Performance: page execution timings audit', () => {
   it('should get no data when no events are present', () => {
     const artifacts = Object.assign(
       {traces: {defaultPass: errorTrace}},
-      AuditRunner.instantiateComputedArtifacts()
+      Runner.instantiateComputedArtifacts()
     );
 
     return PageExecutionTimings.audit(artifacts, {options}).then(output => {

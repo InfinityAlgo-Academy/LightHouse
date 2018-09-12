@@ -6,7 +6,7 @@
 'use strict';
 
 const Interactive = require('../../../audits/metrics/interactive.js');
-const AuditRunner = require('../../../audit-runner.js');
+const Runner = require('../../../runner.js');
 const assert = require('assert');
 const options = Interactive.defaultOptions;
 
@@ -28,7 +28,7 @@ describe('Performance: interactive audit', () => {
       devtoolsLogs: {
         [Interactive.DEFAULT_PASS]: acceptableDevToolsLog,
       },
-    }, AuditRunner.instantiateComputedArtifacts());
+    }, Runner.instantiateComputedArtifacts());
 
     const settings = {throttlingMethod: 'provided'};
     return Interactive.audit(artifacts, {options, settings}).then(output => {
@@ -46,7 +46,7 @@ describe('Performance: interactive audit', () => {
       devtoolsLogs: {
         [Interactive.DEFAULT_PASS]: redirectDevToolsLog,
       },
-    }, AuditRunner.instantiateComputedArtifacts());
+    }, Runner.instantiateComputedArtifacts());
 
     const settings = {throttlingMethod: 'provided'};
     return Interactive.audit(artifacts, {options, settings}).then(output => {

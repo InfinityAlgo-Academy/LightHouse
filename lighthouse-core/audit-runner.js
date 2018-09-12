@@ -7,7 +7,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const isDeepEqual = require('lodash.isequal');
 const log = require('lighthouse-logger');
 const i18n = require('./lib/i18n.js');
 const Audit = require('./audits/audit.js');
@@ -22,20 +21,8 @@ class AuditRunner {
    * @param {Array<string>} runWarnings
    * @return {Promise<Array<LH.Audit.Result>>}
    */
-  static async runAudits(settings, audits, artifacts, runWarnings) {
+  static async run(settings, audits, artifacts, runWarnings) {
     log.log('status', 'Analyzing and running audits...');
-    artifacts = Object.assign({}, AuditRunner.instantiateComputedArtifacts(), artifacts);
-
-    if (artifacts.settings) {
-      const overrides = {gatherMode: undefined, auditMode: undefined, output: undefined};
-      const normalizedGatherSettings = Object.assign({}, artifacts.settings, overrides);
-      const normalizedAuditSettings = Object.assign({}, settings, overrides);
-
-      // TODO(phulce): allow change of throttling method to `simulate`
-      if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
-        throw new Error('Cannot change settings between gathering and auditing');
-      }
-    }
 
     // Run each audit sequentially
     const auditResults = [];
@@ -148,25 +135,6 @@ class AuditRunner {
     ];
 
     return fileList.filter(f => /\.js$/.test(f) && !filenamesToSkip.includes(f)).sort();
-  }
-
-  /**
-   * TODO(bckenny): refactor artifact types
-   * @return {LH.ComputedArtifacts}
-   */
-  static instantiateComputedArtifacts() {
-    const computedArtifacts = {};
-    AuditRunner.getComputedGathererList().forEach(function(filename) {
-      // Drop `.js` suffix to keep browserify import happy.
-      filename = filename.replace(/\.js$/, '');
-      const ArtifactClass = require('./gather/computed/' + filename);
-      const artifact = new ArtifactClass(computedArtifacts);
-      // define the request* function that will be exposed on `artifacts`
-      // @ts-ignore - doesn't have an index signature, so can't be set dynamically.
-      computedArtifacts['request' + artifact.name] = artifact.request.bind(artifact);
-    });
-
-    return /** @type {LH.ComputedArtifacts} */ (computedArtifacts);
   }
 
   /**

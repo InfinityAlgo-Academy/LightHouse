@@ -13,5 +13,5 @@ module.exports = {
   pageLoadFailed: `Your page failed to load. Verify that the URL is valid and re-run Lighthouse.`,
   internalChromeError: `An internal Chrome error occurred. Please restart Chrome and try re-running Lighthouse.`,
   requestContentTimeout: 'Fetching resource content has exceeded the allotted time',
-  urlInvalid: `The URL you have provided appears to be invalid.`,
+  urlInvalid: 'The url provided should have a proper protocol and hostname.',
 };

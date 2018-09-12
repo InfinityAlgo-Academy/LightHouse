@@ -6,7 +6,7 @@
 'use strict';
 
 const PredictivePerf = require('../../audits/predictive-perf.js');
-const AuditRunner = require('../../audit-runner.js');
+const Runner = require('../../runner.js');
 
 const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
 const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -21,7 +21,7 @@ describe('Performance: predictive performance audit', () => {
       devtoolsLogs: {
         [PredictivePerf.DEFAULT_PASS]: acceptableDevToolsLog,
       },
-    }, AuditRunner.instantiateComputedArtifacts());
+    }, Runner.instantiateComputedArtifacts());
 
     return PredictivePerf.audit(artifacts).then(output => {
       const metrics = output.details.items[0];

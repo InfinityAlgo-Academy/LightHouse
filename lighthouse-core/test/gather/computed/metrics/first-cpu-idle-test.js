@@ -8,7 +8,7 @@
 const FirstCPUIdle = require('../../../../gather/computed/metrics/first-cpu-idle');
 const firstCPUIdle = new FirstCPUIdle();
 const TracingProcessor = require('../../../../lib/traces/tracing-processor');
-const AuditRunner = require('../../../../audit-runner.js');
+const Runner = require('../../../../runner.js');
 
 const tooShortTrace = require('../../../fixtures/traces/progressive-app.json');
 const acceptableTrace = require('../../../fixtures/traces/progressive-app-m60.json');
@@ -25,7 +25,7 @@ describe('FirstInteractive computed artifact:', () => {
   let devtoolsLog;
 
   beforeEach(() => {
-    computedArtifacts = AuditRunner.instantiateComputedArtifacts();
+    computedArtifacts = Runner.instantiateComputedArtifacts();
     settings = {throttlingMethod: 'provided'};
     devtoolsLog = [];
   });
@@ -60,7 +60,7 @@ describe('FirstInteractive computed artifact:', () => {
     trace = acceptableTrace;
     devtoolsLog = acceptableDevtoolsLog;
 
-    const artifacts = AuditRunner.instantiateComputedArtifacts();
+    const artifacts = Runner.instantiateComputedArtifacts();
     const result = await artifacts.requestFirstCPUIdle({trace, devtoolsLog, settings});
 
     expect({

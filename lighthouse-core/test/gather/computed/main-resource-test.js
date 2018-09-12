@@ -7,14 +7,14 @@
 
 /* eslint-env jest */
 
-const AuditRunner = require('../../../audit-runner.js');
+const Runner = require('../../../runner.js');
 const assert = require('assert');
 
 describe('MainResource computed artifact', () => {
   let computedArtifacts;
 
   beforeEach(() => {
-    computedArtifacts = AuditRunner.instantiateComputedArtifacts();
+    computedArtifacts = Runner.instantiateComputedArtifacts();
   });
 
   it('returns an artifact', () => {
