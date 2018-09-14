@@ -23,6 +23,11 @@ const listOfTlds = [
   'com', 'co', 'gov', 'edu', 'ac', 'org', 'go', 'gob', 'or', 'net', 'in', 'ne', 'nic', 'gouv',
   'web', 'spb', 'blog', 'jus', 'kiev', 'mil', 'wi', 'qc', 'ca', 'bel', 'on',
 ];
+
+const allowedProtocols = [
+  'https:', 'http:', 'chrome:',
+];
+
 /**
  * There is fancy URL rewriting logic for the chrome://settings page that we need to work around.
  * Why? Special handling was added by Chrome team to allow a pushState transition between chrome:// pages.
@@ -180,6 +185,20 @@ class URLShim extends URL {
       urlb.hash = '';
 
       return urla.href === urlb.href;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * Determine if the url has a protocol that we're able to test
+   * @param {string} url
+   * @return {boolean}
+   */
+  static isProtocolAllowed(url) {
+    try {
+      const parsed = new URL(url);
+      return allowedProtocols.includes(parsed.protocol);
     } catch (e) {
       return false;
     }

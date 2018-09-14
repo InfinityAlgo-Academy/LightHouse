@@ -118,6 +118,12 @@ const ERRORS = {
     code: 'REQUEST_CONTENT_TIMEOUT',
     message: strings.requestContentTimeout,
   },
+
+  // URL parsing failures
+  INVALID_URL: {
+    code: 'INVALID_URL',
+    message: strings.urlInvalid,
+  },
 };
 
 /** @type {Record<keyof typeof ERRORS, LighthouseErrorDefinition>} */

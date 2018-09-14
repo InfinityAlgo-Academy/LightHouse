@@ -10,6 +10,9 @@ const log = require('lighthouse-logger');
 const ChromeProtocol = require('./gather/connections/cri.js');
 const Config = require('./config/config');
 
+const URL = require('./lib/url-shim.js');
+const LHError = require('./lib/lh-error.js');
+
 /** @typedef {import('./gather/connections/connection.js')} Connection */
 
 /*
@@ -36,6 +39,11 @@ const Config = require('./config/config');
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function lighthouse(url, flags = {}, configJSON, connection) {
+  // verify the url is valid and that protocol is allowed
+  if (url && (!URL.isValid(url) || !URL.isProtocolAllowed(url))) {
+    throw new LHError(LHError.errors.INVALID_URL);
+  }
+
   // set logging preferences, assume quiet
   flags.logLevel = flags.logLevel || 'error';
   log.setLevel(flags.logLevel);
