@@ -288,28 +288,28 @@ class ReportUIFeatures {
   }
 
   /**
-   * Jumps to respective audit on page load if hash is provided in URL
-   * Collapsed content is opened automatically
-   * Element is highlighted via CSS selector
+   * Jumps to respective audit on page load if hash is provided in URL.
+   * Collapsed content is opened automatically.
+   * Element is highlighted via CSS selector.
    */
   _jumpToAudit() {
     const hash = window.location.hash;
     if (!hash) {
       return;
     }
-    const audit = document.querySelector(hash);
+    const audit = this._document.querySelector(hash);
     if (!audit || !audit.classList.contains('lh-audit')) {
       return;
     }
     if (audit.firstElementChild && audit.firstElementChild.tagName === 'DETAILS') {
       audit.firstElementChild.setAttribute('open', 'true');
     }
-    const details = audit.closest('details')
+    const details = audit.closest('details');
     if (details) {
       details.setAttribute('open', 'true');
       window.scroll({
-        top: details.getBoundingClientRect().top + window.scrollY,
-        behavior: 'smooth'
+        top: /** @type {HTMLElement} */ details.offsetTop,
+        behavior: 'smooth',
       });
     }
   }
