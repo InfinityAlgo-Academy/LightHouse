@@ -304,14 +304,28 @@ class ReportUIFeatures {
     if (audit.firstElementChild && audit.firstElementChild.tagName === 'DETAILS') {
       audit.firstElementChild.setAttribute('open', 'true');
     }
-    const details = audit.closest('details');
-    if (details) {
-      details.setAttribute('open', 'true');
+    if (this._openClosestDetails(audit)) {
       window.scroll({
-        top: /** @type {HTMLElement} */ details.offsetTop,
+        top: /** @type {HTMLElement} */ audit.offsetTop,
         behavior: 'smooth',
       });
     }
+  }
+
+  /**
+   * Open all closest <details> elements recursively.
+   * @param {Element} element
+   */
+  _openClosestDetails(element) {
+    const details = element.closest('.lh-container details');
+    if (details) {
+      details.setAttribute('open', 'true');
+      if (details.parentElement) {
+        this._openClosestDetails(details.parentElement);
+      }
+      return true;
+    }
+    return false;
   }
 
   /**
