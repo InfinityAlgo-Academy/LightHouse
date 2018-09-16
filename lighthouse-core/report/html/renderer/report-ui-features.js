@@ -304,16 +304,12 @@ class ReportUIFeatures {
     if (audit.firstElementChild && audit.firstElementChild.tagName === 'DETAILS') {
       audit.firstElementChild.setAttribute('open', 'true');
     }
-    if (this._openClosestDetails(audit)) {
-      window.scroll({
-        top: /** @type {HTMLElement} */ audit.offsetTop,
-        behavior: 'smooth',
-      });
-    }
+    this._openClosestDetails(audit);
   }
 
   /**
    * Open all closest <details> elements recursively.
+   * If found, scroll to element in viewport.
    * @param {Element} element
    */
   _openClosestDetails(element) {
@@ -323,9 +319,11 @@ class ReportUIFeatures {
       if (details.parentElement) {
         this._openClosestDetails(details.parentElement);
       }
-      return true;
+      window.scroll({
+        top: /** @type {HTMLElement} */ details.offsetTop,
+        behavior: 'smooth',
+      });
     }
-    return false;
   }
 
   /**
