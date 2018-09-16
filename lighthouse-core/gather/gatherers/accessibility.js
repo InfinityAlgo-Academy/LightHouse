@@ -32,6 +32,7 @@ function runA11yChecks() {
     },
     resultTypes: ['violations', 'inapplicable'],
     rules: {
+      'css-orientation-lock': {enabled: true},
       'tabindex': {enabled: true},
       'table-fake-caption': {enabled: true},
       'td-has-header': {enabled: true},
