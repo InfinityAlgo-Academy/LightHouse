@@ -37,15 +37,15 @@ class ManifestValues extends ComputedArtifact {
       },
       {
         id: 'hasIconsAtLeast192px',
-        failureText: 'Manifest does not have icons at least 192px',
+        failureText: 'Manifest does not have a PNG icon of at least 192px',
         validate: manifestValue => icons.doExist(manifestValue) &&
-            icons.sizeAtLeast(192, manifestValue).length > 0,
+            icons.pngSizedAtLeast(192, manifestValue).length > 0,
       },
       {
         id: 'hasIconsAtLeast512px',
-        failureText: 'Manifest does not have icons at least 512px',
+        failureText: 'Manifest does not have a PNG icon of at least 512px',
         validate: manifestValue => icons.doExist(manifestValue) &&
-            icons.sizeAtLeast(512, manifestValue).length > 0,
+            icons.pngSizedAtLeast(512, manifestValue).length > 0,
       },
       {
         id: 'hasPWADisplayValue',

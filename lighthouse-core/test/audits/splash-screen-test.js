@@ -10,28 +10,24 @@ const assert = require('assert');
 const manifestParser = require('../../lib/manifest-parser');
 
 const manifestSrc = JSON.stringify(require('../fixtures/manifest.json'));
+const manifestDirtyJpgSrc = JSON.stringify(require('../fixtures/manifest-dirty-jpg.json'));
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
-const exampleManifest = noUrlManifestParser(manifestSrc);
 
 const Runner = require('../../runner.js');
 
-function generateMockArtifacts() {
+/**
+ * @param {string} src
+ * @return {!ManifestNode<(!Manifest|undefined)>}
+ */
+function generateMockArtifacts(src = manifestSrc) {
+  const exampleManifest = manifestParser(src, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+
   const computedArtifacts = Runner.instantiateComputedArtifacts();
   const mockArtifacts = Object.assign({}, computedArtifacts, {
     Manifest: exampleManifest,
   });
   return mockArtifacts;
-}
-
-/**
- * Simple manifest parsing helper when the manifest URLs aren't material to the
- * test. Uses example.com URLs for testing.
- * @param {string} manifestSrc
- * @return {!ManifestNode<(!Manifest|undefined)>}
- */
-function noUrlManifestParser(manifestSrc) {
-  return manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 }
 
 /* eslint-env jest */
@@ -95,9 +91,8 @@ describe('PWA: splash screen audit', () => {
       });
     });
 
-    it('fails when a manifest contains no background color', () => {
-      const artifacts = generateMockArtifacts();
-      artifacts.Manifest = noUrlManifestParser(JSON.stringify({
+    it('fails when a manifest contains invalid background color', () => {
+      const artifacts = generateMockArtifacts(JSON.stringify({
         background_color: 'no',
       }));
 
@@ -123,7 +118,18 @@ describe('PWA: splash screen audit', () => {
 
       return SplashScreenAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.explanation.includes('icons'), result.explanation);
+        assert.ok(result.explanation.includes('PNG icon'), result.explanation);
+      });
+    });
+
+    it('fails if icons were present, but no valid PNG present', () => {
+      const artifacts = generateMockArtifacts(manifestDirtyJpgSrc);
+
+      return SplashScreenAudit.audit(artifacts).then(result => {
+        assert.strictEqual(result.rawValue, false);
+        assert.ok(result.explanation.includes('PNG icon'), result.explanation);
+        const failures = result.details.items[0].failures;
+        assert.strictEqual(failures.length, 1, failures);
       });
     });
   });

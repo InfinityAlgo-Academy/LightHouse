@@ -10,13 +10,15 @@ const assert = require('assert');
 const manifestParser = require('../../lib/manifest-parser');
 
 const manifestSrc = JSON.stringify(require('../fixtures/manifest.json'));
+const manifestDirtyJpgSrc = JSON.stringify(require('../fixtures/manifest-dirty-jpg.json'));
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
-const exampleManifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 
 const Runner = require('../../runner.js');
 
-function generateMockArtifacts() {
+function generateMockArtifacts(src = manifestSrc) {
+  const exampleManifest = manifestParser(src, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+
   const computedArtifacts = Runner.instantiateComputedArtifacts();
   const clonedArtifacts = JSON.parse(JSON.stringify({
     Manifest: exampleManifest,
@@ -118,10 +120,21 @@ describe('PWA: webapp install banner audit', () => {
 
       return WebappInstallBannerAudit.audit(artifacts).then(result => {
         assert.strictEqual(result.rawValue, false);
-        assert.ok(result.explanation.includes('icons'), result.explanation);
+        assert.ok(result.explanation.includes('PNG icon'), result.explanation);
         const failures = result.details.items[0].failures;
         assert.strictEqual(failures.length, 1, failures);
       });
+    });
+  });
+
+  it('fails if icons were present, but no valid PNG present', () => {
+    const artifacts = generateMockArtifacts(manifestDirtyJpgSrc);
+
+    return WebappInstallBannerAudit.audit(artifacts).then(result => {
+      assert.strictEqual(result.rawValue, false);
+      assert.ok(result.explanation.includes('PNG icon'), result.explanation);
+      const failures = result.details.items[0].failures;
+      assert.strictEqual(failures.length, 1, failures);
     });
   });
 

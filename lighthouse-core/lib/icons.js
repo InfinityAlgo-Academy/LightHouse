@@ -5,6 +5,8 @@
  */
 'use strict';
 
+const URL = require('./url-shim.js');
+
 /**
  * @param {NonNullable<LH.Artifacts.Manifest['value']>} manifest
  * @return {boolean} Does the manifest have any icons?
@@ -24,17 +26,26 @@ function doExist(manifest) {
  * @param {NonNullable<LH.Artifacts.Manifest['value']>} manifest
  * @return {Array<string>} Value of satisfactory sizes (eg. ['192x192', '256x256'])
  */
-function sizeAtLeast(sizeRequirement, manifest) {
+function pngSizedAtLeast(sizeRequirement, manifest) {
   // An icon can be provided for a single size, or for multiple sizes.
   // To handle both, we flatten all found sizes into a single array.
   const iconValues = manifest.icons.value;
   /** @type {Array<string>} */
   const flattenedSizes = [];
-  iconValues.forEach(icon => {
-    if (icon.value.sizes.value) {
-      flattenedSizes.push(...icon.value.sizes.value);
-    }
-  });
+  iconValues
+    // filter out icons with a typehint that is not 'image/png'
+    .filter(icon => (!icon.value.type.value) ||
+      (icon.value.type.value &&
+      icon.value.type.value === 'image/png'))
+    // filter out icons that are not png
+    .filter(icon => icon.value.src.value &&
+      new URL(icon.value.src.value).pathname.endsWith('.png'))
+    .forEach(icon => {
+      // check that the icon has a size
+      if (icon.value.sizes.value) {
+        flattenedSizes.push(...icon.value.sizes.value);
+      }
+    });
 
   return flattenedSizes
       // discard sizes that are not AAxBB (eg. "any")
@@ -54,5 +65,5 @@ function sizeAtLeast(sizeRequirement, manifest) {
 
 module.exports = {
   doExist,
-  sizeAtLeast,
+  pngSizedAtLeast,
 };
