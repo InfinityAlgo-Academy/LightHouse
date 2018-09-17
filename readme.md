@@ -164,7 +164,7 @@ Lighthouse can produce a report as JSON or HTML.
 
 HTML report:
 
-![Lighthouse report](https://user-images.githubusercontent.com/2301202/40556754-b9361c66-6002-11e8-8957-68c7bac85fa4.png)
+![Lighthouse report](/assets/example_audit.png)
 
 ### Online Viewer
 
