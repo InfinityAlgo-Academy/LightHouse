@@ -11,6 +11,7 @@ const background = require('./lighthouse-background');
 const ExtensionProtocol = require('../../../lighthouse-core/gather/connections/extension');
 const log = require('lighthouse-logger');
 const assetSaver = require('../../../lighthouse-core/lib/asset-saver.js');
+const LHError = require('../../../lighthouse-core/lib/lh-error.js');
 
 /** @type {Record<'mobile'|'desktop', LH.Config.Json>} */
 const LR_PRESETS = {
@@ -111,14 +112,33 @@ async function runLighthouseInLR(connection, url, flags, {lrDevice, categoryIDs,
     config.settings.onlyCategories = categoryIDs;
   }
 
-  const results = await lighthouse(url, flags, config, connection);
-  if (!results) return;
+  try {
+    const results = await lighthouse(url, flags, config, connection);
+    if (!results) return;
 
-  if (logAssets) {
-    await assetSaver.logAssets(results.artifacts, results.lhr.audits);
+    if (logAssets) {
+      await assetSaver.logAssets(results.artifacts, results.lhr.audits);
+    }
+    return results.report;
+  } catch (err) {
+    // If an error ruined the entire lighthouse run, attempt to return a meaningful error.
+    let runtimeError;
+    if (!(err instanceof LHError) || !err.lhrRuntimeError) {
+      runtimeError = {
+        code: LHError.UNKNOWN_ERROR,
+        message: `Unknown error encountered with message '${err.message}'`,
+      };
+    } else {
+      runtimeError = {
+        code: err.code,
+        message: err.friendlyMessage ?
+            `${err.friendlyMessage} (${err.message})` :
+            err.message,
+      };
+    }
+
+    return JSON.stringify({runtimeError}, null, 2);
   }
-
-  return results.report;
 }
 
 /**
@@ -222,28 +242,32 @@ if ('chrome' in window && chrome.runtime) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  // Export for popup.js to import types. We don't want tsc to infer an index
-  // type, so use exports instead of module.exports.
-  exports.runLighthouseInExtension = runLighthouseInExtension;
-  exports.getDefaultCategories = background.getDefaultCategories;
-  exports.isRunning = isRunning;
-  exports.listenForStatus = listenForStatus;
-  exports.saveSettings = saveSettings;
-  exports.loadSettings = loadSettings;
+  // Export for importing types into popup.js, require()ing into unit tests.
+  module.exports = {
+    runLighthouseInExtension,
+    runLighthouseInLR,
+    getDefaultCategories: background.getDefaultCategories,
+    isRunning,
+    listenForStatus,
+    saveSettings,
+    loadSettings,
+  };
 }
 
-// Expose on window for extension, other consumers of file.
-// @ts-ignore
-window.runLighthouseInExtension = runLighthouseInExtension;
-// @ts-ignore
-window.runLighthouseInLR = runLighthouseInLR;
-// @ts-ignore
-window.getDefaultCategories = background.getDefaultCategories;
-// @ts-ignore
-window.isRunning = isRunning;
-// @ts-ignore
-window.listenForStatus = listenForStatus;
-// @ts-ignore
-window.loadSettings = loadSettings;
-// @ts-ignore
-window.saveSettings = saveSettings;
+// Expose on window for extension, other browser-residing consumers of file.
+if (typeof window !== 'undefined') {
+  // @ts-ignore
+  window.runLighthouseInExtension = runLighthouseInExtension;
+  // @ts-ignore
+  window.runLighthouseInLR = runLighthouseInLR;
+  // @ts-ignore
+  window.getDefaultCategories = background.getDefaultCategories;
+  // @ts-ignore
+  window.isRunning = isRunning;
+  // @ts-ignore
+  window.listenForStatus = listenForStatus;
+  // @ts-ignore
+  window.loadSettings = loadSettings;
+  // @ts-ignore
+  window.saveSettings = saveSettings;
+}

@@ -12,18 +12,20 @@ const strings = require('./strings');
  * @property {string} code
  * @property {string} message
  * @property {RegExp} [pattern]
+ * @property {boolean} [lhrRuntimeError] True if it should appear in the top-level LHR.runtimeError property.
  */
 
 class LighthouseError extends Error {
   /**
    * @param {LighthouseErrorDefinition} errorDefinition
-   * @param {Record<string, string|undefined>=} properties
+   * @param {Record<string, string|boolean|undefined>=} properties
    */
   constructor(errorDefinition, properties) {
     super(errorDefinition.code);
     this.name = 'LHError';
     this.code = errorDefinition.code;
     this.friendlyMessage = errorDefinition.message;
+    this.lhrRuntimeError = !!errorDefinition.lhrRuntimeError;
     if (properties) Object.assign(this, properties);
 
     Error.captureStackTrace(this, LighthouseError);
@@ -75,17 +77,52 @@ class LighthouseError extends Error {
 
 const ERRORS = {
   // Screenshot/speedline errors
-  NO_SPEEDLINE_FRAMES: {code: 'NO_SPEEDLINE_FRAMES', message: strings.didntCollectScreenshots},
-  SPEEDINDEX_OF_ZERO: {code: 'SPEEDINDEX_OF_ZERO', message: strings.didntCollectScreenshots},
-  NO_SCREENSHOTS: {code: 'NO_SCREENSHOTS', message: strings.didntCollectScreenshots},
-  INVALID_SPEEDLINE: {code: 'INVALID_SPEEDLINE', message: strings.didntCollectScreenshots},
+  NO_SPEEDLINE_FRAMES: {
+    code: 'NO_SPEEDLINE_FRAMES',
+    message: strings.didntCollectScreenshots,
+    lhrRuntimeError: true,
+  },
+  SPEEDINDEX_OF_ZERO: {
+    code: 'SPEEDINDEX_OF_ZERO',
+    message: strings.didntCollectScreenshots,
+    lhrRuntimeError: true,
+  },
+  NO_SCREENSHOTS: {
+    code: 'NO_SCREENSHOTS',
+    message: strings.didntCollectScreenshots,
+    lhrRuntimeError: true,
+  },
+  INVALID_SPEEDLINE: {
+    code: 'INVALID_SPEEDLINE',
+    message: strings.didntCollectScreenshots,
+    lhrRuntimeError: true,
+  },
 
   // Trace parsing errors
-  NO_TRACING_STARTED: {code: 'NO_TRACING_STARTED', message: strings.badTraceRecording},
-  NO_NAVSTART: {code: 'NO_NAVSTART', message: strings.badTraceRecording},
-  NO_FCP: {code: 'NO_FCP', message: strings.badTraceRecording},
-  NO_FMP: {code: 'NO_FMP', message: strings.badTraceRecording},
-  NO_DCL: {code: 'NO_DCL', message: strings.badTraceRecording},
+  NO_TRACING_STARTED: {
+    code: 'NO_TRACING_STARTED',
+    message: strings.badTraceRecording,
+    lhrRuntimeError: true,
+  },
+  NO_NAVSTART: {
+    code: 'NO_NAVSTART',
+    message: strings.badTraceRecording,
+    lhrRuntimeError: true,
+  },
+  NO_FCP: {
+    code: 'NO_FCP',
+    message: strings.badTraceRecording,
+    lhrRuntimeError: true,
+  },
+  NO_DCL: {
+    code: 'NO_DCL',
+    message: strings.badTraceRecording,
+    lhrRuntimeError: true,
+  },
+  NO_FMP: {
+    code: 'NO_FMP',
+    message: strings.badTraceRecording,
+  },
 
   // TTI calculation failures
   FMP_TOO_LATE_FOR_FCPUI: {code: 'FMP_TOO_LATE_FOR_FCPUI', message: strings.pageLoadTookTooLong},
@@ -97,21 +134,36 @@ const ERRORS = {
   },
 
   // Page load failures
-  NO_DOCUMENT_REQUEST: {code: 'NO_DOCUMENT_REQUEST', message: strings.pageLoadFailed},
-  FAILED_DOCUMENT_REQUEST: {code: 'FAILED_DOCUMENT_REQUEST', message: strings.pageLoadFailed},
+  NO_DOCUMENT_REQUEST: {
+    code: 'NO_DOCUMENT_REQUEST',
+    message: strings.pageLoadFailed,
+    lhrRuntimeError: true,
+  },
+  FAILED_DOCUMENT_REQUEST: {
+    code: 'FAILED_DOCUMENT_REQUEST',
+    message: strings.pageLoadFailed,
+    lhrRuntimeError: true,
+  },
 
   // Protocol internal failures
   TRACING_ALREADY_STARTED: {
     code: 'TRACING_ALREADY_STARTED',
     message: strings.internalChromeError,
     pattern: /Tracing.*started/,
+    lhrRuntimeError: true,
   },
   PARSING_PROBLEM: {
     code: 'PARSING_PROBLEM',
     message: strings.internalChromeError,
     pattern: /Parsing problem/,
+    lhrRuntimeError: true,
   },
-  READ_FAILED: {code: 'READ_FAILED', message: strings.internalChromeError, pattern: /Read failed/},
+  READ_FAILED: {
+    code: 'READ_FAILED',
+    message: strings.internalChromeError,
+    pattern: /Read failed/,
+    lhrRuntimeError: true,
+  },
 
   // Protocol timeout failures
   REQUEST_CONTENT_TIMEOUT: {
@@ -128,5 +180,7 @@ const ERRORS = {
 
 /** @type {Record<keyof typeof ERRORS, LighthouseErrorDefinition>} */
 LighthouseError.errors = ERRORS;
+LighthouseError.NO_ERROR = 'NO_ERROR';
+LighthouseError.UNKNOWN_ERROR = 'UNKNOWN_ERROR';
 module.exports = LighthouseError;
 

@@ -10,12 +10,14 @@ const GatherRunner = require('../gather/gather-runner');
 const driverMock = require('./gather/fake-driver');
 const Config = require('../config/config');
 const Audit = require('../audits/audit');
+const Gatherer = require('../gather/gatherers/gatherer.js');
 const assetSaver = require('../lib/asset-saver');
 const fs = require('fs');
 const assert = require('assert');
 const path = require('path');
 const sinon = require('sinon');
 const rimraf = require('rimraf');
+const LHError = require('../lib/lh-error.js');
 
 /* eslint-env jest */
 
@@ -603,6 +605,41 @@ describe('Runner', () => {
     return Runner.run(null, {config, driverMock}).then(results => {
       assert.deepStrictEqual(results.lhr.runWarnings, [warningString]);
     });
+  });
+
+  it('includes a top-level runtimeError when a gatherer throws one', async () => {
+    const NO_FCP = LHError.errors.NO_FCP;
+    class RuntimeErrorGatherer extends Gatherer {
+      afterPass() {
+        throw new LHError(NO_FCP);
+      }
+    }
+    class WarningAudit extends Audit {
+      static get meta() {
+        return {
+          id: 'test-audit',
+          title: 'A test audit',
+          description: 'An audit for testing',
+          requiredArtifacts: ['RuntimeErrorGatherer'],
+        };
+      }
+      static audit() {
+        throw new Error('Should not get here');
+      }
+    }
+
+    const config = new Config({
+      passes: [{gatherers: [RuntimeErrorGatherer]}],
+      audits: [WarningAudit],
+    });
+    const {lhr} = await Runner.run(null, {url: 'https://example.com/', config, driverMock});
+
+    // Audit error included the runtimeError
+    assert.strictEqual(lhr.audits['test-audit'].scoreDisplayMode, 'error');
+    assert.ok(lhr.audits['test-audit'].errorMessage.includes(NO_FCP.code));
+    // And it bubbled up to the runtimeError.
+    assert.strictEqual(lhr.runtimeError.code, NO_FCP.code);
+    assert.ok(lhr.runtimeError.message.includes(NO_FCP.code));
   });
 
   it('can handle array of outputs', async () => {

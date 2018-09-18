@@ -18,6 +18,7 @@ const path = require('path');
 const URL = require('./lib/url-shim');
 const Sentry = require('./lib/sentry');
 const generateReport = require('./report/report-generator').generateReport;
+const LHError = require('./lib/lh-error.js');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
 /** @typedef {import('./config/config.js')} Config */
@@ -131,6 +132,7 @@ class Runner {
         requestedUrl: requestedUrl,
         finalUrl: artifacts.URL.finalUrl,
         runWarnings: lighthouseRunWarnings,
+        runtimeError: Runner.getArtifactRuntimeError(artifacts),
         audits: resultsById,
         configSettings: settings,
         categories,
@@ -289,6 +291,31 @@ class Runner {
 
     log.verbose('statusEnd', status);
     return auditResult;
+  }
+
+  /**
+   * Returns first runtimeError found in artifacts.
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Result['runtimeError']}
+   */
+  static getArtifactRuntimeError(artifacts) {
+    for (const possibleErrorArtifact of Object.values(artifacts)) {
+      if (possibleErrorArtifact instanceof LHError && possibleErrorArtifact.lhrRuntimeError) {
+        const errorMessage = possibleErrorArtifact.friendlyMessage ?
+            `${possibleErrorArtifact.friendlyMessage} (${possibleErrorArtifact.message})` :
+            possibleErrorArtifact.message;
+
+        return {
+          code: possibleErrorArtifact.code,
+          message: errorMessage,
+        };
+      }
+    }
+
+    return {
+      code: LHError.NO_ERROR,
+      message: '',
+    };
   }
 
   /**
