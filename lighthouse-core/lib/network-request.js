@@ -106,6 +106,13 @@ module.exports = class NetworkRequest {
   }
 
   /**
+   * @return {boolean}
+   */
+  hasErrorStatusCode() {
+    return this.statusCode >= 400;
+  }
+
+  /**
    * @param {NetworkRequest} initiator
    */
   setInitiatorRequest(initiator) {

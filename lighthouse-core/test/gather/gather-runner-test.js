@@ -12,6 +12,7 @@ const GatherRunner = require('../../gather/gather-runner');
 const assert = require('assert');
 const Config = require('../../config/config');
 const unresolvedPerfLog = require('./../fixtures/unresolved-perflog.json');
+const NetworkRequest = require('../../lib/network-request.js');
 
 class TestGatherer extends Gatherer {
   constructor() {
@@ -606,29 +607,54 @@ describe('GatherRunner', function() {
   describe('#getPageLoadError', () => {
     it('passes when the page is loaded', () => {
       const url = 'http://the-page.com';
-      const records = [{url}];
-      assert.ok(!GatherRunner.getPageLoadError(url, records));
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      assert.ok(!GatherRunner.getPageLoadError(url, [mainRecord]));
     });
 
     it('passes when the page is loaded, ignoring any fragment', () => {
       const url = 'http://example.com/#/page/list';
-      const records = [{url: 'http://example.com'}];
-      assert.ok(!GatherRunner.getPageLoadError(url, records));
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = 'http://example.com';
+      assert.ok(!GatherRunner.getPageLoadError(url, [mainRecord]));
     });
 
-    it('throws when page fails to load', () => {
+    it('fails when page fails to load', () => {
       const url = 'http://the-page.com';
-      const records = [{url, failed: true, localizedFailDescription: 'foobar'}];
-      const error = GatherRunner.getPageLoadError(url, records);
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      mainRecord.failed = true;
+      mainRecord.localizedFailDescription = 'foobar';
+      const error = GatherRunner.getPageLoadError(url, [mainRecord]);
       assert.equal(error.message, 'FAILED_DOCUMENT_REQUEST');
       assert.ok(/Your page failed to load/.test(error.friendlyMessage));
     });
 
-    it('throws when page times out', () => {
+    it('fails when page times out', () => {
       const url = 'http://the-page.com';
       const records = [];
       const error = GatherRunner.getPageLoadError(url, records);
       assert.equal(error.message, 'NO_DOCUMENT_REQUEST');
+      assert.ok(/Your page failed to load/.test(error.friendlyMessage));
+    });
+
+    it('fails when page returns with a 404', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      mainRecord.statusCode = 404;
+      const error = GatherRunner.getPageLoadError(url, [mainRecord]);
+      assert.equal(error.message, 'ERRORED_DOCUMENT_REQUEST');
+      assert.ok(/Your page failed to load/.test(error.friendlyMessage));
+    });
+
+    it('fails when page returns with a 500', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      mainRecord.statusCode = 500;
+      const error = GatherRunner.getPageLoadError(url, [mainRecord]);
+      assert.equal(error.message, 'ERRORED_DOCUMENT_REQUEST');
       assert.ok(/Your page failed to load/.test(error.friendlyMessage));
     });
   });
