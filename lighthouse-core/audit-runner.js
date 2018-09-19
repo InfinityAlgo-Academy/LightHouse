@@ -7,31 +7,56 @@
 
 const fs = require('fs');
 const path = require('path');
+const isDeepEqual = require('lodash.isequal');
 const log = require('lighthouse-logger');
 const i18n = require('./lib/i18n.js');
 const Audit = require('./audits/audit.js');
-const Sentry = require('./lib/sentry');
+const Sentry = require('./lib/sentry.js');
+const URL = require('./lib/url-shim.js');
 
 class AuditRunner {
 /**
    * Run all audits with specified settings and artifacts.
+   * @param {string=} requestedUrl
    * @param {LH.Config.Settings} settings
-   * @param {Array<LH.Config.AuditDefn>} audits
+   * @param {?Array<LH.Config.AuditDefn>} audits
    * @param {LH.Artifacts} artifacts
-   * @param {Array<string>} runWarnings
-   * @return {Promise<Array<LH.Audit.Result>>}
+   * @return {Promise<{auditResults: Array<LH.Audit.Result>, lighthouseRunWarnings: Array<string>}>}
    */
-  static async run(settings, audits, artifacts, runWarnings) {
+  static async run(requestedUrl, settings, audits, artifacts) {
     log.log('status', 'Analyzing and running audits...');
 
+    if (!audits) throw new Error('No audits in config to evaluate');
+    if (requestedUrl && !URL.equalWithExcludedFragments(requestedUrl, artifacts.URL.requestedUrl)) {
+      throw new Error('Cannot run audit mode on different URL than gatherers were');
+    }
+
+    // Check that current settings are compatible with settings used to gather artifacts.
+    if (artifacts.settings) {
+      const overrides = {gatherMode: undefined, auditMode: undefined, output: undefined};
+      const normalizedGatherSettings = Object.assign({}, artifacts.settings, overrides);
+      const normalizedAuditSettings = Object.assign({}, settings, overrides);
+
+      // TODO(phulce): allow change of throttling method to `simulate`
+      if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
+        throw new Error('Cannot change settings between gathering and auditing');
+      }
+    }
+
+    /**
+     * List of top-level warnings for this Lighthouse run, starting with any from artifacts.
+     * @type {Array<string>}
+     */
+    const lighthouseRunWarnings = [...artifacts.LighthouseRunWarnings || []];
     // Run each audit sequentially
     const auditResults = [];
     for (const auditDefn of audits) {
-      const auditResult = await AuditRunner._runAudit(auditDefn, artifacts, settings, runWarnings);
+      const auditResult = await AuditRunner._runAudit(auditDefn, artifacts, settings,
+          lighthouseRunWarnings);
       auditResults.push(auditResult);
     }
 
-    return auditResults;
+    return {auditResults, lighthouseRunWarnings};
   }
 
   /**
