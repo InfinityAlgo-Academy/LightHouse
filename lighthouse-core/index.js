@@ -5,6 +5,7 @@
  */
 'use strict';
 
+const Sentry = require('./lib/sentry');
 const Runner = require('./runner');
 const log = require('lighthouse-logger');
 const ChromeProtocol = require('./gather/connections/cri.js');
@@ -40,6 +41,15 @@ const LHError = require('./lib/lh-error.js');
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function lighthouse(url, flags = {}, configJSON, connection) {
+  const startTime = Date.now();
+  // Start Sentry if CLI has opted in.
+  const sentryContext = Sentry.getContext();
+  Sentry.captureBreadcrumb({
+    message: 'Run started',
+    category: 'lifecycle',
+    data: sentryContext && sentryContext.extra,
+  });
+
   // verify the url is valid and that protocol is allowed
   let requestedUrl;
   if (url) {
@@ -63,7 +73,12 @@ async function lighthouse(url, flags = {}, configJSON, connection) {
   connection = connection || new ChromeProtocol(flags.port, flags.hostname);
 
   // kick off a lighthouse run
-  return Runner.run(connection, {requestedUrl, config});
+  const runnerResult = await Runner.run(connection, {requestedUrl, config});
+  if (runnerResult) {
+    runnerResult.lhr.timing.total = Date.now() - startTime;
+  }
+
+  return runnerResult;
 }
 
 lighthouse.getAuditList = AuditRunner.getAuditList;

@@ -21,7 +21,7 @@ class AuditRunner {
    * @param {LH.Config.Settings} settings
    * @param {?Array<LH.Config.AuditDefn>} audits
    * @param {LH.Artifacts} artifacts
-   * @return {Promise<{auditResults: Array<LH.Audit.Result>, lighthouseRunWarnings: Array<string>}>}
+   * @return {Promise<{auditResults: Array<LH.Audit.Result>, runWarnings: Array<string>}>}
    */
   static async run(requestedUrl, settings, audits, artifacts) {
     log.log('status', 'Analyzing and running audits...');
@@ -47,16 +47,15 @@ class AuditRunner {
      * List of top-level warnings for this Lighthouse run, starting with any from artifacts.
      * @type {Array<string>}
      */
-    const lighthouseRunWarnings = [...artifacts.LighthouseRunWarnings || []];
+    const runWarnings = [...artifacts.LighthouseRunWarnings || []];
     // Run each audit sequentially
     const auditResults = [];
     for (const auditDefn of audits) {
-      const auditResult = await AuditRunner._runAudit(auditDefn, artifacts, settings,
-          lighthouseRunWarnings);
+      const auditResult = await AuditRunner._runAudit(auditDefn, artifacts, settings, runWarnings);
       auditResults.push(auditResult);
     }
 
-    return {auditResults, lighthouseRunWarnings};
+    return {auditResults, runWarnings};
   }
 
   /**

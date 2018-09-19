@@ -31,14 +31,6 @@ class Runner {
     const settings = config.settings;
 
     try {
-      const startTime = Date.now();
-      const sentryContext = Sentry.getContext();
-      Sentry.captureBreadcrumb({
-        message: 'Run started',
-        category: 'lifecycle',
-        data: sentryContext && sentryContext.extra,
-      });
-
       // User can run -G solo, -A solo, or -GA together
       // -G and -A will run partial lighthouse pipelines,
       // and -GA will run everything plus save artifacts to disk
@@ -75,7 +67,7 @@ class Runner {
 
       // Audit phase
       const fullArtifacts = Object.assign({}, Runner.instantiateComputedArtifacts(), artifacts);
-      const {auditResults, lighthouseRunWarnings} = await AuditRunner.run(runOpts.requestedUrl,
+      const {auditResults, runWarnings} = await AuditRunner.run(runOpts.requestedUrl,
           settings, config.audits, fullArtifacts);
 
       // LHR construction phase
@@ -105,12 +97,12 @@ class Runner {
         fetchTime: artifacts.fetchTime,
         requestedUrl: artifacts.URL.requestedUrl,
         finalUrl: artifacts.URL.finalUrl,
-        runWarnings: lighthouseRunWarnings,
+        runWarnings,
         audits: resultsById,
         configSettings: config.settings,
         categories,
         categoryGroups: config.groups || undefined,
-        timing: {total: Date.now() - startTime},
+        timing: {total: 0}, // Filled in by index.js
         i18n: {
           rendererFormattedStrings: i18n.getRendererFormattedStrings(config.settings.locale),
           icuMessagePaths: {},
