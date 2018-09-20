@@ -118,6 +118,25 @@ describe('network recorder', function() {
       ]);
     });
 
+    it('should handle iframe requests', () => {
+      const iframeRequest = {
+        finished: false,
+        url: 'https://iframe.com',
+        documentURL: 'https://iframe.com',
+        responseReceivedTime: 1.2,
+      };
+
+      const records = [
+        record({startTime: 0, endTime: 1}),
+        record({startTime: 0, endTime: 1.2, ...iframeRequest}),
+      ];
+
+      const periods = NetworkRecorder.findNetworkQuietPeriods(records, 0);
+      assert.deepStrictEqual(periods, [
+        {start: 1200, end: Infinity},
+      ]);
+    });
+
     it('should handle QUIC requests', () => {
       const quicRequest = {
         finished: false,

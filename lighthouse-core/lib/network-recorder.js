@@ -100,6 +100,18 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
+   * frame root network requests don't always "finish" even when they're done loading data, use responseReceived instead
+   * @see https://github.com/GoogleChrome/lighthouse/issues/6067#issuecomment-423211201
+   * @param {LH.Artifacts.NetworkRequest} record
+   * @return {boolean}
+   */
+  static _isFrameRootRequestAndFinished(record) {
+    const isFrameRootRequest = record.url === record.documentURL;
+    const responseReceived = record.responseReceivedTime > 0;
+    return !!(isFrameRootRequest && responseReceived && record.endTime);
+  }
+
+  /**
    * Finds all time periods where the number of inflight requests is less than or equal to the
    * number of allowed concurrent requests.
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
@@ -119,7 +131,9 @@ class NetworkRecorder extends EventEmitter {
 
       // convert the network record timestamp to ms
       timeBoundaries.push({time: record.startTime * 1000, isStart: true});
-      if (record.finished || NetworkRecorder._isQUICAndFinished(record)) {
+      if (record.finished ||
+          NetworkRecorder._isQUICAndFinished(record) ||
+          NetworkRecorder._isFrameRootRequestAndFinished(record)) {
         timeBoundaries.push({time: record.endTime * 1000, isStart: false});
       }
     });
