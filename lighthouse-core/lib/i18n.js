@@ -15,6 +15,8 @@ const LOCALES = require('./locales');
 
 const LH_ROOT = path.join(__dirname, '../../');
 const MESSAGE_INSTANCE_ID_REGEX = /(.* \| .*) # (\d+)$/;
+// Above regex is very slow against large strings. Use QUICK_REGEX as a much quicker discriminator.
+const MESSAGE_INSTANCE_ID_QUICK_REGEX = / # \d+$/;
 
 (() => {
   // Node usually doesn't come with the locales we want built-in, so load the polyfill if we can.
@@ -235,7 +237,8 @@ function createMessageInstanceIdFn(filename, fileStrings) {
  * @return {string}
  */
 function getFormatted(icuMessageIdOrRawString, locale) {
-  if (MESSAGE_INSTANCE_ID_REGEX.test(icuMessageIdOrRawString)) {
+  if (MESSAGE_INSTANCE_ID_QUICK_REGEX.test(icuMessageIdOrRawString) &&
+      MESSAGE_INSTANCE_ID_REGEX.test(icuMessageIdOrRawString)) {
     return _resolveIcuMessageInstanceId(icuMessageIdOrRawString, locale).formattedString;
   }
 
@@ -278,7 +281,8 @@ function replaceIcuMessageInstanceIds(lhr, locale) {
       const currentPathInLHR = pathInLHR.concat([property]);
 
       // Check to see if the value in the LHR looks like a string reference. If it is, replace it.
-      if (typeof value === 'string' && MESSAGE_INSTANCE_ID_REGEX.test(value)) {
+      if (typeof value === 'string' && MESSAGE_INSTANCE_ID_QUICK_REGEX.test(value) &&
+          MESSAGE_INSTANCE_ID_REGEX.test(value)) {
         const {icuMessageInstance, formattedString} = _resolveIcuMessageInstanceId(value, locale);
         const messageInstancesInLHR = icuMessagePaths[icuMessageInstance.icuMessageId] || [];
         const currentPathAsString = _formatPathAsString(currentPathInLHR);
