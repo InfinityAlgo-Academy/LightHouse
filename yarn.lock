@@ -5782,9 +5782,9 @@ spdx-license-ids@^1.0.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-1.2.2.tgz#c9df7a3424594ade6bd11900d596696dc06bac57"
 
-speedline-core@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/speedline-core/-/speedline-core-1.4.0.tgz#884831eaef66ddc928dd7d4c9e844c5d28bad7db"
+speedline-core@1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/speedline-core/-/speedline-core-1.4.2.tgz#bb061444a218d67b4cd52f63a262386197b90c8a"
   dependencies:
     "@types/node" "*"
     image-ssim "^0.2.0"
