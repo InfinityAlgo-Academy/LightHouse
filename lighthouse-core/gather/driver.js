@@ -12,7 +12,6 @@ const LHError = require('../lib/lh-error');
 const NetworkRequest = require('../lib/network-request');
 const EventEmitter = require('events').EventEmitter;
 const URL = require('../lib/url-shim');
-const TraceParser = require('../lib/traces/trace-parser');
 const constants = require('../config/constants');
 
 const log = require('lighthouse-logger');
@@ -933,7 +932,6 @@ class Driver {
     return this.sendCommand('Page.enable')
       .then(_ => this.sendCommand('Tracing.start', {
         categories: uniqueCategories.join(','),
-        transferMode: 'ReturnAsStream',
         options: 'sampling-frequency=10000', // 1000 is default and too slow.
       }));
   }
@@ -942,55 +940,25 @@ class Driver {
    * @return {Promise<LH.Trace>}
    */
   endTrace() {
+    /** @type {Array<LH.TraceEvent>} */
+    const traceEvents = [];
+
+    /**
+     * Listener for when dataCollected events fire for each trace chunk
+     * @param {LH.Crdp.Tracing.DataCollectedEvent} data
+     */
+    const dataListener = function(data) {
+      traceEvents.push(...data.value);
+    };
+    this.on('Tracing.dataCollected', dataListener);
+
     return new Promise((resolve, reject) => {
-      // When the tracing has ended this will fire with a stream handle.
-      this.once('Tracing.tracingComplete', completeEvent => {
-        this._readTraceFromStream(completeEvent)
-            .then(traceContents => resolve(traceContents), reject);
+      this.once('Tracing.tracingComplete', _ => {
+        this.off('Tracing.dataCollected', dataListener);
+        resolve({traceEvents});
       });
 
-      // Issue the command to stop tracing.
       return this.sendCommand('Tracing.end').catch(reject);
-    });
-  }
-
-  /**
-   * @param {LH.Crdp.Tracing.TracingCompleteEvent} traceCompleteEvent
-   * @return {Promise<LH.Trace>}
-   */
-  _readTraceFromStream(traceCompleteEvent) {
-    return new Promise((resolve, reject) => {
-      let isEOF = false;
-      const parser = new TraceParser();
-
-      if (!traceCompleteEvent.stream) {
-        return reject('No streamHandle returned by traceCompleteEvent');
-      }
-
-      const readArguments = {
-        handle: traceCompleteEvent.stream,
-      };
-
-      /**
-       * @param {LH.Crdp.IO.ReadResponse} response
-       * @return {void|Promise<void>}
-       */
-      const onChunkRead = response => {
-        if (isEOF) {
-          return;
-        }
-
-        parser.parseChunk(response.data);
-
-        if (response.eof) {
-          isEOF = true;
-          return resolve(parser.getTrace());
-        }
-
-        return this.sendCommand('IO.read', readArguments).then(onChunkRead);
-      };
-
-      this.sendCommand('IO.read', readArguments).then(onChunkRead).catch(reject);
     });
   }
 

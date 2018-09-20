@@ -36,7 +36,7 @@ class AxeAudit extends Audit {
     const impact = rule && rule.impact;
     const tags = rule && rule.tags;
 
-    /** @type {Array<{node: LH.Audit.DetailsRendererNodeDetailsJSON}>}>} */
+    /** @type {Array<{node: LH.Audit.DetailsRendererNodeDetailsJSON}>} */
     let items = [];
     if (rule && rule.nodes) {
       items = rule.nodes.map(node => ({
