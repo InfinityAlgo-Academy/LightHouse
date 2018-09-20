@@ -123,12 +123,13 @@ function getDOMStats(element, deep=true) {
     depth: {
       max: result.maxDepth,
       pathToElement: elementPathInDOM(deepestNode),
-      snippet: getOuterHTMLSnippet(deepestNode),
+      // ignore style since it will provide no additional context, and is often long
+      snippet: getOuterHTMLSnippet(deepestNode, ['style']),
     },
     width: {
       max: result.maxWidth,
       pathToElement: elementPathInDOM(parentWithMostChildren),
-      snippet: getOuterHTMLSnippet(parentWithMostChildren),
+      snippet: getOuterHTMLSnippet(parentWithMostChildren, ['style']),
     },
   };
 }
