@@ -241,16 +241,18 @@ for more info.
 ### Tests
 
 ```sh
-# lint and test all files
+# lint and test all files, extension, viewer, and smoke tests
 yarn test
 
 # watch for file changes and run tests
 #   Requires http://entrproject.org : brew install entr
 yarn watch
 
-## run linting, unit, and smoke tests separately
+## run linting, unit, extension, viewer, and smoke tests separately
 yarn lint
 yarn unit
+yarn test-extension
+yarn test-viewer
 yarn smoke
 
 ## run tsc compiler
