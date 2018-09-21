@@ -26,7 +26,7 @@
     "smoke": "node lighthouse-cli/test/smokehouse/run-smoke.js",
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
     "start": "node ./lighthouse-cli/index.js",
-    "test": "yarn diff:sample-json && yarn lint --quiet && yarn unit && yarn type-check",
+    "test": "yarn diff:sample-json && yarn lint --quiet && yarn unit && yarn type-check && yarn test-extension && yarn test-viewer && yarn smoke",
     "test-extension": "cd lighthouse-extension && yarn test",
     "test-viewer": "cd lighthouse-viewer && yarn pptr-test",
     "test-lantern": "bash lighthouse-core/scripts/test-lantern.sh",

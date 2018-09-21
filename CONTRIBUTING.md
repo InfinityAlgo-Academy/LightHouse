@@ -41,8 +41,12 @@ If you have a contribution for our [documentation](https://developers.google.com
 1. Submit an issue describing your proposed change to the repo in question.
 1. The repo owner will respond to your issue promptly.
 1. If your proposed change is accepted, and you haven't already done so, sign a Contributor License Agreement (see details above).
-1. Fork the repo, develop and test your code changes.
-1. Ensure that your code adheres to the existing style in the sample to which you are contributing.
+1. Fork the repo, develop and test your code changes.  
+1. Ensure that your code adheres to the existing style and passes all regression tests by making sure that you have built all components and tested them.  This can be done with 2 simple yarn commands.
+   ```
+   $ yarn build-all
+   $ yarn test
+   ```
 1. Submit a pull request.
 
 ## description guidelines
