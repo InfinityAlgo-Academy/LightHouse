@@ -7,6 +7,7 @@
 
 const MultiCheckAudit = require('./multi-check-audit');
 const SWAudit = require('./service-worker');
+const ManifestValues = require('../gather/computed/manifest-values');
 
 /**
  * @fileoverview
@@ -118,33 +119,33 @@ class WebappInstallBanner extends MultiCheckAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<{failures: Array<string>, warnings: Array<string>, manifestValues: LH.Artifacts.ManifestValues}>}
    */
-  static audit_(artifacts) {
+  static async audit_(artifacts, context) {
     /** @type {Array<string>} */
     let offlineFailures = [];
     /** @type {Array<string>} */
     let offlineWarnings = [];
 
-    return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {
-      const manifestFailures = WebappInstallBanner.assessManifest(manifestValues);
-      const swFailures = WebappInstallBanner.assessServiceWorker(artifacts);
-      if (!swFailures.length) {
-        const {failures, warnings} = WebappInstallBanner.assessOfflineStartUrl(artifacts);
-        offlineFailures = failures;
-        offlineWarnings = warnings;
-      }
+    const manifestValues = await ManifestValues.request(context, artifacts.Manifest);
+    const manifestFailures = WebappInstallBanner.assessManifest(manifestValues);
+    const swFailures = WebappInstallBanner.assessServiceWorker(artifacts);
+    if (!swFailures.length) {
+      const {failures, warnings} = WebappInstallBanner.assessOfflineStartUrl(artifacts);
+      offlineFailures = failures;
+      offlineWarnings = warnings;
+    }
 
-      return {
-        warnings: offlineWarnings,
-        failures: [
-          ...manifestFailures,
-          ...swFailures,
-          ...offlineFailures,
-        ],
-        manifestValues,
-      };
-    });
+    return {
+      warnings: offlineWarnings,
+      failures: [
+        ...manifestFailures,
+        ...swFailures,
+        ...offlineFailures,
+      ],
+      manifestValues,
+    };
   }
 }
 

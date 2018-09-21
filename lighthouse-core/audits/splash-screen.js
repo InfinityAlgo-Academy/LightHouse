@@ -6,6 +6,7 @@
 'use strict';
 
 const MultiCheckAudit = require('./multi-check-audit');
+const ManifestValues = require('../gather/computed/manifest-values');
 
 /**
  * @fileoverview
@@ -64,20 +65,20 @@ class SplashScreen extends MultiCheckAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<{failures: Array<string>, manifestValues: LH.Artifacts.ManifestValues}>}
    */
-  static audit_(artifacts) {
+  static async audit_(artifacts, context) {
     /** @type {Array<string>} */
     const failures = [];
 
-    return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {
-      SplashScreen.assessManifest(manifestValues, failures);
+    const manifestValues = await ManifestValues.request(context, artifacts.Manifest);
+    SplashScreen.assessManifest(manifestValues, failures);
 
-      return {
-        failures,
-        manifestValues,
-      };
-    });
+    return {
+      failures,
+      manifestValues,
+    };
   }
 }
 

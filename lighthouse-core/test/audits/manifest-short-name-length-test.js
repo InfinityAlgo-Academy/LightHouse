@@ -12,14 +12,15 @@ const manifestParser = require('../../lib/manifest-parser');
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
 
-const Runner = require('../../runner.js');
-
 function generateMockArtifacts() {
-  const computedArtifacts = Runner.instantiateComputedArtifacts();
-  const mockArtifacts = Object.assign({}, computedArtifacts, {
+  return {
     Manifest: null,
-  });
-  return mockArtifacts;
+  };
+}
+function generateMockAuditContext() {
+  return {
+    computedCache: new Map(),
+  };
 }
 
 /* eslint-env jest */
@@ -28,8 +29,9 @@ describe('Manifest: short_name_length audit', () => {
   it('marked as notApplicable if page had no manifest', () => {
     const artifacts = generateMockArtifacts();
     artifacts.Manifest = null;
+    const context = generateMockAuditContext();
 
-    return ManifestShortNameLengthAudit.audit(artifacts).then(result => {
+    return ManifestShortNameLengthAudit.audit(artifacts, context).then(result => {
       assert.strictEqual(result.rawValue, true);
       assert.strictEqual(result.notApplicable, true);
     });
@@ -38,7 +40,8 @@ describe('Manifest: short_name_length audit', () => {
   it('marked as notApplicable if manifest is present but empty', () => {
     const artifacts = generateMockArtifacts();
     artifacts.Manifest = manifestParser('{}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
-    return ManifestShortNameLengthAudit.audit(artifacts).then(result => {
+    const context = generateMockAuditContext();
+    return ManifestShortNameLengthAudit.audit(artifacts, context).then(result => {
       assert.strictEqual(result.rawValue, true);
       assert.strictEqual(result.notApplicable, true);
     });
@@ -50,7 +53,8 @@ describe('Manifest: short_name_length audit', () => {
       name: 'i\'m much longer than the recommended size',
     });
     artifacts.Manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
-    return ManifestShortNameLengthAudit.audit(artifacts).then(result => {
+    const context = generateMockAuditContext();
+    return ManifestShortNameLengthAudit.audit(artifacts, context).then(result => {
       assert.strictEqual(result.rawValue, true);
       assert.strictEqual(result.notApplicable, true);
       assert.equal(result.explanation, undefined);
@@ -65,7 +69,8 @@ describe('Manifest: short_name_length audit', () => {
       short_name: 'i\'m much longer than the recommended size',
     });
     artifacts.Manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
-    return ManifestShortNameLengthAudit.audit(artifacts).then(result => {
+    const context = generateMockAuditContext();
+    return ManifestShortNameLengthAudit.audit(artifacts, context).then(result => {
       assert.equal(result.rawValue, false);
       assert.ok(result.explanation.includes('without truncation'), result.explanation);
       assert.equal(result.notApplicable, undefined);
@@ -78,7 +83,8 @@ describe('Manifest: short_name_length audit', () => {
       short_name: 'Lighthouse',
     });
     artifacts.Manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
-    return ManifestShortNameLengthAudit.audit(artifacts).then(result => {
+    const context = generateMockAuditContext();
+    return ManifestShortNameLengthAudit.audit(artifacts, context).then(result => {
       assert.equal(result.rawValue, true);
       assert.equal(result.explanation, undefined);
       assert.equal(result.notApplicable, undefined);

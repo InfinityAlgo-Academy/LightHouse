@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const ComputedArtifact = require('./computed-artifact');
+const makeComputedArtifact = require('./new-computed-artifact');
 const icons = require('../../lib/icons');
 
 const PWA_DISPLAY_VALUES = ['minimal-ui', 'fullscreen', 'standalone'];
@@ -14,11 +14,7 @@ const PWA_DISPLAY_VALUES = ['minimal-ui', 'fullscreen', 'standalone'];
 // For more discussion, see https://github.com/GoogleChrome/lighthouse/issues/69 and https://developer.chrome.com/apps/manifest/name#short_name
 const SUGGESTED_SHORTNAME_LENGTH = 12;
 
-class ManifestValues extends ComputedArtifact {
-  get name() {
-    return 'ManifestValues';
-  }
-
+class ManifestValues {
   static get validityIds() {
     return ['hasManifest', 'hasParseableManifest'];
   }
@@ -88,7 +84,7 @@ class ManifestValues extends ComputedArtifact {
    * @param {LH.Artifacts['Manifest']} manifest
    * @return {Promise<LH.Artifacts.ManifestValues>}
    */
-  async compute_(manifest) {
+  static async compute_(manifest) {
     // if the manifest isn't there or is invalid json, we report that and bail
     let parseFailureReason;
 
@@ -125,4 +121,4 @@ class ManifestValues extends ComputedArtifact {
   }
 }
 
-module.exports = ManifestValues;
+module.exports = makeComputedArtifact(ManifestValues);

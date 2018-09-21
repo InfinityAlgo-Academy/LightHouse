@@ -14,10 +14,12 @@ const Audit = require('./audit');
 class MultiCheckAudit extends Audit {
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
-    return Promise.resolve(this.audit_(artifacts)).then(result => this.createAuditProduct(result));
+  static async audit(artifacts, context) {
+    const multiProduct = await this.audit_(artifacts, context);
+    return this.createAuditProduct(multiProduct);
   }
 
   /**
@@ -63,9 +65,10 @@ class MultiCheckAudit extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<{failures: Array<string>, warnings?: Array<string>, manifestValues?: LH.Artifacts.ManifestValues}>}
    */
-  static audit_(artifacts) {
+  static audit_(artifacts, context) {
     throw new Error('audit_ unimplemented');
   }
 

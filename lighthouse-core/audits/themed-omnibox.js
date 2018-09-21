@@ -7,6 +7,7 @@
 
 const MultiCheckAudit = require('./multi-check-audit');
 const validColor = require('../lib/web-inspector').Color.parse;
+const ManifestValues = require('../gather/computed/manifest-values');
 
 /**
  * @fileoverview
@@ -63,22 +64,22 @@ class ThemedOmnibox extends MultiCheckAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<{failures: Array<string>, manifestValues: LH.Artifacts.ManifestValues, themeColor: ?string}>}
    */
-  static audit_(artifacts) {
+  static async audit_(artifacts, context) {
     /** @type {Array<string>} */
     const failures = [];
 
-    return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {
-      ThemedOmnibox.assessManifest(manifestValues, failures);
-      ThemedOmnibox.assessMetaThemecolor(artifacts.ThemeColor, failures);
+    const manifestValues = await ManifestValues.request(context, artifacts.Manifest);
+    ThemedOmnibox.assessManifest(manifestValues, failures);
+    ThemedOmnibox.assessMetaThemecolor(artifacts.ThemeColor, failures);
 
-      return {
-        failures,
-        manifestValues,
-        themeColor: artifacts.ThemeColor,
-      };
-    });
+    return {
+      failures,
+      manifestValues,
+      themeColor: artifacts.ThemeColor,
+    };
   }
 }
 

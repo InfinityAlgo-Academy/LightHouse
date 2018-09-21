@@ -49,7 +49,7 @@ declare global {
 
   /** Obtain the type of the first parameter of a function. */
   type FirstParamType<T extends (arg1: any, ...args: any[]) => any> =
-    T extends (arg1: infer P, ...args: any[]) => any ? P : any;
+    T extends (arg1: infer P, ...args: any[]) => any ? P : never;
 
   module LH {
     // re-export useful type modules under global LH module.

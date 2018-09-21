@@ -13,7 +13,11 @@ const assert = require('assert');
 const manifestSrc = JSON.stringify(require('../../fixtures/manifest.json'));
 const manifestParser = require('../../../lib/manifest-parser');
 
-const manifestValues = new ManifestValues();
+function getMockContext() {
+  return {
+    computedCache: new Map(),
+  };
+}
 
 /**
  * Simple manifest parsing helper when the manifest URLs aren't material to the
@@ -31,7 +35,7 @@ function noUrlManifestParser(manifestSrc) {
 describe('ManifestValues computed artifact', () => {
   it('reports a parse failure if page had no manifest', async () => {
     const manifestArtifact = null;
-    const results = await manifestValues.compute_(manifestArtifact);
+    const results = await ManifestValues.request(getMockContext(), manifestArtifact);
     assert.equal(results.isParseFailure, true);
     assert.ok(results.parseFailureReason, 'No manifest was fetched');
     assert.equal(results.allChecks.length, 0);
@@ -39,7 +43,7 @@ describe('ManifestValues computed artifact', () => {
 
   it('reports a parse failure if page had an unparseable manifest', async () => {
     const manifestArtifact = noUrlManifestParser('{:,}');
-    const results = await manifestValues.compute_(manifestArtifact);
+    const results = await ManifestValues.request(getMockContext(), manifestArtifact);
     assert.equal(results.isParseFailure, true);
     assert.ok(results.parseFailureReason.includes('failed to parse as valid JSON'));
     assert.equal(results.allChecks.length, 0);
@@ -47,14 +51,14 @@ describe('ManifestValues computed artifact', () => {
 
   it('passes the parsing checks on an empty manifest', async () => {
     const manifestArtifact = noUrlManifestParser('{}');
-    const results = await manifestValues.compute_(manifestArtifact);
+    const results = await ManifestValues.request(getMockContext(), manifestArtifact);
     assert.equal(results.isParseFailure, false);
     assert.equal(results.parseFailureReason, undefined);
   });
 
   it('passes the all checks with fixture manifest', async () => {
     const manifestArtifact = noUrlManifestParser(manifestSrc);
-    const results = await manifestValues.compute_(manifestArtifact);
+    const results = await ManifestValues.request(getMockContext(), manifestArtifact);
     assert.equal(results.isParseFailure, false);
     assert.equal(results.parseFailureReason, undefined);
 
@@ -67,7 +71,7 @@ describe('ManifestValues computed artifact', () => {
       const Manifest = noUrlManifestParser(JSON.stringify({
         start_url: '/',
       }));
-      const results = await manifestValues.compute_(Manifest);
+      const results = await ManifestValues.request(getMockContext(), Manifest);
       const colorResults = results.allChecks.filter(i => i.id.includes('Color'));
       assert.equal(colorResults.every(i => i.passing === false), true);
     });
@@ -78,7 +82,7 @@ describe('ManifestValues computed artifact', () => {
         theme_color: 'no',
       }));
 
-      const results = await manifestValues.compute_(Manifest);
+      const results = await ManifestValues.request(getMockContext(), Manifest);
       const colorResults = results.allChecks.filter(i => i.id.includes('Color'));
       assert.equal(colorResults.every(i => i.passing === false), true);
     });
@@ -89,7 +93,7 @@ describe('ManifestValues computed artifact', () => {
         theme_color: '#FAFAFA',
       }));
 
-      const results = await manifestValues.compute_(Manifest);
+      const results = await ManifestValues.request(getMockContext(), Manifest);
       const colorResults = results.allChecks.filter(i => i.id.includes('Color'));
       assert.equal(colorResults.every(i => i.passing === true), true);
     });
@@ -123,7 +127,7 @@ describe('ManifestValues computed artifact', () => {
           name: 'NoIconsHere',
         });
         const Manifest = noUrlManifestParser(manifestSrc);
-        const results = await manifestValues.compute_(Manifest);
+        const results = await ManifestValues.request(getMockContext(), Manifest);
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
         assert.equal(iconResults.every(i => i.passing === false), true);
       });
@@ -133,7 +137,7 @@ describe('ManifestValues computed artifact', () => {
           icons: [],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
-        const results = await manifestValues.compute_(Manifest);
+        const results = await ManifestValues.request(getMockContext(), Manifest);
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
         assert.equal(iconResults.every(i => i.passing === false), true);
       });
@@ -147,7 +151,7 @@ describe('ManifestValues computed artifact', () => {
           }],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
-        const results = await manifestValues.compute_(Manifest);
+        const results = await ManifestValues.request(getMockContext(), Manifest);
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
 
         assert.equal(iconResults.every(i => i.passing === false), true);
@@ -161,7 +165,7 @@ describe('ManifestValues computed artifact', () => {
           }],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
-        const results = await manifestValues.compute_(Manifest);
+        const results = await ManifestValues.request(getMockContext(), Manifest);
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
 
         assert.equal(iconResults.every(i => i.passing === true), true);
@@ -177,7 +181,7 @@ describe('ManifestValues computed artifact', () => {
           }],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
-        const results = await manifestValues.compute_(Manifest);
+        const results = await ManifestValues.request(getMockContext(), Manifest);
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
 
         assert.equal(iconResults.every(i => i.passing === true), true);
@@ -192,7 +196,7 @@ describe('ManifestValues computed artifact', () => {
           }],
         });
         const Manifest = noUrlManifestParser(manifestSrc);
-        const results = await manifestValues.compute_(Manifest);
+        const results = await ManifestValues.request(getMockContext(), Manifest);
         const iconResults = results.allChecks.filter(i => i.id.includes('Icons'));
 
         assert.equal(iconResults.every(i => i.passing === false), true);

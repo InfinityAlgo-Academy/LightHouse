@@ -6,6 +6,7 @@
 'use strict';
 
 const Audit = require('./audit');
+const ManifestValues = require('../gather/computed/manifest-values');
 
 class ManifestShortNameLength extends Audit {
   /**
@@ -25,10 +26,11 @@ class ManifestShortNameLength extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit(artifacts) {
-    const manifestValues = await artifacts.requestManifestValues(artifacts.Manifest);
+  static async audit(artifacts, context) {
+    const manifestValues = await ManifestValues.request(context, artifacts.Manifest);
     // If there's no valid manifest, this audit is not applicable
     if (manifestValues.isParseFailure) {
       return {
