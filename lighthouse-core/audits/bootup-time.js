@@ -8,7 +8,7 @@
 const Audit = require('./audit');
 const NetworkRequest = require('../lib/network-request');
 const {taskGroups} = require('../lib/task-groups');
-const i18n = require('../lib/i18n');
+const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the time spent executing javascript files during the load. This descriptive title is shown to users when the amount is acceptable and no user action is required. */

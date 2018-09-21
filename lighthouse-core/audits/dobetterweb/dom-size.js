@@ -14,7 +14,7 @@
 
 const Audit = require('../audit');
 const Util = require('../../report/html/renderer/util.js');
-const i18n = require('../../lib/i18n');
+const i18n = require('../../lib/i18n/i18n.js');
 
 const MAX_DOM_NODES = 1500;
 const MAX_DOM_TREE_WIDTH = 60;

@@ -12,7 +12,7 @@ const defaultConfig = require('../../config/default-config.js');
 const log = require('lighthouse-logger');
 const Gatherer = require('../../gather/gatherers/gatherer');
 const Audit = require('../../audits/audit');
-const i18n = require('../../lib/i18n');
+const i18n = require('../../lib/i18n/i18n.js');
 
 /* eslint-env jest */
 

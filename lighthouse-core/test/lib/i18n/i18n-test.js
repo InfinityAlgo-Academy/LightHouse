@@ -6,7 +6,7 @@
 'use strict';
 
 const path = require('path');
-const i18n = require('../../lib/i18n');
+const i18n = require('../../../lib/i18n/i18n.js');
 
 /* eslint-env jest */
 
@@ -37,14 +37,14 @@ describe('i18n', () => {
       const templates = {daString: 'use me!'};
       const formatter = i18n.createMessageInstanceIdFn(fakeFile, templates);
 
-      const expected = 'lighthouse-core/test/lib/fake-file.js | daString # 0';
+      const expected = 'lighthouse-core/test/lib/i18n/fake-file.js | daString # 0';
       expect(formatter(templates.daString, {x: 1})).toBe(expected);
     });
   });
 
   describe('#replaceIcuMessageInstanceIds', () => {
     it('replaces the references in the LHR', () => {
-      const templateID = 'lighthouse-core/test/lib/fake-file.js | daString';
+      const templateID = 'lighthouse-core/test/lib/i18n/fake-file.js | daString';
       const reference = templateID + ' # 0';
       const lhr = {audits: {'fake-audit': {title: reference}}};
 

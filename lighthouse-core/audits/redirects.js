@@ -7,7 +7,7 @@
 
 const Audit = require('./audit');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
-const i18n = require('../lib/i18n');
+const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates. */

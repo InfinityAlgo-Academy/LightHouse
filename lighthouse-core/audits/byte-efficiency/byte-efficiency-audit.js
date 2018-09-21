@@ -8,7 +8,7 @@
 const Audit = require('../audit');
 const linearInterpolation = require('../../lib/statistics').linearInterpolation;
 const Interactive = require('../../gather/computed/metrics/lantern-interactive');
-const i18n = require('../../lib/i18n');
+const i18n = require('../../lib/i18n/i18n.js');
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, {});
 

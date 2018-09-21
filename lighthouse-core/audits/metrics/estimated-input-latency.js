@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('../audit');
-const i18n = require('../../lib/i18n');
+const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** The name of the metric that marks the estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */

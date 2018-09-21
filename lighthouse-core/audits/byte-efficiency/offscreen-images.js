@@ -12,7 +12,7 @@
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const Sentry = require('../../lib/sentry');
 const URL = require('../../lib/url-shim');
-const i18n = require('../../lib/i18n');
+const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to defer loading offscreen images. Offscreen images are images located outside of the visible browser viewport. As they are unseen by the user and slow down page load, they should be loaded later, closer to when the user is going to see them. This is displayed in a list of audit titles that Lighthouse generates. */

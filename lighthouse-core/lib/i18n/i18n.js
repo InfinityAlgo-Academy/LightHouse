@@ -11,9 +11,9 @@ const log = require('lighthouse-logger');
 const MessageFormat = require('intl-messageformat').default;
 const MessageParser = require('intl-messageformat-parser');
 const lookupClosestLocale = require('lookup-closest-locale');
-const LOCALES = require('./locales');
+const LOCALES = require('./locales.js');
 
-const LH_ROOT = path.join(__dirname, '../../');
+const LH_ROOT = path.join(__dirname, '../../../');
 const MESSAGE_INSTANCE_ID_REGEX = /(.* \| .*) # (\d+)$/;
 // Above regex is very slow against large strings. Use QUICK_REGEX as a much quicker discriminator.
 const MESSAGE_INSTANCE_ID_QUICK_REGEX = / # \d+$/;

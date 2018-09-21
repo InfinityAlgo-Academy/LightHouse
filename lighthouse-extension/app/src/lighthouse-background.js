@@ -9,7 +9,7 @@ const lighthouse = require('../../../lighthouse-core/index');
 const RawProtocol = require('../../../lighthouse-core/gather/connections/raw');
 const Config = require('../../../lighthouse-core/config/config');
 const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
-const i18n = require('../../../lighthouse-core/lib/i18n');
+const i18n = require('../../../lighthouse-core/lib/i18n/i18n.js');
 const log = require('lighthouse-logger');
 
 /** @typedef {import('../../../lighthouse-core/gather/connections/connection.js')} Connection */

@@ -9,7 +9,7 @@ const URL = require('../lib/url-shim');
 const Audit = require('./audit');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
 const CriticalRequestChains = require('../gather/computed/critical-request-chains');
-const i18n = require('../lib/i18n');
+const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to use <link rel=preload> to initiate important network requests earlier during page load. This is displayed in a list of audit titles that Lighthouse generates. */

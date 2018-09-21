@@ -8,7 +8,7 @@
 /* eslint-disable max-len */
 
 const constants = require('./constants');
-const i18n = require('../lib/i18n');
+const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Title of the Performance category of audits. Equivalent to 'Web performance', this term is inclusive of all web page speed and loading optimization topics. Also used as a label of a score gauge; try to limit to 20 characters. */
