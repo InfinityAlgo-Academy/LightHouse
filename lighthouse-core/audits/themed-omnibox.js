@@ -6,8 +6,8 @@
 'use strict';
 
 const MultiCheckAudit = require('./multi-check-audit');
-const validColor = require('../lib/web-inspector').Color.parse;
 const ManifestValues = require('../gather/computed/manifest-values');
+const cssParsers = require('cssstyle/lib/parsers');
 
 /**
  * @fileoverview
@@ -35,13 +35,21 @@ class ThemedOmnibox extends MultiCheckAudit {
   }
 
   /**
+   * @param {string} color
+   * @return {boolean}
+   */
+  static isValidColor(color) {
+    return cssParsers.valueType(color) === cssParsers.TYPES.COLOR;
+  }
+
+  /**
    * @param {LH.Artifacts['ThemeColor']} themeColorMeta
    * @param {Array<string>} failures
    */
   static assessMetaThemecolor(themeColorMeta, failures) {
     if (themeColorMeta === null) {
       failures.push('No `<meta name="theme-color">` tag found');
-    } else if (!validColor(themeColorMeta)) {
+    } else if (!ThemedOmnibox.isValidColor(themeColorMeta)) {
       failures.push('The theme-color meta tag did not contain a valid CSS color');
     }
   }

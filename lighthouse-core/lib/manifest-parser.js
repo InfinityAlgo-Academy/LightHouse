@@ -6,7 +6,7 @@
 'use strict';
 
 const URL = require('./url-shim');
-const validateColor = require('./web-inspector').Color.parse;
+const cssParsers = require('cssstyle/lib/parsers');
 
 const ALLOWED_DISPLAY_VALUES = [
   'fullscreen',
@@ -30,6 +30,14 @@ const ALLOWED_ORIENTATION_VALUES = [
   'landscape-primary',
   'landscape-secondary',
 ];
+
+/**
+ * @param {string} color
+ * @return {boolean}
+ */
+function isValidColor(color) {
+  return cssParsers.valueType(color) === cssParsers.TYPES.COLOR;
+}
 
 /**
  * @param {*} raw
@@ -66,9 +74,8 @@ function parseColor(raw) {
     return color;
   }
 
-  // Use DevTools's color parser to check CSS3 Color parsing.
-  const validatedColor = validateColor(color.raw);
-  if (!validatedColor) {
+  // Use color parser to check CSS3 Color parsing.
+  if (!isValidColor(color.raw)) {
     color.value = undefined;
     color.warning = 'ERROR: color parsing failed.';
   }

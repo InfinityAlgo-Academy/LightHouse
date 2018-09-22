@@ -149,9 +149,6 @@ module.exports = (function() {
     Log: 'log',
   };
 
-  // Dependencies for color parsing.
-  require('chrome-devtools-frontend/front_end/common/Color.js');
-
   // Dependencies for effective CSS rule calculation.
   require('chrome-devtools-frontend/front_end/common/TextRange.js');
   require('chrome-devtools-frontend/front_end/sdk/CSSMatchedStyles.js');
