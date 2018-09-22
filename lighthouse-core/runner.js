@@ -311,9 +311,7 @@ class Runner {
   static getArtifactRuntimeError(artifacts) {
     for (const possibleErrorArtifact of Object.values(artifacts)) {
       if (possibleErrorArtifact instanceof LHError && possibleErrorArtifact.lhrRuntimeError) {
-        const errorMessage = possibleErrorArtifact.friendlyMessage ?
-            `${possibleErrorArtifact.friendlyMessage} (${possibleErrorArtifact.message})` :
-            possibleErrorArtifact.message;
+        const errorMessage = possibleErrorArtifact.friendlyMessage || possibleErrorArtifact.message;
 
         return {
           code: possibleErrorArtifact.code,

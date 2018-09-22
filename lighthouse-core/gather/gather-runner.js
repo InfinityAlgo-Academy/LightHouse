@@ -156,22 +156,19 @@ class GatherRunner {
       return URL.equalWithExcludedFragments(record.url, url);
     });
 
-    let errorCode;
-    let errorReason;
+    let errorDef;
     if (!mainRecord) {
-      errorCode = LHError.errors.NO_DOCUMENT_REQUEST;
+      errorDef = LHError.errors.NO_DOCUMENT_REQUEST;
     } else if (mainRecord.failed) {
-      errorCode = LHError.errors.FAILED_DOCUMENT_REQUEST;
-      errorReason = mainRecord.localizedFailDescription;
+      errorDef = {...LHError.errors.FAILED_DOCUMENT_REQUEST};
+      errorDef.message += ` ${mainRecord.localizedFailDescription}.`;
     } else if (mainRecord.hasErrorStatusCode()) {
-      errorCode = LHError.errors.ERRORED_DOCUMENT_REQUEST;
-      errorReason = `Status code: ${mainRecord.statusCode}`;
+      errorDef = {...LHError.errors.ERRORED_DOCUMENT_REQUEST};
+      errorDef.message += ` Status code: ${mainRecord.statusCode}.`;
     }
 
-    if (errorCode) {
-      const error = new LHError(errorCode, {reason: errorReason});
-      log.error('GatherRunner', error.message, url);
-      return error;
+    if (errorDef) {
+      return new LHError(errorDef);
     }
   }
 
@@ -279,9 +276,8 @@ class GatherRunner {
     if (!driver.online) pageLoadError = undefined;
 
     if (pageLoadError) {
-      passContext.LighthouseRunWarnings.push('Lighthouse was unable to reliably load the ' +
-        'page you requested. Make sure you are testing the correct URL and that the server is ' +
-        'properly responding to all requests.');
+      log.error('GatherRunner', pageLoadError.message, passContext.url);
+      passContext.LighthouseRunWarnings.push(pageLoadError.friendlyMessage);
     }
 
     // Expose devtoolsLog, networkRecords, and trace (if present) to gatherers
@@ -333,7 +329,6 @@ class GatherRunner {
     /** @type {Partial<LH.GathererArtifacts>} */
     const gathererArtifacts = {};
 
-    const pageLoadFailures = [];
     const resultsEntries = /** @type {GathererResultsEntries} */ (Object.entries(gathererResults));
     for (const [gathererName, phaseResultsPromises] of resultsEntries) {
       if (gathererArtifacts[gathererName] !== undefined) continue;
@@ -349,17 +344,10 @@ class GatherRunner {
         // An error result must be non-fatal to not have caused an exit by now,
         // so return it to runner to handle turning it into an error audit.
         gathererArtifacts[gathererName] = err;
-        // Track page load errors separately, so we can fail loudly if needed.
-        if (LHError.isPageLoadError(err)) pageLoadFailures.push(err);
       }
 
       if (gathererArtifacts[gathererName] === undefined) {
         throw new Error(`${gathererName} failed to provide an artifact.`);
-      }
-
-      // Fail the run if more than 50% of all artifacts failed due to page load failure.
-      if (pageLoadFailures.length > Object.keys(gathererArtifacts).length * 0.5) {
-        throw LHError.fromLighthouseError(pageLoadFailures[0]);
       }
     }
 

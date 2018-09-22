@@ -627,7 +627,7 @@ describe('GatherRunner', function() {
       mainRecord.localizedFailDescription = 'foobar';
       const error = GatherRunner.getPageLoadError(url, [mainRecord]);
       assert.equal(error.message, 'FAILED_DOCUMENT_REQUEST');
-      assert.ok(/Your page failed to load/.test(error.friendlyMessage));
+      assert.ok(/^Lighthouse was unable to reliably load/.test(error.friendlyMessage));
     });
 
     it('fails when page times out', () => {
@@ -635,7 +635,7 @@ describe('GatherRunner', function() {
       const records = [];
       const error = GatherRunner.getPageLoadError(url, records);
       assert.equal(error.message, 'NO_DOCUMENT_REQUEST');
-      assert.ok(/Your page failed to load/.test(error.friendlyMessage));
+      assert.ok(/^Lighthouse was unable to reliably load/.test(error.friendlyMessage));
     });
 
     it('fails when page returns with a 404', () => {
@@ -645,7 +645,7 @@ describe('GatherRunner', function() {
       mainRecord.statusCode = 404;
       const error = GatherRunner.getPageLoadError(url, [mainRecord]);
       assert.equal(error.message, 'ERRORED_DOCUMENT_REQUEST');
-      assert.ok(/Your page failed to load/.test(error.friendlyMessage));
+      assert.ok(/^Lighthouse was unable to reliably load/.test(error.friendlyMessage));
     });
 
     it('fails when page returns with a 500', () => {
@@ -655,7 +655,7 @@ describe('GatherRunner', function() {
       mainRecord.statusCode = 500;
       const error = GatherRunner.getPageLoadError(url, [mainRecord]);
       assert.equal(error.message, 'ERRORED_DOCUMENT_REQUEST');
-      assert.ok(/Your page failed to load/.test(error.friendlyMessage));
+      assert.ok(/^Lighthouse was unable to reliably load/.test(error.friendlyMessage));
     });
   });
 

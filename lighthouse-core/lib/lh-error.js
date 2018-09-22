@@ -32,15 +32,6 @@ class LighthouseError extends Error {
   }
 
   /**
-   * @param {{code?: string}} err
-   * @return {err is LighthouseError}
-   */
-  static isPageLoadError(err) {
-    return err.code === ERRORS.NO_DOCUMENT_REQUEST.code ||
-      err.code === ERRORS.FAILED_DOCUMENT_REQUEST.code;
-  }
-
-  /**
    * @param {LighthouseError} err
    * @return {LighthouseError}
    */
