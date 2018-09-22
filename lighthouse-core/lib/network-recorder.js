@@ -5,7 +5,6 @@
  */
 'use strict';
 
-const NetworkManager = require('./web-inspector').NetworkManager;
 const NetworkRequest = require('./network-request');
 const EventEmitter = require('events').EventEmitter;
 const log = require('lighthouse-logger');
@@ -45,10 +44,6 @@ class NetworkRecorder extends EventEmitter {
    */
   once(event, listener) {
     return super.once(event, listener);
-  }
-
-  get EventTypes() {
-    return NetworkManager.Events;
   }
 
   isIdle() {
