@@ -2394,6 +2394,37 @@
         "summary": {}
       }
     },
+    "js-libraries": {
+      "id": "js-libraries",
+      "title": "Detected JavaScript libraries",
+      "description": "All front-end JavaScript libraries detected on the page.",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "rawValue": true,
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "name",
+            "itemType": "text",
+            "text": "Name"
+          },
+          {
+            "key": "version",
+            "itemType": "text",
+            "text": "Version"
+          }
+        ],
+        "items": [
+          {
+            "name": "jQuery",
+            "version": "2.1.1",
+            "npm": "jquery"
+          }
+        ],
+        "summary": {}
+      }
+    },
     "no-websql": {
       "id": "no-websql",
       "title": "Uses WebSQL DB",
@@ -3259,6 +3290,10 @@
         {
           "id": "no-vulnerable-libraries",
           "weight": 1
+        },
+        {
+          "id": "js-libraries",
+          "weight": 0
         },
         {
           "id": "notification-on-start",

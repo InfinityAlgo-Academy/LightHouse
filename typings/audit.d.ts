@@ -95,7 +95,7 @@ declare global {
 
     export type DetailsItem = string | number | DetailsRendererNodeDetailsJSON |
       DetailsRendererLinkDetailsJSON | DetailsRendererCodeDetailJSON | undefined |
-      boolean | DetailsRendererUrlDetailsJSON;
+      boolean | DetailsRendererUrlDetailsJSON | null;
 
     export interface DetailsRendererNodeDetailsJSON {
       type: 'node';
