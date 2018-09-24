@@ -311,15 +311,23 @@ class Driver {
         contextId,
       };
 
-      this.sendCommand('Runtime.evaluate', evaluationParams).then(result => {
+      this.sendCommand('Runtime.evaluate', evaluationParams).then(response => {
         clearTimeout(asyncTimeout);
-        const value = result.result.value;
 
-        if (result.exceptionDetails) {
+        if (response.exceptionDetails) {
           // An error occurred before we could even create a Promise, should be *very* rare
-          reject(new Error('an unexpected driver error occurred'));
-        } if (value && value.__failedInBrowser) {
-          reject(Object.assign(new Error(), value));
+          return reject(new Error(`Evaluation exception: ${response.exceptionDetails.text}`));
+        }
+
+        // Protocol should always return a 'result' object, but it is sometimes undefined.  See #6026.
+        if (response.result === undefined) {
+          return reject(new Error('Runtime.evaluate response did not contain a "result" object'));
+        }
+
+        const value = response.result.value;
+
+        if (value && value.__failedInBrowser) {
+          return reject(Object.assign(new Error(), value));
         } else {
           resolve(value);
         }
