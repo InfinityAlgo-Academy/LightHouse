@@ -12,7 +12,6 @@ const stream = require('stream');
 const Simulator = require('./dependency-graph/simulator/simulator');
 const lanternTraceSaver = require('./lantern-trace-saver');
 const Metrics = require('./traces/pwmetrics-events');
-const TraceParser = require('./traces/trace-parser');
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 
@@ -94,7 +93,7 @@ async function loadArtifacts(basePath) {
 
   // load devtoolsLogs
   artifacts.devtoolsLogs = {};
-  filenames.filter(f => f.endsWith(devtoolsLogSuffix)).map(filename => {
+  filenames.filter(f => f.endsWith(devtoolsLogSuffix)).forEach(filename => {
     const passName = filename.replace(devtoolsLogSuffix, '');
     const devtoolsLog = JSON.parse(fs.readFileSync(path.join(basePath, filename), 'utf8'));
     artifacts.devtoolsLogs[passName] = devtoolsLog;
@@ -102,22 +101,12 @@ async function loadArtifacts(basePath) {
 
   // load traces
   artifacts.traces = {};
-  const promises = filenames.filter(f => f.endsWith(traceSuffix)).map(filename => {
-    return new Promise(resolve => {
-      const passName = filename.replace(traceSuffix, '');
-      const readStream = fs.createReadStream(path.join(basePath, filename), {
-        encoding: 'utf-8',
-        highWaterMark: 4 * 1024 * 1024, // TODO benchmark to find the best buffer size here
-      });
-      const parser = new TraceParser();
-      readStream.on('data', chunk => parser.parseChunk(chunk));
-      readStream.on('end', _ => {
-        artifacts.traces[passName] = parser.getTrace();
-        resolve();
-      });
-    });
+  filenames.filter(f => f.endsWith(traceSuffix)).forEach(filename => {
+    const file = fs.readFileSync(path.join(basePath, filename), {encoding: 'utf-8'});
+    const trace = JSON.parse(file);
+    const passName = filename.replace(traceSuffix, '');
+    artifacts.traces[passName] = Array.isArray(trace) ? {traceEvents: trace} : trace;
   });
-  await Promise.all(promises);
 
   return artifacts;
 }

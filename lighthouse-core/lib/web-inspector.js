@@ -21,10 +21,6 @@ module.exports = (function() {
     global.self = global;
   }
 
-  if (typeof global.window === 'undefined') {
-    global.window = global;
-  }
-
   global.Node = {
     ELEMENT_NODE: 1,
     TEXT_NODE: 3,
@@ -45,28 +41,11 @@ module.exports = (function() {
   // See https://github.com/GoogleChrome/lighthouse/issues/73
   const _setImmediate = global.setImmediate;
 
-  global.Protocol = {
-    Agents() {},
-  };
-
   global.WebInspector = {};
   const WebInspector = global.WebInspector;
 
   // Shared Dependencies
-  require('chrome-devtools-frontend/front_end/common/Object.js');
-  require('chrome-devtools-frontend/front_end/common/UIString.js');
   require('chrome-devtools-frontend/front_end/platform/utilities.js');
-  require('chrome-devtools-frontend/front_end/sdk/Target.js');
-  require('chrome-devtools-frontend/front_end/sdk/TargetManager.js');
-
-  // Dependencies for timeline-model
-  WebInspector.console = {
-    error() {},
-  };
-
-  // used for streaming json parsing
-  require('chrome-devtools-frontend/front_end/common/TextUtils.js');
-  require('chrome-devtools-frontend/front_end/timeline/TimelineLoader.js');
 
   // Dependencies for effective CSS rule calculation.
   require('chrome-devtools-frontend/front_end/common/TextRange.js');

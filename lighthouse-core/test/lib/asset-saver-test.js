@@ -170,4 +170,15 @@ describe('asset-saver helper', () => {
         });
     }, 40 * 1000);
   });
+
+  describe('loadArtifacts', () => {
+    it('loads artifacts from disk', async () => {
+      const artifactsPath = __dirname + '/../fixtures/artifacts/perflog/';
+      const artifacts = await assetSaver.loadArtifacts(artifactsPath);
+      assert.strictEqual(artifacts.LighthouseRunWarnings.length, 2);
+      assert.strictEqual(artifacts.URL.requestedUrl, 'https://www.reddit.com/r/nba');
+      assert.strictEqual(artifacts.devtoolsLogs.defaultPass.length, 555);
+      assert.strictEqual(artifacts.traces.defaultPass.traceEvents.length, 12);
+    });
+  });
 });

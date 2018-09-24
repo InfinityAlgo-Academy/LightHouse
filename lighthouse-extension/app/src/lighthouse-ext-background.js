@@ -231,8 +231,8 @@ function isRunning() {
   return lighthouseIsRunning;
 }
 
-// Run when in extension context, but not in devtools.
-if ('chrome' in window && chrome.runtime) {
+// Run when in extension context, but not in devtools or unit tests.
+if (typeof window !== 'undefined' && 'chrome' in window && chrome.runtime) {
   chrome.runtime.onInstalled.addListener(details => {
     if (details.previousVersion) {
       // eslint-disable-next-line no-console

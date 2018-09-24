@@ -8,7 +8,7 @@
     "chrome-debug": "./lighthouse-core/scripts/manual-chrome-launcher.js"
   },
   "engines": {
-    "node": ">=8.9"
+    "node": ">=8.10"
   },
   "scripts": {
     "install-all": "npm-run-posix-or-windows install-all:task",
