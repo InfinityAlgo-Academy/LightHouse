@@ -56,22 +56,6 @@ describe('asset-saver helper', () => {
       assert.ok(fileContents.includes('"message": "first"'));
       fs.unlinkSync(filename);
     });
-
-    it('screenshots html file saved to disk with data', () => {
-      const ssHTMLFilename = 'the_file-0.screenshots.html';
-      const ssFileContents = fs.readFileSync(ssHTMLFilename, 'utf8');
-      assert.ok(/<!doctype/gim.test(ssFileContents));
-      const expectedScreenshotContent = '{"timestamp":668545858.596';
-      assert.ok(ssFileContents.includes(expectedScreenshotContent), 'unexpected screenshot html');
-      fs.unlinkSync(ssHTMLFilename);
-    });
-
-    it('screenshots json file saved to disk with data', () => {
-      const ssJSONFilename = 'the_file-0.screenshots.json';
-      const ssContents = JSON.parse(fs.readFileSync(ssJSONFilename, 'utf8'));
-      assert.equal(ssContents[0].timestamp, 668545858.596, 'unexpected screenshot json');
-      fs.unlinkSync(ssJSONFilename);
-    });
   });
 
   describe('prepareAssets', () => {

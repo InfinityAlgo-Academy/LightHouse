@@ -17,8 +17,6 @@ last-run-results.html
 
 *.trace.json
 *.devtoolslog.json
-*.screenshots.html
-*.screenshots.json
 *.report.html
 *.report.dom.html
 *.report.json

@@ -46,7 +46,7 @@ Logging:
   --quiet    Displays no progress, debug logs or errors                                                                                    [boolean]
 
 Configuration:
-  --save-assets                  Save the trace contents & screenshots to disk                                                             [boolean]
+  --save-assets                  Save the trace & devtools log to disk                                                                     [boolean]
   --list-all-audits              Prints a list of all available audits and exits                                                           [boolean]
   --list-trace-categories        Prints a list of all required trace categories and exits                                                  [boolean]
   --additional-trace-categories  Additional categories to capture with the trace (comma-delimited).
@@ -97,7 +97,7 @@ Examples:
   lighthouse <url> --view                                                   Opens the HTML report in a browser after the run completes
   lighthouse <url> --config-path=./myconfig.js                              Runs Lighthouse with your own configuration: custom audits, report
                                                                             generation, etc.
-  lighthouse <url> --output=json --output-path=./report.json --save-assets  Save trace, screenshots, and named JSON report.
+  lighthouse <url> --output=json --output-path=./report.json --save-assets  Save trace, devtoolslog, and named JSON report.
   lighthouse <url> --disable-device-emulation                               Disable device emulation and all throttling.
     --throttling-method=provided
   lighthouse <url> --chrome-flags="--window-size=412,732"                   Launch Chrome with a specific window size
@@ -129,7 +129,7 @@ lighthouse --output json --output html
 
 lighthouse --output-path=~/mydir/foo.out --save-assets
 # saves `~/mydir/foo.report.html`
-# saves `~/mydir/foo-0.trace.json` and `~/mydir/foo-0.screenshots.html`
+# saves `~/mydir/foo-0.trace.json` and `~/mydir/foo-0.devtoolslog.json`
 
 lighthouse --output-path=./report.json --output json
 # saves `./report.json`
