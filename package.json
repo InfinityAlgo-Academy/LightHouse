@@ -112,7 +112,7 @@
   },
   "dependencies": {
     "axe-core": "3.0.0-beta.2",
-    "chrome-devtools-frontend": "1.0.422034",
+    "chrome-devtools-frontend": "1.0.593291",
     "chrome-launcher": "^0.10.4",
     "configstore": "^3.1.1",
     "cssstyle": "1.1.1",

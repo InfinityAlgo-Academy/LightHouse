@@ -7,48 +7,49 @@
 'use strict';
 
 /**
- * Stubbery to allow portions of the DevTools frontend to be used in lighthouse. `WebInspector`
+ * Stubbery to allow portions of the DevTools frontend to be used in lighthouse. `SDK`
  * technically lives on the global object but should be accessed through a normal `require` call.
  */
 module.exports = (function() {
-  if (global.WebInspector) {
-    return global.WebInspector;
+  if (global.SDK) {
+    return global.SDK;
   }
 
-  // Global pollution.
-  // Check below is to make it worker-friendly where global is worker's self.
-  if (global.self !== global) {
-    global.self = global;
-  }
-
+  // Dependencies for effective CSS rule calculation. Global pollution!
+  global.SDK = {};
+  global.TextUtils = {};
   global.Node = {
     ELEMENT_NODE: 1,
     TEXT_NODE: 3,
   };
-
-  global.CSSAgent = {};
-  global.CSSAgent.StyleSheetOrigin = {
-    Injected: 'injected',
-    UserAgent: 'user-agent',
-    Inspector: 'inspector',
-    Regular: 'regular',
+  global.Protocol = {
+    CSS: {
+      StyleSheetOrigin: {
+        Injected: 'injected',
+        UserAgent: 'user-agent',
+        Inspector: 'inspector',
+        Regular: 'regular',
+      },
+    },
   };
 
-  global.CSS = {};
-  global.CSS.supports = () => true;
+  /**
+   * The single prototype augmentation needed from 'chrome-devtools-frontend/front_end/platform/utilities.js'.
+   * @return {Array<number>}
+   */
+  String.prototype.computeLineEndings = function() { // eslint-disable-line no-extend-native
+    const endings = [];
+    for (let i = 0; i < this.length; i++) {
+      if (this.charAt(i) === '\n') {
+        endings.push(i);
+      }
+    }
+    endings.push(this.length);
+    return endings;
+  };
 
-  // Stash the real one so we can reinstall after DT incorrectly polyfills.
-  // See https://github.com/GoogleChrome/lighthouse/issues/73
-  const _setImmediate = global.setImmediate;
-
-  global.WebInspector = {};
-  const WebInspector = global.WebInspector;
-
-  // Shared Dependencies
-  require('chrome-devtools-frontend/front_end/platform/utilities.js');
-
-  // Dependencies for effective CSS rule calculation.
-  require('chrome-devtools-frontend/front_end/common/TextRange.js');
+  require('chrome-devtools-frontend/front_end/text_utils/Text.js');
+  require('chrome-devtools-frontend/front_end/text_utils/TextRange.js');
   require('chrome-devtools-frontend/front_end/sdk/CSSMatchedStyles.js');
   require('chrome-devtools-frontend/front_end/sdk/CSSMedia.js');
   require('chrome-devtools-frontend/front_end/sdk/CSSMetadata.js');
@@ -56,15 +57,5 @@ module.exports = (function() {
   require('chrome-devtools-frontend/front_end/sdk/CSSRule.js');
   require('chrome-devtools-frontend/front_end/sdk/CSSStyleDeclaration.js');
 
-  WebInspector.CSSMetadata._generatedProperties = [
-    {
-      name: 'font-size',
-      inherited: true,
-    },
-  ];
-
-  // Restore setImmediate, see comment at top.
-  global.setImmediate = _setImmediate;
-
-  return WebInspector;
+  return global.SDK;
 })();
