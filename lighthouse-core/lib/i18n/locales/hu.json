@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Egyes Chrome-bővítmények kedvezőtlenül befolyásolták az oldal betöltési teljesítményét. Próbálja meg ellenőrizni az oldalt inkognitómódban vagy tiszta Chrome-profilból."
+    "message": "Egyes Chrome-bővítmények kedvezőtlenül befolyásolták az oldal betöltési teljesítményét. Próbálkozzon az oldal inkognitómódban vagy bővítmények nélküli Chrome-profilból történő ellenőrzésével."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Szkriptértékelés"
@@ -111,7 +111,7 @@
     "message": "Jelenítse meg a képeket következő generációs formátumokban"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Az alábbi kritikuslekérdezés-láncok megmutatják, hogy milyen forrásokat kapnak kiemelt prioritást. Fontolja meg a láncok hosszának csökkentését, az erőforrások letöltési méretének csökkentését, vagy a felesleges erőforrások letöltésének késleltetését az oldal betöltésének javítása érdekében. [További információ](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Az alábbi kritikuslekérdezés-láncok megmutatják, hogy milyen források töltődnek be prioritással. Az oldalbetöltés javítása érdekében fontolja meg a láncok hosszának csökkentését, a letöltött erőforrások méretének csökkentését, vagy a felesleges erőforrások letöltésének késleltetését. [További információ.](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 lánc található}other{# lánc található}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Minimalizálja a kritikus lekérdezések mélységét"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Maximális DOM-mélység"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Összes DOM-csomópont"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Alárendelt elemek maximális száma"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "A böngészőket fejlesztő mérnökök azt javasolják, hogy az oldalakon ~1500 DOM-csomópontnál kevesebb legyen. A legkedvezőbb a 32 elemnél kisebb és a 60 alárendelt/fölérendelt elemnél kisebb famélység. A nagy DOM növelheti a memóriahasználatot, és hosszabb [stílusszámítást](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), valamint költséges [elrendezés-újraszámítást](https://developers.google.com/speed/articles/reflow) eredményezhet. [További információ](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Kerülje a túl nagy DOM-méretet"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Maximális DOM-mélység"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Összes DOM-csomópont"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Kerüli a túlzó DOM-méretet"
@@ -168,7 +177,7 @@
     "message": "Becsült bemeneti késés"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Az első, tartalommal rendelkező leképezés azt az időt jelöli, amely alatt a rendszer végrehajtja az első szöveg vagy kép megjelenítését. [További információ](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Az első vizuális tartalomválasz azt az időpontot jelöli, amikor a rendszer megkezdi az első szöveg vagy kép megjelenítését. [További információ.](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Első, tartalommal rendelkező leképezés"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Alacsony a szerver válaszideje (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Időtartam"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Név"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Kezdés ideje"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Típus"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Érdemes ellátnia alkalmazását a Felhasználói időmérés API-val, hogy a kulcsfontosságú felhasználói élményekről egyedi, valós mutatókat hozhasson létre. [További információ](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Érdemes felhasználnia alkalmazásában a User Timing API-t, amellyel valós használat során mért teljesítményadatokat kaphat a legfontosabb felhasználói műveletekről. [További információ.](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 felhasználói időmérés}other{# felhasználói időmérés}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Teljesítmény"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Gyorsítótár-TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Méret (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Eltöltött idő"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Potenciális megtakarítás (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potenciális megtakarítás (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "{wastedBytes, number, bytes} kB potenciális megtakarítás"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potenciális megtakarítás értéke: {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Ellenőrzések megjelenítése"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Kezdeti navigáció"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Kritikus elérési út maximális várakozási ideje:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Hiba!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Jelentési hiba: nincs ellenőrzési információ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Laboradatok"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Az aktuális oldal [Lighthouse](https://developers.google.com/web/tools/lighthouse/)-elemzése emulált 3G-n. Az értékek becslések, legközelebb eltérhetnek."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "További manuálisan elemzendő elemek"

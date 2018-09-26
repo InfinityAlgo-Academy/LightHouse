@@ -111,7 +111,7 @@
     "message": "Използвайте съвременни формати за показване на изображения"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Веригите от критични заявки по-долу ви показват кои ресурси са с висок приоритет. За да ускорите зареждането на страницата, препоръчваме да скъсите веригите, да намалите размера за изтегляне на ресурсите или да отложите изтеглянето на ненужните от тях. [Научете повече](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Веригите от критични заявки по-долу ви показват кои ресурси се зареждат с висок приоритет. За да ускорите зареждането на страницата, препоръчваме да скъсите веригите, да намалите размера за изтегляне на ресурсите или да отложите изтеглянето на ненужните от тях. [Научете повече](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{Намерена е 1 верига}other{Намерени са # вериги}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Намалете дълбочината на критичните заявки"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Максимална дълбочина на DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Общ брой възли на DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Максимален брой дъщерни елементи"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Браузърните инженери препоръчват страниците да съдържат под ~ 1500 възела на DOM. Най-добре е йерархичната структура да е с дълбочина под 32 елемента и всеки родителски елемент да има по-малко от 60 дъщерни. Големият размер на DOM може да доведе до използване на повече памет, удължаване на [стиловите изчисления](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и забавяне поради [преоформяне](https://developers.google.com/speed/articles/reflow). [Научете повече](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Не използвайте DOM с твърде голям размер"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Максимална дълбочина на DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Общ брой възли на DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Не се използва DOM с твърде голям размер"
@@ -168,7 +177,7 @@
     "message": "Прогнозно забавяне при входящо действие"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Показателят „Първо изобразяване на съдържание“ указва след колко време се изобразява първият текстов или графичен елемент. [Научете повече](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Показателят „Първо изобразяване на съдържание (FCP)“ указва след колко време се изобразява първият текстов или графичен елемент. [Научете повече](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Първо изобразяване на съдържание"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Сървърът отговаря бързо (време до първия байт)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Продължителност"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Име"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Начален час"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Тип"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Препоръчваме да използвате API за разбивка на потребителските времена за приложението си, за да се възползвате от персонализирани, действителни измервания на ключови аспекти от практическата работа на потребителите. [Научете повече](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Препоръчваме да използвате API за разбивка на потребителските времена за приложението си, за да измервате действителната му ефективност по време на ключови аспекти от практическата работа на потребителите. [Научете повече](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 потребителско време}other{# потребителски времена}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Ефективност"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Време на валидност на кеша"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Размер (КБ)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Прекарано време"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL адрес"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Потенциална икономия (КБ)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Потенциална икономия (мсек)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Потенциално спестяване на {wastedBytes, number, bytes} КБ"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Потенциално спестяване на {wastedMs, number, milliseconds} мсек"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} мсек"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} сек"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Показване на проверките"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Първоначална навигация"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Максимално забавяне в критичния път:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Грешка!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Грешка в отчета: няма информация за проверката"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Данни от контролиран тест"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Анализът с [Lighthouse](https://developers.google.com/web/tools/lighthouse/) на текущата страница бе извършен през емулирана 3G връзка. Стойностите са прогнозни и може да варират."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Допълнителни елементи, които да проверите ръчно"

@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chromen laajennukset heikensivät tämän sivun latausnopeutta. Yritä tarkastaa sivu incognito-tilassa tai puhtaalla Chrome-profiililla."
+    "message": "Chromen laajennukset heikensivät tämän sivun latausnopeutta. Yritä tarkastaa sivu incognito-tilassa tai Chrome-profiililla, johon ei ole lisätty laajennuksia."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Skriptin arviointi"
@@ -111,7 +111,7 @@
     "message": "Jakele kuvat seuraavan sukupolven muodoissa"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Alla olevat kriittiset pyyntöketjut kertovat, mille resursseille on määritetty korkea prioriteetti. Suosittelemme parantamaan sivun latausaikaa lyhentämällä ketjuja, pienentämällä resurssien latauskokoa ja lykkäämällä tarpeettomien resurssien lataamista. [Lue lisää](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Alla olevat kriittiset pyyntöketjut kertovat, minkä resurssien lataaminen priorisoidaan. Suosittelemme parantamaan sivun latausaikaa lyhentämällä ketjuja, pienentämällä resurssien latauskokoa ja lykkäämällä tarpeettomien resurssien lataamista. [Lue lisää](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 ketju löydetty}other{# ketjua löydetty}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Minimoi kriittisten pyyntöjen syvyys"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "DOM:n enimmäissyvyys"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "DOM-noodien kokonaismäärä"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Alatason kohteiden enimmäismäärä"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Selainten kehittäjät suosittelevat käyttämään sivulla enintään noin 1 500:aa DOM-noodia. Sopiva puun syvyys on korkeintaan 32 elementtiä ja alle 60 ala- tai ylätason elementtiä. Suuri DOM voi lisätä muistin käyttöä, pidentää [tyylilaskelmia](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) ja aiheuttaa työläitä [asettelun uudelleenjuoksutuksia](https://developers.google.com/speed/articles/reflow). [Lue lisää](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Vältä liian suurta DOM:ää"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "DOM:n enimmäissyvyys"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "DOM-noodien kokonaismäärä"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Välttää liian suurta DOM:ää"
@@ -168,7 +177,7 @@
     "message": "Arvioitu syöttöviive"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Ensimmäinen sisällön renderöinti kertoo, milloin ensimmäinen tekstikohde tai kuva renderöidään. [Lue lisää](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Ensimmäinen merkityksellinen piirtäminen kertoo, milloin sivun ensisijainen sisältö tulee näkyviin. [Lue lisää](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Ensimmäinen sisällön renderöinti"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Palvelimen vastausajat ovat lyhyitä (ensimmäistä tavua edeltävä aika)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Kesto"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Nimi"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Aloitusaika"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Tyyppi"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Suosittelemme käyttämään sovelluksen kehittämisessä User Timing ‑sovellusliittymää, jonka avulla voit arvioida tärkeitä käyttökokemuksia räätälöityjen ja todellisuuteen perustuvien mittarien avulla. [Lue lisää](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Suosittelemme käyttämään sovelluksen kehittämisessä User Timing ‑sovellusliittymää mittaamaan todellista toimivuutta tärkeiden käyttökokemuksien aikana. [Lue lisää](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 käyttäjän ajankäyttömerkintä}other{# käyttäjän ajankäyttömerkintää}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Tehokkuus"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Välimuistin käyttöikä"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Koko (kt)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Käytetty aika"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL-osoite"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Potentiaalinen säästö (kt)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potentiaalinen säästö (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potentiaalinen säästö: {wastedBytes, number, bytes} kt"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potentiaalinen säästö: {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Näytä tarkastukset"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Ensimmäinen navigointi"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Kriittisen polun enimmäisviive:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Virhe!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Raporttivirhe: ei tarkastustietoja"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Laboratoriodata"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysoi nykyisen sivun 3G-emulaation avulla. Arvot ovat arvioita ja voivat vaihdella."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Lisää manuaalisesti tarkistettavia kohteita"

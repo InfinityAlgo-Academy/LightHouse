@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome एक्सटेंशन ने इस पेज के लोड परफ़ॉर्मेंस पर नकारात्मक रूप से असर डाला है. गुप्त मोड में या किसी साफ़ Chrome प्रोफ़ाइल से कोई दूसरा पेज ऑडिट करके देखें."
+    "message": "Chrome एक्सटेंशन ने इस पेज के लोड परफ़ॉर्मेंस पर नकारात्मक रूप से असर डाला है. 'गुप्त मोड' में या बिना किसी एक्सटेंशन के Chrome प्रोफ़ाइल से पेज ऑडिट करके देखें."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "स्क्रिप्ट मूल्यांकन"
@@ -111,7 +111,7 @@
     "message": "इमेज अगली जेनरेशन के फ़ॉर्मेट में ऑफ़र करें"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "नीचे दी गई अहम अनुरोध शृंखलाएं आपको वे संसाधन दिखाती हैं जो उच्च प्राथमिकता के साथ जारी किए जाते हैं. शृंखलाओं की अवधि कम करने पर विचार करें, जिससे संसाधनों का डाउनलोड आकार कम हो जाएगा या पेज लोड को बेहतर बनाने के लिए गैर-ज़रूरी संसाधनों का डाउनलोड टल जाएगा. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "नीचे दी गई अहम अनुरोध शृंखलाएं आपको वे संसाधन दिखाती हैं जो उच्च प्राथमिकता से भरपूर हैं. शृंखलाओं की अवधि कम करने पर विचार करें, जिससे संसाधनों का डाउनलोड आकार कम हो जाएगा या पेज लोड को बेहतर बनाने के लिए गैर-ज़रूरी संसाधनों का डाउनलोड टल जाएगा. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 शृंखला मिली}one{# शृंखलाएं मिलीं}other{# शृंखलाएं मिलीं}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "अहम अनुरोधों की गहराई कम से कम करें"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "सबसे ज़्यादा DOM गहराई"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "कुल DOM नोड"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "ज़्यादा से ज़्यादा चिल्ड्रन"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "ब्राउज़र इंजीनियर सुझाव देते हैं कि पेज में ~1,500 से कम DOM नोड होने चाहिए. सबसे सही आंकड़ा है < 32 एलीमेंट वाली ट्री गहराई और 60 से कम चिल्ड्रन/पेरेंट एलीमेंट. ज़्यादा बड़े DOM से मेमोरी का इस्तेमाल बढ़ सकता है, जिससे ज़्यादा लंबे [स्टाइल कैल्युलेशन](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) हो सकते हैं और इनसे महंगे [लेआउट रीफ़्लो](https://developers.google.com/speed/articles/reflow) बन सकते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "बहुत ज़्यादा बड़े DOM आकार से बचें"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "सबसे ज़्यादा DOM गहराई"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "कुल DOM नोड"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "बहुत ज़्यादा बड़े DOM आकार से बचता है"
@@ -156,10 +165,10 @@
     "message": "JS को पार्स करने, कंपाइल करने और एक्ज़ीक्यूट करने में लगने वाला समय कम करने पर विचार करें. आप देखेंगे कि इसके ज़रिए छोटे-छोटे JS पेलोड डिलीवर करने में मदद मिलती है."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "मुख्य थ्रेड काम को कम से कम करें"
+    "message": "मुख्य थ्रेड के काम को कम करना"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
-    "message": "मुख्य थ्रेड काम को कम से कम करता है"
+    "message": "मुख्य थ्रेड के काम को कम करता है"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "ऊपर दिया गया स्कोर एक अनुमान है कि पेज लोड होने की सबसे व्यस्त 5 सेकंड की विंडो में आपके ऐप्लिकेशन को उपयोगकर्ता इनपुट का जवाब देने में, मिलीसेकंड में कितना समय लगेगा. अगर आपकी प्रतीक्षा अवधि 60 मिलीसेकंड से ज़्यादा है, तो उपयोगकर्ता आपके ऐप्लिकेशन को धीमा मान सकते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
@@ -168,7 +177,7 @@
     "message": "अनुमानित इनपुट प्रतीक्षा समय"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "पहला सार्थक सामग्री वाला पेंट वह समय चिह्नित करता है जब पहले लेख या इमेज को पेंट किया गया हो. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "फ़र्स्ट कॉन्टेंटफ़ुल पेंट वह समय चिह्नित करता है जब पहले लेख या इमेज को पेंट किया गया हो. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "उपयोगी सामग्री वाला पहला पेंट"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "सर्वर के जवाब देने के समय धीमे हैं (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "कुल समय"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "नाम"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "शुरुआत का समय"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "प्रकार"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "प्रमुख उपयोगकर्ताओं के पसंद के मुताबिक, असली दुनिया के माप तैयार करने के लिए अपने ऐप्लिकेशन को उपयोगकर्ता समय API (एपीआई) के ज़रिए तैयार करने पर विचार करें. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "प्रमुख उपयोगकर्ता अनुभवों के दौरान, असली दुनिया के माप तैयार करने के लिए अपने ऐप्लिकेशन को 'उपयोगकर्ता समय API (एपीआई)' के ज़रिए तैयार करने पर विचार करें. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 उपयोगकर्ता समय}one{# उपयोगकर्ता समय}other{# उपयोगकर्ता समय}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "परफ़ॉर्मेंस"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "कैश TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "आकार (केबी)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "बिताया गया समय"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "यूआरएल"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "हो सकने वाली बचत (केबी)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "हो सकने वाली बचत (‍मिली सेकंड)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "{wastedBytes, number, bytes} केबी की हो सकने वाली बचत"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "{wastedMs, number, milliseconds} मिलीसेकंड की हो सकने वाली बचत"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} मिलीसेकंड"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} सेकंड"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "ऑडिट दिखाएं"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "शुरुआती नेविगेशन"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "पाथ का ज़्यादा से ज़्यादा अहम प्रतीक्षा समय:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "गड़बड़ी!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "गड़बड़ी की रिपोर्ट करें: कोई ऑडिट जानकारी नहीं"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "किसी नई या दुबारा जाँची जाने वाली ऐप्लिकेशन के लिए तैयार किया गया डेटा"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "एम्युलेट किए गए 3G पर मौजूदा पेज का [लाइटहाउस](https://developers.google.com/web/tools/lighthouse/) विश्लेषण. मान अनुमानित हैं और इनमें अंतर हो सकता है."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "मैन्युअल रूप से देखे जाने वाले और ज़्यादा आइटम"

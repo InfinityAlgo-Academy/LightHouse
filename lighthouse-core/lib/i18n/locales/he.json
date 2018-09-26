@@ -111,7 +111,7 @@
     "message": "יש להציג תמונות בפורמטים עדכניים"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "בקטע 'שרשראות בקשה קריטיות' שבהמשך מוצגים המשאבים שמקבלים עדיפות גבוהה. כדי לשפר את מהירות טעינת הדף, כדאי לשקול את האפשרות לקצר את השרשראות, להקטין את גודל ההורדה של משאבים או לעכב את ההורדה של משאבים לא נחוצים. [מידע נוסף](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "בקטע 'שרשראות בקשה קריטיות' שבהמשך מוצגים המשאבים שנטענים עם עדיפות גבוהה. כדי לשפר את מהירות טעינת הדף, מומלץ לקצר את השרשראות, להקטין את גודל ההורדה של משאבים או לעכב את ההורדה של משאבים לא נחוצים. [מידע נוסף](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{נמצאה שרשרת אחת}two{נמצאו # שרשראות}many{נמצאו # שרשראות}other{נמצאו # שרשראות}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "יש לצמצם את העומק של בקשות קריטיות"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "עומק DOM מרבי"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "המספר הכולל של צומתי DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "מספר צאצאים מרבי"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "מפתחי דפדפנים ממליצים שדפים יכילו פחות מכ-1,500 צומתי DOM. המצב האופטימלי הוא עץ בעומק של פחות מ-32 אלמנטים ופחות מ-60 אלמנטים ברמת צאצא/אב. DOM גדול יכול להגדיל את צריכת הזיכרון, להאריך [חישובי סגנון](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) ולגרום לזרימות חוזרות של פריסה שצורכות נתונים רבים [layout reflows](https://developers.google.com/speed/articles/reflow). [מידע נוסף](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "יש להימנע מ-DOM גדול מדי"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "עומק DOM מרבי"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "המספר הכולל של צומתי DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "נמנע מ-DOM גדול מדי"
@@ -156,7 +165,7 @@
     "message": "כדאי לשקול את האפשרות לקצר את הזמן הדרוש לניתוח, הידור וביצוע JS. לשם כך כדאי להשתמש במטענים ייעודיים (payload) קטנים יותר של JS."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "יש לצמצם את העבודה על התהליכון הראשי"
+    "message": "צריך לצמצם את העבודה על התהליכון הראשי"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
     "message": "מצמצם את העבודה על התהליכון הראשי"
@@ -168,7 +177,7 @@
     "message": "אומדן זמן האחזור של קלט"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "הערך 'הצגת התוכן הראשוני' מציין את הזמן שבו הופיעו הטקסט או התמונה הראשונים. [מידע נוסף](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "המדד 'הצגת תוכן ראשוני' (FCP) מציין את הזמן שבו הטקסט או התמונה הראשונים מוצגים. [מידע נוסף](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "הצגת התוכן הראשוני"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "זמני התגובה של השרת ארוכים (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "משך זמן"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "שם"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "שעת התחלה"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "סוג"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "כדאי לשקול את האפשרות להוסיף לאפליקציה את User Timing API כדי ליצור מדידות מותאמות אישית ובזמן אמת של היבטים עיקריים בחוויית המשתמש. [מידע נוסף](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "כדי למדוד את ביצועי האפליקציה בפועל במהלך חוויות משתמש חשובות, מומלץ להוסיף לאפליקציה את User Timing API. [מידע נוסף](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{תזמון משתמש אחד}two{# תזמוני משתמש}many{# תזמוני משתמש}other{# תזמוני משתמש}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "ביצועים"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "אורך חיים (TTL) של מטמון"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "גודל (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "משך הזמן שנדרש"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "כתובת אתר"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "חיסכון פוטנציאלי (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "פוטנציאל חיסכון (אלפיות שנייה)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "חיסכון פוטנציאלי של {wastedBytes, number, bytes} ‏KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "חיסכון פוטנציאלי של {wastedMs, number, milliseconds} אלפיות שנייה"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} אלפיות שנייה"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} שניות"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "הצגת בדיקות"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "ניווט התחלתי"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "זמן אחזור מקסימלי של נתיב קריטי:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "שגיאה!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "שגיאה בדוח: אין מידע על הבדיקה"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "נתוני בדיקה"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "ניתוח הדף הנוכחי בהדמיית 3G באמצעות [Lighthouse]‏(https://developers.google.com/web/tools/lighthouse/). הערכים הם אומדנים, והם עשויים להשתנות."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "פריטים נוספים שיש לבדוק באופן ידני"

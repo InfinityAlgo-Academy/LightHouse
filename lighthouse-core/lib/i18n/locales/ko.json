@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome 확장 프로그램이 이 페이지의 로드 성능에 부정적인 영향을 미쳤습니다. 시크릿 모드나 확장 프로그램이 없는 Chrome 프로필에서 페이지를 감사해 보세요."
+    "message": "Chrome 확장 프로그램이 이 페이지의 로드 성능에 부정적인 영향을 미쳤습니다. 시크릿 모드나 확장 프로그램이 없는 Chrome 프로필에서 페이지를 검사해 보세요."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "스크립트 평가"
@@ -111,7 +111,7 @@
     "message": "차세대 형식을 사용해 이미지 제공하기"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "다음의 중요 요청 체인은 발행 시 우선순위가 높은 리소스를 보여줍니다. 체인의 길이를 줄이고, 리소스의 다운로드 크기를 줄이거나 불필요한 리소스의 다운로드를 지연하여 페이지 로드 속도를 높이는 것이 좋습니다. [자세히 알아보기](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)"
+    "message": "다음의 크리티컬 요청 체인(Critical Request Chains)은 로드 시 우선순위가 높은 리소스를 보여줍니다. 체인의 길이를 줄이고, 리소스의 다운로드 크기를 줄이거나 불필요한 리소스의 다운로드를 지연하여 페이지 로드 속도를 높이는 것이 좋습니다. [자세히 알아보기](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1개 체인 발견됨}other{#개 체인 발견됨}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "중요 요청 깊이 최소화하기"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "최대 DOM 깊이"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "총 DOM 노드"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "최대 하위항목"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "브라우저 엔지니어들은 페이지에 포함된 DOM 노드의 수가 1,500개 미만인 것이 바람직하다고 말합니다. 최적의 값은 트리 깊이가 요소 32개 미만이고 하위/상위 요소 60개 미만일 때입니다. DOM이 크면 메모리 사용량이 늘어나고 [스타일 계산](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) 시간이 길어질 수 있으며, 큰 비용이 드는 [레이아웃 리플로](https://developers.google.com/speed/articles/reflow)가 발생할 수 있습니다. [자세히 알아보기](https://developers.google.com/web/tools/lighthouse/audits/dom-size)"
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "과도한 DOM 크기 지양하기"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "최대 DOM 깊이"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "총 DOM 노드"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "과도한 DOM 크기 지양하기"
@@ -168,7 +177,7 @@
     "message": "예상 입력 대기시간"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "최초 만족 페인트는 첫 번째 텍스트 또는 이미지가 표시되는 시간을 나타냅니다. [자세히 알아보기](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)"
+    "message": "콘텐츠가 포함된 첫 페인트는 첫 번째 텍스트 또는 이미지가 표시되는 시간을 나타냅니다. [자세히 알아보기](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "최초 만족 페인트"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "서버 응답 시간 낮음(TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "시간"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "이름"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "시작 시간"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "유형"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "앱에 User Timing API를 사용하여 중요 사용자 환경에 관한 현실적인 맞춤형 측정값을 만드세요. [자세히 알아보기](https://developers.google.com/web/tools/lighthouse/audits/user-timing)"
+    "message": "앱에 User Timing API를 사용하여 중요 사용자 경험이 이루어지는 동안의 실적을 측정하세요. [자세히 알아보기](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{사용자 시간 1회}other{사용자 시간 #회}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "성능"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "캐시 TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "크기(KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "소요 시간"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "절감 가능치(KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "절감 가능한 페이지 로드 시간(ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "절감 가능치: {wastedBytes, number, bytes}KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "절감 가능 {wastedMs, number, milliseconds}ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds}ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds}초"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "감사 보기"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "초기 탐색"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "최상 경로 최대 지연 시간:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "오류!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "보고 오류: 감사 정보 없음"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "실험실 데이터"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "에뮬레이트된 3G 환경에서의 현재 페이지 [Lighthouse](https://developers.google.com/web/tools/lighthouse/) 분석 결과입니다. 값은 추정치이며 달라질 수 있습니다."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "직접 확인해야 하는 추가 항목"

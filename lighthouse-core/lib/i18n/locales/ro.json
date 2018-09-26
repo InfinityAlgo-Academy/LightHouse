@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Extensiile Chrome au afectat performanța de încărcare a acestei pagini. Încearcă să auditezi pagina în modul incognito sau dintr-un profil Chrome curat."
+    "message": "Extensiile Chrome au afectat performanța de încărcare a acestei pagini. Încearcă să auditezi pagina în modul incognito sau dintr-un profil Chrome fără extensii."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Evaluarea scripturilor"
@@ -111,7 +111,7 @@
     "message": "Difuzează imagini în formate moderne"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Lanțurile de solicitări esențiale de mai jos îți arată ce resurse sunt emise cu prioritate ridicată. Poți să reduci lungimea lanțurilor, să reduci dimensiunea de descărcare a resurselor sau să amâni descărcarea de resurse inutile pentru a îmbunătăți încărcarea paginilor. [Află mai multe] (https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Lanțurile de solicitări esențiale de mai jos îți arată ce resurse sunt încărcate cu prioritate ridicată. Poți să reduci lungimea lanțurilor, să reduci dimensiunea de descărcare a resurselor sau să amâni descărcarea de resurse inutile pentru a îmbunătăți încărcarea paginilor. [Află mai multe] (https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{un lanț găsit}few{# lanțuri găsite}other{# de lanțuri găsite}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Redu profunzimea solicitărilor esențiale"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Adâncimea DOM maximă"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Numărul total de noduri DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Numărul maxim de noduri subordonate"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Specialiștii în browsere recomandă ca paginile să conțină mai puțin de ~1.500 de noduri DOM. Ideal este ca arborele să aibă o profunzime mai mică de 32 de elemente și mai puțin de 60 de elemente principale/subordonate. Un DOM mare poate crește folosirea memoriei, poate produce [calcule de stil] (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) mai lungi și poate produce [rearanjări ale aspectului](https://developers.google.com/speed/articles/reflow). [Află mai multe](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Evită o dimensiune DOM excesivă"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Adâncimea DOM maximă"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Numărul total de noduri DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Evită o dimensiune DOM excesivă"
@@ -168,7 +177,7 @@
     "message": "Latența estimată a comenzilor"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Prima redare de conținut arată momentul când se redă primul text sau prima imagine. [Află mai multe](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Prima redare de conținut arată momentul când se redă primul text sau prima imagine. [Află mai multe](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Prima redare de conținut"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Serverul răspunde repede (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Durată"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Nume"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Ora de începere"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Tip"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Îți poți îmbunătăți aplicația cu API-ul User Timing ca să creezi dimensiuni reale și personalizate ale experiențelor de utilizare principale. [Află mai multe](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Îți poți îmbunătăți aplicația cu API-ul User Timing ca să măsori performanța reală a acesteia în timpul experiențelor de utilizare principale. [Află mai multe](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{o durată a utilizării}few{# durate ale utilizărilor}other{# de durate ale utilizărilor}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Performanță"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL cache"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Dimensiune (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Timp petrecut"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "Adresa URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Economii potențiale (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Economii potențiale (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Poți economisi {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Poți economisi {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Afișează audituri"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Navigare inițială"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Latența maximă a căii critice:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Eroare!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Eroare de raport: nu există informații de auditare"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Datele testului"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Analiza în [Lighthouse](https://developers.google.com/web/tools/lighthouse/) a paginii actuale cu o conexiune 3G emulată. Valorile sunt estimate și pot varia."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Elemente suplimentare de verificat manual"

@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Розширення Chrome негативно впливають на ефективність завантаження цієї сторінки. Спробуйте перевірити сторінку в режимі анонімного перегляду або в чистому профілі Chrome."
+    "message": "Розширення Chrome негативно впливають на завантаження цієї сторінки. Спробуйте перевірити сторінку в режимі анонімного перегляду або в профілі Chrome без розширень."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Оцінка сценарію"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Мінімізуйте глибину важливих запитів"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Максимальна глибина DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Загальна кількість вузлів DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Максимальна кількість дітей"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Розробники веб-переглядачів радять, щоб сторінки містили до ~1500 вузлів DOM. Зона найкращого сприйняття – глибина дерева < 32 елементів і до 60 дитячих чи батьківських елементів. Великий файл DOM може збільшувати використання пам’яті, спричиняти довше [обчислення стилів](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) і створювати дороге [перекомпонування макетів](https://developers.google.com/speed/articles/reflow). [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Уникайте надмірного розміру DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Максимальна глибина DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Загальна кількість вузлів DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Уникається надмірний розмір DOM"
@@ -156,10 +165,10 @@
     "message": "Зменште час виконання синтаксичного аналізу, компілювання й запуску сценаріїв JavaScript. Завантажувати менші обсяги даних JavaScript може бути корисно."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Мінімізуйте роботу основного ланцюжка"
+    "message": "Мінімізуйте роботу основного потоку"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
-    "message": "Мінімізується робота основного ланцюжка"
+    "message": "Мінімізується робота основного потоку"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Результат вище показує, скільки часу в мілісекундах додаток відповідає на ввід користувача під час п’ятисекундного періоду завантаження сторінки. Якщо затримка перевищує 50 мс, користувачі можуть вважати ваш додаток повільним. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
@@ -168,7 +177,7 @@
     "message": "Приблизна затримка введення"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Перше відображення вмісту показує, коли з’являється текст чи зображення. [Докладніше](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Час завантаження першого вмісту показує, коли з’являється текст чи зображення. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Перше відображення всього вмісту"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Сервер довго відповідає (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Тривалість"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Назва"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Час початку"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Тип"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Використовуйте в додатку User Timing API, щоб отримувати власні показники взаємодії з користувачами. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Використовуйте в додатку User Timing API, щоб отримувати показники ефективності додатка під час взаємодії з користувачами. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 позначка часу користувача}one{# позначка часу користувача}few{# позначки часу користувача}many{# позначок часу користувача}other{# позначки часу користувача}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Ефективність"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL кешу"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Розмір (КБ)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Витрачений час"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL-адреса"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Потенційне заощадження (КБ)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Потенційне заощадження (мс)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Потенційне заощадження – {wastedBytes, number, bytes} КБ"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Потенційне заощадження – {wastedMs, number, milliseconds} мс"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} мс"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} c"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Показати перевірки"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Початкова навігація"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Максимальна критична затримка шляху:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Помилка."
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Повідомлення про помилку: немає інформації про перевірку"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Дані тестів"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Аналіз [Lighthouse](https://developers.google.com/web/tools/lighthouse/) поточної сторінки в імітованій мережі 3G. Значення приблизні й можуть відрізнятися."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Додаткові елементи, які потрібно перевірити вручну"

@@ -111,7 +111,7 @@
     "message": "Dostavljajte slike v sodobnih oblikah zapisa"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Verige kritičnih zahtev spodaj vam prikazujejo, katera sredstva so izdana z visoko prednostjo. Razmislite o skrajšanju verig, zmanjšanju velikosti sredstev ali odlaganju prenosa nepotrebnih sredstev zaradi izboljšanja nalaganja strani. [Več o tem](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Verige kritičnih zahtev spodaj vam prikazujejo, katera sredstva so naložena z visoko prednostjo. Razmislite o skrajšanju verig, zmanjšanju velikosti sredstev ali odlaganju prenosa nepotrebnih sredstev zaradi izboljšanja nalaganja strani. [Več o tem](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{Najdena je bila 1 veriga}one{Najdena je bila # veriga}two{Najdeni sta bili # verigi}few{Najdene so bile # verige}other{Najdenih je bilo # verig}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Zmanjšajte globino kritičnih zahtev"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Največja globina DOM-a"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Skupno število vozlišč DOM-a"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Največ podrejenih"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Inženirji za brskalnike priporočajo, da strani vsebujejo manj kot približno 1500 vozlišč DOM-a. Idealna vrednost je globina drevesa z manj kot 32 elementi in manj kot 60 podrejenimi/nadrejenimi elementi. Velik DOM lahko povzroči povečano uporabo pomnilnika, daljše [slogovne izračune](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) in drage [prilagoditve postavitve](https://developers.google.com/speed/articles/reflow). [Več o tem](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Izogibajte se prekomerni velikosti DOM-a"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Največja globina DOM-a"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Skupno število vozlišč DOM-a"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Izogiba se prekomerni velikosti DOM-a"
@@ -168,7 +177,7 @@
     "message": "Ocenjena zakasnitev vnosa"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Prvo vsebinsko barvanje označuje čas, ko je pobarvano prvo besedilo oziroma je pobarvana prva slika. [Več o tem](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Prvo vsebinsko barvanje označuje čas, ko je pobarvano prvo besedilo oziroma je pobarvana prva slika. [Več o tem](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Prvo vsebinsko barvanje"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Odzivni časi strežnika so nizki (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Trajanje"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Ime"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Začetni čas"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Vrsta"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Razmislite o uporabi API-ja za spremljanje trajanja izvedb uporabniških dogodkov (User Timing API), če želite ustvariti meritve po meri, ki bodo merile dejanske ključne uporabniške izkušnje. [Več o tem](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Razmislite o uporabi API-ja za merjenje dejanskih izvedb uporabniških dogodkov (User Timing API), če želite izmeriti dejansko delovanje aplikacije med ključnimi uporabniškimi izkušnjami. [Več o tem](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 trajanje izvedbe uporabniških dogodkov}one{# trajanje izvedbe uporabniških dogodkov}two{# trajanji izvedbe uporabniških dogodkov}few{# trajanja izvedbe uporabniških dogodkov}other{# trajanj izvedbe uporabniških dogodkov}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Delovanje"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL predpomnjenja"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Velikost (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Porabljeni čas"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Morebitni prihranek (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Morebitni prihranki (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "{wastedBytes, number, bytes} KB morebitnega prihranka"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "{wastedMs, number, milliseconds} ms morebitnega prihranka"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Pokaži preglede"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Začetno krmarjenje"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Največja zakasnitev kritične poti:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Napaka"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Napaka sporočila: ni podatkov o pregledu"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Laboratorijski podatki"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Analiza storitve [Lighthouse](https://developers.google.com/web/tools/lighthouse/) za trenutno stran z emulirano povezavo 3G. Vrednosti so ocenjene in lahko odstopajo."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Dodatni elementi za ročno preverjanje"

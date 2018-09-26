@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chromeova proširenja negativno su utjecala na izvedbu učitavanja ove stranice. Pokušajte pregledati stranicu anonimno ili putem Chromeova profila bez proširenja."
+    "message": "Chromeova proširenja negativno su utjecala na izvedbu učitavanja ove stranice. Pokušajte pregledati stranicu anonimno ili putem Chromeovog profila bez proširenja."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Procjena skripte"
@@ -111,7 +111,7 @@
     "message": "Poslužite slike u modernim formatima"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Lanci kritičkih zahtjeva u nastavku prikazuju koji se resursi izdaju s visokim prioritetom. Savjetujemo vam da skratite duljinu lanaca, smanjite veličinu resursa za preuzimanje ili odgodite preuzimanje resursa koji nisu nužni kako biste poboljšali učitavanje stranice. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Lanci kritičkih zahtjeva u nastavku prikazuju koji se resursi učitavaju s visokim prioritetom. Savjetujemo vam da skratite duljinu lanaca, smanjite veličinu resursa za preuzimanje ili odgodite preuzimanje resursa koji nisu nužni kako biste poboljšali učitavanje stranice. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{Pronađen je jedan lanac}one{Pronađen je # lanac}few{Pronađena su # lanca}other{Pronađeno je # lanaca}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Minimizirajte dubinu kritičnih zahtjeva"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Maksimalna dubina DOM-a"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Ukupan broj čvorova DOM-a"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Maksimalan broj podređenih elemenata"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Inženjeri preglednika preporučuju da stranice sadrže manje od ~1500 čvorova DOM-a. Idealno je da je dubina stabla manja od 32 elementa i da ima manje od 60 elemenata podređenih/nadređenih jedinica. Veliki DOM može pojačati upotrebu memorije, uzrokovati dulje [izračune stilova](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) i proizvesti zahtjevna [preoblikovanja izgleda](https://developers.google.com/speed/articles/reflow). [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Izbjegavajte pretjeranu veličinu DOM-a"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Maksimalna dubina DOM-a"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Ukupan broj čvorova DOM-a"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Izbjegava pretjeranu veličinu DOM-a"
@@ -168,7 +177,7 @@
     "message": "Procijenjena latencija unosa"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Prvo bojenje sadržaja označava vrijeme bojenja prvog teksta ili slike. [Saznajte više](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Prvo renderiranje sadržaja označava vrijeme renderiranja prvog teksta ili slike. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Prvo bojenje sadržaja"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Poslužitelj odgovara sporo (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Trajanje"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Naziv"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Vrijeme početka"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Vrsta"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Savjetujemo vam da na aplikaciju primijenite API za Praćenje korisničkog vremena da biste dobili prilagođene, objektivne izmjere ključnih korisničkih doživljaja. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Savjetujemo vam da na aplikaciju primijenite API za praćenje korisničkog vremena radi mjerenja izvedbe aplikacije u stvarnom vremenu tijekom važnih korisničkih doživljaja. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{Jedno praćenje korisničkog vremena}one{# praćenje korisničkog vremena}few{# praćenja korisničkog vremena}other{# praćenja korisničkog vremena}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Izvedba"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL predmemoriranja"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Veličina (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Utrošeno vrijeme"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Potencijalna ušteda (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potencijalna ušteda (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potencijalna ušteda {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potencijalna ušteda {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Prikažite preglede"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Početna navigacija"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Maksimalna latencija kritičkog puta:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Pogreška!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Pogreška izvješća: nema podataka o pregledu"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Laboratorijski podaci"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analiza trenutačne stranice na emuliranoj 3G mreži. Vrijednosti su procijenjene i mogu varirati."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Dodatne stavke za ručnu provjeru"

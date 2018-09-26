@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome-utvidelser gjør innlastingen av denne siden tregere. Prøv å revidere siden i inkognitomodus eller fra en ren Chrome-profil."
+    "message": "Chrome-utvidelser gjør innlastingen av denne siden tregere. Prøv å revidere siden i inkognitomodus eller fra en Chrome-profil uten utvidelser."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Skriptevaluering"
@@ -111,7 +111,7 @@
     "message": "Bruk nyere bildeformater"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "De kritiske forespørselskjedene nedenfor viser hvilke ressurser som er utstedt med høy prioritet. Vurder å redusere lengden på kjedene, redusere nedlastingsstørrelsen på ressurser eller utsette nedlasting av unødvendige ressurser for å bedre sideinnlastingen. [Finn ut mer](https://developers.google.com/web/tools/lighthouse/audits\n/critical-request-chains)."
+    "message": "De kritiske forespørselskjedene nedenfor viser hvilke ressurser som er utstedt med høy prioritet. Vurder å redusere lengden på kjedene, redusere nedlastingsstørrelsen på ressurser eller utsette nedlasting av unødvendige ressurser for å bedre sideinnlastingen. [Finn ut mer](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 kjede funnet}other{# kjeder funnet}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Minimer dybden på kritiske forespørsler"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Maksimal DOM-dybde"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Totalt antall DOM-noder"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Maksimalt antall underordnede"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Nettlesereksperter anbefaler at sider inneholder mindre enn ca. 1500 DOM-noder. Den perfekte verdien er en tredybde på mindre enn 32 elementer og mindre enn 60 underordnede/overordnede elementer. En stor DOM-struktur kan øke minnebruken, føre til at [stilberegninger](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) tar lengre tid, og forårsake kostbare [gjenoppbygginger av sidevisningen](https://developers.google.com/speed/articles/reflow). [Finn ut mer](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Unngå for stor DOM-struktur"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Maksimal DOM-dybde"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Totalt antall DOM-noder"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Unngå for stor DOM-struktur"
@@ -156,10 +165,10 @@
     "message": "Vurder å redusere tiden som brukes til parsing, kompilering og kjøring i JS. Levering av mindre JS-ressurser kan bidra til dette."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Minimer hovedtrådarbeidet"
+    "message": "Minimer arbeidet på hovedtråden"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
-    "message": "Minimerer hovedtrådarbeidet"
+    "message": "Minimerer arbeidet på hovedtråden"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Poengsummen ovenfor er et estimat av hvor lang tid (i millisekunder) det tar for appen din å svare på brukerinndata i det travleste 5-sekunders vinduet av sideinnlastingen. Hvis tidsforsinkelsen er høyere enn 50 ms, kan brukeren oppleve appen din som treg. [Finn ut mer](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
@@ -168,7 +177,7 @@
     "message": "Anslått tidsforsinkelse for inndata"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Første innholdsrike opptegning markerer tidspunktet når den første teksten eller det første bildet gjengis på skjermen. [Finn ut mer](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Den første innholdsrike opptegningen (FCP) markerer den første gangen tekst eller bilder tegnes opp. [Finn ut mer](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Første innholdsrike opptegning"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Svartiden til tjeneren er lav (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Varighet"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Navn"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Starttid"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Type"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Vurder å utstyre appen din med User Timing API for å lage tilpassede, reelle målinger av de viktigste brukeropplevelsene. [Finn ut mer](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Vurder å utstyre appen din med User Timing API for å måle appens reelle ytelse under viktige brukeropplevelser. [Finn ut mer](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{ 1 brukertiming}other{# brukertiminger}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Resultater"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Buffer-TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Størrelse (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Brukt tid"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "Nettadresse"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Potensielle besparelser (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potensielle besparelser (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potensielle besparelser på {wastedBytes, number, bytes} kB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potensiell besparelse på {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Vis revisjoner"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Navigasjonsstart"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Maksimum kritisk baneforsinkelse:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Feil!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Rapportfeil: ingen revisjonsinformasjon"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Prøvefunksjonsdata"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse]-analyse (https://developers.google.com/web/tools/lighthouse/) av den gjeldende siden på emulert 3G. Verdiene er anslått og kan variere."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Tilleggselementer for manuell kontroll"

@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome 擴充功能會對這個頁面的載入效能產生負面影響。建議透過無痕模式乾淨的 Chrome 設定檔來稽核頁面。"
+    "message": "Chrome 擴充功能對這個頁面的載入效能有負面影響。建議透過無痕模式或不含擴充功能的 Chrome 設定檔來稽核頁面。"
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "指令碼評估"
@@ -111,7 +111,7 @@
     "message": "提供 next-gen 格式的圖片"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "下方的「關鍵要求鏈結」顯示的是以高優先順序發佈的資源。為了提高頁面載入速度，我們的建議是透過縮短鏈結長度，降低下載資源的大小，或是延後下載非必要資源。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)"
+    "message": "下方的「關鍵要求鏈結」顯示的是以高優先順序載入的資源。為了提高頁面載入速度，建議你縮短鏈結長度，降低下載資源的大小，或是延後下載非必要資源。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)。"
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{找到 1 個鏈結}other{找到 # 個鏈結}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "將關鍵要求層級降至最低"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "DOM 層級上限"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "DOM 節點總數"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "子元素上限"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "瀏覽器工程師建議，頁面包含的 DOM 節點數量應少於 1,500 個左右。理想樹狀層級應包含少於 32 個元素，以及少於 60 個下層/上層元素。大型的 DOM 可能造成記憶體用量增加、延長[樣式運算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)的過程，還會導致費工的[版面配置重排](https://developers.google.com/speed/articles/reflow)。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/dom-size)"
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "避免 DOM 過大"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "DOM 層級上限"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "DOM 節點總數"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "避免 DOM 過大"
@@ -168,7 +177,7 @@
     "message": "預估輸入延遲"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "首次內容繪製標記的是繪製第一個文字/第一張圖片的時間。[瞭解詳情](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)"
+    "message": "「首次顯示內容所需時間」會標記寫下第一個文字或繪製第一張圖片的時間。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)。"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "首次內容繪製"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "伺服器回應時間低 (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "時間長度"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "名稱"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "開始時間"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "類型"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "建議使用 User Timing API 檢測您的應用程式，建立自訂且符合實際的關鍵使用者體驗衡量方法。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/user-timing)"
+    "message": "建議你使用 User Timing API 檢測應用程式在關鍵使用者體驗期間的實際成效。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/user-timing)。"
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 個 User Timing 標記}other{# 個 User Timing 標記}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "效能"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "快取 TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "大小 (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "花費的時間"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "網址"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "潛在減少量 (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "潛在減少量 (毫秒)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "可減少 {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "可減少 {wastedMs, number, milliseconds} 毫秒"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} 毫秒"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} 秒"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "顯示稽核結果"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "起始導覽"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "關鍵路徑延遲時間上限："
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "發生錯誤！"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "回報錯誤：無稽核資訊"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "研究資料"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) 在 3G 模擬網路上分析目前網頁。分析結果為預估值，可能與實際情況有所出入。"
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "其他手動檢查項目"

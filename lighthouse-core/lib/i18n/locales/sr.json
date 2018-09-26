@@ -111,7 +111,7 @@
     "message": "Приказујте слике у форматима следеће генерације"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Ланци веома важних захтева у наставку вам приказују који ресурси се издају са високим приоритетом. Размислите о томе да смањите дужину ланаца, да смањите величину преузимања за ресурсе или да одложите преузимање ресурса који нису неопходни ради бржег учитавања странице. [Сазнајте више](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Ланци веома важних захтева у наставку вам приказују који ресурси се учитавају са високим приоритетом. Размислите о томе да смањите дужину ланаца, да смањите величину преузимања за ресурсе или да одложите преузимање ресурса који нису неопходни ради бржег учитавања странице. [Сазнајте више](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{Пронађен је 1 ланац}one{Пронађен је # ланац}few{Пронађена су # ланца}other{Пронађено је # ланаца}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Смањите број веома важних захтева"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Максимална дубина DOM-а"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Укупан број DOM чворова"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Максимални број чворова потомака"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Инжењери за прегледаче препоручују да странице садрже мање од приближно 1500 DOM чворова. Најбоље би било да дубина стабла буде испод 32 елемента и да има мање од 60 подређених/надређених елемената. Велики DOM може да повећа потрошњу меморије, да изазове дужа [израчунавања стилова](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и да доведе до скупих [преобликовања изгледа](https://developers.google.com/speed/articles/reflow). [Сазнајте више](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Избегавајте превелику величину DOM-а"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Максимална дубина DOM-а"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Укупан број DOM чворова"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Избегава превелику величину DOM-а"
@@ -168,7 +177,7 @@
     "message": "Процењено кашњење уноса"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Прво приказивање садржаја означава време када се приказују први текст или слика. [Сазнајте више](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Прво приказивање садржаја означава време када се приказују први текст или слика. [Сазнајте више](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Прво приказивање садржаја"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Времена одговора сервера су кратка (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Трајање"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Назив"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Време почетка"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Тип"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Размислите о томе да опремите апликацију API-јем за време корисника да бисте спроводили прилагођена мерења главних корисничких доживљаја у стварном свету. [Сазнајте више](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Размислите о томе да опремите апликацију API-јем за време корисника да бисте измерили учинак апликације у реалном свету током кључних корисничких доживљаја. [Сазнајте више](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 време корисника}one{# време корисника}few{# времена корисника}other{# времена корисника}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Учинак"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Време преживљавања кеша"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Величина (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Проведено време"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Потенцијална уштеда (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Потенцијална уштеда (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Потенцијална уштеда од {wastedBytes, number, bytes} kB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Потенцијална уштеда од {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} сек"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Прикажи провере"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Почетна навигација"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Максимално кашњење критичне путање:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Грешка!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Пријављивање грешке: нема информација о провери"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Подаци о експерименталним функцијама"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) анализа актуелне странице емулиране помоћу 3G мреже. Вредности су процењене и могу да се разликују."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Додатне ставке за ручну проверу"

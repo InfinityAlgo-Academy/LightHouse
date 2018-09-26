@@ -111,7 +111,7 @@
     "message": "采用新一代格式提供图片"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "下面的关键请求链显示了以高优先级呈现的资源。请考虑缩短链长、缩减资源的下载文件大小，或者推迟下载不必要的资源，从而提高网页加载速度。[了解详情](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)。"
+    "message": "下面的关键请求链显示了以高优先级加载的资源。请考虑缩短链长、缩减资源的下载文件大小，或者推迟下载不必要的资源，从而提高网页加载速度。[了解详情](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)。"
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{找到了 1 条请求链}other{找到了 # 条请求链}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "最大限度地缩短关键请求深度"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "最大 DOM 深度"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "DOM 节点总数"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "子元素数量最高值"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "浏览器工程师建议，网页包含的 DOM 节点最好少于 1500 个左右。理想状况是，树深度少于 32 个元素，且少于 60 个子/父元素。大型 DOM 可能会增加内存使用量、导致[样式计算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)用时延长并产生高昂的[布局重排](https://developers.google.com/speed/articles/reflow)费用。[了解详情](https://developers.google.com/web/tools/lighthouse/audits/dom-size)。"
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "避免 DOM 规模过大"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "最大 DOM 深度"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "DOM 节点总数"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "避免 DOM 规模过大"
@@ -168,7 +177,7 @@
     "message": "输入延迟（估算值）"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "首次内容绘制时间标记了绘制出首个文本或首张图片的时间。[了解详情](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)。"
+    "message": "首次内容绘制时间标记了绘制出首个文本或首张图片的时间。[了解详情](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)。"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "首次内容绘制时间"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "服务器响应用时较短 (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "时长"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "名称"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "开始时间"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "类型"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "考虑使用 User Timing API 检测您的应用，从而为衡量关键用户体验打造切实可行的自定义方法。[了解详情](https://developers.google.com/web/tools/lighthouse/audits/user-timing)。"
+    "message": "考虑使用 User Timing API 检测您的应用，从而衡量应用在关键用户体验中的实际性能。[了解详情](https://developers.google.com/web/tools/lighthouse/audits/user-timing)。"
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 项 User Timing 结果}other{# 项 User Timing 结果}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "性能"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "缓存 TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "大小 (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "花费的时间"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "网址"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "有望节省的流量 (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "有望节省的时间（毫秒）"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "有望节省 {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "有望节省 {wastedMs, number, milliseconds} 毫秒"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} 毫秒"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} 秒"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "显示审核结果"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "初始导航"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "关键路径延迟时间上限："
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "出错了！"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "报告错误：没有任何审核信息"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "实验室数据"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) 使用模拟 3G 网络对当前页面进行的分析。这些值都是估算值，且可能会因时而异。"
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "待手动检查的其他项"

@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Inläsningen av den här sidan påverkas negativt av tillägg i Chrome. Testa att granska sidan i inkognitoläge eller med en standardprofil i Chrome."
+    "message": "Inläsningen av den här sidan påverkas negativt av tillägg i Chrome. Testa att granska sidan i inkognitoläge eller med en Chrome-profil utan tillägg."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Utvärdering av skript"
@@ -111,7 +111,7 @@
     "message": "Skicka bilder i modernare bildformat"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Orderkedjorna nedan visar vilka resurser som skickas ut med hög prioritet. Se om du kan förbättra sidinläsningstiden genom att göra kedjorna kortare, minska storleken på resurser som laddas ned eller skjuta upp nedladdningen av onödiga resurser. [Läs mer](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Orderkedjorna nedan visar vilka resurser som läses in med hög prioritet. Se om du kan förbättra sidinläsningstiden genom att göra kedjorna kortare, minska storleken på resurser som laddas ned eller skjuta upp nedladdningen av onödiga resurser. [Läs mer](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 kedja hittades}other{# kedjor hittades}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Minska antalet steg i viktiga orderkedjor"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Största DOM-djup"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Totalt antal noder i DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Högsta antal underordnade noder"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Webbläsarutvecklare rekommenderar att en sidas DOM ska ha färre än ca 1 500 noder. Ett träd där djupet är mindre än 32 element och det finns högst 60 underordnade/överordnade element är idealiskt. Stora DOM-träd kan medföra ökad minnesförbrukning, längre [formatmallsberäkningar](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) och resurskrävande [omflödning av layouten](https://developers.google.com/speed/articles/reflow). [Läs mer](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Undvik ett onödigt stort DOM-träd"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Största DOM-djup"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Totalt antal noder i DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Undviker ett onödigt stort DOM-träd"
@@ -168,7 +177,7 @@
     "message": "Beräknad inmatningslatens"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Första uppritningen av innehåll anger tidpunkten när den första texten eller bilden ritades upp. [Läs mer](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Första innehållsrendering anger tidpunkten när den första texten eller bilden ritades upp. [Läs mer](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Första uppritningen av innehåll"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Servern svarar snabbt (tid till första byte)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Varaktighet"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Namn"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Starttid"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Typ"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Om du bygger in User Timing API i appen kan du ta fram egna, viktiga mätvärden av användarupplevelsen från verkliga fall. [Läs mer](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Om du bygger in User Timing API i appen kan du mäta appens prestanda i realtid i samband med viktiga användarupplevelser. [Läs mer](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 användartimer}other{# användartimer}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Prestanda"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Lagringstid i cacheminnet"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Storlek (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Tid som använts"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "Webbadress"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Möjlig databesparing (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Möjlig tidsbesparing (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Möjlig databesparing: {wastedBytes, number, bytes} kB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Möjlig tidsbesparing: {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Visa granskningar"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Första navigering"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Högsta latens för kritisk kedja:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Fel."
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Rapportfel: ingen granskningsinformation"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Labbdata"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/)-analys av den aktuella sidan med 3G-emulering. Värdena är uppskattningar och kan variera."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Fler saker att kolla manuellt"

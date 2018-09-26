@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Les extensions de Chrome han afectat negativament el rendiment de càrrega de la pàgina. Audita la pàgina en mode d'incògnit o des d'un perfil de Chrome buit."
+    "message": "Les extensions de Chrome han afectat negativament el rendiment de càrrega de la pàgina. Audita la pàgina en mode d'incògnit o des d'un perfil de Chrome sense extensions."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Avaluació de scripts"
@@ -111,7 +111,7 @@
     "message": "Publica imatges en format d'última generació"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Les cadenes de sol·licituds crítiques de sota et mostren quins recursos es publiquen amb prioritat alta. Et recomanem que escurcis les cadenes, redueixis la mida de baixada dels recursos o ajornis la baixada de recursos innecessaris per millorar la càrrega de pàgines. [Més informació] (https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Les cadenes de sol·licituds crítiques de sota et mostren quins recursos es carreguen amb prioritat alta. Et recomanem que escurcis les cadenes, redueixis la mida de baixada dels recursos o ajornis la baixada de recursos innecessaris per millorar la càrrega de pàgines. [Més informació] (https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{S'ha trobat 1 cadena}other{S'han trobat # cadenes}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Minimitza la profunditat de les sol·licituds crítiques"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Profunditat màxima de DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Total de nodes de DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Nombre màxim d'elements secundaris"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Els enginyers de navegadors recomanen que les pàgines continguin menys d'uns 1.500 nodes de DOM. La situació ideal és una profunditat d'arbre inferior a 32 elements i menys de 60 elements superiors o secundaris. Un DOM gran pot augmentar l'ús de la memòria, provocar [càlculs d'estil] més llargs (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) i produir costosos [reinicis de reflux del disseny] (https://developers.google.com/speed/articles/reflow). [Més informació] (https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Evita una mida de DOM excessiva"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Profunditat màxima de DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Total de nodes de DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Evita una mida excessiva de DOM"
@@ -156,10 +165,10 @@
     "message": "Et recomanem que redueixis el temps dedicat a analitzar, compilar i executar JavaScript. Et pot ajudar utilitzar càrregues útils de JavaScript més petites."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Minimitza el treball principal al fil"
+    "message": "Minimitza el treball al fil principal"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
-    "message": "Minimitza el treball principal al fil"
+    "message": "Minimitza el treball al fil principal"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "La puntuació de més amunt és una estimació de quant tarda en mil·lisegons la teva aplicació a respondre a una acció de l'usuari durant el període de 5 segons amb més càrregues de pàgines. Si la latència és superior a 50 ms, és possible que els usuaris considerin que l'aplicació és lenta. [Més informació] (https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
@@ -168,7 +177,7 @@
     "message": "Latència estimada de les accions"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "La mètrica Primera renderització de contingut marca el moment en què es renderitza el primer text o la primera imatge. [Més informació] (https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "La primera renderització de contingut marca el moment en què es renderitza el primer text o la primera imatge. [Més informació] (https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Primera renderització de contingut"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Els temps de resposta del servidor són baixos (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Durada"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Nom"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Hora d'inici"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Tipus"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Et recomanem que utilitzis l'API Temps d'usuari amb la teva aplicació per crear mesures reals i personalitzades de les experiències clau dels usuaris. [Més informació] (https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Et recomanem que utilitzis l'API Temps d'usuari amb la teva aplicació per mesurar-ne el rendiment al món real durant experiències clau dels usuaris. [Més informació] (https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 temps d'usuari}other{# temps d'usuari}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Rendiment"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL de la memòria cau"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Mida (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Temps invertit"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Possible estalvi (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Possible estalvi (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Possible estalvi de {wastedBytes, number, bytes} kB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Possible estalvi de {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Mostra les auditories"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Navegació inicial"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Latència de camí crítica màxima:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Error"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Error de l'informe: no hi ha informació d'auditoria"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Dades de laboratori"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Anàlisi amb [Lighthouse] (https://developers.google.com/web/tools/lighthouse/) de la pàgina actual mitjançant una connexió 3G emulada. Els valors són estimacions i poden variar."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Elements addicionals per comprovar manualment"

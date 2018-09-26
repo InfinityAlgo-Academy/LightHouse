@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome 擴充功能會對此頁面的載入效能產生負面影響。建議透過無痕模式或簡潔的 Chrome 設定檔來審核頁面。"
+    "message": "Chrome 擴充程式會對此頁面的載入效能產生負面影響。建議透過無痕模式或使用未安裝擴充程式的 Chrome 設定檔來審核頁面。"
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "指令碼評估"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "將重要要求深度降至最低"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "DOM 深度上限"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "DOM 節點總數"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "子元素數量上限"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "瀏覽器工程師建議，頁面包含的 DOM 節點數量應少於 1,500 個左右。理想樹狀深度應包含少於 32 個元素，且少於 60 個子/父元素。大型 DOM 會增加記憶體用量、導致[樣式運算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)所用時間延長並產生昂貴的[版面配置自動重排](https://developers.google.com/speed/articles/reflow)費用。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/dom-size)。"
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "避免 DOM 過大"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "DOM 深度上限"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "DOM 節點總數"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "避免 DOM 過大"
@@ -168,7 +177,7 @@
     "message": "預計輸入延遲時間"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "「首次內容繪製時間」標示繪製首個文字/首張圖片的時間。[瞭解詳情](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)。"
+    "message": "「首次內容繪製時間」標示繪製首個文字/首張圖片的時間。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)。"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "首次內容繪製時間"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "伺服器回應時間短 (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "時間長度"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "名稱"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "開始時間"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "類別"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "建議使用「用戶使用時間」檢測您的應用程式，打造自訂且經實際評估的關鍵使用者體驗。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/user-timing)。"
+    "message": "建議使用「用戶使用時間」檢測您的應用程式，評估其在關鍵使用者體驗期間的實際成效。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/user-timing)。"
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 個用戶使用時間標記}other{# 個用戶使用時間標記}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "效能"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "快取 TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "大小 (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "所用的時間"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "網址"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "可節省的用量 (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "可節省的時間 (毫秒)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "可節省 {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "可節省 {wastedMs, number, milliseconds} 毫秒"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} 毫秒"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} 秒"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "顯示審核結果"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "初始導覽"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "關鍵路徑延遲時間上限："
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "發生錯誤！"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "報告錯誤：無審核資料"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "實驗室數據"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) 在 3G 模擬網絡上分析目前網頁。此為預計值，可能與實際值有所不同。"
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "其他手動檢查項目"

@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome-extensies hadden een negatieve invloed op de laadprestaties van deze pagina. Controleer de pagina in de incognitomodus of via een schoon Chrome-profiel."
+    "message": "Chrome-extensies hadden een negatieve invloed op de laadprestaties van deze pagina. Controleer de pagina in de incognitomodus of via een Chrome-profiel zonder extensies."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Scriptevaluatie"
@@ -111,7 +111,7 @@
     "message": "Lever afbeeldingen in moderne indelingen"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "De onderstaande kritieke verzoekketens laten zien welke bronnen met een hoge prioriteit worden uitgegeven. Overweeg de lengte van ketens te verkleinen, de downloadgrootte van bronnen te beperken of het downloaden van onnodige bronnen uit te stellen om de laadtijd van de pagina te verbeteren. [Meer informatie](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "De onderstaande kritieke verzoekketens laten zien welke bronnen met een hoge prioriteit worden geladen. Overweeg de lengte van ketens te verkleinen, de downloadgrootte van bronnen te beperken of het downloaden van onnodige bronnen uit te stellen om de laadtijd van de pagina te verbeteren. [Meer informatie](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 keten gevonden}other{# ketens gevonden}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Minimaliseer de diepte van kritieke verzoeken"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Maximum DOM-diepte"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Totaal aantal DOM-knooppunten"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Maximum aantal onderliggende elementen"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Browser-engineers bevelen aan dat pagina's minder dan ~1500 DOM-knooppunten bevatten. De perfecte balans is een structuurdiepte van minder dan 32 elementen en minder dan 60 onderliggende/bovenliggende elementen. Een grote DOM kan ervoor zorgen dat het geheugengebruik toeneemt. Dit leidt tot langere [stijlberekeningen](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) en produceert dure [dynamische lay-outaanpassingen](https://developers.google.com/speed/articles/reflow). [Meer informatie](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Vermijd een overmatig grote DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Maximum DOM-diepte"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Totaal aantal DOM-knooppunten"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Vermijdt een overmatige grote DOM"
@@ -156,10 +165,10 @@
     "message": "Overweeg minder tijd te besteden aan het parseren, compileren en uitvoeren van JS. Het leveren van kleinere JS-payloads kan hierbij helpen."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Minimaliseer primaire thread-bewerkingen"
+    "message": "Primaire threadbewerkingen minimaliseren"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
-    "message": "Minimaliseert primaire thread-bewerkingen"
+    "message": "Primaire threadbewerkingen minimaliseren"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "De bovenstaande score is een schatting van hoelang het duurt voordat je app reageert op gebruikersinvoer (in milliseconden) gedurende de drukste periode van 5 seconden tijdens het laden van de pagina. Als de wachttijd langer dan 50 ms is, kunnen gebruikers je app als traag beschouwen. [Meer informatie](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
@@ -168,7 +177,7 @@
     "message": "Geschatte invoerwachttijd"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "'Eerste tekenbewerking met content' geeft het tijdstip aan waarop de eerste tekst of afbeelding is weergegeven. [Meer informatie](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "'Eerste tekenbewerking met content' geeft het tijdstip aan waarop de eerste tekst of afbeelding is weergegeven. [Meer informatie](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Eerste tekenbewerking met content"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Serverreactietijden zijn laag (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Duur"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Naam"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Begintijd"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Type"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Overweeg je app te voorzien van de API voor gebruikerstiming voor aangepaste, echte metingen van belangrijke gebruikerservaringen. [Meer informatie](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Overweeg je app te voorzien van de API voor gebruikerstiming om de daadwerkelijke prestaties van je app tijdens belangrijke gebruikerservaringen te meten. [Meer informatie](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 gebruikerstiming}other{# gebruikerstimings}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Prestaties"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache-TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Grootte (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Bestede tijd"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Potentiële besparing (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potentiële besparing (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potentiële besparing van {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potentiële besparing van {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Controles weergeven"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Beginnavigatie"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Maximum wachttijd voor kritiek pad:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Fout"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Rapportfout: geen controlegegevens"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Labgegevens"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Analyse met [Lighthouse](https://developers.google.com/web/tools/lighthouse/) van de huidige pagina bij een 3G-emulatie. Waarden worden geschat en kunnen variëren."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Aanvullende items om handmatig te controleren"

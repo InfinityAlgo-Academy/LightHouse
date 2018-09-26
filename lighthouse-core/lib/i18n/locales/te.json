@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome ఎక్స్‌టెన్షన్‌లు ఈ పేజీ లోడ్ పనితీరును ప్రతికూలంగా ప్రభావితం చేసాయి. పేజీని అజ్ఞాత మోడ్‌లో లేదా ఎక్స్‌టెన్షన్‌లు లేని Chrome ప్రొఫైల్‌లో ఆడిట్ చేయడాన్ని ప్రయత్నించండి."
+    "message": "Chrome ఎక్స్‌టెన్షన్‌లు ఈ పేజీ లోడ్ పనితీరును ప్రతికూలంగా ప్రభావితం చేసాయి. ఎక్స్టెన్షన్‌లు లేకుండా పేజీని అజ్ఞాత మోడ్‌లో లేదా ఎక్స్‌టెన్షన్‌లు లేని Chrome ప్రొఫైల్‌లో ఆడిట్ చేయడాన్ని ప్రయత్నించండి."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "స్క్రిప్ట్ మూల్యనిర్ధారణ"
@@ -111,7 +111,7 @@
     "message": "చిత్రాలను తర్వాతి-తరం ఫార్మాట్‌లలో అందించండి"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "కింది క్లిష్టమైన అభ్యర్ధన గొలుసులు ఏ వనరులు అధిక ప్రాధాన్యతో జారీ చేయబడ్డాయో చూపిస్తాయి. పేజీ లోడ్‌ను మెరుగుపరచడానికి గొలుసుల పొడవును తగ్గించడం, వనరుల డౌన్‌లోడ్ పరిమాణాన్ని తగ్గించడం, లేదా అనవసర వనరులను డౌన్‌లోడ్ చేయడాన్ని వాయిదా వేయడాన్ని పరిగణించండి. [మరింత తెలుసుకోండి](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "కింది క్లిష్టమైన అభ్యర్ధన గొలుసులు ఏ వనరులు అధిక ప్రాధాన్యతతో లోడ్ అయ్యాయో చూపిస్తాయి. పేజీ లోడ్‌ను మెరుగుపరచడానికి గొలుసుల పొడవును తగ్గించడం, వనరుల డౌన్‌లోడ్ పరిమాణాన్ని తగ్గించడం, లేదా అనవసర వనరులను డౌన్‌లోడ్ చేయడాన్ని వాయిదా వేయడం పరిగణించండి. [మరింత తెలుసుకోండి](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 గొలుసు కనుగొనబడింది}other{# గొలుసులు కనుగొనబడ్డాయి}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "క్లిష్టమైన అభ్యర్ధనల గాఢత్వమును తగ్గించండి"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "DOM గరిష్ట గాఢత్వము"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "మొత్తం DOM నోడ్‌లు"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "పిల్లల గరిష్ట సంఖ్య"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "పేజీలలో ~1,500 కన్నా తక్కువ DOM నోడ్‌లు ఉండాలని బ్రౌజర్ ఇంజినీర్లు సిఫార్సు చేస్తారు. ఉత్తమమైన స్థాయి < 32 అంశాల ట్రీ గాఢత మరియు 60 పిల్లలు/తల్లి/తండ్రి అంశం కన్నా తక్కువ ఉండడం. పెద్ద DOM మెమరీ వినియోగాన్ని పెంచవచ్చు, సుదీర్ఘ [శైలి గణనలు] కు దారి తీయవచ్చు (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), మరియు ఖరీదైన [లేఅవుట్ రీఫ్లోలు]ను ఉత్పత్తి చేయవచ్చు (https://developers.google.com/speed/articles/reflow). [మరింత తెలుసుకోండి](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "అధిక DOM పరిమాణాన్ని నివారించండి"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "DOM గరిష్ట గాఢత్వము"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "మొత్తం DOM నోడ్‌లు"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "అధిక DOM పరిమాణాన్ని నివారిస్తుంది"
@@ -168,7 +177,7 @@
     "message": "అంచనా వేయబడిన ఇన్‌పుట్ ప్రతిస్పందన సమయం"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "మొదటి కంటెంట్ సహిత పెయింట్ మొదటి వచనం లేదా చిత్రం పెయింట్ చేయబడిన సమయాన్ని గుర్తిస్తుంది. [మరింత తెలుసుకోండి](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "మొదటి కంటెంట్ సహిత పెయింట్ ఏదైనా వచనం లేదా చిత్రం మొదటిసారి పెయింట్ చేయబడిన సమయాన్ని గుర్తిస్తుంది. [మరింత తెలుసుకోండి](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "మొదటి కంటెంట్ సహిత పెయింట్"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "సర్వర్ ప్రతిస్పందన సమయాలు తక్కువగా ఉన్నాయి (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "వ్యవధి"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "పేరు"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "ప్రారంభ సమయం"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "రకం"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "కీలక వినియోగదారు అనుభవాల అనుకూల, నిజ-ప్రపంచ కొలతలను సృష్టించడానికి మీ యాప్‌ను వినియోగదారు సమయ APIతో ప్రయోగించడాన్ని పరిగణించండి. [మరింత తెలుసుకోండి](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "కీలక వినియోగదారు అనుభవాల సమయంలో మీ యాప్ వాస్తవ ప్రపంచ పనితీరును అంచనా వేయడానికి, మీ యాప్ కోసం వినియోగదారు సమయానుకూల APIని కొలమానంగా చేసుకుని పరిశీలించండి. [మరింత తెలుసుకోండి](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 వినియోగదారు సమయం}other{# వినియోగదారు సమయాలు}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "పనితీరు"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "కాష్ TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "పరిమాణం (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "వెచ్చించిన సమయం"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "ఆదా చేయగల పరిమాణం (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "ఆదా చేయగల వ్యవధి (మి. సె)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "ఆదా చేయగల పరిమాణం {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "ఆదా చేయగల వ్యవధి {wastedMs, number, milliseconds} మి. సెలు"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} మి. సె"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} సె"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "ఆడిట్‌లను చూపించండి"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "ప్రారంభ నావిగేషన్"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "గరిష్ట క్లిష్టమైన మార్గ ప్రతిస్పందన సమయం:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "ఎర్రర్ ఏర్పడింది!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "నివేదిక ఎర్రర్: ఆడిట్ సమాచారం లేదు"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "ల్యాబ్ డేటా"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "ఎములేటెడ్ 3Gలో ప్రస్తుత పేజీ [లైట్‌హౌస్](https://developers.google.com/web/tools/lighthouse/) విశ్లేషణ. విలువలు అంచనా ప్రకారం అందించినవి, కనుక తేడాలు ఉండవచ్చు."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "మాన్యువల్‌గా తనిఖీ చేయవలసిన అదనపు అంశాలు"

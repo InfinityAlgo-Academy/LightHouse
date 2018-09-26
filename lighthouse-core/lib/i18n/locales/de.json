@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome-Erweiterungen haben sich negativ auf die Ladegeschwindigkeit dieser Seite ausgewirkt. Versuchen Sie, die Seite im Inkognito-Modus oder mit einem neuen Chrome-Profil zu überprüfen."
+    "message": "Chrome-Erweiterungen haben die Ladegeschwindigkeit dieser Seite beeinträchtigt. Versuchen Sie, die Seite im Inkognito-Modus oder mit einem Chrome-Profil ohne Erweiterungen zu überprüfen."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Skriptauswertung"
@@ -111,7 +111,7 @@
     "message": "Bilder in modernen Formaten bereitstellen"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "In den unten aufgeführten Ketten kritischer Anfragen können Sie sehen, welche Ressourcen mit einer hohen Priorität ausgegeben werden. Versuchen Sie, die Länge der Ketten zu reduzieren, die Downloadgröße von Ressourcen zu verkleinern oder das Herunterladen unnötiger Ressourcen aufzuschieben, um den Seitenaufbau zu beschleunigen. [Weitere Informationen](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "In den unten aufgeführten Ketten kritischer Anfragen können Sie sehen, welche Ressourcen mit einer hohen Priorität geladen werden. Versuchen Sie, die Ketten zu verkürzen, die Downloadgröße von Ressourcen zu reduzieren oder das Herunterladen unnötiger Ressourcen aufzuschieben, um den Seitenaufbau zu beschleunigen. [Weitere Informationen](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 Kette gefunden}other{# Ketten gefunden}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Tiefe kritischer Anforderungen minimieren"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Maximale DOM-Tiefe"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Gesamtzahl der DOM-Knoten"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Maximale Anzahl untergeordneter Elemente"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Laut der Empfehlung von Browserentwicklern sollten Seiten nicht mehr als ungefähr 1.500 DOM-Knoten enthalten. Die ideale Strukturtiefe liegt bei unter 32 Elementen und weniger als 60 unter- und übergeordneten Elementen. Ein großes DOM kann zu hohem Speicherverbrauch, langwierigen [Stilberechnungen](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) und kostspieligen [dynamischen Umbrüchen im Layout](https://developers.google.com/speed/articles/reflow) führen. [Weitere Informationen](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Übermäßige DOM-Größe vermeiden"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Maximale DOM-Tiefe"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Gesamtzahl der DOM-Knoten"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Vermeidet eine übermäßige DOM-Größe"
@@ -168,7 +177,7 @@
     "message": "Geschätzte Eingabelatenz"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "\"Erste Inhalte gezeichnet\" gibt an, wann der erste Text oder das erste Bild gezeichnet wird. [Weitere Informationen](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "\"Erste Inhalte gezeichnet\" gibt an, wann der erste Text oder das erste Bild gezeichnet wird. [Weitere Informationen](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Erste Inhalte gezeichnet"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Serverantwortzeiten sind niedrig (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Dauer"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Name"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Beginn"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Typ"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Versuchen Sie, die User Timing API in Ihre App zu integrieren. Damit können Sie Messungen von wichtigem Nutzerverhalten in der Praxis vornehmen. [Weitere Informationen](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Sie können die User Timing API in Ihre App integrieren. Damit lässt sich die Leistung Ihrer App in der Praxis messen, beispielsweise während Seitenladevorgängen oder wichtigen Nutzerinteraktionen. [Weitere Informationen](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 Nutzertiming}other{# Nutzertimings}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Leistung"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache-TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Größe (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Zeitaufwand"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Mögliche Einsparung (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Mögliche Einsparung (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Mögliche Einsparung von {wastedBytes, number, bytes} ms"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Mögliche Einsparung von {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Überprüfungen ansehen"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Anfangsnavigation"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Maximale Latenz für kritischen Pfad:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Fehler."
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Fehler gemeldet: keine Informationen zur Überprüfung"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Labdaten"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/)-Analyse der aktuellen Seite in einem emulierten 3G-Netz. Die Werte sind geschätzt und können variieren."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Zusätzliche Elemente zur manuellen Überprüfung"

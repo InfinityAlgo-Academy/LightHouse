@@ -111,7 +111,7 @@
     "message": "Vis billeder i formater af næste generation"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Kæderne med kritiske anmodninger nedenfor viser dig, hvilke ressourcer der udsendes med høj prioritet. Overvej at reducere kædernes længde, så ressourcernes downloadstørrelse bliver mindre, eller at udskyde download af unødvendige ressourcer, så sideindlæsningen forbedres. [Få flere oplysninger](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Kæderne med kritiske anmodninger nedenfor viser dig, hvilke ressourcer der indlæses med høj prioritet. Du kan også vælge at reducere kædernes længde, så ressourcernes downloadstørrelse bliver mindre, eller at udskyde download af unødvendige ressourcer, så sideindlæsningen forbedres. [Få flere oplysninger](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{Der blev fundet 1 kæde}one{Der blev fundet # kæde}other{Der blev fundet # kæder}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Minimer dybden for kritiske anmodninger"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Maksimal DOM-dybde"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Samlet antal DOM-noder"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Maksimalt antal underordnede elementer"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Browserudviklere anbefaler, at sider højst indeholder 1.500 DOM-noder. Det bedste er en træstrukturdybde med under 32 elementer og mindre end 60 underordnede/overordnede elementer. En stor DOM kan øge hukommelsesforbruget, medføre længere [beregninger af typografi](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) og producere dyre [omformateringer af layout](https://developers.google.com/speed/articles/reflow). [Få flere oplysninger](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Undgå en overdreven DOM-størrelse"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Maksimal DOM-dybde"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Samlet antal DOM-noder"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Undgår en overdreven DOM-størrelse"
@@ -168,7 +177,7 @@
     "message": "Estimeret inputforsinkelse"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Første udfyldning af indhold markerer det tidspunkt, hvor den første tekst eller det første billede udfyldes. [Få flere oplysninger](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Første udfyldning af indhold markerer tidspunktet, hvor den første tekst eller det første billede udfyldes. [Få flere oplysninger](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Første udfyldning af indhold"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Serversvartiderne er korte (TTFB, Time To First Byte)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Varighed"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Navn"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Starttidspunkt"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Type"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Overvej at bruge User Timing API som værktøj til din app for at oprette tilpassede målinger i den virkelige verden af vigtige brugeroplevelser. [Få flere oplysninger](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Du kan også vælge at bruge User Timing API som værktøj til din app for at måle appens effektivitet i den virkelige verden i forbindelse med vigtige brugeroplevelser. [Få flere oplysninger](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 brugstid}one{# brugstid}other{# brugstider}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Effektivitet"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache-TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Størrelse (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Tidsforbrug"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "Webadresse"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Potentiel databesparelse (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potentiel tidsbesparelse (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potentiel databesparelse på {wastedBytes, number, bytes} kB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potentiel tidsbesparelse på {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} sek."
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Se revisioner"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Indledende navigation"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Maksimal forsinkelse for kritisk sti:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Der opstod en fejl"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Rapportfejl: Der er ingen revisionsoplysninger"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Laboratoriedata"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/)-analyse af den aktuelle side på et emuleret 3G-netværk. Værdierne er estimerede og kan variere."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Yderligere elementer, der skal tjekkes manuelt"

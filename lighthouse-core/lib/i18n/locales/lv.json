@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome paplašinājumi negatīvi ietekmē lapas ielādes veiktspēju. Mēģiniet lapas pārbaudi veikt inkognito režīmā vai no tīra Chrome profila."
+    "message": "Chrome paplašinājumi negatīvi ietekmē šīs lapas ielādes veiktspēju. Mēģiniet lapas pārbaudi veikt inkognito režīmā vai no Chrome profila bez paplašinājumiem."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Skripta novērtēšana"
@@ -111,7 +111,7 @@
     "message": "Rādiet attēlus nākamās paaudzes formātos"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Metrika “Kritisko pieprasījumu ķēdes” tālāk parāda, kuriem resursiem ir piešķirta augstākā prioritāte. Lai uzlabotu lapas ielādi, ieteicams samazināt ķēžu garumu, samazināt resursu lejupielādes apjomu vai atlikt nevajadzīgo resursu lejupielādi. [Uzzināt vairāk](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Metrika “Kritisko pieprasījumu ķēdes” tālāk parāda, kuri resursi ir ielādēti ar augstāko prioritāti. Lai uzlabotu lapas ielādi, ieteicams samazināt ķēžu garumu, samazināt resursu lejupielādes apjomu vai atlikt nevajadzīgo resursu lejupielādi.[Uzzināt vairāk](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{Atrasta 1 ķēde}zero{Atrastas # ķēdes}one{Atrasta # ķēde}other{Atrastas # ķēdes}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Kritisko pieprasījumu dziļuma samazināšana"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Maksimālais DOM dziļums"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "DOM mezglu kopskaits"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Maksimālais bērnelementu skaits"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Pārlūka inženieri iesaka, lai lapā nebūtu vairāk par 1500 DOM mezgliem. Ieteicams, lai koka dziļums nepārsniegtu 32 elementus un 60 bērnelementus/vecākelementus. Liels DOM var palielināt atmiņas lietojumu, izraisīt ilgākus [stila aprēķinus](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) un radīt dārgu [izkārtojuma plūduma sakārtošanu](https://developers.google.com/speed/articles/reflow). [Uzzināt vairāk](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Pārāk lielu DOM izmēru nepieļaušana"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Maksimālais DOM dziļums"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "DOM mezglu kopskaits"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Nepieļauj pārāk lielus DOM izmērus"
@@ -156,10 +165,10 @@
     "message": "Ieteicams samazināt laiku, kas tiek izmantots JS parsēšanai, kompilēšanai un izpildei. Iespējams, konstatēsiet, ka ir noderīgi izmantot mazākas JS lietderīgās slodzes."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Galvenā pavediena darba samazināšana"
+    "message": "Samaziniet galvenā pavediena darbu"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
-    "message": "Samazina galvenā pavediena darbu"
+    "message": "Galvenā pavediena darba samazināšana"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Iepriekš redzamais rādītājs aptuveni norāda, pēc cik ilga laika (milisekundēs) uz lietotāja ievadi reaģēs jūsu lietotne aizņemtākajā lapas ielādes 5 s periodā. Ja latentums pārsniedz 50 ms, iespējams, lietotāji jūsu lietotnes saņems novēloti. [Uzzināt vairāk](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
@@ -168,7 +177,7 @@
     "message": "Paredzētais ievades latentums"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Metrika “Pirmais saturīgais satura atveidojums” norāda, kad tiks parādīts pirmais teksts vai attēls. [Uzzināt vairāk](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Metrika \"Pirmais satura marķējums\" atzīmē laiku, kad tiek marķēts pirmais teksts vai attēls. [Uzzināt vairāk](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Pirmais saturīgais satura atveidojums"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Servera atbildes laiks ir mazs (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Ilgums"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Vārds"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Sākuma laiks"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Veids"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Ieteicams pievienot lietotnei Lietotāju laika API, lai izveidotu aktuālas atskaites par lietotāju mijiedarbi ar jūsu lietotnēm. [Uzzināt vairāk](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Ieteicams pievienot lietotnei Lietotāju laika API, lai noteiktu lietotnes aktuālo veiktspēju lietotāju pamata darbības laikā. [Uzzināt vairāk](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 lietotāja laiks}zero{# lietotāju laiks}one{# lietotāja laiks}other{# lietotāju laiks}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Veiktspēja"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Kešatmiņas TTL vērtība"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Lielums (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Iztērētais laiks"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Potenciālais ietaupījums (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potenciālais ietaupījums (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potenciālais ietaupījums: {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potenciālais ietaupījums: {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Rādīt pārbaudes"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Sākotnējā navigācija"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Maksimālais kritiskais ceļa latentums:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Kļūda!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Pārskata kļūda: nav pārbaudes informācijas"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Laboratorijas dati"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse] (https://developers.google.com/web/tools/lighthouse/) pašreizējās lapas analīze emulētajā 3G. Vērtības ir aptuvenas un var atšķirties."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Papildu vienumi manuālai pārbaudei"

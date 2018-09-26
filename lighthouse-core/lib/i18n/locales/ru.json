@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Расширения Chrome значительно повлияли на показатели загрузки этой страницы. Проведите аудит в режиме инкогнито или в чистом профиле Chrome."
+    "message": "Расширения Chrome замедляют загрузку этой страницы. Попробуйте использовать режим инкогнито или профиль Chrome без расширений."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Время оценки скриптов"
@@ -111,7 +111,7 @@
     "message": "Используйте современные форматы изображений"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Цепочки критических запросов показывают, какие ресурсы используются с высоким приоритетом. Чтобы ускорить загрузку страниц, рекомендуем сократить длину цепочек, уменьшить размер скачиваемых ресурсов или отложить скачивание ненужных ресурсов. [Подробнее…](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Приведенные ниже цепочки критических запросов показывают, какие ресурсы загружаются с высоким приоритетом. Чтобы ускорить загрузку страниц, рекомендуем сократить длину цепочек, уменьшить размер скачиваемых ресурсов или отложить скачивание ненужных ресурсов. [Подробнее…](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{Найдена 1 цепочка}one{Найдена # цепочка}few{Найдено # цепочки}many{Найдено # цепочек}other{Найдено # цепочки}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Сократите глубину вложенности критических запросов"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Максимальная глубина вложенности DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Общее количество узлов DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Максимальное количество дочерних элементов"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Разработчики браузеров рекомендуют, чтобы на странице было не более 1500 узлов DOM. Наилучшие показатели: глубина вложенности менее 32 элементов, количество дочерних и родительских элементов – менее 60. Сложная структура DOM может увеличить использование памяти, замедлить [вычисление стилей](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и повысить затраты на [компоновку шаблонов](https://developers.google.com/speed/articles/reflow). [Подробнее…](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Сократите размер структуры DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Максимальная глубина вложенности DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Общее количество узлов DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Сокращение размера структуры DOM"
@@ -168,7 +177,7 @@
     "message": "Приблизительное время задержки при вводе"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Этот параметр представляет собой отметку времени, когда на странице становятся видны первые изображения или текст. [Подробнее…](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Первая отрисовка контента – показатель, который определяет интервал времени между началом загрузки страницы и появлением первого изображения или блока текста. [Подробнее…](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Время загрузки первого контента"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Короткое время ответа сервера (время до получения первого байта)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Длительность"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Название"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Время начала"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Тип"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Чтобы создавать отчеты с актуальными сведениями о взаимодействии пользователей с вашим приложением, рекомендуем использовать User Timing API. [Подробнее…](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Используйте User Timing API, чтобы измерить реальную производительность своего приложения во время ключевых моментов взаимодействия с пользователями. [Подробнее…](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 временная метка}one{# временная метка}few{# временные метки}many{# временных меток}other{# временной метки}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Производительность"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Время жизни кеша"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Размер (КБ)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Потраченное время"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Потенциальная экономия данных (КБ)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Потенциальная экономия времени (мс)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Потенциальная экономия данных: {wastedBytes, number, bytes} КБ"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Потенциальная экономия времени: {wastedMs, number, milliseconds} мс"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} мс"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} сек."
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Показать аудиты"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Начальная навигация"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Максимальная задержка критического пути:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Ошибка"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Ошибка отчета: информация аудита отсутствует"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Лабораторные данные"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Анализ [Lighthouse](https://developers.google.com/web/tools/lighthouse/) для текущей страницы в условиях эмулированной 3G-сети. Значения приблизительные и могут изменяться."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Дополнительные объекты для проверки вручную"

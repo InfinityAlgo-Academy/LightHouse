@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome 拡張機能がこのページの読み込みに悪影響を及ぼしています。シークレット モードまたはクリーンな Chrome プロファイルでページを監査してみてください。"
+    "message": "Chrome 拡張機能がこのページの読み込みに悪影響を及ぼしています。シークレット モードで、または拡張機能なしの Chrome プロファイルからページを監査してみてください。"
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "スクリプトの評価"
@@ -111,7 +111,7 @@
     "message": "次世代フォーマットでの画像の配信"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "下のクリティカル リクエスト チェーンでは、高い優先度で発行されたリソースを確認できます。チェーンの長さを縮小する、リソースのダウンロード サイズを抑える、不要なリソースのダウンロードを遅らせるなどしてページの読み込み速度を改善することをご検討ください。[詳細](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)"
+    "message": "下のクリティカル リクエスト チェーンでは、高い優先度で読み込まれたリソースを確認できます。チェーンの長さを縮小する、リソースのダウンロード サイズを抑える、不要なリソースのダウンロードを遅らせるなどしてページの読み込み速度を改善することをご検討ください。[詳細](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)"
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 件のチェーンが見つかりました}other{# 件のチェーンが見つかりました}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "クリティカルなリクエストの深さの最小化"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "DOM の最大深さ"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "合計 DOM ノード数"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "最大の子要素数"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "ブラウザ エンジニアは、ページに含まれる DOM のノード数が 1,500 個を超えないようにすることを推奨しています。ツリーの深さは 32 要素まで、子や親の要素数は 60 個までにするのが最適です。DOM サイズが大きいと、メモリの使用量が増え、[スタイルの計算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)に時間がかかり、[レイアウトのリフロー](https://developers.google.com/speed/articles/reflow)というコストが発生します。[詳細](https://developers.google.com/web/tools/lighthouse/audits/dom-size)"
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "過大な DOM サイズの回避"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "DOM の最大深さ"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "合計 DOM ノード数"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "過大な DOM サイズの回避"
@@ -168,7 +177,7 @@
     "message": "入力の推定待ち時間"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "コンテンツの初回ペイントは、テキストまたは画像が初めてペイントされるまでにかかった時間です。[詳細](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)"
+    "message": "コンテンツの初回ペイントは、テキストまたは画像が初めてペイントされるまでにかかった時間です。[詳細](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "コンテンツの初回ペイント"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "サーバーの応答時間が遅い（TTFB）"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "継続時間"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "名前"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "開始時間"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "タイプ"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "User Timing API を使用してアプリをインストルメント化し、主要なユーザー エクスペリエンスのカスタムの実測値を取得できるようにしてください。[詳細](https://developers.google.com/web/tools/lighthouse/audits/user-timing)"
+    "message": "User Timing API を使用してアプリをインストルメント化し、主要なユーザー エクスペリエンスでのアプリの実際のパフォーマンスを測定できるようにしてください。[詳細](https://developers.google.com/web/tools/lighthouse/audits/user-timing)"
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 件のカスタム速度}other{# 件のカスタム速度}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "パフォーマンス"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "キャッシュの TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "サイズ（KB）"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "かかった時間"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "減らせるデータ量（KB）"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "短縮できる時間（ミリ秒）"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "{wastedBytes, number, bytes} KB 減らせます"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "{wastedMs, number, milliseconds} ミリ秒短縮できます"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ミリ秒"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} 秒"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "監査を表示"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "最初の移動先"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "クリティカル パスの最大待ち時間:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "エラー"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "レポートエラー: 監査情報はありません"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "ラボデータ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "エミュレート済み 3G での現在のページに関する [Lighthouse](https://developers.google.com/web/tools/lighthouse/) 分析です。推定値のため変動する可能性があります。"
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "個別の検証が必要な他の項目"

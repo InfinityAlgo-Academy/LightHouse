@@ -111,7 +111,7 @@
     "message": "แสดงรูปภาพในรูปแบบสมัยใหม่"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "ห่วงโซ่คำขอที่สำคัญด้านล่างแสดงให้เห็นทรัพยากรที่ออกโดยมีลำดับความสำคัญสูง พิจารณาลดความยาวของห่วงโซ่ ลดขนาดการดาวน์โหลดของทรัพยากร หรือเลื่อนเวลาการดาวน์โหลดทรัพยากรที่ไม่จำเป็นเพื่อปรับปรุงการโหลดหน้าเว็บ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)"
+    "message": "ห่วงโซ่คำขอที่สำคัญด้านล่างแสดงให้เห็นทรัพยากรที่โหลดโดยมีลำดับความสำคัญสูง พิจารณาลดความยาวของห่วงโซ่ ลดขนาดการดาวน์โหลดของทรัพยากร หรือเลื่อนเวลาการดาวน์โหลดทรัพยากรที่ไม่จำเป็นเพื่อปรับปรุงการโหลดหน้าเว็บ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)"
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{พบห่วงโซ่ 1 รายการ}other{พบห่วงโซ่ # รายการ}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "ลดความลึกของคำขอที่สำคัญ"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "ความลึก DOM สูงสุด"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "โหนด DOM ทั้งหมด"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "รายการย่อยสูงสุด"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "วิศวกรเบราว์เซอร์แนะนำให้ใช้หน้าเว็บที่มีโหนด DOM น้อยกว่าประมาณ 1,500 รายการ ความลึกที่เหมาะที่สุดคือแบบต้นไม้ซึ่งมีองค์ประกอบน้อยกว่า 32 รายการและมีองค์ประกอบย่อย/หลักน้อยกว่า 60 รายการ DOM ขนาดใหญ่อาจใช้หน่วยความจำเพิ่มขึ้น ทำให้[การคำนวณสไตล์](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)ยาวนานขึ้น และสร้าง[การจัดเรียงการออกแบบใหม่](https://developers.google.com/speed/articles/reflow)ที่ต้องใช้ค่าใช้จ่ายสูง [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/dom-size)"
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "หลีกเลี่ยง DOM ที่มีขนาดใหญ่เกินไป"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "ความลึก DOM สูงสุด"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "โหนด DOM ทั้งหมด"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "หลีกเลี่ยง DOM ที่มีขนาดใหญ่เกินไป"
@@ -168,7 +177,7 @@
     "message": "เวลาในการตอบสนองต่ออินพุตโดยประมาณ"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "การแสดงผลที่มีเนื้อหาเต็มครั้งแรกระบุเวลาที่มีการแสดงผลข้อความหรือรูปภาพครั้งแรก [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)"
+    "message": "First Contentful Paint ระบุเวลาที่มีการแสดงผลข้อความหรือรูปภาพครั้งแรก [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "การแสดงผลที่มีเนื้อหาเต็มครั้งแรก"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "เวลาตอบสนองของเซิร์ฟเวอร์ต่ำ (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "ระยะเวลา"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "ชื่อ"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "เวลาเริ่มต้น"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "ประเภท"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "พิจารณาติดตั้ง User Timing API ในแอปเพื่อสร้างการวัดประสบการณ์สำคัญของผู้ใช้ซึ่งคุณกำหนดเองและในชีวิตจริงได้ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/user-timing)"
+    "message": "พิจารณาติดตั้ง User Timing API ในแอปเพื่อวัดประสิทธิภาพในระหว่างประสบการณ์สำคัญของผู้ใช้ในชีวิตจริงได้ [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/user-timing)"
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{ระยะเวลาของผู้ใช้ 1 รายการ}other{ระยะเวลาของผู้ใช้ # รายการ}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "ประสิทธิภาพ"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "แคช TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "ขนาด (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "เวลาที่ใช้"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "ไบต์ที่อาจประหยัดได้ (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "เวลาที่อาจประหยัดได้ (มิลลิวินาที)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "อาจประหยัดได้ {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "อาจประหยัดเวลาได้ {wastedMs, number, milliseconds} มิลลิวินาที"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} มิลลิวินาที"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} วินาที"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "แสดงการตรวจสอบ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "การนำทางเริ่มต้น"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "เวลาในการตอบสนองของเส้นทางสำคัญที่ยาวที่สุด"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "ข้อผิดพลาด!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "ข้อผิดพลาดในรายงาน: ไม่มีข้อมูลการตรวจสอบ"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "ข้อมูลในห้องทดลอง"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) การวิเคราะห์หน้าปัจจุบันบน 3G จำลอง ค่าต่างๆ เป็นค่าประมาณและอาจแตกต่างกันไป"
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "รายการเพิ่มเติมที่ควรตรวจสอบด้วยตนเอง"

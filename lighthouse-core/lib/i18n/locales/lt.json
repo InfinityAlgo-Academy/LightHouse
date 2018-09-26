@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "„Chrome“ plėtiniai neigiamai paveikė šio puslapio įkėlimo našumą. Patikrinkite puslapį inkognito režimu arba naudodami švarų „Chrome“ profilį."
+    "message": "„Chrome“ plėtiniai neigiamai paveikė šio puslapio įkėlimo našumą. Pabandykite patikrinti puslapį inkognito režimu arba naudodami „Chrome“ profilį be plėtinių."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Scenarijaus įvertinimas"
@@ -111,7 +111,7 @@
     "message": "Pateikite naujos kartos formatų vaizdus"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Toliau pateiktose svarbiausių užklausų grandinėse nurodoma, kuriems ištekliams suteiktas aukštas prioritetas. Kad puslapio įkėlimas būtų sklandesnis, galbūt verta sutrumpinti grandines, sumažinti atsisiunčiamų išteklių dydį arba atidėti nereikalingų išteklių atsisiuntimą. [Sužinokite daugiau](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Toliau pateiktose svarbiausių užklausų grandinėse nurodoma, kurie ištekliai įkelti nurodant aukštą prioritetą. Kad puslapio įkėlimas būtų sklandesnis, galbūt verta sutrumpinti grandines, sumažinti atsisiunčiamų išteklių dydį arba atidėti nereikalingų išteklių atsisiuntimą. [Sužinokite daugiau](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{Rasta 1 grandinė}one{Rasta # grandinė}few{Rastos # grandinės}many{Rasta # grandinės}other{Rasta # grandinių}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Sumažinkite svarbiausių užklausų gylį"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Maksimalus DOM gylis"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Bendras DOM mazgų skaičius"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Maksimalus poelemenčių skaičius"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Naršyklių inžinieriai rekomenduoja puslapiuose turėti ne daugiau nei apytiksliai 1,5 tūkst. DOM mazgų. Optimaliausias medžio gylis – mažiau nei 32 elementai ir mažiau nei 60 poelemenčių bei viršelemenčių. Dėl didelio DOM gali būti sunaudojama daugiau atminties, ilgiau skaičiuojami stiliai (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) ir reikia brangių išdėstymo perskaičiavimų (https://developers.google.com/speed/articles/reflow). [Sužinokite daugiau](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Venkite per didelių DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Maksimalus DOM gylis"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Bendras DOM mazgų skaičius"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Išvengiama per didelių DOM"
@@ -156,7 +165,7 @@
     "message": "Apsvarstykite, ar neverta sutrumpinti JS analizei, kompiliavimui ir vykdymui skiriamo laiko. Mažesnės JS naudingosios apkrovos gali padėti tai padaryti."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Sutrumpinkite pagrindinės grupės veikimą"
+    "message": "Pagrindinės grupės veikimo sutrumpinimas"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
     "message": "Sutrumpinamas pagrindinės grupės veikimas"
@@ -168,7 +177,7 @@
     "message": "Įvertinta įvesties delsa"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Pirmasis „Contentful“ parodymas nurodo, kada parodomas pirmasis tekstas ar vaizdas. [Sužinokite daugiau](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Pirmas turiningas žymėjimas nurodo laiką, kada pažymimas pirmasis tekstas ar vaizdas. [Sužinokite daugiau](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Pirmasis „Contentful“ parodymas"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Serverio atsako laikas yra trumpas (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Trukmė"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Pavadinimas"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Pradžios laikas"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Tipas"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Galbūt verta apdoroti programą naudojant naudotojo laiko API ir gauti tinkintus realius svarbiausios naudotojo patirties įvertinimus. [Sužinokite daugiau](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Galbūt verta apdoroti programą naudojant naudotojo laiko API ir įvertinti programos realų našumą atsižvelgiant į pagrindines naudotojo funkcijas. [Sužinokite daugiau](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 naudotojo laikas}one{# naudotojo laikas}few{# naudotojo laikai}many{# naudotojo laiko}other{# naudotojo laikų}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Našumas"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Talpyklos TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Dydis (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Sugaištas laikas"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Galima sutaupyti (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Galima sutaupyti (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Galima sutaupyti {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Galima sutaupyti {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} sek."
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Rodyti patikras"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Pradinis naršymas"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Didžiausia svarbiausio kelio delsa:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Klaida!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Ataskaitos klaida: nėra patikros informacijos"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Laboratorijos duomenys"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Dabartinio puslapio [„Lighthouse“](https://developers.google.com/web/tools/lighthouse/) analizė naudojant emuliuotą 3G. Vertės yra numatytos ir gali skirtis."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Papildomi elementai, kuriuos reikia patikrinti neautomatiškai"

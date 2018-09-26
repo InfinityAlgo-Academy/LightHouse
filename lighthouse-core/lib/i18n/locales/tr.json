@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome uzantıları bu sayfanın yükleme performansını olumsuz etkiledi. Sayfayı gizli modda veya temiz bir Chrome profilinden denetlemeyi deneyin."
+    "message": "Chrome uzantıları bu sayfanın yükleme performansını olumsuz etkilemiştir. Sayfayı gizli modda veya uzantı içermeyen bir Chrome profilinden denetlemeyi deneyin."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Komut Dosyası Değerlendirmesi"
@@ -111,7 +111,7 @@
     "message": "Resimleri yeni nesil biçimlerde yayınlayın"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Aşağıdaki Kritik İstek Zincirleri, hangi kaynakların yüksek öncelikle yayınlandığını göstermektedir. Sayfa yüklemesini iyileştirmek için zincir uzunluğunu azaltma, kaynakların indirme boyutunu azaltma veya gereksiz kaynakların indirilmesini erteleme seçeneğini değerlendirin. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Aşağıdaki Kritik İstek Zincirleri, hangi kaynakların yüksek öncelikle yüklendiğini göstermektedir. Sayfa yüklemesini iyileştirmek için zincir uzunluğunu azaltma, kaynakların indirme boyutunu küçültme veya gereksiz kaynakların indirilmesini erteleme seçeneğini değerlendirin. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 zincir bulundu}other{# zincir bulundu}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Kritik İsteklerin Derinliğini En Aza İndirin"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Maksimum DOM Derinliği"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Toplam DOM Düğümü"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Maksimum Alt Öğe Sayısı"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Tarayıcı mühendisleri, sayfaların yaklaşık olarak 1500'den az DOM düğümü içermesini önerir. En etkili nokta, 32 öğeden ve 60 alt/üst öğeden az olan bir ağaç derinliğidir. Büyük bir DOM, bellek kullanımını artırarak daha uzun [stil hesaplamalarına] (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) yol açabilir ve yüksek maliyetli [düzen yeniden düzenlemeleri](https://developers.google.com/speed/articles/reflow) oluşturabilir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Aşırı büyük bir DOM boyutundan kaçının"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Maksimum DOM Derinliği"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Toplam DOM Düğümü"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Aşırı büyük bir DOM boyutunu önler"
@@ -156,10 +165,10 @@
     "message": "JS'yi ayrıştırma, derleme ve yürütme için harcanan zamanı kısaltma seçeneğini değerlendirin. Daha küçük JS yüklerinin sağlanması bu konuda yardımcı olabilir."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Ana iş parçacığı çalışmasını en aza indirin"
+    "message": "Ana iş parçacığı çalışmasını en aza indir"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
-    "message": "Ana iş parçacığı çalışmasını en aza indirir"
+    "message": "Ana iş parçacığının çalışmasını en aza indirir"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Yukarıdaki puan, sayfa yüklemesinin en yoğun olduğu 5 saniyelik zaman aralığında uygulamanızın kullanıcı girişine kaç milisaniye içinde yanıt vereceğine dair bir tahmindir. Gecikmeniz 50 ms'nin üzerinde olursa kullanıcılar uygulamanızın durakladığını düşünebilir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
@@ -168,7 +177,7 @@
     "message": "Tahmini Giriş Gecikmesi"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "İlk zengin içerikli boya, ilk metnin veya resmin boyandığı zamanı işaret eder. [Daha fazla bilgi](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "İlk Zengin İçerikli Boyama, ilk metnin veya resmin boyandığı zamanı işaret eder. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "İlk Zengin İçerikli Boya"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Sunucu yanıt süreleri düşük (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Süre"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Ad"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Başlangıç Zamanı"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Tür"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Temel kullanıcı deneyimlerinin özel, gerçek dünya ölçümlerini oluşturmak için uygulamanıza Kullanıcı Zamanlaması API'si ekleme seçeneğini değerlendirin. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Önemli kullanıcı deneyimleri esnasında uygulamanızın gerçek dünya performansını ölçmek için uygulamanıza User Timing API'si ekleme seçeneğini değerlendirin. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 kullanıcı zamanlaması}other{# kullanıcı zamanlaması}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Performans"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL'yi Önbelleğe Alma"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Boyut (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Harcanan Süre"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Potansiyel Tasarruflar (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potansiyel Tasarruf (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "{wastedBytes, number, bytes} KB potansiyel tasarruf"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "{wastedMs, number, milliseconds} ms potansiyel tasarruf"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} sn."
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Denetimleri göster"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "İlk Gezinme"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Maksimum kritik yol gecikmesi:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Hata!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Bildirme hatası: denetim bilgisi yok"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Test Verileri"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Mevcut sayfanın 3G kullanılarak gerçekleştirilen [Lighthouse](https://developers.google.com/web/tools/lighthouse/) analizi. Değerler tahmini olup değişiklik gösterebilir."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Manuel olarak kontrol edilecek ek öğeler"

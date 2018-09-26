@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Rychlost načítání této stránky byla negativně ovlivněna rozšířeními pro Chrome. Zkuste stránku zkontrolovat v anonymním režimu nebo v čistém profilu Chromu."
+    "message": "Rychlost načítání této stránky byla negativně ovlivněna rozšířeními pro Chrome. Zkuste stránku zkontrolovat v anonymním režimu nebo profilu Chromu bez rozšíření."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Vyhodnocování skriptů"
@@ -111,7 +111,7 @@
     "message": "Zobrazujte obrázky ve formátech nové generace"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Řetězce kritických požadavků níže ukazují, které zdroje jsou poskytovány s vysokou prioritou. Zvažte, zda byste načítání stránky nemohli vylepšit tím, že řetězce zkrátíte, zmenšíte zdroje nebo odložíte stahování zdrojů, které nejsou nezbytné. [Další informace](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Řetězce kritických požadavků níže ukazují, které zdroje se načítají s vysokou prioritou. Zvažte, zda byste načítání stránky nemohli vylepšit tím, že řetězce zkrátíte, zmenšíte zdroje nebo odložíte stahování zdrojů, které nejsou nezbytné. [Další informace](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{Byl nalezen 1 řetězec}few{Byly nalezeny # řetězce}many{Bylo nalezeno # řetězce}other{Bylo nalezeno # řetězců}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Minimalizujte hloubku kritických požadavků"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Maximální hloubka modelu DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Celkový počet uzlů v modelu DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Maximální počet podřízených prvků"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Vývojáři prohlížečů doporučují, aby stránky obsahovaly méně než cca. 1 500 uzlů modelu DOM. Ideálně by hloubka stromu měla být menší než 32 prvků a každý nadřazený prvek by měl mít méně než 60 podřízených prvků. Velký model DOM může vést k většímu využití paměti, delším [výpočtům stylů](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) a náročným [přeformátováváním rozvržení](https://developers.google.com/speed/articles/reflow). [Další informace](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Nepoužívejte příliš velký model DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Maximální hloubka modelu DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Celkový počet uzlů v modelu DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Nepoužívá příliš velký model DOM"
@@ -168,7 +177,7 @@
     "message": "Odhadovaná latence vstupu"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "První vykreslení obsahu je okamžik vykreslení prvního textu nebo obrázku. [Další informace](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "První vykreslení obsahu je okamžik vykreslení prvního textu nebo obrázku. [Další informace](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "První vykreslení obsahu"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Doby odezvy serveru jsou krátké (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Trvání"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Název"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Čas zahájení"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Typ"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Zkuste v aplikaci pomocí rozhraní User Timing API implementovat vlastní měření reálných událostí zásadních pro uživatelský dojem. [Další informace](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Zkuste v aplikaci pomocí rozhraní User Timing API implementovat měření reálného výkonu při událostech zásadních pro uživatelský dojem. [Další informace](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 časování uživatelů}few{# časování uživatelů}many{# časování uživatelů}other{# časování uživatelů}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Výkon"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Hodnota TTL (Time to Live) mezipaměti"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Velikost (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Strávený čas"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Možná úspora (kB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Možná úspora (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Lze uspořit {wastedBytes, number, bytes} kB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Lze uspořit {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Zobrazit audity"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Počáteční navigace"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Maximální latence kritické trasy:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Chyba!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Chyba přehledu: žádné informace o auditu"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Laboratorní data"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Analýza aktuální stránky nástrojem [Lighthouse](https://developers.google.com/web/tools/lighthouse/) při emulovaném připojení 3G. Hodnoty jsou odhady a mohou být proměnlivé."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Další položky k ruční kontrole"

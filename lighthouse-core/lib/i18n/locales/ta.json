@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Chrome நீட்டிப்புகள் இந்தப் பக்கத்தின் ஏற்றுதல் செயல்திறனை எதிர்மறையாகப் பாதிக்கின்றன. மறைநிலையிலோ, புதிய Chrome கணக்கிலிருந்தோ பக்கத்தைத் தணிக்கை செய்ய முயலவும்."
+    "message": "Chrome நீட்டிப்புகள் இந்தப் பக்கத்தின் ஏற்றுதல் செயல்திறனை எதிர்மறையாகப் பாதிக்கின்றன. மறைநிலையிலோ, நீட்டிப்புகள் இல்லாத ஒரு Chrome கணக்கிலிருந்தோ பக்கத்தைத் தணிக்கை செய்ய முயலவும்."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "ஸ்கிரிப்ட் மதிப்பாய்வு"
@@ -111,7 +111,7 @@
     "message": "படங்களை நவீன வடிவமைப்புகளில் வழங்கவும்"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "கீழுள்ள 'முக்கியக் கோரிக்கை வரிசைகள்', எந்தெந்த மூலங்கள் உயர் முன்னுரிமையுடன் வழங்கப்பட்டன என்பதைக் காண்பிக்கின்றன. பக்கம் ஏற்றப்படுவதன் வேகத்தை அதிகரிக்க, வரிசைகளின் நீளத்தைக் குறைத்தல், ஆதாரங்களின் பதிவிறக்க அளவைக் குறைத்தல் அல்லது தேவையற்ற ஆதாரங்களைப் பதிவிறக்குவதைத் தவிர்த்தல் போன்றவற்றை முயற்சி செய்யவும். [மேலும் அறிக](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "கீழுள்ள 'முக்கியக் கோரிக்கை வரிசைகள்', எந்தெந்த ஆதாரங்கள் உயர் முன்னுரிமையுடன் ஏற்றப்பட்டன என்பதைக் காண்பிக்கின்றன. பக்கம் ஏற்றப்படுவதன் வேகத்தை அதிகரிக்க, வரிசைகளின் நீளத்தைக் குறைத்தல், ஆதாரங்களின் பதிவிறக்க அளவைக் குறைத்தல் அல்லது தேவையற்ற ஆதாரங்களைப் பதிவிறக்குவதைத் தவிர்த்தல் போன்றவற்றை முயற்சி செய்யவும். [மேலும் அறிக](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 வரிசை கண்டறியப்பட்டது}other{# வரிசைகள் கண்டறியப்பட்டன}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "'முக்கியக் கோரிக்கைகளின் அடுக்கைக்' குறைக்கவும்"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "அதிகபட்ச DOM கிளை அடுக்கு"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "மொத்த DOM கணுக்கள்"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "அதிகபட்சத் துணை உறுப்புகள்"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "~1,500 DOM கணுக்களுக்குக் குறைவான கணுக்களைக் கொண்ட பக்கங்களை உலாவிப் பொறியாளர்கள் பரிந்துரைக்கின்றனர். 32 உறுப்புகளுக்குக் குறைவான கிளை அடுக்குகளும் 60க்குக் குறைவான துணைக்கிளை/கிளை உறுப்புகளும் இருப்பது உகந்தது. ஒரு பெரிய DOM, நினைவகப் பயன்பாட்டை அதிகரிக்கலாம், [ஸ்டைல் கணக்கீடுகளை] நீட்டிக்கலாம், மேலும் (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) அதிகச் செலவு பிடிக்கும் [தளவமைப்பு மறுசீராக்கங்களை] ஏற்படுத்தலாம் (https://developers.google.com/speed/articles/reflow). [மேலும் அறிக](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "அபரிமிதமான DOM அளவைத் தவிர்க்கவும்"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "அதிகபட்ச DOM கிளை அடுக்கு"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "மொத்த DOM கணுக்கள்"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "அபரிமிதமான DOM அளவைத் தவிர்க்கிறது"
@@ -168,7 +177,7 @@
     "message": "தோராயமான உள்ளீட்டுத் தாமதம்"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "'உள்ளடக்கமுள்ள முதல் தோற்றம்' என்பது, முதல் உரை அல்லது படம் தோன்றும் நேரத்தைக் குறிக்கிறது. [மேலும் அறிக](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "'உள்ளடக்கத்துடன் முதல் தோற்றம்' என்பது, முதல் உரை அல்லது படம் தோன்றும் நேரத்தைக் குறிக்கிறது. [மேலும் அறிக](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "உள்ளடக்கமுள்ள முதல் தோற்றம்"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "சேவையகம் எதிர்வினையாற்றும் நேரங்கள் குறைவாக உள்ளன (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "கால அளவு"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "பெயர்"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "தொடக்க நேரம்"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "வகை"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "முக்கியப் பயனர் அனுபவங்களை அளவிடுவதற்கான பிரத்யேக, நிகழ்நேர அளவீடுகளை உருவாக்குவதற்கு, உங்கள் ஆப்ஸில் User Timing APIஐப் பயன்படுத்தவும். [மேலும் அறிக](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "முக்கியப் பயனர் அனுபவங்களின்போது உங்கள் ஆப்ஸின் நிகழ்நேர செயல்திறனை அளவிடுவதற்கு, உங்கள் ஆப்ஸில் User Timing APIஐப் பயன்படுத்தலாம். [மேலும் அறிக](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 பயனர் நேரம்}other{# பயனர் நேரங்கள்}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "இணையச் செயல்திறன்"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "தற்காலிக நினைவக TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "அளவு (கி.பை.)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "செலவிட்ட நேரம்"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "தோராயமான சேமிப்பு (கி.பை.)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "தோராயமான சேமிப்புகள் (மி.வி.)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "சேமிக்கக்கூடிய அளவு: {wastedBytes, number, bytes} கி.பை."
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "சேமிக்கக்கூடிய நேரம்: {wastedMs, number, milliseconds} மி.வி."
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} மி.வி."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} வி"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "தணிக்கைகளைக் காட்டு"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "துவக்க நெட்வொர்க் கோரிக்கை"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "முக்கியக் கோரிக்கைத் தடத்தின் அதிகபட்சத் தாமதம்:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "பிழை!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "அறிக்கைப் பிழை: தணிக்கைத் தகவல் இல்லை"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "ஆய்வகத் தரவு"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "எமுலேட்டட் 3G இல் தற்போதைய பக்கத்தின் [Lighthouse](https://developers.google.com/web/tools/lighthouse/) பகுப்பாய்வு. மதிப்புகள் தோராயமானவை, மாறுபடக்கூடியவை."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "கைமுறையாகச் சரிபார்க்க வேண்டிய கூடுதல் விஷயங்கள்"

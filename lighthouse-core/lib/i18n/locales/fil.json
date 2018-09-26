@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Nagkaroon ng negatibong epekto ang mga extension ng Chrome sa performance ng pag-load ng page na ito. Subukang i-audit ang page sa incognito mode o mula sa isang malinis na profile sa Chrome."
+    "message": "Nagkaroon ng negatibong epekto ang mga extension ng Chrome sa performance ng pag-load ng page na ito. Subukang i-audit ang page sa incognito mode o mula sa isang profile sa Chrome nang walang extension."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Pagsusuri ng Script"
@@ -111,7 +111,7 @@
     "message": "Maghatid ng mga larawan sa mga makabagong format"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Ipinapakita sa iyo ng Critical Request Chains sa ibaba kung anong mga resource ang ibinibigay nang may mataas na priyoridad. Pag-isipang paikliin ang mga chain, paliitin ang mga dina-download sa mga resource, o ipagpaliban ang pag-download ng mga hindi kinakailangang resource para mapabilis ang pag-load ng page [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Ipinapakita sa iyo ng Critical Request Chains sa ibaba kung anong mga resource ang nilo-load nang may mataas na priyoridad. Pag-isipang paikliin ang mga chain, paliitin ang mga dina-download sa mga resource, o ipagpaliban ang pag-download ng mga hindi kinakailangang resource para mapabilis ang pag-load ng page [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{Nakakita ng 1 chain}one{Nakakita ng # chain}other{Nakakita ng # na chain}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "I-minimize ang Lalim ng Mahahalagang Kahilingan"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Maximum na Lalim ng DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Kabuuang Bilang ng Mga Node ng DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Maximum na Bilang ng Mga Child"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Inirerekomenda ng mga engineer ng browser na hindi umabot sa ~1,500 ang mga node ng DOM sa mga page. Ang pinakamainam ay isang lalim ng tree na < 32 elemento at wala pang 60 child/parent na elemento. Ang malaking DOM ay maaaring magresulta sa mas malakas na paggamit ng memory, at magpahaba ng [mga pagkalkula ng istilo](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), at gumawa ng mga magastos na [reflow ng layout](https://developers.google.com/speed/articles/reflow). [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Umiwas sa masyadong malaking DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Maximum na Lalim ng DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Kabuuang Bilang ng Mga Node ng DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Umiiwas sa masyadong malaking DOM"
@@ -156,10 +165,10 @@
     "message": "Pag-isipang bawasan ang oras na ginugugol sa pag-parse, pag-compile, at pagpapagana ng JS. Maaaring mapansin mong nakakatulong dito ang paghahatid ng mas maliliit na payload ng JS."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "I-minimize ang gawain sa pangunahing thread"
+    "message": "Bawasan ang gawain sa pangunahing thread"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
-    "message": "Mini-minimize ang gawain sa pangunahing thread"
+    "message": "Binabawasan ang gawain sa pangunahing thread"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Ang marka sa itaas ay isang pagtataya ng bilis ng pagtugon ng iyong app sa input ng user, na nasa milliseconds, sa pinakaabalang 5 segundong window ng pag-load ng page. Kung mas mataas sa 50 ms ang iyong latency, maaaring ituring ng mga user na mabagal ang app mo. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
@@ -168,7 +177,7 @@
     "message": "Tinatayang Latency ng Input"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Minamarkahan ng first contentful paint ang oras ng pag-paint sa unang text o larawan. [Matuto pa](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Minamarkahan ng First Contentful Paint ang oras ng pag-paint sa unang text o larawan. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "First Contentful Paint"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Masyadong matagal ang pagtugon ng server (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Tagal"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Pangalan"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Oras ng Pagsisimula"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Uri"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Pag-isipang gumamit ng User Timing API sa iyong app para makagawa ng custom at makatotohanang pagsukat ng mahahalagang karanasan ng user. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Pag-isipang gumamit ng User Timing API sa iyong app para sukatin ang makatotohanang performance ng app mo sa mahahalagang karanasan ng user. [Matuto pa](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 timing ng user}one{# timing ng user}other{# na timing ng user}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Performance"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL ng Cache"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Laki (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Oras na Ginugol"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Maaaring Matipid (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Maaaring Matipid (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Maaaring makatipid ng {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Maaaring makatipid ng {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Ipakita ang mga pag-audit"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Unang Navigation"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Maximum na latency ng critical path:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Nagka-error!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Error sa ulat: walang impormasyon sa pag-audit"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Data ng Lab"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Ang pagsusuri ng [Lighthouse](https://developers.google.com/web/tools/lighthouse/) sa kasalukuyang page sa ginayang 3G. Tinatantya at maaaring mag-iba ang mga value."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Mga karagdagang item na manual na susuriin"

@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Les extensions Chrome ont eu un impact négatif sur les performances de chargement de la page. Essayez de contrôler la page en mode navigation privée ou depuis un profil Chrome vide."
+    "message": "Les extensions Chrome ont eu un impact négatif sur les performances de chargement de la page. Essayez de contrôler la page en mode navigation privée ou depuis un profil Chrome sans extensions."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Évaluation des scripts"
@@ -33,7 +33,7 @@
     "message": "Différez le chargement des images hors écran"
   },
   "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | description": {
-    "message": "Des ressources bloquent le premier passage de votre page. Envisagez de diffuser des feuilles JS/CSS essentielles en ligne et de différer la diffusion de toutes les feuilles JS/de style non essentielles. [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources)."
+    "message": "Des ressources bloquent la première visualisation (first paint) de votre page. Envisagez de diffuser des feuilles JS/CSS essentielles en ligne et de différer la diffusion de toutes les feuilles JS/de style non essentielles. [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources)."
   },
   "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | title": {
     "message": "Éliminez les ressources qui bloquent le rendu"
@@ -111,7 +111,7 @@
     "message": "Diffusez des images aux formats nouvelle génération"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Les Chaînes de demandes critiques ci-dessous vous montrent quelles ressources sont émises avec une priorité élevée. Envisagez de réduire la longueur des chaînes et la taille de téléchargement des ressources ou de reporter le téléchargement de ressources inutiles afin d'améliorer le chargement des pages. [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Les Chaînes de demandes critiques ci-dessous vous montrent quelles ressources sont chargées avec une priorité élevée. Envisagez de réduire la longueur des chaînes et la taille de téléchargement des ressources ou de reporter le téléchargement de ressources inutiles afin d'améliorer le chargement des pages. [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 chaîne trouvée}one{# chaîne trouvée}other{# chaînes trouvées}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Réduisez la profondeur des demandes critiques"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Profondeur maximum de DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Total des nœuds de DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Nombre maximal d'enfants"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Les ingénieurs en navigation recommandent que les pages contiennent moins de 1 500 nœuds de DOM environ. La zone d'écoute idéale est une profondeur d'arborescence inférieure à 32 éléments et contenant moins de 60 éléments enfant/parent. Un grand DOM peut accroître l'utilisation de la mémoire, entraîner de plus longs [calculs de style](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) et des [redispositions] coûteuses (https://developers.google.com/speed/articles/reflow). [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Évitez une taille excessive de DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Profondeur maximum de DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Total des nœuds de DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Éviter une taille excessive de DOM"
@@ -168,10 +177,10 @@
     "message": "Estimation du temps de latence avant intervention"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "La statistique \"Premier passage de contenu entier\" indique le moment où le premier texte ou la première image sont affichés. [En savoir plus](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "La statistique \"first contentful paint\" indique le moment où le premier texte ou la première image sont affichés. [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
-    "message": "Premier passage de contenu entier"
+    "message": "First Contentful Paint"
   },
   "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
     "message": "La statistique \"Premier processeur inactif\" marque la première fois que le thread principal de la page est suffisamment silencieux pour gérer l'entrée. [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/first-interactive)."
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Les délais de réponse du serveur sont faibles (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Durée"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Nom"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Heure de début"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Type"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Envisagez de doter votre application de l'API temps utilisateur pour créer des mesures réelles et personnalisées des expériences utilisateur clés. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Envisagez de doter votre application de l'API User Timing pour mesurer les performances réelles de votre application lors d'expériences utilisateur clés. [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{[=1]1 temps utilisateur}one{# temps utilisateur}other{# temps utilisateur}}"
@@ -243,10 +264,10 @@
     "message": "Diagnostics"
   },
   "lighthouse-core/config/default-config.js | firstPaintImprovementsGroupDescription": {
-    "message": "L'aspect le plus essentiel des performances est la rapidité avec laquelle les pixels sont affichés à l'écran. Statistiques clés : Premier passage de contenu entier, Premier passage significatif"
+    "message": "L'aspect le plus essentiel des performances est la rapidité avec laquelle les pixels sont affichés à l'écran. Statistiques clés : First Contentful Paint, First Meaningful Paint"
   },
   "lighthouse-core/config/default-config.js | firstPaintImprovementsGroupTitle": {
-    "message": "Amélioration du premier passage"
+    "message": "Amélioration de First Paint"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
     "message": "Ces optimisations peuvent accélérer le chargement de votre page."
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Performances"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache de la valeur TTL"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Taille (Ko)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Temps passé"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Économies potentielles (Ko)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Économies potentielles (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Économies potentielles de {wastedBytes, number, bytes} Ko"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Économies potentielles de {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} s"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Afficher les audits"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Navigation initiale"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Latence de chemin d'accès critique maximale :"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Erreur"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Erreur de rapport : pas d'information d'audit"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Données de test"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Analyse [Lighthouse](https://developers.google.com/web/tools/lighthouse/) de la page actuelle sur 3G émulée. Les valeurs sont des estimations et peuvent varier."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Autres éléments à vérifier manuellement"

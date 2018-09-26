@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Οι επεκτάσεις Chrome επηρεάζονται αρνητικά από την απόδοση φόρτωσης αυτής της σελίδας. Δοκιμάστε να εκτελέσετε έλεγχο της σελίδας σε κατάσταση ανώνυμης περιήγησης ή από κάποιο καθαρό προφίλ Chrome."
+    "message": "Οι επεκτάσεις του Chrome επηρέασαν αρνητικά την απόδοση φόρτωσης αυτής της σελίδας. Δοκιμάστε να ελέγξετε τη σελίδα σε κατάσταση ανώνυμης περιήγησης ή από ένα προφίλ του Chrome χωρίς επεκτάσεις."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Αξιολόγηση σεναρίου"
@@ -111,7 +111,7 @@
     "message": "Προβολή εικόνων σε μορφές επόμενης γενιάς"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Οι Αλυσίδες κρίσιμων αιτημάτων που ακολουθούν δείχνουν τους πόρους που εκδίδονται με υψηλή προτεραιότητα. Εξετάστε το ενδεχόμενο μείωσης των αλυσίδων, μείωσης του μεγέθους λήψης πόρων ή καθυστέρησης της λήψης μη απαραίτητων πόρων, για τη βελτίωση της φόρτωσης σελίδας. [Μάθετε περισσότερα](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Οι Αλυσίδες κρίσιμων αιτημάτων που ακολουθούν δείχνουν τους πόρους που φορτώνονται με υψηλή προτεραιότητα. Εξετάστε το ενδεχόμενο μείωσης του μεγέθους των αλυσίδων, μείωσης του μεγέθους λήψης πόρων ή καθυστέρησης της λήψης μη απαραίτητων πόρων, για τη βελτίωση της φόρτωσης σελίδας. [Μάθετε περισσότερα](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{Βρέθηκε 1 αλυσίδα}other{Βρέθηκαν # αλυσίδες}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Ελαχιστοποίηση βάθους κρίσιμων αιτημάτων"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Μέγιστο βάθος DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Σύνολο κόμβων DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Μέγιστος αριθμός θυγατρικών"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Οι μηχανικοί προγραμμάτων περιήγησης συνιστούν να περιέχουν οι σελίδες λιγότερους από ~1.500 κόμβους DOM. Το ιδανικό είναι ένα βάθος δέντρου με < 32 στοιχεία και λιγότερα από 60 θυγατρικά/γονικά στοιχεία. Ένα μεγάλο DOM μπορεί να αυξήσει τη χρήση της μνήμης, να προκαλέσει [υπολογισμούς στυλ] μεγαλύτερης διάρκειας (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) και να δημιουργήσει [επαναληπτικές ροές διάταξης] υψηλού κόστους (https://developers.google.com/speed/articles/reflow). [Μάθετε περισσότερα](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Αποφύγετε τα υπερβολικά μεγάλα μεγέθη DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Μέγιστο βάθος DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Σύνολο κόμβων DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Αποφεύγει τα υπερβολικά μεγάλα μεγέθη DOM"
@@ -156,10 +165,10 @@
     "message": "Εξετάστε το ενδεχόμενο ελάττωσης του χρόνου ανάλυσης, σύνθεσης και εκτέλεσης JS. Μπορεί να διαπιστώσετε ότι η προβολή μικρότερων φορτίων δεδομένων JS συμβάλλει προς αυτήν την κατεύθυνση."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Ελαχιστοποιήστε την κύρια εργασία νήματος"
+    "message": "Ελαχιστοποίηση εργασίας κύριου νήματος"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
-    "message": "Ελαχιστοποιεί την κύρια εργασία νήματος"
+    "message": "Ελαχιστοποιεί την εργασία κύριου νήματος"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "Η παραπάνω βαθμολογία αποτελεί εκτίμηση του χρόνου που απαιτείται προκειμένου η εφαρμογή σας να ανταποκριθεί στα στοιχεία εισόδου χρήστη, σε χιλιοστά του δευτερολέπτου, κατά τη διάρκεια εκτέλεσης του παραθύρου φόρτωσης σελίδας 5 δευτ. με τη μεγαλύτερη κινητικότητα. Εάν ο λανθάνων χρόνος είναι μεγαλύτερος από 50 ms, οι χρήστες μπορεί να θεωρήσουν ότι η εφαρμογή σας είναι αργή. [Μάθετε περισσότερα](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
@@ -168,7 +177,7 @@
     "message": "Εκτιμώμενος λανθάνων χρόνος στοιχείων εισόδου"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Η Πρώτη μορφή με περιεχόμενο υποδεικνύει πότε μορφοποιείται το πρώτο κείμενο ή η πρώτη εικόνα. [Μάθετε περισσότερα](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "Η Πρώτη σχεδίαση περιεχομένου (FCP) υποδεικνύει πότε μορφοποιείται το πρώτο κείμενο ή η πρώτη εικόνα. [Μάθετε περισσότερα](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Πρώτη μορφή με περιεχόμενο"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Οι χρόνοι απόκρισης διακομιστή είναι χαμηλοί (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Διάρκεια"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Όνομα"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Ώρα έναρξης"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Τύπος"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Εξετάστε το ενδεχόμενο ενίσχυσης της εφαρμογής σας με το User Timing API, για να δημιουργείτε προσαρμοσμένες, πραγματικές μετρήσεις για σημαντικές εμπειρίες χρήστη. [Μάθετε περισσότερα](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Εξετάστε το ενδεχόμενο ενίσχυσης της εφαρμογής σας με το User Timing API, για να καταμετράτε την πραγματική απόδοση της εφαρμογής σας κατά τη διάρκεια σημαντικών εμπειριών χρήστη. [Μάθετε περισσότερα](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 χρόνος χρήστη}other{# χρόνοι χρήστη}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Απόδοση"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL κρυφής μνήμης"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Μέγεθος (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Χρόνος χρήσης"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Δυνητικές εξοικονομήσεις (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Δυνητικές εξοικονομήσεις (ms)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Δυνητικές εξοικονομήσεις {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Δυνητικές εξοικονομήσεις {wastedMs, number, milliseconds} ms"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} δ."
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Εμφάνιση ελέγχων"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Αρχική πλοήγηση"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Μέγιστος λανθάνων χρόνος κρίσιμης διαδρομής:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Σφάλμα!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Σφάλμα αναφοράς: Δεν υπάρχουν πληροφορίες ελέγχου"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Εργαστηριακά δεδομένα"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Φάρος](https://developers.google.com/web/tools/lighthouse/) ανάλυση της τρέχουσας σελίδας σε προσομοιωμένο 3G. Οι τιμές αποτελούν εκτιμήσεις και μπορεί να ποικίλουν."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Επιπλέον στοιχεία για μη αυτόματο έλεγχο"

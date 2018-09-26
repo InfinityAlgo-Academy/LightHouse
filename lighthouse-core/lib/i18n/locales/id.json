@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Ekstensi Chrome berpengaruh negatif terhadap performa pemuatan halaman ini. Coba audit halaman dalam mode penyamaran atau dari profil Chrome yang bersih."
+    "message": "Ekstensi Chrome berpengaruh negatif terhadap performa pemuatan halaman ini. Coba audit halaman dalam mode penyamaran atau dari profil Chrome tanpa ekstensi."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Evaluasi Skrip"
@@ -111,7 +111,7 @@
     "message": "Tayangkan gambar dalam format generasi berikutnya"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "Rantai Permintaan Penting di bawah menampilkan resource apa saja yang diterbitkan dengan prioritas tinggi. Pertimbangkan mengurangi panjang rantai, mengurangi ukuran download resource, atau menunda download resource yang tidak penting untuk meningkatkan pemuatan halaman. [Pelajari lebih lanjut](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
+    "message": "Rantai Permintaan Penting di bawah menampilkan resource apa saja yang dimuat dengan prioritas tinggi. Pertimbangkan mengurangi panjang rantai, mengurangi ukuran download resource, atau menunda download resource yang tidak penting untuk mempercepat pemuatan halaman. [Pelajari lebih lanjut](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{1 rantai ditemukan}other{# rantai ditemukan}}"
@@ -119,14 +119,14 @@
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Minimalkan Kedalaman Permintaan Penting"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": {
-    "message": "Kedalaman DOM Maksimum"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
+    "message": "Element"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": {
-    "message": "Total Node DOM"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
+    "message": "Statistic"
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": {
-    "message": "Turunan Maksimum"
+  "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
+    "message": "Value"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Engineer browser merekomendasikan halaman berisi kurang dari ~1.500 node DOM. Titik yang efektif adalah kedalaman hierarki < 32 elemen dan kurang dari 60 elemen turunan/induk. DOM yang besar dapat meningkatkan penggunaan memori, menyebabkan [penghitungan gaya] yang lebih lama(https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), dan menghasilkan [penyesuaian tata letak] yang mahal(https://developers.google.com/speed/articles/reflow). [Pelajari lebih lanjut](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -136,6 +136,15 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Menghindari ukuran DOM yang berlebihan"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
+    "message": "Kedalaman DOM Maksimum"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
+    "message": "Total Node DOM"
+  },
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
+    "message": "Maximum Child Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Menghindari ukuran DOM yang berlebihan"
@@ -156,7 +165,7 @@
     "message": "Pertimbangkan mengurangi waktu yang dihabiskan untuk mengurai, mengompilasi, dan mengeksekusi JS. Anda mungkin menemukan bahwa mengirim payload JS yang lebih kecil akan membantu mengurangi waktu."
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": {
-    "message": "Minimalkan proses thread utama"
+    "message": "Minimalkan pekerjaan thread utama"
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
     "message": "Meminimalkan pekerjaan thread utama"
@@ -168,7 +177,7 @@
     "message": "Perkiraan Latensi Masukan"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "First Contentful Paint menandai waktu saat teks atau gambar pertama di-paint. [Pelajari lebih lanjut](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint)."
+    "message": "First Contentful Paint menandai waktu saat teks atau gambar pertama di-paint. [Pelajari lebih lanjut] (https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "First Contentful Paint"
@@ -215,8 +224,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Waktu respons server sedikit (TTFB)"
   },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Durasi"
+  },
+  "lighthouse-core/audits/user-timings.js | columnName": {
+    "message": "Nama"
+  },
+  "lighthouse-core/audits/user-timings.js | columnStartTime": {
+    "message": "Waktu Mulai"
+  },
+  "lighthouse-core/audits/user-timings.js | columnType": {
+    "message": "Jenis"
+  },
   "lighthouse-core/audits/user-timings.js | description": {
-    "message": "Pertimbangkan melengkapi aplikasi dengan User Timing API untuk membuat pengukuran kustom di dunia nyata terhadap pengalaman pengguna utama. [Pelajari lebih lanjut](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
+    "message": "Pertimbangkan melengkapi aplikasi dengan User Timing API untuk mengukur performa sebenarnya aplikasi Anda selama pengalaman pengguna utama. [Pelajari lebih lanjut](https://developers.google.com/web/tools/lighthouse/audits/user-timing)."
   },
   "lighthouse-core/audits/user-timings.js | displayValue": {
     "message": "{itemCount,plural, =1{1 waktu pengguna}other{# waktu pengguna}}"
@@ -266,41 +287,56 @@
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Performa"
   },
-  "lighthouse-core/lib/i18n.js | columnCacheTTL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL Cache"
   },
-  "lighthouse-core/lib/i18n.js | columnSize": {
+  "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Ukuran (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnTimeSpent": {
+  "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Waktu yang Dihabiskan"
   },
-  "lighthouse-core/lib/i18n.js | columnURL": {
+  "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedBytes": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Potensi Penghematan (KB)"
   },
-  "lighthouse-core/lib/i18n.js | columnWastedMs": {
+  "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
     "message": "Potensi Penghematan (md)"
   },
-  "lighthouse-core/lib/i18n.js | displayValueByteSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
     "message": "Potensi penghematan {wastedBytes, number, bytes} KB"
   },
-  "lighthouse-core/lib/i18n.js | displayValueMsSavings": {
+  "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": {
     "message": "Potensi penghematan {wastedMs, number, milliseconds} md"
   },
-  "lighthouse-core/lib/i18n.js | ms": {
+  "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} md"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | seconds": {
+    "message": "{timeInMs, number, seconds} d"
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Tampilkan audit"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
+    "message": "Navigasi Awal"
+  },
+  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Latensi lokasi kritis maksimal:"
   },
   "lighthouse-core/report/html/renderer/util.js | errorLabel": {
     "message": "Error!"
   },
   "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
     "message": "Error laporan: tidak ada informasi audit"
+  },
+  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
+    "message": "Data Lab"
+  },
+  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analisis halaman saat ini pada 3G teremulasi. Nilai adalah hasil perkiraan dan dapat bervariasi."
   },
   "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
     "message": "Item tambahan untuk diperiksa secara manual"
