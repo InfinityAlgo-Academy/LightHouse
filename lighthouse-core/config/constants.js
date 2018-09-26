@@ -36,6 +36,7 @@ const defaultSettings = {
   gatherMode: false,
   disableStorageReset: false,
   disableDeviceEmulation: false,
+  emulatedFormFactor: 'mobile',
 
   // the following settings have no defaults but we still want ensure that `key in settings`
   // in config will work in a typechecked way

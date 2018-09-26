@@ -415,7 +415,12 @@ class Util {
         summary = 'Unknown';
     }
 
-    const deviceEmulation = settings.disableDeviceEmulation ? 'No emulation' : 'Emulated Nexus 5X';
+    let deviceEmulation = 'No emulation';
+    if (!settings.disableDeviceEmulation) {
+      if (settings.emulatedFormFactor === 'mobile') deviceEmulation = 'Emulated Nexus 5X';
+      if (settings.emulatedFormFactor === 'desktop') deviceEmulation = 'Emulated Desktop';
+    }
+
     return {
       deviceEmulation,
       cpuThrottling,

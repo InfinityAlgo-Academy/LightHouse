@@ -57,7 +57,7 @@ function getFlags(manualArgv) {
       .group(
         [
           'save-assets', 'list-all-audits', 'list-trace-categories', 'additional-trace-categories',
-          'config-path', 'preset', 'chrome-flags', 'port', 'hostname',
+          'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'emulated-form-factor',
           'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
           'only-audits', 'only-categories', 'skip-audits',
         ],
@@ -70,7 +70,8 @@ function getFlags(manualArgv) {
         'blocked-url-patterns': 'Block any network requests to the specified URL patterns',
         'disable-storage-reset':
             'Disable clearing the browser cache and other storage APIs before a run',
-        'disable-device-emulation': 'Disable Nexus 5X emulation',
+        'disable-device-emulation': 'Disable all device form factor emulation. Deprecated: use --emulated-form-factor=none instead',
+        'emulated-form-factor': 'Controls the emulated device form factor (mobile vs. desktop) if not disabled',
         'throttling-method': 'Controls throttling method',
         'throttling.rttMs': 'Controls simulated network RTT (TCP layer)',
         'throttling.throughputKbps': 'Controls simulated network download throughput',
@@ -120,6 +121,7 @@ function getFlags(manualArgv) {
         'list-trace-categories', 'view', 'verbose', 'quiet', 'help',
       ])
       .choices('output', printer.getValidOutputOptions())
+      .choices('emulated-form-factor', ['mobile', 'desktop', 'none'])
       .choices('throttling-method', ['devtools', 'provided', 'simulate'])
       .choices('preset', ['full', 'perf', 'mixed-content'])
       // force as an array
@@ -134,6 +136,7 @@ function getFlags(manualArgv) {
       // default values
       .default('chrome-flags', '')
       .default('output', ['html'])
+      .default('emulated-form-factor', 'mobile')
       .default('port', 0)
       .default('hostname', 'localhost')
       .default('enable-error-reporting', undefined) // Undefined so prompted by default

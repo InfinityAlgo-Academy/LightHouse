@@ -63,6 +63,7 @@ Configuration:
   --hostname                     The hostname to use for the debugging protocol.                                              [default: "localhost"]
   --max-wait-for-load            The timeout (in milliseconds) to wait before the page is considered done loading and the run should continue.
                                  WARNING: Very high values can lead to large traces and instability                                 [default: 45000]
+  --emulated-form-factor         Controls the emulated device form factor (mobile vs. desktop) if not disabled                      [choices: "mobile", "desktop", "none"] [default: "mobile"]
   --enable-error-reporting       Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More:
                                  https://git.io/vFFTO
   --gather-mode, -G              Collect artifacts from a connected browser and save to disk. If audit-mode is not also enabled, the run will quit
@@ -83,7 +84,7 @@ Options:
   --version                     Show version number                                                                                        [boolean]
   --blocked-url-patterns        Block any network requests to the specified URL patterns                                                     [array]
   --disable-storage-reset       Disable clearing the browser cache and other storage APIs before a run                                     [boolean]
-  --disable-device-emulation    Disable Nexus 5X emulation                                                                                 [boolean]
+  --disable-device-emulation    Disable all device form factor emulation. Deprecated: use --emulated-form-factor=none instead              [boolean]
   --throttling-method                  Controls throttling method         [choices: "devtools", "provided", "simulate"]
   --throttling.rttMs                   Controls simulated network RTT (TCP layer)
   --throttling.throughputKbps          Controls simulated network download throughput
