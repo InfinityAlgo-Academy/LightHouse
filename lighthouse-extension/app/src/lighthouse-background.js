@@ -70,10 +70,11 @@ if (typeof module !== 'undefined' && module.exports) {
   };
 }
 
-if (typeof window !== 'undefined') {
-  // Expose on window for devtools, other consumers of file.
+// Expose only in DevTools' worker
+// @ts-ignore
+if (typeof self !== 'undefined') {
   // @ts-ignore
-  window.runLighthouseInWorker = runLighthouseInWorker;
+  self.runLighthouseInWorker = runLighthouseInWorker;
   // @ts-ignore
-  window.listenForStatus = listenForStatus;
+  self.listenForStatus = listenForStatus;
 }

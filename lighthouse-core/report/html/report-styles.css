@@ -601,7 +601,7 @@
 
 /* Removing too much whitespace */
 .lh-audit-group--metrics {
-  margin-top: -28px;
+  margin-top: calc(var(--circle-size)/2 * -1);
   border-bottom: none;
 }
 
