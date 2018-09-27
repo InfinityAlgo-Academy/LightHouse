@@ -106,7 +106,7 @@
     "pretty-json-stringify": "^0.0.2",
     "puppeteer": "1.4.0",
     "sinon": "^2.3.5",
-    "typescript": "3.1.0-dev.20180831",
+    "typescript": "3.1.1",
     "zone.js": "^0.7.3"
   },
   "dependencies": {

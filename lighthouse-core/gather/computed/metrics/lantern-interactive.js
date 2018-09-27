@@ -97,7 +97,6 @@ class Interactive extends MetricArtifact {
    * @return {number}
    */
   static getLastLongTaskEndTime(nodeTimings, duration = 50) {
-    // @ts-ignore TS can't infer how the object invariants change
     return Array.from(nodeTimings.entries())
       .filter(([node, timing]) => {
         if (node.type !== BaseNode.TYPES.CPU) return false;
