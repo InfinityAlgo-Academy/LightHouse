@@ -232,13 +232,22 @@ function createMessageInstanceIdFn(filename, fileStrings) {
 }
 
 /**
+ * Returns true if string is an ICUMessage reference.
+ * @param {string} icuMessageIdOrRawString
+ * @return {boolean}
+ */
+function isIcuMessage(icuMessageIdOrRawString) {
+  return MESSAGE_INSTANCE_ID_QUICK_REGEX.test(icuMessageIdOrRawString) &&
+      MESSAGE_INSTANCE_ID_REGEX.test(icuMessageIdOrRawString);
+}
+
+/**
  * @param {string} icuMessageIdOrRawString
  * @param {LH.Locale} locale
  * @return {string}
  */
 function getFormatted(icuMessageIdOrRawString, locale) {
-  if (MESSAGE_INSTANCE_ID_QUICK_REGEX.test(icuMessageIdOrRawString) &&
-      MESSAGE_INSTANCE_ID_REGEX.test(icuMessageIdOrRawString)) {
+  if (isIcuMessage(icuMessageIdOrRawString)) {
     return _resolveIcuMessageInstanceId(icuMessageIdOrRawString, locale).formattedString;
   }
 
@@ -265,24 +274,27 @@ function _resolveIcuMessageInstanceId(icuMessageInstanceId, locale) {
 }
 
 /**
- * @param {LH.Result} lhr
+ * Recursively walk the input object, looking for property values that are
+ * string references and replace them with their localized values. Primarily
+ * used with the full LHR as input.
+ * @param {*} inputObject
  * @param {LH.Locale} locale
+ * @return {LH.I18NMessages}
  */
-function replaceIcuMessageInstanceIds(lhr, locale) {
+function replaceIcuMessageInstanceIds(inputObject, locale) {
   /**
-   * @param {*} objectInLHR
+   * @param {*} subObject
    * @param {LH.I18NMessages} icuMessagePaths
    * @param {string[]} pathInLHR
    */
-  function replaceInObject(objectInLHR, icuMessagePaths, pathInLHR = []) {
-    if (typeof objectInLHR !== 'object' || !objectInLHR) return;
+  function replaceInObject(subObject, icuMessagePaths, pathInLHR = []) {
+    if (typeof subObject !== 'object' || !subObject) return;
 
-    for (const [property, value] of Object.entries(objectInLHR)) {
+    for (const [property, value] of Object.entries(subObject)) {
       const currentPathInLHR = pathInLHR.concat([property]);
 
       // Check to see if the value in the LHR looks like a string reference. If it is, replace it.
-      if (typeof value === 'string' && MESSAGE_INSTANCE_ID_QUICK_REGEX.test(value) &&
-          MESSAGE_INSTANCE_ID_REGEX.test(value)) {
+      if (typeof value === 'string' && isIcuMessage(value)) {
         const {icuMessageInstance, formattedString} = _resolveIcuMessageInstanceId(value, locale);
         const messageInstancesInLHR = icuMessagePaths[icuMessageInstance.icuMessageId] || [];
         const currentPathAsString = _formatPathAsString(currentPathInLHR);
@@ -293,7 +305,7 @@ function replaceIcuMessageInstanceIds(lhr, locale) {
             currentPathAsString
         );
 
-        objectInLHR[property] = formattedString;
+        subObject[property] = formattedString;
         icuMessagePaths[icuMessageInstance.icuMessageId] = messageInstancesInLHR;
       } else {
         replaceInObject(value, icuMessagePaths, currentPathInLHR);
@@ -303,7 +315,7 @@ function replaceIcuMessageInstanceIds(lhr, locale) {
 
   /** @type {LH.I18NMessages} */
   const icuMessagePaths = {};
-  replaceInObject(lhr, icuMessagePaths);
+  replaceInObject(inputObject, icuMessagePaths);
   return icuMessagePaths;
 }
 
@@ -315,4 +327,5 @@ module.exports = {
   createMessageInstanceIdFn,
   getFormatted,
   replaceIcuMessageInstanceIds,
+  isIcuMessage,
 };

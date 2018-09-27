@@ -49,6 +49,7 @@ Configuration:
   --save-assets                  Save the trace & devtools log to disk                                                                     [boolean]
   --list-all-audits              Prints a list of all available audits and exits                                                           [boolean]
   --list-trace-categories        Prints a list of all required trace categories and exits                                                  [boolean]
+  --print-config                 Print the normalized config for the given config and options, then exit.                                  [boolean]
   --additional-trace-categories  Additional categories to capture with the trace (comma-delimited).
   --config-path                  The path to the config JSON.
   --chrome-flags                 Custom flags to pass to Chrome (space-delimited). For a full list of flags, see

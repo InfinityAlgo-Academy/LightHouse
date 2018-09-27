@@ -56,7 +56,7 @@ function getFlags(manualArgv) {
 
       .group(
         [
-          'save-assets', 'list-all-audits', 'list-trace-categories', 'additional-trace-categories',
+          'save-assets', 'list-all-audits', 'list-trace-categories', 'print-config', 'additional-trace-categories',
           'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'emulated-form-factor',
           'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
           'only-audits', 'only-categories', 'skip-audits',
@@ -100,6 +100,7 @@ function getFlags(manualArgv) {
         'only-audits': 'Only run the specified audits',
         'only-categories': 'Only run the specified categories',
         'skip-audits': 'Run everything except these audits',
+        'print-config': 'Print the normalized config for the given config and options, then exit.',
       })
       // set aliases
       .alias({'gather-mode': 'G', 'audit-mode': 'A'})
@@ -118,7 +119,7 @@ function getFlags(manualArgv) {
       // boolean values
       .boolean([
         'disable-storage-reset', 'disable-device-emulation', 'save-assets', 'list-all-audits',
-        'list-trace-categories', 'view', 'verbose', 'quiet', 'help',
+        'list-trace-categories', 'view', 'verbose', 'quiet', 'help', 'print-config',
       ])
       .choices('output', printer.getValidOutputOptions())
       .choices('emulated-form-factor', ['mobile', 'desktop', 'none'])
@@ -142,16 +143,19 @@ function getFlags(manualArgv) {
       .default('enable-error-reporting', undefined) // Undefined so prompted by default
       .check(/** @param {LH.CliFlags} argv */ (argv) => {
         // Lighthouse doesn't need a URL if...
-        //   - We're in auditMode (and we have artifacts already)
         //   - We're just listing the available options.
-        // If one of these don't apply, stop the program and ask for a url.
-        const isListMode = argv.listAllAudits || argv.listTraceCategories;
+        //   - We're just printing the config.
+        //   - We're in auditMode (and we have artifacts already)
+        // If one of these don't apply, if no URL, stop the program and ask for one.
+        const isPrintSomethingMode = argv.listAllAudits || argv.listTraceCategories || argv.printConfig;
         const isOnlyAuditMode = !!argv.auditMode && !argv.gatherMode;
-        if (!isListMode && !isOnlyAuditMode && argv._.length === 0) {
-          throw new Error('Please provide a url');
+        if (isPrintSomethingMode || isOnlyAuditMode) {
+          return true;
+        } else if (argv._.length > 0) {
+          return true;
         }
 
-        return true;
+        throw new Error('Please provide a url');
       })
       .epilogue(
           'For more information on Lighthouse, see https://developers.google.com/web/tools/lighthouse/.')

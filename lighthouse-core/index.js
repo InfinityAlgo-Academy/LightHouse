@@ -48,8 +48,7 @@ async function lighthouse(url, flags = {}, configJSON, connection) {
   flags.logLevel = flags.logLevel || 'error';
   log.setLevel(flags.logLevel);
 
-  // Use ConfigParser to generate a valid config file
-  const config = new Config(configJSON, flags);
+  const config = generateConfig(configJSON, flags);
 
   connection = connection || new ChromeProtocol(flags.port, flags.hostname);
 
@@ -57,6 +56,19 @@ async function lighthouse(url, flags = {}, configJSON, connection) {
   return Runner.run(connection, {url, config});
 }
 
+/**
+ * Generate a Lighthouse Config.
+ * @param {LH.Config.Json=} configJson Configuration for the Lighthouse run. If
+ *   not present, the default config is used.
+ * @param {LH.Flags=} flags Optional settings for the Lighthouse run. If present,
+ *   they will override any settings in the config.
+ * @return {Config}
+ */
+function generateConfig(configJson, flags) {
+  return new Config(configJson, flags);
+}
+
+lighthouse.generateConfig = generateConfig;
 lighthouse.getAuditList = Runner.getAuditList;
 lighthouse.traceCategories = require('./gather/driver').traceCategories;
 lighthouse.Audit = require('./audits/audit');

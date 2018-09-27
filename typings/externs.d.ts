@@ -73,6 +73,10 @@ declare global {
 
     export type OutputMode = 'json' | 'html' | 'csv';
 
+    /**
+     * Options that are found in both the flags used by the Lighthouse module
+     * interface and the Config's `settings` object.
+     */
     interface SharedFlagsSettings {
       output?: OutputMode|OutputMode[];
       locale?: Locale;
@@ -92,6 +96,10 @@ declare global {
       extraHeaders?: Crdp.Network.Headers | null; // See extraHeaders TODO in bin.js
     }
 
+    /**
+     * Extends the flags in SharedFlagsSettings with flags used to configure the
+     * Lighthouse module but will not end up in the Config settings.
+     */
     export interface Flags extends SharedFlagsSettings {
       port?: number;
       hostname?: string;
@@ -100,8 +108,8 @@ declare global {
     }
 
     /**
-     * Flags accepted by Lighthouse, plus additional flags just
-     * for controlling the CLI.
+     * Extends the flags accepted by the Lighthouse module with additional flags
+     * used just for controlling the CLI.
      */
     export interface CliFlags extends Flags {
       _: string[];
@@ -115,10 +123,11 @@ declare global {
       preset?: 'full'|'mixed-content'|'perf';
       verbose: boolean;
       quiet: boolean;
-      // following are given defaults in cli-flags, so not optional like in Flags or SharedFlagsSettings
+      // following are given defaults in cli-flags, so are not optional like in Flags or SharedFlagsSettings
       output: OutputMode[];
       port: number;
       hostname: string;
+      printConfig: boolean;
     }
 
     export interface RunnerResult {

@@ -280,6 +280,9 @@ function deepCloneConfigJson(json) {
 }
 
 /**
+ * If any items with identical `path` properties are found in the input array,
+ * merge their `options` properties into the first instance and then discard any
+ * other instances.
  * Until support of jsdoc templates with constraints, type in config.d.ts.
  * See https://github.com/Microsoft/TypeScript/issues/24283
  * @type {LH.Config.MergeOptionsOfItems}
@@ -361,6 +364,45 @@ class Config {
     // TODO(bckenny): until tsc adds @implements support, assert that Config is a ConfigJson.
     /** @type {LH.Config.Json} */
     const configJson = this; // eslint-disable-line no-unused-vars
+  }
+
+  /**
+   * Provides a cleaned-up, stringified version of this config. Gatherer and
+   * Audit `implementation` and `instance` do not survive this process.
+   * @return {string}
+   */
+  getPrintString() {
+    const jsonConfig = deepClone(this);
+
+    if (jsonConfig.passes) {
+      for (const pass of jsonConfig.passes) {
+        for (const gathererDefn of pass.gatherers) {
+          gathererDefn.implementation = undefined;
+          // @ts-ignore Breaking the Config.GathererDefn type.
+          gathererDefn.instance = undefined;
+          if (Object.keys(gathererDefn.options).length === 0) {
+            // @ts-ignore Breaking the Config.GathererDefn type.
+            gathererDefn.options = undefined;
+          }
+        }
+      }
+    }
+
+    if (jsonConfig.audits) {
+      for (const auditDefn of jsonConfig.audits) {
+        // @ts-ignore Breaking the Config.AuditDefn type.
+        auditDefn.implementation = undefined;
+        if (Object.keys(auditDefn.options).length === 0) {
+          // @ts-ignore Breaking the Config.AuditDefn type.
+          auditDefn.options = undefined;
+        }
+      }
+    }
+
+    // Printed config is more useful with localized strings.
+    i18n.replaceIcuMessageInstanceIds(jsonConfig, jsonConfig.settings.locale);
+
+    return JSON.stringify(jsonConfig, null, 2);
   }
 
   /**
