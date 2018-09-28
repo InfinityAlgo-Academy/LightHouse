@@ -33,6 +33,41 @@ limitations under the License.
   </div>
 </template>
 
+<template id="tmpl-lh-3p-filter">
+  <style>
+  .lh-3p-filter {
+    position: absolute;
+    bottom: 30px;
+    left: 10px;
+  }
+
+  .filtered tr.third-party {
+    display: none;
+  }
+  </style>
+  <div class="lh-3p-filter">
+    <label for="lh-3p-filter-input">
+      Filter out 3rd-parties:
+      <input type="checkbox" id="lh-3p-filter-input">
+    </label>
+  </div>
+</template>
+
+<template id="tmpl-lh-3p-filter-replacement">
+    <style>
+    .lh-3p-filter-replacement {
+      display: none;
+      background: hsla(0, 0%, 100%, 0.7);
+      text-align: center;
+    }
+
+    .filtered .lh-3p-filter-replacement {
+      display: table-row;
+    }
+    </style>
+    <tr class="lh-3p-filter-replacement"><td colspan="10"></td></tr>
+</template>
+
 <!-- Toggle arrow chevron -->
 <template id="tmpl-lh-chevron">
   <svg class="lh-chevron" title="See audits" xmlns="http://www.w3.org/2000/svg"  viewbox="0 0 100 100">

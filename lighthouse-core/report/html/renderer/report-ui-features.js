@@ -85,6 +85,7 @@ class ReportUIFeatures {
 
     this.json = report;
     this._setupMediaQueryListeners();
+    this._setupThirdPartyFilter();
     this._setupExportButton();
     this._setUpCollapseDetailsAfterPrinting();
     this._setupHeaderAnimation();
@@ -102,6 +103,40 @@ class ReportUIFeatures {
   _fireEventOn(name, target = this._document, detail) {
     const event = new CustomEvent(name, detail ? {detail} : undefined);
     target.dispatchEvent(event);
+  }
+
+  _setupThirdPartyFilter() {
+    const scoresContainer = this._dom.find('.lh-scores-container', this._document);
+    const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._document);
+    scoresContainer.appendChild(filterTemplate);
+
+    const checkbox = this._dom.find('#lh-3p-filter-input', scoresContainer);
+    checkbox.addEventListener('change', () => this._document.body.classList.toggle('filtered'));
+
+    const pageTLDPlusOne = new URL(this.json.finalUrl).origin.split('.').slice(-2).join('.')
+    const urlColumns = this._document.querySelectorAll('td.lh-table-column--url');
+    const replacements = new Map()
+    for (const urlColumn of urlColumns) {
+      const rowEl = urlColumn.parentElement
+      const urlEl = urlColumn.querySelector('.lh-text__url')
+      if (!rowEl || !urlEl) continue;
+      const tableEl = rowEl.parentElement
+      if (!tableEl) continue;
+
+      const url = urlEl.title
+      const isThirdParty = !url.includes(`${pageTLDPlusOne}/`)
+      if (isThirdParty && rowEl) {
+        rowEl.classList.add('third-party');
+        replacements.set(tableEl, (replacements.get(tableEl) || 0) + 1)
+      }
+    }
+
+    for (const [tableEl, count] of replacements) {
+      const template = this._dom.cloneTemplate('#tmpl-lh-3p-filter-replacement', this._document);
+      const cell = this._dom.find('td', template);
+      cell.textContent = `${count} Third Party items filtered out`
+      tableEl.appendChild(template)
+    }
   }
 
   _setupMediaQueryListeners() {

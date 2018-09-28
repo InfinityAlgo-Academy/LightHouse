@@ -940,6 +940,13 @@ summary.lh-passed-audits-summary {
   max-width: var(--bytes-col-width);
 }
 
+.filtered .lh-table-column--url + th.lh-table-column--bytes,
+.filtered .lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--bytes,
+.filtered .lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--timespanMs {
+  max-width: 1000px;
+  min-width: 50px;
+}
+
 .lh-table-column--code {
   max-width: var(--url-col-max-width);
 }
