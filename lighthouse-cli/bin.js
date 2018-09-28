@@ -8,6 +8,19 @@
 const fs = require('fs');
 const path = require('path');
 
+/*
+ * The relationship between these CLI modules:
+ *
+ *   index.js     : only calls bin.js's begin()
+ *   cli-flags.js : leverages yargs to read argv, outputs LH.CliFlags
+ *   bin.js       : CLI args processing. cwd, list/print commands
+ *   run.js       : chrome-launcher bits, calling lighthouse-core, output to Printer
+ *
+ *   index ---->    bin    ---->      run      ----> printer
+ *                  ⭏  ⭎               ⭏  ⭎
+ *               cli-flags        lh-core/index
+ */
+
 const commands = require('./commands/commands.js');
 const printer = require('./printer.js');
 const getFlags = require('./cli-flags.js').getFlags;
@@ -95,7 +108,7 @@ if (cliFlags.extraHeaders) {
 /**
  * @return {Promise<LH.RunnerResult|void>}
  */
-async function run() {
+async function begin() {
   if (cliFlags.printConfig) {
     const config = generateConfig(configJson, cliFlags);
     process.stdout.write(config.getPrintString());
@@ -127,5 +140,5 @@ async function run() {
 }
 
 module.exports = {
-  run,
+  begin,
 };
