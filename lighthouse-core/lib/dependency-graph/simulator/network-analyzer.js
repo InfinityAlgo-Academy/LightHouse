@@ -385,6 +385,64 @@ class NetworkAnalyzer {
     return NetworkAnalyzer.summarize(estimatesByOrigin);
   }
 
+
+  /**
+   * Computes the average throughput for the given records in bits/second.
+   * Excludes data URI, failed or otherwise incomplete, and cached requests.
+   * Returns Infinity if there were no analyzable network records.
+   *
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
+   * @return {number}
+   */
+  static estimateThroughput(networkRecords) {
+    let totalBytes = 0;
+
+    // We will measure throughput by summing the total bytes downloaded by the total time spent
+    // downloading those bytes. We slice up all the network records into start/end boundaries, so
+    // it's easier to deal with the gaps in downloading.
+    const timeBoundaries = networkRecords.reduce((boundaries, record) => {
+      const scheme = record.parsedURL && record.parsedURL.scheme;
+      // Requests whose bodies didn't come over the network or didn't completely finish will mess
+      // with the computation, just skip over them.
+      if (scheme === 'data' || record.failed || !record.finished ||
+          record.statusCode > 300 || !record.transferSize) {
+        return boundaries;
+      }
+
+      // If we've made it this far, all the times we need should be valid (i.e. not undefined/-1).
+      totalBytes += record.transferSize;
+      boundaries.push({time: record.responseReceivedTime, isStart: true});
+      boundaries.push({time: record.endTime, isStart: false});
+      return boundaries;
+    }, /** @type {Array<{time: number, isStart: boolean}>} */([])).sort((a, b) => a.time - b.time);
+
+    if (!timeBoundaries.length) {
+      return Infinity;
+    }
+
+    let inflight = 0;
+    let currentStart = 0;
+    let totalDuration = 0;
+
+    timeBoundaries.forEach(boundary => {
+      if (boundary.isStart) {
+        if (inflight === 0) {
+          // We just ended a quiet period, keep track of when the download period started
+          currentStart = boundary.time;
+        }
+        inflight++;
+      } else {
+        inflight--;
+        if (inflight === 0) {
+          // We just entered a quiet period, update our duration with the time we spent downloading
+          totalDuration += boundary.time - currentStart;
+        }
+      }
+    });
+
+    return totalBytes * 8 / totalDuration;
+  }
+
   /**
    * @param {Array<LH.Artifacts.NetworkRequest>} records
    * @return {LH.Artifacts.NetworkRequest}

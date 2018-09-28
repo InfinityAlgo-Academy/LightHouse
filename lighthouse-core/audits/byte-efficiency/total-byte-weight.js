@@ -57,16 +57,13 @@ class TotalByteWeight extends ByteEfficiencyAudit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLogs = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
-    const [networkRecords, networkThroughput] = await Promise.all([
-      artifacts.requestNetworkRecords(devtoolsLogs),
-      artifacts.requestNetworkThroughput(devtoolsLogs),
-    ]);
+    const devtoolsLog = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
+    const records = await artifacts.requestNetworkRecords(devtoolsLog);
 
     let totalBytes = 0;
-    /** @type {Array<{url: string, totalBytes: number, totalMs: number}>} */
+    /** @type {Array<{url: string, totalBytes: number}>} */
     let results = [];
-    networkRecords.forEach(record => {
+    records.forEach(record => {
       // exclude data URIs since their size is reflected in other resources
       // exclude unfinished requests since they won't have transfer size information
       if (record.parsedURL.scheme === 'data' || !record.finished) return;
@@ -74,7 +71,6 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       const result = {
         url: record.url,
         totalBytes: record.transferSize,
-        totalMs: ByteEfficiencyAudit.bytesToMs(record.transferSize, networkThroughput),
       };
 
       totalBytes += result.totalBytes;

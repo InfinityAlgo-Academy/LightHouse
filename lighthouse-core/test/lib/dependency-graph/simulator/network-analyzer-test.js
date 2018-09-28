@@ -273,6 +273,103 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     });
   });
 
+  describe('#estimateThroughput', () => {
+    const estimateThroughput = NetworkAnalyzer.estimateThroughput;
+
+    function createThroughputRecord(responseReceivedTime, endTime, extras) {
+      return Object.assign(
+        {
+          responseReceivedTime,
+          endTime,
+          transferSize: 1000,
+          finished: true,
+          failed: false,
+          statusCode: 200,
+          url: 'https://google.com/logo.png',
+          parsedURL: {isValid: true, scheme: 'https'},
+        },
+        extras
+      );
+    }
+
+    it('should return Infinity for no/missing records', () => {
+      assert.equal(estimateThroughput([]), Infinity);
+      assert.equal(estimateThroughput([createThroughputRecord(0, 0, {finished: false})]), Infinity);
+    });
+
+    it('should compute correctly for a basic waterfall', () => {
+      const result = estimateThroughput([
+        createThroughputRecord(0, 1),
+        createThroughputRecord(1, 2),
+        createThroughputRecord(2, 6),
+      ]);
+
+      assert.equal(result, 500 * 8);
+    });
+
+    it('should compute correctly for concurrent requests', () => {
+      const result = estimateThroughput([
+        createThroughputRecord(0, 1),
+        createThroughputRecord(0.5, 1),
+      ]);
+
+      assert.equal(result, 2000 * 8);
+    });
+
+    it('should compute correctly for gaps', () => {
+      const result = estimateThroughput([
+        createThroughputRecord(0, 1),
+        createThroughputRecord(3, 4),
+      ]);
+
+      assert.equal(result, 1000 * 8);
+    });
+
+    it('should compute correctly for partially overlapping requests', () => {
+      const result = estimateThroughput([
+        createThroughputRecord(0, 1),
+        createThroughputRecord(0.5, 1.5),
+        createThroughputRecord(1.25, 3),
+        createThroughputRecord(1.4, 4),
+        createThroughputRecord(5, 9),
+      ]);
+
+      assert.equal(result, 625 * 8);
+    });
+
+    it('should exclude failed records', () => {
+      const result = estimateThroughput([
+        createThroughputRecord(0, 2),
+        createThroughputRecord(3, 4, {failed: true}),
+      ]);
+      assert.equal(result, 500 * 8);
+    });
+
+    it('should exclude cached records', () => {
+      const result = estimateThroughput([
+        createThroughputRecord(0, 2),
+        createThroughputRecord(3, 4, {statusCode: 304}),
+      ]);
+      assert.equal(result, 500 * 8);
+    });
+
+    it('should exclude unfinished records', () => {
+      const result = estimateThroughput([
+        createThroughputRecord(0, 2),
+        createThroughputRecord(3, 4, {finished: false}),
+      ]);
+      assert.equal(result, 500 * 8);
+    });
+
+    it('should exclude data URIs', () => {
+      const result = estimateThroughput([
+        createThroughputRecord(0, 2),
+        createThroughputRecord(3, 4, {parsedURL: {scheme: 'data'}}),
+      ]);
+      assert.equal(result, 500 * 8);
+    });
+  });
+
   describe('#findMainDocument', () => {
     it('should find the main document', async () => {
       const records = await computedArtifacts.requestNetworkRecords(devtoolsLog);

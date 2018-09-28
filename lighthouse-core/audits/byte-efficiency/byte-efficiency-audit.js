@@ -57,16 +57,6 @@ class UnusedBytes extends Audit {
   }
 
   /**
-   * @param {number} bytes
-   * @param {number} networkThroughput measured in bytes/second
-   * @return {number}
-   */
-  static bytesToMs(bytes, networkThroughput) {
-    const milliseconds = bytes / networkThroughput * 1000;
-    return milliseconds;
-  }
-
-  /**
    * Estimates the number of bytes this network record would have consumed on the network based on the
    * uncompressed size (totalBytes). Uses the actual transfer size from the network record if applicable.
    *

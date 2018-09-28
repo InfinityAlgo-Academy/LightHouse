@@ -15,7 +15,7 @@ class NetworkAnalysis extends ComputedArtifact {
 
   /**
    * @param {Array<LH.Artifacts.NetworkRequest>} records
-   * @return {LH.Artifacts.NetworkAnalysis}
+   * @return {Omit<LH.Artifacts.NetworkAnalysis, 'throughput'|'records'>}
    */
   static computeRTTAndServerResponseTime(records) {
     // First pass compute the estimated observed RTT to each origin's servers.
@@ -45,7 +45,11 @@ class NetworkAnalysis extends ComputedArtifact {
       serverResponseTimeByOrigin.set(origin, summary.median);
     }
 
-    return {rtt: minimumRtt, additionalRttByOrigin, serverResponseTimeByOrigin, throughput: 0};
+    return {
+      rtt: minimumRtt,
+      additionalRttByOrigin,
+      serverResponseTimeByOrigin,
+    };
   }
 
   /**
@@ -55,10 +59,9 @@ class NetworkAnalysis extends ComputedArtifact {
    */
   async compute_(devtoolsLog, computedArtifacts) {
     const records = await computedArtifacts.requestNetworkRecords(devtoolsLog);
-    const throughput = await computedArtifacts.requestNetworkThroughput(devtoolsLog);
+    const throughput = NetworkAnalyzer.estimateThroughput(records);
     const rttAndServerResponseTime = NetworkAnalysis.computeRTTAndServerResponseTime(records);
-    rttAndServerResponseTime.throughput = throughput * 8; // convert from KBps to Kbps
-    return rttAndServerResponseTime;
+    return {records, throughput, ...rttAndServerResponseTime};
   }
 }
 
