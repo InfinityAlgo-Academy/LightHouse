@@ -81,6 +81,7 @@
     "@types/update-notifier": "^1.0.2",
     "@types/ws": "^4.0.1",
     "@types/yargs": "^8.0.2",
+    "angular": "^1.7.4",
     "babel-core": "^6.26.0",
     "bundlesize": "^0.14.4",
     "chalk": "^2.4.1",
