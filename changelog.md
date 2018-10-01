@@ -1,3 +1,12 @@
+ <a name="3.2.1"></a>
+# 3.2.1 (2018-10-01)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v3.2.0...v3.2.1)
+
+## Core
+
+* await js-libraries detection to fix Workbox always showing up ([#6141](https://github.com/googlechrome/lighthouse/pull/6141))
+* emulation: set desktop viewport to 1350x940 ([#6131](https://github.com/googlechrome/lighthouse/pull/6131))
+
  <a name="3.2.0"></a>
 # 3.2.0 (2018-09-27)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v3.1.1...v3.2.0)

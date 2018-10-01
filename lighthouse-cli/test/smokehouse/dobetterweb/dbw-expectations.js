@@ -138,6 +138,14 @@ module.exports = [
           ],
         },
       },
+      'js-libraries': {
+        score: 1,
+        details: {
+          items: [{
+            name: 'jQuery',
+          }],
+        },
+      },
     },
   },
 ];

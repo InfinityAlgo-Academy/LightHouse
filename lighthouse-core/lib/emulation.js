@@ -33,8 +33,8 @@ const NEXUS5X_EMULATION_METRICS = {
  */
 const DESKTOP_EMULATION_METRICS = {
   mobile: false,
-  width: 1366,
-  height: 768,
+  width: 1350,
+  height: 940,
   deviceScaleFactor: 1,
 };
 

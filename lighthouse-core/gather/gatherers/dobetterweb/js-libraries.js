@@ -29,9 +29,9 @@ function detectLibraries() {
   // d41d8cd98f00b204e9800998ecf8427e_ is a consistent prefix used by the detect libraries
   // see https://github.com/HTTPArchive/httparchive/issues/77#issuecomment-291320900
   // @ts-ignore - injected libDetectorSource var
-  Object.entries(d41d8cd98f00b204e9800998ecf8427e_LibraryDetectorTests).forEach(([name, lib]) => {
+  Object.entries(d41d8cd98f00b204e9800998ecf8427e_LibraryDetectorTests).forEach(async ([name, lib]) => { // eslint-disable-line max-len
     try {
-      const result = lib.test(window);
+      const result = await lib.test(window);
       if (result) {
         libraries.push({
           name: name,
