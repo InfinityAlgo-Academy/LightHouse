@@ -58,6 +58,7 @@ module.exports = class NetworkRequest {
     this.url = '';
     this.protocol = '';
     this.isSecure = false;
+    this.isValid = false;
     this.parsedURL = /** @type {ParsedURL} */ ({scheme: ''});
     this.documentURL = '';
 
@@ -124,8 +125,14 @@ module.exports = class NetworkRequest {
    */
   onRequestWillBeSent(data) {
     this.requestId = data.requestId;
-
-    const url = new URL(data.request.url);
+    let url;
+    try {
+      // try to construct the url and fill in request
+      url = new URL(data.request.url);
+    } catch (e) {
+      // isValid left false, all other data is blank
+      return;
+    }
     this.url = data.request.url;
     this.documentURL = data.documentURL;
     this.parsedURL = {
@@ -146,6 +153,7 @@ module.exports = class NetworkRequest {
 
     this.frameId = data.frameId;
     this.isLinkPreload = data.initiator.type === 'preload' || !!data.request.isLinkPreload;
+    this.isValid = true;
   }
 
   onRequestServedFromCache() {

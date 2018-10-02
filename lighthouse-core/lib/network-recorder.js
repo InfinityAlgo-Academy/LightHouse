@@ -320,7 +320,7 @@ class NetworkRecorder extends EventEmitter {
    */
   _findRealRequest(requestId) {
     let request = this._recordsById.get(requestId);
-    if (!request) return undefined;
+    if (!request || !request.isValid) return undefined;
 
     while (request.redirectDestination) {
       request = request.redirectDestination;
@@ -339,8 +339,8 @@ class NetworkRecorder extends EventEmitter {
     // playback all the devtools messages to recreate network records
     devtoolsLog.forEach(message => networkRecorder.dispatch(message));
 
-    // get out the list of records
-    const records = networkRecorder.getRecords();
+    // get out the list of records & filter out invalid records
+    const records = networkRecorder.getRecords().filter(record => record.isValid);
 
     // create a map of all the records by URL to link up initiator
     const recordsByURL = new Map();

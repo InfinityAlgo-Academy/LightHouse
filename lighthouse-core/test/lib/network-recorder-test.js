@@ -45,6 +45,66 @@ describe('network recorder', function() {
     assert.equal(mainDocument.resourceType, 'Document');
   });
 
+  it('recordsFromLogs ignores invalid records', function() {
+    const logs = [
+      { // valid request
+        'method': 'Network.requestWillBeSent',
+        'params': {
+          'requestId': '1',
+          'frameId': '1',
+          'loaderId': '1',
+          'documentURL': 'https://www.example.com',
+          'request': {
+            'url': 'https://www.example.com',
+            'method': 'GET',
+            'headers': {
+              'Upgrade-Insecure-Requests': '1',
+              'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) ' +
+                ' AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2774.2 Safari/537.36',
+            },
+            'mixedContentType': 'none',
+            'initialPriority': 'VeryHigh',
+          },
+          'timestamp': 107988.912007,
+          'wallTime': 1466620735.21187,
+          'initiator': {
+            'type': 'other',
+          },
+          'type': 'Document',
+        },
+      },
+      { // invalid request
+        'method': 'Network.requestWillBeSent',
+        'params': {
+          'requestId': '2',
+          'loaderId': '2',
+          'documentURL': 'https://www.example.com',
+          'request': {
+            'url': 'https:',
+            'method': 'GET',
+            'headers': {
+              'Origin': 'https://www.example.com',
+            },
+            'mixedContentType': 'blockable',
+            'initialPriority': 'VeryLow',
+            'referrerPolicy': 'no-referrer-when-downgrade',
+          },
+          'timestamp': 831346.969485,
+          'wallTime': 1538411434.25547,
+          'initiator': {
+            'type': 'other',
+          },
+          'type': 'Font',
+          'frameId': '1',
+          'hasUserGesture': false,
+        },
+      },
+    ];
+    assert.equal(logs.length, 2);
+    const records = NetworkRecorder.recordsFromLogs(logs);
+    assert.equal(records.length, 1);
+  });
+
   describe('#findNetworkQuietPeriods', () => {
     function record(data) {
       const url = data.url || 'https://example.com';
