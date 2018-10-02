@@ -99,10 +99,6 @@ async function runLighthouseInLR(connection, url, flags, {lrDevice, categoryIDs,
   // Certain fixes need to kick-in under LR, see https://github.com/GoogleChrome/lighthouse/issues/5839
   global.isLightRider = true;
 
-  // Override default device to be desktop, since LR default device has viewport 1x1.
-  connection.sendCommand('Emulation.setDeviceMetricsOverride',
-    {width: 800, height: 600, deviceScaleFactor: 0, mobile: false});
-
   // disableStorageReset because it causes render server hang
   flags.disableStorageReset = true;
   flags.logLevel = flags.logLevel || 'info';
