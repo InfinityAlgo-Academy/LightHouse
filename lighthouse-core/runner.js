@@ -387,6 +387,7 @@ class Runner {
       // Computed artifacts switching to the new system.
       'new-computed-artifact.js',
       'manifest-values.js',
+      'screenshots.js',
     ];
 
     const fileList = [

@@ -11,25 +11,26 @@ const ArbitraryEqualityMap = require('../../lib/arbitrary-equality-map.js');
  * @template {string} N
  * @template A
  * @template R
- * @param {{name: N, compute_: (artifact: A) => Promise<R>}} computableArtifact
- * @return {{name: N, request: (context: LH.Audit.Context, artifact: A) => Promise<R>}}
+ * @param {{name: N, compute_: (artifacts: A, context: LH.Audit.Context) => Promise<R>}} computableArtifact
+ * @return {{name: N, request: (artifacts: A, context: LH.Audit.Context) => Promise<R>}}
  */
 function makeComputedArtifact(computableArtifact) {
   /**
+   * @param {A} artifacts
    * @param {LH.Audit.Context} context
-   * @param {A} artifact
    */
-  const request = ({computedCache}, artifact) => {
+  const request = (artifacts, context) => {
+    const computedCache = context.computedCache;
     const cache = computedCache.get(computableArtifact.name) || new ArbitraryEqualityMap();
     computedCache.set(computableArtifact.name, cache);
 
-    const computed = /** @type {Promise<R>|undefined} */ (cache.get(artifact));
+    const computed = /** @type {Promise<R>|undefined} */ (cache.get(artifacts));
     if (computed) {
       return computed;
     }
 
-    const artifactPromise = computableArtifact.compute_(artifact);
-    cache.set(artifact, artifactPromise);
+    const artifactPromise = computableArtifact.compute_(artifacts, context);
+    cache.set(artifacts, artifactPromise);
 
     return artifactPromise;
   };
