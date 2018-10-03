@@ -39,13 +39,13 @@ const DESKTOP_EMULATION_METRICS = {
 };
 
 const NEXUS5X_USERAGENT = {
-  userAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36' +
-    '(KHTML, like Gecko) Chrome/71.0.3559.0 Mobile Safari/537.36',
+  // eslint-disable-next-line max-len
+  userAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3559.0 Mobile Safari/537.36',
 };
 
 const DESKTOP_USERAGENT = {
-  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 ' +
-    '(KHTML, like Gecko) Chrome/71.0.3559.0 Safari/537.36',
+  // eslint-disable-next-line max-len
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3559.0 Safari/537.36',
 };
 
 const OFFLINE_METRICS = {
