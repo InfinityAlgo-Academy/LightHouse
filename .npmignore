@@ -15,8 +15,9 @@ lighthouse-extension/
 lighthouse-cli/results/
 lighthouse-logger/
 
-# keep the chrome launcher script
+# keep a few scripts useful for CI
 !lighthouse-core/scripts/manual-chrome-launcher.js
+!lighthouse-core/scripts/download-chrome.sh
 
 # keep smokehouse tests, etc
 !lighthouse-cli/test
