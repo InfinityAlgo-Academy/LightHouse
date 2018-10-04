@@ -153,7 +153,7 @@ class NoVulnerableLibrariesAudit extends Audit {
           vulnCount,
           detectedLib: {
             text: lib.name + '@' + version,
-            url: `https://snyk.io/vuln/npm:${lib.npmPkgName}?lh=${version}`,
+            url: `https://snyk.io/vuln/npm:${lib.npmPkgName}?lh=${version}&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit`,
             type: 'link',
           },
         });
