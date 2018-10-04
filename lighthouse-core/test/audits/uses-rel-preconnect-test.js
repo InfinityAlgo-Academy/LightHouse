@@ -10,6 +10,8 @@
 
 const UsesRelPreconnect = require('../../audits/uses-rel-preconnect.js');
 const assert = require('assert');
+const Runner = require('../../runner.js');
+const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 const mainResource = {
   url: 'https://www.example.com/',
@@ -36,17 +38,13 @@ describe('Performance: uses-rel-preconnect audit', () => {
       mainResource,
       {
         url: 'https://www.example.com/request',
-        parsedURL: {
-          securityOrigin: 'https://www.example.com',
-        },
       },
     ];
-    const artifacts = {
-      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       requestMainResource: () => Promise.resolve(mainResource),
       requestLoadSimulator: () => Promise.resolve(simulator),
-    };
+    });
 
     const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, {});
     assert.equal(score, 1);
@@ -62,12 +60,11 @@ describe('Performance: uses-rel-preconnect audit', () => {
         initiator: mainResource,
       },
     ];
-    const artifacts = {
-      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       requestMainResource: () => Promise.resolve(mainResource),
       requestLoadSimulator: () => Promise.resolve(simulator),
-    };
+    });
 
     const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, {});
     assert.equal(score, 1);
@@ -83,12 +80,11 @@ describe('Performance: uses-rel-preconnect audit', () => {
         initiator: {},
       },
     ];
-    const artifacts = {
-      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       requestMainResource: () => Promise.resolve(mainResource),
       requestLoadSimulator: () => Promise.resolve(simulator),
-    };
+    });
 
     const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, {});
     assert.equal(score, 1);
@@ -110,12 +106,11 @@ describe('Performance: uses-rel-preconnect audit', () => {
         },
       },
     ];
-    const artifacts = {
-      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       requestMainResource: () => Promise.resolve(mainResource),
       requestLoadSimulator: () => Promise.resolve(simulator),
-    };
+    });
 
     const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, {});
     assert.equal(score, 1);
@@ -129,15 +124,14 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/request',
         initiator: {},
-        _startTime: 16,
+        startTime: 16,
       },
     ];
-    const artifacts = {
-      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       requestMainResource: () => Promise.resolve(mainResource),
       requestLoadSimulator: () => Promise.resolve(simulator),
-    };
+    });
 
     const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, {});
     assert.equal(score, 1);
@@ -151,10 +145,6 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/first',
         initiator: {},
-        parsedURL: {
-          scheme: 'https',
-          securityOrigin: 'https://cdn.example.com',
-        },
         startTime: 2,
         timing: {
           dnsStart: 100,
@@ -165,10 +155,6 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/second',
         initiator: {},
-        parsedURL: {
-          scheme: 'https',
-          securityOrigin: 'https://cdn.example.com',
-        },
         startTime: 3,
         timing: {
           dnsStart: 300,
@@ -177,12 +163,11 @@ describe('Performance: uses-rel-preconnect audit', () => {
         },
       },
     ];
-    const artifacts = {
-      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       requestMainResource: () => Promise.resolve(mainResource),
       requestLoadSimulator: () => Promise.resolve(simulator),
-    };
+    });
 
     const {rawValue, extendedInfo} = await UsesRelPreconnect.audit(artifacts, {});
     assert.equal(rawValue, 200);
@@ -196,12 +181,8 @@ describe('Performance: uses-rel-preconnect audit', () => {
     const networkRecords = [
       mainResource,
       {
-        url: 'https://cdn.example.com/first',
+        url: 'http://cdn.example.com/first',
         initiator: {},
-        parsedURL: {
-          scheme: 'http',
-          securityOrigin: 'http://cdn.example.com',
-        },
         startTime: 2,
         timing: {
           dnsStart: 100,
@@ -212,10 +193,6 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://othercdn.example.com/second',
         initiator: {},
-        parsedURL: {
-          scheme: 'https',
-          securityOrigin: 'https://othercdn.example.com',
-        },
         startTime: 1.2,
         timing: {
           dnsStart: 100,
@@ -224,12 +201,11 @@ describe('Performance: uses-rel-preconnect audit', () => {
         },
       },
     ];
-    const artifacts = {
-      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       requestMainResource: () => Promise.resolve(mainResource),
       requestLoadSimulator: () => Promise.resolve(simulator),
-    };
+    });
 
     simulatorOptions = {
       rtt: 100,

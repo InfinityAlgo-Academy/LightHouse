@@ -8,6 +8,8 @@
 const NetworkRequest = require('../../lib/network-request');
 const Audit = require('../../audits/font-display.js');
 const assert = require('assert');
+const Runner = require('../../runner.js');
+const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
 const openSansFont = {
@@ -34,11 +36,10 @@ const openSansFontBold = {
 
 describe('Performance: Font Display audit', () => {
   function getArtifacts(networkRecords, fonts) {
-    return {
-      devtoolsLogs: {[Audit.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
+    return Object.assign({
+      devtoolsLogs: {[Audit.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       Fonts: fonts,
-    };
+    }, Runner.instantiateComputedArtifacts());
   }
 
   it('fails when not all fonts have a correct font-display rule', () => {

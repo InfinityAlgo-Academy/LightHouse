@@ -5,7 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../../audits/redirects.js');
+const Runner = require('../../runner.js');
+const RedirectsAudit = require('../../audits/redirects.js');
 const assert = require('assert');
 
 /* eslint-env jest */
@@ -62,16 +63,15 @@ describe('Performance: Redirects audit', () => {
   let nodeTimings;
 
   const mockArtifacts = (mockChain) => {
-    return {
+    return Object.assign(Runner.instantiateComputedArtifacts(), {
       traces: {},
-      devtoolsLogs: {},
+      devtoolsLogs: {defaultPass: []},
       requestLanternInteractive: () => ({pessimisticEstimate: {nodeTimings}}),
       requestTraceOfTab: () => {},
-      requestNetworkRecords: () => [],
       requestMainResource: function() {
         return Promise.resolve(mockChain);
       },
-    };
+    });
   };
 
   it('fails when 3 redirects detected', () => {
@@ -82,7 +82,7 @@ describe('Performance: Redirects audit', () => {
       [{type: 'network', record: {url: 'https://m.example.com/final'}}, {startTime: 17000}],
     ]);
 
-    return Audit.audit(mockArtifacts(FAILING_THREE_REDIRECTS), {}).then(output => {
+    return RedirectsAudit.audit(mockArtifacts(FAILING_THREE_REDIRECTS), {}).then(output => {
       assert.equal(output.score, 0);
       assert.equal(output.details.items.length, 4);
       assert.equal(output.rawValue, 17000);
@@ -96,7 +96,7 @@ describe('Performance: Redirects audit', () => {
       [{type: 'network', record: {url: 'https://www.lisairish.com/'}}, {startTime: 638}],
     ]);
 
-    return Audit.audit(mockArtifacts(FAILING_TWO_REDIRECTS), {}).then(output => {
+    return RedirectsAudit.audit(mockArtifacts(FAILING_TWO_REDIRECTS), {}).then(output => {
       assert.equal(Math.round(output.score * 100) / 100, 0.56);
       assert.equal(output.details.items.length, 3);
       assert.equal(Math.round(output.rawValue), 638);
@@ -109,7 +109,7 @@ describe('Performance: Redirects audit', () => {
       [{type: 'network', record: {url: 'https://www.lisairish.com/'}}, {startTime: 510}],
     ]);
 
-    return Audit.audit(mockArtifacts(SUCCESS_ONE_REDIRECT), {}).then(output => {
+    return RedirectsAudit.audit(mockArtifacts(SUCCESS_ONE_REDIRECT), {}).then(output => {
       // If === 1 redirect, perfect score is expected, regardless of latency
       assert.equal(output.score, 1);
       // We will still generate a table and show wasted time
@@ -119,7 +119,7 @@ describe('Performance: Redirects audit', () => {
   });
 
   it('passes when no redirect detected', () => {
-    return Audit.audit(mockArtifacts(SUCCESS_NOREDIRECT), {}).then(output => {
+    return RedirectsAudit.audit(mockArtifacts(SUCCESS_NOREDIRECT), {}).then(output => {
       assert.equal(output.score, 1);
       assert.equal(output.details.items.length, 0);
       assert.equal(output.rawValue, 0);

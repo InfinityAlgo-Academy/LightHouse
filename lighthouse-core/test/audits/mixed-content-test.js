@@ -7,22 +7,23 @@
 
 const Audit = require('../../audits/mixed-content.js');
 const assert = require('assert');
+const Runner = require('../../runner');
+const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
 
 describe('Mixed Content audit', () => {
   function getArtifacts(baseUrl, defaultPassRecords, mixedContentPassRecords) {
-    return {
+    const defaultDevtoolsLog = networkRecordsToDevtoolsLog(defaultPassRecords);
+    const mixedContentDevtoolsLog = networkRecordsToDevtoolsLog(mixedContentPassRecords);
+
+    return Object.assign(Runner.instantiateComputedArtifacts(), {
       MixedContent: {url: baseUrl},
-      devtoolsLogs: {[Audit.DEFAULT_PASS]: true, ['mixedContentPass']: false},
-      requestNetworkRecords: (pass) => {
-        if (pass) {
-          return Promise.resolve(defaultPassRecords);
-        } else {
-          return Promise.resolve(mixedContentPassRecords);
-        }
+      devtoolsLogs: {
+        [Audit.DEFAULT_PASS]: defaultDevtoolsLog,
+        ['mixedContentPass']: mixedContentDevtoolsLog,
       },
-    };
+    });
   }
 
   it('passes when there are no insecure resources by default', () => {
@@ -55,7 +56,7 @@ describe('Mixed Content audit', () => {
       {url: 'https://example.org/', isSecure: true, finished: true, documentURL: 'http://example.org/'},
       {url: 'https://example.org/resource1.js', isSecure: true, finished: true, documentURL: 'https://example.org'},
       {url: 'https://third-party.example.com/resource2.js', isSecure: true, finished: true, documentURL: 'https://example.org'},
-      {url: 'https://fourth-party.example.com/resource3.js', isSecure: false, finished: true, documentURL: 'https://third-party.example.com'},
+      {url: 'https://fourth-party.example.com/resource3.js', isSecure: true, finished: true, documentURL: 'https://third-party.example.com'},
     ];
     return Audit.audit(
       getArtifacts('http://example.org', defaultRecords, upgradeRecords)

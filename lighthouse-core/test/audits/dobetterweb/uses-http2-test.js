@@ -5,8 +5,10 @@
  */
 'use strict';
 
+const Runner = require('../../../runner.js');
 const UsesHTTP2Audit = require('../../../audits/dobetterweb/uses-http2.js');
 const assert = require('assert');
+const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 const URL = 'https://webtide.com/http2-push-demo/';
 const networkRecords = require('../../fixtures/networkRecords-mix.json');
@@ -14,12 +16,20 @@ const networkRecords = require('../../fixtures/networkRecords-mix.json');
 /* eslint-env jest */
 
 describe('Resources are fetched over http/2', () => {
+  function getArtifacts(networkRecords, finalUrl) {
+    // networkRecords-mix.json is an old network request format, so don't verify round-trip.
+    const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords, {skipVerification: true});
+
+    return Object.assign(Runner.instantiateComputedArtifacts(), {
+      URL: {finalUrl},
+      devtoolsLogs: {[UsesHTTP2Audit.DEFAULT_PASS]: devtoolsLog},
+    });
+  }
+
   it('fails when some resources were requested via http/1.x', () => {
-    return UsesHTTP2Audit.audit({
-      URL: {finalUrl: URL},
-      devtoolsLogs: {[UsesHTTP2Audit.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
-    }).then(auditResult => {
+    return UsesHTTP2Audit.audit(
+      getArtifacts(networkRecords, URL)
+    ).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
       assert.ok(auditResult.displayValue.match('3 requests not'));
       assert.equal(auditResult.details.items.length, 3);
@@ -32,11 +42,9 @@ describe('Resources are fetched over http/2', () => {
 
   it('displayValue is correct when only one resource fails', () => {
     const entryWithHTTP1 = networkRecords.slice(1, 2);
-    return UsesHTTP2Audit.audit({
-      URL: {finalUrl: URL},
-      devtoolsLogs: {[UsesHTTP2Audit.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(entryWithHTTP1),
-    }).then(auditResult => {
+    return UsesHTTP2Audit.audit(
+      getArtifacts(entryWithHTTP1, URL)
+    ).then(auditResult => {
       assert.ok(auditResult.displayValue.match('1 request not'));
     });
   });
@@ -47,11 +55,9 @@ describe('Resources are fetched over http/2', () => {
       record.protocol = 'h2';
     });
 
-    return UsesHTTP2Audit.audit({
-      URL: {finalUrl: URL},
-      devtoolsLogs: {[UsesHTTP2Audit.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(h2Records),
-    }).then(auditResult => {
+    return UsesHTTP2Audit.audit(
+      getArtifacts(h2Records, URL)
+    ).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
       assert.ok(auditResult.displayValue === '');
     });

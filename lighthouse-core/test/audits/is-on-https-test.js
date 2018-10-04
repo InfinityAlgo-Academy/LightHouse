@@ -5,17 +5,19 @@
  */
 'use strict';
 
+const Runner = require('../../runner.js');
 const Audit = require('../../audits/is-on-https.js');
 const assert = require('assert');
+const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
 
 describe('Security: HTTPS audit', () => {
   function getArtifacts(networkRecords) {
-    return {
-      devtoolsLogs: {[Audit.DEFAULT_PASS]: []},
-      requestNetworkRecords: () => Promise.resolve(networkRecords),
-    };
+    const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
+    return Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {[Audit.DEFAULT_PASS]: devtoolsLog},
+    });
   }
 
   it('fails when there is more than one insecure record', () => {

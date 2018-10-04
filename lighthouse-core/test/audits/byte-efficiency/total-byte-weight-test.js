@@ -9,6 +9,8 @@ const TotalByteWeight = require('../../../audits/byte-efficiency/total-byte-weig
 const assert = require('assert');
 const URL = require('url').URL;
 const options = TotalByteWeight.defaultOptions;
+const Runner = require('../../../runner.js');
+const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
 
@@ -32,10 +34,9 @@ function generateArtifacts(records) {
     records = records.map(args => generateRequest(...args));
   }
 
-  return {
-    devtoolsLogs: {defaultPass: []},
-    requestNetworkRecords: () => Promise.resolve(records),
-  };
+  return Object.assign(Runner.instantiateComputedArtifacts(), {
+    devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(records)},
+  });
 }
 
 describe('Total byte weight audit', () => {

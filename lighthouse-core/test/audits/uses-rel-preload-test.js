@@ -15,6 +15,7 @@ const assert = require('assert');
 const Runner = require('../../runner');
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 const defaultMainResource = {
   _endTime: 1,
@@ -25,16 +26,15 @@ describe('Performance: uses-rel-preload audit', () => {
   let mockSimulator;
 
   const mockArtifacts = (networkRecords, mainResource = defaultMainResource) => {
-    return {
+    return Object.assign(Runner.instantiateComputedArtifacts(), {
       traces: {[UsesRelPreload.DEFAULT_PASS]: {traceEvents: []}},
-      devtoolsLogs: {[UsesRelPreload.DEFAULT_PASS]: []},
+      devtoolsLogs: {[UsesRelPreload.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       requestLoadSimulator: () => mockSimulator,
       requestPageDependencyGraph: () => mockGraph,
-      requestNetworkRecords: () => networkRecords,
       requestMainResource: () => {
         return Promise.resolve(mainResource);
       },
-    };
+    });
   };
 
   afterEach(() => {
@@ -50,11 +50,9 @@ describe('Performance: uses-rel-preload audit', () => {
     const networkRecords = [
       {
         requestId: '2',
-        resourceType: 'Document',
         priority: 'High',
         isLinkPreload: false,
         url: 'http://example.com:3000',
-        redirects: [''],
       },
       {
         requestId: '2:redirect',
@@ -62,7 +60,6 @@ describe('Performance: uses-rel-preload audit', () => {
         priority: 'High',
         isLinkPreload: false,
         url: 'http://www.example.com:3000',
-        redirects: [''],
       },
       {
         requestId: '3',
@@ -160,7 +157,7 @@ describe('Performance: uses-rel-preload audit', () => {
     const networkRecords = [
       {
         requestId: '3',
-        _startTime: 10,
+        startTime: 10,
         isLinkPreload: true,
         url: 'http://www.example.com/script.js',
       },
@@ -177,7 +174,7 @@ describe('Performance: uses-rel-preload audit', () => {
       {
         requestId: '3',
         protocol: 'data',
-        _startTime: 10,
+        startTime: 10,
       },
     ];
 
@@ -192,7 +189,7 @@ describe('Performance: uses-rel-preload audit', () => {
       {
         requestId: '3',
         protocol: 'blob',
-        _startTime: 10,
+        startTime: 10,
       },
     ];
 

@@ -8,6 +8,7 @@
 const NetworkRequests = require('../../audits/network-requests');
 const Runner = require('../../runner.js');
 const assert = require('assert');
+const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
@@ -38,7 +39,11 @@ describe('Network requests audit', () => {
       {url: 'https://example.com/1', startTime: 15.5, endTime: -1},
     ];
 
-    const artifacts = {devtoolsLogs: {}, requestNetworkRecords: () => Promise.resolve(records)};
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {
+        [NetworkRequests.DEFAULT_PASS]: networkRecordsToDevtoolsLog(records),
+      },
+    });
     const output = await NetworkRequests.audit(artifacts);
     assert.equal(output.details.items[0].startTime, 0);
     assert.equal(output.details.items[0].endTime, 500);
