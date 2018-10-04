@@ -165,7 +165,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
    * @param {LH.Audit.Context} context
    * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
-  static audit_(artifacts, networkRecords, context) {
+  static async audit_(artifacts, networkRecords, context) {
     const images = artifacts.ImageUsage;
     const viewportDimensions = artifacts.ViewportDimensions;
     const trace = artifacts.traces[ByteEfficiencyAudit.DEFAULT_PASS];
@@ -195,29 +195,43 @@ class OffscreenImages extends ByteEfficiencyAudit {
     }, /** @type {Map<string, WasteResult>} */ (new Map()));
 
     const settings = context.settings;
-    return artifacts.requestInteractive({trace, devtoolsLog, settings}).then(interactive => {
-      const unfilteredResults = Array.from(resultsMap.values());
+
+    let items;
+    const unfilteredResults = Array.from(resultsMap.values());
+    // get the interactive time or fallback to getting the end of trace time
+    try {
+      const interactive = await artifacts.requestInteractive({trace, devtoolsLog, settings});
+
+      // use interactive to generate items
       const lanternInteractive = /** @type {LH.Artifacts.LanternMetric} */ (interactive);
       // Filter out images that were loaded after all CPU activity
-      const items = context.settings.throttlingMethod === 'simulate' ?
+      items = context.settings.throttlingMethod === 'simulate' ?
         OffscreenImages.filterLanternResults(unfilteredResults, lanternInteractive) :
         // @ts-ignore - .timestamp will exist if throttlingMethod isn't lantern
         OffscreenImages.filterObservedResults(unfilteredResults, interactive.timestamp);
+    } catch (err) {
+      // if the error is during a Lantern run, end of trace may also be inaccurate, so rethrow
+      if (context.settings.throttlingMethod === 'simulate') {
+        throw err;
+      }
+      // use end of trace as a substitute for finding interactive time
+      items = OffscreenImages.filterObservedResults(unfilteredResults,
+        await artifacts.requestTraceOfTab(trace).then(tot => tot.timestamps.traceEnd));
+    }
 
-      /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
-      const headings = [
-        {key: 'url', valueType: 'thumbnail', label: ''},
-        {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
-        {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
-        {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
-      ];
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
+    const headings = [
+      {key: 'url', valueType: 'thumbnail', label: ''},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
+      {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
+    ];
 
-      return {
-        warnings,
-        items,
-        headings,
-      };
-    });
+    return {
+      warnings,
+      items,
+      headings,
+    };
   }
 }
 
