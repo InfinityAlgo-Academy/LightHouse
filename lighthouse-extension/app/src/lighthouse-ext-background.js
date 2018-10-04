@@ -10,14 +10,6 @@ const background = require('./lighthouse-background');
 
 const ExtensionProtocol = require('../../../lighthouse-core/gather/connections/extension');
 const log = require('lighthouse-logger');
-const assetSaver = require('../../../lighthouse-core/lib/asset-saver.js');
-const LHError = require('../../../lighthouse-core/lib/lh-error.js');
-
-/** @type {Record<'mobile'|'desktop', LH.Config.Json>} */
-const LR_PRESETS = {
-  mobile: require('../../../lighthouse-core/config/lr-mobile-config'),
-  desktop: require('../../../lighthouse-core/config/lr-desktop-config'),
-};
 
 /** @typedef {import('../../../lighthouse-core/gather/connections/connection.js')} Connection */
 
@@ -85,56 +77,6 @@ async function runLighthouseInExtension(flags, categoryIDs) {
   const reportHtml = /** @type {string} */ (runnerResult.report);
   const blobURL = createReportPageAsBlob(reportHtml);
   await new Promise(resolve => chrome.windows.create({url: blobURL}, resolve));
-}
-
-/**
- * Run lighthouse for connection and provide similar results as in CLI.
- * @param {Connection} connection
- * @param {string} url
- * @param {LH.Flags} flags Lighthouse flags, including `output`
- * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean}} lrOpts Options coming from Lightrider
- * @return {Promise<string|Array<string>|void>}
- */
-async function runLighthouseInLR(connection, url, flags, {lrDevice, categoryIDs, logAssets}) {
-  // Certain fixes need to kick-in under LR, see https://github.com/GoogleChrome/lighthouse/issues/5839
-  global.isLightRider = true;
-
-  // disableStorageReset because it causes render server hang
-  flags.disableStorageReset = true;
-  flags.logLevel = flags.logLevel || 'info';
-  const config = lrDevice === 'desktop' ? LR_PRESETS.desktop : LR_PRESETS.mobile;
-  if (categoryIDs) {
-    config.settings = config.settings || {};
-    config.settings.onlyCategories = categoryIDs;
-  }
-
-  try {
-    const results = await lighthouse(url, flags, config, connection);
-    if (!results) return;
-
-    if (logAssets) {
-      await assetSaver.logAssets(results.artifacts, results.lhr.audits);
-    }
-    return results.report;
-  } catch (err) {
-    // If an error ruined the entire lighthouse run, attempt to return a meaningful error.
-    let runtimeError;
-    if (!(err instanceof LHError) || !err.lhrRuntimeError) {
-      runtimeError = {
-        code: LHError.UNKNOWN_ERROR,
-        message: `Unknown error encountered with message '${err.message}'`,
-      };
-    } else {
-      runtimeError = {
-        code: err.code,
-        message: err.friendlyMessage ?
-            `${err.friendlyMessage} (${err.message})` :
-            err.message,
-      };
-    }
-
-    return JSON.stringify({runtimeError}, null, 2);
-  }
 }
 
 /**
@@ -241,7 +183,6 @@ if (typeof module !== 'undefined' && module.exports) {
   // Export for importing types into popup.js, require()ing into unit tests.
   module.exports = {
     runLighthouseInExtension,
-    runLighthouseInLR,
     getDefaultCategories: background.getDefaultCategories,
     isRunning,
     listenForStatus,
@@ -254,8 +195,6 @@ if (typeof module !== 'undefined' && module.exports) {
 if (typeof window !== 'undefined') {
   // @ts-ignore
   window.runLighthouseInExtension = runLighthouseInExtension;
-  // @ts-ignore
-  window.runLighthouseInLR = runLighthouseInLR;
   // @ts-ignore
   window.getDefaultCategories = background.getDefaultCategories;
   // @ts-ignore

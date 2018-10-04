@@ -34,6 +34,13 @@ const pkg = require('../package.json');
 
 const distDir = 'dist';
 
+// list of all consumers we build for (easier to understand which file is used for which)
+const CONSUMERS = {
+  DEVTOOLS: 'lighthouse-background.js',
+  EXTENSION: 'lighthouse-ext-background.js',
+  LIGHTRIDER: 'lighthouse-lr-background.js',
+};
+
 const VERSION = pkg.version;
 const COMMIT_HASH = require('child_process')
   .execSync('git rev-parse HEAD')
@@ -49,6 +56,12 @@ const gatherers = LighthouseRunner.getGathererList()
 
 const computedArtifacts = LighthouseRunner.getComputedGathererList()
     .map(f => '../lighthouse-core/gather/computed/' + f.replace(/\.js$/, ''));
+
+const locales = fs.readdirSync('../lighthouse-core/lib/i18n/locales/')
+    .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
+
+const isDevtools = file => file.endsWith(CONSUMERS.DEVTOOLS);
+const isExtension = file => file.endsWith(CONSUMERS.EXTENSION);
 
 gulp.task('extras', () => {
   return gulp.src([
@@ -96,7 +109,7 @@ gulp.task('chromeManifest', () => {
   const manifestOpts = {
     buildnumber: false,
     background: {
-      target: 'scripts/lighthouse-ext-background.js',
+      target: `scripts/${CONSUMERS.EXTENSION}`,
     },
   };
   return gulp.src('app/manifest.json')
@@ -114,12 +127,10 @@ function applyBrowserifyTransforms(bundle) {
 }
 
 gulp.task('browserify-lighthouse', () => {
-  return gulp.src([
-    'app/src/lighthouse-background.js',
-    'app/src/lighthouse-ext-background.js',
-  ], {read: false})
+  const consumerSources = Object.values(CONSUMERS).map(consumer => `app/src/${consumer}`);
+  return gulp.src(consumerSources, {read: false})
     .pipe(tap(file => {
-      let bundle = browserify(file.path); // , {debug: true}); // for sourcemaps
+      let bundle = browserify(file.path, {debug: true}); // for sourcemaps
       bundle = applyBrowserifyTransforms(bundle);
 
       // scripts will need some additional transforms, ignores and requires…
@@ -135,8 +146,12 @@ gulp.task('browserify-lighthouse', () => {
       bundle.ignore(require.resolve('../lighthouse-core/gather/connections/cri.js'));
 
       // Prevent the DevTools background script from getting the stringified HTML.
-      if (/lighthouse-background/.test(file.path)) {
+      if (isDevtools(file.path)) {
         bundle.ignore(require.resolve('../lighthouse-core/report/html/html-report-assets.js'));
+      }
+
+      if (isDevtools(file.path) || isExtension(file.path)) {
+        bundle.ignore(locales);
       }
 
       // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.
@@ -197,9 +212,8 @@ gulp.task('compilejs', () => {
     // sourceMaps: 'both'
   };
 
-  return gulp.src([
-    'dist/scripts/lighthouse-background.js',
-    'dist/scripts/lighthouse-ext-background.js'])
+  const compiledSources = Object.values(CONSUMERS).map(consumer => `dist/scripts/${consumer}`);
+  return gulp.src(compiledSources)
     .pipe(tap(file => {
       const minified = babel.transform(file.contents.toString(), opts).code;
       file.contents = new Buffer(minified);
