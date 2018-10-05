@@ -101,8 +101,8 @@
     },
     "load-fast-enough-for-pwa": {
       "id": "load-fast-enough-for-pwa",
-      "title": "Page load is fast enough on 3G",
-      "description": "A fast page load over a 3G network ensures a good mobile user experience. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g).",
+      "title": "Page load is fast enough on mobile networks",
+      "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "rawValue": 4927.278
@@ -3448,7 +3448,7 @@
       "errorLabel": "Error!",
       "errorMissingAuditInfo": "Report error: no audit information",
       "labDataTitle": "Lab Data",
-      "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on emulated 3G. Values are estimated and may vary.",
+      "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
       "manualAuditsGroupTitle": "Additional items to manually check",
       "notApplicableAuditsGroupTitle": "Not applicable",
       "opportunityResourceColumnLabel": "Opportunity",

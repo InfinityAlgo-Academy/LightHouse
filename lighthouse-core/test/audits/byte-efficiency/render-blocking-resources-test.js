@@ -7,7 +7,7 @@
 
 const RenderBlockingResourcesAudit = require('../../../audits/byte-efficiency/render-blocking-resources.js'); // eslint-disable-line max-len
 
-const mobile3G = require('../../../config/constants').throttling.mobile3G;
+const mobileSlow4G = require('../../../config/constants').throttling.mobileSlow4G;
 const Runner = require('../../../runner');
 const NetworkNode = require('../../../lib/dependency-graph/network-node');
 const CPUNode = require('../../../lib/dependency-graph/cpu-node');
@@ -36,7 +36,7 @@ describe('Render blocking resources audit', () => {
       Runner.instantiateComputedArtifacts()
     );
 
-    const settings = {throttlingMethod: 'simulate', throttling: mobile3G};
+    const settings = {throttlingMethod: 'simulate', throttling: mobileSlow4G};
     const result = await RenderBlockingResourcesAudit.audit(artifacts, {settings});
     assert.equal(result.score, 1);
     assert.equal(result.rawValue, 0);

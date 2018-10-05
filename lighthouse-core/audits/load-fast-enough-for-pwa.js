@@ -13,7 +13,7 @@
 
 const isDeepEqual = require('lodash.isequal');
 const Audit = require('./audit');
-const mobile3GThrottling = require('../config/constants').throttling.mobile3G;
+const mobileThrottling = require('../config/constants').throttling.mobileSlow4G;
 
 // Maximum TTI to be considered "fast" for PWA baseline checklist
 //   https://developers.google.com/web/progressive-web-apps/checklist
@@ -26,10 +26,10 @@ class LoadFastEnough4Pwa extends Audit {
   static get meta() {
     return {
       id: 'load-fast-enough-for-pwa',
-      title: 'Page load is fast enough on 3G',
-      failureTitle: 'Page load is not fast enough on 3G',
+      title: 'Page load is fast enough on mobile networks',
+      failureTitle: 'Page load is not fast enough on mobile networks',
       description:
-        'A fast page load over a 3G network ensures a good mobile user experience. ' +
+        'A fast page load over a cellular network ensures a good mobile user experience. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g).',
       requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
@@ -44,12 +44,12 @@ class LoadFastEnough4Pwa extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
 
-    // If throttling was default devtools or lantern 3G throttling, then reuse the given settings
-    // Otherwise, we'll force the usage of lantern 3G.
-    const settingOverrides = {throttlingMethod: 'simulate', throttling: mobile3GThrottling};
+    // If throttling was default devtools or lantern slow 4G throttling, then reuse the given settings
+    // Otherwise, we'll force the usage of lantern slow 4G.
+    const settingOverrides = {throttlingMethod: 'simulate', throttling: mobileThrottling};
     const settings =
       context.settings.throttlingMethod !== 'provided' &&
-      isDeepEqual(context.settings.throttling, mobile3GThrottling)
+      isDeepEqual(context.settings.throttling, mobileThrottling)
         ? context.settings
         : Object.assign({}, context.settings, settingOverrides);
 

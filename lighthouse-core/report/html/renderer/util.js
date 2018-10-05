@@ -398,7 +398,7 @@ class Util {
         networkThrottling = `${Util.formatNumber(requestLatencyMs)}${NBSP}ms HTTP RTT, ` +
           `${Util.formatNumber(throttling.downloadThroughputKbps)}${NBSP}Kbps down, ` +
           `${Util.formatNumber(throttling.uploadThroughputKbps)}${NBSP}Kbps up (DevTools)`;
-        summary = 'Throttled Fast 3G network';
+        summary = 'Throttled Slow 4G network';
         break;
       }
       case 'simulate': {
@@ -406,7 +406,7 @@ class Util {
         cpuThrottling = `${Util.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
         networkThrottling = `${Util.formatNumber(rttMs)}${NBSP}ms TCP RTT, ` +
           `${Util.formatNumber(throughputKbps)}${NBSP}Kbps throughput (Simulated)`;
-        summary = 'Simulated Fast 3G network';
+        summary = 'Simulated Slow 4G network';
         break;
       }
       default:
@@ -484,8 +484,8 @@ Util.UIStrings = {
   /** Label of value shown in the summary of critical request chains. Refers to the total amount of time (milliseconds) of the longest critical path chain/sequence of network requests. Example value: 2310 ms */
   crcLongestDurationLabel: 'Maximum critical path latency:',
 
-  /** Explanation shown to users below performance results to inform them that the test was done with a 3G network connection and to warn them that the numbers they see will likely change slightly the next time they run Lighthouse. 'Lighthouse' becomes link text to additional documentation. */
-  lsPerformanceCategoryDescription: '[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on emulated 3G. Values are estimated and may vary.',
+  /** Explanation shown to users below performance results to inform them that the test was done with a 4G network connection and to warn them that the numbers they see will likely change slightly the next time they run Lighthouse. 'Lighthouse' becomes link text to additional documentation. */
+  lsPerformanceCategoryDescription: '[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.',
   /** Title of the lab data section of the Performance category. Within this section are various speed metrics which quantify the pageload performance into values presented in seconds and milliseconds. "Lab" is an abbreviated form of "laboratory", and refers to the fact that the data is from a controlled test of a website, not measurements from real users visiting that site.  */
   labDataTitle: 'Lab Data',
 };

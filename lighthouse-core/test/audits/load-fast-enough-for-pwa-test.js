@@ -8,7 +8,7 @@
 const FastPWAAudit = require('../../audits/load-fast-enough-for-pwa');
 const Runner = require('../../runner.js');
 const Audit = require('../../audits/audit.js');
-const mobile3GThrottling = require('../../config/constants').throttling.mobile3G;
+const mobileSlow4GThrottling = require('../../config/constants').throttling.mobileSlow4G;
 const assert = require('assert');
 
 const trace = require('../fixtures/traces/progressive-app-m60.json');
@@ -31,7 +31,7 @@ function generateArtifacts(ttiValue) {
 /* eslint-env jest */
 describe('PWA: load-fast-enough-for-pwa audit', () => {
   it('returns boolean based on TTI value', () => {
-    const settings = {throttlingMethod: 'devtools', throttling: mobile3GThrottling};
+    const settings = {throttlingMethod: 'devtools', throttling: mobileSlow4GThrottling};
     return FastPWAAudit.audit(generateArtifacts(5000), {settings}).then(result => {
       assert.equal(result.score, true, 'fixture trace is not passing audit');
       assert.equal(result.rawValue, 5000);
@@ -39,7 +39,7 @@ describe('PWA: load-fast-enough-for-pwa audit', () => {
   });
 
   it('fails a bad TTI value', () => {
-    const settings = {throttlingMethod: 'devtools', throttling: mobile3GThrottling};
+    const settings = {throttlingMethod: 'devtools', throttling: mobileSlow4GThrottling};
     return FastPWAAudit.audit(generateArtifacts(15000), {settings}).then(result => {
       assert.equal(result.score, false, 'not failing a long TTI value');
       assert.equal(result.rawValue, 15000);
@@ -54,7 +54,7 @@ describe('PWA: load-fast-enough-for-pwa audit', () => {
       devtoolsLogs: {defaultPass: devtoolsLog},
     }, Runner.instantiateComputedArtifacts());
 
-    const settings = {throttlingMethod: 'devtools', throttling: mobile3GThrottling};
+    const settings = {throttlingMethod: 'devtools', throttling: mobileSlow4GThrottling};
     const result = await FastPWAAudit.audit(artifacts, {settings});
     assert.equal(Math.round(result.rawValue), 1582);
   });
