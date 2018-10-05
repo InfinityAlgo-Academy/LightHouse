@@ -33,8 +33,9 @@ function runA11yChecks() {
     resultTypes: ['violations', 'inapplicable'],
     rules: {
       'tabindex': {enabled: true},
-      'table-fake-caption': {enabled: true},
-      'td-has-header': {enabled: true},
+      'table-fake-caption': {enabled: false},
+      'td-has-header': {enabled: false},
+      'marquee': {enabled: false},
       'area-alt': {enabled: false},
       'blink': {enabled: false},
       'server-side-image-map': {enabled: false},
