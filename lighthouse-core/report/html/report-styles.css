@@ -77,8 +77,6 @@
   --lh-section-vpadding: 12px;
   --chevron-size: 12px;
 
-  /* Voodoo magic here to get narrow columns. 0 doesn't size the column like our friend 1px does */
-  --bytes-col-width: 1px;
   --pass-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>check</title><path fill="hsl(139, 70%, 30%)" d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/></svg>');
   --average-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>info</title><path fill="hsl(31, 100%, 45%)" d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm2 30h-4V22h4v12zm0-16h-4v-4h4v4z"/></svg>');
   --fail-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>warn</title><path fill="hsl(1, 73%, 45%)" d="M2 42h44L24 4 2 42zm24-6h-4v-4h4v4zm0-8h-4v-8h4v8z"/></svg>');
@@ -312,8 +310,8 @@
   background-color: #F8F9FA;
 }
 
-.lh-audit-group__summary::-webkit-details-marker,
-.lh-expandable-details__summary::-webkit-details-marker {
+.lh-audit-group > summary::-webkit-details-marker,
+.lh-expandable-details > summary::-webkit-details-marker {
   display: none;
 }
 
@@ -648,6 +646,7 @@
 }
 
 .lh-header-sticky {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100%;
@@ -820,19 +819,6 @@
   line-height: var(--header-line-height);
 }
 
-.lh-passed-audits[open] summary.lh-passed-audits-summary {
-  margin-bottom: calc(var(--default-padding) * 2);
-}
-
-summary.lh-passed-audits-summary {
-  margin: calc(var(--default-padding) * 2) var(--default-padding);
-  margin-left: var(--default-padding);
-  margin-bottom: 0;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-}
-
 #lh-log {
   position: fixed;
   background-color: #323232;
@@ -895,6 +881,7 @@ summary.lh-passed-audits-summary {
 .lh-table thead th {
   color: var(--medium-75-gray);
   font-weight: normal;
+  word-wrap: normal;
 }
 
 .lh-table tbody tr:nth-child(even) {
@@ -930,18 +917,16 @@ summary.lh-passed-audits-summary {
 .lh-table-column--url {
   min-width: 250px;
   white-space: nowrap;
-  max-width: 0;
 }
 
-/* Keep bytes columns narrow if they follow the URL column */
+/* Keep columns narrow if they follow the URL column */
+/* 12% was determined to be a decent narrow width, but wide enough for column headings */
 .lh-table-column--url + th.lh-table-column--bytes,
 .lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--bytes,
+.lh-table-column--url + .lh-table-column--ms, 
+.lh-table-column--url + .lh-table-column--ms + th.lh-table-column--bytes,
 .lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--timespanMs {
-  max-width: var(--bytes-col-width);
-}
-
-.lh-table-column--code {
-  max-width: var(--url-col-max-width);
+  width: 12%;
 }
 
 .lh-text__url {
@@ -993,19 +978,19 @@ summary.lh-passed-audits-summary {
  transition: transform 300ms, stroke 300ms;
 }
 
-.lh-audit-group > .lh-audit-group__summary > .lh-chevron .lh-chevron__line-right,
-.lh-audit-group[open] > .lh-audit-group__summary > .lh-chevron .lh-chevron__line-left,
+.lh-audit-group > summary > .lh-audit-group__summary > .lh-chevron .lh-chevron__line-right,
+.lh-audit-group[open] > summary > .lh-audit-group__summary > .lh-chevron .lh-chevron__line-left,
 .lh-audit > .lh-expandable-details .lh-chevron__line-right,
 .lh-audit > .lh-expandable-details[open] .lh-chevron__line-left {
  transform: rotate(calc(var(--chevron-angle) * -1));
 }
 
-.lh-audit-group[open] > .lh-audit-group__summary > .lh-chevron .lh-chevron__line-right,
+.lh-audit-group[open] > summary > .lh-audit-group__summary > .lh-chevron .lh-chevron__line-right,
 .lh-audit > .lh-expandable-details[open] .lh-chevron__line-right {
   transform: rotate(var(--chevron-angle));
 }
 
-.lh-audit-group[open] > .lh-audit-group__summary > .lh-chevron .lh-chevron__lines,
+.lh-audit-group[open] > summary > .lh-audit-group__summary > .lh-chevron .lh-chevron__lines,
 .lh-audit > .lh-expandable-details[open] .lh-chevron__lines {
  transform: translateY(calc(var(--chevron-size) * -1));
 }

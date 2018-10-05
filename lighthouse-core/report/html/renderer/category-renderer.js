@@ -164,11 +164,12 @@ class CategoryRenderer {
   renderAuditGroup(group, opts) {
     const expandable = opts.expandable;
     const groupEl = this.dom.createElement(expandable ? 'details' : 'div', 'lh-audit-group');
-    const summmaryEl = this.dom.createChildOf(groupEl, 'summary', 'lh-audit-group__summary');
-    const headerEl = this.dom.createChildOf(summmaryEl, 'div', 'lh-audit-group__header');
-    const itemCountEl = this.dom.createChildOf(summmaryEl, 'div', 'lh-audit-group__itemcount');
+    const summaryEl = this.dom.createChildOf(groupEl, 'summary');
+    const summaryInnerEl = this.dom.createChildOf(summaryEl, 'div', 'lh-audit-group__summary');
+    const headerEl = this.dom.createChildOf(summaryInnerEl, 'div', 'lh-audit-group__header');
+    const itemCountEl = this.dom.createChildOf(summaryInnerEl, 'div', 'lh-audit-group__itemcount');
     if (expandable) {
-      const chevronEl = summmaryEl.appendChild(this._createChevron());
+      const chevronEl = summaryInnerEl.appendChild(this._createChevron());
       chevronEl.title = Util.UIStrings.auditGroupExpandTooltip;
     }
 
