@@ -54,7 +54,7 @@ If you are adding an image to a readme use the absolute path to the image for th
 
 If you are updating an image that already exists: commit it, then update the readme to point the image with that new commits hash absolute url.
 
-## description guidelines
+## Description Guidelines
 
 Keep the `description` of an audit as short as possible. When a reference doc for the audit exists on
 developers.google.com/web, the `description` should only explain *why* the user should care
