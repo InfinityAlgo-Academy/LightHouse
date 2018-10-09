@@ -72,7 +72,6 @@ describe('Screenshot thumbnails', () => {
     const artifacts = Object.assign({
       traces: {defaultPass: pwaTrace},
     }, computedArtifacts);
-    computedArtifacts.requestInteractive = () => ({timing: 20000});
 
     return ScreenshotThumbnailsAudit.audit(artifacts, {settings, options}).then(results => {
       assert.equal(results.details.items[0].timing, 82);
@@ -93,12 +92,17 @@ describe('Screenshot thumbnails', () => {
   });
 
   it('should handle nonsense times', async () => {
+    const infiniteTrace = JSON.parse(JSON.stringify(pwaTrace));
+    infiniteTrace.traceEvents.forEach(event => {
+      if (event.name === 'Screenshot') {
+        event.ts = Infinity;
+      }
+    });
+
     const settings = {throttlingMethod: 'simulate'};
-    const artifacts = {
-      traces: {},
-      requestSpeedline: () => ({frames: [], complete: false, beginning: -1}),
-      requestInteractive: () => ({timing: NaN}),
-    };
+    const artifacts = Object.assign({
+      traces: {defaultPass: infiniteTrace},
+    }, computedArtifacts);
 
     try {
       await ScreenshotThumbnailsAudit.audit(artifacts, {settings, options: {}});

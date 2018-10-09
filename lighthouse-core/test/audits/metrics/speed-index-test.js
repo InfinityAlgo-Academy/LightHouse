@@ -28,19 +28,4 @@ describe('Performance: speed-index audit', () => {
       assert.equal(result.rawValue, 605);
     });
   }, 10000);
-
-  it('scores speed index of 845 as 100', () => {
-    const artifacts = {
-      traces: {},
-      devtoolsLogs: {},
-      requestSpeedIndex() {
-        return Promise.resolve({timing: 845});
-      },
-    };
-
-    return Audit.audit(artifacts, {options}).then(result => {
-      assert.equal(result.score, 1);
-      assert.equal(result.rawValue, 845);
-    });
-  });
 });

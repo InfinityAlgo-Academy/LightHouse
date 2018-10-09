@@ -7,6 +7,8 @@
 
 const HreflangAudit = require('../../../audits/seo/hreflang.js');
 const assert = require('assert');
+const Runner = require('../../../runner.js');
+const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
 
@@ -21,17 +23,20 @@ describe('SEO: Document has valid hreflang code', () => {
     ];
 
     const allRuns = hreflangValues.map(hreflangValue => {
+      const finalUrl = 'https://example.com';
       const mainResource = {
+        url: finalUrl,
         responseHeaders: [],
       };
-      const artifacts = {
-        devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: []},
-        requestMainResource: () => Promise.resolve(mainResource),
+      const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+      const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+        devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: devtoolsLog},
+        URL: {finalUrl},
         Hreflang: [{
           hreflang: hreflangValue,
           href: 'https://example.com',
         }],
-      };
+      });
 
       return HreflangAudit.audit(artifacts).then(auditResult => {
         assert.equal(auditResult.rawValue, false);
@@ -43,12 +48,15 @@ describe('SEO: Document has valid hreflang code', () => {
   });
 
   it('succeeds when language code provided via link element is valid', () => {
+    const finalUrl = 'https://example.com';
     const mainResource = {
+      url: finalUrl,
       responseHeaders: [],
     };
-    const artifacts = {
-      devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: []},
-      requestMainResource: () => Promise.resolve(mainResource),
+    const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: devtoolsLog},
+      URL: {finalUrl},
       Hreflang: [
         {hreflang: 'pl'},
         {hreflang: 'nl-be'},
@@ -56,7 +64,7 @@ describe('SEO: Document has valid hreflang code', () => {
         {hreflang: 'x-default'},
         {hreflang: 'FR-BE'},
       ],
-    };
+    });
 
     return HreflangAudit.audit(artifacts).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
@@ -64,14 +72,17 @@ describe('SEO: Document has valid hreflang code', () => {
   });
 
   it('succeeds when there are no rel=alternate link elements nor headers', () => {
+    const finalUrl = 'https://example.com';
     const mainResource = {
+      url: finalUrl,
       responseHeaders: [],
     };
-    const artifacts = {
-      devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: []},
-      requestMainResource: () => Promise.resolve(mainResource),
+    const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: devtoolsLog},
+      URL: {finalUrl},
       Hreflang: [],
-    };
+    });
 
     return HreflangAudit.audit(artifacts).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
@@ -99,14 +110,17 @@ describe('SEO: Document has valid hreflang code', () => {
     ];
 
     const allRuns = linkHeaders.map(headers => {
+      const finalUrl = 'https://example.com';
       const mainResource = {
+        url: finalUrl,
         responseHeaders: headers,
       };
-      const artifacts = {
-        devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: []},
-        requestMainResource: () => Promise.resolve(mainResource),
+      const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+      const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+        devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: devtoolsLog},
+        URL: {finalUrl},
         Hreflang: null,
-      };
+      });
 
       return HreflangAudit.audit(artifacts).then(auditResult => {
         assert.equal(auditResult.rawValue, false);
@@ -118,7 +132,9 @@ describe('SEO: Document has valid hreflang code', () => {
   });
 
   it('succeeds when language codes provided via Link header are valid', () => {
+    const finalUrl = 'https://example.com';
     const mainResource = {
+      url: finalUrl,
       responseHeaders: [
         {name: 'link', value: ''},
         {name: 'link', value: 'garbage'},
@@ -128,11 +144,12 @@ describe('SEO: Document has valid hreflang code', () => {
         {name: 'LINK', value: '<http://es.example.com/>; rel="alternate"; hreflang="es",<http://fr.example.com/>; rel="alternate"; Hreflang="fr-be"'},
       ],
     };
-    const artifacts = {
-      devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: []},
-      requestMainResource: () => Promise.resolve(mainResource),
+    const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: devtoolsLog},
+      URL: {finalUrl},
       Hreflang: null,
-    };
+    });
 
     return HreflangAudit.audit(artifacts).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
@@ -140,21 +157,24 @@ describe('SEO: Document has valid hreflang code', () => {
   });
 
   it('returns all failing items', () => {
+    const finalUrl = 'https://example.com';
     const mainResource = {
+      url: finalUrl,
       responseHeaders: [
         {name: 'link', value: '<http://xx1.example.com/>; rel="alternate"; hreflang="xx1"'},
         {name: 'Link', value: '<http://xx2.example.com/>; rel="alternate"; hreflang="xx2"'},
       ],
     };
-    const artifacts = {
-      devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: []},
-      requestMainResource: () => Promise.resolve(mainResource),
+    const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: devtoolsLog},
+      URL: {finalUrl},
       Hreflang: [{
         hreflang: 'xx3',
       }, {
         hreflang: 'xx4',
       }],
-    };
+    });
 
     return HreflangAudit.audit(artifacts).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
