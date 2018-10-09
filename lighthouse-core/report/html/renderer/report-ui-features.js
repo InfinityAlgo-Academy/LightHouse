@@ -132,9 +132,8 @@ class ReportUIFeatures {
 
   _setupHeaderAnimation() {
     const scoresWrapper = this._dom.find('.lh-scores-wrapper', this._document);
-    this.headerOverlap = /** @type {number} */
-      // @ts-ignore - TODO: move off CSSOM to support other browsers
-      (scoresWrapper.computedStyleMap().get('margin-top').value);
+    const computedMarginTop = window.getComputedStyle(scoresWrapper).marginTop;
+    this.headerOverlap = parseFloat(computedMarginTop || '0');
 
     this.headerSticky = this._dom.find('.lh-header-sticky', this._document);
     this.headerBackground = this._dom.find('.lh-header-bg', this._document);
@@ -144,8 +143,8 @@ class ReportUIFeatures {
     this.toolbar = this._dom.find('.lh-toolbar', this._document);
     this.toolbarMetadata = this._dom.find('.lh-toolbar__metadata', this._document);
 
-    // @ts-ignore - TODO: move off CSSOM to support other browsers
-    this.headerHeight = this.headerBackground.computedStyleMap().get('height').value;
+    const computedHeight = window.getComputedStyle(this.headerBackground).height;
+    this.headerHeight = parseFloat(computedHeight || '0');
 
     this._document.addEventListener('scroll', this.onScroll, {passive: true});
 
@@ -287,6 +286,7 @@ class ReportUIFeatures {
     this._dom.resetTemplates();
   }
 
+  /* eslint-env browser */
   /**
    * Jumps to respective audit on page load if hash is provided in URL.
    * Collapsed content is opened automatically.
