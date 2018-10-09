@@ -7,40 +7,49 @@
 
 const FastPWAAudit = require('../../audits/load-fast-enough-for-pwa');
 const Runner = require('../../runner.js');
-const Audit = require('../../audits/audit.js');
 const mobileSlow4GThrottling = require('../../config/constants').throttling.mobileSlow4G;
 const assert = require('assert');
+const createTestTrace = require('../create-test-trace.js');
+const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 const trace = require('../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
-function generateArtifacts(ttiValue) {
-  return {
-    devtoolsLogs: {
-      [Audit.DEFAULT_PASS]: [],
-    },
-    traces: {
-      [Audit.DEFAULT_PASS]: {traceEvents: []},
-    },
-    requestInteractive: () => Promise.resolve({
-      timing: ttiValue,
-    }),
-  };
-}
 
 /* eslint-env jest */
 describe('PWA: load-fast-enough-for-pwa audit', () => {
   it('returns boolean based on TTI value', () => {
+    const artifacts = Object.assign({
+      traces: {defaultPass: trace},
+      devtoolsLogs: {defaultPass: devtoolsLog},
+    }, Runner.instantiateComputedArtifacts());
+
     const settings = {throttlingMethod: 'devtools', throttling: mobileSlow4GThrottling};
-    return FastPWAAudit.audit(generateArtifacts(5000), {settings}).then(result => {
+    return FastPWAAudit.audit(artifacts, {settings}).then(result => {
       assert.equal(result.score, true, 'fixture trace is not passing audit');
-      assert.equal(result.rawValue, 5000);
+      assert.equal(result.rawValue, 1582.189);
     });
   });
 
-  it('fails a bad TTI value', () => {
+  it('fails a bad TTI value', async () => {
+    const topLevelTasks = [
+      {ts: 1000, duration: 100},
+      {ts: 3000, duration: 100},
+      {ts: 5000, duration: 100},
+      {ts: 9000, duration: 100},
+      {ts: 12000, duration: 100},
+      {ts: 14900, duration: 100},
+    ];
+    const longTrace = createTestTrace({navigationStart: 0, traceEnd: 20000, topLevelTasks});
+    const devtoolsLog = networkRecordsToDevtoolsLog([{url: 'https://example.com'}]);
+
+    const artifacts = Object.assign({
+      traces: {defaultPass: longTrace},
+      devtoolsLogs: {defaultPass: devtoolsLog},
+    }, Runner.instantiateComputedArtifacts());
+
     const settings = {throttlingMethod: 'devtools', throttling: mobileSlow4GThrottling};
-    return FastPWAAudit.audit(generateArtifacts(15000), {settings}).then(result => {
+    return FastPWAAudit.audit(artifacts, {settings}).then(result => {
       assert.equal(result.score, false, 'not failing a long TTI value');
       assert.equal(result.rawValue, 15000);
       assert.deepEqual(result.displayValue, ['Interactive at %d\xa0s', 15]);

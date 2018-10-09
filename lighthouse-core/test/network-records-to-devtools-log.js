@@ -32,7 +32,8 @@ function getBaseRequestId(record) {
 function headersArrayToHeadersDict(headersArray = []) {
   const headersDict = {};
   headersArray.forEach(headerItem => {
-    const value = headersDict[headerItem.name] ? headersDict[headerItem.name] + '\n' : '';
+    const value = headersDict[headerItem.name] !== undefined ?
+        headersDict[headerItem.name] + '\n' : '';
     headersDict[headerItem.name] = value + headerItem.value;
   });
 
@@ -44,8 +45,10 @@ function headersArrayToHeadersDict(headersArray = []) {
  * @return {LH.Protocol.RawEventMessage}
  */
 function getRequestWillBeSentEvent(networkRecord, index) {
-  const initiator = networkRecord.isLinkPreload ? {type: 'preload'} :
-      networkRecord.initiator || {type: 'other'};
+  let initiator;
+  if (networkRecord.initiator) {
+    initiator = {...networkRecord.initiator};
+  }
 
   return {
     method: 'Network.requestWillBeSent',
@@ -57,10 +60,11 @@ function getRequestWillBeSentEvent(networkRecord, index) {
         method: networkRecord.requestMethod || 'GET',
         headers: {},
         initialPriority: networkRecord.priority || 'Low',
+        isLinkPreload: networkRecord.isLinkPreload,
       },
       timestamp: networkRecord.startTime || 0,
       wallTime: 0,
-      initiator: initiator,
+      initiator: initiator || {type: 'other'},
       type: networkRecord.resourceType || 'Document',
       frameId: `${idBase}.1`,
       redirectResponse: networkRecord.redirectResponse,
@@ -74,9 +78,12 @@ function getRequestWillBeSentEvent(networkRecord, index) {
  */
 function getResponseReceivedEvent(networkRecord, index) {
   const headers = headersArrayToHeadersDict(networkRecord.responseHeaders);
-  const timing = networkRecord.timing;
-  if (timing && timing.requestTime === undefined) {
-    timing.requestTime = networkRecord.startTime || 0;
+  let timing;
+  if (networkRecord.timing) {
+    timing = {...networkRecord.timing};
+    if (timing.requestTime === undefined) {
+      timing.requestTime = networkRecord.startTime || 0;
+    }
   }
 
   return {
