@@ -314,15 +314,17 @@ class ReportUIFeatures {
    */
   _openClosestDetails(element) {
     const details = element.closest('.lh-container details');
-    if (details) {
+    if (details instanceof HTMLElement) {
       details.setAttribute('open', 'true');
       if (details.parentElement) {
         this._openClosestDetails(details.parentElement);
       }
       window.scroll({
-        top: /** @type {HTMLElement} */ details.offsetTop,
+        top: details.offsetTop,
         behavior: 'smooth',
       });
+    } else {
+      throw new Error(`Closest ancestor '.lh-container details' of ${element.nodeName} not found`);
     }
   }
 
