@@ -307,6 +307,7 @@ class ReportUIFeatures {
     this._openClosestDetails(audit);
   }
 
+  /* eslint-env browser*/
   /**
    * Open all closest <details> elements recursively.
    * If found, scroll to element in viewport.
