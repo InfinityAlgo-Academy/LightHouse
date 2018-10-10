@@ -3,6 +3,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 // HACK: patch astw before it's required to use acorn with ES2018
 // We add the right acorn version to package.json deps, resolve the path to it here,
 // and then inject the modified require statement into astw's code.
@@ -36,9 +37,18 @@ const distDir = 'dist';
 
 // list of all consumers we build for (easier to understand which file is used for which)
 const CONSUMERS = {
-  DEVTOOLS: 'lighthouse-background.js',
-  EXTENSION: 'lighthouse-ext-background.js',
-  LIGHTRIDER: 'lighthouse-lr-background.js',
+  DEVTOOLS: {
+    src: 'devtools-entry.js',
+    dist: 'lighthouse-dt-bundle.js',
+  },
+  EXTENSION: {
+    src: 'extension-entry.js',
+    dist: 'lighthouse-ext-bundle.js',
+  },
+  LIGHTRIDER: {
+    src: 'lightrider-entry.js',
+    dist: 'lighthouse-lr-bundle.js',
+  },
 };
 
 const VERSION = pkg.version;
@@ -60,8 +70,10 @@ const computedArtifacts = LighthouseRunner.getComputedGathererList()
 const locales = fs.readdirSync('../lighthouse-core/lib/i18n/locales/')
     .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
 
-const isDevtools = file => file.endsWith(CONSUMERS.DEVTOOLS);
-const isExtension = file => file.endsWith(CONSUMERS.EXTENSION);
+const isDevtools = file =>
+  file.endsWith(CONSUMERS.DEVTOOLS.src);
+const isExtension = file =>
+  file.endsWith(CONSUMERS.EXTENSION.src);
 
 gulp.task('extras', () => {
   return gulp.src([
@@ -109,7 +121,7 @@ gulp.task('chromeManifest', () => {
   const manifestOpts = {
     buildnumber: false,
     background: {
-      target: `scripts/${CONSUMERS.EXTENSION}`,
+      target: `scripts/${CONSUMERS.EXTENSION.dist}`,
     },
   };
   return gulp.src('app/manifest.json')
@@ -127,10 +139,10 @@ function applyBrowserifyTransforms(bundle) {
 }
 
 gulp.task('browserify-lighthouse', () => {
-  const consumerSources = Object.values(CONSUMERS).map(consumer => `app/src/${consumer}`);
+  const consumerSources = Object.values(CONSUMERS).map(consumer => `app/src/${consumer.src}`);
   return gulp.src(consumerSources, {read: false})
     .pipe(tap(file => {
-      let bundle = browserify(file.path, {debug: true}); // for sourcemaps
+      let bundle = browserify(file.path); // , {debug: true}); // for sourcemaps
       bundle = applyBrowserifyTransforms(bundle);
 
       // scripts will need some additional transforms, ignores and requires…
@@ -176,6 +188,18 @@ gulp.task('browserify-lighthouse', () => {
       // Inject the new browserified contents back into our gulp pipeline
       file.contents = bundle.bundle();
     }))
+    .pipe(debug({title: ''}))
+    .pipe(tap(file => {
+      // rename our bundles
+      const basename = path.basename(file.path);
+
+      // find the dist file of the given file
+      const consumer = Object.values(CONSUMERS)
+        .find(consumer => consumer.src === basename);
+
+      file.path = file.path.replace(consumer.src, consumer.dist);
+    }))
+    .pipe(debug({title: 'renamed into:'}))
     .pipe(gulp.dest('app/scripts'))
     .pipe(gulp.dest('dist/scripts'));
 });
@@ -212,7 +236,7 @@ gulp.task('compilejs', () => {
     // sourceMaps: 'both'
   };
 
-  const compiledSources = Object.values(CONSUMERS).map(consumer => `dist/scripts/${consumer}`);
+  const compiledSources = Object.values(CONSUMERS).map(consumer => `dist/scripts/${consumer.dist}`);
   return gulp.src(compiledSources)
     .pipe(tap(file => {
       const minified = babel.transform(file.contents.toString(), opts).code;
@@ -228,7 +252,6 @@ gulp.task('clean', () => {
     paths.forEach(path => gutil.log('deleted:', gutil.colors.blue(path)))
   );
 });
-
 
 gulp.task('watch', ['browserify', 'html'], () => {
   livereload.listen();

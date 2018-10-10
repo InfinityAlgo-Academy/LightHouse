@@ -61,7 +61,7 @@ function listenForStatus(listenCallback) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  // export for lighthouse-ext-background to require (via browserify).
+  // export for extension-entry to require (via browserify).
   module.exports = {
     getDefaultConfigForCategories,
     runLighthouseInWorker,

@@ -6,12 +6,12 @@
 'use strict';
 
 const assert = require('assert');
-const lhBackground = require('../../../app/src/lighthouse-lr-background.js');
+const lhBackground = require('../../../app/src/lightrider-entry.js');
 const LHError = require('../../../../lighthouse-core/lib/lh-error.js');
 
 /* eslint-env mocha */
 
-describe('lighthouse-lr-background', () => {
+describe('lightrider-entry', () => {
   describe('#runLighthouseInLR', () => {
     it('returns a runtimeError LHR when lighthouse throws a runtimeError', async () => {
       const connectionError = new LHError(LHError.errors.FAILED_DOCUMENT_REQUEST);
