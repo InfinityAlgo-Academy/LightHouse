@@ -134,7 +134,7 @@ class Util {
   static showAsPassed(audit) {
     switch (audit.scoreDisplayMode) {
       case 'manual':
-      case 'not-applicable':
+      case 'not_applicable':
         return true;
       case 'error':
       case 'informative':
@@ -154,7 +154,7 @@ class Util {
    */
   static calculateRating(score, scoreDisplayMode) {
     // Handle edge cases first, manual and not applicable receive 'pass', errored audits receive 'error'
-    if (scoreDisplayMode === 'manual' || scoreDisplayMode === 'not-applicable') {
+    if (scoreDisplayMode === 'manual' || scoreDisplayMode === 'not_applicable') {
       return RATINGS.PASS.label;
     } else if (scoreDisplayMode === 'error') {
       return RATINGS.ERROR.label;

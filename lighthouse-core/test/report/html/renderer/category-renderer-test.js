@@ -154,7 +154,7 @@ describe('CategoryRenderer', () => {
         '.lh-audit-group--not-applicable .lh-audit-group__summary'));
 
     const notApplicableCount = a11yCategory.auditRefs.reduce((sum, audit) =>
-        sum += audit.result.scoreDisplayMode === 'not-applicable' ? 1 : 0, 0);
+        sum += audit.result.scoreDisplayMode === 'not_applicable' ? 1 : 0, 0);
     assert.equal(
       categoryDOM.querySelectorAll('.lh-audit-group--not-applicable .lh-audit').length,
       notApplicableCount,
@@ -195,7 +195,7 @@ describe('CategoryRenderer', () => {
     it.skip('renders the failed audits grouped by group', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const failedAudits = category.auditRefs.filter(audit => {
-        return audit.result.score !== 1 && !audit.result.scoreDisplayMode === 'not-applicable';
+        return audit.result.score !== 1 && !audit.result.scoreDisplayMode === 'not_applicable';
       });
       const failedAuditTags = new Set(failedAudits.map(audit => audit.group));
 
@@ -206,7 +206,7 @@ describe('CategoryRenderer', () => {
     it('renders the passed audits grouped by group', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const passedAudits = category.auditRefs.filter(audit =>
-          audit.result.scoreDisplayMode !== 'not-applicable' && audit.result.score === 1);
+          audit.result.scoreDisplayMode !== 'not_applicable' && audit.result.score === 1);
       const passedAuditTags = new Set(passedAudits.map(audit => audit.group));
 
       const passedAuditGroups = categoryDOM.querySelectorAll('.lh-passed-audits .lh-audit-group');

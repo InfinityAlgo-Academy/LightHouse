@@ -336,7 +336,7 @@ class CategoryRenderer {
         group = auditsUngrouped;
       }
 
-      if (auditRef.result.scoreDisplayMode === 'not-applicable') {
+      if (auditRef.result.scoreDisplayMode === 'not_applicable') {
         group.notApplicable.push(auditRef);
       } else if (Util.showAsPassed(auditRef.result)) {
         group.passed.push(auditRef);
