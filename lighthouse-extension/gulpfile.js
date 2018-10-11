@@ -274,9 +274,18 @@ gulp.task('watch', ['browserify', 'html'], () => {
 
 gulp.task('package', function() {
   const manifest = require(`./${distDir}/manifest.json`);
-  return gulp.src(`${distDir}/**`)
-  .pipe(zip(`lighthouse-${manifest.version}.zip`))
-  .pipe(gulp.dest('package'));
+
+  return del([
+    `${distDir}/scripts/${CONSUMERS.DEVTOOLS.dist}`,
+    `${distDir}/scripts/${CONSUMERS.LIGHTRIDER.dist}`,
+  ])
+    .then(paths =>
+      paths.forEach(path => gutil.log('deleted:', gutil.colors.blue(path))))
+    .then(() =>
+      gulp.src(`${distDir}/**`)
+          .pipe(zip(`lighthouse-${manifest.version}.zip`))
+          .pipe(gulp.dest('package'))
+    );
 });
 
 gulp.task('build', cb => {
