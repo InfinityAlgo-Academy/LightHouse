@@ -6,9 +6,7 @@
 'use strict';
 
 const FirstCPUIdle = require('../../../../gather/computed/metrics/first-cpu-idle');
-const firstCPUIdle = new FirstCPUIdle();
 const TracingProcessor = require('../../../../lib/traces/tracing-processor');
-const Runner = require('../../../../runner.js');
 
 const tooShortTrace = require('../../../fixtures/traces/progressive-app.json');
 const acceptableTrace = require('../../../fixtures/traces/progressive-app-m60.json');
@@ -19,20 +17,20 @@ const assert = require('assert');
 
 /* eslint-env jest */
 describe('FirstInteractive computed artifact:', () => {
-  let computedArtifacts;
   let trace;
   let settings;
   let devtoolsLog;
+  let context;
 
   beforeEach(() => {
-    computedArtifacts = Runner.instantiateComputedArtifacts();
     settings = {throttlingMethod: 'provided'};
     devtoolsLog = [];
+    context = {settings, computedCache: new Map()};
   });
 
   it('throws on short traces', () => {
     trace = {traceEvents: tooShortTrace};
-    return computedArtifacts.requestFirstCPUIdle({trace, devtoolsLog, settings}).then(() => {
+    return FirstCPUIdle.request({trace, devtoolsLog, settings}, context).then(() => {
       assert.ok(false, 'should have thrown for short trace');
     }).catch(err => {
       assert.equal(err.message, 'FMP_TOO_LATE_FOR_FCPUI');
@@ -41,7 +39,7 @@ describe('FirstInteractive computed artifact:', () => {
 
   it('should compute firstInteractive', () => {
     trace = acceptableTrace;
-    return computedArtifacts.requestFirstCPUIdle({trace, devtoolsLog, settings}).then(output => {
+    return FirstCPUIdle.request({trace, devtoolsLog, settings}, context).then(output => {
       assert.equal(Math.round(output.timing), 1582);
       assert.ok(output.timestamp, 'output is missing timestamp');
     });
@@ -49,7 +47,7 @@ describe('FirstInteractive computed artifact:', () => {
 
   it('should compute firstInteractive on pages with redirect', () => {
     trace = redirectTrace;
-    return computedArtifacts.requestFirstCPUIdle({trace, devtoolsLog, settings}).then(output => {
+    return FirstCPUIdle.request({trace, devtoolsLog, settings}, context).then(output => {
       assert.equal(Math.round(output.timing), 2712);
       assert.ok(output.timestamp, 'output is missing timestamp');
     });
@@ -60,8 +58,7 @@ describe('FirstInteractive computed artifact:', () => {
     trace = acceptableTrace;
     devtoolsLog = acceptableDevtoolsLog;
 
-    const artifacts = Runner.instantiateComputedArtifacts();
-    const result = await artifacts.requestFirstCPUIdle({trace, devtoolsLog, settings});
+    const result = await FirstCPUIdle.request({trace, devtoolsLog, settings}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -83,7 +80,7 @@ describe('FirstInteractive computed artifact:', () => {
       originalMainThreadEventsFunc = TracingProcessor.getMainThreadTopLevelEvents;
       TracingProcessor.getMainThreadTopLevelEvents = () => mainThreadEvents
           .map(evt => Object.assign(evt, {duration: evt.end - evt.start}));
-      computeObservedMetric = traceOfTab => firstCPUIdle.computeObservedMetric({traceOfTab});
+      computeObservedMetric = traceOfTab => FirstCPUIdle.computeObservedMetric({traceOfTab});
     });
 
     afterAll(() => {
@@ -91,18 +88,16 @@ describe('FirstInteractive computed artifact:', () => {
     });
 
     it('should throw when trace is not long enough after FMP', () => {
-      assert.throws(() => {
-        computeObservedMetric({
-          timings: {
-            firstMeaningfulPaint: 3400,
-            domContentLoaded: 2000,
-            traceEnd: 4500,
-          },
-          timestamps: {
-            navigationStart: 0,
-          },
-        });
-      }, /FMP_TOO_LATE/);
+      expect(computeObservedMetric({
+        timings: {
+          firstMeaningfulPaint: 3400,
+          domContentLoaded: 2000,
+          traceEnd: 4500,
+        },
+        timestamps: {
+          navigationStart: 0,
+        },
+      })).rejects.toThrow(/FMP_TOO_LATE/);
     });
 
     it('should return FMP when no trace events are found', async () => {

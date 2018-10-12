@@ -7,18 +7,18 @@
 
 /* eslint-env jest */
 
-const Runner = require('../../../runner');
 const assert = require('assert');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const LoadSimulator = require('../../../gather/computed/load-simulator.js');
 
 describe('Simulator artifact', () => {
   it('returns a simulator for "provided" throttling', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
-
-    const simulator = await artifacts.requestLoadSimulator({
+    const settings = {throttlingMethod: 'provided'};
+    const context = {settings, computedCache: new Map()};
+    const simulator = await LoadSimulator.request({
       devtoolsLog,
-      settings: {throttlingMethod: 'provided'},
-    });
+      settings,
+    }, context);
 
     assert.equal(Math.round(simulator._rtt), 3);
     assert.equal(Math.round(simulator._throughput / 1024), 1590);
@@ -27,13 +27,13 @@ describe('Simulator artifact', () => {
   });
 
   it('returns a simulator for "devtools" throttling', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
-
     const throttling = {requestLatencyMs: 375, downloadThroughputKbps: 900};
-    const simulator = await artifacts.requestLoadSimulator({
+    const settings = {throttlingMethod: 'devtools', throttling};
+    const context = {settings, computedCache: new Map()};
+    const simulator = await LoadSimulator.request({
       devtoolsLog,
-      settings: {throttlingMethod: 'devtools', throttling},
-    });
+      settings,
+    }, context);
 
     assert.equal(simulator._rtt, 100);
     assert.equal(simulator._throughput / 1024, 1000);
@@ -42,13 +42,13 @@ describe('Simulator artifact', () => {
   });
 
   it('returns a simulator for "simulate" throttling', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
-
     const throttling = {rttMs: 120, throughputKbps: 1000, cpuSlowdownMultiplier: 3};
-    const simulator = await artifacts.requestLoadSimulator({
+    const settings = {throttlingMethod: 'simulate', throttling};
+    const context = {settings, computedCache: new Map()};
+    const simulator = await LoadSimulator.request({
       devtoolsLog,
-      settings: {throttlingMethod: 'simulate', throttling},
-    });
+      settings,
+    }, context);
 
     assert.equal(simulator._rtt, 120);
     assert.equal(simulator._throughput / 1024, 1000);

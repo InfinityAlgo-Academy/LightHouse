@@ -8,7 +8,6 @@
 const UnusedImages =
     require('../../../audits/byte-efficiency/offscreen-images.js');
 const assert = require('assert');
-const Runner = require('../../../runner.js');
 const createTestTrace = require('../../create-test-trace.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
@@ -50,19 +49,19 @@ describe('OffscreenImages audit', () => {
   const DEFAULT_DIMENSIONS = {innerWidth: 1920, innerHeight: 1080};
 
   beforeEach(() => {
-    context = {settings: {throttlingMethod: 'devtools'}};
+    context = {settings: {throttlingMethod: 'devtools'}, computedCache: new Map()};
   });
 
   it('handles images without network record', () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageUsage: [
         generateImage(generateSize(100, 100), [0, 0]),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
-    });
+    };
 
     return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
       assert.equal(auditResult.items.length, 0);
@@ -73,7 +72,7 @@ describe('OffscreenImages audit', () => {
     const urlB = 'https://google.com/logo2.png';
     const urlC = 'data:image/jpeg;base64,foobar';
     const topLevelTasks = [{ts: 1900, duration: 100}];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageUsage: [
         generateImage(generateSize(200, 200), [0, 0], generateRecord(100)),
@@ -82,7 +81,7 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
-    });
+    };
 
     return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
       assert.equal(auditResult.items.length, 0);
@@ -92,7 +91,7 @@ describe('OffscreenImages audit', () => {
   it('finds unused images', () => {
     const url = s => `https://google.com/logo${s}.png`;
     const topLevelTasks = [{ts: 1900, duration: 100}];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageUsage: [
         // offscreen to the right
@@ -108,7 +107,7 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
-    });
+    };
 
     return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
       assert.equal(auditResult.items.length, 4);
@@ -117,14 +116,14 @@ describe('OffscreenImages audit', () => {
 
   it('finds images with 0 area', () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageUsage: [
         generateImage(generateSize(0, 0), [0, 0], generateRecord(100)),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
-    });
+    };
 
     return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
       assert.equal(auditResult.items.length, 1);
@@ -135,7 +134,7 @@ describe('OffscreenImages audit', () => {
   it('de-dupes images', () => {
     const urlB = 'https://google.com/logo2.png';
     const topLevelTasks = [{ts: 1900, duration: 100}];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageUsage: [
         generateImage(generateSize(50, 50), [0, 0], generateRecord(50)),
@@ -145,7 +144,7 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
-    });
+    };
 
     return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
       assert.equal(auditResult.items.length, 1);
@@ -154,7 +153,7 @@ describe('OffscreenImages audit', () => {
 
   it('disregards images loaded after TTI', () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageUsage: [
         // offscreen to the right
@@ -162,7 +161,7 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
-    });
+    };
 
     return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
       assert.equal(auditResult.items.length, 0);
@@ -170,7 +169,7 @@ describe('OffscreenImages audit', () => {
   });
 
   it('disregards images loaded after Trace End when interactive throws error', () => {
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageUsage: [
         // offscreen to the right
@@ -178,7 +177,7 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({traceEnd: 2000})},
       devtoolsLogs: {},
-    });
+    };
 
     return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
       assert.equal(auditResult.items.length, 0);
@@ -186,7 +185,7 @@ describe('OffscreenImages audit', () => {
   });
 
   it('finds images loaded before Trace End when TTI when interactive throws error', () => {
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageUsage: [
         // offscreen to the right
@@ -194,7 +193,7 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({traceEnd: 2000})},
       devtoolsLogs: {},
-    });
+    };
 
     return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
       assert.equal(auditResult.items.length, 1);
@@ -202,7 +201,7 @@ describe('OffscreenImages audit', () => {
   });
 
   it('disregards images loaded after last long task (Lantern)', () => {
-    context = {settings: {throttlingMethod: 'simulate'}};
+    context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const wastedSize = 100 * 1024;
     const recordA = {
       url: 'https://example.com/a',
@@ -225,7 +224,7 @@ describe('OffscreenImages audit', () => {
     const topLevelTasks = [
       {ts: 1975, duration: 50},
     ];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageUsage: [
         generateImage(generateSize(0, 0), [0, 0], recordA, recordA.url),
@@ -233,7 +232,7 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {defaultPass: devtoolsLog},
-    });
+    };
 
     return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
       assert.equal(auditResult.items.length, 1);
@@ -243,7 +242,7 @@ describe('OffscreenImages audit', () => {
   });
 
   it('finds images loaded before last long task (Lantern)', () => {
-    context = {settings: {throttlingMethod: 'simulate'}};
+    context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const wastedSize = 100 * 1024;
     const recordA = {
       url: 'https://example.com/a',
@@ -269,7 +268,7 @@ describe('OffscreenImages audit', () => {
       {ts: 1050, duration: 10},
       {ts: 1975, duration: 50},
     ];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageUsage: [
         generateImage(generateSize(0, 0), [0, 0], recordA, recordA.url),
@@ -277,7 +276,7 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {defaultPass: devtoolsLog},
-    });
+    };
 
     return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
       assert.equal(auditResult.items.length, 2);
@@ -289,8 +288,8 @@ describe('OffscreenImages audit', () => {
   });
 
   it('rethrow error when interactive throws error in Lantern', async () => {
-    context = {settings: {throttlingMethod: 'simulate'}};
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
+    const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       ImageUsage: [
         generateImage(generateSize(0, 0), [0, 0], generateRecord(100, 3), 'a'),
@@ -298,7 +297,7 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({traceEnd: 2000})},
       devtoolsLogs: {},
-    });
+    };
 
     try {
       await UnusedImages.audit_(artifacts, [], context);

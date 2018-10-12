@@ -5,7 +5,9 @@
  */
 'use strict';
 
-const MetricArtifact = require('./metric');
+const makeComputedArtifact = require('../new-computed-artifact.js');
+const ComputedMetric = require('./metric.js');
+const LanternInteractive = require('./lantern-interactive.js');
 
 const NetworkRecorder = require('../../../lib/network-recorder');
 const TracingProcessor = require('../../../lib/traces/tracing-processor');
@@ -19,11 +21,7 @@ const ALLOWED_CONCURRENT_REQUESTS = 2;
  * resources and is mostly idle.
  * @see https://docs.google.com/document/d/1yE4YWsusi5wVXrnwhR61j-QyjK9tzENIzfxrCjA1NAk/edit#heading=h.yozfsuqcgpc4
  */
-class Interactive extends MetricArtifact {
-  get name() {
-    return 'Interactive';
-  }
-
+class Interactive extends ComputedMetric {
   /**
    * Finds all time periods where the number of inflight requests is less than or equal to the
    * number of allowed concurrent requests (2).
@@ -144,9 +142,18 @@ class Interactive extends MetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Artifacts.LanternMetric>}
+   */
+  static computeSimulatedMetric(data, context) {
+    return LanternInteractive.request(data, context);
+  }
+
+  /**
+   * @param {LH.Artifacts.MetricComputationData} data
    * @return {Promise<LH.Artifacts.Metric>}
    */
-  computeObservedMetric(data) {
+  static computeObservedMetric(data) {
     const {traceOfTab, networkRecords} = data;
 
     if (!traceOfTab.timestamps.domContentLoaded) {
@@ -173,7 +180,7 @@ class Interactive extends MetricArtifact {
   }
 }
 
-module.exports = Interactive;
+module.exports = makeComputedArtifact(Interactive);
 
 /**
  * @typedef TimePeriod

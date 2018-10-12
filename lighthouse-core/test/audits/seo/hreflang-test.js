@@ -7,7 +7,6 @@
 
 const HreflangAudit = require('../../../audits/seo/hreflang.js');
 const assert = require('assert');
-const Runner = require('../../../runner.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -29,16 +28,17 @@ describe('SEO: Document has valid hreflang code', () => {
         responseHeaders: [],
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-      const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      const artifacts = {
         devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: devtoolsLog},
         URL: {finalUrl},
         Hreflang: [{
           hreflang: hreflangValue,
           href: 'https://example.com',
         }],
-      });
+      };
 
-      return HreflangAudit.audit(artifacts).then(auditResult => {
+      const context = {computedCache: new Map()};
+      return HreflangAudit.audit(artifacts, context).then(auditResult => {
         assert.equal(auditResult.rawValue, false);
         assert.equal(auditResult.details.items.length, 1);
       });
@@ -54,7 +54,7 @@ describe('SEO: Document has valid hreflang code', () => {
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Hreflang: [
@@ -64,9 +64,10 @@ describe('SEO: Document has valid hreflang code', () => {
         {hreflang: 'x-default'},
         {hreflang: 'FR-BE'},
       ],
-    });
+    };
 
-    return HreflangAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return HreflangAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });
@@ -78,13 +79,14 @@ describe('SEO: Document has valid hreflang code', () => {
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Hreflang: [],
-    });
+    };
 
-    return HreflangAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return HreflangAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });
@@ -116,13 +118,14 @@ describe('SEO: Document has valid hreflang code', () => {
         responseHeaders: headers,
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-      const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      const artifacts = {
         devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: devtoolsLog},
         URL: {finalUrl},
         Hreflang: null,
-      });
+      };
 
-      return HreflangAudit.audit(artifacts).then(auditResult => {
+      const context = {computedCache: new Map()};
+      return HreflangAudit.audit(artifacts, context).then(auditResult => {
         assert.equal(auditResult.rawValue, false);
         assert.equal(auditResult.details.items.length, 1);
       });
@@ -145,13 +148,14 @@ describe('SEO: Document has valid hreflang code', () => {
       ],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Hreflang: null,
-    });
+    };
 
-    return HreflangAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return HreflangAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });
@@ -166,7 +170,7 @@ describe('SEO: Document has valid hreflang code', () => {
       ],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[HreflangAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Hreflang: [{
@@ -174,9 +178,10 @@ describe('SEO: Document has valid hreflang code', () => {
       }, {
         hreflang: 'xx4',
       }],
-    });
+    };
 
-    return HreflangAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return HreflangAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
       assert.equal(auditResult.details.items.length, 4);
     });

@@ -5,12 +5,14 @@
  */
 'use strict';
 
-const ComputedArtifact = require('./computed-artifact');
+const makeComputedArtifact = require('./new-computed-artifact');
 const NetworkNode = require('../../lib/dependency-graph/network-node');
 const CPUNode = require('../../lib/dependency-graph/cpu-node');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer');
 const TracingProcessor = require('../../lib/traces/tracing-processor');
 const NetworkRequest = require('../../lib/network-request');
+const TraceOfTab = require('./trace-of-tab.js');
+const NetworkRecords = require('./network-records.js');
 
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
@@ -20,11 +22,7 @@ const MINIMUM_TASK_DURATION_OF_INTEREST = 10;
 //    into estimation logic when we use the dependency graph for other purposes.
 const IGNORED_MIME_TYPES_REGEX = /^video/;
 
-class PageDependencyGraphArtifact extends ComputedArtifact {
-  get name() {
-    return 'PageDependencyGraph';
-  }
-
+class PageDependencyGraph {
   /**
    * @param {LH.Artifacts.NetworkRequest} record
    * @return {Array<string>}
@@ -123,7 +121,7 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
    */
   static linkNetworkNodes(rootNode, networkNodeOutput) {
     networkNodeOutput.nodes.forEach(node => {
-      const initiators = PageDependencyGraphArtifact.getNetworkInitiators(node.record);
+      const initiators = PageDependencyGraph.getNetworkInitiators(node.record);
       if (initiators.length) {
         initiators.forEach(initiator => {
           const parentCandidates = networkNodeOutput.urlToNodeMap.get(initiator) || [rootNode];
@@ -268,8 +266,8 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
    * @return {Node}
    */
   static createGraph(traceOfTab, networkRecords) {
-    const networkNodeOutput = PageDependencyGraphArtifact.getNetworkNodeOutput(networkRecords);
-    const cpuNodes = PageDependencyGraphArtifact.getCPUNodes(traceOfTab);
+    const networkNodeOutput = PageDependencyGraph.getNetworkNodeOutput(networkRecords);
+    const cpuNodes = PageDependencyGraph.getCPUNodes(traceOfTab);
 
     const rootRequest = networkRecords.reduce((min, r) => (min.startTime < r.startTime ? min : r));
     const rootNode = networkNodeOutput.idToNodeMap.get(rootRequest.requestId);
@@ -281,8 +279,8 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
       throw new Error(`${rootNode ? 'mainDocument' : 'root'}Node not found.`);
     }
 
-    PageDependencyGraphArtifact.linkNetworkNodes(rootNode, networkNodeOutput);
-    PageDependencyGraphArtifact.linkCPUNodes(rootNode, networkNodeOutput, cpuNodes);
+    PageDependencyGraph.linkNetworkNodes(rootNode, networkNodeOutput);
+    PageDependencyGraph.linkCPUNodes(rootNode, networkNodeOutput, cpuNodes);
     mainDocumentNode.setIsMainDocument(true);
 
     if (NetworkNode.hasCycle(rootNode)) {
@@ -326,22 +324,22 @@ class PageDependencyGraphArtifact extends ComputedArtifact {
 
   /**
    * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog}} data
-   * @param {LH.ComputedArtifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<Node>}
    */
-  async compute_(data, artifacts) {
+  static async compute_(data, context) {
     const trace = data.trace;
     const devtoolsLog = data.devtoolsLog;
     const [traceOfTab, networkRecords] = await Promise.all([
-      artifacts.requestTraceOfTab(trace),
-      artifacts.requestNetworkRecords(devtoolsLog),
+      TraceOfTab.request(trace, context),
+      NetworkRecords.request(devtoolsLog, context),
     ]);
 
-    return PageDependencyGraphArtifact.createGraph(traceOfTab, networkRecords);
+    return PageDependencyGraph.createGraph(traceOfTab, networkRecords);
   }
 }
 
-module.exports = PageDependencyGraphArtifact;
+module.exports = makeComputedArtifact(PageDependencyGraph);
 
 /**
  * @typedef {Object} NetworkNodeOutput

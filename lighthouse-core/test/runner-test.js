@@ -491,14 +491,6 @@ describe('Runner', () => {
     });
   });
 
-  it('can create computed artifacts', () => {
-    const computedArtifacts = Runner.instantiateComputedArtifacts();
-    assert.ok(Object.keys(computedArtifacts).length, 'there are a few computed artifacts');
-    Object.keys(computedArtifacts).forEach(artifactRequest => {
-      assert.equal(typeof computedArtifacts[artifactRequest], 'function');
-    });
-  });
-
   it('results include artifacts when given artifacts and audits', () => {
     const config = new Config({
       settings: {

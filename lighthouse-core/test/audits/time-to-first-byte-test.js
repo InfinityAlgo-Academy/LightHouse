@@ -7,7 +7,6 @@
 
 const TimeToFirstByte = require('../../audits/time-to-first-byte.js');
 const assert = require('assert');
-const Runner = require('../../runner.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -20,12 +19,12 @@ describe('Performance: time-to-first-byte audit', () => {
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
 
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[TimeToFirstByte.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl: 'https://example.com/'},
-    });
+    };
 
-    return TimeToFirstByte.audit(artifacts).then(result => {
+    return TimeToFirstByte.audit(artifacts, {computedCache: new Map()}).then(result => {
       assert.strictEqual(result.rawValue, 630);
       assert.strictEqual(result.score, 0);
     });
@@ -39,12 +38,12 @@ describe('Performance: time-to-first-byte audit', () => {
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
 
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[TimeToFirstByte.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl: 'https://example.com/'},
-    });
+    };
 
-    return TimeToFirstByte.audit(artifacts).then(result => {
+    return TimeToFirstByte.audit(artifacts, {computedCache: new Map()}).then(result => {
       assert.strictEqual(result.rawValue, 200);
       assert.strictEqual(result.score, 1);
     });

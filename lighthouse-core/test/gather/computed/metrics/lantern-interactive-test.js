@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Runner = require('../../../../runner');
+const LanternInteractive = require('../../../../gather/computed/metrics/lantern-interactive.js'); // eslint-disable-line max-len
 const assert = require('assert');
 
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
@@ -14,9 +14,10 @@ const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtoo
 /* eslint-env jest */
 describe('Metrics: Lantern TTI', () => {
   it('should compute predicted value', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
-    const result = await artifacts.requestLanternInteractive({trace, devtoolsLog,
-      settings: {}});
+    const settings = {};
+    const context = {settings, computedCache: new Map()};
+    const result = await LanternInteractive.request({trace, devtoolsLog,
+      settings}, context);
 
     expect({
       timing: Math.round(result.timing),

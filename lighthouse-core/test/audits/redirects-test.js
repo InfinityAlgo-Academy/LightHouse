@@ -5,7 +5,6 @@
  */
 'use strict';
 
-const Runner = require('../../runner.js');
 const RedirectsAudit = require('../../audits/redirects.js');
 const assert = require('assert');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
@@ -85,16 +84,17 @@ describe('Performance: Redirects audit', () => {
   const mockArtifacts = (networkRecords, finalUrl) => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
-    return Object.assign(Runner.instantiateComputedArtifacts(), {
+    return {
       traces: {defaultPass: createTestTrace({traceEnd: 5000})},
       devtoolsLogs: {defaultPass: devtoolsLog},
       URL: {finalUrl},
-    });
+    };
   };
 
   it('fails when 3 redirects detected', () => {
     const artifacts = mockArtifacts(FAILING_THREE_REDIRECTS, 'https://m.example.com/final');
-    return RedirectsAudit.audit(artifacts, {settings: {}}).then(output => {
+    const context = {settings: {}, computedCache: new Map()};
+    return RedirectsAudit.audit(artifacts, context).then(output => {
       assert.equal(Math.round(output.score * 100) / 100, 0.37);
       assert.equal(output.details.items.length, 4);
       assert.equal(output.rawValue, 1890);
@@ -103,7 +103,8 @@ describe('Performance: Redirects audit', () => {
 
   it('fails when 2 redirects detected', () => {
     const artifacts = mockArtifacts(FAILING_TWO_REDIRECTS, 'https://www.lisairish.com/');
-    return RedirectsAudit.audit(artifacts, {settings: {}}).then(output => {
+    const context = {settings: {}, computedCache: new Map()};
+    return RedirectsAudit.audit(artifacts, context).then(output => {
       assert.equal(Math.round(output.score * 100) / 100, 0.46);
       assert.equal(output.details.items.length, 3);
       assert.equal(Math.round(output.rawValue), 1110);
@@ -112,7 +113,8 @@ describe('Performance: Redirects audit', () => {
 
   it('passes when one redirect detected', () => {
     const artifacts = mockArtifacts(SUCCESS_ONE_REDIRECT, 'https://www.lisairish.com/');
-    return RedirectsAudit.audit(artifacts, {settings: {}}).then(output => {
+    const context = {settings: {}, computedCache: new Map()};
+    return RedirectsAudit.audit(artifacts, context).then(output => {
       // If === 1 redirect, perfect score is expected, regardless of latency
       assert.equal(output.score, 1);
       // We will still generate a table and show wasted time
@@ -123,7 +125,8 @@ describe('Performance: Redirects audit', () => {
 
   it('passes when no redirect detected', () => {
     const artifacts = mockArtifacts(SUCCESS_NOREDIRECT, 'https://www.google.com/');
-    return RedirectsAudit.audit(artifacts, {settings: {}}).then(output => {
+    const context = {settings: {}, computedCache: new Map()};
+    return RedirectsAudit.audit(artifacts, context).then(output => {
       assert.equal(output.score, 1);
       assert.equal(output.details.items.length, 0);
       assert.equal(output.rawValue, 0);

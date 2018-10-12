@@ -157,15 +157,15 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
-  static audit_(artifacts) {
+  static audit_(artifacts, networkRecords) {
     const styles = artifacts.CSSUsage.stylesheets;
     const usage = artifacts.CSSUsage.rules;
     const pageUrl = artifacts.URL.finalUrl;
 
-    const devtoolsLogs = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
-    return artifacts.requestNetworkRecords(devtoolsLogs).then(networkRecords => {
+    return Promise.resolve(networkRecords).then(networkRecords => {
       const indexedSheets = UnusedCSSRules.indexStylesheetsById(styles, networkRecords);
       UnusedCSSRules.indexUsedRules(usage, indexedSheets);
 

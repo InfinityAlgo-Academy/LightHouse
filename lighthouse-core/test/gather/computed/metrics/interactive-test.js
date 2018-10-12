@@ -7,7 +7,6 @@
 
 const Interactive = require('../../../../gather/computed/metrics/interactive'); // eslint-disable-line
 
-const Runner = require('../../../../runner');
 const assert = require('assert');
 
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
@@ -30,9 +29,9 @@ function generateNetworkRecords(records, navStart) {
 /* eslint-env jest */
 describe('Metrics: TTI', () => {
   it('should compute a simulated value', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'simulate'};
-    const result = await artifacts.requestInteractive({trace, devtoolsLog, settings});
+    const context = {settings, computedCache: new Map()};
+    const result = await Interactive.request({trace, devtoolsLog, settings}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -46,9 +45,9 @@ describe('Metrics: TTI', () => {
   });
 
   it('should compute an observed value', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'provided'};
-    const result = await artifacts.requestInteractive({trace, devtoolsLog, settings});
+    const context = {settings, computedCache: new Map()};
+    const result = await Interactive.request({trace, devtoolsLog, settings}, context);
 
     assert.equal(Math.round(result.timing), 1582);
     assert.equal(result.timestamp, 225415754204);

@@ -5,8 +5,7 @@
  */
 'use strict';
 
-const Runner = require('../../../../runner');
-
+const LanternEstimatedInputLatency = require('../../../../gather/computed/metrics/lantern-estimated-input-latency.js'); // eslint-disable-line max-len
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
@@ -14,10 +13,10 @@ const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtoo
 
 describe('Metrics: Lantern EIL', () => {
   it('should compute a simulated value', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'simulate'};
     const data = {trace, devtoolsLog, settings};
-    const result = await artifacts.requestLanternEstimatedInputLatency(data);
+    const context = {settings, computedCache: new Map()};
+    const result = await LanternEstimatedInputLatency.request(data, context);
 
     expect({
       timing: Math.round(result.timing),

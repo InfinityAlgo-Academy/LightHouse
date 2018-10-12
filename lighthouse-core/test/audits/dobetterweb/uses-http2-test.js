@@ -5,7 +5,6 @@
  */
 'use strict';
 
-const Runner = require('../../../runner.js');
 const UsesHTTP2Audit = require('../../../audits/dobetterweb/uses-http2.js');
 const assert = require('assert');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
@@ -20,15 +19,15 @@ describe('Resources are fetched over http/2', () => {
     // networkRecords-mix.json is an old network request format, so don't verify round-trip.
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords, {skipVerification: true});
 
-    return Object.assign(Runner.instantiateComputedArtifacts(), {
+    return {
       URL: {finalUrl},
       devtoolsLogs: {[UsesHTTP2Audit.DEFAULT_PASS]: devtoolsLog},
-    });
+    };
   }
 
   it('fails when some resources were requested via http/1.x', () => {
     return UsesHTTP2Audit.audit(
-      getArtifacts(networkRecords, URL)
+      getArtifacts(networkRecords, URL), {computedCache: new Map()}
     ).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
       assert.ok(auditResult.displayValue.match('3 requests not'));
@@ -43,7 +42,7 @@ describe('Resources are fetched over http/2', () => {
   it('displayValue is correct when only one resource fails', () => {
     const entryWithHTTP1 = networkRecords.slice(1, 2);
     return UsesHTTP2Audit.audit(
-      getArtifacts(entryWithHTTP1, URL)
+      getArtifacts(entryWithHTTP1, URL), {computedCache: new Map()}
     ).then(auditResult => {
       assert.ok(auditResult.displayValue.match('1 request not'));
     });
@@ -56,7 +55,7 @@ describe('Resources are fetched over http/2', () => {
     });
 
     return UsesHTTP2Audit.audit(
-      getArtifacts(h2Records, URL)
+      getArtifacts(h2Records, URL), {computedCache: new Map()}
     ).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
       assert.ok(auditResult.displayValue === '');

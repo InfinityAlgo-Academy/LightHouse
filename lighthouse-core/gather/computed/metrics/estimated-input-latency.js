@@ -5,9 +5,11 @@
  */
 'use strict';
 
-const MetricArtifact = require('./metric');
+const makeComputedArtifact = require('../new-computed-artifact.js');
+const ComputedMetric = require('./metric');
 const LHError = require('../../../lib/lh-error');
 const TracingProcessor = require('../../../lib/traces/tracing-processor');
+const LanternEstimatedInputLatency = require('./lantern-estimated-input-latency.js');
 
 const ROLLING_WINDOW_SIZE = 5000;
 
@@ -16,11 +18,7 @@ const ROLLING_WINDOW_SIZE = 5000;
  *    FMP and the end of the trace.
  * @see https://docs.google.com/document/d/1b9slyaB9yho91YTOkAQfpCdULFkZM9LqsipcX3t7He8/preview
  */
-class EstimatedInputLatency extends MetricArtifact {
-  get name() {
-    return 'EstimatedInputLatency';
-  }
-
+class EstimatedInputLatency extends ComputedMetric {
   /**
    * @param {Array<{start: number, end: number, duration: number}>} events
    * @return {number}
@@ -45,9 +43,18 @@ class EstimatedInputLatency extends MetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Artifacts.LanternMetric>}
+   */
+  static computeSimulatedMetric(data, context) {
+    return LanternEstimatedInputLatency.request(data, context);
+  }
+
+  /**
+   * @param {LH.Artifacts.MetricComputationData} data
    * @return {Promise<LH.Artifacts.Metric>}
    */
-  computeObservedMetric(data) {
+  static computeObservedMetric(data) {
     const {firstMeaningfulPaint} = data.traceOfTab.timings;
     if (!firstMeaningfulPaint) {
       throw new LHError(LHError.errors.NO_FMP);
@@ -64,4 +71,4 @@ class EstimatedInputLatency extends MetricArtifact {
   }
 }
 
-module.exports = EstimatedInputLatency;
+module.exports = makeComputedArtifact(EstimatedInputLatency);

@@ -7,7 +7,6 @@
 
 const IsCrawlableAudit = require('../../../audits/seo/is-crawlable.js');
 const assert = require('assert');
-const Runner = require('../../../runner.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -31,14 +30,15 @@ describe('SEO: Is page crawlable audit', () => {
         responseHeaders: [],
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-      const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
         URL: {finalUrl},
         MetaRobots: robotsValue,
         RobotsTxt: {},
-      });
+      };
 
-      return IsCrawlableAudit.audit(artifacts).then(auditResult => {
+      const context = {computedCache: new Map()};
+      return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
         assert.equal(auditResult.rawValue, false);
         assert.equal(auditResult.details.items.length, 1);
       });
@@ -54,15 +54,16 @@ describe('SEO: Is page crawlable audit', () => {
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       requestMainResource: () => Promise.resolve(mainResource),
       MetaRobots: 'all, noarchive',
       RobotsTxt: {},
-    });
+    };
 
-    return IsCrawlableAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });
@@ -74,14 +75,15 @@ describe('SEO: Is page crawlable audit', () => {
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       MetaRobots: null,
       RobotsTxt: {},
-    });
+    };
 
-    return IsCrawlableAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });
@@ -116,14 +118,15 @@ describe('SEO: Is page crawlable audit', () => {
         responseHeaders: headers,
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-      const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
         URL: {finalUrl},
         MetaRobots: null,
         RobotsTxt: {},
-      });
+      };
 
-      return IsCrawlableAudit.audit(artifacts).then(auditResult => {
+      const context = {computedCache: new Map()};
+      return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
         assert.equal(auditResult.rawValue, false);
         assert.equal(auditResult.details.items.length, 1);
       });
@@ -142,14 +145,15 @@ describe('SEO: Is page crawlable audit', () => {
       ],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       MetaRobots: null,
       RobotsTxt: {},
-    });
+    };
 
-    return IsCrawlableAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });
@@ -161,14 +165,15 @@ describe('SEO: Is page crawlable audit', () => {
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       MetaRobots: null,
       RobotsTxt: {},
-    });
+    };
 
-    return IsCrawlableAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });
@@ -183,14 +188,15 @@ describe('SEO: Is page crawlable audit', () => {
       ],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       MetaRobots: null,
       RobotsTxt: {},
-    });
+    };
 
-    return IsCrawlableAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });
@@ -230,14 +236,15 @@ describe('SEO: Is page crawlable audit', () => {
         responseHeaders: [],
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-      const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
         URL: {finalUrl},
         MetaRobots: null,
         RobotsTxt: robotsTxt,
-      });
+      };
 
-      return IsCrawlableAudit.audit(artifacts).then(auditResult => {
+      const context = {computedCache: new Map()};
+      return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
         assert.equal(auditResult.rawValue, false);
         assert.equal(auditResult.details.items.length, 1);
       });
@@ -268,14 +275,15 @@ describe('SEO: Is page crawlable audit', () => {
         responseHeaders: [],
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-      const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
         URL: {finalUrl},
         MetaRobots: null,
         RobotsTxt: robotsTxt,
-      });
+      };
 
-      return IsCrawlableAudit.audit(artifacts).then(auditResult => {
+      const context = {computedCache: new Map()};
+      return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
         assert.equal(auditResult.rawValue, true);
       });
     });
@@ -297,14 +305,15 @@ describe('SEO: Is page crawlable audit', () => {
       Disallow: /`,
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       MetaRobots: 'noindex',
       RobotsTxt: robotsTxt,
-    });
+    };
 
-    return IsCrawlableAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
       assert.equal(auditResult.details.items.length, 4);
     });

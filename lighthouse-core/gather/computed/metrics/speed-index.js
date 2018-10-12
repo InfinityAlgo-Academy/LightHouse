@@ -5,24 +5,32 @@
  */
 'use strict';
 
-const MetricArtifact = require('./metric');
+const makeComputedArtifact = require('../new-computed-artifact.js');
+const ComputedMetric = require('./metric');
+const LanternSpeedIndex = require('./lantern-speed-index.js');
+const Speedline = require('../speedline.js');
 
-class SpeedIndex extends MetricArtifact {
-  get name() {
-    return 'SpeedIndex';
+class SpeedIndex extends ComputedMetric {
+  /**
+   * @param {LH.Artifacts.MetricComputationData} data
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Artifacts.LanternMetric>}
+   */
+  static computeSimulatedMetric(data, context) {
+    return LanternSpeedIndex.request(data, context);
   }
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
-   * @param {LH.ComputedArtifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.Metric>}
    */
-  async computeObservedMetric(data, artifacts) {
-    const speedline = await artifacts.requestSpeedline(data.trace);
+  static async computeObservedMetric(data, context) {
+    const speedline = await Speedline.request(data.trace, context);
     const timing = Math.round(speedline.speedIndex);
     const timestamp = (timing + speedline.beginning) * 1000;
     return Promise.resolve({timing, timestamp});
   }
 }
 
-module.exports = SpeedIndex;
+module.exports = makeComputedArtifact(SpeedIndex);

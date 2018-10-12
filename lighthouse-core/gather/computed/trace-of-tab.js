@@ -16,7 +16,7 @@
  * 4. Return all those items in one handy bundle.
  */
 
-const ComputedArtifact = require('./computed-artifact');
+const makeComputedArtifact = require('./new-computed-artifact.js');
 const log = require('lighthouse-logger');
 const TracingProcessor = require('../../lib/traces/tracing-processor');
 const LHError = require('../../lib/lh-error');
@@ -24,11 +24,7 @@ const Sentry = require('../../lib/sentry');
 
 const ACCEPTABLE_NAVIGATION_URL_REGEX = /^(chrome|https?):/;
 
-class TraceOfTab extends ComputedArtifact {
-  get name() {
-    return 'TraceOfTab';
-  }
-
+class TraceOfTab {
   /**
    * Returns true if the event is a navigation start event of a document whose URL seems valid.
    *
@@ -75,7 +71,7 @@ class TraceOfTab extends ComputedArtifact {
    * @param {LH.Trace} trace
    * @return {Promise<LH.Artifacts.TraceOfTab>}
   */
-  async compute_(trace) {
+  static async compute_(trace) {
     // Parse the trace for our key events and sort them by timestamp. Note: sort
     // *must* be stable to keep events correctly nested.
     const keyEvents = TraceOfTab.filteredStableSort(trace.traceEvents, e => {
@@ -193,4 +189,4 @@ class TraceOfTab extends ComputedArtifact {
   }
 }
 
-module.exports = TraceOfTab;
+module.exports = makeComputedArtifact(TraceOfTab);

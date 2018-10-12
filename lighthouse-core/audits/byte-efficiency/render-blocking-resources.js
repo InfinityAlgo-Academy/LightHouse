@@ -15,6 +15,9 @@ const BaseNode = require('../../lib/dependency-graph/base-node');
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const UnusedCSS = require('./unused-css-rules');
 const NetworkRequest = require('../../lib/network-request');
+const TraceOfTab = require('../../gather/computed/trace-of-tab.js');
+const LoadSimulator = require('../../gather/computed/load-simulator.js');
+const FirstContentfulPaint = require('../../gather/computed/metrics/first-contentful-paint.js');
 
 /** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
@@ -83,14 +86,14 @@ class RenderBlockingResources extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const simulatorData = {devtoolsLog, settings: context.settings};
-    const traceOfTab = await artifacts.requestTraceOfTab(trace);
-    const simulator = await artifacts.requestLoadSimulator(simulatorData);
+    const traceOfTab = await TraceOfTab.request(trace, context);
+    const simulator = await LoadSimulator.request(simulatorData, context);
     const wastedCssBytes = await RenderBlockingResources.computeWastedCSSBytes(artifacts, context);
 
     const metricSettings = {throttlingMethod: 'simulate'};
     const metricComputationData = {trace, devtoolsLog, simulator, settings: metricSettings};
     // @ts-ignore - TODO(bckenny): allow optional `throttling` settings
-    const fcpSimulation = await artifacts.requestFirstContentfulPaint(metricComputationData);
+    const fcpSimulation = await FirstContentfulPaint.request(metricComputationData, context);
     const fcpTsInMs = traceOfTab.timestamps.firstContentfulPaint / 1000;
 
     const nodesByUrl = getNodesAndTimingByUrl(fcpSimulation.optimisticEstimate.nodeTimings);

@@ -13,6 +13,8 @@ const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const Sentry = require('../../lib/sentry');
 const URL = require('../../lib/url-shim');
 const i18n = require('../../lib/i18n/i18n.js');
+const Interactive = require('../../gather/computed/metrics/interactive.js');
+const TraceOfTab = require('../../gather/computed/trace-of-tab.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to defer loading offscreen images. Offscreen images are images located outside of the visible browser viewport. As they are unseen by the user and slow down page load, they should be loaded later, closer to when the user is going to see them. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -200,7 +202,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     const unfilteredResults = Array.from(resultsMap.values());
     // get the interactive time or fallback to getting the end of trace time
     try {
-      const interactive = await artifacts.requestInteractive({trace, devtoolsLog, settings});
+      const interactive = await Interactive.request({trace, devtoolsLog, settings}, context);
 
       // use interactive to generate items
       const lanternInteractive = /** @type {LH.Artifacts.LanternMetric} */ (interactive);
@@ -216,7 +218,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       }
       // use end of trace as a substitute for finding interactive time
       items = OffscreenImages.filterObservedResults(unfilteredResults,
-        await artifacts.requestTraceOfTab(trace).then(tot => tot.timestamps.traceEnd));
+        await TraceOfTab.request(trace, context).then(tot => tot.timestamps.traceEnd));
     }
 
     /** @type {LH.Result.Audit.OpportunityDetails['headings']} */

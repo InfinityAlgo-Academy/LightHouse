@@ -5,18 +5,25 @@
  */
 'use strict';
 
-const MetricArtifact = require('./metric');
+const makeComputedArtifact = require('../new-computed-artifact.js');
+const ComputedMetric = require('./metric');
+const LanternFirstContentfulPaint = require('./lantern-first-contentful-paint.js');
 
-class FirstContentfulPaint extends MetricArtifact {
-  get name() {
-    return 'FirstContentfulPaint';
+class FirstContentfulPaint extends ComputedMetric {
+  /**
+   * @param {LH.Artifacts.MetricComputationData} data
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Artifacts.LanternMetric>}
+   */
+  static computeSimulatedMetric(data, context) {
+    return LanternFirstContentfulPaint.request(data, context);
   }
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
    * @return {Promise<LH.Artifacts.Metric>}
    */
-  async computeObservedMetric(data) {
+  static async computeObservedMetric(data) {
     const {traceOfTab} = data;
 
     return {
@@ -26,4 +33,4 @@ class FirstContentfulPaint extends MetricArtifact {
   }
 }
 
-module.exports = FirstContentfulPaint;
+module.exports = makeComputedArtifact(FirstContentfulPaint);

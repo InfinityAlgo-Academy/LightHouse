@@ -9,6 +9,9 @@ const Audit = require('../audit');
 const linearInterpolation = require('../../lib/statistics').linearInterpolation;
 const Interactive = require('../../gather/computed/metrics/lantern-interactive');
 const i18n = require('../../lib/i18n/i18n.js');
+const NetworkRecords = require('../../gather/computed/network-records.js');
+const LoadSimulator = require('../../gather/computed/load-simulator.js');
+const PageDependencyGraph = require('../../gather/computed/page-dependency-graph.js');
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, {});
 
@@ -99,13 +102,12 @@ class UnusedBytes extends Audit {
       settings,
     };
 
-    return artifacts
-      .requestNetworkRecords(devtoolsLog)
+    return NetworkRecords.request(devtoolsLog, context)
       .then(networkRecords =>
         Promise.all([
           this.audit_(artifacts, networkRecords, context),
-          artifacts.requestPageDependencyGraph({trace, devtoolsLog}),
-          artifacts.requestLoadSimulator(simulatorOptions),
+          PageDependencyGraph.request({trace, devtoolsLog}, context),
+          LoadSimulator.request(simulatorOptions, context),
         ])
       )
       .then(([result, graph, simulator]) => this.createAuditProduct(result, graph, simulator));

@@ -9,7 +9,7 @@ const ArbitraryEqualityMap = require('../../lib/arbitrary-equality-map');
 
 class ComputedArtifact {
   /**
-   * @param {LH.ComputedArtifacts} allComputedArtifacts
+   * @param {*} allComputedArtifacts
    */
   constructor(allComputedArtifacts) {
     const cache = new ArbitraryEqualityMap();
@@ -19,7 +19,7 @@ class ComputedArtifact {
     // @ts-ignore cache is close enough to a Map for our purposes (but e.g. no [Symbol.toStringTag])
     this._cache = cache;
 
-    /** @type {LH.ComputedArtifacts} */
+    /** @type {*} */
     this._allComputedArtifacts = allComputedArtifacts;
   }
 
@@ -36,7 +36,7 @@ class ComputedArtifact {
    * Override with more specific `artifact` and return type to implement a
    * computed artifact.
    * @param {*} artifact Input to computation.
-   * @param {LH.ComputedArtifacts} allComputedArtifacts Access to all computed artifacts.
+   * @param {*} allComputedArtifacts Access to all computed artifacts.
    * @return {Promise<*>}
    * @throws {Error}
    */

@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Runner = require('../../../../runner');
 const assert = require('assert');
 
+const FirstContentfulPaint = require('../../../../gather/computed/metrics/first-contentful-paint.js'); // eslint-disable-line max-len
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
@@ -15,9 +15,9 @@ const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtoo
 
 describe('Metrics: FCP', () => {
   it('should compute a simulated value', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'simulate'};
-    const result = await artifacts.requestFirstContentfulPaint({trace, devtoolsLog, settings});
+    const context = {settings, computedCache: new Map()};
+    const result = await FirstContentfulPaint.request({trace, devtoolsLog, settings}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -31,9 +31,9 @@ describe('Metrics: FCP', () => {
   });
 
   it('should compute an observed value', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'provided'};
-    const result = await artifacts.requestFirstContentfulPaint({trace, devtoolsLog, settings});
+    const context = {settings, computedCache: new Map()};
+    const result = await FirstContentfulPaint.request({trace, devtoolsLog, settings}, context);
 
     assert.equal(Math.round(result.timing), 499);
     assert.equal(result.timestamp, 225414670885);

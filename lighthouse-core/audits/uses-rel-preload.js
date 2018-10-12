@@ -10,6 +10,9 @@ const Audit = require('./audit');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
 const CriticalRequestChains = require('../gather/computed/critical-request-chains');
 const i18n = require('../lib/i18n/i18n.js');
+const MainResource = require('../gather/computed/main-resource.js');
+const PageDependencyGraph = require('../gather/computed/page-dependency-graph.js');
+const LoadSimulator = require('../gather/computed/load-simulator.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to use <link rel=preload> to initiate important network requests earlier during page load. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -170,9 +173,9 @@ class UsesRelPreloadAudit extends Audit {
     const simulatorOptions = {trace, devtoolsLog, settings: context.settings};
 
     const [mainResource, graph, simulator] = await Promise.all([
-      artifacts.requestMainResource({devtoolsLog, URL}),
-      artifacts.requestPageDependencyGraph({trace, devtoolsLog}),
-      artifacts.requestLoadSimulator(simulatorOptions),
+      MainResource.request({devtoolsLog, URL}, context),
+      PageDependencyGraph.request({trace, devtoolsLog}, context),
+      LoadSimulator.request(simulatorOptions, context),
     ]);
 
     const urls = UsesRelPreloadAudit.getURLsToPreload(mainResource, graph);

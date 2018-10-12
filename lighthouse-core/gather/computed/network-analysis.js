@@ -5,14 +5,11 @@
  */
 'use strict';
 
-const ComputedArtifact = require('./computed-artifact');
+const makeComputedArtifact = require('./new-computed-artifact.js');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer');
+const NetworkRecords = require('./network-records.js');
 
-class NetworkAnalysis extends ComputedArtifact {
-  get name() {
-    return 'NetworkAnalysis';
-  }
-
+class NetworkAnalysis {
   /**
    * @param {Array<LH.Artifacts.NetworkRequest>} records
    * @return {Omit<LH.Artifacts.NetworkAnalysis, 'throughput'|'records'>}
@@ -54,15 +51,15 @@ class NetworkAnalysis extends ComputedArtifact {
 
   /**
    * @param {LH.DevtoolsLog} devtoolsLog
-   * @param {LH.ComputedArtifacts} computedArtifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.NetworkAnalysis>}
    */
-  async compute_(devtoolsLog, computedArtifacts) {
-    const records = await computedArtifacts.requestNetworkRecords(devtoolsLog);
+  static async compute_(devtoolsLog, context) {
+    const records = await NetworkRecords.request(devtoolsLog, context);
     const throughput = NetworkAnalyzer.estimateThroughput(records);
     const rttAndServerResponseTime = NetworkAnalysis.computeRTTAndServerResponseTime(records);
     return {records, throughput, ...rttAndServerResponseTime};
   }
 }
 
-module.exports = NetworkAnalysis;
+module.exports = makeComputedArtifact(NetworkAnalysis);

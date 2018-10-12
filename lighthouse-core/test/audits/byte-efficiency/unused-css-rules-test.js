@@ -7,7 +7,6 @@
 
 const UnusedCSSAudit = require('../../../audits/byte-efficiency/unused-css-rules.js');
 const assert = require('assert');
-const Runner = require('../../../runner.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -128,17 +127,17 @@ describe('Best Practices: unused css rules audit', () => {
     ];
 
     function getArtifacts({CSSUsage}) {
-      return Object.assign(Runner.instantiateComputedArtifacts(), {
+      return {
         devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
         URL: {finalUrl: ''},
         CSSUsage,
-      });
+      };
     }
 
     it('ignores missing stylesheets', () => {
       return UnusedCSSAudit.audit_(getArtifacts({
         CSSUsage: {rules: [{styleSheetId: 'a', used: false}], stylesheets: []},
-      })).then(result => {
+      }), networkRecords).then(result => {
         assert.equal(result.items.length, 0);
       });
     });
@@ -159,7 +158,7 @@ describe('Best Practices: unused css rules audit', () => {
             content: '.my.favorite.selector { rule: content; }',
           },
         ]},
-      })).then(result => {
+      }), networkRecords).then(result => {
         assert.equal(result.items.length, 0);
       });
     });
@@ -183,7 +182,7 @@ describe('Best Practices: unused css rules audit', () => {
             content: `${generate('123', 450)}`, // will be filtered out
           },
         ]},
-      })).then(result => {
+      }), networkRecords).then(result => {
         assert.equal(result.items.length, 2);
         assert.equal(result.items[0].totalBytes, 10 * 1024);
         assert.equal(result.items[1].totalBytes, 6000);
@@ -219,7 +218,7 @@ describe('Best Practices: unused css rules audit', () => {
             content: '       ',
           },
         ]},
-      })).then(result => {
+      }), networkRecords).then(result => {
         assert.equal(result.items.length, 1);
         assert.equal(Math.floor(result.items[0].wastedPercent), 33);
       });

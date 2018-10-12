@@ -5,24 +5,22 @@
  */
 'use strict';
 
-const MetricArtifact = require('./lantern-metric');
+const makeComputedArtifact = require('../new-computed-artifact.js');
+const LanternMetric = require('./lantern-metric.js');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
 const NetworkRequest = require('../../../lib/network-request');
+const LanternFirstMeaningfulPaint = require('./lantern-first-meaningful-paint.js');
 
 /** @typedef {BaseNode.Node} Node */
 
 // Any CPU task of 20 ms or more will end up being a critical long task on mobile
 const CRITICAL_LONG_TASK_THRESHOLD = 20;
 
-class Interactive extends MetricArtifact {
-  get name() {
-    return 'LanternInteractive';
-  }
-
+class LanternInteractive extends LanternMetric {
   /**
    * @return {LH.Gatherer.Simulation.MetricCoefficients}
    */
-  get COEFFICIENTS() {
+  static get COEFFICIENTS() {
     return {
       intercept: 0,
       optimistic: 0.5,
@@ -34,7 +32,7 @@ class Interactive extends MetricArtifact {
    * @param {Node} dependencyGraph
    * @return {Node}
    */
-  getOptimisticGraph(dependencyGraph) {
+  static getOptimisticGraph(dependencyGraph) {
     // Adjust the critical long task threshold for microseconds
     const minimumCpuTaskDuration = CRITICAL_LONG_TASK_THRESHOLD * 1000;
 
@@ -60,7 +58,7 @@ class Interactive extends MetricArtifact {
    * @param {Node} dependencyGraph
    * @return {Node}
    */
-  getPessimisticGraph(dependencyGraph) {
+  static getPessimisticGraph(dependencyGraph) {
     return dependencyGraph;
   }
 
@@ -69,8 +67,8 @@ class Interactive extends MetricArtifact {
    * @param {Object} extras
    * @return {LH.Gatherer.Simulation.Result}
    */
-  getEstimateFromSimulation(simulationResult, extras) {
-    const lastTaskAt = Interactive.getLastLongTaskEndTime(simulationResult.nodeTimings);
+  static getEstimateFromSimulation(simulationResult, extras) {
+    const lastTaskAt = LanternInteractive.getLastLongTaskEndTime(simulationResult.nodeTimings);
     const minimumTime = extras.optimistic
       ? extras.fmpResult.optimisticEstimate.timeInMs
       : extras.fmpResult.pessimisticEstimate.timeInMs;
@@ -82,12 +80,12 @@ class Interactive extends MetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {LH.ComputedArtifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
-  async compute_(data, artifacts) {
-    const fmpResult = await artifacts.requestLanternFirstMeaningfulPaint(data);
-    const metricResult = await this.computeMetricWithGraphs(data, artifacts, {fmpResult});
+  static async compute_(data, context) {
+    const fmpResult = await LanternFirstMeaningfulPaint.request(data, context);
+    const metricResult = await this.computeMetricWithGraphs(data, context, {fmpResult});
     metricResult.timing = Math.max(metricResult.timing, fmpResult.timing);
     return metricResult;
   }
@@ -107,4 +105,4 @@ class Interactive extends MetricArtifact {
   }
 }
 
-module.exports = Interactive;
+module.exports = makeComputedArtifact(LanternInteractive);

@@ -5,68 +5,64 @@
  */
 'use strict';
 
-const ComputedArtifact = require('../computed-artifact');
 const TracingProcessor = require('../../../lib/traces/tracing-processor');
+const TraceOfTab = require('../trace-of-tab.js');
+const NetworkRecords = require('../network-records.js');
 
 /**
  * @fileOverview Encapsulates logic for choosing the correct metric computation method based on the
  * specified throttling settings, supporting simulated and observed metric types.
  *
  * To implement a fully supported metric:
- *     - Override the name getter with MyMetricName
  *     - Override the computeObservedMetric method with the observed-mode implementation.
- *     - Override the computeSimulatedMetric method with the simulated-mode implementation OR
- *       create another computed artifact with the name LanternMyMetricName.
+ *     - Override the computeSimulatedMetric method with the simulated-mode implementation (which
+ *       may call another computed artifact with the name LanternMyMetricName).
  */
-class ComputedMetric extends ComputedArtifact {
-  /** @type {string} */
-  get name() {
+class ComputedMetric {
+  constructor() {}
+
+  /**
+   * @param {LH.Artifacts.MetricComputationData} data
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Artifacts.LanternMetric>}
+   */
+  static computeSimulatedMetric(data, context) { // eslint-disable-line no-unused-vars
     throw new Error('Unimplemented');
   }
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
-   * @param {LH.ComputedArtifacts} artifacts
-   * @return {Promise<LH.Artifacts.LanternMetric>}
-   */
-  computeSimulatedMetric(data, artifacts) {
-    // @ts-ignore TODO(bckenny): allow string constuction access to lantern metric.
-    return artifacts[`requestLantern${this.name}`](data);
-  }
-
-  /**
-   * @param {LH.Artifacts.MetricComputationData} data
-   * @param {LH.ComputedArtifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.Metric>}
    */
-  computeObservedMetric(data, artifacts) { // eslint-disable-line no-unused-vars
+  static computeObservedMetric(data, context) { // eslint-disable-line no-unused-vars
     throw new Error('Unimplemented');
   }
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {LH.ComputedArtifacts} computedArtifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.LanternMetric|LH.Artifacts.Metric>}
    */
-  async compute_(data, computedArtifacts) {
+  static async compute_(data, context) {
     const {trace, devtoolsLog, settings} = data;
     if (!trace || !devtoolsLog || !settings) {
       throw new Error('Did not provide necessary metric computation data');
     }
 
     const augmentedData = Object.assign({
-      networkRecords: await computedArtifacts.requestNetworkRecords(devtoolsLog),
-      traceOfTab: await computedArtifacts.requestTraceOfTab(trace),
+      networkRecords: await NetworkRecords.request(devtoolsLog, context),
+      traceOfTab: await TraceOfTab.request(trace, context),
     }, data);
 
     TracingProcessor.assertHasToplevelEvents(augmentedData.traceOfTab.mainThreadEvents);
 
     switch (settings.throttlingMethod) {
       case 'simulate':
-        return this.computeSimulatedMetric(augmentedData, computedArtifacts);
+        return this.computeSimulatedMetric(augmentedData, context);
       case 'provided':
       case 'devtools':
-        return this.computeObservedMetric(augmentedData, computedArtifacts);
+        return this.computeObservedMetric(augmentedData, context);
       default:
         throw new TypeError(`Unrecognized throttling method: ${settings.throttlingMethod}`);
     }

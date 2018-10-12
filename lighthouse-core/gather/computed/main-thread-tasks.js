@@ -5,8 +5,9 @@
  */
 'use strict';
 
-const ComputedArtifact = require('./computed-artifact');
+const makeComputedArtifact = require('./new-computed-artifact.js');
 const {taskGroups, taskNameToGroup} = require('../../lib/task-groups');
+const TraceOfTab = require('./trace-of-tab.js');
 
 /**
  * @fileoverview
@@ -40,11 +41,7 @@ const {taskGroups, taskNameToGroup} = require('../../lib/task-groups');
  * @prop {TaskGroup} group
  */
 
-class MainThreadTasks extends ComputedArtifact {
-  get name() {
-    return 'MainThreadTasks';
-  }
-
+class MainThreadTasks {
   /**
    * @param {LH.TraceEvent} event
    * @param {TaskNode} [parent]
@@ -229,13 +226,13 @@ class MainThreadTasks extends ComputedArtifact {
 
   /**
    * @param {LH.Trace} trace
-   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<Array<TaskNode>>} networkRecords
    */
-  async compute_(trace, artifacts) {
-    const {mainThreadEvents} = await artifacts.requestTraceOfTab(trace);
+  static async compute_(trace, context) {
+    const {mainThreadEvents} = await TraceOfTab.request(trace, context);
     return MainThreadTasks.getMainThreadTasks(mainThreadEvents);
   }
 }
 
-module.exports = MainThreadTasks;
+module.exports = makeComputedArtifact(MainThreadTasks);

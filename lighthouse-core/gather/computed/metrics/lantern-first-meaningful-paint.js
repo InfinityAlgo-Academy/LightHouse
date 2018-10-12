@@ -5,21 +5,19 @@
  */
 'use strict';
 
-const MetricArtifact = require('./lantern-metric');
+const makeComputedArtifact = require('../new-computed-artifact.js');
+const LanternMetric = require('./lantern-metric.js');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
 const LHError = require('../../../lib/lh-error');
+const LanternFirstContentfulPaint = require('./lantern-first-contentful-paint.js');
 
 /** @typedef {BaseNode.Node} Node */
 
-class FirstMeaningfulPaint extends MetricArtifact {
-  get name() {
-    return 'LanternFirstMeaningfulPaint';
-  }
-
+class LanternFirstMeaningfulPaint extends LanternMetric {
   /**
    * @return {LH.Gatherer.Simulation.MetricCoefficients}
    */
-  get COEFFICIENTS() {
+  static get COEFFICIENTS() {
     return {
       intercept: 0,
       optimistic: 0.5,
@@ -32,13 +30,13 @@ class FirstMeaningfulPaint extends MetricArtifact {
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {Node}
    */
-  getOptimisticGraph(dependencyGraph, traceOfTab) {
+  static getOptimisticGraph(dependencyGraph, traceOfTab) {
     const fmp = traceOfTab.timestamps.firstMeaningfulPaint;
     if (!fmp) {
       throw new LHError(LHError.errors.NO_FMP);
     }
 
-    const blockingScriptUrls = MetricArtifact.getScriptUrls(dependencyGraph, node => {
+    const blockingScriptUrls = LanternMetric.getScriptUrls(dependencyGraph, node => {
       return (
         node.endTime <= fmp && node.hasRenderBlockingPriority() && node.initiatorType !== 'script'
       );
@@ -61,13 +59,13 @@ class FirstMeaningfulPaint extends MetricArtifact {
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {Node}
    */
-  getPessimisticGraph(dependencyGraph, traceOfTab) {
+  static getPessimisticGraph(dependencyGraph, traceOfTab) {
     const fmp = traceOfTab.timestamps.firstMeaningfulPaint;
     if (!fmp) {
       throw new LHError(LHError.errors.NO_FMP);
     }
 
-    const requiredScriptUrls = MetricArtifact.getScriptUrls(dependencyGraph, node => {
+    const requiredScriptUrls = LanternMetric.getScriptUrls(dependencyGraph, node => {
       return node.endTime <= fmp && node.hasRenderBlockingPriority();
     });
 
@@ -85,16 +83,16 @@ class FirstMeaningfulPaint extends MetricArtifact {
   }
 
   /**
-   * @param {LH.Artifacts.MetricComputationData} data
-   * @param {LH.ComputedArtifacts} artifacts
+   * @param {LH.Artifacts.MetricComputationDataInput} data
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
-  async compute_(data, artifacts) {
-    const fcpResult = await artifacts.requestLanternFirstContentfulPaint(data);
-    const metricResult = await this.computeMetricWithGraphs(data, artifacts);
+  static async compute_(data, context) {
+    const fcpResult = await LanternFirstContentfulPaint.request(data, context);
+    const metricResult = await this.computeMetricWithGraphs(data, context);
     metricResult.timing = Math.max(metricResult.timing, fcpResult.timing);
     return metricResult;
   }
 }
 
-module.exports = FirstMeaningfulPaint;
+module.exports = makeComputedArtifact(LanternFirstMeaningfulPaint);

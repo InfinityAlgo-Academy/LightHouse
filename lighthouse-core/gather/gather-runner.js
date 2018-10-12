@@ -58,7 +58,7 @@ const Driver = require('../gather/driver.js'); // eslint-disable-line no-unused-
  *   B. GatherRunner.disposeDriver()
  *   C. collect all artifacts and return them
  *     i. collectArtifacts() from completed passes on each gatherer
- *     ii. add trace data and computed artifact methods
+ *     ii. add trace and devtoolsLog data
  */
 class GatherRunner {
   /**
@@ -354,7 +354,7 @@ class GatherRunner {
     // Take only unique LighthouseRunWarnings.
     baseArtifacts.LighthouseRunWarnings = Array.from(new Set(baseArtifacts.LighthouseRunWarnings));
 
-    // TODO(bckenny): drop cast when ComputedArtifacts not included in Artifacts
+    // TODO(bckenny): correct Partial<LH.GathererArtifacts> at this point to drop cast.
     return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...gathererArtifacts});
   }
 

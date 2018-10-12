@@ -15,7 +15,7 @@ type LanternSimulator = InstanceType<typeof _LanternSimulator>;
 
 declare global {
   module LH {
-    export interface Artifacts extends BaseArtifacts, GathererArtifacts, ComputedArtifacts {}
+    export interface Artifacts extends BaseArtifacts, GathererArtifacts {}
 
     /** Artifacts always created by GatherRunner. */
     export interface BaseArtifacts {
@@ -119,35 +119,6 @@ declare global {
       ViewportDimensions: Artifacts.ViewportDimensions;
       /** WebSQL database information for the page or null if none was found. */
       WebSQL: Crdp.Database.Database | null;
-    }
-
-    export interface ComputedArtifacts {
-      requestCriticalRequestChains(data: {devtoolsLog: DevtoolsLog, URL: Artifacts['URL']}): Promise<Artifacts.CriticalRequestNode>;
-      requestLoadSimulator(data: {devtoolsLog: DevtoolsLog, settings: Config.Settings}): Promise<LanternSimulator>;
-      requestMainResource(data: {devtoolsLog: DevtoolsLog, URL: Artifacts['URL']}): Promise<Artifacts.NetworkRequest>;
-      requestNetworkAnalysis(devtoolsLog: DevtoolsLog): Promise<LH.Artifacts.NetworkAnalysis>;
-      requestNetworkRecords(devtoolsLog: DevtoolsLog): Promise<Artifacts.NetworkRequest[]>;
-      requestPageDependencyGraph(data: {trace: Trace, devtoolsLog: DevtoolsLog}): Promise<Gatherer.Simulation.GraphNode>;
-      requestPushedRequests(devtoolsLogs: DevtoolsLog): Promise<Artifacts.NetworkRequest[]>;
-      requestMainThreadTasks(trace: Trace): Promise<Artifacts.TaskNode[]>;
-      requestTraceOfTab(trace: Trace): Promise<Artifacts.TraceOfTab>;
-      requestSpeedline(trace: Trace): Promise<LH.Artifacts.Speedline>;
-
-      // Metrics.
-      requestInteractive(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
-      requestEstimatedInputLatency(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
-      requestFirstContentfulPaint(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
-      requestFirstCPUIdle(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
-      requestFirstMeaningfulPaint(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
-      requestSpeedIndex(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric|Artifacts.Metric>;
-
-      // Lantern metrics.
-      requestLanternInteractive(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric>;
-      requestLanternEstimatedInputLatency(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric>;
-      requestLanternFirstContentfulPaint(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric>;
-      requestLanternFirstCPUIdle(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric>;
-      requestLanternFirstMeaningfulPaint(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric>;
-      requestLanternSpeedIndex(data: LH.Artifacts.MetricComputationDataInput): Promise<Artifacts.LanternMetric>;
     }
 
     module Artifacts {

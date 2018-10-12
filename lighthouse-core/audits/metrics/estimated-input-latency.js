@@ -7,6 +7,7 @@
 
 const Audit = require('../audit');
 const i18n = require('../../lib/i18n/i18n.js');
+const ComputedEil = require('../../gather/computed/metrics/estimated-input-latency.js');
 
 const UIStrings = {
   /** The name of the metric that marks the estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
@@ -57,7 +58,7 @@ class EstimatedInputLatency extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
-    const metricResult = await artifacts.requestEstimatedInputLatency(metricComputationData);
+    const metricResult = await ComputedEil.request(metricComputationData, context);
 
     return {
       score: Audit.computeLogNormalScore(

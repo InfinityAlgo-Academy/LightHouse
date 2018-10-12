@@ -7,7 +7,6 @@
 
 const HTTPStatusCodeAudit = require('../../../audits/seo/http-status-code.js');
 const assert = require('assert');
-const Runner = require('../../../runner.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -24,12 +23,12 @@ describe('SEO: HTTP code audit', () => {
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
 
-      const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+      const artifacts = {
         devtoolsLogs: {[HTTPStatusCodeAudit.DEFAULT_PASS]: devtoolsLog},
         URL: {finalUrl},
-      });
+      };
 
-      return HTTPStatusCodeAudit.audit(artifacts).then(auditResult => {
+      return HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()}).then(auditResult => {
         assert.equal(auditResult.rawValue, false);
         assert.ok(auditResult.displayValue.includes(statusCode), false);
       });
@@ -46,12 +45,12 @@ describe('SEO: HTTP code audit', () => {
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
 
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[HTTPStatusCodeAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
-    });
+    };
 
-    return HTTPStatusCodeAudit.audit(artifacts).then(auditResult => {
+    return HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()}).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });

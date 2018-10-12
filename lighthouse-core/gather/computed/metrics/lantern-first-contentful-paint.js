@@ -5,20 +5,17 @@
  */
 'use strict';
 
-const MetricArtifact = require('./lantern-metric');
+const makeComputedArtifact = require('../new-computed-artifact.js');
+const LanternMetric = require('./lantern-metric');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
 
 /** @typedef {BaseNode.Node} Node */
 
-class FirstContentfulPaint extends MetricArtifact {
-  get name() {
-    return 'LanternFirstContentfulPaint';
-  }
-
+class LanternFirstContentfulPaint extends LanternMetric {
   /**
    * @return {LH.Gatherer.Simulation.MetricCoefficients}
    */
-  get COEFFICIENTS() {
+  static get COEFFICIENTS() {
     return {
       intercept: 0,
       optimistic: 0.5,
@@ -31,9 +28,9 @@ class FirstContentfulPaint extends MetricArtifact {
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {Node}
    */
-  getOptimisticGraph(dependencyGraph, traceOfTab) {
+  static getOptimisticGraph(dependencyGraph, traceOfTab) {
     const fcp = traceOfTab.timestamps.firstContentfulPaint;
-    const blockingScriptUrls = MetricArtifact.getScriptUrls(dependencyGraph, node => {
+    const blockingScriptUrls = LanternMetric.getScriptUrls(dependencyGraph, node => {
       return (
         node.endTime <= fcp && node.hasRenderBlockingPriority() && node.initiatorType !== 'script'
       );
@@ -56,9 +53,9 @@ class FirstContentfulPaint extends MetricArtifact {
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {Node}
    */
-  getPessimisticGraph(dependencyGraph, traceOfTab) {
+  static getPessimisticGraph(dependencyGraph, traceOfTab) {
     const fcp = traceOfTab.timestamps.firstContentfulPaint;
-    const blockingScriptUrls = MetricArtifact.getScriptUrls(dependencyGraph, node => {
+    const blockingScriptUrls = LanternMetric.getScriptUrls(dependencyGraph, node => {
       return node.endTime <= fcp && node.hasRenderBlockingPriority();
     });
 
@@ -75,4 +72,4 @@ class FirstContentfulPaint extends MetricArtifact {
   }
 }
 
-module.exports = FirstContentfulPaint;
+module.exports = makeComputedArtifact(LanternFirstContentfulPaint);

@@ -5,8 +5,7 @@
  */
 'use strict';
 
-const Runner = require('../../../../runner');
-const EstimatedInputLatency = require('../../../../gather/computed/metrics/estimated-input-latency'); // eslint-disable-line
+const EstimatedInputLatency = require('../../../../gather/computed/metrics/estimated-input-latency'); // eslint-disable-line max-len
 const assert = require('assert');
 
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
@@ -16,9 +15,9 @@ const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtoo
 
 describe('Metrics: EIL', () => {
   it('should compute a simulated value', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'simulate'};
-    const result = await artifacts.requestEstimatedInputLatency({trace, devtoolsLog, settings});
+    const context = {settings, computedCache: new Map()};
+    const result = await EstimatedInputLatency.request({trace, devtoolsLog, settings}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -28,9 +27,9 @@ describe('Metrics: EIL', () => {
   });
 
   it('should compute an observed value', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
     const settings = {throttlingMethod: 'provided'};
-    const result = await artifacts.requestEstimatedInputLatency({trace, devtoolsLog, settings});
+    const context = {settings, computedCache: new Map()};
+    const result = await EstimatedInputLatency.request({trace, devtoolsLog, settings}, context);
 
     assert.equal(Math.round(result.timing * 10) / 10, 17.1);
   });

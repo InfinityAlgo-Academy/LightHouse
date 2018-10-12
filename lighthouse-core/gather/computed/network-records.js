@@ -5,21 +5,17 @@
  */
 'use strict';
 
-const ComputedArtifact = require('./computed-artifact');
+const makeComputedArtifact = require('./new-computed-artifact.js');
 const NetworkRecorder = require('../../lib/network-recorder');
 
-class NetworkRecords extends ComputedArtifact {
-  get name() {
-    return 'NetworkRecords';
-  }
-
+class NetworkRecords {
   /**
    * @param {LH.DevtoolsLog} devtoolsLog
    * @return {Promise<Array<LH.Artifacts.NetworkRequest>>} networkRecords
    */
-  async compute_(devtoolsLog) {
+  static async compute_(devtoolsLog) {
     return NetworkRecorder.recordsFromLogs(devtoolsLog);
   }
 }
 
-module.exports = NetworkRecords;
+module.exports = makeComputedArtifact(NetworkRecords);

@@ -5,24 +5,21 @@
  */
 'use strict';
 
-const ComputedArtifact = require('./computed-artifact');
+const makeComputedArtifact = require('./new-computed-artifact.js');
 const speedline = require('speedline-core');
 const LHError = require('../../lib/lh-error');
+const TraceOfTab = require('./trace-of-tab.js');
 
-class Speedline extends ComputedArtifact {
-  get name() {
-    return 'Speedline';
-  }
-
+class Speedline {
   /**
    * @param {LH.Trace} trace
-   * @param {LH.ComputedArtifacts} computedArtifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.Speedline>}
    */
-  compute_(trace, computedArtifacts) {
+  static async compute_(trace, context) {
     // speedline() may throw without a promise, so we resolve immediately
     // to get in a promise chain.
-    return computedArtifacts.requestTraceOfTab(trace).then(traceOfTab => {
+    return TraceOfTab.request(trace, context).then(traceOfTab => {
       // Use a shallow copy of traceEvents so speedline can sort as it pleases.
       // See https://github.com/GoogleChrome/lighthouse/issues/2333
       const traceEvents = trace.traceEvents.slice();
@@ -54,4 +51,4 @@ class Speedline extends ComputedArtifact {
   }
 }
 
-module.exports = Speedline;
+module.exports = makeComputedArtifact(Speedline);

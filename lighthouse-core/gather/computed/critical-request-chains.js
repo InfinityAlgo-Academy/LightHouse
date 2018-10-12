@@ -5,15 +5,13 @@
  */
 'use strict';
 
-const ComputedArtifact = require('./computed-artifact');
+const makeComputedArtifact = require('./new-computed-artifact.js');
 const NetworkRequest = require('../../lib/network-request');
 const assert = require('assert');
+const NetworkRecords = require('./network-records.js');
+const MainResource = require('./main-resource.js');
 
-class CriticalRequestChains extends ComputedArtifact {
-  get name() {
-    return 'CriticalRequestChains';
-  }
-
+class CriticalRequestChains {
   /**
    * For now, we use network priorities as a proxy for "render-blocking"/critical-ness.
    * It's imperfect, but there is not a higher-fidelity signal available yet.
@@ -145,17 +143,17 @@ class CriticalRequestChains extends ComputedArtifact {
 
   /**
    * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
-   * @param {LH.ComputedArtifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.CriticalRequestNode>}
    */
-  async compute_(data, artifacts) {
+  static async compute_(data, context) {
     const [networkRecords, mainResource] = await Promise.all([
-      artifacts.requestNetworkRecords(data.devtoolsLog),
-      artifacts.requestMainResource(data),
+      NetworkRecords.request(data.devtoolsLog, context),
+      MainResource.request(data, context),
     ]);
 
     return CriticalRequestChains.extractChain(networkRecords, mainResource);
   }
 }
 
-module.exports = CriticalRequestChains;
+module.exports = makeComputedArtifact(CriticalRequestChains);

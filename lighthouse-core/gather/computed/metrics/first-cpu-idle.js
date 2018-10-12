@@ -4,9 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
-const MetricArtifact = require('./metric');
+
+const makeComputedArtifact = require('../new-computed-artifact.js');
+const ComputedMetric = require('./metric');
 const TracingProcessor = require('../../../lib/traces/tracing-processor');
 const LHError = require('../../../lib/lh-error');
+const LanternFirstCPUIdle = require('./lantern-first-cpu-idle.js');
 
 const LONG_TASK_THRESHOLD = 50;
 
@@ -47,11 +50,7 @@ const EXPONENTIATION_COEFFICIENT = -Math.log(3 - 1) / 15;
  *
  * If this timestamp is earlier than DOMContentLoaded, use DOMContentLoaded as firstCPUIdle.
  */
-class FirstCPUIdle extends MetricArtifact {
-  get name() {
-    return 'FirstCPUIdle';
-  }
-
+class FirstCPUIdle extends ComputedMetric {
   /**
    * @param {number} t The time passed since FMP in miliseconds.
    * @return {number}
@@ -168,9 +167,18 @@ class FirstCPUIdle extends MetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Artifacts.LanternMetric>}
+   */
+  static computeSimulatedMetric(data, context) {
+    return LanternFirstCPUIdle.request(data, context);
+  }
+
+  /**
+   * @param {LH.Artifacts.MetricComputationData} data
    * @return {Promise<LH.Artifacts.Metric>}
    */
-  computeObservedMetric(data) {
+  static async computeObservedMetric(data) {
     const {traceOfTab} = data;
     const navStart = traceOfTab.timestamps.navigationStart;
     const FMP = traceOfTab.timings.firstMeaningfulPaint;
@@ -203,4 +211,4 @@ class FirstCPUIdle extends MetricArtifact {
  * @typedef {{start: number, end: number, duration: number}} TaskCluster
  */
 
-module.exports = FirstCPUIdle;
+module.exports = makeComputedArtifact(FirstCPUIdle);

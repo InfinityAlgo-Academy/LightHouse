@@ -5,21 +5,18 @@
  */
 'use strict';
 
-const LanternMetricArtifact = require('./lantern-metric');
+const makeComputedArtifact = require('../new-computed-artifact.js');
+const LanternMetric = require('./lantern-metric');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
-const EstimatedInputLatency = require('./estimated-input-latency');
+const LanternFirstMeaningfulPaint = require('./lantern-first-meaningful-paint.js');
 
 /** @typedef {BaseNode.Node} Node */
 
-class LanternEstimatedInputLatency extends LanternMetricArtifact {
-  get name() {
-    return 'LanternEstimatedInputLatency';
-  }
-
+class LanternEstimatedInputLatency extends LanternMetric {
   /**
    * @return {LH.Gatherer.Simulation.MetricCoefficients}
    */
-  get COEFFICIENTS() {
+  static get COEFFICIENTS() {
     return {
       intercept: 0,
       optimistic: 0.4,
@@ -31,7 +28,7 @@ class LanternEstimatedInputLatency extends LanternMetricArtifact {
    * @param {Node} dependencyGraph
    * @return {Node}
    */
-  getOptimisticGraph(dependencyGraph) {
+  static getOptimisticGraph(dependencyGraph) {
     return dependencyGraph;
   }
 
@@ -39,7 +36,7 @@ class LanternEstimatedInputLatency extends LanternMetricArtifact {
    * @param {Node} dependencyGraph
    * @return {Node}
    */
-  getPessimisticGraph(dependencyGraph) {
+  static getPessimisticGraph(dependencyGraph) {
     return dependencyGraph;
   }
 
@@ -48,7 +45,7 @@ class LanternEstimatedInputLatency extends LanternMetricArtifact {
    * @param {Object} extras
    * @return {LH.Gatherer.Simulation.Result}
    */
-  getEstimateFromSimulation(simulation, extras) {
+  static getEstimateFromSimulation(simulation, extras) {
     // Intentionally use the opposite FMP estimate, a more pessimistic FMP means that more tasks
     // are excluded from the EIL computation, so a higher FMP means lower EIL for same work.
     const fmpTimeInMs = extras.optimistic
@@ -60,6 +57,9 @@ class LanternEstimatedInputLatency extends LanternMetricArtifact {
       fmpTimeInMs
     );
 
+    // Require here to resolve circular dependency.
+    const EstimatedInputLatency = require('./estimated-input-latency');
+
     return {
       timeInMs: EstimatedInputLatency.calculateRollingWindowEIL(events),
       nodeTimings: simulation.nodeTimings,
@@ -68,12 +68,12 @@ class LanternEstimatedInputLatency extends LanternMetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {LH.ComputedArtifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
-  async compute_(data, artifacts) {
-    const fmpResult = await artifacts.requestLanternFirstMeaningfulPaint(data);
-    return this.computeMetricWithGraphs(data, artifacts, {fmpResult});
+  static async compute_(data, context) {
+    const fmpResult = await LanternFirstMeaningfulPaint.request(data, context);
+    return this.computeMetricWithGraphs(data, context, {fmpResult});
   }
 
   /**
@@ -98,4 +98,4 @@ class LanternEstimatedInputLatency extends LanternMetricArtifact {
   }
 }
 
-module.exports = LanternEstimatedInputLatency;
+module.exports = makeComputedArtifact(LanternEstimatedInputLatency);

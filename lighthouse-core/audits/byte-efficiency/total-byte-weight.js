@@ -7,6 +7,7 @@
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const i18n = require('../../lib/i18n/i18n.js');
+const NetworkRecords = require('../../gather/computed/network-records.js');
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on large network resources required during page load. 'Payloads' is roughly equivalent to 'resources'. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -58,7 +59,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
-    const records = await artifacts.requestNetworkRecords(devtoolsLog);
+    const records = await NetworkRecords.request(devtoolsLog, context);
 
     let totalBytes = 0;
     /** @type {Array<{url: string, totalBytes: number}>} */

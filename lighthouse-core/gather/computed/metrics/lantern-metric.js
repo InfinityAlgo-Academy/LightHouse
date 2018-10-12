@@ -5,15 +5,17 @@
  */
 'use strict';
 
-const ComputedArtifact = require('../computed-artifact');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
 const NetworkRequest = require('../../../lib/network-request');
+const TraceOfTab = require('../trace-of-tab.js');
+const PageDependencyGraph = require('../page-dependency-graph.js');
+const LoadSimulator = require('../load-simulator.js');
 
 /** @typedef {BaseNode.Node} Node */
 /** @typedef {import('../../../lib/dependency-graph/network-node')} NetworkNode */
 /** @typedef {import('../../../lib/dependency-graph/simulator/simulator')} Simulator */
 
-class LanternMetricArtifact extends ComputedArtifact {
+class LanternMetricArtifact {
   /**
    * @param {Node} dependencyGraph
    * @param {function(NetworkNode):boolean=} condition
@@ -36,7 +38,7 @@ class LanternMetricArtifact extends ComputedArtifact {
   /**
    * @return {LH.Gatherer.Simulation.MetricCoefficients}
    */
-  get COEFFICIENTS() {
+  static get COEFFICIENTS() {
     throw new Error('COEFFICIENTS unimplemented!');
   }
 
@@ -45,7 +47,7 @@ class LanternMetricArtifact extends ComputedArtifact {
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {Node}
    */
-  getOptimisticGraph(dependencyGraph, traceOfTab) { // eslint-disable-line no-unused-vars
+  static getOptimisticGraph(dependencyGraph, traceOfTab) { // eslint-disable-line no-unused-vars
     throw new Error('Optimistic graph unimplemented!');
   }
 
@@ -54,7 +56,7 @@ class LanternMetricArtifact extends ComputedArtifact {
    * @param {LH.Artifacts.TraceOfTab} traceOfTab
    * @return {Node}
    */
-  getPessimisticGraph(dependencyGraph, traceOfTab) { // eslint-disable-line no-unused-vars
+  static getPessimisticGraph(dependencyGraph, traceOfTab) { // eslint-disable-line no-unused-vars
     throw new Error('Pessmistic graph unimplemented!');
   }
 
@@ -63,24 +65,23 @@ class LanternMetricArtifact extends ComputedArtifact {
    * @param {any=} extras
    * @return {LH.Gatherer.Simulation.Result}
    */
-  getEstimateFromSimulation(simulationResult, extras) { // eslint-disable-line no-unused-vars
+  static getEstimateFromSimulation(simulationResult, extras) { // eslint-disable-line no-unused-vars
     return simulationResult;
   }
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {LH.ComputedArtifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @param {any=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
-  async computeMetricWithGraphs(data, artifacts, extras) {
+  static async computeMetricWithGraphs(data, context, extras) {
     const {trace, devtoolsLog, settings} = data;
     const metricName = this.name.replace('Lantern', '');
-    const graph = await artifacts.requestPageDependencyGraph({trace, devtoolsLog});
-    const traceOfTab = await artifacts.requestTraceOfTab(trace);
-    /** @type {Simulator} */
+    const graph = await PageDependencyGraph.request({trace, devtoolsLog}, context);
+    const traceOfTab = await TraceOfTab.request(trace, context);
     const simulator = data.simulator ||
-        await artifacts.requestLoadSimulator({devtoolsLog, settings});
+        await LoadSimulator.request({devtoolsLog, settings}, context);
 
     const optimisticGraph = this.getOptimisticGraph(graph, traceOfTab);
     const pessimisticGraph = this.getPessimisticGraph(graph, traceOfTab);
@@ -125,11 +126,11 @@ class LanternMetricArtifact extends ComputedArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {LH.ComputedArtifacts} computedArtifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
-  compute_(data, computedArtifacts) {
-    return this.computeMetricWithGraphs(data, computedArtifacts);
+  static async compute_(data, context) {
+    return this.computeMetricWithGraphs(data, context);
   }
 }
 

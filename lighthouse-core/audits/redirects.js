@@ -8,6 +8,10 @@
 const Audit = require('./audit');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
 const i18n = require('../lib/i18n/i18n.js');
+const TraceOfTab = require('../gather/computed/trace-of-tab.js');
+const NetworkRecords = require('../gather/computed/network-records.js');
+const MainResource = require('../gather/computed/main-resource.js');
+const LanternInteractive = require('../gather/computed/metrics/lantern-interactive.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates. */
@@ -42,12 +46,12 @@ class Redirects extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
 
-    const traceOfTab = await artifacts.requestTraceOfTab(trace);
-    const networkRecords = await artifacts.requestNetworkRecords(devtoolsLog);
-    const mainResource = await artifacts.requestMainResource({URL: artifacts.URL, devtoolsLog});
+    const traceOfTab = await TraceOfTab.request(trace, context);
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
 
     const metricComputationData = {trace, devtoolsLog, traceOfTab, networkRecords, settings};
-    const metricResult = await artifacts.requestLanternInteractive(metricComputationData);
+    const metricResult = await LanternInteractive.request(metricComputationData, context);
 
     /** @type {Map<string, LH.Gatherer.Simulation.NodeTiming>} */
     const nodeTimingsByUrl = new Map();

@@ -7,7 +7,6 @@
 
 const PageDependencyGraph = require('../../../gather/computed/page-dependency-graph');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
-const Runner = require('../../../runner.js');
 const NetworkRequest = require('../../../lib/network-request');
 
 const sampleTrace = require('../../fixtures/traces/progressive-app-m60.json');
@@ -31,7 +30,6 @@ const TOPLEVEL_TASK_NAME = 'TaskQueueManager::ProcessTaskFromWorkQueue';
 
 /* eslint-env jest */
 describe('PageDependencyGraph computed artifact:', () => {
-  let computedArtifacts;
   let traceOfTab;
 
   function addTaskEvents(startTs, duration, evts) {
@@ -57,16 +55,16 @@ describe('PageDependencyGraph computed artifact:', () => {
   }
 
   beforeEach(() => {
-    computedArtifacts = Runner.instantiateComputedArtifacts();
     traceOfTab = {mainThreadEvents: []};
   });
 
   describe('#compute_', () => {
     it('should compute the dependency graph', () => {
-      return computedArtifacts.requestPageDependencyGraph({
+      const context = {computedCache: new Map()};
+      return PageDependencyGraph.request({
         trace: sampleTrace,
         devtoolsLog: sampleDevtoolsLog,
-      }).then(output => {
+      }, context).then(output => {
         assert.ok(output instanceof BaseNode, 'did not return a graph');
 
         const dependents = output.getDependents();

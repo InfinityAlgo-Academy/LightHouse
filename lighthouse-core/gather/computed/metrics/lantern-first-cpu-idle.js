@@ -5,19 +5,15 @@
  */
 'use strict';
 
+const makeComputedArtifact = require('../new-computed-artifact.js');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
-const FirstCPUIdle = require('./first-cpu-idle');
 const LanternInteractive = require('./lantern-interactive');
 
 class LanternFirstCPUIdle extends LanternInteractive {
-  get name() {
-    return 'LanternFirstCPUIdle';
-  }
-
   /**
    * @return {LH.Gatherer.Simulation.MetricCoefficients}
    */
-  get COEFFICIENTS() {
+  static get COEFFICIENTS() {
     return {
       intercept: 0,
       optimistic: 1,
@@ -31,7 +27,7 @@ class LanternFirstCPUIdle extends LanternInteractive {
    * @param {Object} extras
    * @return {LH.Gatherer.Simulation.Result}
    */
-  getEstimateFromSimulation(simulation, extras) {
+  static getEstimateFromSimulation(simulation, extras) {
     const fmpTimeInMs = extras.optimistic
       ? extras.fmpResult.optimisticEstimate.timeInMs
       : extras.fmpResult.pessimisticEstimate.timeInMs;
@@ -56,8 +52,19 @@ class LanternFirstCPUIdle extends LanternInteractive {
       longTasks.push({start: timing.startTime, end: timing.endTime});
     }
 
+    // Require here to resolve circular dependency.
+    const FirstCPUIdle = require('./first-cpu-idle');
     return FirstCPUIdle.findQuietWindow(fmpTimeInMs, Infinity, longTasks);
+  }
+
+  /**
+   * @param {LH.Artifacts.MetricComputationDataInput} data
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Artifacts.LanternMetric>}
+   */
+  static async compute_(data, context) {
+    return super.compute_(data, context);
   }
 }
 
-module.exports = LanternFirstCPUIdle;
+module.exports = makeComputedArtifact(LanternFirstCPUIdle);

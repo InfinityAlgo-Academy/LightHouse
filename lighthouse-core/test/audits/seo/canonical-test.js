@@ -7,7 +7,6 @@
 
 const CanonicalAudit = require('../../../audits/seo/canonical.js');
 const assert = require('assert');
-const Runner = require('../../../runner.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -20,14 +19,15 @@ describe('SEO: Document has valid canonical link', () => {
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Canonical: [],
       Hreflang: [],
-    });
+    };
 
-    return CanonicalAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });
@@ -42,14 +42,15 @@ describe('SEO: Document has valid canonical link', () => {
       }],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Canonical: ['https://www.example.com'],
       Hreflang: [],
-    });
+    };
 
-    return CanonicalAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
       assert.ok(auditResult.explanation.includes('Multiple'), auditResult.explanation);
     });
@@ -62,14 +63,15 @@ describe('SEO: Document has valid canonical link', () => {
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Canonical: ['https:// example.com'],
       Hreflang: [],
-    });
+    };
 
-    return CanonicalAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
       assert.ok(auditResult.explanation.includes('Invalid'), auditResult.explanation);
     });
@@ -82,14 +84,15 @@ describe('SEO: Document has valid canonical link', () => {
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Canonical: ['/'],
       Hreflang: [],
-    });
+    };
 
-    return CanonicalAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
       assert.ok(auditResult.explanation.includes('Relative'), auditResult.explanation);
     });
@@ -105,14 +108,15 @@ describe('SEO: Document has valid canonical link', () => {
       }],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Canonical: ['https://example.com/fr/'],
       Hreflang: [{href: 'https://example.com/fr/'}],
-    });
+    };
 
-    return CanonicalAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
       assert.ok(auditResult.explanation.includes('hreflang'), auditResult.explanation);
     });
@@ -125,14 +129,15 @@ describe('SEO: Document has valid canonical link', () => {
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Canonical: ['https://example.com/'],
       Hreflang: [],
-    });
+    };
 
-    return CanonicalAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
       assert.ok(auditResult.explanation.includes('domain'), auditResult.explanation);
     });
@@ -145,14 +150,15 @@ describe('SEO: Document has valid canonical link', () => {
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Canonical: ['https://example.com/'],
       Hreflang: [],
-    });
+    };
 
-    return CanonicalAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
       assert.ok(auditResult.explanation.includes('root'), auditResult.explanation);
     });
@@ -168,14 +174,15 @@ describe('SEO: Document has valid canonical link', () => {
       }],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Canonical: ['https://www.example.com'],
       Hreflang: [],
-    });
+    };
 
-    return CanonicalAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });
@@ -187,14 +194,15 @@ describe('SEO: Document has valid canonical link', () => {
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Canonical: ['https://example.com/articles/cats-and-you'],
       Hreflang: [],
-    });
+    };
 
-    return CanonicalAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });
@@ -209,14 +217,15 @@ describe('SEO: Document has valid canonical link', () => {
       }],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       Canonical: [],
       Hreflang: [],
-    });
+    };
 
-    return CanonicalAudit.audit(artifacts).then(auditResult => {
+    const context = {computedCache: new Map()};
+    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, true);
     });
   });

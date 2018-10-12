@@ -5,9 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../../audits/font-display.js');
+const FontDisplayAudit = require('../../audits/font-display.js');
 const assert = require('assert');
-const Runner = require('../../runner.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -15,17 +14,19 @@ const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.
 describe('Performance: Font Display audit', () => {
   let networkRecords;
   let stylesheet;
+  let context;
 
   beforeEach(() => {
     stylesheet = {content: ''};
+    context = {computedCache: new Map()};
   });
 
   function getArtifacts() {
-    return Object.assign({
-      devtoolsLogs: {[Audit.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
+    return {
+      devtoolsLogs: {[FontDisplayAudit.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: 'https://example.com/foo/bar/page'},
       CSSUsage: {stylesheets: [stylesheet]},
-    }, Runner.instantiateComputedArtifacts());
+    };
   }
 
   it('fails when not all fonts have a correct font-display rule', async () => {
@@ -64,7 +65,7 @@ describe('Performance: Font Display audit', () => {
       },
     ];
 
-    const result = await Audit.audit(getArtifacts());
+    const result = await FontDisplayAudit.audit(getArtifacts(), context);
     const items = [
       {url: networkRecords[0].url, wastedMs: 2000},
       {url: networkRecords[1].url, wastedMs: 3000},
@@ -113,7 +114,7 @@ describe('Performance: Font Display audit', () => {
       },
     ];
 
-    const result = await Audit.audit(getArtifacts());
+    const result = await FontDisplayAudit.audit(getArtifacts(), context);
     assert.strictEqual(result.rawValue, true);
     assert.deepEqual(result.details.items, []);
   });
@@ -153,7 +154,7 @@ describe('Performance: Font Display audit', () => {
       },
     ];
 
-    const result = await Audit.audit(getArtifacts());
+    const result = await FontDisplayAudit.audit(getArtifacts(), context);
     assert.strictEqual(result.rawValue, false);
     assert.deepEqual(result.details.items.map(item => item.url), [
       'https://edition.i.cdn.cnn.com/.a/fonts/cnn/3.7.2/cnnclock-black.woff2',

@@ -187,7 +187,6 @@ class Runner {
    */
   static async _runAudits(settings, audits, artifacts, runWarnings) {
     log.log('status', 'Analyzing and running audits...');
-    artifacts = Object.assign({}, Runner.instantiateComputedArtifacts(), artifacts);
 
     if (artifacts.settings) {
       const overrides = {
@@ -371,50 +370,6 @@ class Runner {
           .map(f => `dobetterweb/${f}`),
     ];
     return fileList.filter(f => /\.js$/.test(f) && f !== 'gatherer.js').sort();
-  }
-
-  /**
-   * Returns list of computed gatherer names for external querying.
-   * @return {Array<string>}
-   */
-  static getComputedGathererList() {
-    const filenamesToSkip = [
-      'computed-artifact.js', // the base class which other artifacts inherit
-      'metrics', // the sub folder that contains metric names
-      'metrics/lantern-metric.js', // lantern metric base class
-      'metrics/metric.js', // computed metric base class
-
-      // Computed artifacts switching to the new system.
-      'new-computed-artifact.js',
-      'manifest-values.js',
-      'screenshots.js',
-    ];
-
-    const fileList = [
-      ...fs.readdirSync(path.join(__dirname, './gather/computed')),
-      ...fs.readdirSync(path.join(__dirname, './gather/computed/metrics')).map(f => `metrics/${f}`),
-    ];
-
-    return fileList.filter(f => /\.js$/.test(f) && !filenamesToSkip.includes(f)).sort();
-  }
-
-  /**
-   * TODO(bckenny): refactor artifact types
-   * @return {LH.ComputedArtifacts}
-   */
-  static instantiateComputedArtifacts() {
-    const computedArtifacts = {};
-    Runner.getComputedGathererList().forEach(function(filename) {
-      // Drop `.js` suffix to keep browserify import happy.
-      filename = filename.replace(/\.js$/, '');
-      const ArtifactClass = require('./gather/computed/' + filename);
-      const artifact = new ArtifactClass(computedArtifacts);
-      // define the request* function that will be exposed on `artifacts`
-      // @ts-ignore - doesn't have an index signature, so can't be set dynamically.
-      computedArtifacts['request' + artifact.name] = artifact.request.bind(artifact);
-    });
-
-    return /** @type {LH.ComputedArtifacts} */ (computedArtifacts);
   }
 
   /**

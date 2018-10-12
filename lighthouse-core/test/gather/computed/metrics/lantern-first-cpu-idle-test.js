@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Runner = require('../../../../runner');
+const LanternFirstCPUIdle = require('../../../../gather/computed/metrics/lantern-first-cpu-idle.js'); // eslint-disable-line max-len
 const assert = require('assert');
 
 const trace = require('../../../fixtures/traces/progressive-app-m60.json');
@@ -14,8 +14,9 @@ const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtoo
 /* eslint-env jest */
 describe('Metrics: Lantern TTFCPUI', () => {
   it('should compute predicted value', async () => {
-    const artifacts = Runner.instantiateComputedArtifacts();
-    const result = await artifacts.requestLanternFirstCPUIdle({trace, devtoolsLog, settings: {}});
+    const settings = {};
+    const context = {settings, computedCache: new Map()};
+    const result = await LanternFirstCPUIdle.request({trace, devtoolsLog, settings}, context);
 
     expect({
       timing: Math.round(result.timing),

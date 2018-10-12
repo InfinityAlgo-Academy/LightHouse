@@ -64,9 +64,6 @@ const audits = LighthouseRunner.getAuditList()
 const gatherers = LighthouseRunner.getGathererList()
     .map(f => '../lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
 
-const computedArtifacts = LighthouseRunner.getComputedGathererList()
-    .map(f => '../lighthouse-core/gather/computed/' + f.replace(/\.js$/, ''));
-
 const locales = fs.readdirSync('../lighthouse-core/lib/i18n/locales/')
     .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
 
@@ -174,9 +171,6 @@ gulp.task('browserify-lighthouse', () => {
       });
       gatherers.forEach(gatherer => {
         bundle = bundle.require(gatherer, {expose: gatherer.replace(driverPath, '../gather/')});
-      });
-      computedArtifacts.forEach(artifact => {
-        bundle = bundle.require(artifact, {expose: artifact.replace(corePath, './')});
       });
 
       // browerify's url shim doesn't work with .URL in node_modules,

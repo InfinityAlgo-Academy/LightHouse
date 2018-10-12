@@ -14,6 +14,7 @@
 const isDeepEqual = require('lodash.isequal');
 const Audit = require('./audit');
 const mobileThrottling = require('../config/constants').throttling.mobileSlow4G;
+const Interactive = require('../gather/computed/metrics/interactive.js');
 
 // Maximum TTI to be considered "fast" for PWA baseline checklist
 //   https://developers.google.com/web/progressive-web-apps/checklist
@@ -54,7 +55,7 @@ class LoadFastEnough4Pwa extends Audit {
         : Object.assign({}, context.settings, settingOverrides);
 
     const metricComputationData = {trace, devtoolsLog, settings};
-    const tti = await artifacts.requestInteractive(metricComputationData);
+    const tti = await Interactive.request(metricComputationData, context);
 
     const score = Number(tti.timing < MAXIMUM_TTI);
 

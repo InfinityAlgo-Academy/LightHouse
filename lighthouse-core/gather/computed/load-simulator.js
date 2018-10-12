@@ -5,23 +5,20 @@
  */
 'use strict';
 
-const ComputedArtifact = require('./computed-artifact');
+const makeComputedArtifact = require('./new-computed-artifact');
 const constants = require('../../config/constants');
 const Simulator = require('../../lib/dependency-graph/simulator/simulator');
+const NetworkAnalysis = require('../../gather/computed/network-analysis.js');
 
-class LoadSimulatorArtifact extends ComputedArtifact {
-  get name() {
-    return 'LoadSimulator';
-  }
-
+class LoadSimulator {
   /**
    * @param {{devtoolsLog: LH.DevtoolsLog, settings: LH.Config.Settings}} data
-   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<Simulator>}
    */
-  async compute_(data, artifacts) {
+  static async compute_(data, context) {
     const {throttlingMethod, throttling} = data.settings;
-    const networkAnalysis = await artifacts.requestNetworkAnalysis(data.devtoolsLog);
+    const networkAnalysis = await NetworkAnalysis.request(data.devtoolsLog, context);
 
     /** @type {LH.Gatherer.Simulation.Options} */
     const options = {
@@ -64,4 +61,4 @@ class LoadSimulatorArtifact extends ComputedArtifact {
   }
 }
 
-module.exports = LoadSimulatorArtifact;
+module.exports = makeComputedArtifact(LoadSimulator);

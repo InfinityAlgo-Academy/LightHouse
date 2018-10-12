@@ -9,12 +9,11 @@ const assert = require('assert');
 
 // eslint-disable-next-line
 const NetworkAnalyzer = require('../../../../lib/dependency-graph/simulator/network-analyzer');
-const Runner = require('../../../../runner');
+const NetworkRecords = require('../../../../gather/computed/network-records.js');
 const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 /* eslint-env jest */
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
-  let computedArtifacts;
   let recordId;
 
   function createRecord(opts) {
@@ -38,7 +37,6 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
 
   beforeEach(() => {
     recordId = 1;
-    computedArtifacts = Runner.instantiateComputedArtifacts();
   });
 
   function assertCloseEnough(valueA, valueB, threshold = 1) {
@@ -125,7 +123,7 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     });
 
     it('should work on a real devtoolsLog', () => {
-      return computedArtifacts.requestNetworkRecords(devtoolsLog).then(records => {
+      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateIfConnectionWasReused(records);
         const distinctConnections = Array.from(result.values()).filter(item => !item).length;
         assert.equal(result.size, 66);
@@ -201,7 +199,7 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     });
 
     it('should work on a real devtoolsLog', () => {
-      return computedArtifacts.requestNetworkRecords(devtoolsLog).then(records => {
+      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateRTTByOrigin(records);
         assertCloseEnough(result.get('https://pwa.rocks').min, 3);
         assertCloseEnough(result.get('https://www.googletagmanager.com').min, 3);
@@ -210,7 +208,7 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     });
 
     it('should approximate well with either method', () => {
-      return computedArtifacts.requestNetworkRecords(devtoolsLog).then(records => {
+      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateRTTByOrigin(records).get(NetworkAnalyzer.SUMMARY);
         const resultApprox = NetworkAnalyzer.estimateRTTByOrigin(records, {
           forceCoarseEstimates: true,
@@ -250,7 +248,7 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     });
 
     it('should work on a real devtoolsLog', () => {
-      return computedArtifacts.requestNetworkRecords(devtoolsLog).then(records => {
+      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records);
         assertCloseEnough(result.get('https://pwa.rocks').avg, 162);
         assertCloseEnough(result.get('https://www.googletagmanager.com').avg, 153);
@@ -259,7 +257,7 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     });
 
     it('should approximate well with either method', () => {
-      return computedArtifacts.requestNetworkRecords(devtoolsLog).then(records => {
+      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records).get(
           NetworkAnalyzer.SUMMARY
         );
@@ -372,7 +370,7 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
 
   describe('#findMainDocument', () => {
     it('should find the main document', async () => {
-      const records = await computedArtifacts.requestNetworkRecords(devtoolsLog);
+      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
       const mainDocument = NetworkAnalyzer.findMainDocument(records);
       assert.equal(mainDocument.url, 'https://pwa.rocks/');
     });

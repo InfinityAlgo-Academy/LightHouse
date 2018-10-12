@@ -10,7 +10,6 @@
 
 const UsesRelPreconnect = require('../../audits/uses-rel-preconnect.js');
 const assert = require('assert');
-const Runner = require('../../runner.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 const mainResource = {
@@ -30,12 +29,13 @@ describe('Performance: uses-rel-preconnect audit', () => {
         timing: {receiveHeadersEnd: 3},
       },
     ];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
-    });
+    };
 
-    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, {settings: {}});
+    const context = {settings: {}, computedCache: new Map()};
+    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(score, 1);
     assert.equal(rawValue, 0);
     assert.equal(details.items.length, 0);
@@ -53,12 +53,13 @@ describe('Performance: uses-rel-preconnect audit', () => {
         timing: {receiveHeadersEnd: 3},
       },
     ];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
-    });
+    };
 
-    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, {settings: {}});
+    const context = {settings: {}, computedCache: new Map()};
+    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(score, 1);
     assert.equal(rawValue, 0);
     assert.equal(details.items.length, 0);
@@ -73,12 +74,13 @@ describe('Performance: uses-rel-preconnect audit', () => {
         timing: {receiveHeadersEnd: 3},
       },
     ];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
-    });
+    };
 
-    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, {settings: {}});
+    const context = {settings: {}, computedCache: new Map()};
+    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(score, 1);
     assert.equal(rawValue, 0);
     assert.equal(details.items.length, 0);
@@ -99,12 +101,13 @@ describe('Performance: uses-rel-preconnect audit', () => {
         },
       },
     ];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
-    });
+    };
 
-    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, {settings: {}});
+    const context = {settings: {}, computedCache: new Map()};
+    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(score, 1);
     assert.equal(rawValue, 0);
     assert.equal(details.items.length, 0);
@@ -120,12 +123,13 @@ describe('Performance: uses-rel-preconnect audit', () => {
         timing: {receiveHeadersEnd: 20},
       },
     ];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
-    });
+    };
 
-    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, {settings: {}});
+    const context = {settings: {}, computedCache: new Map()};
+    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(score, 1);
     assert.equal(rawValue, 0);
     assert.equal(details.items.length, 0);
@@ -157,12 +161,13 @@ describe('Performance: uses-rel-preconnect audit', () => {
         },
       },
     ];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
-    });
+    };
 
-    const {rawValue, extendedInfo} = await UsesRelPreconnect.audit(artifacts, {settings: {}});
+    const context = {settings: {}, computedCache: new Map()};
+    const {rawValue, extendedInfo} = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(rawValue, 300);
     assert.equal(extendedInfo.value.length, 1);
     assert.deepStrictEqual(extendedInfo.value, [
@@ -196,12 +201,13 @@ describe('Performance: uses-rel-preconnect audit', () => {
         },
       },
     ];
-    const artifacts = Object.assign(Runner.instantiateComputedArtifacts(), {
+    const artifacts = {
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
-    });
+    };
 
-    const {rawValue, extendedInfo} = await UsesRelPreconnect.audit(artifacts, {settings: {}});
+    const context = {settings: {}, computedCache: new Map()};
+    const {rawValue, extendedInfo} = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(rawValue, 300);
     assert.equal(extendedInfo.value.length, 2);
     assert.deepStrictEqual(extendedInfo.value, [

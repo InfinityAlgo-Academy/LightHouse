@@ -5,20 +5,19 @@
  */
 'use strict';
 
-const MetricArtifact = require('./lantern-metric');
+const makeComputedArtifact = require('../new-computed-artifact.js');
+const LanternMetric = require('./lantern-metric');
 const BaseNode = require('../../../lib/dependency-graph/base-node');
+const Speedline = require('../speedline.js');
+const LanternFirstContentfulPaint = require('./lantern-first-contentful-paint.js');
 
 /** @typedef {BaseNode.Node} Node */
 
-class SpeedIndex extends MetricArtifact {
-  get name() {
-    return 'LanternSpeedIndex';
-  }
-
+class LanternSpeedIndex extends LanternMetric {
   /**
    * @return {LH.Gatherer.Simulation.MetricCoefficients}
    */
-  get COEFFICIENTS() {
+  static get COEFFICIENTS() {
     return {
       // Negative intercept is OK because estimate is Math.max(FCP, Speed Index) and
       // the optimistic estimate is based on the real observed speed index rather than a real
@@ -33,7 +32,7 @@ class SpeedIndex extends MetricArtifact {
    * @param {Node} dependencyGraph
    * @return {Node}
    */
-  getOptimisticGraph(dependencyGraph) {
+  static getOptimisticGraph(dependencyGraph) {
     return dependencyGraph;
   }
 
@@ -41,7 +40,7 @@ class SpeedIndex extends MetricArtifact {
    * @param {Node} dependencyGraph
    * @return {Node}
    */
-  getPessimisticGraph(dependencyGraph) {
+  static getPessimisticGraph(dependencyGraph) {
     return dependencyGraph;
   }
 
@@ -50,11 +49,11 @@ class SpeedIndex extends MetricArtifact {
    * @param {Object} extras
    * @return {LH.Gatherer.Simulation.Result}
    */
-  getEstimateFromSimulation(simulationResult, extras) {
+  static getEstimateFromSimulation(simulationResult, extras) {
     const fcpTimeInMs = extras.fcpResult.pessimisticEstimate.timeInMs;
     const estimate = extras.optimistic
       ? extras.speedline.speedIndex
-      : SpeedIndex.computeLayoutBasedSpeedIndex(simulationResult.nodeTimings, fcpTimeInMs);
+      : LanternSpeedIndex.computeLayoutBasedSpeedIndex(simulationResult.nodeTimings, fcpTimeInMs);
     return {
       timeInMs: estimate,
       nodeTimings: simulationResult.nodeTimings,
@@ -63,13 +62,13 @@ class SpeedIndex extends MetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {LH.ComputedArtifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
-  async compute_(data, artifacts) {
-    const speedline = await artifacts.requestSpeedline(data.trace);
-    const fcpResult = await artifacts.requestLanternFirstContentfulPaint(data);
-    const metricResult = await this.computeMetricWithGraphs(data, artifacts, {
+  static async compute_(data, context) {
+    const speedline = await Speedline.request(data.trace, context);
+    const fcpResult = await LanternFirstContentfulPaint.request(data, context);
+    const metricResult = await this.computeMetricWithGraphs(data, context, {
       speedline,
       fcpResult,
     });
@@ -116,4 +115,4 @@ class SpeedIndex extends MetricArtifact {
   }
 }
 
-module.exports = SpeedIndex;
+module.exports = makeComputedArtifact(LanternSpeedIndex);

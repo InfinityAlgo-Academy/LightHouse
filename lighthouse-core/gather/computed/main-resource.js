@@ -5,26 +5,23 @@
  */
 'use strict';
 
-const ComputedArtifact = require('./computed-artifact');
+const makeComputedArtifact = require('./new-computed-artifact.js');
 const URL = require('../../lib/url-shim');
+const NetworkRecords = require('./network-records.js');
 
 /**
  * @fileoverview This artifact identifies the main resource on the page. Current solution assumes
  * that the main resource is the first non-rediected one.
  */
-class MainResource extends ComputedArtifact {
-  get name() {
-    return 'MainResource';
-  }
-
+class MainResource {
   /**
    * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
-   * @param {LH.ComputedArtifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Artifacts.NetworkRequest>}
    */
-  async compute_(data, artifacts) {
+  static async compute_(data, context) {
     const finalUrl = data.URL.finalUrl;
-    const requests = await artifacts.requestNetworkRecords(data.devtoolsLog);
+    const requests = await NetworkRecords.request(data.devtoolsLog, context);
     // equalWithExcludedFragments is expensive, so check that the finalUrl starts with the request first
     const mainResource = requests.find(request => finalUrl.startsWith(request.url) &&
       URL.equalWithExcludedFragments(request.url, finalUrl));
@@ -37,4 +34,4 @@ class MainResource extends ComputedArtifact {
   }
 }
 
-module.exports = MainResource;
+module.exports = makeComputedArtifact(MainResource);

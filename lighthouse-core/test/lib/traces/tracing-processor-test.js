@@ -149,7 +149,7 @@ describe('TracingProcessor lib', () => {
   describe('getMainThreadTopLevelEvents', () => {
     it('gets durations of top-level tasks', async () => {
       const trace = {traceEvents: pwaTrace};
-      const tabTrace = await new TraceOfTab().compute_(trace);
+      const tabTrace = await TraceOfTab.compute_(trace);
       const ret = TracingProcessor.getMainThreadTopLevelEvents(tabTrace);
 
       assert.equal(ret.length, 645);
@@ -190,7 +190,7 @@ describe('TracingProcessor lib', () => {
   describe('getMainThreadTopLevelEventDurations', () => {
     it('gets durations of top-level tasks', async () => {
       const trace = {traceEvents: pwaTrace};
-      const tabTrace = await new TraceOfTab().compute_(trace);
+      const tabTrace = await TraceOfTab.compute_(trace);
       const events = TracingProcessor.getMainThreadTopLevelEvents(tabTrace);
       const ret = TracingProcessor.getMainThreadTopLevelEventDurations(events);
       const durations = ret.durations;
@@ -228,7 +228,7 @@ describe('TracingProcessor lib', () => {
 
     it('compute correct defaults', async () => {
       const trace = {traceEvents: pwaTrace};
-      const tabTrace = await new TraceOfTab().compute_(trace);
+      const tabTrace = await TraceOfTab.compute_(trace);
       const events = TracingProcessor.getMainThreadTopLevelEvents(tabTrace);
       const ret = TracingProcessor.getRiskToResponsiveness(events, 0, tabTrace.timings.traceEnd);
       assert.equal(ret.durations.length, 645);
