@@ -74,7 +74,6 @@ const defaultConfig = {
       'seo/embedded-content',
       'seo/canonical',
       'seo/robots-txt',
-      'fonts',
     ],
   },
   {

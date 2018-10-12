@@ -1104,9 +1104,6 @@ Object {
         Object {
           "path": "seo/robots-txt",
         },
-        Object {
-          "path": "fonts",
-        },
       ],
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
