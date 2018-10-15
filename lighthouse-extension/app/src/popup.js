@@ -26,6 +26,8 @@ const NON_BUG_ERROR_MESSAGES = {
       'are trying to review.',
   'Cannot access contents of the page': 'Lighthouse can only audit URLs that start' +
       ' with http:// or https://.',
+  'INVALID_URL': 'Lighthouse can only audit URLs that start' +
+      ' with http:// or https://.',
 };
 
 const MAX_ISSUE_ERROR_LENGTH = 60;
