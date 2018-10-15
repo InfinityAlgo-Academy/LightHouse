@@ -366,7 +366,7 @@ class GatherRunner {
     return {
       fetchTime: (new Date()).toJSON(),
       LighthouseRunWarnings: [],
-      HostUserAgent: await options.driver.getUserAgent(),
+      HostUserAgent: (await options.driver.getBrowserVersion()).userAgent,
       NetworkUserAgent: '', // updated later
       BenchmarkIndex: 0, // updated later
       traces: {},

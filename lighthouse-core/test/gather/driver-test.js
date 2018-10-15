@@ -6,12 +6,14 @@
 'use strict';
 
 let sendCommandParams = [];
+let sendCommandMockResponses = {};
 
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
 const Element = require('../../lib/element.js');
 const assert = require('assert');
 const EventEmitter = require('events').EventEmitter;
+const {protocolGetVersionResponse} = require('./fake-driver');
 
 const connection = new Connection();
 const driverStub = new Driver(connection);
@@ -46,9 +48,23 @@ function createActiveWorker(id, url, controlledClients, status = 'activated') {
   };
 }
 
+function createOnceMethodResponse(method, response) {
+  assert.deepEqual(!!sendCommandMockResponses[method], false, 'stub response already defined');
+  sendCommandMockResponses[method] = response;
+}
+
 connection.sendCommand = function(command, params) {
   sendCommandParams.push({command, params});
+
+  const mockResponse = sendCommandMockResponses[command];
+  if (mockResponse) {
+    delete sendCommandMockResponses[command];
+    return Promise.resolve(mockResponse);
+  }
+
   switch (command) {
+    case 'Browser.getVersion':
+      return Promise.resolve(protocolGetVersionResponse);
     case 'DOM.getDocument':
       return Promise.resolve({root: {nodeId: 249}});
     case 'DOM.querySelector':
@@ -99,6 +115,7 @@ connection.sendCommand = function(command, params) {
 describe('Browser Driver', () => {
   beforeEach(() => {
     sendCommandParams = [];
+    sendCommandMockResponses = {};
   });
 
   it('returns null when DOM.querySelector finds no node', () => {
@@ -232,14 +249,31 @@ describe('Browser Driver', () => {
   });
 
   it('will use requested additionalTraceCategories', () => {
-    return driverStub.beginTrace({additionalTraceCategories: 'v8,v8.execute,toplevel'}).then(() => {
+    return driverStub.beginTrace({additionalTraceCategories: 'loading,xtra_cat'}).then(() => {
       const traceCmd = sendCommandParams.find(obj => obj.command === 'Tracing.start');
       const categories = traceCmd.params.categories;
-      assert.ok(categories.includes('blink'), 'contains default categories');
-      assert.ok(categories.includes('v8.execute'), 'contains added categories');
-      assert.ok(categories.indexOf('toplevel') === categories.lastIndexOf('toplevel'),
+      assert.ok(categories.includes('blink.user_timing'), 'contains default categories');
+      assert.ok(categories.includes('xtra_cat'), 'contains added categories');
+      assert.ok(categories.indexOf('loading') === categories.lastIndexOf('loading'),
           'de-dupes categories');
     });
+  });
+
+  it('will adjust traceCategories based on chrome version', async () => {
+    // m70 doesn't have disabled-by-default-lighthouse, so 'toplevel' is used instead.
+    const m70ProtocolGetVersionResponse = Object.assign({}, protocolGetVersionResponse, {
+      product: 'Chrome/70.0.3577.0',
+      // eslint-disable-next-line max-len
+      userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3577.0 Safari/537.36',
+    });
+    createOnceMethodResponse('Browser.getVersion', m70ProtocolGetVersionResponse);
+
+    // eslint-disable-next-line max-len
+    await driverStub.beginTrace();
+    const traceCmd = sendCommandParams.find(obj => obj.command === 'Tracing.start');
+    const categories = traceCmd.params.categories;
+    assert.ok(categories.includes('toplevel'), 'contains old toplevel category');
+    assert.equal(categories.indexOf('disabled-by-default-lighthouse'), -1, 'excludes new cat');
   });
 
   it('should send the Network.setExtraHTTPHeaders command when there are extra-headers', () => {

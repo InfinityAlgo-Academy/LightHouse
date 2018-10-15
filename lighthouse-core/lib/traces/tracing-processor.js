@@ -8,12 +8,16 @@
 // The ideal input response latency, the time between the input task and the
 // first frame of the response.
 const BASE_RESPONSE_LATENCY = 16;
-// m65 and earlier
-const SCHEDULABLE_TASK_TITLE = 'TaskQueueManager::ProcessTaskFromWorkQueue';
+// m71+ We added RunTask to `disabled-by-default-lighthouse`
+const SCHEDULABLE_TASK_TITLE_LH = 'RunTask';
+// m69-70 DoWork is different and we now need RunTask, see https://bugs.chromium.org/p/chromium/issues/detail?id=871204#c11
+const SCHEDULABLE_TASK_TITLE_ALT1 = 'ThreadControllerImpl::RunTask';
 // In m66-68 refactored to this task title, https://crrev.com/c/883346
-const SCHEDULABLE_TASK_TITLE_ALT1 = 'ThreadControllerImpl::DoWork';
-// m69+ DoWork is different and we now need RunTask, see https://bugs.chromium.org/p/chromium/issues/detail?id=871204#c11
-const SCHEDULABLE_TASK_TITLE_ALT2 = 'ThreadControllerImpl::RunTask';
+const SCHEDULABLE_TASK_TITLE_ALT2 = 'ThreadControllerImpl::DoWork';
+// m65 and earlier
+const SCHEDULABLE_TASK_TITLE_ALT3 = 'TaskQueueManager::ProcessTaskFromWorkQueue';
+
+
 const LHError = require('../lh-error');
 
 class TraceProcessor {
@@ -234,9 +238,10 @@ class TraceProcessor {
    * @return {boolean}
    */
   static isScheduleableTask(evt) {
-    return evt.name === SCHEDULABLE_TASK_TITLE ||
-      evt.name === SCHEDULABLE_TASK_TITLE_ALT1 ||
-      evt.name === SCHEDULABLE_TASK_TITLE_ALT2;
+    return evt.name === SCHEDULABLE_TASK_TITLE_LH ||
+    evt.name === SCHEDULABLE_TASK_TITLE_ALT1 ||
+    evt.name === SCHEDULABLE_TASK_TITLE_ALT2 ||
+    evt.name === SCHEDULABLE_TASK_TITLE_ALT3;
   }
 }
 

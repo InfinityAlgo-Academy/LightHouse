@@ -53,9 +53,6 @@ function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn,
     }
     cleanBrowserCaches() {}
     clearDataForOrigin() {}
-    getUserAgent() {
-      return Promise.resolve('Fake user agent');
-    }
   };
   const EmulationMock = class extends Connection {
     sendCommand(command, params) {
@@ -126,7 +123,8 @@ describe('GatherRunner', function() {
     const options = {url, driver, config, settings};
 
     const results = await GatherRunner.run([], options);
-    expect(results.HostUserAgent).toEqual('Fake user agent');
+    expect(results.HostUserAgent).toEqual(fakeDriver.protocolGetVersionResponse.userAgent);
+    expect(results.HostUserAgent).toMatch(/Chrome\/\d+/);
   });
 
   it('collects network user agent as an artifact', async () => {
@@ -272,6 +270,7 @@ describe('GatherRunner', function() {
     };
     const createEmulationCheck = variable => (...args) => {
       tests[variable] = args;
+
       return true;
     };
     const driver = getMockedEmulationDriver(
