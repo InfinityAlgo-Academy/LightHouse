@@ -6,7 +6,9 @@
 'use strict';
 
 const lighthouse = require('../../../lighthouse-core/index');
-const background = require('./devtools-entry');
+const Config = require('../../../lighthouse-core/config/config');
+const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
+const i18n = require('../../../lighthouse-core/lib/i18n/i18n.js');
 
 const ExtensionProtocol = require('../../../lighthouse-core/gather/connections/extension');
 const log = require('lighthouse-logger');
@@ -19,6 +21,31 @@ const SETTINGS_KEY = 'lighthouse_settings';
 let lighthouseIsRunning = false;
 /** @type {?[string, string, string]} */
 let latestStatusLog = null;
+
+/**
+ * Returns list of top-level categories from the default config.
+ * @return {Array<{title: string, id: string}>}
+ */
+function getDefaultCategories() {
+  const categories = Config.getCategories(defaultConfig);
+  categories.forEach(cat => cat.title = i18n.getFormatted(cat.title, 'en-US'));
+  return categories;
+}
+
+/**
+ * Return a version of the default config, filtered to only run the specified
+ * categories.
+ * @param {Array<string>} categoryIDs
+ * @return {LH.Config.Json}
+ */
+function getDefaultConfigForCategories(categoryIDs) {
+  return {
+    extends: 'lighthouse:default',
+    settings: {
+      onlyCategories: categoryIDs,
+    },
+  };
+}
 
 /**
  * Sets the extension badge text.
@@ -58,7 +85,7 @@ async function runLighthouseInExtension(flags, categoryIDs) {
 
   const connection = new ExtensionProtocol();
   const url = await connection.getCurrentTabURL();
-  const config = background.getDefaultConfigForCategories(categoryIDs);
+  const config = getDefaultConfigForCategories(categoryIDs);
 
   updateBadgeUI(url);
   let runnerResult;
@@ -106,7 +133,7 @@ function saveSettings(settings) {
   };
 
   // Stash selected categories.
-  background.getDefaultCategories().forEach(category => {
+  getDefaultCategories().forEach(category => {
     storage[STORAGE_KEY][category.id] = settings.selectedCategories.includes(category.id);
   });
 
@@ -130,7 +157,7 @@ function loadSettings() {
       // always up to date.
       /** @type {Record<string, boolean>} */
       const defaultCategories = {};
-      background.getDefaultCategories().forEach(category => {
+      getDefaultCategories().forEach(category => {
         defaultCategories[category.id] = true;
       });
 
@@ -169,7 +196,7 @@ function isRunning() {
   return lighthouseIsRunning;
 }
 
-// Run when in extension context, but not in devtools or unit tests.
+// Run when in extension context, but not in unit tests.
 if (typeof window !== 'undefined' && 'chrome' in window && chrome.runtime) {
   chrome.runtime.onInstalled.addListener(details => {
     if (details.previousVersion) {
@@ -180,10 +207,10 @@ if (typeof window !== 'undefined' && 'chrome' in window && chrome.runtime) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  // Export for importing types into popup.js, require()ing into unit tests.
+  // Export for importing types into popup.js and require()ing into unit tests.
   module.exports = {
     runLighthouseInExtension,
-    getDefaultCategories: background.getDefaultCategories,
+    getDefaultCategories,
     isRunning,
     listenForStatus,
     saveSettings,
@@ -191,12 +218,12 @@ if (typeof module !== 'undefined' && module.exports) {
   };
 }
 
-// Expose on window for extension, other browser-residing consumers of file.
+// Expose on window for extension (popup.js), other browser-residing consumers of file.
 if (typeof window !== 'undefined') {
   // @ts-ignore
   window.runLighthouseInExtension = runLighthouseInExtension;
   // @ts-ignore
-  window.getDefaultCategories = background.getDefaultCategories;
+  window.getDefaultCategories = getDefaultCategories;
   // @ts-ignore
   window.isRunning = isRunning;
   // @ts-ignore

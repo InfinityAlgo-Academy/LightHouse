@@ -7,9 +7,6 @@
 
 const lighthouse = require('../../../lighthouse-core/index');
 const RawProtocol = require('../../../lighthouse-core/gather/connections/raw');
-const Config = require('../../../lighthouse-core/config/config');
-const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
-const i18n = require('../../../lighthouse-core/lib/i18n/i18n.js');
 const log = require('lighthouse-logger');
 
 /** @typedef {import('../../../lighthouse-core/gather/connections/connection.js')} Connection */
@@ -45,27 +42,15 @@ function runLighthouseInWorker(port, url, flags, categoryIDs) {
   return lighthouse(url, flags, config, connection);
 }
 
-/**
- * Returns list of top-level categories from the default config.
- * @return {Array<{title: string, id: string}>}
- */
-function getDefaultCategories() {
-  const categories = Config.getCategories(defaultConfig);
-  categories.forEach(cat => cat.title = i18n.getFormatted(cat.title, 'en-US'));
-  return categories;
-}
-
 /** @param {(status: [string, string, string]) => void} listenCallback */
 function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  // export for extension-entry to require (via browserify).
+  // export for require()ing (via browserify).
   module.exports = {
-    getDefaultConfigForCategories,
     runLighthouseInWorker,
-    getDefaultCategories,
     listenForStatus,
   };
 }

@@ -21,7 +21,6 @@ const gutil = require('gulp-util');
 const runSequence = require('run-sequence');
 const gulp = require('gulp');
 const browserify = require('browserify');
-const chromeManifest = require('gulp-chrome-manifest');
 const debug = require('gulp-debug');
 const eslint = require('gulp-eslint');
 const livereload = require('gulp-livereload');
@@ -115,27 +114,18 @@ gulp.task('html', () => {
 });
 
 gulp.task('chromeManifest', () => {
-  const manifestOpts = {
-    buildnumber: false,
-    background: {
-      target: `scripts/${CONSUMERS.EXTENSION.dist}`,
-    },
-  };
   return gulp.src('app/manifest.json')
-  .pipe(chromeManifest(manifestOpts))
   .pipe(gulp.dest(distDir));
 });
 
 function applyBrowserifyTransforms(bundle) {
-  // Fix an issue with imported speedline code that doesn't brfs well.
-  return bundle.transform('./fs-transform', {global: true})
-  // Transform the fs.readFile etc, but do so in all the modules.
-  .transform('brfs', {global: true, parserOpts: {ecmaVersion: 9}})
+  // Transform the fs.readFile etc into inline strings.
+  return bundle.transform('brfs', {global: true, parserOpts: {ecmaVersion: 9}})
   // Strip everything out of package.json includes except for the version.
   .transform('package-json-versionify');
 }
 
-gulp.task('browserify-lighthouse', () => {
+gulp.task('browserify', () => {
   const consumerSources = Object.values(CONSUMERS).map(consumer => `app/src/${consumer.src}`);
   return gulp.src(consumerSources, {read: false})
     .pipe(tap(file => {
@@ -198,24 +188,13 @@ gulp.task('browserify-lighthouse', () => {
     .pipe(gulp.dest('dist/scripts'));
 });
 
-gulp.task('browserify-other', () => {
+gulp.task('js-other', () => {
   return gulp.src([
     'app/src/popup.js',
-  ], {read: false})
-    .pipe(tap(file => {
-      let bundle = browserify(file.path); // , {debug: true}); // for sourcemaps
-      bundle = applyBrowserifyTransforms(bundle);
-
-      // Inject the new browserified contents back into our gulp pipeline
-      file.contents = bundle.bundle();
-    }))
+  ])
     .pipe(gulpReplace('__COMMITHASH__', COMMIT_HASH))
     .pipe(gulp.dest('app/scripts'))
     .pipe(gulp.dest(`${distDir}/scripts`));
-});
-
-gulp.task('browserify', cb => {
-  runSequence('browserify-lighthouse', 'browserify-other', cb);
 });
 
 gulp.task('compilejs', () => {
@@ -247,7 +226,7 @@ gulp.task('clean', () => {
   );
 });
 
-gulp.task('watch', ['browserify', 'html'], () => {
+gulp.task('watch', ['browserify', 'other-js', 'html'], () => {
   livereload.listen();
 
   gulp.watch([
@@ -285,7 +264,7 @@ gulp.task('package', function() {
 gulp.task('build', cb => {
   runSequence(
     'lint', 'browserify', 'chromeManifest',
-    ['html', 'images', 'css', 'extras'], cb);
+    ['html', 'images', 'css', 'extras', 'js-other'], cb);
 });
 
 gulp.task('build:production', cb => {
