@@ -6,7 +6,7 @@
 'use strict';
 
 let sendCommandParams = [];
-let sendCommandMockResponses = {};
+const sendCommandMockResponses = new Map();
 
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
@@ -49,16 +49,16 @@ function createActiveWorker(id, url, controlledClients, status = 'activated') {
 }
 
 function createOnceMethodResponse(method, response) {
-  assert.deepEqual(!!sendCommandMockResponses[method], false, 'stub response already defined');
-  sendCommandMockResponses[method] = response;
+  assert.equal(sendCommandMockResponses.has(method), false, 'stub response already defined');
+  sendCommandMockResponses.set(method, response);
 }
 
 connection.sendCommand = function(command, params) {
   sendCommandParams.push({command, params});
 
-  const mockResponse = sendCommandMockResponses[command];
-  if (mockResponse) {
-    delete sendCommandMockResponses[command];
+  if (sendCommandMockResponses.has(command)) {
+    const mockResponse = sendCommandMockResponses.get(command);
+    sendCommandMockResponses.delete(command);
     return Promise.resolve(mockResponse);
   }
 
@@ -115,7 +115,7 @@ connection.sendCommand = function(command, params) {
 describe('Browser Driver', () => {
   beforeEach(() => {
     sendCommandParams = [];
-    sendCommandMockResponses = {};
+    sendCommandMockResponses.clear();
   });
 
   it('returns null when DOM.querySelector finds no node', () => {

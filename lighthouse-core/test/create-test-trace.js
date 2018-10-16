@@ -16,13 +16,13 @@ const frame = '3EFC2700D7BC3F4734CAF2F726EFB78C';
  */
 function getTopLevelTask({ts, duration}) {
   return {
-    name: 'ThreadControllerImpl::RunTask',
+    name: 'RunTask',
     ts: ts * 1000,
     dur: duration * 1000,
     pid,
     tid,
     ph: 'X',
-    cat: 'toplevel',
+    cat: 'disabled-by-default-lighthouse',
     args: {
       src_file: '../../third_party/blink/renderer/core/fake_runner.cc',
       src_func: 'FakeRunnerFinished',

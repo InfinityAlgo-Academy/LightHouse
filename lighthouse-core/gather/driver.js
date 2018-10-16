@@ -947,7 +947,7 @@ class Driver {
     const milestone = (await this.getBrowserVersion()).milestone;
     if (milestone < 71) {
       const toplevelIndex = traceCategories.indexOf('disabled-by-default-lighthouse');
-      traceCategories.splice(toplevelIndex, 1, 'toplevel');
+      traceCategories[toplevelIndex] = 'toplevel';
     }
 
     const uniqueCategories = Array.from(new Set(traceCategories));
