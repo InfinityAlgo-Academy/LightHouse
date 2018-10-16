@@ -57,15 +57,21 @@ declare global {
     export import CrdpEvents = _CrdpMappings.Events;
     export import CrdpCommands = _CrdpMappings.Commands;
 
+    /** Simulation settings that control the amount of network & cpu throttling in the run. */
     interface ThrottlingSettings {
-      // simulation settings
+      // The round trip time in milliseconds
       rttMs?: number;
+      // The network throughput in kilobytes per second
       throughputKbps?: number;
       // devtools settings
+      // The network request latency in milliseconds
       requestLatencyMs?: number;
+      // The network download throughput in kilobytes per second
       downloadThroughputKbps?: number;
+      // The network upload throughput in kilobytes per second
       uploadThroughputKbps?: number;
       // used by both
+      // The amount of slowdown applied to the cpu (1/<cpuSlowdownMultiplier>)
       cpuSlowdownMultiplier?: number
     }
 
@@ -78,21 +84,37 @@ declare global {
      * interface and the Config's `settings` object.
      */
     interface SharedFlagsSettings {
+      // The output types (json, html, ...)
       output?: OutputMode|OutputMode[];
+      // The locale setting
       locale?: Locale;
+      // The maximum amount of time to wait for a page to load in ms
       maxWaitForLoad?: number;
+      // List of URL patterns to block
       blockedUrlPatterns?: string[] | null;
+      // Comma-delimited list of trace categories to include
       additionalTraceCategories?: string | null;
+      // Flag indicating the run should only audit
       auditMode?: boolean | string;
+      // Flag indicating the run should only gather
       gatherMode?: boolean | string;
+      // Flag indicating that the browser storage should not be reset for the audit
       disableStorageReset?: boolean;
+      // Flag indicating that there shouldn't be any emulation during the run
       disableDeviceEmulation?: boolean;
+      // The form factor the emulation should use
       emulatedFormFactor?: 'mobile'|'desktop'|'none';
+      // The method used to throttle the network
       throttlingMethod?: 'devtools'|'simulate'|'provided';
+      // The throttling config settings
       throttling?: ThrottlingSettings;
+      // List of audits that the run should conduct
       onlyAudits?: string[] | null;
+      // List of categories of audits the run should conduct
       onlyCategories?: string[] | null;
+      // List of audits that the run should skip
       skipAudits?: string[] | null;
+      // List of extra HTTP Headers to include
       extraHeaders?: Crdp.Network.Headers | null; // See extraHeaders TODO in bin.js
     }
 
@@ -114,12 +136,19 @@ declare global {
     export interface CliFlags extends Flags {
       _: string[];
       chromeFlags: string;
+      // Output path for the generated assets
       outputPath: string;
+      // Flag to save the trace contents and screenshots to disk
       saveAssets: boolean;
+      // Flag to open the report immediately
       view: boolean;
+      // Enables error reporting
       enableErrorReporting?: boolean;
+      // Flag to print out a list of all audits + categories
       listAllAudits: boolean;
+      // Flag to print out a list of all required trace categories
       listTraceCategories: boolean;
+      // A preset audit of selected audit categories to run
       preset?: 'full'|'mixed-content'|'perf';
       verbose: boolean;
       quiet: boolean;

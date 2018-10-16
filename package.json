@@ -21,7 +21,7 @@
     "build-all:task:windows": "yarn build-extension && yarn build-viewer",
     "build-extension": "cd ./lighthouse-extension && yarn build",
     "build-viewer": "cd ./lighthouse-viewer && yarn build",
-    "clean": "rimraf *.report.html *.report.dom.html *.report.json *.devtoolslog.json *.trace.json || true",
+    "clean": "rimraf proto/scripts/*.json proto/scripts/*_pb2.* proto/scripts/*_pb.* proto/scripts/__pycache__ proto/scripts/*.pyc *.report.html *.report.dom.html *.report.json *.devtoolslog.json *.trace.json || true",
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
     "smoke": "node lighthouse-cli/test/smokehouse/run-smoke.js",
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
@@ -63,7 +63,10 @@
     "diff:sample-json": "yarn i18n:checks && bash lighthouse-core/scripts/assert-golden-lhr-unchanged.sh",
     "ultradumbBenchmark": "./lighthouse-core/scripts/benchmark.js",
     "mixed-content": "./lighthouse-cli/index.js --chrome-flags='--headless' --preset=mixed-content",
-    "minify-latest-run": "./lighthouse-core/scripts/lantern/minify-trace.js ./latest-run/defaultPass.trace.json ./latest-run/defaultPass.trace.min.json && ./lighthouse-core/scripts/lantern/minify-devtoolslog.js ./latest-run/defaultPass.devtoolslog.json ./latest-run/defaultPass.devtoolslog.min.json"
+    "minify-latest-run": "./lighthouse-core/scripts/lantern/minify-trace.js ./latest-run/defaultPass.trace.json ./latest-run/defaultPass.trace.min.json && ./lighthouse-core/scripts/lantern/minify-devtoolslog.js ./latest-run/defaultPass.devtoolslog.json ./latest-run/defaultPass.devtoolslog.min.json",
+    "update:proto": "yarn compile-proto && yarn build-proto",
+    "compile-proto": "protoc --python_out=./ ./proto/lighthouse-result.proto && mv ./proto/*_pb2.py ./proto/scripts",
+    "build-proto": "cd proto/scripts && PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=cpp PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION_VERSION=2 python json_roundtrip_via_proto.py"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.60",
