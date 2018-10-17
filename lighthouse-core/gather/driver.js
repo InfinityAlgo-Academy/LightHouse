@@ -469,6 +469,7 @@ class Driver {
    * @private
    */
   _waitForNetworkIdle(networkQuietThresholdMs) {
+    let hasDCLFired = false;
     /** @type {NodeJS.Timer|undefined} */
     let idleTimeout;
     /** @type {(() => void)} */
@@ -499,6 +500,7 @@ class Driver {
       };
 
       const domContentLoadedListener = () => {
+        hasDCLFired = true;
         if (networkStatusMonitor.is2Idle()) {
           onIdle();
         } else {
@@ -506,12 +508,37 @@ class Driver {
         }
       };
 
+      // We frequently need to debug why LH is still waiting for the page.
+      // This listener is added to all network events to verbosely log what URLs we're waiting on.
+      const logStatus = () => {
+        if (!hasDCLFired) {
+          log.verbose('Driver', 'Waiting on DomContentLoaded');
+          return;
+        }
+
+        const inflightRecords = networkStatusMonitor.getInflightRecords();
+        // If there are more than 20 inflight requests, load is still in full swing.
+        // Wait until it calms down a bit to be a little less spammy.
+        if (inflightRecords.length < 20) {
+          for (const record of inflightRecords) {
+            log.verbose('Driver', `Waiting on ${record.url.slice(0, 120)} to finish`);
+          }
+        }
+      };
+
+      networkStatusMonitor.on('requeststarted', logStatus);
+      networkStatusMonitor.on('requestloaded', logStatus);
+      networkStatusMonitor.on('network-2-busy', logStatus);
+
       this.once('Page.domContentEventFired', domContentLoadedListener);
       cancel = () => {
         idleTimeout && clearTimeout(idleTimeout);
         this.off('Page.domContentEventFired', domContentLoadedListener);
         networkStatusMonitor.removeListener('network-2-busy', onBusy);
         networkStatusMonitor.removeListener('network-2-idle', onIdle);
+        networkStatusMonitor.removeListener('requeststarted', logStatus);
+        networkStatusMonitor.removeListener('requestloaded', logStatus);
+        networkStatusMonitor.removeListener('network-2-busy', logStatus);
       };
     });
 

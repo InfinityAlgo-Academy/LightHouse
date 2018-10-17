@@ -11,7 +11,7 @@ const log = require('lighthouse-logger');
 
 const IGNORED_NETWORK_SCHEMES = ['data', 'ws'];
 
-/** @typedef {'requestloaded'|'network-2-idle'|'networkidle'|'networkbusy'|'network-2-busy'} NetworkRecorderEvent */
+/** @typedef {'requeststarted'|'requestloaded'|'network-2-idle'|'networkidle'|'networkbusy'|'network-2-busy'} NetworkRecorderEvent */
 
 class NetworkRecorder extends EventEmitter {
   /**
@@ -24,6 +24,13 @@ class NetworkRecorder extends EventEmitter {
     this._records = [];
     /** @type {Map<string, NetworkRequest>} */
     this._recordsById = new Map();
+  }
+
+  /**
+   * @return {Array<LH.Artifacts.NetworkRequest>}
+   */
+  getInflightRecords() {
+    return this._records.filter(record => !NetworkRecorder.isNetworkRecordFinished(record));
   }
 
   getRecords() {
@@ -107,6 +114,16 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
+   * @param {LH.Artifacts.NetworkRequest} record
+   * @return {boolean}
+   */
+  static isNetworkRecordFinished(record) {
+    return record.finished ||
+      NetworkRecorder._isQUICAndFinished(record) ||
+      NetworkRecorder._isFrameRootRequestAndFinished(record);
+  }
+
+  /**
    * Finds all time periods where the number of inflight requests is less than or equal to the
    * number of allowed concurrent requests.
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
@@ -126,9 +143,7 @@ class NetworkRecorder extends EventEmitter {
 
       // convert the network record timestamp to ms
       timeBoundaries.push({time: record.startTime * 1000, isStart: true});
-      if (record.finished ||
-          NetworkRecorder._isQUICAndFinished(record) ||
-          NetworkRecorder._isFrameRootRequestAndFinished(record)) {
+      if (NetworkRecorder.isNetworkRecordFinished(record)) {
         timeBoundaries.push({time: record.endTime * 1000, isStart: false});
       }
     });
@@ -175,6 +190,7 @@ class NetworkRecorder extends EventEmitter {
     this._records.push(request);
     this._recordsById.set(request.requestId, request);
 
+    this.emit('requeststarted', request);
     this._emitNetworkStatus();
   }
 
