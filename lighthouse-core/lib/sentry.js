@@ -65,6 +65,8 @@ function init(opts) {
     sentryDelegate.captureBreadcrumb = (...args) => Sentry.captureBreadcrumb(...args);
     sentryDelegate.getContext = () => Sentry.getContext();
 
+    // Keep a record of exceptions per audit/gatherer so we can just report once
+    const sentryExceptionCache = new Map();
     // Special case captureException to return a Promise so we don't process.exit too early
     sentryDelegate.captureException = async (err, opts = {}) => {
       // Ignore if there wasn't an error
@@ -73,6 +75,19 @@ function init(opts) {
       // Ignore expected errors
       // @ts-ignore Non-standard property added to flag error as not needing capturing.
       if (err.expected) return;
+
+      const tags = opts.tags || {};
+      if (tags.audit) {
+        const key = `audit-${tags.audit}-${err.message}`;
+        if (sentryExceptionCache.has(key)) return;
+        sentryExceptionCache.set(key, true);
+      }
+
+      if (tags.gatherer) {
+        const key = `gatherer-${tags.gatherer}-${err.message}`;
+        if (sentryExceptionCache.has(key)) return;
+        sentryExceptionCache.set(key, true);
+      }
 
       // Sample known errors that occur at a high frequency.
       const sampledErrorMatch = SAMPLED_ERRORS.find(sample => sample.pattern.test(err.message));
