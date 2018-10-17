@@ -923,7 +923,7 @@
 /* 12% was determined to be a decent narrow width, but wide enough for column headings */
 .lh-table-column--url + th.lh-table-column--bytes,
 .lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--bytes,
-.lh-table-column--url + .lh-table-column--ms, 
+.lh-table-column--url + .lh-table-column--ms,
 .lh-table-column--url + .lh-table-column--ms + th.lh-table-column--bytes,
 .lh-table-column--url + .lh-table-column--bytes + th.lh-table-column--timespanMs {
   width: 12%;
@@ -1036,6 +1036,7 @@
   z-index: 1;
   will-change: opacity;
   right: 0;
+  pointer-events: none;
 }
 
 .tooltip::before {
@@ -1053,5 +1054,5 @@
 @keyframes fadeInTooltip {
   0% { opacity: 0; }
   75% { opacity: 1; }
-  100% { opacity: 1;  filter: drop-shadow(1px 0px 1px #aaa) drop-shadow(0px 2px 4px hsla(206, 6%, 25%, 0.15)); }
+  100% { opacity: 1;  filter: drop-shadow(1px 0px 1px #aaa) drop-shadow(0px 2px 4px hsla(206, 6%, 25%, 0.15)); pointer-events: auto; }
 }
