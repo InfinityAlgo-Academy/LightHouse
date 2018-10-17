@@ -1196,17 +1196,16 @@ class Driver {
    * @return {Promise<void>}
    */
   async dismissJavaScriptDialogs() {
-    await this.sendCommand('Page.enable');
-
     this.on('Page.javascriptDialogOpening', data => {
       log.warn('Driver', `${data.type} dialog opened by the page automatically suppressed.`);
 
-      // rejection intentionally unhandled
       this.sendCommand('Page.handleJavaScriptDialog', {
         accept: true,
         promptText: 'Lighthouse prompt response',
-      });
+      }).catch(err => log.warn('Driver', err));
     });
+
+    await this.sendCommand('Page.enable');
   }
 }
 
