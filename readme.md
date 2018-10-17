@@ -36,7 +36,7 @@ By default, Lighthouse writes the report to an HTML file. You can control the ou
 
 ### CLI options
 
-```sh
+```
 $ lighthouse --help
 
 lighthouse <url>
