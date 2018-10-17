@@ -65,7 +65,6 @@ const defaultConfig = {
       'dobetterweb/password-inputs-with-prevented-paste',
       'dobetterweb/response-compression',
       'dobetterweb/tags-blocking-first-paint',
-      'dobetterweb/websql',
       'seo/meta-description',
       'seo/font-size',
       'seo/crawlable-links',
@@ -197,7 +196,6 @@ const defaultConfig = {
     'dobetterweb/no-document-write',
     'dobetterweb/no-vulnerable-libraries',
     'dobetterweb/js-libraries',
-    'dobetterweb/no-websql',
     'dobetterweb/notification-on-start',
     'dobetterweb/password-inputs-can-be-pasted-into',
     'dobetterweb/uses-http2',
@@ -399,7 +397,6 @@ const defaultConfig = {
       title: 'Best Practices',
       auditRefs: [
         {id: 'appcache-manifest', weight: 1},
-        {id: 'no-websql', weight: 1},
         {id: 'is-on-https', weight: 1},
         {id: 'uses-http2', weight: 1},
         {id: 'uses-passive-event-listeners', weight: 1},

@@ -2402,15 +2402,6 @@
         "summary": {}
       }
     },
-    "no-websql": {
-      "id": "no-websql",
-      "title": "Uses WebSQL DB",
-      "description": "Web SQL is deprecated. Consider using IndexedDB instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/web-sql).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "rawValue": false,
-      "displayValue": "Found \"mydb\" (v1.0)"
-    },
     "notification-on-start": {
       "id": "notification-on-start",
       "title": "Requests the notification permission on page load",
@@ -3231,10 +3222,6 @@
       "auditRefs": [
         {
           "id": "appcache-manifest",
-          "weight": 1
-        },
-        {
-          "id": "no-websql",
           "weight": 1
         },
         {

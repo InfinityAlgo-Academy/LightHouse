@@ -69,10 +69,6 @@ module.exports = [
           },
         },
       },
-      'no-websql': {
-        score: 0,
-        displayValue: 'Found "mydb" (v1.0)',
-      },
       'notification-on-start': {
         score: 0,
       },

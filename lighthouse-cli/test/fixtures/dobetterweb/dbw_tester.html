@@ -204,10 +204,6 @@ function documentWriteTest() {
   document.write('2.0!'); // FAIL
 }
 
-function websqlTest() {
-  const db = openDatabase('mydb', '1.0', 'my first database', 1024);
-}
-
 function passiveEventsListenerTest() {
   // FAIL or PASS - field trial for document level defaulting to passive M71+
   window.addEventListener('wheel', function(e) {
@@ -325,7 +321,6 @@ if (location.search === '') {
   documentWriteTest();
   dateNowTest();
   consoleTimeTest();
-  websqlTest();
   passiveEventsListenerTest();
   geolocationOnStartTest();
   notificationOnStartTest();
@@ -344,9 +339,6 @@ if (location.search === '') {
   }
   if (params.has('consoleTime')) {
     consoleTimeTest();
-  }
-  if (params.has('websql')) {
-    websqlTest();
   }
   if (params.has('passiveEvents')) {
     passiveEventsListenerTest();

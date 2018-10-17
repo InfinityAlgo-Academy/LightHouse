@@ -313,9 +313,6 @@ Object {
       "path": "dobetterweb/js-libraries",
     },
     Object {
-      "path": "dobetterweb/no-websql",
-    },
-    Object {
       "path": "dobetterweb/notification-on-start",
     },
     Object {
@@ -592,10 +589,6 @@ Object {
       "auditRefs": Array [
         Object {
           "id": "appcache-manifest",
-          "weight": 1,
-        },
-        Object {
-          "id": "no-websql",
           "weight": 1,
         },
         Object {
@@ -1076,9 +1069,6 @@ Object {
         },
         Object {
           "path": "dobetterweb/tags-blocking-first-paint",
-        },
-        Object {
-          "path": "dobetterweb/websql",
         },
         Object {
           "path": "seo/meta-description",

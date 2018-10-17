@@ -1602,14 +1602,6 @@
             "scoreDisplayMode": "binary", 
             "title": "Includes front-end JavaScript libraries with known security vulnerabilities"
         }, 
-        "no-websql": {
-            "description": "Web SQL is deprecated. Consider using IndexedDB instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/web-sql).", 
-            "displayValue": "Found \"mydb\" (v1.0)", 
-            "id": "no-websql", 
-            "score": 0.0, 
-            "scoreDisplayMode": "binary", 
-            "title": "Uses WebSQL DB"
-        }, 
         "notification-on-start": {
             "description": "Users are mistrustful of or confused by sites that request to send notifications without context. Consider tying the request to user gestures instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/notifications-on-load).", 
             "details": {
@@ -2818,10 +2810,6 @@
             "auditRefs": [
                 {
                     "id": "appcache-manifest", 
-                    "weight": 1.0
-                }, 
-                {
-                    "id": "no-websql", 
                     "weight": 1.0
                 }, 
                 {

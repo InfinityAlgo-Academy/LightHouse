@@ -36,9 +36,6 @@ module.exports = [
       'no-document-write': {
         score: 1,
       },
-      'no-websql': {
-        score: 1,
-      },
       'uses-passive-event-listeners': {
         score: 1,
       },

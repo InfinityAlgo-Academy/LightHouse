@@ -117,8 +117,6 @@ declare global {
       Viewport: string|null;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
-      /** WebSQL database information for the page or null if none was found. */
-      WebSQL: Crdp.Database.Database | null;
     }
 
     module Artifacts {
