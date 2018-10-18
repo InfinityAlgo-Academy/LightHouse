@@ -20,6 +20,7 @@
     "lighthouse-cli/**/*.js",
     "lighthouse-core/**/*.js",
     "lighthouse-extension/app/src/*.js",
+    "lighthouse-extension/*.js",
     "./typings/*.d.ts",
   ],
   "exclude": [
