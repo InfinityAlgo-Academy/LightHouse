@@ -16,5 +16,6 @@ lighthouse-extension/               @paulirish          @patrickhulce
 lighthouse-viewer/                  @ebidel             @brendankenny
 
 docs/                               @paulirish
+proto/                              @brendankenny       @exterkamp
 
 # no explicit owner for plots, travis, etc

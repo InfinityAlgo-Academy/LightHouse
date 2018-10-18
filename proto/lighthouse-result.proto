@@ -6,7 +6,7 @@ import "google/protobuf/wrappers.proto";
 
 // Canonical list of errors created by Lighthouse.
 enum LighthouseError {
-  UNPARSEABLE_ERROR_CODE = 0;
+  UNDEFINED = 0;
   // No error in Lighthouse; the results are reliable.
   NO_ERROR = 1;
   // An uncategorized error occurred, likely a JavaScript exception.
