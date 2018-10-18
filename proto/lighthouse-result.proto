@@ -69,7 +69,7 @@ message LighthouseResult {
     string host_user_agent = 2;
 
     // The benchmark index that indicates rough device class
-    int32 benchmark_index = 3;
+    google.protobuf.DoubleValue benchmark_index = 3;
   }
 
   // The environment that the audit was run in
@@ -110,7 +110,7 @@ message LighthouseResult {
     repeated string output = 1;
 
     // The maximum amount of time to wait for loading in ms
-    int32 max_wait_for_load = 2;
+    google.protobuf.DoubleValue max_wait_for_load = 2;
 
     // Network throttling options
     enum ThrottlingMethod {
@@ -133,7 +133,7 @@ message LighthouseResult {
     // Message containing the throttling settings used in an LH configuration
     message Throttling {
       // The round trip time in ms
-      int32 rtt_ms = 1;
+      google.protobuf.DoubleValue rtt_ms = 1;
 
       // The throughput in kilobytes per second
       google.protobuf.DoubleValue throughput_kbps = 2;
@@ -148,7 +148,7 @@ message LighthouseResult {
       google.protobuf.DoubleValue upload_throughput_kbps = 5;
 
       // The amount of slowdown to apply to the cpu
-      int32 cpu_slowdown_multiplier = 6;
+      google.protobuf.DoubleValue cpu_slowdown_multiplier = 6;
     }
 
     // The throttling settings used

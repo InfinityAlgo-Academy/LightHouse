@@ -3244,7 +3244,7 @@
         "extraHeaders": null, 
         "gatherMode": false, 
         "locale": "en-US", 
-        "maxWaitForLoad": 45000, 
+        "maxWaitForLoad": 45000.0, 
         "onlyAudits": null, 
         "onlyCategories": null, 
         "output": [
@@ -3252,17 +3252,17 @@
         ], 
         "skipAudits": null, 
         "throttling": {
-            "cpuSlowdownMultiplier": 4, 
+            "cpuSlowdownMultiplier": 4.0, 
             "downloadThroughputKbps": 1474.5600000000002, 
             "requestLatencyMs": 562.5, 
-            "rttMs": 150, 
+            "rttMs": 150.0, 
             "throughputKbps": 1638.4, 
             "uploadThroughputKbps": 675.0
         }, 
         "throttlingMethod": "devtools"
     }, 
     "environment": {
-        "benchmarkIndex": 1000, 
+        "benchmarkIndex": 1000.0, 
         "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36", 
         "networkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36"
     }, 

@@ -149,7 +149,7 @@ function ultradumbBenchmark() {
   }
 
   const durationInSeconds = (Date.now() - start) / 1000;
-  return iterations / durationInSeconds;
+  return Math.round(iterations / durationInSeconds);
 }
 
 module.exports = {
