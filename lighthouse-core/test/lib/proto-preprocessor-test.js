@@ -9,6 +9,24 @@ const processForProto = require('../../lib/proto-preprocessor').processForProto;
 
 /* eslint-env jest */
 describe('processing for proto', () => {
+  it('cleans up configSettings', () => {
+    const input = {
+      'configSettings': {
+        'output': 'json',
+      },
+    };
+    const expectation = {
+      'configSettings': {
+        'output': [
+          'json',
+        ],
+      },
+    };
+    const output = processForProto(JSON.stringify(input));
+
+    expect(JSON.parse(output)).toMatchObject(expectation);
+  });
+
   it('cleans up audits', () => {
     const input = {
       'audits': {

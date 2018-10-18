@@ -22,13 +22,23 @@ function processForProto(result) {
   /** @type {LH.Result} */
   const reportJson = JSON.parse(result);
 
+  // Clean up the configSettings
+  if (reportJson.configSettings) {
+    // make sure the 'output' field is an array
+    if (reportJson.configSettings.output) {
+      if (!Array.isArray(reportJson.configSettings.output)) {
+        reportJson.configSettings.output = [reportJson.configSettings.output];
+      }
+    }
+  }
+
   // Clean up actions that require 'audits' to exist
-  if ('audits' in reportJson) {
+  if (reportJson.audits) {
     Object.keys(reportJson.audits).forEach(auditName => {
       const audit = reportJson.audits[auditName];
 
       // Rewrite the 'not-applicable' scoreDisplayMode to 'not_applicable'. #6201
-      if ('scoreDisplayMode' in audit) {
+      if (audit.scoreDisplayMode) {
         if (audit.scoreDisplayMode === 'not-applicable') {
           // @ts-ignore Breaking the LH.Result type
           audit.scoreDisplayMode = 'not_applicable';
@@ -52,7 +62,7 @@ function processForProto(result) {
   }
 
   // Drop the i18n icuMessagePaths. Painful in proto, and low priority to expose currently.
-  if ('i18n' in reportJson && 'icuMessagePaths' in reportJson.i18n) {
+  if (reportJson.i18n && reportJson.i18n.icuMessagePaths) {
     delete reportJson.i18n.icuMessagePaths;
   }
 
