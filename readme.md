@@ -76,7 +76,7 @@ Output:
   --output-path  The file path to output the results. Use 'stdout' to write to stdout.
                  If using JSON or CSV output, default is stdout.
                  If using HTML output, default is a file in the working directory with a name based on the test URL and date.
-                 If using multiple outputs, --output-path is ignored.
+                 If using multiple outputs, --output-path is appended with the standard extension for each output type. "reports/my-run" -> "reports/my-run.report.html", "reports/my-run.report.json", etc.
                  Example: --output-path=./lighthouse-results.html
   --view         Open HTML report in your browser                                                                                          [boolean]
 
