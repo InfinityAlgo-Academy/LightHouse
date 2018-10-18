@@ -37,6 +37,9 @@ const sentryDelegate = {
   getContext: noop,
   /** @type {(error: Error, options?: CaptureOptions) => Promise<void>} */
   captureException: async () => {},
+  _shouldSample() {
+    return SAMPLE_RATE >= Math.random();
+  },
 };
 
 /**
@@ -50,7 +53,7 @@ function init(opts) {
   }
 
   // If not selected for samping, leave the functions as a noop.
-  if (SAMPLE_RATE <= Math.random()) {
+  if (!sentryDelegate._shouldSample()) {
     return;
   }
 
