@@ -251,8 +251,7 @@ class Runner {
           throw new Error(`Required ${artifactName} gatherer did not run.`);
         }
 
-        // If artifact was an error, it must be non-fatal (or gatherRunner would
-        // have thrown). Output error result on behalf of audit.
+        // If artifact was an error, output error result on behalf of audit.
         if (artifacts[artifactName] instanceof Error) {
           /** @type {Error} */
           // @ts-ignore An artifact *could* be an Error, but caught here, so ignore elsewhere.
@@ -286,12 +285,9 @@ class Runner {
       auditResult = Audit.generateAuditResult(audit, product);
     } catch (err) {
       log.warn(audit.meta.id, `Caught exception: ${err.message}`);
-      if (err.fatal) {
-        throw err;
-      }
 
       Sentry.captureException(err, {tags: {audit: audit.meta.id}, level: 'error'});
-      // Non-fatal error become error audit result.
+      // Errors become error audit result.
       const errorMessage = err.friendlyMessage ?
         `${err.friendlyMessage} (${err.message})` :
         `Audit error: ${err.message}`;

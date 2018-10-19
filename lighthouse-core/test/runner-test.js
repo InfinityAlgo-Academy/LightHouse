@@ -290,7 +290,7 @@ describe('Runner', () => {
 
     // TODO: need to support save/load of artifact errors.
     // See https://github.com/GoogleChrome/lighthouse/issues/4984
-    it.skip('outputs an error audit result when required artifact was a non-fatal Error', () => {
+    it.skip('outputs an error audit result when required artifact was an Error', () => {
       const errorMessage = 'blurst of times';
       const artifactError = new Error(errorMessage);
 
@@ -326,7 +326,7 @@ describe('Runner', () => {
       requiredArtifacts: [],
     };
 
-    it('produces an error audit result when an audit throws a non-fatal Error', () => {
+    it('produces an error audit result when an audit throws an Error', () => {
       const errorMessage = 'Audit yourself';
       const config = new Config({
         settings: {
@@ -350,31 +350,6 @@ describe('Runner', () => {
         assert.strictEqual(auditResult.scoreDisplayMode, 'error');
         assert.ok(auditResult.errorMessage.includes(errorMessage));
       });
-    });
-
-    it('rejects if an audit throws a fatal error', () => {
-      const errorMessage = 'Uh oh';
-      const config = new Config({
-        settings: {
-          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
-        },
-        audits: [
-          class FatalThrowyAudit extends Audit {
-            static get meta() {
-              return testAuditMeta;
-            }
-            static audit() {
-              const fatalError = new Error(errorMessage);
-              fatalError.fatal = true;
-              throw fatalError;
-            }
-          },
-        ],
-      });
-
-      return Runner.run({}, {config}).then(
-        _ => assert.ok(false),
-        err => assert.strictEqual(err.message, errorMessage));
     });
   });
 

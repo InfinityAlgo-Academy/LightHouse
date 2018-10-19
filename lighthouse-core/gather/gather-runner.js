@@ -132,20 +132,6 @@ class GatherRunner {
   }
 
   /**
-   * Test any error output from the promise, absorbing non-fatal errors and
-   * throwing on fatal ones so that run is stopped.
-   * @param {Promise<*>} promise
-   * @return {Promise<void>}
-   */
-  static recoverOrThrow(promise) {
-    return promise.catch(err => {
-      if (err.fatal) {
-        throw err;
-      }
-    });
-  }
-
-  /**
    * Returns an error if the original network request failed or wasn't found.
    * @param {string} url The URL of the original requested page.
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
@@ -214,7 +200,7 @@ class GatherRunner {
       passContext.options = gathererDefn.options || {};
       const artifactPromise = Promise.resolve().then(_ => gatherer.beforePass(passContext));
       gathererResults[gatherer.name] = [artifactPromise];
-      await GatherRunner.recoverOrThrow(artifactPromise);
+      await artifactPromise.catch(() => {});
     }
   }
 
@@ -258,7 +244,7 @@ class GatherRunner {
       const gathererResult = gathererResults[gatherer.name] || [];
       gathererResult.push(artifactPromise);
       gathererResults[gatherer.name] = gathererResult;
-      await GatherRunner.recoverOrThrow(artifactPromise);
+      await artifactPromise.catch(() => {});
     }
   }
 
@@ -327,7 +313,7 @@ class GatherRunner {
       const gathererResult = gathererResults[gatherer.name] || [];
       gathererResult.push(artifactPromise);
       gathererResults[gatherer.name] = gathererResult;
-      await GatherRunner.recoverOrThrow(artifactPromise);
+      await artifactPromise.catch(() => {});
       log.verbose('statusEnd', status);
     }
 
@@ -338,7 +324,7 @@ class GatherRunner {
   /**
    * Takes the results of each gatherer phase for each gatherer and uses the
    * last produced value (that's not undefined) as the artifact for that
-   * gatherer. If a non-fatal error was rejected from a gatherer phase,
+   * gatherer. If an error was rejected from a gatherer phase,
    * uses that error object as the artifact instead.
    * @param {Partial<GathererResults>} gathererResults
    * @param {LH.BaseArtifacts} baseArtifacts
@@ -360,8 +346,7 @@ class GatherRunner {
         // Typecast pretends artifact always provided here, but checked below for top-level `throw`.
         gathererArtifacts[gathererName] = /** @type {NonVoid<PhaseResult>} */ (artifact);
       } catch (err) {
-        // An error result must be non-fatal to not have caused an exit by now,
-        // so return it to runner to handle turning it into an error audit.
+        // Return error to runner to handle turning it into an error audit.
         gathererArtifacts[gathererName] = err;
       }
 
