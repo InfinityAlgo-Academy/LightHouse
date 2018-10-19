@@ -90,7 +90,7 @@ function getElementsInDocument(selector) {
   /** @param {NodeListOf<Element>} nodes */
   const _findAllElements = nodes => {
     for (let i = 0, el; el = nodes[i]; ++i) {
-      if (!selector || el.matches(selector)) {
+      if (!selector || window.__ElementMatches.call(el, selector)) {
         results.push(el);
       }
       // If the element has a shadow root, dig deeper.
