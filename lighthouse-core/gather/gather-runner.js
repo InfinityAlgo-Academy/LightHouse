@@ -112,6 +112,7 @@ class GatherRunner {
     await driver.cacheNatives();
     await driver.registerPerformanceObserver();
     await driver.dismissJavaScriptDialogs();
+    await driver.listenForSecurityStateChanges();
     if (resetStorage) await driver.clearDataForOrigin(options.requestedUrl);
   }
 
@@ -169,6 +170,22 @@ class GatherRunner {
 
     if (errorDef) {
       return new LHError(errorDef);
+    }
+  }
+
+  /**
+   * Throws an error if the security state is insecure.
+   * @param {LH.Crdp.Security.SecurityStateChangedEvent} securityState
+   * @throws {LHError}
+   */
+  static assertNoSecurityIssues({securityState, explanations}) {
+    if (securityState === 'insecure') {
+      const errorDef = {...LHError.errors.INSECURE_DOCUMENT_REQUEST};
+      const insecureDescriptions = explanations
+        .filter(exp => exp.securityState === 'insecure')
+        .map(exp => exp.description);
+      errorDef.message += ` ${insecureDescriptions.join(' ')}`;
+      throw new LHError(errorDef);
     }
   }
 
@@ -279,6 +296,8 @@ class GatherRunner {
       log.error('GatherRunner', pageLoadError.message, passContext.url);
       passContext.LighthouseRunWarnings.push(pageLoadError.friendlyMessage);
     }
+
+    this.assertNoSecurityIssues(driver.getSecurityState());
 
     // Expose devtoolsLog, networkRecords, and trace (if present) to gatherers
     /** @type {LH.Gatherer.LoadData} */

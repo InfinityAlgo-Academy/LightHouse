@@ -142,6 +142,12 @@ const ERRORS = {
     message: strings.pageLoadFailed,
     lhrRuntimeError: true,
   },
+  /* Used when security error prevents page load. */
+  INSECURE_DOCUMENT_REQUEST: {
+    code: 'INSECURE_DOCUMENT_REQUEST',
+    message: strings.pageLoadFailedInsecure,
+    lhrRuntimeError: true,
+  },
 
   // Protocol internal failures
   TRACING_ALREADY_STARTED: {
