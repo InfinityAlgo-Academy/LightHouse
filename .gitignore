@@ -39,8 +39,6 @@ yarn-error.log
 /chrome-win32/
 /chrome.zip
 
-plots/out**
-
 *__pycache__
 *.pyc
 proto/scripts/*_pb2.*

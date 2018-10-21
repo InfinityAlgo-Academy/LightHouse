@@ -173,7 +173,7 @@ gulp.task('create-dir-for-gh-pages', () => {
 gulp.task('deploy', cb => {
   runSequence('clean', 'build', 'create-dir-for-gh-pages', function() {
     ghpages.publish(`dist/viewer`, {
-      add: true, // keep existing files (like `./plots/`)
+      add: true, // keep existing files
       logger: $.util.log,
     }, err => {
       if (err) {

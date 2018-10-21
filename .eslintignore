@@ -11,7 +11,4 @@ lighthouse-extension/app/scripts
 **/closure/*/*
 coverage/**
 
-# Generated files
-plots/out*
-
 !.eslintrc.js

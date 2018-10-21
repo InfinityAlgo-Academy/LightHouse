@@ -53,7 +53,6 @@
     "fast": "yarn start --disable-device-emulation --throttlingMethod=provided",
     "deploy-viewer": "cd lighthouse-viewer && gulp deploy",
     "bundlesize": "bundlesize",
-    "plots-smoke": "bash plots/test/smoke.sh",
     "changelog": "conventional-changelog --config ./build/changelog-generator/index.js --infile changelog.md --same-file",
     "type-check": "tsc -p . && cd ./lighthouse-viewer && yarn type-check",
     "i18n:checks": "./lighthouse-core/scripts/i18n/assert-strings-collected.sh",
