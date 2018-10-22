@@ -137,11 +137,10 @@ describe('Images: aspect-ratio audit', () => {
     },
   });
 
-  testImage('has invalid natural sizing information', {
+  testImage('is placeholder image', {
     rawValue: true,
-    warning: 'Invalid image sizing information https://google.com/logo.png',
-    clientSize: [100, 100],
-    naturalSize: [0, 0],
+    clientSize: [300, 220],
+    naturalSize: [1, 1],
     props: {
       isCss: false,
       usesObjectFit: false,
