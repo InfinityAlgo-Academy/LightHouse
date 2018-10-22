@@ -205,6 +205,7 @@ declare global {
         snapshot?: string;
         data?: {
           documentLoaderURL?: string;
+          frame?: string;
           frames?: {
             frame: string;
             parent?: string;
@@ -219,6 +220,7 @@ declare global {
           styleSheetUrl?: string;
           timerId?: string;
           url?: string;
+          processId?: number;
         };
         frame?: string;
         name?: string;

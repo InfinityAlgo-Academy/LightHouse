@@ -26,20 +26,21 @@ const Driver = require('../gather/driver.js'); // eslint-disable-line no-unused-
  * Execution sequence when GatherRunner.run() is called:
  *
  * 1. Setup
- *   A. navigate to about:blank
  *   B. driver.connect()
  *   C. GatherRunner.setupDriver()
- *     i. assertNoSameOriginServiceWorkerClients
- *     ii. beginEmulation
- *     iii. enableRuntimeEvents
- *     iv. evaluateScriptOnLoad rescue native Promise from potential polyfill
- *     v. register a performance observer
- *     vi. register dialog dismisser
- *     vii. clearDataForOrigin
+ *     i. navigate to a blank page
+ *     ii. assertNoSameOriginServiceWorkerClients
+ *     iii. retrieve and save userAgent
+ *     iv. beginEmulation
+ *     v. enableRuntimeEvents
+ *     vi. evaluateScriptOnLoad rescue native Promise from potential polyfill
+ *     vii. register a performance observer
+ *     viii. register dialog dismisser
+ *     iv. clearDataForOrigin
  *
  * 2. For each pass in the config:
  *   A. GatherRunner.beforePass()
- *     i. navigate to about:blank
+ *     i. navigate to a blank page
  *     ii. Enable network request blocking for specified patterns
  *     iii. all gatherers' beforePass()
  *   B. GatherRunner.pass()
@@ -105,7 +106,9 @@ class GatherRunner {
   static async setupDriver(driver, options) {
     log.log('status', 'Initializing…');
     const resetStorage = !options.settings.disableStorageReset;
-    // Enable emulation based on settings
+    // In the devtools/extension case, we can't still be on the site while trying to clear state
+    // So we first navigate to a blank page, then apply our emulation & setup
+    await GatherRunner.loadBlank(driver);
     await driver.assertNoSameOriginServiceWorkerClients(options.requestedUrl);
     await driver.beginEmulation(options.settings);
     await driver.enableRuntimeEvents();
@@ -176,7 +179,7 @@ class GatherRunner {
   }
 
   /**
-   * Navigates to about:blank and calls beforePass() on gatherers before tracing
+   * Navigates to a blank page and calls beforePass() on gatherers before tracing
    * has started and before navigation to the target page.
    * @param {LH.Gatherer.PassContext} passContext
    * @param {Partial<GathererResults>} gathererResults
@@ -187,7 +190,14 @@ class GatherRunner {
       .concat(passContext.settings.blockedUrlPatterns || []);
     const blankPage = passContext.passConfig.blankPage;
     const blankDuration = passContext.passConfig.blankDuration;
-    await GatherRunner.loadBlank(passContext.driver, blankPage, blankDuration);
+
+    // On the very first pass we're already on blank
+    const skipLoadBlank = passContext.firstPass;
+    const pass = skipLoadBlank
+      ? Promise.resolve()
+      : GatherRunner.loadBlank(passContext.driver, blankPage, blankDuration);
+    await pass;
+
     // Set request blocking before any network activity
     // No "clearing" is done at the end of the pass since blockUrlPatterns([]) will unset all if
     // neccessary at the beginning of the next pass.
@@ -394,7 +404,6 @@ class GatherRunner {
     try {
       await driver.connect();
       const baseArtifacts = await GatherRunner.getBaseArtifacts(options);
-      await GatherRunner.loadBlank(driver);
       baseArtifacts.BenchmarkIndex = await options.driver.getBenchmarkIndex();
       await GatherRunner.setupDriver(driver, options);
 
@@ -409,6 +418,7 @@ class GatherRunner {
           passConfig,
           // *pass() functions and gatherers can push to this warnings array.
           LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,
+          firstPass,
         };
 
         await driver.setThrottling(options.settings, passConfig);

@@ -14,15 +14,18 @@ const TracingProcessor = require('../../../lib/traces/tracing-processor.js');
 const assert = require('assert');
 
 describe('MainResource computed artifact', () => {
-  const args = {data: {}};
+  const pid = 1;
+  const tid = 2;
+  const frameId = 'BLAH';
+  const args = {data: {}, frame: frameId};
   const baseTs = 1241250325;
   let boilerplateTrace;
 
   beforeEach(() => {
     boilerplateTrace = [
-      {ph: 'I', name: 'TracingStartedInPage', ts: baseTs, args},
-      {ph: 'I', name: 'navigationStart', ts: baseTs, args},
-      {ph: 'R', name: 'firstContentfulPaint', ts: baseTs + 1, args},
+      {ph: 'I', name: 'TracingStartedInPage', pid, tid, ts: baseTs, args: {data: {page: frameId}}},
+      {ph: 'I', name: 'navigationStart', pid, tid, ts: baseTs, args},
+      {ph: 'R', name: 'firstContentfulPaint', pid, tid, ts: baseTs + 1, args},
     ];
   });
 
@@ -60,13 +63,13 @@ describe('MainResource computed artifact', () => {
     */
     const traceEvents = [
       ...boilerplateTrace,
-      {ph: 'X', name: 'TaskA', ts: baseTs, dur: 100e3},
-      {ph: 'B', name: 'TaskB', ts: baseTs + 5e3},
-      {ph: 'X', name: 'TaskC', ts: baseTs + 10e3, dur: 30e3},
-      {ph: 'E', name: 'TaskB', ts: baseTs + 55e3},
+      {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 100e3, args},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 5e3, args},
+      {ph: 'X', name: 'TaskC', pid, tid, ts: baseTs + 10e3, dur: 30e3, args},
+      {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 55e3, args},
     ];
 
-    traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline', args}));
+    traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
 
     const context = {computedCache: new Map()};
     const tasks = await MainThreadTasks.request({traceEvents}, context);
@@ -116,11 +119,11 @@ describe('MainResource computed artifact', () => {
     */
     const traceEvents = [
       ...boilerplateTrace,
-      {ph: 'X', name: 'TaskA', ts: baseTs, dur: 100e3, ...url('about:blank')},
-      {ph: 'B', name: 'TaskB', ts: baseTs + 5e3, ...stackFrames(['urlB.1', 'urlB.2'])},
-      {ph: 'X', name: 'EvaluateScript', ts: baseTs + 10e3, dur: 30e3, ...url('urlC')},
-      {ph: 'X', name: 'TaskD', ts: baseTs + 15e3, dur: 5e3, ...stackFrames(['urlD'])},
-      {ph: 'E', name: 'TaskB', ts: baseTs + 55e3},
+      {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 100e3, ...url('about:blank')},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 5e3, ...stackFrames(['urlB.1', 'urlB.2'])},
+      {ph: 'X', name: 'EvaluateScript', pid, tid, ts: baseTs + 10e3, dur: 30e3, ...url('urlC')},
+      {ph: 'X', name: 'TaskD', pid, tid, ts: baseTs + 15e3, dur: 5e3, ...stackFrames(['urlD'])},
+      {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 55e3},
     ];
 
     traceEvents.forEach(evt => {
