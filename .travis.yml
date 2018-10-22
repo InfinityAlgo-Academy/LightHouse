@@ -6,7 +6,7 @@ branches:
 matrix:
   include:
     - node_js: "8"
-    - node_js: "9"
+    - node_js: "10"
       if: head_branch IS blank AND branch = master
 dist: trusty
 cache:
@@ -42,7 +42,7 @@ script:
   - yarn test-viewer
   - yarn test-lantern
   - yarn i18n:checks
-  # _JAVA_OPTIONS is breaking parsing of compiler output. See #3338.
+  # _JAVA_OPTIONS is breaking parsing of `compile-devtools` output. See #3338.
   - unset _JAVA_OPTIONS
   # FIXME(paulirish): re-enable after a roll of LH->CDT
   # - yarn compile-devtools
