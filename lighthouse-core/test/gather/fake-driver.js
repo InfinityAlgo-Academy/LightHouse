@@ -31,6 +31,9 @@ const fakeDriver = {
   gotoURL() {
     return Promise.resolve('https://www.reddit.com/r/nba');
   },
+  waitForLoadEvent() {
+    return Promise.resolve();
+  },
   beginEmulation() {
     return Promise.resolve();
   },
