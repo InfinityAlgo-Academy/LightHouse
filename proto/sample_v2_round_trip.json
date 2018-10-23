@@ -2075,12 +2075,12 @@
                     }
                 ], 
                 "overallSavingsBytes": 30470.0, 
-                "overallSavingsMs": 0.0, 
+                "overallSavingsMs": 150.0, 
                 "type": "opportunity"
             }, 
             "displayValue": "Potential savings of 30\u00a0KB", 
             "id": "unminified-javascript", 
-            "score": 1.0, 
+            "score": 0.88, 
             "scoreDisplayMode": "numeric", 
             "title": "Minify JavaScript", 
             "warnings": []
@@ -2452,12 +2452,12 @@
                     }
                 ], 
                 "overallSavingsBytes": 64646.0, 
-                "overallSavingsMs": 150.0, 
+                "overallSavingsMs": 300.0, 
                 "type": "opportunity"
             }, 
             "displayValue": "Potential savings of 63\u00a0KB", 
             "id": "uses-text-compression", 
-            "score": 0.88, 
+            "score": 0.75, 
             "scoreDisplayMode": "numeric", 
             "title": "Enable text compression"
         }, 

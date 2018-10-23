@@ -182,6 +182,17 @@ class Simulator {
   }
 
   /**
+   * @param {Set<Node>} nodes
+   * @return {Node[]}
+   */
+  _getNodesSortedByStartTime(nodes) {
+    return Array.from(nodes).sort((nodeA, nodeB) => {
+      // Sort nodes by startTime to match original execution order
+      return nodeA.startTime - nodeB.startTime;
+    });
+  }
+
+  /**
    * @param {Node} node
    * @param {number} totalElapsedTime
    */
@@ -354,18 +365,23 @@ class Simulator {
     }
   }
 
+  /**
+   * @return {Map<Node, LH.Gatherer.Simulation.NodeTiming>}
+   */
   _computeFinalNodeTimings() {
-    /** @type {Map<Node, LH.Gatherer.Simulation.NodeTiming>} */
-    const nodeTimings = new Map();
+    /** @type {Array<[Node, LH.Gatherer.Simulation.NodeTiming]>} */
+    const nodeTimingEntries = [];
     for (const [node, timing] of this._nodeTimings) {
-      nodeTimings.set(node, {
+      nodeTimingEntries.push([node, {
         startTime: timing.startTime,
         endTime: timing.endTime,
         duration: timing.endTime - timing.startTime,
-      });
+      }]);
     }
 
-    return nodeTimings;
+    // Most consumers will want the entries sorted by startTime, so insert them in that order
+    nodeTimingEntries.sort((a, b) => a[1].startTime - b[1].startTime);
+    return new Map(nodeTimingEntries);
   }
 
   /**
@@ -419,7 +435,7 @@ class Simulator {
     // loop as long as we have nodes in the queue or currently in progress
     while (nodesReadyToStart.size || nodesInProgress.size) {
       // move all possible queued nodes to in progress
-      for (const node of nodesReadyToStart) {
+      for (const node of this._getNodesSortedByStartTime(nodesReadyToStart)) {
         this._startNodeIfPossible(node, totalElapsedTime);
       }
 

@@ -94,7 +94,7 @@ class LanternEstimatedInputLatency extends LanternMetric {
       });
     }
 
-    return events;
+    return events.sort((a, b) => a.start - b.start);
   }
 }
 

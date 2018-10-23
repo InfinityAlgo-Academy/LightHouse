@@ -1951,9 +1951,9 @@
       "id": "unminified-javascript",
       "title": "Minify JavaScript",
       "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://developers.google.com/speed/docs/insights/MinifyResources).",
-      "score": 1,
+      "score": 0.88,
       "scoreDisplayMode": "numeric",
-      "rawValue": 0,
+      "rawValue": 150,
       "displayValue": "Potential savings of 30 KB",
       "warnings": [],
       "details": {
@@ -1983,7 +1983,7 @@
             "wastedPercent": 42.52388078488413
           }
         ],
-        "overallSavingsMs": 0,
+        "overallSavingsMs": 150,
         "overallSavingsBytes": 30470
       }
     },
@@ -2070,9 +2070,9 @@
       "id": "uses-text-compression",
       "title": "Enable text compression",
       "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/text-compression).",
-      "score": 0.88,
+      "score": 0.75,
       "scoreDisplayMode": "numeric",
-      "rawValue": 150,
+      "rawValue": 300,
       "displayValue": "Potential savings of 63 KB",
       "details": {
         "type": "opportunity",
@@ -2105,7 +2105,7 @@
             "wastedBytes": 8442
           }
         ],
-        "overallSavingsMs": 150,
+        "overallSavingsMs": 300,
         "overallSavingsBytes": 64646
       }
     },
