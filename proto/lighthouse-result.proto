@@ -205,6 +205,9 @@ message LighthouseResult {
     // List of the audits that were skipped, empty if all were run
     // nullable list of strings
     google.protobuf.Value skip_audits = 15;
+
+    // Flag indicating whether this Lighthouse run was audit-only
+    google.protobuf.BoolValue audit_mode = 16;
   }
 
   // The settings that were used to run this audit
@@ -212,6 +215,15 @@ message LighthouseResult {
 
   // i18n info in version 1 message format
   I18n i18n = 13;
+
+  // Message containing the performance timing data for the Lighthouse run
+  message Timing {
+    // The total duration of Lighthouse's run
+    google.protobuf.DoubleValue total = 1;
+ }
+
+ // The performance timing data for the Lighthouse run
+ Timing timing = 14;
 }
 
 // Message containing a category 
