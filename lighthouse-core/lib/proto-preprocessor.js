@@ -32,6 +32,11 @@ function processForProto(result) {
     }
   }
 
+  // Remove runtimeError if it is NO_ERROR
+  if (reportJson.runtimeError && reportJson.runtimeError.code === 'NO_ERROR') {
+    delete reportJson.runtimeError;
+  }
+
   // Clean up actions that require 'audits' to exist
   if (reportJson.audits) {
     Object.keys(reportJson.audits).forEach(auditName => {

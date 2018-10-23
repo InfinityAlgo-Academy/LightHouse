@@ -6,42 +6,41 @@ import "google/protobuf/wrappers.proto";
 
 // Canonical list of errors created by Lighthouse.
 enum LighthouseError {
-  UNDEFINED = 0;
   // No error in Lighthouse; the results are reliable.
-  NO_ERROR = 1;
+  NO_ERROR = 0;
   // An uncategorized error occurred, likely a JavaScript exception.
-  UNKNOWN_ERROR = 2;
+  UNKNOWN_ERROR = 1;
   // The trace did not contain any screenshot events.
-  NO_SPEEDLINE_FRAMES = 3;
+  NO_SPEEDLINE_FRAMES = 2;
   // No visual change between the beginning and end of load.
-  SPEEDINDEX_OF_ZERO = 4;
+  SPEEDINDEX_OF_ZERO = 3;
   // The trace did not contain any screenshot events.
-  NO_SCREENSHOTS = 5;
+  NO_SCREENSHOTS = 4;
   // The computed speedindex results are non-finite.
-  INVALID_SPEEDLINE = 6;
+  INVALID_SPEEDLINE = 5;
   // The trace did not contain a TracingStartedInPage event.
-  NO_TRACING_STARTED = 7;
+  NO_TRACING_STARTED = 6;
   // The trace did not contain a navigationStart event.
-  NO_NAVSTART = 8;
+  NO_NAVSTART = 7;
   // The trace did not contain a firstContentfulPaint event.
-  NO_FCP = 9;
+  NO_FCP = 8;
   // The trace did not contain a domContentLoaded event.
-  NO_DCL = 10;
+  NO_DCL = 9;
   // No network request could be identified as the primary HTML document.
-  NO_DOCUMENT_REQUEST = 11;
+  NO_DOCUMENT_REQUEST = 10;
   // The HTML document's network request failed due to Chrome-internal reasons
   // (canceled, blocked, etc).
-  FAILED_DOCUMENT_REQUEST = 12;
+  FAILED_DOCUMENT_REQUEST = 11;
   // The HTML document's network request completed, but returned an HTTP status
   // code of 4xx or 5xx.
-  ERRORED_DOCUMENT_REQUEST = 13;
+  ERRORED_DOCUMENT_REQUEST = 12;
   // Chromium's tracing controller did not manage to begin tracing across
   // processes. Typically fixed by restarting Chromium.
-  TRACING_ALREADY_STARTED = 14;
+  TRACING_ALREADY_STARTED = 13;
   // The trace data wasn't parsed correctly.
-  PARSING_PROBLEM = 15;
+  PARSING_PROBLEM = 14;
   // The trace data failed to stream over the protocol.
-  READ_FAILED = 16;
+  READ_FAILED = 15;
 }
 
 // The overarching Lighthouse Response object (LHR)

@@ -27,6 +27,30 @@ describe('processing for proto', () => {
     expect(JSON.parse(output)).toMatchObject(expectation);
   });
 
+  it('cleans up default runtimeErrors', () => {
+    const input = {
+      'runtimeError': {
+        'code': 'NO_ERROR',
+      },
+    };
+
+    const output = processForProto(JSON.stringify(input));
+
+    expect(JSON.parse(output)).not.toHaveProperty('runtimeError');
+  });
+
+  it('non-default runtimeErrors are untouched', () => {
+    const input = {
+      'runtimeError': {
+        'code': 'ERROR_NO_DOCUMENT_REQUEST',
+      },
+    };
+
+    const output = processForProto(JSON.stringify(input));
+
+    expect(JSON.parse(output)).toMatchObject(input);
+  });
+
   it('cleans up audits', () => {
     const input = {
       'audits': {
