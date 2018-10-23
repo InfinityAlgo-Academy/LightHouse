@@ -6,6 +6,7 @@
 'use strict';
 
 const fs = require('fs');
+const logoPageSource = fs.readFileSync(__dirname + '/../gather/logo-page.html', 'utf8');
 
 /**
  * Adjustments needed for DevTools network throttling to simulate
@@ -60,8 +61,8 @@ const defaultPassConfig = {
   networkQuietThresholdMs: 0,
   cpuQuietThresholdMs: 0,
   blockedUrlPatterns: [],
-  blankPage: 'about:blank',
-  blankDuration: 300,
+  blankPage: `data:text/html,${logoPageSource}`,
+  blankDuration: 10,
   gatherers: [],
 };
 
