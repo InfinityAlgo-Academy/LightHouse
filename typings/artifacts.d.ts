@@ -355,8 +355,8 @@ declare global {
         processEvents: Array<TraceEvent>;
         /** The subset of trace events from the page's main thread, sorted by timestamp. */
         mainThreadEvents: Array<TraceEvent>;
-        /** The event marking the start of tracing in the target browser. */
-        startedInPageEvt: TraceEvent;
+        /** Various ids for the current trace context. */
+        tracingIds: {pid: number, tid: number, frameId: string, ts: number};
         /** The trace event marking navigationStart. */
         navigationStartEvt: TraceEvent;
         /** The trace event marking firstPaint, if it was found. */

@@ -4,14 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
-const fs = require('fs');
 
 const log = require('lighthouse-logger');
 const LHError = require('../lib/lh-error');
 const URL = require('../lib/url-shim');
 const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants');
-const blankPageSource = fs.readFileSync(__dirname + '/blank-page.html', 'utf8');
 
 const Driver = require('../gather/driver.js'); // eslint-disable-line no-unused-vars
 
@@ -65,33 +63,22 @@ const Driver = require('../gather/driver.js'); // eslint-disable-line no-unused-
  */
 class GatherRunner {
   /**
-   * Loads a blank page and waits there briefly. Since a Page.reload command does
-   * not let a service worker take over, we navigate away and then come back to reload.
+   * Loads about:blank and waits there briefly. Since a Page.reload command does
+   * not let a service worker take over, we navigate away and then come back to
+   * reload. We do not `waitForLoad` on about:blank since a page load event is
+   * never fired on it.
    * @param {Driver} driver
    * @param {string=} url
    * @param {number=} duration
    * @return {Promise<void>}
    */
   static async loadBlank(
-    driver,
-    url = constants.defaultPassConfig.blankPage,
-    duration = constants.defaultPassConfig.blankDuration
+      driver,
+      url = constants.defaultPassConfig.blankPage,
+      duration = constants.defaultPassConfig.blankDuration
   ) {
-    // The real about:blank doesn't fire onload and is full of mysteries (https://goo.gl/mdQkYr)
-    // To improve speed and avoid anomalies (https://goo.gl/Aho2R9), we use a basic data uri page
-    const blankPageUrl = `data:text/html,${blankPageSource}`;
-
-    // Only navigating to a single data-uri doesn't reliably trigger onload. (Why? Beats me.)
-    // Two data uris work, however the two need to be sufficiently different (Why? Beats me.)
-    // If they are too similar, Chrome considers the latter to be as superficial as a pushState
-    // Lastly, it's possible for two navigations to be racy, so we await onload inbetween.
-    await driver.gotoURL(blankPageUrl);
-    await driver.waitForLoadEvent();
     await driver.gotoURL(url);
-    await driver.waitForLoadEvent();
-
-    // keep for backwards compat (WPT; see #4310)
-    if (duration > 0) await new Promise(resolve => setTimeout(resolve, duration));
+    await new Promise(resolve => setTimeout(resolve, duration));
   }
 
   /**

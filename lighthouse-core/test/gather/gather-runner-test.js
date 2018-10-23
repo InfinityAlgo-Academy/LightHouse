@@ -53,9 +53,6 @@ function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn,
     }
     cleanBrowserCaches() {}
     clearDataForOrigin() {}
-    waitForLoadEvent() {
-      return Promise.resolve();
-    }
   };
   const EmulationMock = class extends Connection {
     sendCommand(command, params) {
@@ -320,7 +317,6 @@ describe('GatherRunner', function() {
       enableRuntimeEvents: asyncFunc,
       cacheNatives: asyncFunc,
       gotoURL: asyncFunc,
-      waitForLoadEvent: asyncFunc,
       registerPerformanceObserver: asyncFunc,
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),
@@ -381,7 +377,6 @@ describe('GatherRunner', function() {
       enableRuntimeEvents: asyncFunc,
       cacheNatives: asyncFunc,
       gotoURL: asyncFunc,
-      waitForLoadEvent: asyncFunc,
       registerPerformanceObserver: asyncFunc,
       cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),
