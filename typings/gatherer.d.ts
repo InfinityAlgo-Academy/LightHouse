@@ -20,7 +20,7 @@ declare global {
       options?: object;
       /** Push to this array to add top-level warnings to the LHR. */
       LighthouseRunWarnings: Array<string>;
-      firstPass: boolean;
+      isFirstPass: boolean;
     }
 
     export interface LoadData {

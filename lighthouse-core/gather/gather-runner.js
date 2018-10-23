@@ -192,11 +192,9 @@ class GatherRunner {
     const blankDuration = passContext.passConfig.blankDuration;
 
     // On the very first pass we're already on blank
-    const skipLoadBlank = passContext.firstPass;
-    const pass = skipLoadBlank
-      ? Promise.resolve()
-      : GatherRunner.loadBlank(passContext.driver, blankPage, blankDuration);
-    await pass;
+    if (!passContext.isFirstPass) {
+      GatherRunner.loadBlank(passContext.driver, blankPage, blankDuration);
+    }
 
     // Set request blocking before any network activity
     // No "clearing" is done at the end of the pass since blockUrlPatterns([]) will unset all if
@@ -404,11 +402,11 @@ class GatherRunner {
     try {
       await driver.connect();
       const baseArtifacts = await GatherRunner.getBaseArtifacts(options);
-      baseArtifacts.BenchmarkIndex = await options.driver.getBenchmarkIndex();
       await GatherRunner.setupDriver(driver, options);
+      baseArtifacts.BenchmarkIndex = await options.driver.getBenchmarkIndex();
 
       // Run each pass
-      let firstPass = true;
+      let isFirstPass = true;
       for (const passConfig of passes) {
         const passContext = {
           driver: options.driver,
@@ -418,7 +416,7 @@ class GatherRunner {
           passConfig,
           // *pass() functions and gatherers can push to this warnings array.
           LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,
-          firstPass,
+          isFirstPass,
         };
 
         await driver.setThrottling(options.settings, passConfig);
@@ -444,10 +442,10 @@ class GatherRunner {
           baseArtifacts.traces[passConfig.passName] = passData.trace;
         }
 
-        if (firstPass) {
+        if (isFirstPass) {
           // Copy redirected URL to artifact in the first pass only.
           baseArtifacts.URL.finalUrl = passContext.url;
-          firstPass = false;
+          isFirstPass = false;
         }
       }
       const resetStorage = !options.settings.disableStorageReset;

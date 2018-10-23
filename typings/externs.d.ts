@@ -220,7 +220,6 @@ declare global {
           styleSheetUrl?: string;
           timerId?: string;
           url?: string;
-          processId?: number;
         };
         frame?: string;
         name?: string;

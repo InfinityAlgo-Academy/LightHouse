@@ -226,7 +226,7 @@ class TraceProcessor {
     }
 
     // Support legacy browser versions that do not emit TracingStartedInBrowser event.
-    if (!pid || !tid || !frameId) {
+    if (!pid || !tid || !frameId || ts === undefined) {
       // The first TracingStartedInPage in the trace is definitely our renderer thread of interest
       // Beware: the tracingStartedInPage event can appear slightly after a navigationStart
       const startedInPageEvt = events.find(e => e.name === 'TracingStartedInPage');
@@ -238,13 +238,14 @@ class TraceProcessor {
       }
     }
 
-    if (!pid || !tid || !frameId) throw new LHError(LHError.errors.NO_TRACING_STARTED);
+    if (!pid || !tid || !frameId || ts === undefined) {
+      throw new LHError(LHError.errors.NO_TRACING_STARTED);
+    }
 
     return {
       pid,
       tid,
       frameId,
-      // @ts-ignore
       ts,
     };
   }
