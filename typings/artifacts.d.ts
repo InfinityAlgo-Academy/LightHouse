@@ -188,12 +188,12 @@ declare global {
           fontSize: number;
           textLength: number;
           node: FontSize.DomNodeWithParent;
-          cssRule: {
+          cssRule?: {
             type: 'Regular' | 'Inline' | 'Attributes';
-            range: {startLine: number, startColumn: number};
-            parentRule: {origin: Crdp.CSS.StyleSheetOrigin, selectors: {text: string}[]};
-            styleSheetId: string;
-            stylesheet: Crdp.CSS.CSSStyleSheetHeader;
+            range?: {startLine: number, startColumn: number};
+            parentRule?: {origin: Crdp.CSS.StyleSheetOrigin, selectors: {text: string}[]};
+            styleSheetId?: string;
+            stylesheet?: Crdp.CSS.CSSStyleSheetHeader;
           }
         }>
       }
@@ -202,6 +202,10 @@ declare global {
         export interface DomNodeWithParent extends Crdp.DOM.Node {
           parentId: number;
           parentNode: DomNodeWithParent;
+        }
+
+        export interface DomNodeMaybeWithParent extends Crdp.DOM.Node {
+          parentNode?: DomNodeMaybeWithParent;
         }
       }
 
