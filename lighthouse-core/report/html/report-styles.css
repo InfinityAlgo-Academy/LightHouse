@@ -905,7 +905,8 @@
 
 .lh-table-column--bytes,
 .lh-table-column--timespanMs,
-.lh-table-column--ms {
+.lh-table-column--ms,
+.lh-table-column--numeric {
   text-align: right;
 }
 

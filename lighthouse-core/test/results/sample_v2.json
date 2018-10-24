@@ -2182,7 +2182,7 @@
           },
           {
             "key": "value",
-            "itemType": "text",
+            "itemType": "numeric",
             "text": "Value"
           }
         ],

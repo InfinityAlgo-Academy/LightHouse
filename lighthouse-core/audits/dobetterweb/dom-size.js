@@ -104,7 +104,7 @@ class DOMSize extends Audit {
     const headings = [
       {key: 'statistic', itemType: 'text', text: str_(UIStrings.columnStatistic)},
       {key: 'element', itemType: 'code', text: str_(UIStrings.columnElement)},
-      {key: 'value', itemType: 'text', text: str_(UIStrings.columnValue)},
+      {key: 'value', itemType: 'numeric', text: str_(UIStrings.columnValue)},
     ];
 
     /** @type {Array<Object<string, LH.Audit.DetailsItem>>} */
