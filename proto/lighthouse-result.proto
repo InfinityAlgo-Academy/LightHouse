@@ -223,10 +223,10 @@ message LighthouseResult {
   message Timing {
     // The total duration of Lighthouse's run
     google.protobuf.DoubleValue total = 1;
- }
+  }
 
- // The performance timing data for the Lighthouse run
- Timing timing = 14;
+  // The performance timing data for the Lighthouse run
+  Timing timing = 14;
 }
 
 // Message containing a category
