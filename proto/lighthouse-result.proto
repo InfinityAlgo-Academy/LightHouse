@@ -43,6 +43,10 @@ enum LighthouseError {
   PARSING_PROBLEM = 14;
   // The trace data failed to stream over the protocol.
   READ_FAILED = 15;
+  // Used when security error prevents page load.
+  INSECURE_DOCUMENT_REQUEST = 16;
+  // Used when protocol command times out.
+  PROTOCOL_TIMEOUT = 17;
 }
 
 // The overarching Lighthouse Response object (LHR)

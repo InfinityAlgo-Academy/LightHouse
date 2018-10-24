@@ -165,7 +165,7 @@ describe('Browser Driver', () => {
     return driverStub.getRequestContent('', MAX_WAIT_FOR_PROTOCOL).then(_ => {
       assert.ok(false, 'long-running getRequestContent supposed to reject');
     }, e => {
-      assert.equal(e.code, 'REQUEST_CONTENT_TIMEOUT');
+      assert.equal(e.code, 'PROTOCOL_TIMEOUT');
     });
   });
 

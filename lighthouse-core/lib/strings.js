@@ -15,4 +15,5 @@ module.exports = {
   internalChromeError: `An internal Chrome error occurred. Please restart Chrome and try re-running Lighthouse.`,
   requestContentTimeout: 'Fetching resource content has exceeded the allotted time',
   urlInvalid: `The URL you have provided appears to be invalid.`,
+  protocolTimeout: `Waiting for DevTools protocol response has exceeded the allotted time.`,
 };

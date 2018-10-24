@@ -29,6 +29,8 @@ const DEFAULT_PAUSE_AFTER_LOAD = 0;
 const DEFAULT_NETWORK_QUIET_THRESHOLD = 5000;
 // Controls how long to wait between longtasks before determining the CPU is idle, off by default
 const DEFAULT_CPU_QUIET_THRESHOLD = 0;
+// Controls how long to wait for a response after sending a DevTools protocol command.
+const DEFAULT_PROTOCOL_TIMEOUT = 5000;
 
 /**
  * @typedef {LH.Protocol.StrictEventEmitter<LH.CrdpEvents>} CrdpEventEmitter
@@ -85,6 +87,12 @@ class Driver {
      * @private
      */
     this._lastSecurityState = null;
+
+    /**
+     * @type {number}
+     * @private
+     */
+    this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
   }
 
   static get traceCategories() {
@@ -241,13 +249,25 @@ class Driver {
   }
 
   /**
+   * NOTE: This can eventually be replaced when TypeScript
+   * resolves https://github.com/Microsoft/TypeScript/issues/5453.
+   * @param {number} timeout
+   */
+  setNextProtocolTimeout(timeout) {
+    this._nextProtocolTimeout = timeout;
+  }
+
+  /**
    * Call protocol methods.
+   * To configure the timeout for the next call, use 'setNextProtocolTimeout'.
    * @template {keyof LH.CrdpCommands} C
    * @param {C} method
-   * @param {LH.CrdpCommands[C]['paramsType']} params,
+   * @param {LH.CrdpCommands[C]['paramsType']} params
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
   sendCommand(method, ...params) {
+    const timeout = this._nextProtocolTimeout;
+    this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
     const domainCommand = /^(\w+)\.(enable|disable)$/.exec(method);
     if (domainCommand) {
       const enable = domainCommand[2] === 'enable';
@@ -255,8 +275,21 @@ class Driver {
         return Promise.resolve();
       }
     }
-
-    return this._connection.sendCommand(method, ...params);
+    return new Promise(async (resolve, reject) => {
+      const asyncTimeout = setTimeout((_ => {
+        const err = new LHError(LHError.errors.PROTOCOL_TIMEOUT);
+        err.message += ` Method: ${method}`;
+        reject(err);
+      }), timeout);
+      try {
+        const result = await this._connection.sendCommand(method, ...params);
+        clearTimeout(asyncTimeout);
+        resolve(result);
+      } catch (err) {
+        clearTimeout(asyncTimeout);
+        reject(err);
+      }
+    });
   }
 
   /**
@@ -306,61 +339,46 @@ class Driver {
    * @param {number|undefined} contextId
    * @return {Promise<*>}
    */
-  _evaluateInContext(expression, contextId) {
-    return new Promise((resolve, reject) => {
-      // If this gets to 60s and it hasn't been resolved, reject the Promise.
-      const asyncTimeout = setTimeout(
-        (_ => reject(new Error('The asynchronous expression exceeded the allotted time of 60s'))),
-        60000
-      );
+  async _evaluateInContext(expression, contextId) {
+    const evaluationParams = {
+      // We need to explicitly wrap the raw expression for several purposes:
+      // 1. Ensure that the expression will be a native Promise and not a polyfill/non-Promise.
+      // 2. Ensure that errors in the expression are captured by the Promise.
+      // 3. Ensure that errors captured in the Promise are converted into plain-old JS Objects
+      //    so that they can be serialized properly b/c JSON.stringify(new Error('foo')) === '{}'
+      expression: `(function wrapInNativePromise() {
+        const __nativePromise = window.__nativePromise || Promise;
+        const URL = window.__nativeURL || window.URL;
+        return new __nativePromise(function (resolve) {
+          return __nativePromise.resolve()
+            .then(_ => ${expression})
+            .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowserString})
+            .then(resolve);
+        });
+      }())`,
+      includeCommandLineAPI: true,
+      awaitPromise: true,
+      returnByValue: true,
+      contextId,
+    };
 
-      const evaluationParams = {
-        // We need to explicitly wrap the raw expression for several purposes:
-        // 1. Ensure that the expression will be a native Promise and not a polyfill/non-Promise.
-        // 2. Ensure that errors in the expression are captured by the Promise.
-        // 3. Ensure that errors captured in the Promise are converted into plain-old JS Objects
-        //    so that they can be serialized properly b/c JSON.stringify(new Error('foo')) === '{}'
-        expression: `(function wrapInNativePromise() {
-          const __nativePromise = window.__nativePromise || Promise;
-          const URL = window.__nativeURL || window.URL;
-          return new __nativePromise(function (resolve) {
-            return __nativePromise.resolve()
-              .then(_ => ${expression})
-              .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowserString})
-              .then(resolve);
-          });
-        }())`,
-        includeCommandLineAPI: true,
-        awaitPromise: true,
-        returnByValue: true,
-        contextId,
-      };
-
-      this.sendCommand('Runtime.evaluate', evaluationParams).then(response => {
-        clearTimeout(asyncTimeout);
-
-        if (response.exceptionDetails) {
-          // An error occurred before we could even create a Promise, should be *very* rare
-          return reject(new Error(`Evaluation exception: ${response.exceptionDetails.text}`));
-        }
-
-        // Protocol should always return a 'result' object, but it is sometimes undefined.  See #6026.
-        if (response.result === undefined) {
-          return reject(new Error('Runtime.evaluate response did not contain a "result" object'));
-        }
-
-        const value = response.result.value;
-
-        if (value && value.__failedInBrowser) {
-          return reject(Object.assign(new Error(), value));
-        } else {
-          resolve(value);
-        }
-      }).catch(err => {
-        clearTimeout(asyncTimeout);
-        reject(err);
-      });
-    });
+    this.setNextProtocolTimeout(60000);
+    const response = await this.sendCommand('Runtime.evaluate', evaluationParams);
+    if (response.exceptionDetails) {
+      // An error occurred before we could even create a Promise, should be *very* rare
+      return Promise.reject(new Error(`Evaluation exception: ${response.exceptionDetails.text}`));
+    }
+    // Protocol should always return a 'result' object, but it is sometimes undefined.  See #6026.
+    if (response.result === undefined) {
+      return Promise.reject(
+        new Error('Runtime.evaluate response did not contain a "result" object'));
+    }
+    const value = response.result.value;
+    if (value && value.__failedInBrowser) {
+      return Promise.reject(Object.assign(new Error(), value));
+    } else {
+      return value;
+    }
   }
 
   /**
@@ -863,24 +881,14 @@ class Driver {
    * @param {number} [timeout]
    * @return {Promise<string>}
    */
-  getRequestContent(requestId, timeout = 1000) {
+  async getRequestContent(requestId, timeout = 1000) {
     requestId = NetworkRequest.getRequestIdForBackend(requestId);
 
-    return new Promise((resolve, reject) => {
-      // If this takes more than 1s, reject the Promise.
-      // Why? Encoding issues can lead to hanging getResponseBody calls: https://github.com/GoogleChrome/lighthouse/pull/4718
-      const err = new LHError(LHError.errors.REQUEST_CONTENT_TIMEOUT);
-      const asyncTimeout = setTimeout((_ => reject(err)), timeout);
-
-      this.sendCommand('Network.getResponseBody', {requestId}).then(result => {
-        clearTimeout(asyncTimeout);
-        // Ignoring result.base64Encoded, which indicates if body is already encoded
-        resolve(result.body);
-      }).catch(e => {
-        clearTimeout(asyncTimeout);
-        reject(e);
-      });
-    });
+    // Encoding issues may lead to hanging getResponseBody calls: https://github.com/GoogleChrome/lighthouse/pull/4718
+    // driver.sendCommand will handle timeout after 1s.
+    this.setNextProtocolTimeout(timeout);
+    const result = await this.sendCommand('Network.getResponseBody', {requestId});
+    return result.body;
   }
 
   async listenForSecurityStateChanges() {
