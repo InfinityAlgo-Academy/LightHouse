@@ -4,6 +4,8 @@ import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
+// This comment required for LightRider import compatibility
+
 // Canonical list of errors created by Lighthouse.
 enum LighthouseError {
   // No error in Lighthouse; the results are reliable.
@@ -64,7 +66,7 @@ message LighthouseResult {
     // The user agent that was used by the network
     string network_user_agent = 1;
 
-    // The user agent used by the host 
+    // The user agent used by the host
     string host_user_agent = 2;
 
     // The benchmark index that indicates rough device class
@@ -118,14 +120,15 @@ message LighthouseResult {
 
       // Use devtools to throttle the request
       devtools = 1;
-      
-      // Use no additional throttling (only throttling provided by system itself)
+
+      // Use no additional throttling (only throttling provided by system
+      // itself)
       provided = 2;
 
       // Simulate throttling with Lantern
       simulate = 3;
     }
-    
+
     // The throttling method used during this audit
     ThrottlingMethod throttling_method = 3;
 
@@ -179,7 +182,7 @@ message LighthouseResult {
 
     // The form factor used in the audit
     EmulatedFormFactor emulated_form_factor = 8;
-    
+
     // The locale that was active during the audit
     string locale = 9;
 
@@ -226,7 +229,7 @@ message LighthouseResult {
  Timing timing = 14;
 }
 
-// Message containing a category 
+// Message containing a category
 message CategoryGroup {
   // The human readable title of the group
   string title = 1;
@@ -255,7 +258,8 @@ message LhrCategory {
   // An description for manual audits within this category.
   string manual_description = 5;
 
-  // A Category's reference to an AuditResult, with a weight for category scoring.
+  // A Category's reference to an AuditResult, with a weight for category
+  // scoring.
   message AuditRef {
     // Matches a key in the top-level `audits` map.
     string id = 1;
@@ -323,7 +327,8 @@ message AuditResult {
   // Error message from any exception thrown while running this audit.
   string error_message = 8;
 
-  // Extra information provided by some types of audits.  Given as an arbitrary object.
+  // Extra information provided by some types of audits.  Given as an arbitrary
+  // object.
   google.protobuf.Struct details = 9;
 
   // List of warnings associated with this audit
@@ -362,10 +367,12 @@ message I18n {
     // The heading shown above a list of audits that do not apply to a page
     string not_applicable_audits_group_title = 9;
 
-    // The heading shown above a list of audits that were not computerd in the run
+    // The heading shown above a list of audits that were not computerd in the
+    // run
     string manual_audits_group_title = 10;
 
-    // The label shown preceding important warnings that may have invalidated an entire report
+    // The label shown preceding important warnings that may have invalidated an
+    // entire report
     string toplevel_warnings_message = 11;
 
     // The label that explains the score gauges scale (0-49, 50-89, 90-100)
@@ -377,7 +384,8 @@ message I18n {
     // The label for the initial request in a critical request chain
     string crc_initial_navigation = 14;
 
-    // The disclaimer shown under performance explaning that the network can vary
+    // The disclaimer shown under performance explaning that the network can
+    // vary
     string ls_performance_category_description = 15;
 
     // The title of the lab data performance category
