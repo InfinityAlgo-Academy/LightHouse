@@ -111,7 +111,7 @@ function getElementsInDocument(selector) {
  * @return {string}
  */
 /* istanbul ignore next */
-function getOuterHTMLSnippet(element, ignoreAttrs=[]) {
+function getOuterHTMLSnippet(element, ignoreAttrs = []) {
   const clone = element.cloneNode();
 
   ignoreAttrs.forEach(attribute =>{

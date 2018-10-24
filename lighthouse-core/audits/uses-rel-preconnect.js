@@ -130,7 +130,7 @@ class UsesRelPreconnectAudit extends Audit {
       // Sometimes requests are done simultaneous and the connection has not been made
       // chrome will try to connect for each network record, we get the first record
       const firstRecordOfOrigin = records.reduce((firstRecord, record) => {
-        return (record.startTime < firstRecord.startTime) ? record: firstRecord;
+        return (record.startTime < firstRecord.startTime) ? record : firstRecord;
       });
 
       // Skip the origin if we don't have timing information

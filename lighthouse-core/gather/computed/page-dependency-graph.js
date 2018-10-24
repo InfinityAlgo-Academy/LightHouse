@@ -89,7 +89,7 @@ class PageDependencyGraph {
 
       // Skip all trace events that aren't schedulable tasks with sizable duration
       if (
-        !TracingProcessor.isScheduleableTask(evt)||
+        !TracingProcessor.isScheduleableTask(evt) ||
         !evt.dur ||
         evt.dur < minimumEvtDur
       ) {

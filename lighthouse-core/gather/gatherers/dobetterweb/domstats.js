@@ -84,7 +84,7 @@ function elementPathInDOM(element) {
  * @return {LH.Artifacts.DOMStats}
  */
 /* istanbul ignore next */
-function getDOMStats(element, deep=true) {
+function getDOMStats(element, deep = true) {
   let deepestNode = null;
   let maxDepth = 0;
   let maxWidth = 0;
@@ -94,7 +94,7 @@ function getDOMStats(element, deep=true) {
    * @param {Element} element
    * @param {number} depth
    */
-  const _calcDOMWidthAndHeight = function(element, depth=1) {
+  const _calcDOMWidthAndHeight = function(element, depth = 1) {
     if (depth > maxDepth) {
       deepestNode = element;
       maxDepth = depth;
