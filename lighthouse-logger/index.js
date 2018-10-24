@@ -52,6 +52,7 @@ class Emitter extends EventEmitter {
 
 const loggersByTitle = {};
 const loggingBufferColumns = 25;
+let level_;
 
 class Log {
   static _logToStdErr(title, argsArray) {
@@ -74,7 +75,11 @@ class Log {
     return log;
   }
 
+  /**
+   * @param {string} level
+   */
   static setLevel(level) {
+    level_ = level;
     switch (level) {
       case 'silent':
         debug.enable('-*');
@@ -104,6 +109,13 @@ class Log {
     const snippet = (data.params && method !== 'IO.read') ?
       JSON.stringify(data.params).substr(0, maxLength) : '';
     Log._logToStdErr(`${prefix}:${level || ''}`, [method, snippet]);
+  }
+
+  /**
+   * @return {boolean}
+   */
+  static isVerbose() {
+    return level_ === 'verbose';
   }
 
   static time({msg, id, args = []}, level = 'log') {
@@ -219,10 +231,11 @@ class Log {
 }
 
 Log.events = new Emitter();
-Log.takeTimeEntries = _ => {
+Log.takeTimeEntries = () => {
   const entries = marky.getEntries();
   marky.clear();
   return entries;
 };
+Log.getTimeEntries = () => marky.getEntries();
 
 module.exports = Log;
