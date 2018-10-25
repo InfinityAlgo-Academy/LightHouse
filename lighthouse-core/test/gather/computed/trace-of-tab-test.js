@@ -27,7 +27,7 @@ describe('Trace of Tab computed artifact:', () => {
       assert.equal(evt.pid, firstEvt.pid, 'A traceEvent is found from another process');
     });
 
-    assert.ok(firstEvt.pid === trace.startedInPageEvt.pid);
+    assert.ok(firstEvt.pid === trace.mainFrameIds.pid);
     assert.ok(firstEvt.pid === trace.navigationStartEvt.pid);
     assert.ok(firstEvt.pid === trace.firstContentfulPaintEvt.pid);
     assert.ok(firstEvt.pid === trace.firstMeaningfulPaintEvt.pid);
@@ -54,7 +54,7 @@ describe('Trace of Tab computed artifact:', () => {
   describe('finds correct FMP', () => {
     it('if there was a tracingStartedInPage after the frame\'s navStart', async () => {
       const trace = await TraceOfTab.compute_(lateTracingStartedTrace);
-      assert.equal(trace.startedInPageEvt.ts, 29343544280);
+      assert.equal(trace.mainFrameIds.frameId, '0x163736997740');
       assert.equal(trace.navigationStartEvt.ts, 29343540951);
       assert.equal(trace.firstContentfulPaintEvt.ts, 29343621005);
       assert.equal(trace.firstMeaningfulPaintEvt.ts, 29344070867);
@@ -63,7 +63,7 @@ describe('Trace of Tab computed artifact:', () => {
 
     it('if there was a tracingStartedInPage after the frame\'s navStart #2', async () => {
       const trace = await TraceOfTab.compute_(badNavStartTrace);
-      assert.equal(trace.startedInPageEvt.ts, 8885435611);
+      assert.equal(trace.mainFrameIds.frameId, '0x89915541e48');
       assert.equal(trace.navigationStartEvt.ts, 8885424467);
       assert.equal(trace.firstContentfulPaintEvt.ts, 8886056886);
       assert.equal(trace.firstMeaningfulPaintEvt.ts, 8886056891);
@@ -72,7 +72,7 @@ describe('Trace of Tab computed artifact:', () => {
 
     it('if it appears slightly before the fCP', async () => {
       const trace = await TraceOfTab.compute_(preactTrace);
-      assert.equal(trace.startedInPageEvt.ts, 1805796376829);
+      assert.equal(trace.mainFrameIds.frameId, '0x25edaa521e58');
       assert.equal(trace.navigationStartEvt.ts, 1805796384607);
       assert.equal(trace.firstContentfulPaintEvt.ts, 1805797263653);
       assert.equal(trace.firstMeaningfulPaintEvt.ts, 1805797262960);
@@ -81,7 +81,7 @@ describe('Trace of Tab computed artifact:', () => {
 
     it('from candidates if no defined FMP exists', async () => {
       const trace = await TraceOfTab.compute_(noFMPtrace);
-      assert.equal(trace.startedInPageEvt.ts, 2146735802456);
+      assert.equal(trace.mainFrameIds.frameId, '0x150343381dd0');
       assert.equal(trace.navigationStartEvt.ts, 2146735807738);
       assert.equal(trace.firstContentfulPaintEvt.ts, 2146737302468);
       assert.equal(trace.firstMeaningfulPaintEvt.ts, 2146740268666);
@@ -91,7 +91,7 @@ describe('Trace of Tab computed artifact:', () => {
 
   it('handles traces missing a paints (captured in background tab)', async () => {
     const trace = await TraceOfTab.compute_(backgroundTabTrace);
-    assert.equal(trace.startedInPageEvt.ts, 1966813248134);
+    assert.equal(trace.mainFrameIds.frameId, '0x53965941e30');
     assert.notEqual(trace.navigationStartEvt.ts, 1966813346529, 'picked wrong frame');
     assert.notEqual(trace.navigationStartEvt.ts, 1966813520313, 'picked wrong frame');
     assert.equal(
@@ -158,7 +158,7 @@ describe('Trace of Tab computed artifact:', () => {
         'args': {'name': 'CrRendererMain'},
       }]};
     const trace = await TraceOfTab.compute_(tracingStartedInBrowserTrace);
-    assert.equal(trace.startedInPageEvt.ts, 2193564729582);
+    assert.equal(trace.mainFrameIds.frameId, 'B192D1F3355A6F961EC8F0B01623C1FB');
     assert.equal(trace.navigationStartEvt.ts, 2193564790059);
   });
 
