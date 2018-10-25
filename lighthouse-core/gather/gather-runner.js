@@ -238,7 +238,7 @@ class GatherRunner {
 
     const status = {
       msg: 'Loading page & waiting for onload',
-      id: 'lh:gather:loadPage',
+      id: `lh:gather:loadPage-${passContext.passConfig.passName}`,
       args: [gatherers.map(g => g.instance.name).join(', ')],
     };
     log.time(status);
@@ -271,8 +271,8 @@ class GatherRunner {
       gathererResult.push(artifactPromise);
       gathererResults[gatherer.name] = gathererResult;
       await artifactPromise.catch(() => {});
-      log.timeEnd(status);
     }
+    log.timeEnd(status);
     log.timeEnd(pStatus);
   }
 
