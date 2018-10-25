@@ -120,9 +120,12 @@
   Object.defineProperty(document.getElementById("5934b"), 'matches', {
     value: "blahblah"
   });
-  
   // Ensure gatherers still work when the prototype is messed with
   HTMLElement.prototype.matches = { value: "blahblah" };
+
+
+  // Ensure long-task collection still works when performance.now is redefined
+  window.performance.now = 'right now';
 </script>
 
 <div>
