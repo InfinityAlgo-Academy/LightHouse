@@ -16,6 +16,9 @@ const Audit = require('./audit');
 const mobileThrottling = require('../config/constants').throttling.mobileSlow4G;
 const Interactive = require('../gather/computed/metrics/interactive.js');
 
+const displayValueText = `Interactive at %d\xa0s`;
+const displayValueTextWithOverride = `Interactive on simulated mobile network at %d\xa0s`;
+
 // Maximum TTI to be considered "fast" for PWA baseline checklist
 //   https://developers.google.com/web/progressive-web-apps/checklist
 const MAXIMUM_TTI = 10 * 1000;
@@ -48,11 +51,16 @@ class LoadFastEnough4Pwa extends Audit {
     // If throttling was default devtools or lantern slow 4G throttling, then reuse the given settings
     // Otherwise, we'll force the usage of lantern slow 4G.
     const settingOverrides = {throttlingMethod: 'simulate', throttling: mobileThrottling};
-    const settings =
-      context.settings.throttlingMethod !== 'provided' &&
-      isDeepEqual(context.settings.throttling, mobileThrottling)
-        ? context.settings
-        : Object.assign({}, context.settings, settingOverrides);
+
+    // Override settings for interactive if provided throttling was used or network
+    // throttling was not consistent with standard `mobile network throttling`
+    const override = context.settings.throttlingMethod === 'provided' ||
+      !isDeepEqual(context.settings.throttling, mobileThrottling);
+
+    const displayValueFinal = override ? displayValueTextWithOverride : displayValueText;
+
+    const settings = override ? Object.assign({}, context.settings, settingOverrides) :
+      context.settings;
 
     const metricComputationData = {trace, devtoolsLog, settings};
     const tti = await Interactive.request(metricComputationData, context);
@@ -64,7 +72,7 @@ class LoadFastEnough4Pwa extends Audit {
     /** @type {string|undefined} */
     let explanation;
     if (!score) {
-      displayValue = [`Interactive at %d\xa0s`, tti.timing / 1000];
+      displayValue = [displayValueFinal, tti.timing / 1000];
       explanation = 'Your page loads too slowly and is not interactive within 10 seconds. ' +
         'Look at the opportunities and diagnostics in the "Performance" section to learn how to ' +
         'improve.';
