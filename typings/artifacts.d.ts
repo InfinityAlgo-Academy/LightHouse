@@ -37,6 +37,8 @@ declare global {
       settings: Config.Settings;
       /** The URL initially requested and the post-redirects URL that was actually loaded. */
       URL: {requestedUrl: string, finalUrl: string};
+      /** The timing instrumentation of the gather portion of a run. */
+      Timing: Artifacts.MeasureEntry[];
     }
 
     /**
@@ -302,6 +304,11 @@ declare global {
           failureText: string;
           passing: boolean;
         }[];
+      }
+
+      export interface MeasureEntry extends PerformanceEntry {
+        /** Whether timing entry was collected during artifact gathering. */
+        gather?: boolean;
       }
 
       export interface MetricComputationDataInput {

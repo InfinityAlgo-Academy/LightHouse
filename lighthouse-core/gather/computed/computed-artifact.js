@@ -6,6 +6,7 @@
 'use strict';
 
 const ArbitraryEqualityMap = require('../../lib/arbitrary-equality-map');
+const log = require('lighthouse-logger');
 
 class ComputedArtifact {
   /**
@@ -59,12 +60,15 @@ class ComputedArtifact {
       return computed;
     }
 
+    const status = {msg: `Computing artifact: ${this.name}`, id: `lh:computed:${this.name}`};
+    log.time(status, 'verbose');
     // Need to cast since `this.compute_(...)` returns the concrete return type
     // of the base class's compute_, not the called derived class's.
     const artifactPromise = /** @type {ReturnType<this['compute_']>} */ (
       this.compute_(requiredArtifacts, this._allComputedArtifacts));
     this._cache.set(requiredArtifacts, artifactPromise);
 
+    artifactPromise.then(() => log.timeEnd(status));
     return artifactPromise;
   }
 }

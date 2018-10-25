@@ -41,6 +41,7 @@ describe('CLI run', function() {
           Object.keys(results.audits).length,
           Object.keys(lhr.audits).length);
       assert.deepStrictEqual(results.timing, lhr.timing);
+      assert.ok(results.timing.total !== 0);
 
       fs.unlinkSync(filename);
     });

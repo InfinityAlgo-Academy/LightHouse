@@ -21,5 +21,6 @@ declare module 'lighthouse-logger' {
   export function reset(): string;
   /** Retrieves and clears all stored time entries */
   export function takeTimeEntries(): PerformanceEntry[];
+  export function getTimeEntries(): PerformanceEntry[];
   export var events: import('events').EventEmitter;
 }

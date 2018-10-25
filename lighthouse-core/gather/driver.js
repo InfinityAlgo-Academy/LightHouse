@@ -136,9 +136,12 @@ class Driver {
    * @return {Promise<LH.Crdp.Browser.GetVersionResponse & {milestone: number}>}
    */
   async getBrowserVersion() {
+    const status = {msg: 'Getting browser version', id: 'lh:gather:getVersion'};
+    log.time(status, 'verbose');
     const version = await this.sendCommand('Browser.getVersion');
     const match = version.product.match(/\/(\d+)/); // eg 'Chrome/71.0.3577.0'
     const milestone = match ? parseInt(match[1]) : 0;
+    log.timeEnd(status);
     return Object.assign(version, {milestone});
   }
 
@@ -146,15 +149,22 @@ class Driver {
    * Computes the ULTRADUMB™ benchmark index to get a rough estimate of device class.
    * @return {Promise<number>}
    */
-  getBenchmarkIndex() {
-    return this.evaluateAsync(`(${pageFunctions.ultradumbBenchmarkString})()`);
+  async getBenchmarkIndex() {
+    const status = {msg: 'Benchmarking machine', id: 'lh:gather:getBenchmarkIndex'};
+    log.time(status);
+    const indexVal = await this.evaluateAsync(`(${pageFunctions.ultradumbBenchmarkString})()`);
+    log.timeEnd(status);
+    return indexVal;
   }
 
   /**
    * @return {Promise<void>}
    */
-  connect() {
-    return this._connection.connect();
+  async connect() {
+    const status = {msg: 'Connecting to browser', id: 'lh:init:connect'};
+    log.time(status);
+    await this._connection.connect();
+    log.timeEnd(status);
   }
 
   /**

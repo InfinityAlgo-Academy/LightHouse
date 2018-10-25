@@ -30,18 +30,20 @@ class TestComputedArtifact extends ComputedArtifact {
 }
 
 describe('ComputedArtifact base class', () => {
-  it('caches computed artifacts by strict equality', () => {
+  it('caches computed artifacts by strict equality', async () => {
     const computedArtifact = new TestComputedArtifact();
 
-    return computedArtifact.request({x: 1}).then(result => {
-      assert.equal(result, 0);
-    }).then(_ => computedArtifact.request({x: 2})).then(result => {
-      assert.equal(result, 1);
-    }).then(_ => computedArtifact.request({x: 1})).then(result => {
-      assert.equal(result, 0);
-    }).then(_ => computedArtifact.request({x: 2})).then(result => {
-      assert.equal(result, 1);
-      assert.equal(computedArtifact.computeCounter, 2);
-    });
+    let result = await computedArtifact.request({x: 1});
+    assert.equal(result, 0);
+
+    result = await computedArtifact.request({x: 2});
+    assert.equal(result, 1);
+
+    result = await computedArtifact.request({x: 1});
+    assert.equal(result, 0);
+
+    result = await computedArtifact.request({x: 2});
+    assert.equal(result, 1);
+    assert.equal(computedArtifact.computeCounter, 2);
   });
 });

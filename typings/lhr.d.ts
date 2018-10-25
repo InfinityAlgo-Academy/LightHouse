@@ -59,13 +59,18 @@ declare global {
       /** Information about the environment in which Lighthouse was run. */
       environment: Environment;
       /** Execution timings for the Lighthouse run */
-      timing: {total: number, [t: string]: number};
+      timing: Result.Timing;
       /** The record of all formatted string locations in the LHR and their corresponding source values. */
       i18n: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths: I18NMessages};
     }
 
     // Result namespace
     export module Result {
+      export interface Timing {
+        entries: Artifacts.MeasureEntry[];
+        total: number;
+      }
+
       export interface Category {
         /** The string identifier of the category. */
         id: string;

@@ -63,6 +63,11 @@ async function loadArtifacts(basePath) {
     artifacts.traces[passName] = Array.isArray(trace) ? {traceEvents: trace} : trace;
   });
 
+  if (Array.isArray(artifacts.Timing)) {
+    // Any Timing entries in saved artifacts will have a different timeOrigin than the auditing phase
+    // The `gather` prop is read later in generate-timing-trace and they're added to a separate track of trace events
+    artifacts.Timing.forEach(entry => (entry.gather = true));
+  }
   return artifacts;
 }
 
@@ -74,6 +79,8 @@ async function loadArtifacts(basePath) {
  * @return {Promise<void>}
  */
 async function saveArtifacts(artifacts, basePath) {
+  const status = {msg: 'Saving artifacts', id: 'lh:assetSaver:saveArtifacts'};
+  log.time(status);
   mkdirp.sync(basePath);
   rimraf.sync(`${basePath}/*${traceSuffix}`);
   rimraf.sync(`${basePath}/${artifactsFilename}`);
@@ -95,6 +102,7 @@ async function saveArtifacts(artifacts, basePath) {
   const restArtifactsString = JSON.stringify(restArtifacts, null, 2);
   fs.writeFileSync(`${basePath}/${artifactsFilename}`, restArtifactsString, 'utf8');
   log.log('Artifacts saved to disk in folder:', basePath);
+  log.timeEnd(status);
 }
 
 /**

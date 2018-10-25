@@ -31,8 +31,9 @@ class Runner {
    */
   static async run(connection, runOpts) {
     try {
-      const startTime = Date.now();
       const settings = runOpts.config.settings;
+      const runnerStatus = {msg: 'Runner setup', id: 'lh:runner:run'};
+      log.time(runnerStatus, 'verbose');
 
       /**
        * List of top-level warnings for this Lighthouse run.
@@ -98,7 +99,8 @@ class Runner {
           lighthouseRunWarnings);
 
       // LHR construction phase
-      log.log('status', 'Generating results...');
+      const resultsStatus = {msg: 'Generating results...', id: 'lh:runner:generate'};
+      log.time(resultsStatus);
 
       if (artifacts.LighthouseRunWarnings) {
         lighthouseRunWarnings.push(...artifacts.LighthouseRunWarnings);
@@ -119,6 +121,9 @@ class Runner {
         categories = ReportScoring.scoreAllCategories(runOpts.config.categories, resultsById);
       }
 
+      log.timeEnd(resultsStatus);
+      log.timeEnd(runnerStatus);
+
       /** @type {LH.Result} */
       const lhr = {
         userAgent: artifacts.HostUserAgent,
@@ -137,7 +142,7 @@ class Runner {
         configSettings: settings,
         categories,
         categoryGroups: runOpts.config.groups || undefined,
-        timing: {total: Date.now() - startTime},
+        timing: this._getTiming(artifacts),
         i18n: {
           rendererFormattedStrings: i18n.getRendererFormattedStrings(settings.locale),
           icuMessagePaths: {},
@@ -147,12 +152,33 @@ class Runner {
       // Replace ICU message references with localized strings; save replaced paths in lhr.
       lhr.i18n.icuMessagePaths = i18n.replaceIcuMessageInstanceIds(lhr, settings.locale);
 
+      // Create the HTML, JSON, and/or CSV string
       const report = generateReport(lhr, settings.output);
+
       return {lhr, artifacts, report};
     } catch (err) {
       await Sentry.captureException(err, {level: 'fatal'});
       throw err;
     }
+  }
+
+  /**
+   * This handles both the auditMode case where gatherer entries need to be merged in and
+   * the gather/audit case where timingEntriesFromRunner contains all entries from this run,
+   * including those also in timingEntriesFromArtifacts.
+   * @param {LH.Artifacts} artifacts
+   * @return {LH.Result.Timing}
+   */
+  static _getTiming(artifacts) {
+    const timingEntriesFromArtifacts = artifacts.Timing || [];
+    const timingEntriesFromRunner = log.takeTimeEntries();
+    const timingEntriesKeyValues = [
+      ...timingEntriesFromArtifacts,
+      ...timingEntriesFromRunner,
+    ].map(entry => /** @type {[string, PerformanceEntry]} */ ([entry.name, entry]));
+    const timingEntries = Array.from(new Map(timingEntriesKeyValues).values());
+    const runnerEntry = timingEntries.find(e => e.name === 'lh:runner:run');
+    return {entries: timingEntries, total: runnerEntry && runnerEntry.duration || 0};
   }
 
   /**
@@ -186,7 +212,8 @@ class Runner {
    * @return {Promise<Array<LH.Audit.Result>>}
    */
   static async _runAudits(settings, audits, artifacts, runWarnings) {
-    log.log('status', 'Analyzing and running audits...');
+    const status = {msg: 'Analyzing and running audits...', id: 'lh:runner:auditing'};
+    log.time(status);
 
     if (artifacts.settings) {
       const overrides = {
@@ -218,6 +245,7 @@ class Runner {
       auditResults.push(auditResult);
     }
 
+    log.timeEnd(status);
     return auditResults;
   }
 
@@ -232,9 +260,12 @@ class Runner {
    */
   static async _runAudit(auditDefn, artifacts, sharedAuditContext) {
     const audit = auditDefn.implementation;
-    const status = `Evaluating: ${i18n.getFormatted(audit.meta.title, 'en-US')}`;
+    const status = {
+      msg: `Evaluating: ${i18n.getFormatted(audit.meta.title, 'en-US')}`,
+      id: `lh:audit:${audit.meta.id}`,
+    };
+    log.time(status);
 
-    log.log('status', status);
     let auditResult;
     try {
       // Return an early error if an artifact required for the audit is missing or an error.
@@ -294,7 +325,7 @@ class Runner {
       auditResult = Audit.generateErrorAuditResult(audit, errorMessage);
     }
 
-    log.verbose('statusEnd', status);
+    log.timeEnd(status);
     return auditResult;
   }
 
