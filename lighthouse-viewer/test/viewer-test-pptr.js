@@ -20,7 +20,7 @@ const config = require(path.resolve(__dirname, '../../lighthouse-core/config/def
 const lighthouseCategories = Object.keys(config.categories);
 const getAuditsOfCategory = category => config.categories[category].auditRefs;
 
-// TODO: should be combined in some way with lighthouse-extension/test/extension-test.js
+// TODO: should be combined in some way with clients/test/extension/extension-test.js
 describe('Lighthouse Viewer', function() {
   // eslint-disable-next-line no-console
   console.log('\n✨ Be sure to have recently run this: yarn build-viewer');

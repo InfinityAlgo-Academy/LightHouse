@@ -38,7 +38,7 @@ yarn install-all
 
 # * Bump it *
 yarn version --no-git-tag-version
-# manually bump extension v in extension/app/manifest.json
+# manually bump extension v in clients/extension/manifest.json
 yarn update:sample-json
 
 # * Build it *
@@ -94,9 +94,15 @@ echo "Rebuild extension and viewer to get the latest, tagged master commit"
 yarn build-all;
 
 # zip the extension files
-cd lighthouse-extension; gulp package; cd ..
+node build/build-extension.js package; cd dist/extension-package/
 echo "Go here: https://chrome.google.com/webstore/developer/edit/blipmdconlkpinefehnmjammfjpmpbjk "
 echo "Upload the package zip to CWS dev dashboard"
+# Be in lighthouse-extension-owners group
+# Open <https://chrome.google.com/webstore/developer/dashboard>
+# Click _Edit_ on lighthouse
+# _Upload Updated Package_
+# Select `lighthouse-4.X.X.zip`
+# _Publish_ at the bottom
 
 echo "Verify the npm package won't include unncessary files"
 npm pack --dry-run

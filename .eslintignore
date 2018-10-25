@@ -6,9 +6,7 @@
 **/third_party/**
 
 **/dist/**
-lighthouse-extension/app/scripts
 
-**/closure/*/*
 coverage/**
 
 !.eslintrc.js

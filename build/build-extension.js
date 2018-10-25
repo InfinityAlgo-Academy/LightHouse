@@ -8,39 +8,25 @@
 const fs = require('fs');
 
 const archiver = require('archiver');
-const del = require('del');
 const cpy = require('cpy');
 const makeDir = require('make-dir');
-const bundleBuilder = require('./bundle-builder.js');
+const bundleBuilder = require('./build-bundle.js');
 
-const distDir = 'dist';
-const manifestVersion = require(`./app/manifest.json`).version;
+const sourceName = 'extension-entry.js';
+const distName = 'lighthouse-ext-bundle.js';
 
-// list of all consumers we build for (easier to understand which file is used for which)
-const CONSUMERS = {
-  DEVTOOLS: {
-    src: 'devtools-entry.js',
-    dist: 'lighthouse-dt-bundle.js',
-  },
-  EXTENSION: {
-    src: 'extension-entry.js',
-    dist: 'lighthouse-ext-bundle.js',
-  },
-  LIGHTRIDER: {
-    src: 'lightrider-entry.js',
-    dist: 'lighthouse-lr-bundle.js',
-  },
-};
+const sourceDir = __dirname + '/../clients/extension';
+const distDir = __dirname + '/../dist/extension';
+
+const manifestVersion = require(`${sourceDir}/manifest.json`).version;
 
 /**
- * Browserify and minify scripts.
+ * Browserify and minify entry point.
  */
-function buildAll() {
-  return Object.values(CONSUMERS).map(consumer => {
-    const inFile = `app/src/${consumer.src}`;
-    const outFile = `dist/scripts/${consumer.dist}`;
-    return bundleBuilder.build(inFile, outFile);
-  });
+function buildEntryPoint() {
+  const inFile = `${sourceDir}/scripts/${sourceName}`;
+  const outFile = `${distDir}/scripts/${distName}`;
+  return bundleBuilder.build(inFile, outFile);
 }
 
 /**
@@ -48,11 +34,12 @@ function buildAll() {
  * @return {Promise<void>}
  */
 async function copyPopup() {
-  let popupSrc = fs.readFileSync('app/src/popup.js', {encoding: 'utf8'});
+  let popupSrc = fs.readFileSync(`${sourceDir}/scripts/popup.js`, {encoding: 'utf8'});
   popupSrc = popupSrc.replace(/__COMMITHASH__/g, bundleBuilder.COMMIT_HASH);
 
-  await makeDir(`${distDir}/scripts`);
-  fs.writeFileSync(`${distDir}/scripts/popup.js`, popupSrc);
+  const popupDir = `${distDir}/scripts`;
+  await makeDir(popupDir);
+  fs.writeFileSync(`${popupDir}/popup.js`, popupSrc);
 }
 
 /**
@@ -65,8 +52,8 @@ async function copyAssets() {
     'images/**/*',
     'manifest.json',
     '_locales/**', // currently non-functional
-  ], `../${distDir}`, {
-    cwd: 'app',
+  ], distDir, {
+    cwd: sourceDir,
     parents: true,
   });
 }
@@ -77,17 +64,15 @@ async function copyAssets() {
  * @return {Promise<void>}
  */
 async function packageExtension() {
-  await del([
-    `${distDir}/scripts/${CONSUMERS.DEVTOOLS.dist}`,
-    `${distDir}/scripts/${CONSUMERS.LIGHTRIDER.dist}`,
-  ]);
+  const packagePath = `${distDir}/../extension-package`;
+  await makeDir(packagePath);
 
   return new Promise((resolve, reject) => {
     const archive = archiver('zip', {
       zlib: {level: 9},
     });
 
-    const outPath = `package/lighthouse-${manifestVersion}.zip`;
+    const outPath = `${packagePath}/lighthouse-${manifestVersion}.zip`;
     const writeStream = fs.createWriteStream(outPath);
     writeStream.on('finish', resolve);
     writeStream.on('error', reject);
@@ -105,7 +90,7 @@ async function run() {
   }
 
   await Promise.all([
-    ...buildAll(),
+    buildEntryPoint(),
     copyAssets(),
     copyPopup(),
   ]);

@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const lighthouse = require('../../../lighthouse-core/index');
-const RawProtocol = require('../../../lighthouse-core/gather/connections/raw');
+const lighthouse = require('../lighthouse-core/index.js');
+const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
 const log = require('lighthouse-logger');
 
-/** @typedef {import('../../../lighthouse-core/gather/connections/connection.js')} Connection */
+/** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
 
 /**
  * Return a version of the default config, filtered to only run the specified
