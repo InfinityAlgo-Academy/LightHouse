@@ -123,10 +123,10 @@
     "message": "Element"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Statistică"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Valoare"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Specialiștii în browsere recomandă ca paginile să conțină mai puțin de ~1.500 de noduri DOM. Ideal este ca arborele să aibă o profunzime mai mică de 32 de elemente și mai puțin de 60 de elemente principale/subordonate. Un DOM mare poate crește folosirea memoriei, poate produce [calcule de stil] (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) mai lungi și poate produce [rearanjări ale aspectului](https://developers.google.com/speed/articles/reflow). [Află mai multe](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Numărul total de noduri DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Numărul maxim de elemente subordonate"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Evită o dimensiune DOM excesivă"

@@ -120,13 +120,13 @@
     "message": "最大限度地缩短关键请求深度"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "元素"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "统计信息"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "值"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "浏览器工程师建议，网页包含的 DOM 节点最好少于 1500 个左右。理想状况是，树深度少于 32 个元素，且少于 60 个子/父元素。大型 DOM 可能会增加内存使用量、导致[样式计算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)用时延长并产生高昂的[布局重排](https://developers.google.com/speed/articles/reflow)费用。[了解详情](https://developers.google.com/web/tools/lighthouse/audits/dom-size)。"
@@ -144,7 +144,7 @@
     "message": "DOM 节点总数"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "子元素数量最大值"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "避免 DOM 规模过大"

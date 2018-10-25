@@ -123,10 +123,10 @@
     "message": "Element"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Statystyki"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Wartość"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Twórcy przeglądarek zalecają, by strony zawierały mniej niż około 1500 węzłów DOM. Optymalne jest drzewo o głębokości mniejszej niż 32 elementy i zawierające mniej niż 60 elementów podrzędnych/nadrzędnych. Duży DOM może zwiększyć wykorzystanie pamięci, wydłużyć [obliczanie stylów](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) i powodować kosztowne [przeformatowanie układu](https://developers.google.com/speed/articles/reflow). [Więcej informacji](https://developers.google.com/web/tools/lighthouse/audits/dom-size)"
@@ -144,7 +144,7 @@
     "message": "Łączna liczba węzłów DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Maksymalna liczba elementów podrzędnych"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Unika zbyt dużego DOM"

@@ -120,13 +120,13 @@
     "message": "クリティカルなリクエストの深さの最小化"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "要素"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "統計情報"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "値"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "ブラウザ エンジニアは、ページに含まれる DOM のノード数が 1,500 個を超えないようにすることを推奨しています。ツリーの深さは 32 要素まで、子や親の要素数は 60 個までにするのが最適です。DOM サイズが大きいと、メモリの使用量が増え、[スタイルの計算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)に時間がかかり、[レイアウトのリフロー](https://developers.google.com/speed/articles/reflow)というコストが発生します。[詳細](https://developers.google.com/web/tools/lighthouse/audits/dom-size)"
@@ -144,7 +144,7 @@
     "message": "合計 DOM ノード数"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "子要素の上限数"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "過大な DOM サイズの回避"

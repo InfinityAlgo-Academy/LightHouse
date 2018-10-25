@@ -120,13 +120,13 @@
     "message": "Kritisko pieprasījumu dziļuma samazināšana"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Elements"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Statistikas dati"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Vērtība"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Pārlūka inženieri iesaka, lai lapā nebūtu vairāk par 1500 DOM mezgliem. Ieteicams, lai koka dziļums nepārsniegtu 32 elementus un 60 bērnelementus/vecākelementus. Liels DOM var palielināt atmiņas lietojumu, izraisīt ilgākus [stila aprēķinus](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) un radīt dārgu [izkārtojuma plūduma sakārtošanu](https://developers.google.com/speed/articles/reflow). [Uzzināt vairāk](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "DOM mezglu kopskaits"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Maksimālais pakārtoto elementu skaits"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Nepieļauj pārāk lielus DOM izmērus"

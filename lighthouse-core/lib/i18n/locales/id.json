@@ -120,13 +120,13 @@
     "message": "Minimalkan Kedalaman Permintaan Penting"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Elemen"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Statistik"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Nilai"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Engineer browser merekomendasikan halaman berisi kurang dari ~1.500 node DOM. Titik yang efektif adalah kedalaman hierarki < 32 elemen dan kurang dari 60 elemen turunan/induk. DOM yang besar dapat meningkatkan penggunaan memori, menyebabkan [penghitungan gaya] yang lebih lama(https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), dan menghasilkan [penyesuaian tata letak] yang mahal(https://developers.google.com/speed/articles/reflow). [Pelajari lebih lanjut](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Total Node DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Elemen Turunan Maksimum"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Menghindari ukuran DOM yang berlebihan"

@@ -120,13 +120,13 @@
     "message": "క్లిష్టమైన అభ్యర్ధనల గాఢత్వమును తగ్గించండి"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "మూలకం"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "గణాంక రకం"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "విలువ"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "పేజీలలో ~1,500 కన్నా తక్కువ DOM నోడ్‌లు ఉండాలని బ్రౌజర్ ఇంజినీర్లు సిఫార్సు చేస్తారు. ఉత్తమమైన స్థాయి < 32 అంశాల ట్రీ గాఢత మరియు 60 పిల్లలు/తల్లి/తండ్రి అంశం కన్నా తక్కువ ఉండడం. పెద్ద DOM మెమరీ వినియోగాన్ని పెంచవచ్చు, సుదీర్ఘ [శైలి గణనలు] కు దారి తీయవచ్చు (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), మరియు ఖరీదైన [లేఅవుట్ రీఫ్లోలు]ను ఉత్పత్తి చేయవచ్చు (https://developers.google.com/speed/articles/reflow). [మరింత తెలుసుకోండి](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "మొత్తం DOM నోడ్‌లు"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "పిల్ల మూలకాల గరిష్ట సంఖ్య"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "అధిక DOM పరిమాణాన్ని నివారిస్తుంది"

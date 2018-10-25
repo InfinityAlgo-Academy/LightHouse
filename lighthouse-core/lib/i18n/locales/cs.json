@@ -120,13 +120,13 @@
     "message": "Minimalizujte hloubku kritických požadavků"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Prvek"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Statistika"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Hodnota"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Vývojáři prohlížečů doporučují, aby stránky obsahovaly méně než cca. 1 500 uzlů modelu DOM. Ideálně by hloubka stromu měla být menší než 32 prvků a každý nadřazený prvek by měl mít méně než 60 podřízených prvků. Velký model DOM může vést k většímu využití paměti, delším [výpočtům stylů](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) a náročným [přeformátováváním rozvržení](https://developers.google.com/speed/articles/reflow). [Další informace](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Celkový počet uzlů v modelu DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Maximální počet podřízených prvků"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Nepoužívá příliš velký model DOM"

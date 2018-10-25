@@ -120,13 +120,13 @@
     "message": "중요 요청 깊이 최소화하기"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "요소"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "통계"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "값"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "브라우저 엔지니어들은 페이지에 포함된 DOM 노드의 수가 1,500개 미만인 것이 바람직하다고 말합니다. 최적의 값은 트리 깊이가 요소 32개 미만이고 하위/상위 요소 60개 미만일 때입니다. DOM이 크면 메모리 사용량이 늘어나고 [스타일 계산](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) 시간이 길어질 수 있으며, 큰 비용이 드는 [레이아웃 리플로](https://developers.google.com/speed/articles/reflow)가 발생할 수 있습니다. [자세히 알아보기](https://developers.google.com/web/tools/lighthouse/audits/dom-size)"
@@ -144,7 +144,7 @@
     "message": "총 DOM 노드"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "최대 하위 요소"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "과도한 DOM 크기 지양하기"

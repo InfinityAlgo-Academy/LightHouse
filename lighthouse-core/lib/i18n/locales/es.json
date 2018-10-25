@@ -120,13 +120,13 @@
     "message": "Minimiza la profundidad de las solicitudes críticas"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Elemento"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Estadística"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Valor"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Los ingenieros que desarrollan navegadores recomiendan que las páginas contengan menos de ~1500 nodos de DOM. Lo ideal es conseguir una profundidad de árbol de < 32 elementos y menos de 60 elementos secundarios por cada nodo principal. Los DOM de gran tamaño aumentan el uso de la memoria, hacen que los [cálculos de estilo](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) sean más largos y producen [reinicios de flujo](https://developers.google.com/speed/articles/reflow) más caros. [Más información](https://developers.google.com/web/tools/lighthouse/audits/dom-size)"
@@ -144,7 +144,7 @@
     "message": "Nodos totales de DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Número máximo de elementos secundarios"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Evita un tamaño excesivo de DOM"

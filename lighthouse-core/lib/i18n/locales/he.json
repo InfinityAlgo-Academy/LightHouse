@@ -120,13 +120,13 @@
     "message": "יש לצמצם את העומק של בקשות קריטיות"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "רכיב"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "נתון סטטיסטי"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "ערך"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "מפתחי דפדפנים ממליצים שדפים יכילו פחות מכ-1,500 צומתי DOM. המצב האופטימלי הוא עץ בעומק של פחות מ-32 אלמנטים ופחות מ-60 אלמנטים ברמת צאצא/אב. DOM גדול יכול להגדיל את צריכת הזיכרון, להאריך [חישובי סגנון](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) ולגרום לזרימות חוזרות של פריסה שצורכות נתונים רבים [layout reflows](https://developers.google.com/speed/articles/reflow). [מידע נוסף](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "המספר הכולל של צומתי DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "מקסימום רכיבי צאצא"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "נמנע מ-DOM גדול מדי"

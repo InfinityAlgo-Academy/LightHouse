@@ -123,10 +123,10 @@
     "message": "Element"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Statistika"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Vrijednost"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Inženjeri preglednika preporučuju da stranice sadrže manje od ~1500 čvorova DOM-a. Idealno je da je dubina stabla manja od 32 elementa i da ima manje od 60 elemenata podređenih/nadređenih jedinica. Veliki DOM može pojačati upotrebu memorije, uzrokovati dulje [izračune stilova](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) i proizvesti zahtjevna [preoblikovanja izgleda](https://developers.google.com/speed/articles/reflow). [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Ukupan broj čvorova DOM-a"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Maksimalni broj podređenih elemenata"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Izbjegava pretjeranu veličinu DOM-a"

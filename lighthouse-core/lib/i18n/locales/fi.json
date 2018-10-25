@@ -120,13 +120,13 @@
     "message": "Minimoi kriittisten pyyntöjen syvyys"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Elementti"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Tilastotieto"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Arvo"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Selainten kehittäjät suosittelevat käyttämään sivulla enintään noin 1 500:aa DOM-noodia. Sopiva puun syvyys on korkeintaan 32 elementtiä ja alle 60 ala- tai ylätason elementtiä. Suuri DOM voi lisätä muistin käyttöä, pidentää [tyylilaskelmia](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) ja aiheuttaa työläitä [asettelun uudelleenjuoksutuksia](https://developers.google.com/speed/articles/reflow). [Lue lisää](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "DOM-noodien kokonaismäärä"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Alatason elementtien maksimimäärä"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Välttää liian suurta DOM:ää"

@@ -120,13 +120,13 @@
     "message": "將關鍵要求層級降至最低"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "元素"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "統計資料"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "值"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "瀏覽器工程師建議，頁面包含的 DOM 節點數量應少於 1,500 個左右。理想樹狀層級應包含少於 32 個元素，以及少於 60 個下層/上層元素。大型的 DOM 可能造成記憶體用量增加、延長[樣式運算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)的過程，還會導致費工的[版面配置重排](https://developers.google.com/speed/articles/reflow)。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/dom-size)"
@@ -144,7 +144,7 @@
     "message": "DOM 節點總數"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "子元素數量上限"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "避免 DOM 過大"

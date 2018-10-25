@@ -120,13 +120,13 @@
     "message": "Reduza a profundidade de solicitações críticas"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Elemento"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Estatística"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Valor"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Os engenheiros de navegador recomendam que as páginas tenham menos de ~1.500 nós de DOM. O ideal é uma profundidade de árvore com < 32 elementos e menos de 60 elementos filhos/pais. Um DOM grande pode aumentar o uso da memória, causar [cálculos de estilo] mais longos (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) e produzir [reflows de layout] de alto custo (https://developers.google.com/speed/articles/reflow). [Saiba mais](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Total de nós de DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Máximo de elementos filhos"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Evita DOM de tamanho excessivo"

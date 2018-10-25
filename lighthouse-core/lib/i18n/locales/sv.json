@@ -123,10 +123,10 @@
     "message": "Element"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Värde"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Antal"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Webbläsarutvecklare rekommenderar att en sidas DOM ska ha färre än ca 1 500 noder. Ett träd där djupet är mindre än 32 element och det finns högst 60 underordnade/överordnade element är idealiskt. Stora DOM-träd kan medföra ökad minnesförbrukning, längre [formatmallsberäkningar](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) och resurskrävande [omflödning av layouten](https://developers.google.com/speed/articles/reflow). [Läs mer](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Totalt antal noder i DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Högsta antal underordnade element"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Undviker ett onödigt stort DOM-träd"

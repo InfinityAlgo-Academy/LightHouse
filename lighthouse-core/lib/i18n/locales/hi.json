@@ -120,13 +120,13 @@
     "message": "अहम अनुरोधों की गहराई कम से कम करें"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "तत्व"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "आंकड़े"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "मान"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "ब्राउज़र इंजीनियर सुझाव देते हैं कि पेज में ~1,500 से कम DOM नोड होने चाहिए. सबसे सही आंकड़ा है < 32 एलीमेंट वाली ट्री गहराई और 60 से कम चिल्ड्रन/पेरेंट एलीमेंट. ज़्यादा बड़े DOM से मेमोरी का इस्तेमाल बढ़ सकता है, जिससे ज़्यादा लंबे [स्टाइल कैल्युलेशन](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) हो सकते हैं और इनसे महंगे [लेआउट रीफ़्लो](https://developers.google.com/speed/articles/reflow) बन सकते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "कुल DOM नोड"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "ज़्यादातर बच्चों की चीजें"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "बहुत ज़्यादा बड़े DOM आकार से बचता है"

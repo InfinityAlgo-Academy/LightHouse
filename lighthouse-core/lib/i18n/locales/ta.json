@@ -120,13 +120,13 @@
     "message": "'முக்கியக் கோரிக்கைகளின் அடுக்கைக்' குறைக்கவும்"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "உறுப்பு"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "புள்ளிவிவரம்"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "மதிப்பு"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "~1,500 DOM கணுக்களுக்குக் குறைவான கணுக்களைக் கொண்ட பக்கங்களை உலாவிப் பொறியாளர்கள் பரிந்துரைக்கின்றனர். 32 உறுப்புகளுக்குக் குறைவான கிளை அடுக்குகளும் 60க்குக் குறைவான துணைக்கிளை/கிளை உறுப்புகளும் இருப்பது உகந்தது. ஒரு பெரிய DOM, நினைவகப் பயன்பாட்டை அதிகரிக்கலாம், [ஸ்டைல் கணக்கீடுகளை] நீட்டிக்கலாம், மேலும் (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) அதிகச் செலவு பிடிக்கும் [தளவமைப்பு மறுசீராக்கங்களை] ஏற்படுத்தலாம் (https://developers.google.com/speed/articles/reflow). [மேலும் அறிக](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "மொத்த DOM கணுக்கள்"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "அதிகபட்சத் துணை உறுப்புகள்"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "அபரிமிதமான DOM அளவைத் தவிர்க்கிறது"

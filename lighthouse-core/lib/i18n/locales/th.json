@@ -120,13 +120,13 @@
     "message": "ลดความลึกของคำขอที่สำคัญ"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "องค์ประกอบ"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "สถิติ"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "ค่า"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "วิศวกรเบราว์เซอร์แนะนำให้ใช้หน้าเว็บที่มีโหนด DOM น้อยกว่าประมาณ 1,500 รายการ ความลึกที่เหมาะที่สุดคือแบบต้นไม้ซึ่งมีองค์ประกอบน้อยกว่า 32 รายการและมีองค์ประกอบย่อย/หลักน้อยกว่า 60 รายการ DOM ขนาดใหญ่อาจใช้หน่วยความจำเพิ่มขึ้น ทำให้[การคำนวณสไตล์](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)ยาวนานขึ้น และสร้าง[การจัดเรียงการออกแบบใหม่](https://developers.google.com/speed/articles/reflow)ที่ต้องใช้ค่าใช้จ่ายสูง [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/tools/lighthouse/audits/dom-size)"
@@ -144,7 +144,7 @@
     "message": "โหนด DOM ทั้งหมด"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "จำนวนองค์ประกอบย่อยสูงสุด"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "หลีกเลี่ยง DOM ที่มีขนาดใหญ่เกินไป"

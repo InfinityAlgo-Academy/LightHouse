@@ -123,10 +123,10 @@
     "message": "Element"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Statistikk"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Verdi"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Nettlesereksperter anbefaler at sider inneholder mindre enn ca. 1500 DOM-noder. Den perfekte verdien er en tredybde på mindre enn 32 elementer og mindre enn 60 underordnede/overordnede elementer. En stor DOM-struktur kan øke minnebruken, føre til at [stilberegninger](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) tar lengre tid, og forårsake kostbare [gjenoppbygginger av sidevisningen](https://developers.google.com/speed/articles/reflow). [Finn ut mer](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Totalt antall DOM-noder"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Maksimalt antall underordnede elementer"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Unngå for stor DOM-struktur"

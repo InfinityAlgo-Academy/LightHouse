@@ -123,10 +123,10 @@
     "message": "Element"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Estadística"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Valor"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Els enginyers de navegadors recomanen que les pàgines continguin menys d'uns 1.500 nodes de DOM. La situació ideal és una profunditat d'arbre inferior a 32 elements i menys de 60 elements superiors o secundaris. Un DOM gran pot augmentar l'ús de la memòria, provocar [càlculs d'estil] més llargs (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) i produir costosos [reinicis de reflux del disseny] (https://developers.google.com/speed/articles/reflow). [Més informació] (https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Total de nodes de DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Nombre màxim d'elements secundaris"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Evita una mida excessiva de DOM"

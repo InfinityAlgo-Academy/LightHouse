@@ -120,13 +120,13 @@
     "message": "Ελαχιστοποίηση βάθους κρίσιμων αιτημάτων"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Στοιχείο"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Στατιστικό στοιχείο"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Τιμή"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Οι μηχανικοί προγραμμάτων περιήγησης συνιστούν να περιέχουν οι σελίδες λιγότερους από ~1.500 κόμβους DOM. Το ιδανικό είναι ένα βάθος δέντρου με < 32 στοιχεία και λιγότερα από 60 θυγατρικά/γονικά στοιχεία. Ένα μεγάλο DOM μπορεί να αυξήσει τη χρήση της μνήμης, να προκαλέσει [υπολογισμούς στυλ] μεγαλύτερης διάρκειας (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) και να δημιουργήσει [επαναληπτικές ροές διάταξης] υψηλού κόστους (https://developers.google.com/speed/articles/reflow). [Μάθετε περισσότερα](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Σύνολο κόμβων DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Μέγιστος αριθμός θυγατρικών στοιχείων"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Αποφεύγει τα υπερβολικά μεγάλα μεγέθη DOM"

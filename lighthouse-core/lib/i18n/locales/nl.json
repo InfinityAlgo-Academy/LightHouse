@@ -123,10 +123,10 @@
     "message": "Element"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Statistiek"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Waarde"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Browser-engineers bevelen aan dat pagina's minder dan ~1500 DOM-knooppunten bevatten. De perfecte balans is een structuurdiepte van minder dan 32 elementen en minder dan 60 onderliggende/bovenliggende elementen. Een grote DOM kan ervoor zorgen dat het geheugengebruik toeneemt. Dit leidt tot langere [stijlberekeningen](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) en produceert dure [dynamische lay-outaanpassingen](https://developers.google.com/speed/articles/reflow). [Meer informatie](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Totaal aantal DOM-knooppunten"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Maximum aantal onderliggende elementen"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Vermijdt een overmatige grote DOM"

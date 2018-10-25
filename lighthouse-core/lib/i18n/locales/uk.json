@@ -120,13 +120,13 @@
     "message": "Мінімізуйте глибину важливих запитів"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Елемент"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Статистика"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Значення"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Розробники веб-переглядачів радять, щоб сторінки містили до ~1500 вузлів DOM. Зона найкращого сприйняття – глибина дерева < 32 елементів і до 60 дитячих чи батьківських елементів. Великий файл DOM може збільшувати використання пам’яті, спричиняти довше [обчислення стилів](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) і створювати дороге [перекомпонування макетів](https://developers.google.com/speed/articles/reflow). [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Загальна кількість вузлів DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Максимальна кількість дочірніх елементів"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Уникається надмірний розмір DOM"

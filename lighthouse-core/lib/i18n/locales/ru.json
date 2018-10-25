@@ -120,13 +120,13 @@
     "message": "Сократите глубину вложенности критических запросов"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Элемент"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Статистический показатель"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Значение"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Разработчики браузеров рекомендуют, чтобы на странице было не более 1500 узлов DOM. Наилучшие показатели: глубина вложенности менее 32 элементов, количество дочерних и родительских элементов – менее 60. Сложная структура DOM может увеличить использование памяти, замедлить [вычисление стилей](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и повысить затраты на [компоновку шаблонов](https://developers.google.com/speed/articles/reflow). [Подробнее…](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Общее количество узлов DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Максимальное число дочерних элементов"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Сокращение размера структуры DOM"

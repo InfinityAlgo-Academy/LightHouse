@@ -120,13 +120,13 @@
     "message": "Kritik İsteklerin Derinliğini En Aza İndirin"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Öğe"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "İstatistik"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Değer"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Tarayıcı mühendisleri, sayfaların yaklaşık olarak 1500'den az DOM düğümü içermesini önerir. En etkili nokta, 32 öğeden ve 60 alt/üst öğeden az olan bir ağaç derinliğidir. Büyük bir DOM, bellek kullanımını artırarak daha uzun [stil hesaplamalarına] (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) yol açabilir ve yüksek maliyetli [düzen yeniden düzenlemeleri](https://developers.google.com/speed/articles/reflow) oluşturabilir. [Daha fazla bilgi](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Toplam DOM Düğümü"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Maksimum Alt Öğe"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Aşırı büyük bir DOM boyutunu önler"

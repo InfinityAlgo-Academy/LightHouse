@@ -120,13 +120,13 @@
     "message": "Намалете дълбочината на критичните заявки"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Елемент"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Статистически данни"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Стойност"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Браузърните инженери препоръчват страниците да съдържат под ~ 1500 възела на DOM. Най-добре е йерархичната структура да е с дълбочина под 32 елемента и всеки родителски елемент да има по-малко от 60 дъщерни. Големият размер на DOM може да доведе до използване на повече памет, удължаване на [стиловите изчисления](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и забавяне поради [преоформяне](https://developers.google.com/speed/articles/reflow). [Научете повече](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Общ брой възли на DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Максимален брой дъщерни елементи"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Не се използва DOM с твърде голям размер"

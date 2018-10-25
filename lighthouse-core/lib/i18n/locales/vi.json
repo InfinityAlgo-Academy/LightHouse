@@ -120,13 +120,13 @@
     "message": "Giảm thiểu độ sâu của các yêu cầu quan trọng"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Phần tử"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Thống kê"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Giá trị"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Các công cụ của trình duyệt đề xuất các trang nên chứa ít hơn 1.500 nút DOM. Điểm ngọt là độ sâu của cây có ít hơn 32 thành phần và 60 thành phần con/cấp độ gốc. Một DOM lớn có thể tăng mức sử dụng bộ nhớ, khiến [các phép tính về kiểu](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) dài hơn đồng thời tạo ra [các chỉnh sửa bố cục](https://developers.google.com/speed/articles/reflow) tốn kém. [Tìm hiểu thêm](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Tổng số nút DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Phần tử con tối đa"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Tránh kích thước DOM quá lớn"

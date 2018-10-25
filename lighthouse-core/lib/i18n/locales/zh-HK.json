@@ -111,7 +111,7 @@
     "message": "提供 next-gen 格式的圖片"
   },
   "lighthouse-core/audits/critical-request-chains.js | description": {
-    "message": "下方的「關鍵要求鏈結」顯示以高優先次序發佈的資源。為了提高頁面載入速度，建議您縮短鏈結長度，縮減下載資源的大小，或延遲下載不必要資源。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)。"
+    "message": "下方的「關鍵要求鏈」顯示以高優先次序發佈的資源。為了提高頁面載入速度，建議您縮短鏈長，縮減下載資源的大小，或延遲下載不必要資源。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)。"
   },
   "lighthouse-core/audits/critical-request-chains.js | displayValue": {
     "message": "{itemCount,plural, =1{已找到 1 個鏈結}other{已找到 # 個鏈結}}"
@@ -120,13 +120,13 @@
     "message": "將重要要求深度降至最低"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "元素"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "統計資料"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "值"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "瀏覽器工程師建議，頁面包含的 DOM 節點數量應少於 1,500 個左右。理想樹狀深度應包含少於 32 個元素，且少於 60 個子/父元素。大型 DOM 會增加記憶體用量、導致[樣式運算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)所用時間延長並產生昂貴的[版面配置自動重排](https://developers.google.com/speed/articles/reflow)費用。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/dom-size)。"
@@ -144,7 +144,7 @@
     "message": "DOM 節點總數"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "子元素數量上限"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "避免 DOM 過大"

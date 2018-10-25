@@ -120,10 +120,10 @@
     "message": "I-minimize ang Lalim ng Mahahalagang Kahilingan"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Elemento"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Istatistika"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
     "message": "Value"
@@ -144,7 +144,7 @@
     "message": "Kabuuang Bilang ng Mga Node ng DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Maximum na Mga Child na Elemento"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Umiiwas sa masyadong malaking DOM"

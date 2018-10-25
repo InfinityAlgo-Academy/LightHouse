@@ -120,13 +120,13 @@
     "message": "Minimalizálja a kritikus lekérdezések mélységét"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Elem"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Jellemző"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Érték"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "A böngészőket fejlesztő mérnökök azt javasolják, hogy az oldalakon ~1500 DOM-csomópontnál kevesebb legyen. A legkedvezőbb a 32 elemnél kisebb és a 60 alárendelt/fölérendelt elemnél kisebb famélység. A nagy DOM növelheti a memóriahasználatot, és hosszabb [stílusszámítást](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), valamint költséges [elrendezés-újraszámítást](https://developers.google.com/speed/articles/reflow) eredményezhet. [További információ](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Összes DOM-csomópont"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Alárendelt elemek maximális száma"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Kerüli a túlzó DOM-méretet"

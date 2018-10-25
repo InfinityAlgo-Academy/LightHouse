@@ -120,13 +120,13 @@
     "message": "تقليل عمق الطلبات المهمة"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "العنصر"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "الإحصائية"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "القيمة"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "يوصي مهندسو المتصفّح بالصفحات التي تحتوي على أقل من ~1500 عُقدة DOM. وتمثل sweet spot شبكة عمقها < 32 عنصرًا ولا تزيد عن 60 عنصرًا فرعيًا/رئيسيًا. ويمكن أن تزيد عُقدة DOM الكبيرة من استخدام الذاكرة، وتسبب [عمليات حسابية نمطية] أطول (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)، وتنتج [عمليات إعادة عرض للتنسيق] مُكلفة (https://developers.google.com/speed/articles/reflow). [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "إجمالى عُقَدْ DOM"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "الحد الأقصى من عناصر الأطفال"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "تجنُب حجم DOM الزائد"

@@ -120,13 +120,13 @@
     "message": "Sumažinkite svarbiausių užklausų gylį"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": {
-    "message": "Element"
+    "message": "Elementas"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Statistika"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Vertė"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Naršyklių inžinieriai rekomenduoja puslapiuose turėti ne daugiau nei apytiksliai 1,5 tūkst. DOM mazgų. Optimaliausias medžio gylis – mažiau nei 32 elementai ir mažiau nei 60 poelemenčių bei viršelemenčių. Dėl didelio DOM gali būti sunaudojama daugiau atminties, ilgiau skaičiuojami stiliai (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) ir reikia brangių išdėstymo perskaičiavimų (https://developers.google.com/speed/articles/reflow). [Sužinokite daugiau](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Bendras DOM mazgų skaičius"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Maksimalus antrinių elementų skaičius"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Išvengiama per didelių DOM"

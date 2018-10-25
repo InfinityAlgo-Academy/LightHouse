@@ -123,10 +123,10 @@
     "message": "Element"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
-    "message": "Statistic"
+    "message": "Statistični podatek"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
-    "message": "Value"
+    "message": "Vrednost"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
     "message": "Inženirji za brskalnike priporočajo, da strani vsebujejo manj kot približno 1500 vozlišč DOM-a. Idealna vrednost je globina drevesa z manj kot 32 elementi in manj kot 60 podrejenimi/nadrejenimi elementi. Velik DOM lahko povzroči povečano uporabo pomnilnika, daljše [slogovne izračune](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) in drage [prilagoditve postavitve](https://developers.google.com/speed/articles/reflow). [Več o tem](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
@@ -144,7 +144,7 @@
     "message": "Skupno število vozlišč DOM-a"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
-    "message": "Maximum Child Elements"
+    "message": "Največje število podrejenih elementov"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Izogiba se prekomerni velikosti DOM-a"
@@ -177,7 +177,7 @@
     "message": "Ocenjena zakasnitev vnosa"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "Prvo vsebinsko barvanje označuje čas, ko je pobarvano prvo besedilo oziroma je pobarvana prva slika. [Več o tem](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
+    "message": "Prvi vsebinski izris označuje čas, ko je izrisano prvo besedilo oziroma je izrisana prva slika. [Več o tem](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Prvo vsebinsko barvanje"
