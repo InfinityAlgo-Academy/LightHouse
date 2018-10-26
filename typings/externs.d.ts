@@ -85,7 +85,7 @@ declare global {
      */
     interface SharedFlagsSettings {
       // The output types (json, html, ...)
-      output?: OutputMode|OutputMode[];
+      output?: OutputMode[];
       // The locale setting
       locale?: Locale;
       // The maximum amount of time to wait for a page to load in ms

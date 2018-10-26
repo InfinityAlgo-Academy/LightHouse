@@ -28,7 +28,7 @@ const throttling = {
 
 /** @type {LH.Config.Settings} */
 const defaultSettings = {
-  output: 'json',
+  output: ['json'],
   maxWaitForLoad: 45 * 1000,
   throttlingMethod: 'simulate',
   throttling: throttling.mobileSlow4G,
