@@ -6,7 +6,7 @@
         1. Install the [C++ Protocol Buffer Runtime](https://github.com/protocolbuffers/protobuf/blob/master/src/README.md)
     1. Brew install
         1. `brew install protobuf`
-1. Run `yarn compile-proto` then `yarn build-proto`
+1. Run `yarn compile-proto` then `yarn build-proto-roundtrip`
 
 ## Proto Resources
 - [Protobuf Github Repo](https://github.com/protocolbuffers/protobuf) 
