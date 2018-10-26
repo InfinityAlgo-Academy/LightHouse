@@ -238,8 +238,8 @@ describe('CategoryRenderer', () => {
       const category = JSON.parse(JSON.stringify(origCategory));
       category.auditRefs.forEach(audit => audit.result.score = 0);
       const elem = renderer.render(category, sampleResults.categoryGroups);
-      const passedAudits = elem.querySelectorAll('.lh-passed-audits > .lh-audit');
-      const failedAudits = elem.querySelectorAll('.lh-failed-audits > .lh-audit');
+      const passedAudits = elem.querySelectorAll('.lh-passed-audits .lh-audit');
+      const failedAudits = elem.querySelectorAll('.lh-failed-audits .lh-audit');
 
       assert.equal(passedAudits.length, 0);
       assert.equal(failedAudits.length, 11);

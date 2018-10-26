@@ -73,9 +73,6 @@ Object {
       "path": "themed-omnibox",
     },
     Object {
-      "path": "manifest-short-name-length",
-    },
-    Object {
       "path": "content-width",
     },
     Object {
@@ -814,52 +811,59 @@ Object {
     "pwa": Object {
       "auditRefs": Array [
         Object {
+          "group": "pwa-fast-reliable",
           "id": "load-fast-enough-for-pwa",
           "weight": 7,
         },
         Object {
+          "group": "pwa-fast-reliable",
           "id": "works-offline",
           "weight": 5,
         },
         Object {
-          "id": "webapp-install-banner",
-          "weight": 3,
-        },
-        Object {
+          "group": "pwa-installable",
           "id": "is-on-https",
           "weight": 2,
         },
         Object {
-          "id": "redirects-http",
-          "weight": 2,
-        },
-        Object {
-          "id": "viewport",
-          "weight": 2,
-        },
-        Object {
+          "group": "pwa-installable",
           "id": "service-worker",
           "weight": 1,
         },
         Object {
-          "id": "without-javascript",
-          "weight": 1,
+          "group": "pwa-installable",
+          "id": "webapp-install-banner",
+          "weight": 3,
         },
         Object {
+          "group": "pwa-engaging",
+          "id": "redirects-http",
+          "weight": 2,
+        },
+        Object {
+          "group": "pwa-engaging",
           "id": "splash-screen",
           "weight": 1,
         },
         Object {
+          "group": "pwa-engaging",
           "id": "themed-omnibox",
           "weight": 1,
         },
         Object {
+          "group": "pwa-engaging",
           "id": "content-width",
           "weight": 1,
         },
         Object {
-          "id": "manifest-short-name-length",
-          "weight": 0,
+          "group": "pwa-engaging",
+          "id": "viewport",
+          "weight": 2,
+        },
+        Object {
+          "group": "pwa-engaging",
+          "id": "without-javascript",
+          "weight": 1,
         },
         Object {
           "id": "pwa-cross-browser",
@@ -874,7 +878,7 @@ Object {
           "weight": 0,
         },
       ],
-      "description": "These checks validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).",
+      "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
       "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
       "title": "Progressive Web App",
     },
@@ -992,6 +996,15 @@ Object {
     },
     "metrics": Object {
       "title": "Metrics",
+    },
+    "pwa-engaging": Object {
+      "title": "Engaging",
+    },
+    "pwa-fast-reliable": Object {
+      "title": "Fast and reliable",
+    },
+    "pwa-installable": Object {
+      "title": "Installable",
     },
     "seo-content": Object {
       "description": "Format your HTML in a way that enables crawlers to better understand your app’s content.",
@@ -1244,6 +1257,15 @@ Object {
     },
     "metrics": Object {
       "title": "Metrics",
+    },
+    "pwa-engaging": Object {
+      "title": "Engaging",
+    },
+    "pwa-fast-reliable": Object {
+      "title": "Fast and reliable",
+    },
+    "pwa-installable": Object {
+      "title": "Installable",
     },
     "seo-content": Object {
       "description": "Format your HTML in a way that enables crawlers to better understand your app’s content.",

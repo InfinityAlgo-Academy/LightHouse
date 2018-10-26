@@ -383,6 +383,18 @@
     "message": "Performance",
     "description": "Title of the Performance category of audits. Equivalent to 'Web performance', this term is inclusive of all web page speed and loading optimization topics. Also used as a label of a score gauge; try to limit to 20 characters."
   },
+  "lighthouse-core/config/default-config.js | pwaEngagingGroupTitle": {
+    "message": "Engaging",
+    "description": "Title of the Engaging section of the web app category. Within this section are audits that check if the developer has taken advantage of features to make their web page more enjoyable and engaging for the user."
+  },
+  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
+    "message": "Fast and reliable",
+    "description": "Title of the Fast and Reliable section of the web app category. Within this section are audits that check if the web site loaded quickly and can reliably load even if the internet connection is very slow or goes offline."
+  },
+  "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
+    "message": "Installable",
+    "description": "Title of the Installable section of the web app category. Within this section are audits that check if Chrome supports installing the web site as an app on their device."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache TTL",
     "description": "Label for the TTL column in data tables, entries will be the time to live value of the cache header on a web resource"
