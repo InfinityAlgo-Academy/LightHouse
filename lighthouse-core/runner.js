@@ -175,7 +175,8 @@ class Runner {
     const timingEntriesKeyValues = [
       ...timingEntriesFromArtifacts,
       ...timingEntriesFromRunner,
-    ].map(entry => /** @type {[string, PerformanceEntry]} */ ([entry.name, entry]));
+      // As entries can share a name, dedupe based on the startTime timestamp
+    ].map(entry => /** @type {[number, PerformanceEntry]} */ ([entry.startTime, entry]));
     const timingEntries = Array.from(new Map(timingEntriesKeyValues).values());
     const runnerEntry = timingEntries.find(e => e.name === 'lh:runner:run');
     return {entries: timingEntries, total: runnerEntry && runnerEntry.duration || 0};

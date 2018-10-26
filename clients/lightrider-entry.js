@@ -5,19 +5,19 @@
  */
 'use strict';
 
-const lighthouse = require('../../../lighthouse-core/index');
+const lighthouse = require('../lighthouse-core/index.js');
 
-const assetSaver = require('../../../lighthouse-core/lib/asset-saver.js');
-const LHError = require('../../../lighthouse-core/lib/lh-error.js');
-const preprocessor = require('../../../lighthouse-core/lib/proto-preprocessor.js');
+const assetSaver = require('../lighthouse-core/lib/asset-saver.js');
+const LHError = require('../lighthouse-core/lib/lh-error.js');
+const preprocessor = require('../lighthouse-core/lib/proto-preprocessor.js');
 
 /** @type {Record<'mobile'|'desktop', LH.Config.Json>} */
 const LR_PRESETS = {
-  mobile: require('../../../lighthouse-core/config/lr-mobile-config'),
-  desktop: require('../../../lighthouse-core/config/lr-desktop-config'),
+  mobile: require('../lighthouse-core/config/lr-mobile-config.js'),
+  desktop: require('../lighthouse-core/config/lr-desktop-config.js'),
 };
 
-/** @typedef {import('../../../lighthouse-core/gather/connections/connection.js')} Connection */
+/** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
 
 /**
  * Run lighthouse for connection and provide similar results as in CLI.

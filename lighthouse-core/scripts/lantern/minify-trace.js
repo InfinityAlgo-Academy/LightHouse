@@ -78,11 +78,11 @@ const traceEventsToKeepInProcess = new Set([
  * @param {LH.TraceEvent[]} events
  */
 function filterOutUnnecessaryTasksByNameAndDuration(events) {
-  const {startedInPageEvt} = TracingProcessor.findTracingStartedEvt(events);
+  const {pid} = TracingProcessor.findMainFrameIds(events);
 
   return events.filter(evt => {
     if (toplevelTaskNames.has(evt.name) && evt.dur < 1000) return false;
-    if (evt.pid === startedInPageEvt.pid && traceEventsToKeepInProcess.has(evt.name)) return true;
+    if (evt.pid === pid && traceEventsToKeepInProcess.has(evt.name)) return true;
     return traceEventsToAlwaysKeep.has(evt.name);
   });
 }

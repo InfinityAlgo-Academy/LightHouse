@@ -19,14 +19,13 @@
   "include": [
     "lighthouse-cli/**/*.js",
     "lighthouse-core/**/*.js",
-    "lighthouse-extension/app/src/*.js",
-    "lighthouse-extension/*.js",
+    "clients/**/*.js",
+    "build/**/*.js",
     "./typings/*.d.ts",
   ],
   "exclude": [
     "lighthouse-cli/test/**/*.js",
     "lighthouse-core/test/**/*.js",
-    "lighthouse-core/closure/**/*.js",
-    "lighthouse-core/third_party/src/**/*.js",
+    "clients/test/**/*.js",
   ]
 }

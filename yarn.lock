@@ -126,13 +126,6 @@
   resolved "https://registry.yarnpkg.com/@types/css-font-loading-module/-/css-font-loading-module-0.0.2.tgz#09f1f1772975777e37851b7b7a4389d97c210add"
   integrity sha512-zZTq/B1ZcJMepOfBIMEwOZ/g/jpSPUJoxP8zPtPizOKE/Q89SujK1BLYZBg+4LLW3IzJGOI67dbeePy8uPUs+g==
 
-"@types/del@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@types/del/-/del-3.0.1.tgz#4712da8c119873cbbf533ad8dbf1baac5940ac5d"
-  integrity sha512-y6qRq6raBuu965clKgx6FHuiPu3oHdtmzMPXi8Uahsjdq1L6DL5fS/aY5/s71YwM7k6K1QIWvem5vNwlnNGIkQ==
-  dependencies:
-    "@types/glob" "*"
-
 "@types/esprima@^4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@types/esprima/-/esprima-4.0.2.tgz#0303602d0644086d4802635d7abc9ac0eec57207"
@@ -2517,18 +2510,6 @@ del@^2.0.2:
     pinkie-promise "^2.0.0"
     rimraf "^2.2.8"
 
-del@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/del/-/del-3.0.0.tgz#53ecf699ffcbcb39637691ab13baf160819766e5"
-  integrity sha1-U+z2mf/LyzljdpGrE7rxYIGXZuU=
-  dependencies:
-    globby "^6.1.0"
-    is-path-cwd "^1.0.0"
-    is-path-in-cwd "^1.0.0"
-    p-map "^1.1.1"
-    pify "^3.0.0"
-    rimraf "^2.2.8"
-
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
@@ -3743,17 +3724,6 @@ globby@^5.0.0:
   dependencies:
     array-union "^1.0.1"
     arrify "^1.0.0"
-    glob "^7.0.3"
-    object-assign "^4.0.1"
-    pify "^2.0.0"
-    pinkie-promise "^2.0.0"
-
-globby@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/globby/-/globby-6.1.0.tgz#f5a6d70e8395e21c858fb0489d64df02424d506c"
-  integrity sha1-9abXDoOV4hyFj7BInWTfAkJNUGw=
-  dependencies:
-    array-union "^1.0.1"
     glob "^7.0.3"
     object-assign "^4.0.1"
     pify "^2.0.0"
@@ -6606,11 +6576,6 @@ p-locate@^2.0.0:
   integrity sha1-IKAQOyIqcMj9OcwuWAaA893l7EM=
   dependencies:
     p-limit "^1.1.0"
-
-p-map@^1.1.1:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/p-map/-/p-map-1.2.0.tgz#e4e94f311eabbc8633a1e79908165fca26241b6b"
-  integrity sha512-r6zKACMNhjPJMTl8KcFH4li//gkrXWfbD6feV8l6doRHlzljFWGJ2AP6iKaCJXyZmAUMOPtvbW7EXkbWO/pLEA==
 
 package-json-versionify@^1.0.4:
   version "1.0.4"

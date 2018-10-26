@@ -10,10 +10,11 @@
 const path = require('path');
 const assert = require('assert');
 const fs = require('fs');
-const puppeteer = require('../../node_modules/puppeteer/index.js');
+const puppeteer = require('../../../node_modules/puppeteer/index.js');
 
-const lighthouseExtensionPath = path.resolve(__dirname, '../dist');
-const config = require(path.resolve(__dirname, '../../lighthouse-core/config/default-config.js'));
+const lighthouseExtensionPath = path.resolve(__dirname, '../../../dist/extension');
+const config = require(path.resolve(__dirname,
+    '../../../lighthouse-core/config/default-config.js'));
 
 const getAuditsOfCategory = category => config.categories[category].auditRefs;
 

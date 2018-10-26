@@ -4,9 +4,7 @@ npm-debug.log
 .vscode
 .tmp
 
-lighthouse-extension/dist
-lighthouse-core/third_party/src
-**/pages/scripts/lighthouse-report.js
+dist
 coverage
 lcov.info
 .nyc_output

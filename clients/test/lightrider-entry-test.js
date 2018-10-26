@@ -6,8 +6,8 @@
 'use strict';
 
 const assert = require('assert');
-const lhBackground = require('../../../app/src/lightrider-entry.js');
-const LHError = require('../../../../lighthouse-core/lib/lh-error.js');
+const lhBackground = require('../lightrider-entry.js');
+const LHError = require('../../lighthouse-core/lib/lh-error.js');
 
 /* eslint-env mocha */
 

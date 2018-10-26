@@ -198,39 +198,46 @@ class TraceProcessor {
 
   /**
    * @param {LH.TraceEvent[]} events
-   * @return {{startedInPageEvt: LH.TraceEvent, frameId: string}}
+   * @return {{pid: number, tid: number, frameId: string}}
    */
-  static findTracingStartedEvt(events) {
-    /** @type {LH.TraceEvent|undefined} */
-    let startedInPageEvt;
-
+  static findMainFrameIds(events) {
     // Prefer the newer TracingStartedInBrowser event first, if it exists
     const startedInBrowserEvt = events.find(e => e.name === 'TracingStartedInBrowser');
     if (startedInBrowserEvt && startedInBrowserEvt.args.data &&
         startedInBrowserEvt.args.data.frames) {
       const mainFrame = startedInBrowserEvt.args.data.frames.find(frame => !frame.parent);
+      const frameId = mainFrame && mainFrame.frame;
       const pid = mainFrame && mainFrame.processId;
+
       const threadNameEvt = events.find(e => e.pid === pid && e.ph === 'M' &&
         e.cat === '__metadata' && e.name === 'thread_name' && e.args.name === 'CrRendererMain');
-      startedInPageEvt = mainFrame && threadNameEvt ?
-        Object.assign({}, startedInBrowserEvt, {
-          pid, tid: threadNameEvt.tid, name: 'TracingStartedInPage',
-          args: {data: {page: mainFrame.frame}}}) :
-        undefined;
+      const tid = threadNameEvt && threadNameEvt.tid;
+
+      if (pid && tid && frameId) {
+        return {
+          pid,
+          tid,
+          frameId,
+        };
+      }
     }
 
     // Support legacy browser versions that do not emit TracingStartedInBrowser event.
-    if (!startedInPageEvt) {
-      // The first TracingStartedInPage in the trace is definitely our renderer thread of interest
-      // Beware: the tracingStartedInPage event can appear slightly after a navigationStart
-      startedInPageEvt = events.find(e => e.name === 'TracingStartedInPage');
+    // The first TracingStartedInPage in the trace is definitely our renderer thread of interest
+    // Beware: the tracingStartedInPage event can appear slightly after a navigationStart
+    const startedInPageEvt = events.find(e => e.name === 'TracingStartedInPage');
+    if (startedInPageEvt && startedInPageEvt.args && startedInPageEvt.args.data) {
+      const frameId = startedInPageEvt.args.data.page;
+      if (frameId) {
+        return {
+          pid: startedInPageEvt.pid,
+          tid: startedInPageEvt.tid,
+          frameId,
+        };
+      }
     }
 
-    if (!startedInPageEvt) throw new LHError(LHError.errors.NO_TRACING_STARTED);
-
-    // @ts-ignore - property chain exists for 'TracingStartedInPage' event.
-    const frameId = /** @type {string} */ (startedInPageEvt.args.data.page);
-    return {startedInPageEvt, frameId};
+    throw new LHError(LHError.errors.NO_TRACING_STARTED);
   }
 
   /**

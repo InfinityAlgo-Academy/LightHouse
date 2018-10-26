@@ -9,9 +9,9 @@
 
 const path = require('path');
 const assert = require('assert');
-const puppeteer = require('../../node_modules/puppeteer/index.js');
+const puppeteer = require('../../../node_modules/puppeteer/index.js');
 
-const lighthouseExtensionPath = path.resolve(__dirname, '../dist');
+const lighthouseExtensionPath = path.resolve(__dirname, '../../../dist/extension');
 
 const defaultCategoriesStub = [
   {

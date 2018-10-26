@@ -25,12 +25,12 @@ const COMMIT_HASH = require('child_process')
   .toString().trim();
 
 const audits = LighthouseRunner.getAuditList()
-    .map(f => '../lighthouse-core/audits/' + f.replace(/\.js$/, ''));
+    .map(f => './lighthouse-core/audits/' + f.replace(/\.js$/, ''));
 
 const gatherers = LighthouseRunner.getGathererList()
-    .map(f => '../lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
+    .map(f => './lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
 
-const locales = fs.readdirSync('../lighthouse-core/lib/i18n/locales/')
+const locales = fs.readdirSync(__dirname + '/../lighthouse-core/lib/i18n/locales/')
     .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
 
 /** @param {string} file */
@@ -81,7 +81,7 @@ async function browserifyFile(entryPath, distPath) {
   }
 
   // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.
-  const corePath = '../lighthouse-core/';
+  const corePath = './lighthouse-core/';
   const driverPath = `${corePath}gather/`;
   audits.forEach(audit => {
     bundle = bundle.require(audit, {expose: audit.replace(corePath, '../')});
@@ -140,8 +140,23 @@ async function build(entryPath, distPath) {
   minifyScript(distPath);
 }
 
-module.exports = {
-  /** The commit hash for the current HEAD. */
-  COMMIT_HASH,
-  build,
-};
+/**
+ * @param {Array<string>} argv
+ */
+async function cli(argv) {
+  // Take paths relative to cwd and build.
+  const [entryPath, distPath] = argv.slice(2)
+    .map(filePath => path.resolve(process.cwd(), filePath));
+  build(entryPath, distPath);
+}
+
+// @ts-ignore Test if called from the CLI or as a module.
+if (require.main === module) {
+  cli(process.argv);
+} else {
+  module.exports = {
+    /** The commit hash for the current HEAD. */
+    COMMIT_HASH,
+    build,
+  };
+}

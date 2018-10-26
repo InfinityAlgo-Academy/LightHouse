@@ -25,7 +25,7 @@ const LHError = require('./lib/lh-error.js');
  *
  *         lighthouse-cli \
  *                         -- core/index.js ----> runner.js ----> [Gather / Audit]
- *   lighthouse-extension /
+ *                clients /
  */
 
 /**

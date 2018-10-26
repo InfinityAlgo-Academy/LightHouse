@@ -33,7 +33,7 @@ fi
 report_dir="lighthouse-core/report/html"
 fe_lh_dir="$frontend_dir/audits2/lighthouse"
 
-lh_bg_js="lighthouse-extension/dist/scripts/lighthouse-dt-bundle.js"
+lh_bg_js="dist/lighthouse-dt-bundle.js"
 lh_worker_dir="$frontend_dir/audits2_worker/lighthouse"
 
 # copy report files
