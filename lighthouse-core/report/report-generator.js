@@ -88,12 +88,9 @@ class ReportGenerator {
    * Creates the results output in a format based on the `mode`.
    * @param {LH.Result} lhr
    * @param {LH.Config.Settings['output']} outputModes
-   * @return {string|string[]}
+   * @return {string[]}
    */
   static generateReport(lhr, outputModes) {
-    const outputAsArray = Array.isArray(outputModes);
-    if (typeof outputModes === 'string') outputModes = [outputModes];
-
     const output = outputModes.map(outputMode => {
       // HTML report.
       if (outputMode === 'html') {
@@ -110,8 +107,7 @@ class ReportGenerator {
 
       throw new Error('Invalid output mode: ' + outputMode);
     });
-
-    return outputAsArray ? output : output[0];
+    return output;
   }
 }
 

@@ -161,7 +161,7 @@ declare global {
 
     export interface RunnerResult {
       lhr: Result;
-      report: string|string[];
+      report: string[];
       artifacts: Artifacts;
     }
 
