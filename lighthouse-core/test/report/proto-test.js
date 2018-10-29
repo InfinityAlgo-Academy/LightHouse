@@ -59,6 +59,9 @@ describe('round trip JSON comparison subsets', () => {
   });
 });
 
+// Note: In a failing diff, if you see details.summary going from {} to null, it's OK.
+// Jest considers this not a failure, and neither do we, here in the python roundtrip
+// Meanwhile, The PSI roundtrip maintains {} to {}.
 describe('round trip JSON comparison to everything', () => {
   let sampleJson;
 
