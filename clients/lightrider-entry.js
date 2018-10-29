@@ -48,13 +48,14 @@ async function runLighthouseInLR(connection, url, flags, {lrDevice, categoryIDs,
       await assetSaver.logAssets(results.artifacts, results.lhr.audits);
     }
 
-    // pre process the LHR for proto
+    // pre process the LHR for proto (if it is a json report)
     if (flags.output && flags.output.length === 1 &&
-      flags.output[0] === 'json' && typeof results.report === 'string') {
-      return preprocessor.processForProto(results.report);
+      flags.output[0] === 'json' && typeof results.report[0] === 'string') {
+      return preprocessor.processForProto(results.report[0]);
     }
 
-    return results.report;
+    // get the html report
+    return results.report[0];
   } catch (err) {
     // If an error ruined the entire lighthouse run, attempt to return a meaningful error.
     let runtimeError;
