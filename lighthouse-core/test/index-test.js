@@ -108,7 +108,7 @@ describe('Module Tests', function() {
   it('should return formatted LHR when given no categories', function() {
     const exampleUrl = 'https://www.reddit.com/r/nba';
     return lighthouse(exampleUrl, {
-      output: 'html',
+      output: ['html'],
     }, {
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',

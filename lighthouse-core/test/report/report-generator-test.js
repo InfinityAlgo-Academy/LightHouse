@@ -76,12 +76,12 @@ describe('ReportGenerator', () => {
 
   describe('#generateReport', () => {
     it('creates JSON for results', () => {
-      const jsonOutput = ReportGenerator.generateReport(sampleResults, 'json');
+      const jsonOutput = ReportGenerator.generateReport(sampleResults, ['json']);
       assert.doesNotThrow(_ => JSON.parse(jsonOutput));
     });
 
     it('creates HTML for results', () => {
-      const htmlOutput = ReportGenerator.generateReport(sampleResults, 'html');
+      const htmlOutput = ReportGenerator.generateReport(sampleResults, ['html']);
       assert.ok(/<!doctype/gim.test(htmlOutput));
       assert.ok(/<html lang="en"/gim.test(htmlOutput));
     });
@@ -96,7 +96,7 @@ describe('ReportGenerator', () => {
         score: 42,
       };
 
-      const csvOutput = ReportGenerator.generateReport(sampleResults, 'csv');
+      const csvOutput = ReportGenerator.generateReport(sampleResults, ['csv']);
       fs.writeFileSync(path, csvOutput);
 
       try {
@@ -109,7 +109,7 @@ describe('ReportGenerator', () => {
     });
 
     it('writes extended info', () => {
-      const htmlOutput = ReportGenerator.generateReport(sampleResults, 'html');
+      const htmlOutput = ReportGenerator.generateReport(sampleResults, ['html']);
       const outputCheck = new RegExp('dobetterweb/dbw_tester.css', 'i');
       assert.ok(outputCheck.test(htmlOutput));
     });
