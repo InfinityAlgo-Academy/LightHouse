@@ -22,16 +22,6 @@ function processForProto(result) {
   /** @type {LH.Result} */
   const reportJson = JSON.parse(result);
 
-  // Clean up the configSettings
-  if (reportJson.configSettings) {
-    // make sure the 'output' field is an array
-    if (reportJson.configSettings.output) {
-      if (!Array.isArray(reportJson.configSettings.output)) {
-        reportJson.configSettings.output = [reportJson.configSettings.output];
-      }
-    }
-  }
-
   // Remove runtimeError if it is NO_ERROR
   if (reportJson.runtimeError && reportJson.runtimeError.code === 'NO_ERROR') {
     delete reportJson.runtimeError;
