@@ -36,7 +36,7 @@ describe('PerfCategoryRenderer', () => {
     const PerformanceCategoryRenderer =
         require('../../../../report/html/renderer/performance-category-renderer.js');
 
-    const document = jsdom.jsdom(TEMPLATE_FILE);
+    const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
     renderer = new PerformanceCategoryRenderer(dom, detailsRenderer);

@@ -44,7 +44,8 @@ describe('DOM', () => {
     global.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
 
-    document = jsdom.jsdom(TEMPLATE_FILE);
+    const {window} = new jsdom.JSDOM(TEMPLATE_FILE);
+    document = window.document;
   });
 
   afterAll(() => {

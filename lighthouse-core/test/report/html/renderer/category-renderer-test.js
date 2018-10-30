@@ -31,7 +31,7 @@ describe('CategoryRenderer', () => {
     global.Util = Util;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
 
-    const document = jsdom.jsdom(TEMPLATE_FILE);
+    const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
     renderer = new CategoryRenderer(dom, detailsRenderer);
@@ -251,7 +251,8 @@ describe('CategoryRenderer', () => {
   it('can set a custom templateContext', () => {
     assert.equal(renderer.templateContext, renderer.dom.document());
 
-    const otherDocument = jsdom.jsdom(TEMPLATE_FILE);
+    const dom = new jsdom.JSDOM(TEMPLATE_FILE);
+    const otherDocument = dom.window.document;
     renderer.setTemplateContext(otherDocument);
     assert.equal(renderer.templateContext, otherDocument);
   });

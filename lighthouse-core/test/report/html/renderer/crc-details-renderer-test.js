@@ -80,7 +80,7 @@ describe('DetailsRenderer', () => {
   beforeAll(() => {
     global.URL = URL;
     global.Util = Util;
-    const document = jsdom.jsdom(TEMPLATE_FILE);
+    const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
     dom = new DOM(document);
   });
 

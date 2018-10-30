@@ -51,10 +51,10 @@ describe('ReportRenderer', () => {
       };
     };
 
-    const document = jsdom.jsdom(TEMPLATE_FILE);
-    global.self = document.defaultView;
+    const {window} = new jsdom.JSDOM(TEMPLATE_FILE);
+    global.self = window;
 
-    const dom = new DOM(document);
+    const dom = new DOM(window.document);
     const detailsRenderer = new DetailsRenderer(dom);
     const categoryRenderer = new CategoryRenderer(dom, detailsRenderer);
     renderer = new ReportRenderer(dom, categoryRenderer);
@@ -149,7 +149,8 @@ describe('ReportRenderer', () => {
   it('can set a custom templateContext', () => {
     assert.equal(renderer._templateContext, renderer._dom.document());
 
-    const otherDocument = jsdom.jsdom(TEMPLATE_FILE);
+    const {window} = new jsdom.JSDOM(TEMPLATE_FILE);
+    const otherDocument = window.document;
     renderer.setTemplateContext(otherDocument);
     assert.equal(renderer._templateContext, otherDocument);
   });

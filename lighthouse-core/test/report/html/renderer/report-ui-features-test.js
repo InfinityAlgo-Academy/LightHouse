@@ -53,9 +53,9 @@ describe('ReportUIFeatures', () => {
       };
     };
 
-    const document = jsdom.jsdom(TEMPLATE_FILE);
-    const documentReport = jsdom.jsdom(TEMPLATE_FILE_REPORT);
-    global.self = document.defaultView;
+    const document = new jsdom.JSDOM(TEMPLATE_FILE);
+    const documentReport = new jsdom.JSDOM(TEMPLATE_FILE_REPORT);
+    global.self = document.window;
     global.self.matchMedia = function() {
       return {
         addListener: function() {},
@@ -70,8 +70,8 @@ describe('ReportUIFeatures', () => {
       };
     };
 
-    const dom = new DOM(document);
-    const dom2 = new DOM(documentReport);
+    const dom = new DOM(document.window.document);
+    const dom2 = new DOM(documentReport.window.document);
     const detailsRenderer = new DetailsRenderer(dom);
     const categoryRenderer = new CategoryRenderer(dom, detailsRenderer);
     renderer = new ReportRenderer(dom, categoryRenderer);

@@ -16,7 +16,7 @@ describe('DetailsRenderer', () => {
   let dom;
 
   beforeAll(() => {
-    const document = jsdom.jsdom();
+    const {document} = new jsdom.JSDOM().window;
     dom = new DOM(document);
   });
 
