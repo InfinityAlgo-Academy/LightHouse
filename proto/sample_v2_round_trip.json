@@ -1630,6 +1630,14 @@
             "scoreDisplayMode": "not_applicable", 
             "title": "`<object>` elements have `[alt]` text"
         }, 
+        "offline-start-url": {
+            "description": "A service worker enables your web app to be reliable in unpredictable network conditions. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).", 
+            "id": "offline-start-url", 
+            "score": 0.0, 
+            "scoreDisplayMode": "binary", 
+            "title": "start_url does not respond with a 200 when offline", 
+            "warnings": []
+        }, 
         "offscreen-content-hidden": {
             "description": "Offscreen content is hidden with display: none or aria-hidden=true. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).", 
             "id": "offscreen-content-hidden", 
@@ -3042,6 +3050,11 @@
                     "weight": 5.0
                 }, 
                 {
+                    "group": "pwa-fast-reliable", 
+                    "id": "offline-start-url", 
+                    "weight": 1.0
+                }, 
+                {
                     "group": "pwa-installable", 
                     "id": "is-on-https", 
                     "weight": 2.0
@@ -3054,7 +3067,7 @@
                 {
                     "group": "pwa-installable", 
                     "id": "webapp-install-banner", 
-                    "weight": 3.0
+                    "weight": 2.0
                 }, 
                 {
                     "group": "pwa-engaging", 
@@ -3507,6 +3520,12 @@
                 "duration": 100.0, 
                 "entryType": "measure", 
                 "name": "lh:audit:metrics", 
+                "startTime": 0.0
+            }, 
+            {
+                "duration": 100.0, 
+                "entryType": "measure", 
+                "name": "lh:audit:offline-start-url", 
                 "startTime": 0.0
             }, 
             {

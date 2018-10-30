@@ -132,6 +132,7 @@ const defaultConfig = {
     'font-display',
     'network-requests',
     'metrics',
+    'offline-start-url',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -334,10 +335,11 @@ const defaultConfig = {
         // Fast and Reliable
         {id: 'load-fast-enough-for-pwa', weight: 7, group: 'pwa-fast-reliable'},
         {id: 'works-offline', weight: 5, group: 'pwa-fast-reliable'},
+        {id: 'offline-start-url', weight: 1, group: 'pwa-fast-reliable'},
         // Installable
         {id: 'is-on-https', weight: 2, group: 'pwa-installable'},
         {id: 'service-worker', weight: 1, group: 'pwa-installable'},
-        {id: 'webapp-install-banner', weight: 3, group: 'pwa-installable'},
+        {id: 'webapp-install-banner', weight: 2, group: 'pwa-installable'},
         // Engaging
         {id: 'redirects-http', weight: 2, group: 'pwa-engaging'},
         {id: 'splash-screen', weight: 1, group: 'pwa-engaging'},

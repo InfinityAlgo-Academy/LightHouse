@@ -25,7 +25,6 @@ function generateMockArtifacts(src = manifestSrc) {
         scriptURL: 'https://example.com/sw.js',
       }],
     },
-    StartUrl: {statusCode: 200},
     URL: {finalUrl: 'https://example.com'},
   }));
   return clonedArtifacts;
@@ -151,7 +150,6 @@ describe('PWA: webapp install banner audit', () => {
   it('fails if page had no SW', () => {
     const artifacts = generateMockArtifacts();
     artifacts.ServiceWorker.versions = [];
-    artifacts.StartUrl = {statusCode: -1};
     const context = generateMockAuditContext();
 
     return WebappInstallBannerAudit.audit(artifacts, context).then(result => {
@@ -159,30 +157,6 @@ describe('PWA: webapp install banner audit', () => {
       assert.ok(result.explanation.includes('service worker'), result.explanation);
       const failures = result.details.items[0].failures;
       assert.strictEqual(failures.length, 1, failures);
-    });
-  });
-
-  it('fails if start_url is not cached', () => {
-    const artifacts = generateMockArtifacts();
-    artifacts.StartUrl = {statusCode: -1};
-    const context = generateMockAuditContext();
-
-    return WebappInstallBannerAudit.audit(artifacts, context).then(result => {
-      assert.strictEqual(result.rawValue, false);
-      assert.ok(result.explanation.includes('start_url'), result.explanation);
-      const failures = result.details.items[0].failures;
-      assert.strictEqual(failures.length, 1, failures);
-    });
-  });
-
-  it('includes warning from start_url', () => {
-    const artifacts = generateMockArtifacts();
-    artifacts.StartUrl = {statusCode: 200, explanation: 'Warning!'};
-    const context = generateMockAuditContext();
-
-    return WebappInstallBannerAudit.audit(artifacts, context).then(result => {
-      assert.strictEqual(result.rawValue, true);
-      assert.equal(result.warnings[0], 'Warning!');
     });
   });
 });

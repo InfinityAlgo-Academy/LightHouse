@@ -1048,6 +1048,15 @@
         ]
       }
     },
+    "offline-start-url": {
+      "id": "offline-start-url",
+      "title": "start_url does not respond with a 200 when offline",
+      "description": "A service worker enables your web app to be reliable in unpredictable network conditions. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "rawValue": false,
+      "warnings": []
+    },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
@@ -2928,6 +2937,11 @@
           "group": "pwa-fast-reliable"
         },
         {
+          "id": "offline-start-url",
+          "weight": 1,
+          "group": "pwa-fast-reliable"
+        },
+        {
           "id": "is-on-https",
           "weight": 2,
           "group": "pwa-installable"
@@ -2939,7 +2953,7 @@
         },
         {
           "id": "webapp-install-banner",
-          "weight": 3,
+          "weight": 2,
           "group": "pwa-installable"
         },
         {
@@ -3649,6 +3663,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:metrics",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:offline-start-url",
         "duration": 100,
         "entryType": "measure"
       },

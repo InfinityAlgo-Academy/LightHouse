@@ -115,6 +115,7 @@ function checkSameOrigin(url1, url2) {
  * @param {*} jsonInput
  * @param {string} manifestUrl
  * @param {string} documentUrl
+ * @return {{raw: any, value: string, warning?: string}}
  */
 function parseStartUrl(jsonInput, manifestUrl, documentUrl) {
   const raw = jsonInput.start_url;
@@ -127,10 +128,18 @@ function parseStartUrl(jsonInput, manifestUrl, documentUrl) {
       warning: 'ERROR: start_url string empty',
     };
   }
-  const parsedAsString = parseString(raw);
-  if (!parsedAsString.value) {
-    parsedAsString.value = documentUrl;
-    return parsedAsString;
+  if (raw === undefined) {
+    return {
+      raw,
+      value: documentUrl,
+    };
+  }
+  if (typeof raw !== 'string') {
+    return {
+      raw,
+      value: documentUrl,
+      warning: 'ERROR: expected a string.',
+    };
   }
 
   // 8.10(4) - construct URL with raw as input and manifestUrl as the base.

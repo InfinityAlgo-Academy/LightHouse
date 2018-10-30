@@ -229,7 +229,7 @@ describe('CategoryRenderer', () => {
       const manualAudits = elem.querySelectorAll('.lh-audit-group--manual .lh-audit');
 
       assert.equal(passedAudits.length, 4);
-      assert.equal(failedAudits.length, 7);
+      assert.equal(failedAudits.length, 8);
       assert.equal(manualAudits.length, 3);
     });
 
@@ -242,7 +242,7 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-failed-audits .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 11);
+      assert.equal(failedAudits.length, 12);
 
       assert.equal(elem.querySelector('.lh-passed-audits-summary'), null);
     });

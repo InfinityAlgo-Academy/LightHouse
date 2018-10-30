@@ -82,7 +82,7 @@ describe('Start-url gatherer', () => {
       assert.ok(artifactWithQueryString.explanation, 'did not set debug string');
       assert.equal(artifactWithResponseNotFromSW.statusCode, -1);
       assert.equal(artifactWithResponseNotFromSW.explanation,
-          'Unable to fetch start URL via service worker');
+          'Unable to fetch start URL via service worker.');
     });
   });
 
@@ -120,7 +120,7 @@ describe('Start-url gatherer', () => {
     return startUrlGatherer.afterPass(options, tracingData)
       .then(artifact => {
         assert.equal(artifact.explanation,
-          `No usable web app manifest found on page`);
+          `No usable web app manifest found on page.`);
       });
   });
 
@@ -141,11 +141,11 @@ describe('Start-url gatherer', () => {
       .then(artifact => {
         assert.equal(artifact.explanation,
           `Error fetching web app manifest: ERROR: file isn't valid JSON: ` +
-          `SyntaxError: Unexpected token h in JSON at position 1`);
+          `SyntaxError: Unexpected token h in JSON at position 1.`);
       });
   });
 
-  it('returns a explanation when start_url cannot be found', () => {
+  it('times out when a start_url is too slow to respond', () => {
     const startUrlGatherer = new StartUrlGatherer();
     const options = {
       url: 'https://ifixit-pwa.appspot.com/',
@@ -154,20 +154,7 @@ describe('Start-url gatherer', () => {
 
     return startUrlGatherer.afterPass(options, tracingData)
       .then(artifact => {
-        assert.equal(artifact.explanation, 'ERROR: start_url string empty');
-      });
-  });
-
-  it('returns an error when origin is not the same', () => {
-    const startUrlGatherer = new StartUrlGatherer();
-    const options = {
-      url: 'https://ifixit-pwa.appspot.com/',
-      driver: wrapSendCommand(mockDriver, 'https://not-same-origin.com/'),
-    };
-
-    return startUrlGatherer.afterPass(options, tracingData)
-      .then(artifact => {
-        assert.equal(artifact.explanation, 'ERROR: start_url must be same-origin as document');
+        assert.equal(artifact.explanation, 'Timed out waiting for fetched start_url.');
       });
   });
 });

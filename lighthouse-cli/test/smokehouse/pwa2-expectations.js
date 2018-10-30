@@ -32,6 +32,9 @@ module.exports = [
       'works-offline': {
         score: 1,
       },
+      'offline-start-url': {
+        score: 1,
+      },
       'viewport': {
         score: 1,
       },
@@ -87,6 +90,9 @@ module.exports = [
         score: 1,
       },
       'works-offline': {
+        score: 1,
+      },
+      'offline-start-url': {
         score: 1,
       },
       'viewport': {

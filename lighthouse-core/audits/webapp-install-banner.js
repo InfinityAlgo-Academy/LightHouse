@@ -41,7 +41,7 @@ class WebappInstallBanner extends MultiCheckAudit {
       description: 'Browsers can proactively prompt users to add your app to their homescreen, ' +
           'which can lead to higher engagement. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/install-prompt).',
-      requiredArtifacts: ['URL', 'ServiceWorker', 'Manifest', 'StartUrl'],
+      requiredArtifacts: ['URL', 'ServiceWorker', 'Manifest'],
     };
   }
 
@@ -96,53 +96,18 @@ class WebappInstallBanner extends MultiCheckAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {{failures: Array<string>, warnings: Array<string>}}
-   */
-  static assessOfflineStartUrl(artifacts) {
-    const failures = [];
-    const warnings = [];
-    const hasOfflineStartUrl = artifacts.StartUrl.statusCode === 200;
-
-    if (!hasOfflineStartUrl) {
-      failures.push('Service worker does not successfully serve the manifest\'s start_url');
-      if (artifacts.StartUrl.explanation) {
-        failures.push(artifacts.StartUrl.explanation);
-      }
-    }
-
-    if (artifacts.StartUrl.explanation) {
-      warnings.push(artifacts.StartUrl.explanation);
-    }
-
-    return {failures, warnings};
-  }
-
-  /**
-   * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {Promise<{failures: Array<string>, warnings: Array<string>, manifestValues: LH.Artifacts.ManifestValues}>}
+   * @return {Promise<{failures: Array<string>, manifestValues: LH.Artifacts.ManifestValues}>}
    */
   static async audit_(artifacts, context) {
-    /** @type {Array<string>} */
-    let offlineFailures = [];
-    /** @type {Array<string>} */
-    let offlineWarnings = [];
-
     const manifestValues = await ManifestValues.request(artifacts.Manifest, context);
     const manifestFailures = WebappInstallBanner.assessManifest(manifestValues);
     const swFailures = WebappInstallBanner.assessServiceWorker(artifacts);
-    if (!swFailures.length) {
-      const {failures, warnings} = WebappInstallBanner.assessOfflineStartUrl(artifacts);
-      offlineFailures = failures;
-      offlineWarnings = warnings;
-    }
 
     return {
-      warnings: offlineWarnings,
       failures: [
         ...manifestFailures,
         ...swFailures,
-        ...offlineFailures,
       ],
       manifestValues,
     };

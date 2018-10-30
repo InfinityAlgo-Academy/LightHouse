@@ -103,6 +103,9 @@ Object {
       "path": "metrics",
     },
     Object {
+      "path": "offline-start-url",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -821,6 +824,11 @@ Object {
           "weight": 5,
         },
         Object {
+          "group": "pwa-fast-reliable",
+          "id": "offline-start-url",
+          "weight": 1,
+        },
+        Object {
           "group": "pwa-installable",
           "id": "is-on-https",
           "weight": 2,
@@ -833,7 +841,7 @@ Object {
         Object {
           "group": "pwa-installable",
           "id": "webapp-install-banner",
-          "weight": 3,
+          "weight": 2,
         },
         Object {
           "group": "pwa-engaging",
