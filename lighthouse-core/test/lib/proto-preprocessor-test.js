@@ -9,17 +9,40 @@ const processForProto = require('../../lib/proto-preprocessor').processForProto;
 
 /* eslint-env jest */
 describe('processing for proto', () => {
-  it('cleans up configSettings', () => {
+  it('keeps only necessary configSettings', () => {
     const input = {
-      'configSettings': {
-        'output': 'json',
-      },
-    };
-    const expectation = {
       'configSettings': {
         'output': [
           'json',
         ],
+        'maxWaitForLoad': 45000,
+        'throttlingMethod': 'devtools',
+        'throttling': {
+          'rttMs': 150,
+          'throughputKbps': 1638.4,
+          'requestLatencyMs': 562.5,
+          'downloadThroughputKbps': 1474.5600000000002,
+          'uploadThroughputKbps': 675,
+          'cpuSlowdownMultiplier': 4,
+        },
+        'gatherMode': false,
+        'disableStorageReset': false,
+        'disableDeviceEmulation': false,
+        'emulatedFormFactor': 'mobile',
+        'locale': 'en-US',
+        'blockedUrlPatterns': null,
+        'additionalTraceCategories': null,
+        'extraHeaders': null,
+        'onlyAudits': null,
+        'onlyCategories': null,
+        'skipAudits': null,
+      },
+    };
+    const expectation = {
+      'configSettings': {
+        'emulatedFormFactor': 'mobile',
+        'locale': 'en-US',
+        'onlyCategories': null,
       },
     };
     const output = processForProto(JSON.stringify(input));

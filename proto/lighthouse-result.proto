@@ -111,64 +111,6 @@ message LighthouseResult {
 
   // Message containing the configuration settings for the LH run
   message ConfigSettings {
-    // The output types the audit made (json, html...)
-    repeated string output = 1;
-
-    // The maximum amount of time to wait for loading in ms
-    google.protobuf.DoubleValue max_wait_for_load = 2;
-
-    // Network throttling options
-    enum ThrottlingMethod {
-      // Unknown method.  Should not be used
-      UNKNOWN_THROTTLING_METHOD = 0;
-
-      // Use devtools to throttle the request
-      devtools = 1;
-
-      // Use no additional throttling (only throttling provided by system
-      // itself)
-      provided = 2;
-
-      // Simulate throttling with Lantern
-      simulate = 3;
-    }
-
-    // The throttling method used during this audit
-    ThrottlingMethod throttling_method = 3;
-
-    // Message containing the throttling settings used in an LH configuration
-    message Throttling {
-      // The round trip time in ms
-      google.protobuf.DoubleValue rtt_ms = 1;
-
-      // The throughput in kilobytes per second
-      google.protobuf.DoubleValue throughput_kbps = 2;
-
-      // The request latency in milliseconds
-      google.protobuf.DoubleValue request_latency_ms = 3;
-
-      // The download throughput in kilobytes per second
-      google.protobuf.DoubleValue download_throughput_kbps = 4;
-
-      // The upload throughput in kilobytes per second
-      google.protobuf.DoubleValue upload_throughput_kbps = 5;
-
-      // The amount of slowdown to apply to the cpu
-      google.protobuf.DoubleValue cpu_slowdown_multiplier = 6;
-    }
-
-    // The throttling settings used
-    Throttling throttling = 4;
-
-    // Flag indicating this audit was gather only or not
-    google.protobuf.BoolValue gather_mode = 5;
-
-    // Flag disabling clearing the browser cache before runs
-    google.protobuf.BoolValue disable_storage_reset = 6;
-
-    // Flag indicating if device emulation was enabled or not
-    google.protobuf.BoolValue disable_device_emulation = 7;
-
     // The possible form factors an audit can be run in
     enum EmulatedFormFactor {
       // Unknown form factor.  This should not be used
@@ -185,36 +127,14 @@ message LighthouseResult {
     }
 
     // The form factor used in the audit
-    EmulatedFormFactor emulated_form_factor = 8;
+    EmulatedFormFactor emulated_form_factor = 1;
 
     // The locale that was active during the audit
-    string locale = 9;
-
-    // List of URL patterns that were blocked during this audit
-    // nullable list of strings
-    google.protobuf.Value blocked_url_patterns = 10;
-
-    // Comma delimited list of trace categories to capture
-    // nullable string
-    google.protobuf.Value additional_trace_categories = 11;
-
-    // Map of extra HTTP Headers to pass in with the request
-    google.protobuf.Value extra_headers = 12;
-
-    // List of the audits that were preformed, empty if all were run
-    // nullable list of strings
-    google.protobuf.Value only_audits = 13;
+    string locale = 2;
 
     // List of the categories that were run, empty if all were run
     // nullable list of strings
-    google.protobuf.Value only_categories = 14;
-
-    // List of the audits that were skipped, empty if all were run
-    // nullable list of strings
-    google.protobuf.Value skip_audits = 15;
-
-    // Flag indicating whether this Lighthouse run was audit-only
-    google.protobuf.BoolValue audit_mode = 16;
+    google.protobuf.Value only_categories = 3;
   }
 
   // The settings that were used to run this audit

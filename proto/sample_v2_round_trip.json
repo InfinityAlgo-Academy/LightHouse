@@ -3245,30 +3245,9 @@
         }
     }, 
     "configSettings": {
-        "additionalTraceCategories": null, 
-        "blockedUrlPatterns": null, 
-        "disableDeviceEmulation": false, 
-        "disableStorageReset": false, 
         "emulatedFormFactor": "mobile", 
-        "extraHeaders": null, 
-        "gatherMode": false, 
         "locale": "en-US", 
-        "maxWaitForLoad": 45000.0, 
-        "onlyAudits": null, 
-        "onlyCategories": null, 
-        "output": [
-            "json"
-        ], 
-        "skipAudits": null, 
-        "throttling": {
-            "cpuSlowdownMultiplier": 4.0, 
-            "downloadThroughputKbps": 1474.5600000000002, 
-            "requestLatencyMs": 562.5, 
-            "rttMs": 150.0, 
-            "throughputKbps": 1638.4, 
-            "uploadThroughputKbps": 675.0
-        }, 
-        "throttlingMethod": "devtools"
+        "onlyCategories": null
     }, 
     "environment": {
         "benchmarkIndex": 1000.0, 
