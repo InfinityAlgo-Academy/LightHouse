@@ -5,7 +5,7 @@
 **/node_modules/**
 **/third_party/**
 
-**/dist/**
+/dist/**
 
 coverage/**
 

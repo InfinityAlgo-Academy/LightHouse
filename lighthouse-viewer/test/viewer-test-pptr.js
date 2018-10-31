@@ -13,7 +13,7 @@ const puppeteer = require('../../node_modules/puppeteer/index.js');
 
 const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
 const portNumber = 10200;
-const viewerUrl = `http://localhost:${portNumber}/lighthouse-viewer/dist/index.html`;
+const viewerUrl = `http://localhost:${portNumber}/dist/viewer/index.html`;
 const sampleLhr = __dirname + '/../../lighthouse-core/test/results/sample_v2.json';
 
 const config = require(path.resolve(__dirname, '../../lighthouse-core/config/default-config.js'));

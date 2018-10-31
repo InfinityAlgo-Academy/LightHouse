@@ -33,15 +33,15 @@ We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patc
 ```sh
 # use a custom lighthouse-pristine checkout to make sure your dev files aren't involved.
 
-# * Install the latest. This also builds the cli, extension, and viewer *
-yarn install-all
+# * Install the latest.*
+yarn
 
 # * Bump it *
 yarn version --no-git-tag-version
 # manually bump extension v in clients/extension/manifest.json
 yarn update:sample-json
 
-# * Build it *
+# * Build it. This also builds the cli, extension, and viewer. *
 yarn build-all
 
 # * Test err'thing *
@@ -67,7 +67,7 @@ cd ../lighthouse-pristine; command rm -f lighthouse-*.tgz
 
 echo "Test the lighthouse-viewer build"
 # Manual test for now:
-# Start a server in lighthouse-viewer/dist/ and open the page in a tab. You should see the viewer.
+# Start a server in dist/viewer/ and open the page in a tab. You should see the viewer.
 # Drop in a results.json or paste an existing gist url (e.g. https://gist.github.com/ebidel/b9fd478b5f40bf5fab174439dc18f83a).
 # Check for errors!
 

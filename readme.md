@@ -224,7 +224,6 @@ git clone https://github.com/GoogleChrome/lighthouse
 
 cd lighthouse
 yarn
-yarn install-all
 yarn build-all
 ```
 

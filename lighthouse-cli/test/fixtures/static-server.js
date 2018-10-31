@@ -24,7 +24,7 @@ function requestHandler(request, response) {
   const queryString = requestUrl.search && parseQueryString(requestUrl.search.slice(1));
   let absoluteFilePath = path.join(__dirname, filePath);
 
-  if (filePath.startsWith('/lighthouse-viewer')) {
+  if (filePath.startsWith('/dist/viewer')) {
     // Rewrite lighthouse-viewer paths to point to that location.
     absoluteFilePath = path.join(__dirname, '/../../../', filePath);
   }
