@@ -29,12 +29,14 @@
  *      document
  *   );
  *
- * @param {string} LHResultJsonString The stringified version of {LH.Result}
+ * @param {LH.Result | string} LHResult The stringified version of {LH.Result}
  * @param {Document} document The host page's window.document
  * @return {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null}}
  */
-function prepareLabData(LHResultJsonString, document) {
-  const lhResult = /** @type {LH.Result} */ (JSON.parse(LHResultJsonString));
+function prepareLabData(LHResult, document) {
+  const lhResult = (typeof LHResult === 'string') ?
+    /** @type {LH.Result} */ (JSON.parse(LHResult)) : LHResult;
+
   const dom = new DOM(document);
 
   // Assume fresh styles needed on every call, so mark all template styles as unused.
