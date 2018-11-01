@@ -138,10 +138,12 @@ class LighthouseReportViewer {
   _replaceReportHtml(json) {
     this._validateReportJson(json);
 
-    if (!json.lighthouseVersion.startsWith('3')) {
+    if (json.lighthouseVersion.startsWith('2')) {
       this._loadInLegacyViewerVersion(json);
       return;
     }
+
+    // TODO: viewer3x :)
 
     const dom = new DOM(document);
     const renderer = new ReportRenderer(dom);

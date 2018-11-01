@@ -3289,7 +3289,7 @@
             "warningHeader": "Warnings: "
         }
     }, 
-    "lighthouseVersion": "3.2.0", 
+    "lighthouseVersion": "4.0.0-alpha.0", 
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html", 
     "runWarnings": [], 
     "timing": {
