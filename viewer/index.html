@@ -45,9 +45,9 @@ limitations under the License.
 <template id="tmpl-lh-scorescale">
   <div class="lh-scorescale">
     <span class="lh-scorescale-label"></span>
-    <span class="lh-scorescale-range lh-scorescale-range--fail">0-49</span>
-    <span class="lh-scorescale-range lh-scorescale-range--average">50-89</span>
     <span class="lh-scorescale-range lh-scorescale-range--pass">90-100</span>
+    <span class="lh-scorescale-range lh-scorescale-range--average">50-89</span>
+    <span class="lh-scorescale-range lh-scorescale-range--fail">0-49</span>
   </div>
 </template>
 
@@ -74,12 +74,14 @@ limitations under the License.
 <template id="tmpl-lh-audit">
   <div class="lh-audit">
     <details class="lh-expandable-details">
-      <summary class="lh-audit__header lh-expandable-details__summary">
-        <span class="lh-audit__index"></span>
-        <span class="lh-audit__title"></span>
-        <span class="lh-audit__display-text"></span>
-        <div class="lh-audit__score-icon"></div>
-        <div class="lh-chevron-container"></div>
+      <summary>
+        <div class="lh-audit__header lh-expandable-details__summary">
+          <span class="lh-audit__index"></span>
+          <span class="lh-audit__title"></span>
+          <span class="lh-audit__display-text"></span>
+          <div class="lh-audit__score-icon"></div>
+          <div class="lh-chevron-container"></div>
+        </div>
       </summary>
       <div class="lh-audit__description"></div>
     </details>
@@ -101,21 +103,23 @@ limitations under the License.
 <template id="tmpl-lh-opportunity">
   <div class="lh-audit lh-audit--load-opportunity">
     <details class="lh-expandable-details">
-      <summary class="lh-audit__header lh-expandable-details__summary">
-        <div class="lh-load-opportunity__cols">
-          <div class="lh-load-opportunity__col lh-load-opportunity__col--one">
-            <span class="lh-audit__index"></span>
-            <div class="lh-audit__title"></div>
-          </div>
-          <div class="lh-load-opportunity__col lh-load-opportunity__col--two">
-            <div class="lh-load-opportunity__sparkline">
-              <div class="lh-sparkline"><div class="lh-sparkline__bar"></div></div>
+        <summary>
+          <div class="lh-audit__header lh-expandable-details__summary">
+            <div class="lh-load-opportunity__cols">
+              <div class="lh-load-opportunity__col lh-load-opportunity__col--one">
+                <span class="lh-audit__index"></span>
+                <div class="lh-audit__title"></div>
+              </div>
+              <div class="lh-load-opportunity__col lh-load-opportunity__col--two">
+                <div class="lh-load-opportunity__sparkline">
+                  <div class="lh-sparkline"><div class="lh-sparkline__bar"></div></div>
+                </div>
+                <div class="lh-audit__display-text"></div>
+                <div class="lh-chevron-container" title="See resources"></div>
+              </div>
             </div>
-            <div class="lh-audit__display-text"></div>
-            <div class="lh-chevron-container" title="See resources"></div>
           </div>
-        </div>
-      </summary>
+        </summary>
       <div class="lh-audit__description"></div>
     </details>
   </div>
