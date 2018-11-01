@@ -25,7 +25,7 @@ const listOfTlds = [
 ];
 
 const allowedProtocols = [
-  'https:', 'http:', 'chrome:',
+  'https:', 'http:', 'chrome:', 'chrome-extension:',
 ];
 
 /**

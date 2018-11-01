@@ -40,6 +40,7 @@ describe('URL Shim', () => {
     assert.ok(URL.isProtocolAllowed('http://google.com/'));
     assert.ok(URL.isProtocolAllowed('https://google.com/'));
     assert.ok(URL.isProtocolAllowed('chrome://version'));
+    assert.ok(URL.isProtocolAllowed('chrome-extension://blipmdconlkpinefehnmjammfjpmpbjk/popup.html'));
   });
 
   it('safely identifies disallowed URL protocols', () => {
