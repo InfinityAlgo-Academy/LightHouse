@@ -358,7 +358,7 @@
 .lh-metric__innerwrap {
   display: flex;
   justify-content: space-between;
-  padding: 11px var(--text-indent);
+  padding: 8px var(--text-indent);
 }
 
 .lh-metric__details {
@@ -506,7 +506,7 @@
 .lh-filmstrip-container {
   padding: 0 var(--expandable-indent);
   /* smaller gap between metrics and filmstrip */
-  margin: -16px auto 0 auto;
+  margin: -8px auto 0 auto;
 }
 
 .lh-filmstrip {
