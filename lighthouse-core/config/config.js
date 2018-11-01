@@ -64,13 +64,18 @@ function validateCategories(categories, audits, groups) {
     return;
   }
 
+  const auditsKeyedById = new Map((audits || []).map(audit =>
+    /** @type {[string, LH.Config.AuditDefn]} */
+    ([audit.implementation.meta.id, audit])
+  ));
+
   Object.keys(categories).forEach(categoryId => {
     categories[categoryId].auditRefs.forEach((auditRef, index) => {
       if (!auditRef.id) {
         throw new Error(`missing an audit id at ${categoryId}[${index}]`);
       }
 
-      const audit = audits && audits.find(a => a.implementation.meta.id === auditRef.id);
+      const audit = auditsKeyedById.get(auditRef.id);
       if (!audit) {
         throw new Error(`could not find ${auditRef.id} audit for category ${categoryId}`);
       }
