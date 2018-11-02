@@ -13,7 +13,7 @@ const writeFileAsync = promisify(fs.writeFile);
 
 const browserify = require('browserify');
 const cpy = require('cpy');
-const ghPages = promisify(require('gh-pages').publish);
+const ghPages = require('gh-pages');
 const glob = promisify(require('glob'));
 const lighthousePackage = require('../package.json');
 const makeDir = require('make-dir');
@@ -148,6 +148,23 @@ async function compileJs() {
 }
 
 /**
+ * Publish viewer to gh-pages branch.
+ * @return {Promise<void>}
+ */
+async function deploy() {
+  return new Promise((resolve, reject) => {
+    ghPages.publish(distDir, {
+      add: true, // keep existing files
+      dest: 'viewer',
+      message: `Update viewer to lighthouse@${lighthousePackage.version}`,
+    }, err => {
+      if (err) return reject(err);
+      resolve();
+    });
+  });
+}
+
+/**
  * Build viewer, optionally deploying to gh-pages if `--deploy` flag was set.
  */
 async function run() {
@@ -162,10 +179,7 @@ async function run() {
 
   const argv = process.argv.slice(2);
   if (argv.includes('--deploy')) {
-    await ghPages(`${distDir}/**/*`, {
-      add: true, // keep existing files
-      dest: 'viewer',
-    }, () => {});
+    await deploy();
   }
 }
 
