@@ -35,7 +35,6 @@ declare global {
         cpuQuietThresholdMs?: number;
         blockedUrlPatterns?: string[];
         blankPage?: string;
-        blankDuration?: number;
         gatherers?: GathererJson[];
       }
 

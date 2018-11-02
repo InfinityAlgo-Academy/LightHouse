@@ -1029,7 +1029,6 @@ Object {
   },
   "passes": Array [
     Object {
-      "blankDuration": 300,
       "blankPage": "about:blank",
       "blockedUrlPatterns": Array [],
       "cpuQuietThresholdMs": 1000,
@@ -1123,7 +1122,6 @@ Object {
       "useThrottling": true,
     },
     Object {
-      "blankDuration": 300,
       "blankPage": "about:blank",
       "blockedUrlPatterns": Array [],
       "cpuQuietThresholdMs": 0,
@@ -1145,7 +1143,6 @@ Object {
       "useThrottling": false,
     },
     Object {
-      "blankDuration": 300,
       "blankPage": "about:blank",
       "blockedUrlPatterns": Array [
         "*.css",
@@ -1290,7 +1287,6 @@ Object {
   },
   "passes": Array [
     Object {
-      "blankDuration": 300,
       "blankPage": "about:blank",
       "blockedUrlPatterns": Array [],
       "cpuQuietThresholdMs": 1000,

@@ -497,6 +497,16 @@ class Driver {
   }
 
   /**
+   * Returns a promise that resolve when a frame has been navigated.
+   * Used for detecting that our about:blank reset has been completed.
+   */
+  _waitForFrameNavigated() {
+    return new Promise(resolve => {
+      this.once('Page.frameNavigated', resolve);
+    });
+  }
+
+  /**
    * Returns a promise that resolves when the network has been idle (after DCL) for
    * `networkQuietThresholdMs` ms and a method to cancel internal network listeners/timeout.
    * @param {number} networkQuietThresholdMs
@@ -824,13 +834,18 @@ class Driver {
    * possible workaround.
    * Resolves on the url of the loaded page, taking into account any redirects.
    * @param {string} url
-   * @param {{waitForLoad?: boolean, passContext?: LH.Gatherer.PassContext}} options
+   * @param {{waitForLoad?: boolean, waitForNavigated?: boolean, passContext?: LH.Gatherer.PassContext}} options
    * @return {Promise<string>}
    */
   async gotoURL(url, options = {}) {
+    const waitForNavigated = options.waitForNavigated || false;
     const waitForLoad = options.waitForLoad || false;
     const passContext = /** @type {Partial<LH.Gatherer.PassContext>} */ (options.passContext || {});
     const disableJS = passContext.disableJavaScript || false;
+
+    if (waitForNavigated && waitForLoad) {
+      throw new Error('Cannot use both waitForNavigated and waitForLoad, pick just one');
+    }
 
     await this._beginNetworkStatusMonitoring(url);
     await this._clearIsolatedContextId();
@@ -842,6 +857,10 @@ class Driver {
     this.sendCommand('Emulation.setScriptExecutionDisabled', {value: disableJS});
     this.setNextProtocolTimeout(30 * 1000);
     this.sendCommand('Page.navigate', {url});
+
+    if (waitForNavigated) {
+      await this._waitForFrameNavigated();
+    }
 
     if (waitForLoad) {
       const passConfig = /** @type {Partial<LH.Config.Pass>} */ (passContext.passConfig || {});

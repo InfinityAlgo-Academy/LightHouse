@@ -59,7 +59,6 @@ const defaultPassConfig = {
   cpuQuietThresholdMs: 0,
   blockedUrlPatterns: [],
   blankPage: 'about:blank',
-  blankDuration: 300,
   gatherers: [],
 };
 

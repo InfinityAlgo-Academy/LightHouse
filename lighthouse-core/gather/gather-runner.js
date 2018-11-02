@@ -68,18 +68,12 @@ class GatherRunner {
    * never fired on it.
    * @param {Driver} driver
    * @param {string=} url
-   * @param {number=} duration
    * @return {Promise<void>}
    */
-  static async loadBlank(
-      driver,
-      url = constants.defaultPassConfig.blankPage,
-      duration = constants.defaultPassConfig.blankDuration
-  ) {
+  static async loadBlank(driver, url = constants.defaultPassConfig.blankPage) {
     const status = {msg: 'Resetting state with about:blank', id: 'lh:gather:loadBlank'};
     log.time(status);
-    await driver.gotoURL(url);
-    await new Promise(resolve => setTimeout(resolve, duration));
+    await driver.gotoURL(url, {waitForNavigated: true});
     log.timeEnd(status);
   }
 
@@ -458,7 +452,7 @@ class GatherRunner {
         await driver.setThrottling(options.settings, passConfig);
         if (!isFirstPass) {
           // Already on blank page if driver was just set up.
-          await GatherRunner.loadBlank(driver, passConfig.blankPage, passConfig.blankDuration);
+          await GatherRunner.loadBlank(driver, passConfig.blankPage);
         }
         await GatherRunner.beforePass(passContext, gathererResults);
         await GatherRunner.pass(passContext, gathererResults);
