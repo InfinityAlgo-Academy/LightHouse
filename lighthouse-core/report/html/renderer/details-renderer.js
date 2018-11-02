@@ -126,10 +126,7 @@ class DetailsRenderer {
       displayedPath = parsed.file === '/' ? parsed.origin : parsed.file;
       displayedHost = parsed.file === '/' ? '' : `(${parsed.hostname})`;
       title = url;
-    } catch (/** @type {!Error} */ e) {
-      if (!e.name.startsWith('TypeError')) {
-        throw e;
-      }
+    } catch (e) {
       displayedPath = url;
     }
 
