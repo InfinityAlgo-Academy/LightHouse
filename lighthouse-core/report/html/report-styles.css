@@ -310,6 +310,11 @@
   background-color: #F8F9FA;
 }
 
+/* Hide the expandable arrow icon, cross-browser */
+.lh-audit-group > summary,
+.lh-expandable-details > summary {
+  list-style-type: none;
+}
 .lh-audit-group > summary::-webkit-details-marker,
 .lh-expandable-details > summary::-webkit-details-marker {
   display: none;
