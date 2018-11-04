@@ -37,8 +37,8 @@ limitations under the License.
 <template id="tmpl-lh-chevron">
   <svg class="lh-chevron" title="See audits" xmlns="http://www.w3.org/2000/svg"  viewbox="0 0 100 100">
     <g class="lh-chevron__lines">
-      <path class="lh-chevron__line lh-chevron__line-left" d="M10 50h40" stroke="#707173"/>
-      <path class="lh-chevron__line lh-chevron__line-right" d="M90 50H50" stroke="#707173"/>
+      <path class="lh-chevron__line lh-chevron__line-left" d="M10 50h40" stroke="#707173"></path>
+      <path class="lh-chevron__line lh-chevron__line-right" d="M90 50H50" stroke="#707173"></path>
     </g>
   </svg>
 </template>
@@ -168,7 +168,7 @@ limitations under the License.
       position: absolute;
       top: var(--report-header-height);
       right: 50%;
-      transform: translate3d(calc(var(--report-width) / 2), -100%, 0);
+      transform: translate3d(var(--report-width-half), -100%, 0);
       opacity: 1;
       transform-origin: bottom right;
       will-change: transform, opacity;
@@ -359,7 +359,7 @@ limitations under the License.
     <svg width="217" height="148" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>
         <mask id="a" x="-56" y="-54" width="284" height="202" maskUnits="userSpaceOnUse">
-          <path d="M-56-54h284v202H-56z" fill="#fff"/>
+          <path d="M-56-54h284v202H-56z" fill="#fff"></path>
         </mask>
         <linearGradient id="b" x1="-525.16" y1="560.08" x2="-524.23" y2="560.08" gradientTransform="matrix(91 0 0 -77 47797 43181)" gradientUnits="userSpaceOnUse">
           <stop offset="0" stop-color="#f1f3f4"/>

@@ -164,7 +164,7 @@ class CategoryRenderer {
   renderAuditGroup(group, opts) {
     const expandable = opts.expandable;
     const groupEl = this.dom.createElement(expandable ? 'details' : 'div', 'lh-audit-group');
-    const summaryEl = this.dom.createChildOf(groupEl, 'summary');
+    const summaryEl = this.dom.createChildOf(groupEl, expandable ? 'summary' : 'div');
     const summaryInnerEl = this.dom.createChildOf(summaryEl, 'div', 'lh-audit-group__summary');
     const headerEl = this.dom.createChildOf(summaryInnerEl, 'div', 'lh-audit-group__header');
     const itemCountEl = this.dom.createChildOf(summaryInnerEl, 'div', 'lh-audit-group__itemcount');
