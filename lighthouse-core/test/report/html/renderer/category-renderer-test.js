@@ -145,6 +145,13 @@ describe('CategoryRenderer', () => {
     assert.ok(categoryDOM.querySelector('.lh-audit-group--manual .lh-audit-group__summary'));
     assert.equal(categoryDOM.querySelectorAll('.lh-audit--manual').length, 3,
         'score shows informative and dash icon');
+
+    assert.ok(pwaCategory.manualDescription);
+    const description = categoryDOM
+      .querySelector('.lh-audit-group--manual .lh-audit-group__description').textContent;
+    // may need to be adjusted if description includes a link at the beginning
+    assert.ok(description.startsWith(pwaCategory.manualDescription.substring(0, 20)),
+        'no manual description');
   });
 
   it('renders not applicable audits if the category contains them', () => {
@@ -217,6 +224,55 @@ describe('CategoryRenderer', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const auditsElements = categoryDOM.querySelectorAll('.lh-audit');
       assert.equal(auditsElements.length, category.auditRefs.length);
+    });
+
+    it('increments the audit index across groups', () => {
+      const elem = renderer.render(category, sampleResults.categoryGroups);
+
+      const passedAudits = elem.querySelectorAll('.lh-passed-audits .lh-audit__index');
+      const failedAudits = elem.querySelectorAll('.lh-failed-audits .lh-audit__index');
+      const manualAudits = elem.querySelectorAll('.lh-audit-group--manual .lh-audit__index');
+      const notApplicableAudits =
+        elem.querySelectorAll('.lh-audit-group--not-applicable .lh-audit__index');
+
+      const assertAllTheIndices = (nodeList) => {
+        // Must be at least one for a decent test.
+        assert.ok(nodeList.length > 0);
+
+        // Assert indices are continuous, starting at 1.
+        nodeList.forEach((node, i) => {
+          const auditIndex = Number.parseInt(node.textContent);
+          assert.strictEqual(auditIndex, i + 1);
+        });
+      };
+
+      assertAllTheIndices(passedAudits);
+      assertAllTheIndices(failedAudits);
+      assertAllTheIndices(manualAudits);
+      assertAllTheIndices(notApplicableAudits);
+    });
+
+    it('renders audits without a group before grouped ones', () => {
+      const categoryClone = JSON.parse(JSON.stringify(category));
+
+      // Remove groups from some audits.
+      const ungroupedAudits = ['color-contrast', 'image-alt', 'link-name'];
+      for (const auditRef of categoryClone.auditRefs) {
+        if (ungroupedAudits.includes(auditRef.id)) {
+          assert.ok(auditRef.group); // Make sure this will change something.
+          delete auditRef.group;
+        }
+      }
+
+      const elem = renderer.render(categoryClone, sampleResults.categoryGroups);
+
+      // Check that the first audits found are the ungrouped ones.
+      const auditElems = Array.from(elem.querySelectorAll('.lh-audit'));
+      const firstAuditElems = auditElems.slice(0, ungroupedAudits.length);
+      for (const auditElem of firstAuditElems) {
+        const auditId = auditElem.id;
+        assert.ok(ungroupedAudits.includes(auditId), auditId);
+      }
     });
   });
 
