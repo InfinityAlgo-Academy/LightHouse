@@ -11,6 +11,9 @@ const REPORT_TEMPLATE = fs.readFileSync(__dirname + '/report-template.html', 'ut
 const REPORT_JAVASCRIPT = [
   fs.readFileSync(__dirname + '/renderer/util.js', 'utf8'),
   fs.readFileSync(__dirname + '/renderer/dom.js', 'utf8'),
+  // COMPAT: Remove when Microsoft Edge supports <details>/<summary>
+  // https://developer.microsoft.com/en-us/microsoft-edge/platform/status/detailssummary/?q=details
+  fs.readFileSync(__dirname + '/third_party/details-element-polyfill.js', 'utf8'),
   fs.readFileSync(__dirname + '/renderer/details-renderer.js', 'utf8'),
   fs.readFileSync(__dirname + '/renderer/crc-details-renderer.js', 'utf8'),
   fs.readFileSync(__dirname + '/../../lib/file-namer.js', 'utf8'),

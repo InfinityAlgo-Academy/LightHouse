@@ -25,6 +25,7 @@
   ],
   "exclude": [
     "lighthouse-cli/test/**/*.js",
+    "lighthouse-core/report/html/third_party/",
     "lighthouse-core/test/**/*.js",
     "clients/test/**/*.js",
   ]
