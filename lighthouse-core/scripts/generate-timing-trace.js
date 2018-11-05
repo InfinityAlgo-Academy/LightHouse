@@ -11,7 +11,7 @@ const {createTraceString} = require('../lib/timing-trace-saver');
 
 /**
  * @fileoverview This script takes the timing entries saved during a Lighthouse run and generates
- * a trace file that's readable in chrome://tracing.
+ * a trace file that's readable in DevTools perf panel or chrome://tracing.
  *
  * input = LHR.json
  * output = LHR.timing.trace.json
@@ -50,7 +50,7 @@ function saveTraceFromCLI() {
   // eslint-disable-next-line no-console
   console.log(`
   > Timing trace file saved to: ${traceFilePath}
-  > Open this file in chrome://tracing
+  > Open this file in DevTools perf panel   (For --audit-mode runs, use chrome://tracing instead)
 `);
 }
 
