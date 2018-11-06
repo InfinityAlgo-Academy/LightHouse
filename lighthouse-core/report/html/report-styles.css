@@ -579,7 +579,8 @@ details, summary {
 }
 
 .lh-audit-group__header::before {
-  content: '';
+  /* By default, groups don't get an icon */
+  content: none;
   width: calc(var(--subheader-font-size) / 14 * 24);
   height: calc(var(--subheader-font-size) / 14 * 24);
   margin-right: calc(var(--subheader-font-size) / 2);
@@ -589,29 +590,30 @@ details, summary {
   vertical-align: middle;
 }
 
-/* A11y/Seo groups within Passed don't get an icon */
-.lh-audit-group--unadorned .lh-audit-group__header::before {
-  content: none;
-}
-
-
-.lh-audit-group--manual .lh-audit-group__header::before {
+.lh-clump--manual > summary .lh-audit-group__header::before {
+  content: '';
   background-image: var(--search-icon-url);
 }
-.lh-passed-audits .lh-audit-group__header::before {
+.lh-clump--passed > summary .lh-audit-group__header::before {
+  content: '';
   background-image: var(--check-icon-url);
 }
+.lh-clump--not-applicable > summary .lh-audit-group__header::before {
+  content: '';
+  background-image: var(--remove-circle-icon-url);
+}
+
 .lh-audit-group--diagnostics .lh-audit-group__header::before {
+  content: '';
   background-image: var(--content-paste-icon-url);
 }
 .lh-audit-group--opportunities .lh-audit-group__header::before {
+  content: '';
   background-image: var(--photo-filter-icon-url);
 }
 .lh-audit-group--metrics .lh-audit-group__header::before {
+  content: '';
   background-image: var(--av-timer-icon-url);
-}
-.lh-audit-group--not-applicable .lh-audit-group__header::before {
-  background-image: var(--remove-circle-icon-url);
 }
 
 /* Removing too much whitespace */
@@ -637,11 +639,14 @@ details, summary {
 .lh-audit-group__description {
   font-size: var(--body-font-size);
   color: var(--medium-75-gray);
-  margin: var(--lh-audit-group-vpadding) 0;
+  margin: 0 0 var(--lh-audit-group-vpadding);
 }
 
-.lh-audit-group--unadorned .lh-audit-group__description {
-  margin-top: 0;
+.lh-clump > .lh-audit-group__description,
+.lh-audit-group--diagnostics .lh-audit-group__description,
+.lh-audit-group--opportunities .lh-audit-group__description,
+.lh-audit-group--metrics .lh-audit-group__description {
+  margin-top: var(--lh-audit-group-vpadding);
 }
 
 .lh-audit-explanation {

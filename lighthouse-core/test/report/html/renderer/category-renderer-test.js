@@ -142,13 +142,13 @@ describe('CategoryRenderer', () => {
   it('renders manual audits if the category contains them', () => {
     const pwaCategory = sampleResults.reportCategories.find(cat => cat.id === 'pwa');
     const categoryDOM = renderer.render(pwaCategory, sampleResults.categoryGroups);
-    assert.ok(categoryDOM.querySelector('.lh-audit-group--manual .lh-audit-group__summary'));
+    assert.ok(categoryDOM.querySelector('.lh-clump--manual .lh-audit-group__summary'));
     assert.equal(categoryDOM.querySelectorAll('.lh-audit--manual').length, 3,
         'score shows informative and dash icon');
 
     assert.ok(pwaCategory.manualDescription);
     const description = categoryDOM
-      .querySelector('.lh-audit-group--manual .lh-audit-group__description').textContent;
+      .querySelector('.lh-clump--manual .lh-audit-group__description').textContent;
     // may need to be adjusted if description includes a link at the beginning
     assert.ok(description.startsWith(pwaCategory.manualDescription.substring(0, 20)),
         'no manual description');
@@ -158,19 +158,19 @@ describe('CategoryRenderer', () => {
     const a11yCategory = sampleResults.reportCategories.find(cat => cat.id === 'accessibility');
     const categoryDOM = renderer.render(a11yCategory, sampleResults.categoryGroups);
     assert.ok(categoryDOM.querySelector(
-        '.lh-audit-group--not-applicable .lh-audit-group__summary'));
+        '.lh-clump--not-applicable .lh-audit-group__summary'));
 
     const notApplicableCount = a11yCategory.auditRefs.reduce((sum, audit) =>
         sum += audit.result.scoreDisplayMode === 'not-applicable' ? 1 : 0, 0);
     assert.equal(
-      categoryDOM.querySelectorAll('.lh-audit-group--not-applicable .lh-audit').length,
+      categoryDOM.querySelectorAll('.lh-clump--not-applicable .lh-audit').length,
       notApplicableCount,
       'score shows informative and dash icon'
     );
 
     const bestPracticeCat = sampleResults.reportCategories.find(cat => cat.id === 'best-practices');
     const categoryDOM2 = renderer.render(bestPracticeCat, sampleResults.categoryGroups);
-    assert.ok(!categoryDOM2.querySelector('.lh-audit-group--not-applicable'));
+    assert.ok(!categoryDOM2.querySelector('.lh-clump--not-applicable'));
   });
 
   describe('category with groups', () => {
@@ -216,7 +216,7 @@ describe('CategoryRenderer', () => {
           audit.result.scoreDisplayMode !== 'not-applicable' && audit.result.score === 1);
       const passedAuditTags = new Set(passedAudits.map(audit => audit.group));
 
-      const passedAuditGroups = categoryDOM.querySelectorAll('.lh-passed-audits .lh-audit-group');
+      const passedAuditGroups = categoryDOM.querySelectorAll('.lh-clump--passed .lh-audit-group');
       assert.equal(passedAuditGroups.length, passedAuditTags.size);
     });
 
@@ -229,11 +229,11 @@ describe('CategoryRenderer', () => {
     it('increments the audit index across groups', () => {
       const elem = renderer.render(category, sampleResults.categoryGroups);
 
-      const passedAudits = elem.querySelectorAll('.lh-passed-audits .lh-audit__index');
-      const failedAudits = elem.querySelectorAll('.lh-failed-audits .lh-audit__index');
-      const manualAudits = elem.querySelectorAll('.lh-audit-group--manual .lh-audit__index');
+      const passedAudits = elem.querySelectorAll('.lh-clump--passed .lh-audit__index');
+      const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit__index');
+      const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit__index');
       const notApplicableAudits =
-        elem.querySelectorAll('.lh-audit-group--not-applicable .lh-audit__index');
+        elem.querySelectorAll('.lh-clump--not-applicable .lh-audit__index');
 
       const assertAllTheIndices = (nodeList) => {
         // Must be at least one for a decent test.
@@ -274,15 +274,29 @@ describe('CategoryRenderer', () => {
         assert.ok(ungroupedAudits.includes(auditId), auditId);
       }
     });
+
+    it('gives each group a selectable class', () => {
+      const categoryGroupIds = new Set(category.auditRefs.filter(a => a.group).map(a => a.group));
+      assert.ok(categoryGroupIds.size > 6); // Ensure there's something to test.
+
+      const categoryElem = renderer.render(category, sampleResults.categoryGroups);
+
+      categoryGroupIds.forEach(groupId => {
+        const selector = `.lh-audit-group--${groupId}`;
+        // Could be multiple results (e.g. found in both passed and failed clumps).
+        assert.ok(categoryElem.querySelectorAll(selector).length >= 1,
+          `could not find '${selector}'`);
+      });
+    });
   });
 
-  describe('grouping passed/failed/manual', () => {
+  describe('clumping passed/failed/manual', () => {
     it('separates audits in the DOM', () => {
       const category = sampleResults.reportCategories.find(c => c.id === 'pwa');
       const elem = renderer.render(category, sampleResults.categoryGroups);
-      const passedAudits = elem.querySelectorAll('.lh-passed-audits .lh-audit');
-      const failedAudits = elem.querySelectorAll('.lh-failed-audits .lh-audit');
-      const manualAudits = elem.querySelectorAll('.lh-audit-group--manual .lh-audit');
+      const passedAudits = elem.querySelectorAll('.lh-clump--passed .lh-audit');
+      const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
+      const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit');
 
       assert.equal(passedAudits.length, 4);
       assert.equal(failedAudits.length, 8);
@@ -294,13 +308,11 @@ describe('CategoryRenderer', () => {
       const category = JSON.parse(JSON.stringify(origCategory));
       category.auditRefs.forEach(audit => audit.result.score = 0);
       const elem = renderer.render(category, sampleResults.categoryGroups);
-      const passedAudits = elem.querySelectorAll('.lh-passed-audits .lh-audit');
-      const failedAudits = elem.querySelectorAll('.lh-failed-audits .lh-audit');
+      const passedAudits = elem.querySelectorAll('.lh-clump--passed .lh-audit');
+      const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
 
       assert.equal(passedAudits.length, 0);
       assert.equal(failedAudits.length, 12);
-
-      assert.equal(elem.querySelector('.lh-passed-audits-summary'), null);
     });
   });
 

@@ -46,19 +46,19 @@ class CategoryRenderer {
   get _clumpDisplayInfo() {
     return {
       'failed': {
-        className: 'lh-failed-audits',
+        className: 'lh-clump--failed',
       },
       'manual': {
         title: Util.UIStrings.manualAuditsGroupTitle,
-        className: 'lh-audit-group--manual',
+        className: 'lh-clump--manual',
       },
       'passed': {
         title: Util.UIStrings.passedAuditsGroupTitle,
-        className: 'lh-passed-audits',
+        className: 'lh-clump--passed',
       },
       'not-applicable': {
         title: Util.UIStrings.notApplicableAuditsGroupTitle,
-        className: 'lh-audit-group--not-applicable',
+        className: 'lh-clump--not-applicable',
       },
     };
   }
@@ -255,7 +255,7 @@ class CategoryRenderer {
       for (const auditRef of groupAuditRefs) {
         auditGroupElem.appendChild(this.renderAudit(auditRef, index++));
       }
-      auditGroupElem.classList.add('lh-audit-group--unadorned');
+      auditGroupElem.classList.add(`lh-audit-group--${groupId}`);
       auditElements.push(auditGroupElem);
     }
 
@@ -300,7 +300,7 @@ class CategoryRenderer {
     if (clumpId === 'failed') {
       // Failed audit clump is always expanded and not nested in an lh-audit-group.
       const failedElem = this.renderUnexpandableClump(auditRefs, groupDefinitions);
-      failedElem.classList.add(this._clumpDisplayInfo.failed.className);
+      failedElem.classList.add('lh-clump', this._clumpDisplayInfo.failed.className);
       return failedElem;
     }
 
@@ -312,7 +312,7 @@ class CategoryRenderer {
     const groupDef = {title: clumpInfo.title, description};
     const opts = {expandable, itemCount: auditRefs.length};
     const clumpElem = this.renderAuditGroup(groupDef, opts);
-    clumpElem.classList.add(clumpInfo.className);
+    clumpElem.classList.add('lh-clump', clumpInfo.className);
 
     elements.forEach(elem => clumpElem.appendChild(elem));
 
