@@ -57,7 +57,7 @@
     },
     "works-offline": {
       "id": "works-offline",
-      "title": "Does not respond with a 200 when offline",
+      "title": "Current page does not respond with a 200 when offline",
       "description": "If you're building a Progressive Web App, consider using a service worker so that your app can work offline. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).",
       "score": 0,
       "scoreDisplayMode": "binary",
@@ -503,7 +503,7 @@
     },
     "themed-omnibox": {
       "id": "themed-omnibox",
-      "title": "Address bar does not match brand colors",
+      "title": "Does not set an address-bar theme color",
       "description": "The browser address bar can be themed to match your site. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/address-bar).",
       "score": 0,
       "scoreDisplayMode": "binary",
@@ -2959,32 +2959,32 @@
         {
           "id": "redirects-http",
           "weight": 2,
-          "group": "pwa-engaging"
+          "group": "pwa-optimized"
         },
         {
           "id": "splash-screen",
           "weight": 1,
-          "group": "pwa-engaging"
+          "group": "pwa-optimized"
         },
         {
           "id": "themed-omnibox",
           "weight": 1,
-          "group": "pwa-engaging"
+          "group": "pwa-optimized"
         },
         {
           "id": "content-width",
           "weight": 1,
-          "group": "pwa-engaging"
+          "group": "pwa-optimized"
         },
         {
           "id": "viewport",
           "weight": 2,
-          "group": "pwa-engaging"
+          "group": "pwa-optimized"
         },
         {
           "id": "without-javascript",
           "weight": 1,
-          "group": "pwa-engaging"
+          "group": "pwa-optimized"
         },
         {
           "id": "pwa-cross-browser",
@@ -3388,8 +3388,8 @@
     "pwa-installable": {
       "title": "Installable"
     },
-    "pwa-engaging": {
-      "title": "Engaging"
+    "pwa-optimized": {
+      "title": "PWA Optimized"
     },
     "a11y-color-contrast": {
       "title": "Color Contrast Is Satisfactory",
@@ -4795,8 +4795,8 @@
       "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": [
         "categoryGroups[pwa-installable].title"
       ],
-      "lighthouse-core/config/default-config.js | pwaEngagingGroupTitle": [
-        "categoryGroups[pwa-engaging].title"
+      "lighthouse-core/config/default-config.js | pwaOptimizedGroupTitle": [
+        "categoryGroups[pwa-optimized].title"
       ],
       "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": [
         "categoryGroups[a11y-color-contrast].title"

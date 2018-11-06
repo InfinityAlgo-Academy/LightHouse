@@ -67,8 +67,8 @@ const UIStrings = {
   pwaFastReliableGroupTitle: 'Fast and reliable',
   /** Title of the Installable section of the web app category. Within this section are audits that check if Chrome supports installing the web site as an app on their device. */
   pwaInstallableGroupTitle: 'Installable',
-  /** Title of the Engaging section of the web app category. Within this section are audits that check if the developer has taken advantage of features to make their web page more enjoyable and engaging for the user. */
-  pwaEngagingGroupTitle: 'Engaging',
+  /** Title of the "PWA Optimized" section of the web app category. Within this section are audits that check if the developer has taken advantage of features to make their web page more enjoyable and engaging for the user. */
+  pwaOptimizedGroupTitle: 'PWA Optimized',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -269,8 +269,8 @@ const defaultConfig = {
     'pwa-installable': {
       title: str_(UIStrings.pwaInstallableGroupTitle),
     },
-    'pwa-engaging': {
-      title: str_(UIStrings.pwaEngagingGroupTitle),
+    'pwa-optimized': {
+      title: str_(UIStrings.pwaOptimizedGroupTitle),
     },
     'a11y-color-contrast': {
       title: str_(UIStrings.a11yColorContrastGroupTitle),
@@ -373,12 +373,12 @@ const defaultConfig = {
         {id: 'service-worker', weight: 1, group: 'pwa-installable'},
         {id: 'webapp-install-banner', weight: 2, group: 'pwa-installable'},
         // Engaging
-        {id: 'redirects-http', weight: 2, group: 'pwa-engaging'},
-        {id: 'splash-screen', weight: 1, group: 'pwa-engaging'},
-        {id: 'themed-omnibox', weight: 1, group: 'pwa-engaging'},
-        {id: 'content-width', weight: 1, group: 'pwa-engaging'},
-        {id: 'viewport', weight: 2, group: 'pwa-engaging'},
-        {id: 'without-javascript', weight: 1, group: 'pwa-engaging'},
+        {id: 'redirects-http', weight: 2, group: 'pwa-optimized'},
+        {id: 'splash-screen', weight: 1, group: 'pwa-optimized'},
+        {id: 'themed-omnibox', weight: 1, group: 'pwa-optimized'},
+        {id: 'content-width', weight: 1, group: 'pwa-optimized'},
+        {id: 'viewport', weight: 2, group: 'pwa-optimized'},
+        {id: 'without-javascript', weight: 1, group: 'pwa-optimized'},
         // Manual audits
         {id: 'pwa-cross-browser', weight: 0},
         {id: 'pwa-page-transitions', weight: 0},

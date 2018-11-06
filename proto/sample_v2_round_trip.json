@@ -1952,7 +1952,7 @@
             "id": "themed-omnibox", 
             "score": 0.0, 
             "scoreDisplayMode": "binary", 
-            "title": "Address bar does not match brand colors"
+            "title": "Does not set an address-bar theme color"
         }, 
         "time-to-first-byte": {
             "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).", 
@@ -2574,7 +2574,7 @@
             "id": "works-offline", 
             "score": 0.0, 
             "scoreDisplayMode": "binary", 
-            "title": "Does not respond with a 200 when offline", 
+            "title": "Current page does not respond with a 200 when offline", 
             "warnings": []
         }
     }, 
@@ -3070,32 +3070,32 @@
                     "weight": 2.0
                 }, 
                 {
-                    "group": "pwa-engaging", 
+                    "group": "pwa-optimized", 
                     "id": "redirects-http", 
                     "weight": 2.0
                 }, 
                 {
-                    "group": "pwa-engaging", 
+                    "group": "pwa-optimized", 
                     "id": "splash-screen", 
                     "weight": 1.0
                 }, 
                 {
-                    "group": "pwa-engaging", 
+                    "group": "pwa-optimized", 
                     "id": "themed-omnibox", 
                     "weight": 1.0
                 }, 
                 {
-                    "group": "pwa-engaging", 
+                    "group": "pwa-optimized", 
                     "id": "content-width", 
                     "weight": 1.0
                 }, 
                 {
-                    "group": "pwa-engaging", 
+                    "group": "pwa-optimized", 
                     "id": "viewport", 
                     "weight": 2.0
                 }, 
                 {
-                    "group": "pwa-engaging", 
+                    "group": "pwa-optimized", 
                     "id": "without-javascript", 
                     "weight": 1.0
                 }, 
@@ -3235,14 +3235,14 @@
         "metrics": {
             "title": "Metrics"
         }, 
-        "pwa-engaging": {
-            "title": "Engaging"
-        }, 
         "pwa-fast-reliable": {
             "title": "Fast and reliable"
         }, 
         "pwa-installable": {
             "title": "Installable"
+        }, 
+        "pwa-optimized": {
+            "title": "PWA Optimized"
         }, 
         "seo-content": {
             "description": "Format your HTML in a way that enables crawlers to better understand your app\u2019s content.", 

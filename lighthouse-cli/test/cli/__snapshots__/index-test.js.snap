@@ -844,32 +844,32 @@ Object {
           "weight": 2,
         },
         Object {
-          "group": "pwa-engaging",
+          "group": "pwa-optimized",
           "id": "redirects-http",
           "weight": 2,
         },
         Object {
-          "group": "pwa-engaging",
+          "group": "pwa-optimized",
           "id": "splash-screen",
           "weight": 1,
         },
         Object {
-          "group": "pwa-engaging",
+          "group": "pwa-optimized",
           "id": "themed-omnibox",
           "weight": 1,
         },
         Object {
-          "group": "pwa-engaging",
+          "group": "pwa-optimized",
           "id": "content-width",
           "weight": 1,
         },
         Object {
-          "group": "pwa-engaging",
+          "group": "pwa-optimized",
           "id": "viewport",
           "weight": 2,
         },
         Object {
-          "group": "pwa-engaging",
+          "group": "pwa-optimized",
           "id": "without-javascript",
           "weight": 1,
         },
@@ -1005,14 +1005,14 @@ Object {
     "metrics": Object {
       "title": "Metrics",
     },
-    "pwa-engaging": Object {
-      "title": "Engaging",
-    },
     "pwa-fast-reliable": Object {
       "title": "Fast and reliable",
     },
     "pwa-installable": Object {
       "title": "Installable",
+    },
+    "pwa-optimized": Object {
+      "title": "PWA Optimized",
     },
     "seo-content": Object {
       "description": "Format your HTML in a way that enables crawlers to better understand your app’s content.",
@@ -1263,14 +1263,14 @@ Object {
     "metrics": Object {
       "title": "Metrics",
     },
-    "pwa-engaging": Object {
-      "title": "Engaging",
-    },
     "pwa-fast-reliable": Object {
       "title": "Fast and reliable",
     },
     "pwa-installable": Object {
       "title": "Installable",
+    },
+    "pwa-optimized": Object {
+      "title": "PWA Optimized",
     },
     "seo-content": Object {
       "description": "Format your HTML in a way that enables crawlers to better understand your app’s content.",
