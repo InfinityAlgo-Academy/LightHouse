@@ -31,6 +31,38 @@ const UIStrings = {
   diagnosticsGroupTitle: 'Diagnostics',
   /** Description of the diagnostics section of the Performance category. Within this section are audits with non-imperative titles that provide more detail on the page's page load performance characteristics. Whereas the 'Opportunities' suggest an action along with expected time savings, diagnostics do not. Within this section, the user may read the details and deduce additional actions they could take. */
   diagnosticsGroupDescription: 'More information about the performance of your application.',
+  /* Title of the color contrast section within the Accessibility category. Within this section are audits with descriptive titles that highlight the color and vision aspects of the page's accessibility that are passing or failing. */
+  a11yColorContrastGroupTitle: 'Color Contrast Is Satisfactory',
+  /* Description of the color contrast section within the Accessibility category. Within this section are audits with descriptive titles that highlight the color and vision aspects of the page's accessibility that are passing or failing. */
+  a11yColorContrastGroupDescription: 'These are opportunities to improve the legibility of your content.',
+  /* Title of the screen reader annotation section within the Accessibility category. Within this section are audits with descriptive titles that highlight the screen reader readability aspects of the page's accessibility that are passing or failing. 'Elements' refers to HTML elements. */
+  a11yDescribeContentsGroupTitle: 'Elements Describe Contents Well',
+  /* Description of the screen reader annotation section within the Accessibility category. Within this section are audits with descriptive titles that highlight the screen reader readability aspects of the page's accessibility that are passing or failing. */
+  a11yDescribeContentsGroupDescription: 'These are opportunities to make your content easier to understand for a user of assistive technology, like a screen reader.',
+  /* Title of the HTML validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight structural HTML aspects of the page's accessibility that are passing or failing (i.e. that list items are contained within list parents, etc). 'Elements' refers to HTML elements. */
+  a11yWellStructuredGroupTitle: 'Elements Are Well Structured',
+  /* Description of the HTML validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight structural HTML aspects of the page's accessibility that are passing or failing. */
+  a11yWellStructuredGroupDescription: 'These are opportunities to make sure your HTML is appropriately structured.',
+  /* Title of the ARIA validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if whether all the aria-* HTML attributes have been used properly. */
+  a11yAriaGroupTitle: 'ARIA Attributes Follow Best Practices',
+  /* Description of the ARIA validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if whether all the aria-* HTML attributes have been used properly. */
+  a11yAriaGroupDescription: 'These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader.',
+  /* Title of the HTML attribute validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the HTML attribute values on the page are used correctly. 'Elements' refers to HTML elements. */
+  a11yCorrectAttributesGroupTitle: 'Elements Use Attributes Correctly',
+  /* Description of the HTML attribute validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the HTML attribute values on the page are used correctly. */
+  a11yCorrectAttributesGroupDescription: 'These are opportunities to improve the configuration of your HTML elements.',
+  /* Title of the HTML element naming section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the non-textual HTML elements on the page have names discernible by a screen reader. */
+  a11yElementNamesGroupTitle: 'Elements Have Discernible Names',
+  /* Description of the HTML element naming section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the non-textual HTML elements on the page have names discernible by a screen reader. */
+  a11yElementNamesGroupDescription: 'These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.',
+  /* Title of the language section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the language has been annotated in the correct HTML attributes on the page. */
+  a11yLanguageGroupTitle: 'Page Specifies Valid Language',
+  /* Description of the language section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the language has been annotated in the correct HTML attributes on the page. */
+  a11yLanguageGroupDescription: 'These are opportunities to improve the interpretation of your content by users in different locales.',
+  /* Title of the meta tag section within the Accessibility category. Within this section are audits with descriptive titles that highlight if meta tags on the page have been used properly and if any important ones are missing. */
+  a11yMetaGroupTitle: 'Meta Tags Used Properly',
+  /* Description of the meta tag section within the Accessibility category. Within this section are audits with descriptive titles that highlight if meta tags on the page have been used properly and if any important ones are missing. */
+  a11yMetaGroupDescription: 'These are opportunities to improve the user experience of your site.',
   /** Title of the Fast and Reliable section of the web app category. Within this section are audits that check if the web site loaded quickly and can reliably load even if the internet connection is very slow or goes offline. */
   pwaFastReliableGroupTitle: 'Fast and reliable',
   /** Title of the Installable section of the web app category. Within this section are audits that check if Chrome supports installing the web site as an app on their device. */
@@ -241,36 +273,36 @@ const defaultConfig = {
       title: str_(UIStrings.pwaEngagingGroupTitle),
     },
     'a11y-color-contrast': {
-      title: 'Color Contrast Is Satisfactory',
-      description: 'These are opportunities to improve the legibility of your content.',
+      title: str_(UIStrings.a11yColorContrastGroupTitle),
+      description: str_(UIStrings.a11yColorContrastGroupDescription),
     },
     'a11y-describe-contents': {
-      title: 'Elements Describe Contents Well',
-      description: 'These are opportunities to make your content easier to understand for a user of assistive technology, like a screen reader.',
+      title: str_(UIStrings.a11yDescribeContentsGroupTitle),
+      description: str_(UIStrings.a11yDescribeContentsGroupDescription),
     },
     'a11y-well-structured': {
-      title: 'Elements Are Well Structured',
-      description: 'These are opportunities to make sure your HTML is appropriately structured.',
+      title: str_(UIStrings.a11yWellStructuredGroupTitle),
+      description: str_(UIStrings.a11yWellStructuredGroupDescription),
     },
     'a11y-aria': {
-      title: 'ARIA Attributes Follow Best Practices',
-      description: 'These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader.',
+      title: str_(UIStrings.a11yAriaGroupTitle),
+      description: str_(UIStrings.a11yAriaGroupDescription),
     },
     'a11y-correct-attributes': {
-      title: 'Elements Use Attributes Correctly',
-      description: 'These are opportunities to improve the configuration of your HTML elements.',
+      title: str_(UIStrings.a11yCorrectAttributesGroupTitle),
+      description: str_(UIStrings.a11yCorrectAttributesGroupDescription),
     },
     'a11y-element-names': {
-      title: 'Elements Have Discernible Names',
-      description: 'These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.',
+      title: str_(UIStrings.a11yElementNamesGroupTitle),
+      description: str_(UIStrings.a11yElementNamesGroupDescription),
     },
     'a11y-language': {
-      title: 'Page Specifies Valid Language',
-      description: 'These are opportunities to improve the interpretation of your content by users in different locales.',
+      title: str_(UIStrings.a11yLanguageGroupTitle),
+      description: str_(UIStrings.a11yLanguageGroupDescription),
     },
     'a11y-meta': {
-      title: 'Meta Tags Used Properly',
-      description: 'These are opportunities to improve the user experience of your site.',
+      title: str_(UIStrings.a11yMetaGroupTitle),
+      description: str_(UIStrings.a11yMetaGroupDescription),
     },
     'seo-mobile': {
       title: 'Mobile Friendly',

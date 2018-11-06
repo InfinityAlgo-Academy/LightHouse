@@ -11,6 +11,14 @@
  */
 
 const Audit = require('../audit');
+const i18n = require('../../lib/i18n/i18n.js');
+
+const UIStrings = {
+  /** Label of a table column that identifies HTML elements that have failed an audit. */
+  failingElementsHeader: 'Failing Elements',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class AxeAudit extends Audit {
   /**
@@ -51,7 +59,7 @@ class AxeAudit extends Audit {
     }
 
     const headings = [
-      {key: 'node', itemType: 'node', text: 'Failing Elements'},
+      {key: 'node', itemType: 'node', text: str_(UIStrings.failingElementsHeader)},
     ];
 
     return {
@@ -65,3 +73,4 @@ class AxeAudit extends Audit {
 }
 
 module.exports = AxeAudit;
+module.exports.UIStrings = UIStrings;
