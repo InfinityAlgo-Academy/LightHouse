@@ -41,14 +41,22 @@ class LinkText extends Audit {
   static audit(artifacts) {
     const failingLinks = artifacts.CrawlableLinks
       .filter(link => {
+        const href = link.href.toLowerCase();
         if (
-          link.href.toLowerCase().startsWith('javascript:') ||
+          href.startsWith('javascript:') ||
+          href.startsWith('mailto:') ||
           URL.equalWithExcludedFragments(link.href, artifacts.URL.finalUrl)
         ) {
           return false;
         }
 
         return BLOCKLIST.has(link.text.trim().toLowerCase());
+      })
+      .map(link => {
+        return {
+          href: link.href,
+          text: link.text.trim(),
+        };
       });
 
     const headings = [

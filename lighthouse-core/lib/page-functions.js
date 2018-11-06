@@ -84,13 +84,14 @@ function checkTimeSinceLastLongTask() {
  */
 /* istanbul ignore next */
 function getElementsInDocument(selector) {
+  const realMatchesFn = window.__ElementMatches || window.Element.prototype.matches;
   /** @type {Array<Element>} */
   const results = [];
 
   /** @param {NodeListOf<Element>} nodes */
   const _findAllElements = nodes => {
     for (let i = 0, el; el = nodes[i]; ++i) {
-      if (!selector || window.__ElementMatches.call(el, selector)) {
+      if (!selector || realMatchesFn.call(el, selector)) {
         results.push(el);
       }
       // If the element has a shadow root, dig deeper.

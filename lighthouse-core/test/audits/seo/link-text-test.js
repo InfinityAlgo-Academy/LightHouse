@@ -64,6 +64,21 @@ describe('SEO: link text audit', () => {
     assert.equal(auditResult.rawValue, true);
   });
 
+  it('ignores mailto: links', () => {
+    const artifacts = {
+      URL: {
+        finalUrl: 'https://example.com/page.html',
+      },
+      CrawlableLinks: [
+        {href: 'mailto:info@example.com', text: 'click here'},
+        {href: 'mailto:mailmaster@localhost', text: 'click here'},
+      ],
+    };
+
+    const auditResult = LinkTextAudit.audit(artifacts);
+    assert.equal(auditResult.rawValue, true);
+  });
+
   it('passes when all links have descriptive texts', () => {
     const artifacts = {
       URL: {

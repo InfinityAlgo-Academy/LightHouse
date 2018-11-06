@@ -99,10 +99,10 @@ module.exports = [
       },
       'link-text': {
         score: 0,
-        displayValue: '3 links found',
+        displayValue: '4 links found',
         details: {
           items: {
-            length: 3,
+            length: 4,
           },
         },
       },
