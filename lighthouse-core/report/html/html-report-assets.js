@@ -21,6 +21,7 @@ const REPORT_JAVASCRIPT = [
   fs.readFileSync(__dirname + '/renderer/report-ui-features.js', 'utf8'),
   fs.readFileSync(__dirname + '/renderer/category-renderer.js', 'utf8'),
   fs.readFileSync(__dirname + '/renderer/performance-category-renderer.js', 'utf8'),
+  fs.readFileSync(__dirname + '/renderer/pwa-category-renderer.js', 'utf8'),
   fs.readFileSync(__dirname + '/renderer/report-renderer.js', 'utf8'),
 ].join(';\n');
 const REPORT_CSS = fs.readFileSync(__dirname + '/report-styles.css', 'utf8');

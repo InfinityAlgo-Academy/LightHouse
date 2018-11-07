@@ -9,6 +9,7 @@ import _CriticalRequestChainRenderer = require('../lighthouse-core/report/html/r
 import _DetailsRenderer = require('../lighthouse-core/report/html/renderer/details-renderer.js');
 import _DOM = require('../lighthouse-core/report/html/renderer/dom.js');
 import _PerformanceCategoryRenderer = require('../lighthouse-core/report/html/renderer/performance-category-renderer.js');
+import _PwaCategoryRenderer = require('../lighthouse-core/report/html/renderer/pwa-category-renderer.js');
 import _ReportRenderer = require('../lighthouse-core/report/html/renderer/report-renderer.js');
 import _ReportUIFeatures = require('../lighthouse-core/report/html/renderer/report-ui-features.js');
 import _Util = require('../lighthouse-core/report/html/renderer/util.js');
@@ -22,6 +23,7 @@ declare global {
   var DOM: typeof _DOM;
   var getFilenamePrefix: typeof _FileNamer.getFilenamePrefix;
   var PerformanceCategoryRenderer: typeof _PerformanceCategoryRenderer;
+  var PwaCategoryRenderer: typeof _PwaCategoryRenderer;
   var ReportRenderer: typeof _ReportRenderer;
   var ReportUIFeatures: typeof _ReportUIFeatures;
   var Util: typeof _Util;
@@ -33,6 +35,7 @@ declare global {
     DetailsRenderer: typeof _DetailsRenderer;
     DOM: typeof _DOM;
     PerformanceCategoryRenderer: typeof _PerformanceCategoryRenderer;
+    PwaCategoryRenderer: typeof _PwaCategoryRenderer;
     ReportRenderer: typeof _ReportRenderer;
     ReportUIFeatures: typeof _ReportUIFeatures;
     Util: typeof _Util;

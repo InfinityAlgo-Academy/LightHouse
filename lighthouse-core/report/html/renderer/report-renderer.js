@@ -26,7 +26,7 @@
 /** @typedef {import('./dom.js')} DOM */
 /** @typedef {import('./details-renderer.js').DetailsJSON} DetailsJSON */
 
-/* globals self, Util, DetailsRenderer, CategoryRenderer, PerformanceCategoryRenderer */
+/* globals self, Util, DetailsRenderer, CategoryRenderer, PerformanceCategoryRenderer, PwaCategoryRenderer */
 
 class ReportRenderer {
   /**
@@ -188,8 +188,15 @@ class ReportRenderer {
     const detailsRenderer = new DetailsRenderer(this._dom);
     const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
     categoryRenderer.setTemplateContext(this._templateContext);
-    const perfCategoryRenderer = new PerformanceCategoryRenderer(this._dom, detailsRenderer);
-    perfCategoryRenderer.setTemplateContext(this._templateContext);
+
+    /** @type {Record<string, CategoryRenderer>} */
+    const specificCategoryRenderers = {
+      performance: new PerformanceCategoryRenderer(this._dom, detailsRenderer),
+      pwa: new PwaCategoryRenderer(this._dom, detailsRenderer),
+    };
+    Object.values(specificCategoryRenderers).forEach(renderer => {
+      renderer.setTemplateContext(this._templateContext);
+    });
 
     const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
 
@@ -198,10 +205,7 @@ class ReportRenderer {
         scoreHeader.appendChild(categoryRenderer.renderScoreGauge(category));
       }
 
-      let renderer = categoryRenderer;
-      if (category.id === 'performance') {
-        renderer = perfCategoryRenderer;
-      }
+      const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       categories.appendChild(renderer.render(category, report.categoryGroups));
     }
 
