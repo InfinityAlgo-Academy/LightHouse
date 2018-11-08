@@ -39,7 +39,12 @@ describe('PwaCategoryRenderer', () => {
     pwaRenderer = new PwaCategoryRenderer(dom, detailsRenderer);
 
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
-    category = sampleResults.reportCategories.find(cat => cat.id === 'pwa');
+  });
+
+  beforeEach(() => {
+    // Clone category to allow modifications.
+    const pwaCategory = sampleResults.reportCategories.find(cat => cat.id === 'pwa');
+    category = JSON.parse(JSON.stringify(pwaCategory));
   });
 
   afterAll(() => {
@@ -88,6 +93,84 @@ describe('PwaCategoryRenderer', () => {
       // Expected that only the non-manual audits will be grouped.
       assert.strictEqual(categoryElem.querySelectorAll(selector).length, 1,
         `trouble with selector '${selector}'`);
+    });
+  });
+
+  describe('badging groups', () => {
+    let auditRefs;
+    let groupIds;
+
+    beforeEach(() => {
+      auditRefs = category.auditRefs
+        .filter(audit => audit.result.scoreDisplayMode !== 'manual');
+
+      // Expect results to all be scorable.
+      for (const auditRef of auditRefs) {
+        assert.strictEqual(auditRef.result.scoreDisplayMode, 'binary');
+      }
+
+      groupIds = [...new Set(auditRefs.map(ref => ref.group))];
+    });
+
+    it('only gives a group a badge when all the group\'s audits are passing', () => {
+      for (const auditRef of auditRefs) {
+        auditRef.result.score = 0;
+      }
+
+      const targetGroupId = groupIds[2];
+      assert.ok(targetGroupId);
+      const targetAuditRefs = auditRefs.filter(ref => ref.group === targetGroupId);
+
+      // Try every permutation of audit scoring.
+      const totalPermutations = Math.pow(2, targetAuditRefs.length);
+      for (let i = 0; i < totalPermutations; i++) {
+        for (let j = 0; j < targetAuditRefs.length; j++) {
+          // Set as passing if jth bit in i is set.
+          targetAuditRefs[j].result.score = i >> j & 1;
+        }
+
+        const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
+        const badgedElems = categoryElem.querySelectorAll(`.lh-badged`);
+
+        // Only expect a badge on last permutation (all bits are set).
+        const expectedBadgeCount = i === totalPermutations - 1 ? 1 : 0;
+        assert.strictEqual(badgedElems.length, expectedBadgeCount);
+      }
+    });
+
+    it('renders all badges when all audits are passing', () => {
+      for (const auditRef of auditRefs) {
+        auditRef.result.score = 1;
+      }
+
+      const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
+      assert.strictEqual(categoryElem.querySelectorAll('.lh-badged').length, groupIds.length);
+    });
+
+    it('renders no badges when no audit groups are passing', () => {
+      for (const auditRef of auditRefs) {
+        auditRef.result.score = 0;
+      }
+
+      const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
+      assert.strictEqual(categoryElem.querySelectorAll('.lh-badged').length, 0);
+    });
+
+    it('renders all but one badge when all groups but one are passing', () => {
+      for (const auditRef of auditRefs) {
+        auditRef.result.score = 1;
+      }
+      auditRefs[0].result.score = 0;
+      const failingGroupId = auditRefs[0].group;
+
+      const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
+
+      for (const groupId of groupIds) {
+        const expectedCount = groupId === failingGroupId ? 0 : 1;
+
+        const groupElems = categoryElem.querySelectorAll(`.lh-audit-group--${groupId}.lh-badged`);
+        assert.strictEqual(groupElems.length, expectedCount);
+      }
     });
   });
 });

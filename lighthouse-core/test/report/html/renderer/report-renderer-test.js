@@ -16,9 +16,6 @@ const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-features.js');
 const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
-// lazy loaded because they depend on CategoryRenderer to be available globally
-let PerformanceCategoryRenderer = null;
-let PwaCategoryRenderer = null;
 const CriticalRequestChainRenderer = require(
     '../../../../report/html/renderer/crc-details-renderer.js');
 const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
@@ -39,16 +36,12 @@ describe('ReportRenderer', () => {
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.DetailsRenderer = DetailsRenderer;
     global.CategoryRenderer = CategoryRenderer;
-    if (!PerformanceCategoryRenderer) {
-      PerformanceCategoryRenderer =
+
+    // lazy loaded because they depend on CategoryRenderer to be available globally
+    global.PerformanceCategoryRenderer =
         require('../../../../report/html/renderer/performance-category-renderer.js');
-    }
-    global.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
-    if (!PwaCategoryRenderer) {
-      PwaCategoryRenderer =
+    global.PwaCategoryRenderer =
         require('../../../../report/html/renderer/pwa-category-renderer.js');
-    }
-    global.PwaCategoryRenderer = PwaCategoryRenderer;
 
     // Stub out matchMedia for Node.
     global.matchMedia = function() {

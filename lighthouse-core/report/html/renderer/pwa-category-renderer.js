@@ -16,7 +16,7 @@
  */
 'use strict';
 
-/* globals self, CategoryRenderer */
+/* globals self, Util, CategoryRenderer */
 
 class PwaCategoryRenderer extends CategoryRenderer {
   /**
@@ -34,7 +34,7 @@ class PwaCategoryRenderer extends CategoryRenderer {
     // Regular audits aren't split up into pass/fail/not-applicable clumps, they're
     // all put in a top-level clump that isn't expandable/collapsable.
     const regularAuditRefs = auditRefs.filter(ref => ref.result.scoreDisplayMode !== 'manual');
-    const auditsElem = this.renderUnexpandableClump(regularAuditRefs, groupDefinitions);
+    const auditsElem = this._renderAudits(regularAuditRefs, groupDefinitions);
     categoryElem.appendChild(auditsElem);
 
     // Manual audits are still in a manual clump.
@@ -44,6 +44,45 @@ class PwaCategoryRenderer extends CategoryRenderer {
     categoryElem.appendChild(manualElem);
 
     return categoryElem;
+  }
+
+  /**
+   * Returns the group IDs whose audits are all considered passing.
+   * @param {Array<LH.ReportResult.AuditRef>} auditRefs
+   * @return {Set<string>}
+   */
+  _getPassingGroupIds(auditRefs) {
+    const groupIds = auditRefs.map(ref => ref.group).filter(/** @return {g is string} */ g => !!g);
+    const uniqueGroupIds = new Set(groupIds);
+
+    // Remove any that have a failing audit.
+    for (const auditRef of auditRefs) {
+      if (!Util.showAsPassed(auditRef.result) && auditRef.group) {
+        uniqueGroupIds.delete(auditRef.group);
+      }
+    }
+
+    return uniqueGroupIds;
+  }
+
+  /**
+   * Render non-manual audits in groups, giving a badge to any group that has
+   * all passing audits.
+   * @param {Array<LH.ReportResult.AuditRef>} auditRefs
+   * @param {Object<string, LH.Result.ReportGroup>} groupDefinitions
+   * @return {Element}
+   */
+  _renderAudits(auditRefs, groupDefinitions) {
+    const auditsElem = this.renderUnexpandableClump(auditRefs, groupDefinitions);
+
+    // Add a 'badged' class to group if all audits in that group pass.
+    const passsingGroupIds = this._getPassingGroupIds(auditRefs);
+    for (const groupId of passsingGroupIds) {
+      const groupElem = this.dom.find(`.lh-audit-group--${groupId}`, auditsElem);
+      groupElem.classList.add('lh-badged');
+    }
+
+    return auditsElem;
   }
 }
 
