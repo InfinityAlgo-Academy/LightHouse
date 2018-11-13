@@ -7,6 +7,7 @@
 
 const assert = require('assert');
 const Util = require('../../../../report/html/renderer/util.js');
+const sampleResult = require('../../../results/sample_v2.json');
 
 const NBSP = '\xa0';
 
@@ -167,5 +168,25 @@ describe('util helpers', () => {
     const cloned = JSON.parse(JSON.stringify(displayValue));
     Util.formatDisplayValue(displayValue);
     assert.deepStrictEqual(displayValue, cloned, 'displayValue was mutated');
+  });
+
+  describe('#prepareReportResult', () => {
+    it('corrects underscored `not-applicable` scoreDisplayMode', () => {
+      const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+
+      let notApplicableCount = 0;
+      Object.values(clonedSampleResult.audits).forEach(audit => {
+        if (audit.scoreDisplayMode === 'not-applicable') {
+          notApplicableCount++;
+          audit.scoreDisplayMode = 'not_applicable';
+        }
+      });
+
+      assert.ok(notApplicableCount > 20); // Make sure something's being tested.
+
+      // Original audit results should be restored.
+      const preparedResult = Util.prepareReportResult(clonedSampleResult);
+      assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+    });
   });
 });

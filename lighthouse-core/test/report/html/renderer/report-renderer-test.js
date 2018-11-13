@@ -154,4 +154,25 @@ describe('ReportRenderer', () => {
     renderer.setTemplateContext(otherDocument);
     assert.equal(renderer._templateContext, otherDocument);
   });
+
+  it('renders `not_applicable` audits as `not-applicable`', () => {
+    const clonedSampleResult = JSON.parse(JSON.stringify(sampleResultsOrig));
+
+    let notApplicableCount = 0;
+    Object.values(clonedSampleResult.audits).forEach(audit => {
+      if (audit.scoreDisplayMode === 'not-applicable') {
+        notApplicableCount++;
+        audit.scoreDisplayMode = 'not_applicable';
+      }
+    });
+
+    assert.ok(notApplicableCount > 20); // Make sure something's being tested.
+
+    const container = renderer._dom._document.body;
+    const reportElement = renderer.renderReport(sampleResults, container);
+    const notApplicableElementCount = reportElement
+      .querySelectorAll('.lh-audit--not-applicable').length;
+
+    assert.strictEqual(notApplicableCount, notApplicableElementCount);
+  });
 });

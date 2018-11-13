@@ -62,6 +62,15 @@ class Util {
     if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
     clone.reportCategories = Object.values(clone.categories);
 
+    // The proto process turns 'not-applicable' into 'not_applicable'. Correct this to support both.
+    // TODO: remove when underscore/hyphen proto issue is resolved. See #6371, #6201.
+    for (const audit of Object.values(clone.audits)) {
+      // @ts-ignore tsc rightly flags that this value shouldn't occur.
+      if (audit.scoreDisplayMode === 'not_applicable') {
+        audit.scoreDisplayMode = 'not-applicable';
+      }
+    }
+
     // For convenience, smoosh all AuditResults into their auditDfn (which has just weight & group)
     for (const category of clone.reportCategories) {
       category.auditRefs.forEach(auditMeta => {
