@@ -26,11 +26,11 @@ const Connection = require('./connections/connection.js');
 // Controls how long to wait after onLoad before continuing
 const DEFAULT_PAUSE_AFTER_LOAD = 0;
 // Controls how long to wait between network requests before determining the network is quiet
-const DEFAULT_NETWORK_QUIET_THRESHOLD = 10000;
+const DEFAULT_NETWORK_QUIET_THRESHOLD = 5000;
 // Controls how long to wait between longtasks before determining the CPU is idle, off by default
 const DEFAULT_CPU_QUIET_THRESHOLD = 0;
 // Controls how long to wait for a response after sending a DevTools protocol command.
-const DEFAULT_PROTOCOL_TIMEOUT = 5000;
+const DEFAULT_PROTOCOL_TIMEOUT = 30000;
 
 /**
  * @typedef {LH.Protocol.StrictEventEmitter<LH.CrdpEvents>} CrdpEventEmitter
