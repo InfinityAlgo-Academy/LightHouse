@@ -353,8 +353,6 @@ class TapTargets extends Audit {
       {key: 'targetB', itemType: 'node', text: 'Too Close Element'},
     ];
 
-    // todo: figure out how to fix ts failure here
-    // "[x: string]: any" on TooSmallTapTarget fixes it, but seems bad
     const details = Audit.makeTableDetails(headings, tableItems);
 
     let displayValue;
