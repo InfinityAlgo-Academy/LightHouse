@@ -6,7 +6,7 @@
 // @ts-nocheck
 'use strict';
 
-/* global window document */
+/* global window document Node */
 
 /**
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
@@ -153,6 +153,37 @@ function ultradumbBenchmark() {
   return Math.round(iterations / durationInSeconds);
 }
 
+/**
+ * Adapted from DevTools' SDK.DOMNode.prototype.path
+ *   https://github.com/ChromeDevTools/devtools-frontend/blob/7a2e162ddefd/front_end/sdk/DOMModel.js#L530-L552
+ * TODO: Doesn't handle frames or shadow roots...
+ * @param {Node} node
+ */
+function getNodePath(node) {
+  /** @param {Node} node */
+  function getNodeIndex(node) {
+    let index = 0;
+    let prevNode;
+    while (prevNode = node.previousSibling) {
+      node = prevNode;
+      // skip empty text nodes
+      if (node.nodeType === Node.TEXT_NODE && node.textContent &&
+        node.textContent.trim().length === 0) continue;
+      index++;
+    }
+    return index;
+  }
+
+  const path = [];
+  while (node && node.parentNode) {
+    const index = getNodeIndex(node);
+    path.push([index, node.nodeName]);
+    node = node.parentNode;
+  }
+  path.reverse();
+  return path.join(',');
+}
+
 module.exports = {
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
@@ -162,4 +193,5 @@ module.exports = {
   getOuterHTMLSnippet: getOuterHTMLSnippet,
   ultradumbBenchmark: ultradumbBenchmark,
   ultradumbBenchmarkString: ultradumbBenchmark.toString(),
+  getNodePathString: getNodePath.toString(),
 };

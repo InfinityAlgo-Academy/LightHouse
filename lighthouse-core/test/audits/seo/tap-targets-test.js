@@ -8,7 +8,6 @@
 /* eslint-env jest */
 
 const TapTargetsAudit = require('../../../audits/seo/tap-targets.js');
-const {addRectBottomAndRight} = require('../../../lib/client-rect-functions.js');
 const assert = require('assert');
 
 function auditTapTargets(tapTargets) {
