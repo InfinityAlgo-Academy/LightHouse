@@ -44,5 +44,10 @@ describe('DetailsRenderer', () => {
         ['style-missing', 'aria-label-missing']
       ), '<div id="1" style="style" aria-label="label">');
     });
+
+    it('works if attribute values contain line breaks', () => {
+      assert.equal(pageFunctions.getOuterHTMLSnippet(
+        dom.createElement('div', '', {style: 'style1\nstyle2'})), '<div style="style1\nstyle2">');
+    });
   });
 });

@@ -119,7 +119,7 @@ function getOuterHTMLSnippet(element, ignoreAttrs = []) {
     clone.removeAttribute(attribute);
   });
 
-  const reOpeningTag = /^.*?>/;
+  const reOpeningTag = /^[\s\S]*?>/;
   const match = clone.outerHTML.match(reOpeningTag);
 
   return (match && match[0]) || '';
