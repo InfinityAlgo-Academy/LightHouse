@@ -45,6 +45,7 @@ function runA11yChecks() {
     // Augment the node objects with outerHTML snippet & custom path string
     // @ts-ignore
     axeResult.violations.forEach(v => v.nodes.forEach(node => {
+      // @ts-ignore - getNodePath put into scope via stringification
       node.path = getNodePath(node.element);
       // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
       node.snippet = getOuterHTMLSnippet(node.element);
