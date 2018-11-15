@@ -56,12 +56,13 @@ function isVisible({
     visibility,
   } = getComputedStyle(node);
 
-  if (
-    ((overflowX === 'hidden' && overflowY === 'hidden') ||
-      node.children.length === 0) &&
-    allClientRectsEmpty(clientRects)
-  ) {
-    return false;
+  if (allClientRectsEmpty(clientRects)) {
+    if (
+      (overflowX === 'hidden' && overflowY === 'hidden') ||
+      node.children.length === 0
+    ) {
+      return false;
+    }
   }
 
   if (
@@ -84,6 +85,11 @@ function isVisible({
 
   if (checkClientRectsInsideParents) {
     if (!isWithinAncestorsVisibleScrollArea(node, clientRects)) {
+      // Treating overflowing content in scroll containers as invisible could mean that
+      // most of a given page is deemed invisible. But:
+      // - tap targets audit doesn't consider different containers/layers
+      // - having most content in an explicit scroll container is rare
+      // - treating them as hidden only generates false passes, which is better than false failures
       return false;
     }
   }
@@ -149,15 +155,13 @@ function getClientRects(node, includeChildren = true) {
     node.getClientRects()
   );
 
-  const clientRects = Array.from(rawClientRects).map(clientRect => {
+  let clientRects = Array.from(rawClientRects).map(clientRect => {
     const {width, height, left, top, right, bottom} = clientRect;
     return {width, height, left, top, right, bottom};
   });
   if (includeChildren) {
     for (const child of node.children) {
-      getClientRects(child).forEach(childClientRect =>
-        clientRects.push(childClientRect)
-      );
+      clientRects = clientRects.concat(getClientRects(child));
     }
   }
 
@@ -166,6 +170,8 @@ function getClientRects(node, includeChildren = true) {
 
 /**
  * Check if node is in a block of text, such as paragraph with a bunch of links in it.
+ * Makes a reasonable guess, but for example gets it wrong if the element is surounded by other
+ * HTML elements instead of direct text nodes.
  * @param {Node} node
  * @returns {boolean}
  */
@@ -175,9 +181,6 @@ function nodeIsInTextBlock(node) {
    * @returns {boolean}
    */
   function isInline(node) {
-    // if (!node) {
-    //   return false;
-    // }
     if (node.nodeType === Node.TEXT_NODE) {
       return true;
     }
@@ -215,11 +218,10 @@ function nodeIsInTextBlock(node) {
       if (sibling === node) {
         continue;
       }
-      // check for at least 3 chars so e.g. " || " doesn't count as content
+      const siblingTextContent = (sibling.textContent || '').trim();
       if (
         sibling.nodeType === Node.TEXT_NODE &&
-        sibling.textContent &&
-        sibling.textContent.trim().length > 0
+        siblingTextContent.length > 0
       ) {
         return true;
       }
@@ -243,12 +245,11 @@ function nodeIsInTextBlock(node) {
   }
 }
 
+/**
+ * @returns {LH.Artifacts.TapTarget[]}
+ */
 function gatherTapTargets() {
-  // todo: move this code out of there and run toString on the function
-  // migth need stuff like this: // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
-
   const selector = TARGET_SELECTORS.join(',');
-  // const elements = getElementsInDocument(selector);
 
   /** @type Array<LH.Artifacts.TapTargetWithNode> */
   let targets = Array.from(document.querySelectorAll(selector)).map(node => ({
@@ -259,7 +260,6 @@ function gatherTapTargets() {
   }));
 
   targets = targets.filter(target => !nodeIsInTextBlock(target.node));
-
   targets = targets.filter(isVisible);
 
   return targets.map(t => {
@@ -274,7 +274,7 @@ function gatherTapTargets() {
  * @param {function} fn
  * @param {(args: any[]) => any} getCacheKey
  */
-function cacheResults(fn, getCacheKey) {
+function memoize(fn, getCacheKey) {
   const cache = new Map();
   /**
    * @this {any}
@@ -305,7 +305,7 @@ class TapTargets extends Gatherer {
       ${isVisible.toString()};
       ${truncate.toString()};
       ${getClientRects.toString()};
-      ${cacheResults.toString()};
+      ${memoize.toString()};
       ${nodeIsInTextBlock.toString()};
       ${allClientRectsEmpty.toString()};
       ${rectContains.toString()};
@@ -313,7 +313,7 @@ class TapTargets extends Gatherer {
       ${gatherTapTargets.toString()};
 
       const TARGET_SELECTORS = ${JSON.stringify(TARGET_SELECTORS)};
-      isVisible = cacheResults(isVisible, args => args[0].node)
+      isVisible = memoize(isVisible, args => args[0].node)
 
       return gatherTapTargets();
     
