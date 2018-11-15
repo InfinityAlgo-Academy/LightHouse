@@ -10,104 +10,95 @@
 const {simplifyClientRects} = require('../../lib/client-rect-functions');
 const assert = require('assert');
 
+function makeClientRect({x, y, width, height}) {
+  return {
+    left: x,
+    top: y,
+    right: x + width,
+    bottom: y + height,
+    width,
+    height,
+  };
+}
+
 describe('simplifyClientRects', () => {
   it('Merges rects if a smaller rect is inside a larger one', () => {
     const res = simplifyClientRects([
-      {
-        left: 10,
-        right: 110,
+      makeClientRect({
+        x: 10,
+        y: 10,
         width: 100,
         height: 10,
-        top: 10,
-        bottom: 20,
-      },
-      {
-        left: 10,
-        right: 60,
+      }),
+      makeClientRect({
+        x: 10,
+        y: 10,
         width: 50,
         height: 10,
-        top: 10,
-        bottom: 20,
-      },
+      }),
     ]);
     assert.deepEqual(res, [
-      {
-        left: 10,
-        right: 110,
+      makeClientRect({
+        x: 10,
+        y: 10,
         width: 100,
         height: 10,
-        top: 10,
-        bottom: 20,
-      },
+      }),
     ]);
   });
   it('Merges two horizontally adjacent client rects', () => {
     const res = simplifyClientRects([
-      {
-        left: 10,
-        right: 110,
+      makeClientRect({
+        x: 10,
+        y: 10,
         width: 100,
         height: 10,
-        top: 10,
-        bottom: 20,
-      },
-      {
-        left: 110,
-        right: 210,
+      }),
+      makeClientRect({
+        x: 110,
+        y: 10,
         width: 100,
         height: 10,
-        top: 10,
-        bottom: 20,
-      },
+      }),
     ]);
     assert.deepEqual(res, [
-      {
-        left: 10,
-        right: 210,
+      makeClientRect({
+        x: 10,
+        y: 10,
         width: 200,
         height: 10,
-        top: 10,
-        bottom: 20,
-      },
+      }),
     ]);
   });
 
   it('Merges three horizontally adjacent client rects', () => {
     const res = simplifyClientRects([
-      {
-        left: 10,
-        right: 110,
+      makeClientRect({
+        x: 10,
+        y: 10,
         width: 100,
         height: 10,
-        top: 10,
-        bottom: 20,
-      },
-      {
-        left: 110,
-        right: 210,
+      }),
+      makeClientRect({
+        x: 110,
+        y: 10,
         width: 100,
         height: 10,
-        top: 10,
-        bottom: 20,
-      },
-      {
-        left: 210,
-        right: 310,
+      }),
+      makeClientRect({
+        x: 210,
+        y: 10,
         width: 100,
         height: 10,
-        top: 10,
-        bottom: 20,
-      },
+      }),
     ]);
     assert.deepEqual(res, [
-      {
-        left: 10,
-        right: 310,
+      makeClientRect({
+        x: 10,
+        y: 10,
         width: 300,
         height: 10,
-        top: 10,
-        bottom: 20,
-      },
+      }),
     ]);
   });
 
@@ -117,32 +108,26 @@ describe('simplifyClientRects', () => {
     // If we don't merge we'll put a finger on the image and link separately, with the link
     // being small and on one side and overlapping with something.
     const res = simplifyClientRects([
-      {
-        left: 10,
-        right: 110,
+      makeClientRect({
+        x: 10,
+        y: 10,
         width: 100,
         height: 10,
-        top: 10,
-        bottom: 20,
-      },
-      {
-        left: 10,
-        right: 210,
+      }),
+      makeClientRect({
+        x: 10,
+        y: 15,
         width: 200,
-        height: 10,
-        top: 15,
-        bottom: 30,
-      },
+        height: 15,
+      }),
     ]);
     assert.deepEqual(res, [
-      {
-        left: 10,
-        right: 210,
+      makeClientRect({
+        x: 10,
+        y: 10,
         width: 200,
         height: 20,
-        top: 10,
-        bottom: 30,
-      },
+      }),
     ]);
   });
 
@@ -151,32 +136,26 @@ describe('simplifyClientRects', () => {
     // 2px diff is ok, often there are cases where an image is a px or two out of the main link bcr
     // should not be called simplofybcrs...
     const res = simplifyClientRects([
-      {
-        left: 10,
-        right: 110,
+      makeClientRect({
+        x: 10,
+        y: 10,
         width: 100,
         height: 10,
-        top: 10,
-        bottom: 20,
-      },
-      {
-        left: 110,
-        right: 210,
+      }),
+      makeClientRect({
+        x: 110,
+        y: 12,
         width: 100,
         height: 10,
-        top: 12,
-        bottom: 22,
-      },
+      }),
     ]);
     assert.deepEqual(res, [
-      {
-        left: 10,
-        right: 210,
+      makeClientRect({
+        x: 10,
+        y: 10,
         width: 200,
         height: 12,
-        top: 10,
-        bottom: 22,
-      },
+      }),
     ]);
   });
 });

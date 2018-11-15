@@ -8,6 +8,7 @@
 /* eslint-env jest */
 
 const TapTargetsAudit = require('../../../audits/seo/tap-targets.js');
+const {addRectBottomAndRight} = require('../../../lib/client-rect-functions.js');
 const assert = require('assert');
 
 function auditTapTargets(tapTargets) {
@@ -20,44 +21,43 @@ function auditTapTargets(tapTargets) {
 }
 
 function getBorderlineTapTargets(options = {}) {
+  function makeClientRects({x, y}) {
+    return {
+      left: x,
+      top: y,
+      width: tapTargetSize,
+      height: tapTargetSize,
+      bottom: y + tapTargetSize,
+      right: x + tapTargetSize,
+    };
+  }
+
   const tapTargetSize = 10;
   const mainTapTarget = {
     snippet: '<main></main>',
     clientRects: [
-      {
-        top: 0,
-        bottom: tapTargetSize,
-        left: 0,
-        right: tapTargetSize,
-        width: tapTargetSize,
-        height: tapTargetSize,
-      },
+      makeClientRects({
+        x: 0,
+        y: 0,
+      }),
     ],
   };
   const tapTargetBelow = {
     snippet: '<below></below>',
     clientRects: [
-      {
-        top: mainTapTarget.clientRects[0].top + TapTargetsAudit.FINGER_SIZE_PX,
-        bottom: mainTapTarget.clientRects[0].bottom + TapTargetsAudit.FINGER_SIZE_PX,
-        left: 0,
-        right: tapTargetSize,
-        width: tapTargetSize,
-        height: tapTargetSize,
-      },
+      makeClientRects({
+        x: 0,
+        y: mainTapTarget.clientRects[0].top + TapTargetsAudit.FINGER_SIZE_PX,
+      }),
     ],
   };
   const tapTargetToTheRight = {
     snippet: '<right></right>',
     clientRects: [
-      {
-        top: 0,
-        bottom: tapTargetSize,
-        left: mainTapTarget.clientRects[0].left + TapTargetsAudit.FINGER_SIZE_PX,
-        right: mainTapTarget.clientRects[0].right + TapTargetsAudit.FINGER_SIZE_PX,
-        width: tapTargetSize,
-        height: tapTargetSize,
-      },
+      makeClientRects({
+        x: mainTapTarget.clientRects[0].left + TapTargetsAudit.FINGER_SIZE_PX,
+        y: 0,
+      }),
     ],
   };
 
@@ -74,14 +74,12 @@ function getBorderlineTapTargets(options = {}) {
     tapTargetBelow.clientRects[0].bottom -= overlapAmount;
   }
   if (options.failSecondClientRect) {
-    mainTapTarget.clientRects.push({
-      top: overlapAmount,
-      bottom: tapTargetSize + overlapAmount,
-      left: 0,
-      right: tapTargetSize,
-      width: tapTargetSize,
-      height: tapTargetSize,
-    });
+    mainTapTarget.clientRects.push(
+      makeClientRects({
+        x: 0,
+        y: overlapAmount,
+      })
+    );
   }
 
   return [mainTapTarget, tapTargetBelow, tapTargetToTheRight];
