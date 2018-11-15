@@ -297,6 +297,7 @@ class TapTargets extends Audit {
           targetA: {
             type: 'node',
             snippet: target.snippet,
+            path: target.path,
           },
           // todo: should not be type node if it's not a node...
           targetB,

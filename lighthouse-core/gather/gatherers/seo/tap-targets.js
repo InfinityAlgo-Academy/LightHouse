@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global document, getComputedStyle, Node */
+/* global document, getComputedStyle, Node, getNodePath */
 
 const Gatherer = require('../gatherer');
 const pageFunctions = require('../../../lib/page-functions.js');
@@ -256,6 +256,8 @@ function gatherTapTargets() {
     node,
     clientRects: getClientRects(node),
     snippet: truncate(node.outerHTML, 700),
+    // @ts-ignore - getNodePath put into scope via stringification
+    path: getNodePath(node),
     href: node.getAttribute('href') || '',
   }));
 
@@ -309,9 +311,9 @@ class TapTargets extends Gatherer {
       ${nodeIsInTextBlock.toString()};
       ${allClientRectsEmpty.toString()};
       ${rectContains.toString()};
-      ${pageFunctions.getOuterHTMLSnippetString};
+      ${pageFunctions.getNodePathString};
       ${gatherTapTargets.toString()};
-
+      
       const TARGET_SELECTORS = ${JSON.stringify(TARGET_SELECTORS)};
       isVisible = memoize(isVisible, args => args[0].node)
 
