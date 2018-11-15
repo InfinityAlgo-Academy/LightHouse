@@ -279,9 +279,9 @@ class TapTargets extends Audit {
 
     tooSmallTargets.forEach(target => {
       const largestBcr = getLargestClientRect(target);
-      const largestClientRectArea = getClientRectArea(largestBcr);
-      const size =
-        Math.floor(largestBcr.width) + 'x' + Math.floor(largestBcr.height);
+      const width = Math.floor(largestBcr.width);
+      const height = Math.floor(largestBcr.height);
+      const size = width + 'x' + height;
       // todo: better name for this var
       const overlappingTargets = tooClose.filter(
         tooClose => tooClose.targetA === target
@@ -302,7 +302,8 @@ class TapTargets extends Audit {
           targetB,
           size,
           extraDistanceNeeded,
-          largestClientRectArea,
+          width,
+          height,
         };
       }
       if (overlappingTargets.length > 0) {
@@ -332,7 +333,7 @@ class TapTargets extends Audit {
        * @param {LH.Audit.TooSmallTapTargetItem} failure
        */
       function getFailureSeriousness(failure) {
-        let magnitude = failure.largestClientRectArea;
+        let magnitude = failure.width * failure.height;
         if (failure.extraDistanceNeeded) {
           magnitude -= failure.extraDistanceNeeded * 10000;
         }

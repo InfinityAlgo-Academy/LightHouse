@@ -79,7 +79,8 @@ declare global {
       targetB: DetailsRendererNodeDetailsJSON;
       size: string;
       extraDistanceNeeded: number;
-      largestClientRectArea: number;
+      height: number;
+      width: number
     }
 
     // TODO: placeholder typedefs until Details are typed
