@@ -113,6 +113,8 @@ declare global {
       StartUrl: {statusCode: number, explanation?: string};
       /** Information on <script> and <link> tags blocking first paint. */
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
+      /** Information about tap targets including their position and size. */
+      TapTargets: Artifacts.TapTarget[];
       /** The value of the <meta name="theme=color">'s content attribute, or null. */
       ThemeColor: string|null;
       /** The value of the <meta name="viewport">'s content attribute, or null. */
@@ -278,6 +280,25 @@ declare global {
         };
       }
 
+      export interface ClientRect {
+        width: number;
+        height: number;
+        top: number;
+        right: number;
+        bottom: number;
+        left: number;
+      }
+
+      export interface TapTarget {
+        snippet: string,
+        href: string,
+        clientRects: ClientRect[]
+      }
+
+      export interface TapTargetWithNode extends TapTarget {
+        node: Element
+      }
+      
       export interface ViewportDimensions {
         innerWidth: number;
         innerHeight: number;

@@ -74,6 +74,14 @@ declare global {
       wastedPercent?: number;
     }
 
+    export type TooSmallTapTargetItem = {
+      targetA: DetailsRendererNodeDetailsJSON;
+      targetB: DetailsRendererNodeDetailsJSON;
+      size: string;
+      extraDistanceNeeded: number;
+      largestClientRectArea: number;
+    }
+
     // TODO: placeholder typedefs until Details are typed
     export interface DetailsRendererDetailsSummary {
       wastedMs?: number;
