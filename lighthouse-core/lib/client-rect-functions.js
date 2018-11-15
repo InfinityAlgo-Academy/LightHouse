@@ -5,7 +5,6 @@
  */
 'use strict';
 
-// todo: check this works, mayb write test case
 /**
  * @param {LH.Artifacts.ClientRect} cr1
  * @param {LH.Artifacts.ClientRect} cr2
@@ -89,53 +88,51 @@ function filterOutClientRectsContainedByOthers(clientRects) {
 }
 
 /**
+ * @param {number} a
+ * @param {number} b
+ */
+function almostEqual(a, b) {
+  return Math.abs(a - b) <= 2;
+}
+
+/**
+ * @param {LH.Artifacts.ClientRect} crA
+ * @param {LH.Artifacts.ClientRect} crB
+ * @returns {boolean}
+ */
+function clientRectsTouch(crA, crB) {
+  // https://stackoverflow.com/questions/2752349/fast-rectangle-to-rectangle-intersection
+  return (
+    crA.left <= crB.right &&
+    crB.left <= crA.right &&
+    crA.top <= crB.bottom &&
+    crB.top <= crA.bottom
+  );
+}
+
+/**
  * @param {LH.Artifacts.ClientRect[]} clientRects
  * @returns {LH.Artifacts.ClientRect[]}
  */
 function mergeTouchingClientRects(clientRects) {
-  /**
-   * @param {number} a
-   * @param {number} b
-   */
-  function almostEqual(a, b) {
-    return Math.abs(a - b) <= 2;
-  }
-
-  // better description/name: merge parallel bcrs with overlap
-  // console.log('merge adjacent', JSON.stringify(bcrs, null, 4));
-  // todo: merge these two loops!
-  // console.log('----');
   for (let i = 0; i < clientRects.length; i++) {
-    for (let j = 0; j < clientRects.length; j++) {
-      if (i === j) {
-        continue;
-      }
+    for (let j = i + 1; j < clientRects.length; j++) {
       const crA = clientRects[i];
       const crB = clientRects[j];
 
       let canMerge = false;
-      // todo: can simplify these if statements and get rid of canMerge... would that be more readable though
+      const rectsLineUpHorizontally =
+        almostEqual(crA.top, crB.top) || almostEqual(crA.bottom, crB.bottom);
+      const rectsLineUpVertically =
+        almostEqual(crA.left, crB.left) || almostEqual(crA.right, crB.right);
       if (
-        almostEqual(crA.top, crB.top) &&
-        almostEqual(crA.bottom, crB.bottom)
+        clientRectsTouch(crA, crB) &&
+        (rectsLineUpHorizontally || rectsLineUpVertically)
       ) {
-        // they line up horizontally
-        if (crA.right <= crB.left && crB.right >= crA.right) {
-          canMerge = true;
-        }
-      } else if (
-        almostEqual(crA.left, crB.left) ||
-        almostEqual(crA.right, crB.right)
-      ) {
-        // they line up vertically
-        if (crB.bottom >= crB.bottom && crB.top >= crA.top) {
-          canMerge = true;
-        }
+        canMerge = true;
       }
 
       if (canMerge) {
-        // todo: sometimes you can merge 1,0 but not 0,1... why is that??
-        // console.log('canmerge', i, j);
         const left = Math.min(crA.left, crB.left);
         const right = Math.max(crA.right, crB.right);
         const top = Math.min(crA.top, crB.top);
