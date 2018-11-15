@@ -343,7 +343,7 @@ class TapTargets extends Audit {
 
     const headings = [
       {key: 'targetA', itemType: 'node', text: 'Element 1'},
-      {key: 'issue', itemType: 'text', text: 'Size (px)'},
+      {key: 'size', itemType: 'text', text: 'Size (px)'},
       {key: 'targetB', itemType: 'node', text: 'Element that\'s too close'},
     ];
 
