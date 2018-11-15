@@ -76,7 +76,7 @@ declare global {
 
     export type TooSmallTapTargetItem = {
       targetA: DetailsRendererNodeDetailsJSON;
-      targetB: DetailsRendererNodeDetailsJSON;
+      targetB: DetailsRendererNodeDetailsJSON | null;
       size: string;
       extraDistanceNeeded: number;
       height: number;

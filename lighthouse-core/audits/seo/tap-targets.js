@@ -301,7 +301,7 @@ class TapTargets extends Audit {
       );
 
       /**
-       * @param {{targetB: LH.Audit.DetailsRendererNodeDetailsJSON, extraDistanceNeeded: number}} args
+       * @param {{targetB: LH.Audit.DetailsRendererNodeDetailsJSON | null, extraDistanceNeeded: number}} args
        * @returns {LH.Audit.TooSmallTapTargetItem}
        */
       function makeItem({targetB, extraDistanceNeeded}) {
@@ -326,7 +326,7 @@ class TapTargets extends Audit {
       } else {
         tableItems.push(
           makeItem({
-            targetB: {type: 'node', snippet: 'n/a'},
+            targetB: null,
             extraDistanceNeeded: 0,
           })
         );
