@@ -291,6 +291,7 @@ declare global {
 
       export interface TapTarget {
         snippet: string,
+        selector: string,
         path: string,
         href: string,
         clientRects: ClientRect[]

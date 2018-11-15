@@ -241,6 +241,19 @@ function getTooSmallTargets(targets) {
   return targets.filter(targetIsTooSmall);
 }
 
+/**
+ * @param {LH.Artifacts.TapTarget} target
+ * @returns {LH.Audit.DetailsRendererNodeDetailsJSON}
+ */
+function targetToTableNode(target) {
+  return {
+    type: 'node',
+    snippet: target.snippet,
+    path: target.path,
+    selector: target.selector,
+  };
+}
+
 class TapTargets extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -293,13 +306,7 @@ class TapTargets extends Audit {
        */
       function makeItem({targetB, extraDistanceNeeded}) {
         return {
-          // todo: include path etc
-          targetA: {
-            type: 'node',
-            snippet: target.snippet,
-            path: target.path,
-          },
-          // todo: should not be type node if it's not a node...
+          targetA: targetToTableNode(target),
           targetB,
           size,
           extraDistanceNeeded,
@@ -311,10 +318,7 @@ class TapTargets extends Audit {
         overlappingTargets.forEach(({targetB, overlap}) => {
           tableItems.push(
             makeItem({
-              targetB: {
-                type: 'node',
-                snippet: targetB.snippet,
-              },
+              targetB: targetToTableNode(targetB),
               extraDistanceNeeded: overlap,
             })
           );
