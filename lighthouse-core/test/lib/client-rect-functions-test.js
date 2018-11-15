@@ -158,4 +158,31 @@ describe('simplifyClientRects', () => {
       }),
     ]);
   });
+
+  it('Removes tiny 1x1px client rects', () => {
+    // 2px diff is ok, often there are cases where an image is a px or two out of the main link bcr
+    // should not be called simplofybcrs...
+    const res = simplifyClientRects([
+      makeClientRect({
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100,
+      }),
+      makeClientRect({
+        x: 5,
+        y: 5,
+        width: 1,
+        height: 1,
+      }),
+    ]);
+    assert.deepEqual(res, [
+      makeClientRect({
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100,
+      }),
+    ]);
+  });
 });

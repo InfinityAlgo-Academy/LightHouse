@@ -48,7 +48,8 @@ function rectContains(cr1, cr2) {
  * @param {LH.Artifacts.ClientRect[]} clientRects
  */
 function simplifyClientRects(clientRects) {
-  clientRects = filterClientRectsContainedByOthers(clientRects);
+  clientRects = filterOutTinyClientRects(clientRects);
+  clientRects = filterOutClientRectsContainedByOthers(clientRects);
   clientRects = mergeTouchingClientRects(clientRects);
   return clientRects;
 }
@@ -57,7 +58,23 @@ function simplifyClientRects(clientRects) {
  * @param {LH.Artifacts.ClientRect[]} clientRects
  * @returns {LH.Artifacts.ClientRect[]}
  */
-function filterClientRectsContainedByOthers(clientRects) {
+function filterOutTinyClientRects(clientRects) {
+  // 1x1px rect shouldn't be reason to treat the rect as something the user should tap on.
+  // Often they're made invisble in some obscure way anyway, and only exit for e.g. accessibiliity.
+  const nonTinyClientRects = clientRects.filter(
+    rect => rect.width > 1 && rect.height > 1
+  );
+  if (nonTinyClientRects.length > 0) {
+    return nonTinyClientRects;
+  }
+  return clientRects;
+}
+
+/**
+ * @param {LH.Artifacts.ClientRect[]} clientRects
+ * @returns {LH.Artifacts.ClientRect[]}
+ */
+function filterOutClientRectsContainedByOthers(clientRects) {
   return clientRects.filter(cr => {
     for (const possiblyContainingRect of clientRects) {
       if (possiblyContainingRect === cr) {
