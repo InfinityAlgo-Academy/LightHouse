@@ -64,7 +64,7 @@ function getBorderlineTapTargets(options = {}) {
   const minimalOverlapCausingDistance = (TapTargetsAudit.FINGER_SIZE_PX - tapTargetSize) / 2;
   const minimalFailingOverlapDistance =
     minimalOverlapCausingDistance + Math.ceil(tapTargetSize / 2 / 2);
-  const overlapAmount = options.overlapAmount || minimalFailingOverlapDistance;
+  const overlapAmount = minimalFailingOverlapDistance;
   if (options.failRight) {
     tapTargetToTheRight.clientRects[0].left -= overlapAmount;
     tapTargetToTheRight.clientRects[0].right -= overlapAmount;
@@ -99,14 +99,14 @@ describe('SEO: Tap targets audit', () => {
     assert.equal(auditResult.rawValue, true);
   });
 
-  it('fails if a tap target overlaps horizontally', () => {
+  it('fails if two tap targets overlaps each other horizontally', () => {
     const auditResult = auditTapTargets(
       getBorderlineTapTargets({
         failRight: true,
       })
     );
     assert.equal(auditResult.rawValue, false);
-    assert.equal(Math.round(auditResult.score * 100), 67);
+    assert.equal(Math.round(auditResult.score * 100), 33);
     const failure = auditResult.details.items[0];
     assert.equal(failure.targetA.snippet, '<main></main>');
     assert.equal(failure.targetB.snippet, '<right></right>');
@@ -131,14 +131,16 @@ describe('SEO: Tap targets audit', () => {
     assert.equal(auditResult.rawValue, false);
   });
 
-  it('reports 2 failures if the main target is overlapped both vertically and horizontally', () => {
+  it('reports 4 items if the main target is overlapped both vertically and horizontally', () => {
+    // Main is overlapped by right + below, right and below are each overlapped by main
     const auditResult = auditTapTargets(
       getBorderlineTapTargets({
         failRight: true,
         failBelow: true,
       })
     );
+    assert.equal(Math.round(auditResult.score * 100), 0); // all tap targets are overlapped by something
     const failures = auditResult.details.items.filter(item => item.extraDistanceNeeded > 0);
-    assert.equal(failures.length, 2);
+    assert.equal(failures.length, 4);
   });
 });

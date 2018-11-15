@@ -128,16 +128,6 @@ function getTooCloseTargets(targets) {
   /** @type TapTargetFailure[] */
   const failures = [];
 
-  /**
-   * @param {LH.Artifacts.TapTarget} targetA
-   * @param {LH.Artifacts.TapTarget} targetB
-   */
-  function targetPairAlreadyHasFailure(targetA, targetB) {
-    return failures.some(failure => {
-      return failure.targetA === targetA && failure.targetB === targetB;
-    });
-  }
-
   for (let i = 0; i < count; i++) {
     for (let j = 0; j < count; j++) {
       if (i === j) {
@@ -148,10 +138,6 @@ function getTooCloseTargets(targets) {
       const targetB = targets[j];
       if (/https?:\/\//.test(targetA.href) && targetA.href === targetB.href) {
         // no overlap because same target action
-        continue;
-      }
-
-      if (targetPairAlreadyHasFailure(targetB, targetA)) {
         continue;
       }
 
