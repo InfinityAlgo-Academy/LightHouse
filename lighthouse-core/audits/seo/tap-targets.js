@@ -343,9 +343,9 @@ class TapTargets extends Audit {
     });
 
     const headings = [
-      {key: 'targetA', itemType: 'node', text: 'Element 1'},
+      {key: 'targetA', itemType: 'node', text: 'Too Small Element'},
       {key: 'size', itemType: 'text', text: 'Size (px)'},
-      {key: 'targetB', itemType: 'node', text: 'Element that\'s too close'},
+      {key: 'targetB', itemType: 'node', text: 'Too Close Element'},
     ];
 
     // todo: figure out how to fix ts failure here
