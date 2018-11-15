@@ -224,13 +224,13 @@ function getClientRectArea(cr) {
  * @param {LH.Artifacts.TapTarget} target
  */
 function getLargestClientRect(target) {
-  let largestBcr = target.clientRects[0];
-  for (const bcr of target.clientRects) {
-    if (getClientRectArea(bcr) > getClientRectArea(largestBcr)) {
-      largestBcr = bcr;
+  let largestCr = target.clientRects[0];
+  for (const cr of target.clientRects) {
+    if (getClientRectArea(cr) > getClientRectArea(largestCr)) {
+      largestCr = cr;
     }
   }
-  return largestBcr;
+  return largestCr;
 }
 
 /**
@@ -278,9 +278,9 @@ class TapTargets extends Audit {
     const tableItems = [];
 
     tooSmallTargets.forEach(target => {
-      const largestBcr = getLargestClientRect(target);
-      const width = Math.floor(largestBcr.width);
-      const height = Math.floor(largestBcr.height);
+      const largestCr = getLargestClientRect(target);
+      const width = Math.floor(largestCr.width);
+      const height = Math.floor(largestCr.height);
       const size = width + 'x' + height;
       // todo: better name for this var
       const overlappingTargets = tooClose.filter(

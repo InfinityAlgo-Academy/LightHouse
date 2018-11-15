@@ -131,10 +131,8 @@ describe('simplifyClientRects', () => {
     ]);
   });
 
-  // todO: rename this one!!!!
-  it('Merges two horizontally adjacent client recttha tare only adjcentishs', () => {
-    // 2px diff is ok, often there are cases where an image is a px or two out of the main link bcr
-    // should not be called simplofybcrs...
+  it('Merges two horizontally adjacent client rects that don\'t line up exactly', () => {
+    // 2px difference is ok, often there are cases where an image is a 1px or 2px out of the main link client rect
     const res = simplifyClientRects([
       makeClientRect({
         x: 10,
@@ -160,8 +158,6 @@ describe('simplifyClientRects', () => {
   });
 
   it('Removes tiny 1x1px client rects', () => {
-    // 2px diff is ok, often there are cases where an image is a px or two out of the main link bcr
-    // should not be called simplofybcrs...
     const res = simplifyClientRects([
       makeClientRect({
         x: 10,
