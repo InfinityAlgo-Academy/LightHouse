@@ -10,6 +10,8 @@ const config = {
   extends: 'lighthouse:default',
   settings: {
     maxWaitForLoad: 35 * 1000,
+    // Skip the h2 audit so it doesn't lie to us. See #6539
+    skipAudits: ['uses-http2'],
   },
 };
 
