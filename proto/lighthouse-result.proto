@@ -47,6 +47,8 @@ enum LighthouseError {
   INSECURE_DOCUMENT_REQUEST = 16;
   // Used when protocol command times out.
   PROTOCOL_TIMEOUT = 17;
+  // Used when the page is not responding after maxWaitForLoad.
+  PAGE_HUNG = 18;
 }
 
 // The overarching Lighthouse Response object (LHR)

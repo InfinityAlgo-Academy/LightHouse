@@ -148,6 +148,12 @@ const ERRORS = {
     message: strings.pageLoadFailedInsecure,
     lhrRuntimeError: true,
   },
+  /* Used when the page stopped responding and did not finish loading. */
+  PAGE_HUNG: {
+    code: 'PAGE_HUNG',
+    message: strings.pageLoadFailedHung,
+    lhrRuntimeError: true,
+  },
 
   // Protocol internal failures
   TRACING_ALREADY_STARTED: {

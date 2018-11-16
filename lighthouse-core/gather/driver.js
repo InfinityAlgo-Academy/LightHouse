@@ -369,6 +369,7 @@ class Driver {
       includeCommandLineAPI: true,
       awaitPromise: true,
       returnByValue: true,
+      timeout: 60000,
       contextId,
     };
 
@@ -688,6 +689,25 @@ class Driver {
   }
 
   /**
+   * Returns whether the page appears to be hung.
+   * @return {Promise<boolean>}
+   */
+  async isPageHung() {
+    try {
+      this.setNextProtocolTimeout(1000);
+      await this.sendCommand('Runtime.evaluate', {
+        expression: '"ping"',
+        returnByValue: true,
+        timeout: 1000,
+      });
+
+      return false;
+    } catch (err) {
+      return true;
+    }
+  }
+
+  /**
    * Returns a promise that resolves when:
    * - All of the following conditions have been met:
    *    - pauseAfterLoadMs milliseconds have passed since the load event.
@@ -736,11 +756,18 @@ class Driver {
     const maxTimeoutPromise = new Promise((resolve, reject) => {
       maxTimeoutHandle = setTimeout(resolve, maxWaitForLoadedMs);
     }).then(_ => {
-      return function() {
-        log.warn('Driver', 'Timed out waiting for page load. Moving on...');
+      return async () => {
+        log.warn('Driver', 'Timed out waiting for page load. Checking if page is hung...');
         waitForLoadEvent.cancel();
         waitForNetworkIdle.cancel();
         waitForCPUIdle && waitForCPUIdle.cancel();
+
+        if (await this.isPageHung()) {
+          log.warn('Driver', 'Page appears to be hung, killing JavaScript...');
+          await this.sendCommand('Emulation.setScriptExecutionDisabled', {value: true});
+          await this.sendCommand('Runtime.terminateExecution');
+          throw new LHError(LHError.errors.PAGE_HUNG);
+        }
       };
     });
 
@@ -749,7 +776,7 @@ class Driver {
       loadPromise,
       maxTimeoutPromise,
     ]);
-    cleanupFn();
+    await cleanupFn();
   }
 
   /**
