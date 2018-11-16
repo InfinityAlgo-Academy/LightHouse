@@ -679,6 +679,18 @@ describe('GatherRunner', function() {
       assert.equal(error.code, 'ERRORED_DOCUMENT_REQUEST');
       assert.ok(/^Lighthouse was unable to reliably load/.test(error.friendlyMessage));
     });
+
+    it('fails when page domain doesn\'t resolve', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      mainRecord.failed = true;
+      mainRecord.localizedFailDescription = 'net::ERR_NAME_NOT_RESOLVED';
+      const error = GatherRunner.getPageLoadError(url, [mainRecord]);
+      assert.equal(error.message, 'DNS_FAILURE');
+      assert.equal(error.code, 'DNS_FAILURE');
+      assert.ok(/^DNS servers could not resolve/.test(error.friendlyMessage));
+    });
   });
 
   describe('#assertNoSecurityIssues', () => {
@@ -1059,7 +1071,7 @@ describe('GatherRunner', function() {
         config: new Config({}),
       }).then(artifacts => {
         assert.equal(artifacts.LighthouseRunWarnings.length, 1);
-        assert.ok(/unable.*load the page/.test(artifacts.LighthouseRunWarnings[0]));
+        assert.ok(/DNS servers could not resolve/.test(artifacts.LighthouseRunWarnings[0]));
       });
     });
 

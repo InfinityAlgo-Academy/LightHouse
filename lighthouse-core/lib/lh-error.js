@@ -188,6 +188,13 @@ const ERRORS = {
     lhrRuntimeError: true,
   },
 
+  // DNS failure on main document (no resolution, timed out, etc)
+  DNS_FAILURE: {
+    code: 'DNS_FAILURE',
+    message: strings.dnsFailure,
+    lhrRuntimeError: true,
+  },
+
   // Hey! When adding a new error type, update lighthouse-result.proto too.
 };
 

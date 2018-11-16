@@ -17,4 +17,5 @@ module.exports = {
   requestContentTimeout: 'Fetching resource content has exceeded the allotted time',
   urlInvalid: `The URL you have provided appears to be invalid.`,
   protocolTimeout: `Waiting for DevTools protocol response has exceeded the allotted time.`,
+  dnsFailure: `DNS servers could not resolve the provided domain.`,
 };
