@@ -79,6 +79,7 @@
   --lh-audit-group-vpadding: 8px;
   --lh-section-vpadding: 12px;
   --chevron-size: 12px;
+  --circle-size: calc(3 * var(--header-font-size));
 
   --pass-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>check</title><path fill="%23178239" d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/></svg>');
   --average-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>info</title><path fill="%23E67700" d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm2 30h-4V22h4v12zm0-16h-4v-4h4v4z"/></svg>');
@@ -785,8 +786,13 @@ details, summary {
   border: 0;
 }
 
-.lh-scores-header .lh-gauge__wrapper {
+.lh-scores-header .lh-gauge__wrapper,
+.lh-scores-header .lh-gauge--pwa__wrapper, {
   margin: 0 4px;
+}
+
+.lh-scores-header .lh-gauge--pwa__wrapper {
+  border-left: 1px solid var(--report-secondary-border-color)
 }
 
 .lh-scorescale {
@@ -835,7 +841,6 @@ details, summary {
 }
 
 .lh-category {
-  --circle-size: calc(2.5 * var(--header-font-size));
   padding: var(--section-padding);
 }
 
