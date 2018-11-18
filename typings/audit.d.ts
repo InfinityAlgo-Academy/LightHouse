@@ -80,7 +80,9 @@ declare global {
       size: string;
       extraDistanceNeeded: number;
       height: number;
-      width: number
+      width: number;
+      tapTargetScore: number;
+      overlappingTargetScore: number;
     }
 
     // TODO: placeholder typedefs until Details are typed

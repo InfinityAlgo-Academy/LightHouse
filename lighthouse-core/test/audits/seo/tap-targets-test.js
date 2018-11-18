@@ -91,7 +91,7 @@ describe('SEO: Tap targets audit', () => {
     assert.equal(auditResult.score, 1);
   });
 
-  it('passes when tap targets don\'t overlap', () => {
+  it("passes when tap targets don't overlap", () => {
     const auditResult = auditTapTargets(getBorderlineTapTargets());
     assert.equal(auditResult.rawValue, true);
   });
@@ -108,6 +108,12 @@ describe('SEO: Tap targets audit', () => {
     assert.equal(failure.tapTarget.snippet, '<main></main>');
     assert.equal(failure.overlappingTarget.snippet, '<right></right>');
     assert.equal(failure.size, '10x10');
+    // Includes data for debugging/adjusting the scoring logic later on
+    assert.equal(failure.tapTargetScore, 25);
+    assert.equal(failure.overlappingTargetScore, 15);
+    assert.equal(failure.extraDistanceNeeded, 1);
+    assert.equal(failure.width, 10);
+    assert.equal(failure.height, 10);
   });
 
   it('fails if a tap target overlaps vertically', () => {

@@ -113,7 +113,7 @@ function getFingerScore(rectWithFinger, scoredRect) {
     }
   });
 
-  return maxScore;
+  return Math.ceil(maxScore);
 }
 
 /**
@@ -125,7 +125,7 @@ function getTooCloseTargets(tapTarget, allTargets) {
   const count = allTargets.length;
 
   // todo: move typedef
-  /** @typedef {{tapTarget: LH.Artifacts.TapTarget, overlappingTarget: LH.Artifacts.TapTarget, overlap: number}} TapTargetFailure */
+  /** @typedef {{tapTarget: LH.Artifacts.TapTarget, overlappingTarget: LH.Artifacts.TapTarget, extraDistanceNeeded: number, overlappingTargetScore: number, tapTargetScore: number}} TapTargetFailure */
 
   /** @type TapTargetFailure[] */
   const failures = [];
@@ -143,13 +143,14 @@ function getTooCloseTargets(tapTarget, allTargets) {
       continue;
     }
 
-    let maxExtraDistanceNeeded = 0;
+    /** @type TapTargetFailure | null */
+    let greatestFailure = null;
     simplifyClientRects(tapTarget.clientRects).forEach(targetCR => {
       const fingerAtCenter = getFingerAtCenter(targetCR);
-      const aOverlapScore = getFingerScore(targetCR, targetCR);
+      const tapTargetScore = getFingerScore(targetCR, targetCR);
 
-      for (const crB of maybeOverlappingTarget.clientRects) {
-        if (rectContains(crB, targetCR)) {
+      for (const maybeOverlappingCR of maybeOverlappingTarget.clientRects) {
+        if (rectContains(maybeOverlappingCR, targetCR)) {
           return;
         }
       }
@@ -161,11 +162,14 @@ function getTooCloseTargets(tapTarget, allTargets) {
           }
         }
 
-        const bOverlapScore = getFingerScore(targetCR, maybeOverlappingCR);
+        const maybeOverlappingScore = getFingerScore(
+          targetCR,
+          maybeOverlappingCR
+        );
 
-        if (bOverlapScore > aOverlapScore / 2) {
+        if (maybeOverlappingScore > tapTargetScore / 2) {
           const overlapAreaExcess = Math.ceil(
-            bOverlapScore - aOverlapScore / 2
+            maybeOverlappingScore - tapTargetScore / 2
           );
           const xMovementNeededToFix =
             overlapAreaExcess /
@@ -177,19 +181,24 @@ function getTooCloseTargets(tapTarget, allTargets) {
             xMovementNeededToFix,
             yMovementNeededToFix
           );
-          if (extraDistanceNeeded > maxExtraDistanceNeeded) {
-            maxExtraDistanceNeeded = extraDistanceNeeded;
+          if (
+            !greatestFailure ||
+            extraDistanceNeeded > greatestFailure.extraDistanceNeeded
+          ) {
+            greatestFailure = {
+              tapTarget,
+              overlappingTarget: maybeOverlappingTarget,
+              extraDistanceNeeded: Math.ceil(extraDistanceNeeded),
+              tapTargetScore,
+              overlappingTargetScore: maybeOverlappingScore,
+            };
           }
         }
       });
     });
 
-    if (maxExtraDistanceNeeded > 0) {
-      failures.push({
-        tapTarget,
-        overlappingTarget: maybeOverlappingTarget,
-        overlap: Math.ceil(maxExtraDistanceNeeded),
-      });
+    if (greatestFailure) {
+      failures.push(greatestFailure);
     }
   }
 
@@ -308,16 +317,25 @@ class TapTargets extends Audit {
 
       if (overlappingTargets.length > 0) {
         scorePerElement.set(target, 0);
-        overlappingTargets.forEach(({overlappingTarget, overlap}) => {
-          tableItems.push({
-            tapTarget: targetToTableNode(target),
-            overlappingTarget: targetToTableNode(overlappingTarget),
-            size,
-            extraDistanceNeeded: overlap,
-            width,
-            height,
-          });
-        });
+        overlappingTargets.forEach(
+          ({
+            overlappingTarget,
+            extraDistanceNeeded,
+            overlappingTargetScore,
+            tapTargetScore,
+          }) => {
+            tableItems.push({
+              tapTarget: targetToTableNode(target),
+              overlappingTarget: targetToTableNode(overlappingTarget),
+              size,
+              extraDistanceNeeded,
+              width,
+              height,
+              overlappingTargetScore,
+              tapTargetScore,
+            });
+          }
+        );
       }
     });
 
