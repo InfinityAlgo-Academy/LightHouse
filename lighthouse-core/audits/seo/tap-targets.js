@@ -266,7 +266,7 @@ class TapTargets extends Audit {
       title: 'Tap targets are sized appropriately',
       failureTitle: 'Tap targets are not sized appropriately',
       description:
-        'Interactive elements like buttons and links should be large enough, and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).',
+        'Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).',
       requiredArtifacts: ['Viewport', 'TapTargets'],
     };
   }
@@ -337,7 +337,7 @@ class TapTargets extends Audit {
 
     const headings = [
       {key: 'tapTarget', itemType: 'node', text: 'Tap Target'},
-      {key: 'size', itemType: 'text', text: 'Size (px)'},
+      {key: 'size', itemType: 'text', text: 'Size'},
       {key: 'overlappingTarget', itemType: 'node', text: 'Overlapping Target'},
     ];
 
