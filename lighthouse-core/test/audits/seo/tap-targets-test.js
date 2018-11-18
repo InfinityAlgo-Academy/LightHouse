@@ -91,7 +91,7 @@ describe('SEO: Tap targets audit', () => {
     assert.equal(auditResult.score, 1);
   });
 
-  it("passes when tap targets don't overlap", () => {
+  it('passes when tap targets don\'t overlap', () => {
     const auditResult = auditTapTargets(getBorderlineTapTargets());
     assert.equal(auditResult.rawValue, true);
   });
