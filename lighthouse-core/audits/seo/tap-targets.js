@@ -118,76 +118,73 @@ function getFingerScore(rectWithFinger, scoredRect) {
 
 /**
  *
- * @param {LH.Artifacts.TapTarget[]} targets
+ * @param {LH.Artifacts.TapTarget} targetA
+ * @param {LH.Artifacts.TapTarget[]} allTargets
  */
-function getTooCloseTargets(targets) {
-  const count = targets.length;
+function getTooCloseTargets(targetA, allTargets) {
+  const count = allTargets.length;
 
   /** @typedef {{targetA: LH.Artifacts.TapTarget, targetB: LH.Artifacts.TapTarget, overlap: number}} TapTargetFailure */
 
   /** @type TapTargetFailure[] */
   const failures = [];
 
-  for (let i = 0; i < count; i++) {
-    for (let j = 0; j < count; j++) {
-      if (i === j) {
-        continue;
+  for (let j = 0; j < count; j++) {
+    if (allTargets[j] === targetA) {
+      continue;
+    }
+    const targetB = allTargets[j];
+    if (/https?:\/\//.test(targetA.href) && targetA.href === targetB.href) {
+      // no overlap because same target action
+      continue;
+    }
+
+    let maxExtraDistanceNeeded = 0;
+    // todo: wouldn't a better name for simplifyclientrects be getrectsthatneedfinger?
+    simplifyClientRects(targetA.clientRects).forEach(crA => {
+      const fingerAtCenter = getFingerAtCenter(crA);
+      const aOverlapScore = getFingerScore(crA, crA);
+
+      for (const crB of targetB.clientRects) {
+        if (rectContains(crB, crA)) {
+          return;
+        }
       }
 
-      const targetA = targets[i];
-      const targetB = targets[j];
-      if (/https?:\/\//.test(targetA.href) && targetA.href === targetB.href) {
-        // no overlap because same target action
-        continue;
-      }
-
-      let maxExtraDistanceNeeded = 0;
-      // todo: wouldn't a better name for simplifyclientrects be getrectsthatneedfinger?
-      simplifyClientRects(targetA.clientRects).forEach(crA => {
-        const fingerAtCenter = getFingerAtCenter(crA);
-        const aOverlapScore = getFingerScore(crA, crA);
-
-        for (const crB of targetB.clientRects) {
-          if (rectContains(crB, crA)) {
+      targetB.clientRects.forEach(crB => {
+        for (const crA of targetA.clientRects) {
+          if (rectContains(crA, crB)) {
             return;
           }
         }
 
-        targetB.clientRects.forEach(crB => {
-          for (const crA of targetA.clientRects) {
-            if (rectContains(crA, crB)) {
-              return;
-            }
-          }
+        const bOverlapScore = getFingerScore(crA, crB);
 
-          const bOverlapScore = getFingerScore(crA, crB);
-
-          if (bOverlapScore > aOverlapScore / 2) {
-            const overlapAreaExcess = Math.ceil(
-              bOverlapScore - aOverlapScore / 2
-            );
-            const xMovementNeededToFix =
-              overlapAreaExcess / getRectXOverlap(fingerAtCenter, crB);
-            const yMovementNeededToFix =
-              overlapAreaExcess / getRectYOverlap(fingerAtCenter, crB);
-            const extraDistanceNeeded = Math.min(
-              xMovementNeededToFix,
-              yMovementNeededToFix
-            );
-            if (extraDistanceNeeded > maxExtraDistanceNeeded) {
-              maxExtraDistanceNeeded = extraDistanceNeeded;
-            }
+        if (bOverlapScore > aOverlapScore / 2) {
+          const overlapAreaExcess = Math.ceil(
+            bOverlapScore - aOverlapScore / 2
+          );
+          const xMovementNeededToFix =
+            overlapAreaExcess / getRectXOverlap(fingerAtCenter, crB);
+          const yMovementNeededToFix =
+            overlapAreaExcess / getRectYOverlap(fingerAtCenter, crB);
+          const extraDistanceNeeded = Math.min(
+            xMovementNeededToFix,
+            yMovementNeededToFix
+          );
+          if (extraDistanceNeeded > maxExtraDistanceNeeded) {
+            maxExtraDistanceNeeded = extraDistanceNeeded;
           }
-        });
+        }
       });
+    });
 
-      if (maxExtraDistanceNeeded > 0) {
-        failures.push({
-          targetA,
-          targetB,
-          overlap: Math.ceil(maxExtraDistanceNeeded),
-        });
-      }
+    if (maxExtraDistanceNeeded > 0) {
+      failures.push({
+        targetA,
+        targetB,
+        overlap: Math.ceil(maxExtraDistanceNeeded),
+      });
     }
   }
 
@@ -285,51 +282,37 @@ class TapTargets extends Audit {
 
     const tooSmallTargets = getTooSmallTargets(artifacts.TapTargets);
 
-    const tooClose = getTooCloseTargets(artifacts.TapTargets);
-
     /** @type {Array<LH.Audit.TooSmallTapTargetItem>} */
     const tableItems = [];
+
+    const scorePerElement = new Map();
+    artifacts.TapTargets.forEach(target => {
+      scorePerElement.set(target, 1);
+    });
 
     tooSmallTargets.forEach(target => {
       const largestCr = getLargestClientRect(target);
       const width = Math.floor(largestCr.width);
       const height = Math.floor(largestCr.height);
       const size = width + 'x' + height;
-      // todo: better name for this var
-      const overlappingTargets = tooClose.filter(
-        tooClose => tooClose.targetA === target
+
+      const overlappingTargets = getTooCloseTargets(
+        target,
+        artifacts.TapTargets
       );
 
-      /**
-       * @param {{targetB: LH.Audit.DetailsRendererNodeDetailsJSON | null, extraDistanceNeeded: number}} args
-       * @returns {LH.Audit.TooSmallTapTargetItem}
-       */
-      function makeItem({targetB, extraDistanceNeeded}) {
-        return {
-          targetA: targetToTableNode(target),
-          targetB,
-          size,
-          extraDistanceNeeded,
-          width,
-          height,
-        };
-      }
       if (overlappingTargets.length > 0) {
+        scorePerElement.set(target, 0);
         overlappingTargets.forEach(({targetB, overlap}) => {
-          tableItems.push(
-            makeItem({
-              targetB: targetToTableNode(targetB),
-              extraDistanceNeeded: overlap,
-            })
-          );
+          tableItems.push({
+            targetA: targetToTableNode(target),
+            targetB: targetToTableNode(targetB),
+            size,
+            extraDistanceNeeded: overlap,
+            width,
+            height,
+          });
         });
-      } else {
-        tableItems.push(
-          makeItem({
-            targetB: null,
-            extraDistanceNeeded: 0,
-          })
-        );
       }
     });
 
@@ -363,14 +346,6 @@ class TapTargets extends Audit {
           : '1 issue found';
     }
 
-    const scorePerElement = new Map();
-    artifacts.TapTargets.forEach(target => {
-      scorePerElement.set(target, 1);
-    });
-    tooClose.forEach(({targetA}) => {
-      scorePerElement.set(targetA, 0);
-    });
-
     let score = 1;
     if (artifacts.TapTargets.length > 0) {
       score = 0;
@@ -384,7 +359,7 @@ class TapTargets extends Audit {
     score = Math.round(score * 1000) / 1000;
 
     return {
-      rawValue: tooClose.length === 0,
+      rawValue: tableItems.length === 0,
       score,
       details,
       displayValue,
