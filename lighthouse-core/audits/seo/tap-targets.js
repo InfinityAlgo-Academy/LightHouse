@@ -124,10 +124,7 @@ function getFingerScore(rectWithFinger, scoredRect) {
 function getTooCloseTargets(tapTarget, allTargets) {
   const count = allTargets.length;
 
-  // todo: move typedef
-  /** @typedef {{tapTarget: LH.Artifacts.TapTarget, overlappingTarget: LH.Artifacts.TapTarget, extraDistanceNeeded: number, overlappingTargetScore: number, tapTargetScore: number}} TapTargetFailure */
-
-  /** @type TapTargetFailure[] */
+  /** @type LH.Audit.TapTargetOverlapDetail[] */
   const failures = [];
 
   for (let i = 0; i < count; i++) {
@@ -143,7 +140,7 @@ function getTooCloseTargets(tapTarget, allTargets) {
       continue;
     }
 
-    /** @type TapTargetFailure | null */
+    /** @type LH.Audit.TapTargetOverlapDetail | null */
     let greatestFailure = null;
     simplifyClientRects(tapTarget.clientRects).forEach(targetCR => {
       const fingerAtCenter = getFingerAtCenter(targetCR);

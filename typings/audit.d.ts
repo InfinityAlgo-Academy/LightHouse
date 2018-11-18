@@ -74,6 +74,14 @@ declare global {
       wastedPercent?: number;
     }
 
+    export type TapTargetOverlapDetail = {
+      tapTarget: Artifacts.TapTarget;
+      overlappingTarget: Artifacts.TapTarget;
+      extraDistanceNeeded: number;
+      overlappingTargetScore: number;
+      tapTargetScore: number;
+    }
+
     export type TooSmallTapTargetItem = {
       tapTarget: DetailsRendererNodeDetailsJSON;
       overlappingTarget: DetailsRendererNodeDetailsJSON;
