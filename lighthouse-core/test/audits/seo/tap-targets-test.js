@@ -105,8 +105,8 @@ describe('SEO: Tap targets audit', () => {
     assert.equal(auditResult.rawValue, false);
     assert.equal(Math.round(auditResult.score * 100), 33);
     const failure = auditResult.details.items[0];
-    assert.equal(failure.targetA.snippet, '<main></main>');
-    assert.equal(failure.targetB.snippet, '<right></right>');
+    assert.equal(failure.tapTarget.snippet, '<main></main>');
+    assert.equal(failure.overlappingTarget.snippet, '<right></right>');
     assert.equal(failure.size, '10x10');
   });
 

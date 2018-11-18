@@ -75,8 +75,8 @@ declare global {
     }
 
     export type TooSmallTapTargetItem = {
-      targetA: DetailsRendererNodeDetailsJSON;
-      targetB: DetailsRendererNodeDetailsJSON | null;
+      tapTarget: DetailsRendererNodeDetailsJSON;
+      overlappingTarget: DetailsRendererNodeDetailsJSON;
       size: string;
       extraDistanceNeeded: number;
       height: number;

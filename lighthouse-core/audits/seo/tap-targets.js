@@ -118,56 +118,61 @@ function getFingerScore(rectWithFinger, scoredRect) {
 
 /**
  *
- * @param {LH.Artifacts.TapTarget} targetA
+ * @param {LH.Artifacts.TapTarget} tapTarget
  * @param {LH.Artifacts.TapTarget[]} allTargets
  */
-function getTooCloseTargets(targetA, allTargets) {
+function getTooCloseTargets(tapTarget, allTargets) {
   const count = allTargets.length;
 
-  /** @typedef {{targetA: LH.Artifacts.TapTarget, targetB: LH.Artifacts.TapTarget, overlap: number}} TapTargetFailure */
+  // todo: move typedef
+  /** @typedef {{tapTarget: LH.Artifacts.TapTarget, overlappingTarget: LH.Artifacts.TapTarget, overlap: number}} TapTargetFailure */
 
   /** @type TapTargetFailure[] */
   const failures = [];
 
-  for (let j = 0; j < count; j++) {
-    if (allTargets[j] === targetA) {
+  for (let i = 0; i < count; i++) {
+    if (allTargets[i] === tapTarget) {
       continue;
     }
-    const targetB = allTargets[j];
-    if (/https?:\/\//.test(targetA.href) && targetA.href === targetB.href) {
+    const maybeOverlappingTarget = allTargets[i];
+    if (
+      /https?:\/\//.test(tapTarget.href) &&
+      tapTarget.href === maybeOverlappingTarget.href
+    ) {
       // no overlap because same target action
       continue;
     }
 
     let maxExtraDistanceNeeded = 0;
-    // todo: wouldn't a better name for simplifyclientrects be getrectsthatneedfinger?
-    simplifyClientRects(targetA.clientRects).forEach(crA => {
-      const fingerAtCenter = getFingerAtCenter(crA);
-      const aOverlapScore = getFingerScore(crA, crA);
+    simplifyClientRects(tapTarget.clientRects).forEach(targetCR => {
+      const fingerAtCenter = getFingerAtCenter(targetCR);
+      const aOverlapScore = getFingerScore(targetCR, targetCR);
 
-      for (const crB of targetB.clientRects) {
-        if (rectContains(crB, crA)) {
+      for (const crB of maybeOverlappingTarget.clientRects) {
+        if (rectContains(crB, targetCR)) {
           return;
         }
       }
 
-      targetB.clientRects.forEach(crB => {
-        for (const crA of targetA.clientRects) {
-          if (rectContains(crA, crB)) {
+      maybeOverlappingTarget.clientRects.forEach(maybeOverlappingCR => {
+        for (const crA of tapTarget.clientRects) {
+          if (rectContains(crA, maybeOverlappingCR)) {
             return;
           }
         }
 
-        const bOverlapScore = getFingerScore(crA, crB);
+        const bOverlapScore = getFingerScore(targetCR, maybeOverlappingCR);
 
         if (bOverlapScore > aOverlapScore / 2) {
           const overlapAreaExcess = Math.ceil(
             bOverlapScore - aOverlapScore / 2
           );
           const xMovementNeededToFix =
-            overlapAreaExcess / getRectXOverlap(fingerAtCenter, crB);
+            overlapAreaExcess /
+            getRectXOverlap(fingerAtCenter, maybeOverlappingCR);
           const yMovementNeededToFix =
-            overlapAreaExcess / getRectYOverlap(fingerAtCenter, crB);
+            overlapAreaExcess /
+            getRectYOverlap(fingerAtCenter, maybeOverlappingCR);
           const extraDistanceNeeded = Math.min(
             xMovementNeededToFix,
             yMovementNeededToFix
@@ -181,8 +186,8 @@ function getTooCloseTargets(targetA, allTargets) {
 
     if (maxExtraDistanceNeeded > 0) {
       failures.push({
-        targetA,
-        targetB,
+        tapTarget,
+        overlappingTarget: maybeOverlappingTarget,
         overlap: Math.ceil(maxExtraDistanceNeeded),
       });
     }
@@ -303,10 +308,10 @@ class TapTargets extends Audit {
 
       if (overlappingTargets.length > 0) {
         scorePerElement.set(target, 0);
-        overlappingTargets.forEach(({targetB, overlap}) => {
+        overlappingTargets.forEach(({overlappingTarget, overlap}) => {
           tableItems.push({
-            targetA: targetToTableNode(target),
-            targetB: targetToTableNode(targetB),
+            tapTarget: targetToTableNode(target),
+            overlappingTarget: targetToTableNode(overlappingTarget),
             size,
             extraDistanceNeeded: overlap,
             width,
@@ -331,9 +336,9 @@ class TapTargets extends Audit {
     });
 
     const headings = [
-      {key: 'targetA', itemType: 'node', text: 'Too Small Element'},
+      {key: 'tapTarget', itemType: 'node', text: 'Tap Target'},
       {key: 'size', itemType: 'text', text: 'Size (px)'},
-      {key: 'targetB', itemType: 'node', text: 'Too Close Element'},
+      {key: 'overlappingTarget', itemType: 'node', text: 'Overlapping Target'},
     ];
 
     const details = Audit.makeTableDetails(headings, tableItems);
