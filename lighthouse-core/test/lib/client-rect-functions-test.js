@@ -103,10 +103,9 @@ describe('simplifyClientRects', () => {
   });
 
   it('Merges two vertically adjacent client rects even if one is wider than the other', () => {
-    // todo: rephrase
-    // We do this because to fix issues with images inside links.
-    // If we don't merge we'll put a finger on the image and link separately, with the link
-    // being small and on one side and overlapping with something.
+    // We do this because to fix issues with children (e.g. images) inside links.
+    // The link itself might be small, so if we put a finger on it directly then it's
+    // likely to overlap with something.
     const res = simplifyClientRects([
       makeClientRect({
         x: 10,
