@@ -2683,7 +2683,7 @@
     "tap-targets": {
       "id": "tap-targets",
       "title": "Tap targets are not sized appropriately",
-      "description": "Interactive elements like buttons and links should be large enough, and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).",
+      "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).",
       "score": null,
       "scoreDisplayMode": "error",
       "rawValue": null,
