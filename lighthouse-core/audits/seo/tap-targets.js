@@ -40,6 +40,7 @@ function getRectXOverlap(rect1, rect2) {
     Math.min(rect1.right, rect2.right) - Math.max(rect1.left, rect2.left)
   );
 }
+
 /**
  * @param {LH.Artifacts.ClientRect} rect1
  * @param {LH.Artifacts.ClientRect} rect2
@@ -117,17 +118,48 @@ function getFingerScore(rectWithFinger, scoredRect) {
 }
 
 /**
+ * @param {LH.Artifacts.ClientRect} targetCR
+ * @param {LH.Artifacts.ClientRect} maybeOverlappingCR
+ */
+function getOverlapFailure(targetCR, maybeOverlappingCR) {
+  const tapTargetScore = getFingerScore(targetCR, targetCR);
+  const maybeOverlappingScore = getFingerScore(targetCR, maybeOverlappingCR);
+
+  if (maybeOverlappingScore <= tapTargetScore / 2) {
+    return null;
+  }
+
+  const fingerAtCenter = getFingerAtCenter(targetCR);
+  const overlapAreaExcess = Math.ceil(
+    maybeOverlappingScore - tapTargetScore / 2
+  );
+
+  const xMovementNeededToFix =
+    overlapAreaExcess / getRectXOverlap(fingerAtCenter, maybeOverlappingCR);
+  const yMovementNeededToFix =
+    overlapAreaExcess / getRectYOverlap(fingerAtCenter, maybeOverlappingCR);
+  const extraDistanceNeeded = Math.min(
+    xMovementNeededToFix,
+    yMovementNeededToFix
+  );
+
+  return {
+    extraDistanceNeeded: Math.ceil(extraDistanceNeeded),
+    tapTargetScore,
+    overlappingTargetScore: maybeOverlappingScore,
+  };
+}
+
+/**
  *
  * @param {LH.Artifacts.TapTarget} tapTarget
  * @param {LH.Artifacts.TapTarget[]} allTargets
  */
 function getTooCloseTargets(tapTarget, allTargets) {
-  const count = allTargets.length;
-
   /** @type LH.Audit.TapTargetOverlapDetail[] */
   const failures = [];
 
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < allTargets.length; i++) {
     if (allTargets[i] === tapTarget) {
       continue;
     }
@@ -143,9 +175,6 @@ function getTooCloseTargets(tapTarget, allTargets) {
     /** @type LH.Audit.TapTargetOverlapDetail | null */
     let greatestFailure = null;
     simplifyClientRects(tapTarget.clientRects).forEach(targetCR => {
-      const fingerAtCenter = getFingerAtCenter(targetCR);
-      const tapTargetScore = getFingerScore(targetCR, targetCR);
-
       for (const maybeOverlappingCR of maybeOverlappingTarget.clientRects) {
         if (rectContains(maybeOverlappingCR, targetCR)) {
           return;
@@ -155,39 +184,22 @@ function getTooCloseTargets(tapTarget, allTargets) {
       maybeOverlappingTarget.clientRects.forEach(maybeOverlappingCR => {
         for (const crA of tapTarget.clientRects) {
           if (rectContains(crA, maybeOverlappingCR)) {
+            // If one tap target is contained within the other that's
+            // probably intentional (e.g. an item with a delete button inside)
             return;
           }
         }
 
-        const maybeOverlappingScore = getFingerScore(
-          targetCR,
-          maybeOverlappingCR
-        );
-
-        if (maybeOverlappingScore > tapTargetScore / 2) {
-          const overlapAreaExcess = Math.ceil(
-            maybeOverlappingScore - tapTargetScore / 2
-          );
-          const xMovementNeededToFix =
-            overlapAreaExcess /
-            getRectXOverlap(fingerAtCenter, maybeOverlappingCR);
-          const yMovementNeededToFix =
-            overlapAreaExcess /
-            getRectYOverlap(fingerAtCenter, maybeOverlappingCR);
-          const extraDistanceNeeded = Math.min(
-            xMovementNeededToFix,
-            yMovementNeededToFix
-          );
+        const failure = getOverlapFailure(targetCR, maybeOverlappingCR);
+        if (failure) {
           if (
             !greatestFailure ||
-            extraDistanceNeeded > greatestFailure.extraDistanceNeeded
+            failure.extraDistanceNeeded > greatestFailure.extraDistanceNeeded
           ) {
             greatestFailure = {
+              ...failure,
               tapTarget,
               overlappingTarget: maybeOverlappingTarget,
-              extraDistanceNeeded: Math.ceil(extraDistanceNeeded),
-              tapTargetScore,
-              overlappingTargetScore: maybeOverlappingScore,
             };
           }
         }
