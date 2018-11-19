@@ -130,6 +130,24 @@ describe('simplifyClientRects', () => {
     ]);
   });
 
+  it('Does not merge if the center of the merged rect wouldn\'t be in the original rects', () => {
+    const res = simplifyClientRects([
+      makeClientRect({
+        x: 10,
+        y: 10,
+        width: 10,
+        height: 100,
+      }),
+      makeClientRect({
+        x: 10,
+        y: 10,
+        width: 200,
+        height: 10,
+      }),
+    ]);
+    assert.equal(res.length, 2);
+  });
+
   it('Merges two horizontally adjacent client rects that don\'t line up exactly', () => {
     // 2px difference is ok, often there are cases where an image is a 1px or 2px out of the main link client rect
     const res = simplifyClientRects([

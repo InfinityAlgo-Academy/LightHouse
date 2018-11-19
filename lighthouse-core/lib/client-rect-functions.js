@@ -6,18 +6,18 @@
 'use strict';
 
 /**
+ * @param {LH.Artifacts.ClientRect} cr
+ * @param {{x:number, y:number}} point
+ */
+function rectContainsPoint(cr, {x, y}) {
+  return cr.left <= x && cr.right >= x && cr.top <= y && cr.bottom >= y;
+}
+
+/**
  * @param {LH.Artifacts.ClientRect} cr1
  * @param {LH.Artifacts.ClientRect} cr2
  */
 function rectContains(cr1, cr2) {
-  /**
-   * @param {LH.Artifacts.ClientRect} cr
-   * @param {{x:number, y:number}} point
-   */
-  function rectContainsPoint(cr, {x, y}) {
-    return cr.left <= x && cr.right >= x && cr.top <= y && cr.bottom >= y;
-  }
-
   const topLeft = {
     x: cr2.left,
     y: cr2.top,
@@ -96,6 +96,16 @@ function almostEqual(a, b) {
 }
 
 /**
+ * @param {LH.Artifacts.ClientRect} rect
+ */
+function getRectCenterPoint(rect) {
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
+  };
+}
+
+/**
  * @param {LH.Artifacts.ClientRect} crA
  * @param {LH.Artifacts.ClientRect} crB
  * @returns {boolean}
@@ -144,6 +154,19 @@ function mergeTouchingClientRects(clientRects) {
           top,
           bottom,
         });
+        const mergedRectCenter = getRectCenterPoint(replacementClientRect);
+        if (
+          !(
+            rectContainsPoint(crA, mergedRectCenter) ||
+            rectContainsPoint(crB, mergedRectCenter)
+          )
+        ) {
+          // Don't merge because the new shape is too different from the
+          // merged rects, and putting a tap target in the finger
+          // wouldn't hit either actual rect
+          continue;
+        }
+
         clientRects.push(replacementClientRect);
 
         clientRects.splice(i, 1);
