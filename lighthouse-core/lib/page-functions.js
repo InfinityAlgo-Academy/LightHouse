@@ -159,6 +159,7 @@ function ultradumbBenchmark() {
  * TODO: Doesn't handle frames or shadow roots...
  * @param {Node} node
  */
+/* istanbul ignore next */
 function getNodePath(node) {
   /** @param {Node} node */
   function getNodeIndex(node) {
