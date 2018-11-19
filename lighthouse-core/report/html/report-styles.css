@@ -612,7 +612,7 @@
   content: '';
   background-image: var(--content-paste-icon-url);
 }
-.lh-audit-group--opportunities .lh-audit-group__header::before {
+.lh-audit-group--load-opportunities .lh-audit-group__header::before {
   content: '';
   background-image: var(--photo-filter-icon-url);
 }
@@ -678,7 +678,7 @@
 
 .lh-clump > .lh-audit-group__description,
 .lh-audit-group--diagnostics .lh-audit-group__description,
-.lh-audit-group--opportunities .lh-audit-group__description,
+.lh-audit-group--load-opportunities .lh-audit-group__description,
 .lh-audit-group--metrics .lh-audit-group__description,
 .lh-audit-group--pwa-fast-reliable .lh-audit-group__description,
 .lh-audit-group--pwa-installable .lh-audit-group__description,

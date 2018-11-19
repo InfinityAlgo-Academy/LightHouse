@@ -188,7 +188,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       groupEl.appendChild(headerEl);
       opportunityAudits.forEach((item, i) =>
           groupEl.appendChild(this._renderOpportunity(item, i, scale)));
-      groupEl.classList.add('lh-audit-group--opportunities');
+      groupEl.classList.add('lh-audit-group--load-opportunities');
       element.appendChild(groupEl);
     }
 
