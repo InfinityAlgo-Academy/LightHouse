@@ -37,4 +37,4 @@ The renderer was designed to be portable across various environments.
 
 ### Polyfills
 
-The `details-element-polyfill` is pulled in to provide [support](https://caniuse.com/#feat=details) for Microsoft Edge. It's built [unminified](https://github.com/javan/details-element-polyfill/issues/12) and pulled into third_party.
+The [`details-element-polyfill`](https://www.npmjs.com/package/details-element-polyfill/v/2.1.1) is pulled in to provide [support](https://caniuse.com/#feat=details) for Microsoft Edge.

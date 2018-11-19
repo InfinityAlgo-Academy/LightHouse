@@ -160,11 +160,6 @@
   display: none !important;
 }
 
-/* Edge doesn't recognize these, and the polyfill doesn't set block. https://github.com/javan/details-element-polyfill/issues/13 */
-details, summary {
-  display: block;
-}
-
 .lh-root details > summary {
   cursor: pointer;
 }
