@@ -6,7 +6,7 @@ The result object contains all the audit information Lighthouse determined about
 
 The top-level Lighthouse Result object (LHR) is what the lighthouse node module returns and the entirety of the JSON output of the CLI. It contains some metadata about the run and the results in the various subproperties below.
 
-For an always up-to-date definition of the LHR, take a look [at our typedefs](https://github.com/GoogleChrome/lighthouse/blob/master/typings/lhr.d.ts).
+For an always up-to-date definition of the LHR, take a look [at our typedefs](https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr.d.ts).
 
 ### Properties
 

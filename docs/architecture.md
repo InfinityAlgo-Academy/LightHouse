@@ -84,7 +84,7 @@ Tracing processor takes the output of trace of tab and identifies the top-level 
 
 ## Audits
 
-The return value of each audit [takes this shape](https://github.com/GoogleChrome/lighthouse/blob/8f500e00243e07ef0a80b39334bedcc8ddc8d3d0/typings/audit.d.ts#L117-L130).
+The return value of each audit [takes this shape](https://github.com/GoogleChrome/lighthouse/blob/09cc741c54bfdf6f6851dae1c749dd46a52d6a1f/typings/audit.d.ts#L133-L159).
 
 The `details` object is parsed in report-renderer.js. View other audits for guidance on how to structure `details`.
 

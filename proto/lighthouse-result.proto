@@ -54,7 +54,7 @@ enum LighthouseError {
 }
 
 // The overarching Lighthouse Response object (LHR)
-// https://github.com/GoogleChrome/lighthouse/blob/master/typings/lhr.d.ts
+// https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr.d.ts
 message LighthouseResult {
   // The timestamp of when the results were generated.
   google.protobuf.Timestamp fetch_time = 1;

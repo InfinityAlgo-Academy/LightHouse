@@ -10,7 +10,7 @@
     // "noErrorTruncation": true,
     "typeRoots": [
       "@types",
-      "./typings"
+      "./types"
     ],
 
     "resolveJsonModule": true,
@@ -21,7 +21,7 @@
     "lighthouse-core/**/*.js",
     "clients/**/*.js",
     "build/**/*.js",
-    "./typings/*.d.ts",
+    "./types/*.d.ts",
   ],
   "exclude": [
     "lighthouse-cli/test/**/*.js",
