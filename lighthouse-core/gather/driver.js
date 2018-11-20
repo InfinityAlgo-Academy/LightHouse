@@ -259,6 +259,7 @@ class Driver {
   }
 
   /**
+   * timeout is used for the next call to 'sendCommand'.
    * NOTE: This can eventually be replaced when TypeScript
    * resolves https://github.com/Microsoft/TypeScript/issues/5453.
    * @param {number} timeout
@@ -268,7 +269,7 @@ class Driver {
   }
 
   /**
-   * Call protocol methods.
+   * Call protocol methods, with a timeout.
    * To configure the timeout for the next call, use 'setNextProtocolTimeout'.
    * @template {keyof LH.CrdpCommands} C
    * @param {C} method
@@ -278,6 +279,32 @@ class Driver {
   sendCommand(method, ...params) {
     const timeout = this._nextProtocolTimeout;
     this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
+    return new Promise(async (resolve, reject) => {
+      const asyncTimeout = setTimeout((() => {
+        const err = new LHError(LHError.errors.PROTOCOL_TIMEOUT);
+        err.message += ` Method: ${method}`;
+        reject(err);
+      }), timeout);
+      try {
+        const result = await this._innerSendCommand(method, ...params);
+        resolve(result);
+      } catch (err) {
+        reject(err);
+      } finally {
+        clearTimeout(asyncTimeout);
+      }
+    });
+  }
+
+  /**
+   * Call protocol methods.
+   * @private
+   * @template {keyof LH.CrdpCommands} C
+   * @param {C} method
+   * @param {LH.CrdpCommands[C]['paramsType']} params
+   * @return {Promise<LH.CrdpCommands[C]['returnType']>}
+   */
+  _innerSendCommand(method, ...params) {
     const domainCommand = /^(\w+)\.(enable|disable)$/.exec(method);
     if (domainCommand) {
       const enable = domainCommand[2] === 'enable';
@@ -285,21 +312,7 @@ class Driver {
         return Promise.resolve();
       }
     }
-    return new Promise(async (resolve, reject) => {
-      const asyncTimeout = setTimeout((_ => {
-        const err = new LHError(LHError.errors.PROTOCOL_TIMEOUT);
-        err.message += ` Method: ${method}`;
-        reject(err);
-      }), timeout);
-      try {
-        const result = await this._connection.sendCommand(method, ...params);
-        clearTimeout(asyncTimeout);
-        resolve(result);
-      } catch (err) {
-        clearTimeout(asyncTimeout);
-        reject(err);
-      }
-    });
+    return this._connection.sendCommand(method, ...params);
   }
 
   /**
@@ -882,8 +895,8 @@ class Driver {
     // happen _after_ onload: https://crbug.com/768961
     this.sendCommand('Page.enable');
     this.sendCommand('Emulation.setScriptExecutionDisabled', {value: disableJS});
-    this.setNextProtocolTimeout(30 * 1000);
-    this.sendCommand('Page.navigate', {url});
+    // No timeout needed for Page.navigate. See #6413.
+    this._innerSendCommand('Page.navigate', {url});
 
     if (waitForNavigated) {
       await this._waitForFrameNavigated();
