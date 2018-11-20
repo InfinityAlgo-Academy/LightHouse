@@ -7,11 +7,11 @@
 
 const Audit = require('../audit');
 const linearInterpolation = require('../../lib/statistics').linearInterpolation;
-const Interactive = require('../../gather/computed/metrics/lantern-interactive');
+const Interactive = require('../../computed/metrics/lantern-interactive.js');
 const i18n = require('../../lib/i18n/i18n.js');
-const NetworkRecords = require('../../gather/computed/network-records.js');
-const LoadSimulator = require('../../gather/computed/load-simulator.js');
-const PageDependencyGraph = require('../../gather/computed/page-dependency-graph.js');
+const NetworkRecords = require('../../computed/network-records.js');
+const LoadSimulator = require('../../computed/load-simulator.js');
+const PageDependencyGraph = require('../../computed/page-dependency-graph.js');
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, {});
 

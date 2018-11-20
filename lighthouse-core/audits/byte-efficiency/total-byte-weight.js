@@ -7,7 +7,7 @@
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const i18n = require('../../lib/i18n/i18n.js');
-const NetworkRecords = require('../../gather/computed/network-records.js');
+const NetworkRecords = require('../../computed/network-records.js');
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on large network resources required during page load. 'Payloads' is roughly equivalent to 'resources'. This descriptive title is shown to users when the amount is acceptable and no user action is required. */

@@ -9,7 +9,7 @@ const NetworkNode = require('../../../../lib/dependency-graph/network-node');
 const CpuNode = require('../../../../lib/dependency-graph/cpu-node');
 const Simulator = require('../../../../lib/dependency-graph/simulator/simulator');
 const DNSCache = require('../../../../lib/dependency-graph/simulator/dns-cache');
-const PageDependencyGraph = require('../../../../gather/computed/page-dependency-graph');
+const PageDependencyGraph = require('../../../../computed/page-dependency-graph.js');
 
 const assert = require('assert');
 let nextRequestId = 1;

@@ -8,7 +8,7 @@
 const Audit = require('../audit');
 const LinkHeader = require('http-link-header');
 const URL = require('../../lib/url-shim');
-const MainResource = require('../../gather/computed/main-resource.js');
+const MainResource = require('../../computed/main-resource.js');
 const LINK_HEADER = 'link';
 
 /**

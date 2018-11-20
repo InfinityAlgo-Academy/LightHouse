@@ -7,7 +7,7 @@
 
 const Audit = require('../audit');
 const LinkHeader = require('http-link-header');
-const MainResource = require('../../gather/computed/main-resource.js');
+const MainResource = require('../../computed/main-resource.js');
 const VALID_LANGS = importValidLangs();
 const LINK_HEADER = 'link';
 const NO_LANGUAGE = 'x-default';

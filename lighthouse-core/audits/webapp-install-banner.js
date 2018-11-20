@@ -7,7 +7,7 @@
 
 const MultiCheckAudit = require('./multi-check-audit');
 const SWAudit = require('./service-worker');
-const ManifestValues = require('../gather/computed/manifest-values');
+const ManifestValues = require('../computed/manifest-values.js');
 
 /**
  * @fileoverview

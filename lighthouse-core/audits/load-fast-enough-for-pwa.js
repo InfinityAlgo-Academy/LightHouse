@@ -14,7 +14,7 @@
 const isDeepEqual = require('lodash.isequal');
 const Audit = require('./audit');
 const mobileThrottling = require('../config/constants').throttling.mobileSlow4G;
-const Interactive = require('../gather/computed/metrics/interactive.js');
+const Interactive = require('../computed/metrics/interactive.js');
 
 const displayValueText = `Interactive at %d\xa0s`;
 const displayValueTextWithOverride = `Interactive on simulated mobile network at %d\xa0s`;

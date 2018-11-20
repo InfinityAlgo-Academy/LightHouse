@@ -7,7 +7,7 @@
 
 const Audit = require('./audit');
 const URL = require('../lib/url-shim');
-const NetworkRecords = require('../gather/computed/network-records.js');
+const NetworkRecords = require('../computed/network-records.js');
 
 class NetworkRequests extends Audit {
   /**

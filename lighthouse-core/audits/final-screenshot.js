@@ -7,7 +7,7 @@
 
 const Audit = require('./audit');
 const LHError = require('../lib/lh-error');
-const Screenshots = require('../gather/computed/screenshots.js');
+const Screenshots = require('../computed/screenshots.js');
 
 class FinalScreenshot extends Audit {
   /**

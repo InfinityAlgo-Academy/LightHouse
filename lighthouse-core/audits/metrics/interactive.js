@@ -7,7 +7,7 @@
 
 const Audit = require('../audit');
 const i18n = require('../../lib/i18n/i18n.js');
-const Interactive = require('../../gather/computed/metrics/interactive.js');
+const Interactive = require('../../computed/metrics/interactive.js');
 
 const UIStrings = {
   /** The name of the metric that marks the time at which the page is fully loaded and is able to quickly respond to user input (clicks, taps, and keypresses feel responsive). Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */

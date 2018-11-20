@@ -15,9 +15,9 @@ const BaseNode = require('../../lib/dependency-graph/base-node');
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const UnusedCSS = require('./unused-css-rules');
 const NetworkRequest = require('../../lib/network-request');
-const TraceOfTab = require('../../gather/computed/trace-of-tab.js');
-const LoadSimulator = require('../../gather/computed/load-simulator.js');
-const FirstContentfulPaint = require('../../gather/computed/metrics/first-contentful-paint.js');
+const TraceOfTab = require('../../computed/trace-of-tab.js');
+const LoadSimulator = require('../../computed/load-simulator.js');
+const FirstContentfulPaint = require('../../computed/metrics/first-contentful-paint.js');
 
 /** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */

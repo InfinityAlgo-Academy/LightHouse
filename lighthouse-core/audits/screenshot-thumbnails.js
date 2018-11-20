@@ -8,8 +8,8 @@
 const Audit = require('./audit');
 const LHError = require('../lib/lh-error');
 const jpeg = require('jpeg-js');
-const Speedline = require('../gather/computed/speedline.js');
-const Interactive = require('../gather/computed/metrics/interactive.js');
+const Speedline = require('../computed/speedline.js');
+const Interactive = require('../computed/metrics/interactive.js');
 
 const NUMBER_OF_THUMBNAILS = 10;
 const THUMBNAIL_WIDTH = 120;

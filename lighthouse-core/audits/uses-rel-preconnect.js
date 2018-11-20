@@ -9,9 +9,9 @@
 const Audit = require('./audit');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
 const i18n = require('../lib/i18n/i18n.js');
-const NetworkRecords = require('../gather/computed/network-records.js');
-const MainResource = require('../gather/computed/main-resource.js');
-const LoadSimulator = require('../gather/computed/load-simulator.js');
+const NetworkRecords = require('../computed/network-records.js');
+const MainResource = require('../computed/main-resource.js');
+const LoadSimulator = require('../computed/load-simulator.js');
 
 // Preconnect establishes a "clean" socket. Chrome's socket manager will keep an unused socket
 // around for 10s. Meaning, the time delta between processing preconnect a request should be <10s,
