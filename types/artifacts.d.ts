@@ -108,7 +108,7 @@ declare global {
       /** The content of all scripts loaded by the page, keyed by networkRecord requestId. */
       Scripts: Record<string, string>;
       /** Version information for all ServiceWorkers active after the first page load. */
-      ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[]};
+      ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: Crdp.ServiceWorker.ServiceWorkerRegistration[]};
       /** The status of an offline fetch of the page's start_url. -1 and a explanation if missing or there was an error. */
       StartUrl: {statusCode: number, explanation?: string};
       /** Information on <script> and <link> tags blocking first paint. */

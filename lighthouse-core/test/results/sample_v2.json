@@ -467,13 +467,12 @@
       "score": 0,
       "scoreDisplayMode": "binary",
       "rawValue": false,
-      "explanation": "Failures: No manifest was fetched,\nSite does not register a service worker.",
+      "explanation": "Failures: No manifest was fetched.",
       "details": {
         "items": [
           {
             "failures": [
-              "No manifest was fetched",
-              "Site does not register a service worker"
+              "No manifest was fetched"
             ],
             "isParseFailure": true,
             "parseFailureReason": "No manifest was fetched"
