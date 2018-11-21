@@ -69,6 +69,11 @@ function filterOutTinyClientRects(clientRects) {
   return clientRects;
 }
 
+const rectContainsString = `
+  ${rectContainsPoint.toString()}
+  ${rectContains.toString()};
+`;
+
 /**
  * @param {LH.Artifacts.ClientRect[]} clientRects
  * @returns {LH.Artifacts.ClientRect[]}
@@ -202,4 +207,5 @@ module.exports = {
   rectContains,
   simplifyClientRects,
   addRectWidthAndHeight,
+  rectContainsString,
 };

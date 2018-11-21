@@ -9,7 +9,7 @@
 
 const Gatherer = require('../gatherer');
 const pageFunctions = require('../../../lib/page-functions.js');
-const {rectContains} = require('../../../lib/client-rect-functions');
+const {rectContainsString, rectContains} = require('../../../lib/client-rect-functions');
 
 const TARGET_SELECTORS = [
   'button',
@@ -312,7 +312,7 @@ class TapTargets extends Gatherer {
       ${memoize.toString()};
       ${nodeIsInTextBlock.toString()};
       ${allClientRectsEmpty.toString()};
-      ${rectContains.toString()};
+      ${rectContainsString};
       ${pageFunctions.getNodePathString};
       ${pageFunctions.getNodeSelectorString};
       ${gatherTapTargets.toString()};
