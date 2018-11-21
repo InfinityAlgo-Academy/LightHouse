@@ -3476,6 +3476,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:NetworkRecords",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:redirects-http",
         "duration": 100,
         "entryType": "measure"
@@ -3512,7 +3518,25 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:FirstContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceOfTab",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:first-meaningful-paint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:FirstMeaningfulPaint",
         "duration": 100,
         "entryType": "measure"
       },
@@ -3524,7 +3548,25 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:Interactive",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:speed-index",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:SpeedIndex",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:Speedline",
         "duration": 100,
         "entryType": "measure"
       },
@@ -3542,7 +3584,19 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:Screenshots",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:estimated-input-latency",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:EstimatedInputLatency",
         "duration": 100,
         "entryType": "measure"
       },
@@ -3560,7 +3614,19 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:MainResource",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:first-cpu-idle",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:FirstCPUIdle",
         "duration": 100,
         "entryType": "measure"
       },
@@ -3584,13 +3650,61 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:CriticalRequestChains",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:redirects",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
+        "name": "lh:computed:LanternInteractive",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternFirstMeaningfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternFirstContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:PageDependencyGraph",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LoadSimulator",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:NetworkAnalysis",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:webapp-install-banner",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:ManifestValues",
         "duration": 100,
         "entryType": "measure"
       },
@@ -3632,6 +3746,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:MainThreadTasks",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:bootup-time",
         "duration": 100,
         "entryType": "measure"
@@ -3639,6 +3759,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:uses-rel-preload",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LoadSimulator",
         "duration": 100,
         "entryType": "measure"
       },
@@ -3987,6 +4113,18 @@
       {
         "startTime": 0,
         "name": "lh:audit:render-blocking-resources",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:FirstContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternFirstContentfulPaint",
         "duration": 100,
         "entryType": "measure"
       },

@@ -6,6 +6,7 @@
 'use strict';
 
 const ArbitraryEqualityMap = require('../lib/arbitrary-equality-map.js');
+const log = require('lighthouse-logger');
 
 /**
  * Decorate computableArtifact with a caching `request()` method which will
@@ -25,17 +26,24 @@ function makeComputedArtifact(computableArtifact) {
    */
   const request = (artifacts, context) => {
     const computedCache = context.computedCache;
-    const cache = computedCache.get(computableArtifact.name) || new ArbitraryEqualityMap();
-    computedCache.set(computableArtifact.name, cache);
+    const computedName = computableArtifact.name;
+
+    const cache = computedCache.get(computedName) || new ArbitraryEqualityMap();
+    computedCache.set(computedName, cache);
 
     const computed = /** @type {ReturnType<C['compute_']>|undefined} */ (cache.get(artifacts));
     if (computed) {
       return computed;
     }
 
+    const status = {msg: `Computing artifact: ${computedName}`, id: `lh:computed:${computedName}`};
+    log.time(status, 'verbose');
+
     const artifactPromise = /** @type {ReturnType<C['compute_']>} */
         (computableArtifact.compute_(artifacts, context));
     cache.set(artifacts, artifactPromise);
+
+    artifactPromise.then(() => log.timeEnd(status)).catch(() => log.timeEnd(status));
 
     return artifactPromise;
   };

@@ -12,19 +12,19 @@ const assert = require('assert');
 const makeComputedArtifact = require('../../computed/computed-artifact.js');
 
 describe('ComputedArtifact base class', () => {
-  it.skip('caches computed artifacts by strict equality', async () => {
+  it('caches computed artifacts by strict equality', async () => {
     let computeCounter = 0;
-
-    const TestComputedArtifact = makeComputedArtifact(class TestComputedArtifact {
+    class RawTestComputedArtifact {
       static async compute_() {
         return computeCounter++;
       }
-    });
+    }
 
     const context = {
       computedCache: new Map(),
     };
 
+    const TestComputedArtifact = makeComputedArtifact(RawTestComputedArtifact);
     let result = await TestComputedArtifact.request({x: 1}, context);
     assert.equal(result, 0);
 
