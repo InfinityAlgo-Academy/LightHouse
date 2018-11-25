@@ -7,7 +7,7 @@
 
 const Audit = require('../audit');
 const i18n = require('../../lib/i18n/i18n.js');
-const ComputedFmp = require('../../gather/computed/metrics/first-meaningful-paint.js');
+const ComputedFmp = require('../../computed/metrics/first-meaningful-paint.js');
 
 const UIStrings = {
   /** The name of the metric that marks the time at which a majority of the content has been painted by the browser. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */

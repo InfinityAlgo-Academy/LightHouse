@@ -6,14 +6,14 @@
 'use strict';
 
 const Audit = require('./audit');
-const TraceOfTab = require('../gather/computed/trace-of-tab.js');
-const Speedline = require('../gather/computed/speedline.js');
-const FirstContentfulPaint = require('../gather/computed/metrics/first-contentful-paint.js');
-const FirstMeaningfulPaint = require('../gather/computed/metrics/first-meaningful-paint.js');
-const FirstCPUIdle = require('../gather/computed/metrics/first-cpu-idle.js');
-const Interactive = require('../gather/computed/metrics/interactive.js');
-const SpeedIndex = require('../gather/computed/metrics/speed-index.js');
-const EstimatedInputLatency = require('../gather/computed/metrics/estimated-input-latency.js');
+const TraceOfTab = require('../computed/trace-of-tab.js');
+const Speedline = require('../computed/speedline.js');
+const FirstContentfulPaint = require('../computed/metrics/first-contentful-paint.js');
+const FirstMeaningfulPaint = require('../computed/metrics/first-meaningful-paint.js');
+const FirstCPUIdle = require('../computed/metrics/first-cpu-idle.js');
+const Interactive = require('../computed/metrics/interactive.js');
+const SpeedIndex = require('../computed/metrics/speed-index.js');
+const EstimatedInputLatency = require('../computed/metrics/estimated-input-latency.js');
 
 class Metrics extends Audit {
   /**

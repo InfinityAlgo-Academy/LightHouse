@@ -8,7 +8,7 @@
 const Audit = require('./audit');
 const URL = require('../lib/url-shim');
 const Util = require('../report/html/renderer/util');
-const NetworkRecords = require('../gather/computed/network-records.js');
+const NetworkRecords = require('../computed/network-records.js');
 
 /**
  * This audit checks which resources a page currently loads over HTTP which it

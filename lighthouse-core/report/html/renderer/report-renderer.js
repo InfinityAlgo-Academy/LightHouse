@@ -201,15 +201,26 @@ class ReportRenderer {
     const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
 
     for (const category of report.reportCategories) {
-      if (scoreHeader) {
-        scoreHeader.appendChild(categoryRenderer.renderScoreGauge(category));
-      }
-
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       categories.appendChild(renderer.render(category, report.categoryGroups));
     }
 
     if (scoreHeader) {
+      const defaultGauges = [];
+      const customGauges = [];
+      for (const category of report.reportCategories) {
+        const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
+        const categoryGauge = renderer.renderScoreGauge(category);
+
+        // Group gauges that aren't default at the end of the header
+        if (renderer.renderScoreGauge === categoryRenderer.renderScoreGauge) {
+          defaultGauges.push(categoryGauge);
+        } else {
+          customGauges.push(categoryGauge);
+        }
+      }
+      scoreHeader.append(...defaultGauges, ...customGauges);
+
       const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
       this._dom.find('.lh-scorescale-label', scoreScale).textContent =
         Util.UIStrings.scorescaleLabel;

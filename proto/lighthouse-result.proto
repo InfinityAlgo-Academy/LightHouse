@@ -47,10 +47,14 @@ enum LighthouseError {
   INSECURE_DOCUMENT_REQUEST = 16;
   // Used when protocol command times out.
   PROTOCOL_TIMEOUT = 17;
+  // Used when the page is not responding after maxWaitForLoad.
+  PAGE_HUNG = 18;
+  // DNS failure on main document (no resolution, timed out, etc)
+  DNS_FAILURE = 19;
 }
 
 // The overarching Lighthouse Response object (LHR)
-// https://github.com/GoogleChrome/lighthouse/blob/master/typings/lhr.d.ts
+// https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr.d.ts
 message LighthouseResult {
   // The timestamp of when the results were generated.
   google.protobuf.Timestamp fetch_time = 1;

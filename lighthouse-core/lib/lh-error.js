@@ -148,6 +148,12 @@ const ERRORS = {
     message: strings.pageLoadFailedInsecure,
     lhrRuntimeError: true,
   },
+  /* Used when the page stopped responding and did not finish loading. */
+  PAGE_HUNG: {
+    code: 'PAGE_HUNG',
+    message: strings.pageLoadFailedHung,
+    lhrRuntimeError: true,
+  },
 
   // Protocol internal failures
   TRACING_ALREADY_STARTED: {
@@ -179,6 +185,13 @@ const ERRORS = {
   PROTOCOL_TIMEOUT: {
     code: 'PROTOCOL_TIMEOUT',
     message: strings.protocolTimeout,
+    lhrRuntimeError: true,
+  },
+
+  // DNS failure on main document (no resolution, timed out, etc)
+  DNS_FAILURE: {
+    code: 'DNS_FAILURE',
+    message: strings.dnsFailure,
     lhrRuntimeError: true,
   },
 

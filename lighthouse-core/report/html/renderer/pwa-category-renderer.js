@@ -47,13 +47,52 @@ class PwaCategoryRenderer extends CategoryRenderer {
   }
 
   /**
+   * @param {LH.ReportResult.Category} category
+   * @return {DocumentFragment}
+   */
+  renderScoreGauge(category) {
+    // Defer to parent-gauge style if category error.
+    if (category.score === null) {
+      return super.renderScoreGauge(category);
+    }
+
+    const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge--pwa', this.templateContext);
+    const wrapper = /** @type {HTMLAnchorElement} */ (this.dom.find('.lh-gauge--pwa__wrapper',
+      tmpl));
+    wrapper.href = `#${category.id}`;
+
+    const allGroups = this._getGroupIds(category.auditRefs);
+    const passingGroupIds = this._getPassingGroupIds(category.auditRefs);
+
+    if (passingGroupIds.size === allGroups.size) {
+      wrapper.classList.add('lh-badged--all');
+    } else {
+      for (const passingGroupId of passingGroupIds) {
+        wrapper.classList.add(`lh-badged--${passingGroupId}`);
+      }
+    }
+
+    this.dom.find('.lh-gauge__label', tmpl).textContent = category.title;
+    return tmpl;
+  }
+
+  /**
+   * Returns the group IDs found in auditRefs.
+   * @param {Array<LH.ReportResult.AuditRef>} auditRefs
+   * @return {Set<string>}
+   */
+  _getGroupIds(auditRefs) {
+    const groupIds = auditRefs.map(ref => ref.group).filter(/** @return {g is string} */ g => !!g);
+    return new Set(groupIds);
+  }
+
+  /**
    * Returns the group IDs whose audits are all considered passing.
    * @param {Array<LH.ReportResult.AuditRef>} auditRefs
    * @return {Set<string>}
    */
   _getPassingGroupIds(auditRefs) {
-    const groupIds = auditRefs.map(ref => ref.group).filter(/** @return {g is string} */ g => !!g);
-    const uniqueGroupIds = new Set(groupIds);
+    const uniqueGroupIds = this._getGroupIds(auditRefs);
 
     // Remove any that have a failing audit.
     for (const auditRef of auditRefs) {

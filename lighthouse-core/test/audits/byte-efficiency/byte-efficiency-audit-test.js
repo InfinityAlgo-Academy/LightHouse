@@ -9,8 +9,8 @@ const ByteEfficiencyAudit_ = require('../../../audits/byte-efficiency/byte-effic
 const NetworkNode = require('../../../lib/dependency-graph/network-node');
 const CPUNode = require('../../../lib/dependency-graph/cpu-node');
 const Simulator = require('../../../lib/dependency-graph/simulator/simulator');
-const PageDependencyGraph = require('../../../gather/computed/page-dependency-graph.js');
-const LoadSimulator = require('../../../gather/computed/load-simulator.js');
+const PageDependencyGraph = require('../../../computed/page-dependency-graph.js');
+const LoadSimulator = require('../../../computed/load-simulator.js');
 
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');

@@ -14,7 +14,7 @@
 const URL = require('../../lib/url-shim');
 const Audit = require('../audit');
 const Util = require('../../report/html/renderer/util.js');
-const NetworkRecords = require('../../gather/computed/network-records.js');
+const NetworkRecords = require('../../computed/network-records.js');
 
 class UsesHTTP2Audit extends Audit {
   /**

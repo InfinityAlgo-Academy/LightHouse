@@ -131,10 +131,17 @@ describe('PwaCategoryRenderer', () => {
 
         const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
         const badgedElems = categoryElem.querySelectorAll(`.lh-badged`);
+        const badgedScoreGauge =
+          categoryElem.querySelector('.lh-gauge--pwa__wrapper[class*="lh-badged--"]');
 
-        // Only expect a badge on last permutation (all bits are set).
-        const expectedBadgeCount = i === totalPermutations - 1 ? 1 : 0;
-        assert.strictEqual(badgedElems.length, expectedBadgeCount);
+        // Only expect a badge (and badged gauge) on last permutation (all bits are set).
+        if (i !== totalPermutations - 1) {
+          assert.strictEqual(badgedElems.length, 0);
+          assert.strictEqual(badgedScoreGauge, null);
+        } else {
+          assert.strictEqual(badgedElems.length, 1);
+          assert.ok(badgedScoreGauge.classList.contains(`lh-badged--${targetGroupId}`));
+        }
       }
     });
 
@@ -145,6 +152,7 @@ describe('PwaCategoryRenderer', () => {
 
       const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
       assert.strictEqual(categoryElem.querySelectorAll('.lh-badged').length, groupIds.length);
+      assert.ok(categoryElem.querySelector('.lh-gauge--pwa__wrapper.lh-badged--all'));
     });
 
     it('renders no badges when no audit groups are passing', () => {
@@ -154,6 +162,8 @@ describe('PwaCategoryRenderer', () => {
 
       const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
       assert.strictEqual(categoryElem.querySelectorAll('.lh-badged').length, 0);
+      assert.strictEqual(categoryElem.querySelector('.lh-gauge--pwa__wrapper[class*="lh-badged-"]'),
+        null);
     });
 
     it('renders all but one badge when all groups but one are passing', () => {
@@ -164,13 +174,30 @@ describe('PwaCategoryRenderer', () => {
       const failingGroupId = auditRefs[0].group;
 
       const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
+      const gaugeElem = categoryElem.querySelector('.lh-gauge--pwa__wrapper');
 
       for (const groupId of groupIds) {
         const expectedCount = groupId === failingGroupId ? 0 : 1;
 
         const groupElems = categoryElem.querySelectorAll(`.lh-audit-group--${groupId}.lh-badged`);
         assert.strictEqual(groupElems.length, expectedCount);
+
+        gaugeElem.classList.contains(`lh-badged--${groupId}`);
       }
+    });
+  });
+
+  describe('#renderScoreGauge', () => {
+    it('renders an error score gauge in case of category error', () => {
+      category.score = null;
+      const badgeGauge = pwaRenderer.renderScoreGauge(category);
+
+      // Not a PWA gauge.
+      assert.strictEqual(badgeGauge.querySelector('.lh-gauge--pwa__wrapper'), null);
+
+      const percentageElem = badgeGauge.querySelector('.lh-gauge__percentage');
+      assert.strictEqual(percentageElem.textContent, '?');
+      assert.strictEqual(percentageElem.title, Util.UIStrings.errorLabel);
     });
   });
 });

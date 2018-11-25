@@ -8,10 +8,10 @@
 const Audit = require('./audit');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
 const i18n = require('../lib/i18n/i18n.js');
-const TraceOfTab = require('../gather/computed/trace-of-tab.js');
-const NetworkRecords = require('../gather/computed/network-records.js');
-const MainResource = require('../gather/computed/main-resource.js');
-const LanternInteractive = require('../gather/computed/metrics/lantern-interactive.js');
+const TraceOfTab = require('../computed/trace-of-tab.js');
+const NetworkRecords = require('../computed/network-records.js');
+const MainResource = require('../computed/main-resource.js');
+const LanternInteractive = require('../computed/metrics/lantern-interactive.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates. */

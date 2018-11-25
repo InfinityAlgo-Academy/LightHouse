@@ -19,12 +19,6 @@ function generateMockArtifacts(src = manifestSrc) {
 
   const clonedArtifacts = JSON.parse(JSON.stringify({
     Manifest: exampleManifest,
-    ServiceWorker: {
-      versions: [{
-        status: 'activated',
-        scriptURL: 'https://example.com/sw.js',
-      }],
-    },
     URL: {finalUrl: 'https://example.com'},
   }));
   return clonedArtifacts;
@@ -142,19 +136,6 @@ describe('PWA: webapp install banner audit', () => {
     return WebappInstallBannerAudit.audit(artifacts, context).then(result => {
       assert.strictEqual(result.rawValue, false);
       assert.ok(result.explanation.includes('PNG icon'), result.explanation);
-      const failures = result.details.items[0].failures;
-      assert.strictEqual(failures.length, 1, failures);
-    });
-  });
-
-  it('fails if page had no SW', () => {
-    const artifacts = generateMockArtifacts();
-    artifacts.ServiceWorker.versions = [];
-    const context = generateMockAuditContext();
-
-    return WebappInstallBannerAudit.audit(artifacts, context).then(result => {
-      assert.strictEqual(result.rawValue, false);
-      assert.ok(result.explanation.includes('service worker'), result.explanation);
       const failures = result.details.items[0].failures;
       assert.strictEqual(failures.length, 1, failures);
     });

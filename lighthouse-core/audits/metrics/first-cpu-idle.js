@@ -7,7 +7,7 @@
 
 const Audit = require('../audit');
 const i18n = require('../../lib/i18n/i18n.js');
-const ComputedFci = require('../../gather/computed/metrics/first-cpu-idle.js');
+const ComputedFci = require('../../computed/metrics/first-cpu-idle.js');
 
 const UIStrings = {
   /** The name of the metric that marks when the page has displayed content and the CPU is not busy executing the page's scripts. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */

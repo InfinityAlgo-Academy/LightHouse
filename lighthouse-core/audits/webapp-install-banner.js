@@ -6,8 +6,7 @@
 'use strict';
 
 const MultiCheckAudit = require('./multi-check-audit');
-const SWAudit = require('./service-worker');
-const ManifestValues = require('../gather/computed/manifest-values');
+const ManifestValues = require('../computed/manifest-values.js');
 
 /**
  * @fileoverview
@@ -82,32 +81,16 @@ class WebappInstallBanner extends MultiCheckAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {Array<string>}
-   */
-  static assessServiceWorker(artifacts) {
-    const failures = [];
-    const hasServiceWorker = SWAudit.audit(artifacts).rawValue;
-    if (!hasServiceWorker) {
-      failures.push('Site does not register a service worker');
-    }
-
-    return failures;
-  }
-
-  /**
-   * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<{failures: Array<string>, manifestValues: LH.Artifacts.ManifestValues}>}
    */
   static async audit_(artifacts, context) {
     const manifestValues = await ManifestValues.request(artifacts.Manifest, context);
     const manifestFailures = WebappInstallBanner.assessManifest(manifestValues);
-    const swFailures = WebappInstallBanner.assessServiceWorker(artifacts);
 
     return {
       failures: [
         ...manifestFailures,
-        ...swFailures,
       ],
       manifestValues,
     };

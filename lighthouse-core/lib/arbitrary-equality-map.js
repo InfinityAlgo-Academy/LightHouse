@@ -14,7 +14,7 @@ const isEqual = require('lodash.isequal');
  */
 class ArbitraryEqualityMap {
   constructor() {
-    this._equalsFn = /** @type {function(*,*):boolean} */ ((a, b) => a === b);
+    this._equalsFn = ArbitraryEqualityMap.deepEquals;
     /** @type {Array<{key: *, value: *}>} */
     this._entries = [];
   }

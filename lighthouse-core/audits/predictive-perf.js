@@ -8,12 +8,12 @@
 const Audit = require('./audit');
 const Util = require('../report/html/renderer/util');
 
-const LanternFcp = require('../gather/computed/metrics/lantern-first-contentful-paint.js');
-const LanternFmp = require('../gather/computed/metrics/lantern-first-meaningful-paint.js');
-const LanternInteractive = require('../gather/computed/metrics/lantern-interactive.js');
-const LanternFirstCPUIdle = require('../gather/computed/metrics/lantern-first-cpu-idle.js');
-const LanternSpeedIndex = require('../gather/computed/metrics/lantern-speed-index.js');
-const LanternEil = require('../gather/computed/metrics/lantern-estimated-input-latency.js');
+const LanternFcp = require('../computed/metrics/lantern-first-contentful-paint.js');
+const LanternFmp = require('../computed/metrics/lantern-first-meaningful-paint.js');
+const LanternInteractive = require('../computed/metrics/lantern-interactive.js');
+const LanternFirstCPUIdle = require('../computed/metrics/lantern-first-cpu-idle.js');
+const LanternSpeedIndex = require('../computed/metrics/lantern-speed-index.js');
+const LanternEil = require('../computed/metrics/lantern-estimated-input-latency.js');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 //   https://www.desmos.com/calculator/rjp0lbit8y

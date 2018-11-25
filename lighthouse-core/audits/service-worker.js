@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const URL = require('../lib/url-shim');
-const Audit = require('./audit');
+const URL = require('../lib/url-shim.js');
+const Audit = require('./audit.js');
 
 class ServiceWorker extends Audit {
   /**
@@ -29,17 +29,30 @@ class ServiceWorker extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    // Find active service worker for this URL. Match against
-    // artifacts.URL.finalUrl so audit accounts for any redirects.
-    const versions = artifacts.ServiceWorker.versions;
-    const url = artifacts.URL.finalUrl;
+    const {versions, registrations} = artifacts.ServiceWorker;
+    const pageUrl = new URL(artifacts.URL.finalUrl);
 
-    const origin = new URL(url).origin;
-    const matchingSW = versions.filter(v => v.status === 'activated')
-        .find(v => new URL(v.scriptURL).origin === origin);
+    // Find active service workers for this origin. Match against
+    // artifacts.URL.finalUrl so audit accounts for any redirects.
+    const matchingSWVersions = versions.filter(v => v.status === 'activated')
+      .filter(v => new URL(v.scriptURL).origin === pageUrl.origin);
+
+    if (matchingSWVersions.length === 0) {
+      return {rawValue: false};
+    }
+
+    // Find the normalized scope URLs of possibly-controlling SWs.
+    const matchingScopeUrls = matchingSWVersions
+      .map(v => registrations.find(r => r.registrationId === v.registrationId))
+      .filter(/** @return {r is LH.Crdp.ServiceWorker.ServiceWorkerRegistration} */ r => !!r)
+      .map(r => new URL(r.scopeURL).href);
+
+    // Ensure page is included in a SW's scope.
+    // See https://w3c.github.io/ServiceWorker/v1/#scope-match-algorithm
+    const inScope = matchingScopeUrls.some(scopeUrl => pageUrl.href.startsWith(scopeUrl));
 
     return {
-      rawValue: !!matchingSW,
+      rawValue: inScope,
     };
   }
 }

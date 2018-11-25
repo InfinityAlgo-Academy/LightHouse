@@ -11,9 +11,11 @@ module.exports = {
   badTraceRecording: `Something went wrong with recording the trace over your page load. Please run Lighthouse again.`,
   pageLoadTookTooLong: `Your page took too long to load. Please follow the opportunities in the report to reduce your page load time, and then try re-running Lighthouse.`,
   pageLoadFailed: `Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests.`,
+  pageLoadFailedHung: `Lighthouse was unable to reliably load the URL you requested because the page stopped responding.`,
   pageLoadFailedInsecure: `The URL you have provided does not have valid security credentials.`,
   internalChromeError: `An internal Chrome error occurred. Please restart Chrome and try re-running Lighthouse.`,
   requestContentTimeout: 'Fetching resource content has exceeded the allotted time',
   urlInvalid: `The URL you have provided appears to be invalid.`,
   protocolTimeout: `Waiting for DevTools protocol response has exceeded the allotted time.`,
+  dnsFailure: `DNS servers could not resolve the provided domain.`,
 };

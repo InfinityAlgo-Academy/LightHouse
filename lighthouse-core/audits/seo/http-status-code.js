@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('../audit');
-const MainResource = require('../../gather/computed/main-resource.js');
+const MainResource = require('../../computed/main-resource.js');
 const HTTP_UNSUCCESSFUL_CODE_LOW = 400;
 const HTTP_UNSUCCESSFUL_CODE_HIGH = 599;
 

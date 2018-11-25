@@ -15,6 +15,7 @@ const yargs = require('yargs');
 const log = require('lighthouse-logger');
 
 const PROTOCOL_TIMEOUT_EXIT_CODE = 67;
+const PAGE_HUNG_EXIT_CODE = 68;
 const RETRIES = 3;
 const NUMERICAL_EXPECTATION_REGEXP = /^(<=?|>=?)((\d|\.)+)$/;
 
@@ -87,7 +88,7 @@ function runLighthouse(url, configPath, isDebug) {
   if (runResults.status === PROTOCOL_TIMEOUT_EXIT_CODE) {
     console.error(`Lighthouse debugger connection timed out ${RETRIES} times. Giving up.`);
     process.exit(1);
-  } else if (runResults.status !== 0) {
+  } else if (runResults.status !== 0 && runResults.status !== PAGE_HUNG_EXIT_CODE) {
     console.error(`Lighthouse run failed with exit code ${runResults.status}. stderr to follow:`);
     console.error(runResults.stderr);
     process.exit(runResults.status);
@@ -98,10 +99,14 @@ function runLighthouse(url, configPath, isDebug) {
     console.error(`STDERR: ${runResults.stderr}`);
   }
 
+  if (runResults.status === PAGE_HUNG_EXIT_CODE) {
+    return {requestedUrl: url, finalUrl: url, errorCode: 'PAGE_HUNG', audits: {}};
+  }
+
   const lhr = fs.readFileSync(outputPath, 'utf8');
   if (isDebug) {
     console.log('LHR output available at: ', outputPath);
-  } else {
+  } else if (fs.existsSync(outputPath)) {
     fs.unlinkSync(outputPath);
   }
 

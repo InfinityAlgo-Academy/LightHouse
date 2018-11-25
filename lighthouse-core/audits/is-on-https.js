@@ -8,7 +8,7 @@
 const Audit = require('./audit');
 const URL = require('../lib/url-shim');
 const Util = require('../report/html/renderer/util');
-const NetworkRecords = require('../gather/computed/network-records.js');
+const NetworkRecords = require('../computed/network-records.js');
 
 const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extension', 'about'];
 const SECURE_DOMAINS = ['localhost', '127.0.0.1'];

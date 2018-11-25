@@ -30,6 +30,11 @@ const SMOKETESTS = [{
   expectations: 'a11y/expectations.js',
   batch: 'parallel-first',
 }, {
+  id: 'errors',
+  expectations: smokehouseDir + 'error-expectations.js',
+  config: smokehouseDir + 'error-config.js',
+  batch: 'errors',
+}, {
   id: 'pwa',
   expectations: smokehouseDir + 'pwa-expectations.js',
   config: smokehouseDir + 'pwa-config.js',

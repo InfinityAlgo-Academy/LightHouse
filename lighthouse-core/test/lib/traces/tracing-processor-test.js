@@ -12,7 +12,7 @@ const TracingProcessor = require('../../../lib/traces/tracing-processor');
 const pwaTrace = require('../../fixtures/traces/progressive-app.json');
 const defaultPercentiles = [0, 0.25, 0.5, 0.75, 0.9, 0.99, 1];
 
-const TraceOfTab = require('../../../gather/computed/trace-of-tab');
+const TraceOfTab = require('../../../computed/trace-of-tab.js');
 
 /**
  * Create a riskPercentiles result object by matching the values in percentiles
