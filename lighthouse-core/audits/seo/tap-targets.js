@@ -370,13 +370,6 @@ class TapTargets extends Audit {
 
     const details = Audit.makeTableDetails(headings, tableItems);
 
-    let displayValue;
-    if (tableItems.length) {
-      displayValue =
-        tableItems.length > 1
-          ? `${tableItems.length} issues found`
-          : '1 issue found';
-    }
 
     let score = 1;
     if (artifacts.TapTargets.length > 0) {
@@ -389,6 +382,8 @@ class TapTargets extends Audit {
 
     // handle floating point number issue where score is greater than 1, e.g. 1.00...0002)
     score = Math.round(score * 1000) / 1000;
+
+    const displayValue = Math.round(score * 100) + '% appropriately sized tap targets';
 
     return {
       rawValue: tableItems.length === 0,
