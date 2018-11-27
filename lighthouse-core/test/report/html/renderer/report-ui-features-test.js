@@ -69,6 +69,8 @@ describe('ReportUIFeatures', () => {
       };
     };
 
+    global.window.location = 'http://localhost';
+
     const dom = new DOM(document.window.document);
     const dom2 = new DOM(documentReport.window.document);
     const detailsRenderer = new DetailsRenderer(dom);
