@@ -14,6 +14,7 @@
 const URL = require('../../lib/url-shim');
 const Audit = require('../audit');
 const Util = require('../../report/html/renderer/util.js');
+const NetworkRecords = require('../../computed/network-records.js');
 
 class UsesHTTP2Audit extends Audit {
   /**
@@ -32,11 +33,12 @@ class UsesHTTP2Audit extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
+  static audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    return artifacts.requestNetworkRecords(devtoolsLogs).then(networkRecords => {
+    return NetworkRecords.request(devtoolsLogs, context).then(networkRecords => {
       const finalHost = new URL(artifacts.URL.finalUrl).host;
 
       const seenURLs = new Set();

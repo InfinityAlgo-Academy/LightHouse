@@ -11,6 +11,20 @@
  */
 
 const AxeAudit = require('./axe-audit');
+const i18n = require('../../lib/i18n/i18n.js');
+
+const UIStrings = {
+  /** Title of an accesibility audit that evaluates if the accesskey HTML attribute values are unique across all elements. This title is descriptive of the successful state and is shown to users when no user action is required. */
+  title: '`[accesskey]` values are unique',
+  /** Title of an accesibility audit that evaluates if the accesskey HTML attribute values are unique across all elements. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
+  failureTitle: '`[accesskey]` values are not unique',
+  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  description: 'Access keys let users quickly focus a part of the page. For proper ' +
+      'navigation, each access key must be unique. ' +
+      '[Learn more](https://dequeuniversity.com/rules/axe/2.2/accesskeys?application=lighthouse).',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class Accesskeys extends AxeAudit {
   /**
@@ -19,14 +33,13 @@ class Accesskeys extends AxeAudit {
   static get meta() {
     return {
       id: 'accesskeys',
-      title: '`[accesskey]` values are unique',
-      failureTitle: '`[accesskey]` values are not unique',
-      description: 'Access keys let users quickly focus a part of the page. For proper ' +
-          'navigation, each access key must be unique. ' +
-          '[Learn more](https://dequeuniversity.com/rules/axe/2.2/accesskeys?application=lighthouse).',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['Accessibility'],
     };
   }
 }
 
 module.exports = Accesskeys;
+module.exports.UIStrings = UIStrings;

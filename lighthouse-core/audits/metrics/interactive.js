@@ -6,7 +6,8 @@
 'use strict';
 
 const Audit = require('../audit');
-const i18n = require('../../lib/i18n');
+const i18n = require('../../lib/i18n/i18n.js');
+const Interactive = require('../../computed/metrics/interactive.js');
 
 const UIStrings = {
   /** The name of the metric that marks the time at which the page is fully loaded and is able to quickly respond to user input (clicks, taps, and keypresses feel responsive). Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
@@ -60,7 +61,7 @@ class InteractiveMetric extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
-    const metricResult = await artifacts.requestInteractive(metricComputationData);
+    const metricResult = await Interactive.request(metricComputationData, context);
     const timeInMs = metricResult.timing;
     const extendedInfo = {
       timeInMs,
@@ -78,7 +79,7 @@ class InteractiveMetric extends Audit {
         context.options.scoreMedian
       ),
       rawValue: timeInMs,
-      displayValue: str_(i18n.UIStrings.ms, {timeInMs}),
+      displayValue: str_(i18n.UIStrings.seconds, {timeInMs}),
       extendedInfo: {
         value: extendedInfo,
       },

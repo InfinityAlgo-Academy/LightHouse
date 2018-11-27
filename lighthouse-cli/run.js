@@ -22,6 +22,7 @@ const opn = require('opn');
 
 const _RUNTIME_ERROR_CODE = 1;
 const _PROTOCOL_TIMEOUT_EXIT_CODE = 67;
+const _PAGE_HUNG_EXIT_CODE = 68;
 
 /**
  * exported for testing
@@ -70,6 +71,12 @@ function showProtocolTimeoutError() {
   process.exit(_PROTOCOL_TIMEOUT_EXIT_CODE);
 }
 
+/** @param {LH.LighthouseError} err */
+function showPageHungError(err) {
+  console.error('Page hung:', err.friendlyMessage);
+  process.exit(_PAGE_HUNG_EXIT_CODE);
+}
+
 /**
  * @param {LH.LighthouseError} err
  */
@@ -89,6 +96,8 @@ function handleError(err) {
     showConnectionError();
   } else if (err.code === 'CRI_TIMEOUT') {
     showProtocolTimeoutError();
+  } else if (err.code === 'PAGE_HUNG') {
+    showPageHungError(err);
   } else {
     showRuntimeError(err);
   }
@@ -147,6 +156,18 @@ function runLighthouse(url, flags, config) {
   let launchedChrome;
   const shouldGather = flags.gatherMode || flags.gatherMode === flags.auditMode;
   let chromeP = Promise.resolve();
+
+  process.on('unhandledRejection', async (reason) => {
+    process.stderr.write(`Unhandled Rejection. Reason: ${reason}\n`);
+    try {
+      await potentiallyKillChrome();
+    } catch (err) {
+      process.stderr.write(`Couldn't quit Chrome process. ${err.toString()}\n`);
+    }
+    setTimeout(_ => {
+      process.exit(1);
+    }, 100);
+  });
 
   if (shouldGather) {
     chromeP = chromeP.then(_ =>

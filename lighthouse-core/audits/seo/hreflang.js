@@ -7,6 +7,7 @@
 
 const Audit = require('../audit');
 const LinkHeader = require('http-link-header');
+const MainResource = require('../../computed/main-resource.js');
 const VALID_LANGS = importValidLangs();
 const LINK_HEADER = 'link';
 const NO_LANGUAGE = 'x-default';
@@ -75,13 +76,14 @@ class Hreflang extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
+  static audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const URL = artifacts.URL;
 
-    return artifacts.requestMainResource({devtoolsLog, URL})
+    return MainResource.request({devtoolsLog, URL}, context)
       .then(mainResource => {
         /** @type {Array<{source: string|{type: 'node', snippet: string}}>} */
         const invalidHreflangs = [];

@@ -10,7 +10,7 @@
 
 const NetworkRequest = require('../../lib/network-request');
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const i18n = require('../../lib/i18n');
+const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to use video formats rather than animated GIFs, which are wasteful. This is displayed in a list of audit titles that Lighthouse generates. */

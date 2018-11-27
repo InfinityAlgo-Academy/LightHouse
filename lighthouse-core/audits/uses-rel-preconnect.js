@@ -8,7 +8,10 @@
 
 const Audit = require('./audit');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
-const i18n = require('../lib/i18n');
+const i18n = require('../lib/i18n/i18n.js');
+const NetworkRecords = require('../computed/network-records.js');
+const MainResource = require('../computed/main-resource.js');
+const LoadSimulator = require('../computed/load-simulator.js');
 
 // Preconnect establishes a "clean" socket. Chrome's socket manager will keep an unused socket
 // around for 10s. Meaning, the time delta between processing preconnect a request should be <10s,
@@ -87,9 +90,9 @@ class UsesRelPreconnectAudit extends Audit {
     let maxWasted = 0;
 
     const [networkRecords, mainResource, loadSimulator] = await Promise.all([
-      artifacts.requestNetworkRecords(devtoolsLog),
-      artifacts.requestMainResource({devtoolsLog, URL}),
-      artifacts.requestLoadSimulator({devtoolsLog, settings}),
+      NetworkRecords.request(devtoolsLog, context),
+      MainResource.request({devtoolsLog, URL}, context),
+      LoadSimulator.request({devtoolsLog, settings}, context),
     ]);
 
     const {rtt, additionalRttByOrigin} = loadSimulator.getOptions();
@@ -127,7 +130,7 @@ class UsesRelPreconnectAudit extends Audit {
       // Sometimes requests are done simultaneous and the connection has not been made
       // chrome will try to connect for each network record, we get the first record
       const firstRecordOfOrigin = records.reduce((firstRecord, record) => {
-        return (record.startTime < firstRecord.startTime) ? record: firstRecord;
+        return (record.startTime < firstRecord.startTime) ? record : firstRecord;
       });
 
       // Skip the origin if we don't have timing information
@@ -172,7 +175,9 @@ class UsesRelPreconnectAudit extends Audit {
     return {
       score: UnusedBytes.scoreForWastedMs(maxWasted),
       rawValue: maxWasted,
-      displayValue: str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: maxWasted}),
+      displayValue: maxWasted ?
+        str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: maxWasted}) :
+        '',
       extendedInfo: {
         value: results,
       },

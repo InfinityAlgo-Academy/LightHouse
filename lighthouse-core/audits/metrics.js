@@ -6,6 +6,14 @@
 'use strict';
 
 const Audit = require('./audit');
+const TraceOfTab = require('../computed/trace-of-tab.js');
+const Speedline = require('../computed/speedline.js');
+const FirstContentfulPaint = require('../computed/metrics/first-contentful-paint.js');
+const FirstMeaningfulPaint = require('../computed/metrics/first-meaningful-paint.js');
+const FirstCPUIdle = require('../computed/metrics/first-cpu-idle.js');
+const Interactive = require('../computed/metrics/interactive.js');
+const SpeedIndex = require('../computed/metrics/speed-index.js');
+const EstimatedInputLatency = require('../computed/metrics/estimated-input-latency.js');
 
 class Metrics extends Audit {
   /**
@@ -31,14 +39,14 @@ class Metrics extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
 
-    const traceOfTab = await artifacts.requestTraceOfTab(trace);
-    const speedline = await artifacts.requestSpeedline(trace);
-    const firstContentfulPaint = await artifacts.requestFirstContentfulPaint(metricComputationData);
-    const firstMeaningfulPaint = await artifacts.requestFirstMeaningfulPaint(metricComputationData);
-    const firstCPUIdle = await artifacts.requestFirstCPUIdle(metricComputationData);
-    const interactive = await artifacts.requestInteractive(metricComputationData);
-    const speedIndex = await artifacts.requestSpeedIndex(metricComputationData);
-    const estimatedInputLatency = await artifacts.requestEstimatedInputLatency(metricComputationData); // eslint-disable-line max-len
+    const traceOfTab = await TraceOfTab.request(trace, context);
+    const speedline = await Speedline.request(trace, context);
+    const firstContentfulPaint = await FirstContentfulPaint.request(metricComputationData, context);
+    const firstMeaningfulPaint = await FirstMeaningfulPaint.request(metricComputationData, context);
+    const firstCPUIdle = await FirstCPUIdle.request(metricComputationData, context);
+    const interactive = await Interactive.request(metricComputationData, context);
+    const speedIndex = await SpeedIndex.request(metricComputationData, context);
+    const estimatedInputLatency = await EstimatedInputLatency.request(metricComputationData, context); // eslint-disable-line max-len
 
     /** @type {UberMetricsItem} */
     const metrics = {

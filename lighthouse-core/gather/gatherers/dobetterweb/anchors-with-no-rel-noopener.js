@@ -15,8 +15,8 @@ class AnchorsWithNoRelNoopener extends Gatherer {
    */
   afterPass(passContext) {
     const expression = `(function() {
-      ${pageFunctions.getOuterHTMLSnippet.toString()};
-      ${pageFunctions.getElementsInDocument.toString()}; // define function on page
+      ${pageFunctions.getOuterHTMLSnippetString};
+      ${pageFunctions.getElementsInDocumentString}; // define function on page
       const selector = 'a[target="_blank"]:not([rel~="noopener"]):not([rel~="noreferrer"])';
       const elements = getElementsInDocument(selector);
       return elements.map(node => ({

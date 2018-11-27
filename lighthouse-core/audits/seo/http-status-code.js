@@ -6,6 +6,7 @@
 'use strict';
 
 const Audit = require('../audit');
+const MainResource = require('../../computed/main-resource.js');
 const HTTP_UNSUCCESSFUL_CODE_LOW = 400;
 const HTTP_UNSUCCESSFUL_CODE_HIGH = 599;
 
@@ -27,13 +28,14 @@ class HTTPStatusCode extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
+  static audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const URL = artifacts.URL;
 
-    return artifacts.requestMainResource({devtoolsLog, URL})
+    return MainResource.request({devtoolsLog, URL}, context)
       .then(mainResource => {
         const statusCode = mainResource.statusCode;
 

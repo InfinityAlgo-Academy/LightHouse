@@ -72,6 +72,19 @@
       },
       "tts": 826016
     },
+    {
+      "pid": 6117,
+      "tid": 775,
+      "ts": 1805897263653,
+      "ph": "R",
+      "cat": "blink.user_timing",
+      "name": "navigationStart",
+      "args": {
+        "frame": "0x25edaa521e58",
+        "data": {"documentLoaderURL": "intent://this-one-should-be-ignored"}
+      },
+      "tts": 673412
+    },
       {
       "pid": 6117,
       "tid": 775,

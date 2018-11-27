@@ -56,7 +56,6 @@ class LighthouseReportViewer {
    * @private
    */
   _addEventListeners() {
-    // @ts-ignore - tsc thinks document can't listen for `paste`
     document.addEventListener('paste', this._onPaste);
 
     const gistUrlInput = find('.js-gist-url', document);
@@ -139,10 +138,12 @@ class LighthouseReportViewer {
   _replaceReportHtml(json) {
     this._validateReportJson(json);
 
-    if (!json.lighthouseVersion.startsWith('3')) {
+    if (json.lighthouseVersion.startsWith('2')) {
       this._loadInLegacyViewerVersion(json);
       return;
     }
+
+    // TODO: viewer3x :)
 
     const dom = new DOM(document);
     const renderer = new ReportRenderer(dom);
@@ -156,7 +157,7 @@ class LighthouseReportViewer {
       let saveCallback = null;
       if (!this._reportIsFromGist) {
         saveCallback = this._onSaveJson;
-        history.pushState({}, undefined, LighthouseReportViewer.APP_URL);
+        history.pushState({}, '', LighthouseReportViewer.APP_URL);
       }
 
       const features = new ViewerUIFeatures(dom, saveCallback);
@@ -257,7 +258,7 @@ class LighthouseReportViewer {
       }
 
       this._reportIsFromGist = true;
-      history.pushState({}, undefined, `${LighthouseReportViewer.APP_URL}?gist=${id}`);
+      history.pushState({}, '', `${LighthouseReportViewer.APP_URL}?gist=${id}`);
 
       return id;
     }).catch(err => logger.log(err.message));
@@ -335,7 +336,7 @@ class LighthouseReportViewer {
 
       const match = url.pathname.match(/[a-f0-9]{5,}/);
       if (match) {
-        history.pushState({}, undefined, `${LighthouseReportViewer.APP_URL}?gist=${match[0]}`);
+        history.pushState({}, '', `${LighthouseReportViewer.APP_URL}?gist=${match[0]}`);
         this._loadFromDeepLink();
       }
     } catch (err) {
@@ -369,7 +370,7 @@ class LighthouseReportViewer {
   }
 }
 
-// @ts-ignore - node export for testing.
+// node export for testing.
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = LighthouseReportViewer;
 }

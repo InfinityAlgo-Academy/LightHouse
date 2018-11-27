@@ -6,7 +6,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const i18n = require('../../lib/i18n');
+const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to remove content from their CSS that isn’t needed immediately and instead load that content at a later time. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -151,21 +151,21 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
     }
 
     const usage = UnusedCSSRules.computeUsage(stylesheetInfo);
-    const result = {url}; // Assign to temporary to keep tsc happy about index signature.
-    return Object.assign(result, usage);
+    // @ts-ignore TODO(bckenny): fix index signature on ByteEfficiencyItem.
+    return Object.assign({url}, usage);
   }
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
-  static audit_(artifacts) {
+  static audit_(artifacts, networkRecords) {
     const styles = artifacts.CSSUsage.stylesheets;
     const usage = artifacts.CSSUsage.rules;
     const pageUrl = artifacts.URL.finalUrl;
 
-    const devtoolsLogs = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
-    return artifacts.requestNetworkRecords(devtoolsLogs).then(networkRecords => {
+    return Promise.resolve(networkRecords).then(networkRecords => {
       const indexedSheets = UnusedCSSRules.indexStylesheetsById(styles, networkRecords);
       UnusedCSSRules.indexUsedRules(usage, indexedSheets);
 

@@ -16,8 +16,11 @@ const {URL} = require('url');
 (async() => {
 const url = 'https://www.chromestatus.com/features';
 
-// Use Puppeteer to launch Chrome. appMode launches headful chrome and doesn't size the viewport.
-const browser = await puppeteer.launch({appMode: true});
+// Use Puppeteer to launch headful Chrome and don't use its default 800x600 viewport.
+const browser = await puppeteer.launch({
+  headless: false,
+  defaultViewport: null,
+});
 
 // Wait for Lighthouse to open url, then customize network conditions.
 // Note: this will re-establish these conditions when LH reloads the page. Think that's ok....

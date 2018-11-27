@@ -8,7 +8,7 @@
 /* eslint-disable max-len */
 
 const constants = require('./constants');
-const i18n = require('../lib/i18n');
+const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Title of the Performance category of audits. Equivalent to 'Web performance', this term is inclusive of all web page speed and loading optimization topics. Also used as a label of a score gauge; try to limit to 20 characters. */
@@ -31,6 +31,44 @@ const UIStrings = {
   diagnosticsGroupTitle: 'Diagnostics',
   /** Description of the diagnostics section of the Performance category. Within this section are audits with non-imperative titles that provide more detail on the page's page load performance characteristics. Whereas the 'Opportunities' suggest an action along with expected time savings, diagnostics do not. Within this section, the user may read the details and deduce additional actions they could take. */
   diagnosticsGroupDescription: 'More information about the performance of your application.',
+  /* Title of the color contrast section within the Accessibility category. Within this section are audits with descriptive titles that highlight the color and vision aspects of the page's accessibility that are passing or failing. */
+  a11yColorContrastGroupTitle: 'Color Contrast Is Satisfactory',
+  /* Description of the color contrast section within the Accessibility category. Within this section are audits with descriptive titles that highlight the color and vision aspects of the page's accessibility that are passing or failing. */
+  a11yColorContrastGroupDescription: 'These are opportunities to improve the legibility of your content.',
+  /* Title of the screen reader annotation section within the Accessibility category. Within this section are audits with descriptive titles that highlight the screen reader readability aspects of the page's accessibility that are passing or failing. 'Elements' refers to HTML elements. */
+  a11yDescribeContentsGroupTitle: 'Elements Describe Contents Well',
+  /* Description of the screen reader annotation section within the Accessibility category. Within this section are audits with descriptive titles that highlight the screen reader readability aspects of the page's accessibility that are passing or failing. */
+  a11yDescribeContentsGroupDescription: 'These are opportunities to make your content easier to understand for a user of assistive technology, like a screen reader.',
+  /* Title of the HTML validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight structural HTML aspects of the page's accessibility that are passing or failing (i.e. that list items are contained within list parents, etc). 'Elements' refers to HTML elements. */
+  a11yWellStructuredGroupTitle: 'Elements Are Well Structured',
+  /* Description of the HTML validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight structural HTML aspects of the page's accessibility that are passing or failing. */
+  a11yWellStructuredGroupDescription: 'These are opportunities to make sure your HTML is appropriately structured.',
+  /* Title of the ARIA validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if whether all the aria-* HTML attributes have been used properly. */
+  a11yAriaGroupTitle: 'ARIA Attributes Follow Best Practices',
+  /* Description of the ARIA validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if whether all the aria-* HTML attributes have been used properly. */
+  a11yAriaGroupDescription: 'These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader.',
+  /* Title of the HTML attribute validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the HTML attribute values on the page are used correctly. 'Elements' refers to HTML elements. */
+  a11yCorrectAttributesGroupTitle: 'Elements Use Attributes Correctly',
+  /* Description of the HTML attribute validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the HTML attribute values on the page are used correctly. */
+  a11yCorrectAttributesGroupDescription: 'These are opportunities to improve the configuration of your HTML elements.',
+  /* Title of the HTML element naming section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the non-textual HTML elements on the page have names discernible by a screen reader. */
+  a11yElementNamesGroupTitle: 'Elements Have Discernible Names',
+  /* Description of the HTML element naming section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the non-textual HTML elements on the page have names discernible by a screen reader. */
+  a11yElementNamesGroupDescription: 'These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.',
+  /* Title of the language section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the language has been annotated in the correct HTML attributes on the page. */
+  a11yLanguageGroupTitle: 'Page Specifies Valid Language',
+  /* Description of the language section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the language has been annotated in the correct HTML attributes on the page. */
+  a11yLanguageGroupDescription: 'These are opportunities to improve the interpretation of your content by users in different locales.',
+  /* Title of the meta tag section within the Accessibility category. Within this section are audits with descriptive titles that highlight if meta tags on the page have been used properly and if any important ones are missing. */
+  a11yMetaGroupTitle: 'Meta Tags Used Properly',
+  /* Description of the meta tag section within the Accessibility category. Within this section are audits with descriptive titles that highlight if meta tags on the page have been used properly and if any important ones are missing. */
+  a11yMetaGroupDescription: 'These are opportunities to improve the user experience of your site.',
+  /** Title of the Fast and Reliable section of the web app category. Within this section are audits that check if the web site loaded quickly and can reliably load even if the internet connection is very slow or goes offline. */
+  pwaFastReliableGroupTitle: 'Fast and reliable',
+  /** Title of the Installable section of the web app category. Within this section are audits that check if Chrome supports installing the web site as an app on their device. */
+  pwaInstallableGroupTitle: 'Installable',
+  /** Title of the "PWA Optimized" section of the web app category. Within this section are audits that check if the developer has taken advantage of features to make their web page more enjoyable and engaging for the user. */
+  pwaOptimizedGroupTitle: 'PWA Optimized',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -65,7 +103,6 @@ const defaultConfig = {
       'dobetterweb/password-inputs-with-prevented-paste',
       'dobetterweb/response-compression',
       'dobetterweb/tags-blocking-first-paint',
-      'dobetterweb/websql',
       'seo/meta-description',
       'seo/font-size',
       'seo/crawlable-links',
@@ -74,7 +111,6 @@ const defaultConfig = {
       'seo/embedded-content',
       'seo/canonical',
       'seo/robots-txt',
-      'fonts',
     ],
   },
   {
@@ -115,10 +151,9 @@ const defaultConfig = {
     'user-timings',
     'critical-request-chains',
     'redirects',
-    'webapp-install-banner',
+    'installable-manifest',
     'splash-screen',
     'themed-omnibox',
-    'manifest-short-name-length',
     'content-width',
     'image-aspect-ratio',
     'deprecations',
@@ -129,6 +164,7 @@ const defaultConfig = {
     'font-display',
     'network-requests',
     'metrics',
+    'offline-start-url',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -197,7 +233,7 @@ const defaultConfig = {
     'dobetterweb/geolocation-on-start',
     'dobetterweb/no-document-write',
     'dobetterweb/no-vulnerable-libraries',
-    'dobetterweb/no-websql',
+    'dobetterweb/js-libraries',
     'dobetterweb/notification-on-start',
     'dobetterweb/password-inputs-can-be-pasted-into',
     'dobetterweb/uses-http2',
@@ -227,37 +263,46 @@ const defaultConfig = {
       title: str_(UIStrings.diagnosticsGroupTitle),
       description: str_(UIStrings.diagnosticsGroupDescription),
     },
+    'pwa-fast-reliable': {
+      title: str_(UIStrings.pwaFastReliableGroupTitle),
+    },
+    'pwa-installable': {
+      title: str_(UIStrings.pwaInstallableGroupTitle),
+    },
+    'pwa-optimized': {
+      title: str_(UIStrings.pwaOptimizedGroupTitle),
+    },
     'a11y-color-contrast': {
-      title: 'Color Contrast Is Satisfactory',
-      description: 'These are opportunities to improve the legibility of your content.',
+      title: str_(UIStrings.a11yColorContrastGroupTitle),
+      description: str_(UIStrings.a11yColorContrastGroupDescription),
     },
     'a11y-describe-contents': {
-      title: 'Elements Describe Contents Well',
-      description: 'These are opportunities to make your content easier to understand for a user of assistive technology, like a screen reader.',
+      title: str_(UIStrings.a11yDescribeContentsGroupTitle),
+      description: str_(UIStrings.a11yDescribeContentsGroupDescription),
     },
     'a11y-well-structured': {
-      title: 'Elements Are Well Structured',
-      description: 'These are opportunities to make sure your HTML is appropriately structured.',
+      title: str_(UIStrings.a11yWellStructuredGroupTitle),
+      description: str_(UIStrings.a11yWellStructuredGroupDescription),
     },
     'a11y-aria': {
-      title: 'ARIA Attributes Follow Best Practices',
-      description: 'These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader.',
+      title: str_(UIStrings.a11yAriaGroupTitle),
+      description: str_(UIStrings.a11yAriaGroupDescription),
     },
     'a11y-correct-attributes': {
-      title: 'Elements Use Attributes Correctly',
-      description: 'These are opportunities to improve the configuration of your HTML elements.',
+      title: str_(UIStrings.a11yCorrectAttributesGroupTitle),
+      description: str_(UIStrings.a11yCorrectAttributesGroupDescription),
     },
     'a11y-element-names': {
-      title: 'Elements Have Discernible Names',
-      description: 'These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.',
+      title: str_(UIStrings.a11yElementNamesGroupTitle),
+      description: str_(UIStrings.a11yElementNamesGroupDescription),
     },
     'a11y-language': {
-      title: 'Page Specifies Valid Language',
-      description: 'These are opportunities to improve the interpretation of your content by users in different locales.',
+      title: str_(UIStrings.a11yLanguageGroupTitle),
+      description: str_(UIStrings.a11yLanguageGroupDescription),
     },
     'a11y-meta': {
-      title: 'Meta Tags Used Properly',
-      description: 'These are opportunities to improve the user experience of your site.',
+      title: str_(UIStrings.a11yMetaGroupTitle),
+      description: str_(UIStrings.a11yMetaGroupDescription),
     },
     'seo-mobile': {
       title: 'Mobile Friendly',
@@ -314,27 +359,26 @@ const defaultConfig = {
     },
     'pwa': {
       title: 'Progressive Web App',
-      description: 'These checks validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).',
+      description: 'These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).',
       manualDescription: 'These checks are required by the baseline ' +
           '[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are ' +
           'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.',
       auditRefs: [
-        // Most difficult and critical for good UX
-        {id: 'load-fast-enough-for-pwa', weight: 7}, // can't be green in the category without being fast
-        {id: 'works-offline', weight: 5},
-        // Encompasses most of the other checks
-        {id: 'webapp-install-banner', weight: 3},
-        // Important but not too difficult
-        {id: 'is-on-https', weight: 2},
-        {id: 'redirects-http', weight: 2},
-        {id: 'viewport', weight: 2},
-        // Relatively easy checkboxes to tick with minimal value on their own
-        {id: 'service-worker', weight: 1},
-        {id: 'without-javascript', weight: 1},
-        {id: 'splash-screen', weight: 1},
-        {id: 'themed-omnibox', weight: 1},
-        {id: 'content-width', weight: 1},
-        {id: 'manifest-short-name-length', weight: 0},
+        // Fast and Reliable
+        {id: 'load-fast-enough-for-pwa', weight: 7, group: 'pwa-fast-reliable'},
+        {id: 'works-offline', weight: 5, group: 'pwa-fast-reliable'},
+        {id: 'offline-start-url', weight: 1, group: 'pwa-fast-reliable'},
+        // Installable
+        {id: 'is-on-https', weight: 2, group: 'pwa-installable'},
+        {id: 'service-worker', weight: 1, group: 'pwa-installable'},
+        {id: 'installable-manifest', weight: 2, group: 'pwa-installable'},
+        // PWA Optimized
+        {id: 'redirects-http', weight: 2, group: 'pwa-optimized'},
+        {id: 'splash-screen', weight: 1, group: 'pwa-optimized'},
+        {id: 'themed-omnibox', weight: 1, group: 'pwa-optimized'},
+        {id: 'content-width', weight: 1, group: 'pwa-optimized'},
+        {id: 'viewport', weight: 2, group: 'pwa-optimized'},
+        {id: 'without-javascript', weight: 1, group: 'pwa-optimized'},
         // Manual audits
         {id: 'pwa-cross-browser', weight: 0},
         {id: 'pwa-page-transitions', weight: 0},
@@ -399,7 +443,6 @@ const defaultConfig = {
       title: 'Best Practices',
       auditRefs: [
         {id: 'appcache-manifest', weight: 1},
-        {id: 'no-websql', weight: 1},
         {id: 'is-on-https', weight: 1},
         {id: 'uses-http2', weight: 1},
         {id: 'uses-passive-event-listeners', weight: 1},
@@ -408,6 +451,7 @@ const defaultConfig = {
         {id: 'geolocation-on-start', weight: 1},
         {id: 'doctype', weight: 1},
         {id: 'no-vulnerable-libraries', weight: 1},
+        {id: 'js-libraries', weight: 0},
         {id: 'notification-on-start', weight: 1},
         {id: 'deprecations', weight: 1},
         {id: 'password-inputs-can-be-pasted-into', weight: 1},

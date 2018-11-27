@@ -7,8 +7,11 @@
 
 const Audit = require('../audit');
 const linearInterpolation = require('../../lib/statistics').linearInterpolation;
-const Interactive = require('../../gather/computed/metrics/lantern-interactive');
-const i18n = require('../../lib/i18n');
+const Interactive = require('../../computed/metrics/lantern-interactive.js');
+const i18n = require('../../lib/i18n/i18n.js');
+const NetworkRecords = require('../../computed/network-records.js');
+const LoadSimulator = require('../../computed/load-simulator.js');
+const PageDependencyGraph = require('../../computed/page-dependency-graph.js');
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, {});
 
@@ -57,16 +60,6 @@ class UnusedBytes extends Audit {
   }
 
   /**
-   * @param {number} bytes
-   * @param {number} networkThroughput measured in bytes/second
-   * @return {number}
-   */
-  static bytesToMs(bytes, networkThroughput) {
-    const milliseconds = bytes / networkThroughput * 1000;
-    return milliseconds;
-  }
-
-  /**
    * Estimates the number of bytes this network record would have consumed on the network based on the
    * uncompressed size (totalBytes). Uses the actual transfer size from the network record if applicable.
    *
@@ -109,13 +102,12 @@ class UnusedBytes extends Audit {
       settings,
     };
 
-    return artifacts
-      .requestNetworkRecords(devtoolsLog)
+    return NetworkRecords.request(devtoolsLog, context)
       .then(networkRecords =>
         Promise.all([
           this.audit_(artifacts, networkRecords, context),
-          artifacts.requestPageDependencyGraph({trace, devtoolsLog}),
-          artifacts.requestLoadSimulator(simulatorOptions),
+          PageDependencyGraph.request({trace, devtoolsLog}, context),
+          LoadSimulator.request(simulatorOptions, context),
         ])
       )
       .then(([result, graph, simulator]) => this.createAuditProduct(result, graph, simulator));

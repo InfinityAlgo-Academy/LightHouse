@@ -36,9 +36,6 @@ module.exports = [
       'no-document-write': {
         score: 1,
       },
-      'no-websql': {
-        score: 1,
-      },
       'uses-passive-event-listeners': {
         score: 1,
       },
@@ -66,8 +63,10 @@ module.exports = [
       'critical-request-chains': {
         scoreDisplayMode: 'not-applicable',
       },
-      'webapp-install-banner': {
+      'installable-manifest': {
         score: 0,
+        explanation: 'Failures: No manifest was fetched.',
+        details: {items: [{isParseFailure: true}]},
       },
       'splash-screen': {
         score: 0,
@@ -127,7 +126,7 @@ module.exports = [
       'critical-request-chains': {
         scoreDisplayMode: 'not-applicable',
       },
-      'webapp-install-banner': {
+      'installable-manifest': {
         score: 1,
       },
       'splash-screen': {
@@ -155,6 +154,19 @@ module.exports = [
         scoreDisplayMode: 'not-applicable',
       },
       'content-width': {
+        score: 1,
+      },
+    },
+  },
+
+  {
+    requestedUrl: 'http://localhost:10503/offline-ready.html?slow',
+    finalUrl: 'http://localhost:10503/offline-ready.html?slow',
+    audits: {
+      'service-worker': {
+        score: 1,
+      },
+      'works-offline': {
         score: 1,
       },
     },

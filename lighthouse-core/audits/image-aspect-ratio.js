@@ -77,6 +77,8 @@ class ImageAspectRatio extends Audit {
       // - filter all svgs as they have no natural dimensions to audit
       return image.networkRecord &&
         image.networkRecord.mimeType !== 'image/svg+xml' &&
+        image.naturalHeight > 5 &&
+        image.naturalWidth > 5 &&
         image.width &&
         image.height &&
         !image.usesObjectFit;

@@ -5,11 +5,15 @@
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
     "benchmarkIndex": 1000
   },
-  "lighthouseVersion": "3.0.3",
+  "lighthouseVersion": "4.0.0-alpha.1",
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "runWarnings": [],
+  "runtimeError": {
+    "code": "NO_ERROR",
+    "message": ""
+  },
   "audits": {
     "is-on-https": {
       "id": "is-on-https",
@@ -53,7 +57,7 @@
     },
     "works-offline": {
       "id": "works-offline",
-      "title": "Does not respond with a 200 when offline",
+      "title": "Current page does not respond with a 200 when offline",
       "description": "If you're building a Progressive Web App, consider using a service worker so that your app can work offline. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).",
       "score": 0,
       "scoreDisplayMode": "binary",
@@ -84,7 +88,7 @@
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "rawValue": 3969.135,
-      "displayValue": "3,970 ms"
+      "displayValue": "4.0 s"
     },
     "first-meaningful-paint": {
       "id": "first-meaningful-paint",
@@ -93,12 +97,12 @@
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "rawValue": 3969.136,
-      "displayValue": "3,970 ms"
+      "displayValue": "4.0 s"
     },
     "load-fast-enough-for-pwa": {
       "id": "load-fast-enough-for-pwa",
-      "title": "Page load is fast enough on 3G",
-      "description": "A fast page load over a 3G network ensures a good mobile user experience. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g).",
+      "title": "Page load is fast enough on mobile networks",
+      "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "rawValue": 4927.278
@@ -110,7 +114,7 @@
       "score": 0.74,
       "scoreDisplayMode": "numeric",
       "rawValue": 4417,
-      "displayValue": "4,420 ms"
+      "displayValue": "4.4 s"
     },
     "screenshot-thumbnails": {
       "id": "screenshot-thumbnails",
@@ -270,7 +274,7 @@
       "score": 0.72,
       "scoreDisplayMode": "numeric",
       "rawValue": 4927.278,
-      "displayValue": "4,930 ms"
+      "displayValue": "4.9 s"
     },
     "interactive": {
       "id": "interactive",
@@ -279,7 +283,7 @@
       "score": 0.78,
       "scoreDisplayMode": "numeric",
       "rawValue": 4927.278,
-      "displayValue": "4,930 ms"
+      "displayValue": "4.9 s"
     },
     "user-timings": {
       "id": "user-timings",
@@ -321,8 +325,7 @@
                   "endTime": 185604.52588,
                   "responseReceivedTime": 185604.52470399998,
                   "transferSize": 821
-                },
-                "children": {}
+                }
               },
               "75994.4": {
                 "request": {
@@ -331,8 +334,7 @@
                   "endTime": 185604.534512,
                   "responseReceivedTime": 185604.532778,
                   "transferSize": 139
-                },
-                "children": {}
+                }
               },
               "75994.5": {
                 "request": {
@@ -341,8 +343,7 @@
                   "endTime": 185606.170588,
                   "responseReceivedTime": 185606.169761,
                   "transferSize": 821
-                },
-                "children": {}
+                }
               },
               "75994.6": {
                 "request": {
@@ -351,8 +352,7 @@
                   "endTime": 185604.541262,
                   "responseReceivedTime": 185604.54052399998,
                   "transferSize": 1108
-                },
-                "children": {}
+                }
               },
               "75994.7": {
                 "request": {
@@ -361,8 +361,7 @@
                   "endTime": 185604.549739,
                   "responseReceivedTime": 185604.54903999998,
                   "transferSize": 736
-                },
-                "children": {}
+                }
               },
               "75994.8": {
                 "request": {
@@ -371,8 +370,7 @@
                   "endTime": 185605.097653,
                   "responseReceivedTime": 185605.096858,
                   "transferSize": 733
-                },
-                "children": {}
+                }
               },
               "75994.9": {
                 "request": {
@@ -381,8 +379,7 @@
                   "endTime": 185607.537382,
                   "responseReceivedTime": 185607.53660999998,
                   "transferSize": 821
-                },
-                "children": {}
+                }
               },
               "75994.10": {
                 "request": {
@@ -391,8 +388,7 @@
                   "endTime": 185605.113307,
                   "responseReceivedTime": 185605.104776,
                   "transferSize": 1703
-                },
-                "children": {}
+                }
               },
               "75994.11": {
                 "request": {
@@ -401,8 +397,7 @@
                   "endTime": 185604.557407,
                   "responseReceivedTime": 185604.556719,
                   "transferSize": 144
-                },
-                "children": {}
+                }
               },
               "75994.21": {
                 "request": {
@@ -411,8 +406,7 @@
                   "endTime": 185607.28227,
                   "responseReceivedTime": 185606.742005,
                   "transferSize": 71654
-                },
-                "children": {}
+                }
               },
               "75994.22": {
                 "request": {
@@ -421,8 +415,7 @@
                   "endTime": 185608.117509,
                   "responseReceivedTime": 185607.822806,
                   "transferSize": 30174
-                },
-                "children": {}
+                }
               },
               "75994.28": {
                 "request": {
@@ -431,8 +424,7 @@
                   "endTime": 185607.285454,
                   "responseReceivedTime": 185606.82147599998,
                   "transferSize": 821
-                },
-                "children": {}
+                }
               }
             }
           },
@@ -443,8 +435,7 @@
               "endTime": 185608.857719,
               "responseReceivedTime": 185608.85586200003,
               "transferSize": 221
-            },
-            "children": {}
+            }
           }
         },
         "longestChain": {
@@ -469,20 +460,19 @@
         "overallSavingsMs": 0
       }
     },
-    "webapp-install-banner": {
-      "id": "webapp-install-banner",
-      "title": "User will not be prompted to Install the Web App",
+    "installable-manifest": {
+      "id": "installable-manifest",
+      "title": "Web app manifest does not meet the installability requirements",
       "description": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/install-prompt).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "rawValue": false,
-      "explanation": "Failures: No manifest was fetched,\nSite does not register a service worker.",
+      "explanation": "Failures: No manifest was fetched.",
       "details": {
         "items": [
           {
             "failures": [
-              "No manifest was fetched",
-              "Site does not register a service worker"
+              "No manifest was fetched"
             ],
             "isParseFailure": true,
             "parseFailureReason": "No manifest was fetched"
@@ -512,7 +502,7 @@
     },
     "themed-omnibox": {
       "id": "themed-omnibox",
-      "title": "Address bar does not match brand colors",
+      "title": "Does not set an address-bar theme color",
       "description": "The browser address bar can be themed to match your site. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/address-bar).",
       "score": 0,
       "scoreDisplayMode": "binary",
@@ -531,14 +521,6 @@
           }
         ]
       }
-    },
-    "manifest-short-name-length": {
-      "id": "manifest-short-name-length",
-      "title": "The `short_name` won't be truncated on the homescreen",
-      "description": "Make your app's `short_name` fewer than 12 characters to ensure that it's not truncated on homescreens. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/manifest-short_name-is-not-truncated).",
-      "score": null,
-      "scoreDisplayMode": "not-applicable",
-      "rawValue": true
     },
     "content-width": {
       "id": "content-width",
@@ -593,7 +575,7 @@
     },
     "deprecations": {
       "id": "deprecations",
-      "title": "Uses deprecated API's",
+      "title": "Uses deprecated APIs",
       "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://www.chromestatus.com/features#deprecated).",
       "score": 0,
       "scoreDisplayMode": "binary",
@@ -646,7 +628,7 @@
       "score": 0.96,
       "scoreDisplayMode": "numeric",
       "rawValue": 1548.5690000000002,
-      "displayValue": "1,550 ms",
+      "displayValue": "1.5 s",
       "details": {
         "type": "table",
         "headings": [
@@ -708,7 +690,7 @@
       "score": 0.92,
       "scoreDisplayMode": "numeric",
       "rawValue": 1150.932,
-      "displayValue": "1,150 ms",
+      "displayValue": "1.2 s",
       "details": {
         "type": "table",
         "headings": [
@@ -768,7 +750,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "rawValue": 0,
-      "displayValue": "Potential savings of 0 ms",
+      "displayValue": "",
       "details": {
         "type": "opportunity",
         "headings": [],
@@ -783,7 +765,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "rawValue": 0,
-      "displayValue": "Potential savings of 0 ms",
+      "displayValue": "",
       "details": {
         "type": "opportunity",
         "headings": [],
@@ -1064,6 +1046,15 @@
           }
         ]
       }
+    },
+    "offline-start-url": {
+      "id": "offline-start-url",
+      "title": "start_url does not respond with a 200 when offline",
+      "description": "A service worker enables your web app to be reliable in unpredictable network conditions. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "rawValue": false,
+      "warnings": []
     },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
@@ -1825,53 +1816,43 @@
         "items": [
           {
             "url": "http://localhost:10200/zone.js",
-            "totalBytes": 71654,
-            "totalMs": 409.9376550703614
+            "totalBytes": 71654
           },
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-            "totalBytes": 30174,
-            "totalMs": 172.62761051850677
+            "totalBytes": 30174
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-            "totalBytes": 24741,
-            "totalMs": 141.54502922510693
+            "totalBytes": 24741
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "totalBytes": 12640,
-            "totalMs": 72.31434337356418
+            "totalBytes": 12640
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "totalBytes": 12640,
-            "totalMs": 72.31434337356418
+            "totalBytes": 12640
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "totalBytes": 1703,
-            "totalMs": 9.74298471243511
+            "totalBytes": 1703
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
-            "totalBytes": 1108,
-            "totalMs": 6.338947188125721
+            "totalBytes": 1108
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-            "totalBytes": 821,
-            "totalMs": 4.696999676400015
+            "totalBytes": 821
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
-            "totalBytes": 821,
-            "totalMs": 4.696999676400015
+            "totalBytes": 821
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
-            "totalBytes": 821,
-            "totalMs": 4.696999676400015
+            "totalBytes": 821
           }
         ]
       }
@@ -1970,9 +1951,9 @@
       "id": "unminified-javascript",
       "title": "Minify JavaScript",
       "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://developers.google.com/speed/docs/insights/MinifyResources).",
-      "score": 1,
+      "score": 0.88,
       "scoreDisplayMode": "numeric",
-      "rawValue": 0,
+      "rawValue": 150,
       "displayValue": "Potential savings of 30 KB",
       "warnings": [],
       "details": {
@@ -2002,7 +1983,7 @@
             "wastedPercent": 42.52388078488413
           }
         ],
-        "overallSavingsMs": 0,
+        "overallSavingsMs": 150,
         "overallSavingsBytes": 30470
       }
     },
@@ -2089,9 +2070,9 @@
       "id": "uses-text-compression",
       "title": "Enable text compression",
       "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/text-compression).",
-      "score": 0.88,
+      "score": 0.75,
       "scoreDisplayMode": "numeric",
-      "rawValue": 150,
+      "rawValue": 300,
       "displayValue": "Potential savings of 63 KB",
       "details": {
         "type": "opportunity",
@@ -2124,7 +2105,7 @@
             "wastedBytes": 8442
           }
         ],
-        "overallSavingsMs": 150,
+        "overallSavingsMs": 300,
         "overallSavingsBytes": 64646
       }
     },
@@ -2190,35 +2171,40 @@
         "type": "table",
         "headings": [
           {
-            "key": "totalNodes",
+            "key": "statistic",
             "itemType": "text",
-            "text": "Total DOM Nodes"
+            "text": "Statistic"
           },
           {
-            "key": "depth",
-            "itemType": "text",
-            "text": "Maximum DOM Depth"
+            "key": "element",
+            "itemType": "code",
+            "text": "Element"
           },
           {
-            "key": "width",
-            "itemType": "text",
-            "text": "Maximum Children"
+            "key": "value",
+            "itemType": "numeric",
+            "text": "Value"
           }
         ],
         "items": [
           {
-            "totalNodes": "53",
-            "depth": "4",
-            "width": "22"
+            "statistic": "Total DOM Nodes",
+            "element": "",
+            "value": "53"
           },
           {
-            "totalNodes": "",
-            "depth": {
+            "statistic": "Maximum DOM Depth",
+            "element": {
               "type": "code"
             },
-            "width": {
+            "value": "4"
+          },
+          {
+            "statistic": "Maximum Child Elements",
+            "element": {
               "type": "code"
-            }
+            },
+            "value": "22"
           }
         ]
       }
@@ -2377,7 +2363,7 @@
             "vulnCount": 1,
             "detectedLib": {
               "text": "jQuery@2.1.1",
-              "url": "https://snyk.io/vuln/npm:jquery?lh@2.1.1",
+              "url": "https://snyk.io/vuln/npm:jquery?lh=2.1.1&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit",
               "type": "link"
             }
           }
@@ -2385,14 +2371,36 @@
         "summary": {}
       }
     },
-    "no-websql": {
-      "id": "no-websql",
-      "title": "Uses WebSQL DB",
-      "description": "Web SQL is deprecated. Consider using IndexedDB instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/web-sql).",
-      "score": 0,
+    "js-libraries": {
+      "id": "js-libraries",
+      "title": "Detected JavaScript libraries",
+      "description": "All front-end JavaScript libraries detected on the page.",
+      "score": 1,
       "scoreDisplayMode": "binary",
-      "rawValue": false,
-      "displayValue": "Found \"mydb\" (v1.0)"
+      "rawValue": true,
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "name",
+            "itemType": "text",
+            "text": "Name"
+          },
+          {
+            "key": "version",
+            "itemType": "text",
+            "text": "Version"
+          }
+        ],
+        "items": [
+          {
+            "name": "jQuery",
+            "version": "2.1.1",
+            "npm": "jquery"
+          }
+        ],
+        "summary": {}
+      }
     },
     "notification-on-start": {
       "id": "notification-on-start",
@@ -2739,6 +2747,7 @@
     "gatherMode": false,
     "disableStorageReset": false,
     "disableDeviceEmulation": false,
+    "emulatedFormFactor": "mobile",
     "locale": "en-US",
     "blockedUrlPatterns": null,
     "additionalTraceCategories": null,
@@ -2913,56 +2922,68 @@
     },
     "pwa": {
       "title": "Progressive Web App",
-      "description": "These checks validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).",
+      "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
       "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
       "auditRefs": [
         {
           "id": "load-fast-enough-for-pwa",
-          "weight": 7
+          "weight": 7,
+          "group": "pwa-fast-reliable"
         },
         {
           "id": "works-offline",
-          "weight": 5
+          "weight": 5,
+          "group": "pwa-fast-reliable"
         },
         {
-          "id": "webapp-install-banner",
-          "weight": 3
+          "id": "offline-start-url",
+          "weight": 1,
+          "group": "pwa-fast-reliable"
         },
         {
           "id": "is-on-https",
-          "weight": 2
-        },
-        {
-          "id": "redirects-http",
-          "weight": 2
-        },
-        {
-          "id": "viewport",
-          "weight": 2
+          "weight": 2,
+          "group": "pwa-installable"
         },
         {
           "id": "service-worker",
-          "weight": 1
+          "weight": 1,
+          "group": "pwa-installable"
         },
         {
-          "id": "without-javascript",
-          "weight": 1
+          "id": "installable-manifest",
+          "weight": 2,
+          "group": "pwa-installable"
+        },
+        {
+          "id": "redirects-http",
+          "weight": 2,
+          "group": "pwa-optimized"
         },
         {
           "id": "splash-screen",
-          "weight": 1
+          "weight": 1,
+          "group": "pwa-optimized"
         },
         {
           "id": "themed-omnibox",
-          "weight": 1
+          "weight": 1,
+          "group": "pwa-optimized"
         },
         {
           "id": "content-width",
-          "weight": 1
+          "weight": 1,
+          "group": "pwa-optimized"
         },
         {
-          "id": "manifest-short-name-length",
-          "weight": 0
+          "id": "viewport",
+          "weight": 2,
+          "group": "pwa-optimized"
+        },
+        {
+          "id": "without-javascript",
+          "weight": 1,
+          "group": "pwa-optimized"
         },
         {
           "id": "pwa-cross-browser",
@@ -3216,10 +3237,6 @@
           "weight": 1
         },
         {
-          "id": "no-websql",
-          "weight": 1
-        },
-        {
           "id": "is-on-https",
           "weight": 1
         },
@@ -3250,6 +3267,10 @@
         {
           "id": "no-vulnerable-libraries",
           "weight": 1
+        },
+        {
+          "id": "js-libraries",
+          "weight": 0
         },
         {
           "id": "notification-on-start",
@@ -3360,6 +3381,15 @@
       "title": "Diagnostics",
       "description": "More information about the performance of your application."
     },
+    "pwa-fast-reliable": {
+      "title": "Fast and reliable"
+    },
+    "pwa-installable": {
+      "title": "Installable"
+    },
+    "pwa-optimized": {
+      "title": "PWA Optimized"
+    },
     "a11y-color-contrast": {
       "title": "Color Contrast Is Satisfactory",
       "description": "These are opportunities to improve the legibility of your content."
@@ -3405,6 +3435,893 @@
       "description": "To appear in search results, crawlers need access to your app."
     }
   },
+  "timing": {
+    "entries": [
+      {
+        "startTime": 0,
+        "name": "lh:init:config",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:config:requireGatherers",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:config:requireAudits",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:runner:run",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:runner:auditing",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:is-on-https",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:NetworkRecords",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:redirects-http",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:service-worker",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:works-offline",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:viewport",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:without-javascript",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:first-contentful-paint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:FirstContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TraceOfTab",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:first-meaningful-paint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:FirstMeaningfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:load-fast-enough-for-pwa",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:Interactive",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:speed-index",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:SpeedIndex",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:Speedline",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:screenshot-thumbnails",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:final-screenshot",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:Screenshots",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:estimated-input-latency",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:EstimatedInputLatency",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:errors-in-console",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:time-to-first-byte",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:MainResource",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:first-cpu-idle",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:FirstCPUIdle",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:interactive",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:user-timings",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:critical-request-chains",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:CriticalRequestChains",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:redirects",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternInteractive",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternFirstMeaningfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternFirstContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:PageDependencyGraph",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LoadSimulator",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:NetworkAnalysis",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:installable-manifest",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:ManifestValues",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:splash-screen",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:themed-omnibox",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:content-width",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:image-aspect-ratio",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:deprecations",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:mainthread-work-breakdown",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:MainThreadTasks",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:bootup-time",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:uses-rel-preload",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LoadSimulator",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:uses-rel-preconnect",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:font-display",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:network-requests",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:metrics",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:offline-start-url",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:pwa-cross-browser",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:pwa-page-transitions",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:pwa-each-page-has-url",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:accesskeys",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-allowed-attr",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-required-attr",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-required-children",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-required-parent",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-roles",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-valid-attr-value",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:aria-valid-attr",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:audio-caption",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:button-name",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:bypass",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:color-contrast",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:definition-list",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:dlitem",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:document-title",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:duplicate-id",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:frame-title",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:html-has-lang",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:html-lang-valid",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:image-alt",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:input-image-alt",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:label",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:layout-table",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:link-name",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:list",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:listitem",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:meta-refresh",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:meta-viewport",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:object-alt",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:tabindex",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:td-headers-attr",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:th-has-data-cells",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:valid-lang",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:video-caption",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:video-description",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:custom-controls-labels",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:custom-controls-roles",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:focus-traps",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:focusable-controls",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:heading-levels",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:interactive-element-affordance",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:logical-tab-order",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:managed-focus",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:offscreen-content-hidden",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:use-landmarks",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:visual-order-follows-dom",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:uses-long-cache-ttl",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:total-byte-weight",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:offscreen-images",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:render-blocking-resources",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:FirstContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternFirstContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:unminified-css",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:unminified-javascript",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:unused-css-rules",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:uses-webp-images",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:uses-optimized-images",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:uses-text-compression",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:uses-responsive-images",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:efficient-animated-content",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:appcache-manifest",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:doctype",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:dom-size",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:external-anchors-use-rel-noopener",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:geolocation-on-start",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:no-document-write",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:no-vulnerable-libraries",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:js-libraries",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:notification-on-start",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:password-inputs-can-be-pasted-into",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:uses-http2",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:uses-passive-event-listeners",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:meta-description",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:http-status-code",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:font-size",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:link-text",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:is-crawlable",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:robots-txt",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:hreflang",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:plugins",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:canonical",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:mobile-friendly",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:structured-data",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:runner:generate",
+        "duration": 100,
+        "entryType": "measure"
+      }
+    ],
+    "total": 12345.6789
+  },
   "i18n": {
     "rendererFormattedStrings": {
       "auditGroupExpandTooltip": "Show audits",
@@ -3412,6 +4329,8 @@
       "crcLongestDurationLabel": "Maximum critical path latency:",
       "errorLabel": "Error!",
       "errorMissingAuditInfo": "Report error: no audit information",
+      "labDataTitle": "Lab Data",
+      "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
       "manualAuditsGroupTitle": "Additional items to manually check",
       "notApplicableAuditsGroupTitle": "Not applicable",
       "opportunityResourceColumnLabel": "Opportunity",
@@ -3429,7 +4348,7 @@
       "lighthouse-core/audits/metrics/first-contentful-paint.js | description": [
         "audits[first-contentful-paint].description"
       ],
-      "lighthouse-core/lib/i18n.js | ms": [
+      "lighthouse-core/lib/i18n/i18n.js | seconds": [
         {
           "values": {
             "timeInMs": 3969.135
@@ -3447,12 +4366,6 @@
             "timeInMs": 4417
           },
           "path": "audits[speed-index].displayValue"
-        },
-        {
-          "values": {
-            "timeInMs": 16
-          },
-          "path": "audits[estimated-input-latency].displayValue"
         },
         {
           "values": {
@@ -3496,6 +4409,14 @@
       ],
       "lighthouse-core/audits/metrics/estimated-input-latency.js | description": [
         "audits[estimated-input-latency].description"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | ms": [
+        {
+          "values": {
+            "timeInMs": 16
+          },
+          "path": "audits[estimated-input-latency].displayValue"
+        }
       ],
       "lighthouse-core/audits/time-to-first-byte.js | title": [
         "audits[time-to-first-byte].title"
@@ -3558,7 +4479,7 @@
       "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": [
         "audits[mainthread-work-breakdown].details.headings[0].text"
       ],
-      "lighthouse-core/lib/i18n.js | columnTimeSpent": [
+      "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
         "audits[mainthread-work-breakdown].details.headings[1].text"
       ],
       "lighthouse-core/audits/bootup-time.js | title": [
@@ -3567,7 +4488,7 @@
       "lighthouse-core/audits/bootup-time.js | description": [
         "audits[bootup-time].description"
       ],
-      "lighthouse-core/lib/i18n.js | columnURL": [
+      "lighthouse-core/lib/i18n/i18n.js | columnURL": [
         "audits[bootup-time].details.headings[0].text",
         "audits[uses-long-cache-ttl].details.headings[0].text",
         "audits[total-byte-weight].details.headings[0].text",
@@ -3591,26 +4512,6 @@
       "lighthouse-core/audits/uses-rel-preload.js | description": [
         "audits[uses-rel-preload].description"
       ],
-      "lighthouse-core/lib/i18n.js | displayValueMsSavings": [
-        {
-          "values": {
-            "wastedMs": 0
-          },
-          "path": "audits[uses-rel-preload].displayValue"
-        },
-        {
-          "values": {
-            "wastedMs": 0
-          },
-          "path": "audits[uses-rel-preconnect].displayValue"
-        },
-        {
-          "values": {
-            "wastedMs": 1129
-          },
-          "path": "audits[render-blocking-resources].displayValue"
-        }
-      ],
       "lighthouse-core/audits/uses-rel-preconnect.js | title": [
         "audits[uses-rel-preconnect].title"
       ],
@@ -3622,6 +4523,223 @@
       ],
       "lighthouse-core/audits/font-display.js | description": [
         "audits[font-display].description"
+      ],
+      "lighthouse-core/audits/accessibility/accesskeys.js | title": [
+        "audits.accesskeys.title"
+      ],
+      "lighthouse-core/audits/accessibility/accesskeys.js | description": [
+        "audits.accesskeys.description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": [
+        "audits[aria-allowed-attr].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": [
+        "audits[aria-allowed-attr].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-required-attr.js | title": [
+        "audits[aria-required-attr].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-required-attr.js | description": [
+        "audits[aria-required-attr].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-required-children.js | title": [
+        "audits[aria-required-children].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-required-children.js | description": [
+        "audits[aria-required-children].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-required-parent.js | title": [
+        "audits[aria-required-parent].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-required-parent.js | description": [
+        "audits[aria-required-parent].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-roles.js | title": [
+        "audits[aria-roles].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-roles.js | description": [
+        "audits[aria-roles].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | title": [
+        "audits[aria-valid-attr-value].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": [
+        "audits[aria-valid-attr-value].description"
+      ],
+      "lighthouse-core/audits/accessibility/aria-valid-attr.js | title": [
+        "audits[aria-valid-attr].title"
+      ],
+      "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": [
+        "audits[aria-valid-attr].description"
+      ],
+      "lighthouse-core/audits/accessibility/audio-caption.js | title": [
+        "audits[audio-caption].title"
+      ],
+      "lighthouse-core/audits/accessibility/audio-caption.js | description": [
+        "audits[audio-caption].description"
+      ],
+      "lighthouse-core/audits/accessibility/button-name.js | title": [
+        "audits[button-name].title"
+      ],
+      "lighthouse-core/audits/accessibility/button-name.js | description": [
+        "audits[button-name].description"
+      ],
+      "lighthouse-core/audits/accessibility/bypass.js | title": [
+        "audits.bypass.title"
+      ],
+      "lighthouse-core/audits/accessibility/bypass.js | description": [
+        "audits.bypass.description"
+      ],
+      "lighthouse-core/audits/accessibility/color-contrast.js | failureTitle": [
+        "audits[color-contrast].title"
+      ],
+      "lighthouse-core/audits/accessibility/color-contrast.js | description": [
+        "audits[color-contrast].description"
+      ],
+      "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": [
+        "audits[color-contrast].details.headings[0].text",
+        "audits[html-has-lang].details.headings[0].text",
+        "audits[image-alt].details.headings[0].text",
+        "audits.label.details.headings[0].text",
+        "audits[link-name].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/accessibility/definition-list.js | title": [
+        "audits[definition-list].title"
+      ],
+      "lighthouse-core/audits/accessibility/definition-list.js | description": [
+        "audits[definition-list].description"
+      ],
+      "lighthouse-core/audits/accessibility/dlitem.js | title": [
+        "audits.dlitem.title"
+      ],
+      "lighthouse-core/audits/accessibility/dlitem.js | description": [
+        "audits.dlitem.description"
+      ],
+      "lighthouse-core/audits/accessibility/document-title.js | title": [
+        "audits[document-title].title"
+      ],
+      "lighthouse-core/audits/accessibility/document-title.js | description": [
+        "audits[document-title].description"
+      ],
+      "lighthouse-core/audits/accessibility/duplicate-id.js | title": [
+        "audits[duplicate-id].title"
+      ],
+      "lighthouse-core/audits/accessibility/duplicate-id.js | description": [
+        "audits[duplicate-id].description"
+      ],
+      "lighthouse-core/audits/accessibility/frame-title.js | title": [
+        "audits[frame-title].title"
+      ],
+      "lighthouse-core/audits/accessibility/frame-title.js | description": [
+        "audits[frame-title].description"
+      ],
+      "lighthouse-core/audits/accessibility/html-has-lang.js | failureTitle": [
+        "audits[html-has-lang].title"
+      ],
+      "lighthouse-core/audits/accessibility/html-has-lang.js | description": [
+        "audits[html-has-lang].description"
+      ],
+      "lighthouse-core/audits/accessibility/html-lang-valid.js | title": [
+        "audits[html-lang-valid].title"
+      ],
+      "lighthouse-core/audits/accessibility/html-lang-valid.js | description": [
+        "audits[html-lang-valid].description"
+      ],
+      "lighthouse-core/audits/accessibility/image-alt.js | failureTitle": [
+        "audits[image-alt].title"
+      ],
+      "lighthouse-core/audits/accessibility/image-alt.js | description": [
+        "audits[image-alt].description"
+      ],
+      "lighthouse-core/audits/accessibility/input-image-alt.js | title": [
+        "audits[input-image-alt].title"
+      ],
+      "lighthouse-core/audits/accessibility/input-image-alt.js | description": [
+        "audits[input-image-alt].description"
+      ],
+      "lighthouse-core/audits/accessibility/label.js | failureTitle": [
+        "audits.label.title"
+      ],
+      "lighthouse-core/audits/accessibility/label.js | description": [
+        "audits.label.description"
+      ],
+      "lighthouse-core/audits/accessibility/layout-table.js | title": [
+        "audits[layout-table].title"
+      ],
+      "lighthouse-core/audits/accessibility/layout-table.js | description": [
+        "audits[layout-table].description"
+      ],
+      "lighthouse-core/audits/accessibility/link-name.js | failureTitle": [
+        "audits[link-name].title"
+      ],
+      "lighthouse-core/audits/accessibility/link-name.js | description": [
+        "audits[link-name].description"
+      ],
+      "lighthouse-core/audits/accessibility/list.js | title": [
+        "audits.list.title"
+      ],
+      "lighthouse-core/audits/accessibility/list.js | description": [
+        "audits.list.description"
+      ],
+      "lighthouse-core/audits/accessibility/listitem.js | title": [
+        "audits.listitem.title"
+      ],
+      "lighthouse-core/audits/accessibility/listitem.js | description": [
+        "audits.listitem.description"
+      ],
+      "lighthouse-core/audits/accessibility/meta-refresh.js | title": [
+        "audits[meta-refresh].title"
+      ],
+      "lighthouse-core/audits/accessibility/meta-refresh.js | description": [
+        "audits[meta-refresh].description"
+      ],
+      "lighthouse-core/audits/accessibility/meta-viewport.js | title": [
+        "audits[meta-viewport].title"
+      ],
+      "lighthouse-core/audits/accessibility/meta-viewport.js | description": [
+        "audits[meta-viewport].description"
+      ],
+      "lighthouse-core/audits/accessibility/object-alt.js | title": [
+        "audits[object-alt].title"
+      ],
+      "lighthouse-core/audits/accessibility/object-alt.js | description": [
+        "audits[object-alt].description"
+      ],
+      "lighthouse-core/audits/accessibility/tabindex.js | title": [
+        "audits.tabindex.title"
+      ],
+      "lighthouse-core/audits/accessibility/tabindex.js | description": [
+        "audits.tabindex.description"
+      ],
+      "lighthouse-core/audits/accessibility/td-headers-attr.js | title": [
+        "audits[td-headers-attr].title"
+      ],
+      "lighthouse-core/audits/accessibility/td-headers-attr.js | description": [
+        "audits[td-headers-attr].description"
+      ],
+      "lighthouse-core/audits/accessibility/th-has-data-cells.js | title": [
+        "audits[th-has-data-cells].title"
+      ],
+      "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": [
+        "audits[th-has-data-cells].description"
+      ],
+      "lighthouse-core/audits/accessibility/valid-lang.js | title": [
+        "audits[valid-lang].title"
+      ],
+      "lighthouse-core/audits/accessibility/valid-lang.js | description": [
+        "audits[valid-lang].description"
+      ],
+      "lighthouse-core/audits/accessibility/video-caption.js | title": [
+        "audits[video-caption].title"
+      ],
+      "lighthouse-core/audits/accessibility/video-caption.js | description": [
+        "audits[video-caption].description"
+      ],
+      "lighthouse-core/audits/accessibility/video-description.js | title": [
+        "audits[video-description].title"
+      ],
+      "lighthouse-core/audits/accessibility/video-description.js | description": [
+        "audits[video-description].description"
       ],
       "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": [
         "audits[uses-long-cache-ttl].title"
@@ -3637,10 +4755,10 @@
           "path": "audits[uses-long-cache-ttl].displayValue"
         }
       ],
-      "lighthouse-core/lib/i18n.js | columnCacheTTL": [
+      "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": [
         "audits[uses-long-cache-ttl].details.headings[1].text"
       ],
-      "lighthouse-core/lib/i18n.js | columnSize": [
+      "lighthouse-core/lib/i18n/i18n.js | columnSize": [
         "audits[uses-long-cache-ttl].details.headings[2].text",
         "audits[total-byte-weight].details.headings[1].text",
         "audits[render-blocking-resources].details.headings[1].label",
@@ -3674,7 +4792,15 @@
       "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | description": [
         "audits[render-blocking-resources].description"
       ],
-      "lighthouse-core/lib/i18n.js | columnWastedMs": [
+      "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": [
+        {
+          "values": {
+            "wastedMs": 1129
+          },
+          "path": "audits[render-blocking-resources].displayValue"
+        }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": [
         "audits[render-blocking-resources].details.headings[2].label"
       ],
       "lighthouse-core/audits/byte-efficiency/unminified-css.js | title": [
@@ -3689,7 +4815,7 @@
       "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | description": [
         "audits[unminified-javascript].description"
       ],
-      "lighthouse-core/lib/i18n.js | displayValueByteSavings": [
+      "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": [
         {
           "values": {
             "wastedBytes": 30470
@@ -3709,7 +4835,7 @@
           "path": "audits[uses-text-compression].displayValue"
         }
       ],
-      "lighthouse-core/lib/i18n.js | columnWastedBytes": [
+      "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": [
         "audits[unminified-javascript].details.headings[2].label",
         "audits[uses-webp-images].details.headings[3].label",
         "audits[uses-text-compression].details.headings[2].label"
@@ -3764,14 +4890,23 @@
           "path": "audits[dom-size].displayValue"
         }
       ],
-      "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMNodes": [
+      "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": [
         "audits[dom-size].details.headings[0].text"
       ],
-      "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMDepth": [
+      "lighthouse-core/audits/dobetterweb/dom-size.js | columnElement": [
         "audits[dom-size].details.headings[1].text"
       ],
-      "lighthouse-core/audits/dobetterweb/dom-size.js | columnDOMWidth": [
+      "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": [
         "audits[dom-size].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": [
+        "audits[dom-size].details.items[0].statistic"
+      ],
+      "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": [
+        "audits[dom-size].details.items[1].statistic"
+      ],
+      "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": [
+        "audits[dom-size].details.items[2].statistic"
       ],
       "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
         "categories.performance.title"
@@ -3790,6 +4925,63 @@
       ],
       "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": [
         "categoryGroups.diagnostics.description"
+      ],
+      "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": [
+        "categoryGroups[pwa-fast-reliable].title"
+      ],
+      "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": [
+        "categoryGroups[pwa-installable].title"
+      ],
+      "lighthouse-core/config/default-config.js | pwaOptimizedGroupTitle": [
+        "categoryGroups[pwa-optimized].title"
+      ],
+      "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": [
+        "categoryGroups[a11y-color-contrast].title"
+      ],
+      "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": [
+        "categoryGroups[a11y-color-contrast].description"
+      ],
+      "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupTitle": [
+        "categoryGroups[a11y-describe-contents].title"
+      ],
+      "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupDescription": [
+        "categoryGroups[a11y-describe-contents].description"
+      ],
+      "lighthouse-core/config/default-config.js | a11yWellStructuredGroupTitle": [
+        "categoryGroups[a11y-well-structured].title"
+      ],
+      "lighthouse-core/config/default-config.js | a11yWellStructuredGroupDescription": [
+        "categoryGroups[a11y-well-structured].description"
+      ],
+      "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": [
+        "categoryGroups[a11y-aria].title"
+      ],
+      "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": [
+        "categoryGroups[a11y-aria].description"
+      ],
+      "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupTitle": [
+        "categoryGroups[a11y-correct-attributes].title"
+      ],
+      "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupDescription": [
+        "categoryGroups[a11y-correct-attributes].description"
+      ],
+      "lighthouse-core/config/default-config.js | a11yElementNamesGroupTitle": [
+        "categoryGroups[a11y-element-names].title"
+      ],
+      "lighthouse-core/config/default-config.js | a11yElementNamesGroupDescription": [
+        "categoryGroups[a11y-element-names].description"
+      ],
+      "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": [
+        "categoryGroups[a11y-language].title"
+      ],
+      "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": [
+        "categoryGroups[a11y-language].description"
+      ],
+      "lighthouse-core/config/default-config.js | a11yMetaGroupTitle": [
+        "categoryGroups[a11y-meta].title"
+      ],
+      "lighthouse-core/config/default-config.js | a11yMetaGroupDescription": [
+        "categoryGroups[a11y-meta].description"
       ]
     }
   }

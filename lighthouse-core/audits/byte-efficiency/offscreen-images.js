@@ -12,7 +12,9 @@
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const Sentry = require('../../lib/sentry');
 const URL = require('../../lib/url-shim');
-const i18n = require('../../lib/i18n');
+const i18n = require('../../lib/i18n/i18n.js');
+const Interactive = require('../../computed/metrics/interactive.js');
+const TraceOfTab = require('../../computed/trace-of-tab.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to defer loading offscreen images. Offscreen images are images located outside of the visible browser viewport. As they are unseen by the user and slow down page load, they should be loaded later, closer to when the user is going to see them. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -165,7 +167,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
    * @param {LH.Audit.Context} context
    * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
-  static audit_(artifacts, networkRecords, context) {
+  static async audit_(artifacts, networkRecords, context) {
     const images = artifacts.ImageUsage;
     const viewportDimensions = artifacts.ViewportDimensions;
     const trace = artifacts.traces[ByteEfficiencyAudit.DEFAULT_PASS];
@@ -181,7 +183,6 @@ class OffscreenImages extends ByteEfficiencyAudit {
 
       if (processed instanceof Error) {
         warnings.push(processed.message);
-        // @ts-ignore TODO(bckenny): Sentry type checking
         Sentry.captureException(processed, {tags: {audit: this.meta.id}, level: 'warning'});
         return results;
       }
@@ -196,29 +197,43 @@ class OffscreenImages extends ByteEfficiencyAudit {
     }, /** @type {Map<string, WasteResult>} */ (new Map()));
 
     const settings = context.settings;
-    return artifacts.requestInteractive({trace, devtoolsLog, settings}).then(interactive => {
-      const unfilteredResults = Array.from(resultsMap.values());
+
+    let items;
+    const unfilteredResults = Array.from(resultsMap.values());
+    // get the interactive time or fallback to getting the end of trace time
+    try {
+      const interactive = await Interactive.request({trace, devtoolsLog, settings}, context);
+
+      // use interactive to generate items
       const lanternInteractive = /** @type {LH.Artifacts.LanternMetric} */ (interactive);
       // Filter out images that were loaded after all CPU activity
-      const items = context.settings.throttlingMethod === 'simulate' ?
+      items = context.settings.throttlingMethod === 'simulate' ?
         OffscreenImages.filterLanternResults(unfilteredResults, lanternInteractive) :
         // @ts-ignore - .timestamp will exist if throttlingMethod isn't lantern
         OffscreenImages.filterObservedResults(unfilteredResults, interactive.timestamp);
+    } catch (err) {
+      // if the error is during a Lantern run, end of trace may also be inaccurate, so rethrow
+      if (context.settings.throttlingMethod === 'simulate') {
+        throw err;
+      }
+      // use end of trace as a substitute for finding interactive time
+      items = OffscreenImages.filterObservedResults(unfilteredResults,
+        await TraceOfTab.request(trace, context).then(tot => tot.timestamps.traceEnd));
+    }
 
-      /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
-      const headings = [
-        {key: 'url', valueType: 'thumbnail', label: ''},
-        {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
-        {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
-        {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
-      ];
+    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
+    const headings = [
+      {key: 'url', valueType: 'thumbnail', label: ''},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},
+      {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
+    ];
 
-      return {
-        warnings,
-        items,
-        headings,
-      };
-    });
+    return {
+      warnings,
+      items,
+      headings,
+    };
   }
 }
 

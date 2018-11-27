@@ -9,7 +9,7 @@ const defaultConfigPath = './default-config.js';
 const defaultConfig = require('./default-config.js');
 const fullConfig = require('./full-config.js');
 const constants = require('./constants.js');
-const i18n = require('./../lib/i18n.js');
+const i18n = require('./../lib/i18n/i18n.js');
 
 const isDeepEqual = require('lodash.isequal');
 const log = require('lighthouse-logger');
@@ -64,13 +64,18 @@ function validateCategories(categories, audits, groups) {
     return;
   }
 
+  const auditsKeyedById = new Map((audits || []).map(audit =>
+    /** @type {[string, LH.Config.AuditDefn]} */
+    ([audit.implementation.meta.id, audit])
+  ));
+
   Object.keys(categories).forEach(categoryId => {
     categories[categoryId].auditRefs.forEach((auditRef, index) => {
       if (!auditRef.id) {
         throw new Error(`missing an audit id at ${categoryId}[${index}]`);
       }
 
-      const audit = audits && audits.find(a => a.implementation.meta.id === auditRef.id);
+      const audit = auditsKeyedById.get(auditRef.id);
       if (!audit) {
         throw new Error(`could not find ${auditRef.id} audit for category ${categoryId}`);
       }
@@ -280,6 +285,9 @@ function deepCloneConfigJson(json) {
 }
 
 /**
+ * If any items with identical `path` properties are found in the input array,
+ * merge their `options` properties into the first instance and then discard any
+ * other instances.
  * Until support of jsdoc templates with constraints, type in config.d.ts.
  * See https://github.com/Microsoft/TypeScript/issues/24283
  * @type {LH.Config.MergeOptionsOfItems}
@@ -309,6 +317,8 @@ class Config {
    * @param {LH.Flags=} flags
    */
   constructor(configJSON, flags) {
+    const status = {msg: 'Create config', id: 'lh:init:config'};
+    log.time(status, 'verbose');
     let configPath = flags && flags.configPath;
 
     if (!configJSON) {
@@ -361,6 +371,46 @@ class Config {
     // TODO(bckenny): until tsc adds @implements support, assert that Config is a ConfigJson.
     /** @type {LH.Config.Json} */
     const configJson = this; // eslint-disable-line no-unused-vars
+    log.timeEnd(status);
+  }
+
+  /**
+   * Provides a cleaned-up, stringified version of this config. Gatherer and
+   * Audit `implementation` and `instance` do not survive this process.
+   * @return {string}
+   */
+  getPrintString() {
+    const jsonConfig = deepClone(this);
+
+    if (jsonConfig.passes) {
+      for (const pass of jsonConfig.passes) {
+        for (const gathererDefn of pass.gatherers) {
+          gathererDefn.implementation = undefined;
+          // @ts-ignore Breaking the Config.GathererDefn type.
+          gathererDefn.instance = undefined;
+          if (Object.keys(gathererDefn.options).length === 0) {
+            // @ts-ignore Breaking the Config.GathererDefn type.
+            gathererDefn.options = undefined;
+          }
+        }
+      }
+    }
+
+    if (jsonConfig.audits) {
+      for (const auditDefn of jsonConfig.audits) {
+        // @ts-ignore Breaking the Config.AuditDefn type.
+        auditDefn.implementation = undefined;
+        if (Object.keys(auditDefn.options).length === 0) {
+          // @ts-ignore Breaking the Config.AuditDefn type.
+          auditDefn.options = undefined;
+        }
+      }
+    }
+
+    // Printed config is more useful with localized strings.
+    i18n.replaceIcuMessageInstanceIds(jsonConfig, jsonConfig.settings.locale);
+
+    return JSON.stringify(jsonConfig, null, 2);
   }
 
   /**
@@ -706,6 +756,8 @@ class Config {
    * @return {Config['audits']}
    */
   static requireAudits(audits, configPath) {
+    const status = {msg: 'Requiring audits', id: 'lh:config:requireAudits'};
+    log.time(status, 'verbose');
     const expandedAudits = Config.expandAuditShorthand(audits);
     if (!expandedAudits) {
       return null;
@@ -737,6 +789,7 @@ class Config {
 
     const mergedAuditDefns = mergeOptionsOfItems(auditDefns);
     mergedAuditDefns.forEach(audit => assertValidAudit(audit.implementation, audit.path));
+    log.timeEnd(status);
     return mergedAuditDefns;
   }
 
@@ -778,6 +831,8 @@ class Config {
     if (!passes) {
       return null;
     }
+    const status = {msg: 'Requiring gatherers', id: 'lh:config:requireGatherers'};
+    log.time(status, 'verbose');
 
     const coreList = Runner.getGathererList();
     const fullPasses = passes.map(pass => {
@@ -811,7 +866,7 @@ class Config {
 
       return Object.assign(pass, {gatherers: mergedDefns});
     });
-
+    log.timeEnd(status);
     return fullPasses;
   }
 }

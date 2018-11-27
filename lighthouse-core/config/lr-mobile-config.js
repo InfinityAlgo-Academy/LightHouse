@@ -8,7 +8,11 @@
 /** @type {LH.Config.Json} */
 const config = {
   extends: 'lighthouse:default',
-  settings: {},
+  settings: {
+    maxWaitForLoad: 35 * 1000,
+    // Skip the h2 audit so it doesn't lie to us. See #6539
+    skipAudits: ['uses-http2'],
+  },
 };
 
 module.exports = config;

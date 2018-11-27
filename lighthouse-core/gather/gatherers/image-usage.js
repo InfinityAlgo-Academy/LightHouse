@@ -161,7 +161,7 @@ class ImageUsage extends Gatherer {
     }, /** @type {Object<string, LH.Artifacts.SingleImageUsage['networkRecord']>} */ ({}));
 
     const expression = `(function() {
-      ${pageFunctions.getElementsInDocument.toString()}; // define function on page
+      ${pageFunctions.getElementsInDocumentString}; // define function on page
       return (${collectImageElementInfo.toString()})();
     })()`;
 

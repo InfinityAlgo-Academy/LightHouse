@@ -44,9 +44,9 @@ These weights are heuristics, and the Lighthouse team is working on formalizing 
 Once Lighthouse is done gathering the raw performance metrics for your website (metrics reported in miliseconds), it converts them into a score by mapping the raw performance number to a number between 0-100 by looking where your raw performance metric falls on the Lighthouse scoring distribution. The Lighthouse scoring distribution is a log normal distribution that is derived from the performance metrics of real website performance data (see sample distribution [here](https://www.desmos.com/calculator/zrjq6v1ihi)).
 
 Once we finish computing the percentile equivalent of your raw performance score, we take the weighted average of all the performance metrics (per the weighting above). Finally, we apply a coloring to the score (green, orange, and red) depending on what "bucket" your score falls in. This maps to:
-- Red (poor score): 0-44.
-- Orange (average): 45-74
-- Green (good): 75-100.
+- Red (poor score): 0-49
+- Orange (average): 50-89
+- Green (good): 90-100
 
 ### What can developers do to improve their performance score?
 *Note: we've built [a little calculator](https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=283330180) that can help you understand what thresholds you should be aiming for achieving a certain Lighthouse performance score. *
@@ -57,6 +57,8 @@ Lighthouse has a whole section in the report on improving your performance score
 # PWA
 ### How is the PWA score calculated?
 The PWA score is calculated based on the [Baseline PWA checklist](https://developers.google.com/web/progressive-web-apps/checklist#baseline), which lists 14 requirements. Lighthouse tests for 11 out of the 14 requirements automatically, with the other 3 being manual checks. Each of the 11 audits for the PWA section of the report is weighted equally, so implementing any of the audits correctly will increase your overall score by ~9 points.
+
+*Note on https redirects*: some metrics in this category have issues with https redirects because of TLS-handshake errors. More specifically you will run into this when using the ```simplehttp2server``` npm package. Subsequent metrics will fail after the https redirects (see #1217, #5910)
 
 # Accessibility
 ### How is the accessibility score calculated?

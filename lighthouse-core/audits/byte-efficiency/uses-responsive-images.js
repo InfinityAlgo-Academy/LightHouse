@@ -16,7 +16,7 @@
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const Sentry = require('../../lib/sentry');
 const URL = require('../../lib/url-shim');
-const i18n = require('../../lib/i18n');
+const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to resize images to match the display dimensions. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -105,7 +105,6 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
 
       if (processed instanceof Error) {
         warnings.push(processed.message);
-        // @ts-ignore TODO(bckenny): Sentry type checking
         Sentry.captureException(processed, {tags: {audit: this.meta.id}, level: 'warning'});
         return;
       }

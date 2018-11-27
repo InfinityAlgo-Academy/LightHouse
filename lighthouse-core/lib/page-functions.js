@@ -37,7 +37,7 @@ function wrapRuntimeEvalErrorInBrowser(err) {
  */
 /* istanbul ignore next */
 function registerPerformanceObserverInPage() {
-  window.____lastLongTask = window.performance.now();
+  window.____lastLongTask = window.__perfNow();
   const observer = new window.PerformanceObserver(entryList => {
     const entries = entryList.getEntries();
     for (const entry of entries) {
@@ -64,12 +64,12 @@ function registerPerformanceObserverInPage() {
 function checkTimeSinceLastLongTask() {
   // Wait for a delta before returning so that we're sure the PerformanceObserver
   // has had time to register the last longtask
-  return new Promise(resolve => {
-    const timeoutRequested = window.performance.now() + 50;
+  return new window.__nativePromise(resolve => {
+    const timeoutRequested = window.__perfNow() + 50;
 
     setTimeout(() => {
       // Double check that a long task hasn't happened since setTimeout
-      const timeoutFired = window.performance.now();
+      const timeoutFired = window.__perfNow();
       const timeSinceLongTask = timeoutFired - timeoutRequested < 50 ?
           timeoutFired - window.____lastLongTask : 0;
       resolve(timeSinceLongTask);
@@ -84,13 +84,14 @@ function checkTimeSinceLastLongTask() {
  */
 /* istanbul ignore next */
 function getElementsInDocument(selector) {
+  const realMatchesFn = window.__ElementMatches || window.Element.prototype.matches;
   /** @type {Array<Element>} */
   const results = [];
 
   /** @param {NodeListOf<Element>} nodes */
   const _findAllElements = nodes => {
     for (let i = 0, el; el = nodes[i]; ++i) {
-      if (!selector || el.matches(selector)) {
+      if (!selector || realMatchesFn.call(el, selector)) {
         results.push(el);
       }
       // If the element has a shadow root, dig deeper.
@@ -107,12 +108,20 @@ function getElementsInDocument(selector) {
 /**
  * Gets the opening tag text of the given node.
  * @param {Element} element
+ * @param {Array<string>=} ignoreAttrs An optional array of attribute tags to not include in the HTML snippet.
  * @return {string}
  */
 /* istanbul ignore next */
-function getOuterHTMLSnippet(element) {
+function getOuterHTMLSnippet(element, ignoreAttrs = []) {
+  const clone = element.cloneNode();
+
+  ignoreAttrs.forEach(attribute =>{
+    clone.removeAttribute(attribute);
+  });
+
   const reOpeningTag = /^.*?>/;
-  const match = element.outerHTML.match(reOpeningTag);
+  const match = clone.outerHTML.match(reOpeningTag);
+
   return (match && match[0]) || '';
 }
 
@@ -141,14 +150,16 @@ function ultradumbBenchmark() {
   }
 
   const durationInSeconds = (Date.now() - start) / 1000;
-  return iterations / durationInSeconds;
+  return Math.round(iterations / durationInSeconds);
 }
 
 module.exports = {
-  wrapRuntimeEvalErrorInBrowser,
-  registerPerformanceObserverInPage,
-  checkTimeSinceLastLongTask,
-  getElementsInDocument,
-  getOuterHTMLSnippet,
-  ultradumbBenchmark,
+  wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
+  registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
+  checkTimeSinceLastLongTaskString: checkTimeSinceLastLongTask.toString(),
+  getElementsInDocumentString: getElementsInDocument.toString(),
+  getOuterHTMLSnippetString: getOuterHTMLSnippet.toString(),
+  getOuterHTMLSnippet: getOuterHTMLSnippet,
+  ultradumbBenchmark: ultradumbBenchmark,
+  ultradumbBenchmarkString: ultradumbBenchmark.toString(),
 };

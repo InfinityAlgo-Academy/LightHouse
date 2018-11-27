@@ -24,7 +24,7 @@ function requestHandler(request, response) {
   const queryString = requestUrl.search && parseQueryString(requestUrl.search.slice(1));
   let absoluteFilePath = path.join(__dirname, filePath);
 
-  if (filePath.startsWith('/lighthouse-viewer')) {
+  if (filePath.startsWith('/dist/viewer')) {
     // Rewrite lighthouse-viewer paths to point to that location.
     absoluteFilePath = path.join(__dirname, '/../../../', filePath);
   }
@@ -35,9 +35,9 @@ function requestHandler(request, response) {
     const zonePath = '../../../node_modules/zone.js';
     absoluteFilePath = path.join(__dirname, `${zonePath}/dist/zone.js`);
   } else {
-    // Otherwise, disallow file requests outside of LH folder or from node_modules
+    // Otherwise, disallow file requests outside of LH folder
     const filePathDir = path.parse(absoluteFilePath).dir;
-    if (!filePathDir.startsWith(lhRootDirPath) || filePathDir.includes('node_modules')) {
+    if (!filePathDir.startsWith(lhRootDirPath)) {
       return readFileCallback(new Error('Disallowed path'));
     }
   }

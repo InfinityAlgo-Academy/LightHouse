@@ -15,7 +15,6 @@
 const Audit = require('../audit');
 const Sentry = require('../../lib/sentry');
 const semver = require('semver');
-// @ts-ignore - json require
 const snykDatabase = require('../../../third-party/snyk/snapshot.json');
 
 const SEMVER_REGEX = /^(\d+\.\d+\.\d+)[^-0-9]+/;
@@ -93,7 +92,6 @@ class NoVulnerableLibrariesAudit extends Audit {
     } catch (err) {
       err.pkgName = lib.npmPkgName;
       // Report the failure and skip this library if the version was ill-specified
-      // @ts-ignore TODO(bckenny): Sentry type checking
       Sentry.captureException(err, {level: 'warning'});
       return [];
     }
@@ -155,7 +153,7 @@ class NoVulnerableLibrariesAudit extends Audit {
           vulnCount,
           detectedLib: {
             text: lib.name + '@' + version,
-            url: `https://snyk.io/vuln/npm:${lib.npmPkgName}?lh@${version}`,
+            url: `https://snyk.io/vuln/npm:${lib.npmPkgName}?lh=${version}&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit`,
             type: 'link',
           },
         });

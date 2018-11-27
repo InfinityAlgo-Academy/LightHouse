@@ -6,7 +6,8 @@
 'use strict';
 
 const MultiCheckAudit = require('./multi-check-audit');
-const validColor = require('../lib/web-inspector').Color.parse;
+const ManifestValues = require('../computed/manifest-values.js');
+const cssParsers = require('cssstyle/lib/parsers');
 
 /**
  * @fileoverview
@@ -25,12 +26,20 @@ class ThemedOmnibox extends MultiCheckAudit {
   static get meta() {
     return {
       id: 'themed-omnibox',
-      title: 'Address bar matches brand colors',
-      failureTitle: 'Address bar does not match brand colors',
+      title: 'Sets an address-bar theme color',
+      failureTitle: 'Does not set an address-bar theme color',
       description: 'The browser address bar can be themed to match your site. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/address-bar).',
       requiredArtifacts: ['Manifest', 'ThemeColor'],
     };
+  }
+
+  /**
+   * @param {string} color
+   * @return {boolean}
+   */
+  static isValidColor(color) {
+    return cssParsers.valueType(color) === cssParsers.TYPES.COLOR;
   }
 
   /**
@@ -40,7 +49,7 @@ class ThemedOmnibox extends MultiCheckAudit {
   static assessMetaThemecolor(themeColorMeta, failures) {
     if (themeColorMeta === null) {
       failures.push('No `<meta name="theme-color">` tag found');
-    } else if (!validColor(themeColorMeta)) {
+    } else if (!ThemedOmnibox.isValidColor(themeColorMeta)) {
       failures.push('The theme-color meta tag did not contain a valid CSS color');
     }
   }
@@ -63,22 +72,22 @@ class ThemedOmnibox extends MultiCheckAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<{failures: Array<string>, manifestValues: LH.Artifacts.ManifestValues, themeColor: ?string}>}
    */
-  static audit_(artifacts) {
+  static async audit_(artifacts, context) {
     /** @type {Array<string>} */
     const failures = [];
 
-    return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {
-      ThemedOmnibox.assessManifest(manifestValues, failures);
-      ThemedOmnibox.assessMetaThemecolor(artifacts.ThemeColor, failures);
+    const manifestValues = await ManifestValues.request(artifacts.Manifest, context);
+    ThemedOmnibox.assessManifest(manifestValues, failures);
+    ThemedOmnibox.assessMetaThemecolor(artifacts.ThemeColor, failures);
 
-      return {
-        failures,
-        manifestValues,
-        themeColor: artifacts.ThemeColor,
-      };
-    });
+    return {
+      failures,
+      manifestValues,
+      themeColor: artifacts.ThemeColor,
+    };
   }
 }
 

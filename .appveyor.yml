@@ -22,7 +22,6 @@ install:
   - ps: Install-Product node $env:nodejs_version $env:platform
   - npm install yarn -g
   - yarn
-  - yarn install-all
 
 before_test:
   - set "PATH=C:\MinGW\msys\1.0\bin;%PATH%"
@@ -48,6 +47,4 @@ test_script:
 cache:
   #- chrome-win32 -> appveyor.yml,package.json
   - node_modules -> appveyor.yml,package.json,yarn.lock
-  - lighthouse-extension\node_modules -> appveyor.yml,package.json,yarn.lock,lighthouse-extension\package.json,lighthouse-extension\yarn.lock
-  - lighthouse-viewer\node_modules -> appveyor.yml,package.json,yarn.lock,lighthouse-viewer\package.json,lighthouse-viewer\yarn.lock
   - '%LOCALAPPDATA%\Yarn -> appveyor.yml,package.json,yarn.lock'

@@ -31,7 +31,7 @@ describe('CategoryRenderer', () => {
     global.Util = Util;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
 
-    const document = jsdom.jsdom(TEMPLATE_FILE);
+    const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
     renderer = new CategoryRenderer(dom, detailsRenderer);
@@ -142,28 +142,35 @@ describe('CategoryRenderer', () => {
   it('renders manual audits if the category contains them', () => {
     const pwaCategory = sampleResults.reportCategories.find(cat => cat.id === 'pwa');
     const categoryDOM = renderer.render(pwaCategory, sampleResults.categoryGroups);
-    assert.ok(categoryDOM.querySelector('.lh-audit-group--manual .lh-audit-group__summary'));
+    assert.ok(categoryDOM.querySelector('.lh-clump--manual .lh-audit-group__summary'));
     assert.equal(categoryDOM.querySelectorAll('.lh-audit--manual').length, 3,
         'score shows informative and dash icon');
+
+    assert.ok(pwaCategory.manualDescription);
+    const description = categoryDOM
+      .querySelector('.lh-clump--manual .lh-audit-group__description').textContent;
+    // may need to be adjusted if description includes a link at the beginning
+    assert.ok(description.startsWith(pwaCategory.manualDescription.substring(0, 20)),
+        'no manual description');
   });
 
   it('renders not applicable audits if the category contains them', () => {
     const a11yCategory = sampleResults.reportCategories.find(cat => cat.id === 'accessibility');
     const categoryDOM = renderer.render(a11yCategory, sampleResults.categoryGroups);
     assert.ok(categoryDOM.querySelector(
-        '.lh-audit-group--not-applicable .lh-audit-group__summary'));
+        '.lh-clump--not-applicable .lh-audit-group__summary'));
 
     const notApplicableCount = a11yCategory.auditRefs.reduce((sum, audit) =>
         sum += audit.result.scoreDisplayMode === 'not-applicable' ? 1 : 0, 0);
     assert.equal(
-      categoryDOM.querySelectorAll('.lh-audit-group--not-applicable .lh-audit').length,
+      categoryDOM.querySelectorAll('.lh-clump--not-applicable .lh-audit').length,
       notApplicableCount,
       'score shows informative and dash icon'
     );
 
     const bestPracticeCat = sampleResults.reportCategories.find(cat => cat.id === 'best-practices');
     const categoryDOM2 = renderer.render(bestPracticeCat, sampleResults.categoryGroups);
-    assert.ok(!categoryDOM2.querySelector('.lh-audit-group--not-applicable'));
+    assert.ok(!categoryDOM2.querySelector('.lh-clump--not-applicable'));
   });
 
   describe('category with groups', () => {
@@ -209,7 +216,7 @@ describe('CategoryRenderer', () => {
           audit.result.scoreDisplayMode !== 'not-applicable' && audit.result.score === 1);
       const passedAuditTags = new Set(passedAudits.map(audit => audit.group));
 
-      const passedAuditGroups = categoryDOM.querySelectorAll('.lh-passed-audits .lh-audit-group');
+      const passedAuditGroups = categoryDOM.querySelectorAll('.lh-clump--passed .lh-audit-group');
       assert.equal(passedAuditGroups.length, passedAuditTags.size);
     });
 
@@ -218,18 +225,81 @@ describe('CategoryRenderer', () => {
       const auditsElements = categoryDOM.querySelectorAll('.lh-audit');
       assert.equal(auditsElements.length, category.auditRefs.length);
     });
+
+    it('increments the audit index across groups', () => {
+      const elem = renderer.render(category, sampleResults.categoryGroups);
+
+      const passedAudits = elem.querySelectorAll('.lh-clump--passed .lh-audit__index');
+      const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit__index');
+      const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit__index');
+      const notApplicableAudits =
+        elem.querySelectorAll('.lh-clump--not-applicable .lh-audit__index');
+
+      const assertAllTheIndices = (nodeList) => {
+        // Must be at least one for a decent test.
+        assert.ok(nodeList.length > 0);
+
+        // Assert indices are continuous, starting at 1.
+        nodeList.forEach((node, i) => {
+          const auditIndex = Number.parseInt(node.textContent);
+          assert.strictEqual(auditIndex, i + 1);
+        });
+      };
+
+      assertAllTheIndices(passedAudits);
+      assertAllTheIndices(failedAudits);
+      assertAllTheIndices(manualAudits);
+      assertAllTheIndices(notApplicableAudits);
+    });
+
+    it('renders audits without a group before grouped ones', () => {
+      const categoryClone = JSON.parse(JSON.stringify(category));
+
+      // Remove groups from some audits.
+      const ungroupedAudits = ['color-contrast', 'image-alt', 'link-name'];
+      for (const auditRef of categoryClone.auditRefs) {
+        if (ungroupedAudits.includes(auditRef.id)) {
+          assert.ok(auditRef.group); // Make sure this will change something.
+          delete auditRef.group;
+        }
+      }
+
+      const elem = renderer.render(categoryClone, sampleResults.categoryGroups);
+
+      // Check that the first audits found are the ungrouped ones.
+      const auditElems = Array.from(elem.querySelectorAll('.lh-audit'));
+      const firstAuditElems = auditElems.slice(0, ungroupedAudits.length);
+      for (const auditElem of firstAuditElems) {
+        const auditId = auditElem.id;
+        assert.ok(ungroupedAudits.includes(auditId), auditId);
+      }
+    });
+
+    it('gives each group a selectable class', () => {
+      const categoryGroupIds = new Set(category.auditRefs.filter(a => a.group).map(a => a.group));
+      assert.ok(categoryGroupIds.size > 6); // Ensure there's something to test.
+
+      const categoryElem = renderer.render(category, sampleResults.categoryGroups);
+
+      categoryGroupIds.forEach(groupId => {
+        const selector = `.lh-audit-group--${groupId}`;
+        // Could be multiple results (e.g. found in both passed and failed clumps).
+        assert.ok(categoryElem.querySelectorAll(selector).length >= 1,
+          `could not find '${selector}'`);
+      });
+    });
   });
 
-  describe('grouping passed/failed/manual', () => {
+  describe('clumping passed/failed/manual', () => {
     it('separates audits in the DOM', () => {
       const category = sampleResults.reportCategories.find(c => c.id === 'pwa');
       const elem = renderer.render(category, sampleResults.categoryGroups);
-      const passedAudits = elem.querySelectorAll('.lh-passed-audits .lh-audit');
-      const failedAudits = elem.querySelectorAll('.lh-failed-audits .lh-audit');
-      const manualAudits = elem.querySelectorAll('.lh-audit-group--manual .lh-audit');
+      const passedAudits = elem.querySelectorAll('.lh-clump--passed .lh-audit');
+      const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
+      const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit');
 
       assert.equal(passedAudits.length, 4);
-      assert.equal(failedAudits.length, 7);
+      assert.equal(failedAudits.length, 8);
       assert.equal(manualAudits.length, 3);
     });
 
@@ -238,20 +308,19 @@ describe('CategoryRenderer', () => {
       const category = JSON.parse(JSON.stringify(origCategory));
       category.auditRefs.forEach(audit => audit.result.score = 0);
       const elem = renderer.render(category, sampleResults.categoryGroups);
-      const passedAudits = elem.querySelectorAll('.lh-passed-audits > .lh-audit');
-      const failedAudits = elem.querySelectorAll('.lh-failed-audits > .lh-audit');
+      const passedAudits = elem.querySelectorAll('.lh-clump--passed .lh-audit');
+      const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 11);
-
-      assert.equal(elem.querySelector('.lh-passed-audits-summary'), null);
+      assert.equal(failedAudits.length, 12);
     });
   });
 
   it('can set a custom templateContext', () => {
     assert.equal(renderer.templateContext, renderer.dom.document());
 
-    const otherDocument = jsdom.jsdom(TEMPLATE_FILE);
+    const dom = new jsdom.JSDOM(TEMPLATE_FILE);
+    const otherDocument = dom.window.document;
     renderer.setTemplateContext(otherDocument);
     assert.equal(renderer.templateContext, otherDocument);
   });

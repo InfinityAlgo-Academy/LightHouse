@@ -7,7 +7,6 @@
 
 const FontSizeAudit = require('../../../audits/seo/font-size.js');
 const assert = require('assert');
-const CSSStyleDeclaration = require('../../../lib/web-inspector').CSSStyleDeclaration;
 
 const URL = 'https://example.com';
 const validViewport = 'width=device-width';
@@ -89,7 +88,7 @@ describe('SEO: Font size audit', () => {
   it('groups entries with same source, sorts them by coverage', () => {
     const style1 = {
       styleSheetId: 1,
-      type: CSSStyleDeclaration.Type.Regular,
+      type: 'Regular',
       range: {
         startLine: 123,
         startColumn: 10,
@@ -97,7 +96,7 @@ describe('SEO: Font size audit', () => {
     };
     const style2 = {
       styleSheetId: 1,
-      type: CSSStyleDeclaration.Type.Regular,
+      type: 'Regular',
       range: {
         startLine: 0,
         startColumn: 10,

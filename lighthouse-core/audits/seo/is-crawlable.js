@@ -8,6 +8,7 @@
 const Audit = require('../audit');
 const robotsParser = require('robots-parser');
 const URL = require('../../lib/url-shim');
+const MainResource = require('../../computed/main-resource.js');
 const BLOCKLIST = new Set([
   'noindex',
   'none',
@@ -74,12 +75,13 @@ class IsCrawlable extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
+  static audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
 
-    return artifacts.requestMainResource({devtoolsLog, URL: artifacts.URL})
+    return MainResource.request({devtoolsLog, URL: artifacts.URL}, context)
       .then(mainResource => {
         /** @type {Array<Object<string, LH.Audit.DetailsItem>>} */
         const blockingDirectives = [];

@@ -91,7 +91,6 @@ class ReportUIFeatures {
     this._resetUIState();
     this._jumpToAudit();
     this._document.addEventListener('keydown', this.printShortCutDetect);
-    // @ts-ignore - TODO(bckenny): tsc thinks document can't listen for `copy`. Remove ignore in 3.1.
     this._document.addEventListener('copy', this.onCopy);
   }
 
@@ -115,7 +114,7 @@ class ReportUIFeatures {
 
   /**
    * Handle media query change events.
-   * @param {MediaQueryList} mql
+   * @param {MediaQueryList|MediaQueryListEvent} mql
    */
   onMediaQueryChange(mql) {
     const root = this._dom.find('.lh-root', this._document);
@@ -134,7 +133,6 @@ class ReportUIFeatures {
     const scoresWrapper = this._dom.find('.lh-scores-wrapper', this._document);
     const computedMarginTop = window.getComputedStyle(scoresWrapper).marginTop;
     this.headerOverlap = parseFloat(computedMarginTop || '0');
-
     this.headerSticky = this._dom.find('.lh-header-sticky', this._document);
     this.headerBackground = this._dom.find('.lh-header-bg', this._document);
     this.lighthouseIcon = this._dom.find('.lh-lighthouse', this._document);
@@ -142,7 +140,6 @@ class ReportUIFeatures {
     this.productInfo = this._dom.find('.lh-product-info', this._document);
     this.toolbar = this._dom.find('.lh-toolbar', this._document);
     this.toolbarMetadata = this._dom.find('.lh-toolbar__metadata', this._document);
-
     const computedHeight = window.getComputedStyle(this.headerBackground).height;
     this.headerHeight = parseFloat(computedHeight || '0');
 
@@ -222,17 +219,17 @@ class ReportUIFeatures {
   animateHeader() {
     const collapsedHeaderHeight = 50;
     const heightDiff = this.headerHeight - collapsedHeaderHeight + this.headerOverlap;
-    const scrollPct = Math.min(1,
-      this.latestKnownScrollY / (this.headerHeight - collapsedHeaderHeight));
+    const scrollPct = Math.max(0, Math.min(1,
+      this.latestKnownScrollY / (this.headerHeight - collapsedHeaderHeight)));
 
     const scoresContainer = /** @type {HTMLElement} */ (this.scoresWrapperBg.parentElement);
 
     this.headerSticky.style.transform = `translateY(${heightDiff * scrollPct * -1}px)`;
     this.headerBackground.style.transform = `translateY(${scrollPct * this.headerOverlap}px)`;
     this.lighthouseIcon.style.transform =
-      `translate3d(calc(var(--report-width) / 2),` +
+      `translate3d(var(--report-width-half),` +
       ` calc(-100% - ${scrollPct * this.headerOverlap * -1}px), 0) scale(${1 - scrollPct})`;
-    this.lighthouseIcon.style.opacity = Math.max(0, 1 - scrollPct).toString();
+    this.lighthouseIcon.style.opacity = (1 - scrollPct).toString();
 
     // Switch up the score background & shadows
     this.scoresWrapperBg.style.opacity = (1 - scrollPct).toString();

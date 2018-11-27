@@ -7,12 +7,15 @@
 
 const EventEmitter = require('events').EventEmitter;
 const log = require('lighthouse-logger');
-const LHError = require('../../lib/errors');
+const LHError = require('../../lib/lh-error');
 
+// TODO(bckenny): CommandCallback properties should be tied by command type after
+// https://github.com/Microsoft/TypeScript/pull/22348. See driver.js TODO.
 /**
- * @typedef {LH.StrictEventEmitter<{'protocolevent': LH.Protocol.RawEventMessage}>} CrdpEventMessageEmitter
+ * @typedef {{'protocolevent': [LH.Protocol.RawEventMessage]}} ProtocolEventRecord
+ * @typedef {LH.Protocol.StrictEventEmitter<ProtocolEventRecord>} CrdpEventMessageEmitter
  * @typedef {LH.CrdpCommands[keyof LH.CrdpCommands]} CommandInfo
- * @typedef {{resolve: function(Promise<CommandInfo['returnType']>): void, method: keyof LH.CrdpCommands, options: {silent?: boolean}}} CommandCallback
+ * @typedef {{resolve: function(Promise<CommandInfo['returnType']>): void, method: keyof LH.CrdpCommands}} CommandCallback
  */
 
 class Connection {
@@ -21,8 +24,7 @@ class Connection {
     /** @type {Map<number, CommandCallback>} */
     this._callbacks = new Map();
 
-    /** @type {?CrdpEventMessageEmitter} */
-    this._eventEmitter = new EventEmitter();
+    this._eventEmitter = /** @type {?CrdpEventMessageEmitter} */ (new EventEmitter());
   }
 
   /**
@@ -44,6 +46,27 @@ class Connection {
    */
   wsEndpoint() {
     return Promise.reject(new Error('Not implemented'));
+  }
+
+  /**
+   * Call protocol methods
+   * @template {keyof LH.CrdpCommands} C
+   * @param {C} method
+   * @param {LH.CrdpCommands[C]['paramsType']} paramArgs,
+   * @return {Promise<LH.CrdpCommands[C]['returnType']>}
+   */
+  sendCommand(method, ...paramArgs) {
+    // Reify params since we need it as a property so can't just spread again.
+    const params = paramArgs.length ? paramArgs[0] : undefined;
+
+    log.formatProtocol('method => browser', {method, params}, 'verbose');
+    const id = ++this._lastCommandId;
+    const message = JSON.stringify({id, method, params});
+    this.sendRawMessage(message);
+
+    return new Promise(resolve => {
+      this._callbacks.set(id, {method, resolve});
+    });
   }
 
   /**
@@ -94,12 +117,9 @@ class Connection {
     if (callback) {
       this._callbacks.delete(object.id);
 
-      // @ts-ignore since can't convince compiler that callback.resolve's return
-      // type and object.result are matching since only linked by object.id.
       return callback.resolve(Promise.resolve().then(_ => {
         if (object.error) {
-          const logLevel = callback.options.silent ? 'verbose' : 'error';
-          log.formatProtocol('method <= browser ERR', {method: callback.method}, logLevel);
+          log.formatProtocol('method <= browser ERR', {method: callback.method}, 'error');
           throw LHError.fromProtocolMessage(callback.method, object.error);
         }
 
@@ -137,34 +157,5 @@ class Connection {
     }
   }
 }
-
-// Declared outside class body because function expressions can be typed via coercive @type
-/**
- * Looser-typed internal implementation of `Connection.sendCommand` which is
- * strictly typed externally on exposed Connection interface. See
- * `Driver.sendCommand` for explanation.
- * @this {Connection}
- * @param {keyof LH.CrdpCommands} method
- * @param {CommandInfo['paramsType']=} params,
- * @param {{silent?: boolean}=} cmdOpts
- * @return {Promise<CommandInfo['returnType']>}
- */
-function _sendCommand(method, params, cmdOpts = {}) {
-  /* eslint-disable no-invalid-this */
-  log.formatProtocol('method => browser', {method, params}, 'verbose');
-  const id = ++this._lastCommandId;
-  const message = JSON.stringify({id, method, params});
-  this.sendRawMessage(message);
-  return new Promise(resolve => {
-    this._callbacks.set(id, {resolve, method, options: cmdOpts});
-  });
-  /* eslint-enable no-invalid-this */
-}
-
-/**
- * Call protocol methods.
- * @type {LH.Protocol.SendCommand}
- */
-Connection.prototype.sendCommand = _sendCommand;
 
 module.exports = Connection;
