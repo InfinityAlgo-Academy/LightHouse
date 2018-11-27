@@ -40,6 +40,7 @@ class Runner {
        * @type {Array<string>}
        */
       const lighthouseRunWarnings = [];
+      const lighthouseVersion = require('../package.json').version;
 
       const sentryContext = Sentry.getContext();
       Sentry.captureBreadcrumb({
@@ -79,8 +80,47 @@ class Runner {
         } catch (e) {
           throw new Error('The url provided should have a proper protocol and hostname.');
         }
+        // try {
+          artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection);
+        // } catch (e) {
+        //   console.log('woah that was a protocol error!')
+        //   lighthouseRunWarnings.push(e.friendlyMessage);
 
-        artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection);
+        //   // graceful exit here with a lil' LHR
+        //   /** @type {LH.Result} */
+        //   const lhr = {
+        //     userAgent: '',
+        //     environment: {
+        //       networkUserAgent: '',
+        //       hostUserAgent: '',
+        //       benchmarkIndex: 0,
+        //     },
+        //     lighthouseVersion,
+        //     fetchTime: (new Date()).toJSON(),
+        //     requestedUrl: requestedUrl,
+        //     finalUrl: requestedUrl,
+        //     runWarnings: lighthouseRunWarnings,
+        //     runtimeError: e,
+        //     audits: {},
+        //     configSettings: settings,
+        //     categories: {},
+        //     categoryGroups: runOpts.config.groups || undefined,
+        //     timing: {entries: [], total: 0},
+        //     i18n: {
+        //       rendererFormattedStrings: i18n.getRendererFormattedStrings(settings.locale),
+        //       icuMessagePaths: {},
+        //     },
+        //   };
+
+        //   // Replace ICU message references with localized strings; save replaced paths in lhr.
+        //   lhr.i18n.icuMessagePaths = i18n.replaceIcuMessageInstanceIds(lhr, settings.locale);
+
+        //   // Create the HTML, JSON, and/or CSV string
+        //   const report = generateReport(lhr, settings.output);
+
+        //   // @ts-ignore
+        //   return {lhr, artifacts, report};
+        // }
         // -G means save these to ./latest-run, etc.
         if (settings.gatherMode) {
           const path = Runner._getArtifactsPath(settings);
@@ -107,7 +147,7 @@ class Runner {
       }
 
       // Entering: conclusion of the lighthouse result object
-      const lighthouseVersion = require('../package.json').version;
+      
 
       /** @type {Object<string, LH.Audit.Result>} */
       const resultsById = {};
@@ -336,6 +376,19 @@ class Runner {
    * @return {LH.Result['runtimeError']}
    */
   static getArtifactRuntimeError(artifacts) {
+    // check the top level fatal runtime errors.
+    if (artifacts.LighthouseRunErrors.length > 0 ) {
+      // Return the first error.
+      /** @type {LHError} */
+      const error = artifacts.LighthouseRunErrors[0];
+
+      return {
+        code: error.code,
+        message: error.friendlyMessage || error.message,
+      };
+    }
+
+    // Check the gatherers for errors individually.
     for (const possibleErrorArtifact of Object.values(artifacts)) {
       if (possibleErrorArtifact instanceof LHError && possibleErrorArtifact.lhrRuntimeError) {
         const errorMessage = possibleErrorArtifact.friendlyMessage || possibleErrorArtifact.message;

@@ -8,6 +8,7 @@ import parseManifest = require('../lighthouse-core/lib/manifest-parser.js');
 import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator.js');
 import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
 import speedline = require('speedline-core');
+import LHError = require('../lighthouse-core/lib/lh-error.js');
 
 type _TaskNode = import('../lighthouse-core/computed/main-thread-tasks.js').TaskNode;
 
@@ -23,6 +24,8 @@ declare global {
       fetchTime: string;
       /** A set of warnings about unexpected things encountered while loading and testing the page. */
       LighthouseRunWarnings: string[];
+      /** A set of fatal top level errors encountered in the run. */
+      LighthouseRunErrors: LHError[];
       /** The user agent string of the version of Chrome used. */
       HostUserAgent: string;
       /** The user agent string that Lighthouse used to load the page. */

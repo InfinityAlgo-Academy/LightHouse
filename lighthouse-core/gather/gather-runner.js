@@ -416,6 +416,7 @@ class GatherRunner {
     return {
       fetchTime: (new Date()).toJSON(),
       LighthouseRunWarnings: [],
+      LighthouseRunErrors: [],
       HostUserAgent: (await options.driver.getBrowserVersion()).userAgent,
       NetworkUserAgent: '', // updated later
       BenchmarkIndex: 0, // updated later
@@ -498,9 +499,27 @@ class GatherRunner {
       await GatherRunner.disposeDriver(driver);
       return GatherRunner.collectArtifacts(gathererResults, baseArtifacts);
     } catch (err) {
-      // cleanup on error
+      // Cleanup on error.
       GatherRunner.disposeDriver(driver);
-      throw err;
+ 
+      // Generate set of emergency never-fail artifacts to return.
+      /** @type {LH.BaseArtifacts} */
+      const emergencyArtifacts = {
+        fetchTime: (new Date()).toJSON(),
+        LighthouseRunWarnings: [err.friendlyMessage],
+        LighthouseRunErrors: [err],
+        HostUserAgent: '',
+        NetworkUserAgent: '',
+        BenchmarkIndex: 0,
+        traces: {},
+        devtoolsLogs: {},
+        settings: options.settings,
+        URL: {requestedUrl: options.requestedUrl, finalUrl: options.requestedUrl},
+        Timing: [],
+      };
+
+      /** @type {LH.Artifacts} */
+      return GatherRunner.collectArtifacts({}, emergencyArtifacts);
     }
   }
 }
