@@ -324,8 +324,6 @@ class ReportUIFeatures {
         top: details.offsetTop,
         behavior: 'smooth',
       });
-    } else {
-      throw new Error(`Closest ancestor '.lh-container details' of ${element.nodeName} not found`);
     }
   }
 
