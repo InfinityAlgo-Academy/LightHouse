@@ -313,8 +313,9 @@ class GatherRunner {
 
     // Assert no fatal errors have occured.
     this.assertNoSecurityIssues(driver.getSecurityState());
-    this.assertNoPageLoadError(passContext.url, networkRecords);
-
+    if (driver.online) {
+      this.assertNoPageLoadError(passContext.url, networkRecords);
+    }
     // Expose devtoolsLog, networkRecords, and trace (if present) to gatherers
     /** @type {LH.Gatherer.LoadData} */
     const passData = {

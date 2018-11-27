@@ -627,14 +627,14 @@ describe('GatherRunner', function() {
       const url = 'http://the-page.com';
       const mainRecord = new NetworkRequest();
       mainRecord.url = url;
-      assert.ok(!GatherRunner.getPageLoadError(url, [mainRecord]));
+      assert.ok(!GatherRunner.assertNoPageLoadError(url, [mainRecord]));
     });
 
     it('passes when the page is loaded, ignoring any fragment', () => {
       const url = 'http://example.com/#/page/list';
       const mainRecord = new NetworkRequest();
       mainRecord.url = 'http://example.com';
-      assert.ok(!GatherRunner.getPageLoadError(url, [mainRecord]));
+      assert.ok(!GatherRunner.assertNoPageLoadError(url, [mainRecord]));
     });
 
     it('fails when page fails to load', () => {
@@ -643,19 +643,17 @@ describe('GatherRunner', function() {
       mainRecord.url = url;
       mainRecord.failed = true;
       mainRecord.localizedFailDescription = 'foobar';
-      const error = GatherRunner.getPageLoadError(url, [mainRecord]);
-      assert.equal(error.message, 'FAILED_DOCUMENT_REQUEST');
-      assert.equal(error.code, 'FAILED_DOCUMENT_REQUEST');
-      assert.ok(/^Lighthouse was unable to reliably load/.test(error.friendlyMessage));
+
+      expect(() => GatherRunner.assertNoPageLoadError(url, [mainRecord]))
+        .toThrowError('FAILED_DOCUMENT_REQUEST');
     });
 
     it('fails when page times out', () => {
       const url = 'http://the-page.com';
       const records = [];
-      const error = GatherRunner.getPageLoadError(url, records);
-      assert.equal(error.message, 'NO_DOCUMENT_REQUEST');
-      assert.equal(error.code, 'NO_DOCUMENT_REQUEST');
-      assert.ok(/^Lighthouse was unable to reliably load/.test(error.friendlyMessage));
+
+      expect(() => GatherRunner.assertNoPageLoadError(url, records))
+        .toThrowError('NO_DOCUMENT_REQUEST');
     });
 
     it('fails when page returns with a 404', () => {
@@ -663,10 +661,9 @@ describe('GatherRunner', function() {
       const mainRecord = new NetworkRequest();
       mainRecord.url = url;
       mainRecord.statusCode = 404;
-      const error = GatherRunner.getPageLoadError(url, [mainRecord]);
-      assert.equal(error.message, 'ERRORED_DOCUMENT_REQUEST');
-      assert.equal(error.code, 'ERRORED_DOCUMENT_REQUEST');
-      assert.ok(/^Lighthouse was unable to reliably load/.test(error.friendlyMessage));
+
+      expect(() => GatherRunner.assertNoPageLoadError(url, [mainRecord]))
+        .toThrowError('ERRORED_DOCUMENT_REQUEST');
     });
 
     it('fails when page returns with a 500', () => {
@@ -674,10 +671,9 @@ describe('GatherRunner', function() {
       const mainRecord = new NetworkRequest();
       mainRecord.url = url;
       mainRecord.statusCode = 500;
-      const error = GatherRunner.getPageLoadError(url, [mainRecord]);
-      assert.equal(error.message, 'ERRORED_DOCUMENT_REQUEST');
-      assert.equal(error.code, 'ERRORED_DOCUMENT_REQUEST');
-      assert.ok(/^Lighthouse was unable to reliably load/.test(error.friendlyMessage));
+
+      expect(() => GatherRunner.assertNoPageLoadError(url, [mainRecord]))
+        .toThrowError('ERRORED_DOCUMENT_REQUEST');
     });
 
     it('fails when page domain doesn\'t resolve', () => {
@@ -686,10 +682,9 @@ describe('GatherRunner', function() {
       mainRecord.url = url;
       mainRecord.failed = true;
       mainRecord.localizedFailDescription = 'net::ERR_NAME_NOT_RESOLVED';
-      const error = GatherRunner.getPageLoadError(url, [mainRecord]);
-      assert.equal(error.message, 'DNS_FAILURE');
-      assert.equal(error.code, 'DNS_FAILURE');
-      assert.ok(/^DNS servers could not resolve/.test(error.friendlyMessage));
+
+      expect(() => GatherRunner.assertNoPageLoadError(url, [mainRecord]))
+        .toThrowError('DNS_FAILURE');
     });
   });
 
