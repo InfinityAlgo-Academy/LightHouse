@@ -283,10 +283,10 @@ class ReportUIFeatures {
     this._dom.resetTemplates();
   }
 
-  /* eslint-env browser */
   /**
    * Jumps to respective audit on page load if hash is provided in URL.
    * Collapsed content is opened automatically.
+   * If found, scroll to element in viewport.
    * Element is highlighted via CSS selector.
    */
   _jumpToAudit() {
@@ -302,25 +302,25 @@ class ReportUIFeatures {
       audit.firstElementChild.setAttribute('open', 'true');
     }
     this._openClosestDetails(audit);
+    if (audit instanceof HTMLElement) {
+      window.scroll({
+        top: audit.offsetTop,
+        behavior: 'smooth',
+      });
+    }
   }
 
-  /* eslint-env browser*/
   /**
    * Open all closest <details> elements recursively.
-   * If found, scroll to element in viewport.
    * @param {Element} element
    */
   _openClosestDetails(element) {
     const details = element.closest('.lh-container details');
-    if (details instanceof HTMLElement) {
-      details.setAttribute('open', 'true');
+    if (details instanceof HTMLDetailsElement) {
+      details.open = true;
       if (details.parentElement) {
         this._openClosestDetails(details.parentElement);
       }
-      window.scroll({
-        top: details.offsetTop,
-        behavior: 'smooth',
-      });
     }
   }
 
