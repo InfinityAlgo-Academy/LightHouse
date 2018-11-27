@@ -138,9 +138,9 @@ class GatherRunner {
    * Returns an error if the original network request failed or wasn't found.
    * @param {string} url The URL of the original requested page.
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {LHError|undefined}
+   * @throws {LHError}
    */
-  static getPageLoadError(url, networkRecords) {
+  static assertNoPageLoadError(url, networkRecords) {
     const mainRecord = networkRecords.find(record => {
       // record.url is actual request url, so needs to be compared without any URL fragment.
       return URL.equalWithExcludedFragments(record.url, url);
@@ -169,7 +169,7 @@ class GatherRunner {
     }
 
     if (errorDef) {
-      return new LHError(errorDef);
+      throw new LHError(errorDef);
     }
   }
 
@@ -311,16 +311,9 @@ class GatherRunner {
     const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
     log.timeEnd(status);
 
+    // Assert no fatal errors have occured.
     this.assertNoSecurityIssues(driver.getSecurityState());
-
-    let pageLoadError = GatherRunner.getPageLoadError(passContext.url, networkRecords);
-    // If the driver was offline, a page load error is expected, so do not save it.
-    if (!driver.online) pageLoadError = undefined;
-
-    if (pageLoadError) {
-      log.error('GatherRunner', pageLoadError.message, passContext.url);
-      passContext.LighthouseRunWarnings.push(pageLoadError.friendlyMessage);
-    }
+    this.assertNoPageLoadError(passContext.url, networkRecords);
 
     // Expose devtoolsLog, networkRecords, and trace (if present) to gatherers
     /** @type {LH.Gatherer.LoadData} */
@@ -346,11 +339,9 @@ class GatherRunner {
       // Add gatherer options to the passContext.
       passContext.options = gathererDefn.options || {};
 
-      // If there was a pageLoadError, fail every afterPass with it rather than bail completely.
-      const artifactPromise = pageLoadError ?
-        Promise.reject(pageLoadError) :
-        // Wrap gatherer response in promise, whether rejected or not.
-        Promise.resolve().then(_ => gatherer.afterPass(passContext, passData));
+      // Wrap the afterPass results in a promise.
+      const artifactPromise = Promise.resolve()
+        .then(_ => gatherer.afterPass(passContext, passData));
 
       const gathererResult = gathererResults[gatherer.name] || [];
       gathererResult.push(artifactPromise);
@@ -499,9 +490,12 @@ class GatherRunner {
       await GatherRunner.disposeDriver(driver);
       return GatherRunner.collectArtifacts(gathererResults, baseArtifacts);
     } catch (err) {
-      // Cleanup on error.
+      // A fatal error has occured that has totally invalidated the run.  Make some
+      // emergency prep, record the error, and return.
+
+      // Cleanup driver.
       GatherRunner.disposeDriver(driver);
- 
+
       // Generate set of emergency never-fail artifacts to return.
       /** @type {LH.BaseArtifacts} */
       const emergencyArtifacts = {

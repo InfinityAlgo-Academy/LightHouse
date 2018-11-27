@@ -30,7 +30,7 @@ const DEFAULT_NETWORK_QUIET_THRESHOLD = 5000;
 // Controls how long to wait between longtasks before determining the CPU is idle, off by default
 const DEFAULT_CPU_QUIET_THRESHOLD = 0;
 // Controls how long to wait for a response after sending a DevTools protocol command.
-const DEFAULT_PROTOCOL_TIMEOUT = 10000;
+const DEFAULT_PROTOCOL_TIMEOUT = 30000;
 
 /**
  * @typedef {LH.Protocol.StrictEventEmitter<LH.CrdpEvents>} CrdpEventEmitter
