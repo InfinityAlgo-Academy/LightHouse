@@ -364,8 +364,7 @@ class ReportUIFeatures {
     // load event, however it is cross-domain and won't fire. Instead, listen
     // for a message from the target app saying "I'm open".
     const json = reportJson;
-    window.addEventListener('message', function msgHandler(/** @type {Event} */ e) {
-      const messageEvent = /** @type {MessageEvent} */ (e);
+    window.addEventListener('message', function msgHandler(messageEvent) {
       if (messageEvent.origin !== VIEWER_ORIGIN) {
         return;
       }
@@ -469,7 +468,7 @@ class ReportUIFeatures {
     const ext = blob.type.match('json') ? '.json' : '.html';
     const href = URL.createObjectURL(blob);
 
-    const a = /** @type {HTMLAnchorElement} */ (this._dom.createElement('a'));
+    const a = this._dom.createElement('a');
     a.download = `${filename}${ext}`;
     a.href = href;
     this._document.body.appendChild(a); // Firefox requires anchor to be in the DOM.
