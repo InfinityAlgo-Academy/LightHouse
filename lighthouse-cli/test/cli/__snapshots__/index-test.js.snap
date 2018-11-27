@@ -64,7 +64,7 @@ Object {
       "path": "redirects",
     },
     Object {
-      "path": "webapp-install-banner",
+      "path": "installable-manifest",
     },
     Object {
       "path": "splash-screen",
@@ -840,7 +840,7 @@ Object {
         },
         Object {
           "group": "pwa-installable",
-          "id": "webapp-install-banner",
+          "id": "installable-manifest",
           "weight": 2,
         },
         Object {

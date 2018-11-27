@@ -50,7 +50,7 @@ module.exports = [
       'load-fast-enough-for-pwa': {
         // Ignore speed test; just verify that it ran.
       },
-      'webapp-install-banner': {
+      'installable-manifest': {
         score: 1,
         details: {items: [pwaDetailsExpectations]},
       },
@@ -110,7 +110,7 @@ module.exports = [
       'load-fast-enough-for-pwa': {
         // Ignore speed test; just verify that it ran.
       },
-      'webapp-install-banner': {
+      'installable-manifest': {
         score: 1,
         details: {items: [pwaDetailsExpectations]},
       },

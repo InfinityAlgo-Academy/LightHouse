@@ -15,10 +15,6 @@ const PWA_DISPLAY_VALUES = ['minimal-ui', 'fullscreen', 'standalone'];
 const SUGGESTED_SHORTNAME_LENGTH = 12;
 
 class ManifestValues {
-  static get validityIds() {
-    return ['hasManifest', 'hasParseableManifest'];
-  }
-
   /** @typedef {(val: NonNullable<LH.Artifacts.Manifest['value']>) => boolean} Validator */
 
   /**
@@ -86,8 +82,6 @@ class ManifestValues {
    */
   static async compute_(manifest) {
     // if the manifest isn't there or is invalid json, we report that and bail
-    let parseFailureReason;
-
     if (manifest === null) {
       return {
         isParseFailure: true,
@@ -115,7 +109,6 @@ class ManifestValues {
 
     return {
       isParseFailure: false,
-      parseFailureReason,
       allChecks: remainingChecks,
     };
   }

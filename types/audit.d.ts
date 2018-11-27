@@ -179,7 +179,6 @@ declare global {
     type MultiCheckAuditP2 = Partial<Artifacts.ManifestValues>;
     interface MultiCheckAuditP3 {
       failures: Array<string>;
-      warnings?: undefined;
       manifestValues?: undefined;
       allChecks?: undefined;
     }

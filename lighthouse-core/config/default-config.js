@@ -151,7 +151,7 @@ const defaultConfig = {
     'user-timings',
     'critical-request-chains',
     'redirects',
-    'webapp-install-banner',
+    'installable-manifest',
     'splash-screen',
     'themed-omnibox',
     'content-width',
@@ -371,7 +371,7 @@ const defaultConfig = {
         // Installable
         {id: 'is-on-https', weight: 2, group: 'pwa-installable'},
         {id: 'service-worker', weight: 1, group: 'pwa-installable'},
-        {id: 'webapp-install-banner', weight: 2, group: 'pwa-installable'},
+        {id: 'installable-manifest', weight: 2, group: 'pwa-installable'},
         // PWA Optimized
         {id: 'redirects-http', weight: 2, group: 'pwa-optimized'},
         {id: 'splash-screen', weight: 1, group: 'pwa-optimized'},
