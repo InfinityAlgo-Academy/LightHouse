@@ -158,4 +158,17 @@ module.exports = [
       },
     },
   },
+
+  {
+    requestedUrl: 'http://localhost:10503/offline-ready.html?slow',
+    finalUrl: 'http://localhost:10503/offline-ready.html?slow',
+    audits: {
+      'service-worker': {
+        score: 1,
+      },
+      'works-offline': {
+        score: 1,
+      },
+    },
+  },
 ];
