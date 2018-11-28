@@ -142,8 +142,7 @@ module.exports = [
     finalUrl: BASE_URL + 'seo-failure-cases.html?status_code=403',
     audits: {
       'http-status-code': {
-        score: 0,
-        displayValue: '403',
+        score: null,
       },
       'viewport': {
         score: null,

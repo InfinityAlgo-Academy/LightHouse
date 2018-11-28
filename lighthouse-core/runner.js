@@ -274,10 +274,12 @@ class Runner {
         const noArtifact = artifacts[artifactName] === undefined;
 
         // If trace required, check that DEFAULT_PASS trace exists.
-        // TODO: need pass-specific check of networkRecords and traces.
+        // TODO: need pass-specific check of devtoolsLog and traces.
         const noTrace = artifactName === 'traces' && !artifacts.traces[Audit.DEFAULT_PASS];
+        const noDevtoolsLog = artifactName === 'devtoolsLogs' &&
+          !artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
 
-        if (noArtifact || noTrace) {
+        if (noArtifact || noTrace || noDevtoolsLog) {
           log.warn('Runner',
               `${artifactName} gatherer, required by audit ${audit.meta.id}, did not run.`);
           throw new Error(`Required ${artifactName} gatherer did not run.`);

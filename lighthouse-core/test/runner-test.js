@@ -269,6 +269,25 @@ describe('Runner', () => {
       });
     });
 
+    it('outputs an error audit result when devtoolsLog required but not provided', () => {
+      const config = new Config({
+        settings: {
+          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+        },
+        audits: [
+          // requires devtoolsLog[Audit.DEFAULT_PASS]
+          'seo/http-status-code',
+        ],
+      });
+
+      return Runner.run({}, {config}).then(results => {
+        const auditResult = results.lhr.audits['http-status-code'];
+        assert.strictEqual(auditResult.rawValue, null);
+        assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+        assert.ok(auditResult.errorMessage.includes('devtoolsLog'));
+      });
+    });
+
     it('outputs an error audit result when missing a required artifact', () => {
       const config = new Config({
         settings: {
