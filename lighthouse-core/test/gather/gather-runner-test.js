@@ -13,7 +13,6 @@ const assert = require('assert');
 const Config = require('../../config/config');
 const unresolvedPerfLog = require('./../fixtures/unresolved-perflog.json');
 const NetworkRequest = require('../../lib/network-request.js');
-const LHError = require('../../lib/lh-error');
 
 class TestGatherer extends Gatherer {
   constructor() {
