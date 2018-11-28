@@ -318,6 +318,7 @@ class GatherRunner {
     if (driver.online) {
       this.assertNoPageLoadError(passContext.url, networkRecords);
     }
+
     // Expose devtoolsLog, networkRecords, and trace (if present) to gatherers
     /** @type {LH.Gatherer.LoadData} */
     const passData = {
