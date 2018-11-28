@@ -601,6 +601,10 @@ limitations under the License.
     .lh-gauge--pwa__wrapper:not([class*='lh-badged--']) .lh-gauge--pwa__na-line {
       display: inline;
     }
+    /* Just optimized. Same n/a line as no passing groups. */
+    .lh-gauge--pwa__wrapper.lh-badged--pwa-optimized .lh-gauge--pwa__na-line {
+      display: inline;
+    }
 
     /* Just fast and reliable. */
     .lh-gauge--pwa__wrapper.lh-badged--pwa-fast-reliable:not(.lh-badged--pwa-installable) .lh-gauge--pwa__fast-reliable-badge {
