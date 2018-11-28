@@ -13,6 +13,7 @@ const assert = require('assert');
 const Config = require('../../config/config');
 const unresolvedPerfLog = require('./../fixtures/unresolved-perflog.json');
 const NetworkRequest = require('../../lib/network-request.js');
+const LHError = require('../../lib/lh-error');
 
 class TestGatherer extends Gatherer {
   constructor() {
@@ -33,6 +34,7 @@ class TestGathererNoArtifact extends Gatherer {
 }
 
 const fakeDriver = require('./fake-driver');
+const fakeBrokenDriver = require('./fake-broken-driver');
 
 function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn,
   blockUrlFn, extraHeadersFn) {
@@ -620,6 +622,22 @@ describe('GatherRunner', function() {
       .then(artifacts => {
         assert.equal(artifacts.networkRecords, undefined);
       });
+  });
+
+  it('gracefully exits when a fatal error occurs', async () => {
+    const url = 'https://example.com';
+    const driver = fakeBrokenDriver;
+    const config = new Config({});
+    const settings = {};
+    const options = {url, driver, config, settings};
+    const results = await GatherRunner.run([], options);
+
+    assert.equal(results.LighthouseRunErrors.length, 1);
+
+    const error = results.LighthouseRunErrors[0];
+    assert.equal(error.code, 'PROTOCOL_TIMEOUT');
+    assert.equal(error.friendlyMessage,
+      'Waiting for DevTools protocol response has exceeded the allotted time.');
   });
 
   describe('#getPageLoadError', () => {
