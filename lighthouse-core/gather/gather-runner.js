@@ -313,6 +313,8 @@ class GatherRunner {
 
     // Assert no fatal errors have occured.
     this.assertNoSecurityIssues(driver.getSecurityState());
+
+    // If the driver was offline, a page load error is expected, so do not throw.
     if (driver.online) {
       this.assertNoPageLoadError(passContext.url, networkRecords);
     }
