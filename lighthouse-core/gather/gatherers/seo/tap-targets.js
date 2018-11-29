@@ -33,6 +33,7 @@ const TARGET_SELECTORS = [
 /**
  * @param {LH.Artifacts.ClientRect[]} clientRects
  */
+/* istanbul ignore next */
 function allClientRectsEmpty(clientRects) {
   return (
     clientRects.length === 0 ||
@@ -43,6 +44,7 @@ function allClientRectsEmpty(clientRects) {
 /**
  * @param {{node: Element, clientRects?: LH.Artifacts.ClientRect[], checkClientRectsInsideParents?: boolean}} options
  */
+/* istanbul ignore next */
 function isVisible({
   node,
   clientRects = getClientRects(node, false),
@@ -112,6 +114,7 @@ function isVisible({
  * @param {LH.Artifacts.ClientRect[]} clientRects
  * @returns {boolean}
  */
+/* istanbul ignore next */
 function isWithinAncestorsVisibleScrollArea(node, clientRects) {
   const parent = node.parentElement;
   if (!parent) {
@@ -139,6 +142,7 @@ function isWithinAncestorsVisibleScrollArea(node, clientRects) {
  * @param {number} maxLength
  * @returns {string}
  */
+/* istanbul ignore next */
 function truncate(str, maxLength) {
   if (str.length <= maxLength) {
     return str;
@@ -151,6 +155,7 @@ function truncate(str, maxLength) {
  * @param {boolean} includeChildren
  * @returns {LH.Artifacts.ClientRect[]}
  */
+/* istanbul ignore next */
 function getClientRects(node, includeChildren = true) {
   /** @type {LH.Artifacts.ClientRect[]} */
   let clientRects = Array.from(
@@ -177,6 +182,7 @@ function getClientRects(node, includeChildren = true) {
  * @param {Node} node
  * @returns {boolean}
  */
+/* istanbul ignore next */
 function nodeIsInTextBlock(node) {
   /**
    * @param {Node} node
@@ -250,6 +256,7 @@ function nodeIsInTextBlock(node) {
 /**
  * @returns {LH.Artifacts.TapTarget[]}
  */
+/* istanbul ignore next */
 function gatherTapTargets() {
   const selector = TARGET_SELECTORS.join(',');
 
@@ -281,6 +288,7 @@ function gatherTapTargets() {
  * @param {function} fn
  * @param {(args: any[]) => any} getCacheKey
  */
+/* istanbul ignore next */
 function memoize(fn, getCacheKey) {
   const cache = new Map();
   /**

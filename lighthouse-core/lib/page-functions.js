@@ -189,6 +189,7 @@ function getNodePath(node) {
  * @param {Element} node
  * @returns {string}
  */
+/* istanbul ignore next */
 function getNodeSelector(node) {
   /**
    * @param {Element} node

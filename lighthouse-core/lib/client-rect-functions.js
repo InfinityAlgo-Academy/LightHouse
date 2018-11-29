@@ -9,6 +9,7 @@
  * @param {LH.Artifacts.ClientRect} cr
  * @param {{x:number, y:number}} point
  */
+/* istanbul ignore next */
 function rectContainsPoint(cr, {x, y}) {
   return cr.left <= x && cr.right >= x && cr.top <= y && cr.bottom >= y;
 }
@@ -17,6 +18,7 @@ function rectContainsPoint(cr, {x, y}) {
  * @param {LH.Artifacts.ClientRect} cr1
  * @param {LH.Artifacts.ClientRect} cr2
  */
+/* istanbul ignore next */
 function rectContains(cr1, cr2) {
   const topLeft = {
     x: cr2.left,
