@@ -169,6 +169,68 @@ function getTooSmallTargets(targets) {
 }
 
 /**
+ *
+ * @param {LH.Artifacts.TapTarget[]} tooSmallTargets
+ * @param {LH.Artifacts.TapTarget[]} allTargets
+ */
+function getOverlapFailures(tooSmallTargets, allTargets) {
+  /** @type {LH.Audit.TapTargetOverlapDetail[]} */
+  const failures = [];
+
+  tooSmallTargets.forEach(target => {
+    const overlappingTargets = getTooCloseTargets(
+      target,
+      allTargets
+    );
+
+    if (overlappingTargets.length > 0) {
+      overlappingTargets.forEach(
+        (targetOverlapDetail) => {
+          failures.push(targetOverlapDetail);
+        }
+      );
+    }
+  });
+
+  return failures;
+}
+
+/**
+ * @param {LH.Audit.TapTargetOverlapDetail[]} overlapFailures
+ */
+function getTableItems(overlapFailures) {
+  const tableItems = overlapFailures.map(
+    ({
+      tapTarget,
+      overlappingTarget,
+      extraDistanceNeeded,
+      overlappingTargetScore,
+      tapTargetScore,
+    }) => {
+      const largestCr = getLargestClientRect(tapTarget);
+      const width = Math.floor(largestCr.width);
+      const height = Math.floor(largestCr.height);
+      const size = width + 'x' + height;
+      return {
+        tapTarget: targetToTableNode(tapTarget),
+        overlappingTarget: targetToTableNode(overlappingTarget),
+        size,
+        extraDistanceNeeded,
+        width,
+        height,
+        overlappingTargetScore,
+        tapTargetScore,
+      };
+    });
+
+  tableItems.sort((a, b) => {
+    return b.extraDistanceNeeded - a.extraDistanceNeeded;
+  });
+
+  return tableItems;
+}
+
+/**
  * @param {LH.Artifacts.TapTarget} target
  * @returns {LH.Audit.DetailsRendererNodeDetailsJSON}
  */
@@ -211,63 +273,8 @@ class TapTargets extends Audit {
     }
 
     const tooSmallTargets = getTooSmallTargets(artifacts.TapTargets);
-
-    /** @type {Array<LH.Audit.TooSmallTapTargetItem>} */
-    const tableItems = [];
-
-    const scorePerElement = new Map();
-    artifacts.TapTargets.forEach(target => {
-      scorePerElement.set(target, 1);
-    });
-
-    tooSmallTargets.forEach(target => {
-      const largestCr = getLargestClientRect(target);
-      const width = Math.floor(largestCr.width);
-      const height = Math.floor(largestCr.height);
-      const size = width + 'x' + height;
-
-      const overlappingTargets = getTooCloseTargets(
-        target,
-        artifacts.TapTargets
-      );
-
-      if (overlappingTargets.length > 0) {
-        scorePerElement.set(target, 0);
-        overlappingTargets.forEach(
-          ({
-            overlappingTarget,
-            extraDistanceNeeded,
-            overlappingTargetScore,
-            tapTargetScore,
-          }) => {
-            tableItems.push({
-              tapTarget: targetToTableNode(target),
-              overlappingTarget: targetToTableNode(overlappingTarget),
-              size,
-              extraDistanceNeeded,
-              width,
-              height,
-              overlappingTargetScore,
-              tapTargetScore,
-            });
-          }
-        );
-      }
-    });
-
-    tableItems.sort((a, b) => {
-      /**
-       * @param {LH.Audit.TooSmallTapTargetItem} failure
-       */
-      function getFailureSeriousness(failure) {
-        let magnitude = failure.width * failure.height;
-        if (failure.extraDistanceNeeded) {
-          magnitude -= failure.extraDistanceNeeded * 10000;
-        }
-        return magnitude;
-      }
-      return getFailureSeriousness(a) - getFailureSeriousness(b);
-    });
+    const overlapFailures = getOverlapFailures(tooSmallTargets, artifacts.TapTargets);
+    const tableItems = getTableItems(overlapFailures);
 
     const headings = [
       {key: 'tapTarget', itemType: 'node', text: 'Tap Target'},
@@ -277,19 +284,11 @@ class TapTargets extends Audit {
 
     const details = Audit.makeTableDetails(headings, tableItems);
 
+    const tapTargetCount = artifacts.TapTargets.length;
+    const failingTapTargetCount = new Set(overlapFailures.map(f => f.tapTarget)).size;
+    const passingTapTargetCount = tapTargetCount - failingTapTargetCount;
 
-    let score = 1;
-    if (artifacts.TapTargets.length > 0) {
-      score = 0;
-      artifacts.TapTargets.forEach(target => {
-        const elementScore = scorePerElement.get(target);
-        score += elementScore / artifacts.TapTargets.length;
-      });
-    }
-
-    // handle floating point number issue where score is greater than 1, e.g. 1.00...0002)
-    score = Math.round(score * 1000) / 1000;
-
+    const score = tapTargetCount > 0 ? passingTapTargetCount / tapTargetCount : 1;
     const displayValue = Math.round(score * 100) + '% appropriately sized tap targets';
 
     return {
