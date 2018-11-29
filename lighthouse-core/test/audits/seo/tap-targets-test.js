@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 Google Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -60,6 +60,8 @@ function getBorderlineTapTargets(options = {}) {
     ],
   };
 
+  const targets = [mainTapTarget, tapTargetBelow, tapTargetToTheRight];
+
   const minimalOverlapCausingDistance = (TapTargetsAudit.FINGER_SIZE_PX - tapTargetSize) / 2;
   const minimalFailingOverlapDistance =
     minimalOverlapCausingDistance + Math.ceil(tapTargetSize / 2 / 2);
@@ -72,6 +74,17 @@ function getBorderlineTapTargets(options = {}) {
     tapTargetBelow.clientRects[0].top -= overlapAmount;
     tapTargetBelow.clientRects[0].bottom -= overlapAmount;
   }
+  if (options.addFullyContainedTapTarget) {
+    targets.push({
+      snippet: '<contained></contained>',
+      clientRects: [
+        makeClientRects({
+          x: 0,
+          y: 0,
+        }),
+      ],
+    });
+  }
   if (options.failSecondClientRect) {
     mainTapTarget.clientRects.push(
       makeClientRects({
@@ -81,7 +94,7 @@ function getBorderlineTapTargets(options = {}) {
     );
   }
 
-  return [mainTapTarget, tapTargetBelow, tapTargetToTheRight];
+  return targets;
 }
 
 describe('SEO: Tap targets audit', () => {
@@ -93,6 +106,13 @@ describe('SEO: Tap targets audit', () => {
 
   it('passes when tap targets don\'t overlap', () => {
     const auditResult = auditTapTargets(getBorderlineTapTargets());
+    assert.equal(auditResult.rawValue, true);
+  });
+
+  it('passes when a target is fully contained in an overlapping target', () => {
+    const auditResult = auditTapTargets(getBorderlineTapTargets({
+      addFullyContainedTapTarget: true,
+    }));
     assert.equal(auditResult.rawValue, true);
   });
 
