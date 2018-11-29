@@ -174,4 +174,18 @@ module.exports = [
       },
     },
   },
+  {
+    requestedUrl: BASE_URL + 'seo-tap-targets.html',
+    finalUrl: BASE_URL + 'seo-tap-targets.html',
+    audits: {
+      'tap-targets': {
+        score: 0.80, // 4/5 visible targets pass
+        details: {
+          items: {
+            length: 1,
+          },
+        },
+      },
+    },
+  },
 ];
