@@ -11,7 +11,6 @@
 const Audit = require('../audit');
 const ViewportAudit = require('../viewport');
 const {
-  rectContains,
   simplifyClientRects,
   getRectOverlap,
   getRectXOverlap,
@@ -19,6 +18,7 @@ const {
   getFingerAtCenter,
   getFingerQuadrants,
   getLargestClientRect,
+  allClientRectsContainedWithinEachOther,
 } = require('../../lib/client-rect-functions');
 const FINGER_SIZE_PX = 48;
 
@@ -89,8 +89,10 @@ function getTooCloseTargets(tapTarget, allTargets) {
 
   for (let i = 0; i < allTargets.length; i++) {
     if (allTargets[i] === tapTarget) {
+      // checking the same target with itself, skip
       continue;
     }
+
     const maybeOverlappingTarget = allTargets[i];
     if (
       /https?:\/\//.test(tapTarget.href) &&
@@ -102,24 +104,21 @@ function getTooCloseTargets(tapTarget, allTargets) {
 
     /** @type LH.Audit.TapTargetOverlapDetail | null */
     let greatestFailure = null;
-    simplifyClientRects(tapTarget.clientRects).forEach(targetCR => {
-      for (const maybeOverlappingCR of maybeOverlappingTarget.clientRects) {
-        if (rectContains(maybeOverlappingCR, targetCR)) {
-          return;
-        }
+    const simplifiedTapTargetCRs = simplifyClientRects(tapTarget.clientRects);
+    simplifiedTapTargetCRs.forEach(targetCR => {
+      if (allClientRectsContainedWithinEachOther(
+          simplifiedTapTargetCRs,
+          maybeOverlappingTarget.clientRects
+      )) {
+        // If one tap target is fully contained within the other that's
+        // probably intentional (e.g. an item with a delete button inside)
+        return;
       }
 
       maybeOverlappingTarget.clientRects.forEach(maybeOverlappingCR => {
-        for (const crA of tapTarget.clientRects) {
-          if (rectContains(crA, maybeOverlappingCR)) {
-            // If one tap target is contained within the other that's
-            // probably intentional (e.g. an item with a delete button inside)
-            return;
-          }
-        }
-
         const failure = getOverlapFailure(targetCR, maybeOverlappingCR);
         if (failure) {
+          // only update our state if this was the biggest failure we've seen for this pair
           if (
             !greatestFailure ||
             failure.extraDistanceNeeded > greatestFailure.extraDistanceNeeded

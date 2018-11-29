@@ -304,6 +304,22 @@ function getLargestClientRect(target) {
   return largestCr;
 }
 
+/**
+ *
+ * @param {LH.Artifacts.ClientRect[]} crListA
+ * @param {LH.Artifacts.ClientRect[]} crListB
+ */
+function allClientRectsContainedWithinEachOther(crListA, crListB) {
+  for (const crA of crListA) {
+    for (const crB of crListB) {
+      if (!rectContains(crA, crB) && !rectContains(crB, crA)) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 module.exports = {
   rectContains,
   simplifyClientRects,
@@ -315,4 +331,5 @@ module.exports = {
   getFingerAtCenter,
   getFingerQuadrants,
   getLargestClientRect,
+  allClientRectsContainedWithinEachOther,
 };

@@ -61,6 +61,7 @@ function isVisible({
       (overflowX === 'hidden' && overflowY === 'hidden') ||
       node.children.length === 0
     ) {
+      // own size is 0x0 and there's no visible child content
       return false;
     }
   }
