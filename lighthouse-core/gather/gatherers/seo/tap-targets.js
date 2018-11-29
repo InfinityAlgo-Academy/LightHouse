@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global document, getComputedStyle, Node, getNodePath, getNodeSelector */
+/* global getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector */
 
 const Gatherer = require('../gatherer');
 const pageFunctions = require('../../../lib/page-functions.js');
@@ -254,7 +254,8 @@ function gatherTapTargets() {
   const selector = TARGET_SELECTORS.join(',');
 
   /** @type Array<LH.Artifacts.TapTargetWithNode> */
-  let targets = Array.from(document.querySelectorAll(selector)).map(node => ({
+  // @ts-ignore - getElementsInDocument put into scope via stringification
+  let targets = Array.from(getElementsInDocument(selector)).map(node => ({
     node,
     clientRects: getClientRects(node),
     snippet: truncate(node.outerHTML, 700),
