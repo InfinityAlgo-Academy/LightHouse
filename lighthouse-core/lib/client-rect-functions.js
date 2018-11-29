@@ -203,9 +203,116 @@ function addRectWidthAndHeight({left, top, right, bottom}) {
   };
 }
 
+
+/**
+ * @param {LH.Artifacts.ClientRect} rect1
+ * @param {LH.Artifacts.ClientRect} rect2
+ */
+function getRectXOverlap(rect1, rect2) {
+  // https:// stackoverflow.com/a/9325084/1290545
+  return Math.max(
+    0,
+    Math.min(rect1.right, rect2.right) - Math.max(rect1.left, rect2.left)
+  );
+}
+
+/**
+ * @param {LH.Artifacts.ClientRect} rect1
+ * @param {LH.Artifacts.ClientRect} rect2
+ */
+function getRectYOverlap(rect1, rect2) {
+  // https:// stackoverflow.com/a/9325084/1290545
+  return Math.max(
+    0,
+    Math.min(rect1.bottom, rect2.bottom) - Math.max(rect1.top, rect2.top)
+  );
+}
+
+/**
+ * @param {LH.Artifacts.ClientRect} rect1
+ * @param {LH.Artifacts.ClientRect} rect2
+ */
+function getRectOverlap(rect1, rect2) {
+  return getRectXOverlap(rect1, rect2) * getRectYOverlap(rect1, rect2);
+}
+
+
+/**
+ * @param {LH.Artifacts.ClientRect} clientRect
+ * @param {number} fingerSize
+ */
+function getFingerAtCenter(clientRect, fingerSize) {
+  return addRectWidthAndHeight({
+    left: clientRect.left + clientRect.width / 2 - fingerSize / 2,
+    top: clientRect.top + clientRect.height / 2 - fingerSize / 2,
+    right: clientRect.right - clientRect.width / 2 + fingerSize / 2,
+    bottom: clientRect.bottom - clientRect.height / 2 + fingerSize / 2,
+  });
+}
+
+/**
+ * @param {LH.Artifacts.ClientRect} rect
+ * @param {number} fingerSize
+ * @return {LH.Artifacts.ClientRect[]}
+ */
+function getFingerQuadrants(rect, fingerSize) {
+  return [
+    addRectWidthAndHeight({
+      left: rect.left + rect.width / 2 - fingerSize / 2,
+      top: rect.top + rect.height / 2 - fingerSize / 2,
+      right: rect.right - rect.width / 2,
+      bottom: rect.bottom - rect.height / 2,
+    }),
+    addRectWidthAndHeight({
+      left: rect.left + rect.width / 2,
+      top: rect.top + rect.height / 2 - fingerSize / 2,
+      right: rect.right - rect.width / 2 + fingerSize / 2,
+      bottom: rect.bottom - rect.height / 2,
+    }),
+    addRectWidthAndHeight({
+      left: rect.left + rect.width / 2 - fingerSize / 2,
+      top: rect.top + rect.height / 2,
+      right: rect.right - rect.width / 2,
+      bottom: rect.bottom - rect.height / 2 + fingerSize / 2,
+    }),
+    addRectWidthAndHeight({
+      left: rect.left + rect.width / 2,
+      top: rect.top + rect.height / 2,
+      right: rect.right - rect.width / 2 + fingerSize / 2,
+      bottom: rect.bottom - rect.height / 2 + fingerSize / 2,
+    }),
+  ];
+}
+
+/**
+ * @param {LH.Artifacts.ClientRect} cr
+ */
+function getClientRectArea(cr) {
+  return cr.width * cr.height;
+}
+
+/**
+ * @param {LH.Artifacts.TapTarget} target
+ */
+function getLargestClientRect(target) {
+  let largestCr = target.clientRects[0];
+  for (const cr of target.clientRects) {
+    if (getClientRectArea(cr) > getClientRectArea(largestCr)) {
+      largestCr = cr;
+    }
+  }
+  return largestCr;
+}
+
 module.exports = {
   rectContains,
   simplifyClientRects,
   addRectWidthAndHeight,
   rectContainsString,
+  getRectXOverlap,
+  getRectYOverlap,
+  getRectOverlap,
+  getFingerAtCenter,
+  getFingerQuadrants,
+  getLargestClientRect,
 };

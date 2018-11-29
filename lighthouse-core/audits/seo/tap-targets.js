@@ -13,98 +13,26 @@ const ViewportAudit = require('../viewport');
 const {
   rectContains,
   simplifyClientRects,
-  addRectWidthAndHeight,
+  getRectOverlap,
+  getRectXOverlap,
+  getRectYOverlap,
+  getFingerAtCenter,
+  getFingerQuadrants,
+  getLargestClientRect,
 } = require('../../lib/client-rect-functions');
 const FINGER_SIZE_PX = 48;
-
-/**
- * @param {LH.Artifacts.ClientRect} clientRect
- */
-function getFingerAtCenter(clientRect) {
-  return addRectWidthAndHeight({
-    left: clientRect.left + clientRect.width / 2 - FINGER_SIZE_PX / 2,
-    top: clientRect.top + clientRect.height / 2 - FINGER_SIZE_PX / 2,
-    right: clientRect.right - clientRect.width / 2 + FINGER_SIZE_PX / 2,
-    bottom: clientRect.bottom - clientRect.height / 2 + FINGER_SIZE_PX / 2,
-  });
-}
-
-/**
- * @param {LH.Artifacts.ClientRect} rect1
- * @param {LH.Artifacts.ClientRect} rect2
- */
-function getRectXOverlap(rect1, rect2) {
-  // https:// stackoverflow.com/a/9325084/1290545
-  return Math.max(
-    0,
-    Math.min(rect1.right, rect2.right) - Math.max(rect1.left, rect2.left)
-  );
-}
-
-/**
- * @param {LH.Artifacts.ClientRect} rect1
- * @param {LH.Artifacts.ClientRect} rect2
- */
-function getRectYOverlap(rect1, rect2) {
-  // https:// stackoverflow.com/a/9325084/1290545
-  return Math.max(
-    0,
-    Math.min(rect1.bottom, rect2.bottom) - Math.max(rect1.top, rect2.top)
-  );
-}
-
-/**
- * @param {LH.Artifacts.ClientRect} rect1
- * @param {LH.Artifacts.ClientRect} rect2
- */
-function getRectOverlap(rect1, rect2) {
-  return getRectXOverlap(rect1, rect2) * getRectYOverlap(rect1, rect2);
-}
-
-/**
- * @param {LH.Artifacts.ClientRect} rect
- * @return {LH.Artifacts.ClientRect[]}
- */
-function getFingerQuadrants(rect) {
-  return [
-    addRectWidthAndHeight({
-      left: rect.left + rect.width / 2 - FINGER_SIZE_PX / 2,
-      top: rect.top + rect.height / 2 - FINGER_SIZE_PX / 2,
-      right: rect.right - rect.width / 2,
-      bottom: rect.bottom - rect.height / 2,
-    }),
-    addRectWidthAndHeight({
-      left: rect.left + rect.width / 2,
-      top: rect.top + rect.height / 2 - FINGER_SIZE_PX / 2,
-      right: rect.right - rect.width / 2 + FINGER_SIZE_PX / 2,
-      bottom: rect.bottom - rect.height / 2,
-    }),
-    addRectWidthAndHeight({
-      left: rect.left + rect.width / 2 - FINGER_SIZE_PX / 2,
-      top: rect.top + rect.height / 2,
-      right: rect.right - rect.width / 2,
-      bottom: rect.bottom - rect.height / 2 + FINGER_SIZE_PX / 2,
-    }),
-    addRectWidthAndHeight({
-      left: rect.left + rect.width / 2,
-      top: rect.top + rect.height / 2,
-      right: rect.right - rect.width / 2 + FINGER_SIZE_PX / 2,
-      bottom: rect.bottom - rect.height / 2 + FINGER_SIZE_PX / 2,
-    }),
-  ];
-}
 
 /**
  * @param {LH.Artifacts.ClientRect} rectWithFinger
  * @param {LH.Artifacts.ClientRect} scoredRect
  */
 function getFingerScore(rectWithFinger, scoredRect) {
-  if (getRectOverlap(getFingerAtCenter(rectWithFinger), scoredRect) === 0) {
+  if (getRectOverlap(getFingerAtCenter(rectWithFinger, FINGER_SIZE_PX), scoredRect) === 0) {
     // No overlap at all, don't need to get per-quadrant score
     return 0;
   }
 
-  const q = getFingerQuadrants(rectWithFinger);
+  const q = getFingerQuadrants(rectWithFinger, FINGER_SIZE_PX);
 
   let maxScore = 0;
   q.forEach(finger => {
@@ -129,7 +57,7 @@ function getOverlapFailure(targetCR, maybeOverlappingCR) {
     return null;
   }
 
-  const fingerAtCenter = getFingerAtCenter(targetCR);
+  const fingerAtCenter = getFingerAtCenter(targetCR, FINGER_SIZE_PX);
   const overlapAreaExcess = Math.ceil(
     maybeOverlappingScore - tapTargetScore / 2
   );
@@ -231,26 +159,6 @@ function targetIsTooSmall(target) {
     }
   }
   return true;
-}
-
-/**
- * @param {LH.Artifacts.ClientRect} cr
- */
-function getClientRectArea(cr) {
-  return cr.width * cr.height;
-}
-
-/**
- * @param {LH.Artifacts.TapTarget} target
- */
-function getLargestClientRect(target) {
-  let largestCr = target.clientRects[0];
-  for (const cr of target.clientRects) {
-    if (getClientRectArea(cr) > getClientRectArea(largestCr)) {
-      largestCr = cr;
-    }
-  }
-  return largestCr;
 }
 
 /**
