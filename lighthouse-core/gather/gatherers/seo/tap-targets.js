@@ -78,6 +78,8 @@ function isVisible({
   }
 
   if (display === 'block' || display === 'inline-block') {
+    // if height/width is 0 and no overflow in that direction then
+    // there's no content that the user can see and tap on
     if (node.clientWidth === 0 && overflowX === 'hidden') {
       return false;
     }
@@ -103,6 +105,7 @@ function isVisible({
     parent.tagName !== 'HTML' &&
     !isVisible({node: parent, checkClientRectsInsideParents: false})
   ) {
+    // if a parent is invisible then the current node is also invisible
     return false;
   }
 
