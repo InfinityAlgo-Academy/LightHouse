@@ -152,11 +152,12 @@ function truncate(str, maxLength) {
  * @returns {LH.Artifacts.ClientRect[]}
  */
 function getClientRects(node, includeChildren = true) {
-  const rawClientRects = /** @type {LH.Artifacts.ClientRect[]} */ Array.from(
+  /** @type {LH.Artifacts.ClientRect[]} */
+  let clientRects = Array.from(
     node.getClientRects()
-  );
-
-  let clientRects = Array.from(rawClientRects).map(clientRect => {
+  ).map(clientRect => {
+    // Contents of DOMRect get lost when returned from Runtime.evaluate call,
+    // so we convert them to plain objects.
     const {width, height, left, top, right, bottom} = clientRect;
     return {width, height, left, top, right, bottom};
   });
