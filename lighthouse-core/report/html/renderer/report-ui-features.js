@@ -303,8 +303,9 @@ class ReportUIFeatures {
     }
     this._openClosestDetails(audit);
     if (audit instanceof HTMLElement) {
+      const scoresWrapper = this._dom.find('.lh-scores-wrapper', this._document);
       window.scroll({
-        top: audit.offsetTop,
+        top: audit.offsetTop + scoresWrapper.clientHeight,
         behavior: 'smooth',
       });
     }
