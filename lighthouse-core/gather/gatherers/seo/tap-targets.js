@@ -54,7 +54,6 @@ function isVisible({
     overflowX,
     overflowY,
     display,
-    opacity,
     visibility,
   } = getComputedStyle(node);
 
@@ -70,10 +69,9 @@ function isVisible({
 
   if (
     display === 'none' ||
-    visibility === 'hidden' ||
-    visibility === 'collapse' ||
-    (opacity && parseFloat(opacity) < 0.1)
+    (visibility === 'collapse' && ['TR', 'TBODY', 'COL', 'COLGROUP'].includes(node.tagName))
   ) {
+    // Element not displayed
     return false;
   }
 
