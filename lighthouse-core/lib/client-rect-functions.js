@@ -253,40 +253,6 @@ function getFingerAtCenter(clientRect, fingerSize) {
 }
 
 /**
- * @param {LH.Artifacts.ClientRect} rect
- * @param {number} fingerSize
- * @return {LH.Artifacts.ClientRect[]}
- */
-function getFingerQuadrants(rect, fingerSize) {
-  return [
-    addRectWidthAndHeight({
-      left: rect.left + rect.width / 2 - fingerSize / 2,
-      top: rect.top + rect.height / 2 - fingerSize / 2,
-      right: rect.right - rect.width / 2,
-      bottom: rect.bottom - rect.height / 2,
-    }),
-    addRectWidthAndHeight({
-      left: rect.left + rect.width / 2,
-      top: rect.top + rect.height / 2 - fingerSize / 2,
-      right: rect.right - rect.width / 2 + fingerSize / 2,
-      bottom: rect.bottom - rect.height / 2,
-    }),
-    addRectWidthAndHeight({
-      left: rect.left + rect.width / 2 - fingerSize / 2,
-      top: rect.top + rect.height / 2,
-      right: rect.right - rect.width / 2,
-      bottom: rect.bottom - rect.height / 2 + fingerSize / 2,
-    }),
-    addRectWidthAndHeight({
-      left: rect.left + rect.width / 2,
-      top: rect.top + rect.height / 2,
-      right: rect.right - rect.width / 2 + fingerSize / 2,
-      bottom: rect.bottom - rect.height / 2 + fingerSize / 2,
-    }),
-  ];
-}
-
-/**
  * @param {LH.Artifacts.ClientRect} cr
  */
 function getClientRectArea(cr) {
@@ -331,7 +297,6 @@ module.exports = {
   getRectYOverlap,
   getRectOverlap,
   getFingerAtCenter,
-  getFingerQuadrants,
   getLargestClientRect,
   allClientRectsContainedWithinEachOther,
 };

@@ -16,56 +16,38 @@ const {
   getRectXOverlap,
   getRectYOverlap,
   getFingerAtCenter,
-  getFingerQuadrants,
   getLargestClientRect,
   allClientRectsContainedWithinEachOther,
 } = require('../../lib/client-rect-functions');
 const FINGER_SIZE_PX = 48;
 
-/**
- * @param {LH.Artifacts.ClientRect} rectWithFinger
- * @param {LH.Artifacts.ClientRect} scoredRect
- */
-function getFingerScore(rectWithFinger, scoredRect) {
-  if (getRectOverlap(getFingerAtCenter(rectWithFinger, FINGER_SIZE_PX), scoredRect) === 0) {
-    // No overlap at all, don't need to get per-quadrant score
-    return 0;
-  }
-
-  const q = getFingerQuadrants(rectWithFinger, FINGER_SIZE_PX);
-
-  let maxScore = 0;
-  q.forEach(finger => {
-    const score = getRectOverlap(finger, scoredRect);
-    if (score > maxScore) {
-      maxScore = score;
-    }
-  });
-
-  return Math.ceil(maxScore);
-}
 
 /**
  * @param {LH.Artifacts.ClientRect} targetCR
  * @param {LH.Artifacts.ClientRect} maybeOverlappingCR
  */
 function getOverlapFailure(targetCR, maybeOverlappingCR) {
-  const tapTargetScore = getFingerScore(targetCR, targetCR);
-  const maybeOverlappingScore = getFingerScore(targetCR, maybeOverlappingCR);
+  const fingerRect = getFingerAtCenter(targetCR, FINGER_SIZE_PX);
+  // Score indicates how much area of each target the finger overlaps with
+  // when the user taps on the targetCR
+  const tapTargetScore = getRectOverlap(fingerRect, targetCR);
+  const maybeOverlappingScore = getRectOverlap(fingerRect, maybeOverlappingCR);
 
-  if (maybeOverlappingScore <= tapTargetScore / 2) {
+  const scoreRatio = maybeOverlappingScore / tapTargetScore;
+  if (scoreRatio < 0.25) {
+    // low score means it's clear that the user tried to tap on the targetCR,
+    // rather than the other tap target client rect
     return null;
   }
 
-  const fingerAtCenter = getFingerAtCenter(targetCR, FINGER_SIZE_PX);
   const overlapAreaExcess = Math.ceil(
     maybeOverlappingScore - tapTargetScore / 2
   );
 
   const xMovementNeededToFix =
-    overlapAreaExcess / getRectXOverlap(fingerAtCenter, maybeOverlappingCR);
+    overlapAreaExcess / getRectXOverlap(fingerRect, maybeOverlappingCR);
   const yMovementNeededToFix =
-    overlapAreaExcess / getRectYOverlap(fingerAtCenter, maybeOverlappingCR);
+    overlapAreaExcess / getRectYOverlap(fingerRect, maybeOverlappingCR);
   const extraDistanceNeeded = Math.min(
     xMovementNeededToFix,
     yMovementNeededToFix
