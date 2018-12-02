@@ -42,13 +42,13 @@ function allClientRectsEmpty(clientRects) {
 }
 
 /**
- * @param {{node: Element, clientRects?: LH.Artifacts.ClientRect[], checkClientRectsInsideParents?: boolean}} options
+ * @param {{node: Element, clientRects?: LH.Artifacts.ClientRect[], checkIsWithinAncestorsVisibleScrollArea?: boolean}} options
  */
 /* istanbul ignore next */
 function isVisible({
   node,
   clientRects = getClientRects(node, false),
-  checkClientRectsInsideParents = true,
+  checkIsWithinAncestorsVisibleScrollArea = true,
 }) {
   const {
     overflowX,
@@ -86,7 +86,7 @@ function isVisible({
     }
   }
 
-  if (checkClientRectsInsideParents) {
+  if (checkIsWithinAncestorsVisibleScrollArea) {
     if (!isWithinAncestorsVisibleScrollArea(node, clientRects)) {
       // Treating overflowing content in scroll containers as invisible could mean that
       // most of a given page is deemed invisible. But:
@@ -101,7 +101,7 @@ function isVisible({
   if (
     parent &&
     parent.tagName !== 'HTML' &&
-    !isVisible({node: parent, checkClientRectsInsideParents: false})
+    !isVisible({node: parent, checkIsWithinAncestorsVisibleScrollArea: false})
   ) {
     // if a parent is invisible then the current node is also invisible
     return false;
