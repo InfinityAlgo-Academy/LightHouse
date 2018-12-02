@@ -61,7 +61,7 @@ function simplifyClientRects(clientRects) {
  */
 function filterOutTinyClientRects(clientRects) {
   // 1x1px rect shouldn't be reason to treat the rect as something the user should tap on.
-  // Often they're made invisble in some obscure way anyway, and only exit for e.g. accessibiliity.
+  // Often they're made invisble in some obscure way anyway, and only exist for e.g. accessibiliity.
   const nonTinyClientRects = clientRects.filter(
     rect => rect.width > 1 && rect.height > 1
   );
