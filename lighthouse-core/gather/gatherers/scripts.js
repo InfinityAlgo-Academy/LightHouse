@@ -20,7 +20,7 @@ class Scripts extends Gatherer {
   async afterPass(passContext, loadData) {
     const driver = passContext.driver;
 
-    /** @type {Object<string, string>} */
+    /** @type {Object<string, {content: string, url: string}>} */
     const scriptContentMap = {};
     const scriptRecords = loadData.networkRecords
       .filter(record => record.resourceType === NetworkRequest.TYPES.Script);
@@ -28,8 +28,12 @@ class Scripts extends Gatherer {
     for (const record of scriptRecords) {
       try {
         const content = await driver.getRequestContent(record.requestId);
+        const url = record.url;
         if (content) {
-          scriptContentMap[record.requestId] = content;
+          scriptContentMap[record.requestId] = {
+            content,
+            url,
+          };
         }
       } catch (e) {}
     }

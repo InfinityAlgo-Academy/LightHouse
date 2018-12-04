@@ -78,7 +78,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
     const items = [];
     const warnings = [];
     for (const requestId of Object.keys(artifacts.Scripts)) {
-      const scriptContent = artifacts.Scripts[requestId];
+      const scriptContent = artifacts.Scripts[requestId].content;
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
       if (!networkRecord || !scriptContent) continue;
 
