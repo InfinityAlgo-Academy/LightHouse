@@ -9,8 +9,32 @@
 /** @typedef {{row: number, col: number, poly: Poly}} PolyIssue */
 
 const Audit = require('./audit');
+const i18n = require('../lib/i18n/i18n.js');
 
-class ExtraneousPolyfills extends Audit {
+const UIStrings = {
+  /** Imperative title of a Lighthouse audit that tells the user to remove JavaScript that is never evaluated during page load. This is displayed in a list of audit titles that Lighthouse generates. */
+  title: 'Polyfills',
+  /** Description of a Lighthouse audit that tells the user *why* they should remove JavaScript that is never needed/evaluated by the browser. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  // eslint-disable-next-line max-len
+  description: 'Polyfills enable older browsers to use new JavaScript language features. However, they aren\'t always necessary. Research what browsers you must support and consider removing polyfils for features that are well supported by them.',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+class Polyfills extends Audit {
+  /**
+   * @return {LH.Audit.Meta}
+   */
+  static get meta() {
+    return {
+      id: 'polyfills',
+      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
+      description: str_(UIStrings.description),
+      title: str_(UIStrings.title),
+      requiredArtifacts: ['Scripts'],
+    };
+  }
+
   /**
      * @param {Poly[]} polys
      * @param {string} code
@@ -67,19 +91,6 @@ class ExtraneousPolyfills extends Audit {
     }
 
     return polyMatches;
-  }
-
-  /**
-   * @return {LH.Audit.Meta}
-   */
-  static get meta() {
-    return {
-      id: 'extraneous-polyfills',
-      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      title: 'Extraneous polyfills',
-      description: 'Potentially unnecessary polyfills.',
-      requiredArtifacts: ['Scripts'],
-    };
   }
 
   /**
@@ -193,4 +204,4 @@ class ExtraneousPolyfills extends Audit {
   }
 }
 
-module.exports = ExtraneousPolyfills;
+module.exports = Polyfills;

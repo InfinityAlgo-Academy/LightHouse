@@ -165,7 +165,7 @@ const defaultConfig = {
     'network-requests',
     'metrics',
     'offline-start-url',
-    'extraneous-polyfills',
+    'polyfills',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -458,7 +458,7 @@ const defaultConfig = {
         {id: 'password-inputs-can-be-pasted-into', weight: 1},
         {id: 'errors-in-console', weight: 1},
         {id: 'image-aspect-ratio', weight: 1},
-        {id: 'extraneous-polyfills', weight: 0},
+        {id: 'polyfills', weight: 0},
       ],
     },
     'seo': {
