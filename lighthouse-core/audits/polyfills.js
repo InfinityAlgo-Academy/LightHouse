@@ -47,7 +47,7 @@ class Polyfills extends Audit {
       let subpattern = '';
 
       // String.prototype.startsWith =
-      subpattern += `${object || ''}.${property}\\s*=`;
+      subpattern += `${object || ''}\\.?${property}\\s*=`;
       subpattern += `|${object || ''}\\[${qt(property)}\\]\\s*=`;
 
       // Object.defineProperty(String.prototype, 'startsWith'
@@ -70,18 +70,28 @@ class Polyfills extends Audit {
     let result;
     let row = 0;
     let rowBeginsAtIndex = 0;
+    // each poly maps to one subgroup in the generated regex. for each iteration of the regex exec,
+    // only one subgroup will be defined. Exec until no more matches.
     while ((result = re.exec(code)) !== null) {
+      // discard first (it's the whole matching pattern)
+      // index 1 is truthy if matching a newline, and is used to track the row number
+      // matches maps to each possible poly. Exec until no more matches
+      // only one of [isNewline, ...matches] is ever defined.
       const [, isNewline, ...matches] = result;
       if (isNewline) {
         row++;
         rowBeginsAtIndex = result.index;
         continue;
       }
-
       const poly = polys[matches.findIndex(Boolean)];
+
+      // don't report more than one instance of a poly for this code.
+      // would be nice, but it also reports false positives if both '='
+      // and 'Object.defineProperty' are used conditionally based on feature detection.
       if (polysSeen.has(poly)) {
         continue;
       }
+
       polysSeen.add(poly);
       polyMatches.push({
         row,
