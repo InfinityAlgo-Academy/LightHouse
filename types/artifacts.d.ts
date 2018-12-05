@@ -106,7 +106,7 @@ declare global {
       /** Set of exceptions thrown during page load. */
       RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
       /** The content of all scripts loaded by the page, keyed by networkRecord requestId. */
-      Scripts: Record<string, {content: string, url: string}>;
+      Scripts: Record<string, string>;
       /** Version information for all ServiceWorkers active after the first page load. */
       ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: Crdp.ServiceWorker.ServiceWorkerRegistration[]};
       /** The status of an offline fetch of the page's start_url. -1 and a explanation if missing or there was an error. */

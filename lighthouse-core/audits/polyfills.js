@@ -9,6 +9,7 @@
 /** @typedef {{row: number, col: number, poly: Poly}} PolyIssue */
 
 const Audit = require('./audit');
+const NetworkRecords = require('../computed/network-records.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -105,9 +106,13 @@ class Polyfills extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit(artifacts) {
+  static async audit(artifacts, context) {
+    const devtoolsLog = artifacts.devtoolsLogs[Polyfills.DEFAULT_PASS];
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+
     // TODO
     // how do we determine which polys are not necessary?
     // ex: only reason to polyfill Array.prototype.filter is if IE <9,
@@ -170,9 +175,11 @@ class Polyfills extends Audit {
     /** @type {Map<string, PolyIssue[]>} */
     const urlToPolyIssues = new Map();
 
-    for (const {content, url} of Object.values(artifacts.Scripts)) {
+    for (const [requestId, content] of Object.entries(artifacts.Scripts)) {
+      const networkRecord = networkRecords.find(record => record.requestId === requestId);
+      if (!networkRecord) continue;
       const extPolys = this.detectPolys(polys, content);
-      urlToPolyIssues.set(url, extPolys);
+      urlToPolyIssues.set(networkRecord.url, extPolys);
       for (const polyIssue of extPolys) {
         const val = polyCounter.get(polyIssue.poly) || 0;
         polyIssueCounter.set(polyIssue, val);
