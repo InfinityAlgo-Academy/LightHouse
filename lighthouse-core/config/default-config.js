@@ -458,6 +458,7 @@ const defaultConfig = {
         {id: 'password-inputs-can-be-pasted-into', weight: 1},
         {id: 'errors-in-console', weight: 1},
         {id: 'image-aspect-ratio', weight: 1},
+        // Manual audits
         {id: 'polyfills', weight: 0},
       ],
     },

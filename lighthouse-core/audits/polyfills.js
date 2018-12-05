@@ -28,7 +28,7 @@ class Polyfills extends Audit {
   static get meta() {
     return {
       id: 'polyfills',
-      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
+      scoreDisplayMode: Audit.SCORING_MODES.MANUAL,
       description: str_(UIStrings.description),
       title: str_(UIStrings.title),
       requiredArtifacts: ['Scripts'],
@@ -158,11 +158,11 @@ class Polyfills extends Audit {
     const polyIssueCounter = new Map();
 
     /** @type {Map<string, PolyIssue[]>} */
-    const allExtPolys = new Map();
+    const urlToPolyIssues = new Map();
 
     for (const {content, url} of Object.values(artifacts.Scripts)) {
       const extPolys = this.detectPolys(polys, content);
-      allExtPolys.set(url, extPolys);
+      urlToPolyIssues.set(url, extPolys);
       for (const polyIssue of extPolys) {
         const val = polyCounter.get(polyIssue.poly) || 0;
         polyIssueCounter.set(polyIssue, val);
@@ -172,7 +172,7 @@ class Polyfills extends Audit {
 
     /** @type {Array<{url: string, description: string, location: string}>} */
     const tableRows = [];
-    allExtPolys.forEach((polyIssues, url) => {
+    urlToPolyIssues.forEach((polyIssues, url) => {
       for (const polyIssue of polyIssues) {
         const {poly, row, col} = polyIssue;
         const polyStatement = `${poly.object ? poly.object + '.' : ''}${poly.property}`;
@@ -197,8 +197,8 @@ class Polyfills extends Audit {
     const details = Audit.makeTableDetails(headings, tableRows);
 
     return {
-      score: Number(allExtPolys.size === 0),
-      rawValue: allExtPolys.size,
+      score: Number(urlToPolyIssues.size === 0),
+      rawValue: urlToPolyIssues.size,
       details,
     };
   }
