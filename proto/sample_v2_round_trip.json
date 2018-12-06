@@ -1722,6 +1722,40 @@
             "scoreDisplayMode": "binary", 
             "title": "Document avoids plugins"
         }, 
+        "polyfills": {
+            "description": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider removing polyfils for features that are well supported by them.", 
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "url", 
+                        "key": "url", 
+                        "text": "URL"
+                    }, 
+                    {
+                        "itemType": "code", 
+                        "key": "description", 
+                        "text": "Description"
+                    }, 
+                    {
+                        "itemType": "code", 
+                        "key": "location", 
+                        "text": "Location"
+                    }
+                ], 
+                "items": [
+                    {
+                        "description": "Object.create", 
+                        "location": "r: 1306, c: 5", 
+                        "url": "http://localhost:10200/zone.js"
+                    }
+                ], 
+                "type": "table"
+            }, 
+            "id": "polyfills", 
+            "score": null, 
+            "scoreDisplayMode": "manual", 
+            "title": "Polyfills"
+        }, 
         "pwa-cross-browser": {
             "description": "To reach the most number of users, sites should work across every major browser. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#site-works-cross-browser).", 
             "id": "pwa-cross-browser", 
@@ -2867,6 +2901,10 @@
                 {
                     "id": "image-aspect-ratio", 
                     "weight": 1.0
+                }, 
+                {
+                    "id": "polyfills", 
+                    "weight": 0.0
                 }
             ], 
             "id": "best-practices", 
@@ -3651,6 +3689,12 @@
                 "duration": 100.0, 
                 "entryType": "measure", 
                 "name": "lh:audit:offline-start-url", 
+                "startTime": 0.0
+            }, 
+            {
+                "duration": 100.0, 
+                "entryType": "measure", 
+                "name": "lh:audit:polyfills", 
                 "startTime": 0.0
             }, 
             {

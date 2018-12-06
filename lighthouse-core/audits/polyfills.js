@@ -13,9 +13,9 @@ const NetworkRecords = require('../computed/network-records.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
-  /** Imperative title of a Lighthouse audit that tells the user to remove JavaScript that is never evaluated during page load. This is displayed in a list of audit titles that Lighthouse generates. */
+  /** Imperative title of a Lighthouse audit that tells the user about all JavaScript polyfills loaded on the page. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Polyfills',
-  /** Description of a Lighthouse audit that tells the user *why* they should remove JavaScript that is never needed/evaluated by the browser. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** TODO: write this */
   // eslint-disable-next-line max-len
   description: 'Polyfills enable older browsers to use new JavaScript language features. However, they aren\'t always necessary. Research what browsers you must support and consider removing polyfils for features that are well supported by them.',
 };
@@ -222,3 +222,4 @@ class Polyfills extends Audit {
 }
 
 module.exports = Polyfills;
+module.exports.UIStrings = UIStrings;

@@ -28,7 +28,6 @@ class Scripts extends Gatherer {
     for (const record of scriptRecords) {
       try {
         const content = await driver.getRequestContent(record.requestId);
-        const url = record.url;
         if (content) {
           scriptContentMap[record.requestId] = content;
         }

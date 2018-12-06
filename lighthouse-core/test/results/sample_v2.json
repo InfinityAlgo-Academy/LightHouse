@@ -1056,6 +1056,41 @@
       "rawValue": false,
       "warnings": []
     },
+    "polyfills": {
+      "id": "polyfills",
+      "title": "Polyfills",
+      "description": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider removing polyfils for features that are well supported by them.",
+      "score": null,
+      "scoreDisplayMode": "manual",
+      "rawValue": 3,
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "url",
+            "text": "URL"
+          },
+          {
+            "key": "description",
+            "itemType": "code",
+            "text": "Description"
+          },
+          {
+            "key": "location",
+            "itemType": "code",
+            "text": "Location"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/zone.js",
+            "description": "Object.create",
+            "location": "r: 1306, c: 5"
+          }
+        ]
+      }
+    },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
@@ -3291,6 +3326,10 @@
         {
           "id": "image-aspect-ratio",
           "weight": 1
+        },
+        {
+          "id": "polyfills",
+          "weight": 0
         }
       ],
       "id": "best-practices",
@@ -3794,6 +3833,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:offline-start-url",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:polyfills",
         "duration": 100,
         "entryType": "measure"
       },
@@ -4523,6 +4568,12 @@
       ],
       "lighthouse-core/audits/font-display.js | description": [
         "audits[font-display].description"
+      ],
+      "lighthouse-core/audits/polyfills.js | title": [
+        "audits.polyfills.title"
+      ],
+      "lighthouse-core/audits/polyfills.js | description": [
+        "audits.polyfills.description"
       ],
       "lighthouse-core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"

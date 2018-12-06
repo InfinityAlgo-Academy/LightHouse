@@ -699,6 +699,14 @@
     "message": "Speed Index",
     "description": "The name of the metric that summarizes how quickly the page looked visually complete. The name of this metric is largely abstract and can be loosely translated. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit."
   },
+  "lighthouse-core/audits/polyfills.js | description": {
+    "message": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider removing polyfils for features that are well supported by them.",
+    "description": "TODO: write this"
+  },
+  "lighthouse-core/audits/polyfills.js | title": {
+    "message": "Polyfills",
+    "description": "Imperative title of a Lighthouse audit that tells the user about all JavaScript polyfills loaded on the page. This is displayed in a list of audit titles that Lighthouse generates."
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).",
     "description": "Description of a Lighthouse audit that tells users why they should reduce the number of server-side redirects on their page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."

@@ -106,6 +106,9 @@ Object {
       "path": "offline-start-url",
     },
     Object {
+      "path": "polyfills",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -646,6 +649,10 @@ Object {
         Object {
           "id": "image-aspect-ratio",
           "weight": 1,
+        },
+        Object {
+          "id": "polyfills",
+          "weight": 0,
         },
       ],
       "title": "Best Practices",
