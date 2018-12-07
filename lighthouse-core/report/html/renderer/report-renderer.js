@@ -42,6 +42,7 @@ class ReportRenderer {
   /**
    * @param {LH.Result} result
    * @param {Element} container Parent element to render the report into.
+   * @return {Element}
    */
   renderReport(result, container) {
     // Mutate the UIStrings if necessary (while saving originals)
@@ -55,7 +56,7 @@ class ReportRenderer {
     // put the UIStrings back into original state
     Util.updateAllUIStrings(originalUIStrings);
 
-    return /** @type {Element} **/ (container);
+    return container;
   }
 
   /**

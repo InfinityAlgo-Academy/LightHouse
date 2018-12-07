@@ -229,4 +229,5 @@ module.exports = {
   ultradumbBenchmarkString: ultradumbBenchmark.toString(),
   getNodePathString: getNodePath.toString(),
   getNodeSelectorString: getNodeSelector.toString(),
+  getNodeSelector: getNodeSelector,
 };

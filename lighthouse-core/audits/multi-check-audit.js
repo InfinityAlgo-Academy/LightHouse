@@ -32,7 +32,6 @@ class MultiCheckAudit extends Audit {
       ...result,
       ...result.manifestValues,
       manifestValues: undefined,
-      warnings: undefined,
       allChecks: undefined,
     };
 

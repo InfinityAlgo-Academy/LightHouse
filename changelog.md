@@ -1,3 +1,39 @@
+ <a name="4.0.0-beta"></a>
+# 4.0.0-beta (2018-11-29)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v4.0.0-alpha.1...v4.0.0-beta)
+
+## Core
+
+* service-worker: check that test page is in SW scope ([#6609](https://github.com/googlechrome/lighthouse/pull/6609))
+* throw fatally on page hang ([#6497](https://github.com/googlechrome/lighthouse/pull/6497))
+* define new DNS failure LH Error ([#6579](https://github.com/googlechrome/lighthouse/pull/6579))
+* assert securityIssues before getPageLoadError ([#6578](https://github.com/googlechrome/lighthouse/pull/6578))
+* remove protocol timeout for Page.navigate ([#6413](https://github.com/googlechrome/lighthouse/pull/6413))
+* rename webapp-install-banner audit to installable-manifest ([#6630](https://github.com/googlechrome/lighthouse/pull/6630))
+* computed-artifacts: fix cache and add perf timing ([#6619](https://github.com/googlechrome/lighthouse/pull/6619))
+
+## Report
+
+* add PWA category badge gauge ([#6526](https://github.com/googlechrome/lighthouse/pull/6526), [#6670](https://github.com/googlechrome/lighthouse/pull/6670))
+* give passed-opportunities group an icon ([#6594](https://github.com/googlechrome/lighthouse/pull/6594))
+* safari: fix dropdown overlap translateZ ([#6546](https://github.com/googlechrome/lighthouse/pull/6546))
+* use details-element-polyfill from node_modules ([#6593](https://github.com/googlechrome/lighthouse/pull/6593), [#6607](https://github.com/googlechrome/lighthouse/pull/6607))
+
+## CLI
+
+* exit and kill Chrome on unhandledRejection ([#6394](https://github.com/googlechrome/lighthouse/pull/6394))
+
+## Tests
+
+* add smoketest for slow service worker ([#6648](https://github.com/googlechrome/lighthouse/pull/6648))
+
+## Misc
+
+* tsc: infer dom.createElement type from tag name ([#6637](https://github.com/googlechrome/lighthouse/pull/6637))
+* rename core/gather/computed/ to core/computed/ ([#6618](https://github.com/googlechrome/lighthouse/pull/6618))
+* rename typings/ to types/ ([#6617](https://github.com/googlechrome/lighthouse/pull/6617))
+* bump extension version ([#6569](https://github.com/googlechrome/lighthouse/pull/6569))
+
  <a name="4.0.0-alpha.1"></a>
 # 4.0.0-alpha.1 (2018-11-15)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v4.0.0-alpha.0...v4.0.0-alpha.1)

@@ -933,6 +933,25 @@
             "scoreDisplayMode": "not_applicable", 
             "title": "`<input type=\"image\">` elements have `[alt]` text"
         }, 
+        "installable-manifest": {
+            "description": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/install-prompt).", 
+            "details": {
+                "items": [
+                    {
+                        "failures": [
+                            "No manifest was fetched"
+                        ], 
+                        "isParseFailure": true, 
+                        "parseFailureReason": "No manifest was fetched"
+                    }
+                ]
+            }, 
+            "explanation": "Failures: No manifest was fetched.", 
+            "id": "installable-manifest", 
+            "score": 0.0, 
+            "scoreDisplayMode": "binary", 
+            "title": "Web app manifest does not meet the installability requirements"
+        }, 
         "interactive": {
             "description": "Interactive marks the time at which the page is fully interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).", 
             "displayValue": "4.9\u00a0s", 
@@ -2550,25 +2569,6 @@
             "scoreDisplayMode": "manual", 
             "title": "Visual order on the page follows DOM order"
         }, 
-        "webapp-install-banner": {
-            "description": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/install-prompt).", 
-            "details": {
-                "items": [
-                    {
-                        "failures": [
-                            "No manifest was fetched"
-                        ], 
-                        "isParseFailure": true, 
-                        "parseFailureReason": "No manifest was fetched"
-                    }
-                ]
-            }, 
-            "explanation": "Failures: No manifest was fetched.", 
-            "id": "webapp-install-banner", 
-            "score": 0.0, 
-            "scoreDisplayMode": "binary", 
-            "title": "User will not be prompted to Install the Web App"
-        }, 
         "without-javascript": {
             "description": "Your app should display some content when JavaScript is disabled, even if it's just a warning to the user that JavaScript is required to use the app. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/no-js).", 
             "id": "without-javascript", 
@@ -3073,7 +3073,7 @@
                 }, 
                 {
                     "group": "pwa-installable", 
-                    "id": "webapp-install-banner", 
+                    "id": "installable-manifest", 
                     "weight": 2.0
                 }, 
                 {
@@ -3301,7 +3301,7 @@
             "warningHeader": "Warnings: "
         }
     }, 
-    "lighthouseVersion": "4.0.0-alpha.1", 
+    "lighthouseVersion": "4.0.0-beta", 
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html", 
     "runWarnings": [], 
     "timing": {
@@ -3567,7 +3567,7 @@
             {
                 "duration": 100.0, 
                 "entryType": "measure", 
-                "name": "lh:audit:webapp-install-banner", 
+                "name": "lh:audit:installable-manifest", 
                 "startTime": 0.0
             }, 
             {

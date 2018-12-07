@@ -315,9 +315,16 @@ declare global {
 
       export type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast192px'|'hasIconsAtLeast512px'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength';
 
-      export interface ManifestValues {
-        isParseFailure: boolean;
-        parseFailureReason: string | undefined;
+      export type ManifestValues = {
+        isParseFailure: false;
+        allChecks: {
+          id: ManifestValueCheckID;
+          failureText: string;
+          passing: boolean;
+        }[];
+      } | {
+        isParseFailure: true;
+        parseFailureReason: string;
         allChecks: {
           id: ManifestValueCheckID;
           failureText: string;
