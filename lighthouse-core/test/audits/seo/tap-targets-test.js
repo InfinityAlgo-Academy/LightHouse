@@ -19,6 +19,13 @@ function auditTapTargets(tapTargets) {
   return TapTargetsAudit.audit(artifacts);
 }
 
+const tapTargetSize = 10;
+const minimalOverlapCausingDistance = (TapTargetsAudit.FINGER_SIZE_PX - tapTargetSize) / 2;
+// 3px means it'll have 10x3=30px overlap with the finger, which is 30% of the tap targets own score
+// and the failure cutoff is 25%
+const pxOverlappedByFinger = 3;
+const minimalFailingOverlapDistance = minimalOverlapCausingDistance + pxOverlappedByFinger;
+
 function getBorderlineTapTargets(options = {}) {
   function makeClientRects({x, y}) {
     return {
@@ -31,7 +38,6 @@ function getBorderlineTapTargets(options = {}) {
     };
   }
 
-  const tapTargetSize = 10;
   const mainTapTarget = {
     snippet: '<main></main>',
     clientRects: [
@@ -62,9 +68,6 @@ function getBorderlineTapTargets(options = {}) {
 
   const targets = [mainTapTarget, tapTargetBelow, tapTargetToTheRight];
 
-  const minimalOverlapCausingDistance = (TapTargetsAudit.FINGER_SIZE_PX - tapTargetSize) / 2;
-  const minimalFailingOverlapDistance =
-    minimalOverlapCausingDistance + Math.ceil(tapTargetSize / 2 / 2);
   const overlapAmount = minimalFailingOverlapDistance;
   if (options.failRight) {
     tapTargetToTheRight.clientRects[0].left -= overlapAmount;
@@ -129,9 +132,9 @@ describe('SEO: Tap targets audit', () => {
     assert.equal(failure.overlappingTarget.snippet, '<right></right>');
     assert.equal(failure.size, '10x10');
     // Includes data for debugging/adjusting the scoring logic later on
-    assert.equal(failure.tapTargetScore, 25);
-    assert.equal(failure.overlappingTargetScore, 15);
-    assert.equal(failure.extraDistanceNeeded, 1);
+    assert.equal(failure.tapTargetScore, tapTargetSize * tapTargetSize);
+    assert.equal(failure.overlappingTargetScore, tapTargetSize * pxOverlappedByFinger);
+    assert.equal(failure.overlapScoreRatio, 0.3);
     assert.equal(failure.width, 10);
     assert.equal(failure.height, 10);
   });
@@ -163,7 +166,7 @@ describe('SEO: Tap targets audit', () => {
       })
     );
     assert.equal(Math.round(auditResult.score * 100), 0); // all tap targets are overlapped by something
-    const failures = auditResult.details.items.filter(item => item.extraDistanceNeeded > 0);
+    const failures = auditResult.details.items;
     assert.equal(failures.length, 4);
   });
 });

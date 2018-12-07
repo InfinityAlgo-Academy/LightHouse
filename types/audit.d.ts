@@ -77,7 +77,7 @@ declare global {
     export type TapTargetOverlapDetail = {
       tapTarget: Artifacts.TapTarget;
       overlappingTarget: Artifacts.TapTarget;
-      extraDistanceNeeded: number;
+      overlapScoreRatio: number;
       overlappingTargetScore: number;
       tapTargetScore: number;
     }
@@ -86,7 +86,7 @@ declare global {
       tapTarget: DetailsRendererNodeDetailsJSON;
       overlappingTarget: DetailsRendererNodeDetailsJSON;
       size: string;
-      extraDistanceNeeded: number;
+      overlapScoreRatio: number;
       height: number;
       width: number;
       tapTargetScore: number;

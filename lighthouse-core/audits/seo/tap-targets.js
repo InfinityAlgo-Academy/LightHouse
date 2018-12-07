@@ -33,28 +33,15 @@ function getOverlapFailure(targetCR, maybeOverlappingCR) {
   const tapTargetScore = getRectOverlap(fingerRect, targetCR);
   const maybeOverlappingScore = getRectOverlap(fingerRect, maybeOverlappingCR);
 
-  const scoreRatio = maybeOverlappingScore / tapTargetScore;
-  if (scoreRatio < 0.25) {
+  const overlapScoreRatio = maybeOverlappingScore / tapTargetScore;
+  if (overlapScoreRatio < 0.25) {
     // low score means it's clear that the user tried to tap on the targetCR,
     // rather than the other tap target client rect
     return null;
   }
 
-  const overlapAreaExcess = Math.ceil(
-    maybeOverlappingScore - tapTargetScore / 2
-  );
-
-  const xMovementNeededToFix =
-    overlapAreaExcess / getRectXOverlap(fingerRect, maybeOverlappingCR);
-  const yMovementNeededToFix =
-    overlapAreaExcess / getRectYOverlap(fingerRect, maybeOverlappingCR);
-  const extraDistanceNeeded = Math.min(
-    xMovementNeededToFix,
-    yMovementNeededToFix
-  );
-
   return {
-    extraDistanceNeeded: Math.ceil(extraDistanceNeeded),
+    overlapScoreRatio,
     tapTargetScore,
     overlappingTargetScore: maybeOverlappingScore,
   };
@@ -103,7 +90,7 @@ function getTooCloseTargets(tapTarget, allTargets) {
           // only update our state if this was the biggest failure we've seen for this pair
           if (
             !greatestFailure ||
-            failure.extraDistanceNeeded > greatestFailure.extraDistanceNeeded
+            failure.overlapScoreRatio > greatestFailure.overlapScoreRatio
           ) {
             greatestFailure = {
               ...failure,
@@ -185,9 +172,9 @@ function getTableItems(overlapFailures) {
     ({
       tapTarget,
       overlappingTarget,
-      extraDistanceNeeded,
       overlappingTargetScore,
       tapTargetScore,
+      overlapScoreRatio,
     }) => {
       const largestCr = getLargestClientRect(tapTarget);
       const width = Math.floor(largestCr.width);
@@ -197,16 +184,16 @@ function getTableItems(overlapFailures) {
         tapTarget: targetToTableNode(tapTarget),
         overlappingTarget: targetToTableNode(overlappingTarget),
         size,
-        extraDistanceNeeded,
         width,
         height,
         overlappingTargetScore,
+        overlapScoreRatio,
         tapTargetScore,
       };
     });
 
   tableItems.sort((a, b) => {
-    return b.extraDistanceNeeded - a.extraDistanceNeeded;
+    return b.overlapScoreRatio - a.overlapScoreRatio;
   });
 
   return tableItems;
