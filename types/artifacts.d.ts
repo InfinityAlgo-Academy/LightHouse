@@ -278,6 +278,15 @@ declare global {
         };
       }
 
+      export interface Rect {
+        width: number;
+        height: number;
+        top: number;
+        right: number;
+        bottom: number;
+        left: number;
+      }
+
       export interface ViewportDimensions {
         innerWidth: number;
         innerHeight: number;
