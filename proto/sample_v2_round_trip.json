@@ -1895,7 +1895,7 @@
             "id": "service-worker", 
             "score": 0.0, 
             "scoreDisplayMode": "binary", 
-            "title": "Does not register a service worker"
+            "title": "Does not register a service worker that controls page and start_url"
         }, 
         "speed-index": {
             "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index).", 
