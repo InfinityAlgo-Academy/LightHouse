@@ -280,7 +280,7 @@ declare global {
         };
       }
 
-      export interface ClientRect {
+      export interface Rect {
         width: number;
         height: number;
         top: number;
