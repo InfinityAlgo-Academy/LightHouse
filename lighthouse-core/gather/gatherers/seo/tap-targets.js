@@ -316,6 +316,24 @@ function memoize(fn, getCacheKey) {
   return fnWithCaching;
 }
 
+function filterClientRectsWithinAncestorsVisibleScrollArea(node, clientRects) {
+  const parent = node.parentElement;
+  if (!parent) {
+    return clientRects;
+  }
+  if (getComputedStyle(parent).overflowY !== 'visible') {
+    const parentBCR = parent.getBoundingClientRect();
+    clientRects = clientRects.filter(cr => rectContains(parentBCR, cr));
+  }
+  if (parent.parentElement && parent.parentElement.tagName !== 'HTML') {
+    return filterClientRectsWithinAncestorsVisibleScrollArea(
+      parent.parentElement,
+      clientRects
+    );
+  }
+  return clientRects;
+}
+
 class TapTargets extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
@@ -335,6 +353,7 @@ class TapTargets extends Gatherer {
       ${pageFunctions.getNodePathString};
       ${pageFunctions.getNodeSelectorString};
       ${gatherTapTargets.toString()};
+      ${memoize.toString()};
       
       const TARGET_SELECTORS = ${JSON.stringify(TARGET_SELECTORS)};
       memoize(nodeIsVisible)
