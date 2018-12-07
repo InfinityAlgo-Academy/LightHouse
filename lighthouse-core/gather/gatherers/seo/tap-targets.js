@@ -41,31 +41,13 @@ function allClientRectsEmpty(clientRects) {
   );
 }
 
-/**
- * @param {{node: Element, clientRects?: LH.Artifacts.ClientRect[], checkIsWithinAncestorsVisibleScrollArea?: boolean}} options
- */
-/* istanbul ignore next */
-function isVisible({
-  node,
-  clientRects = getClientRects(node, false),
-  checkIsWithinAncestorsVisibleScrollArea = true,
-}) {
+function nodeIsVisible(node) {
   const {
     overflowX,
     overflowY,
     display,
     visibility,
   } = getComputedStyle(node);
-
-  if (allClientRectsEmpty(clientRects)) {
-    if (
-      (overflowX === 'hidden' && overflowY === 'hidden') ||
-      node.children.length === 0
-    ) {
-      // own size is 0x0 and there's no visible child content
-      return false;
-    }
-  }
 
   if (
     display === 'none' ||
@@ -86,22 +68,11 @@ function isVisible({
     }
   }
 
-  if (checkIsWithinAncestorsVisibleScrollArea) {
-    if (!isWithinAncestorsVisibleScrollArea(node, clientRects)) {
-      // Treating overflowing content in scroll containers as invisible could mean that
-      // most of a given page is deemed invisible. But:
-      // - tap targets audit doesn't consider different containers/layers
-      // - having most content in an explicit scroll container is rare
-      // - treating them as hidden only generates false passes, which is better than false failures
-      return false;
-    }
-  }
-
   const parent = node.parentElement;
   if (
     parent &&
     parent.tagName !== 'HTML' &&
-    !isVisible({node: parent, checkIsWithinAncestorsVisibleScrollArea: false})
+    !nodeIsVisible(parent)
   ) {
     // if a parent is invisible then the current node is also invisible
     return false;
@@ -112,31 +83,63 @@ function isVisible({
 
 /**
  * @param {Element} node
- * @param {LH.Artifacts.ClientRect[]} clientRects
- * @returns {boolean}
  */
-/* istanbul ignore next */
-function isWithinAncestorsVisibleScrollArea(node, clientRects) {
-  const parent = node.parentElement;
-  if (!parent) {
-    return true;
+function getVisibleClientRects(node) {
+  if (!nodeIsVisible(node)) {
+    return [];
   }
-  if (getComputedStyle(parent).overflowY !== 'visible') {
-    for (let i = 0; i < clientRects.length; i++) {
-      const clientRect = clientRects[i];
-      if (!rectContains(parent.getBoundingClientRect(), clientRect)) {
-        return false;
-      }
+
+  const {
+    overflowX,
+    overflowY,
+  } = getComputedStyle(node);
+  let clientRects = getClientRects(node, true);
+
+  if (allClientRectsEmpty(clientRects)) {
+    if ((overflowX === 'hidden' && overflowY === 'hidden') || node.children.length === 0) {
+      // own size is 0x0 and there's no visible child content
+      return [];
     }
   }
-  if (parent.parentElement && parent.parentElement.tagName !== 'HTML') {
-    return isWithinAncestorsVisibleScrollArea(
-      parent.parentElement,
-      clientRects
-    );
-  }
-  return true;
+
+  // Treating overflowing content in scroll containers as invisible could mean that
+  // most of a given page is deemed invisible. But:
+  // - tap targets audit doesn't consider different containers/layers
+  // - having most content in an explicit scroll container is rare
+  // - treating them as hidden only generates false passes, which is better than false failures
+  clientRects = filterClientRectsWithinAncestorsVisibleScrollArea(node, clientRects);
+
+  return clientRects;
 }
+
+
+// /**
+//  * @param {Element} node
+//  * @param {LH.Artifacts.ClientRect[]} clientRects
+//  * @returns {boolean}
+//  */
+// /* istanbul ignore next */
+// function isWithinAncestorsVisibleScrollArea(node, clientRects) {
+//   const parent = node.parentElement;
+//   if (!parent) {
+//     return true;
+//   }
+//   if (getComputedStyle(parent).overflowY !== 'visible') {
+//     for (let i = 0; i < clientRects.length; i++) {
+//       const clientRect = clientRects[i];
+//       if (!rectContains(parent.getBoundingClientRect(), clientRect)) {
+//         return false;
+//       }
+//     }
+//   }
+//   if (parent.parentElement && parent.parentElement.tagName !== 'HTML') {
+//     return isWithinAncestorsVisibleScrollArea(
+//       parent.parentElement,
+//       clientRects
+//     );
+//   }
+//   return true;
+// }
 
 /**
  * @param {string} str
@@ -261,28 +264,32 @@ function nodeIsInTextBlock(node) {
 function gatherTapTargets() {
   const selector = TARGET_SELECTORS.join(',');
 
-  /** @type Array<LH.Artifacts.TapTargetWithNode> */
+  /** @type {LH.Artifacts.TapTarget[]} */
+  const targets = [];
+
   // @ts-ignore - getElementsInDocument put into scope via stringification
-  let targets = Array.from(getElementsInDocument(selector)).map(node => ({
-    node,
-    clientRects: getClientRects(node),
-    snippet: truncate(node.outerHTML, 700),
-    // @ts-ignore - getNodePath put into scope via stringification
-    path: getNodePath(node),
-    // @ts-ignore - getNodeSelector put into scope via stringification
-    selector: getNodeSelector(node),
-    href: node.getAttribute('href') || '',
-  }));
+  Array.from(getElementsInDocument(selector)).forEach(node => {
+    if (nodeIsInTextBlock(node)) {
+      return;
+    }
 
-  targets = targets.filter(target => !nodeIsInTextBlock(target.node));
-  targets = targets.filter(isVisible);
+    const visibleClientRects = getVisibleClientRects(node);
+    if (visibleClientRects.length === 0) {
+      return;
+    }
 
-  return targets.map(t => {
-    return {
-      ...t,
-      node: undefined,
-    };
+    targets.push({
+      clientRects: visibleClientRects,
+      snippet: truncate(node.outerHTML, 700),
+      // @ts-ignore - getNodePath put into scope via stringification
+      path: getNodePath(node),
+      // @ts-ignore - getNodeSelector put into scope via stringification
+      selector: getNodeSelector(node),
+      href: node.getAttribute('href') || '',
+    });
   });
+
+  return targets;
 }
 
 /**
@@ -317,11 +324,11 @@ class TapTargets extends Gatherer {
   afterPass(passContext) {
     const expression = `(function() {
       ${pageFunctions.getElementsInDocumentString};
-      ${isWithinAncestorsVisibleScrollArea.toString()};
-      ${isVisible.toString()};
+      ${filterClientRectsWithinAncestorsVisibleScrollArea.toString()};
+      ${nodeIsVisible.toString()};
+      ${getVisibleClientRects.toString()};
       ${truncate.toString()};
       ${getClientRects.toString()};
-      ${memoize.toString()};
       ${nodeIsInTextBlock.toString()};
       ${allClientRectsEmpty.toString()};
       ${rectContainsString};
@@ -330,7 +337,7 @@ class TapTargets extends Gatherer {
       ${gatherTapTargets.toString()};
       
       const TARGET_SELECTORS = ${JSON.stringify(TARGET_SELECTORS)};
-      isVisible = memoize(isVisible, args => args[0].node)
+      memoize(nodeIsVisible)
 
       return gatherTapTargets();
     

@@ -179,7 +179,7 @@ module.exports = [
     finalUrl: BASE_URL + 'seo-tap-targets.html',
     audits: {
       'tap-targets': {
-        score: 0.80, // 4/5 visible targets pass
+        score: 0.83, // 5 passing targets/6 total visible targets
         details: {
           items: {
             length: 1,

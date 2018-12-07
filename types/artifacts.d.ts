@@ -296,10 +296,6 @@ declare global {
         href: string,
         clientRects: ClientRect[]
       }
-
-      export interface TapTargetWithNode extends TapTarget {
-        node: Element
-      }
       
       export interface ViewportDimensions {
         innerWidth: number;

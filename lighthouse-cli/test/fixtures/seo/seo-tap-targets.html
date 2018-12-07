@@ -38,6 +38,17 @@
   </div>
   <br/><br/>
 
+  
+  <div style="overflow: hidden; position: relative">
+    <!-- Should be counted as visible although part of it is outside the scroll container -->
+    <a>
+      <div style="position: absolute;top: -100px">invisible</div>
+      visible
+    </a>
+  </div>
+
+  <br/><br/>
+
   <!-- Link contains large inline block element - no failure because finger
     should be placed in the center of the whole link area -->
   <a style="background: red;">
