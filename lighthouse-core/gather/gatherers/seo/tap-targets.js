@@ -46,6 +46,7 @@ function nodeIsVisible(node) {
     return false;
   }
 
+  // only for block and inline-block, since clientWidth/Height are always 0 for inline elements
   if (display === 'block' || display === 'inline-block') {
     // if height/width is 0 and no overflow in that direction then
     // there's no content that the user can see and tap on
