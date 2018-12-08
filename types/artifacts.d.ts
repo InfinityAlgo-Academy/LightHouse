@@ -294,7 +294,7 @@ declare global {
         selector: string,
         path: string,
         href: string,
-        clientRects: ClientRect[]
+        clientRects: Rect[]
       }
       
       export interface ViewportDimensions {

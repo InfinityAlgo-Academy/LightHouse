@@ -11,27 +11,27 @@
 const Audit = require('../audit');
 const ViewportAudit = require('../viewport');
 const {
-  simplifyClientRects,
-  getRectOverlap,
-  getRectXOverlap,
-  getRectYOverlap,
-  getFingerAtCenter,
-  getLargestClientRect,
-  allClientRectsContainedWithinEachOther,
-} = require('../../lib/client-rect-functions');
+  getRectOverlapArea,
+  getRectAtCenter,
+  allRectsContainedWithinEachOther,
+  getLargestRect,
+} = require('../../lib/rect-helpers');
+const {
+  getTappableRectsFromClientRects,
+} = require('../../lib/tappable-rects');
 const FINGER_SIZE_PX = 48;
 
 
 /**
- * @param {LH.Artifacts.ClientRect} targetCR
- * @param {LH.Artifacts.ClientRect} maybeOverlappingCR
+ * @param {LH.Artifacts.Rect} targetCR
+ * @param {LH.Artifacts.Rect} maybeOverlappingCR
  */
 function getOverlapFailure(targetCR, maybeOverlappingCR) {
-  const fingerRect = getFingerAtCenter(targetCR, FINGER_SIZE_PX);
+  const fingerRect = getRectAtCenter(targetCR, FINGER_SIZE_PX);
   // Score indicates how much area of each target the finger overlaps with
   // when the user taps on the targetCR
-  const tapTargetScore = getRectOverlap(fingerRect, targetCR);
-  const maybeOverlappingScore = getRectOverlap(fingerRect, maybeOverlappingCR);
+  const tapTargetScore = getRectOverlapArea(fingerRect, targetCR);
+  const maybeOverlappingScore = getRectOverlapArea(fingerRect, maybeOverlappingCR);
 
   const overlapScoreRatio = maybeOverlappingScore / tapTargetScore;
   if (overlapScoreRatio < 0.25) {
@@ -73,10 +73,10 @@ function getTooCloseTargets(tapTarget, allTargets) {
 
     /** @type LH.Audit.TapTargetOverlapDetail | null */
     let greatestFailure = null;
-    const simplifiedTapTargetCRs = simplifyClientRects(tapTarget.clientRects);
-    simplifiedTapTargetCRs.forEach(targetCR => {
-      if (allClientRectsContainedWithinEachOther(
-          simplifiedTapTargetCRs,
+    const tappableRects = getTappableRectsFromClientRects(tapTarget.clientRects);
+    tappableRects.forEach(targetCR => {
+      if (allRectsContainedWithinEachOther(
+        tappableRects,
           maybeOverlappingTarget.clientRects
       )) {
         // If one tap target is fully contained within the other that's
@@ -111,7 +111,7 @@ function getTooCloseTargets(tapTarget, allTargets) {
 }
 
 /**
- * @param {LH.Artifacts.ClientRect} cr
+ * @param {LH.Artifacts.Rect} cr
  */
 function clientRectMeetsMinimumSize(cr) {
   return cr.width >= FINGER_SIZE_PX && cr.height >= FINGER_SIZE_PX;
@@ -176,7 +176,7 @@ function getTableItems(overlapFailures) {
       tapTargetScore,
       overlapScoreRatio,
     }) => {
-      const largestCr = getLargestClientRect(tapTarget);
+      const largestCr = getLargestRect(tapTarget.clientRects);
       const width = Math.floor(largestCr.width);
       const height = Math.floor(largestCr.height);
       const size = width + 'x' + height;

@@ -9,7 +9,7 @@
 
 const Gatherer = require('../gatherer');
 const pageFunctions = require('../../../lib/page-functions.js');
-const {rectContainsString, rectContains} = require('../../../lib/client-rect-functions');
+const {rectContainsString, rectContains} = require('../../../lib/rect-helpers');
 
 const TARGET_SELECTORS = [
   'button',
@@ -31,7 +31,7 @@ const TARGET_SELECTORS = [
 ];
 
 /**
- * @param {LH.Artifacts.ClientRect[]} clientRects
+ * @param {LH.Artifacts.Rect[]} clientRects
  */
 /* istanbul ignore next */
 function allClientRectsEmpty(clientRects) {
@@ -157,11 +157,11 @@ function truncate(str, maxLength) {
 /**
  * @param {Element} node
  * @param {boolean} includeChildren
- * @returns {LH.Artifacts.ClientRect[]}
+ * @returns {LH.Artifacts.Rect[]}
  */
 /* istanbul ignore next */
 function getClientRects(node, includeChildren = true) {
-  /** @type {LH.Artifacts.ClientRect[]} */
+  /** @type {LH.Artifacts.Rect[]} */
   let clientRects = Array.from(
     node.getClientRects()
   ).map(clientRect => {
