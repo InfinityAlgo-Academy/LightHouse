@@ -296,7 +296,7 @@ declare global {
         href: string,
         clientRects: Rect[]
       }
-      
+
       export interface ViewportDimensions {
         innerWidth: number;
         innerHeight: number;
