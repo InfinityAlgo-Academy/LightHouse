@@ -298,8 +298,8 @@ class ReportUIFeatures {
     if (!audit || !audit.classList.contains('lh-audit')) {
       return;
     }
-    if (audit.firstElementChild && audit.firstElementChild.tagName === 'DETAILS') {
-      audit.firstElementChild.setAttribute('open', 'true');
+    if (audit.firstElementChild instanceof HTMLDetailsElement) {
+      audit.firstElementChild.open = true;
     }
     this._openClosestDetails(audit);
     if (audit instanceof HTMLElement) {
