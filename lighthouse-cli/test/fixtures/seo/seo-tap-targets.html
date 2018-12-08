@@ -14,71 +14,78 @@
   a {
     color: blue;
   }
+  body {
+    margin: 0;
+  }
   </style>
 </head>
 <body>
-  <h1>SEO Tap targets</h1>
+  <!-- Big tap targets, but it's invisible because it's behind the main content div -->
+  <a style="background: red; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: -1;"></a>
+  <div style="background: white; padding: 20px;">
+    <h1>SEO Tap targets</h1>
 
-  <!-- Invisible nodes don't cause failures -->
-  <div>
-    <!-- Scroll container hides the child -->
-    <div style="height: 1px; overflow: auto;">
-      <a style="display: inline-block; height: 1000px; width: 1000px"></a>
+    <!-- Invisible nodes don't cause failures -->
+    <div>
+      <!-- Scroll container hides the child -->
+      <div style="height: 1px; overflow: auto;">
+        <a style="display: inline-block; height: 1000px; width: 1000px"></a>
+      </div>
+      <!-- Various invisible tap targets-->
+      <a></a>
+      <a style="width: 0;height:0;display:inline-block;">0</a>
+      <a style="display: none">display none</a>
+      <span style="display: none"><a>display none parent</a></span>
+      <a style="display: inline-block; width: 0; overflow-x: hidden;height: 1px">
+        width 0 and overflow x hidden
+      </a>
+      <!-- Visible target should not fail because nothing overlaps it -->
+      <a>visible target</a>
     </div>
-    <!-- Various invisible tap targets-->
-    <a></a>
-    <a style="width: 0;height:0;display:inline-block;">0</a>
-    <a style="display: none">display none</a>
-    <span style="display: none"><a>display none parent</a></span>
-    <a style="display: inline-block; width: 0; overflow-x: hidden;height: 1px">
-      width 0 and overflow x hidden
+    <br/><br/>
+
+    
+    <div style="overflow: hidden; position: relative">
+      <!-- Should be counted as visible although part of it is outside the scroll container -->
+      <a>
+        <div style="position: absolute;top: -100px">invisible</div>
+        visible
+      </a>
+    </div>
+
+    <br/><br/>
+
+    <!-- Link contains large inline block element - no failure because finger
+      should be placed in the center of the whole link area -->
+    <a style="background: red;">
+      <div style="display: inline-block; height: 30px; width: 30px; background: orange;"></div>
+      Link
     </a>
-    <!-- Visible target should not fail because nothing overlaps it -->
-    <a>visible target</a>
+    <br/>
+    <a style="display: block; padding: 30px; background: #ddf;">
+      Link that the top one would overlap with, if it weren't for the inline-block child.
+    </a>
+
+    <br/><br/>
+
+    <!-- Only target that's being overlapped should fail, the overlapping one shouldn't -->
+    <div>
+      <a style="display: block; width: 100px; height: 30px;background: #ddd;">
+        too small target
+      </a>
+      <a style="display: block; width: 100px; height: 100px;background: #aaa;">
+        big enough target
+      </a>
+    </div>
+
+    <!-- Links in text blocks are exempted from size/overlap requirements and should not fail -->
+    <p style="width: 100px">
+      This is <a>a link in a text block.</a>
+      This is <a>a link in a text block.</a>
+      This is <a>a link in a text block.</a>
+      This is <a>a link in a text block.</a>
+      This is <a>a link in a text block.</a>
+    </p>
   </div>
-  <br/><br/>
-
-  
-  <div style="overflow: hidden; position: relative">
-    <!-- Should be counted as visible although part of it is outside the scroll container -->
-    <a>
-      <div style="position: absolute;top: -100px">invisible</div>
-      visible
-    </a>
-  </div>
-
-  <br/><br/>
-
-  <!-- Link contains large inline block element - no failure because finger
-    should be placed in the center of the whole link area -->
-  <a style="background: red;">
-    <div style="display: inline-block; height: 30px; width: 30px; background: orange;"></div>
-    Link
-  </a>
-  <br/>
-  <a style="display: block; padding: 30px; background: #ddf;">
-    Link that the top one would overlap with, if it weren't for the inline-block child.
-  </a>
-
-  <br/><br/>
-
-  <!-- Only target that's being overlapped should fail, the overlapping one shouldn't -->
-  <div>
-    <a style="display: block; width: 100px; height: 30px;background: #ddd;">
-      too small target
-    </a>
-    <a style="display: block; width: 100px; height: 100px;background: #aaa;">
-      big enough target
-    </a>
-  </div>
-
-  <!-- Links in text blocks are exempted from size/overlap requirements and should not fail -->
-  <p style="width: 100px">
-    This is <a>a link in a text block.</a>
-    This is <a>a link in a text block.</a>
-    This is <a>a link in a text block.</a>
-    This is <a>a link in a text block.</a>
-    This is <a>a link in a text block.</a>
-  </p>
 </body>
 </html>
