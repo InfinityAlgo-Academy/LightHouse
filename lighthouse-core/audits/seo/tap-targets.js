@@ -19,8 +19,11 @@ const {
 const {
   getTappableRectsFromClientRects,
 } = require('../../lib/tappable-rects');
-const FINGER_SIZE_PX = 48;
 
+const FINGER_SIZE_PX = 48;
+// Ratio of the finger area tapping on an unintended element
+// to the finger area tapping on the intended element
+const MAX_ACCEPTABLE_OVERLAP_SCORE_RATIO = 0.25;
 
 /**
  * @param {LH.Artifacts.Rect} targetCR
@@ -34,7 +37,7 @@ function getOverlapFailure(targetCR, maybeOverlappingCR) {
   const maybeOverlappingScore = getRectOverlapArea(fingerRect, maybeOverlappingCR);
 
   const overlapScoreRatio = maybeOverlappingScore / tapTargetScore;
-  if (overlapScoreRatio < 0.25) {
+  if (overlapScoreRatio < MAX_ACCEPTABLE_OVERLAP_SCORE_RATIO) {
     // low score means it's clear that the user tried to tap on the targetCR,
     // rather than the other tap target client rect
     return null;
