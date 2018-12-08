@@ -296,30 +296,6 @@ function gatherTapTargets() {
   return targets;
 }
 
-/**
- * @param {function} fn
- * @param {(args: any[]) => any} getCacheKey
- */
-/* istanbul ignore next */
-function memoize(fn, getCacheKey) {
-  const cache = new Map();
-  /**
-   * @this {any}
-   * @param  {...any} args
-   */
-  function fnWithCaching(...args) {
-    const cacheKey = getCacheKey(args);
-    if (cache.get(cacheKey)) {
-      return cache.get(cacheKey);
-    }
-
-    const result = fn.apply(this, args);
-    cache.set(cacheKey, result);
-    return result;
-  }
-  return fnWithCaching;
-}
-
 class TapTargets extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
@@ -327,6 +303,7 @@ class TapTargets extends Gatherer {
    */
   afterPass(passContext) {
     const expression = `(function() {
+      const TARGET_SELECTORS = ${JSON.stringify(TARGET_SELECTORS)};
       ${pageFunctions.getElementsInDocumentString};
       ${filterClientRectsWithinAncestorsVisibleScrollArea.toString()};
       ${nodeIsPositionFixedOrAbsolute.toString()};
@@ -340,11 +317,7 @@ class TapTargets extends Gatherer {
       ${pageFunctions.getNodePathString};
       ${pageFunctions.getNodeSelectorString};
       ${gatherTapTargets.toString()};
-      ${memoize.toString()};
       
-      const TARGET_SELECTORS = ${JSON.stringify(TARGET_SELECTORS)};
-      memoize(nodeIsVisible);
-
       return gatherTapTargets();
     
     })()`;
