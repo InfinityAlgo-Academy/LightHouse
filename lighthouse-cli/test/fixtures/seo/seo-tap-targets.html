@@ -57,12 +57,12 @@
   </a>
   <br/>
   <a style="display: block; padding: 30px; background: #ddf;">
-    Link that the top one would overlap with, if it weren't for the inline-block element.
+    Link that the top one would overlap with, if it weren't for the inline-block child.
   </a>
 
   <br/><br/>
 
-  <!-- Only target that's being overlapped should fail, the overlapper shouldn't -->
+  <!-- Only target that's being overlapped should fail, the overlapping one shouldn't -->
   <div>
     <a style="display: block; width: 100px; height: 30px;background: #ddd;">
       too small target
@@ -72,7 +72,7 @@
     </a>
   </div>
 
-  <!-- Links in text blocks are exempted from size/overlap requirements -->
+  <!-- Links in text blocks are exempted from size/overlap requirements and should not fail -->
   <p style="width: 100px">
     This is <a>a link in a text block.</a>
     This is <a>a link in a text block.</a>

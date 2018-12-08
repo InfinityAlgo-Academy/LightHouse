@@ -16,102 +16,13 @@ const {
   allRectsContainedWithinEachOther,
   getLargestRect,
 } = require('../../lib/rect-helpers');
-const {
-  getTappableRectsFromClientRects,
-} = require('../../lib/tappable-rects');
+const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects');
 
 const FINGER_SIZE_PX = 48;
 // Ratio of the finger area tapping on an unintended element
 // to the finger area tapping on the intended element
 const MAX_ACCEPTABLE_OVERLAP_SCORE_RATIO = 0.25;
 
-/**
- * @param {LH.Artifacts.Rect} targetCR
- * @param {LH.Artifacts.Rect} maybeOverlappingCR
- */
-function getOverlapFailure(targetCR, maybeOverlappingCR) {
-  const fingerRect = getRectAtCenter(targetCR, FINGER_SIZE_PX);
-  // Score indicates how much area of each target the finger overlaps with
-  // when the user taps on the targetCR
-  const tapTargetScore = getRectOverlapArea(fingerRect, targetCR);
-  const maybeOverlappingScore = getRectOverlapArea(fingerRect, maybeOverlappingCR);
-
-  const overlapScoreRatio = maybeOverlappingScore / tapTargetScore;
-  if (overlapScoreRatio < MAX_ACCEPTABLE_OVERLAP_SCORE_RATIO) {
-    // low score means it's clear that the user tried to tap on the targetCR,
-    // rather than the other tap target client rect
-    return null;
-  }
-
-  return {
-    overlapScoreRatio,
-    tapTargetScore,
-    overlappingTargetScore: maybeOverlappingScore,
-  };
-}
-
-/**
- *
- * @param {LH.Artifacts.TapTarget} tapTarget
- * @param {LH.Artifacts.TapTarget[]} allTapTargets
- */
-function getTooCloseTargets(tapTarget, allTapTargets) {
-  /** @type LH.Audit.TapTargetOverlapDetail[] */
-  const failures = [];
-
-  for (const maybeOverlappingTarget of allTapTargets) {
-    if (maybeOverlappingTarget === tapTarget) {
-      // checking the same target with itself, skip
-      continue;
-    }
-
-    const failure = getTargetTooCloseFailure(tapTarget, maybeOverlappingTarget);
-    if (failure) {
-      failures.push(failure);
-    }
-  }
-
-  return failures;
-}
-
-/**
- * @param {LH.Artifacts.TapTarget} tapTarget
- * @param {LH.Artifacts.TapTarget} maybeOverlappingTarget
- * @returns {LH.Audit.TapTargetOverlapDetail | null}
- */
-function getTargetTooCloseFailure(tapTarget, maybeOverlappingTarget) {
-  const tappableRects = getTappableRectsFromClientRects(tapTarget.clientRects);
-  const isHttpOrHttpsLink = /https?:\/\//.test(tapTarget.href);
-  if (isHttpOrHttpsLink && tapTarget.href === maybeOverlappingTarget.href) {
-    // no overlap because same target action
-    return null;
-  }
-
-  /** @type LH.Audit.TapTargetOverlapDetail | null */
-  let greatestFailure = null;
-  tappableRects.forEach(targetCR => {
-    if (allRectsContainedWithinEachOther(tappableRects, maybeOverlappingTarget.clientRects)) {
-      // If one tap target is fully contained within the other that's
-      // probably intentional (e.g. an item with a delete button inside)
-      return;
-    }
-    maybeOverlappingTarget.clientRects.forEach(maybeOverlappingCR => {
-      const failure = getOverlapFailure(targetCR, maybeOverlappingCR);
-      if (failure) {
-        // only update our state if this was the biggest failure we've seen for this pair
-        if (!greatestFailure ||
-          failure.overlapScoreRatio > greatestFailure.overlapScoreRatio) {
-          greatestFailure = {
-            ...failure,
-            tapTarget,
-            overlappingTarget: maybeOverlappingTarget,
-          };
-        }
-      }
-    });
-  });
-  return greatestFailure;
-}
 
 /**
  * @param {LH.Artifacts.Rect} cr
@@ -147,7 +58,7 @@ function getTooSmallTargets(targets) {
  */
 function getOverlapFailures(tooSmallTargets, allTargets) {
   /** @type {LH.Audit.TapTargetOverlapDetail[]} */
-  const failures = [];
+  let failures = [];
 
   tooSmallTargets.forEach(target => {
     const overlappingTargets = getTooCloseTargets(
@@ -156,16 +67,102 @@ function getOverlapFailures(tooSmallTargets, allTargets) {
     );
 
     if (overlappingTargets.length > 0) {
-      overlappingTargets.forEach(
-        (targetOverlapDetail) => {
-          failures.push(targetOverlapDetail);
-        }
-      );
+      failures = failures.concat(overlappingTargets);
     }
   });
 
   return failures;
 }
+
+/**
+ *
+ * @param {LH.Artifacts.TapTarget} tapTarget
+ * @param {LH.Artifacts.TapTarget[]} allTapTargets
+ */
+function getTooCloseTargets(tapTarget, allTapTargets) {
+  /** @type LH.Audit.TapTargetOverlapDetail[] */
+  const failures = [];
+
+  for (const maybeOverlappingTarget of allTapTargets) {
+    if (maybeOverlappingTarget === tapTarget) {
+      // checking the same target with itself, skip
+      continue;
+    }
+
+    const failure = getTargetTooCloseFailure(tapTarget, maybeOverlappingTarget);
+    if (failure) {
+      failures.push(failure);
+    }
+  }
+
+  return failures;
+}
+
+/**
+ * @param {LH.Artifacts.TapTarget} tapTarget
+ * @param {LH.Artifacts.TapTarget} maybeOverlappingTarget
+ * @returns {LH.Audit.TapTargetOverlapDetail | null}
+ */
+function getTargetTooCloseFailure(tapTarget, maybeOverlappingTarget) {
+  // convert client rects to unique tappable areas from a user's perspective
+  const tappableRects = getTappableRectsFromClientRects(tapTarget.clientRects);
+  const isHttpOrHttpsLink = /https?:\/\//.test(tapTarget.href);
+  if (isHttpOrHttpsLink && tapTarget.href === maybeOverlappingTarget.href) {
+    // no overlap because same target action
+    return null;
+  }
+
+  /** @type LH.Audit.TapTargetOverlapDetail | null */
+  let greatestFailure = null;
+  for (const targetCR of tappableRects) {
+    if (allRectsContainedWithinEachOther(tappableRects, maybeOverlappingTarget.clientRects)) {
+      // If one tap target is fully contained within the other that's
+      // probably intentional (e.g. an item with a delete button inside)
+      continue;
+    }
+    for (const maybeOverlappingCR of maybeOverlappingTarget.clientRects) {
+      const failure = getOverlapFailure(targetCR, maybeOverlappingCR);
+      if (failure) {
+        // only update our state if this was the biggest failure we've seen for this pair
+        if (!greatestFailure ||
+          failure.overlapScoreRatio > greatestFailure.overlapScoreRatio) {
+          greatestFailure = {
+            ...failure,
+            tapTarget,
+            overlappingTarget: maybeOverlappingTarget,
+          };
+        }
+      }
+    }
+  }
+  return greatestFailure;
+}
+
+/**
+ * @param {LH.Artifacts.Rect} targetCR
+ * @param {LH.Artifacts.Rect} maybeOverlappingCR
+ */
+function getOverlapFailure(targetCR, maybeOverlappingCR) {
+  const fingerRect = getRectAtCenter(targetCR, FINGER_SIZE_PX);
+  // Score indicates how much of the finger area overlaps each target when the user
+  // taps on the center of targetCR
+  const tapTargetScore = getRectOverlapArea(fingerRect, targetCR);
+  const maybeOverlappingScore = getRectOverlapArea(fingerRect, maybeOverlappingCR);
+
+  const overlapScoreRatio = maybeOverlappingScore / tapTargetScore;
+  if (overlapScoreRatio < MAX_ACCEPTABLE_OVERLAP_SCORE_RATIO) {
+    // low score means it's clear that the user tried to tap on the targetCR,
+    // rather than the other tap target client rect
+    return null;
+  }
+
+  return {
+    overlapScoreRatio,
+    tapTargetScore,
+    overlappingTargetScore: maybeOverlappingScore,
+  };
+}
+
 
 /**
  * @param {LH.Audit.TapTargetOverlapDetail[]} overlapFailures
@@ -175,13 +172,13 @@ function getTableItems(overlapFailures) {
     ({
       tapTarget,
       overlappingTarget,
-      overlappingTargetScore,
       tapTargetScore,
+      overlappingTargetScore,
       overlapScoreRatio,
     }) => {
-      const largestCr = getLargestRect(tapTarget.clientRects);
-      const width = Math.floor(largestCr.width);
-      const height = Math.floor(largestCr.height);
+      const largestCR = getLargestRect(tapTarget.clientRects);
+      const width = Math.floor(largestCR.width);
+      const height = Math.floor(largestCR.height);
       const size = width + 'x' + height;
       return {
         tapTarget: targetToTableNode(tapTarget),
@@ -189,9 +186,9 @@ function getTableItems(overlapFailures) {
         size,
         width,
         height,
+        tapTargetScore,
         overlappingTargetScore,
         overlapScoreRatio,
-        tapTargetScore,
       };
     });
 

@@ -24,7 +24,7 @@ const minimalOverlapCausingDistance = (TapTargetsAudit.FINGER_SIZE_PX - tapTarge
 // 3px means it'll have 10x3=30px overlap with the finger, which is 30% of the tap targets own score
 // and the failure cutoff is 25%
 const pxOverlappedByFinger = 3;
-const minimalFailingOverlapDistance = minimalOverlapCausingDistance + pxOverlappedByFinger;
+const minimalFailingOverlapCausingDistance = minimalOverlapCausingDistance + pxOverlappedByFinger;
 
 function getBorderlineTapTargets(options = {}) {
   function makeClientRects({x, y}) {
@@ -68,7 +68,7 @@ function getBorderlineTapTargets(options = {}) {
 
   const targets = [mainTapTarget, tapTargetBelow, tapTargetToTheRight];
 
-  const overlapAmount = minimalFailingOverlapDistance;
+  const overlapAmount = minimalFailingOverlapCausingDistance;
   if (options.failRight) {
     tapTargetToTheRight.clientRects[0].left -= overlapAmount;
     tapTargetToTheRight.clientRects[0].right -= overlapAmount;

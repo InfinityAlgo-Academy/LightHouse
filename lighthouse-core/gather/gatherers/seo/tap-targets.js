@@ -31,27 +31,12 @@ const TARGET_SELECTORS = [
 ];
 
 /**
- * @param {LH.Artifacts.Rect[]} clientRects
- */
-/* istanbul ignore next */
-function allClientRectsEmpty(clientRects) {
-  return (
-    clientRects.length === 0 ||
-    clientRects.every(cr => cr.width === 0 && cr.height === 0)
-  );
-}
-
-/**
  *
  * @param {Element} node
  */
+/* istanbul ignore next */
 function nodeIsVisible(node) {
-  const {
-    overflowX,
-    overflowY,
-    display,
-    visibility,
-  } = getComputedStyle(node);
+  const {overflowX, overflowY, display, visibility} = getComputedStyle(node);
 
   if (
     display === 'none' ||
@@ -64,20 +49,14 @@ function nodeIsVisible(node) {
   if (display === 'block' || display === 'inline-block') {
     // if height/width is 0 and no overflow in that direction then
     // there's no content that the user can see and tap on
-    if (node.clientWidth === 0 && overflowX === 'hidden') {
-      return false;
-    }
-    if (node.clientHeight === 0 && overflowY === 'hidden') {
+    if ((node.clientWidth === 0 && overflowX === 'hidden') ||
+        (node.clientHeight === 0 && overflowY === 'hidden')) {
       return false;
     }
   }
 
   const parent = node.parentElement;
-  if (
-    parent &&
-    parent.tagName !== 'HTML' &&
-    !nodeIsVisible(parent)
-  ) {
+  if (parent && parent.tagName !== 'HTML' && !nodeIsVisible(parent)) {
     // if a parent is invisible then the current node is also invisible
     return false;
   }
@@ -86,8 +65,17 @@ function nodeIsVisible(node) {
 }
 
 /**
+ * @param {LH.Artifacts.Rect[]} clientRects
+ */
+/* istanbul ignore next */
+function allClientRectsEmpty(clientRects) {
+  return clientRects.every(cr => cr.width === 0 && cr.height === 0);
+}
+
+/**
  * @param {Element} node
  */
+/* istanbul ignore next */
 function getVisibleClientRects(node) {
   if (!nodeIsVisible(node)) {
     return [];
@@ -117,31 +105,28 @@ function getVisibleClientRects(node) {
 }
 
 /**
+ *
  * @param {Element} node
+ * @param {LH.Artifacts.Rect[]} clientRects
+ * @returns {LH.Artifacts.Rect[]}
  */
 /* istanbul ignore next */
-function nodeIsPositionFixedOrAbsolute(node) {
-  const {position} = getComputedStyle(node);
-  if (position === 'fixed' || position === 'absolute') {
-    return true;
+function filterClientRectsWithinAncestorsVisibleScrollArea(node, clientRects) {
+  const parent = node.parentElement;
+  if (!parent) {
+    return clientRects;
   }
-  if (node.parentElement) {
-    return nodeIsInTextBlock(node.parentElement);
+  if (getComputedStyle(parent).overflowY !== 'visible') {
+    const parentBCR = parent.getBoundingClientRect();
+    clientRects = clientRects.filter(cr => rectContains(parentBCR, cr));
   }
-  return false;
-}
-
-/**
- * @param {string} str
- * @param {number} maxLength
- * @returns {string}
- */
-/* istanbul ignore next */
-function truncate(str, maxLength) {
-  if (str.length <= maxLength) {
-    return str;
+  if (parent.parentElement && parent.parentElement.tagName !== 'HTML') {
+    return filterClientRectsWithinAncestorsVisibleScrollArea(
+      parent.parentElement,
+      clientRects
+    );
   }
-  return str.slice(0, maxLength - 1) + '…';
+  return clientRects;
 }
 
 /**
@@ -189,11 +174,8 @@ function nodeIsInTextBlock(node) {
     if (node.nodeType !== Node.ELEMENT_NODE) {
       return false;
     }
-    const element = /** @type {Element} */ (node);
-    return (
-      getComputedStyle(element).display === 'inline' ||
-      getComputedStyle(element).display === 'inline-block'
-    );
+    const {display} = getComputedStyle(/** @type {Element} */ (node));
+    return display === 'inline' || display === 'inline-block';
   }
 
   /**
@@ -214,17 +196,12 @@ function nodeIsInTextBlock(node) {
       return false;
     }
 
-    const potentialSiblings = node.parentElement.childNodes;
-    for (let i = 0; i < potentialSiblings.length; i++) {
-      const sibling = potentialSiblings[i];
+    for (const sibling of node.parentElement.childNodes) {
       if (sibling === node) {
         continue;
       }
       const siblingTextContent = (sibling.textContent || '').trim();
-      if (
-        sibling.nodeType === Node.TEXT_NODE &&
-        siblingTextContent.length > 0
-      ) {
+      if (sibling.nodeType === Node.TEXT_NODE && siblingTextContent.length > 0) {
         return true;
       }
     }
@@ -238,13 +215,40 @@ function nodeIsInTextBlock(node) {
 
   if (hasTextNodeSiblingsFormingTextBlock(node)) {
     return true;
+  } else if (node.parentElement) {
+    return nodeIsInTextBlock(node.parentElement);
   } else {
-    if (node.parentElement) {
-      return nodeIsInTextBlock(node.parentElement);
-    } else {
-      return false;
-    }
+    return false;
   }
+}
+
+/**
+ * @param {Element} node
+ * @returns {boolean}
+ */
+/* istanbul ignore next */
+function nodeIsPositionFixedOrAbsolute(node) {
+  const {position} = getComputedStyle(node);
+  if (position === 'fixed' || position === 'absolute') {
+    return true;
+  }
+  if (node.parentElement) {
+    return nodeIsPositionFixedOrAbsolute(node.parentElement);
+  }
+  return false;
+}
+
+/**
+ * @param {string} str
+ * @param {number} maxLength
+ * @returns {string}
+ */
+/* istanbul ignore next */
+function truncate(str, maxLength) {
+  if (str.length <= maxLength) {
+    return str;
+  }
+  return str.slice(0, maxLength - 1) + '…';
 }
 
 /**
@@ -252,17 +256,19 @@ function nodeIsInTextBlock(node) {
  */
 /* istanbul ignore next */
 function gatherTapTargets() {
-  const selector = TARGET_SELECTORS.join(',');
+  const tapTargetsSelector = TARGET_SELECTORS.join(',');
 
   /** @type {LH.Artifacts.TapTarget[]} */
   const targets = [];
 
   // @ts-ignore - getElementsInDocument put into scope via stringification
-  Array.from(getElementsInDocument(selector)).forEach(node => {
-    if (nodeIsInTextBlock(node)) {
+  Array.from(getElementsInDocument(tapTargetsSelector)).forEach(tapTargetNode => {
+    if (nodeIsInTextBlock(tapTargetNode)) {
+      // Links inside text blocks cause a lot of failures, and there's also an exception for them
+      // in the Web Content Accessibility Guidelines https://www.w3.org/TR/WCAG21/#target-size
       return;
     }
-    if (nodeIsPositionFixedOrAbsolute(node)) {
+    if (nodeIsPositionFixedOrAbsolute(tapTargetNode)) {
       // Absolutely positioned elements might not be visible if they have a lower z-index
       // than other tap targets, but if we don't ignore them we can get false failures.
       //
@@ -271,19 +277,19 @@ function gatherTapTargets() {
       return;
     }
 
-    const visibleClientRects = getVisibleClientRects(node);
+    const visibleClientRects = getVisibleClientRects(tapTargetNode);
     if (visibleClientRects.length === 0) {
       return;
     }
 
     targets.push({
       clientRects: visibleClientRects,
-      snippet: truncate(node.outerHTML, 700),
+      snippet: truncate(tapTargetNode.outerHTML, 700),
       // @ts-ignore - getNodePath put into scope via stringification
-      path: getNodePath(node),
+      path: getNodePath(tapTargetNode),
       // @ts-ignore - getNodeSelector put into scope via stringification
-      selector: getNodeSelector(node),
-      href: node.getAttribute('href') || '',
+      selector: getNodeSelector(tapTargetNode),
+      href: tapTargetNode.getAttribute('href') || '',
     });
   });
 
@@ -314,31 +320,6 @@ function memoize(fn, getCacheKey) {
   return fnWithCaching;
 }
 
-/**
- *
- * @param {Element} node
- * @param {LH.Artifacts.Rect[]} clientRects
- * @returns {LH.Artifacts.Rect[]}
- */
-/* istanbul ignore next */
-function filterClientRectsWithinAncestorsVisibleScrollArea(node, clientRects) {
-  const parent = node.parentElement;
-  if (!parent) {
-    return clientRects;
-  }
-  if (getComputedStyle(parent).overflowY !== 'visible') {
-    const parentBCR = parent.getBoundingClientRect();
-    clientRects = clientRects.filter(cr => rectContains(parentBCR, cr));
-  }
-  if (parent.parentElement && parent.parentElement.tagName !== 'HTML') {
-    return filterClientRectsWithinAncestorsVisibleScrollArea(
-      parent.parentElement,
-      clientRects
-    );
-  }
-  return clientRects;
-}
-
 class TapTargets extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
@@ -362,7 +343,7 @@ class TapTargets extends Gatherer {
       ${memoize.toString()};
       
       const TARGET_SELECTORS = ${JSON.stringify(TARGET_SELECTORS)};
-      memoize(nodeIsVisible)
+      memoize(nodeIsVisible);
 
       return gatherTapTargets();
     
