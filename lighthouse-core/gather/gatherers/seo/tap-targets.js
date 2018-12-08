@@ -41,6 +41,10 @@ function allClientRectsEmpty(clientRects) {
   );
 }
 
+/**
+ *
+ * @param {Element} node
+ */
 function nodeIsVisible(node) {
   const {
     overflowX,
@@ -112,34 +116,20 @@ function getVisibleClientRects(node) {
   return clientRects;
 }
 
-
-// /**
-//  * @param {Element} node
-//  * @param {LH.Artifacts.ClientRect[]} clientRects
-//  * @returns {boolean}
-//  */
-// /* istanbul ignore next */
-// function isWithinAncestorsVisibleScrollArea(node, clientRects) {
-//   const parent = node.parentElement;
-//   if (!parent) {
-//     return true;
-//   }
-//   if (getComputedStyle(parent).overflowY !== 'visible') {
-//     for (let i = 0; i < clientRects.length; i++) {
-//       const clientRect = clientRects[i];
-//       if (!rectContains(parent.getBoundingClientRect(), clientRect)) {
-//         return false;
-//       }
-//     }
-//   }
-//   if (parent.parentElement && parent.parentElement.tagName !== 'HTML') {
-//     return isWithinAncestorsVisibleScrollArea(
-//       parent.parentElement,
-//       clientRects
-//     );
-//   }
-//   return true;
-// }
+/**
+ * @param {Element} node
+ */
+/* istanbul ignore next */
+function nodeIsPositionFixedOrAbsolute(node) {
+  const {position} = getComputedStyle(node);
+  if (position === 'fixed' || position === 'absolute') {
+    return true;
+  }
+  if (node.parentElement) {
+    return nodeIsInTextBlock(node.parentElement);
+  }
+  return false;
+}
 
 /**
  * @param {string} str
@@ -272,6 +262,14 @@ function gatherTapTargets() {
     if (nodeIsInTextBlock(node)) {
       return;
     }
+    if (nodeIsPositionFixedOrAbsolute(node)) {
+      // Absolutely positioned elements might not be visible if they have a lower z-index
+      // than other tap targets, but if we don't ignore them we can get false failures.
+      //
+      // TODO: rewrite logic to use elementFromPoint to check if an element is visible
+      // (this should also mean we'd no longer need to check ancestor visible scroll area)
+      return;
+    }
 
     const visibleClientRects = getVisibleClientRects(node);
     if (visibleClientRects.length === 0) {
@@ -316,6 +314,13 @@ function memoize(fn, getCacheKey) {
   return fnWithCaching;
 }
 
+/**
+ *
+ * @param {Element} node
+ * @param {LH.Artifacts.Rect[]} clientRects
+ * @returns {LH.Artifacts.Rect[]}
+ */
+/* istanbul ignore next */
 function filterClientRectsWithinAncestorsVisibleScrollArea(node, clientRects) {
   const parent = node.parentElement;
   if (!parent) {
@@ -343,6 +348,7 @@ class TapTargets extends Gatherer {
     const expression = `(function() {
       ${pageFunctions.getElementsInDocumentString};
       ${filterClientRectsWithinAncestorsVisibleScrollArea.toString()};
+      ${nodeIsPositionFixedOrAbsolute.toString()};
       ${nodeIsVisible.toString()};
       ${getVisibleClientRects.toString()};
       ${truncate.toString()};
