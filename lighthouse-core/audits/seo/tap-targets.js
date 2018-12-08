@@ -50,64 +50,64 @@ function getOverlapFailure(targetCR, maybeOverlappingCR) {
 /**
  *
  * @param {LH.Artifacts.TapTarget} tapTarget
- * @param {LH.Artifacts.TapTarget[]} allTargets
+ * @param {LH.Artifacts.TapTarget[]} allTapTargets
  */
-function getTooCloseTargets(tapTarget, allTargets) {
+function getTooCloseTargets(tapTarget, allTapTargets) {
   /** @type LH.Audit.TapTargetOverlapDetail[] */
   const failures = [];
 
-  for (let i = 0; i < allTargets.length; i++) {
-    if (allTargets[i] === tapTarget) {
+  for (const maybeOverlappingTarget of allTapTargets) {
+    if (maybeOverlappingTarget === tapTarget) {
       // checking the same target with itself, skip
       continue;
     }
 
-    const maybeOverlappingTarget = allTargets[i];
-    if (
-      /https?:\/\//.test(tapTarget.href) &&
-      tapTarget.href === maybeOverlappingTarget.href
-    ) {
-      // no overlap because same target action
-      continue;
-    }
-
-    /** @type LH.Audit.TapTargetOverlapDetail | null */
-    let greatestFailure = null;
-    const tappableRects = getTappableRectsFromClientRects(tapTarget.clientRects);
-    tappableRects.forEach(targetCR => {
-      if (allRectsContainedWithinEachOther(
-        tappableRects,
-          maybeOverlappingTarget.clientRects
-      )) {
-        // If one tap target is fully contained within the other that's
-        // probably intentional (e.g. an item with a delete button inside)
-        return;
-      }
-
-      maybeOverlappingTarget.clientRects.forEach(maybeOverlappingCR => {
-        const failure = getOverlapFailure(targetCR, maybeOverlappingCR);
-        if (failure) {
-          // only update our state if this was the biggest failure we've seen for this pair
-          if (
-            !greatestFailure ||
-            failure.overlapScoreRatio > greatestFailure.overlapScoreRatio
-          ) {
-            greatestFailure = {
-              ...failure,
-              tapTarget,
-              overlappingTarget: maybeOverlappingTarget,
-            };
-          }
-        }
-      });
-    });
-
-    if (greatestFailure) {
-      failures.push(greatestFailure);
+    const failure = getTargetTooCloseFailure(tapTarget, maybeOverlappingTarget);
+    if (failure) {
+      failures.push(failure);
     }
   }
 
   return failures;
+}
+
+/**
+ * @param {LH.Artifacts.TapTarget} tapTarget
+ * @param {LH.Artifacts.TapTarget} maybeOverlappingTarget
+ * @returns {LH.Audit.TapTargetOverlapDetail | null}
+ */
+function getTargetTooCloseFailure(tapTarget, maybeOverlappingTarget) {
+  const tappableRects = getTappableRectsFromClientRects(tapTarget.clientRects);
+  const isHttpOrHttpsLink = /https?:\/\//.test(tapTarget.href);
+  if (isHttpOrHttpsLink && tapTarget.href === maybeOverlappingTarget.href) {
+    // no overlap because same target action
+    return null;
+  }
+
+  /** @type LH.Audit.TapTargetOverlapDetail | null */
+  let greatestFailure = null;
+  tappableRects.forEach(targetCR => {
+    if (allRectsContainedWithinEachOther(tappableRects, maybeOverlappingTarget.clientRects)) {
+      // If one tap target is fully contained within the other that's
+      // probably intentional (e.g. an item with a delete button inside)
+      return;
+    }
+    maybeOverlappingTarget.clientRects.forEach(maybeOverlappingCR => {
+      const failure = getOverlapFailure(targetCR, maybeOverlappingCR);
+      if (failure) {
+        // only update our state if this was the biggest failure we've seen for this pair
+        if (!greatestFailure ||
+          failure.overlapScoreRatio > greatestFailure.overlapScoreRatio) {
+          greatestFailure = {
+            ...failure,
+            tapTarget,
+            overlappingTarget: maybeOverlappingTarget,
+          };
+        }
+      }
+    });
+  });
+  return greatestFailure;
 }
 
 /**
