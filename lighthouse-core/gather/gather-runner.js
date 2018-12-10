@@ -146,9 +146,8 @@ class GatherRunner {
       return URL.equalWithExcludedFragments(record.url, url);
     });
 
-    let errorDef;
     if (!mainRecord) {
-      errorDef = LHError.errors.NO_DOCUMENT_REQUEST;
+      return new LHError(LHError.errors.NO_DOCUMENT_REQUEST);
     } else if (mainRecord.failed) {
       const netErr = mainRecord.localizedFailDescription;
       // Match all resolution and DNS failures
@@ -158,18 +157,18 @@ class GatherRunner {
         netErr === 'net::ERR_NAME_RESOLUTION_FAILED' ||
         netErr.startsWith('net::ERR_DNS_')
       ) {
-        errorDef = LHError.errors.DNS_FAILURE;
+        return new LHError(LHError.errors.DNS_FAILURE);
       } else {
-        errorDef = {...LHError.errors.FAILED_DOCUMENT_REQUEST};
-        errorDef.message += ` ${netErr}.`;
+        return new LHError(
+          LHError.errors.FAILED_DOCUMENT_REQUEST,
+          {errorDetails: netErr}
+        );
       }
     } else if (mainRecord.hasErrorStatusCode()) {
-      errorDef = {...LHError.errors.ERRORED_DOCUMENT_REQUEST};
-      errorDef.message += ` Status code: ${mainRecord.statusCode}.`;
-    }
-
-    if (errorDef) {
-      return new LHError(errorDef);
+      return new LHError(
+        LHError.errors.ERRORED_DOCUMENT_REQUEST,
+        {statusCode: `${mainRecord.statusCode}`}
+      );
     }
   }
 
@@ -180,12 +179,13 @@ class GatherRunner {
    */
   static assertNoSecurityIssues({securityState, explanations}) {
     if (securityState === 'insecure') {
-      const errorDef = {...LHError.errors.INSECURE_DOCUMENT_REQUEST};
       const insecureDescriptions = explanations
         .filter(exp => exp.securityState === 'insecure')
         .map(exp => exp.description);
-      errorDef.message += ` ${insecureDescriptions.join(' ')}`;
-      throw new LHError(errorDef);
+      throw new LHError(
+        LHError.errors.INSECURE_DOCUMENT_REQUEST,
+        {securityMessages: insecureDescriptions.join(' ')}
+      );
     }
   }
 

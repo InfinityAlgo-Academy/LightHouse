@@ -5,7 +5,40 @@
  */
 'use strict';
 
-const strings = require('./strings');
+const i18n = require('./i18n/i18n.js');
+
+/* eslint-disable max-len */
+const UIStrings = {
+  /** Error message explaining that the Lighthouse run was not able to collect screenshots through Chrome.*/
+  didntCollectScreenshots: `Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse.`,
+  /** Error message explaining that the network trace was not able to be recorded for the Lighthouse run. */
+  badTraceRecording: 'Something went wrong with recording the trace over your page load. Please run Lighthouse again.',
+  /** Error message explaining that the page loaded too slowly to perform a Lighthouse run.  */
+  pageLoadTookTooLong: 'Your page took too long to load. Please follow the opportunities in the report to reduce your page load time, and then try re-running Lighthouse.',
+  /** Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability. */
+  pageLoadFailed: 'Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests.',
+  /** Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability. */
+  pageLoadFailedWithStatusCode: 'Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status code: {statusCode})',
+  /** Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability. */
+  pageLoadFailedWithDetails: 'Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Details: {errorDetails})',
+  /** Error message explaining that the credentials included in the Lighthouse run were invalid, so the URL cannot be accessed. */
+  pageLoadFailedInsecure: 'The URL you have provided does not have valid security credentials. ({securityMessages})',
+  /** Error message explaining that Chrome has encountered an error during the Lighthouse run, and that Chrome should be restarted. */
+  internalChromeError: 'An internal Chrome error occurred. Please restart Chrome and try re-running Lighthouse.',
+  /** Error message explaining that fetching the resources of the webpage has taken longer than the maximum time. */
+  requestContentTimeout: 'Fetching resource content has exceeded the allotted time',
+  /** Error message explaining that the provided URL Lighthouse points to is not valid, and cannot be loaded. */
+  urlInvalid: 'The URL you have provided appears to be invalid.',
+  /** Error message explaining that the Chrome Devtools protocol has exceeded the maximum timeout allowed. */
+  protocolTimeout: 'Waiting for DevTools protocol response has exceeded the allotted time. (Method: {protocolMethod})',
+  /** Error message explaining that the requested page could not be resolved by the DNS server. */
+  dnsFailure: 'DNS servers could not resolve the provided domain.',
+  /** Error message explaining that Lighthouse couldn't complete because the page has stopped responding to its instructions. */
+  pageLoadFailedHung: 'Lighthouse was unable to reliably load the URL you requested because the page stopped responding.',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
 
 /**
  * @typedef LighthouseErrorDefinition
@@ -24,7 +57,7 @@ class LighthouseError extends Error {
     super(errorDefinition.code);
     this.name = 'LHError';
     this.code = errorDefinition.code;
-    this.friendlyMessage = errorDefinition.message;
+    this.friendlyMessage = str_(errorDefinition.message, properties);
     this.lhrRuntimeError = !!errorDefinition.lhrRuntimeError;
     if (properties) Object.assign(this, properties);
 
@@ -70,107 +103,113 @@ const ERRORS = {
   // Screenshot/speedline errors
   NO_SPEEDLINE_FRAMES: {
     code: 'NO_SPEEDLINE_FRAMES',
-    message: strings.didntCollectScreenshots,
+    message: UIStrings.didntCollectScreenshots,
     lhrRuntimeError: true,
   },
   SPEEDINDEX_OF_ZERO: {
     code: 'SPEEDINDEX_OF_ZERO',
-    message: strings.didntCollectScreenshots,
+    message: UIStrings.didntCollectScreenshots,
     lhrRuntimeError: true,
   },
   NO_SCREENSHOTS: {
     code: 'NO_SCREENSHOTS',
-    message: strings.didntCollectScreenshots,
+    message: UIStrings.didntCollectScreenshots,
     lhrRuntimeError: true,
   },
   INVALID_SPEEDLINE: {
     code: 'INVALID_SPEEDLINE',
-    message: strings.didntCollectScreenshots,
+    message: UIStrings.didntCollectScreenshots,
     lhrRuntimeError: true,
   },
 
   // Trace parsing errors
   NO_TRACING_STARTED: {
     code: 'NO_TRACING_STARTED',
-    message: strings.badTraceRecording,
+    message: UIStrings.badTraceRecording,
     lhrRuntimeError: true,
   },
   NO_NAVSTART: {
     code: 'NO_NAVSTART',
-    message: strings.badTraceRecording,
+    message: UIStrings.badTraceRecording,
     lhrRuntimeError: true,
   },
   NO_FCP: {
     code: 'NO_FCP',
-    message: strings.badTraceRecording,
+    message: UIStrings.badTraceRecording,
     lhrRuntimeError: true,
   },
   NO_DCL: {
     code: 'NO_DCL',
-    message: strings.badTraceRecording,
+    message: UIStrings.badTraceRecording,
     lhrRuntimeError: true,
   },
   NO_FMP: {
     code: 'NO_FMP',
-    message: strings.badTraceRecording,
+    message: UIStrings.badTraceRecording,
   },
 
   // TTI calculation failures
-  FMP_TOO_LATE_FOR_FCPUI: {code: 'FMP_TOO_LATE_FOR_FCPUI', message: strings.pageLoadTookTooLong},
-  NO_FCPUI_IDLE_PERIOD: {code: 'NO_FCPUI_IDLE_PERIOD', message: strings.pageLoadTookTooLong},
-  NO_TTI_CPU_IDLE_PERIOD: {code: 'NO_TTI_CPU_IDLE_PERIOD', message: strings.pageLoadTookTooLong},
+  FMP_TOO_LATE_FOR_FCPUI: {code: 'FMP_TOO_LATE_FOR_FCPUI', message: UIStrings.pageLoadTookTooLong},
+  NO_FCPUI_IDLE_PERIOD: {code: 'NO_FCPUI_IDLE_PERIOD', message: UIStrings.pageLoadTookTooLong},
+  NO_TTI_CPU_IDLE_PERIOD: {code: 'NO_TTI_CPU_IDLE_PERIOD', message: UIStrings.pageLoadTookTooLong},
   NO_TTI_NETWORK_IDLE_PERIOD: {
     code: 'NO_TTI_NETWORK_IDLE_PERIOD',
-    message: strings.pageLoadTookTooLong,
+    message: UIStrings.pageLoadTookTooLong,
   },
 
   // Page load failures
   NO_DOCUMENT_REQUEST: {
     code: 'NO_DOCUMENT_REQUEST',
-    message: strings.pageLoadFailed,
+    message: UIStrings.pageLoadFailed,
     lhrRuntimeError: true,
   },
-  /* Used when DevTools reports loading failed. Usually an internal (Chrome) issue. */
+  /* Used when DevTools reports loading failed. Usually an internal (Chrome) issue.
+   * Requries an additional `errorDetails` field for translation.
+   */
   FAILED_DOCUMENT_REQUEST: {
     code: 'FAILED_DOCUMENT_REQUEST',
-    message: strings.pageLoadFailed,
+    message: UIStrings.pageLoadFailedWithDetails,
     lhrRuntimeError: true,
   },
-  /* Used when status code is 4xx or 5xx. */
+  /* Used when status code is 4xx or 5xx.
+   * Requires an additional `statusCode` field for translation.
+   */
   ERRORED_DOCUMENT_REQUEST: {
     code: 'ERRORED_DOCUMENT_REQUEST',
-    message: strings.pageLoadFailed,
+    message: UIStrings.pageLoadFailedWithStatusCode,
     lhrRuntimeError: true,
   },
-  /* Used when security error prevents page load. */
+  /* Used when security error prevents page load.
+   * Requires an additional `securityMessages` field for translation.
+   */
   INSECURE_DOCUMENT_REQUEST: {
     code: 'INSECURE_DOCUMENT_REQUEST',
-    message: strings.pageLoadFailedInsecure,
+    message: UIStrings.pageLoadFailedInsecure,
     lhrRuntimeError: true,
   },
   /* Used when the page stopped responding and did not finish loading. */
   PAGE_HUNG: {
     code: 'PAGE_HUNG',
-    message: strings.pageLoadFailedHung,
+    message: UIStrings.pageLoadFailedHung,
     lhrRuntimeError: true,
   },
 
   // Protocol internal failures
   TRACING_ALREADY_STARTED: {
     code: 'TRACING_ALREADY_STARTED',
-    message: strings.internalChromeError,
+    message: UIStrings.internalChromeError,
     pattern: /Tracing.*started/,
     lhrRuntimeError: true,
   },
   PARSING_PROBLEM: {
     code: 'PARSING_PROBLEM',
-    message: strings.internalChromeError,
+    message: UIStrings.internalChromeError,
     pattern: /Parsing problem/,
     lhrRuntimeError: true,
   },
   READ_FAILED: {
     code: 'READ_FAILED',
-    message: strings.internalChromeError,
+    message: UIStrings.internalChromeError,
     pattern: /Read failed/,
     lhrRuntimeError: true,
   },
@@ -178,20 +217,22 @@ const ERRORS = {
   // URL parsing failures
   INVALID_URL: {
     code: 'INVALID_URL',
-    message: strings.urlInvalid,
+    message: UIStrings.urlInvalid,
   },
 
-  // Protocol timeout failures
+  /* Protocol timeout failures
+   * Requires an additional `icuProtocolMethod` field for translation.
+   */
   PROTOCOL_TIMEOUT: {
     code: 'PROTOCOL_TIMEOUT',
-    message: strings.protocolTimeout,
+    message: UIStrings.protocolTimeout,
     lhrRuntimeError: true,
   },
 
   // DNS failure on main document (no resolution, timed out, etc)
   DNS_FAILURE: {
     code: 'DNS_FAILURE',
-    message: strings.dnsFailure,
+    message: UIStrings.dnsFailure,
     lhrRuntimeError: true,
   },
 
@@ -203,4 +244,4 @@ LighthouseError.errors = ERRORS;
 LighthouseError.NO_ERROR = 'NO_ERROR';
 LighthouseError.UNKNOWN_ERROR = 'UNKNOWN_ERROR';
 module.exports = LighthouseError;
-
+module.exports.UIStrings = UIStrings;

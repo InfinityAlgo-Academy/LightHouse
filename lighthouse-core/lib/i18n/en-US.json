@@ -923,6 +923,58 @@
     "message": "{timeInMs, number, seconds} s",
     "description": "Used to show the duration in seconds that something lasted. The {timeInMs} placeholder will be replaced with the time duration, shown in seconds (e.g. 5.2 s)"
   },
+  "lighthouse-core/lib/lh-error.js | badTraceRecording": {
+    "message": "Something went wrong with recording the trace over your page load. Please run Lighthouse again.",
+    "description": "Error message explaining that the network trace was not able to be recorded for the Lighthouse run."
+  },
+  "lighthouse-core/lib/lh-error.js | didntCollectScreenshots": {
+    "message": "Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse.",
+    "description": "Error message explaining that the Lighthouse run was not able to collect screenshots through Chrome."
+  },
+  "lighthouse-core/lib/lh-error.js | dnsFailure": {
+    "message": "DNS servers could not resolve the provided domain.",
+    "description": "Error message explaining that the requested page could not be resolved by the DNS server."
+  },
+  "lighthouse-core/lib/lh-error.js | internalChromeError": {
+    "message": "An internal Chrome error occurred. Please restart Chrome and try re-running Lighthouse.",
+    "description": "Error message explaining that Chrome has encountered an error during the Lighthouse run, and that Chrome should be restarted."
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
+    "message": "Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests.",
+    "description": "Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability."
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedHung": {
+    "message": "Lighthouse was unable to reliably load the URL you requested because the page stopped responding.",
+    "description": "Error message explaining that Lighthouse couldn't complete because the page has stopped responding to its instructions."
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedInsecure": {
+    "message": "The URL you have provided does not have valid security credentials. ({securityMessages})",
+    "description": "Error message explaining that the credentials included in the Lighthouse run were invalid, so the URL cannot be accessed."
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
+    "message": "Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Details: {errorDetails})",
+    "description": "Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability."
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedWithStatusCode": {
+    "message": "Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status code: {statusCode})",
+    "description": "Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability."
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadTookTooLong": {
+    "message": "Your page took too long to load. Please follow the opportunities in the report to reduce your page load time, and then try re-running Lighthouse.",
+    "description": "Error message explaining that the page loaded too slowly to perform a Lighthouse run."
+  },
+  "lighthouse-core/lib/lh-error.js | protocolTimeout": {
+    "message": "Waiting for DevTools protocol response has exceeded the allotted time. (Method: {protocolMethod})",
+    "description": "Error message explaining that the Chrome Devtools protocol has exceeded the maximum timeout allowed."
+  },
+  "lighthouse-core/lib/lh-error.js | requestContentTimeout": {
+    "message": "Fetching resource content has exceeded the allotted time",
+    "description": "Error message explaining that fetching the resources of the webpage has taken longer than the maximum time."
+  },
+  "lighthouse-core/lib/lh-error.js | urlInvalid": {
+    "message": "The URL you have provided appears to be invalid.",
+    "description": "Error message explaining that the provided URL Lighthouse points to is not valid, and cannot be loaded."
+  },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Show audits",
     "description": "The tooltip text on an expandable chevron icon. Clicking the icon expands a section to reveal a list of audit results that was hidden by default."

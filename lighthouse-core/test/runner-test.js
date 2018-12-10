@@ -609,6 +609,27 @@ describe('Runner', () => {
     assert.ok(lhr.runtimeError.message.includes(NO_FCP.message));
   });
 
+  it('localized errors thrown from driver', async () => {
+    const erroringDriver = {...driverMock,
+      async connect() {
+        const err = new LHError(
+          LHError.errors.PROTOCOL_TIMEOUT,
+          {protocolMethod: 'Method.Failure'}
+        );
+        throw err;
+      },
+    };
+
+    try {
+      await Runner.run(null, {url: 'https://example.com/', driverMock: erroringDriver, config: new Config()});
+      assert.fail('should have thrown');
+    } catch (err) {
+      assert.equal(err.code, LHError.errors.PROTOCOL_TIMEOUT.code);
+      assert.ok(/^Waiting for DevTools protocol.*Method: Method.Failure/.test(err.friendlyMessage),
+        'did not localize error message');
+    }
+  });
+
   it('can handle array of outputs', async () => {
     const url = 'https://example.com';
     const config = new Config({
