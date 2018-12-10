@@ -211,7 +211,7 @@ class ReportRenderer {
       const customGauges = [];
       for (const category of report.reportCategories) {
         const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
-        const categoryGauge = renderer.renderScoreGauge(category);
+        const categoryGauge = renderer.renderScoreGauge(category, report.categoryGroups || {});
 
         // Group gauges that aren't default at the end of the header
         if (renderer.renderScoreGauge === categoryRenderer.renderScoreGauge) {
