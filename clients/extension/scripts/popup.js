@@ -234,12 +234,14 @@ async function initPopup() {
     find('header h2').textContent = siteURL.origin;
   });
 
+  const backgroundPagePromise = new Promise(resolve => chrome.runtime.getBackgroundPage(resolve));
+
   /**
    * Really the Window of the background page, but since we only want what's exposed
    * on window in extension-entry.js, use its module API as the type.
    * @type {BackgroundPage}
    */
-  const background = await new Promise(resolve => chrome.runtime.getBackgroundPage(resolve));
+  const background = await backgroundPagePromise;
 
   // To prevent visual hiccups when opening the popup, we default the subpage
   // to the "running" view and switch to the default view once we're sure
