@@ -700,12 +700,12 @@
     "description": "The name of the metric that summarizes how quickly the page looked visually complete. The name of this metric is largely abstract and can be loosely translated. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit."
   },
   "lighthouse-core/audits/polyfills.js | description": {
-    "message": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider removing polyfils for features that are well supported by them.",
+    "message": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability.",
     "description": "TODO: write this"
   },
   "lighthouse-core/audits/polyfills.js | title": {
     "message": "Polyfills",
-    "description": "Imperative title of a Lighthouse audit that tells the user about all JavaScript polyfills loaded on the page. This is displayed in a list of audit titles that Lighthouse generates."
+    "description": "Title of a Lighthouse audit that tells the user about all JavaScript polyfills loaded on the page. This is displayed in a list of audit titles that Lighthouse generates."
   },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).",
