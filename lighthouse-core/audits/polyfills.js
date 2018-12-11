@@ -13,11 +13,11 @@ const NetworkRecords = require('../computed/network-records.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
-  /** Imperative title of a Lighthouse audit that tells the user about all JavaScript polyfills loaded on the page. This is displayed in a list of audit titles that Lighthouse generates. */
+  /** Title of a Lighthouse audit that tells the user about all JavaScript polyfills loaded on the page. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Polyfills',
   /** TODO: write this */
   // eslint-disable-next-line max-len
-  description: 'Polyfills enable older browsers to use new JavaScript language features. However, they aren\'t always necessary. Research what browsers you must support and consider removing polyfils for features that are well supported by them.',
+  description: 'Polyfills enable older browsers to use new JavaScript language features. However, they aren\'t always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -37,10 +37,10 @@ class Polyfills extends Audit {
   }
 
   /**
-     * @param {Poly[]} polys
-     * @param {string} code
-     * @return {PolyIssue[]}
-     */
+   * @param {Poly[]} polys
+   * @param {string} code
+   * @return {PolyIssue[]}
+   */
   static detectPolys(polys, code) {
     const qt = (/** @type {string} */ token) =>
       `['"]${token}['"]`; // don't worry about matching string delims
@@ -53,13 +53,6 @@ class Polyfills extends Audit {
 
       // Object.defineProperty(String.prototype, 'startsWith'
       subpattern += `|defineProperty\\(${object || qt('window')},\\s*${qt(property)}`;
-
-      // check for lodash. Assume that there is a lodash module for most polys.
-      // TODO this would only work if the bundle has not been stripped of module names (and replaced with an index into the bundled modules),
-      // which is unlikely in a production environment. Instead, look at source map?
-      // TODO how to detect if all of lodash is bundled (a waste)?
-      // TODO maybe just punt entirely for now?
-      // subpattern += `|lodash/${property}`;
 
       return `(${subpattern})`;
     }).join('|');
@@ -105,21 +98,15 @@ class Polyfills extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
-   * @param {LH.Audit.Context} context
-   * @return {Promise<LH.Audit.Product>}
+   * @return {Poly[]}
    */
-  static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Polyfills.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-
+  static getPolyDefinitions() {
     // TODO
     // how do we determine which polys are not necessary?
     // ex: only reason to polyfill Array.prototype.filter is if IE <9,
     //     only reason to polyfill String.prototype.startsWith is if IE, ...
     // Is there a standard way to declare "we support these browsers"? A meta tag?
-    /** @type {Poly[]} */
-    const polys = [
+    return [
       'Object.assign',
       'Object.create',
       'Object.entries',
@@ -165,17 +152,27 @@ class Polyfills extends Audit {
         property: parts[parts.length - 1],
       };
     });
+  }
 
+  /**
+   * @param {LH.GathererArtifacts['Scripts']} scripts
+   * @param {LH.Artifacts.NetworkRequest[]} networkRecords
+   * @return {{
+   *  polyCounter: Map<Poly, number>,
+   *  polyIssueCounter: Map<PolyIssue, number>,
+   *  urlToPolyIssues: Map<string, PolyIssue[]>,
+   * }}
+   */
+  static calculatePolyIssues(scripts, networkRecords) {
+    const polys = this.getPolyDefinitions();
     /** @type {Map<Poly, number>} */
     const polyCounter = new Map();
-
     /** @type {Map<PolyIssue, number>} */
     const polyIssueCounter = new Map();
-
     /** @type {Map<string, PolyIssue[]>} */
     const urlToPolyIssues = new Map();
 
-    for (const [requestId, content] of Object.entries(artifacts.Scripts)) {
+    for (const [requestId, content] of Object.entries(scripts)) {
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
       if (!networkRecord) continue;
       const extPolys = this.detectPolys(polys, content);
@@ -187,6 +184,20 @@ class Polyfills extends Audit {
       }
     }
 
+    return {polyCounter, polyIssueCounter, urlToPolyIssues};
+  }
+
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
+   */
+  static async audit(artifacts, context) {
+    const devtoolsLog = artifacts.devtoolsLogs[Polyfills.DEFAULT_PASS];
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const {polyCounter, polyIssueCounter, urlToPolyIssues} =
+      this.calculatePolyIssues(artifacts.Scripts, networkRecords);
+
     /** @type {Array<{url: string, description: string, location: string}>} */
     const tableRows = [];
     urlToPolyIssues.forEach((polyIssues, url) => {
@@ -194,8 +205,8 @@ class Polyfills extends Audit {
         const {poly, row, col} = polyIssue;
         const polyStatement = `${poly.object ? poly.object + '.' : ''}${poly.property}`;
         const numOfThisPoly = polyCounter.get(poly) || 0;
+        const isMoreThanOne = numOfThisPoly > 1;
         const polyIssueOccurrence = polyIssueCounter.get(polyIssue) || 0;
-        const isMoreThanOne = (polyCounter.get(poly) || 0) > 1;
         const countText = isMoreThanOne ? ` (${polyIssueOccurrence + 1} / ${numOfThisPoly})` : '';
         tableRows.push({
           url,
