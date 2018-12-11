@@ -120,11 +120,11 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const element = this.dom.createElement('div', 'lh-category');
     if (environment === 'PSI') {
       const gaugeEl = this.dom.createElement('div', 'lh-score__gauge');
-      gaugeEl.appendChild(this.renderScoreGauge(category));
+      gaugeEl.appendChild(this.renderScoreGauge(category, groups));
       element.appendChild(gaugeEl);
     } else {
       this.createPermalinkSpan(element, category.id);
-      element.appendChild(this.renderCategoryHeader(category));
+      element.appendChild(this.renderCategoryHeader(category, groups));
     }
 
     // Metrics

@@ -159,13 +159,14 @@ class CategoryRenderer {
 
   /**
    * @param {LH.ReportResult.Category} category
+   * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
    * @return {Element}
    */
-  renderCategoryHeader(category) {
+  renderCategoryHeader(category, groupDefinitions) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-category-header', this.templateContext);
 
     const gaugeContainerEl = this.dom.find('.lh-score__gauge', tmpl);
-    const gaugeEl = this.renderScoreGauge(category);
+    const gaugeEl = this.renderScoreGauge(category, groupDefinitions);
     gaugeContainerEl.appendChild(gaugeEl);
 
     this.dom.find('.lh-category-header__title', tmpl).appendChild(
@@ -329,9 +330,10 @@ class CategoryRenderer {
 
   /**
    * @param {LH.ReportResult.Category} category
+   * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
    * @return {DocumentFragment}
    */
-  renderScoreGauge(category) {
+  renderScoreGauge(category, groupDefinitions) { // eslint-disable-line no-unused-vars
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge', this.templateContext);
     const wrapper = /** @type {HTMLAnchorElement} */ (this.dom.find('.lh-gauge__wrapper', tmpl));
     wrapper.href = `#${category.id}`;
@@ -387,7 +389,7 @@ class CategoryRenderer {
   render(category, groupDefinitions = {}) {
     const element = this.dom.createElement('div', 'lh-category');
     this.createPermalinkSpan(element, category.id);
-    element.appendChild(this.renderCategoryHeader(category));
+    element.appendChild(this.renderCategoryHeader(category, groupDefinitions));
 
     // Top level clumps for audits, in order they will appear in the report.
     /** @type {Map<TopLevelClumpId, Array<LH.ReportResult.AuditRef>>} */

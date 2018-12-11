@@ -652,6 +652,7 @@
   border-bottom: none;
 }
 .lh-audit-group--metrics .lh-audit-group__summary {
+  margin-top: 0;
   margin-bottom: 0;
 }
 
@@ -659,7 +660,8 @@
   display: flex;
   justify-content: space-between;
   padding-right: var(--text-indent);
-  margin-bottom: var(--lh-audit-vpadding);
+  margin-top: calc(var(--section-padding) * 1.5);
+  margin-bottom: var(--section-padding);
 }
 
 .lh-audit-group__itemcount {
