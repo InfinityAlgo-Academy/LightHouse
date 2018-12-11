@@ -209,7 +209,7 @@ class BaseNode {
       }
     });
 
-    if (!idToNodeMap.has(this.id)) throw new Error(`Cloned graph missing node ${this.id}`);
+    if (!idToNodeMap.has(this.id)) throw new Error('Cloned graph missing node');
     return idToNodeMap.get(this.id);
   }
 
