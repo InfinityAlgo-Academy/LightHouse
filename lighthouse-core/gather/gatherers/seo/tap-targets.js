@@ -29,6 +29,7 @@ const TARGET_SELECTORS = [
   '[role=slider]',
   '[role=spinbutton]',
 ];
+const tapTargetsSelector = TARGET_SELECTORS.join(',');
 
 /**
  *
@@ -156,6 +157,21 @@ function getClientRects(node, includeChildren = true) {
 }
 
 /**
+ * @param {Element} node
+ * @returns {boolean}
+ */
+/* istanbul ignore next */
+function nodeHasParentTapTarget(node) {
+  if (!node.parentElement) {
+    return false;
+  }
+  if (node.parentElement.matches(tapTargetsSelector)) {
+    return true;
+  }
+  return nodeHasParentTapTarget(node.parentElement);
+}
+
+/**
  * Check if node is in a block of text, such as paragraph with a bunch of links in it.
  * Makes a reasonable guess, but for example gets it wrong if the element is surounded by other
  * HTML elements instead of direct text nodes.
@@ -257,13 +273,16 @@ function truncate(str, maxLength) {
  */
 /* istanbul ignore next */
 function gatherTapTargets() {
-  const tapTargetsSelector = TARGET_SELECTORS.join(',');
-
   /** @type {LH.Artifacts.TapTarget[]} */
   const targets = [];
 
   // @ts-ignore - getElementsInDocument put into scope via stringification
   Array.from(getElementsInDocument(tapTargetsSelector)).forEach(tapTargetNode => {
+    if (nodeHasParentTapTarget(tapTargetNode)) {
+      // This is usually intentional, either the tap targets trigger the same action
+      // or there's a child with a related action (like a delete button for an item)
+      return;
+    }
     if (nodeIsInTextBlock(tapTargetNode)) {
       // Links inside text blocks cause a lot of failures, and there's also an exception for them
       // in the Web Content Accessibility Guidelines https://www.w3.org/TR/WCAG21/#target-size
@@ -304,11 +323,12 @@ class TapTargets extends Gatherer {
    */
   afterPass(passContext) {
     const expression = `(function() {
-      const TARGET_SELECTORS = ${JSON.stringify(TARGET_SELECTORS)};
+      const tapTargetsSelector = "${tapTargetsSelector}";
       ${pageFunctions.getElementsInDocumentString};
       ${filterClientRectsWithinAncestorsVisibleScrollArea.toString()};
       ${nodeIsPositionFixedOrAbsolute.toString()};
       ${nodeIsVisible.toString()};
+      ${nodeHasParentTapTarget.toString()};
       ${getVisibleClientRects.toString()};
       ${truncate.toString()};
       ${getClientRects.toString()};

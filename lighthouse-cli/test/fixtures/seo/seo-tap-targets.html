@@ -68,6 +68,16 @@
 
     <br/><br/>
 
+    <div role="button">
+      Tap target with children that are also tap targets should not fail.
+      (Children should not be counted as independent tap targets that appear
+      in the list.)
+      Two children to make sure the two children also don't conflict with each other:
+      <a>Child 1</a><a>Child2</a>
+    </div>
+
+    <br/><br/>
+
     <!-- Only target that's being overlapped should fail, the overlapping one shouldn't -->
     <div>
       <a style="display: block; width: 100px; height: 30px;background: #ddd;">
