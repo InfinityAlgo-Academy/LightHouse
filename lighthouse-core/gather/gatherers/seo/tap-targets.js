@@ -58,7 +58,7 @@ function nodeIsVisible(node) {
   }
 
   const parent = node.parentElement;
-  if (parent && parent.tagName !== 'HTML' && !nodeIsVisible(parent)) {
+  if (parent && parent.tagName !== 'BODY' && !nodeIsVisible(parent)) {
     // if a parent is invisible then the current node is also invisible
     return false;
   }
@@ -122,9 +122,9 @@ function filterClientRectsWithinAncestorsVisibleScrollArea(node, clientRects) {
     const parentBCR = parent.getBoundingClientRect();
     clientRects = clientRects.filter(cr => rectContains(parentBCR, cr));
   }
-  if (parent.parentElement && parent.parentElement.tagName !== 'HTML') {
+  if (parent.parentElement && parent.parentElement.tagName !== 'BODY') {
     return filterClientRectsWithinAncestorsVisibleScrollArea(
-      parent.parentElement,
+      parent,
       clientRects
     );
   }
