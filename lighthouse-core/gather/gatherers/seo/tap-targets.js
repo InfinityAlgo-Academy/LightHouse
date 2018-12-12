@@ -309,7 +309,7 @@ function gatherTapTargets() {
       path: getNodePath(tapTargetNode),
       // @ts-ignore - getNodeSelector put into scope via stringification
       selector: getNodeSelector(tapTargetNode),
-      href: tapTargetNode.getAttribute('href') || '',
+      href: tapTargetNode.href || '',
     });
   });
 
