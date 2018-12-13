@@ -17,7 +17,7 @@ describe('Performance: Font Display audit', () => {
   let context;
 
   beforeEach(() => {
-    stylesheet = {content: ''};
+    stylesheet = {content: '', header: {}};
     context = {computedCache: new Map()};
   });
 
@@ -73,6 +73,62 @@ describe('Performance: Font Display audit', () => {
     ];
     assert.strictEqual(result.rawValue, false);
     assert.deepEqual(result.details.items, items);
+  });
+
+  it('resolves URLs relative to stylesheet URL when available', async () => {
+    stylesheet.header.sourceURL = 'https://cdn.example.com/foo/bar/file.css';
+    stylesheet.content = `
+      @font-face {
+        font-display: 'block';
+        /* try with " and same directory */
+        src: url("./font-a.woff");
+      }
+
+      @font-face {
+        font-display: 'block';
+        /* try with " and site origin */
+        src: url("https://example.com/foo/bar/document-font.woff");
+      }
+
+      @font-face {
+        font-display: 'fallback';
+        /* try up a directory with ' */
+        src: url('../font-b.woff');
+      }
+
+      @font-face {
+        font-display: 'optional';
+        /* try no path with no quotes ' */
+        src: url(font.woff);
+      }
+    `;
+
+    networkRecords = [
+      {
+        url: 'https://example.com/foo/bar/document-font.woff',
+        endTime: 3, startTime: 1,
+        resourceType: 'Font',
+      },
+      {
+        url: 'https://cdn.example.com/foo/bar/font-a.woff',
+        endTime: 3, startTime: 1,
+        resourceType: 'Font',
+      },
+      {
+        url: 'https://cdn.example.com/foo/font-b.woff',
+        endTime: 5, startTime: 1,
+        resourceType: 'Font',
+      },
+      {
+        url: 'https://cdn.example.com/foo/bar/font.woff',
+        endTime: 2, startTime: 1,
+        resourceType: 'Font',
+      },
+    ];
+
+    const result = await FontDisplayAudit.audit(getArtifacts(), context);
+    assert.strictEqual(result.rawValue, true);
+    assert.deepEqual(result.details.items, []);
   });
 
   it('passes when all fonts have a correct font-display rule', async () => {

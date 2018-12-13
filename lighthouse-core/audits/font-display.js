@@ -84,7 +84,8 @@ class FontDisplay extends Audit {
         // Convert the relative CSS URL to an absolute URL and add it to the passing set
         for (const relativeURL of relativeURLs) {
           try {
-            const absoluteURL = new URL(relativeURL, artifacts.URL.finalUrl);
+            const relativeRoot = stylesheet.header.sourceURL || artifacts.URL.finalUrl;
+            const absoluteURL = new URL(relativeURL, relativeRoot);
             passingURLs.add(absoluteURL.href);
           } catch (err) {
             Sentry.captureException(err, {tags: {audit: this.meta.id}});
