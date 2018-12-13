@@ -2409,7 +2409,8 @@
             "id": "uses-rel-preconnect", 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
-            "title": "Preconnect to required origins"
+            "title": "Preconnect to required origins", 
+            "warnings": []
         }, 
         "uses-rel-preload": {
             "description": "Consider using <link rel=preload> to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).", 

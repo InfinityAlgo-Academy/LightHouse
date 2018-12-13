@@ -30,6 +30,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       },
     ];
     const artifacts = {
+      LinkElements: [],
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
     };
@@ -54,6 +55,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       },
     ];
     const artifacts = {
+      LinkElements: [],
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
     };
@@ -75,6 +77,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       },
     ];
     const artifacts = {
+      LinkElements: [],
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
     };
@@ -102,6 +105,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       },
     ];
     const artifacts = {
+      LinkElements: [],
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
     };
@@ -124,6 +128,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       },
     ];
     const artifacts = {
+      LinkElements: [],
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
     };
@@ -133,6 +138,34 @@ describe('Performance: uses-rel-preconnect audit', () => {
     assert.equal(score, 1);
     assert.equal(rawValue, 0);
     assert.equal(details.items.length, 0);
+  });
+
+  it(`warns when origin has preconnect directive but not used`, async () => {
+    const networkRecords = [
+      mainResource,
+      {
+        url: 'https://cdn.example.com/request',
+        initiator: {},
+        startTime: 2,
+        timing: {
+          dnsStart: 100,
+          connectStart: 150,
+          connectEnd: 300,
+          receiveHeadersEnd: 2.3,
+        },
+      },
+    ];
+    const artifacts = {
+      LinkElements: [{rel: 'preconnect', href: 'https://cdn.example.com/'}],
+      devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
+      URL: {finalUrl: mainResource.url},
+    };
+
+    const context = {settings: {}, computedCache: new Map()};
+    const {score, warnings} = await UsesRelPreconnect.audit(artifacts, context);
+    expect(score).toBe(1);
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0]).toBeDisplayString(/cdn.example.com.*not used/);
   });
 
   it(`should only list an origin once`, async () => {
@@ -162,6 +195,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       },
     ];
     const artifacts = {
+      LinkElements: [],
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
     };
@@ -202,6 +236,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       },
     ];
     const artifacts = {
+      LinkElements: [],
       devtoolsLogs: {[UsesRelPreconnect.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {finalUrl: mainResource.url},
     };

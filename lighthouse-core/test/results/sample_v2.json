@@ -766,6 +766,7 @@
       "scoreDisplayMode": "numeric",
       "rawValue": 0,
       "displayValue": "",
+      "warnings": [],
       "details": {
         "type": "opportunity",
         "headings": [],
