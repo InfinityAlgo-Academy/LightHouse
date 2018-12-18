@@ -928,11 +928,11 @@
     "description": "Used to show the duration in seconds that something lasted. The {timeInMs} placeholder will be replaced with the time duration, shown in seconds (e.g. 5.2 s)"
   },
   "lighthouse-core/lib/lh-error.js | badTraceRecording": {
-    "message": "Something went wrong with recording the trace over your page load. Please run Lighthouse again.",
+    "message": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. ({errorCode})",
     "description": "Error message explaining that the network trace was not able to be recorded for the Lighthouse run."
   },
   "lighthouse-core/lib/lh-error.js | didntCollectScreenshots": {
-    "message": "Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse.",
+    "message": "Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. ({errorCode})",
     "description": "Error message explaining that the Lighthouse run was not able to collect screenshots through Chrome."
   },
   "lighthouse-core/lib/lh-error.js | dnsFailure": {
@@ -964,7 +964,7 @@
     "description": "Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadTookTooLong": {
-    "message": "Your page took too long to load. Please follow the opportunities in the report to reduce your page load time, and then try re-running Lighthouse.",
+    "message": "Your page took too long to load. Please follow the opportunities in the report to reduce your page load time, and then try re-running Lighthouse. ({errorCode})",
     "description": "Error message explaining that the page loaded too slowly to perform a Lighthouse run."
   },
   "lighthouse-core/lib/lh-error.js | protocolTimeout": {

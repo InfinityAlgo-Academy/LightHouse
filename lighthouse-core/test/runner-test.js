@@ -606,7 +606,8 @@ describe('Runner', () => {
     assert.ok(lhr.audits['test-audit'].errorMessage.includes(NO_FCP.code));
     // And it bubbled up to the runtimeError.
     assert.strictEqual(lhr.runtimeError.code, NO_FCP.code);
-    assert.ok(lhr.runtimeError.message.includes(NO_FCP.message));
+    expect(lhr.runtimeError.message)
+      .toBeDisplayString(/Something .*\(NO_FCP\)/);
   });
 
   it('localized errors thrown from driver', async () => {

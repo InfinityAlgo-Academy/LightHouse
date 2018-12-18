@@ -2669,7 +2669,7 @@
       "score": null,
       "scoreDisplayMode": "error",
       "rawValue": null,
-      "errorMessage": "Audit error: Required RobotsTxt gatherer did not run."
+      "errorMessage": "Required RobotsTxt gatherer did not run."
     },
     "robots-txt": {
       "id": "robots-txt",
@@ -2678,7 +2678,7 @@
       "score": null,
       "scoreDisplayMode": "error",
       "rawValue": null,
-      "errorMessage": "Audit error: Required RobotsTxt gatherer did not run."
+      "errorMessage": "Required RobotsTxt gatherer did not run."
     },
     "hreflang": {
       "id": "hreflang",

@@ -321,9 +321,7 @@ class Runner {
 
       Sentry.captureException(err, {tags: {audit: audit.meta.id}, level: 'error'});
       // Errors become error audit result.
-      const errorMessage = err.friendlyMessage ?
-        `${err.friendlyMessage} (${err.message})` :
-        `Audit error: ${err.message}`;
+      const errorMessage = err.friendlyMessage ? err.friendlyMessage : err.message;
       auditResult = Audit.generateErrorAuditResult(audit, errorMessage);
     }
 

@@ -10,11 +10,11 @@ const i18n = require('./i18n/i18n.js');
 /* eslint-disable max-len */
 const UIStrings = {
   /** Error message explaining that the Lighthouse run was not able to collect screenshots through Chrome.*/
-  didntCollectScreenshots: `Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse.`,
+  didntCollectScreenshots: `Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. ({errorCode})`,
   /** Error message explaining that the network trace was not able to be recorded for the Lighthouse run. */
-  badTraceRecording: 'Something went wrong with recording the trace over your page load. Please run Lighthouse again.',
+  badTraceRecording: 'Something went wrong with recording the trace over your page load. Please run Lighthouse again. ({errorCode})',
   /** Error message explaining that the page loaded too slowly to perform a Lighthouse run.  */
-  pageLoadTookTooLong: 'Your page took too long to load. Please follow the opportunities in the report to reduce your page load time, and then try re-running Lighthouse.',
+  pageLoadTookTooLong: 'Your page took too long to load. Please follow the opportunities in the report to reduce your page load time, and then try re-running Lighthouse. ({errorCode})',
   /** Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability. */
   pageLoadFailed: 'Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests.',
   /** Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability. */
@@ -57,21 +57,12 @@ class LighthouseError extends Error {
     super(errorDefinition.code);
     this.name = 'LHError';
     this.code = errorDefinition.code;
-    this.friendlyMessage = str_(errorDefinition.message, properties);
+    // Insert the i18n reference with errorCode and all additional ICU replacement properties.
+    this.friendlyMessage = str_(errorDefinition.message, {errorCode: this.code, ...properties});
     this.lhrRuntimeError = !!errorDefinition.lhrRuntimeError;
     if (properties) Object.assign(this, properties);
 
     Error.captureStackTrace(this, LighthouseError);
-  }
-
-  /**
-   * @param {LighthouseError} err
-   * @return {LighthouseError}
-   */
-  static fromLighthouseError(err) {
-    const {code, friendlyMessage: message, ...rest} = err;
-    // Note: {...rest} convinces tsc 3.1 that it's assignable to a Record.
-    return new LighthouseError({code, message}, {...rest});
   }
 
   /**
