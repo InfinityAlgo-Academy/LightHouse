@@ -2610,10 +2610,7 @@
       "score": 1,
       "scoreDisplayMode": "binary",
       "rawValue": true,
-      "displayValue": [
-        "%.1d% legible text",
-        100
-      ],
+      "displayValue": "100% legible text",
       "details": {
         "type": "table",
         "headings": [
@@ -4399,6 +4396,12 @@
       "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": [
         "audits[first-meaningful-paint].description"
       ],
+      "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": [
+        "audits[load-fast-enough-for-pwa].title"
+      ],
+      "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": [
+        "audits[load-fast-enough-for-pwa].description"
+      ],
       "lighthouse-core/audits/metrics/speed-index.js | title": [
         "audits[speed-index].title"
       ],
@@ -4908,6 +4911,20 @@
       ],
       "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": [
         "audits[dom-size].details.items[2].statistic"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | title": [
+        "audits[font-size].title"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | description": [
+        "audits[font-size].description"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | displayValue": [
+        {
+          "values": {
+            "decimalProportion": 1
+          },
+          "path": "audits[font-size].displayValue"
+        }
       ],
       "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
         "categories.performance.title"

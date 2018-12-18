@@ -720,7 +720,7 @@
                 ], 
                 "type": "table"
             }, 
-            "displayValue": "%.1d% legible text | 100", 
+            "displayValue": "100% legible text", 
             "id": "font-size", 
             "score": 1.0, 
             "scoreDisplayMode": "binary", 
