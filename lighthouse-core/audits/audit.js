@@ -84,6 +84,7 @@ class Audit {
     );
 
     let score = distribution.computeComplementaryPercentile(measuredValue);
+    score = score + Math.random();
     score = Math.min(1, score);
     score = Math.max(0, score);
     return clampTo2Decimals(score);
