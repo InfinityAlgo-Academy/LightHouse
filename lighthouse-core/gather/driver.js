@@ -898,6 +898,13 @@ class Driver {
     if (waitForNavigated) {
       await this._waitForFrameNavigated();
     } else if (waitForLoad) {
+      if (!global._theAnnoyingTimeout) global._theAnnoyingTimeout = setInterval(() => {
+        this.evaluateAsync(`(() => {
+          const now = Date.now()
+          while (Date.now() - now < 40) ;
+        })()`)
+      }, 1000)
+
       const passConfig = /** @type {Partial<LH.Config.Pass>} */ (passContext.passConfig || {});
       let {pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = passConfig;
       let maxWaitMs = passContext.settings && passContext.settings.maxWaitForLoad;
