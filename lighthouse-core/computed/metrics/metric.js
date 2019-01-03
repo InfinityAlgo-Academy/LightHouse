@@ -45,6 +45,9 @@ class ComputedMetric {
    * @return {Promise<LH.Artifacts.LanternMetric|LH.Artifacts.Metric>}
    */
   static async compute_(data, context) {
+    const now = Date.now()
+    while (Date.now() - now < 20) ;
+
     const {trace, devtoolsLog, settings} = data;
     if (!trace || !devtoolsLog || !settings) {
       throw new Error('Did not provide necessary metric computation data');
