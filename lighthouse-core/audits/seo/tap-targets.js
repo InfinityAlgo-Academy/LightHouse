@@ -166,6 +166,40 @@ function getFailureForClientRectPair(targetCR, maybeOverlappingCR) {
   };
 }
 
+/**
+ * Only report one failure if two targets overlap each other
+ * @param {LH.Audit.TapTargetOverlapDetail[]} overlapFailures
+ * @returns {LH.Audit.TapTargetOverlapDetail[]}
+ */
+function mergeSymmetricFailures(overlapFailures) {
+  /** @type LH.Audit.TapTargetOverlapDetail[] */
+  const failuresAfterMerging = [];
+  overlapFailures.forEach((failure, overlapFailureIndex) => {
+    const symmetricFailure = overlapFailures.find(f =>
+      f.tapTarget === failure.overlappingTarget &&
+      f.overlappingTarget === failure.tapTarget
+    );
+
+    if (!symmetricFailure) {
+      failuresAfterMerging.push(failure);
+      return;
+    }
+
+    const {overlapScoreRatio: failureOSR} = failure;
+    const {overlapScoreRatio: symmetricOSR} = symmetricFailure;
+    if (failureOSR > symmetricOSR || (
+      // If same score for failure and symmetric failure, pick the first one in the list
+      failureOSR === symmetricOSR &&
+      overlapFailureIndex < overlapFailures.indexOf(symmetricFailure)
+    )) {
+      failuresAfterMerging.push(failure);
+    } else {
+      // The symmetric failure will be pushed later
+    }
+  });
+
+  return failuresAfterMerging;
+}
 
 /**
  * @param {LH.Audit.TapTargetOverlapDetail[]} overlapFailures
@@ -246,7 +280,8 @@ class TapTargets extends Audit {
 
     const tooSmallTargets = getTooSmallTargets(artifacts.TapTargets);
     const overlapFailures = getAllFailures(tooSmallTargets, artifacts.TapTargets);
-    const tableItems = getTableItems(overlapFailures);
+    const uniqueOverlapFailures = mergeSymmetricFailures(overlapFailures);
+    const tableItems = getTableItems(uniqueOverlapFailures);
 
     const headings = [
       {key: 'tapTarget', itemType: 'node', text: 'Tap Target'},

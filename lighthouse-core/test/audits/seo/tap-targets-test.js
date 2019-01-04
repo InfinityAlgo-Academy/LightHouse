@@ -66,6 +66,11 @@ function getBorderlineTapTargets(options = {}) {
     ],
   };
 
+  if (options.reduceRightWidth) {
+    tapTargetToTheRight.clientRects[0].width -= 1;
+    tapTargetToTheRight.clientRects[0].right -= 1;
+  }
+
   const targets = [mainTapTarget, tapTargetBelow, tapTargetToTheRight];
 
   const overlapAmount = minimalFailingOverlapCausingDistance;
@@ -157,16 +162,20 @@ describe('SEO: Tap targets audit', () => {
     assert.equal(auditResult.rawValue, false);
   });
 
-  it('reports 4 items if the main target is overlapped both vertically and horizontally', () => {
+  it('reports 2 items if the main target is overlapped both vertically and horizontally', () => {
     // Main is overlapped by right + below, right and below are each overlapped by main
     const auditResult = auditTapTargets(
       getBorderlineTapTargets({
         failRight: true,
+        reduceRightWidth: true,
         failBelow: true,
       })
     );
     assert.equal(Math.round(auditResult.score * 100), 0); // all tap targets are overlapped by something
     const failures = auditResult.details.items;
-    assert.equal(failures.length, 4);
+    assert.equal(failures.length, 2);
+    // Right and Main overlap each other, but Right has a worse score because it's smaller
+    // so it's the failure that appears in the report
+    assert.equal(failures[0].tapTarget.snippet, '<right></right>');
   });
 });
