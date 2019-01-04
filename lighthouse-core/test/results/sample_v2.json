@@ -2684,7 +2684,7 @@
       "score": null,
       "scoreDisplayMode": "error",
       "rawValue": null,
-      "errorMessage": "Audit error: Required TapTargets gatherer did not run."
+      "errorMessage": "Required TapTargets gatherer did not run."
     },
     "hreflang": {
       "id": "hreflang",
