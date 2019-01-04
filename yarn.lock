@@ -2599,10 +2599,10 @@ des.js@^1.0.0:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
 
-details-element-polyfill@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/details-element-polyfill/-/details-element-polyfill-2.1.1.tgz#4faa3f0823e834cfa628319bb815a30a4d11f926"
-  integrity sha512-OY53M2EFudCds5y2mmQSQztOZaMJA4EzBDusMa/J52qHxa8NJrMZEGnj0MfHtLagZPwru9yQYR/KNUXhGX37uQ==
+details-element-polyfill@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/details-element-polyfill/-/details-element-polyfill-2.2.0.tgz#1c0bb65372c20f622e90974b9694ae204d4c8d8c"
+  integrity sha512-Sjg+A4q3Mrn2JKQu58zsreuHqAb4M0qe4eK5ZQAIBuch9i8nx6MlKWCxx0z8s59MMen9I4WXavzW5z+BnkIC0A==
 
 detect-file@^0.1.0:
   version "0.1.0"
