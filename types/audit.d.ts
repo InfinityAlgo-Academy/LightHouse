@@ -85,7 +85,7 @@ declare global {
       overlappingTarget: Artifacts.TapTarget;
     }
 
-    export type TooSmallTapTargetItem = {
+    export type TapTargetTableItem = {
       tapTarget: DetailsRendererNodeDetailsJSON;
       overlappingTarget: DetailsRendererNodeDetailsJSON;
       size: string;

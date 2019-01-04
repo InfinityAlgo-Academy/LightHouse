@@ -203,6 +203,7 @@ function mergeSymmetricFailures(overlapFailures) {
 
 /**
  * @param {LH.Audit.TapTargetOverlapDetail[]} overlapFailures
+ * @returns {LH.Audit.TapTargetTableItem[]}
  */
 function getTableItems(overlapFailures) {
   const tableItems = overlapFailures.map(
