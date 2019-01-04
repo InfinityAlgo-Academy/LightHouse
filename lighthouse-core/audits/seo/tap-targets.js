@@ -32,6 +32,7 @@ function clientRectMeetsMinimumSize(cr) {
 }
 
 /**
+ * A target is "too small" if none of it's clientRects are at least the size of a finger.
  * @param {LH.Artifacts.TapTarget} target
  */
 function targetIsTooSmall(target) {
@@ -56,12 +57,12 @@ function getTooSmallTargets(targets) {
  * @param {LH.Artifacts.TapTarget[]} tooSmallTargets
  * @param {LH.Artifacts.TapTarget[]} allTargets
  */
-function getOverlapFailures(tooSmallTargets, allTargets) {
+function getAllFailures(tooSmallTargets, allTargets) {
   /** @type {LH.Audit.TapTargetOverlapDetail[]} */
   let failures = [];
 
   tooSmallTargets.forEach(target => {
-    const overlappingTargets = getTooCloseTargets(
+    const overlappingTargets = getAllFailuresForTarget(
       target,
       allTargets
     );
@@ -79,7 +80,7 @@ function getOverlapFailures(tooSmallTargets, allTargets) {
  * @param {LH.Artifacts.TapTarget} tapTarget
  * @param {LH.Artifacts.TapTarget[]} allTapTargets
  */
-function getTooCloseTargets(tapTarget, allTapTargets) {
+function getAllFailuresForTarget(tapTarget, allTapTargets) {
   /** @type LH.Audit.TapTargetOverlapDetail[] */
   const failures = [];
 
@@ -89,7 +90,7 @@ function getTooCloseTargets(tapTarget, allTapTargets) {
       continue;
     }
 
-    const failure = getTargetTooCloseFailure(tapTarget, maybeOverlappingTarget);
+    const failure = getFailureForTargetPair(tapTarget, maybeOverlappingTarget);
     if (failure) {
       failures.push(failure);
     }
@@ -103,7 +104,7 @@ function getTooCloseTargets(tapTarget, allTapTargets) {
  * @param {LH.Artifacts.TapTarget} maybeOverlappingTarget
  * @returns {LH.Audit.TapTargetOverlapDetail | null}
  */
-function getTargetTooCloseFailure(tapTarget, maybeOverlappingTarget) {
+function getFailureForTargetPair(tapTarget, maybeOverlappingTarget) {
   // convert client rects to unique tappable areas from a user's perspective
   const tappableRects = getTappableRectsFromClientRects(tapTarget.clientRects);
   const isHttpOrHttpsLink = /https?:\/\//.test(tapTarget.href);
@@ -122,7 +123,7 @@ function getTargetTooCloseFailure(tapTarget, maybeOverlappingTarget) {
   let greatestFailure = null;
   for (const targetCR of tappableRects) {
     for (const maybeOverlappingCR of maybeOverlappingTarget.clientRects) {
-      const failure = getOverlapFailure(targetCR, maybeOverlappingCR);
+      const failure = getFailureForClientRectPair(targetCR, maybeOverlappingCR);
       if (failure) {
         // only update our state if this was the biggest failure we've seen for this pair
         if (!greatestFailure ||
@@ -142,8 +143,9 @@ function getTargetTooCloseFailure(tapTarget, maybeOverlappingTarget) {
 /**
  * @param {LH.Artifacts.Rect} targetCR
  * @param {LH.Artifacts.Rect} maybeOverlappingCR
+ * @returns {LH.Audit.ClientRectOverlapDetail | null}
  */
-function getOverlapFailure(targetCR, maybeOverlappingCR) {
+function getFailureForClientRectPair(targetCR, maybeOverlappingCR) {
   const fingerRect = getRectAtCenter(targetCR, FINGER_SIZE_PX);
   // Score indicates how much of the finger area overlaps each target when the user
   // taps on the center of targetCR
@@ -243,7 +245,7 @@ class TapTargets extends Audit {
     }
 
     const tooSmallTargets = getTooSmallTargets(artifacts.TapTargets);
-    const overlapFailures = getOverlapFailures(tooSmallTargets, artifacts.TapTargets);
+    const overlapFailures = getAllFailures(tooSmallTargets, artifacts.TapTargets);
     const tableItems = getTableItems(overlapFailures);
 
     const headings = [
