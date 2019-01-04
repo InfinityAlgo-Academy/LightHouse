@@ -69,6 +69,8 @@ declare global {
       DOMStats: Artifacts.DOMStats;
       /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
       EmbeddedContent: Artifacts.EmbeddedContentInfo[];
+      /** All the link elements on the page. */
+      LinkElements: Artifacts.LinkElement[];
       /** Information for font faces used in the page. */
       Fonts: Artifacts.Font[];
       /** Information on poorly sized font usage and the text affected by it. */
@@ -169,6 +171,14 @@ declare global {
         data: string | null;
         code: string | null;
         params: {name: string; value: string}[];
+      }
+
+      /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#Attributes */
+      export interface LinkElement {
+        rel: string
+        href: string
+        as: string
+        crossOrigin: 'anonymous'|'use-credentials'|null
       }
 
       export interface Font {

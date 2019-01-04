@@ -76,4 +76,47 @@ describe('i18n', () => {
       expect(i18n.lookupLocale('jk-Latn-DE-1996-a-ext-x-phonebk-i-klingon')).toEqual('en');
     });
   });
+
+  describe('Message values are properly formatted', () => {
+    // Message strings won't be in locale files, so will fall back to values given here.
+    const UIStrings = {
+      helloWorld: 'Hello World',
+      helloBytesWorld: 'Hello {in, number, bytes} World',
+      helloMsWorld: 'Hello {in, number, milliseconds} World',
+      helloSecWorld: 'Hello {in, number, seconds} World',
+      helloTimeInMsWorld: 'Hello {timeInMs, number, seconds} World',
+      helloPercentWorld: 'Hello {in, number, extendedPercent} World',
+    };
+    const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+    it('formats a basic message', () => {
+      const helloStr = str_(UIStrings.helloWorld);
+      expect(helloStr).toBeDisplayString('Hello World');
+    });
+
+    it('formats a message with bytes', () => {
+      const helloBytesStr = str_(UIStrings.helloBytesWorld, {in: 1875});
+      expect(helloBytesStr).toBeDisplayString('Hello 2 World');
+    });
+
+    it('formats a message with milliseconds', () => {
+      const helloMsStr = str_(UIStrings.helloMsWorld, {in: 432});
+      expect(helloMsStr).toBeDisplayString('Hello 430 World');
+    });
+
+    it('formats a message with seconds', () => {
+      const helloSecStr = str_(UIStrings.helloSecWorld, {in: 753});
+      expect(helloSecStr).toBeDisplayString('Hello 753.0 World');
+    });
+
+    it('formats a message with seconds timeInMs', () => {
+      const helloTimeInMsStr = str_(UIStrings.helloTimeInMsWorld, {timeInMs: 753543});
+      expect(helloTimeInMsStr).toBeDisplayString('Hello 753.5 World');
+    });
+
+    it('formats a message with extended percent', () => {
+      const helloPercentStr = str_(UIStrings.helloPercentWorld, {in: 0.43078});
+      expect(helloPercentStr).toBeDisplayString('Hello 43.08% World');
+    });
+  });
 });

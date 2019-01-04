@@ -720,7 +720,7 @@
                 ], 
                 "type": "table"
             }, 
-            "displayValue": "%.1d% legible text | 100", 
+            "displayValue": "100% legible text", 
             "id": "font-size", 
             "score": 1.0, 
             "scoreDisplayMode": "binary", 
@@ -969,7 +969,7 @@
         }, 
         "is-crawlable": {
             "description": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/indexing).", 
-            "errorMessage": "Audit error: Required RobotsTxt gatherer did not run.", 
+            "errorMessage": "Required RobotsTxt gatherer did not run.", 
             "id": "is-crawlable", 
             "score": null, 
             "scoreDisplayMode": "error", 
@@ -1821,7 +1821,7 @@
         }, 
         "robots-txt": {
             "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed.", 
-            "errorMessage": "Audit error: Required RobotsTxt gatherer did not run.", 
+            "errorMessage": "Required RobotsTxt gatherer did not run.", 
             "id": "robots-txt", 
             "score": null, 
             "scoreDisplayMode": "error", 
@@ -2417,7 +2417,8 @@
             "id": "uses-rel-preconnect", 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
-            "title": "Preconnect to required origins"
+            "title": "Preconnect to required origins", 
+            "warnings": []
         }, 
         "uses-rel-preload": {
             "description": "Consider using <link rel=preload> to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).", 

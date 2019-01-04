@@ -45,7 +45,7 @@ class CriticalRequestChains extends Audit {
 
   /**
    * @param {LH.Audit.SimpleCriticalRequestNode} tree
-   * @param {function(CrcNodeInfo)} cb
+   * @param {function(CrcNodeInfo): void} cb
    */
   static _traverse(tree, cb) {
     /**

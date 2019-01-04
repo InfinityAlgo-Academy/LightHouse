@@ -119,6 +119,7 @@ describe('PwaCategoryRenderer', () => {
 
       const targetGroupId = groupIds[2];
       assert.ok(targetGroupId);
+      const targetGroupTitle = sampleResults.categoryGroups[targetGroupId].title;
       const targetAuditRefs = auditRefs.filter(ref => ref.group === targetGroupId);
 
       // Try every permutation of audit scoring.
@@ -134,13 +135,25 @@ describe('PwaCategoryRenderer', () => {
         const badgedScoreGauge =
           categoryElem.querySelector('.lh-gauge--pwa__wrapper[class*="lh-badged--"]');
 
+        const tooltip = categoryElem.querySelector('.lh-gauge--pwa__wrapper').title;
+        const targetGroupTip = tooltip.split(', ').find(tip => tip.startsWith(targetGroupTitle));
+        assert.ok(targetGroupTip);
+
         // Only expect a badge (and badged gauge) on last permutation (all bits are set).
         if (i !== totalPermutations - 1) {
           assert.strictEqual(badgedElems.length, 0);
           assert.strictEqual(badgedScoreGauge, null);
+
+          // Tooltip ends with passing/total.
+          const passingCount = categoryElem.querySelectorAll(
+              `.lh-audit-group--${targetGroupId} .lh-audit--pass`).length;
+          assert.ok(targetGroupTip.endsWith(`${passingCount}/${targetAuditRefs.length}`));
         } else {
           assert.strictEqual(badgedElems.length, 1);
           assert.ok(badgedScoreGauge.classList.contains(`lh-badged--${targetGroupId}`));
+
+          // Tooltip ends with total/total.
+          assert.ok(targetGroupTip.endsWith(`${targetAuditRefs.length}/${targetAuditRefs.length}`));
         }
       }
     });
@@ -152,7 +165,17 @@ describe('PwaCategoryRenderer', () => {
 
       const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
       assert.strictEqual(categoryElem.querySelectorAll('.lh-badged').length, groupIds.length);
-      assert.ok(categoryElem.querySelector('.lh-gauge--pwa__wrapper.lh-badged--all'));
+
+      // Score gauge.
+      const gaugeElem = categoryElem.querySelector('.lh-gauge--pwa__wrapper');
+      assert.ok(gaugeElem.classList.contains('lh-badged--all'));
+
+      // All tooltips should have x/x audits passed.
+      const tips = gaugeElem.title.split(', ');
+      assert.strictEqual(tips.length, groupIds.length);
+      for (const tip of tips) {
+        assert.ok(/(\d+)\/\1$/.test(tip));
+      }
     });
 
     it('renders no badges when no audit groups are passing', () => {
@@ -162,8 +185,17 @@ describe('PwaCategoryRenderer', () => {
 
       const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
       assert.strictEqual(categoryElem.querySelectorAll('.lh-badged').length, 0);
-      assert.strictEqual(categoryElem.querySelector('.lh-gauge--pwa__wrapper[class*="lh-badged-"]'),
-        null);
+
+      // Score gauge.
+      const gaugeElem = categoryElem.querySelector('.lh-gauge--pwa__wrapper');
+      assert.ok(!gaugeElem.matches('.lh-gauge--pwa__wrapper[class*="lh-badged-"]'));
+
+      // All tooltips should have 0/x audits passed.
+      const tips = gaugeElem.title.split(', ');
+      assert.strictEqual(tips.length, groupIds.length);
+      for (const tip of tips) {
+        assert.ok(/0\/\d+$/.test(tip));
+      }
     });
 
     it('renders all but one badge when all groups but one are passing', () => {
@@ -176,13 +208,33 @@ describe('PwaCategoryRenderer', () => {
       const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
       const gaugeElem = categoryElem.querySelector('.lh-gauge--pwa__wrapper');
 
+      const tips = gaugeElem.title.split(', ');
+      assert.strictEqual(tips.length, groupIds.length);
+
       for (const groupId of groupIds) {
         const expectedCount = groupId === failingGroupId ? 0 : 1;
 
+        // Individual group badges.
         const groupElems = categoryElem.querySelectorAll(`.lh-audit-group--${groupId}.lh-badged`);
         assert.strictEqual(groupElems.length, expectedCount);
 
-        gaugeElem.classList.contains(`lh-badged--${groupId}`);
+        // Score gauge.
+        if (groupId !== failingGroupId) {
+          assert.ok(gaugeElem.classList.contains(`lh-badged--${groupId}`));
+        }
+
+        // Map back from groupId to groupTitle (used in tooltip).
+        const groupTitle = sampleResults.categoryGroups[groupId].title;
+        const groupTip = tips.find(tip => tip.startsWith(groupTitle));
+        assert.ok(groupTip);
+
+        // All tooltips should be x/x except for failingGroup, which should be (x-1)/x.
+        if (groupId !== failingGroupId) {
+          assert.ok(/(\d+)\/\1$/.test(groupTip));
+        } else {
+          const [, passingCount, totalCount] = /(\d+)\/(\d+)$/.exec(groupTip);
+          assert.strictEqual(Number(passingCount) + 1, Number(totalCount));
+        }
       }
     });
   });

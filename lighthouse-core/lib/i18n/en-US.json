@@ -635,6 +635,26 @@
     "message": "All text remains visible during webfont loads",
     "description": "Title of a diagnostic audit that provides detail on if all the text on a webpage was visible while the page was loading its webfonts. This descriptive title is shown to users when the amount is acceptable and no user action is required."
   },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
+    "message": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g).",
+    "description": "Description of a Lighthouse audit that tells the user *why* they need to load fast enough on mobile networks. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
+    "message": "Interactive at {timeInMs, number, seconds} s",
+    "description": "[ICU Syntax] Label for the audit identifying the time it took for the page to become interactive."
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
+    "message": "Interactive on simulated mobile network at {timeInMs, number, seconds} s",
+    "description": "[ICU Syntax] Label for the audit identifying the time it took for the page to become interactive on a mobile network."
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
+    "message": "Page load is not fast enough on mobile networks",
+    "description": "Imperative title of a Lighthouse audit that tells the user that their page has loaded fast enough to be considered a Progressive Web App. This imperative title is shown to users when the web page has loaded too slowly to be considered a Progressive Web App."
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
+    "message": "Page load is fast enough on mobile networks",
+    "description": "Imperative title of a Lighthouse audit that tells the user that their page has loaded fast enough to be considered a Progressive Web App. This is displayed in a list of audit titles that Lighthouse generates."
+  },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "Category",
     "description": "Label for the Main Thread Category column in data tables, rows will have a main thread Category and main thread Task Name."
@@ -707,6 +727,22 @@
     "message": "Avoid multiple page redirects",
     "description": "Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates."
   },
+  "lighthouse-core/audits/seo/font-size.js | description": {
+    "message": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).",
+    "description": "Description of a Lighthouse audit that tells the user *why* they need to use a larger font size. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
+  },
+  "lighthouse-core/audits/seo/font-size.js | displayValue": {
+    "message": "{decimalProportion, number, extendedPercent} legible text",
+    "description": "[ICU Syntax] Label for the audit identifying font sizes that are too small."
+  },
+  "lighthouse-core/audits/seo/font-size.js | failureTitle": {
+    "message": "Document doesn't use legible font sizes",
+    "description": "Imperative title of a Lighthouse audit that tells the user that they should use font sizes that are easily read by the user. This imperative title is shown to users when there is a font that is too small to be read by the user."
+  },
+  "lighthouse-core/audits/seo/font-size.js | title": {
+    "message": "Document uses legible font sizes",
+    "description": "Imperative title of a Lighthouse audit that tells the user that they should use font sizes that are easily read by the user. This is displayed in a list of audit titles that Lighthouse generates."
+  },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).",
     "description": "Description of a Lighthouse audit that tells the user *why* they should reduce the amount of time it takes their server to start responding to requests. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
@@ -751,6 +787,10 @@
     "message": "User Timing marks and measures",
     "description": "Descriptive title of a diagnostic audit that provides details on any timestamps generated by the page. User Timing refers to the 'User Timing API', which enables a website to record specific times as 'marks', or spans of time as 'measures'."
   },
+  "lighthouse-core/audits/uses-rel-preconnect.js | crossoriginWarning": {
+    "message": "A preconnect <link> was found for \"{securityOrigin}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly.",
+    "description": "A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected. Forgetting to set the `crossorigin` HTML attribute, or setting it to an incorrect value, on the link is a common mistake when adding preconnect links."
+  },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
     "message": "Consider adding preconnect or dns-prefetch resource hints to establish early connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).",
     "description": "Description of a Lighthouse audit that tells the user how to connect early to third-party domains that will be used to load page resources. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
@@ -758,6 +798,10 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "Preconnect to required origins",
     "description": "Imperative title of a Lighthouse audit that tells the user to connect early to internet domains that will be used to load page resources. Origin is the correct term, however 'domain name' could be used if neccsesary. This is displayed in a list of audit titles that Lighthouse generates."
+  },
+  "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
+    "message": "A preload <link> was found for \"{preloadURL}\" but was not used by the browser. Check that you are using the `crossorigin` attribute properly.",
+    "description": "A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected. Forgetting to set the `crossorigin` HTML attribute, or setting it to an incorrect value, on the link is a common mistake when adding preload links."
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Consider using <link rel=preload> to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
@@ -922,6 +966,58 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s",
     "description": "Used to show the duration in seconds that something lasted. The {timeInMs} placeholder will be replaced with the time duration, shown in seconds (e.g. 5.2 s)"
+  },
+  "lighthouse-core/lib/lh-error.js | badTraceRecording": {
+    "message": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. ({errorCode})",
+    "description": "Error message explaining that the network trace was not able to be recorded for the Lighthouse run."
+  },
+  "lighthouse-core/lib/lh-error.js | didntCollectScreenshots": {
+    "message": "Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. ({errorCode})",
+    "description": "Error message explaining that the Lighthouse run was not able to collect screenshots through Chrome."
+  },
+  "lighthouse-core/lib/lh-error.js | dnsFailure": {
+    "message": "DNS servers could not resolve the provided domain.",
+    "description": "Error message explaining that the requested page could not be resolved by the DNS server."
+  },
+  "lighthouse-core/lib/lh-error.js | internalChromeError": {
+    "message": "An internal Chrome error occurred. Please restart Chrome and try re-running Lighthouse.",
+    "description": "Error message explaining that Chrome has encountered an error during the Lighthouse run, and that Chrome should be restarted."
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
+    "message": "Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests.",
+    "description": "Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability."
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedHung": {
+    "message": "Lighthouse was unable to reliably load the URL you requested because the page stopped responding.",
+    "description": "Error message explaining that Lighthouse couldn't complete because the page has stopped responding to its instructions."
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedInsecure": {
+    "message": "The URL you have provided does not have valid security credentials. ({securityMessages})",
+    "description": "Error message explaining that the credentials included in the Lighthouse run were invalid, so the URL cannot be accessed."
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
+    "message": "Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Details: {errorDetails})",
+    "description": "Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability."
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedWithStatusCode": {
+    "message": "Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status code: {statusCode})",
+    "description": "Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability."
+  },
+  "lighthouse-core/lib/lh-error.js | pageLoadTookTooLong": {
+    "message": "Your page took too long to load. Please follow the opportunities in the report to reduce your page load time, and then try re-running Lighthouse. ({errorCode})",
+    "description": "Error message explaining that the page loaded too slowly to perform a Lighthouse run."
+  },
+  "lighthouse-core/lib/lh-error.js | protocolTimeout": {
+    "message": "Waiting for DevTools protocol response has exceeded the allotted time. (Method: {protocolMethod})",
+    "description": "Error message explaining that the Chrome Devtools protocol has exceeded the maximum timeout allowed."
+  },
+  "lighthouse-core/lib/lh-error.js | requestContentTimeout": {
+    "message": "Fetching resource content has exceeded the allotted time",
+    "description": "Error message explaining that fetching the resources of the webpage has taken longer than the maximum time."
+  },
+  "lighthouse-core/lib/lh-error.js | urlInvalid": {
+    "message": "The URL you have provided appears to be invalid.",
+    "description": "Error message explaining that the provided URL Lighthouse points to is not valid, and cannot be loaded."
   },
   "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
     "message": "Show audits",

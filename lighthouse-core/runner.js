@@ -30,8 +30,8 @@ class Runner {
    * @return {Promise<LH.RunnerResult|undefined>}
    */
   static async run(connection, runOpts) {
+    const settings = runOpts.config.settings;
     try {
-      const settings = runOpts.config.settings;
       const runnerStatus = {msg: 'Runner setup', id: 'lh:runner:run'};
       log.time(runnerStatus, 'verbose');
 
@@ -157,6 +157,8 @@ class Runner {
 
       return {lhr, artifacts, report};
     } catch (err) {
+      // i18n error strings
+      err.friendlyMessage = i18n.getFormatted(err.friendlyMessage, settings.locale);
       await Sentry.captureException(err, {level: 'fatal'});
       throw err;
     }
@@ -193,7 +195,6 @@ class Runner {
     if (!runnerOpts.config.passes) {
       throw new Error('No browser artifacts are either provided or requested.');
     }
-
     const driver = runnerOpts.driverMock || new Driver(connection);
     const gatherOpts = {
       driver,
@@ -320,9 +321,7 @@ class Runner {
 
       Sentry.captureException(err, {tags: {audit: audit.meta.id}, level: 'error'});
       // Errors become error audit result.
-      const errorMessage = err.friendlyMessage ?
-        `${err.friendlyMessage} (${err.message})` :
-        `Audit error: ${err.message}`;
+      const errorMessage = err.friendlyMessage ? err.friendlyMessage : err.message;
       auditResult = Audit.generateErrorAuditResult(audit, errorMessage);
     }
 

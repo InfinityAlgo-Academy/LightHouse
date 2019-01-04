@@ -8,9 +8,23 @@
 /** @typedef {LH.Artifacts.FontSize['analyzedFailingNodesData'][0]} FailingNodeData */
 
 const URL = require('../../lib/url-shim');
+const i18n = require('../../lib/i18n/i18n.js');
 const Audit = require('../audit');
 const ViewportAudit = require('../viewport');
 const MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT = 60;
+
+const UIStrings = {
+  /** Imperative title of a Lighthouse audit that tells the user that they should use font sizes that are easily read by the user. This is displayed in a list of audit titles that Lighthouse generates. */
+  title: 'Document uses legible font sizes',
+  /** Imperative title of a Lighthouse audit that tells the user that they should use font sizes that are easily read by the user. This imperative title is shown to users when there is a font that is too small to be read by the user. */
+  failureTitle: 'Document doesn\'t use legible font sizes',
+  /** Description of a Lighthouse audit that tells the user *why* they need to use a larger font size. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  description: 'Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).',
+  /** [ICU Syntax] Label for the audit identifying font sizes that are too small. */
+  displayValue: '{decimalProportion, number, extendedPercent} legible text',
+};
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
  * @param {Array<FailingNodeData>} fontSizeArtifact
@@ -182,11 +196,9 @@ class FontSize extends Audit {
   static get meta() {
     return {
       id: 'font-size',
-      title: 'Document uses legible font sizes',
-      failureTitle: 'Document doesn\'t use legible font sizes',
-      description: 'Font sizes less than 12px are too small to be legible and require mobile ' +
-      'visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. ' +
-      '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['FontSize', 'URL', 'Viewport'],
     };
   }
@@ -265,8 +277,9 @@ class FontSize extends Audit {
       });
     }
 
+    const decimalProportion = (percentageOfPassingText / 100);
     /** @type {LH.Audit.DisplayValue} */
-    const displayValue = ['%.1d% legible text', percentageOfPassingText];
+    const displayValue = str_(UIStrings.displayValue, {decimalProportion});
     const details = Audit.makeTableDetails(headings, tableData);
     const passed = percentageOfPassingText >= MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT;
 
@@ -294,3 +307,4 @@ class FontSize extends Audit {
 }
 
 module.exports = FontSize;
+module.exports.UIStrings = UIStrings;

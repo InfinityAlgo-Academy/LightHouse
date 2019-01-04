@@ -606,7 +606,29 @@ describe('Runner', () => {
     assert.ok(lhr.audits['test-audit'].errorMessage.includes(NO_FCP.code));
     // And it bubbled up to the runtimeError.
     assert.strictEqual(lhr.runtimeError.code, NO_FCP.code);
-    assert.ok(lhr.runtimeError.message.includes(NO_FCP.message));
+    expect(lhr.runtimeError.message)
+      .toBeDisplayString(/Something .*\(NO_FCP\)/);
+  });
+
+  it('localized errors thrown from driver', async () => {
+    const erroringDriver = {...driverMock,
+      async connect() {
+        const err = new LHError(
+          LHError.errors.PROTOCOL_TIMEOUT,
+          {protocolMethod: 'Method.Failure'}
+        );
+        throw err;
+      },
+    };
+
+    try {
+      await Runner.run(null, {url: 'https://example.com/', driverMock: erroringDriver, config: new Config()});
+      assert.fail('should have thrown');
+    } catch (err) {
+      assert.equal(err.code, LHError.errors.PROTOCOL_TIMEOUT.code);
+      assert.ok(/^Waiting for DevTools protocol.*Method: Method.Failure/.test(err.friendlyMessage),
+        'did not localize error message');
+    }
   });
 
   it('can handle array of outputs', async () => {

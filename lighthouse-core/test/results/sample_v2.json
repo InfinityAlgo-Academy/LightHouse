@@ -766,6 +766,7 @@
       "scoreDisplayMode": "numeric",
       "rawValue": 0,
       "displayValue": "",
+      "warnings": [],
       "details": {
         "type": "opportunity",
         "headings": [],
@@ -2609,10 +2610,7 @@
       "score": 1,
       "scoreDisplayMode": "binary",
       "rawValue": true,
-      "displayValue": [
-        "%.1d% legible text",
-        100
-      ],
+      "displayValue": "100% legible text",
       "details": {
         "type": "table",
         "headings": [
@@ -2668,7 +2666,7 @@
       "score": null,
       "scoreDisplayMode": "error",
       "rawValue": null,
-      "errorMessage": "Audit error: Required RobotsTxt gatherer did not run."
+      "errorMessage": "Required RobotsTxt gatherer did not run."
     },
     "robots-txt": {
       "id": "robots-txt",
@@ -2677,7 +2675,7 @@
       "score": null,
       "scoreDisplayMode": "error",
       "rawValue": null,
-      "errorMessage": "Audit error: Required RobotsTxt gatherer did not run."
+      "errorMessage": "Required RobotsTxt gatherer did not run."
     },
     "tap-targets": {
       "id": "tap-targets",
@@ -2928,87 +2926,6 @@
       ],
       "id": "performance",
       "score": 0.69
-    },
-    "pwa": {
-      "title": "Progressive Web App",
-      "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
-      "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
-      "auditRefs": [
-        {
-          "id": "load-fast-enough-for-pwa",
-          "weight": 7,
-          "group": "pwa-fast-reliable"
-        },
-        {
-          "id": "works-offline",
-          "weight": 5,
-          "group": "pwa-fast-reliable"
-        },
-        {
-          "id": "offline-start-url",
-          "weight": 1,
-          "group": "pwa-fast-reliable"
-        },
-        {
-          "id": "is-on-https",
-          "weight": 2,
-          "group": "pwa-installable"
-        },
-        {
-          "id": "service-worker",
-          "weight": 1,
-          "group": "pwa-installable"
-        },
-        {
-          "id": "installable-manifest",
-          "weight": 2,
-          "group": "pwa-installable"
-        },
-        {
-          "id": "redirects-http",
-          "weight": 2,
-          "group": "pwa-optimized"
-        },
-        {
-          "id": "splash-screen",
-          "weight": 1,
-          "group": "pwa-optimized"
-        },
-        {
-          "id": "themed-omnibox",
-          "weight": 1,
-          "group": "pwa-optimized"
-        },
-        {
-          "id": "content-width",
-          "weight": 1,
-          "group": "pwa-optimized"
-        },
-        {
-          "id": "viewport",
-          "weight": 2,
-          "group": "pwa-optimized"
-        },
-        {
-          "id": "without-javascript",
-          "weight": 1,
-          "group": "pwa-optimized"
-        },
-        {
-          "id": "pwa-cross-browser",
-          "weight": 0
-        },
-        {
-          "id": "pwa-page-transitions",
-          "weight": 0
-        },
-        {
-          "id": "pwa-each-page-has-url",
-          "weight": 0
-        }
-      ],
-      "id": "pwa",
-      "score": 0.42
     },
     "accessibility": {
       "title": "Accessibility",
@@ -3381,6 +3298,87 @@
       ],
       "id": "seo",
       "score": null
+    },
+    "pwa": {
+      "title": "Progressive Web App",
+      "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
+      "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
+      "auditRefs": [
+        {
+          "id": "load-fast-enough-for-pwa",
+          "weight": 7,
+          "group": "pwa-fast-reliable"
+        },
+        {
+          "id": "works-offline",
+          "weight": 5,
+          "group": "pwa-fast-reliable"
+        },
+        {
+          "id": "offline-start-url",
+          "weight": 1,
+          "group": "pwa-fast-reliable"
+        },
+        {
+          "id": "is-on-https",
+          "weight": 2,
+          "group": "pwa-installable"
+        },
+        {
+          "id": "service-worker",
+          "weight": 1,
+          "group": "pwa-installable"
+        },
+        {
+          "id": "installable-manifest",
+          "weight": 2,
+          "group": "pwa-installable"
+        },
+        {
+          "id": "redirects-http",
+          "weight": 2,
+          "group": "pwa-optimized"
+        },
+        {
+          "id": "splash-screen",
+          "weight": 1,
+          "group": "pwa-optimized"
+        },
+        {
+          "id": "themed-omnibox",
+          "weight": 1,
+          "group": "pwa-optimized"
+        },
+        {
+          "id": "content-width",
+          "weight": 1,
+          "group": "pwa-optimized"
+        },
+        {
+          "id": "viewport",
+          "weight": 2,
+          "group": "pwa-optimized"
+        },
+        {
+          "id": "without-javascript",
+          "weight": 1,
+          "group": "pwa-optimized"
+        },
+        {
+          "id": "pwa-cross-browser",
+          "weight": 0
+        },
+        {
+          "id": "pwa-page-transitions",
+          "weight": 0
+        },
+        {
+          "id": "pwa-each-page-has-url",
+          "weight": 0
+        }
+      ],
+      "id": "pwa",
+      "score": 0.42
     }
   },
   "categoryGroups": {
@@ -4418,6 +4416,12 @@
       "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": [
         "audits[first-meaningful-paint].description"
       ],
+      "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": [
+        "audits[load-fast-enough-for-pwa].title"
+      ],
+      "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": [
+        "audits[load-fast-enough-for-pwa].description"
+      ],
       "lighthouse-core/audits/metrics/speed-index.js | title": [
         "audits[speed-index].title"
       ],
@@ -4927,6 +4931,20 @@
       ],
       "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": [
         "audits[dom-size].details.items[2].statistic"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | title": [
+        "audits[font-size].title"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | description": [
+        "audits[font-size].description"
+      ],
+      "lighthouse-core/audits/seo/font-size.js | displayValue": [
+        {
+          "values": {
+            "decimalProportion": 1
+          },
+          "path": "audits[font-size].displayValue"
+        }
       ],
       "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
         "categories.performance.title"

@@ -13,11 +13,11 @@ Note 2: receiving a **score of ?** in any Lighthouse category indicates an error
 ### What performance metrics does Lighthouse measure?
 Lighthouse measures the following performance metrics:
 
-- [First Contentful Paint](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint): first contentful paint is the first time the browser paints any content (text, image, canvas, etc) on the screen. 
+- [First Contentful Paint](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint): first contentful paint is the first time the browser paints any content (text, image, canvas, etc) on the screen.
 - [First Meaningful Paint](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint): first meaningful paint is defined as when the browser first puts any “meaningful” element/set of “meaningful” elements on the screen. What is meaningful is determined from a series of heuristics.
 - [First CPU Idle](https://developers.google.com/web/tools/lighthouse/audits/first-interactive): first CPU idle is defined as the first point at which the page could respond quickly to input. It doesn't consider any point in time before first meaningful paint. The way this is implemented is primarily based on heuristics.
 *Note: this metric is currently in beta, which means that the underlying definition of this metric is in progress.*
-- [Time to Interactive](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive): defined as the first point at which everything is loaded such that the page will quickly respond to any user input throughout the page.
+- [Time to Interactive](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive): defined as the first point at which everything is loaded such that the page will quickly respond to any user input throughout the page.
 *Note: this metric is currently in beta, which means that the underlying definition of this metric is in progress.*
 - [Speed Index](https://developers.google.com/web/tools/lighthouse/audits/speed-index): Speed Index measures how quickly all above-the-fold content is painted on screen. The earlier the pixels are painted, the better you score on metric. Users want an experience where most of the content is shown on the screen during the first few moments of initiating the page load. Loading more content earlier makes your end user feel like the website is loading quickly, which contributes to a positive user experience. Therefore, the lower your Speed Index, the better.
 - [Estimated Input Latency](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency): this audit measures how fast your app is in responding to user input. Our benchmark is that the estimated input latency should be under 50 ms (see documentation [here](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency) as to why).
@@ -33,8 +33,8 @@ The metric results are not weighted equally. Currently the weights are:
 
 * 3X - first contentful paint
 * 1X - first meaningful paint
-* 3X - first cpu idle
-* 5X - consistently interactive
+* 2X - first cpu idle
+* 5X - time to interactive
 * 4X - speed index
 * 0X - estimated input latency
 
