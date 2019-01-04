@@ -112,14 +112,15 @@ function getTargetTooCloseFailure(tapTarget, maybeOverlappingTarget) {
     return null;
   }
 
+  if (allRectsContainedWithinEachOther(tappableRects, maybeOverlappingTarget.clientRects)) {
+    // If one tap target is fully contained within the other that's
+    // probably intentional (e.g. an item with a delete button inside)
+    return null;
+  }
+
   /** @type LH.Audit.TapTargetOverlapDetail | null */
   let greatestFailure = null;
   for (const targetCR of tappableRects) {
-    if (allRectsContainedWithinEachOther(tappableRects, maybeOverlappingTarget.clientRects)) {
-      // If one tap target is fully contained within the other that's
-      // probably intentional (e.g. an item with a delete button inside)
-      continue;
-    }
     for (const maybeOverlappingCR of maybeOverlappingTarget.clientRects) {
       const failure = getOverlapFailure(targetCR, maybeOverlappingCR);
       if (failure) {
