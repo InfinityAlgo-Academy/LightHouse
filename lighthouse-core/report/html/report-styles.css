@@ -54,6 +54,7 @@
   --metric-timeline-rule-color: #b3b3b3;
   --display-value-gray: hsl(216, 5%, 39%);
   --report-width: calc(60 * var(--body-font-size));
+  --report-min-width: 400px;
   /* Edge doesn't support calc(var(calc())) */
   --report-width-half: calc(30 * var(--body-font-size));
   --report-header-height: 161px;
@@ -711,6 +712,7 @@
   position: sticky;
   top: 0;
   width: 100%;
+  min-width: var(--report-min-width);
   z-index: 2;
   will-change: transform;
 }
@@ -728,6 +730,7 @@
 
 .lh-report {
   background-color: #fff;
+  min-width: var(--report-min-width);
 }
 @media screen {
   .lh-report {
@@ -915,7 +918,6 @@
   .lh-report {
     margin-left: 0;
     width: 100%;
-    min-width: 400px;
   }
 }
 
