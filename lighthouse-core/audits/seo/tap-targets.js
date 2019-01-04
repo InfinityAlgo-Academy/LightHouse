@@ -174,6 +174,7 @@ function getFailureForClientRectPair(targetCR, maybeOverlappingCR) {
 function mergeSymmetricFailures(overlapFailures) {
   /** @type LH.Audit.TapTargetOverlapDetail[] */
   const failuresAfterMerging = [];
+
   overlapFailures.forEach((failure, overlapFailureIndex) => {
     const symmetricFailure = overlapFailures.find(f =>
       f.tapTarget === failure.overlappingTarget &&
@@ -194,7 +195,7 @@ function mergeSymmetricFailures(overlapFailures) {
     )) {
       failuresAfterMerging.push(failure);
     } else {
-      // The symmetric failure will be pushed later
+      // The symmetric failure will be pushed instead
     }
   });
 
