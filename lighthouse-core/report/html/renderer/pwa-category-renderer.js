@@ -31,7 +31,7 @@ class PwaCategoryRenderer extends CategoryRenderer {
 
     const auditRefs = category.auditRefs;
 
-    // Regular audits aren't split up into pass/fail/not-applicable clumps, they're
+    // Regular audits aren't split up into pass/fail/notApplicable clumps, they're
     // all put in a top-level clump that isn't expandable/collapsable.
     const regularAuditRefs = auditRefs.filter(ref => ref.result.scoreDisplayMode !== 'manual');
     const auditsElem = this._renderAudits(regularAuditRefs, groupDefinitions);

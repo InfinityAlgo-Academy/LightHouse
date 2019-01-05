@@ -34,7 +34,7 @@ class Audit {
       BINARY: 'binary',
       MANUAL: 'manual',
       INFORMATIVE: 'informative',
-      NOT_APPLICABLE: 'not-applicable',
+      NOT_APPLICABLE: 'notApplicable',
       ERROR: 'error',
     };
   }

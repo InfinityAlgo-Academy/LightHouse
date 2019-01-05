@@ -59,27 +59,42 @@ describe('CategoryRenderer', () => {
     assert.equal(title.textContent, auditRef.result.title);
     assert.ok(description.querySelector('a'), 'audit help text contains coverted markdown links');
     assert.ok(auditDOM.classList.contains('lh-audit--fail'));
-    assert.ok(auditDOM.classList.contains(`lh-audit--${auditRef.result.scoreDisplayMode}`));
+    assert.ok(
+      auditDOM.classList.contains(`lh-audit--${auditRef.result.scoreDisplayMode.toLowerCase()}`));
   });
 
   it('renders an audit explanation when appropriate', () => {
     const audit1 = renderer.renderAudit({
-      scoreDisplayMode: 'binary', score: 0,
-      result: {description: 'help text', explanation: 'A reason', title: 'Audit title'},
+      result: {
+        title: 'Audit title',
+        explanation: 'A reason',
+        description: 'help text',
+        scoreDisplayMode: 'binary',
+        score: 0,
+      },
     });
     assert.ok(audit1.querySelector('.lh-audit-explanation'));
 
     const audit2 = renderer.renderAudit({
-      scoreDisplayMode: 'binary', score: 0,
-      result: {description: 'help text', title: 'Audit title'},
+      result: {
+        title: 'Audit title',
+        description: 'help text',
+        scoreDisplayMode: 'binary',
+        score: 0,
+      },
     });
     assert.ok(!audit2.querySelector('.lh-audit-explanation'));
   });
 
   it('renders an informative audit', () => {
     const auditDOM = renderer.renderAudit({
-      id: 'informative', score: 0,
-      result: {title: 'It informs', description: 'help text', scoreDisplayMode: 'informative'},
+      id: 'informative',
+      result: {
+        title: 'It informs',
+        description: 'help text',
+        scoreDisplayMode: 'informative',
+        score: 0,
+      },
     });
 
     assert.ok(auditDOM.matches('.lh-audit--informative'));
@@ -89,10 +104,11 @@ describe('CategoryRenderer', () => {
     const auditResult = {
       title: 'Audit',
       description: 'Learn more',
+      scoreDisplayMode: 'informative',
       warnings: ['It may not have worked!'],
       score: 1,
     };
-    const auditDOM = renderer.renderAudit({id: 'foo', score: 1, result: auditResult});
+    const auditDOM = renderer.renderAudit({id: 'foo', result: auditResult});
     const warningEl = auditDOM.querySelector('.lh-warnings');
     assert.ok(warningEl, 'did not render warning message');
     assert.ok(warningEl.textContent.includes(auditResult.warnings[0]), 'warning message provided');
@@ -102,10 +118,11 @@ describe('CategoryRenderer', () => {
     const auditResult = {
       title: 'Audit',
       description: 'Learn more',
+      scoreDisplayMode: 'informative',
       warnings: ['It may not have worked!', 'You should read this, though'],
       score: 1,
     };
-    const auditDOM = renderer.renderAudit({id: 'foo', score: 1, result: auditResult});
+    const auditDOM = renderer.renderAudit({id: 'foo', result: auditResult});
     const warningEl = auditDOM.querySelector('.lh-warnings');
     assert.ok(warningEl, 'did not render warning message');
     assert.ok(warningEl.textContent.includes(auditResult.warnings[0]), '1st warning provided');
@@ -158,19 +175,19 @@ describe('CategoryRenderer', () => {
     const a11yCategory = sampleResults.reportCategories.find(cat => cat.id === 'accessibility');
     const categoryDOM = renderer.render(a11yCategory, sampleResults.categoryGroups);
     assert.ok(categoryDOM.querySelector(
-        '.lh-clump--not-applicable .lh-audit-group__summary'));
+        '.lh-clump--notapplicable .lh-audit-group__summary'));
 
     const notApplicableCount = a11yCategory.auditRefs.reduce((sum, audit) =>
-        sum += audit.result.scoreDisplayMode === 'not-applicable' ? 1 : 0, 0);
+        sum += audit.result.scoreDisplayMode === 'notApplicable' ? 1 : 0, 0);
     assert.equal(
-      categoryDOM.querySelectorAll('.lh-clump--not-applicable .lh-audit').length,
+      categoryDOM.querySelectorAll('.lh-clump--notapplicable .lh-audit').length,
       notApplicableCount,
       'score shows informative and dash icon'
     );
 
     const bestPracticeCat = sampleResults.reportCategories.find(cat => cat.id === 'best-practices');
     const categoryDOM2 = renderer.render(bestPracticeCat, sampleResults.categoryGroups);
-    assert.ok(!categoryDOM2.querySelector('.lh-clump--not-applicable'));
+    assert.ok(!categoryDOM2.querySelector('.lh-clump--notapplicable'));
   });
 
   describe('category with groups', () => {
@@ -202,7 +219,7 @@ describe('CategoryRenderer', () => {
     it.skip('renders the failed audits grouped by group', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const failedAudits = category.auditRefs.filter(audit => {
-        return audit.result.score !== 1 && !audit.result.scoreDisplayMode === 'not-applicable';
+        return audit.result.score !== 1 && !audit.result.scoreDisplayMode === 'notApplicable';
       });
       const failedAuditTags = new Set(failedAudits.map(audit => audit.group));
 
@@ -213,7 +230,7 @@ describe('CategoryRenderer', () => {
     it('renders the passed audits grouped by group', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const passedAudits = category.auditRefs.filter(audit =>
-          audit.result.scoreDisplayMode !== 'not-applicable' && audit.result.score === 1);
+          audit.result.scoreDisplayMode !== 'notApplicable' && audit.result.score === 1);
       const passedAuditTags = new Set(passedAudits.map(audit => audit.group));
 
       const passedAuditGroups = categoryDOM.querySelectorAll('.lh-clump--passed .lh-audit-group');
@@ -233,7 +250,7 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit__index');
       const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit__index');
       const notApplicableAudits =
-        elem.querySelectorAll('.lh-clump--not-applicable .lh-audit__index');
+        elem.querySelectorAll('.lh-clump--notapplicable .lh-audit__index');
 
       const assertAllTheIndices = (nodeList) => {
         // Must be at least one for a decent test.

@@ -22,7 +22,7 @@
 /** @typedef {import('./report-renderer.js')} ReportRenderer */
 /** @typedef {import('./details-renderer.js')} DetailsRenderer */
 /** @typedef {import('./util.js')} Util */
-/** @typedef {'failed'|'manual'|'passed'|'not-applicable'} TopLevelClumpId */
+/** @typedef {'failed'|'manual'|'passed'|'notApplicable'} TopLevelClumpId */
 
 class CategoryRenderer {
   /**
@@ -45,20 +45,20 @@ class CategoryRenderer {
    */
   get _clumpDisplayInfo() {
     return {
-      'failed': {
+      failed: {
         className: 'lh-clump--failed',
       },
-      'manual': {
+      manual: {
         title: Util.UIStrings.manualAuditsGroupTitle,
         className: 'lh-clump--manual',
       },
-      'passed': {
+      passed: {
         title: Util.UIStrings.passedAuditsGroupTitle,
         className: 'lh-clump--passed',
       },
-      'not-applicable': {
+      notApplicable: {
         title: Util.UIStrings.notApplicableAuditsGroupTitle,
-        className: 'lh-clump--not-applicable',
+        className: 'lh-clump--notapplicable',
       },
     };
   }
@@ -153,7 +153,7 @@ class CategoryRenderer {
    */
   _setRatingClass(element, score, scoreDisplayMode) {
     const rating = Util.calculateRating(score, scoreDisplayMode);
-    element.classList.add(`lh-audit--${rating}`, `lh-audit--${scoreDisplayMode}`);
+    element.classList.add(`lh-audit--${rating}`, `lh-audit--${scoreDisplayMode.toLowerCase()}`);
     return element;
   }
 
@@ -279,7 +279,7 @@ class CategoryRenderer {
 
   /**
    * Renders a clump (a grouping of groups), under a status of failed, manual,
-   * passed, or not-applicable. The result ends up something like:
+   * passed, or notApplicable. The result ends up something like:
    *
    * clump (e.g. 'failed')
    *   ├── audit 1 (w/o group)
@@ -370,7 +370,7 @@ class CategoryRenderer {
    */
   _getClumpIdForAuditRef(auditRef) {
     const scoreDisplayMode = auditRef.result.scoreDisplayMode;
-    if (scoreDisplayMode === 'manual' || scoreDisplayMode === 'not-applicable') {
+    if (scoreDisplayMode === 'manual' || scoreDisplayMode === 'notApplicable') {
       return scoreDisplayMode;
     }
 
@@ -397,7 +397,7 @@ class CategoryRenderer {
     clumps.set('failed', []);
     clumps.set('manual', []);
     clumps.set('passed', []);
-    clumps.set('not-applicable', []);
+    clumps.set('notApplicable', []);
 
     // Sort audits into clumps.
     for (const auditRef of category.auditRefs) {

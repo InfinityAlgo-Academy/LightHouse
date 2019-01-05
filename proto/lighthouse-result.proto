@@ -247,6 +247,7 @@ message AuditResult {
     // The audit turned out to not apply to the page. Score is NaN and should be
     // ignored.
     not_applicable = 4;
+    notApplicable = 7;
     // The audit exists only to tell you to review something yourself. Score is
     // NaN and should be ignored
     manual = 5;

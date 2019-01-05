@@ -58,10 +58,10 @@ module.exports = [
         score: 1,
       },
       'user-timings': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'critical-request-chains': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'installable-manifest': {
         score: 0,
@@ -75,22 +75,22 @@ module.exports = [
         score: 0,
       },
       'aria-valid-attr': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'aria-allowed-attr': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'color-contrast': {
         score: 1,
       },
       'image-alt': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'label': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'tabindex': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'content-width': {
         score: 1,
@@ -121,10 +121,10 @@ module.exports = [
         score: 1,
       },
       'user-timings': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'critical-request-chains': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'installable-manifest': {
         score: 1,
@@ -136,10 +136,10 @@ module.exports = [
         score: 0,
       },
       'aria-valid-attr': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'aria-allowed-attr': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'color-contrast': {
         score: 1,
@@ -148,10 +148,10 @@ module.exports = [
         score: 0,
       },
       'label': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'tabindex': {
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
       'content-width': {
         score: 1,

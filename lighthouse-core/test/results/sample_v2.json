@@ -290,7 +290,7 @@
       "title": "User Timing marks and measures",
       "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true,
       "details": {
         "type": "table",
@@ -1086,7 +1086,7 @@
       "title": "`[accesskey]` values are unique",
       "description": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/2.2/accesskeys?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "aria-allowed-attr": {
@@ -1094,7 +1094,7 @@
       "title": "`[aria-*]` attributes match their roles",
       "description": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-allowed-attr?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "aria-required-attr": {
@@ -1102,7 +1102,7 @@
       "title": "`[role]`s have all required `[aria-*]` attributes",
       "description": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-required-attr?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "aria-required-children": {
@@ -1110,7 +1110,7 @@
       "title": "Elements with `[role]` that require specific children `[role]`s, are present",
       "description": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-required-children?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "aria-required-parent": {
@@ -1118,7 +1118,7 @@
       "title": "`[role]`s are contained by their required parent element",
       "description": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-required-parent?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "aria-roles": {
@@ -1126,7 +1126,7 @@
       "title": "`[role]` values are valid",
       "description": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-roles?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "aria-valid-attr-value": {
@@ -1134,7 +1134,7 @@
       "title": "`[aria-*]` attributes have valid values",
       "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr-value?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "aria-valid-attr": {
@@ -1142,7 +1142,7 @@
       "title": "`[aria-*]` attributes are valid and not misspelled",
       "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid names. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "audio-caption": {
@@ -1150,7 +1150,7 @@
       "title": "`<audio>` elements contain a `<track>` element with `[kind=\"captions\"]`",
       "description": "Captions make audio elements usable for deaf or hearing-impaired users, providing critical information such as who is talking, what they're saying, and other non-speech information. [Learn more](https://dequeuniversity.com/rules/axe/2.2/audio-caption?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "button-name": {
@@ -1158,7 +1158,7 @@
       "title": "Buttons have an accessible name",
       "description": "When a button doesn't have an accessible name, screen readers announce it as \"button\", making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/2.2/button-name?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "bypass": {
@@ -1223,7 +1223,7 @@
       "title": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>` or `<template>` elements.",
       "description": "When definition lists are not properly marked up, screen readers may produce confusing or inaccurate output. [Learn more](https://dequeuniversity.com/rules/axe/2.2/definition-list?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "dlitem": {
@@ -1231,7 +1231,7 @@
       "title": "Definition list items are wrapped in `<dl>` elements",
       "description": "Definition list items (`<dt>` and `<dd>`) must be wrapped in a parent `<dl>` element to ensure that screen readers can properly announce them. [Learn more](https://dequeuniversity.com/rules/axe/2.2/dlitem?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "document-title": {
@@ -1265,7 +1265,7 @@
       "title": "`<frame>` or `<iframe>` elements have a title",
       "description": "Screen reader users rely on frame titles to describe the contents of frames. [Learn more](https://dequeuniversity.com/rules/axe/2.2/frame-title?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "html-has-lang": {
@@ -1308,7 +1308,7 @@
       "title": "`<html>` element has a valid value for its `[lang]` attribute",
       "description": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) helps screen readers announce text properly. [Learn more](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "image-alt": {
@@ -1371,7 +1371,7 @@
       "title": "`<input type=\"image\">` elements have `[alt]` text",
       "description": "When an image is being used as an `<input>` button, providing alternative text can help screen reader users understand the purpose of the button. [Learn more](https://dequeuniversity.com/rules/axe/2.2/input-image-alt?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "label": {
@@ -1435,7 +1435,7 @@
       "title": "Presentational `<table>` elements avoid using `<th>`, `<caption>` or the `[summary]` attribute.",
       "description": "A table being used for layout purposes should not include data elements, such as the th or caption elements or the summary attribute, because this can create a confusing experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/2.2/layout-table?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "link-name": {
@@ -1491,7 +1491,7 @@
       "title": "Lists contain only `<li>` elements and script supporting elements (`<script>` and `<template>`).",
       "description": "Screen readers have a specific way of announcing lists. Ensuring proper list structure aids screen reader output. [Learn more](https://dequeuniversity.com/rules/axe/2.2/list?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "listitem": {
@@ -1499,7 +1499,7 @@
       "title": "List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements",
       "description": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>` or `<ol>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/2.2/listitem?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "meta-refresh": {
@@ -1507,7 +1507,7 @@
       "title": "The document does not use `<meta http-equiv=\"refresh\">`",
       "description": "Users do not expect a page to refresh automatically, and doing so will move focus back to the top of the page. This may create a frustrating or confusing experience. [Learn more](https://dequeuniversity.com/rules/axe/2.2/meta-refresh?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "meta-viewport": {
@@ -1528,7 +1528,7 @@
       "title": "`<object>` elements have `[alt]` text",
       "description": "Screen readers cannot translate non-text content. Adding alt text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://dequeuniversity.com/rules/axe/2.2/object-alt?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "tabindex": {
@@ -1536,7 +1536,7 @@
       "title": "No element has a `[tabindex]` value greater than 0",
       "description": "A value greater than 0 implies an explicit navigation ordering. Although technically valid, this often creates frustrating experiences for users who rely on assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/2.2/tabindex?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "td-headers-attr": {
@@ -1544,7 +1544,7 @@
       "title": "Cells in a `<table>` element that use the `[headers]` attribute only refer to other cells of that same table.",
       "description": "Screen readers have features to make navigating tables easier. Ensuring `<td>` cells using the `[headers]` attribute only refer to other cells in the same table may improve the experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/2.2/td-headers-attr?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "th-has-data-cells": {
@@ -1552,7 +1552,7 @@
       "title": "`<th>` elements and elements with `[role=\"columnheader\"/\"rowheader\"]` have data cells they describe.",
       "description": "Screen readers have features to make navigating tables easier. Ensuring table headers always refer to some set of cells may improve the experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/2.2/th-has-data-cells?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "valid-lang": {
@@ -1560,7 +1560,7 @@
       "title": "`[lang]` attributes have a valid value",
       "description": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) on elements helps ensure that text is pronounced correctly by a screen reader. [Learn more](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "video-caption": {
@@ -1568,7 +1568,7 @@
       "title": "`<video>` elements contain a `<track>` element with `[kind=\"captions\"]`",
       "description": "When a video provides a caption it is easier for deaf and hearing impaired users to access its information. [Learn more](https://dequeuniversity.com/rules/axe/2.2/video-caption?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "video-description": {
@@ -1576,7 +1576,7 @@
       "title": "`<video>` elements contain a `<track>` element with `[kind=\"description\"]`",
       "description": "Audio descriptions provide relevant information for videos that dialogue cannot, such as facial expressions and scenes. [Learn more](https://dequeuniversity.com/rules/axe/2.2/video-description?application=lighthouse).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "custom-controls-labels": {
@@ -2708,7 +2708,7 @@
       "title": "Document has a valid `rel=canonical`",
       "description": "Canonical links suggest which URL to show in search results. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/canonical).",
       "score": null,
-      "scoreDisplayMode": "not-applicable",
+      "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
     "mobile-friendly": {

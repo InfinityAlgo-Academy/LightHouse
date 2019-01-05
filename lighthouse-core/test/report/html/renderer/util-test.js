@@ -171,12 +171,12 @@ describe('util helpers', () => {
   });
 
   describe('#prepareReportResult', () => {
-    it('corrects underscored `not-applicable` scoreDisplayMode', () => {
+    it('corrects underscored `notApplicable` scoreDisplayMode', () => {
       const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
 
       let notApplicableCount = 0;
       Object.values(clonedSampleResult.audits).forEach(audit => {
-        if (audit.scoreDisplayMode === 'not-applicable') {
+        if (audit.scoreDisplayMode === 'notApplicable') {
           notApplicableCount++;
           audit.scoreDisplayMode = 'not_applicable';
         }

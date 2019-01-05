@@ -73,7 +73,7 @@ module.exports = [
       },
       'robots-txt': {
         rawValue: true,
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
     },
   },
