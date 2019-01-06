@@ -70,13 +70,13 @@ declare global {
       wastedPercent?: number;
     }
 
-    export interface ClientRectOverlapDetail  {
+    export interface ClientRectOverlapFailure  {
       overlapScoreRatio: number;
       tapTargetScore: number;
       overlappingTargetScore: number;
     }
     
-    export interface TapTargetOverlapDetail extends ClientRectOverlapDetail {
+    export interface TapTargetOverlapFailure extends ClientRectOverlapFailure {
       tapTarget: Artifacts.TapTarget;
       overlappingTarget: Artifacts.TapTarget;
     }

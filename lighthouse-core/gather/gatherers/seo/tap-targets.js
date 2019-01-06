@@ -278,6 +278,7 @@ function gatherTapTargets() {
 
   // @ts-ignore - getElementsInDocument put into scope via stringification
   Array.from(getElementsInDocument(tapTargetsSelector)).forEach(tapTargetNode => {
+    // Filter out tap targets that are likely to cause false failures:
     if (nodeHasParentTapTarget(tapTargetNode)) {
       // This is usually intentional, either the tap targets trigger the same action
       // or there's a child with a related action (like a delete button for an item)
