@@ -305,7 +305,7 @@ function gatherTapTargets() {
 
     targets.push({
       clientRects: visibleClientRects,
-      snippet: truncate(tapTargetNode.outerHTML, 700),
+      snippet: truncate(tapTargetNode.outerHTML, 300),
       // @ts-ignore - getNodePath put into scope via stringification
       path: getNodePath(tapTargetNode),
       // @ts-ignore - getNodeSelector put into scope via stringification
