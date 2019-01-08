@@ -297,9 +297,12 @@ class ReportUIFeatures {
     if (!hash) {
       return;
     }
-    /** @type {?HTMLElement} */
     const audit = this._document.querySelector(hash);
     if (!audit || !audit.classList.contains('lh-audit')) {
+      return;
+    }
+    // This should always be an HTMLElement by this point by ts doesn't know that
+    if (!(audit instanceof HTMLElement)) {
       return;
     }
     if (audit.firstElementChild instanceof HTMLDetailsElement) {
