@@ -12,6 +12,7 @@ const execAsync = promisify(require('child_process').exec);
 const {server, serverForOffline} = require('../fixtures/static-server');
 const log = require('lighthouse-logger');
 
+/** @param {string} str */
 const purpleify = str => `${log.purple}${str}${log.reset}`;
 const smokehouseDir = 'lighthouse-cli/test/smokehouse/';
 
@@ -88,18 +89,15 @@ const SMOKETESTS = [{
 
 /**
  * Display smokehouse output from child process
- * @param {{id: string, process: NodeJS.Process} || {id: string, error: Error & {stdout : NodeJS.WriteStream, stderr: NodeJS.WriteStream}}} result
+ * @param {{id: string, stdout: string, stderr: string, error?: Error}} result
  */
 function displaySmokehouseOutput(result) {
   console.log(`\n${purpleify(result.id)} smoketest results:`);
   if (result.error) {
     console.log(result.error.message);
-    process.stdout.write(result.error.stdout);
-    process.stderr.write(result.error.stderr);
-  } else {
-    process.stdout.write(result.process.stdout);
-    process.stderr.write(result.process.stderr);
   }
+  process.stdout.write(result.stdout);
+  process.stderr.write(result.stderr);
   console.timeEnd(`smoketest-${result.id}`);
   console.log(`${purpleify(result.id)} smoketest complete. \n`);
   return result;
@@ -124,8 +122,8 @@ async function runSmokehouse(smokes) {
 
     // The promise ensures we output immediately, even if the process errors
     const p = execAsync(cmd, {timeout: 6 * 60 * 1000, encoding: 'utf8'})
-      .then(cp => ({id: id, process: cp}))
-      .catch(err => ({id: id, error: err}))
+      .then(cp => ({id, ...cp}))
+      .catch(err => ({id, stdout: err.stdout, stderr: err.stderr, error: err}))
       .then(result => displaySmokehouseOutput(result));
 
     // If the machine is terribly slow, we'll run all smoketests in succession, not parallel
@@ -200,6 +198,7 @@ async function cli() {
   if (failingTests.length && (process.env.RETRY_SMOKES || process.env.CI)) {
     console.log('Retrying failed tests...');
     for (const failedResult of failingTests) {
+      /** @type {number} */
       const resultIndex = smokeResults.indexOf(failedResult);
       const smokeDefn = smokeDefns.get(failedResult.id);
       smokeResults[resultIndex] = (await runSmokehouse([smokeDefn]))[0];
