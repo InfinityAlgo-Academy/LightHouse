@@ -787,7 +787,7 @@
 }
 
 .lh-scores-header .lh-gauge__wrapper,
-.lh-scores-header .lh-gauge--pwa__wrapper, {
+.lh-scores-header .lh-gauge--pwa__wrapper {
   margin: 0 4px;
 }
 
