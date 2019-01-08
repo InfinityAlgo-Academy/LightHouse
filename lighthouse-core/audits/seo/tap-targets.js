@@ -287,8 +287,8 @@ class TapTargets extends Audit {
 
     const tooSmallTargets = getTooSmallTargets(artifacts.TapTargets);
     const overlapFailures = getAllOverlapFailures(tooSmallTargets, artifacts.TapTargets);
-    const uniqueOverlapFailures = mergeSymmetricFailures(overlapFailures);
-    const tableItems = getTableItems(uniqueOverlapFailures);
+    const overlapFailuresForDisplay = mergeSymmetricFailures(overlapFailures);
+    const tableItems = getTableItems(overlapFailuresForDisplay);
 
     const headings = [
       {key: 'tapTarget', itemType: 'node', text: 'Tap Target'},
