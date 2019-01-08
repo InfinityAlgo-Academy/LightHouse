@@ -309,7 +309,7 @@ class ReportUIFeatures {
       audit.firstElementChild.open = true;
     }
     this._openClosestDetails(audit);
-    const headerContainer = this._dom.find('lh-header-container', this._document);
+    const headerContainer = this._dom.find('.lh-header-container', this._document);
     window.scroll({
       top: audit.offsetTop - headerContainer.clientHeight,
       behavior: 'smooth',
