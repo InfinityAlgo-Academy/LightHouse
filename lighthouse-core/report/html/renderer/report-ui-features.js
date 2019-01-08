@@ -297,6 +297,7 @@ class ReportUIFeatures {
     if (!hash) {
       return;
     }
+    /** @type {?HTMLElement} */
     const audit = this._document.querySelector(hash);
     if (!audit || !audit.classList.contains('lh-audit')) {
       return;
@@ -305,13 +306,11 @@ class ReportUIFeatures {
       audit.firstElementChild.open = true;
     }
     this._openClosestDetails(audit);
-    if (audit instanceof HTMLElement) {
-      const headerContainer = this._dom.find('lh-header-container', this._document);
-      window.scroll({
-        top: audit.offsetTop - headerContainer.clientHeight,
-        behavior: 'smooth',
-      });
-    }
+    const headerContainer = this._dom.find('lh-header-container', this._document);
+    window.scroll({
+      top: audit.offsetTop - headerContainer.clientHeight,
+      behavior: 'smooth',
+    });
   }
 
   /**
