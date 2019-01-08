@@ -569,7 +569,7 @@
             "title": "Browser errors were logged to the console"
         }, 
         "estimated-input-latency": {
-            "description": "The score above is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).", 
+            "description": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).", 
             "displayValue": "20\u00a0ms", 
             "id": "estimated-input-latency", 
             "score": 1.0, 
@@ -953,7 +953,7 @@
             "title": "Web app manifest does not meet the installability requirements"
         }, 
         "interactive": {
-            "description": "Interactive marks the time at which the page is fully interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).", 
+            "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).", 
             "displayValue": "4.9\u00a0s", 
             "id": "interactive", 
             "score": 0.78, 
