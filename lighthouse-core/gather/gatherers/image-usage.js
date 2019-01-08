@@ -53,8 +53,9 @@ function collectImageElementInfo() {
       naturalHeight: element.naturalHeight,
       isCss: false,
       isPicture: !!element.parentElement && element.parentElement.tagName === 'PICTURE',
-      usesObjectFit: computedStyle.getPropertyValue('object-fit') === 'cover'
-      || computedStyle.getPropertyValue('object-fit') === 'contain',
+      usesObjectFit: ['cover', 'contain', 'scale-down', 'none'].includes(
+        computedStyle.getPropertyValue('object-fit')
+      ),
     };
   });
 

@@ -76,7 +76,7 @@ function updateBadgeUI(optUrl) {
 /**
  * @param {LH.Flags} flags Lighthouse flags.
  * @param {Array<string>} categoryIDs Name values of categories to include.
- * @return {Promise<LH.RunnerResult|void>}
+ * @return {Promise<LH.RunnerResult>}
  */
 async function runLighthouseInExtension(flags, categoryIDs) {
   // Default to 'info' logging level.
@@ -104,6 +104,8 @@ async function runLighthouseInExtension(flags, categoryIDs) {
   const reportHtml = /** @type {string} */ (runnerResult.report);
   const blobURL = createReportPageAsBlob(reportHtml);
   await new Promise(resolve => chrome.windows.create({url: blobURL}, resolve));
+
+  return runnerResult;
 }
 
 /**

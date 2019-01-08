@@ -272,6 +272,9 @@ module.exports = class NetworkRequest {
    * @param {LH.Crdp.Network.ResourceTiming} timing
    */
   _recomputeTimesWithResourceTiming(timing) {
+    // Don't recompute times if the data is invalid. RequestTime should always be a thread timestamp.
+    // If we don't have receiveHeadersEnd, we really don't have more accurate data.
+    if (timing.requestTime === 0 || timing.receiveHeadersEnd === -1) return;
     // Take startTime and responseReceivedTime from timing data for better accuracy.
     // Timing's requestTime is a baseline in seconds, rest of the numbers there are ticks in millis.
     this.startTime = timing.requestTime;

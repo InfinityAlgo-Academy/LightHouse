@@ -13,7 +13,7 @@ const path = require('path');
 const fs = require('fs');
 const parseQueryString = require('querystring').parse;
 const parseURL = require('url').parse;
-const URLSearchParams = require('../../../lighthouse-core/lib/url-shim').URLSearchParams;
+const URLSearchParams = require('url').URLSearchParams;
 const HEADER_SAFELIST = new Set(['x-robots-tag', 'link']);
 
 const lhRootDirPath = path.join(__dirname, '../../../');

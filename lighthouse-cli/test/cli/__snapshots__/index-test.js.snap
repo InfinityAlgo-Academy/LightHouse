@@ -1064,6 +1064,9 @@ Object {
           "path": "accessibility",
         },
         Object {
+          "path": "link-elements",
+        },
+        Object {
           "path": "dobetterweb/anchors-with-no-rel-noopener",
         },
         Object {

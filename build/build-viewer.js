@@ -113,8 +113,15 @@ async function compileJs() {
   const generatorFilename = `${sourceDir}/../lighthouse-core/report/report-generator.js`;
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
     .transform('brfs');
-  const generatorBundle = promisify(generatorBrowserify.bundle.bind(generatorBrowserify));
-  const generatorJs = (await generatorBundle()).toString();
+
+  /** @type {Promise<string>} */
+  const generatorJsPromise = new Promise((resolve, reject) => {
+    generatorBrowserify.bundle((err, src) => {
+      if (err) return reject(err);
+      resolve(src.toString());
+    });
+  });
+  const generatorJs = await generatorJsPromise;
 
   // Report renderer scripts.
   const rendererJs = htmlReportAssets.REPORT_JAVASCRIPT;

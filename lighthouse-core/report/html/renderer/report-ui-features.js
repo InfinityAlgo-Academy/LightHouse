@@ -45,6 +45,8 @@ class ReportUIFeatures {
     /** @type {HTMLElement} */
     this.headerBackground; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement} */
+    this.headerContent; // eslint-disable-line no-unused-expressions
+    /** @type {HTMLElement} */
     this.lighthouseIcon; // eslint-disable-line no-unused-expressions
     /** @type {!HTMLElement} */
     this.scoresWrapperBg; // eslint-disable-line no-unused-expressions
@@ -106,7 +108,7 @@ class ReportUIFeatures {
   }
 
   _setupMediaQueryListeners() {
-    const mediaQuery = self.matchMedia('(max-width: 600px)');
+    const mediaQuery = self.matchMedia('(max-width: 500px)');
     mediaQuery.addListener(this.onMediaQueryChange);
     // Ensure the handler is called on init
     this.onMediaQueryChange(mediaQuery);
@@ -135,6 +137,7 @@ class ReportUIFeatures {
     this.headerOverlap = parseFloat(computedMarginTop || '0');
     this.headerSticky = this._dom.find('.lh-header-sticky', this._document);
     this.headerBackground = this._dom.find('.lh-header-bg', this._document);
+    this.headerContent = this._dom.find('.lh-header', this._document);
     this.lighthouseIcon = this._dom.find('.lh-lighthouse', this._document);
     this.scoresWrapperBg = this._dom.find('.lh-scores-wrapper__background', this._document);
     this.productInfo = this._dom.find('.lh-product-info', this._document);
@@ -227,9 +230,9 @@ class ReportUIFeatures {
     this.headerSticky.style.transform = `translateY(${heightDiff * scrollPct * -1}px)`;
     this.headerBackground.style.transform = `translateY(${scrollPct * this.headerOverlap}px)`;
     this.lighthouseIcon.style.transform =
-      `translate3d(var(--report-width-half),` +
-      ` calc(-100% - ${scrollPct * this.headerOverlap * -1}px), 0) scale(${1 - scrollPct})`;
-    this.lighthouseIcon.style.opacity = (1 - scrollPct).toString();
+      `translate3d(0,` +
+      `-${scrollPct * this.headerOverlap * -1}px, 0) scale(${1 - scrollPct})`;
+    this.headerContent.style.opacity = (1 - scrollPct).toString();
 
     // Switch up the score background & shadows
     this.scoresWrapperBg.style.opacity = (1 - scrollPct).toString();
@@ -407,8 +410,7 @@ class ReportUIFeatures {
     // load event, however it is cross-domain and won't fire. Instead, listen
     // for a message from the target app saying "I'm open".
     const json = reportJson;
-    window.addEventListener('message', function msgHandler(/** @type {Event} */ e) {
-      const messageEvent = /** @type {MessageEvent} */ (e);
+    window.addEventListener('message', function msgHandler(messageEvent) {
       if (messageEvent.origin !== VIEWER_ORIGIN) {
         return;
       }
@@ -512,7 +514,7 @@ class ReportUIFeatures {
     const ext = blob.type.match('json') ? '.json' : '.html';
     const href = URL.createObjectURL(blob);
 
-    const a = /** @type {HTMLAnchorElement} */ (this._dom.createElement('a'));
+    const a = this._dom.createElement('a');
     a.download = `${filename}${ext}`;
     a.href = href;
     this._document.body.appendChild(a); // Firefox requires anchor to be in the DOM.

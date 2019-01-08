@@ -166,6 +166,8 @@ describe('Browser Driver', () => {
       assert.ok(false, 'long-running getRequestContent supposed to reject');
     }, e => {
       assert.equal(e.code, 'PROTOCOL_TIMEOUT');
+      expect(e.friendlyMessage).toBeDisplayString(
+        /^Waiting for DevTools.*Method: Network.getResponseBody/);
     });
   });
 

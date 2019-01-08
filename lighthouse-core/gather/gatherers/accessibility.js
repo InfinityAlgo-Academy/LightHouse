@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global window, document, Node, getOuterHTMLSnippet */
+/* global window, document, getOuterHTMLSnippet, getNodePath */
 
 const Gatherer = require('./gatherer');
 const fs = require('fs');
@@ -45,6 +45,7 @@ function runA11yChecks() {
     // Augment the node objects with outerHTML snippet & custom path string
     // @ts-ignore
     axeResult.violations.forEach(v => v.nodes.forEach(node => {
+      // @ts-ignore - getNodePath put into scope via stringification
       node.path = getNodePath(node.element);
       // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
       node.snippet = getOuterHTMLSnippet(node.element);
@@ -56,37 +57,6 @@ function runA11yChecks() {
     axeResult = {violations: axeResult.violations, notApplicable: axeResult.inapplicable};
     return axeResult;
   });
-
-  /**
-   * Adapted from DevTools' SDK.DOMNode.prototype.path
-   *   https://github.com/ChromeDevTools/devtools-frontend/blob/7a2e162ddefd/front_end/sdk/DOMModel.js#L530-L552
-   * TODO: Doesn't handle frames or shadow roots...
-   * @param {Node} node
-   */
-  function getNodePath(node) {
-    /** @param {Node} node */
-    function getNodeIndex(node) {
-      let index = 0;
-      let prevNode;
-      while (prevNode = node.previousSibling) {
-        node = prevNode;
-        // skip empty text nodes
-        if (node.nodeType === Node.TEXT_NODE && node.textContent &&
-          node.textContent.trim().length === 0) continue;
-        index++;
-      }
-      return index;
-    }
-
-    const path = [];
-    while (node && node.parentNode) {
-      const index = getNodeIndex(node);
-      path.push([index, node.nodeName]);
-      node = node.parentNode;
-    }
-    path.reverse();
-    return path.join(',');
-  }
 }
 
 class Accessibility extends Gatherer {
@@ -98,6 +68,7 @@ class Accessibility extends Gatherer {
     const driver = passContext.driver;
     const expression = `(function () {
       ${pageFunctions.getOuterHTMLSnippetString};
+      ${pageFunctions.getNodePathString};
       ${axeLibSource};
       return (${runA11yChecks.toString()}());
     })()`;

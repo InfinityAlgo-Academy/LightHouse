@@ -14,7 +14,7 @@
 class ViewerUIFeatures extends ReportUIFeatures {
   /**
    * @param {DOM} dom
-   * @param {?function(LH.ReportResult)} saveGistCallback
+   * @param {?function(LH.ReportResult): void} saveGistCallback
    */
   constructor(dom, saveGistCallback) {
     super(dom);

@@ -12,7 +12,7 @@ const pageFunctions = require('../../lib/page-functions');
 
 /* eslint-env jest */
 
-describe('DetailsRenderer', () => {
+describe('Page Functions', () => {
   let dom;
 
   beforeAll(() => {
@@ -43,6 +43,20 @@ describe('DetailsRenderer', () => {
         dom.createElement('div', '', {'id': '1', 'style': 'style', 'aria-label': 'label'}),
         ['style-missing', 'aria-label-missing']
       ), '<div id="1" style="style" aria-label="label">');
+    });
+
+    it('works if attribute values contain line breaks', () => {
+      assert.equal(pageFunctions.getOuterHTMLSnippet(
+        dom.createElement('div', '', {style: 'style1\nstyle2'})), '<div style="style1\nstyle2">');
+    });
+  });
+
+  describe('getNodeSelector', () => {
+    it('Uses IDs where available and otherwise falls back to classes', () => {
+      const parentEl = dom.createElement('div', '', {id: 'wrapper', class: 'dont-use-this'});
+      const childEl = dom.createElement('div', '', {class: 'child'});
+      parentEl.appendChild(childEl);
+      assert.equal(pageFunctions.getNodeSelector(childEl), 'div#wrapper > div.child');
     });
   });
 });

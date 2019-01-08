@@ -20,6 +20,9 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should preload important network requests. The associated network requests are started halfway through pageload (or later) but should be started at the beginning. This is displayed after a user expands the section to see more. No character length limits. '<link rel=preload>' is the html code the user would include in their page and shouldn't be translated. 'Learn More' becomes link text to additional documentation. */
   description: 'Consider using <link rel=preload> to prioritize fetching resources that are ' +
     'currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).',
+  /** A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected. Forgetting to set the `crossorigin` HTML attribute, or setting it to an incorrect value, on the link is a common mistake when adding preload links. */
+  crossoriginWarning: 'A preload <link> was found for "{preloadURL}" but was not used ' +
+    'by the browser. Check that you are using the `crossorigin` attribute properly.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -58,6 +61,25 @@ class UsesRelPreloadAudit extends Audit {
     });
 
     return urls;
+  }
+
+  /**
+   * Finds which URLs were attempted to be preloaded, but failed to be reused and were requested again.
+   *
+   * @param {LH.Gatherer.Simulation.GraphNode} graph
+   * @return {Set<string>}
+   */
+  static getURLsFailedToPreload(graph) {
+    /** @type {Array<LH.Artifacts.NetworkRequest>} */
+    const requests = [];
+    graph.traverse(node => node.type === 'network' && requests.push(node.record));
+
+    const preloadRequests = requests.filter(req => req.isLinkPreload);
+    const preloadURLs = new Set(preloadRequests.map(req => req.url));
+    // A failed preload attempt will manifest as a URL that was requested twice.
+    // Once with `isLinkPreload` AND again without `isLinkPreload`.
+    const failedRequests = requests.filter(req => preloadURLs.has(req.url) && !req.isLinkPreload);
+    return new Set(failedRequests.map(req => req.url));
   }
 
   /**
@@ -183,6 +205,14 @@ class UsesRelPreloadAudit extends Audit {
     // sort results by wastedTime DESC
     results.sort((a, b) => b.wastedMs - a.wastedMs);
 
+    /** @type {Array<string>|undefined} */
+    let warnings;
+    const failedURLs = UsesRelPreloadAudit.getURLsFailedToPreload(graph);
+    if (failedURLs.size) {
+      warnings = Array.from(failedURLs)
+        .map(preloadURL => str_(UIStrings.crossoriginWarning, {preloadURL}));
+    }
+
     /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
     const headings = [
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
@@ -200,6 +230,7 @@ class UsesRelPreloadAudit extends Audit {
         value: results,
       },
       details,
+      warnings,
     };
   }
 }

@@ -210,6 +210,18 @@ describe('Performance: uses-rel-preload audit', () => {
     });
   });
 
+  it(`shouldn't suggest preload for protocol intent`, () => {
+    const networkRecords = getMockNetworkRecords();
+    networkRecords[2].protocol = 'intent';
+
+    const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
+    const context = {settings: {}, computedCache: new Map()};
+    return UsesRelPreload.audit(artifacts, context).then(output => {
+      assert.equal(output.rawValue, 0);
+      assert.equal(output.details.items.length, 0);
+    });
+  });
+
   it('does not throw on a real trace/devtools log', async () => {
     const artifacts = {
       URL: {finalUrl: 'https://pwa.rocks/'},

@@ -5,7 +5,7 @@
  */
 'use strict';
 const BASE_URL = 'http://localhost:10200/seo/';
-const URLSearchParams = require('../../../../lighthouse-core/lib/url-shim').URLSearchParams;
+const URLSearchParams = require('url').URLSearchParams;
 
 function headersParam(headers) {
   const headerString = new URLSearchParams(headers).toString();
@@ -73,7 +73,7 @@ module.exports = [
       },
       'robots-txt': {
         rawValue: true,
-        scoreDisplayMode: 'not-applicable',
+        scoreDisplayMode: 'notApplicable',
       },
     },
   },

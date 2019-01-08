@@ -94,6 +94,7 @@ const defaultConfig = {
       'chrome-console-messages',
       'image-usage',
       'accessibility',
+      'link-elements',
       'dobetterweb/anchors-with-no-rel-noopener',
       'dobetterweb/appcache',
       'dobetterweb/doctype',
@@ -357,34 +358,6 @@ const defaultConfig = {
         {id: 'font-display', weight: 0, group: 'diagnostics'},
       ],
     },
-    'pwa': {
-      title: 'Progressive Web App',
-      description: 'These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).',
-      manualDescription: 'These checks are required by the baseline ' +
-          '[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are ' +
-          'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.',
-      auditRefs: [
-        // Fast and Reliable
-        {id: 'load-fast-enough-for-pwa', weight: 7, group: 'pwa-fast-reliable'},
-        {id: 'works-offline', weight: 5, group: 'pwa-fast-reliable'},
-        {id: 'offline-start-url', weight: 1, group: 'pwa-fast-reliable'},
-        // Installable
-        {id: 'is-on-https', weight: 2, group: 'pwa-installable'},
-        {id: 'service-worker', weight: 1, group: 'pwa-installable'},
-        {id: 'installable-manifest', weight: 2, group: 'pwa-installable'},
-        // PWA Optimized
-        {id: 'redirects-http', weight: 2, group: 'pwa-optimized'},
-        {id: 'splash-screen', weight: 1, group: 'pwa-optimized'},
-        {id: 'themed-omnibox', weight: 1, group: 'pwa-optimized'},
-        {id: 'content-width', weight: 1, group: 'pwa-optimized'},
-        {id: 'viewport', weight: 2, group: 'pwa-optimized'},
-        {id: 'without-javascript', weight: 1, group: 'pwa-optimized'},
-        // Manual audits
-        {id: 'pwa-cross-browser', weight: 0},
-        {id: 'pwa-page-transitions', weight: 0},
-        {id: 'pwa-each-page-has-url', weight: 0},
-      ],
-    },
     'accessibility': {
       title: 'Accessibility',
       description: 'These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.',
@@ -480,6 +453,34 @@ const defaultConfig = {
         // Manual audits
         {id: 'mobile-friendly', weight: 0},
         {id: 'structured-data', weight: 0},
+      ],
+    },
+    'pwa': {
+      title: 'Progressive Web App',
+      description: 'These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).',
+      manualDescription: 'These checks are required by the baseline ' +
+          '[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are ' +
+          'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.',
+      auditRefs: [
+        // Fast and Reliable
+        {id: 'load-fast-enough-for-pwa', weight: 7, group: 'pwa-fast-reliable'},
+        {id: 'works-offline', weight: 5, group: 'pwa-fast-reliable'},
+        {id: 'offline-start-url', weight: 1, group: 'pwa-fast-reliable'},
+        // Installable
+        {id: 'is-on-https', weight: 2, group: 'pwa-installable'},
+        {id: 'service-worker', weight: 1, group: 'pwa-installable'},
+        {id: 'installable-manifest', weight: 2, group: 'pwa-installable'},
+        // PWA Optimized
+        {id: 'redirects-http', weight: 2, group: 'pwa-optimized'},
+        {id: 'splash-screen', weight: 1, group: 'pwa-optimized'},
+        {id: 'themed-omnibox', weight: 1, group: 'pwa-optimized'},
+        {id: 'content-width', weight: 1, group: 'pwa-optimized'},
+        {id: 'viewport', weight: 2, group: 'pwa-optimized'},
+        {id: 'without-javascript', weight: 1, group: 'pwa-optimized'},
+        // Manual audits
+        {id: 'pwa-cross-browser', weight: 0},
+        {id: 'pwa-page-transitions', weight: 0},
+        {id: 'pwa-each-page-has-url', weight: 0},
       ],
     },
   },

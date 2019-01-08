@@ -14,7 +14,10 @@ const LHError = require('../../lighthouse-core/lib/lh-error.js');
 describe('lightrider-entry', () => {
   describe('#runLighthouseInLR', () => {
     it('returns a runtimeError LHR when lighthouse throws a runtimeError', async () => {
-      const connectionError = new LHError(LHError.errors.FAILED_DOCUMENT_REQUEST);
+      const connectionError = new LHError(
+        LHError.errors.FAILED_DOCUMENT_REQUEST,
+        {errorDetails: 'Bad connection req'}
+      );
       assert.strictEqual(connectionError.lhrRuntimeError, true);
       const mockConnection = {
         async connect() {

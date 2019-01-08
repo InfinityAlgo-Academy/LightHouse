@@ -62,12 +62,13 @@ class Util {
     if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
     clone.reportCategories = Object.values(clone.categories);
 
-    // The proto process turns 'not-applicable' into 'not_applicable'. Correct this to support both.
-    // TODO: remove when underscore/hyphen proto issue is resolved. See #6371, #6201.
+    // Turn 'not-applicable' and 'not_applicable' into 'notApplicable' to support old reports.
+    // TODO: remove when underscore/hyphen proto issue is resolved. See #6371, #6201, #6783.
     for (const audit of Object.values(clone.audits)) {
       // @ts-ignore tsc rightly flags that this value shouldn't occur.
-      if (audit.scoreDisplayMode === 'not_applicable') {
-        audit.scoreDisplayMode = 'not-applicable';
+      // eslint-disable-next-line max-len
+      if (audit.scoreDisplayMode === 'not_applicable' || audit.scoreDisplayMode === 'not-applicable') {
+        audit.scoreDisplayMode = 'notApplicable';
       }
     }
 
@@ -143,7 +144,7 @@ class Util {
   static showAsPassed(audit) {
     switch (audit.scoreDisplayMode) {
       case 'manual':
-      case 'not-applicable':
+      case 'notApplicable':
         return true;
       case 'error':
       case 'informative':
@@ -163,7 +164,7 @@ class Util {
    */
   static calculateRating(score, scoreDisplayMode) {
     // Handle edge cases first, manual and not applicable receive 'pass', errored audits receive 'error'
-    if (scoreDisplayMode === 'manual' || scoreDisplayMode === 'not-applicable') {
+    if (scoreDisplayMode === 'manual' || scoreDisplayMode === 'notApplicable') {
       return RATINGS.PASS.label;
     } else if (scoreDisplayMode === 'error') {
       return RATINGS.ERROR.label;

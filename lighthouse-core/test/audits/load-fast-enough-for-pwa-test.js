@@ -51,7 +51,7 @@ describe('PWA: load-fast-enough-for-pwa audit', () => {
     return FastPWAAudit.audit(artifacts, {settings, computedCache: new Map()}).then(result => {
       assert.equal(result.score, false, 'not failing a long TTI value');
       assert.equal(result.rawValue, 15000);
-      assert.deepEqual(result.displayValue, ['Interactive at %d\xa0s', 15]);
+      expect(result.displayValue).toBeDisplayString('Interactive at 15.0\xa0s');
       assert.ok(result.explanation);
     });
   });
@@ -108,7 +108,8 @@ describe('PWA: load-fast-enough-for-pwa audit', () => {
 
     const settings = {throttlingMethod: 'provided', throttling: {rttMs: 40, throughput: 100000}};
     const result = await FastPWAAudit.audit(artifacts, {settings, computedCache: new Map()});
-    expect(result.displayValue).toContain('Interactive on simulated mobile network at %d\xa0s');
+    expect(result.displayValue)
+      .toBeDisplayString('Interactive on simulated mobile network at 24.9\xa0s');
     expect(result.rawValue).toBeGreaterThan(10000);
   });
 });
