@@ -88,6 +88,7 @@ class GatherRunner {
    */
   static async loadPage(driver, passContext) {
     const finalUrl = await driver.gotoURL(passContext.url, {
+      waitForFCP: passContext.passConfig.recordTrace,
       waitForLoad: true,
       passContext,
     });

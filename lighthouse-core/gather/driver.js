@@ -513,6 +513,16 @@ class Driver {
   }
 
   /**
+   * Returns a promise that resolves immediately.
+   * Used for placeholder conditions that we don't want to start waiting for just yet, but still want
+   * to satisfy the same interface.
+   * @return {{promise: Promise<void>, cancel: function(): void}}
+   */
+  _waitForNothing() {
+    return {promise: Promise.resolve(), cancel() {}};
+  }
+
+  /**
    * Returns a promise that resolve when a frame has been navigated.
    * Used for detecting that our about:blank reset has been completed.
    */
@@ -520,6 +530,38 @@ class Driver {
     return new Promise(resolve => {
       this.once('Page.frameNavigated', resolve);
     });
+  }
+
+  /**
+   * Returns a promise that resolve when a frame has a FCP.
+   * @return {{promise: Promise<void>, cancel: function(): void}}
+   */
+  _waitForFCP() {
+    /** @type {(() => void)} */
+    let cancel = () => {
+      throw new Error('_waitForFCP.cancel() called before it was defined');
+    };
+
+    const promise = new Promise(resolve => {
+      /** @param {LH.Crdp.Page.LifecycleEventEvent} e */
+      const lifecycleListener = e => {
+        if (e.name === 'firstContentfulPaint') {
+          resolve();
+          this.off('Page.lifecycleEvent', lifecycleListener);
+        }
+      };
+
+      this.on('Page.lifecycleEvent', lifecycleListener);
+
+      cancel = () => {
+        this.off('Page.lifecycleEvent', lifecycleListener);
+      };
+    });
+
+    return {
+      promise,
+      cancel,
+    };
   }
 
   /**
@@ -733,25 +775,28 @@ class Driver {
    * @param {number} networkQuietThresholdMs
    * @param {number} cpuQuietThresholdMs
    * @param {number} maxWaitForLoadedMs
+   * @param {boolean} shouldWaitForFCP
    * @return {Promise<void>}
    * @private
    */
   async _waitForFullyLoaded(pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs,
-      maxWaitForLoadedMs) {
+      maxWaitForLoadedMs, shouldWaitForFCP) {
     /** @type {NodeJS.Timer|undefined} */
     let maxTimeoutHandle;
 
+    // Listener for onload. Resolves on first FCP event.
+    const waitForFCP = shouldWaitForFCP ? this._waitForFCP() : this._waitForNothing();
     // Listener for onload. Resolves pauseAfterLoadMs ms after load.
     const waitForLoadEvent = this._waitForLoadEvent(pauseAfterLoadMs);
     // Network listener. Resolves when the network has been idle for networkQuietThresholdMs.
     const waitForNetworkIdle = this._waitForNetworkIdle(networkQuietThresholdMs);
     // CPU listener. Resolves when the CPU has been idle for cpuQuietThresholdMs after network idle.
-    /** @type {{promise: Promise<void>, cancel: function(): void}|null} */
-    let waitForCPUIdle = null;
+    let waitForCPUIdle = this._waitForNothing();
 
     // Wait for both load promises. Resolves on cleanup function the clears load
     // timeout timer.
     const loadPromise = Promise.all([
+      waitForFCP.promise,
       waitForLoadEvent.promise,
       waitForNetworkIdle.promise,
     ]).then(() => {
@@ -771,9 +816,10 @@ class Driver {
     }).then(_ => {
       return async () => {
         log.warn('Driver', 'Timed out waiting for page load. Checking if page is hung...');
+        waitForFCP.cancel();
         waitForLoadEvent.cancel();
         waitForNetworkIdle.cancel();
-        waitForCPUIdle && waitForCPUIdle.cancel();
+        waitForCPUIdle.cancel();
 
         if (await this.isPageHung()) {
           log.warn('Driver', 'Page appears to be hung, killing JavaScript...');
@@ -874,23 +920,25 @@ class Driver {
    * possible workaround.
    * Resolves on the url of the loaded page, taking into account any redirects.
    * @param {string} url
-   * @param {{waitForLoad?: boolean, waitForNavigated?: boolean, passContext?: LH.Gatherer.PassContext}} options
+   * @param {{waitForFCP?: boolean, waitForLoad?: boolean, waitForNavigated?: boolean, passContext?: LH.Gatherer.PassContext}} options
    * @return {Promise<string>}
    */
   async gotoURL(url, options = {}) {
+    const waitForFCP = options.waitForFCP || false;
     const waitForNavigated = options.waitForNavigated || false;
     const waitForLoad = options.waitForLoad || false;
     const passContext = /** @type {Partial<LH.Gatherer.PassContext>} */ (options.passContext || {});
     const disableJS = passContext.disableJavaScript || false;
 
-    if (waitForNavigated && waitForLoad) {
-      throw new Error('Cannot use both waitForNavigated and waitForLoad, pick just one');
+    if (waitForNavigated && (waitForFCP || waitForLoad)) {
+      throw new Error('Cannot use both waitForNavigated and another event, pick just one');
     }
 
     await this._beginNetworkStatusMonitoring(url);
     await this._clearIsolatedContextId();
 
     await this.sendCommand('Page.enable');
+    await this.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});
     await this.sendCommand('Emulation.setScriptExecutionDisabled', {value: disableJS});
     // No timeout needed for Page.navigate. See #6413.
     const waitforPageNavigateCmd = this._innerSendCommand('Page.navigate', {url});
@@ -910,7 +958,7 @@ class Driver {
       /* eslint-enable max-len */
 
       await this._waitForFullyLoaded(pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs,
-          maxWaitMs);
+          maxWaitMs, waitForFCP);
     }
 
     // Bring `Page.navigate` errors back into the promise chain. See #6739.
