@@ -3641,6 +3641,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:UserTimings",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:critical-request-chains",
         "duration": 100,
         "entryType": "measure"
