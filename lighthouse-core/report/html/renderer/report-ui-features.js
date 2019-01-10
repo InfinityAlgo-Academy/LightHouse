@@ -288,33 +288,45 @@ class ReportUIFeatures {
 
   /**
    * Jumps to respective audit on page load if hash is provided in URL.
-   * Collapsed content is opened automatically.
-   * If found, scroll to element in viewport.
-   * Element is highlighted via CSS selector.
    */
   _jumpToAudit() {
     const hash = window.location.hash;
-    if (!hash) {
-      return;
-    }
+    if (!hash) return;
+
     const audit = this._document.querySelector(hash);
-    if (!audit || !audit.classList.contains('lh-audit')) {
-      return;
-    }
+    if (!audit || !audit.classList.contains('lh-audit')) return;
     // This should always be an HTMLElement by this point by ts doesn't know that
-    if (!(audit instanceof HTMLElement)) {
-      return;
+    if (!(audit instanceof HTMLElement)) return;
+    
+    // 4 is the magic number of rAF to guarantee seeing a smooth scroll on pageload
+    // Why 4? I could not tell you, but I can show you.
+    requestAnimationFrame(_ => requestAnimationFrame(_ => 
+      requestAnimationFrame(_ => requestAnimationFrame(_ => this._innerJumpToAudit(audit)))
+    ))
+  }
+
+  /**
+   * Display audit details, open any parent <details> so audit is visible, then
+   * smoothly scroll to the element and set focus appropriately.
+   * @param {Element} el
+   */
+  _innerJumpToAudit(el) {
+    if (el.firstElementChild instanceof HTMLDetailsElement) {
+      el.firstElementChild.open = true;
     }
-    if (audit.firstElementChild instanceof HTMLDetailsElement) {
-      audit.firstElementChild.open = true;
-    }
-    this._openClosestDetails(audit);
+    this._openClosestDetails(el);
+
     const headerContainer = this._dom.find('.lh-header-container', this._document);
     window.scroll({
-      top: audit.offsetTop - headerContainer.clientHeight,
+      top: el.offsetTop - headerContainer.clientHeight,
       behavior: 'smooth',
     });
+    // Set focus on the element (once the scroll animation completes) to visually denote the target.
+    setTimeout(_ => {
+      el.querySelector('summary').focus({preventScroll: true});
+    }, 1000);
   }
+    
 
   /**
    * Open all closest <details> elements recursively.

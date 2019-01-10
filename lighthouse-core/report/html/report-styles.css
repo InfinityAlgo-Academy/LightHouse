@@ -338,11 +338,6 @@
   display: none;
 }
 
-.lh-audit:target {
-  background: hsl(0, 0%, 98%);
-  border-radius: 2px;
-}
-
 /* Perf Metric */
 
 .lh-columns {
