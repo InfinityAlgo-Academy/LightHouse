@@ -35,7 +35,7 @@ function getFlags(manualArgv) {
           'lighthouse <url> --disable-device-emulation --throttling-method=provided',
           'Disable device emulation and all throttling')
       .example(
-          'lighthouse <url> --chrome-flags="--window-size=412,732"',
+          'lighthouse <url> --chrome-flags="--window-size=412,660"',
           'Launch Chrome with a specific window size')
       .example(
           'lighthouse <url> --quiet --chrome-flags="--headless"',

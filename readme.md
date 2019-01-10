@@ -106,7 +106,7 @@ Examples:
   lighthouse <url> --output=json --output-path=./report.json --save-assets  Save trace, devtoolslog, and named JSON report.
   lighthouse <url> --disable-device-emulation                               Disable device emulation and all throttling.
     --throttling-method=provided
-  lighthouse <url> --chrome-flags="--window-size=412,732"                   Launch Chrome with a specific window size
+  lighthouse <url> --chrome-flags="--window-size=412,660"                   Launch Chrome with a specific window size
   lighthouse <url> --quiet --chrome-flags="--headless"                      Launch Headless Chrome, turn off logging
   lighthouse <url> --extra-headers "{\"Cookie\":\"monster=blue\"}"          Stringify\'d JSON HTTP Header key/value pairs to send in requests
   lighthouse <url> --extra-headers=./path/to/file.json                      Path to JSON file of HTTP Header key/value pairs to send in requests

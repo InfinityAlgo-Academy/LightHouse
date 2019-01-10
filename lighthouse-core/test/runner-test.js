@@ -478,7 +478,7 @@ describe('Runner', () => {
 
     return Runner.run({}, {config}).then(results => {
       assert.strictEqual(results.artifacts.ViewportDimensions.innerWidth, 412);
-      assert.strictEqual(results.artifacts.ViewportDimensions.innerHeight, 732);
+      assert.strictEqual(results.artifacts.ViewportDimensions.innerHeight, 660);
     });
   });
 

@@ -124,9 +124,9 @@
   "Viewport": "width=device-width, initial-scale=1, minimum-scale=1",
   "ViewportDimensions": {
     "innerWidth": 412,
-    "innerHeight": 732,
+    "innerHeight": 660,
     "outerWidth": 412,
-    "outerHeight": 732,
+    "outerHeight": 660,
     "devicePixelRatio": 2.625
   },
   "ThemeColor": null,
