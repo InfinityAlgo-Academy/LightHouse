@@ -137,7 +137,6 @@ function getFlags(manualArgv) {
       // default values
       .default('chrome-flags', '')
       .default('output', ['html'])
-      .default('emulated-form-factor', 'mobile')
       .default('port', 0)
       .default('hostname', 'localhost')
       .default('enable-error-reporting', undefined) // Undefined so prompted by default
