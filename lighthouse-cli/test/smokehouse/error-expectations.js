@@ -15,4 +15,10 @@ module.exports = [
     errorCode: 'PAGE_HUNG',
     audits: {},
   },
+  {
+    requestedUrl: 'https://expired.badssl.com',
+    finalUrl: 'https://expired.badssl.com',
+    errorCode: 'INSECURE_DOCUMENT_REQUEST',
+    audits: {},
+  },
 ];

@@ -26,6 +26,8 @@ const NON_BUG_ERROR_MESSAGES = {
       'are trying to review.',
   'Cannot access contents of the page': 'Lighthouse can only audit URLs that start' +
       ' with http:// or https://.',
+  'INSECURE_DOCUMENT_REQUEST': 'The URL you have provided does not have valid' +
+      ' security credentials.',
   'INVALID_URL': 'Lighthouse can only audit URLs that start' +
       ' with http:// or https://.',
 };

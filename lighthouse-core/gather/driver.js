@@ -82,13 +82,6 @@ class Driver {
     });
 
     /**
-     * Used for monitoring network status events during gotoURL.
-     * @type {?LH.Crdp.Security.SecurityStateChangedEvent}
-     * @private
-     */
-    this._lastSecurityState = null;
-
-    /**
      * @type {number}
      * @private
      */
@@ -546,14 +539,17 @@ class Driver {
       /** @param {LH.Crdp.Page.LifecycleEventEvent} e */
       const lifecycleListener = e => {
         if (e.name === 'firstContentfulPaint') {
+          cancel();
           resolve();
-          this.off('Page.lifecycleEvent', lifecycleListener);
         }
       };
 
       this.on('Page.lifecycleEvent', lifecycleListener);
 
+      let canceled = false;
       cancel = () => {
+        if (canceled) return;
+        canceled = true;
         this.off('Page.lifecycleEvent', lifecycleListener);
       };
     });
@@ -634,7 +630,10 @@ class Driver {
       networkStatusMonitor.on('network-2-busy', logStatus);
 
       this.once('Page.domContentEventFired', domContentLoadedListener);
+      let canceled = false;
       cancel = () => {
+        if (canceled) return;
+        canceled = true;
         idleTimeout && clearTimeout(idleTimeout);
         this.off('Page.domContentEventFired', domContentLoadedListener);
         networkStatusMonitor.removeListener('network-2-busy', onBusy);
@@ -666,7 +665,7 @@ class Driver {
 
     /** @type {NodeJS.Timer|undefined} */
     let lastTimeout;
-    let cancelled = false;
+    let canceled = false;
 
     const checkForQuietExpression = `(${pageFunctions.checkTimeSinceLastLongTaskString})()`;
     /**
@@ -675,9 +674,9 @@ class Driver {
      * @return {Promise<void>}
      */
     async function checkForQuiet(driver, resolve) {
-      if (cancelled) return;
+      if (canceled) return;
       const timeSinceLongTask = await driver.evaluateAsync(checkForQuietExpression);
-      if (cancelled) return;
+      if (canceled) return;
 
       if (typeof timeSinceLongTask === 'number') {
         if (timeSinceLongTask >= waitForCPUQuiet) {
@@ -698,9 +697,10 @@ class Driver {
     const promise = new Promise((resolve, reject) => {
       checkForQuiet(this, resolve).catch(reject);
       cancel = () => {
-        cancelled = true;
+        if (canceled) return;
+        canceled = true;
         if (lastTimeout) clearTimeout(lastTimeout);
-        reject(new Error('Wait for CPU idle cancelled'));
+        reject(new Error('Wait for CPU idle canceled'));
       };
     });
 
@@ -731,10 +731,56 @@ class Driver {
       };
       this.once('Page.loadEventFired', loadListener);
 
+      let canceled = false;
       cancel = () => {
+        if (canceled) return;
+        canceled = true;
         this.off('Page.loadEventFired', loadListener);
         loadTimeout && clearTimeout(loadTimeout);
       };
+    });
+
+    return {
+      promise,
+      cancel,
+    };
+  }
+
+  /**
+   * Return a promise that resolves when an insecure security state is encountered
+   * and a method to cancel internal listeners.
+   * @return {{promise: Promise<string>, cancel: function(): void}}
+   * @private
+   */
+  _monitorForInsecureState() {
+    /** @type {(() => void)} */
+    let cancel = () => {
+      throw new Error('_monitorForInsecureState.cancel() called before it was defined');
+    };
+
+    const promise = new Promise((resolve, reject) => {
+      /**
+       * @param {LH.Crdp.Security.SecurityStateChangedEvent} event
+       */
+      const securityStateChangedListener = ({securityState, explanations}) => {
+        if (securityState === 'insecure') {
+          cancel();
+          const insecureDescriptions = explanations
+            .filter(exp => exp.securityState === 'insecure')
+            .map(exp => exp.description);
+          resolve(insecureDescriptions.join(' '));
+        }
+      };
+      let canceled = false;
+      cancel = () => {
+        if (canceled) return;
+        canceled = true;
+        this.off('Security.securityStateChanged', securityStateChangedListener);
+        // TODO(@patrickhulce): cancel() should really be a promise itself to handle things like this
+        this.sendCommand('Security.disable').catch(() => {});
+      };
+      this.on('Security.securityStateChanged', securityStateChangedListener);
+      this.sendCommand('Security.enable').catch(() => {});
     });
 
     return {
@@ -765,6 +811,7 @@ class Driver {
   /**
    * Returns a promise that resolves when:
    * - All of the following conditions have been met:
+   *    - page has no security issues
    *    - pauseAfterLoadMs milliseconds have passed since the load event.
    *    - networkQuietThresholdMs milliseconds have passed since the last network request that exceeded
    *      2 inflight requests (network-2-quiet has been reached).
@@ -793,6 +840,13 @@ class Driver {
     // CPU listener. Resolves when the CPU has been idle for cpuQuietThresholdMs after network idle.
     let waitForCPUIdle = this._waitForNothing();
 
+    const monitorForInsecureState = this._monitorForInsecureState();
+    const securityCheckPromise = monitorForInsecureState.promise.then(securityMessages => {
+      return function() {
+        throw new LHError(LHError.errors.INSECURE_DOCUMENT_REQUEST, {securityMessages});
+      };
+    });
+
     // Wait for both load promises. Resolves on cleanup function the clears load
     // timeout timer.
     const loadPromise = Promise.all([
@@ -805,7 +859,6 @@ class Driver {
     }).then(() => {
       return function() {
         log.verbose('Driver', 'loadEventFired and network considered idle');
-        maxTimeoutHandle && clearTimeout(maxTimeoutHandle);
       };
     });
 
@@ -816,11 +869,6 @@ class Driver {
     }).then(_ => {
       return async () => {
         log.warn('Driver', 'Timed out waiting for page load. Checking if page is hung...');
-        waitForFCP.cancel();
-        waitForLoadEvent.cancel();
-        waitForNetworkIdle.cancel();
-        waitForCPUIdle.cancel();
-
         if (await this.isPageHung()) {
           log.warn('Driver', 'Page appears to be hung, killing JavaScript...');
           await this.sendCommand('Emulation.setScriptExecutionDisabled', {value: true});
@@ -830,11 +878,20 @@ class Driver {
       };
     });
 
-    // Wait for load or timeout and run the cleanup function the winner returns.
+    // Wait for security issue, load or timeout and run the cleanup function the winner returns.
     const cleanupFn = await Promise.race([
+      securityCheckPromise,
       loadPromise,
       maxTimeoutPromise,
     ]);
+
+    maxTimeoutHandle && clearTimeout(maxTimeoutHandle);
+    waitForFCP.cancel();
+    waitForLoadEvent.cancel();
+    waitForNetworkIdle.cancel();
+    waitForCPUIdle.cancel();
+    monitorForInsecureState.cancel();
+
     await cleanupFn();
   }
 
@@ -1005,26 +1062,6 @@ class Driver {
     this.setNextProtocolTimeout(timeout);
     const result = await this.sendCommand('Network.getResponseBody', {requestId});
     return result.body;
-  }
-
-  async listenForSecurityStateChanges() {
-    this.on('Security.securityStateChanged', state => {
-      this._lastSecurityState = state;
-    });
-    await this.sendCommand('Security.enable');
-  }
-
-  /**
-   * @return {LH.Crdp.Security.SecurityStateChangedEvent}
-   */
-  getSecurityState() {
-    if (!this._lastSecurityState) {
-      // happens if 'listenForSecurityStateChanges' is not called,
-      // or if some assumptions about the Security domain are wrong
-      throw new Error('Expected a security state.');
-    }
-
-    return this._lastSecurityState;
   }
 
   /**
