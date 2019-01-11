@@ -241,10 +241,12 @@ class ReportUIFeatures {
     scoreShadow.style.transform = `scaleY(${1 - scrollPct * 0.2})`;
 
     // Fade & move the scorescale
-    const scoreScalePositionDelta = 32;
-    const scoreScale = this._dom.find('.lh-scorescale', scoresContainer);
-    scoreScale.style.opacity = `${1 - scrollPct}`;
-    scoreScale.style.transform = `translateY(${scrollPct * -scoreScalePositionDelta}px)`;
+    try {
+      const scoreScalePositionDelta = 32;
+      const scoreScale = this._dom.find('.lh-scorescale', scoresContainer);
+      scoreScale.style.opacity = `${1 - scrollPct}`;
+      scoreScale.style.transform = `translateY(${scrollPct * -scoreScalePositionDelta}px)`;
+    } catch (e) {}
 
     // Move the toolbar & export
     this.toolbar.style.transform = `translateY(${heightDiff * scrollPct}px)`;
