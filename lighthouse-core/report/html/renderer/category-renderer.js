@@ -43,23 +43,11 @@ class CategoryRenderer {
   /**
    * Display info per top-level clump. Define on class to avoid race with Util init.
    */
-  get _clumpDisplayInfo() {
+  get _clumpTitles() {
     return {
-      failed: {
-        className: 'lh-clump--failed',
-      },
-      manual: {
-        title: Util.UIStrings.manualAuditsGroupTitle,
-        className: 'lh-clump--manual',
-      },
-      passed: {
-        title: Util.UIStrings.passedAuditsGroupTitle,
-        className: 'lh-clump--passed',
-      },
-      notApplicable: {
-        title: Util.UIStrings.notApplicableAuditsGroupTitle,
-        className: 'lh-clump--notapplicable',
-      },
+      manual: Util.UIStrings.manualAuditsGroupTitle,
+      passed: Util.UIStrings.passedAuditsGroupTitle,
+      notApplicable: Util.UIStrings.notApplicableAuditsGroupTitle,
     };
   }
 
@@ -183,20 +171,13 @@ class CategoryRenderer {
    * Renders the group container for a group of audits. Individual audit elements can be added
    * directly to the returned element.
    * @param {LH.Result.ReportGroup} group
-   * @param {{expandable: boolean, itemCount?: number}} opts
    * @return {Element}
    */
-  renderAuditGroup(group, opts) {
-    const expandable = opts.expandable;
-    const groupEl = this.dom.createElement(expandable ? 'details' : 'div', 'lh-audit-group');
-    const summaryEl = this.dom.createChildOf(groupEl, expandable ? 'summary' : 'div');
+  renderAuditGroup(group) {
+    const groupEl = this.dom.createElement('div', 'lh-audit-group');
+    const summaryEl = this.dom.createChildOf(groupEl, 'div');
     const summaryInnerEl = this.dom.createChildOf(summaryEl, 'div', 'lh-audit-group__summary');
     const headerEl = this.dom.createChildOf(summaryInnerEl, 'div', 'lh-audit-group__header');
-    const itemCountEl = this.dom.createChildOf(summaryInnerEl, 'div', 'lh-audit-group__itemcount');
-    if (expandable) {
-      const chevronEl = summaryInnerEl.appendChild(this._createChevron());
-      chevronEl.title = Util.UIStrings.auditGroupExpandTooltip;
-    }
 
     if (group.description) {
       const auditGroupDescription = this.dom.createElement('div', 'lh-audit-group__description');
@@ -205,10 +186,6 @@ class CategoryRenderer {
     }
     headerEl.textContent = group.title;
 
-    if (opts.itemCount) {
-      // TODO(i18n): support multiple locales here
-      itemCountEl.textContent = `${opts.itemCount} audits`;
-    }
     return groupEl;
   }
 
@@ -251,10 +228,7 @@ class CategoryRenderer {
 
       // Push grouped audits as a group.
       const groupDef = groupDefinitions[groupId];
-      // Expanded by default!
-      // 1. The 'failed' clump has all groups expanded.
-      // 2. If a clump is collapsed (passed, n/a), we want the groups within to already be expanded
-      const auditGroupElem = this.renderAuditGroup(groupDef, {expandable: false});
+      const auditGroupElem = this.renderAuditGroup(groupDef);
       for (const auditRef of groupAuditRefs) {
         auditGroupElem.appendChild(this.renderAudit(auditRef, index++));
       }
@@ -280,45 +254,40 @@ class CategoryRenderer {
   }
 
   /**
-   * Renders a clump (a grouping of groups), under a status of failed, manual,
-   * passed, or notApplicable. The result ends up something like:
-   *
-   * clump (e.g. 'failed')
-   *   ├── audit 1 (w/o group)
-   *   ├── audit 2 (w/o group)
-   *   ├── audit group
-   *   |  ├── audit 3
-   *   |  └── audit 4
-   *   └── audit group
-   *      ├── audit 5
-   *      └── audit 6
-   * clump (e.g. 'manual')
-   *   ├── audit 1
-   *   ├── audit 2
-   *   ⋮
-   * @param {TopLevelClumpId} clumpId
-   * @param {{auditRefs: Array<LH.ReportResult.AuditRef>, groupDefinitions: Object<string, LH.Result.ReportGroup>, description?: string}} clumpOpts
+   * Take a set of audits and render in a top-level, expandable clump that starts
+   * in a collapsed state.
+   * @param {Exclude<TopLevelClumpId, 'failed'>} clumpId
+   * @param {{auditRefs: Array<LH.ReportResult.AuditRef>, description?: string}} clumpOpts
    * @return {Element}
    */
-  renderClump(clumpId, {auditRefs, groupDefinitions, description}) {
-    if (clumpId === 'failed') {
-      // Failed audit clump is always expanded and not nested in an lh-audit-group.
-      const failedElem = this.renderUnexpandableClump(auditRefs, groupDefinitions);
-      failedElem.classList.add('lh-clump', this._clumpDisplayInfo.failed.className);
-      return failedElem;
+  renderClump(clumpId, {auditRefs, description}) {
+    const clumpTmpl = this.dom.cloneTemplate('#tmpl-lh-clump', this.templateContext);
+    const clumpElement = this.dom.find('.lh-clump', clumpTmpl);
+
+    const summaryInnerEl = this.dom.find('.lh-audit-group__summary', clumpElement);
+    const chevronEl = summaryInnerEl.appendChild(this._createChevron());
+    chevronEl.title = Util.UIStrings.auditGroupExpandTooltip;
+
+    const headerEl = this.dom.find('.lh-audit-group__header', clumpElement);
+    const title = this._clumpTitles[clumpId];
+    headerEl.textContent = title;
+    if (description) {
+      const markdownDescriptionEl = this.dom.convertMarkdownLinkSnippets(description);
+      const auditGroupDescription = this.dom.createElement('div', 'lh-audit-group__description');
+      auditGroupDescription.appendChild(markdownDescriptionEl);
+      clumpElement.appendChild(auditGroupDescription);
     }
 
-    const clumpInfo = this._clumpDisplayInfo[clumpId];
-    // TODO: renderAuditGroup shouldn't be used to render a clump (since it *contains* audit groups).
-    const groupDef = {title: clumpInfo.title, description};
-    const groupOpts = {expandable: true, itemCount: auditRefs.length};
-    const clumpElem = this.renderAuditGroup(groupDef, groupOpts);
-    clumpElem.classList.add('lh-clump', clumpInfo.className);
+    const itemCountEl = this.dom.find('.lh-audit-group__itemcount', clumpElement);
+    // TODO(i18n): support multiple locales here
+    itemCountEl.textContent = `${auditRefs.length} audits`;
 
-    // For all non-failed clumps, we don't group
-    clumpElem.append(...auditRefs.map(this.renderAudit.bind(this)));
+    // Add all audit results to the clump.
+    const auditElements = auditRefs.map(this.renderAudit.bind(this));
+    clumpElement.append(...auditElements);
 
-    return clumpElem;
+    clumpElement.classList.add(`lh-clump--${clumpId.toLowerCase()}`);
+    return clumpElement;
   }
 
   /**
@@ -383,6 +352,23 @@ class CategoryRenderer {
   }
 
   /**
+   * Renders a set of top level sections (clumps), under a status of failed, manual,
+   * passed, or notApplicable. The result ends up something like:
+   *
+   * failed clump
+   *   ├── audit 1 (w/o group)
+   *   ├── audit 2 (w/o group)
+   *   ├── audit group
+   *   |  ├── audit 3
+   *   |  └── audit 4
+   *   └── audit group
+   *      ├── audit 5
+   *      └── audit 6
+   * other clump (e.g. 'manual')
+   *   ├── audit 1
+   *   ├── audit 2
+   *   ├── …
+   *   ⋮
    * @param {LH.ReportResult.Category} category
    * @param {Object<string, LH.Result.ReportGroup>} [groupDefinitions]
    * @return {Element}
@@ -409,12 +395,18 @@ class CategoryRenderer {
     }
 
     // Render each clump.
-    for (const [clumpId, clumpRefs] of clumps) {
-      if (clumpRefs.length === 0) continue;
+    for (const [clumpId, auditRefs] of clumps) {
+      if (auditRefs.length === 0) continue;
+
+      if (clumpId === 'failed') {
+        const clumpElem = this.renderUnexpandableClump(auditRefs, groupDefinitions);
+        clumpElem.classList.add(`lh-clump--failed`);
+        element.appendChild(clumpElem);
+        continue;
+      }
 
       const description = clumpId === 'manual' ? category.manualDescription : undefined;
-      const clumpElem = this.renderClump(clumpId, {auditRefs: clumpRefs, groupDefinitions,
-        description});
+      const clumpElem = this.renderClump(clumpId, {auditRefs, description});
       element.appendChild(clumpElem);
     }
 
