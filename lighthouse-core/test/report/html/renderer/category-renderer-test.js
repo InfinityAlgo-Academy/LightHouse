@@ -227,14 +227,16 @@ describe('CategoryRenderer', () => {
       assert.equal(failedAuditGroups.length, failedAuditTags.size);
     });
 
-    it('renders the passed audits grouped by group', () => {
+    it('renders the passed audits ungrouped', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const passedAudits = category.auditRefs.filter(audit =>
           audit.result.scoreDisplayMode !== 'notApplicable' && audit.result.score === 1);
-      const passedAuditTags = new Set(passedAudits.map(audit => audit.group));
 
       const passedAuditGroups = categoryDOM.querySelectorAll('.lh-clump--passed .lh-audit-group');
-      assert.equal(passedAuditGroups.length, passedAuditTags.size);
+      const passedAuditsElems = categoryDOM.querySelectorAll('.lh-clump--passed .lh-audit');
+
+      assert.equal(passedAuditGroups.length, 0);
+      assert.equal(passedAuditsElems.length, passedAudits.length);
     });
 
     it('renders all the audits', () => {
@@ -293,15 +295,20 @@ describe('CategoryRenderer', () => {
     });
 
     it('gives each group a selectable class', () => {
+      const categoryClone = JSON.parse(JSON.stringify(category));
+      // Force all results to be Failed for accurate counting of groups.
+      categoryClone.auditRefs.forEach(ref => {
+        ref.result.score = 0;
+        ref.result.scoreDisplayMode = 'binary';
+      });
       const categoryGroupIds = new Set(category.auditRefs.filter(a => a.group).map(a => a.group));
       assert.ok(categoryGroupIds.size > 6); // Ensure there's something to test.
 
-      const categoryElem = renderer.render(category, sampleResults.categoryGroups);
+      const categoryElem = renderer.render(categoryClone, sampleResults.categoryGroups);
 
       categoryGroupIds.forEach(groupId => {
         const selector = `.lh-audit-group--${groupId}`;
-        // Could be multiple results (e.g. found in both passed and failed clumps).
-        assert.ok(categoryElem.querySelectorAll(selector).length >= 1,
+        assert.equal(categoryElem.querySelectorAll(selector).length, 1,
           `could not find '${selector}'`);
       });
     });
