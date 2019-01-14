@@ -215,16 +215,36 @@ describe('CategoryRenderer', () => {
       assert.ok(description.querySelector('a'), 'description contains converted markdown links');
     });
 
-    // TODO waiting for decision regarding this header
-    it.skip('renders the failed audits grouped by group', () => {
-      const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
-      const failedAudits = category.auditRefs.filter(audit => {
-        return audit.result.score !== 1 && !audit.result.scoreDisplayMode === 'notApplicable';
+    it('renders the failed audits grouped by group', () => {
+      // Fail all the audits.
+      const categoryClone = JSON.parse(JSON.stringify(category));
+      const auditRefs = categoryClone.auditRefs;
+      auditRefs.forEach(ref => {
+        ref.result.score = 0;
+        ref.result.scoreDisplayMode = 'binary';
       });
-      const failedAuditTags = new Set(failedAudits.map(audit => audit.group));
+      const categoryDOM = renderer.render(categoryClone, sampleResults.categoryGroups);
 
-      const failedAuditGroups = categoryDOM.querySelectorAll('.lh-category > div.lh-audit-group');
-      assert.equal(failedAuditGroups.length, failedAuditTags.size);
+      // All the group names in the config.
+      const groupNames = Array.from(new Set(auditRefs.map(ref => ref.group))).filter(Boolean);
+      assert.ok(groupNames.length > 5, `not enough groups found in category for test`);
+
+      // All the group roots in the DOM.
+      const failedGroupElems = Array.from(
+          categoryDOM.querySelectorAll('.lh-clump--failed > .lh-audit-group'));
+
+      assert.strictEqual(failedGroupElems.length, groupNames.length);
+
+      for (const groupName of groupNames) {
+        const groupAuditRefs = auditRefs.filter(ref => ref.group === groupName);
+        assert.ok(groupAuditRefs.length > 0, `no auditRefs found with group '${groupName}'`);
+
+        const className = `lh-audit-group--${groupName}`;
+        const groupElem = failedGroupElems.find(el => el.classList.contains(className));
+        const groupAuditElems = groupElem.querySelectorAll('.lh-audit');
+
+        assert.strictEqual(groupAuditElems.length, groupAuditRefs.length);
+      }
     });
 
     it('renders the passed audits ungrouped', () => {
