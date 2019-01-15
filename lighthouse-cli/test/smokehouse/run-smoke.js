@@ -26,7 +26,7 @@ const smokehouseDir = 'lighthouse-cli/test/smokehouse/';
 
 /** @type {Array<SmoketestDfn>} */
 const SMOKETESTS = [{
-  id: 'ally',
+  id: 'a11y',
   config: smokehouseDir + 'a11y/a11y-config.js',
   expectations: 'a11y/expectations.js',
   batch: 'parallel-first',

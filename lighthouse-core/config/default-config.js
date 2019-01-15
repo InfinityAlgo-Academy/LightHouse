@@ -169,7 +169,6 @@ const defaultConfig = {
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
-    'accessibility/accesskeys',
     'accessibility/aria-allowed-attr',
     'accessibility/aria-required-attr',
     'accessibility/aria-required-children',
@@ -204,6 +203,7 @@ const defaultConfig = {
     'accessibility/valid-lang',
     'accessibility/video-caption',
     'accessibility/video-description',
+    'accessibility/manual/accesskeys',
     'accessibility/manual/custom-controls-labels',
     'accessibility/manual/custom-controls-roles',
     'accessibility/manual/focus-traps',
@@ -363,7 +363,6 @@ const defaultConfig = {
       description: 'These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.',
       manualDescription: 'These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).',
       auditRefs: [
-        {id: 'accesskeys', weight: 1, group: 'a11y-correct-attributes'},
         {id: 'aria-allowed-attr', weight: 3, group: 'a11y-aria'},
         {id: 'aria-required-attr', weight: 2, group: 'a11y-aria'},
         {id: 'aria-required-children', weight: 5, group: 'a11y-aria'},
@@ -399,6 +398,7 @@ const defaultConfig = {
         {id: 'video-caption', weight: 4, group: 'a11y-describe-contents'},
         {id: 'video-description', weight: 3, group: 'a11y-describe-contents'},
         // Manual audits
+        {id: 'accesskeys', weight: 0},
         {id: 'logical-tab-order', weight: 0},
         {id: 'focusable-controls', weight: 0},
         {id: 'interactive-element-affordance', weight: 0},

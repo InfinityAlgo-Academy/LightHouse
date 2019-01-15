@@ -115,9 +115,6 @@ Object {
       "path": "manual/pwa-each-page-has-url",
     },
     Object {
-      "path": "accessibility/accesskeys",
-    },
-    Object {
       "path": "accessibility/aria-allowed-attr",
     },
     Object {
@@ -218,6 +215,9 @@ Object {
     },
     Object {
       "path": "accessibility/video-description",
+    },
+    Object {
+      "path": "accessibility/manual/accesskeys",
     },
     Object {
       "path": "accessibility/manual/custom-controls-labels",
@@ -361,11 +361,6 @@ Object {
   "categories": Object {
     "accessibility": Object {
       "auditRefs": Array [
-        Object {
-          "group": "a11y-correct-attributes",
-          "id": "accesskeys",
-          "weight": 1,
-        },
         Object {
           "group": "a11y-aria",
           "id": "aria-allowed-attr",
@@ -535,6 +530,10 @@ Object {
           "group": "a11y-describe-contents",
           "id": "video-description",
           "weight": 3,
+        },
+        Object {
+          "id": "accesskeys",
+          "weight": 0,
         },
         Object {
           "id": "logical-tab-order",
