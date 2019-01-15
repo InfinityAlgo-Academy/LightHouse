@@ -75,6 +75,11 @@ class Simulator {
     this._connectionPool = /** @type {ConnectionPool} */ (null);
   }
 
+  /** @return {number} */
+  get rtt() {
+    return this._rtt;
+  }
+
   /**
    * @param {Node} graph
    */
