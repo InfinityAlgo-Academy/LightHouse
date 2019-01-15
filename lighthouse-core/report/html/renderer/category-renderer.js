@@ -22,7 +22,7 @@
 /** @typedef {import('./report-renderer.js')} ReportRenderer */
 /** @typedef {import('./details-renderer.js')} DetailsRenderer */
 /** @typedef {import('./util.js')} Util */
-/** @typedef {'failed'|'manual'|'passed'|'notApplicable'} TopLevelClumpId */
+/** @typedef {'failed'|'warning'|'manual'|'passed'|'notApplicable'} TopLevelClumpId */
 
 class CategoryRenderer {
   /**
@@ -45,6 +45,7 @@ class CategoryRenderer {
    */
   get _clumpTitles() {
     return {
+      warning: Util.UIStrings.warningAuditsGroupTitle,
       manual: Util.UIStrings.manualAuditsGroupTitle,
       passed: Util.UIStrings.passedAuditsGroupTitle,
       notApplicable: Util.UIStrings.notApplicableAuditsGroupTitle,
@@ -264,6 +265,10 @@ class CategoryRenderer {
     const clumpTmpl = this.dom.cloneTemplate('#tmpl-lh-clump', this.templateContext);
     const clumpElement = this.dom.find('.lh-clump', clumpTmpl);
 
+    if (clumpId === 'warning') {
+      clumpElement.setAttribute('open', '');
+    }
+
     const summaryInnerEl = this.dom.find('.lh-audit-group__summary', clumpElement);
     const chevronEl = summaryInnerEl.appendChild(this._createChevron());
     chevronEl.title = Util.UIStrings.auditGroupExpandTooltip;
@@ -334,6 +339,14 @@ class CategoryRenderer {
   }
 
   /**
+   * @param {LH.ReportResult.AuditRef} audit
+   * @return {boolean}
+   */
+  _auditHasWarning(audit) {
+    return Boolean(audit.result.warnings && audit.result.warnings.length);
+  }
+
+  /**
    * Returns the id of the top-level clump to put this audit in.
    * @param {LH.ReportResult.AuditRef} auditRef
    * @return {TopLevelClumpId}
@@ -345,15 +358,19 @@ class CategoryRenderer {
     }
 
     if (Util.showAsPassed(auditRef.result)) {
-      return 'passed';
+      if (this._auditHasWarning(auditRef)) {
+        return 'warning';
+      } else {
+        return 'passed';
+      }
     } else {
       return 'failed';
     }
   }
 
   /**
-   * Renders a set of top level sections (clumps), under a status of failed, manual,
-   * passed, or notApplicable. The result ends up something like:
+   * Renders a set of top level sections (clumps), under a status of failed, warning,
+   * manual, passed, or notApplicable. The result ends up something like:
    *
    * failed clump
    *   ├── audit 1 (w/o group)
@@ -382,6 +399,7 @@ class CategoryRenderer {
     /** @type {Map<TopLevelClumpId, Array<LH.ReportResult.AuditRef>>} */
     const clumps = new Map();
     clumps.set('failed', []);
+    clumps.set('warning', []);
     clumps.set('manual', []);
     clumps.set('passed', []);
     clumps.set('notApplicable', []);

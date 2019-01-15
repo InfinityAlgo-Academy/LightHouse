@@ -331,6 +331,9 @@ message I18n {
 
     // The title of the lab data performance category
     string lab_data_title = 16;
+
+    // The heading that is shown above a list of audits that have warnings
+    string warning_audits_group_title = 17;
   }
 
   // The message holding all formatted strings

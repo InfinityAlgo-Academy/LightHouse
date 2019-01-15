@@ -4343,6 +4343,7 @@
       "scorescaleLabel": "Score scale:",
       "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
       "varianceDisclaimer": "Values are estimated and may vary.",
+      "warningAuditsGroupTitle": "Passed audits but with warnings",
       "warningHeader": "Warnings: "
     },
     "icuMessagePaths": {
