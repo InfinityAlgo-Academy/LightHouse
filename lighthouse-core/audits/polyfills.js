@@ -37,14 +37,14 @@ class Polyfills extends Audit {
   }
 
   /**
-   * @param {Poly[]} polys
+   * @param {Poly[]} polyfills
    * @param {string} code
    * @return {PolyIssue[]}
    */
-  static detectPolys(polys, code) {
+  static detectPolyfills(polyfills, code) {
     const qt = (/** @type {string} */ token) =>
       `['"]${token}['"]`; // don't worry about matching string delims
-    const pattern = polys.map(({object, property}) => {
+    const pattern = polyfills.map(({object, property}) => {
       let subpattern = '';
 
       // String.prototype.startsWith =
@@ -77,7 +77,7 @@ class Polyfills extends Audit {
         rowBeginsAtIndex = result.index;
         continue;
       }
-      const poly = polys[matches.findIndex(Boolean)];
+      const poly = polyfills[matches.findIndex(Boolean)];
 
       // don't report more than one instance of a poly for this code.
       // would be nice, but it also reports false positives if both '='
@@ -101,11 +101,8 @@ class Polyfills extends Audit {
    * @return {Poly[]}
    */
   static getPolyDefinitions() {
-    // TODO
-    // how do we determine which polys are not necessary?
-    // ex: only reason to polyfill Array.prototype.filter is if IE <9,
-    //     only reason to polyfill String.prototype.startsWith is if IE, ...
-    // Is there a standard way to declare "we support these browsers"? A meta tag?
+    // if latest Chrome supports a feature natively, we should
+    // complain about the existence of a polyfill
     return [
       'Object.assign',
       'Object.create',
@@ -164,7 +161,7 @@ class Polyfills extends Audit {
    * }}
    */
   static calculatePolyIssues(scripts, networkRecords) {
-    const polys = this.getPolyDefinitions();
+    const polyfills = this.getPolyDefinitions();
     /** @type {Map<Poly, number>} */
     const polyCounter = new Map();
     /** @type {Map<PolyIssue, number>} */
@@ -175,7 +172,7 @@ class Polyfills extends Audit {
     for (const [requestId, content] of Object.entries(scripts)) {
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
       if (!networkRecord) continue;
-      const extPolys = this.detectPolys(polys, content);
+      const extPolys = this.detectPolyfills(polyfills, content);
       urlToPolyIssues.set(networkRecord.url, extPolys);
       for (const polyIssue of extPolys) {
         const val = polyCounter.get(polyIssue.poly) || 0;
