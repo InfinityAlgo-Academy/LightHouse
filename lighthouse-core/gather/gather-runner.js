@@ -88,6 +88,7 @@ class GatherRunner {
    */
   static async loadPage(driver, passContext) {
     const finalUrl = await driver.gotoURL(passContext.url, {
+      waitForFCP: passContext.passConfig.recordTrace,
       waitForLoad: true,
       passContext,
     });
@@ -109,7 +110,6 @@ class GatherRunner {
     await driver.cacheNatives();
     await driver.registerPerformanceObserver();
     await driver.dismissJavaScriptDialogs();
-    await driver.listenForSecurityStateChanges();
     if (resetStorage) await driver.clearDataForOrigin(options.requestedUrl);
     log.timeEnd(status);
   }
@@ -168,23 +168,6 @@ class GatherRunner {
       return new LHError(
         LHError.errors.ERRORED_DOCUMENT_REQUEST,
         {statusCode: `${mainRecord.statusCode}`}
-      );
-    }
-  }
-
-  /**
-   * Throws an error if the security state is insecure.
-   * @param {LH.Crdp.Security.SecurityStateChangedEvent} securityState
-   * @throws {LHError}
-   */
-  static assertNoSecurityIssues({securityState, explanations}) {
-    if (securityState === 'insecure') {
-      const insecureDescriptions = explanations
-        .filter(exp => exp.securityState === 'insecure')
-        .map(exp => exp.description);
-      throw new LHError(
-        LHError.errors.INSECURE_DOCUMENT_REQUEST,
-        {securityMessages: insecureDescriptions.join(' ')}
       );
     }
   }
@@ -310,8 +293,6 @@ class GatherRunner {
     const devtoolsLog = driver.endDevtoolsLog();
     const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
     log.timeEnd(status);
-
-    this.assertNoSecurityIssues(driver.getSecurityState());
 
     let pageLoadError = GatherRunner.getPageLoadError(passContext.url, networkRecords);
     // If the driver was offline, a page load error is expected, so do not save it.

@@ -32,17 +32,13 @@ declare global {
       BINARY: 'binary';
       MANUAL: 'manual';
       INFORMATIVE: 'informative';
-      NOT_APPLICABLE: 'not-applicable';
+      NOT_APPLICABLE: 'notApplicable';
       ERROR: 'error';
     }
 
     export type ScoreDisplayMode = Audit.ScoreDisplayModes[keyof Audit.ScoreDisplayModes];
 
-    interface DisplayValueArray extends Array<string|number> {
-      0: string;
-    }
-
-    export type DisplayValue = string | DisplayValueArray;
+    export type DisplayValue = string;
 
     export interface Meta {
       /** The string identifier of the audit, in kebab case. */
@@ -124,7 +120,7 @@ declare global {
       warnings?: string[];
       score?: number;
       extendedInfo?: {[p: string]: any};
-      /** Overrides scoreDisplayMode with not-applicable if set to true */
+      /** Overrides scoreDisplayMode with notApplicable if set to true */
       notApplicable?: boolean;
       // TODO(bckenny): define details
       details?: object;
@@ -143,7 +139,7 @@ declare global {
        * 'binary': pass/fail audit (0 and 1 are only possible scores).
        * 'numeric': scores of 0-1 (map to displayed scores of 0-100).
        * 'informative': the audit is an FYI only, and can't be interpreted as pass/fail. Score is null and should be ignored.
-       * 'not-applicable': the audit turned out to not apply to the page. Score is null and should be ignored.
+       * 'notApplicable': the audit turned out to not apply to the page. Score is null and should be ignored.
        * 'manual': The audit exists only to tell you to review something yourself. Score is null and should be ignored.
        * 'error': There was an error while running the audit (check `errorMessage` for details). Score is null and should be ignored.
        */

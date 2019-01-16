@@ -14,9 +14,9 @@
 const NEXUS5X_EMULATION_METRICS = {
   mobile: true,
   screenWidth: 412,
-  screenHeight: 732,
+  screenHeight: 660,
   width: 412,
-  height: 732,
+  height: 660,
   positionX: 0,
   positionY: 0,
   scale: 1,

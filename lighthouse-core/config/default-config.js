@@ -94,6 +94,7 @@ const defaultConfig = {
       'chrome-console-messages',
       'image-usage',
       'accessibility',
+      'link-elements',
       'dobetterweb/anchors-with-no-rel-noopener',
       'dobetterweb/appcache',
       'dobetterweb/doctype',
@@ -169,7 +170,6 @@ const defaultConfig = {
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
-    'accessibility/accesskeys',
     'accessibility/aria-allowed-attr',
     'accessibility/aria-required-attr',
     'accessibility/aria-required-children',
@@ -204,6 +204,7 @@ const defaultConfig = {
     'accessibility/valid-lang',
     'accessibility/video-caption',
     'accessibility/video-description',
+    'accessibility/manual/accesskeys',
     'accessibility/manual/custom-controls-labels',
     'accessibility/manual/custom-controls-roles',
     'accessibility/manual/focus-traps',
@@ -358,40 +359,11 @@ const defaultConfig = {
         {id: 'font-display', weight: 0, group: 'diagnostics'},
       ],
     },
-    'pwa': {
-      title: 'Progressive Web App',
-      description: 'These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).',
-      manualDescription: 'These checks are required by the baseline ' +
-          '[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are ' +
-          'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.',
-      auditRefs: [
-        // Fast and Reliable
-        {id: 'load-fast-enough-for-pwa', weight: 7, group: 'pwa-fast-reliable'},
-        {id: 'works-offline', weight: 5, group: 'pwa-fast-reliable'},
-        {id: 'offline-start-url', weight: 1, group: 'pwa-fast-reliable'},
-        // Installable
-        {id: 'is-on-https', weight: 2, group: 'pwa-installable'},
-        {id: 'service-worker', weight: 1, group: 'pwa-installable'},
-        {id: 'installable-manifest', weight: 2, group: 'pwa-installable'},
-        // PWA Optimized
-        {id: 'redirects-http', weight: 2, group: 'pwa-optimized'},
-        {id: 'splash-screen', weight: 1, group: 'pwa-optimized'},
-        {id: 'themed-omnibox', weight: 1, group: 'pwa-optimized'},
-        {id: 'content-width', weight: 1, group: 'pwa-optimized'},
-        {id: 'viewport', weight: 2, group: 'pwa-optimized'},
-        {id: 'without-javascript', weight: 1, group: 'pwa-optimized'},
-        // Manual audits
-        {id: 'pwa-cross-browser', weight: 0},
-        {id: 'pwa-page-transitions', weight: 0},
-        {id: 'pwa-each-page-has-url', weight: 0},
-      ],
-    },
     'accessibility': {
       title: 'Accessibility',
       description: 'These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.',
       manualDescription: 'These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).',
       auditRefs: [
-        {id: 'accesskeys', weight: 1, group: 'a11y-correct-attributes'},
         {id: 'aria-allowed-attr', weight: 3, group: 'a11y-aria'},
         {id: 'aria-required-attr', weight: 2, group: 'a11y-aria'},
         {id: 'aria-required-children', weight: 5, group: 'a11y-aria'},
@@ -427,6 +399,7 @@ const defaultConfig = {
         {id: 'video-caption', weight: 4, group: 'a11y-describe-contents'},
         {id: 'video-description', weight: 3, group: 'a11y-describe-contents'},
         // Manual audits
+        {id: 'accesskeys', weight: 0},
         {id: 'logical-tab-order', weight: 0},
         {id: 'focusable-controls', weight: 0},
         {id: 'interactive-element-affordance', weight: 0},
@@ -483,6 +456,34 @@ const defaultConfig = {
         // Manual audits
         {id: 'mobile-friendly', weight: 0},
         {id: 'structured-data', weight: 0},
+      ],
+    },
+    'pwa': {
+      title: 'Progressive Web App',
+      description: 'These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).',
+      manualDescription: 'These checks are required by the baseline ' +
+          '[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are ' +
+          'not automatically checked by Lighthouse. They do not affect your score but it\'s important that you verify them manually.',
+      auditRefs: [
+        // Fast and Reliable
+        {id: 'load-fast-enough-for-pwa', weight: 7, group: 'pwa-fast-reliable'},
+        {id: 'works-offline', weight: 5, group: 'pwa-fast-reliable'},
+        {id: 'offline-start-url', weight: 1, group: 'pwa-fast-reliable'},
+        // Installable
+        {id: 'is-on-https', weight: 2, group: 'pwa-installable'},
+        {id: 'service-worker', weight: 1, group: 'pwa-installable'},
+        {id: 'installable-manifest', weight: 2, group: 'pwa-installable'},
+        // PWA Optimized
+        {id: 'redirects-http', weight: 2, group: 'pwa-optimized'},
+        {id: 'splash-screen', weight: 1, group: 'pwa-optimized'},
+        {id: 'themed-omnibox', weight: 1, group: 'pwa-optimized'},
+        {id: 'content-width', weight: 1, group: 'pwa-optimized'},
+        {id: 'viewport', weight: 2, group: 'pwa-optimized'},
+        {id: 'without-javascript', weight: 1, group: 'pwa-optimized'},
+        // Manual audits
+        {id: 'pwa-cross-browser', weight: 0},
+        {id: 'pwa-page-transitions', weight: 0},
+        {id: 'pwa-each-page-has-url', weight: 0},
       ],
     },
   },

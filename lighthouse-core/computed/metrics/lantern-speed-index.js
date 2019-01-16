@@ -10,6 +10,7 @@ const LanternMetric = require('./lantern-metric.js');
 const BaseNode = require('../../lib/dependency-graph/base-node.js');
 const Speedline = require('../speedline.js');
 const LanternFirstContentfulPaint = require('./lantern-first-contentful-paint.js');
+const defaultThrottling = require('../../config/constants.js').throttling;
 
 /** @typedef {BaseNode.Node} Node */
 
@@ -25,6 +26,33 @@ class LanternSpeedIndex extends LanternMetric {
       intercept: -250,
       optimistic: 1.4,
       pessimistic: 0.65,
+    };
+  }
+
+  /**
+   * @param {number} rttMs
+   * @return {LH.Gatherer.Simulation.MetricCoefficients}
+   */
+  static getScaledCoefficients(rttMs) { // eslint-disable-line no-unused-vars
+    // We want to scale our default coefficients based on the speed of the connection.
+    // We will linearly interpolate coefficients for the passed-in rttMs based on two pre-determined points:
+    //   1. Baseline point of 30 ms RTT where Speed Index should be a ~50/50 blend of optimistic/pessimistic.
+    //      30 ms was based on a typical home WiFi connection's actual RTT.
+    //      Coefficients here follow from the fact that the optimistic estimate should be very close
+    //      to reality at this connection speed and the pessimistic estimate compensates for minor
+    //      connection speed differences.
+    //   2. Default throttled point of 150 ms RTT where the default coefficients have been determined to be most accurate.
+    //      Coefficients here were determined through thorough analysis and linear regression on the
+    //      lantern test data set. See lighthouse-core/scripts/test-lantern.sh for more detail.
+    // While the coefficients haven't been analyzed at the interpolated points, it's our current best effort.
+    const defaultCoefficients = this.COEFFICIENTS;
+    const defaultRttExcess = defaultThrottling.mobileSlow4G.rttMs - 30;
+    const multiplier = Math.max((rttMs - 30) / defaultRttExcess, 0);
+
+    return {
+      intercept: defaultCoefficients.intercept * multiplier,
+      optimistic: 0.5 + (defaultCoefficients.optimistic - 0.5) * multiplier,
+      pessimistic: 0.5 + (defaultCoefficients.pessimistic - 0.5) * multiplier,
     };
   }
 

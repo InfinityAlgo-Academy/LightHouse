@@ -87,7 +87,7 @@ describe('processing for proto', () => {
     const expectation = {
       'audits': {
         'critical-request-chains': {
-          'scoreDisplayMode': 'not_applicable',
+          'scoreDisplayMode': 'notApplicable',
           'displayValue': 'hello %d | 123',
         },
       },

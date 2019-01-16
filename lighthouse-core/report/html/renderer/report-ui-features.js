@@ -45,6 +45,8 @@ class ReportUIFeatures {
     /** @type {HTMLElement} */
     this.headerBackground; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement} */
+    this.headerContent; // eslint-disable-line no-unused-expressions
+    /** @type {HTMLElement} */
     this.lighthouseIcon; // eslint-disable-line no-unused-expressions
     /** @type {!HTMLElement} */
     this.scoresWrapperBg; // eslint-disable-line no-unused-expressions
@@ -105,7 +107,7 @@ class ReportUIFeatures {
   }
 
   _setupMediaQueryListeners() {
-    const mediaQuery = self.matchMedia('(max-width: 600px)');
+    const mediaQuery = self.matchMedia('(max-width: 500px)');
     mediaQuery.addListener(this.onMediaQueryChange);
     // Ensure the handler is called on init
     this.onMediaQueryChange(mediaQuery);
@@ -134,6 +136,7 @@ class ReportUIFeatures {
     this.headerOverlap = parseFloat(computedMarginTop || '0');
     this.headerSticky = this._dom.find('.lh-header-sticky', this._document);
     this.headerBackground = this._dom.find('.lh-header-bg', this._document);
+    this.headerContent = this._dom.find('.lh-header', this._document);
     this.lighthouseIcon = this._dom.find('.lh-lighthouse', this._document);
     this.scoresWrapperBg = this._dom.find('.lh-scores-wrapper__background', this._document);
     this.productInfo = this._dom.find('.lh-product-info', this._document);
@@ -226,9 +229,9 @@ class ReportUIFeatures {
     this.headerSticky.style.transform = `translateY(${heightDiff * scrollPct * -1}px)`;
     this.headerBackground.style.transform = `translateY(${scrollPct * this.headerOverlap}px)`;
     this.lighthouseIcon.style.transform =
-      `translate3d(var(--report-width-half),` +
-      ` calc(-100% - ${scrollPct * this.headerOverlap * -1}px), 0) scale(${1 - scrollPct})`;
-    this.lighthouseIcon.style.opacity = (1 - scrollPct).toString();
+      `translate3d(0,` +
+      `-${scrollPct * this.headerOverlap * -1}px, 0) scale(${1 - scrollPct})`;
+    this.headerContent.style.opacity = (1 - scrollPct).toString();
 
     // Switch up the score background & shadows
     this.scoresWrapperBg.style.opacity = (1 - scrollPct).toString();
@@ -238,10 +241,12 @@ class ReportUIFeatures {
     scoreShadow.style.transform = `scaleY(${1 - scrollPct * 0.2})`;
 
     // Fade & move the scorescale
-    const scoreScalePositionDelta = 32;
-    const scoreScale = this._dom.find('.lh-scorescale', scoresContainer);
-    scoreScale.style.opacity = `${1 - scrollPct}`;
-    scoreScale.style.transform = `translateY(${scrollPct * -scoreScalePositionDelta}px)`;
+    try {
+      const scoreScalePositionDelta = 32;
+      const scoreScale = this._dom.find('.lh-scorescale', scoresContainer);
+      scoreScale.style.opacity = `${1 - scrollPct}`;
+      scoreScale.style.transform = `translateY(${scrollPct * -scoreScalePositionDelta}px)`;
+    } catch (e) {}
 
     // Move the toolbar & export
     this.toolbar.style.transform = `translateY(${heightDiff * scrollPct}px)`;

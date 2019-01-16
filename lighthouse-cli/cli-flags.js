@@ -35,7 +35,7 @@ function getFlags(manualArgv) {
           'lighthouse <url> --disable-device-emulation --throttling-method=provided',
           'Disable device emulation and all throttling')
       .example(
-          'lighthouse <url> --chrome-flags="--window-size=412,732"',
+          'lighthouse <url> --chrome-flags="--window-size=412,660"',
           'Launch Chrome with a specific window size')
       .example(
           'lighthouse <url> --quiet --chrome-flags="--headless"',
@@ -137,7 +137,6 @@ function getFlags(manualArgv) {
       // default values
       .default('chrome-flags', '')
       .default('output', ['html'])
-      .default('emulated-form-factor', 'mobile')
       .default('port', 0)
       .default('hostname', 'localhost')
       .default('enable-error-reporting', undefined) // Undefined so prompted by default

@@ -23,6 +23,7 @@ const opn = require('opn');
 const _RUNTIME_ERROR_CODE = 1;
 const _PROTOCOL_TIMEOUT_EXIT_CODE = 67;
 const _PAGE_HUNG_EXIT_CODE = 68;
+const _INSECURE_DOCUMENT_REQUEST_EXIT_CODE = 69;
 
 /**
  * exported for testing
@@ -77,6 +78,12 @@ function showPageHungError(err) {
   process.exit(_PAGE_HUNG_EXIT_CODE);
 }
 
+/** @param {LH.LighthouseError} err */
+function showInsecureDocumentRequestError(err) {
+  console.error('Insecure document request:', err.friendlyMessage);
+  process.exit(_INSECURE_DOCUMENT_REQUEST_EXIT_CODE);
+}
+
 /**
  * @param {LH.LighthouseError} err
  */
@@ -98,6 +105,8 @@ function handleError(err) {
     showProtocolTimeoutError();
   } else if (err.code === 'PAGE_HUNG') {
     showPageHungError(err);
+  } else if (err.code === 'INSECURE_DOCUMENT_REQUEST') {
+    showInsecureDocumentRequestError(err);
   } else {
     showRuntimeError(err);
   }

@@ -25,7 +25,7 @@ const UIStrings = {
   description: 'Screen readers have features to make navigating tables easier. Ensuring ' +
       '`<td>` cells using the `[headers]` attribute only refer to other cells in the same ' +
       'table may improve the experience for screen reader users. ' +
-      '[Learn more](https://dequeuniversity.com/rules/axe/2.2/td-headers-attr?application=lighthouse).',
+      '[Learn more](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

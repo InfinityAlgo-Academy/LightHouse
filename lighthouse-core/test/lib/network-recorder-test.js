@@ -6,6 +6,7 @@
 'use strict';
 
 const NetworkRecorder = require('../../lib/network-recorder');
+const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 const assert = require('assert');
 const devtoolsLogItems = require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
 const redirectsDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
@@ -45,7 +46,7 @@ describe('network recorder', function() {
     assert.equal(mainDocument.resourceType, 'Document');
   });
 
-  it('recordsFromLogs ignores invalid records', function() {
+  it('recordsFromLogs ignores records with an invalid URL', function() {
     const logs = [
       { // valid request
         'method': 'Network.requestWillBeSent',
@@ -55,6 +56,7 @@ describe('network recorder', function() {
           'loaderId': '1',
           'documentURL': 'https://www.example.com',
           'request': {
+            // This URL is valid
             'url': 'https://www.example.com',
             'method': 'GET',
             'headers': {
@@ -80,6 +82,7 @@ describe('network recorder', function() {
           'loaderId': '2',
           'documentURL': 'https://www.example.com',
           'request': {
+            // This URL is invalid
             'url': 'https:',
             'method': 'GET',
             'headers': {
@@ -103,6 +106,15 @@ describe('network recorder', function() {
     assert.equal(logs.length, 2);
     const records = NetworkRecorder.recordsFromLogs(logs);
     assert.equal(records.length, 1);
+  });
+
+  it('should ignore invalid `timing` data', () => {
+    const inputRecords = [{url: 'http://example.com', startTime: 1, endTime: 2}];
+    const devtoolsLogs = networkRecordsToDevtoolsLog(inputRecords);
+    const responseReceived = devtoolsLogs.find(item => item.method === 'Network.responseReceived');
+    responseReceived.params.response.timing = {requestTime: 0, receiveHeadersEnd: -1};
+    const records = NetworkRecorder.recordsFromLogs(devtoolsLogs);
+    expect(records).toMatchObject([{url: 'http://example.com', startTime: 1, endTime: 2}]);
   });
 
   describe('#findNetworkQuietPeriods', () => {

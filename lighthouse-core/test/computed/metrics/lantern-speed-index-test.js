@@ -5,6 +5,7 @@
  */
 'use strict';
 
+const defaultThrottling = require('../../../config/constants.js').throttling.mobileSlow4G;
 const LanternSpeedIndex = require('../../../computed/metrics/lantern-speed-index.js');
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
@@ -13,7 +14,7 @@ const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.
 /* eslint-env jest */
 describe('Metrics: Lantern Speed Index', () => {
   it('should compute predicted value', async () => {
-    const settings = {};
+    const settings = {throttlingMethod: 'simulate', throttling: defaultThrottling};
     const context = {settings, computedCache: new Map()};
     const result = await LanternSpeedIndex.request({trace, devtoolsLog, settings}, context);
 
@@ -21,6 +22,51 @@ describe('Metrics: Lantern Speed Index', () => {
       timing: Math.round(result.timing),
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
-    }).toMatchSnapshot();
+    }).toMatchInlineSnapshot(`
+Object {
+  "optimistic": 605,
+  "pessimistic": 1631,
+  "timing": 1657,
+}
+`);
+  });
+
+  it('should compute predicted value for different settings', async () => {
+    const settings = {throttlingMethod: 'simulate', throttling: {...defaultThrottling, rttMs: 300}};
+    const context = {settings, computedCache: new Map()};
+    const result = await LanternSpeedIndex.request({trace, devtoolsLog, settings}, context);
+
+    expect({
+      timing: Math.round(result.timing),
+      optimistic: Math.round(result.optimisticEstimate.timeInMs),
+      pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
+    }).toMatchInlineSnapshot(`
+Object {
+  "optimistic": 605,
+  "pessimistic": 2381,
+  "timing": 2958,
+}
+`);
+  });
+
+  it('should not scale coefficients at default', async () => {
+    const result = LanternSpeedIndex.getScaledCoefficients(defaultThrottling.rttMs);
+    expect(result).toEqual(LanternSpeedIndex.COEFFICIENTS);
+  });
+
+  it('should scale coefficients back', async () => {
+    const result = LanternSpeedIndex.getScaledCoefficients(5);
+    expect(result).toEqual({intercept: -0, pessimistic: 0.5, optimistic: 0.5});
+  });
+
+  it('should scale coefficients forward', async () => {
+    const result = LanternSpeedIndex.getScaledCoefficients(300);
+    expect(result).toMatchInlineSnapshot(`
+Object {
+  "intercept": -562.5,
+  "optimistic": 2.525,
+  "pessimistic": 0.8375,
+}
+`);
   });
 });

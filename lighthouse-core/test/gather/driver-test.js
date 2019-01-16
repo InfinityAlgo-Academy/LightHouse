@@ -15,16 +15,15 @@ const assert = require('assert');
 const EventEmitter = require('events').EventEmitter;
 const {protocolGetVersionResponse} = require('./fake-driver');
 
-const connection = new Connection();
-const driverStub = new Driver(connection);
-
 const redirectDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
 const MAX_WAIT_FOR_PROTOCOL = 20;
 
 function createOnceStub(events) {
   return (eventName, cb) => {
     if (events[eventName]) {
-      return cb(events[eventName]);
+      // wait a tick b/c real events never fire immediately
+      setTimeout(_ => cb(events[eventName]), 0);
+      return;
     }
 
     throw Error(`Stub not implemented: ${eventName}`);
@@ -53,7 +52,7 @@ function createOnceMethodResponse(method, response) {
   sendCommandMockResponses.set(method, response);
 }
 
-connection.sendCommand = function(command, params) {
+function sendCommandStub(command, params) {
   sendCommandParams.push({command, params});
 
   if (sendCommandMockResponses.has(command)) {
@@ -95,22 +94,34 @@ connection.sendCommand = function(command, params) {
     case 'Network.getResponseBody':
       return new Promise(res => setTimeout(res, MAX_WAIT_FOR_PROTOCOL + 20));
     case 'Page.enable':
+    case 'Page.navigate':
+    case 'Page.setLifecycleEventsEnabled':
     case 'Network.enable':
     case 'Tracing.start':
     case 'ServiceWorker.enable':
     case 'ServiceWorker.disable':
+    case 'Security.enable':
+    case 'Security.disable':
     case 'Network.setExtraHTTPHeaders':
     case 'Network.emulateNetworkConditions':
     case 'Emulation.setCPUThrottlingRate':
+    case 'Emulation.setScriptExecutionDisabled':
       return Promise.resolve({});
     case 'Tracing.end':
       return Promise.reject(new Error('tracing not started'));
     default:
       throw Error(`Stub not implemented: ${command}`);
   }
-};
+}
 
 /* eslint-env jest */
+
+let driverStub;
+beforeEach(() => {
+  const connection = new Connection();
+  connection.sendCommand = sendCommandStub;
+  driverStub = new Driver(connection);
+});
 
 describe('Browser Driver', () => {
   beforeEach(() => {
@@ -533,6 +544,77 @@ describe('Multiple tab check', () => {
         downloadThroughput: 0,
         uploadThroughput: 0,
       });
+    });
+  });
+
+  describe('Security check', () => {
+    it('does not reject when page is secure', async () => {
+      const secureSecurityState = {
+        explanations: [],
+        securityState: 'secure',
+      };
+      driverStub.on = driverStub.once = createOnceStub({
+        'Security.securityStateChanged': secureSecurityState,
+        'Page.loadEventFired': {},
+        'Page.domContentEventFired': {},
+      });
+
+      const startUrl = 'https://www.example.com';
+      const loadOptions = {
+        waitForLoad: true,
+        passContext: {
+          passConfig: {
+            networkQuietThresholdMs: 1,
+          },
+          settings: {
+            maxWaitForLoad: 1,
+          },
+        },
+      };
+      await driverStub.gotoURL(startUrl, loadOptions);
+    });
+
+    it('rejects when page is insecure', async () => {
+      const insecureSecurityState = {
+        explanations: [
+          {
+            description: 'reason 1.',
+            securityState: 'insecure',
+          },
+          {
+            description: 'blah.',
+            securityState: 'info',
+          },
+          {
+            description: 'reason 2.',
+            securityState: 'insecure',
+          },
+        ],
+        securityState: 'insecure',
+      };
+      driverStub.on = createOnceStub({
+        'Security.securityStateChanged': insecureSecurityState,
+      });
+
+      const startUrl = 'https://www.example.com';
+      const loadOptions = {
+        waitForLoad: true,
+        passContext: {
+          passConfig: {
+            networkQuietThresholdMs: 1,
+          },
+        },
+      };
+
+      try {
+        await driverStub.gotoURL(startUrl, loadOptions);
+        assert.fail('security check should have rejected');
+      } catch (err) {
+        assert.equal(err.message, 'INSECURE_DOCUMENT_REQUEST');
+        assert.equal(err.code, 'INSECURE_DOCUMENT_REQUEST');
+        /* eslint-disable-next-line max-len */
+        expect(err.friendlyMessage).toBeDisplayString('The URL you have provided does not have valid security credentials. reason 1. reason 2.');
+      }
     });
   });
 });
