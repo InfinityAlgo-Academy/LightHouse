@@ -1,11 +1,11 @@
  <a name="4.0.0"></a>
 # 4.0.0 (2019-01-16)
 
-## New Contributors!
+## New contributors!
 
 @mattzeunert, @dima74, @jeffbcross, @knoxmic, and @shogunsea. Thanks!
 
-## Major Changes
+## Major changes
 
 * A bevy of bug fixes and performance improvements.
 
@@ -14,6 +14,23 @@
 * A new layout for the PWA category, emphasizing speed, installability, and polish.
 
 <a href="https://user-images.githubusercontent.com/316891/51218948-6e60ef00-18e3-11e9-8a48-535b59a41301.png"><img height="300" alt="Lighthouse 4.0 PWA category" src="https://user-images.githubusercontent.com/316891/51218948-6e60ef00-18e3-11e9-8a48-535b59a41301.png"></a>
+
+## Breaking changes
+
+* New PWA category, organization, and scoring ([#6395](https://github.com/GoogleChrome/lighthouse/issues/6395))
+  - the PWA section of the report has a set of badges instead of a numeric score gauge ([#6526](https://github.com/googlechrome/lighthouse/pull/6526), [#6670](https://github.com/googlechrome/lighthouse/pull/6670))
+  - the `webapp-install-banner` audit is now `installable-manifest` ([#6630](https://github.com/googlechrome/lighthouse/pull/6630))
+  - the offline check formerly in `webapp-install-banner` is the new audit `offline-start-url` ([#6397](https://github.com/googlechrome/lighthouse/pull/6397))
+* audits' `scoreDisplayMode` `'not-applicable'` is now `'notApplicable'` ([#6783](https://github.com/googlechrome/lighthouse/pull/6783))
+* `no-websql` audit removed due to performance cost ([#6293](https://github.com/googlechrome/lighthouse/pull/6293))
+* `speed-index` scoring now scales based on throttling ([#7007](https://github.com/googlechrome/lighthouse/pull/7007))
+* empty children arrays are now removed from `critical-request-chain` audit result ([#6211](https://github.com/googlechrome/lighthouse/pull/6211))
+* the correct Nexus 5X screen height of 660 now used instead of 732 ([#6932](https://github.com/googlechrome/lighthouse/pull/6932))
+* throttling constants under `mobile3G` renamed to the more accurate `mobileSlow4G` with no change in values ([#6163](https://github.com/googlechrome/lighthouse/pull/6163))
+* typescript definition files are now located under `types/` ([#6617](https://github.com/googlechrome/lighthouse/pull/6617))
+* computed artifact files are now located under `lighthouse-core/computed/` ([#6618](https://github.com/googlechrome/lighthouse/pull/6618))
+
+<hr>
 
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v4.0.0-beta...v4.0.0) (in addition to the changes in [4.0.0-beta](https://github.com/GoogleChrome/lighthouse/releases/tag/v4.0.0-beta), [4.0.0-alpha.1](https://github.com/GoogleChrome/lighthouse/releases/tag/v4.0.0-alpha.1), and [4.0.0-alpha.0](https://github.com/GoogleChrome/lighthouse/releases/tag/4.0.0-alpha.0))
 
