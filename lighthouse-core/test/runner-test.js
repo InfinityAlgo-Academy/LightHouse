@@ -487,7 +487,7 @@ describe('Runner', () => {
     const config = new Config({
       passes: [{
         passName: 'firstPass',
-        gatherers: ['viewport', 'viewport-dimensions'],
+        gatherers: ['meta-elements', 'viewport-dimensions'],
       }],
 
       audits: [

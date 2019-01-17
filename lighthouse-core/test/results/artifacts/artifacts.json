@@ -121,7 +121,6 @@
       }
     ]
   },
-  "Viewport": "width=device-width, initial-scale=1, minimum-scale=1",
   "ViewportDimensions": {
     "innerWidth": 412,
     "innerHeight": 660,
@@ -129,8 +128,10 @@
     "outerHeight": 660,
     "devicePixelRatio": 2.625
   },
-  "ThemeColor": null,
   "Manifest": null,
+  "MetaElements": [
+    {"name": "viewport", "content": "width=device-width, initial-scale=1, minimum-scale=1"}
+  ],
   "RuntimeExceptions": [
     {
       "timestamp": 1519974785784.3982,
@@ -2480,7 +2481,6 @@
     "name": "mydb",
     "version": "1.0"
   },
-  "MetaDescription": null,
   "FontSize": {
     "analyzedFailingNodesData": [],
     "analyzedFailingTextLength": 0,
@@ -2510,7 +2510,6 @@
       "text": ""
     }
   ],
-  "MetaRobots": null,
   "Hreflang": [],
   "EmbeddedContent": [],
   "Canonical": [],

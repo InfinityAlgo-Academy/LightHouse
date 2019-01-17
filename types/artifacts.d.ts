@@ -91,10 +91,8 @@ declare global {
       JsUsage: Crdp.Profiler.ScriptCoverage[];
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       Manifest: Artifacts.Manifest | null;
-      /** The value of the <meta name="description">'s content attribute, or null. */
-      MetaDescription: string|null;
-      /** The value of the <meta name="robots">'s content attribute, or null. */
-      MetaRobots: string|null;
+      /** The values of the <meta> elements in the head. */
+      MetaElements: Array<{name: string, content?: string}>;
       /** The URL loaded with interception */
       MixedContent: {url: string};
       /** The status code of the attempted load of the page while network access is disabled. */
@@ -117,10 +115,6 @@ declare global {
       StartUrl: {statusCode: number, explanation?: string};
       /** Information on <script> and <link> tags blocking first paint. */
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
-      /** The value of the <meta name="theme=color">'s content attribute, or null. */
-      ThemeColor: string|null;
-      /** The value of the <meta name="viewport">'s content attribute, or null. */
-      Viewport: string|null;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
     }
@@ -128,6 +122,7 @@ declare global {
     module Artifacts {
       export type NetworkRequest = _NetworkRequest;
       export type TaskNode = _TaskNode;
+      export type MetaElement = LH.Artifacts['MetaElements'][0];
 
       export interface Accessibility {
         violations: {

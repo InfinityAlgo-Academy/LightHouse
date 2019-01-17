@@ -9,7 +9,7 @@
     "requestedUrl": "https://www.reddit.com/r/nba",
     "finalUrl": "https://www.reddit.com/r/nba"
   },
-  "Viewport": null,
+  "MetaElements": [],
   "ViewportDimensions": {
     "innerWidth": 412,
     "innerHeight": 660,

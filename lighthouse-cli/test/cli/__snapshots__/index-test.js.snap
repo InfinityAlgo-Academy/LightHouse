@@ -1039,13 +1039,7 @@ Object {
           "path": "css-usage",
         },
         Object {
-          "path": "viewport",
-        },
-        Object {
           "path": "viewport-dimensions",
-        },
-        Object {
-          "path": "theme-color",
         },
         Object {
           "path": "manifest",
@@ -1064,6 +1058,9 @@ Object {
         },
         Object {
           "path": "link-elements",
+        },
+        Object {
+          "path": "meta-elements",
         },
         Object {
           "path": "dobetterweb/anchors-with-no-rel-noopener",
@@ -1093,16 +1090,10 @@ Object {
           "path": "dobetterweb/tags-blocking-first-paint",
         },
         Object {
-          "path": "seo/meta-description",
-        },
-        Object {
           "path": "seo/font-size",
         },
         Object {
           "path": "seo/crawlable-links",
-        },
-        Object {
-          "path": "seo/meta-robots",
         },
         Object {
           "path": "seo/hreflang",
