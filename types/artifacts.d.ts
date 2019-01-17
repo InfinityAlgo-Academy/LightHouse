@@ -82,7 +82,7 @@ declare global {
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
       /** Information on size and loading for all the images in the page. */
-      ImageUsage: Artifacts.SingleImageUsage[];
+      ImageElements: Artifacts.ImageElement[];
       /** Information on JS libraries and versions used by the page. */
       JSLibraries: {name: string, version: string, npmPkgName: string}[];
       /** JS coverage information for code used during page load. */
@@ -224,31 +224,33 @@ declare global {
       // TODO(bckenny): real type for parsed manifest.
       export type Manifest = ReturnType<typeof parseManifest>;
 
-      export interface SingleImageUsage {
+      export interface ImageElement {
         src: string;
-        clientWidth: number;
-        clientHeight: number;
+        /** The displayed width of the image, uses img.width when available falling back to clientWidth. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
+        displayedWidth: number;
+        /** The displayed height of the image, uses img.height when available falling back to clientHeight. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
+        displayedHeight: number;
+        /** The natural width of the underlying image, uses img.naturalWidth. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
         naturalWidth: number;
+        /** The natural height of the underlying image, uses img.naturalHeight. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
         naturalHeight: number;
-        isCss: boolean;
-        isPicture: boolean;
-        usesObjectFit: boolean;
+        /** The BoundingClientRect of the element. */
         clientRect: {
           top: number;
           bottom: number;
           left: number;
           right: number;
         };
-        networkRecord?: {
-          url: string;
-          resourceSize: number;
-          startTime: number;
-          endTime: number;
-          responseReceivedTime: number;
-          mimeType: string;
-        };
-        width?: number;
-        height?: number;
+        /** Flags whether this element was an image via CSS background-image rather than <img> tag. */
+        isCss: boolean;
+        /** Flags whether this element was contained within a <picture> tag. */
+        isPicture: boolean;
+        /** Flags whether this element was sized using a non-default `object-fit` CSS property. */
+        usesObjectFit: boolean;
+        /** The size of the underlying image file in bytes. 0 if the file could not be identified. */
+        resourceSize: number;
+        /** The MIME type of the underlying image file. */
+        mimeType?: string;
       }
 
       export interface OptimizedImage {

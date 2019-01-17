@@ -47,7 +47,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'devtoolsLogs', 'traces'],
+      requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'devtoolsLogs', 'traces'],
     };
   }
 
@@ -69,21 +69,23 @@ class OffscreenImages extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {LH.Artifacts.SingleImageUsage} image
+   * @param {LH.Artifacts.ImageElement} image
    * @param {{innerWidth: number, innerHeight: number}} viewportDimensions
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {null|Error|WasteResult}
    */
-  static computeWaste(image, viewportDimensions) {
-    if (!image.networkRecord) {
+  static computeWaste(image, viewportDimensions, networkRecords) {
+    const networkRecord = networkRecords.find(record => record.url === image.src);
+    if (!image.resourceSize || !networkRecord) {
       return null;
     }
 
     const url = URL.elideDataURI(image.src);
-    const totalPixels = image.clientWidth * image.clientHeight;
+    const totalPixels = image.displayedWidth * image.displayedHeight;
     const visiblePixels = this.computeVisiblePixels(image.clientRect, viewportDimensions);
     // Treat images with 0 area as if they're offscreen. See https://github.com/GoogleChrome/lighthouse/issues/1914
     const wastedRatio = totalPixels === 0 ? 1 : 1 - visiblePixels / totalPixels;
-    const totalBytes = image.networkRecord.resourceSize;
+    const totalBytes = image.resourceSize;
     const wastedBytes = Math.round(totalBytes * wastedRatio);
 
     if (!Number.isFinite(wastedRatio)) {
@@ -92,7 +94,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
 
     return {
       url,
-      requestStartTime: image.networkRecord.startTime,
+      requestStartTime: networkRecord.startTime,
       totalBytes,
       wastedBytes,
       wastedPercent: 100 * wastedRatio,
@@ -168,7 +170,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
    * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
-    const images = artifacts.ImageUsage;
+    const images = artifacts.ImageElements;
     const viewportDimensions = artifacts.ViewportDimensions;
     const trace = artifacts.traces[ByteEfficiencyAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
@@ -176,7 +178,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     /** @type {string[]} */
     const warnings = [];
     const resultsMap = images.reduce((results, image) => {
-      const processed = OffscreenImages.computeWaste(image, viewportDimensions);
+      const processed = OffscreenImages.computeWaste(image, viewportDimensions, networkRecords);
       if (processed === null) {
         return results;
       }
