@@ -22,6 +22,9 @@ const fakeDriver = {
   getBenchmarkIndex() {
     return Promise.resolve(125.2);
   },
+  getAppManifest() {
+    return Promise.resolve(null);
+  },
   connect() {
     return Promise.resolve();
   },

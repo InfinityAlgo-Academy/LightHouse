@@ -1070,4 +1070,36 @@ describe('GatherRunner', function() {
         });
     });
   });
+
+  describe('.getWebAppManifest', () => {
+    const MANIFEST_URL = 'https://example.com/manifest.json';
+    let passContext;
+
+    beforeEach(() => {
+      passContext = {
+        url: 'https://example.com/index.html',
+        baseArtifacts: {},
+        driver: fakeDriver,
+      };
+    });
+
+    it('should pass through manifest when null', async () => {
+      const getAppManifest = jest.spyOn(fakeDriver, 'getAppManifest');
+      getAppManifest.mockResolvedValueOnce(null);
+      const result = await GatherRunner.getWebAppManifest(passContext);
+      expect(result).toEqual(null);
+    });
+
+    it('should parse the manifest when found', async () => {
+      const manifest = {name: 'App'};
+      const getAppManifest = jest.spyOn(fakeDriver, 'getAppManifest');
+      getAppManifest.mockResolvedValueOnce({data: JSON.stringify(manifest), url: MANIFEST_URL});
+      const result = await GatherRunner.getWebAppManifest(passContext);
+      expect(result).toHaveProperty('raw', JSON.stringify(manifest));
+      expect(result.value).toMatchObject({
+        name: {value: 'App', raw: 'App'},
+        start_url: {value: passContext.url, raw: undefined},
+      });
+    });
+  });
 });

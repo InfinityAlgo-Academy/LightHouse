@@ -398,19 +398,28 @@ class Driver {
   /**
    * @return {Promise<{url: string, data: string}|null>}
    */
-  getAppManifest() {
-    return this.sendCommand('Page.getAppManifest')
-      .then(response => {
-        // We're not reading `response.errors` however it may contain critical and noncritical
-        // errors from Blink's manifest parser:
-        //   https://chromedevtools.github.io/debugger-protocol-viewer/tot/Page/#type-AppManifestError
-        if (!response.data) {
-          // If the data is empty, the page had no manifest.
-          return null;
-        }
+  async getAppManifest() {
+    this.setNextProtocolTimeout(3000);
+    const response = await this.sendCommand('Page.getAppManifest');
+    let data = response.data;
 
-        return /** @type {Required<LH.Crdp.Page.GetAppManifestResponse>} */ (response);
-      });
+    // We're not reading `response.errors` however it may contain critical and noncritical
+    // errors from Blink's manifest parser:
+    //   https://chromedevtools.github.io/debugger-protocol-viewer/tot/Page/#type-AppManifestError
+    if (!data) {
+      // If the data is empty, the page had no manifest.
+      return null;
+    }
+
+    const BOM_LENGTH = 3;
+    const BOM_FIRSTCHAR = 65279;
+    const isBomEncoded = data.charCodeAt(0) === BOM_FIRSTCHAR;
+
+    if (isBomEncoded) {
+      data = Buffer.from(data).slice(BOM_LENGTH).toString();
+    }
+
+    return {...response, data};
   }
 
   /**

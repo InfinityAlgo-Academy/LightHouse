@@ -29,6 +29,8 @@ declare global {
       NetworkUserAgent: string;
       /** The benchmark index that indicates rough device class. */
       BenchmarkIndex: number;
+      /** Parsed version of the page's Web App Manifest, or null if none found. */
+      WebAppManifest: Artifacts.Manifest | null;
       /** A set of page-load traces, keyed by passName. */
       traces: {[passName: string]: Trace};
       /** A set of DevTools debugger protocol records, keyed by passName. */

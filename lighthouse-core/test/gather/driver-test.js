@@ -117,10 +117,11 @@ function sendCommandStub(command, params) {
 /* eslint-env jest */
 
 let driverStub;
+let connectionStub;
 beforeEach(() => {
-  const connection = new Connection();
-  connection.sendCommand = sendCommandStub;
-  driverStub = new Driver(connection);
+  connectionStub = new Connection();
+  connectionStub.sendCommand = sendCommandStub;
+  driverStub = new Driver(connectionStub);
 });
 
 describe('Browser Driver', () => {
@@ -329,11 +330,42 @@ describe('Browser Driver', () => {
       assert.equal(sendCommandParams[0], undefined);
     });
   });
+
+  describe('.getAppManifest', () => {
+    it('should return null when no manifest', async () => {
+      connectionStub.sendCommand = jest.fn()
+        .mockResolvedValueOnce({data: undefined, url: '/manifest'});
+      const result = await driverStub.getAppManifest();
+      expect(result).toEqual(null);
+    });
+
+    it('should return the manifest', async () => {
+      const manifest = {name: 'The App'};
+      connectionStub.sendCommand = jest.fn()
+        .mockResolvedValueOnce({data: JSON.stringify(manifest), url: '/manifest'});
+      const result = await driverStub.getAppManifest();
+      expect(result).toEqual({data: JSON.stringify(manifest), url: '/manifest'});
+    });
+
+    it('should handle BOM-encoded manifest', async () => {
+      const fs = require('fs');
+      const manifestWithoutBOM = fs.readFileSync(__dirname + '/../fixtures/manifest.json')
+        .toString();
+      const manifestWithBOM = fs.readFileSync(__dirname + '/../fixtures/manifest-bom.json')
+        .toString();
+
+      connectionStub.sendCommand = jest.fn()
+        .mockResolvedValueOnce({data: manifestWithBOM, url: '/manifest'});
+      const result = await driverStub.getAppManifest();
+      expect(result).toEqual({data: manifestWithoutBOM, url: '/manifest'});
+    });
+  });
 });
 
 describe('Multiple tab check', () => {
   beforeEach(() => {
     sendCommandParams = [];
+    sendCommandMockResponses.clear();
   });
 
   it('will pass if there are no current service workers', () => {
