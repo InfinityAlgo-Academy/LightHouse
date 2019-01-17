@@ -173,11 +173,13 @@ class Polyfills extends Audit {
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
       if (!networkRecord) continue;
       const extPolys = this.detectPolyfills(polyfills, content);
-      urlToPolyIssues.set(networkRecord.url, extPolys);
-      for (const polyIssue of extPolys) {
-        const val = polyCounter.get(polyIssue.poly) || 0;
-        polyIssueCounter.set(polyIssue, val);
-        polyCounter.set(polyIssue.poly, val + 1);
+      if (extPolys.length) {
+        urlToPolyIssues.set(networkRecord.url, extPolys);
+        for (const polyIssue of extPolys) {
+          const val = polyCounter.get(polyIssue.poly) || 0;
+          polyIssueCounter.set(polyIssue, val);
+          polyCounter.set(polyIssue.poly, val + 1);
+        }
       }
     }
 
@@ -221,9 +223,11 @@ class Polyfills extends Audit {
     ];
     const details = Audit.makeTableDetails(headings, tableRows);
 
+    // console.log(urlToPolyIssues, urlToPolyIssues.size, urlToPolyIssues.size === 0, Number(urlToPolyIssues.size === 0));
+    // console.log(polyIssueCounter);
     return {
-      score: Number(urlToPolyIssues.size === 0),
-      rawValue: urlToPolyIssues.size,
+      score: Number(polyIssueCounter.size === 0),
+      rawValue: polyIssueCounter.size,
       details,
     };
   }

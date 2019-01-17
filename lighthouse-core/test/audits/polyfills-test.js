@@ -29,7 +29,77 @@ const createArtifacts = (scripts) => {
 
 /* eslint-env jest */
 describe('Polyfills', () => {
-  it('should work', async () => {
+  it('code with no polyfills passes', async () => {
+    const artifacts = createArtifacts([
+      {
+        code: 'var message = "hello world"; console.log(message);',
+        url: 'https://www.example.com/a.js',
+      },
+    ]);
+    const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
+    assert.equal(result.score, 1);
+    assert.equal(result.rawValue, 0);
+  });
+
+  it('code with a polyfill fails', async () => {
+    const artifacts = createArtifacts([
+      {
+        code: 'String.prototype.repeat = function() {}',
+        url: 'https://www.example.com/a.js',
+      },
+    ]);
+    const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
+    assert.equal(result.score, 0);
+    assert.equal(result.rawValue, 1);
+    assert.equal(result.details.items[0].description, 'String.prototype.repeat');
+  });
+
+  it('code with multiple polyfills fail', async () => {
+    const artifacts = createArtifacts([
+      {
+        code: 'String.prototype.repeat = function() {}; String.prototype.includes = function() {}',
+        url: 'https://www.example.com/a.js',
+      },
+    ]);
+    const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
+    assert.equal(result.score, 0);
+    assert.equal(result.rawValue, 2);
+  });
+
+  it('multiple of the same polyfill from the same script are counted only once', async () => {
+    const artifacts = createArtifacts([
+      {
+        code: (() => {
+          String.prototype.repeat = function() {};
+          Object.defineProperty(String.prototype, 'repeat', function() {});
+        }),
+        url: 'https://www.example.com/a.js',
+      },
+    ]);
+    const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
+    assert.equal(result.score, 0);
+    assert.equal(result.rawValue, 1);
+  });
+
+  it('multiple of the same polyfill from different scripts display a counter', async () => {
+    const artifacts = createArtifacts([
+      {
+        code: 'String.prototype.repeat = function() {}',
+        url: 'https://www.example.com/a.js',
+      },
+      {
+        code: 'String.prototype["repeat"] = function() {}',
+        url: 'https://www.example.com/b.js',
+      },
+    ]);
+    const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
+    assert.equal(result.score, 0);
+    assert.equal(result.rawValue, 2);
+    assert.equal(result.details.items[0].description, 'String.prototype.repeat (1 / 2)');
+    assert.equal(result.details.items[1].description, 'String.prototype.repeat (2 / 2)');
+  });
+
+  it('should identify polyfills in multiple patterns', async () => {
     const artifacts = createArtifacts([
       {
         code: 'String.prototype.repeat = function() {}',
@@ -43,10 +113,17 @@ describe('Polyfills', () => {
         code: 'String.prototype[\'repeat\'] = function() {}',
         url: 'https://www.example.com/c.js',
       },
+      {
+        code: 'Object.defineProperty(String.prototype, "repeat", function() {})',
+        url: 'https://www.example.com/d.js',
+      },
+      {
+        code: 'Object.defineProperty(String.prototype, \'repeat\', function() {})',
+        url: 'https://www.example.com/e.js',
+      },
     ]);
     const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
-    console.log(JSON.stringify(result, null, 2));
     assert.equal(result.score, 0);
-    assert.equal(result.rawValue, 3);
+    assert.equal(result.rawValue, 5);
   });
 });
