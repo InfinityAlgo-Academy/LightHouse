@@ -182,7 +182,8 @@ function getEffectiveFontRule({inlineStyle, matchedCSSRules, inherited}) {
  * @returns {number}
  */
 function getNodeTextLength(node) {
-  return !node.nodeValue ? 0 : node.nodeValue.trim().length;
+  // Array.from to count symbols not unicode code points. See: #6973
+  return !node.nodeValue ? 0 : Array.from(node.nodeValue.trim()).length;
 }
 
 /**
