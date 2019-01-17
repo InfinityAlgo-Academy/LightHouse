@@ -85,6 +85,11 @@ const SMOKETESTS = [{
   expectations: 'tricky-metrics/expectations.js',
   config: 'lighthouse-core/config/perf-config.js',
   batch: 'parallel-second',
+}, {
+  id: 'polyfills',
+  expectations: 'polyfills-expectations.js',
+  config: 'polyfills-config.js',
+  batch: 'parallel-first',
 }];
 
 /**

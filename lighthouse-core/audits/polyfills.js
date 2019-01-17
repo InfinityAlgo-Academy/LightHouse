@@ -74,7 +74,7 @@ class Polyfills extends Audit {
       const [, isNewline, ...matches] = result;
       if (isNewline) {
         row++;
-        rowBeginsAtIndex = result.index;
+        rowBeginsAtIndex = result.index + 1;
         continue;
       }
       const poly = polyfills[matches.findIndex(Boolean)];

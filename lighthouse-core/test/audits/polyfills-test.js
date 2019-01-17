@@ -70,7 +70,9 @@ describe('Polyfills', () => {
     const artifacts = createArtifacts([
       {
         code: (() => {
+          // eslint-disable-next-line no-extend-native
           String.prototype.repeat = function() {};
+          // eslint-disable-next-line no-extend-native
           Object.defineProperty(String.prototype, 'repeat', function() {});
         }),
         url: 'https://www.example.com/a.js',
