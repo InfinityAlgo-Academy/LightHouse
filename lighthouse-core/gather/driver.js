@@ -340,14 +340,9 @@ class Driver {
    * @param {{useIsolation?: boolean}=} options
    * @return {Promise<*>}
    */
-  evaluateAsync(expression, options = {}) {
-    // tsc won't convert {Promise<number>|Promise<undefined>}, so cast manually.
-    // https://github.com/Microsoft/TypeScript/issues/7294
-    /** @type {Promise<number|undefined>} */
-    const contextIdPromise = options.useIsolation ?
-        this._getOrCreateIsolatedContextId() :
-        Promise.resolve(undefined);
-    return contextIdPromise.then(contextId => this._evaluateInContext(expression, contextId));
+  async evaluateAsync(expression, options = {}) {
+    const contextId = options.useIsolation ? await this._getOrCreateIsolatedContextId() : undefined;
+    return this._evaluateInContext(expression, contextId);
   }
 
   /**
