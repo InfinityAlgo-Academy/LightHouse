@@ -12,15 +12,21 @@ const createTestTrace = require('../../create-test-trace.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
-function generateRecord(resourceSizeInKb, startTime = 0, mimeType = 'image/png') {
+function generateRecord({
+  resourceSizeInKb,
+  url = 'https://google.com/logo.png',
+  startTime = 0,
+  mimeType = 'image/png',
+}) {
   return {
+    url,
     mimeType,
     startTime, // DevTools timestamp which is in seconds
     resourceSize: resourceSizeInKb * 1024,
   };
 }
 
-function generateSize(width, height, prefix = 'client') {
+function generateSize(width, height, prefix = 'displayed') {
   const size = {};
   size[`${prefix}Width`] = width;
   size[`${prefix}Height`] = height;
@@ -35,11 +41,11 @@ function generateImage(size, coords, networkRecord, src = 'https://google.com/lo
 
   const clientRect = {
     top: y,
-    bottom: y + size.clientHeight,
+    bottom: y + size.displayedHeight,
     left: x,
-    right: x + size.clientWidth,
+    right: x + size.displayedWidth,
   };
-  const image = {src, networkRecord, clientRect};
+  const image = {src, clientRect, ...networkRecord};
   Object.assign(image, size);
   return image;
 }
@@ -56,7 +62,7 @@ describe('OffscreenImages audit', () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
+      ImageElements: [
         generateImage(generateSize(100, 100), [0, 0]),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
@@ -68,64 +74,73 @@ describe('OffscreenImages audit', () => {
     });
   });
 
-  it('does not find used images', () => {
+  it('does not find used images', async () => {
     const urlB = 'https://google.com/logo2.png';
     const urlC = 'data:image/jpeg;base64,foobar';
+    const recordA = generateRecord({resourceSizeInKb: 100});
+    const recordB = generateRecord({url: urlB, resourceSizeInKb: 100});
+    const recordC = generateRecord({url: urlC, resourceSizeInKb: 3});
     const topLevelTasks = [{ts: 1900, duration: 100}];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
-        generateImage(generateSize(200, 200), [0, 0], generateRecord(100)),
-        generateImage(generateSize(100, 100), [0, 1080], generateRecord(100), urlB),
-        generateImage(generateSize(400, 400), [1720, 1080], generateRecord(3), urlC),
+      ImageElements: [
+        generateImage(generateSize(200, 200), [0, 0], recordA),
+        generateImage(generateSize(100, 100), [0, 1080], recordB, urlB),
+        generateImage(generateSize(400, 400), [1720, 1080], recordC, urlC),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
-      assert.equal(auditResult.items.length, 0);
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, [recordA, recordB, recordC], context);
+    assert.equal(auditResult.items.length, 0);
   });
 
-  it('finds unused images', () => {
+  it('finds unused images', async () => {
     const url = s => `https://google.com/logo${s}.png`;
     const topLevelTasks = [{ts: 1900, duration: 100}];
+    const networkRecords = [
+      generateRecord({url: url(''), resourceSizeInKb: 100}),
+      generateRecord({url: url('B'), resourceSizeInKb: 100}),
+      generateRecord({url: url('C'), resourceSizeInKb: 100}),
+      generateRecord({url: url('D'), resourceSizeInKb: 100}),
+      generateRecord({url: url('E'), resourceSizeInKb: 100}),
+    ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
+      ImageElements: [
         // offscreen to the right
-        generateImage(generateSize(200, 200), [3000, 0], generateRecord(100)),
+        generateImage(generateSize(200, 200), [3000, 0], networkRecords[0]),
         // offscreen to the bottom
-        generateImage(generateSize(100, 100), [0, 2000], generateRecord(100), url('B')),
+        generateImage(generateSize(100, 100), [0, 2000], networkRecords[1], url('B')),
         // offscreen to the top-left
-        generateImage(generateSize(100, 100), [-2000, -1000], generateRecord(100), url('C')),
+        generateImage(generateSize(100, 100), [-2000, -1000], networkRecords[2], url('C')),
         // offscreen to the bottom-right
-        generateImage(generateSize(100, 100), [3000, 2000], generateRecord(100), url('D')),
+        generateImage(generateSize(100, 100), [3000, 2000], networkRecords[3], url('D')),
         // half offscreen to the top, should not warn
-        generateImage(generateSize(1000, 1000), [0, -500], generateRecord(100), url('E')),
+        generateImage(generateSize(1000, 1000), [0, -500], networkRecords[4], url('E')),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
-      assert.equal(auditResult.items.length, 4);
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, networkRecords, context);
+    assert.equal(auditResult.items.length, 4);
   });
 
   it('finds images with 0 area', () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
+    const networkRecord = generateRecord({resourceSizeInKb: 100});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
-        generateImage(generateSize(0, 0), [0, 0], generateRecord(100)),
+      ImageElements: [
+        generateImage(generateSize(0, 0), [0, 0], networkRecord),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
+    return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
       assert.equal(auditResult.items.length, 1);
       assert.equal(auditResult.items[0].wastedBytes, 100 * 1024);
     });
@@ -134,68 +149,77 @@ describe('OffscreenImages audit', () => {
   it('de-dupes images', () => {
     const urlB = 'https://google.com/logo2.png';
     const topLevelTasks = [{ts: 1900, duration: 100}];
+    const networkRecords = [
+      generateRecord({resourceSizeInKb: 50}),
+      generateRecord({resourceSizeInKb: 50}),
+      generateRecord({url: urlB, resourceSizeInKb: 200}),
+      generateRecord({url: urlB, resourceSizeInKb: 90}),
+    ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
-        generateImage(generateSize(50, 50), [0, 0], generateRecord(50)),
-        generateImage(generateSize(1000, 1000), [1000, 1000], generateRecord(50)),
-        generateImage(generateSize(50, 50), [0, 1500], generateRecord(200), urlB),
-        generateImage(generateSize(400, 400), [0, 1500], generateRecord(90), urlB),
+      ImageElements: [
+        generateImage(generateSize(50, 50), [0, 0], networkRecords[0]),
+        generateImage(generateSize(1000, 1000), [1000, 1000], networkRecords[1]),
+        generateImage(generateSize(50, 50), [0, 1500], networkRecords[2], urlB),
+        generateImage(generateSize(400, 400), [0, 1500], networkRecords[3], urlB),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
+    return UnusedImages.audit_(artifacts, networkRecords, context).then(auditResult => {
       assert.equal(auditResult.items.length, 1);
     });
   });
 
   it('disregards images loaded after TTI', () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
+    const networkRecord = generateRecord({resourceSizeInKb: 100, startTime: 3});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
+      ImageElements: [
         // offscreen to the right
-        generateImage(generateSize(200, 200), [3000, 0], generateRecord(100, 3)),
+        generateImage(generateSize(200, 200), [3000, 0], networkRecord),
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
+    return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
       assert.equal(auditResult.items.length, 0);
     });
   });
 
   it('disregards images loaded after Trace End when interactive throws error', () => {
+    const networkRecord = generateRecord({resourceSizeInKb: 100, startTime: 3});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
+      ImageElements: [
         // offscreen to the right
-        generateImage(generateSize(200, 200), [3000, 0], generateRecord(100, 3)),
+        generateImage(generateSize(200, 200), [3000, 0], networkRecord),
       ],
       traces: {defaultPass: createTestTrace({traceEnd: 2000})},
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
+    return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
       assert.equal(auditResult.items.length, 0);
     });
   });
 
   it('finds images loaded before Trace End when TTI when interactive throws error', () => {
+    const networkRecord = generateRecord({resourceSizeInKb: 100});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
+      ImageElements: [
         // offscreen to the right
-        generateImage(generateSize(100, 100), [0, 2000], generateRecord(100)),
+        generateImage(generateSize(100, 100), [0, 2000], networkRecord),
       ],
       traces: {defaultPass: createTestTrace({traceEnd: 2000})},
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
+    return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
       assert.equal(auditResult.items.length, 1);
     });
   });
@@ -226,7 +250,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
+      ImageElements: [
         generateImage(generateSize(0, 0), [0, 0], recordA, recordA.url),
         generateImage(generateSize(200, 200), [3000, 0], recordB, recordB.url),
       ],
@@ -234,7 +258,7 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
 
-    return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
+    return UnusedImages.audit_(artifacts, [recordA, recordB], context).then(auditResult => {
       assert.equal(auditResult.items.length, 1);
       assert.equal(auditResult.items[0].url, recordA.url);
       assert.equal(auditResult.items[0].wastedBytes, wastedSize);
@@ -270,7 +294,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
+      ImageElements: [
         generateImage(generateSize(0, 0), [0, 0], recordA, recordA.url),
         generateImage(generateSize(200, 200), [3000, 0], recordB, recordB.url),
       ],
@@ -278,7 +302,7 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
 
-    return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
+    return UnusedImages.audit_(artifacts, [recordA, recordB], context).then(auditResult => {
       assert.equal(auditResult.items.length, 2);
       assert.equal(auditResult.items[0].url, recordA.url);
       assert.equal(auditResult.items[0].wastedBytes, wastedSize);
@@ -289,18 +313,22 @@ describe('OffscreenImages audit', () => {
 
   it('rethrow error when interactive throws error in Lantern', async () => {
     context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
+    const networkRecords = [
+      generateRecord({url: 'a', resourceSizeInKb: 100, startTime: 3}),
+      generateRecord({url: 'b', resourceSizeInKb: 100, startTime: 4}),
+    ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
-      ImageUsage: [
-        generateImage(generateSize(0, 0), [0, 0], generateRecord(100, 3), 'a'),
-        generateImage(generateSize(200, 200), [3000, 0], generateRecord(100, 4), 'b'),
+      ImageElements: [
+        generateImage(generateSize(0, 0), [0, 0], networkRecords[0], 'a'),
+        generateImage(generateSize(200, 200), [3000, 0], networkRecords[1], 'b'),
       ],
       traces: {defaultPass: createTestTrace({traceEnd: 2000})},
       devtoolsLogs: {},
     };
 
     try {
-      await UnusedImages.audit_(artifacts, [], context);
+      await UnusedImages.audit_(artifacts, networkRecords, context);
     } catch (err) {
       assert.ok(err.message.includes('Did not provide necessary metric computation data'));
       return;

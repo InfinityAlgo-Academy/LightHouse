@@ -777,13 +777,11 @@
       }
     }
   ],
-  "ImageUsage": [
+  "ImageElements": [
     {
       "src": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-      "width": 480,
-      "height": 57,
-      "clientWidth": 480,
-      "clientHeight": 57,
+      "displayedWidth": 480,
+      "displayedHeight": 57,
       "clientRect": {
         "top": 103.8125,
         "bottom": 160.8125,
@@ -795,21 +793,13 @@
       "isCss": false,
       "isPicture": false,
       "usesObjectFit": false,
-      "networkRecord": {
-        "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-        "resourceSize": 24620,
-        "startTime": 185607.272846,
-        "endTime": 185608.100862,
-        "responseReceivedTime": 185607.847168,
-        "mimeType": "image/jpeg"
-      }
+      "resourceSize": 24620,
+      "mimeType": "image/jpeg"
     },
     {
       "src": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-      "width": 480,
-      "height": 318,
-      "clientWidth": 480,
-      "clientHeight": 318,
+      "displayedWidth": 480,
+      "displayedHeight": 318,
       "clientRect": {
         "top": 164.8125,
         "bottom": 482.8125,
@@ -821,21 +811,13 @@
       "isCss": false,
       "isPicture": false,
       "usesObjectFit": false,
-      "networkRecord": {
-        "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-        "resourceSize": 24620,
-        "startTime": 185607.272846,
-        "endTime": 185608.100862,
-        "responseReceivedTime": 185607.847168,
-        "mimeType": "image/jpeg"
-      }
+      "resourceSize": 24620,
+      "mimeType": "image/jpeg"
     },
     {
       "src": "blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277",
-      "width": 16,
-      "height": 16,
-      "clientWidth": 16,
-      "clientHeight": 16,
+      "displayedWidth": 16,
+      "displayedHeight": 16,
       "clientRect": {
         "top": 559.8125,
         "bottom": 575.8125,

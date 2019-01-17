@@ -1064,10 +1064,10 @@ Object {
           "path": "chrome-console-messages",
         },
         Object {
-          "path": "image-usage",
+          "path": "accessibility",
         },
         Object {
-          "path": "accessibility",
+          "path": "image-elements",
         },
         Object {
           "path": "link-elements",

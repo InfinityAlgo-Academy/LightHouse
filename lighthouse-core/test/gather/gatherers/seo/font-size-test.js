@@ -10,9 +10,9 @@
 const FontSizeGather = require('../../../../gather/gatherers/seo/font-size');
 let fontSizeGather;
 
-const smallText = ' body small text ';
-const bigText = 'body big text';
-const failingText = 'failing text';
+const smallText = ' body sm𝐀ll text ';
+const bigText = 'body 𝐁ig text';
+const failingText = 'failing text 💩';
 const bodyNode = {nodeId: 3, nodeName: 'BODY', parentId: 1};
 const failingNode = {nodeId: 10, nodeName: 'P', parentId: 3};
 const nodes = [
@@ -93,9 +93,10 @@ describe('Font size gatherer', () => {
     };
 
     const artifact = await fontSizeGather.afterPass({driver});
-    const expectedFailingTextLength = smallText.trim().length;
-    const expectedVisitedTextLength = bigText.trim().length + expectedFailingTextLength;
-    const expectedTotalTextLength = failingText.trim().length + expectedVisitedTextLength;
+    const expectedFailingTextLength = Array.from(smallText.trim()).length;
+    const expectedVisitedTextLength = Array.from(bigText.trim()).length + expectedFailingTextLength;
+    const expectedTotalTextLength = Array.from(failingText.trim()).length +
+      expectedVisitedTextLength;
     const expectedAnalyzedFailingTextLength = expectedFailingTextLength;
 
     expect(artifact).toEqual({
