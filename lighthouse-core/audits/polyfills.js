@@ -49,10 +49,20 @@ class Polyfills extends Audit {
 
       // String.prototype.startsWith =
       subpattern += `${object || ''}\\.?${property}\\s*=`;
+
+      // String.prototype['startsWith'] =
       subpattern += `|${object || ''}\\[${qt(property)}\\]\\s*=`;
 
       // Object.defineProperty(String.prototype, 'startsWith'
       subpattern += `|defineProperty\\(${object || qt('window')},\\s*${qt(property)}`;
+
+      if (object) {
+        const objectWithoutPrototype = object.replace('.prototype', '');
+        // e(e.S,"Object",{values
+        // minified pattern found in babel-polyfill
+        // see https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js
+        subpattern += `|;e\\([^,]*,${qt(objectWithoutPrototype)},{${property}`;
+      }
 
       return `(${subpattern})`;
     }).join('|');
@@ -101,45 +111,95 @@ class Polyfills extends Audit {
    * @return {Poly[]}
    */
   static getPolyDefinitions() {
-    // if latest Chrome supports a feature natively, we should
-    // complain about the existence of a polyfill
+    // If latest Chrome supports a feature natively, we should
+    // complain about the existence of a polyfill.
+    // list sourced from a couple places. not exhaustive.
+    // from babel-polyfill: https://gist.github.com/Hoten/1b019f7caf1c31b49596e7628145eb3f
+    // casual perusal of https://developer.mozilla.org/en-US/docs/Web/API
+
     return [
-      'Object.assign',
-      'Object.create',
-      'Object.entries',
-      'Object.values',
       'Array.from',
+      'Array.isArray',
       'Array.of',
-      'Array.prototype.find',
-      'Array.prototype.forEach',
+      'Array.prototype.copyWithin',
+      'Array.prototype.fill',
       'Array.prototype.filter',
+      'Array.prototype.find',
       'Array.prototype.findIndex',
+      'Array.prototype.forEach',
       'Array.prototype.includes',
+      'Array.prototype.indexOf',
+      'Array.prototype.join',
+      'Array.prototype.lastIndexOf',
+      'Array.prototype.slice',
       'Array.prototype.some',
-      'String.prototype.includes',
-      'String.prototype.repeat',
-      'String.prototype.startsWith',
-      'String.prototype.endsWith',
-      'String.prototype.padStart',
-      'String.prototype.padEnd',
-      'String.prototype.trim',
+      'Array.prototype.sort',
+      'CustomEvent',
+      'Date.now',
+      'Date.prototype.toISOString',
+      'Date.prototype.toJSON',
+      'Element.prototype.classList',
+      'Element.prototype.closest',
+      'Element.prototype.matches',
+      'Element.prototype.toggleAttribute',
       'Function.prototype.bind',
-      'Node.prototype.append',
-      'Node.prototype.prepend',
-      'Node.prototype.before',
+      'HTMLCanvasElement.prototype.toBlob',
+      'Math.acosh',
+      'Math.asinh',
+      'Math.atanh',
+      'Math.cbrt',
+      'Math.cosh',
+      'Math.fround',
+      'Math.hypot',
+      'Math.sign',
+      'Math.sinh',
+      'Math.tanh',
+      'Math.trunc',
+      'MouseEvent',
       'Node.prototype.after',
+      'Node.prototype.append',
+      'Node.prototype.before',
+      'Node.prototype.children',
+      'Node.prototype.prepend',
       'Node.prototype.remove',
       'Node.prototype.replaceWith',
-      'Node.prototype.children',
       'NodeList.prototype.forEach',
-      'Element.prototype.closest',
-      'Element.prototype.toggleAttribute',
-      'Element.prototype.matches',
-      'Element.prototype.classList',
-      'MouseEvent',
-      'CustomEvent',
+      'Number.EPSILON',
+      'Number.isFinite',
+      'Number.isInteger',
       'Number.isNaN',
-      'HTMLCanvasElement.prototype.toBlob',
+      'Number.isSafeInteger',
+      'Number.parseFloat',
+      'Number.parseInt',
+      'Number.prototype.toFixed',
+      'Object.assign',
+      'Object.create',
+      'Object.defineProperties',
+      'Object.defineProperty',
+      'Object.entries',
+      'Object.getOwnPropertyDescriptors',
+      'Object.is',
+      'Object.setPrototypeOf',
+      'Object.values',
+      'Promise.prototype.finally',
+      'Reflect.apply',
+      'Reflect.construct',
+      'Reflect.deleteProperty',
+      'Reflect.getPrototypeOf',
+      'Reflect.has',
+      'Reflect.isExtensible',
+      'Reflect.ownKeys',
+      'Reflect.preventExtensions',
+      'String.fromCodePoint',
+      'String.prototype.codePointAt',
+      'String.prototype.endsWith',
+      'String.prototype.includes',
+      'String.prototype.padEnd',
+      'String.prototype.padStart',
+      'String.prototype.repeat',
+      'String.prototype.startsWith',
+      'String.prototype.trim',
+      'String.raw',
     ].map(str => {
       const parts = str.split('.');
       return {

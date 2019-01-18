@@ -14,16 +14,7 @@ module.exports = [
     finalUrl: 'http://localhost:10200/polyfills.html',
     audits: {
       'polyfills': {
-        rawValue: 1,
-        details: {
-          items: [
-            {
-              url: 'http://localhost:10200/polyfills.js',
-              description: 'String.prototype.repeat',
-              location: 'r: 2, c: 0',
-            },
-          ],
-        },
+        rawValue: 62, // 61 are from babel-polyfill
       },
     },
   },

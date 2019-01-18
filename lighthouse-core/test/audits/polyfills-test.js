@@ -123,9 +123,17 @@ describe('Polyfills', () => {
         code: 'Object.defineProperty(String.prototype, \'repeat\', function() {})',
         url: 'https://www.example.com/e.js',
       },
+      {
+        code: ';e(e.S,"Object",{values:function values(t){return i(t)}})',
+        url: 'https://www.example.com/f.js',
+      },
+      {
+        code: 'MouseEvent = function() {}',
+        url: 'https://www.example.com/f.js',
+      },
     ]);
     const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.rawValue, 5);
+    assert.equal(result.rawValue, 7);
   });
 });
