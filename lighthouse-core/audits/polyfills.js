@@ -6,7 +6,7 @@
 'use strict';
 
 /** @typedef {{object: string | undefined, property: string}} Poly */
-/** @typedef {{row: number, col: number, poly: Poly}} PolyIssue */
+/** @typedef {{line: number, col: number, poly: Poly}} PolyIssue */
 
 const Audit = require('./audit');
 const NetworkRecords = require('../computed/network-records.js');
@@ -72,19 +72,19 @@ class Polyfills extends Audit {
     const re = new RegExp(`(^\r\n|\r|\n)|${pattern}`, 'g');
     /** @type {RegExpExecArray | null} */
     let result;
-    let row = 0;
-    let rowBeginsAtIndex = 0;
+    let line = 0;
+    let lineBeginsAtIndex = 0;
     // each poly maps to one subgroup in the generated regex. for each iteration of the regex exec,
     // only one subgroup will be defined. Exec until no more matches.
     while ((result = re.exec(code)) !== null) {
       // discard first (it's the whole matching pattern)
-      // index 1 is truthy if matching a newline, and is used to track the row number
+      // index 1 is truthy if matching a newline, and is used to track the line number
       // matches maps to each possible poly. Exec until no more matches
       // only one of [isNewline, ...matches] is ever defined.
       const [, isNewline, ...matches] = result;
       if (isNewline) {
-        row++;
-        rowBeginsAtIndex = result.index + 1;
+        line++;
+        lineBeginsAtIndex = result.index + 1;
         continue;
       }
       const poly = polyfills[matches.findIndex(Boolean)];
@@ -98,8 +98,8 @@ class Polyfills extends Audit {
 
       polysSeen.add(poly);
       polyMatches.push({
-        row,
-        col: result.index - rowBeginsAtIndex,
+        line,
+        col: result.index - lineBeginsAtIndex,
         poly,
       });
     }
@@ -261,7 +261,7 @@ class Polyfills extends Audit {
     const tableRows = [];
     urlToPolyIssues.forEach((polyIssues, url) => {
       for (const polyIssue of polyIssues) {
-        const {poly, row, col} = polyIssue;
+        const {poly, line, col} = polyIssue;
         const polyStatement = `${poly.object ? poly.object + '.' : ''}${poly.property}`;
         const numOfThisPoly = polyCounter.get(poly) || 0;
         const isMoreThanOne = numOfThisPoly > 1;
@@ -271,7 +271,7 @@ class Polyfills extends Audit {
           url,
           description: `${polyStatement}${countText}`,
           // TODO use sourcemaps
-          location: `r: ${row}, c: ${col}`,
+          location: `Ln: ${line}, Col: ${col}`,
         });
       }
     });
