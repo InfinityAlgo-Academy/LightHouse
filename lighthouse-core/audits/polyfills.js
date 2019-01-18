@@ -283,8 +283,6 @@ class Polyfills extends Audit {
     ];
     const details = Audit.makeTableDetails(headings, tableRows);
 
-    // console.log(urlToPolyIssues, urlToPolyIssues.size, urlToPolyIssues.size === 0, Number(urlToPolyIssues.size === 0));
-    // console.log(polyIssueCounter);
     return {
       score: Number(polyIssueCounter.size === 0),
       rawValue: polyIssueCounter.size,
