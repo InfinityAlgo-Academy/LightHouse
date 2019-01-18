@@ -1769,7 +1769,7 @@
             "title": "Document avoids plugins"
         }, 
         "polyfills": {
-            "description": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider removing polyfils for features that are well supported by them.", 
+            "description": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability.", 
             "details": {
                 "headings": [
                     {
@@ -1790,8 +1790,18 @@
                 ], 
                 "items": [
                     {
+                        "description": "Object.defineProperty", 
+                        "location": "Ln: 1290, Col: 4", 
+                        "url": "http://localhost:10200/zone.js"
+                    }, 
+                    {
+                        "description": "Object.defineProperties", 
+                        "location": "Ln: 1300, Col: 4", 
+                        "url": "http://localhost:10200/zone.js"
+                    }, 
+                    {
                         "description": "Object.create", 
-                        "location": "r: 1306, c: 5", 
+                        "location": "Ln: 1306, Col: 4", 
                         "url": "http://localhost:10200/zone.js"
                     }
                 ], 
