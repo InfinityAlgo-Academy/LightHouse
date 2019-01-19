@@ -33,6 +33,7 @@ const tapTargetsSelector = TARGET_SELECTORS.join(',');
 
 /**
  * @param {Element} element
+ * @returns {boolean}
  */
 /* istanbul ignore next */
 function elementIsVisible(element) {
@@ -57,9 +58,9 @@ function elementIsVisible(element) {
   }
 
   const parent = element.parentElement;
-  if (parent && parent.tagName !== 'BODY' && !elementIsVisible(parent)) {
+  if (parent && parent.tagName !== 'BODY') {
     // if a parent is invisible then the current element is also invisible
-    return false;
+    return elementIsVisible(parent);
   }
 
   return true;
@@ -82,13 +83,13 @@ function getVisibleClientRects(element) {
     return [];
   }
 
-  const {
-    overflowX,
-    overflowY,
-  } = getComputedStyle(element);
-  let clientRects = getClientRects(element, true);
+  let clientRects = getClientRects(element);
 
   if (allClientRectsEmpty(clientRects)) {
+    const {
+      overflowX,
+      overflowY,
+    } = getComputedStyle(element);
     if ((overflowX === 'hidden' && overflowY === 'hidden') || element.children.length === 0) {
       // own size is 0x0 and there's no visible child content
       return [];
@@ -132,13 +133,11 @@ function filterClientRectsWithinAncestorsVisibleScrollArea(element, clientRects)
 
 /**
  * @param {Element} element
- * @param {boolean} includeChildren
  * @returns {LH.Artifacts.Rect[]}
  */
 /* istanbul ignore next */
-function getClientRects(element, includeChildren = true) {
-  /** @type {LH.Artifacts.Rect[]} */
-  let clientRects = Array.from(
+function getClientRects(element) {
+  const clientRects = Array.from(
     element.getClientRects()
   ).map(clientRect => {
     // Contents of DOMRect get lost when returned from Runtime.evaluate call,
@@ -146,10 +145,9 @@ function getClientRects(element, includeChildren = true) {
     const {width, height, left, top, right, bottom} = clientRect;
     return {width, height, left, top, right, bottom};
   });
-  if (includeChildren) {
-    for (const child of element.children) {
-      clientRects = clientRects.concat(getClientRects(child));
-    }
+
+  for (const child of element.children) {
+    clientRects.push(...getClientRects(child));
   }
 
   return clientRects;
