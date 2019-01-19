@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector */
+/* global getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector, window */
 
 const Gatherer = require('../gatherer');
 const pageFunctions = require('../../../lib/page-functions.js');
@@ -161,10 +161,12 @@ function getClientRects(element, includeChildren = true) {
  */
 /* istanbul ignore next */
 function elementHasAncestorTapTarget(element) {
+  // @ts-ignore
+  const realMatchesFn = window.__ElementMatches || window.Element.prototype.matches;
   if (!element.parentElement) {
     return false;
   }
-  if (element.parentElement.matches(tapTargetsSelector)) {
+  if (realMatchesFn.call(element.parentElement, tapTargetsSelector)) {
     return true;
   }
   return elementHasAncestorTapTarget(element.parentElement);
