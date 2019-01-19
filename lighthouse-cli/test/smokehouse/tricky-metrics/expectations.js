@@ -23,4 +23,13 @@ module.exports = [
       },
     },
   },
+  {
+    requestedUrl: 'http://localhost:10200/delayed-fcp.html',
+    finalUrl: 'http://localhost:10200/delayed-fcp.html',
+    audits: {
+      'first-contentful-paint': {
+        rawValue: '>1', // We just want to check that it doesn't error
+      },
+    },
+  },
 ];

@@ -19,8 +19,15 @@ declare module 'lighthouse-logger' {
   export function time(status: Status, level?: string): void;
   export function timeEnd(status: Status, level?: string): void;
   export function reset(): string;
+  export const cross: string;
+  export const dim: string;
+  export const tick: string;
+  export const bold: string;
+  export const purple: string;
+  export function redify(message: any): string;
+  export function greenify(message: any): string;
   /** Retrieves and clears all stored time entries */
   export function takeTimeEntries(): PerformanceEntry[];
   export function getTimeEntries(): PerformanceEntry[];
-  export var events: import('events').EventEmitter;
+  export const events: import('events').EventEmitter;
 }

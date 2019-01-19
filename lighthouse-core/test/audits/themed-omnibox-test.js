@@ -17,7 +17,7 @@ const exampleManifest = noUrlManifestParser(manifestSrc);
 function generateMockArtifacts() {
   return {
     Manifest: exampleManifest,
-    ThemeColor: '#bada55',
+    MetaElements: [{name: 'theme-color', content: '#bada55'}],
   };
 }
 function generateMockAuditContext() {
@@ -88,7 +88,7 @@ describe('PWA: themed omnibox audit', () => {
 
   it('fails and warns when no theme-color meta tag found', () => {
     const artifacts = generateMockArtifacts();
-    artifacts.ThemeColor = null;
+    artifacts.MetaElements = [];
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
       assert.equal(result.rawValue, false);
@@ -98,7 +98,7 @@ describe('PWA: themed omnibox audit', () => {
 
   it('fails and warns when theme-color has an invalid CSS color', () => {
     const artifacts = generateMockArtifacts();
-    artifacts.ThemeColor = '#1234567';
+    artifacts.MetaElements = [{name: 'theme-color', content: '#1234567'}];
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
       assert.equal(result.rawValue, false);
@@ -108,7 +108,7 @@ describe('PWA: themed omnibox audit', () => {
 
   it('succeeds when theme-color present in the html', () => {
     const artifacts = generateMockArtifacts();
-    artifacts.ThemeColor = '#fafa33';
+    artifacts.MetaElements = [{name: 'theme-color', content: '#fafa33'}];
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
       assert.equal(result.rawValue, true);
@@ -118,7 +118,7 @@ describe('PWA: themed omnibox audit', () => {
 
   it('succeeds when theme-color has a CSS nickname content value', () => {
     const artifacts = generateMockArtifacts();
-    artifacts.ThemeColor = 'red';
+    artifacts.MetaElements = [{name: 'theme-color', content: 'red'}];
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
       assert.equal(result.rawValue, true);
@@ -141,7 +141,7 @@ describe('PWA: themed omnibox audit', () => {
 
   it('fails if HTML theme color is bad, and manifest themecolor is good', () => {
     const artifacts = generateMockArtifacts();
-    artifacts.ThemeColor = 'not a color';
+    artifacts.MetaElements = [{name: 'theme-color'}];
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
       assert.equal(result.rawValue, false);

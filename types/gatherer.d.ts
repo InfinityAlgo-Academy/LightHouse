@@ -20,6 +20,7 @@ declare global {
       options?: object;
       /** Push to this array to add top-level warnings to the LHR. */
       LighthouseRunWarnings: Array<string>;
+      baseArtifacts: BaseArtifacts;
     }
 
     export interface LoadData {

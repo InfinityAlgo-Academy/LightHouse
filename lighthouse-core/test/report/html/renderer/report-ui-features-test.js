@@ -19,7 +19,7 @@ const CategoryRenderer = require('../../../../report/html/renderer/category-rend
 const CriticalRequestChainRenderer = require(
     '../../../../report/html/renderer/crc-details-renderer.js');
 const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
-const sampleResultsOrig = require('../../../results/sample_v2.json');
+const sampleResults = require('../../../results/sample_v2.json');
 
 const TEMPLATE_FILE = fs.readFileSync(__dirname +
     '/../../../../report/html/templates.html', 'utf8');
@@ -29,7 +29,6 @@ const TEMPLATE_FILE_REPORT = fs.readFileSync(__dirname +
 describe('ReportUIFeatures', () => {
   let renderer;
   let reportUIFeatures;
-  let sampleResults;
 
   beforeAll(() => {
     global.URL = URL;
@@ -74,7 +73,6 @@ describe('ReportUIFeatures', () => {
     const detailsRenderer = new DetailsRenderer(dom);
     const categoryRenderer = new CategoryRenderer(dom, detailsRenderer);
     renderer = new ReportRenderer(dom, categoryRenderer);
-    sampleResults = Util.prepareReportResult(sampleResultsOrig);
     reportUIFeatures = new ReportUIFeatures(dom2);
   });
 
@@ -100,7 +98,7 @@ describe('ReportUIFeatures', () => {
       renderer.renderReport(sampleResults, container);
 
       assert.equal(reportUIFeatures.json, undefined);
-      reportUIFeatures.initFeatures(Util.prepareReportResult(sampleResults));
+      reportUIFeatures.initFeatures(sampleResults);
       assert.ok(reportUIFeatures.json);
     });
   });

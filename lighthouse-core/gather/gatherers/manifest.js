@@ -6,40 +6,17 @@
 'use strict';
 
 const Gatherer = require('./gatherer');
-const manifestParser = require('../../lib/manifest-parser');
-const BOM_LENGTH = 3;
-const BOM_FIRSTCHAR = 65279;
 
 /**
- * Uses the debugger protocol to fetch the manifest from within the context of
- * the target page, reusing any credentials, emulation, etc, already established
- * there. The artifact produced is the fetched string, if any, passed through
- * the manifest parser.
+ * TODO(phulce): delete this file and move usages over to WebAppManifest
  */
 class Manifest extends Gatherer {
   /**
-   * Returns the parsed manifest or null if the page had no manifest. If the manifest
-   * was unparseable as JSON, manifest.value will be undefined and manifest.warning
-   * will have the reason. See manifest-parser.js for more information.
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts['Manifest']>}
    */
   async afterPass(passContext) {
-    const manifestPromise = passContext.driver.getAppManifest();
-    /** @type {Promise<void>} */
-    const timeoutPromise = new Promise(resolve => setTimeout(resolve, 3000));
-
-    const response = await Promise.race([manifestPromise, timeoutPromise]);
-    if (!response) {
-      return null;
-    }
-
-    const isBomEncoded = response.data.charCodeAt(0) === BOM_FIRSTCHAR;
-    if (isBomEncoded) {
-      response.data = Buffer.from(response.data).slice(BOM_LENGTH).toString();
-    }
-
-    return manifestParser(response.data, response.url, passContext.url);
+    return passContext.baseArtifacts.WebAppManifest;
   }
 }
 

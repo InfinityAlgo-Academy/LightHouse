@@ -106,7 +106,7 @@ Examples:
   lighthouse <url> --output=json --output-path=./report.json --save-assets  Save trace, devtoolslog, and named JSON report.
   lighthouse <url> --disable-device-emulation                               Disable device emulation and all throttling.
     --throttling-method=provided
-  lighthouse <url> --chrome-flags="--window-size=412,732"                   Launch Chrome with a specific window size
+  lighthouse <url> --chrome-flags="--window-size=412,660"                   Launch Chrome with a specific window size
   lighthouse <url> --quiet --chrome-flags="--headless"                      Launch Headless Chrome, turn off logging
   lighthouse <url> --extra-headers "{\"Cookie\":\"monster=blue\"}"          Stringify\'d JSON HTTP Header key/value pairs to send in requests
   lighthouse <url> --extra-headers=./path/to/file.json                      Path to JSON file of HTTP Header key/value pairs to send in requests
@@ -267,9 +267,13 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Calibre](https://calibreapp.com)** - Calibre is a web performance monitoring tool running Lighthouse continuously or on-demand via an API. Test using emulated devices and connection speeds from a number of geographical locations. Set budgets and improve performance with actionable guidelines. Calibre comes with a free 14-day trial.
 
+* **[DebugBear](https://www.debugbear.com/)** - DebugBear is a website monitoring tool based on Lighthouse. See how your scores and metrics changed over time, with a focus on understanding what caused each change. DebugBear is a paid product with a free 30-day trial.
+
 * **[HTTPArchive](http://httparchive.org/)** - HTTPArchive tracks how the web is built by crawling 500k pages with Web Page Test, including Lighthouse results, and stores the information in BigQuery where it is [publicly available](https://discuss.httparchive.org/t/quickstart-guide-to-exploring-the-http-archive/682).
 
 * **[SpeedCurve](https://speedcurve.com)** — SpeedCurve is a tool for continuously monitoring web performance across different browsers, devices, and regions. It can aggregate any metric including Lighthouse scores across multiple pages and sites, and allows you to set performance budgets with Slack or email alerts. SpeedCurve is a paid product with a free 30-day trial.
+
+* **[Speedrank](https://speedrank.app)** - Speedrank monitors the performance of your website in the background. It displays Lighthouse reports over time and delivers recommendations for improvement. Speedrank is a paid product with 14-day-trial.
 
 * **[Treo](https://treo.sh)** - Treo is Lighthouse as a Service. It provides regression testing, geographical regions, custom networks, and integrations with GitHub & Slack. Treo is a paid product with plans for solo-developers and teams.
 

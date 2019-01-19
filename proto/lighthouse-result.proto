@@ -247,6 +247,7 @@ message AuditResult {
     // The audit turned out to not apply to the page. Score is NaN and should be
     // ignored.
     not_applicable = 4;
+    notApplicable = 7;
     // The audit exists only to tell you to review something yourself. Score is
     // NaN and should be ignored
     manual = 5;
@@ -330,6 +331,9 @@ message I18n {
 
     // The title of the lab data performance category
     string lab_data_title = 16;
+
+    // The heading that is shown above a list of audits that have warnings
+    string warning_audits_group_title = 17;
   }
 
   // The message holding all formatted strings

@@ -73,7 +73,7 @@ describe('Module Tests', function() {
     return lighthouse('chrome://version', {}, {
       passes: [{
         gatherers: [
-          'viewport',
+          'scripts',
         ],
       }],
       audits: [

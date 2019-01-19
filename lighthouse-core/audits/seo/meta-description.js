@@ -19,7 +19,7 @@ class Description extends Audit {
       description: 'Meta descriptions may be included in search results to concisely summarize ' +
           'page content. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/description).',
-      requiredArtifacts: ['MetaDescription'],
+      requiredArtifacts: ['MetaElements'],
     };
   }
 
@@ -28,13 +28,15 @@ class Description extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    if (artifacts.MetaDescription === null) {
+    const metaDescription = artifacts.MetaElements.find(meta => meta.name === 'description');
+    if (!metaDescription) {
       return {
         rawValue: false,
       };
     }
 
-    if (artifacts.MetaDescription.trim().length === 0) {
+    const description = metaDescription.content || '';
+    if (description.trim().length === 0) {
       return {
         rawValue: false,
         explanation: 'Description text is empty.',

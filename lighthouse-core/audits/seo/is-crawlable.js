@@ -69,7 +69,7 @@ class IsCrawlable extends Audit {
       description: 'Search engines are unable to include your pages in search results ' +
           'if they don\'t have permission to crawl them. [Learn ' +
           'more](https://developers.google.com/web/tools/lighthouse/audits/indexing).',
-      requiredArtifacts: ['MetaRobots', 'RobotsTxt', 'URL'],
+      requiredArtifacts: ['MetaElements', 'RobotsTxt', 'URL'],
     };
   }
 
@@ -80,20 +80,22 @@ class IsCrawlable extends Audit {
    */
   static audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const metaRobots = artifacts.MetaElements.find(meta => meta.name === 'robots');
 
     return MainResource.request({devtoolsLog, URL: artifacts.URL}, context)
       .then(mainResource => {
         /** @type {Array<Object<string, LH.Audit.DetailsItem>>} */
         const blockingDirectives = [];
 
-        if (artifacts.MetaRobots) {
-          const isBlocking = hasBlockingDirective(artifacts.MetaRobots);
+        if (metaRobots) {
+          const metaRobotsContent = metaRobots.content || '';
+          const isBlocking = hasBlockingDirective(metaRobotsContent);
 
           if (isBlocking) {
             blockingDirectives.push({
               source: {
                 type: /** @type {'node'} */ ('node'),
-                snippet: `<meta name="robots" content="${artifacts.MetaRobots}" />`,
+                snippet: `<meta name="robots" content="${metaRobotsContent}" />`,
               },
             });
           }

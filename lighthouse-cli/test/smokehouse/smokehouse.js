@@ -6,6 +6,22 @@
  */
 'use strict';
 
+/**
+ * @typedef {{path: string, actual: *, expected: *}} Difference
+ */
+
+/**
+ * @typedef {{category: string, actual: *, expected: *, equal: boolean, diff?: Difference | null}} Comparison
+ */
+
+/**
+ * @typedef {Pick<LH.Result, 'audits' | 'finalUrl' | 'requestedUrl'> & {errorCode?: string}} ExpectedLHR
+ */
+
+/**
+ * @typedef {{audits: Comparison[], errorCode: Comparison, finalUrl: Comparison}} LHRComparison
+ */
+
 /* eslint-disable no-console */
 
 const fs = require('fs');
@@ -16,9 +32,9 @@ const log = require('lighthouse-logger');
 
 const PROTOCOL_TIMEOUT_EXIT_CODE = 67;
 const PAGE_HUNG_EXIT_CODE = 68;
+const INSECURE_DOCUMENT_REQUEST_EXIT_CODE = 69;
 const RETRIES = 3;
 const NUMERICAL_EXPECTATION_REGEXP = /^(<=?|>=?)((\d|\.)+)$/;
-
 
 /**
  * Attempt to resolve a path locally. If this fails, attempts to locate the path
@@ -43,10 +59,10 @@ function resolveLocalOrCwd(payloadPath) {
  * @param {string} url
  * @param {string} configPath
  * @param {boolean=} isDebug
- * @return {!LighthouseResults}
+ * @return {ExpectedLHR}
  */
 function runLighthouse(url, configPath, isDebug) {
-  isDebug = isDebug || process.env.SMOKEHOUSE_DEBUG;
+  isDebug = isDebug || Boolean(process.env.SMOKEHOUSE_DEBUG);
 
   const command = 'node';
   const outputPath = `smokehouse-${Math.round(Math.random() * 100000)}.report.json`;
@@ -88,7 +104,9 @@ function runLighthouse(url, configPath, isDebug) {
   if (runResults.status === PROTOCOL_TIMEOUT_EXIT_CODE) {
     console.error(`Lighthouse debugger connection timed out ${RETRIES} times. Giving up.`);
     process.exit(1);
-  } else if (runResults.status !== 0 && runResults.status !== PAGE_HUNG_EXIT_CODE) {
+  } else if (runResults.status !== 0
+     && runResults.status !== PAGE_HUNG_EXIT_CODE
+     && runResults.status !== INSECURE_DOCUMENT_REQUEST_EXIT_CODE) {
     console.error(`Lighthouse run failed with exit code ${runResults.status}. stderr to follow:`);
     console.error(runResults.stderr);
     process.exit(runResults.status);
@@ -101,6 +119,10 @@ function runLighthouse(url, configPath, isDebug) {
 
   if (runResults.status === PAGE_HUNG_EXIT_CODE) {
     return {requestedUrl: url, finalUrl: url, errorCode: 'PAGE_HUNG', audits: {}};
+  }
+
+  if (runResults.status === INSECURE_DOCUMENT_REQUEST_EXIT_CODE) {
+    return {requestedUrl: url, finalUrl: url, errorCode: 'INSECURE_DOCUMENT_REQUEST', audits: {}};
   }
 
   const lhr = fs.readFileSync(outputPath, 'utf8');
@@ -137,6 +159,8 @@ function matchesExpectation(actual, expected) {
         return actual < number;
       case '<=':
         return actual <= number;
+      default:
+        throw new Error(`unexpected operator ${operator}`);
     }
   } else if (typeof actual === 'string' && expected instanceof RegExp && expected.test(actual)) {
     return true;
@@ -157,7 +181,7 @@ function matchesExpectation(actual, expected) {
  * @param {string} path
  * @param {*} actual
  * @param {*} expected
- * @return {({path: string, actual: *, expected: *}|null)}
+ * @return {(Difference|null)}
  */
 function findDifference(path, actual, expected) {
   if (matchesExpectation(actual, expected)) {
@@ -199,9 +223,9 @@ function findDifference(path, actual, expected) {
 
 /**
  * Collate results into comparisons of actual and expected scores on each audit.
- * @param {{finalUrl: string, audits: !Array, errorCode: string}} actual
- * @param {{finalUrl: string, audits: !Array, errorCode: string}} expected
- * @return {{finalUrl: !Object, audits: !Array<!Object>}}
+ * @param {ExpectedLHR} actual
+ * @param {ExpectedLHR} expected
+ * @return {LHRComparison}
  */
 function collateResults(actual, expected) {
   const auditNames = Object.keys(expected.audits);
@@ -224,12 +248,6 @@ function collateResults(actual, expected) {
   });
 
   return {
-    finalUrl: {
-      category: 'final url',
-      actual: actual.finalUrl,
-      expected: expected.finalUrl,
-      equal: actual.finalUrl === expected.finalUrl,
-    },
     audits: collatedAudits,
     errorCode: {
       category: 'error code',
@@ -237,15 +255,23 @@ function collateResults(actual, expected) {
       expected: expected.errorCode,
       equal: actual.errorCode === expected.errorCode,
     },
+    finalUrl: {
+      category: 'final url',
+      actual: actual.finalUrl,
+      expected: expected.finalUrl,
+      equal: actual.finalUrl === expected.finalUrl,
+    },
   };
 }
 
 /**
  * Log the result of an assertion of actual and expected results.
- * @param {{category: string, equal: boolean, diff: ?Object, actual: boolean, expected: boolean}} assertion
+ * @param {Comparison} assertion
  */
 function reportAssertion(assertion) {
+  // @ts-ignore - this doesn't exist now but could one day, so try not to break the future
   const _toJSON = RegExp.prototype.toJSON;
+  // @ts-ignore
   // eslint-disable-next-line no-extend-native
   RegExp.prototype.toJSON = RegExp.prototype.toString;
 
@@ -273,6 +299,7 @@ function reportAssertion(assertion) {
     }
   }
 
+  // @ts-ignore
   // eslint-disable-next-line no-extend-native
   RegExp.prototype.toJSON = _toJSON;
 }
@@ -280,7 +307,7 @@ function reportAssertion(assertion) {
 /**
  * Log all the comparisons between actual and expected test results, then print
  * summary. Returns count of passed and failed tests.
- * @param {{finalUrl: !Object, audits: !Array<!Object>, errorCode: !Object}} results
+ * @param {LHRComparison} results
  * @return {{passed: number, failed: number}}
  */
 function report(results) {
@@ -316,11 +343,12 @@ const cli = yargs
     'expectations-path': 'The path to the expected audit results file',
     'debug': 'Save the artifacts along with the output',
   })
-  .require('config-path')
-  .require('expectations-path')
+  .require('config-path', true)
+  .require('expectations-path', true)
   .argv;
 
 const configPath = resolveLocalOrCwd(cli['config-path']);
+/** @type {ExpectedLHR[]} */
 const expectations = require(resolveLocalOrCwd(cli['expectations-path']));
 
 // Loop sequentially over expectations, comparing against Lighthouse run, and

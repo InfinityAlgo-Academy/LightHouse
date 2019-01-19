@@ -6,10 +6,11 @@
 'use strict';
 
 const log = require('lighthouse-logger');
-const LHError = require('../lib/lh-error');
-const URL = require('../lib/url-shim');
+const manifestParser = require('../lib/manifest-parser.js');
+const LHError = require('../lib/lh-error.js');
+const URL = require('../lib/url-shim.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
-const constants = require('../config/constants');
+const constants = require('../config/constants.js');
 
 const Driver = require('../gather/driver.js'); // eslint-disable-line no-unused-vars
 
@@ -88,6 +89,7 @@ class GatherRunner {
    */
   static async loadPage(driver, passContext) {
     const finalUrl = await driver.gotoURL(passContext.url, {
+      waitForFCP: passContext.passConfig.recordTrace,
       waitForLoad: true,
       passContext,
     });
@@ -109,7 +111,6 @@ class GatherRunner {
     await driver.cacheNatives();
     await driver.registerPerformanceObserver();
     await driver.dismissJavaScriptDialogs();
-    await driver.listenForSecurityStateChanges();
     if (resetStorage) await driver.clearDataForOrigin(options.requestedUrl);
     log.timeEnd(status);
   }
@@ -168,23 +169,6 @@ class GatherRunner {
       return new LHError(
         LHError.errors.ERRORED_DOCUMENT_REQUEST,
         {statusCode: `${mainRecord.statusCode}`}
-      );
-    }
-  }
-
-  /**
-   * Throws an error if the security state is insecure.
-   * @param {LH.Crdp.Security.SecurityStateChangedEvent} securityState
-   * @throws {LHError}
-   */
-  static assertNoSecurityIssues({securityState, explanations}) {
-    if (securityState === 'insecure') {
-      const insecureDescriptions = explanations
-        .filter(exp => exp.securityState === 'insecure')
-        .map(exp => exp.description);
-      throw new LHError(
-        LHError.errors.INSECURE_DOCUMENT_REQUEST,
-        {securityMessages: insecureDescriptions.join(' ')}
       );
     }
   }
@@ -311,8 +295,6 @@ class GatherRunner {
     const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
     log.timeEnd(status);
 
-    this.assertNoSecurityIssues(driver.getSecurityState());
-
     let pageLoadError = GatherRunner.getPageLoadError(passContext.url, networkRecords);
     // If the driver was offline, a page load error is expected, so do not save it.
     if (!driver.online) pageLoadError = undefined;
@@ -419,12 +401,31 @@ class GatherRunner {
       HostUserAgent: (await options.driver.getBrowserVersion()).userAgent,
       NetworkUserAgent: '', // updated later
       BenchmarkIndex: 0, // updated later
+      WebAppManifest: null, // updated later
       traces: {},
       devtoolsLogs: {},
       settings: options.settings,
       URL: {requestedUrl: options.requestedUrl, finalUrl: ''},
       Timing: [],
     };
+  }
+
+  /**
+   * Uses the debugger protocol to fetch the manifest from within the context of
+   * the target page, reusing any credentials, emulation, etc, already established
+   * there.
+   *
+   * Returns the parsed manifest or null if the page had no manifest. If the manifest
+   * was unparseable as JSON, manifest.value will be undefined and manifest.warning
+   * will have the reason. See manifest-parser.js for more information.
+   *
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts.Manifest|null>}
+   */
+  static async getWebAppManifest(passContext) {
+    const response = await passContext.driver.getAppManifest();
+    if (!response) return null;
+    return manifestParser(response.data, response.url, passContext.url);
   }
 
   /**
@@ -456,6 +457,7 @@ class GatherRunner {
           url: options.requestedUrl,
           settings: options.settings,
           passConfig,
+          baseArtifacts,
           // *pass() functions and gatherers can push to this warnings array.
           LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,
         };
@@ -467,6 +469,9 @@ class GatherRunner {
         }
         await GatherRunner.beforePass(passContext, gathererResults);
         await GatherRunner.pass(passContext, gathererResults);
+        if (isFirstPass) {
+          baseArtifacts.WebAppManifest = await GatherRunner.getWebAppManifest(passContext);
+        }
         const passData = await GatherRunner.afterPass(passContext, gathererResults);
 
         // Save devtoolsLog, but networkRecords are discarded and not added onto artifacts.

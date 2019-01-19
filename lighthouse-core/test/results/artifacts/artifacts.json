@@ -121,16 +121,17 @@
       }
     ]
   },
-  "Viewport": "width=device-width, initial-scale=1, minimum-scale=1",
   "ViewportDimensions": {
     "innerWidth": 412,
-    "innerHeight": 732,
+    "innerHeight": 660,
     "outerWidth": 412,
-    "outerHeight": 732,
+    "outerHeight": 660,
     "devicePixelRatio": 2.625
   },
-  "ThemeColor": null,
   "Manifest": null,
+  "MetaElements": [
+    {"name": "viewport", "content": "width=device-width, initial-scale=1, minimum-scale=1"}
+  ],
   "RuntimeExceptions": [
     {
       "timestamp": 1519974785784.3982,
@@ -777,13 +778,11 @@
       }
     }
   ],
-  "ImageUsage": [
+  "ImageElements": [
     {
       "src": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-      "width": 480,
-      "height": 57,
-      "clientWidth": 480,
-      "clientHeight": 57,
+      "displayedWidth": 480,
+      "displayedHeight": 57,
       "clientRect": {
         "top": 103.8125,
         "bottom": 160.8125,
@@ -795,21 +794,13 @@
       "isCss": false,
       "isPicture": false,
       "usesObjectFit": false,
-      "networkRecord": {
-        "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-        "resourceSize": 24620,
-        "startTime": 185607.272846,
-        "endTime": 185608.100862,
-        "responseReceivedTime": 185607.847168,
-        "mimeType": "image/jpeg"
-      }
+      "resourceSize": 24620,
+      "mimeType": "image/jpeg"
     },
     {
       "src": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-      "width": 480,
-      "height": 318,
-      "clientWidth": 480,
-      "clientHeight": 318,
+      "displayedWidth": 480,
+      "displayedHeight": 318,
       "clientRect": {
         "top": 164.8125,
         "bottom": 482.8125,
@@ -821,21 +812,13 @@
       "isCss": false,
       "isPicture": false,
       "usesObjectFit": false,
-      "networkRecord": {
-        "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-        "resourceSize": 24620,
-        "startTime": 185607.272846,
-        "endTime": 185608.100862,
-        "responseReceivedTime": 185607.847168,
-        "mimeType": "image/jpeg"
-      }
+      "resourceSize": 24620,
+      "mimeType": "image/jpeg"
     },
     {
       "src": "blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277",
-      "width": 16,
-      "height": 16,
-      "clientWidth": 16,
-      "clientHeight": 16,
+      "displayedWidth": 16,
+      "displayedHeight": 16,
       "clientRect": {
         "top": 559.8125,
         "bottom": 575.8125,
@@ -861,26 +844,26 @@
         ],
         "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
         "help": "Elements must have sufficient color contrast",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/color-contrast?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=axeAPI",
         "nodes": [
           {
             "impact": "serious",
             "html": "<h2>Do better web tester page</h2>",
             "target": [
-              "div > h2"
+              "h2"
             ],
             "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
-            "path": "3,HTML,1,BODY,0,DIV,0,H2",
+            "path": "3,HTML,1,BODY,5,DIV,0,H2",
             "snippet": "<h2>"
           },
           {
             "impact": "serious",
             "html": "<span>Hi there!</span>",
             "target": [
-              "div > span"
+              "span"
             ],
             "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
-            "path": "3,HTML,1,BODY,0,DIV,1,SPAN",
+            "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
             "snippet": "<span>"
           }
         ]
@@ -895,7 +878,7 @@
         ],
         "description": "Ensures every HTML document has a lang attribute",
         "help": "<html> element must have a lang attribute",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/html-has-lang?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=axeAPI",
         "nodes": [
           {
             "impact": "serious",
@@ -921,37 +904,47 @@
         ],
         "description": "Ensures <img> elements have alternate text or a role of none or presentation",
         "help": "Images must have alternate text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/image-alt?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/image-alt?application=axeAPI",
         "nodes": [
           {
             "impact": "critical",
             "html": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
             "target": [
-              "body > img[src$=\"lighthouse-480x318.jpg\"]:nth-child(5)"
+              "img[height=\"\\35 7\"]"
             ],
-            "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,5,IMG",
+            "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+            "path": "3,HTML,1,BODY,10,IMG",
             "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">"
           },
           {
             "impact": "critical",
             "html": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
             "target": [
-              "body > img[src$=\"lighthouse-480x318.jpg\"]:nth-child(6)"
+              "img[height=\"\\33 18\"]"
             ],
-            "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,7,IMG",
+            "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+            "path": "3,HTML,1,BODY,12,IMG",
             "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">"
           },
           {
             "impact": "critical",
-            "html": "<img src=\"blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277\">",
+            "html": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
             "target": [
-              "body > img:nth-child(20)"
+              "img[src$=\"lighthouse-rotating.gif\"]"
             ],
-            "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,36,IMG",
-            "snippet": "<img src=\"blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277\">"
+            "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+            "path": "3,HTML,1,BODY,14,IMG",
+            "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">"
+          },
+          {
+            "impact": "critical",
+            "html": "<img src=\"blob:http://localhost:62824/289254fd-ef1d-4c1a-96a8-ba291caa2140\">",
+            "target": [
+              "img:nth-child(27)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+            "path": "3,HTML,1,BODY,49,IMG",
+            "snippet": "<img src=\"blob:http://localhost:62824/289254fd-ef1d-4c1a-96a8-ba291caa2140\">"
           }
         ]
       },
@@ -968,36 +961,36 @@
         ],
         "description": "Ensures every form element has a label",
         "help": "Form elements must have labels",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/label?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/label?application=axeAPI",
         "nodes": [
           {
             "impact": "critical",
             "html": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
             "target": [
-              "body > input[type=\"password\"]:nth-child(17)"
+              "input[onpaste=\"event\\.preventDefault\\(\\)\\;\"]"
             ],
-            "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-            "path": "3,HTML,1,BODY,31,INPUT",
+            "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
+            "path": "3,HTML,1,BODY,44,INPUT",
             "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">"
           },
           {
             "impact": "critical",
             "html": "<input type=\"password\">",
             "target": [
-              "body > input[type=\"password\"]:nth-child(18)"
+              "input:nth-child(25)"
             ],
-            "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-            "path": "3,HTML,1,BODY,33,INPUT",
+            "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
+            "path": "3,HTML,1,BODY,46,INPUT",
             "snippet": "<input type=\"password\">"
           },
           {
             "impact": "critical",
             "html": "<input type=\"password\" onpaste=\"return false;\">",
             "target": [
-              "body > input[type=\"password\"]:nth-child(19)"
+              "input[onpaste=\"return\\ false\\;\"]"
             ],
-            "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-            "path": "3,HTML,1,BODY,35,INPUT",
+            "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
+            "path": "3,HTML,1,BODY,48,INPUT",
             "snippet": "<input type=\"password\" onpaste=\"return false;\">"
           }
         ]
@@ -1008,7 +1001,6 @@
         "tags": [
           "cat.name-role-value",
           "wcag2a",
-          "wcag111",
           "wcag412",
           "wcag244",
           "section508",
@@ -1016,57 +1008,92 @@
         ],
         "description": "Ensures links have discernible text",
         "help": "Links must have discernible text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/link-name?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/link-name?application=axeAPI",
         "nodes": [
           {
             "impact": "serious",
             "html": "<a href=\"javascript:void(0)\" target=\"_blank\"></a>",
             "target": [
-              "body > a:nth-child(15)"
+              "a[href=\"javascript:void(0)\"]"
             ],
-            "failureSummary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,27,A",
+            "failureSummary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+            "path": "3,HTML,1,BODY,40,A",
             "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\">"
           },
           {
             "impact": "serious",
             "html": "<a href=\"mailto:inbox@email.com\" target=\"_blank\"></a>",
             "target": [
-              "body > a[href$=\"mailto:inbox@email.com\"]"
+              "a[href$=\"mailto:inbox@email.com\"]"
             ],
-            "failureSummary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-            "path": "3,HTML,1,BODY,29,A",
+            "failureSummary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+            "path": "3,HTML,1,BODY,42,A",
             "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\">"
+          }
+        ]
+      },
+      {
+        "id": "object-alt",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag111",
+          "section508",
+          "section508.22.a"
+        ],
+        "description": "Ensures <object> elements have alternate text",
+        "help": "<object> elements must have alternate text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/object-alt?application=axeAPI",
+        "nodes": [
+          {
+            "impact": "serious",
+            "html": "<object id=\"5934a\"></object>",
+            "target": [
+              "#\\35 934a"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty",
+            "path": "3,HTML,1,BODY,2,OBJECT",
+            "snippet": "<object id=\"5934a\">"
+          },
+          {
+            "impact": "serious",
+            "html": "<object id=\"5934b\"></object>",
+            "target": [
+              "#\\35 934b"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty",
+            "path": "3,HTML,1,BODY,3,OBJECT",
+            "snippet": "<object id=\"5934b\">"
           }
         ]
       }
     ],
     "notApplicable": [
       {
-        "id": "accesskeys",
-        "impact": null,
-        "tags": [
-          "wcag2a",
-          "wcag211",
-          "cat.keyboard"
-        ],
-        "description": "Ensures every accesskey attribute value is unique",
-        "help": "accesskey attribute value must be unique",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/accesskeys?application=axeAPI",
-        "nodes": []
-      },
-      {
         "id": "aria-allowed-attr",
         "impact": null,
         "tags": [
           "cat.aria",
           "wcag2a",
-          "wcag411",
           "wcag412"
         ],
         "description": "Ensures ARIA attributes are allowed for an element's role",
         "help": "Elements must only use allowed ARIA attributes",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/aria-allowed-attr?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=axeAPI",
+        "nodes": []
+      },
+      {
+        "id": "aria-dpub-role-fallback",
+        "impact": null,
+        "tags": [
+          "cat.aria",
+          "wcag2a",
+          "wcag131"
+        ],
+        "description": "Ensures unsupported DPUB roles are only used on elements with implicit fallback roles",
+        "help": "Unsupported DPUB ARIA roles should be used on elements with implicit fallback roles",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-dpub-role-fallback?application=axeAPI",
         "nodes": []
       },
       {
@@ -1075,12 +1102,11 @@
         "tags": [
           "cat.aria",
           "wcag2a",
-          "wcag411",
           "wcag412"
         ],
         "description": "Ensures elements with ARIA roles have all required ARIA attributes",
         "help": "Required ARIA attributes must be provided",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/aria-required-attr?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=axeAPI",
         "nodes": []
       },
       {
@@ -1093,7 +1119,7 @@
         ],
         "description": "Ensures elements with an ARIA role that require child roles contain them",
         "help": "Certain ARIA roles must contain particular children",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/aria-required-children?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=axeAPI",
         "nodes": []
       },
       {
@@ -1106,7 +1132,7 @@
         ],
         "description": "Ensures elements with an ARIA role that require parent roles are contained by them",
         "help": "Certain ARIA roles must be contained by particular parents",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/aria-required-parent?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-required-parent?application=axeAPI",
         "nodes": []
       },
       {
@@ -1115,13 +1141,11 @@
         "tags": [
           "cat.aria",
           "wcag2a",
-          "wcag131",
-          "wcag411",
           "wcag412"
         ],
         "description": "Ensures all elements with a role attribute use a valid value",
         "help": "ARIA roles used must conform to valid values",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/aria-roles?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-roles?application=axeAPI",
         "nodes": []
       },
       {
@@ -1130,13 +1154,11 @@
         "tags": [
           "cat.aria",
           "wcag2a",
-          "wcag131",
-          "wcag411",
           "wcag412"
         ],
         "description": "Ensures all ARIA attributes have valid values",
         "help": "ARIA attributes must conform to valid values",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/aria-valid-attr-value?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=axeAPI",
         "nodes": []
       },
       {
@@ -1145,11 +1167,11 @@
         "tags": [
           "cat.aria",
           "wcag2a",
-          "wcag411"
+          "wcag412"
         ],
         "description": "Ensures attributes that begin with aria- are valid ARIA attributes",
         "help": "ARIA attributes must conform to valid names",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/aria-valid-attr?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr?application=axeAPI",
         "nodes": []
       },
       {
@@ -1158,13 +1180,13 @@
         "tags": [
           "cat.time-and-media",
           "wcag2a",
-          "wcag122",
+          "wcag121",
           "section508",
           "section508.22.a"
         ],
         "description": "Ensures <audio> elements have captions",
         "help": "<audio> elements must have a captions track",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/audio-caption?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=axeAPI",
         "nodes": []
       },
       {
@@ -1179,7 +1201,7 @@
         ],
         "description": "Ensures buttons have discernible text",
         "help": "Buttons must have discernible text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/button-name?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/button-name?application=axeAPI",
         "nodes": []
       },
       {
@@ -1192,7 +1214,7 @@
         ],
         "description": "Ensures <dl> elements are structured correctly",
         "help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script> or <template> elements",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/definition-list?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/definition-list?application=axeAPI",
         "nodes": []
       },
       {
@@ -1205,7 +1227,33 @@
         ],
         "description": "Ensures <dt> and <dd> elements are contained by a <dl>",
         "help": "<dt> and <dd> elements must be contained by a <dl>",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/dlitem?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/dlitem?application=axeAPI",
+        "nodes": []
+      },
+      {
+        "id": "duplicate-id-active",
+        "impact": null,
+        "tags": [
+          "cat.parsing",
+          "wcag2a",
+          "wcag411"
+        ],
+        "description": "Ensures every id attribute value of active elements is unique",
+        "help": "IDs of active elements must be unique",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/duplicate-id-active?application=axeAPI",
+        "nodes": []
+      },
+      {
+        "id": "duplicate-id-aria",
+        "impact": null,
+        "tags": [
+          "cat.parsing",
+          "wcag2a",
+          "wcag411"
+        ],
+        "description": "Ensures every id attribute value used in ARIA and in labels is unique",
+        "help": "IDs used in ARIA and labels must be unique",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/duplicate-id-aria?application=axeAPI",
         "nodes": []
       },
       {
@@ -1215,12 +1263,13 @@
           "cat.text-alternatives",
           "wcag2a",
           "wcag241",
+          "wcag412",
           "section508",
           "section508.22.i"
         ],
         "description": "Ensures <iframe> and <frame> elements contain a non-empty title attribute",
         "help": "Frames must have title attribute",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/frame-title?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/frame-title?application=axeAPI",
         "nodes": []
       },
       {
@@ -1233,7 +1282,20 @@
         ],
         "description": "Ensures the lang attribute of the <html> element has a valid value",
         "help": "<html> element must have a valid value for the lang attribute",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/html-lang-valid?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/html-lang-valid?application=axeAPI",
+        "nodes": []
+      },
+      {
+        "id": "html-xml-lang-mismatch",
+        "impact": null,
+        "tags": [
+          "cat.language",
+          "wcag2a",
+          "wcag311"
+        ],
+        "description": "Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page",
+        "help": "HTML elements with lang and xml:lang must have the same base language",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/html-xml-lang-mismatch?application=axeAPI",
         "nodes": []
       },
       {
@@ -1248,7 +1310,7 @@
         ],
         "description": "Ensures <input type=\"image\"> elements have alternate text",
         "help": "Image buttons must have alternate text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/input-image-alt?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/input-image-alt?application=axeAPI",
         "nodes": []
       },
       {
@@ -1261,7 +1323,7 @@
         ],
         "description": "Ensures presentational <table> elements do not use <th>, <caption> elements or the summary attribute",
         "help": "Layout tables must not use data table elements",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/layout-table?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/layout-table?application=axeAPI",
         "nodes": []
       },
       {
@@ -1274,7 +1336,7 @@
         ],
         "description": "Ensures that lists are structured correctly",
         "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/list?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/list?application=axeAPI",
         "nodes": []
       },
       {
@@ -1287,20 +1349,7 @@
         ],
         "description": "Ensures <li> elements are used semantically",
         "help": "<li> elements must be contained in a <ul> or <ol>",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/listitem?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "marquee",
-        "impact": null,
-        "tags": [
-          "cat.parsing",
-          "wcag2a",
-          "wcag222"
-        ],
-        "description": "Ensures <marquee> elements are not used",
-        "help": "<marquee> elements are deprecated and must not be used",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/marquee?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/listitem?application=axeAPI",
         "nodes": []
       },
       {
@@ -1316,22 +1365,7 @@
         ],
         "description": "Ensures <meta http-equiv=\"refresh\"> is not used",
         "help": "Timed refresh must not exist",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/meta-refresh?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "object-alt",
-        "impact": null,
-        "tags": [
-          "cat.text-alternatives",
-          "wcag2a",
-          "wcag111",
-          "section508",
-          "section508.22.a"
-        ],
-        "description": "Ensures <object> elements have alternate text",
-        "help": "<object> elements must have alternate text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/object-alt?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=axeAPI",
         "nodes": []
       },
       {
@@ -1343,39 +1377,7 @@
         ],
         "description": "Ensures tabindex attribute values are not greater than 0",
         "help": "Elements should not have tabindex greater than zero",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/tabindex?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "table-fake-caption",
-        "impact": null,
-        "tags": [
-          "cat.tables",
-          "experimental",
-          "wcag2a",
-          "wcag131",
-          "section508",
-          "section508.22.g"
-        ],
-        "description": "Ensure that tables with a caption use the <caption> element.",
-        "help": "Data or header cells should not be used to give caption to a data table.",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/table-fake-caption?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "td-has-header",
-        "impact": null,
-        "tags": [
-          "cat.tables",
-          "experimental",
-          "wcag2a",
-          "wcag131",
-          "section508",
-          "section508.22.g"
-        ],
-        "description": "Ensure that each non-empty data cell in a large table has one or more table headers",
-        "help": "All non-empty td element in table larger than 3 by 3 must have an associated table header",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/td-has-header?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/tabindex?application=axeAPI",
         "nodes": []
       },
       {
@@ -1390,7 +1392,7 @@
         ],
         "description": "Ensure that each cell in a table using the headers refers to another cell in that table",
         "help": "All cells in a table element that use the headers attribute must only refer to other cells of that same table",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/td-headers-attr?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=axeAPI",
         "nodes": []
       },
       {
@@ -1405,7 +1407,7 @@
         ],
         "description": "Ensure that each table header in a data table refers to data cells",
         "help": "All th elements and elements with role=columnheader/rowheader must have data cells they describe",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/th-has-data-cells?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=axeAPI",
         "nodes": []
       },
       {
@@ -1418,7 +1420,7 @@
         ],
         "description": "Ensures lang attributes have valid values",
         "help": "lang attribute must have a valid value",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/valid-lang?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=axeAPI",
         "nodes": []
       },
       {
@@ -1428,13 +1430,12 @@
           "cat.text-alternatives",
           "wcag2a",
           "wcag122",
-          "wcag123",
           "section508",
           "section508.22.a"
         ],
         "description": "Ensures <video> elements have captions",
         "help": "<video> elements must have captions",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/video-caption?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/video-caption?application=axeAPI",
         "nodes": []
       },
       {
@@ -1449,7 +1450,7 @@
         ],
         "description": "Ensures <video> elements have audio descriptions",
         "help": "<video> elements must have an audio description track",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/2.6/video-description?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/video-description?application=axeAPI",
         "nodes": []
       }
     ]
@@ -2480,7 +2481,6 @@
     "name": "mydb",
     "version": "1.0"
   },
-  "MetaDescription": null,
   "FontSize": {
     "analyzedFailingNodesData": [],
     "analyzedFailingTextLength": 0,
@@ -2510,7 +2510,6 @@
       "text": ""
     }
   ],
-  "MetaRobots": null,
   "Hreflang": [],
   "EmbeddedContent": [],
   "Canonical": [],

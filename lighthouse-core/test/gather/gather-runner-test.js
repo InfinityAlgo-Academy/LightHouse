@@ -322,7 +322,6 @@ describe('GatherRunner', function() {
       clearDataForOrigin: createCheck('calledClearStorage'),
       blockUrlPatterns: asyncFunc,
       setExtraHTTPHeaders: asyncFunc,
-      listenForSecurityStateChanges: asyncFunc,
     };
 
     return GatherRunner.setupDriver(driver, {settings: {}}).then(_ => {
@@ -382,7 +381,6 @@ describe('GatherRunner', function() {
       clearDataForOrigin: createCheck('calledClearStorage'),
       blockUrlPatterns: asyncFunc,
       setExtraHTTPHeaders: asyncFunc,
-      listenForSecurityStateChanges: asyncFunc,
     };
 
     return GatherRunner.setupDriver(driver, {
@@ -693,44 +691,6 @@ describe('GatherRunner', function() {
       assert.equal(error.message, 'DNS_FAILURE');
       assert.equal(error.code, 'DNS_FAILURE');
       expect(error.friendlyMessage).toBeDisplayString(/^DNS servers could not resolve/);
-    });
-  });
-
-  describe('#assertNoSecurityIssues', () => {
-    it('succeeds when page is secure', () => {
-      const secureSecurityState = {
-        securityState: 'secure',
-      };
-      GatherRunner.assertNoSecurityIssues(secureSecurityState);
-    });
-
-    it('fails when page is insecure', () => {
-      const insecureSecurityState = {
-        explanations: [
-          {
-            description: 'reason 1',
-            securityState: 'insecure',
-          },
-          {
-            description: 'blah.',
-            securityState: 'info',
-          },
-          {
-            description: 'reason 2',
-            securityState: 'insecure',
-          },
-        ],
-        securityState: 'insecure',
-      };
-      try {
-        GatherRunner.assertNoSecurityIssues(insecureSecurityState);
-        assert.fail('expected INSECURE_DOCUMENT_REQUEST LHError');
-      } catch (err) {
-        assert.equal(err.message, 'INSECURE_DOCUMENT_REQUEST');
-        assert.equal(err.code, 'INSECURE_DOCUMENT_REQUEST');
-        expect(err.friendlyMessage)
-          .toBeDisplayString(/The URL.*security credentials.*reason 1 reason 2/);
-      }
     });
   });
 
@@ -1108,6 +1068,38 @@ describe('GatherRunner', function() {
         .then(_ => {
           assert.ok(true);
         });
+    });
+  });
+
+  describe('.getWebAppManifest', () => {
+    const MANIFEST_URL = 'https://example.com/manifest.json';
+    let passContext;
+
+    beforeEach(() => {
+      passContext = {
+        url: 'https://example.com/index.html',
+        baseArtifacts: {},
+        driver: fakeDriver,
+      };
+    });
+
+    it('should pass through manifest when null', async () => {
+      const getAppManifest = jest.spyOn(fakeDriver, 'getAppManifest');
+      getAppManifest.mockResolvedValueOnce(null);
+      const result = await GatherRunner.getWebAppManifest(passContext);
+      expect(result).toEqual(null);
+    });
+
+    it('should parse the manifest when found', async () => {
+      const manifest = {name: 'App'};
+      const getAppManifest = jest.spyOn(fakeDriver, 'getAppManifest');
+      getAppManifest.mockResolvedValueOnce({data: JSON.stringify(manifest), url: MANIFEST_URL});
+      const result = await GatherRunner.getWebAppManifest(passContext);
+      expect(result).toHaveProperty('raw', JSON.stringify(manifest));
+      expect(result.value).toMatchObject({
+        name: {value: 'App', raw: 'App'},
+        start_url: {value: passContext.url, raw: undefined},
+      });
     });
   });
 });

@@ -22,6 +22,9 @@ const fakeDriver = {
   getBenchmarkIndex() {
     return Promise.resolve(125.2);
   },
+  getAppManifest() {
+    return Promise.resolve(null);
+  },
   connect() {
     return Promise.resolve();
   },
@@ -80,14 +83,6 @@ const fakeDriver = {
   },
   setExtraHTTPHeaders() {
     return Promise.resolve();
-  },
-  listenForSecurityStateChanges() {
-    return Promise.resolve();
-  },
-  getSecurityState() {
-    return Promise.resolve({
-      securityState: 'secure',
-    });
   },
 };
 

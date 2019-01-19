@@ -6,7 +6,6 @@
 'use strict';
 
 const Gatherer = require('./gatherer');
-const manifestParser = require('../../lib/manifest-parser');
 
 /** @typedef {import('../driver.js')} Driver */
 
@@ -16,27 +15,21 @@ class StartUrl extends Gatherer {
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts['StartUrl']>}
    */
-  afterPass(passContext) {
-    const driver = passContext.driver;
-    return driver.goOnline(passContext)
-      .then(() => driver.getAppManifest())
-      .then(response => driver.goOffline().then(() => response))
-      .then(response => response && manifestParser(response.data, response.url, passContext.url))
-      .then(manifest => {
-        const startUrlInfo = this._readManifestStartUrl(manifest);
-        if (startUrlInfo.isReadFailure) {
-          return {statusCode: -1, explanation: startUrlInfo.reason};
-        }
+  async afterPass(passContext) {
+    const manifest = passContext.baseArtifacts.WebAppManifest;
+    const startUrlInfo = this._readManifestStartUrl(manifest);
+    if (startUrlInfo.isReadFailure) {
+      return {statusCode: -1, explanation: startUrlInfo.reason};
+    }
 
-        return this._attemptManifestFetch(passContext.driver, startUrlInfo.startUrl);
-      }).catch(() => {
-        return {statusCode: -1, explanation: 'Unable to fetch start URL via service worker.'};
-      });
+    return this._attemptStartURLFetch(passContext.driver, startUrlInfo.startUrl).catch(() => {
+      return {statusCode: -1, explanation: 'Unable to fetch start URL via service worker.'};
+    });
   }
 
   /**
    * Read the parsed manifest and return failure reasons or the startUrl
-   * @param {?{value?: {start_url: {value: string, warning?: string}}, warning?: string}} manifest
+   * @param {LH.Artifacts.Manifest|null} manifest
    * @return {{isReadFailure: true, reason: string}|{isReadFailure: false, startUrl: string}}
    */
   _readManifestStartUrl(manifest) {
@@ -61,7 +54,8 @@ class StartUrl extends Gatherer {
    * @param {string} startUrl
    * @return {Promise<{statusCode: number, explanation: string}>}
    */
-  _attemptManifestFetch(driver, startUrl) {
+  _attemptStartURLFetch(driver, startUrl) {
+    // TODO(phulce): clean up this setTimeout once the response has happened
     // Wait up to 3s to get a matched network request from the fetch() to work
     const timeoutPromise = new Promise(resolve =>
       setTimeout(

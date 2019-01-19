@@ -1,3 +1,113 @@
+ <a name="4.0.0"></a>
+# 4.0.0 (2019-01-16)
+
+## New contributors!
+
+@mattzeunert, @dima74, @jeffbcross, @knoxmic, and @shogunsea. Thanks!
+
+## Major changes
+
+* A bevy of bug fixes and performance improvements.
+
+* A special reward for getting a perfect score.
+
+* A new layout for the PWA category, emphasizing speed, installability, and polish.
+
+<a href="https://user-images.githubusercontent.com/316891/51218948-6e60ef00-18e3-11e9-8a48-535b59a41301.png"><img height="300" alt="Lighthouse 4.0 PWA category" src="https://user-images.githubusercontent.com/316891/51218948-6e60ef00-18e3-11e9-8a48-535b59a41301.png"></a>
+
+## Breaking changes
+
+* New PWA category, organization, and scoring ([#6395](https://github.com/GoogleChrome/lighthouse/issues/6395))
+  - the PWA section of the report has a set of badges instead of a numeric score gauge ([#6526](https://github.com/googlechrome/lighthouse/pull/6526), [#6670](https://github.com/googlechrome/lighthouse/pull/6670))
+  - the `webapp-install-banner` audit is now `installable-manifest` ([#6630](https://github.com/googlechrome/lighthouse/pull/6630))
+  - the offline check formerly in `webapp-install-banner` is the new audit `offline-start-url` ([#6397](https://github.com/googlechrome/lighthouse/pull/6397))
+* audits' `scoreDisplayMode` `'not-applicable'` is now `'notApplicable'` ([#6783](https://github.com/googlechrome/lighthouse/pull/6783))
+* `no-websql` audit removed due to performance cost ([#6293](https://github.com/googlechrome/lighthouse/pull/6293))
+* `speed-index` scoring now scales based on throttling ([#7007](https://github.com/googlechrome/lighthouse/pull/7007))
+* empty children arrays are now removed from `critical-request-chain` audit result ([#6211](https://github.com/googlechrome/lighthouse/pull/6211))
+* the correct Nexus 5X screen height of 660 now used instead of 732 ([#6932](https://github.com/googlechrome/lighthouse/pull/6932))
+* throttling constants under `mobile3G` renamed to the more accurate `mobileSlow4G` with no change in values ([#6163](https://github.com/googlechrome/lighthouse/pull/6163))
+* typescript definition files are now located under `types/` ([#6617](https://github.com/googlechrome/lighthouse/pull/6617))
+* computed artifact files are now located under `lighthouse-core/computed/` ([#6618](https://github.com/googlechrome/lighthouse/pull/6618))
+
+<hr>
+
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v4.0.0-beta...v4.0.0) (in addition to the changes in [4.0.0-beta](https://github.com/GoogleChrome/lighthouse/releases/tag/v4.0.0-beta), [4.0.0-alpha.1](https://github.com/GoogleChrome/lighthouse/releases/tag/v4.0.0-alpha.1), and [4.0.0-alpha.0](https://github.com/GoogleChrome/lighthouse/releases/tag/4.0.0-alpha.0))
+
+## Core
+
+* config: reorder categories to match new score gauge order ([#6848](https://github.com/googlechrome/lighthouse/pull/6848))
+* driver: handle navigation rejections within `Driver.gotoURL` ([#6739](https://github.com/googlechrome/lighthouse/pull/6739))
+* driver: exit early when testing page with insecure certificate ([#6608](https://github.com/googlechrome/lighthouse/pull/6608))
+* driver: `waitForFCP` when tracing ([#6944](https://github.com/googlechrome/lighthouse/pull/6944))
+* handle invalid network timing data ([#6780](https://github.com/googlechrome/lighthouse/pull/6780))
+* fix `usesObjectFit` property for ImageElement ([#6761](https://github.com/googlechrome/lighthouse/pull/6761))
+* fonts: resolve URLs relative to stylesheet ([#6782](https://github.com/googlechrome/lighthouse/pull/6782))
+* lantern: remove unnecessary sort calls ([#6900](https://github.com/googlechrome/lighthouse/pull/6900))
+* lantern: drop node id from error message ([#6774](https://github.com/googlechrome/lighthouse/pull/6774))
+* minification: properly handle regex character classes ([#6745](https://github.com/googlechrome/lighthouse/pull/6745))
+* preconnect: add warning if preconnect link is not used ([#6694](https://github.com/googlechrome/lighthouse/pull/6694))
+* preload: warn when duplicate requests issued ([#6849](https://github.com/googlechrome/lighthouse/pull/6849))
+* scoreDisplayMode: change `'not-applicable'` to `'notApplicable'` ([#6783](https://github.com/googlechrome/lighthouse/pull/6783))
+* service-worker: check that `start_url` is within SW's scope ([#6678](https://github.com/googlechrome/lighthouse/pull/6678))
+* speedindex: scale scoring coefficients based on throttling ([#7007](https://github.com/googlechrome/lighthouse/pull/7007))
+* tap-targets: helper functions for working with `ClientRects` ([#6703](https://github.com/googlechrome/lighthouse/pull/6703))
+* url: add intent protocol to `NON_NETWORK_PROTOCOLS` ([#6711](https://github.com/googlechrome/lighthouse/pull/6711))
+* user-timings: move into computed artifact ([#6719](https://github.com/googlechrome/lighthouse/pull/6719))
+* change `displayValue` to be string only ([#6767](https://github.com/googlechrome/lighthouse/pull/6767))
+* add type checking to `pwmetrics-events` ([#6980](https://github.com/googlechrome/lighthouse/pull/6980))
+* stricter LR-desktop metric scoring ([#6969](https://github.com/googlechrome/lighthouse/pull/6969))
+* in-page functions refactor ([#6702](https://github.com/googlechrome/lighthouse/pull/6702))
+
+## Deps
+
+* update axe-core to latest ([#7020](https://github.com/googlechrome/lighthouse/pull/7020))
+* update details-element-polyfill to 2.2.0 ([#6928](https://github.com/googlechrome/lighthouse/pull/6928))
+* update tsc to 3.2.2 ([#6684](https://github.com/googlechrome/lighthouse/pull/6684))
+* snyk: update snyk snapshot ([#6888](https://github.com/googlechrome/lighthouse/pull/6888), [#6842](https://github.com/googlechrome/lighthouse/pull/6842))
+
+## Docs
+
+* readme: add speedrank to integrations list ([#6987](https://github.com/googlechrome/lighthouse/pull/6987))
+* readme: added simple guidance on install options ([#6810](https://github.com/googlechrome/lighthouse/pull/6810))
+* configuration.md: update link to pwmetrics ([#6816](https://github.com/googlechrome/lighthouse/pull/6816))
+* scoring: update TTI references ([#6865](https://github.com/googlechrome/lighthouse/pull/6865))
+* `--help`: use HTTPS link to bit.ly/chrome-flags ([#6692](https://github.com/googlechrome/lighthouse/pull/6692))
+* ask people to test a11y issues upstream first ([#6764](https://github.com/googlechrome/lighthouse/pull/6764))
+
+## Extension
+
+* return `runnerResult` from `runLighthouseInExtension()` ([#6839](https://github.com/googlechrome/lighthouse/pull/6839))
+
+## I18n
+
+* localize `LighthouseError` messages ([#6457](https://github.com/googlechrome/lighthouse/pull/6457), [#6812](https://github.com/googlechrome/lighthouse/pull/6812))
+
+## Report
+
+* pwa: add tooltip to badge gauge ([#6689](https://github.com/googlechrome/lighthouse/pull/6689))
+* add top-level section for passed audits that had warnings ([#6989](https://github.com/googlechrome/lighthouse/pull/6989))
+* celebrate all 100s ([#5455](https://github.com/googlechrome/lighthouse/pull/5455))
+* expand groups within "Passed Audits" by default ([#6930](https://github.com/googlechrome/lighthouse/pull/6930))
+* fix margin on score gauge wrappers ([#6948](https://github.com/googlechrome/lighthouse/pull/6948), [#6972](https://github.com/googlechrome/lighthouse/pull/6972))
+* support narrow screens ([#6857](https://github.com/googlechrome/lighthouse/pull/6857))
+* larger margins for audit group summaries ([#6688](https://github.com/googlechrome/lighthouse/pull/6688))
+* clean up more clump/group/expandable cruft ([#6982](https://github.com/googlechrome/lighthouse/pull/6982))
+
+## Tests
+
+* smokehouse: assert `errorCode` in expectations ([#6851](https://github.com/googlechrome/lighthouse/pull/6851))
+* smokehouse: use node's native `URLSearchParams` ([#6929](https://github.com/googlechrome/lighthouse/pull/6929))
+* add type checking to `cli/tests/` ([#6874](https://github.com/googlechrome/lighthouse/pull/6874))
+* report: restore old, disabled failed grouping test ([#7006](https://github.com/googlechrome/lighthouse/pull/7006))
+
+## Misc
+
+* descriptions: more accurate metric descriptions ([#6508](https://github.com/googlechrome/lighthouse/pull/6508))
+* emulation: use correct Nexus 5X screen size ([#6932](https://github.com/googlechrome/lighthouse/pull/6932))
+* snyk: only keep vuln data for detectable libs ([#6919](https://github.com/googlechrome/lighthouse/pull/6919))
+* clean up local names within Config ([#6950](https://github.com/googlechrome/lighthouse/pull/6950))
+
  <a name="4.0.0-beta"></a>
 # 4.0.0-beta (2018-11-29)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v4.0.0-alpha.1...v4.0.0-beta)

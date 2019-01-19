@@ -749,13 +749,13 @@ class Config {
 
   /**
    * Take an array of audits and audit paths and require any paths (possibly
-   * relative to the optional `configPath`) using `Runner.resolvePlugin`,
+   * relative to the optional `configDir`) using `Config.resolveModule`,
    * leaving only an array of AuditDefns.
    * @param {LH.Config.Json['audits']} audits
-   * @param {string=} configPath
+   * @param {string=} configDir
    * @return {Config['audits']}
    */
-  static requireAudits(audits, configPath) {
+  static requireAudits(audits, configDir) {
     const status = {msg: 'Requiring audits', id: 'lh:config:requireAudits'};
     log.time(status, 'verbose');
     const expandedAudits = Config.expandAuditShorthand(audits);
@@ -775,7 +775,7 @@ class Config {
         let requirePath = `../audits/${audit.path}`;
         if (!coreAudit) {
           // Otherwise, attempt to find it elsewhere. This throws if not found.
-          requirePath = Runner.resolvePlugin(audit.path, configPath, 'audit');
+          requirePath = Config.resolveModule(audit.path, configDir, 'audit');
         }
         implementation = /** @type {typeof Audit} */ (require(requirePath));
       }
@@ -797,16 +797,16 @@ class Config {
    * @param {string} path
    * @param {{}=} options
    * @param {Array<string>} coreAuditList
-   * @param {string=} configPath
+   * @param {string=} configDir
    * @return {LH.Config.GathererDefn}
    */
-  static requireGathererFromPath(path, options, coreAuditList, configPath) {
+  static requireGathererFromPath(path, options, coreAuditList, configDir) {
     const coreGatherer = coreAuditList.find(a => a === `${path}.js`);
 
     let requirePath = `../gather/gatherers/${path}`;
     if (!coreGatherer) {
       // Otherwise, attempt to find it elsewhere. This throws if not found.
-      requirePath = Runner.resolvePlugin(path, configPath, 'gatherer');
+      requirePath = Config.resolveModule(path, configDir, 'gatherer');
     }
 
     const GathererClass = /** @type {GathererConstructor} */ (require(requirePath));
@@ -821,13 +821,13 @@ class Config {
 
   /**
    * Takes an array of passes with every property now initialized except the
-   * gatherers and requires them, (relative to the optional `configPath` if
-   * provided) using `Runner.resolvePlugin`, returning an array of full Passes.
+   * gatherers and requires them, (relative to the optional `configDir` if
+   * provided) using `Config.resolveModule`, returning an array of full Passes.
    * @param {?Array<Required<LH.Config.PassJson>>} passes
-   * @param {string=} configPath
+   * @param {string=} configDir
    * @return {Config['passes']}
    */
-  static requireGatherers(passes, configPath) {
+  static requireGatherers(passes, configDir) {
     if (!passes) {
       return null;
     }
@@ -855,7 +855,7 @@ class Config {
         } else if (gathererDefn.path) {
           const path = gathererDefn.path;
           const options = gathererDefn.options;
-          return Config.requireGathererFromPath(path, options, coreList, configPath);
+          return Config.requireGathererFromPath(path, options, coreList, configDir);
         } else {
           throw new Error('Invalid expanded Gatherer: ' + JSON.stringify(gathererDefn));
         }
@@ -868,6 +868,52 @@ class Config {
     });
     log.timeEnd(status);
     return fullPasses;
+  }
+
+  /**
+   * Resolves the location of the specified module and returns an absolute
+   * string path to the file. Used for loading custom audits and gatherers.
+   * Throws an error if no module is found.
+   * @param {string} moduleIdentifier
+   * @param {string=} configDir The absolute path to the directory of the config file, if there is one.
+   * @param {string=} category Optional plugin category (e.g. 'audit') for better error messages.
+   * @return {string}
+   * @throws {Error}
+   */
+  static resolveModule(moduleIdentifier, configDir, category) {
+    // First try straight `require()`. Unlikely to be specified relative to this
+    // file, but adds support for Lighthouse modules from npm since
+    // `require()` walks up parent directories looking inside any node_modules/
+    // present. Also handles absolute paths.
+    try {
+      return require.resolve(moduleIdentifier);
+    } catch (e) {}
+
+    // See if the module resolves relative to the current working directory.
+    // Most useful to handle the case of invoking Lighthouse as a module, since
+    // then the config is an object and so has no path.
+    const cwdPath = path.resolve(process.cwd(), moduleIdentifier);
+    try {
+      return require.resolve(cwdPath);
+    } catch (e) {}
+
+    const errorString = 'Unable to locate ' +
+        (category ? `${category}: ` : '') +
+        `${moduleIdentifier} (tried to require() from '${__dirname}' and load from '${cwdPath}'`;
+
+    if (!configDir) {
+      throw new Error(errorString + ')');
+    }
+
+    // Finally, try looking up relative to the config file path. Just like the
+    // relative path passed to `require()` is found relative to the file it's
+    // in, this allows module paths to be specified relative to the config file.
+    const relativePath = path.resolve(configDir, moduleIdentifier);
+    try {
+      return require.resolve(relativePath);
+    } catch (requireError) {}
+
+    throw new Error(errorString + ` and '${relativePath}')`);
   }
 }
 

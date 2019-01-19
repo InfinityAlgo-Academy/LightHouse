@@ -94,7 +94,7 @@ describe('Config', () => {
     const configJson = {
       passes: [{
         passName: unlikelyPassName,
-        gatherers: ['viewport'],
+        gatherers: ['meta-elements'],
       }, {
         passName: unlikelyPassName,
         gatherers: ['viewport-dimensions'],
@@ -139,7 +139,7 @@ describe('Config', () => {
       passes: [{
         gatherers: [
           'viewport-dimensions',
-          'viewport',
+          'meta-elements',
         ],
       }],
       audits: ['is-on-https'],
@@ -975,7 +975,7 @@ describe('Config', () => {
     });
   });
 
-  describe('#getDisplayString', () => {
+  describe('#getPrintString', () => {
     it('doesn\'t include empty gatherer/audit options in output', () => {
       const gOpt = 'gathererOption';
       const aOpt = 'auditOption';
@@ -984,8 +984,8 @@ describe('Config', () => {
         passes: [{
           passName: 'defaultPass',
           gatherers: [
-            // `options` merged into default `viewport` gatherer.
-            {path: 'viewport', options: {gOpt}},
+            // `options` merged into default `scripts` gatherer.
+            {path: 'scripts', options: {gOpt}},
           ],
         }],
         audits: [
@@ -998,8 +998,8 @@ describe('Config', () => {
       const printedConfig = JSON.parse(printed);
 
       // Check that options weren't completely eliminated.
-      const viewportGatherer = printedConfig.passes[0].gatherers.find(g => g.path === 'viewport');
-      assert.strictEqual(viewportGatherer.options.gOpt, gOpt);
+      const scriptsGatherer = printedConfig.passes[0].gatherers.find(g => g.path === 'scripts');
+      assert.strictEqual(scriptsGatherer.options.gOpt, gOpt);
       const metricsAudit = printedConfig.audits.find(a => a.path === 'metrics');
       assert.strictEqual(metricsAudit.options.aOpt, aOpt);
 

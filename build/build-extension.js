@@ -78,7 +78,7 @@ async function packageExtension() {
     writeStream.on('error', reject);
 
     archive.pipe(writeStream);
-    archive.glob(`${distDir}/**`);
+    archive.directory(distDir, false);
     archive.finalize();
   });
 }

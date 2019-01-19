@@ -30,7 +30,7 @@ class ThemedOmnibox extends MultiCheckAudit {
       failureTitle: 'Does not set an address-bar theme color',
       description: 'The browser address bar can be themed to match your site. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/address-bar).',
-      requiredArtifacts: ['Manifest', 'ThemeColor'],
+      requiredArtifacts: ['Manifest', 'MetaElements'],
     };
   }
 
@@ -43,13 +43,13 @@ class ThemedOmnibox extends MultiCheckAudit {
   }
 
   /**
-   * @param {LH.Artifacts['ThemeColor']} themeColorMeta
+   * @param {LH.Artifacts.MetaElement|undefined} themeColorMeta
    * @param {Array<string>} failures
    */
   static assessMetaThemecolor(themeColorMeta, failures) {
-    if (themeColorMeta === null) {
+    if (!themeColorMeta) {
       failures.push('No `<meta name="theme-color">` tag found');
-    } else if (!ThemedOmnibox.isValidColor(themeColorMeta)) {
+    } else if (!ThemedOmnibox.isValidColor(themeColorMeta.content || '')) {
       failures.push('The theme-color meta tag did not contain a valid CSS color');
     }
   }
@@ -79,14 +79,15 @@ class ThemedOmnibox extends MultiCheckAudit {
     /** @type {Array<string>} */
     const failures = [];
 
+    const themeColorMeta = artifacts.MetaElements.find(meta => meta.name === 'theme-color');
     const manifestValues = await ManifestValues.request(artifacts.Manifest, context);
     ThemedOmnibox.assessManifest(manifestValues, failures);
-    ThemedOmnibox.assessMetaThemecolor(artifacts.ThemeColor, failures);
+    ThemedOmnibox.assessMetaThemecolor(themeColorMeta, failures);
 
     return {
       failures,
       manifestValues,
-      themeColor: artifacts.ThemeColor,
+      themeColor: (themeColorMeta && themeColorMeta.content) || null,
     };
   }
 }

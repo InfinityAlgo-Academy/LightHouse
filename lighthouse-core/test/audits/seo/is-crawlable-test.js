@@ -12,6 +12,8 @@ const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-l
 /* eslint-env jest */
 
 describe('SEO: Is page crawlable audit', () => {
+  const makeMetaElements = content => [{name: 'robots', content}];
+
   it('fails when page is blocked from indexing with a robots metatag', () => {
     const robotsValues = [
       'noindex',
@@ -33,7 +35,7 @@ describe('SEO: Is page crawlable audit', () => {
       const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
         URL: {finalUrl},
-        MetaRobots: robotsValue,
+        MetaElements: makeMetaElements(robotsValue),
         RobotsTxt: {},
       };
 
@@ -58,7 +60,7 @@ describe('SEO: Is page crawlable audit', () => {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
       requestMainResource: () => Promise.resolve(mainResource),
-      MetaRobots: 'all, noarchive',
+      MetaElements: makeMetaElements('all, noarchive'),
       RobotsTxt: {},
     };
 
@@ -78,7 +80,7 @@ describe('SEO: Is page crawlable audit', () => {
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
-      MetaRobots: null,
+      MetaElements: [],
       RobotsTxt: {},
     };
 
@@ -121,7 +123,7 @@ describe('SEO: Is page crawlable audit', () => {
       const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
         URL: {finalUrl},
-        MetaRobots: null,
+        MetaElements: [],
         RobotsTxt: {},
       };
 
@@ -148,7 +150,7 @@ describe('SEO: Is page crawlable audit', () => {
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
-      MetaRobots: null,
+      MetaElements: [],
       RobotsTxt: {},
     };
 
@@ -168,7 +170,7 @@ describe('SEO: Is page crawlable audit', () => {
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
-      MetaRobots: null,
+      MetaElements: [],
       RobotsTxt: {},
     };
 
@@ -191,7 +193,7 @@ describe('SEO: Is page crawlable audit', () => {
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
-      MetaRobots: null,
+      MetaElements: [],
       RobotsTxt: {},
     };
 
@@ -239,7 +241,7 @@ describe('SEO: Is page crawlable audit', () => {
       const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
         URL: {finalUrl},
-        MetaRobots: null,
+        MetaElements: [],
         RobotsTxt: robotsTxt,
       };
 
@@ -278,7 +280,7 @@ describe('SEO: Is page crawlable audit', () => {
       const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
         URL: {finalUrl},
-        MetaRobots: null,
+        MetaElements: [],
         RobotsTxt: robotsTxt,
       };
 
@@ -308,7 +310,7 @@ describe('SEO: Is page crawlable audit', () => {
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
-      MetaRobots: 'noindex',
+      MetaElements: makeMetaElements('noindex'),
       RobotsTxt: robotsTxt,
     };
 
