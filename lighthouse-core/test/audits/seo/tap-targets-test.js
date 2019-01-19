@@ -13,7 +13,10 @@ const assert = require('assert');
 function auditTapTargets(tapTargets) {
   const artifacts = {
     TapTargets: tapTargets,
-    Viewport: 'width=device-width',
+    MetaElements: [{
+      name: 'viewport',
+      content: 'width=device-width',
+    }],
   };
 
   return TapTargetsAudit.audit(artifacts);
