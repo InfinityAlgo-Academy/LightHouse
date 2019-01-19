@@ -32,16 +32,15 @@ const TARGET_SELECTORS = [
 const tapTargetsSelector = TARGET_SELECTORS.join(',');
 
 /**
- *
- * @param {Element} node
+ * @param {Element} element
  */
 /* istanbul ignore next */
-function nodeIsVisible(node) {
-  const {overflowX, overflowY, display, visibility} = getComputedStyle(node);
+function elementIsVisible(element) {
+  const {overflowX, overflowY, display, visibility} = getComputedStyle(element);
 
   if (
     display === 'none' ||
-    (visibility === 'collapse' && ['TR', 'TBODY', 'COL', 'COLGROUP'].includes(node.tagName))
+    (visibility === 'collapse' && ['TR', 'TBODY', 'COL', 'COLGROUP'].includes(element.tagName))
   ) {
     // Element not displayed
     return false;
@@ -51,15 +50,15 @@ function nodeIsVisible(node) {
   if (display === 'block' || display === 'inline-block') {
     // if height/width is 0 and no overflow in that direction then
     // there's no content that the user can see and tap on
-    if ((node.clientWidth === 0 && overflowX === 'hidden') ||
-        (node.clientHeight === 0 && overflowY === 'hidden')) {
+    if ((element.clientWidth === 0 && overflowX === 'hidden') ||
+        (element.clientHeight === 0 && overflowY === 'hidden')) {
       return false;
     }
   }
 
-  const parent = node.parentElement;
-  if (parent && parent.tagName !== 'BODY' && !nodeIsVisible(parent)) {
-    // if a parent is invisible then the current node is also invisible
+  const parent = element.parentElement;
+  if (parent && parent.tagName !== 'BODY' && !elementIsVisible(parent)) {
+    // if a parent is invisible then the current element is also invisible
     return false;
   }
 
@@ -75,22 +74,22 @@ function allClientRectsEmpty(clientRects) {
 }
 
 /**
- * @param {Element} node
+ * @param {Element} element
  */
 /* istanbul ignore next */
-function getVisibleClientRects(node) {
-  if (!nodeIsVisible(node)) {
+function getVisibleClientRects(element) {
+  if (!elementIsVisible(element)) {
     return [];
   }
 
   const {
     overflowX,
     overflowY,
-  } = getComputedStyle(node);
-  let clientRects = getClientRects(node, true);
+  } = getComputedStyle(element);
+  let clientRects = getClientRects(element, true);
 
   if (allClientRectsEmpty(clientRects)) {
-    if ((overflowX === 'hidden' && overflowY === 'hidden') || node.children.length === 0) {
+    if ((overflowX === 'hidden' && overflowY === 'hidden') || element.children.length === 0) {
       // own size is 0x0 and there's no visible child content
       return [];
     }
@@ -101,20 +100,20 @@ function getVisibleClientRects(node) {
   // - tap targets audit doesn't consider different containers/layers
   // - having most content in an explicit scroll container is rare
   // - treating them as hidden only generates false passes, which is better than false failures
-  clientRects = filterClientRectsWithinAncestorsVisibleScrollArea(node, clientRects);
+  clientRects = filterClientRectsWithinAncestorsVisibleScrollArea(element, clientRects);
 
   return clientRects;
 }
 
 /**
  *
- * @param {Element} node
+ * @param {Element} element
  * @param {LH.Artifacts.Rect[]} clientRects
  * @returns {LH.Artifacts.Rect[]}
  */
 /* istanbul ignore next */
-function filterClientRectsWithinAncestorsVisibleScrollArea(node, clientRects) {
-  const parent = node.parentElement;
+function filterClientRectsWithinAncestorsVisibleScrollArea(element, clientRects) {
+  const parent = element.parentElement;
   if (!parent) {
     return clientRects;
   }
@@ -132,15 +131,15 @@ function filterClientRectsWithinAncestorsVisibleScrollArea(node, clientRects) {
 }
 
 /**
- * @param {Element} node
+ * @param {Element} element
  * @param {boolean} includeChildren
  * @returns {LH.Artifacts.Rect[]}
  */
 /* istanbul ignore next */
-function getClientRects(node, includeChildren = true) {
+function getClientRects(element, includeChildren = true) {
   /** @type {LH.Artifacts.Rect[]} */
   let clientRects = Array.from(
-    node.getClientRects()
+    element.getClientRects()
   ).map(clientRect => {
     // Contents of DOMRect get lost when returned from Runtime.evaluate call,
     // so we convert them to plain objects.
@@ -148,7 +147,7 @@ function getClientRects(node, includeChildren = true) {
     return {width, height, left, top, right, bottom};
   });
   if (includeChildren) {
-    for (const child of node.children) {
+    for (const child of element.children) {
       clientRects = clientRects.concat(getClientRects(child));
     }
   }
@@ -157,55 +156,40 @@ function getClientRects(node, includeChildren = true) {
 }
 
 /**
- * @param {Element} node
+ * @param {Element} element
  * @returns {boolean}
  */
 /* istanbul ignore next */
-function nodeHasParentTapTarget(node) {
-  if (!node.parentElement) {
+function elementHasAncestorTapTarget(element) {
+  if (!element.parentElement) {
     return false;
   }
-  if (node.parentElement.matches(tapTargetsSelector)) {
+  if (element.parentElement.matches(tapTargetsSelector)) {
     return true;
   }
-  return nodeHasParentTapTarget(node.parentElement);
+  return elementHasAncestorTapTarget(element.parentElement);
 }
 
 /**
- * Check if node is in a block of text, such as paragraph with a bunch of links in it.
- * Makes a reasonable guess, but for example gets it wrong if the element is surounded by other
+ * Check if element is in a block of text, such as paragraph with a bunch of links in it.
+ * Makes a reasonable guess, but for example gets it wrong if the element is surrounded by other
  * HTML elements instead of direct text nodes.
- * @param {Node} node
+ * @param {Element} element
  * @returns {boolean}
  */
 /* istanbul ignore next */
-function nodeIsInTextBlock(node) {
+function elementIsInTextBlock(element) {
   /**
-   * @param {Node} node
-   * @returns {boolean}
+   * @param {Element} element
    */
-  function isInline(node) {
-    if (node.nodeType === Node.TEXT_NODE) {
-      return true;
-    }
-    if (node.nodeType !== Node.ELEMENT_NODE) {
-      return false;
-    }
-    const {display} = getComputedStyle(/** @type {Element} */ (node));
-    return display === 'inline' || display === 'inline-block';
-  }
-
-  /**
-   * @param {Node} node
-   */
-  function hasTextNodeSiblingsFormingTextBlock(node) {
-    if (!node.parentElement) {
+  function hasTextNodeSiblingsFormingTextBlock(element) {
+    if (!element.parentElement) {
       return false;
     }
 
-    const parentElement = node.parentElement;
+    const parentElement = element.parentElement;
 
-    const nodeText = node.textContent || '';
+    const nodeText = element.textContent || '';
     const parentText = parentElement.textContent || '';
     if (parentText.length - nodeText.length < 5) {
       // Parent text mostly consists of this node, so the parent
@@ -213,8 +197,8 @@ function nodeIsInTextBlock(node) {
       return false;
     }
 
-    for (const sibling of node.parentElement.childNodes) {
-      if (sibling === node) {
+    for (const sibling of element.parentElement.childNodes) {
+      if (sibling === element) {
         continue;
       }
       const siblingTextContent = (sibling.textContent || '').trim();
@@ -226,31 +210,32 @@ function nodeIsInTextBlock(node) {
     return false;
   }
 
-  if (!isInline(node)) {
+  const {display} = getComputedStyle(element);
+  if (display !== 'inline' && display !== 'inline-block') {
     return false;
   }
 
-  if (hasTextNodeSiblingsFormingTextBlock(node)) {
+  if (hasTextNodeSiblingsFormingTextBlock(element)) {
     return true;
-  } else if (node.parentElement) {
-    return nodeIsInTextBlock(node.parentElement);
+  } else if (element.parentElement) {
+    return elementIsInTextBlock(element.parentElement);
   } else {
     return false;
   }
 }
 
 /**
- * @param {Element} node
+ * @param {Element} element
  * @returns {boolean}
  */
 /* istanbul ignore next */
-function nodeIsPositionFixedOrAbsolute(node) {
-  const {position} = getComputedStyle(node);
+function elementIsPositionFixedOrAbsolute(element) {
+  const {position} = getComputedStyle(element);
   if (position === 'fixed' || position === 'absolute') {
     return true;
   }
-  if (node.parentElement) {
-    return nodeIsPositionFixedOrAbsolute(node.parentElement);
+  if (element.parentElement) {
+    return elementIsPositionFixedOrAbsolute(element.parentElement);
   }
   return false;
 }
@@ -277,19 +262,19 @@ function gatherTapTargets() {
   const targets = [];
 
   // @ts-ignore - getElementsInDocument put into scope via stringification
-  Array.from(getElementsInDocument(tapTargetsSelector)).forEach(tapTargetNode => {
+  Array.from(getElementsInDocument(tapTargetsSelector)).forEach(tapTargetElement => {
     // Filter out tap targets that are likely to cause false failures:
-    if (nodeHasParentTapTarget(tapTargetNode)) {
+    if (elementHasAncestorTapTarget(tapTargetElement)) {
       // This is usually intentional, either the tap targets trigger the same action
       // or there's a child with a related action (like a delete button for an item)
       return;
     }
-    if (nodeIsInTextBlock(tapTargetNode)) {
+    if (elementIsInTextBlock(tapTargetElement)) {
       // Links inside text blocks cause a lot of failures, and there's also an exception for them
       // in the Web Content Accessibility Guidelines https://www.w3.org/TR/WCAG21/#target-size
       return;
     }
-    if (nodeIsPositionFixedOrAbsolute(tapTargetNode)) {
+    if (elementIsPositionFixedOrAbsolute(tapTargetElement)) {
       // Absolutely positioned elements might not be visible if they have a lower z-index
       // than other tap targets, but if we don't ignore them we can get false failures.
       //
@@ -298,19 +283,19 @@ function gatherTapTargets() {
       return;
     }
 
-    const visibleClientRects = getVisibleClientRects(tapTargetNode);
+    const visibleClientRects = getVisibleClientRects(tapTargetElement);
     if (visibleClientRects.length === 0) {
       return;
     }
 
     targets.push({
       clientRects: visibleClientRects,
-      snippet: truncate(tapTargetNode.outerHTML, 300),
+      snippet: truncate(tapTargetElement.outerHTML, 300),
       // @ts-ignore - getNodePath put into scope via stringification
-      path: getNodePath(tapTargetNode),
+      path: getNodePath(tapTargetElement),
       // @ts-ignore - getNodeSelector put into scope via stringification
-      selector: getNodeSelector(tapTargetNode),
-      href: tapTargetNode.href || '',
+      selector: getNodeSelector(tapTargetElement),
+      href: tapTargetElement.href || '',
     });
   });
 
@@ -327,13 +312,13 @@ class TapTargets extends Gatherer {
       const tapTargetsSelector = "${tapTargetsSelector}";
       ${pageFunctions.getElementsInDocumentString};
       ${filterClientRectsWithinAncestorsVisibleScrollArea.toString()};
-      ${nodeIsPositionFixedOrAbsolute.toString()};
-      ${nodeIsVisible.toString()};
-      ${nodeHasParentTapTarget.toString()};
+      ${elementIsPositionFixedOrAbsolute.toString()};
+      ${elementIsVisible.toString()};
+      ${elementHasAncestorTapTarget.toString()};
       ${getVisibleClientRects.toString()};
       ${truncate.toString()};
       ${getClientRects.toString()};
-      ${nodeIsInTextBlock.toString()};
+      ${elementIsInTextBlock.toString()};
       ${allClientRectsEmpty.toString()};
       ${rectContainsString};
       ${pageFunctions.getNodePathString};
