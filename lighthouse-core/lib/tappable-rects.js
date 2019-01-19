@@ -30,14 +30,14 @@ function getTappableRectsFromClientRects(clientRects) {
 }
 
 /**
+ * Sometimes a child will reach out of the parent by a few px, but still
+ * clearly belong to the same tap area in the users's eyes.
+ * We can be quite generous here, since merging too much tends to cause false
+ * passes instead of false failures (because there are more fingers)
  * @param {number} a
  * @param {number} b
  */
 function almostEqual(a, b) {
-  // Sometimes a child will reach out of the parent by a few px, but still
-  // clearly belong to the same tap area in the users's eyes.
-  // We can be quite generous here, since merging too much tends to cause false
-  // passes instead of false failures (because there are more fingers)
   return Math.abs(a - b) <= 10;
 }
 
