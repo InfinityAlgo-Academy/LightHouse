@@ -189,17 +189,17 @@ module.exports = [
             {
               'tapTarget': {
                 'type': 'node',
-                'snippet': `<a style="display: block; width: 100px; height: 30px;background: #ddd;">
-        too small target
-      </a>`,
+                'snippet': '<a ' +
+                 'style="display: block; width: 100px; height: 30px;background: #ddd;">' +
+                 '\n        too small target\n      </a>',
                 'path': '2,HTML,1,BODY,2,DIV,21,DIV,0,A',
                 'selector': 'body > div > div > a',
               },
               'overlappingTarget': {
                 'type': 'node',
-                'snippet': `<a style="display: block; width: 100px; height: 100px;background: #aaa;">
-        big enough target
-      </a>`,
+                'snippet': '<a ' +
+                  'style="display: block; width: 100px; height: 100px;background: #aaa;">' +
+                  '\n        big enough target\n      </a>',
                 'path': '2,HTML,1,BODY,2,DIV,21,DIV,1,A',
                 'selector': 'body > div > div > a',
               },
