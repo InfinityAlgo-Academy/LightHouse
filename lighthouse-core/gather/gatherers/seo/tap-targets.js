@@ -265,8 +265,11 @@ function gatherTapTargets() {
   /** @type {LH.Artifacts.TapTarget[]} */
   const targets = [];
 
+  /** @type {Element[]} */
   // @ts-ignore - getElementsInDocument put into scope via stringification
-  Array.from(getElementsInDocument(tapTargetsSelector)).forEach(tapTargetElement => {
+  const tapTargetElements = getElementsInDocument(tapTargetsSelector);
+
+  tapTargetElements.forEach(tapTargetElement => {
     // Filter out tap targets that are likely to cause false failures:
     if (elementHasAncestorTapTarget(tapTargetElement)) {
       // This is usually intentional, either the tap targets trigger the same action
@@ -299,7 +302,7 @@ function gatherTapTargets() {
       path: getNodePath(tapTargetElement),
       // @ts-ignore - getNodeSelector put into scope via stringification
       selector: getNodeSelector(tapTargetElement),
-      href: tapTargetElement.href || '',
+      href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
     });
   });
 
