@@ -202,6 +202,10 @@ function elementIsInTextBlock(element) {
         continue;
       }
       const siblingTextContent = (sibling.textContent || '').trim();
+      // Only count text in text nodes so that a series of e.g. buttons isn't counted
+      // as a text block.
+      // This works reasonably well, but means we miss text blocks where all text is e.g.
+      // wrapped in spans
       if (sibling.nodeType === Node.TEXT_NODE && siblingTextContent.length > 0) {
         return true;
       }
