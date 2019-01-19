@@ -56,10 +56,10 @@ function getTooSmallTargets(targets) {
 /**
  * @param {LH.Artifacts.TapTarget[]} tooSmallTargets
  * @param {LH.Artifacts.TapTarget[]} allTargets
- * @returns {LH.Audit.TapTargetOverlapFailure[]}
+ * @returns {TapTargetOverlapFailure[]}
  */
 function getAllOverlapFailures(tooSmallTargets, allTargets) {
-  /** @type {LH.Audit.TapTargetOverlapFailure[]} */
+  /** @type {TapTargetOverlapFailure[]} */
   let failures = [];
 
   tooSmallTargets.forEach(target => {
@@ -80,10 +80,10 @@ function getAllOverlapFailures(tooSmallTargets, allTargets) {
  *
  * @param {LH.Artifacts.TapTarget} tapTarget
  * @param {LH.Artifacts.TapTarget[]} allTapTargets
- * @returns {LH.Audit.TapTargetOverlapFailure[]}
+ * @returns {TapTargetOverlapFailure[]}
  */
 function getAllOverlapFailuresForTarget(tapTarget, allTapTargets) {
-  /** @type LH.Audit.TapTargetOverlapFailure[] */
+  /** @type TapTargetOverlapFailure[] */
   const failures = [];
 
   for (const maybeOverlappingTarget of allTapTargets) {
@@ -104,7 +104,7 @@ function getAllOverlapFailuresForTarget(tapTarget, allTapTargets) {
 /**
  * @param {LH.Artifacts.TapTarget} tapTarget
  * @param {LH.Artifacts.TapTarget} maybeOverlappingTarget
- * @returns {LH.Audit.TapTargetOverlapFailure | null}
+ * @returns {TapTargetOverlapFailure | null}
  */
 function getOverlapFailureForTargetPair(tapTarget, maybeOverlappingTarget) {
   // Convert client rects to unique tappable areas from a user's perspective
@@ -123,7 +123,7 @@ function getOverlapFailureForTargetPair(tapTarget, maybeOverlappingTarget) {
     return null;
   }
 
-  /** @type LH.Audit.TapTargetOverlapFailure | null */
+  /** @type TapTargetOverlapFailure | null */
   let greatestFailure = null;
   for (const targetCR of tappableRects) {
     for (const maybeOverlappingCR of maybeOverlappingTarget.clientRects) {
@@ -147,7 +147,7 @@ function getOverlapFailureForTargetPair(tapTarget, maybeOverlappingTarget) {
 /**
  * @param {LH.Artifacts.Rect} targetCR
  * @param {LH.Artifacts.Rect} maybeOverlappingCR
- * @returns {LH.Audit.ClientRectOverlapFailure | null}
+ * @returns {ClientRectOverlapFailure | null}
  */
 function getOverlapFailureForClientRectPair(targetCR, maybeOverlappingCR) {
   const fingerRect = getRectAtCenter(targetCR, FINGER_SIZE_PX);
@@ -172,11 +172,11 @@ function getOverlapFailureForClientRectPair(targetCR, maybeOverlappingCR) {
 
 /**
  * Only report one failure if two targets overlap each other
- * @param {LH.Audit.TapTargetOverlapFailure[]} overlapFailures
- * @returns {LH.Audit.TapTargetOverlapFailure[]}
+ * @param {TapTargetOverlapFailure[]} overlapFailures
+ * @returns {TapTargetOverlapFailure[]}
  */
 function mergeSymmetricFailures(overlapFailures) {
-  /** @type LH.Audit.TapTargetOverlapFailure[] */
+  /** @type TapTargetOverlapFailure[] */
   const failuresAfterMerging = [];
 
   overlapFailures.forEach((failure, overlapFailureIndex) => {
@@ -208,7 +208,7 @@ function mergeSymmetricFailures(overlapFailures) {
 }
 
 /**
- * @param {LH.Audit.TapTargetOverlapFailure[]} overlapFailures
+ * @param {TapTargetOverlapFailure[]} overlapFailures
  * @returns {LH.Audit.TapTargetTableItem[]}
  */
 function getTableItems(overlapFailures) {
@@ -317,3 +317,18 @@ class TapTargets extends Audit {
 TapTargets.FINGER_SIZE_PX = FINGER_SIZE_PX;
 
 module.exports = TapTargets;
+
+
+/** @typedef {{
+  overlapScoreRatio: number;
+  tapTargetScore: number;
+  overlappingTargetScore: number;
+}} ClientRectOverlapFailure */
+
+/** @typedef {{
+  overlapScoreRatio: number;
+  tapTargetScore: number;
+  overlappingTargetScore: number;
+  tapTarget: LH.Artifacts.TapTarget;
+  overlappingTarget: LH.Artifacts.TapTarget;
+}} TapTargetOverlapFailure */
