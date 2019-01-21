@@ -138,6 +138,11 @@ class LighthouseReportViewer {
   // TODO: Really, `json` should really have type `unknown` and
   // we can have _validateReportJson verify that it's an LH.Result
   _replaceReportHtml(json) {
+    // Allow users to view the runnerResult
+    if ('lhr' in json) {
+      json = /** @type {LH.RunnerResult} */ (json).lhr;
+    }
+
     this._validateReportJson(json);
 
     // Redirect to old viewer if a v2 report. v3 and v4 both handled by v4 viewer.
