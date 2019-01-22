@@ -221,7 +221,7 @@ class NetworkRecorder extends EventEmitter {
       return;
     }
 
-    // TODO(phulce): log these to sentry?
+    // TODO: beacon to Sentry, https://github.com/GoogleChrome/lighthouse/issues/7041
     if (!data.redirectResponse) {
       return;
     }
@@ -231,7 +231,6 @@ class NetworkRecorder extends EventEmitter {
     const modifiedData = {
       ...data,
       // Copy over the initiator as well to match DevTools behavior
-      // TODO(phulce): abandon this DT hack and update Lantern graph to handle it
       initiator: originalRequest.initiator,
       requestId: `${originalRequest.requestId}:redirect`,
     };

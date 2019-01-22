@@ -1245,7 +1245,6 @@ class Driver {
    * @return {Promise<void>}
    */
   async beginEmulation(settings) {
-    // TODO(phulce): remove this flag on next breaking change
     if (!settings.disableDeviceEmulation) {
       if (settings.emulatedFormFactor === 'mobile') {
         await emulation.enableNexus5X(this);

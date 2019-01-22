@@ -51,7 +51,6 @@ const RESOURCE_TYPES = {
 module.exports = class NetworkRequest {
   constructor() {
     this.requestId = '';
-    // TODO(phulce): remove default DevTools connectionId
     this.connectionId = '0';
     this.connectionReused = false;
 

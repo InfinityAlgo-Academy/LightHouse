@@ -5,9 +5,6 @@
  */
 'use strict';
 
-// TODO(phulce): assert more score values once Lantern can tie more trace events back to images.
-// See https://github.com/GoogleChrome/lighthouse/issues/4600.
-
 /**
  * Expected Lighthouse audit values for byte efficiency tests
  */

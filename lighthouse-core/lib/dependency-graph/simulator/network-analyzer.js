@@ -289,8 +289,6 @@ class NetworkAnalyzer {
         );
       }
 
-      // TODO(phulce): compute the maximum number of parallel requests (N) and ensure we have at
-      // least N requests that required new connections
       const firstRecord = originRecords.reduce((a, b) => (a.startTime > b.startTime ? b : a));
       connectionWasReused.set(firstRecord.requestId, false);
     }
@@ -448,7 +446,6 @@ class NetworkAnalyzer {
    * @return {LH.Artifacts.NetworkRequest}
    */
   static findMainDocument(records) {
-    // TODO(phulce): handle more edge cases like client redirects, or plumb through finalUrl
     const documentRequests = records.filter(record => record.resourceType ===
         NetworkRequest.TYPES.Document);
     // The main document is the earliest document request, using position in networkRecords array to break ties.
