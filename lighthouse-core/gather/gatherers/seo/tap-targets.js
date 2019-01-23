@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector, window */
+/* global getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector */
 
 const Gatherer = require('../gatherer');
 const pageFunctions = require('../../../lib/page-functions.js');
