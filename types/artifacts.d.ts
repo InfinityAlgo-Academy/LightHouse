@@ -117,10 +117,6 @@ declare global {
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** Information about tap targets including their position and size. */
       TapTargets: Artifacts.TapTarget[];
-      /** The value of the <meta name="theme=color">'s content attribute, or null. */
-      ThemeColor: string|null;
-      /** The value of the <meta name="viewport">'s content attribute, or null. */
-      Viewport: string|null;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
     }
