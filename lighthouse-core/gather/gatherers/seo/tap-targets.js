@@ -169,6 +169,42 @@ function elementHasAncestorTapTarget(element) {
 }
 
 /**
+ * @param {Element} element
+ */
+/* istanbul ignore next */
+function hasTextNodeSiblingsFormingTextBlock(element) {
+  if (!element.parentElement) {
+    return false;
+  }
+
+  const parentElement = element.parentElement;
+
+  const nodeText = element.textContent || '';
+  const parentText = parentElement.textContent || '';
+  if (parentText.length - nodeText.length < 5) {
+    // Parent text mostly consists of this node, so the parent
+    // is not a text block container
+    return false;
+  }
+
+  for (const sibling of element.parentElement.childNodes) {
+    if (sibling === element) {
+      continue;
+    }
+    const siblingTextContent = (sibling.textContent || '').trim();
+    // Only count text in text nodes so that a series of e.g. buttons isn't counted
+    // as a text block.
+    // This works reasonably well, but means we miss text blocks where all text is e.g.
+    // wrapped in spans
+    if (sibling.nodeType === Node.TEXT_NODE && siblingTextContent.length > 0) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
  * Check if element is in a block of text, such as paragraph with a bunch of links in it.
  * Makes a reasonable guess, but for example gets it wrong if the element is surrounded by other
  * HTML elements instead of direct text nodes.
@@ -177,41 +213,6 @@ function elementHasAncestorTapTarget(element) {
  */
 /* istanbul ignore next */
 function elementIsInTextBlock(element) {
-  /**
-   * @param {Element} element
-   */
-  function hasTextNodeSiblingsFormingTextBlock(element) {
-    if (!element.parentElement) {
-      return false;
-    }
-
-    const parentElement = element.parentElement;
-
-    const nodeText = element.textContent || '';
-    const parentText = parentElement.textContent || '';
-    if (parentText.length - nodeText.length < 5) {
-      // Parent text mostly consists of this node, so the parent
-      // is not a text block container
-      return false;
-    }
-
-    for (const sibling of element.parentElement.childNodes) {
-      if (sibling === element) {
-        continue;
-      }
-      const siblingTextContent = (sibling.textContent || '').trim();
-      // Only count text in text nodes so that a series of e.g. buttons isn't counted
-      // as a text block.
-      // This works reasonably well, but means we miss text blocks where all text is e.g.
-      // wrapped in spans
-      if (sibling.nodeType === Node.TEXT_NODE && siblingTextContent.length > 0) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   const {display} = getComputedStyle(element);
   if (display !== 'inline' && display !== 'inline-block') {
     return false;
@@ -323,6 +324,7 @@ class TapTargets extends Gatherer {
       ${getVisibleClientRects.toString()};
       ${truncate.toString()};
       ${getClientRects.toString()};
+      ${hasTextNodeSiblingsFormingTextBlock.toString()};
       ${elementIsInTextBlock.toString()};
       ${allClientRectsEmpty.toString()};
       ${rectContainsString};
