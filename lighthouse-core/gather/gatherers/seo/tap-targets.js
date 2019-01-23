@@ -159,12 +159,10 @@ function getClientRects(element) {
  */
 /* istanbul ignore next */
 function elementHasAncestorTapTarget(element) {
-  // @ts-ignore
-  const realMatchesFn = window.__ElementMatches || window.Element.prototype.matches;
   if (!element.parentElement) {
     return false;
   }
-  if (realMatchesFn.call(element.parentElement, tapTargetsSelector)) {
+  if (element.parentElement.matches(tapTargetsSelector)) {
     return true;
   }
   return elementHasAncestorTapTarget(element.parentElement);
@@ -336,7 +334,7 @@ class TapTargets extends Gatherer {
     
     })()`;
 
-    return passContext.driver.evaluateAsync(expression);
+    return passContext.driver.evaluateAsync(expression, {useIsolation: true});
   }
 }
 
