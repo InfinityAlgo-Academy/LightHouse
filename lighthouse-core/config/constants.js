@@ -16,12 +16,25 @@ const DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR = 0.9;
 const throttling = {
   DEVTOOLS_RTT_ADJUSTMENT_FACTOR,
   DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+  // These values align with WebPageTest's definition of "Fast 3G"
+  // But offer similar charateristics to roughly the 75th percentile of 4G connections.
   mobileSlow4G: {
     rttMs: 150,
     throughputKbps: 1.6 * 1024,
     requestLatencyMs: 150 * DEVTOOLS_RTT_ADJUSTMENT_FACTOR,
     downloadThroughputKbps: 1.6 * 1024 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
     uploadThroughputKbps: 750 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    cpuSlowdownMultiplier: 4,
+  },
+  // These values partially align with WebPageTest's definition of "Regular 3G".
+  // These values are meant to roughly align with Chrome UX report's 3G definition which are based
+  // on HTTP RTT of 300-1400ms and downlink throughput of <700kbps.
+  mobileRegluar3G: {
+    rttMs: 300,
+    throughputKbps: 700,
+    requestLatencyMs: 300 * DEVTOOLS_RTT_ADJUSTMENT_FACTOR,
+    downloadThroughputKbps: 700 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    uploadThroughputKbps: 700 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
     cpuSlowdownMultiplier: 4,
   },
 };
