@@ -18,6 +18,10 @@
     margin: 0;
   }
   </style>
+  <script>
+    // Ensure gatherers still work when the prototype is messed with
+    HTMLElement.prototype.matches = { value: "blahblah" };
+  </script>
 </head>
 <body>
   <!-- Big tap target, but it's invisible because it's behind the main content div -->
