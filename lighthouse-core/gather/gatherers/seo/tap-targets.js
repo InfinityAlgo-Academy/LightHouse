@@ -86,14 +86,7 @@ function getVisibleClientRects(element) {
   let clientRects = getClientRects(element);
 
   if (allClientRectsEmpty(clientRects)) {
-    const {
-      overflowX,
-      overflowY,
-    } = getComputedStyle(element);
-    if ((overflowX === 'hidden' && overflowY === 'hidden') || element.children.length === 0) {
-      // own size is 0x0 and there's no visible child content
-      return [];
-    }
+    return [];
   }
 
   // Treating overflowing content in scroll containers as invisible could mean that
