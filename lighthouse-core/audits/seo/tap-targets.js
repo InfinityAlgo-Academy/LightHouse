@@ -281,7 +281,7 @@ class TapTargets extends Audit {
       return {
         rawValue: false,
         explanation:
-          'Tap targets are too small because of a missing viewport config',
+          'Tap targets are too small because there\'s no viewport meta tag optimized for mobile screens',
       };
     }
 
