@@ -81,11 +81,11 @@ function getBorderlineTapTargets(options = {}) {
   const targets = [mainTapTarget, tapTargetBelow, tapTargetToTheRight];
 
   const overlapAmount = minimalFailingOverlapCausingDistance;
-  if (options.failRight) {
+  if (options.overlapRight) {
     tapTargetToTheRight.clientRects[0].left -= overlapAmount;
     tapTargetToTheRight.clientRects[0].right -= overlapAmount;
   }
-  if (options.failBelow) {
+  if (options.overlapBelow) {
     tapTargetBelow.clientRects[0].top -= overlapAmount;
     tapTargetBelow.clientRects[0].bottom -= overlapAmount;
   }
@@ -100,7 +100,7 @@ function getBorderlineTapTargets(options = {}) {
       ],
     });
   }
-  if (options.failSecondClientRect) {
+  if (options.overlapSecondClientRect) {
     mainTapTarget.clientRects.push(
       makeClientRects({
         x: 0,
@@ -134,7 +134,7 @@ describe('SEO: Tap targets audit', () => {
   it('fails if two tap targets overlaps each other horizontally', () => {
     const auditResult = auditTapTargets(
       getBorderlineTapTargets({
-        failRight: true,
+        overlapRight: true,
       })
     );
     assert.equal(auditResult.rawValue, false);
@@ -154,7 +154,7 @@ describe('SEO: Tap targets audit', () => {
   it('fails if a tap target overlaps vertically', () => {
     const auditResult = auditTapTargets(
       getBorderlineTapTargets({
-        failBelow: true,
+        overlapBelow: true,
       })
     );
     assert.equal(auditResult.rawValue, false);
@@ -163,7 +163,7 @@ describe('SEO: Tap targets audit', () => {
   it('fails when one of the client rects overlaps', () => {
     const auditResult = auditTapTargets(
       getBorderlineTapTargets({
-        failSecondClientRect: true,
+        overlapSecondClientRect: true,
       })
     );
     assert.equal(auditResult.rawValue, false);
@@ -173,9 +173,9 @@ describe('SEO: Tap targets audit', () => {
     // Main is overlapped by right + below, right and below are each overlapped by main
     const auditResult = auditTapTargets(
       getBorderlineTapTargets({
-        failRight: true,
+        overlapRight: true,
         reduceRightWidth: true,
-        failBelow: true,
+        overlapBelow: true,
       })
     );
     assert.equal(Math.round(auditResult.score * 100), 0); // all tap targets are overlapped by something
@@ -189,7 +189,7 @@ describe('SEO: Tap targets audit', () => {
   it('reports 1 failure if only one tap target involved in an overlap fails', () => {
     const auditResult = auditTapTargets(
       getBorderlineTapTargets({
-        failRight: true,
+        overlapRight: true,
         increaseRightWidth: true,
       })
     );
