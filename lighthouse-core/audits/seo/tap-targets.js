@@ -200,29 +200,22 @@ function mergeSymmetricFailures(overlapFailures) {
  * @returns {LH.Audit.TapTargetTableItem[]}
  */
 function getTableItems(overlapFailures) {
-  const tableItems = overlapFailures.map(
-    ({
-      tapTarget,
-      overlappingTarget,
-      tapTargetScore,
-      overlappingTargetScore,
-      overlapScoreRatio,
-    }) => {
-      const largestCR = getLargestRect(tapTarget.clientRects);
-      const width = Math.floor(largestCR.width);
-      const height = Math.floor(largestCR.height);
-      const size = width + 'x' + height;
-      return {
-        tapTarget: targetToTableNode(tapTarget),
-        overlappingTarget: targetToTableNode(overlappingTarget),
-        size,
-        width,
-        height,
-        tapTargetScore,
-        overlappingTargetScore,
-        overlapScoreRatio,
-      };
-    });
+  const tableItems = overlapFailures.map(failure => {
+    const largestCR = getLargestRect(failure.tapTarget.clientRects);
+    const width = Math.floor(largestCR.width);
+    const height = Math.floor(largestCR.height);
+    const size = width + 'x' + height;
+    return {
+      tapTarget: targetToTableNode(failure.tapTarget),
+      overlappingTarget: targetToTableNode(failure.overlappingTarget),
+      tapTargetScore: failure.tapTargetScore,
+      overlappingTargetScore: failure.overlappingTargetScore,
+      overlapScoreRatio: failure.overlapScoreRatio,
+      size,
+      width,
+      height,
+    };
+  });
 
   tableItems.sort((a, b) => {
     return b.overlapScoreRatio - a.overlapScoreRatio;
