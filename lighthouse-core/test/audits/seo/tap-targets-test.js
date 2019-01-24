@@ -10,13 +10,13 @@
 const TapTargetsAudit = require('../../../audits/seo/tap-targets.js');
 const assert = require('assert');
 
-function auditTapTargets(tapTargets) {
+function auditTapTargets(tapTargets, metaElements = [{
+  name: 'viewport',
+  content: 'width=device-width',
+}]) {
   const artifacts = {
     TapTargets: tapTargets,
-    MetaElements: [{
-      name: 'viewport',
-      content: 'width=device-width',
-    }],
+    MetaElements: metaElements,
   };
 
   return TapTargetsAudit.audit(artifacts);
@@ -180,5 +180,11 @@ describe('SEO: Tap targets audit', () => {
     // Right and Main overlap each other, but Right has a worse score because it's smaller
     // so it's the failure that appears in the report
     assert.equal(failures[0].tapTarget.snippet, '<right></right>');
+  });
+
+  it('fails if no meta viewport tag is provided', () => {
+    const auditResult = auditTapTargets([], []);
+    assert.equal(auditResult.rawValue, false);
+    assert.ok(auditResult.explanation.includes('no viewport meta tag'));
   });
 });
