@@ -28,29 +28,19 @@ const MAX_ACCEPTABLE_OVERLAP_SCORE_RATIO = 0.25;
 /**
  * @param {LH.Artifacts.Rect} cr
  */
-function clientRectMeetsMinimumSize(cr) {
-  return cr.width >= FINGER_SIZE_PX && cr.height >= FINGER_SIZE_PX;
+function clientRectBelowMinimumSize(cr) {
+  return cr.width < FINGER_SIZE_PX || cr.height < FINGER_SIZE_PX;
 }
 
 /**
- * A target is "too small" if none of it's clientRects are at least the size of a finger.
- * @param {LH.Artifacts.TapTarget} target
- */
-function targetIsTooSmall(target) {
-  for (const cr of target.clientRects) {
-    if (clientRectMeetsMinimumSize(cr)) {
-      return false;
-    }
-  }
-  return true;
-}
-
-/**
+ * A target is "too small" if none of its clientRects are at least the size of a finger.
  * @param {LH.Artifacts.TapTarget[]} targets
  * @returns {LH.Artifacts.TapTarget[]}
  */
 function getTooSmallTargets(targets) {
-  return targets.filter(targetIsTooSmall);
+  return targets.filter(target => {
+    return target.clientRects.every(clientRectBelowMinimumSize);
+  });
 }
 
 /**
