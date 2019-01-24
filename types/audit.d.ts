@@ -70,17 +70,6 @@ declare global {
       wastedPercent?: number;
     }
 
-    export interface TapTargetTableItem extends DetailsObject {
-      tapTarget: DetailsRendererNodeDetailsJSON;
-      overlappingTarget: DetailsRendererNodeDetailsJSON;
-      size: string;
-      overlapScoreRatio: number;
-      height: number;
-      width: number;
-      tapTargetScore: number;
-      overlappingTargetScore: number;
-    }
-
     // TODO: placeholder typedefs until Details are typed
     export interface DetailsRendererDetailsSummary {
       wastedMs?: number;

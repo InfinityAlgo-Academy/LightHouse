@@ -197,7 +197,7 @@ function mergeSymmetricFailures(overlapFailures) {
 
 /**
  * @param {TapTargetOverlapFailure[]} overlapFailures
- * @returns {LH.Audit.TapTargetTableItem[]}
+ * @returns {TapTargetTableItem[]}
  */
 function getTableItems(overlapFailures) {
   const tableItems = overlapFailures.map(failure => {
@@ -313,3 +313,14 @@ module.exports = TapTargets;
   tapTarget: LH.Artifacts.TapTarget;
   overlappingTarget: LH.Artifacts.TapTarget;
 }} TapTargetOverlapFailure */
+
+/** @typedef {{
+  tapTarget: LH.Audit.DetailsRendererNodeDetailsJSON;
+  overlappingTarget: LH.Audit.DetailsRendererNodeDetailsJSON;
+  size: string;
+  overlapScoreRatio: number;
+  height: number;
+  width: number;
+  tapTargetScore: number;
+  overlappingTargetScore: number;
+}} TapTargetTableItem */
