@@ -73,6 +73,10 @@ function getBorderlineTapTargets(options = {}) {
     tapTargetToTheRight.clientRects[0].width -= 1;
     tapTargetToTheRight.clientRects[0].right -= 1;
   }
+  if (options.increaseRightWidth) {
+    tapTargetToTheRight.clientRects[0].width += 10;
+    tapTargetToTheRight.clientRects[0].right += 10;
+  }
 
   const targets = [mainTapTarget, tapTargetBelow, tapTargetToTheRight];
 
@@ -180,6 +184,19 @@ describe('SEO: Tap targets audit', () => {
     // Right and Main overlap each other, but Right has a worse score because it's smaller
     // so it's the failure that appears in the report
     assert.equal(failures[0].tapTarget.snippet, '<right></right>');
+  });
+
+  it('reports 1 failure if only one tap target involved in an overlap fails', () => {
+    const auditResult = auditTapTargets(
+      getBorderlineTapTargets({
+        failRight: true,
+        increaseRightWidth: true,
+      })
+    );
+    assert.equal(Math.round(auditResult.score * 100), 67);
+    const failures = auditResult.details.items;
+    // <main> fails, but <right> doesn't
+    assert.equal(failures[0].tapTarget.snippet, '<main></main>');
   });
 
   it('fails if no meta viewport tag is provided', () => {
