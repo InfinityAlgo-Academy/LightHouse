@@ -58,9 +58,7 @@ function getAllOverlapFailures(tooSmallTargets, allTargets) {
       allTargets
     );
 
-    if (overlappingTargets.length > 0) {
-      failures = failures.concat(overlappingTargets);
-    }
+    failures = failures.concat(overlappingTargets);
   });
 
   return failures;
@@ -97,14 +95,14 @@ function getAllOverlapFailuresForTarget(tapTarget, allTapTargets) {
  * @returns {TapTargetOverlapFailure | null}
  */
 function getOverlapFailureForTargetPair(tapTarget, maybeOverlappingTarget) {
-  // Convert client rects to unique tappable areas from a user's perspective
-  const tappableRects = getTappableRectsFromClientRects(tapTarget.clientRects);
   const isHttpOrHttpsLink = /https?:\/\//.test(tapTarget.href);
   if (isHttpOrHttpsLink && tapTarget.href === maybeOverlappingTarget.href) {
     // no overlap because same target action
     return null;
   }
 
+  // Convert client rects to unique tappable areas from a user's perspective
+  const tappableRects = getTappableRectsFromClientRects(tapTarget.clientRects);
   if (allRectsContainedWithinEachOther(tappableRects, maybeOverlappingTarget.clientRects)) {
     // If one tap target is fully contained within the other that's
     // probably intentional (e.g. an item with a delete button inside).
