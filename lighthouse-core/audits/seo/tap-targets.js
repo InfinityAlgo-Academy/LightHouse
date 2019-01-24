@@ -280,8 +280,8 @@ class TapTargets extends Audit {
     if (!hasViewportSet) {
       return {
         rawValue: false,
-        explanation:
-          'Tap targets are too small because there\'s no viewport meta tag optimized for mobile screens',
+        // eslint-disable-next-line
+        explanation: 'Tap targets are too small because there\'s no viewport meta tag optimized for mobile screens',
       };
     }
 
