@@ -1,3 +1,38 @@
+ <a name="4.1.0"></a>
+# 4.1.0 (2019-01-28)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v4.0.0...v4.1.0)
+
+## New contributors!
+
+@castilloandres you da man, man.
+
+## Core
+
+* font-size audit: count code points for text length ([#6973](https://github.com/googlechrome/lighthouse/pull/6973))
+* cache headers audit: ignore private, must-validate, no-cache ([#6835](https://github.com/googlechrome/lighthouse/pull/6835))
+* introduce Lighthouse plugins ([#6959](https://github.com/googlechrome/lighthouse/pull/6959))
+* new audit: add FCP on 3G ([#7062](https://github.com/googlechrome/lighthouse/pull/7062))
+
+## Refactor
+
+* refactor meta element artifacts to single `meta-elements` artifact ([#7025](https://github.com/googlechrome/lighthouse/pull/7025))
+* images: cleanup `ImageUsage` to match other `*Elements` artifacts ([#7030](https://github.com/googlechrome/lighthouse/pull/7030))
+* add baseArtifacts (with new WebAppManifest) to passContext ([#6957](https://github.com/googlechrome/lighthouse/pull/6957))
+* use async/await in evaluateAsync ([#7038](https://github.com/googlechrome/lighthouse/pull/7038))
+
+## Report / Viewer
+
+* renderer: do not attempt fireworks for devtools ([#7090](https://github.com/googlechrome/lighthouse/pull/7090))
+* viewer: allow loading RunnerResult json ([#7031](https://github.com/googlechrome/lighthouse/pull/7031))
+
+## Misc
+
+* readme: Add DebugBear to the list of integrations ([#7036](https://github.com/googlechrome/lighthouse/pull/7036))
+* snyk: update snyk snapshot ([#7079](https://github.com/googlechrome/lighthouse/pull/7079))
+* viewer: fix types to reference `LH.Result` ([#7051](https://github.com/googlechrome/lighthouse/pull/7051))
+* replace TODOs with github issue links ([#7049](https://github.com/googlechrome/lighthouse/pull/7049))
+* fix extension package path and viewer comments ([#7032](https://github.com/googlechrome/lighthouse/pull/7032))
+
  <a name="4.0.0"></a>
 # 4.0.0 (2019-01-16)
 
