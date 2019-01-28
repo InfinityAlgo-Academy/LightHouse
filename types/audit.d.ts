@@ -76,11 +76,15 @@ declare global {
       wastedBytes?: number;
     }
 
+    export interface DetailsObject {
+      [x: string]: DetailsItem
+    }
+
     // TODO: placeholder typedefs until Details are typed
     export interface DetailsRendererDetailsJSON {
       type: 'table';
       headings: Array<Audit.Heading>;
-      items: Array<{[x: string]: DetailsItem}>;
+      items: Array<DetailsObject>;
       summary?: DetailsRendererDetailsSummary;
     }
 

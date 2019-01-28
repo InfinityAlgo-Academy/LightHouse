@@ -25,7 +25,7 @@ describe('SEO: Font size audit', () => {
 
     const auditResult = FontSizeAudit.audit(artifacts);
     assert.equal(auditResult.rawValue, false);
-    assert.ok(auditResult.explanation.includes('missing viewport'));
+    assert.ok(auditResult.explanation.includes('no viewport meta tag'));
   });
 
   it('fails when less than 60% of text is legible', () => {

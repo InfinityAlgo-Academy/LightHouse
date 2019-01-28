@@ -2723,6 +2723,15 @@
       "rawValue": null,
       "errorMessage": "Required RobotsTxt gatherer did not run."
     },
+    "tap-targets": {
+      "id": "tap-targets",
+      "title": "Tap targets are not sized appropriately",
+      "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).",
+      "score": null,
+      "scoreDisplayMode": "error",
+      "rawValue": null,
+      "errorMessage": "Required TapTargets gatherer did not run."
+    },
     "hreflang": {
       "id": "hreflang",
       "title": "Document has a valid `hreflang`",
@@ -3317,6 +3326,11 @@
           "id": "plugins",
           "weight": 1,
           "group": "seo-content"
+        },
+        {
+          "id": "tap-targets",
+          "weight": 1,
+          "group": "seo-mobile"
         },
         {
           "id": "mobile-friendly",
@@ -4329,6 +4343,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:robots-txt",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:tap-targets",
         "duration": 100,
         "entryType": "measure"
       },

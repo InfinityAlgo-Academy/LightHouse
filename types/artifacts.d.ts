@@ -115,6 +115,8 @@ declare global {
       StartUrl: {statusCode: number, explanation?: string};
       /** Information on <script> and <link> tags blocking first paint. */
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
+      /** Information about tap targets including their position and size. */
+      TapTargets: Artifacts.TapTarget[];
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
     }
@@ -294,6 +296,14 @@ declare global {
         right: number;
         bottom: number;
         left: number;
+      }
+
+      export interface TapTarget {
+        snippet: string,
+        selector: string,
+        path: string,
+        href: string,
+        clientRects: Rect[]
       }
 
       export interface ViewportDimensions {

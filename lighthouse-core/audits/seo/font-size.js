@@ -212,7 +212,8 @@ class FontSize extends Audit {
     if (!hasViewportSet) {
       return {
         rawValue: false,
-        explanation: 'Text is illegible because of a missing viewport config',
+        explanation:
+          'Text is illegible because there\'s no viewport meta tag optimized for mobile screens',
       };
     }
 

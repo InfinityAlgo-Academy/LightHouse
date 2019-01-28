@@ -1984,6 +1984,14 @@
             "scoreDisplayMode": "notApplicable", 
             "title": "No element has a `[tabindex]` value greater than 0"
         }, 
+        "tap-targets": {
+            "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).", 
+            "errorMessage": "Required TapTargets gatherer did not run.", 
+            "id": "tap-targets", 
+            "score": null, 
+            "scoreDisplayMode": "error", 
+            "title": "Tap targets are not sized appropriately"
+        }, 
         "td-headers-attr": {
             "description": "Screen readers have features to make navigating tables easier. Ensuring `<td>` cells using the `[headers]` attribute only refer to other cells in the same table may improve the experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse).", 
             "id": "td-headers-attr", 
@@ -3221,6 +3229,11 @@
                     "weight": 1.0
                 }, 
                 {
+                    "group": "seo-mobile", 
+                    "id": "tap-targets", 
+                    "weight": 1.0
+                }, 
+                {
                     "id": "mobile-friendly", 
                     "weight": 0.0
                 }, 
@@ -4190,6 +4203,12 @@
                 "duration": 100.0, 
                 "entryType": "measure", 
                 "name": "lh:audit:robots-txt", 
+                "startTime": 0.0
+            }, 
+            {
+                "duration": 100.0, 
+                "entryType": "measure", 
+                "name": "lh:audit:tap-targets", 
                 "startTime": 0.0
             }, 
             {

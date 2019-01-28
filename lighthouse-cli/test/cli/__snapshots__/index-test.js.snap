@@ -343,6 +343,9 @@ Object {
       "path": "seo/robots-txt",
     },
     Object {
+      "path": "seo/tap-targets",
+    },
+    Object {
       "path": "seo/hreflang",
     },
     Object {
@@ -947,6 +950,11 @@ Object {
           "weight": 1,
         },
         Object {
+          "group": "seo-mobile",
+          "id": "tap-targets",
+          "weight": 1,
+        },
+        Object {
           "id": "mobile-friendly",
           "weight": 0,
         },
@@ -1106,6 +1114,9 @@ Object {
         },
         Object {
           "path": "seo/robots-txt",
+        },
+        Object {
+          "path": "seo/tap-targets",
         },
       ],
       "networkQuietThresholdMs": 1000,

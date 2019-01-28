@@ -134,7 +134,8 @@ describe('Lighthouse Viewer', function() {
     const auditErrors = await viewerPage.$$eval(errorSelectors, getErrors, selectors);
     const errors = auditErrors.filter(item => item.explanation.includes('Audit error:'));
     const unexpectedErrrors = errors.filter(item => {
-      return !item.explanation.includes('Required RobotsTxt gatherer did not run');
+      return !item.explanation.includes('Required RobotsTxt gatherer did not run') &&
+        !item.explanation.includes('Required TapTargets gatherer did not run');
     });
     assert.deepStrictEqual(unexpectedErrrors, [], 'Audit errors found within the report');
   });
