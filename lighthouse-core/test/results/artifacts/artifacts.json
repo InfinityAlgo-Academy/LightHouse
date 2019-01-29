@@ -128,7 +128,7 @@
     "outerHeight": 660,
     "devicePixelRatio": 2.625
   },
-  "Manifest": null,
+  "WebAppManifest": null,
   "MetaElements": [
     {"name": "viewport", "content": "width=device-width, initial-scale=1, minimum-scale=1"}
   ],

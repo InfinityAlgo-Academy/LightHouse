@@ -87,7 +87,6 @@ const defaultConfig = {
       'scripts',
       'css-usage',
       'viewport-dimensions',
-      'manifest',
       'runtime-exceptions',
       'chrome-console-messages',
       'accessibility',

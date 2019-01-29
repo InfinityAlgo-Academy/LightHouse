@@ -1050,9 +1050,6 @@ Object {
           "path": "viewport-dimensions",
         },
         Object {
-          "path": "manifest",
-        },
-        Object {
           "path": "runtime-exceptions",
         },
         Object {
