@@ -7,12 +7,7 @@
 
 const Audit = require('../audit.js');
 const regular3G = require('../../config/constants.js').throttling.mobileRegluar3G;
-const i18n = require('../../lib/i18n/i18n.js');
-const FCP = require('./first-contentful-paint.js');
 const ComputedFcp = require('../../computed/metrics/first-contentful-paint.js');
-
-const i18nFilename = require.resolve('./first-contentful-paint.js');
-const str_ = i18n.createMessageInstanceIdFn(i18nFilename, FCP.UIStrings);
 
 class FirstContentfulPaint3G extends Audit {
   /**
@@ -21,8 +16,9 @@ class FirstContentfulPaint3G extends Audit {
   static get meta() {
     return {
       id: 'first-contentful-paint-3g',
-      title: str_(FCP.UIStrings.title),
-      description: str_(FCP.UIStrings.description),
+      title: 'First Contentful Paint (3G)',
+      description: 'First Contentful Paint 3G marks the time at which the first text or image is ' +
+        `painted while on a 3G network. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).`,
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
@@ -60,7 +56,7 @@ class FirstContentfulPaint3G extends Audit {
         context.options.scoreMedian
       ),
       rawValue: metricResult.timing,
-      displayValue: str_(i18n.UIStrings.seconds, {timeInMs: metricResult.timing}),
+      displayValue: `${metricResult.timing}\xa0ms`,
     };
   }
 }
