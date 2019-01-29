@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/* eslint-env jest */
+
 const path = require('path');
 const spawnSync = require('child_process').spawnSync;
 
