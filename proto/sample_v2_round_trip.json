@@ -1254,6 +1254,14 @@
             "scoreDisplayMode": "manual", 
             "title": "The user's focus is directed to new content added to the page"
         }, 
+        "max-potential-fid": {
+            "description": "The potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task.", 
+            "displayValue": "120\u00a0ms", 
+            "id": "max-potential-fid", 
+            "score": 0.92, 
+            "scoreDisplayMode": "numeric", 
+            "title": "Max Potential FID"
+        }, 
         "meta-description": {
             "description": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/description).", 
             "id": "meta-description", 
@@ -2985,6 +2993,10 @@
                     "weight": 0.0
                 }, 
                 {
+                    "id": "max-potential-fid", 
+                    "weight": 0.0
+                }, 
+                {
                     "group": "load-opportunities", 
                     "id": "render-blocking-resources", 
                     "weight": 0.0
@@ -3538,6 +3550,18 @@
                 "duration": 100.0, 
                 "entryType": "measure", 
                 "name": "lh:computed:EstimatedInputLatency", 
+                "startTime": 0.0
+            }, 
+            {
+                "duration": 100.0, 
+                "entryType": "measure", 
+                "name": "lh:audit:max-potential-fid", 
+                "startTime": 0.0
+            }, 
+            {
+                "duration": 100.0, 
+                "entryType": "measure", 
+                "name": "lh:computed:MaxPotentialFID", 
                 "startTime": 0.0
             }, 
             {

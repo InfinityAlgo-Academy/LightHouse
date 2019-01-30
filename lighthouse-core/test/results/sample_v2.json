@@ -202,6 +202,15 @@
       "rawValue": 16,
       "displayValue": "20 ms"
     },
+    "max-potential-fid": {
+      "id": "max-potential-fid",
+      "title": "Max Potential FID",
+      "description": "The potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task.",
+      "score": 0.92,
+      "scoreDisplayMode": "numeric",
+      "rawValue": 122.537,
+      "displayValue": "120 ms"
+    },
     "errors-in-console": {
       "id": "errors-in-console",
       "title": "Browser errors were logged to the console",
@@ -2869,6 +2878,10 @@
           "group": "metrics"
         },
         {
+          "id": "max-potential-fid",
+          "weight": 0
+        },
+        {
           "id": "render-blocking-resources",
           "weight": 0,
           "group": "load-opportunities"
@@ -3678,6 +3691,18 @@
       {
         "startTime": 0,
         "name": "lh:computed:EstimatedInputLatency",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:max-potential-fid",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:MaxPotentialFID",
         "duration": 100,
         "entryType": "measure"
       },
@@ -4517,7 +4542,19 @@
             "timeInMs": 16
           },
           "path": "audits[estimated-input-latency].displayValue"
+        },
+        {
+          "values": {
+            "timeInMs": 122.537
+          },
+          "path": "audits[max-potential-fid].displayValue"
         }
+      ],
+      "lighthouse-core/audits/metrics/max-potential-fid.js | title": [
+        "audits[max-potential-fid].title"
+      ],
+      "lighthouse-core/audits/metrics/max-potential-fid.js | description": [
+        "audits[max-potential-fid].description"
       ],
       "lighthouse-core/audits/time-to-first-byte.js | title": [
         "audits[time-to-first-byte].title"

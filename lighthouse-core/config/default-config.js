@@ -142,6 +142,7 @@ const defaultConfig = {
     'screenshot-thumbnails',
     'final-screenshot',
     'metrics/estimated-input-latency',
+    'metrics/max-potential-fid',
     'errors-in-console',
     'time-to-first-byte',
     'metrics/first-cpu-idle',
@@ -327,6 +328,7 @@ const defaultConfig = {
         {id: 'interactive', weight: 5, group: 'metrics'},
         {id: 'first-cpu-idle', weight: 2, group: 'metrics'},
         {id: 'estimated-input-latency', weight: 0, group: 'metrics'},
+        {id: 'max-potential-fid', weight: 0}, // intentionally left out of metrics so it won't be displayed yet
 
         {id: 'render-blocking-resources', weight: 0, group: 'load-opportunities'},
         {id: 'uses-responsive-images', weight: 0, group: 'load-opportunities'},

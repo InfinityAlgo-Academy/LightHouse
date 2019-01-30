@@ -43,6 +43,9 @@ Object {
       "path": "metrics/estimated-input-latency",
     },
     Object {
+      "path": "metrics/max-potential-fid",
+    },
+    Object {
       "path": "errors-in-console",
     },
     Object {
@@ -682,6 +685,10 @@ Object {
         Object {
           "group": "metrics",
           "id": "estimated-input-latency",
+          "weight": 0,
+        },
+        Object {
+          "id": "max-potential-fid",
           "weight": 0,
         },
         Object {
