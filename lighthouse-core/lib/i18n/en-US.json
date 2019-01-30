@@ -823,6 +823,18 @@
     "message": "ARIA Attributes Follow Best Practices",
     "description": "Title of the ARIA validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if whether all the aria- HTML attributes have been used properly."
   },
+  "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
+    "message": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
+    "description": "Description of the Accessibility category. This is displayed at the top of a list of audits focused on making web content accessible to users with disabilities. No character length limits. 'improve the accessibility of your web app' becomes link text to additional documentation."
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
+    "message": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
+    "description": "Description of the Accessibility manual checks category. This description is displayed above a list of accessibility audits that currently have no automated test and so must be verified manually by the user. No character length limits. 'conducting an accessibility review' becomes link text to additional documentation."
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
+    "message": "Accessibility",
+    "description": "Title of the Accessibility category of audits. This section contains audits focused on making web content accessible to users with disabilities. Also used as a label of a score gauge; try to limit to 20 characters."
+  },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
     "message": "These are opportunities to improve the legibility of your content.",
     "description": "Description of the color contrast section within the Accessibility category. Within this section are audits with descriptive titles that highlight the color and vision aspects of the page's accessibility that are passing or failing."

@@ -5064,6 +5064,15 @@
       "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
         "categories.performance.title"
       ],
+      "lighthouse-core/config/default-config.js | a11yCategoryTitle": [
+        "categories.accessibility.title"
+      ],
+      "lighthouse-core/config/default-config.js | a11yCategoryDescription": [
+        "categories.accessibility.description"
+      ],
+      "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": [
+        "categories.accessibility.manualDescription"
+      ],
       "lighthouse-core/config/default-config.js | metricGroupTitle": [
         "categoryGroups.metrics.title"
       ],

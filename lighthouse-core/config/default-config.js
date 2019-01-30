@@ -31,6 +31,12 @@ const UIStrings = {
   diagnosticsGroupTitle: 'Diagnostics',
   /** Description of the diagnostics section of the Performance category. Within this section are audits with non-imperative titles that provide more detail on the page's page load performance characteristics. Whereas the 'Opportunities' suggest an action along with expected time savings, diagnostics do not. Within this section, the user may read the details and deduce additional actions they could take. */
   diagnosticsGroupDescription: 'More information about the performance of your application.',
+  /** Title of the Accessibility category of audits. This section contains audits focused on making web content accessible to users with disabilities. Also used as a label of a score gauge; try to limit to 20 characters. */
+  a11yCategoryTitle: 'Accessibility',
+  /** Description of the Accessibility category. This is displayed at the top of a list of audits focused on making web content accessible to users with disabilities. No character length limits. 'improve the accessibility of your web app' becomes link text to additional documentation. */
+  a11yCategoryDescription: 'These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.',
+  /** Description of the Accessibility manual checks category. This description is displayed above a list of accessibility audits that currently have no automated test and so must be verified manually by the user. No character length limits. 'conducting an accessibility review' becomes link text to additional documentation. */
+  a11yCategoryManualDescription: 'These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).',
   /* Title of the color contrast section within the Accessibility category. Within this section are audits with descriptive titles that highlight the color and vision aspects of the page's accessibility that are passing or failing. */
   a11yColorContrastGroupTitle: 'Color Contrast Is Satisfactory',
   /* Description of the color contrast section within the Accessibility category. Within this section are audits with descriptive titles that highlight the color and vision aspects of the page's accessibility that are passing or failing. */
@@ -359,9 +365,9 @@ const defaultConfig = {
       ],
     },
     'accessibility': {
-      title: 'Accessibility',
-      description: 'These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.',
-      manualDescription: 'These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).',
+      title: str_(UIStrings.a11yCategoryTitle),
+      description: str_(UIStrings.a11yCategoryDescription),
+      manualDescription: str_(UIStrings.a11yCategoryManualDescription),
       auditRefs: [
         {id: 'aria-allowed-attr', weight: 3, group: 'a11y-aria'},
         {id: 'aria-required-attr', weight: 2, group: 'a11y-aria'},
