@@ -5457,6 +5457,12 @@
           "path": "audits[font-size].displayValue"
         }
       ],
+      "lighthouse-core/audits/seo/tap-targets.js | failureTitle": [
+        "audits[tap-targets].title"
+      ],
+      "lighthouse-core/audits/seo/tap-targets.js | description": [
+        "audits[tap-targets].description"
+      ],
       "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
         "categories.performance.title"
       ],
