@@ -723,6 +723,22 @@
     "message": "Speed Index",
     "description": "The name of the metric that summarizes how quickly the page looked visually complete. The name of this metric is largely abstract and can be loosely translated. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit."
   },
+  "lighthouse-core/audits/network-rtt.js | description": {
+    "message": "Network round trip times (RTT) have a large impact on performance. If the RTT to an origin is high, it's an indication that servers closer to the user could improve performance. [Learn more](https://hpbn.co/primer-on-latency-and-bandwidth/).",
+    "description": "Description of a Lighthouse audit that tells the user that a high network round trip time (RTT) can effect their website's performance because the server is physically far away from them thus making the RTT high. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
+  },
+  "lighthouse-core/audits/network-rtt.js | title": {
+    "message": "Network Round Trip Times",
+    "description": "Descriptive title of a Lighthouse audit that tells the user the round trip times to each origin the page connected to. This is displayed in a list of audit titles that Lighthouse generates."
+  },
+  "lighthouse-core/audits/network-server-latency.js | description": {
+    "message": "Server latencies can impact web performance. If the server latency of an origin is high, it's an indication the server is overloaded or has poor backend performance. [Learn more](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall).",
+    "description": "Description of a Lighthouse audit that tells the user that server latency can effect their website's performance negatively. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
+  },
+  "lighthouse-core/audits/network-server-latency.js | title": {
+    "message": "Server Backend Latencies",
+    "description": "Descriptive title of a Lighthouse audit that tells the user the server latencies observed from each origin the page connected to. This is displayed in a list of audit titles that Lighthouse generates."
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).",
     "description": "Description of a Lighthouse audit that tells users why they should reduce the number of server-side redirects on their page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."

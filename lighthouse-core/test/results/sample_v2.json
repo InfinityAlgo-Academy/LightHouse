@@ -796,6 +796,37 @@
         "items": []
       }
     },
+    "diagnostics": {
+      "id": "diagnostics",
+      "title": "Diagnostics",
+      "description": "Collection of useful page vitals.",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "rawValue": 1,
+      "details": {
+        "items": [
+          {
+            "numRequests": 18,
+            "numScripts": 4,
+            "numStylesheets": 7,
+            "numFonts": 0,
+            "numTasks": 107,
+            "numTasksOver10ms": 7,
+            "numTasksOver25ms": 5,
+            "numTasksOver50ms": 4,
+            "numTasksOver100ms": 3,
+            "numTasksOver500ms": 1,
+            "rtt": 0.8639999999999999,
+            "throughput": 1398339.461891128,
+            "maxRtt": 1.7249999999999943,
+            "maxServerLatency": 572.829,
+            "totalByteWeight": 160738,
+            "totalTaskTime": 1548.5690000000002,
+            "mainDocumentTransferSize": 12640
+          }
+        ]
+      }
+    },
     "network-requests": {
       "id": "network-requests",
       "title": "Network Requests",
@@ -1033,6 +1064,303 @@
             "statusCode": 404,
             "mimeType": "text/plain",
             "resourceType": "Other"
+          }
+        ]
+      }
+    },
+    "network-rtt": {
+      "id": "network-rtt",
+      "title": "Network Round Trip Times",
+      "description": "Network round trip times (RTT) have a large impact on performance. If the RTT to an origin is high, it's an indication that servers closer to the user could improve performance. [Learn more](https://hpbn.co/primer-on-latency-and-bandwidth/).",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "rawValue": 1.7249999999999943,
+      "displayValue": "0 ms",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "origin",
+            "itemType": "text",
+            "text": "URL"
+          },
+          {
+            "key": "rtt",
+            "itemType": "ms",
+            "granularity": 1,
+            "text": "Time Spent"
+          }
+        ],
+        "items": [
+          {
+            "origin": "http://ajax.googleapis.com",
+            "rtt": 1.7249999999999943
+          },
+          {
+            "origin": "http://localhost:10200",
+            "rtt": 0.8639999999999999
+          }
+        ]
+      }
+    },
+    "network-server-latency": {
+      "id": "network-server-latency",
+      "title": "Server Backend Latencies",
+      "description": "Server latencies can impact web performance. If the server latency of an origin is high, it's an indication the server is overloaded or has poor backend performance. [Learn more](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall).",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "rawValue": 572.829,
+      "displayValue": "570 ms",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "origin",
+            "itemType": "text",
+            "text": "URL"
+          },
+          {
+            "key": "serverReponseTime",
+            "itemType": "ms",
+            "granularity": 1,
+            "text": "Time Spent"
+          }
+        ],
+        "items": [
+          {
+            "origin": "http://localhost:10200",
+            "serverReponseTime": 572.829
+          },
+          {
+            "origin": "http://ajax.googleapis.com",
+            "serverReponseTime": 562.398
+          }
+        ]
+      }
+    },
+    "main-thread-tasks": {
+      "id": "main-thread-tasks",
+      "title": "Tasks",
+      "description": "Lists the toplevel main thread tasks that executed during page load.",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "rawValue": 39,
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "type",
+            "itemType": "text",
+            "text": "Task Type"
+          },
+          {
+            "key": "startTime",
+            "itemType": "ms",
+            "granularity": 1,
+            "text": "Start Time"
+          },
+          {
+            "key": "duration",
+            "itemType": "ms",
+            "granularity": 1,
+            "text": "End Time"
+          }
+        ],
+        "items": [
+          {
+            "type": "other",
+            "duration": 26.823,
+            "startTime": 604.125
+          },
+          {
+            "type": "other",
+            "duration": 23.175,
+            "startTime": 606.246
+          },
+          {
+            "type": "other",
+            "duration": 5.89,
+            "startTime": 631.458
+          },
+          {
+            "type": "other",
+            "duration": 18.85,
+            "startTime": 638.562
+          },
+          {
+            "type": "parseHTML",
+            "duration": 16.58,
+            "startTime": 638.577
+          },
+          {
+            "type": "parseHTML",
+            "duration": 12.522,
+            "startTime": 638.586
+          },
+          {
+            "type": "other",
+            "duration": 5.897,
+            "startTime": 668.051
+          },
+          {
+            "type": "other",
+            "duration": 5.046,
+            "startTime": 668.09
+          },
+          {
+            "type": "other",
+            "duration": 5.516,
+            "startTime": 2643.396
+          },
+          {
+            "type": "other",
+            "duration": 979.165,
+            "startTime": 2857.942
+          },
+          {
+            "type": "scriptEvaluation",
+            "duration": 5.803,
+            "startTime": 2858.62
+          },
+          {
+            "type": "parseHTML",
+            "duration": 970.698,
+            "startTime": 2865.033
+          },
+          {
+            "type": "parseHTML",
+            "duration": 19.463,
+            "startTime": 2866.527
+          },
+          {
+            "type": "scriptEvaluation",
+            "duration": 19.21,
+            "startTime": 2866.571
+          },
+          {
+            "type": "parseHTML",
+            "duration": 945.898,
+            "startTime": 2889.816
+          },
+          {
+            "type": "scriptEvaluation",
+            "duration": 944.888,
+            "startTime": 2890.118
+          },
+          {
+            "type": "scriptEvaluation",
+            "duration": 9.047,
+            "startTime": 3023.783
+          },
+          {
+            "type": "garbageCollection",
+            "duration": 5.97,
+            "startTime": 3023.842
+          },
+          {
+            "type": "scriptEvaluation",
+            "duration": 706.85,
+            "startTime": 3070.433
+          },
+          {
+            "type": "other",
+            "duration": 123.208,
+            "startTime": 3840.307
+          },
+          {
+            "type": "other",
+            "duration": 123.116,
+            "startTime": 3840.313
+          },
+          {
+            "type": "styleLayout",
+            "duration": 30.142,
+            "startTime": 3840.667
+          },
+          {
+            "type": "other",
+            "duration": 87.039,
+            "startTime": 3870.824
+          },
+          {
+            "type": "styleLayout",
+            "duration": 86.959,
+            "startTime": 3870.844
+          },
+          {
+            "type": "styleLayout",
+            "duration": 85.493,
+            "startTime": 3871.238
+          },
+          {
+            "type": "other",
+            "duration": 94.261,
+            "startTime": 3996.555
+          },
+          {
+            "type": "scriptEvaluation",
+            "duration": 90.663,
+            "startTime": 3997.797
+          },
+          {
+            "type": "garbageCollection",
+            "duration": 5.709,
+            "startTime": 4019.279
+          },
+          {
+            "type": "other",
+            "duration": 5.151,
+            "startTime": 4098.541
+          },
+          {
+            "type": "other",
+            "duration": 122.537,
+            "startTime": 4808.624
+          },
+          {
+            "type": "scriptEvaluation",
+            "duration": 82.741,
+            "startTime": 4810
+          },
+          {
+            "type": "parseHTML",
+            "duration": 36.919,
+            "startTime": 4893.397
+          },
+          {
+            "type": "parseHTML",
+            "duration": 36.866,
+            "startTime": 4893.44
+          },
+          {
+            "type": "scriptEvaluation",
+            "duration": 10.58,
+            "startTime": 4894.119
+          },
+          {
+            "type": "scriptEvaluation",
+            "duration": 9.353,
+            "startTime": 4894.151
+          },
+          {
+            "type": "parseHTML",
+            "duration": 22.297,
+            "startTime": 4905.447
+          },
+          {
+            "type": "other",
+            "duration": 6.849,
+            "startTime": 8603.435
+          },
+          {
+            "type": "other",
+            "duration": 7.076,
+            "startTime": 10219.463
+          },
+          {
+            "type": "scriptEvaluation",
+            "duration": 6.983,
+            "startTime": 10219.523
           }
         ]
       }
@@ -2972,14 +3300,6 @@
           "group": "diagnostics"
         },
         {
-          "id": "network-requests",
-          "weight": 0
-        },
-        {
-          "id": "metrics",
-          "weight": 0
-        },
-        {
           "id": "user-timings",
           "weight": 0,
           "group": "diagnostics"
@@ -2990,14 +3310,6 @@
           "group": "diagnostics"
         },
         {
-          "id": "screenshot-thumbnails",
-          "weight": 0
-        },
-        {
-          "id": "final-screenshot",
-          "weight": 0
-        },
-        {
           "id": "mainthread-work-breakdown",
           "weight": 0,
           "group": "diagnostics"
@@ -3006,6 +3318,38 @@
           "id": "font-display",
           "weight": 0,
           "group": "diagnostics"
+        },
+        {
+          "id": "network-requests",
+          "weight": 0
+        },
+        {
+          "id": "network-rtt",
+          "weight": 0
+        },
+        {
+          "id": "network-server-latency",
+          "weight": 0
+        },
+        {
+          "id": "main-thread-tasks",
+          "weight": 0
+        },
+        {
+          "id": "diagnostics",
+          "weight": 0
+        },
+        {
+          "id": "metrics",
+          "weight": 0
+        },
+        {
+          "id": "screenshot-thumbnails",
+          "weight": 0
+        },
+        {
+          "id": "final-screenshot",
+          "weight": 0
         }
       ],
       "id": "performance",
@@ -3894,7 +4238,31 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:diagnostics",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:network-requests",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:network-rtt",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:network-server-latency",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:main-thread-tasks",
         "duration": 100,
         "entryType": "measure"
       },
@@ -4548,6 +4916,18 @@
             "timeInMs": 122.537
           },
           "path": "audits[max-potential-fid].displayValue"
+        },
+        {
+          "values": {
+            "timeInMs": 1.7249999999999943
+          },
+          "path": "audits[network-rtt].displayValue"
+        },
+        {
+          "values": {
+            "timeInMs": 572.829
+          },
+          "path": "audits[network-server-latency].displayValue"
         }
       ],
       "lighthouse-core/audits/metrics/max-potential-fid.js | title": [
@@ -4618,7 +4998,9 @@
         "audits[mainthread-work-breakdown].details.headings[0].text"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
-        "audits[mainthread-work-breakdown].details.headings[1].text"
+        "audits[mainthread-work-breakdown].details.headings[1].text",
+        "audits[network-rtt].details.headings[1].text",
+        "audits[network-server-latency].details.headings[1].text"
       ],
       "lighthouse-core/audits/bootup-time.js | title": [
         "audits[bootup-time].title"
@@ -4628,6 +5010,8 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnURL": [
         "audits[bootup-time].details.headings[0].text",
+        "audits[network-rtt].details.headings[0].text",
+        "audits[network-server-latency].details.headings[0].text",
         "audits[uses-long-cache-ttl].details.headings[0].text",
         "audits[total-byte-weight].details.headings[0].text",
         "audits[render-blocking-resources].details.headings[0].label",
@@ -4661,6 +5045,18 @@
       ],
       "lighthouse-core/audits/font-display.js | description": [
         "audits[font-display].description"
+      ],
+      "lighthouse-core/audits/network-rtt.js | title": [
+        "audits[network-rtt].title"
+      ],
+      "lighthouse-core/audits/network-rtt.js | description": [
+        "audits[network-rtt].description"
+      ],
+      "lighthouse-core/audits/network-server-latency.js | title": [
+        "audits[network-server-latency].title"
+      ],
+      "lighthouse-core/audits/network-server-latency.js | description": [
+        "audits[network-server-latency].description"
       ],
       "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": [
         "audits[aria-allowed-attr].title"
