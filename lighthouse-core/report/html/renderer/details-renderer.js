@@ -19,8 +19,7 @@
 /* globals self CriticalRequestChainRenderer Util URL */
 
 /** @typedef {import('./dom.js')} DOM */
-/** @typedef {import('./crc-details-renderer.js')} CRCDetailsJSON */
-/** @typedef {LH.Result.Audit.OpportunityDetails} OpportunityDetails */
+/** @typedef {LH.Audit.Details.Opportunity} OpportunityDetails */
 
 /** @type {Array<string>} */
 const URL_PREFIXES = ['http://', 'https://', 'data:'];
@@ -76,7 +75,7 @@ class DetailsRenderer {
       case 'criticalrequestchain':
         return CriticalRequestChainRenderer.render(this._dom, this._templateContext,
           // @ts-ignore - TODO(bckenny): Fix type hierarchy
-          /** @type {CRCDetailsJSON} */ (details));
+          /** @type {LH.Audit.Details.CriticalRequestChain} */ (details));
       case 'opportunity':
         // @ts-ignore - TODO(bckenny): Fix type hierarchy
         return this._renderOpportunityTable(details);
@@ -289,7 +288,7 @@ class DetailsRenderer {
     for (const row of details.items) {
       const rowElem = this._dom.createChildOf(tbodyElem, 'tr');
       for (const heading of details.headings) {
-        const key = /** @type {keyof LH.Result.Audit.OpportunityDetailsItem} */ (heading.key);
+        const key = /** @type {keyof LH.Audit.Details.OpportunityItem} */ (heading.key);
         const value = row[key];
 
         if (typeof value === 'undefined' || value === null) {
@@ -360,7 +359,7 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {FilmstripDetails} details
+   * @param {LH.Audit.Details.Filmstrip} details
    * @return {Element}
    */
   _renderFilmstrip(details) {
@@ -460,9 +459,3 @@ if (typeof module !== 'undefined' && module.exports) {
   }} LinkDetailsJSON
  */
 
-/** @typedef {{
-      type: string,
-      scale: number,
-      items: Array<{timing: number, timestamp: number, data: string}>,
-  }} FilmstripDetails
- */

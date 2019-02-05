@@ -63,7 +63,7 @@ declare global {
       granularity?: number;
     }
 
-    export interface ByteEfficiencyItem extends Result.Audit.OpportunityDetailsItem {
+    export interface ByteEfficiencyItem extends Audit.Details.OpportunityItem {
       url: string;
       wastedBytes: number;
       totalBytes: number;

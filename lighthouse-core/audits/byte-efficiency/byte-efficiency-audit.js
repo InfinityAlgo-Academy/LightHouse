@@ -27,7 +27,7 @@ const WASTED_MS_FOR_SCORE_OF_ZERO = 5000;
 /**
  * @typedef {object} ByteEfficiencyProduct
  * @property {Array<LH.Audit.ByteEfficiencyItem>} items
- * @property {LH.Result.Audit.OpportunityDetails['headings']} headings
+ * @property {LH.Audit.Details.Opportunity['headings']} headings
  * @property {string} [displayValue]
  * @property {string} [explanation]
  * @property {Array<string>} [warnings]
