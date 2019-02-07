@@ -126,11 +126,11 @@ class Audit {
   }
 
   /**
-   * @param {Array<LH.ResultLite.Audit.ColumnHeading>} headings
-   * @param {Array<LH.ResultLite.Audit.WastedBytesDetailsItem>|Array<LH.ResultLite.Audit.WastedTimeDetailsItem>} items
+   * @param {Array<LH.Audit.Details.OpportunityColumnHeading>} headings
+   * @param {Array<LH.Audit.Details.OpportunityItem>} items
    * @param {number} overallSavingsMs
    * @param {number=} overallSavingsBytes
-   * @return {LH.Result.Audit.OpportunityDetails}
+   * @return {LH.Audit.Details.Opportunity}
    */
   static makeOpportunityDetails(headings, items, overallSavingsMs, overallSavingsBytes) {
     return {

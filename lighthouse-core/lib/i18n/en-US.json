@@ -723,6 +723,22 @@
     "message": "Speed Index",
     "description": "The name of the metric that summarizes how quickly the page looked visually complete. The name of this metric is largely abstract and can be loosely translated. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit."
   },
+  "lighthouse-core/audits/network-rtt.js | description": {
+    "message": "Network round trip times (RTT) have a large impact on performance. If the RTT to an origin is high, it's an indication that servers closer to the user could improve performance. [Learn more](https://hpbn.co/primer-on-latency-and-bandwidth/).",
+    "description": "Description of a Lighthouse audit that tells the user that a high network round trip time (RTT) can effect their website's performance because the server is physically far away from them thus making the RTT high. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
+  },
+  "lighthouse-core/audits/network-rtt.js | title": {
+    "message": "Network Round Trip Times",
+    "description": "Descriptive title of a Lighthouse audit that tells the user the round trip times to each origin the page connected to. This is displayed in a list of audit titles that Lighthouse generates."
+  },
+  "lighthouse-core/audits/network-server-latency.js | description": {
+    "message": "Server latencies can impact web performance. If the server latency of an origin is high, it's an indication the server is overloaded or has poor backend performance. [Learn more](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall).",
+    "description": "Description of a Lighthouse audit that tells the user that server latency can effect their website's performance negatively. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
+  },
+  "lighthouse-core/audits/network-server-latency.js | title": {
+    "message": "Server Backend Latencies",
+    "description": "Descriptive title of a Lighthouse audit that tells the user the server latencies observed from each origin the page connected to. This is displayed in a list of audit titles that Lighthouse generates."
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).",
     "description": "Description of a Lighthouse audit that tells users why they should reduce the number of server-side redirects on their page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
@@ -746,6 +762,38 @@
   "lighthouse-core/audits/seo/font-size.js | title": {
     "message": "Document uses legible font sizes",
     "description": "Imperative title of a Lighthouse audit that tells the user that they should use font sizes that are easily read by the user. This is displayed in a list of audit titles that Lighthouse generates."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | description": {
+    "message": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).",
+    "description": "Description of a Lighthouse audit that tells the user why buttons and links need to be big enough and what 'big enough' means. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
+    "message": "{decimalProportion, number, percent} appropriately sized tap targets",
+    "description": "Explanatory message stating that a certain percentage of the tap targets (like buttons and links) on the page are of an appropriately large size."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | explanationViewportMetaNotOptimized": {
+    "message": "Tap targets are too small because there's no viewport meta tag optimized for mobile screens",
+    "description": "Explanatory message stating that there was a failure in an audit caused by the viewport meta tag not being optimized for mobile screens, which caused tap targets like buttons and links to be too small to tap on."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | failureTitle": {
+    "message": "Tap targets are not sized appropriately",
+    "description": "Title of a Lighthouse audit that provides detail on whether tap targets (like buttons and links) on a page are big enough so they can easily be tapped on a mobile device. This descriptive title is shown when tap targets are not easy to tap on."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": {
+    "message": "Overlapping Target",
+    "description": "Label of a table column that identifies a tap target (like a link or button) that overlaps with another tap target."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | sizeHeader": {
+    "message": "Size",
+    "description": "Label of a table column that specifies the size of tap targets like buttons and links."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": {
+    "message": "Tap Target",
+    "description": "Label of a table column that identifies tap targets (like buttons and links) that have failed the audit and aren't easy to tap on."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | title": {
+    "message": "Tap targets are sized appropriately",
+    "description": "Title of a Lighthouse audit that provides detail on whether tap targets (like buttons and links) on a page are big enough so they can easily be tapped on a mobile device. This descriptive title is shown when tap targets are easy to tap on."
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).",

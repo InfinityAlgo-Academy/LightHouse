@@ -19,8 +19,7 @@
 /* globals self, Util, CategoryRenderer */
 
 /** @typedef {import('./dom.js')} DOM */
-/** @typedef {import('./details-renderer.js').FilmstripDetails} FilmstripDetails */
-/** @typedef {LH.Result.Audit.OpportunityDetails} OpportunityDetails */
+/** @typedef {LH.Audit.Details.Opportunity} OpportunityDetails */
 
 class PerformanceCategoryRenderer extends CategoryRenderer {
   /**

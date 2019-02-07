@@ -113,20 +113,6 @@ declare global {
         blockedUrlPatterns: string[];
         extraHeaders: Crdp.Network.Headers;
       }
-
-      export module Audit {
-        export interface OpportunityDetailsItem {
-          url: string;
-          wastedBytes?: number;
-          totalBytes?: number;
-          wastedMs?: number;
-          [p: string]: number | boolean | string | undefined;
-        }
-
-        export interface OpportunityDetails extends ResultLite.Audit.OpportunityDetails {
-          items: OpportunityDetailsItem[];
-        }
-      }
     }
   }
 }

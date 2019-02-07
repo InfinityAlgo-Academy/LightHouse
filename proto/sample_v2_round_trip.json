@@ -419,6 +419,36 @@
             "scoreDisplayMode": "binary", 
             "title": "Uses deprecated APIs"
         }, 
+        "diagnostics": {
+            "description": "Collection of useful page vitals.", 
+            "details": {
+                "items": [
+                    {
+                        "mainDocumentTransferSize": 12640.0, 
+                        "maxRtt": 1.7249999999999943, 
+                        "maxServerLatency": 572.829, 
+                        "numFonts": 0.0, 
+                        "numRequests": 18.0, 
+                        "numScripts": 4.0, 
+                        "numStylesheets": 7.0, 
+                        "numTasks": 107.0, 
+                        "numTasksOver100ms": 3.0, 
+                        "numTasksOver10ms": 7.0, 
+                        "numTasksOver25ms": 5.0, 
+                        "numTasksOver500ms": 1.0, 
+                        "numTasksOver50ms": 4.0, 
+                        "rtt": 0.8639999999999999, 
+                        "throughput": 1398339.461891128, 
+                        "totalByteWeight": 160738.0, 
+                        "totalTaskTime": 1548.5690000000002
+                    }
+                ]
+            }, 
+            "id": "diagnostics", 
+            "score": null, 
+            "scoreDisplayMode": "informative", 
+            "title": "Diagnostics"
+        }, 
         "dlitem": {
             "description": "Definition list items (`<dt>` and `<dd>`) must be wrapped in a parent `<dl>` element to ensure that screen readers can properly announce them. [Learn more](https://dequeuniversity.com/rules/axe/3.1/dlitem?application=lighthouse).", 
             "id": "dlitem", 
@@ -1186,6 +1216,232 @@
             "scoreDisplayMode": "manual", 
             "title": "The page has a logical tab order"
         }, 
+        "main-thread-tasks": {
+            "description": "Lists the toplevel main thread tasks that executed during page load.", 
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "text", 
+                        "key": "type", 
+                        "text": "Task Type"
+                    }, 
+                    {
+                        "granularity": 1.0, 
+                        "itemType": "ms", 
+                        "key": "startTime", 
+                        "text": "Start Time"
+                    }, 
+                    {
+                        "granularity": 1.0, 
+                        "itemType": "ms", 
+                        "key": "duration", 
+                        "text": "End Time"
+                    }
+                ], 
+                "items": [
+                    {
+                        "duration": 26.823, 
+                        "startTime": 604.125, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 23.175, 
+                        "startTime": 606.246, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 5.89, 
+                        "startTime": 631.458, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 18.85, 
+                        "startTime": 638.562, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 16.58, 
+                        "startTime": 638.577, 
+                        "type": "parseHTML"
+                    }, 
+                    {
+                        "duration": 12.522, 
+                        "startTime": 638.586, 
+                        "type": "parseHTML"
+                    }, 
+                    {
+                        "duration": 5.897, 
+                        "startTime": 668.051, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 5.046, 
+                        "startTime": 668.09, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 5.516, 
+                        "startTime": 2643.396, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 979.165, 
+                        "startTime": 2857.942, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 5.803, 
+                        "startTime": 2858.62, 
+                        "type": "scriptEvaluation"
+                    }, 
+                    {
+                        "duration": 970.698, 
+                        "startTime": 2865.033, 
+                        "type": "parseHTML"
+                    }, 
+                    {
+                        "duration": 19.463, 
+                        "startTime": 2866.527, 
+                        "type": "parseHTML"
+                    }, 
+                    {
+                        "duration": 19.21, 
+                        "startTime": 2866.571, 
+                        "type": "scriptEvaluation"
+                    }, 
+                    {
+                        "duration": 945.898, 
+                        "startTime": 2889.816, 
+                        "type": "parseHTML"
+                    }, 
+                    {
+                        "duration": 944.888, 
+                        "startTime": 2890.118, 
+                        "type": "scriptEvaluation"
+                    }, 
+                    {
+                        "duration": 9.047, 
+                        "startTime": 3023.783, 
+                        "type": "scriptEvaluation"
+                    }, 
+                    {
+                        "duration": 5.97, 
+                        "startTime": 3023.842, 
+                        "type": "garbageCollection"
+                    }, 
+                    {
+                        "duration": 706.85, 
+                        "startTime": 3070.433, 
+                        "type": "scriptEvaluation"
+                    }, 
+                    {
+                        "duration": 123.208, 
+                        "startTime": 3840.307, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 123.116, 
+                        "startTime": 3840.313, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 30.142, 
+                        "startTime": 3840.667, 
+                        "type": "styleLayout"
+                    }, 
+                    {
+                        "duration": 87.039, 
+                        "startTime": 3870.824, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 86.959, 
+                        "startTime": 3870.844, 
+                        "type": "styleLayout"
+                    }, 
+                    {
+                        "duration": 85.493, 
+                        "startTime": 3871.238, 
+                        "type": "styleLayout"
+                    }, 
+                    {
+                        "duration": 94.261, 
+                        "startTime": 3996.555, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 90.663, 
+                        "startTime": 3997.797, 
+                        "type": "scriptEvaluation"
+                    }, 
+                    {
+                        "duration": 5.709, 
+                        "startTime": 4019.279, 
+                        "type": "garbageCollection"
+                    }, 
+                    {
+                        "duration": 5.151, 
+                        "startTime": 4098.541, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 122.537, 
+                        "startTime": 4808.624, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 82.741, 
+                        "startTime": 4810.0, 
+                        "type": "scriptEvaluation"
+                    }, 
+                    {
+                        "duration": 36.919, 
+                        "startTime": 4893.397, 
+                        "type": "parseHTML"
+                    }, 
+                    {
+                        "duration": 36.866, 
+                        "startTime": 4893.44, 
+                        "type": "parseHTML"
+                    }, 
+                    {
+                        "duration": 10.58, 
+                        "startTime": 4894.119, 
+                        "type": "scriptEvaluation"
+                    }, 
+                    {
+                        "duration": 9.353, 
+                        "startTime": 4894.151, 
+                        "type": "scriptEvaluation"
+                    }, 
+                    {
+                        "duration": 22.297, 
+                        "startTime": 4905.447, 
+                        "type": "parseHTML"
+                    }, 
+                    {
+                        "duration": 6.849, 
+                        "startTime": 8603.435, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 7.076, 
+                        "startTime": 10219.463, 
+                        "type": "other"
+                    }, 
+                    {
+                        "duration": 6.983, 
+                        "startTime": 10219.523, 
+                        "type": "scriptEvaluation"
+                    }
+                ], 
+                "type": "table"
+            }, 
+            "id": "main-thread-tasks", 
+            "score": null, 
+            "scoreDisplayMode": "informative", 
+            "title": "Tasks"
+        }, 
         "mainthread-work-breakdown": {
             "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this.", 
             "details": {
@@ -1578,6 +1834,74 @@
             "score": null, 
             "scoreDisplayMode": "informative", 
             "title": "Network Requests"
+        }, 
+        "network-rtt": {
+            "description": "Network round trip times (RTT) have a large impact on performance. If the RTT to an origin is high, it's an indication that servers closer to the user could improve performance. [Learn more](https://hpbn.co/primer-on-latency-and-bandwidth/).", 
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "text", 
+                        "key": "origin", 
+                        "text": "URL"
+                    }, 
+                    {
+                        "granularity": 1.0, 
+                        "itemType": "ms", 
+                        "key": "rtt", 
+                        "text": "Time Spent"
+                    }
+                ], 
+                "items": [
+                    {
+                        "origin": "http://ajax.googleapis.com", 
+                        "rtt": 1.7249999999999943
+                    }, 
+                    {
+                        "origin": "http://localhost:10200", 
+                        "rtt": 0.8639999999999999
+                    }
+                ], 
+                "type": "table"
+            }, 
+            "displayValue": "0\u00a0ms", 
+            "id": "network-rtt", 
+            "score": null, 
+            "scoreDisplayMode": "informative", 
+            "title": "Network Round Trip Times"
+        }, 
+        "network-server-latency": {
+            "description": "Server latencies can impact web performance. If the server latency of an origin is high, it's an indication the server is overloaded or has poor backend performance. [Learn more](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall).", 
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "text", 
+                        "key": "origin", 
+                        "text": "URL"
+                    }, 
+                    {
+                        "granularity": 1.0, 
+                        "itemType": "ms", 
+                        "key": "serverReponseTime", 
+                        "text": "Time Spent"
+                    }
+                ], 
+                "items": [
+                    {
+                        "origin": "http://localhost:10200", 
+                        "serverReponseTime": 572.829
+                    }, 
+                    {
+                        "origin": "http://ajax.googleapis.com", 
+                        "serverReponseTime": 562.398
+                    }
+                ], 
+                "type": "table"
+            }, 
+            "displayValue": "570\u00a0ms", 
+            "id": "network-server-latency", 
+            "score": null, 
+            "scoreDisplayMode": "informative", 
+            "title": "Server Backend Latencies"
         }, 
         "no-document-write": {
             "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/document-write).", 
@@ -3087,14 +3411,6 @@
                     "weight": 0.0
                 }, 
                 {
-                    "id": "network-requests", 
-                    "weight": 0.0
-                }, 
-                {
-                    "id": "metrics", 
-                    "weight": 0.0
-                }, 
-                {
                     "group": "diagnostics", 
                     "id": "user-timings", 
                     "weight": 0.0
@@ -3105,14 +3421,6 @@
                     "weight": 0.0
                 }, 
                 {
-                    "id": "screenshot-thumbnails", 
-                    "weight": 0.0
-                }, 
-                {
-                    "id": "final-screenshot", 
-                    "weight": 0.0
-                }, 
-                {
                     "group": "diagnostics", 
                     "id": "mainthread-work-breakdown", 
                     "weight": 0.0
@@ -3120,6 +3428,38 @@
                 {
                     "group": "diagnostics", 
                     "id": "font-display", 
+                    "weight": 0.0
+                }, 
+                {
+                    "id": "network-requests", 
+                    "weight": 0.0
+                }, 
+                {
+                    "id": "network-rtt", 
+                    "weight": 0.0
+                }, 
+                {
+                    "id": "network-server-latency", 
+                    "weight": 0.0
+                }, 
+                {
+                    "id": "main-thread-tasks", 
+                    "weight": 0.0
+                }, 
+                {
+                    "id": "diagnostics", 
+                    "weight": 0.0
+                }, 
+                {
+                    "id": "metrics", 
+                    "weight": 0.0
+                }, 
+                {
+                    "id": "screenshot-thumbnails", 
+                    "weight": 0.0
+                }, 
+                {
+                    "id": "final-screenshot", 
                     "weight": 0.0
                 }
             ], 
@@ -3753,7 +4093,31 @@
             {
                 "duration": 100.0, 
                 "entryType": "measure", 
+                "name": "lh:audit:diagnostics", 
+                "startTime": 0.0
+            }, 
+            {
+                "duration": 100.0, 
+                "entryType": "measure", 
                 "name": "lh:audit:network-requests", 
+                "startTime": 0.0
+            }, 
+            {
+                "duration": 100.0, 
+                "entryType": "measure", 
+                "name": "lh:audit:network-rtt", 
+                "startTime": 0.0
+            }, 
+            {
+                "duration": 100.0, 
+                "entryType": "measure", 
+                "name": "lh:audit:network-server-latency", 
+                "startTime": 0.0
+            }, 
+            {
+                "duration": 100.0, 
+                "entryType": "measure", 
+                "name": "lh:audit:main-thread-tasks", 
                 "startTime": 0.0
             }, 
             {
