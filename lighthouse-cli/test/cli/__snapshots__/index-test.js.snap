@@ -100,7 +100,19 @@ Object {
       "path": "font-display",
     },
     Object {
+      "path": "diagnostics",
+    },
+    Object {
       "path": "network-requests",
+    },
+    Object {
+      "path": "network-rtt",
+    },
+    Object {
+      "path": "network-server-latency",
+    },
+    Object {
+      "path": "main-thread-tasks",
     },
     Object {
       "path": "metrics",
@@ -782,14 +794,6 @@ Object {
           "weight": 0,
         },
         Object {
-          "id": "network-requests",
-          "weight": 0,
-        },
-        Object {
-          "id": "metrics",
-          "weight": 0,
-        },
-        Object {
           "group": "diagnostics",
           "id": "user-timings",
           "weight": 0,
@@ -800,14 +804,6 @@ Object {
           "weight": 0,
         },
         Object {
-          "id": "screenshot-thumbnails",
-          "weight": 0,
-        },
-        Object {
-          "id": "final-screenshot",
-          "weight": 0,
-        },
-        Object {
           "group": "diagnostics",
           "id": "mainthread-work-breakdown",
           "weight": 0,
@@ -815,6 +811,38 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "font-display",
+          "weight": 0,
+        },
+        Object {
+          "id": "network-requests",
+          "weight": 0,
+        },
+        Object {
+          "id": "network-rtt",
+          "weight": 0,
+        },
+        Object {
+          "id": "network-server-latency",
+          "weight": 0,
+        },
+        Object {
+          "id": "main-thread-tasks",
+          "weight": 0,
+        },
+        Object {
+          "id": "diagnostics",
+          "weight": 0,
+        },
+        Object {
+          "id": "metrics",
+          "weight": 0,
+        },
+        Object {
+          "id": "screenshot-thumbnails",
+          "weight": 0,
+        },
+        Object {
+          "id": "final-screenshot",
           "weight": 0,
         },
       ],
