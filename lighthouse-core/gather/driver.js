@@ -115,6 +115,7 @@ class Driver {
 
       // Up to 450 (https://goo.gl/rBfhn4) JPGs added to the trace
       'disabled-by-default-devtools.screenshot',
+      'disabled-by-default-devtools.screenshot-sampled',
 
       // This doesn't add its own events, but adds a `stackTrace` property to devtools.timeline events
       'disabled-by-default-devtools.timeline.stack',
