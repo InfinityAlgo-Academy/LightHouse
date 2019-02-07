@@ -191,6 +191,7 @@ Useful documentation, examples, and recipes to get you started.
 
 **Docs**
 
+- [Dealing with variance](./docs/variability.md)
 - [Using Lighthouse programmatically](./docs/readme.md#using-programmatically)
 - [Testing a site with authentication](./docs/readme.md#testing-on-a-site-with-authentication)
 - [Testing on a mobile device](./docs/readme.md#testing-on-a-mobile-device)
