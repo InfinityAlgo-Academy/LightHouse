@@ -175,7 +175,7 @@ class CacheHeaders extends Audit {
     // Ignore assets where policy implies they should not be cached long periods
     if (cacheControl &&
       (
-        cacheControl['must-validate'] ||
+        cacheControl['must-revalidate'] ||
         cacheControl['no-cache'] ||
         cacheControl['no-store'] ||
         cacheControl['private'])) {
