@@ -105,6 +105,7 @@ class Hreflang extends Audit {
           .filter(h => h.name.toLowerCase() === LINK_HEADER && !headerHasValidHreflangs(h.value))
           .forEach(h => invalidHreflangs.push({source: `${h.name}: ${h.value}`}));
 
+        /** @type {LH.Audit.Details.Table['headings']} */
         const headings = [
           {key: 'source', itemType: 'code', text: 'Source'},
         ];

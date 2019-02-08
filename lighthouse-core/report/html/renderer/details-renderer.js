@@ -44,7 +44,7 @@ class DetailsRenderer {
 
   /**
    * @param {DetailsJSON|OpportunityDetails} details
-   * @return {Element}
+   * @return {Element|null}
    */
   render(details) {
     switch (details.type) {
@@ -81,6 +81,12 @@ class DetailsRenderer {
         return this._renderOpportunityTable(details);
       case 'numeric':
         return this._renderNumeric(/** @type {StringDetailsJSON} */ (details));
+
+      // Internal-only details, not for rendering.
+      case 'screenshot':
+      case 'diagnostic':
+        return null;
+
       default: {
         throw new Error(`Unknown type: ${details.type}`);
       }
@@ -218,6 +224,7 @@ class DetailsRenderer {
     for (const heading of details.headings) {
       const itemType = heading.itemType || 'text';
       const classes = `lh-table-column--${itemType}`;
+      // @ts-ignore TODO(bckenny): this can never be null
       this._dom.createChildOf(theadTrElem, 'th', classes).appendChild(this.render({
         type: 'text',
         value: heading.text || '',
@@ -241,6 +248,7 @@ class DetailsRenderer {
         if (value.type) {
           const valueAsDetails = /** @type {DetailsJSON} */ (value);
           const classes = `lh-table-column--${valueAsDetails.type}`;
+          // @ts-ignore TODO(bckenny): this can never be null
           this._dom.createChildOf(rowElem, 'td', classes).appendChild(this.render(valueAsDetails));
           continue;
         }
@@ -257,6 +265,7 @@ class DetailsRenderer {
         // @ts-ignore - TODO(bckenny): handle with refactoring above
         const valueType = value.type;
         const classes = `lh-table-column--${valueType || heading.itemType}`;
+        // @ts-ignore TODO(bckenny): this can never be null
         this._dom.createChildOf(rowElem, 'td', classes).appendChild(this.render(item));
       }
     }

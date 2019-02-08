@@ -243,7 +243,7 @@ function getTableItems(overlapFailures) {
 
 /**
  * @param {LH.Artifacts.TapTarget} target
- * @returns {LH.Audit.DetailsRendererNodeDetailsJSON}
+ * @returns {LH.Audit.Details.NodeValue}
  */
 function targetToTableNode(target) {
   return {
@@ -289,6 +289,7 @@ class TapTargets extends Audit {
     const overlapFailuresForDisplay = mergeSymmetricFailures(overlapFailures);
     const tableItems = getTableItems(overlapFailuresForDisplay);
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'tapTarget', itemType: 'node', text: str_(UIStrings.tapTargetHeader)},
       {key: 'size', itemType: 'text', text: str_(UIStrings.sizeHeader)},
@@ -339,8 +340,8 @@ module.exports.UIStrings = UIStrings;
 }} BoundedTapTarget */
 
 /** @typedef {{
-  tapTarget: LH.Audit.DetailsRendererNodeDetailsJSON;
-  overlappingTarget: LH.Audit.DetailsRendererNodeDetailsJSON;
+  tapTarget: LH.Audit.Details.NodeValue;
+  overlappingTarget: LH.Audit.Details.NodeValue;
   size: string;
   overlapScoreRatio: number;
   height: number;

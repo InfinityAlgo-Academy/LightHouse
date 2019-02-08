@@ -108,8 +108,12 @@ class Metrics extends Audit {
       }
     }
 
-    /** @type {MetricsDetails} */
-    const details = {items: [metrics]};
+    /** @type {LH.Audit.Details.Diagnostic} */
+    const details = {
+      type: 'diagnostic',
+      // TODO: Consider not nesting metrics under `items`.
+      items: [metrics],
+    };
 
     return {
       score: 1,
@@ -154,7 +158,5 @@ class Metrics extends Audit {
  * @property {number} observedSpeedIndex
  * @property {number} observedSpeedIndexTs
  */
-
-/** @typedef {{items: [UberMetricsItem]}} MetricsDetails */
 
 module.exports = Metrics;

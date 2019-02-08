@@ -205,6 +205,7 @@ class RobotsTxt extends Audit {
 
     const validationErrors = validateRobots(content);
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'index', itemType: 'text', text: 'Line #'},
       {key: 'line', itemType: 'code', text: 'Content'},

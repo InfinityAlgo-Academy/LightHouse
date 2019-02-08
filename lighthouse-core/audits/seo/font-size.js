@@ -236,6 +236,7 @@ class FontSize extends Audit {
       (visitedTextLength - failingTextLength) / visitedTextLength * 100;
     const pageUrl = artifacts.URL.finalUrl;
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'source', itemType: 'url', text: 'Source'},
       {key: 'selector', itemType: 'code', text: 'Selector'},

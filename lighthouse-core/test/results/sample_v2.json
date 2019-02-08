@@ -478,6 +478,7 @@
       "rawValue": false,
       "explanation": "Failures: No manifest was fetched.",
       "details": {
+        "type": "diagnostic",
         "items": [
           {
             "failures": [
@@ -498,6 +499,7 @@
       "rawValue": false,
       "explanation": "Failures: No manifest was fetched.",
       "details": {
+        "type": "diagnostic",
         "items": [
           {
             "failures": [
@@ -518,6 +520,7 @@
       "rawValue": false,
       "explanation": "Failures: No manifest was fetched,\nNo `<meta name=\"theme-color\">` tag found.",
       "details": {
+        "type": "diagnostic",
         "items": [
           {
             "failures": [
@@ -804,6 +807,7 @@
       "scoreDisplayMode": "informative",
       "rawValue": 1,
       "details": {
+        "type": "diagnostic",
         "items": [
           {
             "numRequests": 18,
@@ -1373,6 +1377,7 @@
       "scoreDisplayMode": "informative",
       "rawValue": 4927.278,
       "details": {
+        "type": "diagnostic",
         "items": [
           {
             "firstContentfulPaint": 3969,
@@ -1564,12 +1569,15 @@
             }
           }
         ],
-        "impact": "serious",
-        "tags": [
-          "cat.color",
-          "wcag2aa",
-          "wcag143"
-        ]
+        "diagnostic": {
+          "type": "diagnostic",
+          "impact": "serious",
+          "tags": [
+            "cat.color",
+            "wcag2aa",
+            "wcag143"
+          ]
+        }
       }
     },
     "definition-list": {
@@ -1649,12 +1657,15 @@
             }
           }
         ],
-        "impact": "serious",
-        "tags": [
-          "cat.language",
-          "wcag2a",
-          "wcag311"
-        ]
+        "diagnostic": {
+          "type": "diagnostic",
+          "impact": "serious",
+          "tags": [
+            "cat.language",
+            "wcag2a",
+            "wcag311"
+          ]
+        }
       }
     },
     "html-lang-valid": {
@@ -1719,14 +1730,17 @@
             }
           }
         ],
-        "impact": "critical",
-        "tags": [
-          "cat.text-alternatives",
-          "wcag2a",
-          "wcag111",
-          "section508",
-          "section508.22.a"
-        ]
+        "diagnostic": {
+          "type": "diagnostic",
+          "impact": "critical",
+          "tags": [
+            "cat.text-alternatives",
+            "wcag2a",
+            "wcag111",
+            "section508",
+            "section508.22.a"
+          ]
+        }
       }
     },
     "input-image-alt": {
@@ -1782,15 +1796,18 @@
             }
           }
         ],
-        "impact": "critical",
-        "tags": [
-          "cat.forms",
-          "wcag2a",
-          "wcag332",
-          "wcag131",
-          "section508",
-          "section508.22.n"
-        ]
+        "diagnostic": {
+          "type": "diagnostic",
+          "impact": "critical",
+          "tags": [
+            "cat.forms",
+            "wcag2a",
+            "wcag332",
+            "wcag131",
+            "section508",
+            "section508.22.n"
+          ]
+        }
       }
     },
     "layout-table": {
@@ -1837,15 +1854,18 @@
             }
           }
         ],
-        "impact": "serious",
-        "tags": [
-          "cat.name-role-value",
-          "wcag2a",
-          "wcag412",
-          "wcag244",
-          "section508",
-          "section508.22.a"
-        ]
+        "diagnostic": {
+          "type": "diagnostic",
+          "impact": "serious",
+          "tags": [
+            "cat.name-role-value",
+            "wcag2a",
+            "wcag412",
+            "wcag244",
+            "section508",
+            "section508.22.a"
+          ]
+        }
       }
     },
     "list": {
@@ -1921,14 +1941,17 @@
             }
           }
         ],
-        "impact": "serious",
-        "tags": [
-          "cat.text-alternatives",
-          "wcag2a",
-          "wcag111",
-          "section508",
-          "section508.22.a"
-        ]
+        "diagnostic": {
+          "type": "diagnostic",
+          "impact": "serious",
+          "tags": [
+            "cat.text-alternatives",
+            "wcag2a",
+            "wcag111",
+            "section508",
+            "section508.22.a"
+          ]
+        }
       }
     },
     "tabindex": {
@@ -2108,7 +2131,6 @@
         "items": [
           {
             "url": "http://localhost:10200/zone.js",
-            "cacheControl": null,
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 71654,
@@ -2116,7 +2138,6 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-            "cacheControl": null,
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 24741,
@@ -2124,7 +2145,6 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "cacheControl": null,
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 1703,
@@ -2132,7 +2152,6 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
-            "cacheControl": null,
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 1108,
@@ -2140,7 +2159,6 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
-            "cacheControl": null,
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 821,
@@ -2148,7 +2166,6 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
-            "cacheControl": null,
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 821,
@@ -2156,7 +2173,6 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
-            "cacheControl": null,
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 821,
@@ -2164,7 +2180,6 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-            "cacheControl": null,
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 821,
@@ -2172,7 +2187,6 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
-            "cacheControl": null,
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 821,
@@ -2180,7 +2194,6 @@
           },
           {
             "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
-            "cacheControl": null,
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 144,
@@ -2188,7 +2201,6 @@
           },
           {
             "url": "blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277",
-            "cacheControl": null,
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 0,

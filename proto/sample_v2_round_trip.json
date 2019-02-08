@@ -159,6 +159,15 @@
         "color-contrast": {
             "description": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse).", 
             "details": {
+                "diagnostic": {
+                    "impact": "serious", 
+                    "tags": [
+                        "cat.color", 
+                        "wcag2aa", 
+                        "wcag143"
+                    ], 
+                    "type": "diagnostic"
+                }, 
                 "headings": [
                     {
                         "itemType": "node", 
@@ -166,7 +175,6 @@
                         "text": "Failing Elements"
                     }
                 ], 
-                "impact": "serious", 
                 "items": [
                     {
                         "node": {
@@ -186,11 +194,6 @@
                             "type": "node"
                         }
                     }
-                ], 
-                "tags": [
-                    "cat.color", 
-                    "wcag2aa", 
-                    "wcag143"
                 ], 
                 "type": "table"
             }, 
@@ -442,7 +445,8 @@
                         "totalByteWeight": 160738.0, 
                         "totalTaskTime": 1548.5690000000002
                     }
-                ]
+                ], 
+                "type": "diagnostic"
             }, 
             "id": "diagnostics", 
             "score": null, 
@@ -817,6 +821,15 @@
         "html-has-lang": {
             "description": "If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default language that the user chose when setting up the screen reader. If the page isn't actually in the default language, then the screen reader might not announce the page's text correctly. [Learn more](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse).", 
             "details": {
+                "diagnostic": {
+                    "impact": "serious", 
+                    "tags": [
+                        "cat.language", 
+                        "wcag2a", 
+                        "wcag311"
+                    ], 
+                    "type": "diagnostic"
+                }, 
                 "headings": [
                     {
                         "itemType": "node", 
@@ -824,7 +837,6 @@
                         "text": "Failing Elements"
                     }
                 ], 
-                "impact": "serious", 
                 "items": [
                     {
                         "node": {
@@ -835,11 +847,6 @@
                             "type": "node"
                         }
                     }
-                ], 
-                "tags": [
-                    "cat.language", 
-                    "wcag2a", 
-                    "wcag311"
                 ], 
                 "type": "table"
             }, 
@@ -865,6 +872,17 @@
         "image-alt": {
             "description": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse).", 
             "details": {
+                "diagnostic": {
+                    "impact": "critical", 
+                    "tags": [
+                        "cat.text-alternatives", 
+                        "wcag2a", 
+                        "wcag111", 
+                        "section508", 
+                        "section508.22.a"
+                    ], 
+                    "type": "diagnostic"
+                }, 
                 "headings": [
                     {
                         "itemType": "node", 
@@ -872,7 +890,6 @@
                         "text": "Failing Elements"
                     }
                 ], 
-                "impact": "critical", 
                 "items": [
                     {
                         "node": {
@@ -910,13 +927,6 @@
                             "type": "node"
                         }
                     }
-                ], 
-                "tags": [
-                    "cat.text-alternatives", 
-                    "wcag2a", 
-                    "wcag111", 
-                    "section508", 
-                    "section508.22.a"
                 ], 
                 "type": "table"
             }, 
@@ -983,7 +993,8 @@
                         "isParseFailure": true, 
                         "parseFailureReason": "No manifest was fetched"
                     }
-                ]
+                ], 
+                "type": "diagnostic"
             }, 
             "explanation": "Failures: No manifest was fetched.", 
             "id": "installable-manifest", 
@@ -1070,6 +1081,18 @@
         "label": {
             "description": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse).", 
             "details": {
+                "diagnostic": {
+                    "impact": "critical", 
+                    "tags": [
+                        "cat.forms", 
+                        "wcag2a", 
+                        "wcag332", 
+                        "wcag131", 
+                        "section508", 
+                        "section508.22.n"
+                    ], 
+                    "type": "diagnostic"
+                }, 
                 "headings": [
                     {
                         "itemType": "node", 
@@ -1077,7 +1100,6 @@
                         "text": "Failing Elements"
                     }
                 ], 
-                "impact": "critical", 
                 "items": [
                     {
                         "node": {
@@ -1107,14 +1129,6 @@
                         }
                     }
                 ], 
-                "tags": [
-                    "cat.forms", 
-                    "wcag2a", 
-                    "wcag332", 
-                    "wcag131", 
-                    "section508", 
-                    "section508.22.n"
-                ], 
                 "type": "table"
             }, 
             "id": "label", 
@@ -1132,6 +1146,18 @@
         "link-name": {
             "description": "Link text (and alternate text for images, when used as links) that is discernible, unique, and focusable improves the navigation experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse).", 
             "details": {
+                "diagnostic": {
+                    "impact": "serious", 
+                    "tags": [
+                        "cat.name-role-value", 
+                        "wcag2a", 
+                        "wcag412", 
+                        "wcag244", 
+                        "section508", 
+                        "section508.22.a"
+                    ], 
+                    "type": "diagnostic"
+                }, 
                 "headings": [
                     {
                         "itemType": "node", 
@@ -1139,7 +1165,6 @@
                         "text": "Failing Elements"
                     }
                 ], 
-                "impact": "serious", 
                 "items": [
                     {
                         "node": {
@@ -1159,14 +1184,6 @@
                             "type": "node"
                         }
                     }
-                ], 
-                "tags": [
-                    "cat.name-role-value", 
-                    "wcag2a", 
-                    "wcag412", 
-                    "wcag244", 
-                    "section508", 
-                    "section508.22.a"
                 ], 
                 "type": "table"
             }, 
@@ -1581,7 +1598,8 @@
                         "speedIndex": 4417.0, 
                         "speedIndexTs": 185607736912.0
                     }
-                ]
+                ], 
+                "type": "diagnostic"
             }, 
             "id": "metrics", 
             "score": null, 
@@ -2010,6 +2028,17 @@
         "object-alt": {
             "description": "Screen readers cannot translate non-text content. Adding alt text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse).", 
             "details": {
+                "diagnostic": {
+                    "impact": "serious", 
+                    "tags": [
+                        "cat.text-alternatives", 
+                        "wcag2a", 
+                        "wcag111", 
+                        "section508", 
+                        "section508.22.a"
+                    ], 
+                    "type": "diagnostic"
+                }, 
                 "headings": [
                     {
                         "itemType": "node", 
@@ -2017,7 +2046,6 @@
                         "text": "Failing Elements"
                     }
                 ], 
-                "impact": "serious", 
                 "items": [
                     {
                         "node": {
@@ -2037,13 +2065,6 @@
                             "type": "node"
                         }
                     }
-                ], 
-                "tags": [
-                    "cat.text-alternatives", 
-                    "wcag2a", 
-                    "wcag111", 
-                    "section508", 
-                    "section508.22.a"
                 ], 
                 "type": "table"
             }, 
@@ -2319,7 +2340,8 @@
                         "isParseFailure": true, 
                         "parseFailureReason": "No manifest was fetched"
                     }
-                ]
+                ], 
+                "type": "diagnostic"
             }, 
             "explanation": "Failures: No manifest was fetched.", 
             "id": "splash-screen", 
@@ -2376,7 +2398,8 @@
                         "parseFailureReason": "No manifest was fetched", 
                         "themeColor": null
                     }
-                ]
+                ], 
+                "type": "diagnostic"
             }, 
             "explanation": "Failures: No manifest was fetched,\nNo `<meta name=\"theme-color\">` tag found.", 
             "id": "themed-omnibox", 
@@ -2659,7 +2682,6 @@
                 ], 
                 "items": [
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 71654.0, 
@@ -2667,7 +2689,6 @@
                         "wastedBytes": 71654.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 24741.0, 
@@ -2675,7 +2696,6 @@
                         "wastedBytes": 24741.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 1703.0, 
@@ -2683,7 +2703,6 @@
                         "wastedBytes": 1703.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 1108.0, 
@@ -2691,7 +2710,6 @@
                         "wastedBytes": 1108.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 821.0, 
@@ -2699,7 +2717,6 @@
                         "wastedBytes": 821.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 821.0, 
@@ -2707,7 +2724,6 @@
                         "wastedBytes": 821.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 821.0, 
@@ -2715,7 +2731,6 @@
                         "wastedBytes": 821.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 821.0, 
@@ -2723,7 +2738,6 @@
                         "wastedBytes": 821.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 821.0, 
@@ -2731,7 +2745,6 @@
                         "wastedBytes": 821.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 144.0, 
@@ -2739,7 +2752,6 @@
                         "wastedBytes": 144.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 0.0, 

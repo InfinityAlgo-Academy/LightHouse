@@ -55,6 +55,7 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
         };
       });
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'href', itemType: 'url', text: 'URL'},
       {key: 'target', itemType: 'text', text: 'Target'},

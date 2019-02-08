@@ -53,6 +53,7 @@ class NetworkRequests extends Audit {
         };
       });
 
+      /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
         {key: 'url', itemType: 'url', text: 'URL'},
         {key: 'startTime', itemType: 'ms', granularity: 1, text: 'Start Time'},

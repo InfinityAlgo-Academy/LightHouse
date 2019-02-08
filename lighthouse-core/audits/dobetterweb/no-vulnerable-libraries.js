@@ -135,7 +135,7 @@ class NoVulnerableLibrariesAudit extends Audit {
     }
 
     let totalVulns = 0;
-    /** @type {Array<{highestSeverity: string, vulnCount: number, detectedLib: LH.Audit.DetailsRendererLinkDetailsJSON}>} */
+    /** @type {Array<{highestSeverity: string, vulnCount: number, detectedLib: LH.Audit.Details.LinkValue}>} */
     const vulnerabilityResults = [];
 
     const libraryVulns = foundLibraries.map(lib => {
@@ -175,6 +175,7 @@ class NoVulnerableLibrariesAudit extends Audit {
       displayValue = `${totalVulns} vulnerability detected`;
     }
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'detectedLib', itemType: 'link', text: 'Library Version'},
       {key: 'vulnCount', itemType: 'text', text: 'Vulnerability Count'},
