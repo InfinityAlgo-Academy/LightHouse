@@ -50,8 +50,8 @@ declare global {
     export interface GathererArtifacts {
       /** The results of running the aXe accessibility tests on the page. */
       Accessibility: Artifacts.Accessibility;
-      /** Information on all anchors in the page that aren't nofollow or noreferrer. */
-      AnchorsWithNoRelNoopener: {href: string; rel: string; target: string, outerHTML: string}[];
+      /** Array of all anchors on the page. */
+      AnchorElements: Artifacts.AnchorElement[];
       /** The value of the page's <html> manifest attribute, or null if not defined */
       AppCacheManifest: string | null;
       /** Array of all URLs cached in CacheStorage. */
@@ -60,8 +60,6 @@ declare global {
       Canonical: (string | null)[];
       /** Console deprecation and intervention warnings logged by Chrome during page load. */
       ChromeConsoleMessages: Crdp.Log.EntryAddedEvent[];
-      /** The href and innerText of all non-nofollow anchors in the page. */
-      CrawlableLinks: {href: string, text: string}[];
       /** CSS coverage information for styles used by page's final state. */
       CSSUsage: {rules: Crdp.CSS.RuleUsage[], stylesheets: Artifacts.CSSStyleSheetInfo[]};
       /** Information on the document's doctype(or null if not present), specifically the name, publicId, and systemId.
@@ -176,6 +174,15 @@ declare global {
         href: string
         as: string
         crossOrigin: 'anonymous'|'use-credentials'|null
+      }
+
+      /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
+      export interface AnchorElement {
+        rel: string
+        href: string
+        text: string
+        target: string
+        outerHTML: string
       }
 
       export interface Font {

@@ -2229,39 +2229,52 @@
       "col": 45
     }
   ],
-  "AnchorsWithNoRelNoopener": [
+  "AnchorElements": [
     {
       "href": "https://www.google.com/",
       "outerHTML": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
-      "rel": null,
-      "target": "_blank"
+      "rel": "",
+      "target": "_blank",
+      "text": "external link"
     },
     {
       "href": "",
       "outerHTML": "<a target=\"blank\">Hello</a>",
-      "rel": null,
-      "target": "_blank"
+      "rel": "",
+      "target": "_blank",
+      "text": "Hello"
+    },
+    {
+      "href": "https://www.google.com/",
+      "outerHTML": "<a rel=\"noopener\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
+      "rel": "noopener",
+      "target": "_blank",
+      "text": "external link that uses noopener"
     },
     {
       "href": "https://www.google.com/",
       "outerHTML": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
       "rel": "nofollow",
-      "target": "_blank"
+      "target": "_blank",
+      "text": "external link that uses nofollow"
     },
     {
       "href": "http://localhost:10200/dobetterweb/doesnotexist",
-      "rel": null,
-      "target": "_blank"
+      "rel": "",
+      "target": "_blank",
+      "text": "internal link is ok"
     },
     {
       "href": "javascript:void(0)",
-      "rel": null,
-      "target": "_blank"
+      "rel": "",
+      "target": "_blank",
+      "text": ""
     },
     {
       "href": "mailto:inbox@email.com",
-      "rel": null,
-      "target": "_blank"
+      "rel": "",
+      "target": "_blank",
+      "text": ""
     }
   ],
   "AppCacheManifest": "clock.appcache",
@@ -2488,28 +2501,6 @@
     "visitedTextLength": 228,
     "totalTextLength": 228
   },
-  "CrawlableLinks": [
-    {
-      "href": "https://www.google.com/",
-      "text": "external link"
-    },
-    {
-      "href": "https://www.google.com/",
-      "text": "external link that uses rel noopener"
-    },
-    {
-      "href": "http://localhost:10200/dobetterweb/doesnotexist",
-      "text": "internal link is ok"
-    },
-    {
-      "href": "javascript:void(0)",
-      "text": ""
-    },
-    {
-      "href": "mailto:inbox@email.com",
-      "text": ""
-    }
-  ],
   "Hreflang": [],
   "EmbeddedContent": [],
   "Canonical": [],
