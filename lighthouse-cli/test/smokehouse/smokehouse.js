@@ -13,7 +13,7 @@ const path = require('path');
 const spawnSync = require('child_process').spawnSync;
 const yargs = require('yargs');
 const log = require('lighthouse-logger');
-const collateResults = require('./smokehouse-collate');
+const {collateResults, report} = require('./smokehouse-report');
 
 const PROTOCOL_TIMEOUT_EXIT_CODE = 67;
 const PAGE_HUNG_EXIT_CODE = 68;
@@ -133,78 +133,6 @@ function runLighthouse(url, configPath, isDebug) {
   }
 
   return JSON.parse(lhr);
-}
-
-/**
- * Log the result of an assertion of actual and expected results.
- * @param {Comparison} assertion
- */
-function reportAssertion(assertion) {
-  // @ts-ignore - this doesn't exist now but could one day, so try not to break the future
-  const _toJSON = RegExp.prototype.toJSON;
-  // @ts-ignore
-  // eslint-disable-next-line no-extend-native
-  RegExp.prototype.toJSON = RegExp.prototype.toString;
-
-  if (assertion.equal) {
-    console.log(`  ${log.greenify(log.tick)} ${assertion.category}: ` +
-        log.greenify(assertion.actual));
-  } else {
-    if (assertion.diff) {
-      const diff = assertion.diff;
-      const fullActual = JSON.stringify(assertion.actual, null, 2).replace(/\n/g, '\n      ');
-      const msg = `
-  ${log.redify(log.cross)} difference at ${log.bold}${diff.path}${log.reset}
-              expected: ${JSON.stringify(diff.expected)}
-                 found: ${JSON.stringify(diff.actual)}
-
-          found result:
-      ${log.redify(fullActual)}
-`;
-      console.log(msg);
-    } else {
-      console.log(`  ${log.redify(log.cross)} ${assertion.category}:
-              expected: ${JSON.stringify(assertion.expected)}
-                 found: ${JSON.stringify(assertion.actual)}
-`);
-    }
-  }
-
-  // @ts-ignore
-  // eslint-disable-next-line no-extend-native
-  RegExp.prototype.toJSON = _toJSON;
-}
-
-/**
- * Log all the comparisons between actual and expected test results, then print
- * summary. Returns count of passed and failed tests.
- * @param {LHRComparison} results
- * @return {{passed: number, failed: number}}
- */
-function report(results) {
-  reportAssertion(results.finalUrl);
-  reportAssertion(results.errorCode);
-
-  let correctCount = 0;
-  let failedCount = 0;
-  results.audits.forEach(auditAssertion => {
-    if (auditAssertion.equal) {
-      correctCount++;
-    } else {
-      failedCount++;
-      reportAssertion(auditAssertion);
-    }
-  });
-
-  const plural = correctCount === 1 ? '' : 's';
-  const correctStr = `${correctCount} assertion${plural}`;
-  const colorFn = correctCount === 0 ? log.redify : log.greenify;
-  console.log(`  Correctly passed ${colorFn(correctStr)}\n`);
-
-  return {
-    passed: correctCount,
-    failed: failedCount,
-  };
 }
 
 const cli = yargs
