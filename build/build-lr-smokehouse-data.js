@@ -46,8 +46,9 @@ function loadExpectations(expectationsPath) {
   /** @type {ExpectedLHR[]} */
   const expectations = require(expectationsPath);
 
-  // hexa does not support redirects, so don't even try.
   for (const expectation of expectations) {
+    // TODO: true?
+    // Hexa does not support redirects, so don't even try.
     expectation.requestedUrl = expectation.finalUrl;
   }
 

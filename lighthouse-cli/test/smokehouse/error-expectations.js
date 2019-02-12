@@ -16,8 +16,8 @@ module.exports = [
     audits: {},
   },
   {
-    requestedUrl: 'https://expired.badssl.com',
-    finalUrl: 'https://expired.badssl.com',
+    requestedUrl: 'https://expired.badssl.com/',
+    finalUrl: 'https://expired.badssl.com/',
     errorCode: 'INSECURE_DOCUMENT_REQUEST',
     audits: {},
   },
