@@ -70,7 +70,7 @@ function requestHandler(request, response) {
       headers['Content-Type'] = 'image/svg+xml';
     }
 
-    let delay = 0;
+    const delay = 0;
     if (queryString) {
       const params = new URLSearchParams(queryString);
       // set document status-code
@@ -80,7 +80,7 @@ function requestHandler(request, response) {
 
       // set delay of request when present
       if (params.has('delay')) {
-        delay = parseInt(params.get('delay'), 10) || 2000;
+        // delay = parseInt(params.get('delay'), 10) || 2000;
       }
 
       if (params.has('extra_header')) {
