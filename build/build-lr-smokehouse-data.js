@@ -59,31 +59,6 @@ const smokeTests = SMOKETESTS.map(smokeTestDfn => {
   };
 });
 
-// const batches = smokeTests.reduce((map, test) => {
-//   const batch = map.get(test.batch) || [];
-//   batch.push(test);
-//   return map.set(test.batch, batch);
-// }, new Map());
-
-// const contents = smokeTests.reduce((map, test) => {
-//   for (const expectation of test.expectations) {
-//     const url = new URL(expectation.requestedUrl);
-//     if (map.has(url.href)) continue;
-
-//     let content = '';
-//     if (url.hostname === 'localhost') {
-//       const pathToFile = './lighthouse-cli/test/fixtures' + url.pathname;
-//       content = fs.readFileSync(pathToFile).toString('utf-8');
-//     } else {
-//       content = 'TODO';
-//     }
-
-//     map.set(url.href, content);
-//   }
-
-//   return map;
-// }, new Map());
-
 /**
  * @param {Map<*, *>} inputMap
  * @return {object}
@@ -129,33 +104,11 @@ async function createRawHttpText(response) {
    */
   async function getPageContents(url) {
     const page = await browser.newPage();
-    // /** @type {Map<string, string>} */
-    // const redirects = new Map();
 
     // TODO: this does not capture requests for service worker JS.
     page.on('response', async response => {
       const url = response.url();
       if (contents.has(url) || url.startsWith('data:')) return;
-
-      // LR integration test can't mock redirects, so attempt to save the body
-      // of the final url as the body of the requested url (i.e. completely remove the redirect)
-      // if (response.status() === 301 || response.status() === 302 || response.status() === 307) {
-      //   redirects.set(response.headers().location, url);
-      //   return;
-      // }
-
-      // if (redirects.has(url)) {
-      //   let unrolledUrl = url;
-      //   while (redirects.has(unrolledUrl)) {
-      //     // @ts-ignore: literally just verified it exists
-      //     unrolledUrl = redirects.get(unrolledUrl);
-      //   }
-
-      //   if (contents.has(unrolledUrl)) return;
-      //   contents.set(unrolledUrl, await createRawHttpText(response));
-      // } else {
-      //   contents.set(url, await createRawHttpText(response));
-      // }
       contents.set(url, await createRawHttpText(response));
     });
 
@@ -178,23 +131,6 @@ async function createRawHttpText(response) {
 
   await browser.close();
   servers.forEach(server => server.close());
-
-  // const htmlFiles = await new Promise((resolve, reject) => {
-  //   glob('./lighthouse-cli/test/fixtures/**/*.html', function( err, files ) {
-  //     if (err) reject(err);
-  //     resolve(files);
-  //   });
-  // });
-
-
-  // for (const file of fixtureFiles) {
-  //   if (file.endsWith('.html')) {
-
-  //   }
-
-  //   const url = `https://localhost`;
-  //   contents.set();
-  // }
 
   const smokehouseData = JSON.stringify({
     contents: mapToObj(contents),
