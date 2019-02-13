@@ -21,22 +21,6 @@ const INSECURE_DOCUMENT_REQUEST_EXIT_CODE = 69;
 const RETRIES = 3;
 
 /**
- * @typedef {{path: string, actual: *, expected: *}} Difference
- */
-
-/**
- * @typedef {{category: string, actual: *, expected: *, equal: boolean, diff?: Difference | null}} Comparison
- */
-
-/**
- * @typedef {Pick<LH.Result, 'audits' | 'finalUrl' | 'requestedUrl'> & {errorCode?: string}} ExpectedLHR
- */
-
-/**
- * @typedef {{audits: Comparison[], errorCode: Comparison, finalUrl: Comparison}} LHRComparison
- */
-
-/**
  * Attempt to resolve a path locally. If this fails, attempts to locate the path
  * relative to the current working directory.
  * @param {string} payloadPath
@@ -59,7 +43,7 @@ function resolveLocalOrCwd(payloadPath) {
  * @param {string} url
  * @param {string} configPath
  * @param {boolean=} isDebug
- * @return {ExpectedLHR}
+ * @return {Smokehouse.ExpectedLHR}
  */
 function runLighthouse(url, configPath, isDebug) {
   isDebug = isDebug || Boolean(process.env.SMOKEHOUSE_DEBUG);
@@ -147,7 +131,7 @@ const cli = yargs
   .argv;
 
 const configPath = resolveLocalOrCwd(cli['config-path']);
-/** @type {ExpectedLHR[]} */
+/** @type {Smokehouse.ExpectedLHR[]} */
 const expectations = require(resolveLocalOrCwd(cli['expectations-path']));
 
 // Loop sequentially over expectations, comparing against Lighthouse run, and

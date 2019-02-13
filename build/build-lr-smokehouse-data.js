@@ -1,15 +1,8 @@
 const SMOKETESTS = require('../lighthouse-cli/test/smokehouse/smoke-test-dfns');
 const path = require('path');
-const URL = require('url').URL;
 const fs = require('fs');
 const {server, serverForOffline} = require('../lighthouse-cli/test/fixtures/static-server');
 const puppeteer = require('puppeteer');
-
-
-// TODO this is duplicated w/ smokehouse.js
-/**
- * @typedef {Pick<LH.Result, 'audits' | 'finalUrl' | 'requestedUrl'> & {errorCode?: string}} ExpectedLHR
- */
 
 /**
  * Attempt to resolve a path relative to the smokehouse folder.
@@ -40,10 +33,10 @@ function loadConfig(configPath) {
 
 /**
  * @param {string} expectationsPath
- * @return {ExpectedLHR[]}
+ * @return {Smokehouse.ExpectedLHR[]}
  */
 function loadExpectations(expectationsPath) {
-  /** @type {ExpectedLHR[]} */
+  /** @type {Smokehouse.ExpectedLHR[]} */
   const expectations = require(expectationsPath);
 
   for (const expectation of expectations) {
@@ -64,11 +57,11 @@ const smokeTests = SMOKETESTS.map(smokeTestDfn => {
   };
 });
 
-const batches = smokeTests.reduce((map, test) => {
-  const batch = map.get(test.batch) || [];
-  batch.push(test);
-  return map.set(test.batch, batch);
-}, new Map());
+// const batches = smokeTests.reduce((map, test) => {
+//   const batch = map.get(test.batch) || [];
+//   batch.push(test);
+//   return map.set(test.batch, batch);
+// }, new Map());
 
 // const contents = smokeTests.reduce((map, test) => {
 //   for (const expectation of test.expectations) {
@@ -108,11 +101,12 @@ function mapToObj(inputMap) {
  * @param {puppeteer.Response} response
  */
 async function createRawHttpText(response) {
+  const isRedirect = [301, 302, 307].includes(response.status());
   return [
     `HTTP/1.1 ${response.status()} ${response.statusText()}`,
     ...Object.entries(response.headers()).map((key, value) => `${key}: ${value}`),
-    await response.text(),
-  ].join('\r\n');
+    isRedirect ? '' : await response.text(),
+  ].join('\r\n').trim();
 }
 
 (async () => {
@@ -128,10 +122,13 @@ async function createRawHttpText(response) {
 
   const contents = new Map();
 
+  /**
+   * @param {string} url
+   */
   async function getPageContents(url) {
     const page = await browser.newPage();
-    /** @type {Map<string, string>} */
-    const redirects = new Map();
+    // /** @type {Map<string, string>} */
+    // const redirects = new Map();
 
     // TODO: this does not capture requests for service worker JS.
     page.on('response', async response => {
@@ -140,23 +137,24 @@ async function createRawHttpText(response) {
 
       // LR integration test can't mock redirects, so attempt to save the body
       // of the final url as the body of the requested url (i.e. completely remove the redirect)
-      if (response.status() === 301 || response.status() === 302 || response.status() === 307) {
-        redirects.set(response.headers().location, url);
-        return;
-      }
+      // if (response.status() === 301 || response.status() === 302 || response.status() === 307) {
+      //   redirects.set(response.headers().location, url);
+      //   return;
+      // }
 
-      if (redirects.has(url)) {
-        let unrolledUrl = url;
-        while (redirects.has(unrolledUrl)) {
-          // @ts-ignore: literally just verified it exists
-          unrolledUrl = redirects.get(unrolledUrl);
-        }
+      // if (redirects.has(url)) {
+      //   let unrolledUrl = url;
+      //   while (redirects.has(unrolledUrl)) {
+      //     // @ts-ignore: literally just verified it exists
+      //     unrolledUrl = redirects.get(unrolledUrl);
+      //   }
 
-        if (contents.has(unrolledUrl)) return;
-        contents.set(unrolledUrl, await createRawHttpText(response));
-      } else {
-        contents.set(url, await createRawHttpText(response));
-      }
+      //   if (contents.has(unrolledUrl)) return;
+      //   contents.set(unrolledUrl, await createRawHttpText(response));
+      // } else {
+      //   contents.set(url, await createRawHttpText(response));
+      // }
+      contents.set(url, await createRawHttpText(response));
     });
 
     // We have no time for infinite loops.

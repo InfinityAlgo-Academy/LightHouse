@@ -3,22 +3,6 @@ const log = require('lighthouse-logger');
 const NUMERICAL_EXPECTATION_REGEXP = /^(<=?|>=?)((\d|\.)+)$/;
 
 /**
- * @typedef {{path: string, actual: *, expected: *}} Difference
- */
-
-/**
- * @typedef {{category: string, actual: *, expected: *, equal: boolean, diff?: Difference | null}} Comparison
- */
-
-/**
- * @typedef {Pick<LH.Result, 'audits' | 'finalUrl' | 'requestedUrl'> & {errorCode?: string}} ExpectedLHR
- */
-
-/**
- * @typedef {{audits: Comparison[], errorCode: Comparison, finalUrl: Comparison}} LHRComparison
- */
-
-/**
  * Checks if the actual value matches the expectation. Does not recursively search. This supports
  *    - Greater than/less than operators, e.g. "<100", ">90"
  *    - Regular expressions
@@ -64,7 +48,7 @@ function matchesExpectation(actual, expected) {
  * @param {string} path
  * @param {*} actual
  * @param {*} expected
- * @return {(Difference|null)}
+ * @return {(Smokehouse.Difference|null)}
  */
 function findDifference(path, actual, expected) {
   if (matchesExpectation(actual, expected)) {
@@ -106,9 +90,9 @@ function findDifference(path, actual, expected) {
 
 /**
  * Collate results into comparisons of actual and expected scores on each audit.
- * @param {ExpectedLHR} actual
- * @param {ExpectedLHR} expected
- * @return {LHRComparison}
+ * @param {Smokehouse.ExpectedLHR} actual
+ * @param {Smokehouse.ExpectedLHR} expected
+ * @return {Smokehouse.LHRComparison}
  */
 function collateResults(actual, expected) {
   const auditNames = Object.keys(expected.audits);
@@ -149,7 +133,7 @@ function collateResults(actual, expected) {
 
 /**
  * Log the result of an assertion of actual and expected results.
- * @param {Comparison} assertion
+ * @param {Smokehouse.Comparison} assertion
  */
 function reportAssertion(assertion) {
   // @ts-ignore - this doesn't exist now but could one day, so try not to break the future
@@ -190,7 +174,7 @@ function reportAssertion(assertion) {
 /**
  * Log all the comparisons between actual and expected test results, then print
  * summary. Returns count of passed and failed tests.
- * @param {LHRComparison} results
+ * @param {Smokehouse.LHRComparison} results
  * @return {{passed: number, failed: number}}
  */
 function report(results) {

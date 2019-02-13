@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @typedef {object} SmoketestDfn
  * @property {string} id

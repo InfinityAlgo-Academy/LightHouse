@@ -17,7 +17,7 @@ const expected = JSON.parse(process.argv[3]);
 // a runtimeError property. The smoke tests define an 'errorCode' instead.
 
 if (actual.runtimeError) {
-    actual.errorCode = actual.runtimeError.code;
+  actual.errorCode = actual.runtimeError.code;
 }
 
 // Further, if these error codes are expected, the actual LHR should not have a finalUrl property.
@@ -25,7 +25,7 @@ if (actual.runtimeError) {
 // instead.
 
 if (expected.errorCode && ['PAGE_HUNG', 'INSECURE_DOCUMENT_REQUEST'].includes(expected.errorCode)) {
-    delete expected.finalUrl;
+  delete expected.finalUrl;
 }
 
 const results = collateResults(actual, expected);
