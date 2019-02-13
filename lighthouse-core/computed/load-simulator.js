@@ -17,7 +17,7 @@ class LoadSimulator {
    * @return {Promise<Simulator>}
    */
   static async compute_(data, context) {
-    const {throttlingMethod, throttling} = data.settings;
+    const {throttlingMethod, throttling, precomputedLanternData} = data.settings;
     const networkAnalysis = await NetworkAnalysis.request(data.devtoolsLog, context);
 
     /** @type {LH.Gatherer.Simulation.Options} */
@@ -25,6 +25,13 @@ class LoadSimulator {
       additionalRttByOrigin: networkAnalysis.additionalRttByOrigin,
       serverResponseTimeByOrigin: networkAnalysis.serverResponseTimeByOrigin,
     };
+
+    if (precomputedLanternData) {
+      options.additionalRttByOrigin = new Map(Object.entries(
+        precomputedLanternData.additionalRttByOrigin));
+      options.serverResponseTimeByOrigin = new Map(Object.entries(
+        precomputedLanternData.serverResponseTimeByOrigin));
+    }
 
     switch (throttlingMethod) {
       case 'provided':

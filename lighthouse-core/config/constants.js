@@ -57,6 +57,7 @@ const defaultSettings = {
   blockedUrlPatterns: null,
   additionalTraceCategories: null,
   extraHeaders: null,
+  precomputedLanternData: null,
   onlyAudits: null,
   onlyCategories: null,
   skipAudits: null,

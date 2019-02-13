@@ -15,6 +15,7 @@ const dbwTrace = require('../results/artifacts/defaultPass.trace.json');
 const dbwResults = require('../results/sample_v2.json');
 const Audit = require('../../audits/audit.js');
 const fullTraceObj = require('../fixtures/traces/progressive-app-m60.json');
+const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 // deepStrictEqual can hang on a full trace, we assert trace same-ness like so
 function assertTraceEventsEqual(traceEventsA, traceEventsB) {
@@ -71,7 +72,7 @@ describe('asset-saver helper', () => {
       return assetSaver.prepareAssets(mockArtifacts, dbwResults.audits).then(preparedAssets => {
         const afterCount = countEvents(preparedAssets[0].traceData);
         const metricsSansNavStart = Metrics.metricsDefinitions.length - 1;
-        assert.equal(afterCount, beforeCount + (2 * metricsSansNavStart), 'unexpected event count');
+        assert.equal(afterCount, beforeCount + 2 * metricsSansNavStart, 'unexpected event count');
       });
     });
   });
@@ -83,14 +84,17 @@ describe('asset-saver helper', () => {
       fs.unlinkSync(traceFilename);
     });
 
-    it('correctly saves a trace with metadata to disk', () => {
-      return assetSaver.saveTrace(fullTraceObj, traceFilename)
-        .then(_ => {
+    it(
+      'correctly saves a trace with metadata to disk',
+      () => {
+        return assetSaver.saveTrace(fullTraceObj, traceFilename).then(_ => {
           const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
           const traceEventsFromDisk = JSON.parse(traceFileContents).traceEvents;
           assertTraceEventsEqual(traceEventsFromDisk, fullTraceObj.traceEvents);
         });
-    }, 10000);
+      },
+      10000
+    );
 
     it('correctly saves a trace with no trace events to disk', () => {
       const trace = {
@@ -104,11 +108,10 @@ describe('asset-saver helper', () => {
         },
       };
 
-      return assetSaver.saveTrace(trace, traceFilename)
-        .then(_ => {
-          const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
-          assert.deepStrictEqual(JSON.parse(traceFileContents), trace);
-        });
+      return assetSaver.saveTrace(trace, traceFilename).then(_ => {
+        const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
+        assert.deepStrictEqual(JSON.parse(traceFileContents), trace);
+      });
     });
 
     it('correctly saves a trace with multiple extra properties to disk', () => {
@@ -118,41 +121,41 @@ describe('asset-saver helper', () => {
         someProp: 555,
         anotherProp: {
           unlikely: {
-            nested: [
-              'value',
-            ],
+            nested: ['value'],
           },
         },
       };
 
-      return assetSaver.saveTrace(trace, traceFilename)
-        .then(_ => {
-          const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
-          const traceEventsFromDisk = JSON.parse(traceFileContents).traceEvents;
-          assertTraceEventsEqual(traceEventsFromDisk, trace.traceEvents);
-        });
+      return assetSaver.saveTrace(trace, traceFilename).then(_ => {
+        const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
+        const traceEventsFromDisk = JSON.parse(traceFileContents).traceEvents;
+        assertTraceEventsEqual(traceEventsFromDisk, trace.traceEvents);
+      });
     });
 
-    it('can save traces over 256MB (slow)', () => {
-      // Create a trace that wil be longer than 256MB when stringified, the hard
-      // limit of a string in v8.
-      // https://mobile.twitter.com/bmeurer/status/879276976523157505
-      const baseEventsLength = JSON.stringify(traceEvents).length;
-      const countNeeded = Math.ceil(Math.pow(2, 28) / baseEventsLength);
-      let longTraceEvents = [];
-      for (let i = 0; i < countNeeded; i++) {
-        longTraceEvents = longTraceEvents.concat(traceEvents);
-      }
-      const trace = {
-        traceEvents: longTraceEvents,
-      };
+    it(
+      'can save traces over 256MB (slow)',
+      () => {
+        // Create a trace that wil be longer than 256MB when stringified, the hard
+        // limit of a string in v8.
+        // https://mobile.twitter.com/bmeurer/status/879276976523157505
+        const baseEventsLength = JSON.stringify(traceEvents).length;
+        const countNeeded = Math.ceil(Math.pow(2, 28) / baseEventsLength);
+        let longTraceEvents = [];
+        for (let i = 0; i < countNeeded; i++) {
+          longTraceEvents = longTraceEvents.concat(traceEvents);
+        }
+        const trace = {
+          traceEvents: longTraceEvents,
+        };
 
-      return assetSaver.saveTrace(trace, traceFilename)
-        .then(_ => {
+        return assetSaver.saveTrace(trace, traceFilename).then(_ => {
           const fileStats = fs.lstatSync(traceFilename);
           assert.ok(fileStats.size > Math.pow(2, 28));
         });
-    }, 40 * 1000);
+      },
+      40 * 1000
+    );
   });
 
   describe('loadArtifacts', () => {
@@ -163,6 +166,33 @@ describe('asset-saver helper', () => {
       assert.strictEqual(artifacts.URL.requestedUrl, 'https://www.reddit.com/r/nba');
       assert.strictEqual(artifacts.devtoolsLogs.defaultPass.length, 555);
       assert.strictEqual(artifacts.traces.defaultPass.traceEvents.length, 12);
+    });
+  });
+
+  describe('saveLanternNetworkData', () => {
+    const outputFilename = 'test-lantern-network-data.json';
+
+    afterEach(() => {
+      fs.unlinkSync(outputFilename);
+    });
+
+    it('saves the network analysis to disk', async () => {
+      await assetSaver.saveLanternNetworkData(devtoolsLog, outputFilename);
+
+      const results = JSON.parse(fs.readFileSync(outputFilename, 'utf8'));
+
+      expect(results).toEqual({
+        additionalRttByOrigin: {
+          'https://pwa.rocks': expect.any(Number),
+          'https://www.google-analytics.com': expect.any(Number),
+          'https://www.googletagmanager.com': expect.any(Number),
+        },
+        serverResponseTimeByOrigin: {
+          'https://pwa.rocks': expect.any(Number),
+          'https://www.google-analytics.com': expect.any(Number),
+          'https://www.googletagmanager.com': expect.any(Number),
+        },
+      });
     });
   });
 });

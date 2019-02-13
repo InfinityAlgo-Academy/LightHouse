@@ -81,6 +81,11 @@ const SMOKETESTS = [{
   config: 'lighthouse-core/config/perf-config.js',
   batch: 'perf-metric',
 }, {
+  id: 'lantern',
+  expectations: 'perf/lantern-expectations.js',
+  config: smokehouseDir + 'lantern-config.js',
+  batch: 'parallel-first',
+}, {
   id: 'metrics',
   expectations: 'tricky-metrics/expectations.js',
   config: 'lighthouse-core/config/perf-config.js',

@@ -105,6 +105,17 @@ if (cliFlags.extraHeaders) {
   cliFlags.extraHeaders = JSON.parse(extraHeadersStr);
 }
 
+if (cliFlags.precomputedLanternDataPath) {
+  const lanternDataStr = fs.readFileSync(cliFlags.precomputedLanternDataPath, 'utf8');
+  /** @type {LH.PrecomputedLanternData} */
+  const data = JSON.parse(lanternDataStr);
+  if (!data.additionalRttByOrigin || !data.serverResponseTimeByOrigin) {
+    throw new Error('Invalid precomputed lantern data file');
+  }
+
+  cliFlags.precomputedLanternData = data;
+}
+
 /**
  * @return {Promise<LH.RunnerResult|void>}
  */
