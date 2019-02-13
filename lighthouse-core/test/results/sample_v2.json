@@ -2158,13 +2158,6 @@
             "wastedBytes": 1108
           },
           {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
-            "cacheLifetimeMs": 0,
-            "cacheHitProbability": 0,
-            "totalBytes": 821,
-            "wastedBytes": 821
-          },
-          {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
@@ -2172,7 +2165,7 @@
             "wastedBytes": 821
           },
           {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 821,
@@ -2186,7 +2179,14 @@
             "wastedBytes": 821
           },
           {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
+            "cacheLifetimeMs": 0,
+            "cacheHitProbability": 0,
+            "totalBytes": 821,
+            "wastedBytes": 821
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 821,
@@ -2264,15 +2264,15 @@
             "totalBytes": 1108
           },
           {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-            "totalBytes": 821
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
             "totalBytes": 821
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
+            "totalBytes": 821
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
             "totalBytes": 821
           }
         ]

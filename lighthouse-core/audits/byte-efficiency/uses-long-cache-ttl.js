@@ -257,9 +257,11 @@ class CacheHeaders extends Audit {
         });
       }
 
-      results.sort(
-        (a, b) => a.cacheLifetimeMs - b.cacheLifetimeMs || b.totalBytes - a.totalBytes
-      );
+      results.sort((a, b) => {
+        return a.cacheLifetimeMs - b.cacheLifetimeMs ||
+          b.totalBytes - a.totalBytes ||
+          a.url.localeCompare(b.url);
+      });
 
       const score = Audit.computeLogNormalScore(
         totalWastedBytes,

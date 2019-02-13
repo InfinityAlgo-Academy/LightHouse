@@ -78,7 +78,10 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       results.push(result);
     });
     const totalCompletedRequests = results.length;
-    results = results.sort((itemA, itemB) => itemB.totalBytes - itemA.totalBytes).slice(0, 10);
+    results = results.sort((itemA, itemB) => {
+      return itemB.totalBytes - itemA.totalBytes ||
+        itemA.url.localeCompare(itemB.url);
+    }).slice(0, 10);
 
     const score = ByteEfficiencyAudit.computeLogNormalScore(
       totalBytes,

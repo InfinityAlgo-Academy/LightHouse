@@ -2467,15 +2467,15 @@
                     }, 
                     {
                         "totalBytes": 821.0, 
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200"
-                    }, 
-                    {
-                        "totalBytes": 821.0, 
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true"
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100"
                     }, 
                     {
                         "totalBytes": 821.0, 
                         "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true"
+                    }, 
+                    {
+                        "totalBytes": 821.0, 
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200"
                     }
                 ], 
                 "type": "table"
@@ -2713,13 +2713,6 @@
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 821.0, 
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true", 
-                        "wastedBytes": 821.0
-                    }, 
-                    {
-                        "cacheHitProbability": 0.0, 
-                        "cacheLifetimeMs": 0.0, 
-                        "totalBytes": 821.0, 
                         "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100", 
                         "wastedBytes": 821.0
                     }, 
@@ -2727,7 +2720,7 @@
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 821.0, 
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200", 
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true", 
                         "wastedBytes": 821.0
                     }, 
                     {
@@ -2741,7 +2734,14 @@
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 821.0, 
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true", 
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true", 
+                        "wastedBytes": 821.0
+                    }, 
+                    {
+                        "cacheHitProbability": 0.0, 
+                        "cacheLifetimeMs": 0.0, 
+                        "totalBytes": 821.0, 
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200", 
                         "wastedBytes": 821.0
                     }, 
                     {
