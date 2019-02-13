@@ -29,9 +29,7 @@ if (expected.errorCode && ['PAGE_HUNG', 'INSECURE_DOCUMENT_REQUEST'].includes(ex
 }
 
 const results = collateResults(actual, expected);
-
 const counts = report(results);
-
 if (counts.failed) {
   process.exit(1);
 }
