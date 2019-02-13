@@ -1223,6 +1223,7 @@ Object {
     "output": Array [
       "html",
     ],
+    "precomputedLanternData": null,
     "skipAudits": null,
     "throttling": Object {
       "cpuSlowdownMultiplier": 4,
@@ -1352,6 +1353,7 @@ Object {
     "output": Array [
       "json",
     ],
+    "precomputedLanternData": null,
     "skipAudits": null,
     "throttling": Object {
       "cpuSlowdownMultiplier": 4,
