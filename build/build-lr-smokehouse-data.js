@@ -1,10 +1,14 @@
 'use strict';
 
-const SMOKETESTS = require('../lighthouse-cli/test/smokehouse/smoke-test-dfns');
 const path = require('path');
 const fs = require('fs');
-const {server, serverForOffline} = require('../lighthouse-cli/test/fixtures/static-server');
 const puppeteer = require('puppeteer');
+const SMOKETESTS = require('../lighthouse-cli/test/smokehouse/smoke-test-dfns');
+const {
+  server,
+  serverForOffline,
+  toggleDelay,
+} = require('../lighthouse-cli/test/fixtures/static-server');
 
 /**
  * Attempt to resolve a path relative to the smokehouse folder.
@@ -38,16 +42,7 @@ function loadConfig(configPath) {
  * @return {Smokehouse.ExpectedLHR[]}
  */
 function loadExpectations(expectationsPath) {
-  /** @type {Smokehouse.ExpectedLHR[]} */
-  const expectations = require(expectationsPath);
-
-  for (const expectation of expectations) {
-    // TODO: true?
-    // Hexa does not support redirects, so don't even try.
-    expectation.requestedUrl = expectation.finalUrl;
-  }
-
-  return expectations;
+  return require(expectationsPath);
 }
 
 const smokeTests = SMOKETESTS.map(smokeTestDfn => {
@@ -77,16 +72,45 @@ function mapToObj(inputMap) {
 /**
  * @param {puppeteer.Response} response
  */
-async function createRawHttpText(response) {
-  const isRedirect = [301, 302, 307].includes(response.status());
+async function createRawHttpTextFromResponse(response) {
+  const status = response.status();
+  const isRedirect = [301, 302, 307].includes(status);
+  return createRawHttpText({
+    status,
+    statusText: response.statusText(),
+    headers: response.headers(),
+    // .text() errors if response is a redirect
+    text: isRedirect ? '' : await response.text(),
+  });
+}
+
+/**
+ * Puppeteer (actually, the DevTools protocol) compacts multiple same-key headers
+ * into the same key, separated by a newline. Undo that.
+ *
+ * See https://github.com/GoogleChrome/puppeteer/issues/1893
+ *
+ * @param {string} headerKey
+ * @param {string} headerValues
+ */
+function splitMultipleHeaders(headerKey, headerValues) {
+  return headerValues.split('\n').map(value => `${headerKey}: ${value}`).join('\r\n');
+}
+
+/**
+ * @param {{status: number, statusText: string,
+ *          headers?: Record<string, string>, text?: string}} opts
+ */
+function createRawHttpText({status, statusText, headers = {}, text = ''}) {
   return [
-    `HTTP/1.1 ${response.status()} ${response.statusText()}`,
-    ...Object.entries(response.headers()).map((key, value) => `${key}: ${value}`),
-    isRedirect ? '' : await response.text(),
+    `HTTP/1.1 ${status} ${statusText}`,
+    ...Object.entries(headers).map(kv => splitMultipleHeaders(...kv)),
+    text,
   ].join('\r\n').trim();
 }
 
 (async () => {
+  toggleDelay();
   const servers = [
     server.listen(10200, 'localhost'),
     serverForOffline.listen(10503, 'localhost'),
@@ -99,6 +123,12 @@ async function createRawHttpText(response) {
 
   const contents = new Map();
 
+  // Need an explict response to indicate that robots.txt does not exist.
+  contents.set('http://localhost:10200/robots.txt', createRawHttpText({
+    status: 404,
+    statusText: 'Not Found',
+  }));
+
   /**
    * @param {string} url
    */
@@ -109,7 +139,7 @@ async function createRawHttpText(response) {
     page.on('response', async response => {
       const url = response.url();
       if (contents.has(url) || url.startsWith('data:')) return;
-      contents.set(url, await createRawHttpText(response));
+      contents.set(url, await createRawHttpTextFromResponse(response));
     });
 
     // We have no time for infinite loops.

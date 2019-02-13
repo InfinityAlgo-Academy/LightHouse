@@ -18,6 +18,11 @@ const HEADER_SAFELIST = new Set(['x-robots-tag', 'link']);
 
 const lhRootDirPath = path.join(__dirname, '../../../');
 
+let delayEnabled = true;
+function toggleDelay() {
+  delayEnabled = !delayEnabled;
+}
+
 function requestHandler(request, response) {
   const requestUrl = parseURL(request.url);
   const filePath = requestUrl.pathname;
@@ -70,7 +75,7 @@ function requestHandler(request, response) {
       headers['Content-Type'] = 'image/svg+xml';
     }
 
-    const delay = 0;
+    let delay = 0;
     if (queryString) {
       const params = new URLSearchParams(queryString);
       // set document status-code
@@ -78,9 +83,9 @@ function requestHandler(request, response) {
         statusCode = parseInt(params.get('status_code'), 10);
       }
 
-      // set delay of request when present
-      if (params.has('delay')) {
-        // delay = parseInt(params.get('delay'), 10) || 2000;
+      // set delay of request when present and enabled
+      if (delayEnabled && params.has('delay')) {
+        delay = parseInt(params.get('delay'), 10) || 2000;
       }
 
       if (params.has('extra_header')) {
@@ -139,6 +144,7 @@ if (require.main === module) {
   module.exports = {
     server: serverForOnline,
     serverForOffline,
+    toggleDelay,
   };
 }
 
