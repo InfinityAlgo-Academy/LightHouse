@@ -8,6 +8,8 @@ matrix:
     - node_js: "8"
     - node_js: "10"
       if: head_branch IS blank AND branch = master
+    - node_js: "11"
+      if: head_branch IS blank AND branch = master
 dist: trusty
 cache:
   yarn: true
