@@ -53,7 +53,7 @@ module.exports = [
         score: 1,
       },
       'font-size': {
-        rawValue: true,
+        score: 1,
         details: {
           items: {
             length: 6,
@@ -98,7 +98,7 @@ module.exports = [
         score: 1,
       },
       'font-size': {
-        rawValue: false,
+        score: 0,
         explanation:
           'Text is illegible because there\'s no viewport meta tag optimized for mobile screens',
       },

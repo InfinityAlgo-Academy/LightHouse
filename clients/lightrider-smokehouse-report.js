@@ -15,15 +15,13 @@ const expected = JSON.parse(process.argv[3]);
 
 // When an error occurs that prevents LH from completing, the 'actual' LHR will only have a
 // a runtimeError property. The smoke tests define an 'errorCode' instead.
-
-if (actual.runtimeError) {
+if (actual.runtimeError && !actual.audits) {
   actual.errorCode = actual.runtimeError.code;
 }
 
 // Further, if these error codes are expected, the actual LHR should not have a finalUrl property.
 // The smokehouse test harness fakes this property, but here we delete it from the expectations
 // instead.
-
 if (expected.errorCode && ['PAGE_HUNG', 'INSECURE_DOCUMENT_REQUEST'].includes(expected.errorCode)) {
   delete expected.finalUrl;
 }
