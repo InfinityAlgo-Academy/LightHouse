@@ -370,9 +370,6 @@ Object {
       "path": "seo/canonical",
     },
     Object {
-      "path": "seo/manual/mobile-friendly",
-    },
-    Object {
       "path": "seo/manual/structured-data",
     },
   ],
@@ -988,10 +985,6 @@ Object {
           "group": "seo-mobile",
           "id": "tap-targets",
           "weight": 1,
-        },
-        Object {
-          "id": "mobile-friendly",
-          "weight": 0,
         },
         Object {
           "id": "structured-data",

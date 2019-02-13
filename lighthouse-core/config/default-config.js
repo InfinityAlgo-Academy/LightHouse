@@ -256,7 +256,6 @@ const defaultConfig = {
     'seo/hreflang',
     'seo/plugins',
     'seo/canonical',
-    'seo/manual/mobile-friendly',
     'seo/manual/structured-data',
   ],
 
@@ -466,7 +465,6 @@ const defaultConfig = {
         {id: 'plugins', weight: 1, group: 'seo-content'},
         {id: 'tap-targets', weight: 1, group: 'seo-mobile'},
         // Manual audits
-        {id: 'mobile-friendly', weight: 0},
         {id: 'structured-data', weight: 0},
       ],
     },

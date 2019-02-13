@@ -1606,13 +1606,6 @@
             "scoreDisplayMode": "informative", 
             "title": "Metrics"
         }, 
-        "mobile-friendly": {
-            "description": "Take the [Mobile-Friendly Test](https://search.google.com/test/mobile-friendly) to check for audits not covered by Lighthouse, like sizing tap targets appropriately. [Learn more](https://developers.google.com/search/mobile-sites/).", 
-            "id": "mobile-friendly", 
-            "score": null, 
-            "scoreDisplayMode": "manual", 
-            "title": "Page is mobile friendly"
-        }, 
         "network-requests": {
             "description": "Lists the network requests that were made during page load.", 
             "details": {
@@ -3623,10 +3616,6 @@
                     "weight": 1.0
                 }, 
                 {
-                    "id": "mobile-friendly", 
-                    "weight": 0.0
-                }, 
-                {
                     "id": "structured-data", 
                     "weight": 0.0
                 }
@@ -4652,12 +4641,6 @@
                 "duration": 100.0, 
                 "entryType": "measure", 
                 "name": "lh:audit:canonical", 
-                "startTime": 0.0
-            }, 
-            {
-                "duration": 100.0, 
-                "entryType": "measure", 
-                "name": "lh:audit:mobile-friendly", 
                 "startTime": 0.0
             }, 
             {

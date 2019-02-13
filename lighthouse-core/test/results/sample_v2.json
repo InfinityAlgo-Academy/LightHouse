@@ -3140,14 +3140,6 @@
       "scoreDisplayMode": "notApplicable",
       "rawValue": true
     },
-    "mobile-friendly": {
-      "id": "mobile-friendly",
-      "title": "Page is mobile friendly",
-      "description": "Take the [Mobile-Friendly Test](https://search.google.com/test/mobile-friendly) to check for audits not covered by Lighthouse, like sizing tap targets appropriately. [Learn more](https://developers.google.com/search/mobile-sites/).",
-      "score": null,
-      "scoreDisplayMode": "manual",
-      "rawValue": false
-    },
     "structured-data": {
       "id": "structured-data",
       "title": "Structured data is valid",
@@ -3725,10 +3717,6 @@
           "id": "tap-targets",
           "weight": 1,
           "group": "seo-mobile"
-        },
-        {
-          "id": "mobile-friendly",
-          "weight": 0
         },
         {
           "id": "structured-data",
@@ -4797,12 +4785,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:canonical",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:mobile-friendly",
         "duration": 100,
         "entryType": "measure"
       },
