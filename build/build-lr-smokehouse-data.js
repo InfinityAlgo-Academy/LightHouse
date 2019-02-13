@@ -1,3 +1,5 @@
+'use strict';
+
 const SMOKETESTS = require('../lighthouse-cli/test/smokehouse/smoke-test-dfns');
 const path = require('path');
 const fs = require('fs');

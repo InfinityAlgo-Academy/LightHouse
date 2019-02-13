@@ -1,3 +1,7 @@
+/* eslint-disable no-console */
+
+'use strict';
+
 const log = require('lighthouse-logger');
 
 const NUMERICAL_EXPECTATION_REGEXP = /^(<=?|>=?)((\d|\.)+)$/;
