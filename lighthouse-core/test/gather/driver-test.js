@@ -8,24 +8,14 @@
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
 const Element = require('../../lib/element.js');
-const assert = require('assert');
 const EventEmitter = require('events').EventEmitter;
 const {protocolGetVersionResponse} = require('./fake-driver');
 
 const redirectDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
-const MAX_WAIT_FOR_PROTOCOL = 20;
 
-function createOnceStub(events) {
-  return (eventName, cb) => {
-    if (events[eventName]) {
-      // wait a tick b/c real events never fire immediately
-      setTimeout(_ => cb(events[eventName]), 0);
-      return;
-    }
+/* eslint-env jest */
 
-    throw Error(`Stub not implemented: ${eventName}`);
-  };
-}
+jest.useFakeTimers();
 
 /**
  * Creates a jest mock function whose implementation consumes mocked protocol responses matching the
@@ -59,133 +49,131 @@ function createMockSendCommandFn() {
   return mockFn;
 }
 
-function sendCommandOldStub(command, params) {
-  switch (command) {
-    case 'Browser.getVersion':
-      return Promise.resolve(protocolGetVersionResponse);
-    case 'DOM.getDocument':
-      return Promise.resolve({root: {nodeId: 249}});
-    case 'DOM.querySelector':
-      return Promise.resolve({
-        nodeId: params.selector === 'invalid' ? 0 : 231,
-      });
-    case 'DOM.querySelectorAll':
-      return Promise.resolve({
-        nodeIds: params.selector === 'invalid' ? [] : [231],
-      });
-    case 'Runtime.evaluate':
-      return Promise.resolve({result: {value: 123}});
-    case 'Runtime.getProperties':
-      return Promise.resolve({
-        result: params.objectId === 'invalid' ? [] : [{
-          name: 'test',
-          value: {
-            value: '123',
-          },
-        },
-          {
-            name: 'novalue',
-          },
-        ],
-      });
-    case 'Page.getResourceTree':
-      return Promise.resolve({frameTree: {frame: {id: 1}}});
-    case 'Page.createIsolatedWorld':
-      return Promise.resolve({executionContextId: 1});
-    case 'Network.getResponseBody':
-      return new Promise(res => setTimeout(res, MAX_WAIT_FOR_PROTOCOL + 20));
-    case 'Page.enable':
-    case 'Page.navigate':
-    case 'Page.setLifecycleEventsEnabled':
-    case 'Network.enable':
-    case 'Tracing.start':
-    case 'ServiceWorker.enable':
-    case 'ServiceWorker.disable':
-    case 'Security.enable':
-    case 'Security.disable':
-    case 'Network.setExtraHTTPHeaders':
-    case 'Network.emulateNetworkConditions':
-    case 'Emulation.setCPUThrottlingRate':
-    case 'Emulation.setScriptExecutionDisabled':
-      return Promise.resolve({});
-    case 'Tracing.end':
-      return Promise.reject(new Error('tracing not started'));
-    default:
-      throw Error(`Stub not implemented: ${command}`);
+/**
+ * In some functions we have lots of promise follow ups that get queued by protocol messages.
+ * This is a convenience method to easily advance all timers and flush all the queued microtasks.
+ */
+async function flushAllTimersAndMicrotasks() {
+  for (let i = 0; i < 1000; i++) {
+    jest.advanceTimersByTime(1);
+    await Promise.resolve();
   }
 }
 
-/* eslint-env jest */
+function createOnceStub(events) {
+  return (eventName, cb) => {
+    if (events[eventName]) {
+      // wait a tick b/c real events never fire immediately
+      setTimeout(_ => cb(events[eventName]), 0);
+      return;
+    }
+
+    throw Error(`Stub not implemented: ${eventName}`);
+  };
+}
 
 let driver;
 let connectionStub;
 
 beforeEach(() => {
   connectionStub = new Connection();
-  connectionStub.sendCommand = sendCommandOldStub;
+  connectionStub.sendCommand = cmd => {
+    throw new Error(`${cmd} not implemented`);
+  };
   driver = new Driver(connectionStub);
 });
 
 describe('.querySelector(All)', () => {
-  it('returns null when DOM.querySelector finds no node', () => {
-    return driver.querySelector('invalid').then(value => {
-      assert.equal(value, null);
-    });
+  it('returns null when DOM.querySelector finds no node', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
+      .mockResponse('DOM.querySelector', {nodeId: 0});
+
+    const result = await driver.querySelector('invalid');
+    expect(result).toEqual(null);
   });
 
-  it('returns element when DOM.querySelector finds node', () => {
-    return driver.querySelector('meta head').then(value => {
-      assert.equal(value instanceof Element, true);
-    });
+  it('returns element instance when DOM.querySelector finds a node', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+    .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
+      .mockResponse('DOM.querySelector', {nodeId: 231});
+
+    const result = await driver.querySelector('meta head');
+    expect(result).toBeInstanceOf(Element);
   });
 
-  it('returns [] when DOM.querySelectorAll finds no node', () => {
-    return driver.querySelectorAll('invalid').then(value => {
-      assert.deepEqual(value, []);
-    });
+  it('returns [] when DOM.querySelectorAll finds no node', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+    .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
+      .mockResponse('DOM.querySelectorAll', {nodeIds: []});
+
+    const result = await driver.querySelectorAll('#no.matches');
+    expect(result).toEqual([]);
   });
 
-  it('returns element when DOM.querySelectorAll finds node', () => {
-    return driver.querySelectorAll('a').then(value => {
-      assert.equal(value.length, 1);
-      assert.equal(value[0] instanceof Element, true);
-    });
+  it('returns element when DOM.querySelectorAll finds node', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+    .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
+      .mockResponse('DOM.querySelectorAll', {nodeIds: [231]});
+
+    const result = await driver.querySelectorAll('#no.matches');
+    expect(result).toHaveLength(1);
+    expect(result[0]).toBeInstanceOf(Element);
   });
 });
 
 describe('.getObjectProperty', () => {
-  it('returns value when getObjectProperty finds property name', () => {
-    return driver.getObjectProperty('test', 'test').then(value => {
-      assert.deepEqual(value, 123);
-    });
+  it('returns value when getObjectProperty finds property name', async () => {
+    const property = {
+      name: 'testProp',
+      value: {
+        value: 123,
+      },
+    };
+
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Runtime.getProperties', {result: [property]});
+
+    const result = await driver.getObjectProperty('objectId', 'testProp');
+    expect(result).toEqual(123);
   });
 
-  it('returns null when getObjectProperty finds no property name', () => {
-    return driver.getObjectProperty('invalid', 'invalid').then(value => {
-      assert.deepEqual(value, null);
-    });
+  it('returns null when getObjectProperty finds no property name', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Runtime.getProperties', {result: []});
+
+    const result = await driver.getObjectProperty('objectId', 'testProp');
+    expect(result).toEqual(null);
   });
 
-  it('returns null when getObjectProperty finds property name with no value', () => {
-    return driver.getObjectProperty('test', 'novalue').then(value => {
-      assert.deepEqual(value, null);
-    });
+  it('returns null when getObjectProperty finds property name with no value', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Runtime.getProperties', {result: [{name: 'testProp'}]});
+
+    const result = await driver.getObjectProperty('objectId', 'testProp');
+    expect(result).toEqual(null);
   });
 });
 
 describe('.getRequestContent', () => {
-  it('throws if getRequestContent takes too long', () => {
-    return driver.getRequestContent('', MAX_WAIT_FOR_PROTOCOL).then(
-      _ => {
-        assert.ok(false, 'long-running getRequestContent supposed to reject');
-      },
-      e => {
-        assert.equal(e.code, 'PROTOCOL_TIMEOUT');
-        expect(e.friendlyMessage).toBeDisplayString(
-          /^Waiting for DevTools.*Method: Network.getResponseBody/
-        );
-      }
-    );
+  it('throws if getRequestContent takes too long', async () => {
+    connectionStub.sendCommand = jest.fn()
+      .mockImplementationOnce(() => new Promise(r => setTimeout(r), 5000));
+
+    // Fail if we don't reach our two assertions in the catch block
+    expect.assertions(2);
+
+    try {
+      const responsePromise = driver.getRequestContent('', 1000);
+      jest.advanceTimersByTime(1001);
+
+      await responsePromise;
+    } catch (err) {
+      expect(err.code).toEqual('PROTOCOL_TIMEOUT');
+      expect(err.friendlyMessage).toBeDisplayString(
+        /^Waiting for DevTools.*Method: Network.getResponseBody/
+      );
+    }
   });
 });
 
@@ -231,29 +219,21 @@ describe('.evaluateAsync', () => {
 
 describe('.sendCommand', () => {
   it('.sendCommand timesout when commands take too long', async () => {
-    class SlowConnection extends EventEmitter {
-      connect() {
-        return Promise.resolve();
-      }
-      disconnect() {
-        return Promise.resolve();
-      }
-      sendCommand() {
-        return new Promise(resolve => setTimeout(resolve, 15));
-      }
-    }
-    const slowConnection = new SlowConnection();
-    const driver = new Driver(slowConnection);
-    driver.setNextProtocolTimeout(25);
-    await driver.sendCommand('Page.enable');
+    connectionStub.sendCommand = jest.fn()
+      .mockImplementationOnce(() => new Promise(r => setTimeout(r), 5000));
+
+    driver.setNextProtocolTimeout(10000);
+    const pageEnablePromise = driver.sendCommand('Page.enable');
+    jest.advanceTimersByTime(5001);
+    await pageEnablePromise;
 
     driver.setNextProtocolTimeout(5);
-    try {
-      await driver.sendCommand('Page.disable');
-      assert.fail('expected driver.sendCommand to timeout');
-    } catch (err) {
-      assert.equal(err.code, 'PROTOCOL_TIMEOUT');
-    }
+    const pageDisablePromise = driver.sendCommand('Page.disable');
+    jest.advanceTimersByTime(10);
+
+    await expect(pageDisablePromise).rejects.toMatchObject({
+      code: 'PROTOCOL_TIMEOUT',
+    });
   });
 });
 
@@ -380,7 +360,17 @@ describe('.goOffline', () => {
 });
 
 describe('.gotoURL', () => {
-  it('will track redirects through gotoURL load', () => {
+  beforeEach(() => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Network.enable', {})
+      .mockResponse('Page.enable', {})
+      .mockResponse('Page.setLifecycleEventsEnabled', {})
+      .mockResponse('Emulation.setScriptExecutionDisabled', {})
+      .mockResponse('Page.navigate', {})
+      .mockResponse('Runtime.evaluate', {});
+  });
+
+  it('will track redirects through gotoURL load', async () => {
     const delay = _ => new Promise(resolve => setTimeout(resolve));
 
     class ReplayConnection extends EventEmitter {
@@ -417,14 +407,18 @@ describe('.gotoURL', () => {
       waitForLoad: true,
       passContext: {
         passConfig: {
-          networkQuietThresholdMs: 1,
+          pauseAfterLoadMs: 0,
+          networkQuietThresholdMs: 0,
+          cpuQuietThresholdMs: 0,
         },
       },
     };
 
-    return driver.gotoURL(startUrl, loadOptions).then(loadedUrl => {
-      assert.equal(loadedUrl, finalUrl);
-    });
+    const loadPromise = driver.gotoURL(startUrl, loadOptions);
+
+    await flushAllTimersAndMicrotasks();
+    const loadedUrl = await loadPromise;
+    expect(loadedUrl).toEqual(finalUrl);
   });
 
   describe('when waitForNavigated', () => {});
@@ -453,7 +447,10 @@ describe('.gotoURL', () => {
           },
         },
       };
-      await driver.gotoURL(startUrl, loadOptions);
+
+      const loadPromise = driver.gotoURL(startUrl, loadOptions);
+      await flushAllTimersAndMicrotasks();
+      await loadPromise;
     });
 
     it('rejects when page is insecure', async () => {
@@ -488,13 +485,14 @@ describe('.gotoURL', () => {
         },
       };
 
+      expect.assertions(2);
+
       try {
-        await driver.gotoURL(startUrl, loadOptions);
-        assert.fail('security check should have rejected');
+        const loadPromise = driver.gotoURL(startUrl, loadOptions);
+        await flushAllTimersAndMicrotasks();
+        await loadPromise;
       } catch (err) {
-        assert.equal(err.message, 'INSECURE_DOCUMENT_REQUEST');
-        assert.equal(err.code, 'INSECURE_DOCUMENT_REQUEST');
-        /* eslint-disable-next-line max-len */
+        expect(err.code).toEqual('INSECURE_DOCUMENT_REQUEST');
         expect(err.friendlyMessage).toBeDisplayString(
           'The URL you have provided does not have valid security credentials. reason 1. reason 2.'
         );
@@ -504,6 +502,14 @@ describe('.gotoURL', () => {
 });
 
 describe('.assertNoSameOriginServiceWorkerClients', () => {
+  beforeEach(() => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('ServiceWorker.enable', {})
+      .mockResponse('ServiceWorker.disable', {})
+      .mockResponse('ServiceWorker.enable', {})
+      .mockResponse('ServiceWorker.disable', {});
+  });
+
   function createSWRegistration(id, url, isDeleted) {
     return {
       isDeleted: !!isDeleted,
@@ -521,7 +527,7 @@ describe('.assertNoSameOriginServiceWorkerClients', () => {
     };
   }
 
-  it('will pass if there are no current service workers', () => {
+  it('will pass if there are no current service workers', async () => {
     const pageUrl = 'https://example.com/';
     driver.once = createOnceStub({
       'ServiceWorker.workerRegistrationUpdated': {
@@ -535,10 +541,13 @@ describe('.assertNoSameOriginServiceWorkerClients', () => {
       },
     });
 
-    return driver.assertNoSameOriginServiceWorkerClients(pageUrl);
+
+    const assertPromise = driver.assertNoSameOriginServiceWorkerClients(pageUrl);
+    await flushAllTimersAndMicrotasks();
+    await assertPromise;
   });
 
-  it('will pass if there is an active service worker for a different origin', () => {
+  it('will pass if there is an active service worker for a different origin', async () => {
     const pageUrl = 'https://example.com/';
     const secondUrl = 'https://example.edu';
     const swUrl = `${secondUrl}sw.js`;
@@ -558,10 +567,12 @@ describe('.assertNoSameOriginServiceWorkerClients', () => {
       },
     });
 
-    return driver.assertNoSameOriginServiceWorkerClients(pageUrl);
+    const assertPromise = driver.assertNoSameOriginServiceWorkerClients(pageUrl);
+    await flushAllTimersAndMicrotasks();
+    await assertPromise;
   });
 
-  it('will fail if a service worker with a matching origin has a controlled client', () => {
+  it('will fail if a service worker with a matching origin has a controlled client', async () => {
     const pageUrl = 'https://example.com/';
     const swUrl = `${pageUrl}sw.js`;
     const registrations = [createSWRegistration(1, pageUrl)];
@@ -579,15 +590,18 @@ describe('.assertNoSameOriginServiceWorkerClients', () => {
       },
     });
 
-    return driver.assertNoSameOriginServiceWorkerClients(pageUrl).then(
-      _ => assert.ok(false),
-      err => {
-        assert.ok(err.message.toLowerCase().includes('multiple tabs'));
-      }
-    );
+    expect.assertions(1);
+
+    try {
+      const assertPromise = driver.assertNoSameOriginServiceWorkerClients(pageUrl);
+      await flushAllTimersAndMicrotasks();
+      await assertPromise;
+    } catch (err) {
+      expect(err.message.toLowerCase()).toContain('multiple tabs');
+    }
   });
 
-  it('will succeed if a service worker with a matching origin has no controlled clients', () => {
+  it('will succeed if a service worker with has no controlled clients', async () => {
     const pageUrl = 'https://example.com/';
     const swUrl = `${pageUrl}sw.js`;
     const registrations = [createSWRegistration(1, pageUrl)];
@@ -605,10 +619,12 @@ describe('.assertNoSameOriginServiceWorkerClients', () => {
       },
     });
 
-    return driver.assertNoSameOriginServiceWorkerClients(pageUrl);
+    const assertPromise = driver.assertNoSameOriginServiceWorkerClients(pageUrl);
+    await flushAllTimersAndMicrotasks();
+    await assertPromise;
   });
 
-  it('will wait for serviceworker to be activated', () => {
+  it('will wait for serviceworker to be activated', async () => {
     const pageUrl = 'https://example.com/';
     const swUrl = `${pageUrl}sw.js`;
     const registrations = [createSWRegistration(1, pageUrl)];
@@ -628,7 +644,7 @@ describe('.assertNoSameOriginServiceWorkerClients', () => {
           cb({
             versions: [createActiveWorker(1, swUrl, [], 'activated')],
           });
-        }, 1000);
+        }, 50);
 
         return;
       }
@@ -636,7 +652,9 @@ describe('.assertNoSameOriginServiceWorkerClients', () => {
       throw Error(`Stub not implemented: ${eventName}`);
     };
 
-    return driver.assertNoSameOriginServiceWorkerClients(pageUrl);
+    const assertPromise = driver.assertNoSameOriginServiceWorkerClients(pageUrl);
+    await flushAllTimersAndMicrotasks();
+    await assertPromise;
   });
 });
 
