@@ -7,7 +7,7 @@ const SMOKETESTS = require('../lighthouse-cli/test/smokehouse/smoke-test-dfns');
 const {
   server,
   serverForOffline,
-  toggleDelay,
+  setLrSmokehouseGatherMode,
 } = require('../lighthouse-cli/test/fixtures/static-server');
 
 /**
@@ -110,7 +110,7 @@ function createRawHttpText({status, statusText, headers = {}, text = ''}) {
 }
 
 (async () => {
-  toggleDelay();
+  setLrSmokehouseGatherMode(true);
   const servers = [
     server.listen(10200, 'localhost'),
     serverForOffline.listen(10503, 'localhost'),

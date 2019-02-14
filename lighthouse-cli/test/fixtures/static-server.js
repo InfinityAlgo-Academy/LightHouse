@@ -18,9 +18,9 @@ const HEADER_SAFELIST = new Set(['x-robots-tag', 'link']);
 
 const lhRootDirPath = path.join(__dirname, '../../../');
 
-let delayEnabled = true;
-function toggleDelay() {
-  delayEnabled = !delayEnabled;
+let lrSmokehouseGatherMode = false;
+function setLrSmokehouseGatherMode(enable) {
+  lrSmokehouseGatherMode = enable;
 }
 
 function requestHandler(request, response) {
@@ -83,8 +83,8 @@ function requestHandler(request, response) {
         statusCode = parseInt(params.get('status_code'), 10);
       }
 
-      // set delay of request when present and enabled
-      if (delayEnabled && params.has('delay')) {
+      // set delay of request when present
+      if (!lrSmokehouseGatherMode && params.has('delay')) {
         delay = parseInt(params.get('delay'), 10) || 2000;
       }
 
@@ -144,7 +144,7 @@ if (require.main === module) {
   module.exports = {
     server: serverForOnline,
     serverForOffline,
-    toggleDelay,
+    setLrSmokehouseGatherMode,
   };
 }
 
