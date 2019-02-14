@@ -5437,6 +5437,18 @@
       "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": [
         "audits[dom-size].details.items[2].statistic"
       ],
+      "lighthouse-core/audits/seo/meta-description.js | failureTitle": [
+        "audits[meta-description].title"
+      ],
+      "lighthouse-core/audits/seo/meta-description.js | description": [
+        "audits[meta-description].description"
+      ],
+      "lighthouse-core/audits/seo/http-status-code.js | title": [
+        "audits[http-status-code].title"
+      ],
+      "lighthouse-core/audits/seo/http-status-code.js | description": [
+        "audits[http-status-code].description"
+      ],
       "lighthouse-core/audits/seo/font-size.js | title": [
         "audits[font-size].title"
       ],
@@ -5451,11 +5463,53 @@
           "path": "audits[font-size].displayValue"
         }
       ],
+      "lighthouse-core/audits/seo/link-text.js | title": [
+        "audits[link-text].title"
+      ],
+      "lighthouse-core/audits/seo/link-text.js | description": [
+        "audits[link-text].description"
+      ],
+      "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": [
+        "audits[is-crawlable].title"
+      ],
+      "lighthouse-core/audits/seo/is-crawlable.js | description": [
+        "audits[is-crawlable].description"
+      ],
+      "lighthouse-core/audits/seo/robots-txt.js | failureTitle": [
+        "audits[robots-txt].title"
+      ],
+      "lighthouse-core/audits/seo/robots-txt.js | description": [
+        "audits[robots-txt].description"
+      ],
       "lighthouse-core/audits/seo/tap-targets.js | failureTitle": [
         "audits[tap-targets].title"
       ],
       "lighthouse-core/audits/seo/tap-targets.js | description": [
         "audits[tap-targets].description"
+      ],
+      "lighthouse-core/audits/seo/hreflang.js | title": [
+        "audits.hreflang.title"
+      ],
+      "lighthouse-core/audits/seo/hreflang.js | description": [
+        "audits.hreflang.description"
+      ],
+      "lighthouse-core/audits/seo/plugins.js | title": [
+        "audits.plugins.title"
+      ],
+      "lighthouse-core/audits/seo/plugins.js | description": [
+        "audits.plugins.description"
+      ],
+      "lighthouse-core/audits/seo/canonical.js | title": [
+        "audits.canonical.title"
+      ],
+      "lighthouse-core/audits/seo/canonical.js | description": [
+        "audits.canonical.description"
+      ],
+      "lighthouse-core/audits/seo/manual/structured-data.js | title": [
+        "audits[structured-data].title"
+      ],
+      "lighthouse-core/audits/seo/manual/structured-data.js | description": [
+        "audits[structured-data].description"
       ],
       "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
         "categories.performance.title"
@@ -5468,6 +5522,15 @@
       ],
       "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": [
         "categories.accessibility.manualDescription"
+      ],
+      "lighthouse-core/config/default-config.js | seoCategoryTitle": [
+        "categories.seo.title"
+      ],
+      "lighthouse-core/config/default-config.js | seoCategoryDescription": [
+        "categories.seo.description"
+      ],
+      "lighthouse-core/config/default-config.js | seoCategoryManualDescription": [
+        "categories.seo.manualDescription"
       ],
       "lighthouse-core/config/default-config.js | metricGroupTitle": [
         "categoryGroups.metrics.title"

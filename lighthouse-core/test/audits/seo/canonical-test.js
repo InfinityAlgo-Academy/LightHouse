@@ -52,7 +52,8 @@ describe('SEO: Document has valid canonical link', () => {
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.explanation.includes('Multiple'), auditResult.explanation);
+      expect(auditResult.explanation)
+        .toBeDisplayString('Multiple conflicting URLs (https://example.com, https://www.example.com)');
     });
   });
 
@@ -118,7 +119,8 @@ describe('SEO: Document has valid canonical link', () => {
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.explanation.includes('hreflang'), auditResult.explanation);
+      expect(auditResult.explanation)
+        .toBeDisplayString('Points to another `hreflang` location (https://example.com/)');
     });
   });
 
@@ -139,7 +141,8 @@ describe('SEO: Document has valid canonical link', () => {
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.explanation.includes('domain'), auditResult.explanation);
+      expect(auditResult.explanation)
+        .toBeDisplayString('Points to a different domain (https://example.com/)');
     });
   });
 
@@ -160,7 +163,8 @@ describe('SEO: Document has valid canonical link', () => {
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.explanation.includes('root'), auditResult.explanation);
+      expect(auditResult.explanation).toBeDisplayString('Points to the domain\'s root URL (the ' +
+        'homepage), instead of an equivalent page of content');
     });
   });
 

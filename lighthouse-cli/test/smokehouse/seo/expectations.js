@@ -100,7 +100,7 @@ module.exports = [
       'font-size': {
         rawValue: false,
         explanation:
-          'Text is illegible because there\'s no viewport meta tag optimized for mobile screens',
+          'Text is illegible because there\'s no viewport meta tag optimized for mobile screens.',
       },
       'link-text': {
         score: 0,

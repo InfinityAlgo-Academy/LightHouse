@@ -25,7 +25,7 @@ const i18n = require('../../lib/i18n/i18n.js');
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether tap targets (like buttons and links) on a page are big enough so they can easily be tapped on a mobile device. This descriptive title is shown when tap targets are easy to tap on. */
   title: 'Tap targets are sized appropriately',
-  /** Title of a Lighthouse audit that provides detail on whether tap targets (like buttons and links) on a page are big enough so they can easily be tapped on a mobile device. This descriptive title is shown when tap targets are not easy to tap on. */
+  /** Descriptive title of a Lighthouse audit that provides detail on whether tap targets (like buttons and links) on a page are big enough so they can easily be tapped on a mobile device. This descriptive title is shown when tap targets are not easy to tap on. */
   failureTitle: 'Tap targets are not sized appropriately',
   /** Description of a Lighthouse audit that tells the user why buttons and links need to be big enough and what 'big enough' means. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).',

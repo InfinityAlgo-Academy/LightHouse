@@ -69,6 +69,14 @@ const UIStrings = {
   a11yMetaGroupTitle: 'Meta Tags Used Properly',
   /* Description of the meta tag section within the Accessibility category. Within this section are audits with descriptive titles that highlight if meta tags on the page have been used properly and if any important ones are missing. */
   a11yMetaGroupDescription: 'These are opportunities to improve the user experience of your site.',
+  /** Title of the Search Engine Optimization (SEO) category of audits. This is displayed at the top of a list of audits focused on topics related to optimizing a website for indexing by search engines. Also used as a label of a score gauge; try to limit to 20 characters. */
+  seoCategoryTitle: 'SEO',
+  /** Description of the Search Engine Optimization (SEO) category. This is displayed at the top of a list of audits focused on optimizing a website for indexing by search engines. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  seoCategoryDescription: 'These checks ensure that your page is optimized for search engine results ranking. ' +
+  'There are additional factors Lighthouse does not check that may affect your search ranking. ' +
+  '[Learn more](https://support.google.com/webmasters/answer/35769).',
+  /** Description of the Search Engine Optimization (SEO) manual checks category, the additional validators must be run by hand in order to check all SEO best practices. This is displayed at the top of a list of manually run audits focused on optimizing a website for indexing by search engines. No character length limits. */
+  seoCategoryManualDescription: 'Run these additional validators on your site to check additional SEO best practices.',
   /** Title of the Fast and Reliable section of the web app category. Within this section are audits that check if the web site loaded quickly and can reliably load even if the internet connection is very slow or goes offline. */
   pwaFastReliableGroupTitle: 'Fast and reliable',
   /** Title of the Installable section of the web app category. Within this section are audits that check if Chrome supports installing the web site as an app on their device. */
@@ -446,11 +454,9 @@ const defaultConfig = {
       ],
     },
     'seo': {
-      title: 'SEO',
-      description: 'These checks ensure that your page is optimized for search engine results ranking. ' +
-          'There are additional factors Lighthouse does not check that may affect your search ranking. ' +
-          '[Learn more](https://support.google.com/webmasters/answer/35769).',
-      manualDescription: 'Run these additional validators on your site to check additional SEO best practices.',
+      title: str_(UIStrings.seoCategoryTitle),
+      description: str_(UIStrings.seoCategoryDescription),
+      manualDescription: str_(UIStrings.seoCategoryManualDescription),
       auditRefs: [
         {id: 'viewport', weight: 1, group: 'seo-mobile'},
         {id: 'document-title', weight: 1, group: 'seo-content'},
