@@ -281,15 +281,42 @@ async function logAssets(artifacts, audits) {
 async function saveLanternNetworkData(devtoolsLog, outputPath) {
   const context = /** @type {LH.Audit.Context} */ ({computedCache: new Map()});
   const networkAnalysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
+  
+  let lanternData = {additionalRttByOrigin: {}, serverResponseTimeByOrigin: {}};
 
-  /** @type {LH.PrecomputedLanternData} */
-  const lanternData = {additionalRttByOrigin: {}, serverResponseTimeByOrigin: {}};
+  try {
+    const lanternDataStr = fs.readFileSync(outputPath, 'utf8');
+
+    /** @type {LH.PrecomputedLanternData} */
+    lanternData = JSON.parse(lanternDataStr);
+    if (!lanternData.additionalRttByOrigin || !lanternData.serverResponseTimeByOrigin) {
+      throw new Error('Invalid precomputed lantern data file');
+    }
+  } catch (e) {
+    console.log(e)
+    lanternData = {additionalRttByOrigin: {}, serverResponseTimeByOrigin: {}};
+  }
+  // pull saved version
+  console.log(lanternData)
+
   for (const [origin, value] of networkAnalysis.additionalRttByOrigin.entries()) {
-    if (origin.startsWith('http')) lanternData.additionalRttByOrigin[origin] = value;
+    if (origin.startsWith('http')) {
+      if (origin in lanternData.additionalRttByOrigin) {
+        lanternData.additionalRttByOrigin[origin].push(value);
+      } else {
+        lanternData.additionalRttByOrigin[origin] = [value];
+      }
+    }
   }
 
   for (const [origin, value] of networkAnalysis.serverResponseTimeByOrigin.entries()) {
-    if (origin.startsWith('http')) lanternData.serverResponseTimeByOrigin[origin] = value;
+    if (origin.startsWith('http')) {
+      if (origin in lanternData.serverResponseTimeByOrigin) {
+        lanternData.serverResponseTimeByOrigin[origin].push(value);
+      } else {
+        lanternData.serverResponseTimeByOrigin[origin] = [value];
+      }
+    }
   }
 
   fs.writeFileSync(outputPath, JSON.stringify(lanternData));

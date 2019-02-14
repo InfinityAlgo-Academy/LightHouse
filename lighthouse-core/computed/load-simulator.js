@@ -26,11 +26,37 @@ class LoadSimulator {
       serverResponseTimeByOrigin: networkAnalysis.serverResponseTimeByOrigin,
     };
 
+    
+
+
     if (precomputedLanternData) {
-      options.additionalRttByOrigin = new Map(Object.entries(
+      // reduce number[] into average number
+      const additionalRttByOrigin = new Map(Object.entries(
         precomputedLanternData.additionalRttByOrigin));
-      options.serverResponseTimeByOrigin = new Map(Object.entries(
-        precomputedLanternData.serverResponseTimeByOrigin));
+      const averageAdditionalRttByOrigin = new Map();
+      additionalRttByOrigin.forEach((value, key) => {
+        const sum = value.reduce((x, y) => {
+          return x + y;
+        });
+        const avg = sum / value.length;
+        averageAdditionalRttByOrigin[key] = avg;
+      });
+      console.log(averageAdditionalRttByOrigin);
+      
+      const serverResponseTimeByOrigin = new Map(Object.entries(
+        precomputedLanternData.additionalRttByOrigin));
+      const averageServerResponseTimeByOrigin = new Map();
+      serverResponseTimeByOrigin.forEach((value, key) => {
+        const sum = value.reduce((x, y) => {
+          return x + y;
+        });
+        const avg = sum / value.length;
+        averageServerResponseTimeByOrigin[key] = avg;
+      });
+      console.log(averageServerResponseTimeByOrigin);
+
+      options.additionalRttByOrigin = averageAdditionalRttByOrigin;
+      options.serverResponseTimeByOrigin = averageServerResponseTimeByOrigin;
     }
 
     switch (throttlingMethod) {

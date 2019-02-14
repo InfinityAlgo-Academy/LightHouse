@@ -6,6 +6,7 @@
 
 import _Crdp from 'devtools-protocol/types/protocol';
 import _CrdpMappings from 'devtools-protocol/types/protocol-mapping'
+import { List } from 'lodash';
 
 declare global {
   // Augment global Error type to include node's optional `code` property
@@ -76,8 +77,8 @@ declare global {
     }
 
     export interface PrecomputedLanternData {
-      additionalRttByOrigin: {[origin: string]: number};
-      serverResponseTimeByOrigin: {[origin: string]: number};
+      additionalRttByOrigin: {[origin: string]: number[]};
+      serverResponseTimeByOrigin: {[origin: string]: number[]};
     }
 
     export type Locale = 'en-US'|'en'|'en-AU'|'en-GB'|'en-IE'|'en-SG'|'en-ZA'|'en-IN'|'ar-XB'|'ar'|'bg'|'bs'|'ca'|'cs'|'da'|'de'|'el'|'en-XA'|'es'|'fi'|'fil'|'fr'|'he'|'hi'|'hr'|'hu'|'gsw'|'id'|'in'|'it'|'iw'|'ja'|'ko'|'ln'|'lt'|'lv'|'mo'|'nl'|'nb'|'no'|'pl'|'pt'|'pt-PT'|'ro'|'ru'|'sk'|'sl'|'sr'|'sr-Latn'|'sv'|'ta'|'te'|'th'|'tl'|'tr'|'uk'|'vi'|'zh'|'zh-HK'|'zh-TW';
