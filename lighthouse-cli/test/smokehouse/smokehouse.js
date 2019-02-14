@@ -35,6 +35,7 @@ const PAGE_HUNG_EXIT_CODE = 68;
 const INSECURE_DOCUMENT_REQUEST_EXIT_CODE = 69;
 const RETRIES = 3;
 const NUMERICAL_EXPECTATION_REGEXP = /^(<=?|>=?)((\d|\.)+)$/;
+const VERBOSE = Boolean(process.env.LH_SMOKE_VERBOSE);
 
 /**
  * Attempt to resolve a path locally. If this fails, attempts to locate the path
@@ -62,7 +63,7 @@ function resolveLocalOrCwd(payloadPath) {
  * @return {ExpectedLHR}
  */
 function runLighthouse(url, configPath, isDebug) {
-  isDebug = isDebug || Boolean(process.env.SMOKEHOUSE_DEBUG);
+  isDebug = isDebug || Boolean(process.env.LH_SMOKE_DEBUG);
 
   const command = 'node';
   const outputPath = `smokehouse-${Math.round(Math.random() * 100000)}.report.json`;
@@ -265,6 +266,13 @@ function collateResults(actual, expected) {
 }
 
 /**
+ * @param {unknown} obj
+ */
+function isPlainObject(obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]';
+}
+
+/**
  * Log the result of an assertion of actual and expected results.
  * @param {Comparison} assertion
  */
@@ -276,8 +284,12 @@ function reportAssertion(assertion) {
   RegExp.prototype.toJSON = RegExp.prototype.toString;
 
   if (assertion.equal) {
-    console.log(`  ${log.greenify(log.tick)} ${assertion.category}: ` +
-        log.greenify(assertion.actual));
+    if (isPlainObject(assertion.actual)) {
+      console.log(`  ${log.greenify(log.tick)} ${assertion.category}`);
+    } else {
+      console.log(`  ${log.greenify(log.tick)} ${assertion.category}: ` +
+          log.greenify(assertion.actual));
+    }
   } else {
     if (assertion.diff) {
       const diff = assertion.diff;
@@ -311,16 +323,17 @@ function reportAssertion(assertion) {
  * @return {{passed: number, failed: number}}
  */
 function report(results) {
-  reportAssertion(results.finalUrl);
-  reportAssertion(results.errorCode);
-
   let correctCount = 0;
   let failedCount = 0;
-  results.audits.forEach(auditAssertion => {
+
+  [results.finalUrl, results.errorCode, ...results.audits].forEach(auditAssertion => {
     if (auditAssertion.equal) {
       correctCount++;
     } else {
       failedCount++;
+    }
+
+    if (!auditAssertion.equal || VERBOSE) {
       reportAssertion(auditAssertion);
     }
   });
