@@ -2410,8 +2410,8 @@
     },
     "unused-css-rules": {
       "id": "unused-css-rules",
-      "title": "Defer unused CSS",
-      "description": "Remove unused rules from stylesheets to reduce unnecessary bytes consumed by network activity. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/unused-css).",
+      "title": "Remove unused CSS",
+      "description": "Remove dead rules from stylesheets and defer the loading of CSS not used for above-the-fold content to reduce unnecessary bytes consumed by network activity. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/unused-css).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "rawValue": 0,

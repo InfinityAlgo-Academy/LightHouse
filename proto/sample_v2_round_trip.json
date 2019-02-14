@@ -2533,7 +2533,7 @@
             "warnings": []
         }, 
         "unused-css-rules": {
-            "description": "Remove unused rules from stylesheets to reduce unnecessary bytes consumed by network activity. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/unused-css).", 
+            "description": "Remove dead rules from stylesheets and defer the loading of CSS not used for above-the-fold content to reduce unnecessary bytes consumed by network activity. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/unused-css).", 
             "details": {
                 "headings": [], 
                 "items": [], 
@@ -2544,7 +2544,7 @@
             "id": "unused-css-rules", 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
-            "title": "Defer unused CSS"
+            "title": "Remove unused CSS"
         }, 
         "use-landmarks": {
             "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#take_advantage_of_headings_and_landmarks).", 
