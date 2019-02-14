@@ -146,6 +146,25 @@ describe('SEO: Document has valid canonical link', () => {
     });
   });
 
+  it('passes when canonical points to the root while current URL is also the root', async () => {
+    const finalUrl = 'https://example.com/';
+    const mainResource = {
+      url: finalUrl,
+      responseHeaders: [],
+    };
+    const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+    const artifacts = {
+      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
+      URL: {finalUrl},
+      Canonical: ['https://example.com/'],
+      Hreflang: [],
+    };
+
+    const context = {computedCache: new Map()};
+    const auditResult = await CanonicalAudit.audit(artifacts, context);
+    assert.equal(auditResult.rawValue, true);
+  });
+
   it('fails when canonical points to the root while current URL is not the root', () => {
     const finalUrl = 'https://example.com/articles/cats-and-you';
     const mainResource = {
