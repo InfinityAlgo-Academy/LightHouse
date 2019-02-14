@@ -6,7 +6,6 @@
 
 import _Crdp from 'devtools-protocol/types/protocol';
 import _CrdpMappings from 'devtools-protocol/types/protocol-mapping'
-import { List } from 'lodash';
 
 declare global {
   // Augment global Error type to include node's optional `code` property
