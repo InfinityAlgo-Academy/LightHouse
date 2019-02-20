@@ -52,7 +52,7 @@
       {"id":"npm:handlebars:20110425","severity":"medium","semver":{"vulnerable":["<=1.0.0-beta.3"]}}
     ],
     "highcharts":[
-      {"id":"npm:highcharts:20180225","severity":"low","semver":{"vulnerable":["<6.1.0"]}}
+      {"id":"npm:highcharts:20180225","severity":"high","semver":{"vulnerable":["<6.1.0"]}}
     ],
     "jquery":[
       {"id":"npm:jquery:20160529","severity":"low","semver":{"vulnerable":["=3.0.0-rc.1"]}},
@@ -81,7 +81,7 @@
     "moment":[
       {"id":"npm:moment:20170905","severity":"low","semver":{"vulnerable":["<2.19.3"]}},
       {"id":"npm:moment:20161019","severity":"medium","semver":{"vulnerable":["<2.15.2"]}},
-      {"id":"npm:moment:20160126","severity":"low","semver":{"vulnerable":["<=2.11.1"]}}
+      {"id":"npm:moment:20160126","severity":"medium","semver":{"vulnerable":["<=2.11.1"]}}
     ],
     "mustache":[
       {"id":"npm:mustache:20151207","severity":"medium","semver":{"vulnerable":["<2.2.1"]}},

@@ -46,7 +46,7 @@ function resolveLocalOrCwd(payloadPath) {
  * @return {Smokehouse.ExpectedLHR}
  */
 function runLighthouse(url, configPath, isDebug) {
-  isDebug = isDebug || Boolean(process.env.SMOKEHOUSE_DEBUG);
+  isDebug = isDebug || Boolean(process.env.LH_SMOKE_DEBUG);
 
   const command = 'node';
   const outputPath = `smokehouse-${Math.round(Math.random() * 100000)}.report.json`;

@@ -12,6 +12,7 @@ const URL = require('../../../../lib/url-shim');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const Util = require('../../../../report/html/renderer/util.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
+const SnippetRenderer = require('../../../../report/html/renderer/snippet-renderer.js');
 
 const TEMPLATE_FILE = fs.readFileSync(__dirname +
     '/../../../../report/html/templates.html', 'utf8');
@@ -24,14 +25,17 @@ describe('DetailsRenderer', () => {
   beforeAll(() => {
     global.URL = URL;
     global.Util = Util;
+    global.SnippetRenderer = SnippetRenderer;
     const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
     const dom = new DOM(document);
     renderer = new DetailsRenderer(dom);
+    renderer.setTemplateContext(dom._document);
   });
 
   afterAll(() => {
     global.URL = undefined;
     global.Util = undefined;
+    global.SnippetRenderer = undefined;
   });
 
   describe('render', () => {
@@ -117,6 +121,27 @@ describe('DetailsRenderer', () => {
       assert.equal(el.querySelectorAll('.lh-table-column--text').length, 6, '--text not set');
       assert.equal(el.querySelectorAll('.lh-table-column--thumbnail').length, 3,
           '--thumbnail not set');
+    });
+
+    it('renders lists', () => {
+      const snippet = {
+        type: 'snippet',
+        lines: [{lineNumber: 1, content: ''}],
+        title: 'Some snippet',
+        lineMessages: [],
+        generalMessages: [],
+        lineCount: 100,
+      };
+
+      const el = renderer.render({
+        type: 'list',
+        items: [snippet, snippet],
+      });
+
+      assert.equal(el.localName, 'div');
+      assert.ok(el.classList.contains('lh-list'), 'has list class');
+      assert.ok(el.children.length, 2, 'renders all items');
+      assert.ok(el.children[0].textContent.includes('Some snippet'), 'renders item content');
     });
 
     it('renders links', () => {

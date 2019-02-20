@@ -126,6 +126,72 @@ class Audit {
   }
 
   /**
+   * @param {LH.Audit.Details.List['items']} items
+   * @returns {LH.Audit.Details.List}
+   */
+  static makeListDetails(items) {
+    return {
+      type: 'list',
+      items: items,
+    };
+  }
+
+  /** @typedef {{
+   * content: string;
+   * title: string;
+   * lineMessages: LH.Audit.Details.SnippetValue['lineMessages'];
+   * generalMessages: LH.Audit.Details.SnippetValue['generalMessages'];
+   * node?: LH.Audit.Details.NodeValue;
+   * maxLineLength?: number;
+   * maxLinesAroundMessage?: number;
+   * }} SnippetInfo */
+  /**
+   * @param {SnippetInfo} snippetInfo
+   * @return {LH.Audit.Details.SnippetValue}
+   */
+  static makeSnippetDetails({
+    content,
+    title,
+    lineMessages,
+    generalMessages,
+    node,
+    maxLineLength = 200,
+    maxLinesAroundMessage = 20,
+  }) {
+    const allLines = Audit._makeSnippetLinesArray(content, maxLineLength);
+    const lines = Util.filterRelevantLines(allLines, lineMessages, maxLinesAroundMessage);
+    return {
+      type: 'snippet',
+      lines,
+      title,
+      lineMessages,
+      generalMessages,
+      lineCount: allLines.length,
+      node,
+    };
+  }
+
+  /**
+   * @param {string} content
+   * @param {number} maxLineLength
+   * @returns {LH.Audit.Details.SnippetValue['lines']}
+   */
+  static _makeSnippetLinesArray(content, maxLineLength) {
+    return content.split('\n').map((line, lineIndex) => {
+      const lineNumber = lineIndex + 1;
+      /** @type LH.Audit.Details.SnippetValue['lines'][0] */
+      const lineDetail = {
+        content: line.slice(0, maxLineLength),
+        lineNumber,
+      };
+      if (line.length > maxLineLength) {
+        lineDetail.truncated = true;
+      }
+      return lineDetail;
+    });
+  }
+
+  /**
    * @param {LH.Audit.Details.Opportunity['headings']} headings
    * @param {LH.Audit.Details.Opportunity['items']} items
    * @param {number} overallSavingsMs

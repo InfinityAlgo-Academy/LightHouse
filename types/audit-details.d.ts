@@ -65,6 +65,11 @@ declare global {
         diagnostic?: Diagnostic;
       }
 
+      export interface List {
+        type: 'list';
+        items: SnippetValue[]
+      }
+
       /**
        * A details type that is not rendered in the final report; usually used
        * for including diagnostic information in the LHR. Can contain anything.
@@ -163,6 +168,38 @@ declare global {
       export interface UrlValue {
         type: 'url';
         value: string;
+      }
+
+      /**
+       * Snippet of text with line numbers and annotations.
+       */
+      export interface SnippetValue {
+        type: 'snippet',
+        title: string,
+        /** Node where the content of this snippet came from. */
+        node?: NodeValue,
+        /**
+         * The lines that should be rendered. For long snippets we only include important lines
+         * in the audit result.
+         */
+        lines: {
+          content: string
+          /** Line number, starting from 1. */
+          lineNumber: number;
+          truncated?: boolean
+        }[],
+        /** The total number of lines in the snippet, equal to lines.length for short snippets. */
+        lineCount: number,
+        /** Messages that provide information about a specific lines. */
+        lineMessages: {
+          /** Line number, starting from 1. */
+          lineNumber: number,
+          message: string
+        }[];
+        /** Messages that provide information about the snippet in general. */
+        generalMessages: {
+          message: string
+        }[];
       }
     }
   }

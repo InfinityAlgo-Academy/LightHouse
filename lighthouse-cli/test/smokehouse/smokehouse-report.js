@@ -5,6 +5,7 @@
 const log = require('lighthouse-logger');
 
 const NUMERICAL_EXPECTATION_REGEXP = /^(<=?|>=?)((\d|\.)+)$/;
+const VERBOSE = Boolean(process.env.LH_SMOKE_VERBOSE);
 
 /**
  * Checks if the actual value matches the expectation. Does not recursively search. This supports
@@ -136,6 +137,13 @@ function collateResults(actual, expected) {
 }
 
 /**
+ * @param {unknown} obj
+ */
+function isPlainObject(obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]';
+}
+
+/**
  * Log the result of an assertion of actual and expected results.
  * @param {Smokehouse.Comparison} assertion
  */
@@ -147,8 +155,12 @@ function reportAssertion(assertion) {
   RegExp.prototype.toJSON = RegExp.prototype.toString;
 
   if (assertion.equal) {
-    console.log(`  ${log.greenify(log.tick)} ${assertion.category}: ` +
-        log.greenify(assertion.actual));
+    if (isPlainObject(assertion.actual)) {
+      console.log(`  ${log.greenify(log.tick)} ${assertion.category}`);
+    } else {
+      console.log(`  ${log.greenify(log.tick)} ${assertion.category}: ` +
+          log.greenify(assertion.actual));
+    }
   } else {
     if (assertion.diff) {
       const diff = assertion.diff;
@@ -182,16 +194,17 @@ function reportAssertion(assertion) {
  * @return {{passed: number, failed: number}}
  */
 function report(results) {
-  reportAssertion(results.finalUrl);
-  reportAssertion(results.errorCode);
-
   let correctCount = 0;
   let failedCount = 0;
-  results.audits.forEach(auditAssertion => {
+
+  [results.finalUrl, results.errorCode, ...results.audits].forEach(auditAssertion => {
     if (auditAssertion.equal) {
       correctCount++;
     } else {
       failedCount++;
+    }
+
+    if (!auditAssertion.equal || VERBOSE) {
       reportAssertion(auditAssertion);
     }
   });
