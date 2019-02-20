@@ -10,6 +10,7 @@ declare global {
       Details.CriticalRequestChain |
       Details.Diagnostic |
       Details.Filmstrip |
+      Details.List |
       Details.Opportunity |
       Details.Screenshot |
       Details.Table;
@@ -39,6 +40,11 @@ declare global {
         }[];
       }
 
+      export interface List {
+        type: 'list';
+        items: SnippetValue[]
+      }
+
       export interface Opportunity {
         type: 'opportunity';
         overallSavingsMs: number;
@@ -63,11 +69,6 @@ declare global {
           wastedBytes?: number;
         };
         diagnostic?: Diagnostic;
-      }
-
-      export interface List {
-        type: 'list';
-        items: SnippetValue[]
       }
 
       /**
