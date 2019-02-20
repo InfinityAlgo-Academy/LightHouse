@@ -187,7 +187,7 @@
     },
     {
       "path": "./dist/viewer/src/viewer.js",
-      "threshold": "65 Kb"
+      "threshold": "70 Kb"
     }
   ],
   "nyc": {
