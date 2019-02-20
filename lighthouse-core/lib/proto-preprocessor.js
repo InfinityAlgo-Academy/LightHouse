@@ -17,9 +17,11 @@ const fs = require('fs');
 
 /**
   * @param {string} result
-  * @param {{keepRawValues: boolean}} opts
+  * @param {{keepRawValues?: boolean}} opts
   */
-function processForProto(result, {keepRawValues}) {
+function processForProto(result, opts = {}) {
+  const {keepRawValues = false} = opts;
+
   /** @type {LH.Result} */
   const reportJson = JSON.parse(result);
 
