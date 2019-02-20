@@ -1448,6 +1448,19 @@
       "scoreDisplayMode": "manual",
       "rawValue": false
     },
+    "accesskeys": {
+      "id": "accesskeys",
+      "title": "`[accesskey]` values are unique",
+      "description": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse).",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "rawValue": true,
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
     "aria-allowed-attr": {
       "id": "aria-allowed-attr",
       "title": "`[aria-*]` attributes match their roles",
@@ -2001,14 +2014,6 @@
       "score": null,
       "scoreDisplayMode": "notApplicable",
       "rawValue": true
-    },
-    "accesskeys": {
-      "id": "accesskeys",
-      "title": "`[accesskey]` values are unique",
-      "description": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse).",
-      "score": null,
-      "scoreDisplayMode": "manual",
-      "rawValue": false
     },
     "custom-controls-labels": {
       "id": "custom-controls-labels",
@@ -3365,6 +3370,11 @@
       "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
       "auditRefs": [
         {
+          "id": "accesskeys",
+          "weight": 3,
+          "group": "a11y-navigation"
+        },
+        {
           "id": "aria-allowed-attr",
           "weight": 0,
           "group": "a11y-aria"
@@ -3402,17 +3412,17 @@
         {
           "id": "audio-caption",
           "weight": 0,
-          "group": "a11y-correct-attributes"
+          "group": "a11y-audio-video"
         },
         {
           "id": "button-name",
           "weight": 0,
-          "group": "a11y-element-names"
+          "group": "a11y-names-labels"
         },
         {
           "id": "bypass",
           "weight": 10,
-          "group": "a11y-describe-contents"
+          "group": "a11y-navigation"
         },
         {
           "id": "color-contrast",
@@ -3422,27 +3432,27 @@
         {
           "id": "definition-list",
           "weight": 0,
-          "group": "a11y-well-structured"
+          "group": "a11y-tables-lists"
         },
         {
           "id": "dlitem",
           "weight": 0,
-          "group": "a11y-well-structured"
+          "group": "a11y-tables-lists"
         },
         {
           "id": "document-title",
           "weight": 2,
-          "group": "a11y-describe-contents"
+          "group": "a11y-names-labels"
         },
         {
           "id": "duplicate-id",
           "weight": 5,
-          "group": "a11y-well-structured"
+          "group": "a11y-best-practices"
         },
         {
           "id": "frame-title",
           "weight": 0,
-          "group": "a11y-describe-contents"
+          "group": "a11y-names-labels"
         },
         {
           "id": "html-has-lang",
@@ -3457,67 +3467,67 @@
         {
           "id": "image-alt",
           "weight": 8,
-          "group": "a11y-correct-attributes"
+          "group": "a11y-names-labels"
         },
         {
           "id": "input-image-alt",
           "weight": 0,
-          "group": "a11y-correct-attributes"
+          "group": "a11y-names-labels"
         },
         {
           "id": "label",
           "weight": 10,
-          "group": "a11y-describe-contents"
+          "group": "a11y-names-labels"
         },
         {
           "id": "layout-table",
           "weight": 0,
-          "group": "a11y-describe-contents"
+          "group": "a11y-tables-lists"
         },
         {
           "id": "link-name",
           "weight": 9,
-          "group": "a11y-element-names"
+          "group": "a11y-names-labels"
         },
         {
           "id": "list",
           "weight": 0,
-          "group": "a11y-well-structured"
+          "group": "a11y-tables-lists"
         },
         {
           "id": "listitem",
           "weight": 0,
-          "group": "a11y-well-structured"
+          "group": "a11y-tables-lists"
         },
         {
           "id": "meta-refresh",
           "weight": 0,
-          "group": "a11y-meta"
+          "group": "a11y-best-practices"
         },
         {
           "id": "meta-viewport",
           "weight": 3,
-          "group": "a11y-meta"
+          "group": "a11y-best-practices"
         },
         {
           "id": "object-alt",
           "weight": 4,
-          "group": "a11y-describe-contents"
+          "group": "a11y-names-labels"
         },
         {
           "id": "tabindex",
           "weight": 0,
-          "group": "a11y-correct-attributes"
+          "group": "a11y-navigation"
         },
         {
           "id": "td-headers-attr",
           "weight": 0,
-          "group": "a11y-correct-attributes"
+          "group": "a11y-tables-lists"
         },
         {
           "id": "th-has-data-cells",
           "weight": 0,
-          "group": "a11y-correct-attributes"
+          "group": "a11y-tables-lists"
         },
         {
           "id": "valid-lang",
@@ -3527,16 +3537,12 @@
         {
           "id": "video-caption",
           "weight": 0,
-          "group": "a11y-describe-contents"
+          "group": "a11y-audio-video"
         },
         {
           "id": "video-description",
           "weight": 0,
-          "group": "a11y-describe-contents"
-        },
-        {
-          "id": "accesskeys",
-          "weight": 0
+          "group": "a11y-audio-video"
         },
         {
           "id": "logical-tab-order",
@@ -3584,7 +3590,7 @@
         }
       ],
       "id": "accessibility",
-      "score": 0.33
+      "score": 0.36
     },
     "best-practices": {
       "title": "Best Practices",
@@ -3829,37 +3835,37 @@
     "pwa-optimized": {
       "title": "PWA Optimized"
     },
+    "a11y-best-practices": {
+      "title": "Best practices",
+      "description": "These items highlight common accessibility best practices."
+    },
     "a11y-color-contrast": {
-      "title": "Color Contrast Is Satisfactory",
+      "title": "Contrast",
       "description": "These are opportunities to improve the legibility of your content."
     },
-    "a11y-describe-contents": {
-      "title": "Elements Describe Contents Well",
-      "description": "These are opportunities to make your content easier to understand for a user of assistive technology, like a screen reader."
-    },
-    "a11y-well-structured": {
-      "title": "Elements Are Well Structured",
-      "description": "These are opportunities to make sure your HTML is appropriately structured."
-    },
-    "a11y-aria": {
-      "title": "ARIA Attributes Follow Best Practices",
-      "description": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader."
-    },
-    "a11y-correct-attributes": {
-      "title": "Elements Use Attributes Correctly",
-      "description": "These are opportunities to improve the configuration of your HTML elements."
-    },
-    "a11y-element-names": {
-      "title": "Elements Have Discernible Names",
+    "a11y-names-labels": {
+      "title": "Names and labels",
       "description": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader."
     },
+    "a11y-navigation": {
+      "title": "Navigation",
+      "description": "These are opportunities to improve keyboard navigation in your application."
+    },
+    "a11y-aria": {
+      "title": "ARIA",
+      "description": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader."
+    },
     "a11y-language": {
-      "title": "Page Specifies Valid Language",
+      "title": "Internationalization and localization",
       "description": "These are opportunities to improve the interpretation of your content by users in different locales."
     },
-    "a11y-meta": {
-      "title": "Meta Tags Used Properly",
-      "description": "These are opportunities to improve the user experience of your site."
+    "a11y-audio-video": {
+      "title": "Audio and video",
+      "description": "These are opportunities to provide alternative content for audio and video. This may improve the experience for users with hearing or vision impairments."
+    },
+    "a11y-tables-lists": {
+      "title": "Tables and lists",
+      "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader."
     },
     "seo-mobile": {
       "title": "Mobile Friendly",
@@ -4298,6 +4304,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:accesskeys",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:aria-allowed-attr",
         "duration": 100,
         "entryType": "measure"
@@ -4497,12 +4509,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:video-description",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:accesskeys",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5052,6 +5058,12 @@
       "lighthouse-core/audits/network-server-latency.js | description": [
         "audits[network-server-latency].description"
       ],
+      "lighthouse-core/audits/accessibility/accesskeys.js | title": [
+        "audits.accesskeys.title"
+      ],
+      "lighthouse-core/audits/accessibility/accesskeys.js | description": [
+        "audits.accesskeys.description"
+      ],
       "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": [
         "audits[aria-allowed-attr].title"
       ],
@@ -5263,12 +5275,6 @@
       ],
       "lighthouse-core/audits/accessibility/video-description.js | description": [
         "audits[video-description].description"
-      ],
-      "lighthouse-core/audits/accessibility/manual/accesskeys.js | title": [
-        "audits.accesskeys.title"
-      ],
-      "lighthouse-core/audits/accessibility/manual/accesskeys.js | description": [
-        "audits.accesskeys.description"
       ],
       "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | failureTitle": [
         "audits[uses-long-cache-ttl].title"
@@ -5556,23 +5562,29 @@
       "lighthouse-core/config/default-config.js | pwaOptimizedGroupTitle": [
         "categoryGroups[pwa-optimized].title"
       ],
+      "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": [
+        "categoryGroups[a11y-best-practices].title"
+      ],
+      "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": [
+        "categoryGroups[a11y-best-practices].description"
+      ],
       "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": [
         "categoryGroups[a11y-color-contrast].title"
       ],
       "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": [
         "categoryGroups[a11y-color-contrast].description"
       ],
-      "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupTitle": [
-        "categoryGroups[a11y-describe-contents].title"
+      "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": [
+        "categoryGroups[a11y-names-labels].title"
       ],
-      "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupDescription": [
-        "categoryGroups[a11y-describe-contents].description"
+      "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": [
+        "categoryGroups[a11y-names-labels].description"
       ],
-      "lighthouse-core/config/default-config.js | a11yWellStructuredGroupTitle": [
-        "categoryGroups[a11y-well-structured].title"
+      "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": [
+        "categoryGroups[a11y-navigation].title"
       ],
-      "lighthouse-core/config/default-config.js | a11yWellStructuredGroupDescription": [
-        "categoryGroups[a11y-well-structured].description"
+      "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": [
+        "categoryGroups[a11y-navigation].description"
       ],
       "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": [
         "categoryGroups[a11y-aria].title"
@@ -5580,29 +5592,23 @@
       "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": [
         "categoryGroups[a11y-aria].description"
       ],
-      "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupTitle": [
-        "categoryGroups[a11y-correct-attributes].title"
-      ],
-      "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupDescription": [
-        "categoryGroups[a11y-correct-attributes].description"
-      ],
-      "lighthouse-core/config/default-config.js | a11yElementNamesGroupTitle": [
-        "categoryGroups[a11y-element-names].title"
-      ],
-      "lighthouse-core/config/default-config.js | a11yElementNamesGroupDescription": [
-        "categoryGroups[a11y-element-names].description"
-      ],
       "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": [
         "categoryGroups[a11y-language].title"
       ],
       "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": [
         "categoryGroups[a11y-language].description"
       ],
-      "lighthouse-core/config/default-config.js | a11yMetaGroupTitle": [
-        "categoryGroups[a11y-meta].title"
+      "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": [
+        "categoryGroups[a11y-audio-video].title"
       ],
-      "lighthouse-core/config/default-config.js | a11yMetaGroupDescription": [
-        "categoryGroups[a11y-meta].description"
+      "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": [
+        "categoryGroups[a11y-audio-video].description"
+      ],
+      "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": [
+        "categoryGroups[a11y-tables-lists].title"
+      ],
+      "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": [
+        "categoryGroups[a11y-tables-lists].description"
       ]
     }
   }

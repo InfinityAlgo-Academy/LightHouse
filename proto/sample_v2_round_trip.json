@@ -2,9 +2,14 @@
     "audits": {
         "accesskeys": {
             "description": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse).", 
+            "details": {
+                "headings": [], 
+                "items": [], 
+                "type": "table"
+            }, 
             "id": "accesskeys", 
-            "score": null, 
-            "scoreDisplayMode": "manual", 
+            "score": 1.0, 
+            "scoreDisplayMode": "binary", 
             "title": "`[accesskey]` values are unique"
         }, 
         "appcache-manifest": {
@@ -2998,6 +3003,11 @@
         "accessibility": {
             "auditRefs": [
                 {
+                    "group": "a11y-navigation", 
+                    "id": "accesskeys", 
+                    "weight": 3.0
+                }, 
+                {
                     "group": "a11y-aria", 
                     "id": "aria-allowed-attr", 
                     "weight": 0.0
@@ -3033,17 +3043,17 @@
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-correct-attributes", 
+                    "group": "a11y-audio-video", 
                     "id": "audio-caption", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-element-names", 
+                    "group": "a11y-names-labels", 
                     "id": "button-name", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-navigation", 
                     "id": "bypass", 
                     "weight": 10.0
                 }, 
@@ -3053,27 +3063,27 @@
                     "weight": 6.0
                 }, 
                 {
-                    "group": "a11y-well-structured", 
+                    "group": "a11y-tables-lists", 
                     "id": "definition-list", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-well-structured", 
+                    "group": "a11y-tables-lists", 
                     "id": "dlitem", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-names-labels", 
                     "id": "document-title", 
                     "weight": 2.0
                 }, 
                 {
-                    "group": "a11y-well-structured", 
+                    "group": "a11y-best-practices", 
                     "id": "duplicate-id", 
                     "weight": 5.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-names-labels", 
                     "id": "frame-title", 
                     "weight": 0.0
                 }, 
@@ -3088,67 +3098,67 @@
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-correct-attributes", 
+                    "group": "a11y-names-labels", 
                     "id": "image-alt", 
                     "weight": 8.0
                 }, 
                 {
-                    "group": "a11y-correct-attributes", 
+                    "group": "a11y-names-labels", 
                     "id": "input-image-alt", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-names-labels", 
                     "id": "label", 
                     "weight": 10.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-tables-lists", 
                     "id": "layout-table", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-element-names", 
+                    "group": "a11y-names-labels", 
                     "id": "link-name", 
                     "weight": 9.0
                 }, 
                 {
-                    "group": "a11y-well-structured", 
+                    "group": "a11y-tables-lists", 
                     "id": "list", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-well-structured", 
+                    "group": "a11y-tables-lists", 
                     "id": "listitem", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-meta", 
+                    "group": "a11y-best-practices", 
                     "id": "meta-refresh", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-meta", 
+                    "group": "a11y-best-practices", 
                     "id": "meta-viewport", 
                     "weight": 3.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-names-labels", 
                     "id": "object-alt", 
                     "weight": 4.0
                 }, 
                 {
-                    "group": "a11y-correct-attributes", 
+                    "group": "a11y-navigation", 
                     "id": "tabindex", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-correct-attributes", 
+                    "group": "a11y-tables-lists", 
                     "id": "td-headers-attr", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-correct-attributes", 
+                    "group": "a11y-tables-lists", 
                     "id": "th-has-data-cells", 
                     "weight": 0.0
                 }, 
@@ -3158,17 +3168,13 @@
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-audio-video", 
                     "id": "video-caption", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-audio-video", 
                     "id": "video-description", 
-                    "weight": 0.0
-                }, 
-                {
-                    "id": "accesskeys", 
                     "weight": 0.0
                 }, 
                 {
@@ -3219,7 +3225,7 @@
             "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.", 
             "id": "accessibility", 
             "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).", 
-            "score": 0.33, 
+            "score": 0.36, 
             "title": "Accessibility"
         }, 
         "best-practices": {
@@ -3630,35 +3636,35 @@
     "categoryGroups": {
         "a11y-aria": {
             "description": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader.", 
-            "title": "ARIA Attributes Follow Best Practices"
+            "title": "ARIA"
+        }, 
+        "a11y-audio-video": {
+            "description": "These are opportunities to provide alternative content for audio and video. This may improve the experience for users with hearing or vision impairments.", 
+            "title": "Audio and video"
+        }, 
+        "a11y-best-practices": {
+            "description": "These items highlight common accessibility best practices.", 
+            "title": "Best practices"
         }, 
         "a11y-color-contrast": {
             "description": "These are opportunities to improve the legibility of your content.", 
-            "title": "Color Contrast Is Satisfactory"
-        }, 
-        "a11y-correct-attributes": {
-            "description": "These are opportunities to improve the configuration of your HTML elements.", 
-            "title": "Elements Use Attributes Correctly"
-        }, 
-        "a11y-describe-contents": {
-            "description": "These are opportunities to make your content easier to understand for a user of assistive technology, like a screen reader.", 
-            "title": "Elements Describe Contents Well"
-        }, 
-        "a11y-element-names": {
-            "description": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.", 
-            "title": "Elements Have Discernible Names"
+            "title": "Contrast"
         }, 
         "a11y-language": {
             "description": "These are opportunities to improve the interpretation of your content by users in different locales.", 
-            "title": "Page Specifies Valid Language"
+            "title": "Internationalization and localization"
         }, 
-        "a11y-meta": {
-            "description": "These are opportunities to improve the user experience of your site.", 
-            "title": "Meta Tags Used Properly"
+        "a11y-names-labels": {
+            "description": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.", 
+            "title": "Names and labels"
         }, 
-        "a11y-well-structured": {
-            "description": "These are opportunities to make sure your HTML is appropriately structured.", 
-            "title": "Elements Are Well Structured"
+        "a11y-navigation": {
+            "description": "These are opportunities to improve keyboard navigation in your application.", 
+            "title": "Navigation"
+        }, 
+        "a11y-tables-lists": {
+            "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.", 
+            "title": "Tables and lists"
         }, 
         "diagnostics": {
             "description": "More information about the performance of your application.", 
@@ -4154,6 +4160,12 @@
             {
                 "duration": 100.0, 
                 "entryType": "measure", 
+                "name": "lh:audit:accesskeys", 
+                "startTime": 0.0
+            }, 
+            {
+                "duration": 100.0, 
+                "entryType": "measure", 
                 "name": "lh:audit:aria-allowed-attr", 
                 "startTime": 0.0
             }, 
@@ -4353,12 +4365,6 @@
                 "duration": 100.0, 
                 "entryType": "measure", 
                 "name": "lh:audit:video-description", 
-                "startTime": 0.0
-            }, 
-            {
-                "duration": 100.0, 
-                "entryType": "measure", 
-                "name": "lh:audit:accesskeys", 
                 "startTime": 0.0
             }, 
             {

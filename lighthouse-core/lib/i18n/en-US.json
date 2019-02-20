@@ -1,4 +1,16 @@
 {
+  "lighthouse-core/audits/accessibility/accesskeys.js | description": {
+    "message": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse).",
+    "description": "Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
+  },
+  "lighthouse-core/audits/accessibility/accesskeys.js | failureTitle": {
+    "message": "`[accesskey]` values are not unique",
+    "description": "Title of an accesibility audit that evaluates if the ARIA HTML attributes are misaligned with the aria-role HTML attribute specificed on the element, such mismatches are invalid. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed."
+  },
+  "lighthouse-core/audits/accessibility/accesskeys.js | title": {
+    "message": "`[accesskey]` values are unique",
+    "description": "Title of an accesibility audit that evaluates if the accesskey HTML attribute values are unique across all elements. This title is descriptive of the successful state and is shown to users when no user action is required."
+  },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": {
     "message": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=lighthouse).",
     "description": "Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
@@ -302,14 +314,6 @@
   "lighthouse-core/audits/accessibility/listitem.js | title": {
     "message": "List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements",
     "description": "Title of an accesibility audit that evaluates if any list item elements do not have list parent elements. This title is descriptive of the successful state and is shown to users when no user action is required."
-  },
-  "lighthouse-core/audits/accessibility/manual/accesskeys.js | description": {
-    "message": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse).",
-    "description": "Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
-  },
-  "lighthouse-core/audits/accessibility/manual/accesskeys.js | title": {
-    "message": "`[accesskey]` values are unique",
-    "description": "Title of an accesibility audit that evaluates if the accesskey HTML attribute values are unique across all elements. This title is descriptive of the successful state and is shown to users when no user action is required."
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
     "message": "Users do not expect a page to refresh automatically, and doing so will move focus back to the top of the page. This may create a frustrating or confusing experience. [Learn more](https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=lighthouse).",
@@ -1028,12 +1032,28 @@
     "description": "Description of the ARIA validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if whether all the aria- HTML attributes have been used properly."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA Attributes Follow Best Practices",
+    "message": "ARIA",
     "description": "Title of the ARIA validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if whether all the aria- HTML attributes have been used properly."
+  },
+  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
+    "message": "These are opportunities to provide alternative content for audio and video. This may improve the experience for users with hearing or vision impairments.",
+    "description": "Description of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to provide alternative content for audio and video."
+  },
+  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
+    "message": "Audio and video",
+    "description": "Title of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to provide alternative content for audio and video."
+  },
+  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
+    "message": "These items highlight common accessibility best practices.",
+    "description": "Description of the best practices section within the Accessibility category. Within this section are audits with descriptive titles that highlight common accessibility best practices."
+  },
+  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
+    "message": "Best practices",
+    "description": "Title of the best practices section of the Accessibility category. Within this section are audits with descriptive titles that highlight common accessibility best practices."
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
-    "description": "Description of the Accessibility category. This is displayed at the top of a list of audits focused on making web content accessible to users with disabilities. No character length limits. 'improve the accessibility of your web app' becomes link text to additional documentation."
+    "description": "Description of the Accessibility category. This is displayed at the top of a list of audits focused on making web content accessible to all users. No character length limits. 'improve the accessibility of your web app' becomes link text to additional documentation."
   },
   "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
     "message": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
@@ -1041,63 +1061,47 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Accessibility",
-    "description": "Title of the Accessibility category of audits. This section contains audits focused on making web content accessible to users with disabilities. Also used as a label of a score gauge; try to limit to 20 characters."
+    "description": "Title of the Accessibility category of audits. This section contains audits focused on making web content accessible to all users. Also used as a label of a score gauge; try to limit to 20 characters."
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
     "message": "These are opportunities to improve the legibility of your content.",
     "description": "Description of the color contrast section within the Accessibility category. Within this section are audits with descriptive titles that highlight the color and vision aspects of the page's accessibility that are passing or failing."
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Color Contrast Is Satisfactory",
+    "message": "Contrast",
     "description": "Title of the color contrast section within the Accessibility category. Within this section are audits with descriptive titles that highlight the color and vision aspects of the page's accessibility that are passing or failing."
-  },
-  "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupDescription": {
-    "message": "These are opportunities to improve the configuration of your HTML elements.",
-    "description": "Description of the HTML attribute validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the HTML attribute values on the page are used correctly."
-  },
-  "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupTitle": {
-    "message": "Elements Use Attributes Correctly",
-    "description": "Title of the HTML attribute validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the HTML attribute values on the page are used correctly. 'Elements' refers to HTML elements."
-  },
-  "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupDescription": {
-    "message": "These are opportunities to make your content easier to understand for a user of assistive technology, like a screen reader.",
-    "description": "Description of the screen reader annotation section within the Accessibility category. Within this section are audits with descriptive titles that highlight the screen reader readability aspects of the page's accessibility that are passing or failing."
-  },
-  "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupTitle": {
-    "message": "Elements Describe Contents Well",
-    "description": "Title of the screen reader annotation section within the Accessibility category. Within this section are audits with descriptive titles that highlight the screen reader readability aspects of the page's accessibility that are passing or failing. 'Elements' refers to HTML elements."
-  },
-  "lighthouse-core/config/default-config.js | a11yElementNamesGroupDescription": {
-    "message": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.",
-    "description": "Description of the HTML element naming section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the non-textual HTML elements on the page have names discernible by a screen reader."
-  },
-  "lighthouse-core/config/default-config.js | a11yElementNamesGroupTitle": {
-    "message": "Elements Have Discernible Names",
-    "description": "Title of the HTML element naming section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the non-textual HTML elements on the page have names discernible by a screen reader."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "These are opportunities to improve the interpretation of your content by users in different locales.",
     "description": "Description of the language section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the language has been annotated in the correct HTML attributes on the page."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Page Specifies Valid Language",
+    "message": "Internationalization and localization",
     "description": "Title of the language section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the language has been annotated in the correct HTML attributes on the page."
   },
-  "lighthouse-core/config/default-config.js | a11yMetaGroupDescription": {
-    "message": "These are opportunities to improve the user experience of your site.",
-    "description": "Description of the meta tag section within the Accessibility category. Within this section are audits with descriptive titles that highlight if meta tags on the page have been used properly and if any important ones are missing."
+  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
+    "message": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.",
+    "description": "Description of the HTML element naming section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the non-textual HTML elements on the page have names discernible by a screen reader."
   },
-  "lighthouse-core/config/default-config.js | a11yMetaGroupTitle": {
-    "message": "Meta Tags Used Properly",
-    "description": "Title of the meta tag section within the Accessibility category. Within this section are audits with descriptive titles that highlight if meta tags on the page have been used properly and if any important ones are missing."
+  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
+    "message": "Names and labels",
+    "description": "Title of the HTML element naming section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the non-textual HTML elements on the page have names discernible by a screen reader."
   },
-  "lighthouse-core/config/default-config.js | a11yWellStructuredGroupDescription": {
-    "message": "These are opportunities to make sure your HTML is appropriately structured.",
-    "description": "Description of the HTML validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight structural HTML aspects of the page's accessibility that are passing or failing."
+  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
+    "message": "These are opportunities to improve keyboard navigation in your application.",
+    "description": "Description of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to improve keyboard navigation."
   },
-  "lighthouse-core/config/default-config.js | a11yWellStructuredGroupTitle": {
-    "message": "Elements Are Well Structured",
-    "description": "Title of the HTML validity section within the Accessibility category. Within this section are audits with descriptive titles that highlight structural HTML aspects of the page's accessibility that are passing or failing (i.e. that list items are contained within list parents, etc). 'Elements' refers to HTML elements."
+  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
+    "message": "Navigation",
+    "description": "Title of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to improve keyboard navigation."
+  },
+  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
+    "message": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
+    "description": "Description of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to improve the experience of reading tabular or list data using assistive technology."
+  },
+  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
+    "message": "Tables and lists",
+    "description": "Title of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to improve the experience of reading tabular or list data using assistive technology."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
     "message": "More information about the performance of your application.",
