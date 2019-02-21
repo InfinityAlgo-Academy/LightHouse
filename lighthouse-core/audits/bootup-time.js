@@ -159,6 +159,7 @@ class BootupTime extends Audit {
 
     const summary = {wastedMs: totalBootupTime};
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
       {key: 'total', granularity: 1, itemType: 'ms', text: str_(UIStrings.columnTotal)},

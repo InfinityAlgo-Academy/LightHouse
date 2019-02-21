@@ -67,7 +67,11 @@ class Diagnostics extends Audit {
     return {
       score: 1,
       rawValue: 1,
-      details: {items: [diagnostics]},
+      details: {
+        type: 'diagnostic',
+        // TODO: Consider not nesting diagnostics under `items`.
+        items: [diagnostics],
+      },
     };
   }
 }

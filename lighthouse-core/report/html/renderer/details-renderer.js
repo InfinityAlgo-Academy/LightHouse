@@ -16,7 +16,7 @@
  */
 'use strict';
 
-/* globals self CriticalRequestChainRenderer Util URL */
+/* globals self CriticalRequestChainRenderer SnippetRenderer Util URL */
 
 /** @typedef {import('./dom.js')} DOM */
 /** @typedef {LH.Audit.Details.Opportunity} OpportunityDetails */
@@ -43,8 +43,8 @@ class DetailsRenderer {
   }
 
   /**
-   * @param {DetailsJSON|OpportunityDetails} details
-   * @return {Element}
+   * @param {DetailsJSON|OpportunityDetails|LH.Audit.Details.SnippetValue} details
+   * @return {Element|null}
    */
   render(details) {
     switch (details.type) {
@@ -68,6 +68,11 @@ class DetailsRenderer {
       case 'table':
         // @ts-ignore - TODO(bckenny): Fix type hierarchy
         return this._renderTable(/** @type {TableDetailsJSON} */ (details));
+      case 'list':
+        return this._renderList(
+          // @ts-ignore - TODO(bckenny): Fix type hierarchy
+          /** @type {LH.Audit.Details.List} */ (details)
+        );
       case 'code':
         return this._renderCode(/** @type {DetailsJSON} */ (details));
       case 'node':
@@ -81,6 +86,12 @@ class DetailsRenderer {
         return this._renderOpportunityTable(details);
       case 'numeric':
         return this._renderNumeric(/** @type {StringDetailsJSON} */ (details));
+
+      // Internal-only details, not for rendering.
+      case 'screenshot':
+      case 'diagnostic':
+        return null;
+
       default: {
         throw new Error(`Unknown type: ${details.type}`);
       }
@@ -205,6 +216,21 @@ class DetailsRenderer {
   }
 
   /**
+   * @param {LH.Audit.Details.List} details
+   * @returns {Element}
+   */
+  _renderList(details) {
+    const listContainer = this._dom.createElement('div', 'lh-list');
+
+    details.items.forEach(item => {
+      const snippetEl = SnippetRenderer.render(this._dom, this._templateContext, item, this);
+      listContainer.appendChild(snippetEl);
+    });
+
+    return listContainer;
+  }
+
+  /**
    * @param {TableDetailsJSON} details
    * @return {Element}
    */
@@ -218,6 +244,7 @@ class DetailsRenderer {
     for (const heading of details.headings) {
       const itemType = heading.itemType || 'text';
       const classes = `lh-table-column--${itemType}`;
+      // @ts-ignore TODO(bckenny): this can never be null
       this._dom.createChildOf(theadTrElem, 'th', classes).appendChild(this.render({
         type: 'text',
         value: heading.text || '',
@@ -241,6 +268,7 @@ class DetailsRenderer {
         if (value.type) {
           const valueAsDetails = /** @type {DetailsJSON} */ (value);
           const classes = `lh-table-column--${valueAsDetails.type}`;
+          // @ts-ignore TODO(bckenny): this can never be null
           this._dom.createChildOf(rowElem, 'td', classes).appendChild(this.render(valueAsDetails));
           continue;
         }
@@ -257,6 +285,7 @@ class DetailsRenderer {
         // @ts-ignore - TODO(bckenny): handle with refactoring above
         const valueType = value.type;
         const classes = `lh-table-column--${valueType || heading.itemType}`;
+        // @ts-ignore TODO(bckenny): this can never be null
         this._dom.createChildOf(rowElem, 'td', classes).appendChild(this.render(item));
       }
     }

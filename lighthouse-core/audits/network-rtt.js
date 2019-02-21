@@ -59,6 +59,7 @@ class NetworkRTT extends Audit {
 
     results.sort((a, b) => b.rtt - a.rtt);
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'origin', itemType: 'text', text: str_(i18n.UIStrings.columnURL)},
       {key: 'rtt', itemType: 'ms', granularity: 1, text: str_(i18n.UIStrings.columnTimeSpent)},

@@ -2,9 +2,14 @@
     "audits": {
         "accesskeys": {
             "description": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse).", 
+            "details": {
+                "headings": [], 
+                "items": [], 
+                "type": "table"
+            }, 
             "id": "accesskeys", 
-            "score": null, 
-            "scoreDisplayMode": "manual", 
+            "score": 1.0, 
+            "scoreDisplayMode": "binary", 
             "title": "`[accesskey]` values are unique"
         }, 
         "appcache-manifest": {
@@ -159,6 +164,15 @@
         "color-contrast": {
             "description": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse).", 
             "details": {
+                "diagnostic": {
+                    "impact": "serious", 
+                    "tags": [
+                        "cat.color", 
+                        "wcag2aa", 
+                        "wcag143"
+                    ], 
+                    "type": "diagnostic"
+                }, 
                 "headings": [
                     {
                         "itemType": "node", 
@@ -166,7 +180,6 @@
                         "text": "Failing Elements"
                     }
                 ], 
-                "impact": "serious", 
                 "items": [
                     {
                         "node": {
@@ -186,11 +199,6 @@
                             "type": "node"
                         }
                     }
-                ], 
-                "tags": [
-                    "cat.color", 
-                    "wcag2aa", 
-                    "wcag143"
                 ], 
                 "type": "table"
             }, 
@@ -442,7 +450,8 @@
                         "totalByteWeight": 160738.0, 
                         "totalTaskTime": 1548.5690000000002
                     }
-                ]
+                ], 
+                "type": "diagnostic"
             }, 
             "id": "diagnostics", 
             "score": null, 
@@ -817,6 +826,15 @@
         "html-has-lang": {
             "description": "If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default language that the user chose when setting up the screen reader. If the page isn't actually in the default language, then the screen reader might not announce the page's text correctly. [Learn more](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse).", 
             "details": {
+                "diagnostic": {
+                    "impact": "serious", 
+                    "tags": [
+                        "cat.language", 
+                        "wcag2a", 
+                        "wcag311"
+                    ], 
+                    "type": "diagnostic"
+                }, 
                 "headings": [
                     {
                         "itemType": "node", 
@@ -824,7 +842,6 @@
                         "text": "Failing Elements"
                     }
                 ], 
-                "impact": "serious", 
                 "items": [
                     {
                         "node": {
@@ -835,11 +852,6 @@
                             "type": "node"
                         }
                     }
-                ], 
-                "tags": [
-                    "cat.language", 
-                    "wcag2a", 
-                    "wcag311"
                 ], 
                 "type": "table"
             }, 
@@ -865,6 +877,17 @@
         "image-alt": {
             "description": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse).", 
             "details": {
+                "diagnostic": {
+                    "impact": "critical", 
+                    "tags": [
+                        "cat.text-alternatives", 
+                        "wcag2a", 
+                        "wcag111", 
+                        "section508", 
+                        "section508.22.a"
+                    ], 
+                    "type": "diagnostic"
+                }, 
                 "headings": [
                     {
                         "itemType": "node", 
@@ -872,7 +895,6 @@
                         "text": "Failing Elements"
                     }
                 ], 
-                "impact": "critical", 
                 "items": [
                     {
                         "node": {
@@ -910,13 +932,6 @@
                             "type": "node"
                         }
                     }
-                ], 
-                "tags": [
-                    "cat.text-alternatives", 
-                    "wcag2a", 
-                    "wcag111", 
-                    "section508", 
-                    "section508.22.a"
                 ], 
                 "type": "table"
             }, 
@@ -983,7 +998,8 @@
                         "isParseFailure": true, 
                         "parseFailureReason": "No manifest was fetched"
                     }
-                ]
+                ], 
+                "type": "diagnostic"
             }, 
             "explanation": "Failures: No manifest was fetched.", 
             "id": "installable-manifest", 
@@ -1070,6 +1086,18 @@
         "label": {
             "description": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse).", 
             "details": {
+                "diagnostic": {
+                    "impact": "critical", 
+                    "tags": [
+                        "cat.forms", 
+                        "wcag2a", 
+                        "wcag332", 
+                        "wcag131", 
+                        "section508", 
+                        "section508.22.n"
+                    ], 
+                    "type": "diagnostic"
+                }, 
                 "headings": [
                     {
                         "itemType": "node", 
@@ -1077,7 +1105,6 @@
                         "text": "Failing Elements"
                     }
                 ], 
-                "impact": "critical", 
                 "items": [
                     {
                         "node": {
@@ -1107,14 +1134,6 @@
                         }
                     }
                 ], 
-                "tags": [
-                    "cat.forms", 
-                    "wcag2a", 
-                    "wcag332", 
-                    "wcag131", 
-                    "section508", 
-                    "section508.22.n"
-                ], 
                 "type": "table"
             }, 
             "id": "label", 
@@ -1132,6 +1151,18 @@
         "link-name": {
             "description": "Link text (and alternate text for images, when used as links) that is discernible, unique, and focusable improves the navigation experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse).", 
             "details": {
+                "diagnostic": {
+                    "impact": "serious", 
+                    "tags": [
+                        "cat.name-role-value", 
+                        "wcag2a", 
+                        "wcag412", 
+                        "wcag244", 
+                        "section508", 
+                        "section508.22.a"
+                    ], 
+                    "type": "diagnostic"
+                }, 
                 "headings": [
                     {
                         "itemType": "node", 
@@ -1139,7 +1170,6 @@
                         "text": "Failing Elements"
                     }
                 ], 
-                "impact": "serious", 
                 "items": [
                     {
                         "node": {
@@ -1159,14 +1189,6 @@
                             "type": "node"
                         }
                     }
-                ], 
-                "tags": [
-                    "cat.name-role-value", 
-                    "wcag2a", 
-                    "wcag412", 
-                    "wcag244", 
-                    "section508", 
-                    "section508.22.a"
                 ], 
                 "type": "table"
             }, 
@@ -1581,19 +1603,13 @@
                         "speedIndex": 4417.0, 
                         "speedIndexTs": 185607736912.0
                     }
-                ]
+                ], 
+                "type": "diagnostic"
             }, 
             "id": "metrics", 
             "score": null, 
             "scoreDisplayMode": "informative", 
             "title": "Metrics"
-        }, 
-        "mobile-friendly": {
-            "description": "Take the [Mobile-Friendly Test](https://search.google.com/test/mobile-friendly) to check for audits not covered by Lighthouse, like sizing tap targets appropriately. [Learn more](https://developers.google.com/search/mobile-sites/).", 
-            "id": "mobile-friendly", 
-            "score": null, 
-            "scoreDisplayMode": "manual", 
-            "title": "Page is mobile friendly"
         }, 
         "network-requests": {
             "description": "Lists the network requests that were made during page load.", 
@@ -2010,6 +2026,17 @@
         "object-alt": {
             "description": "Screen readers cannot translate non-text content. Adding alt text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse).", 
             "details": {
+                "diagnostic": {
+                    "impact": "serious", 
+                    "tags": [
+                        "cat.text-alternatives", 
+                        "wcag2a", 
+                        "wcag111", 
+                        "section508", 
+                        "section508.22.a"
+                    ], 
+                    "type": "diagnostic"
+                }, 
                 "headings": [
                     {
                         "itemType": "node", 
@@ -2017,7 +2044,6 @@
                         "text": "Failing Elements"
                     }
                 ], 
-                "impact": "serious", 
                 "items": [
                     {
                         "node": {
@@ -2037,13 +2063,6 @@
                             "type": "node"
                         }
                     }
-                ], 
-                "tags": [
-                    "cat.text-alternatives", 
-                    "wcag2a", 
-                    "wcag111", 
-                    "section508", 
-                    "section508.22.a"
                 ], 
                 "type": "table"
             }, 
@@ -2319,7 +2338,8 @@
                         "isParseFailure": true, 
                         "parseFailureReason": "No manifest was fetched"
                     }
-                ]
+                ], 
+                "type": "diagnostic"
             }, 
             "explanation": "Failures: No manifest was fetched.", 
             "id": "splash-screen", 
@@ -2376,7 +2396,8 @@
                         "parseFailureReason": "No manifest was fetched", 
                         "themeColor": null
                     }
-                ]
+                ], 
+                "type": "diagnostic"
             }, 
             "explanation": "Failures: No manifest was fetched,\nNo `<meta name=\"theme-color\">` tag found.", 
             "id": "themed-omnibox", 
@@ -2444,15 +2465,15 @@
                     }, 
                     {
                         "totalBytes": 821.0, 
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200"
-                    }, 
-                    {
-                        "totalBytes": 821.0, 
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true"
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100"
                     }, 
                     {
                         "totalBytes": 821.0, 
                         "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true"
+                    }, 
+                    {
+                        "totalBytes": 821.0, 
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200"
                     }
                 ], 
                 "type": "table"
@@ -2517,7 +2538,7 @@
             "warnings": []
         }, 
         "unused-css-rules": {
-            "description": "Remove unused rules from stylesheets to reduce unnecessary bytes consumed by network activity. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/unused-css).", 
+            "description": "Remove dead rules from stylesheets and defer the loading of CSS not used for above-the-fold content to reduce unnecessary bytes consumed by network activity. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/unused-css).", 
             "details": {
                 "headings": [], 
                 "items": [], 
@@ -2528,7 +2549,7 @@
             "id": "unused-css-rules", 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
-            "title": "Defer unused CSS"
+            "title": "Remove unused CSS"
         }, 
         "use-landmarks": {
             "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#take_advantage_of_headings_and_landmarks).", 
@@ -2659,7 +2680,6 @@
                 ], 
                 "items": [
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 71654.0, 
@@ -2667,7 +2687,6 @@
                         "wastedBytes": 71654.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 24741.0, 
@@ -2675,7 +2694,6 @@
                         "wastedBytes": 24741.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 1703.0, 
@@ -2683,7 +2701,6 @@
                         "wastedBytes": 1703.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 1108.0, 
@@ -2691,15 +2708,6 @@
                         "wastedBytes": 1108.0
                     }, 
                     {
-                        "cacheControl": null, 
-                        "cacheHitProbability": 0.0, 
-                        "cacheLifetimeMs": 0.0, 
-                        "totalBytes": 821.0, 
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true", 
-                        "wastedBytes": 821.0
-                    }, 
-                    {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 821.0, 
@@ -2707,23 +2715,6 @@
                         "wastedBytes": 821.0
                     }, 
                     {
-                        "cacheControl": null, 
-                        "cacheHitProbability": 0.0, 
-                        "cacheLifetimeMs": 0.0, 
-                        "totalBytes": 821.0, 
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200", 
-                        "wastedBytes": 821.0
-                    }, 
-                    {
-                        "cacheControl": null, 
-                        "cacheHitProbability": 0.0, 
-                        "cacheLifetimeMs": 0.0, 
-                        "totalBytes": 821.0, 
-                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200", 
-                        "wastedBytes": 821.0
-                    }, 
-                    {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 821.0, 
@@ -2731,7 +2722,27 @@
                         "wastedBytes": 821.0
                     }, 
                     {
-                        "cacheControl": null, 
+                        "cacheHitProbability": 0.0, 
+                        "cacheLifetimeMs": 0.0, 
+                        "totalBytes": 821.0, 
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200", 
+                        "wastedBytes": 821.0
+                    }, 
+                    {
+                        "cacheHitProbability": 0.0, 
+                        "cacheLifetimeMs": 0.0, 
+                        "totalBytes": 821.0, 
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true", 
+                        "wastedBytes": 821.0
+                    }, 
+                    {
+                        "cacheHitProbability": 0.0, 
+                        "cacheLifetimeMs": 0.0, 
+                        "totalBytes": 821.0, 
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200", 
+                        "wastedBytes": 821.0
+                    }, 
+                    {
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 144.0, 
@@ -2739,7 +2750,6 @@
                         "wastedBytes": 144.0
                     }, 
                     {
-                        "cacheControl": null, 
                         "cacheHitProbability": 0.0, 
                         "cacheLifetimeMs": 0.0, 
                         "totalBytes": 0.0, 
@@ -2993,6 +3003,11 @@
         "accessibility": {
             "auditRefs": [
                 {
+                    "group": "a11y-navigation", 
+                    "id": "accesskeys", 
+                    "weight": 3.0
+                }, 
+                {
                     "group": "a11y-aria", 
                     "id": "aria-allowed-attr", 
                     "weight": 0.0
@@ -3028,17 +3043,17 @@
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-correct-attributes", 
+                    "group": "a11y-audio-video", 
                     "id": "audio-caption", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-element-names", 
+                    "group": "a11y-names-labels", 
                     "id": "button-name", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-navigation", 
                     "id": "bypass", 
                     "weight": 10.0
                 }, 
@@ -3048,27 +3063,27 @@
                     "weight": 6.0
                 }, 
                 {
-                    "group": "a11y-well-structured", 
+                    "group": "a11y-tables-lists", 
                     "id": "definition-list", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-well-structured", 
+                    "group": "a11y-tables-lists", 
                     "id": "dlitem", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-names-labels", 
                     "id": "document-title", 
                     "weight": 2.0
                 }, 
                 {
-                    "group": "a11y-well-structured", 
+                    "group": "a11y-best-practices", 
                     "id": "duplicate-id", 
                     "weight": 5.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-names-labels", 
                     "id": "frame-title", 
                     "weight": 0.0
                 }, 
@@ -3083,67 +3098,67 @@
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-correct-attributes", 
+                    "group": "a11y-names-labels", 
                     "id": "image-alt", 
                     "weight": 8.0
                 }, 
                 {
-                    "group": "a11y-correct-attributes", 
+                    "group": "a11y-names-labels", 
                     "id": "input-image-alt", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-names-labels", 
                     "id": "label", 
                     "weight": 10.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-tables-lists", 
                     "id": "layout-table", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-element-names", 
+                    "group": "a11y-names-labels", 
                     "id": "link-name", 
                     "weight": 9.0
                 }, 
                 {
-                    "group": "a11y-well-structured", 
+                    "group": "a11y-tables-lists", 
                     "id": "list", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-well-structured", 
+                    "group": "a11y-tables-lists", 
                     "id": "listitem", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-meta", 
+                    "group": "a11y-best-practices", 
                     "id": "meta-refresh", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-meta", 
+                    "group": "a11y-best-practices", 
                     "id": "meta-viewport", 
                     "weight": 3.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-names-labels", 
                     "id": "object-alt", 
                     "weight": 4.0
                 }, 
                 {
-                    "group": "a11y-correct-attributes", 
+                    "group": "a11y-navigation", 
                     "id": "tabindex", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-correct-attributes", 
+                    "group": "a11y-tables-lists", 
                     "id": "td-headers-attr", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-correct-attributes", 
+                    "group": "a11y-tables-lists", 
                     "id": "th-has-data-cells", 
                     "weight": 0.0
                 }, 
@@ -3153,17 +3168,13 @@
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-audio-video", 
                     "id": "video-caption", 
                     "weight": 0.0
                 }, 
                 {
-                    "group": "a11y-describe-contents", 
+                    "group": "a11y-audio-video", 
                     "id": "video-description", 
-                    "weight": 0.0
-                }, 
-                {
-                    "id": "accesskeys", 
                     "weight": 0.0
                 }, 
                 {
@@ -3214,7 +3225,7 @@
             "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.", 
             "id": "accessibility", 
             "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).", 
-            "score": 0.33, 
+            "score": 0.36, 
             "title": "Accessibility"
         }, 
         "best-practices": {
@@ -3611,10 +3622,6 @@
                     "weight": 1.0
                 }, 
                 {
-                    "id": "mobile-friendly", 
-                    "weight": 0.0
-                }, 
-                {
                     "id": "structured-data", 
                     "weight": 0.0
                 }
@@ -3629,35 +3636,35 @@
     "categoryGroups": {
         "a11y-aria": {
             "description": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader.", 
-            "title": "ARIA Attributes Follow Best Practices"
+            "title": "ARIA"
+        }, 
+        "a11y-audio-video": {
+            "description": "These are opportunities to provide alternative content for audio and video. This may improve the experience for users with hearing or vision impairments.", 
+            "title": "Audio and video"
+        }, 
+        "a11y-best-practices": {
+            "description": "These items highlight common accessibility best practices.", 
+            "title": "Best practices"
         }, 
         "a11y-color-contrast": {
             "description": "These are opportunities to improve the legibility of your content.", 
-            "title": "Color Contrast Is Satisfactory"
-        }, 
-        "a11y-correct-attributes": {
-            "description": "These are opportunities to improve the configuration of your HTML elements.", 
-            "title": "Elements Use Attributes Correctly"
-        }, 
-        "a11y-describe-contents": {
-            "description": "These are opportunities to make your content easier to understand for a user of assistive technology, like a screen reader.", 
-            "title": "Elements Describe Contents Well"
-        }, 
-        "a11y-element-names": {
-            "description": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.", 
-            "title": "Elements Have Discernible Names"
+            "title": "Contrast"
         }, 
         "a11y-language": {
             "description": "These are opportunities to improve the interpretation of your content by users in different locales.", 
-            "title": "Page Specifies Valid Language"
+            "title": "Internationalization and localization"
         }, 
-        "a11y-meta": {
-            "description": "These are opportunities to improve the user experience of your site.", 
-            "title": "Meta Tags Used Properly"
+        "a11y-names-labels": {
+            "description": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.", 
+            "title": "Names and labels"
         }, 
-        "a11y-well-structured": {
-            "description": "These are opportunities to make sure your HTML is appropriately structured.", 
-            "title": "Elements Are Well Structured"
+        "a11y-navigation": {
+            "description": "These are opportunities to improve keyboard navigation in your application.", 
+            "title": "Navigation"
+        }, 
+        "a11y-tables-lists": {
+            "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.", 
+            "title": "Tables and lists"
         }, 
         "diagnostics": {
             "description": "More information about the performance of your application.", 
@@ -3719,6 +3726,8 @@
             "opportunitySavingsColumnLabel": "Estimated Savings", 
             "passedAuditsGroupTitle": "Passed audits", 
             "scorescaleLabel": "Score scale:", 
+            "snippetCollapseButtonLabel": "Collapse snippet", 
+            "snippetExpandButtonLabel": "Expand snippet", 
             "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:", 
             "varianceDisclaimer": "Values are estimated and may vary.", 
             "warningAuditsGroupTitle": "Passed audits but with warnings", 
@@ -4153,6 +4162,12 @@
             {
                 "duration": 100.0, 
                 "entryType": "measure", 
+                "name": "lh:audit:accesskeys", 
+                "startTime": 0.0
+            }, 
+            {
+                "duration": 100.0, 
+                "entryType": "measure", 
                 "name": "lh:audit:aria-allowed-attr", 
                 "startTime": 0.0
             }, 
@@ -4352,12 +4367,6 @@
                 "duration": 100.0, 
                 "entryType": "measure", 
                 "name": "lh:audit:video-description", 
-                "startTime": 0.0
-            }, 
-            {
-                "duration": 100.0, 
-                "entryType": "measure", 
-                "name": "lh:audit:accesskeys", 
                 "startTime": 0.0
             }, 
             {
@@ -4640,12 +4649,6 @@
                 "duration": 100.0, 
                 "entryType": "measure", 
                 "name": "lh:audit:canonical", 
-                "startTime": 0.0
-            }, 
-            {
-                "duration": 100.0, 
-                "entryType": "measure", 
-                "name": "lh:audit:mobile-friendly", 
                 "startTime": 0.0
             }, 
             {

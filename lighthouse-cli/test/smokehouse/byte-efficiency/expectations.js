@@ -17,7 +17,7 @@ module.exports = [
         details: {
           overallSavingsBytes: '>17000',
           items: {
-            length: 1,
+            length: 2,
           },
         },
       },
@@ -33,7 +33,7 @@ module.exports = [
       },
       'unused-css-rules': {
         details: {
-          overallSavingsBytes: '>39000',
+          overallSavingsBytes: '>35000',
           items: {
             length: 2,
           },

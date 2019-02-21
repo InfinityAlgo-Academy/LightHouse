@@ -57,6 +57,7 @@ class NetworkServerLatency extends Audit {
 
     results.sort((a, b) => b.serverReponseTime - a.serverReponseTime);
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'origin', itemType: 'text', text: str_(i18n.UIStrings.columnURL)},
       {key: 'serverReponseTime', itemType: 'ms', granularity: 1,

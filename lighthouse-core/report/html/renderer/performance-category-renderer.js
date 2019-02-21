@@ -160,8 +160,9 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const thumbnailResult = thumbnailAudit && thumbnailAudit.result;
     if (thumbnailResult && thumbnailResult.details) {
       timelineEl.id = thumbnailResult.id;
+      // @ts-ignore TODO(bckenny): fix detailsRenderer.render input type
       const filmstripEl = this.detailsRenderer.render(thumbnailResult.details);
-      timelineEl.appendChild(filmstripEl);
+      filmstripEl && timelineEl.appendChild(filmstripEl);
     }
 
     // Opportunities
