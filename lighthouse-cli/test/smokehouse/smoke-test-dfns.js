@@ -4,7 +4,7 @@ const path = require('path');
 const smokehouseDir = 'lighthouse-cli/test/smokehouse/';
 
 /** @type {Array<Smokehouse.TestDfn>} */
-module.exports.SMOKE_TESTS = [{
+const SMOKE_TESTS = [{
   id: 'a11y',
   config: smokehouseDir + 'a11y/a11y-config.js',
   expectations: 'a11y/expectations.js',
@@ -101,8 +101,8 @@ function loadExpectations(expectationsPath) {
   return require(expectationsPath);
 }
 
-module.exports.getCompactSmokeTests = () => {
-  return module.exports.SMOKE_TESTS.map(smokeTestDfn => {
+function getUncompactedSmokeTests() {
+  return SMOKE_TESTS.map(smokeTestDfn => {
     return {
       id: smokeTestDfn.id,
       config: loadConfig(resolveLocalOrProjectRoot(smokeTestDfn.config)),
@@ -110,4 +110,9 @@ module.exports.getCompactSmokeTests = () => {
       batch: smokeTestDfn.batch,
     };
   });
+}
+
+module.exports = {
+  SMOKE_TESTS,
+  getUncompactedSmokeTests,
 };
