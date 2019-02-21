@@ -19,7 +19,6 @@
 /* globals self, Util, CategoryRenderer */
 
 /** @typedef {import('./dom.js')} DOM */
-/** @typedef {LH.Audit.Details.Opportunity} OpportunityDetails */
 
 class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
@@ -66,8 +65,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     if (!audit.result.details || audit.result.scoreDisplayMode === 'error') {
       return element;
     }
-    // TODO(bckenny): remove cast when details is fully discriminated based on `type`.
-    const details = /** @type {OpportunityDetails} */ (audit.result.details);
+    const details = audit.result.details;
     if (details.type !== 'opportunity') {
       return element;
     }
@@ -97,8 +95,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
    */
   _getWastedMs(audit) {
     if (audit.result.details && audit.result.details.type === 'opportunity') {
-      // TODO(bckenny): remove cast when details is fully discriminated based on `type`.
-      const details = /** @type {OpportunityDetails} */ (audit.result.details);
+      const details = audit.result.details;
       if (typeof details.overallSavingsMs !== 'number') {
         throw new Error('non-opportunity details passed to _getWastedMs');
       }
@@ -160,7 +157,6 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const thumbnailResult = thumbnailAudit && thumbnailAudit.result;
     if (thumbnailResult && thumbnailResult.details) {
       timelineEl.id = thumbnailResult.id;
-      // @ts-ignore TODO(bckenny): fix detailsRenderer.render input type
       const filmstripEl = this.detailsRenderer.render(thumbnailResult.details);
       filmstripEl && timelineEl.appendChild(filmstripEl);
     }

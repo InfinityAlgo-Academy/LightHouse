@@ -189,9 +189,10 @@ class RenderBlockingResources extends Audit {
     const wastedBytesByUrl = new Map();
     try {
       const results = await UnusedCSS.audit(artifacts, context);
-      // @ts-ignore - TODO(bckenny): details types.
-      for (const item of results.details.items) {
-        wastedBytesByUrl.set(item.url, item.wastedBytes);
+      if (results.details && results.details.type === 'opportunity') {
+        for (const item of results.details.items) {
+          wastedBytesByUrl.set(item.url, item.wastedBytes);
+        }
       }
     } catch (_) {}
 

@@ -151,8 +151,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
     }
 
     const usage = UnusedCSSRules.computeUsage(stylesheetInfo);
-    // @ts-ignore TODO(bckenny): fix index signature on ByteEfficiencyItem.
-    return Object.assign({url}, usage);
+    return {url, ...usage};
   }
 
   /**
