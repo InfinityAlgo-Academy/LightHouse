@@ -20,4 +20,11 @@ declare module Smokehouse {
     errorCode: Comparison;
     finalUrl: Comparison;
   }
+
+  export interface TestDfn {
+    id: string;
+    expectations: string;
+    config: string;
+    batch: string;
+  }
 }

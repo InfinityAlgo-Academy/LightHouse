@@ -35,7 +35,7 @@ function displaySmokehouseOutput(result) {
 /**
  * Run smokehouse in child processes for selected smoketests
  * Display output from each as soon as they finish, but resolve function when ALL are complete
- * @param {Array<typeof SMOKETESTS[0]>} smokes
+ * @param {Array<Smokehouse.TestDfn>} smokes
  * @return {Promise<Array<{id: string, error?: Error}>>}
  */
 async function runSmokehouse(smokes) {

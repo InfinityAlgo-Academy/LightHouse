@@ -1,18 +1,9 @@
 'use strict';
 
 const path = require('path');
-
-/**
- * @typedef {object} SmoketestDfn
- * @property {string} id
- * @property {string} expectations
- * @property {string} config
- * @property {string | undefined} batch
- */
-
 const smokehouseDir = 'lighthouse-cli/test/smokehouse/';
 
-/** @type {Array<SmoketestDfn>} */
+/** @type {Array<Smokehouse.TestDfn>} */
 module.exports.SMOKE_TESTS = [{
   id: 'a11y',
   config: smokehouseDir + 'a11y/a11y-config.js',
