@@ -27,7 +27,8 @@
       {"id":"npm:backbone:20110701","severity":"medium","semver":{"vulnerable":["<0.5.0"]}}
     ],
     "bootstrap":[
-      {"id":"npm:bootstrap:20180529","severity":"medium","semver":{"vulnerable":[">=4.0.0 <4.1.2"]}},
+      {"id":"SNYK-JS-BOOTSTRAP-173700","severity":"medium","semver":{"vulnerable":["<3.4.1",">=4.0.0 <4.3.1"]}},
+      {"id":"SNYK-JS-BOOTSTRAP-73560","severity":"medium","semver":{"vulnerable":[">=4.0.0 <4.1.2"]}},
       {"id":"SNYK-JS-BOOTSTRAP-72890","severity":"medium","semver":{"vulnerable":["<3.4.0"]}},
       {"id":"SNYK-JS-BOOTSTRAP-72889","severity":"medium","semver":{"vulnerable":["<3.4.0"]}},
       {"id":"npm:bootstrap:20180529","severity":"medium","semver":{"vulnerable":["<3.4.0",">=4.0.0 <4.1.2"]}},
@@ -48,6 +49,7 @@
       {"id":"npm:foundation-sites:20120717","severity":"medium","semver":{"vulnerable":["<3.0.6 >=3.0.0"]}}
     ],
     "handlebars":[
+      {"id":"SNYK-JS-HANDLEBARS-173692","severity":"high","semver":{"vulnerable":["<4.0.13"]}},
       {"id":"npm:handlebars:20151207","severity":"medium","semver":{"vulnerable":["<4.0.0"]}},
       {"id":"npm:handlebars:20110425","severity":"medium","semver":{"vulnerable":["<=1.0.0-beta.3"]}}
     ],
