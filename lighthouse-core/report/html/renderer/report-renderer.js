@@ -39,18 +39,51 @@ class ReportRenderer {
   }
 
   /**
-   * @param {LH.Result} result
+   * @param {LH.Result | LH.Result[]} results
    * @param {Element} container Parent element to render the report into.
    * @return {Element}
    */
-  renderReport(result, container) {
+  render(results, container) {
+    if (Array.isArray(results)) {
+      return this.renderReportDiff(results, container);
+    } else {
+      return this.renderReport(results, container);
+    }
+  }
+
+  /**
+   * @param {LH.Result} results
+   * @param {Element} container Parent element to render the report into.
+   * @return {Element}
+   */
+  renderReport(results, container) {
     // Mutate the UIStrings if necessary (while saving originals)
     const originalUIStrings = JSON.parse(JSON.stringify(Util.UIStrings));
 
-    const report = Util.prepareReportResult(result);
+    const report = Util.prepareReportResult(results);
 
     container.textContent = ''; // Remove previous report.
     container.appendChild(this._renderReport(report));
+
+    // put the UIStrings back into original state
+    Util.updateAllUIStrings(originalUIStrings);
+
+    return container;
+  }
+
+  /**
+   * @param {LH.Result[]} results
+   * @param {Element} container Parent element to render the report into.
+   * @return {Element}
+   */
+  renderReportDiff(results, container) {
+    // Mutate the UIStrings if necessary (while saving originals)
+    const originalUIStrings = JSON.parse(JSON.stringify(Util.UIStrings));
+
+    const reports = results.map(Util.prepareReportResult);
+
+    container.textContent = ''; // Remove previous report.
+    container.appendChild(this._renderReportDiff(reports));
 
     // put the UIStrings back into original state
     Util.updateAllUIStrings(originalUIStrings);
@@ -154,6 +187,119 @@ class ReportRenderer {
     }
 
     return container;
+  }
+
+  /**
+   * @param {LH.ReportResult[]} reports
+   * @return {DocumentFragment}
+   */
+  _renderReportDiff(reports) {
+    const baseReport = reports[0];
+
+    // some pre-conditions. Remove as tests are added to cover these cases.
+    if (reports.length < 2) throw new Error();
+
+    for (const report of reports) {
+      if (report.reportCategories.length != baseReport.reportCategories.length) {
+        throw new Error();
+      }
+    }
+
+    let header;
+    const headerContainer = this._dom.createElement('div');
+    if (this._dom.isDevTools()) {
+      headerContainer.classList.add('lh-header-plain');
+      header = this._renderReportShortHeader();
+    } else {
+      // headerContainer.classList.add('lh-header-sticky');
+      header = this._renderReportHeader(baseReport);
+    }
+    headerContainer.appendChild(header);
+
+    const container = this._dom.createElement('div', 'lh-container');
+    const reportSection = container.appendChild(this._dom.createElement('div', 'lh-report'));
+
+    for (const report of reports) {
+      reportSection.appendChild(this._renderReportWarnings(report));
+    }
+
+    const detailsRenderer = new DetailsRenderer(this._dom);
+    const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
+    categoryRenderer.setTemplateContext(this._templateContext);
+
+    /** @type {Record<string, CategoryRenderer>} */
+    const specificCategoryRenderers = {
+      performance: new PerformanceCategoryRenderer(this._dom, detailsRenderer),
+      pwa: new PwaCategoryRenderer(this._dom, detailsRenderer),
+    };
+    Object.values(specificCategoryRenderers).forEach(renderer => {
+      renderer.setTemplateContext(this._templateContext);
+    });
+
+    const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
+
+    for (const category of baseReport.reportCategories) {
+      const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
+      categories.appendChild(renderer.renderDiff(
+        // @ts-ignore
+        reports.map(r => r.reportCategories.find(rc => rc.id === category.id)),
+        reports.map(r => r.categoryGroups)
+      ));
+    }
+
+    // Fireworks
+    // const scoresAll100 = report.reportCategories.every(cat => cat.score === 1);
+    // if (!this._dom.isDevTools() && scoresAll100) {
+    //   headerContainer.classList.add('score100');
+    //   this._dom.find('.lh-header', headerContainer).addEventListener('click', _ => {
+    //     headerContainer.classList.toggle('fireworks-paused');
+    //   });
+    // }
+
+    const isSoloCategory = baseReport.reportCategories.length === 1;
+    if (isSoloCategory) {
+      headerContainer.classList.add('lh-header--solo-category');
+    } else {
+      const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
+
+      for (const report of reports) {
+        const scoreHeader = this._dom.createElement('div', 'lh-scores-header');
+        const letterNode = categoryRenderer._createLetterNode(reports.indexOf(report));
+        letterNode.textContent += ' ' + report.requestedUrl;
+        scoreHeader.appendChild(letterNode);
+
+        const defaultGauges = [];
+        const customGauges = [];
+
+        for (const category of report.reportCategories) {
+          const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
+          const categoryGauge = renderer.renderScoreGauge(category, report.categoryGroups || {});
+
+          // Group gauges that aren't default at the end of the header
+          if (renderer.renderScoreGauge === categoryRenderer.renderScoreGauge) {
+            defaultGauges.push(categoryGauge);
+          } else {
+            customGauges.push(categoryGauge);
+          }
+        }
+
+        scoreHeader.append(...defaultGauges, ...customGauges);
+        scoresContainer.append(scoreHeader);
+      }
+
+      const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
+      this._dom.find('.lh-scorescale-label', scoreScale).textContent =
+        Util.UIStrings.scorescaleLabel;
+      scoresContainer.appendChild(scoreScale);
+    }
+
+    reportSection.appendChild(this._renderReportFooter(baseReport));
+
+    const reportFragment = this._dom.createFragment();
+    reportFragment.appendChild(headerContainer);
+    reportFragment.appendChild(container);
+
+    return reportFragment;
   }
 
   /**

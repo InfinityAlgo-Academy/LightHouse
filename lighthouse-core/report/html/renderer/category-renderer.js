@@ -22,7 +22,7 @@
 /** @typedef {import('./report-renderer.js')} ReportRenderer */
 /** @typedef {import('./details-renderer.js')} DetailsRenderer */
 /** @typedef {import('./util.js')} Util */
-/** @typedef {'failed'|'warning'|'manual'|'passed'|'notApplicable'} TopLevelClumpId */
+/** @typedef {'failed'|'warning'|'manual'|'passed'|'notApplicable'|'changed'} TopLevelClumpId */
 
 class CategoryRenderer {
   /**
@@ -49,11 +49,13 @@ class CategoryRenderer {
       manual: Util.UIStrings.manualAuditsGroupTitle,
       passed: Util.UIStrings.passedAuditsGroupTitle,
       notApplicable: Util.UIStrings.notApplicableAuditsGroupTitle,
+      changed: 'Changed',
+      failed: 'Failed',
     };
   }
 
   /**
-   * @param {LH.ReportResult.AuditRef} audit
+   * @param {LH.ReportResult.AuditRef | LH.ReportResult.AuditRef[]} audit
    * @param {number} index
    * @return {Element}
    */
@@ -64,66 +66,97 @@ class CategoryRenderer {
 
   /**
    * Populate an DOM tree with audit details. Used by renderAudit and renderOpportunity
-   * @param {LH.ReportResult.AuditRef} audit
+   * @param {LH.ReportResult.AuditRef | LH.ReportResult.AuditRef[]} audits
    * @param {number} index
    * @param {DocumentFragment} tmpl
    * @return {Element}
    */
-  populateAuditValues(audit, index, tmpl) {
-    const auditEl = this.dom.find('.lh-audit', tmpl);
-    auditEl.id = audit.result.id;
-    const scoreDisplayMode = audit.result.scoreDisplayMode;
+  populateAuditValues(audits, index, tmpl) {
+    if (!Array.isArray(audits)) audits = [audits];
+    const baseAudit = audits[0];
+    const isDiff = audits.length > 1;
 
-    if (audit.result.displayValue) {
-      const displayValue = Util.formatDisplayValue(audit.result.displayValue);
+    const auditEl = this.dom.find('.lh-audit', tmpl);
+    auditEl.id = baseAudit.result.id;
+    const scoreDisplayMode = baseAudit.result.scoreDisplayMode;
+
+    if (baseAudit.result.displayValue) {
+      const displayValue = Util.formatDisplayValue(baseAudit.result.displayValue);
       this.dom.find('.lh-audit__display-text', auditEl).textContent = displayValue;
     }
 
     const titleEl = this.dom.find('.lh-audit__title', auditEl);
-    titleEl.appendChild(this.dom.convertMarkdownCodeSnippets(audit.result.title));
+    titleEl.appendChild(this.dom.convertMarkdownCodeSnippets(baseAudit.result.title));
     this.dom.find('.lh-audit__description', auditEl)
-        .appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.description));
+        .appendChild(this.dom.convertMarkdownLinkSnippets(baseAudit.result.description));
 
     const header = /** @type {HTMLDetailsElement} */ (this.dom.find('details', auditEl));
-    if (audit.result.details) {
-      const elem = this.detailsRenderer.render(audit.result.details);
-      if (elem) {
-        elem.classList.add('lh-details');
-        header.appendChild(elem);
+    for (const audit of audits) {
+      let elem;
+      if (audit.result.details) {
+        elem = this.detailsRenderer.render(audit.result.details);
       }
+
+      if (isDiff) {
+        // if (!elem) {
+        //   elem = this.dom.createElement('div');
+        //   elem.textContent = 'No details.';
+        // }
+        header.appendChild(this._createLetterNode(audits.indexOf(audit)));
+        // elem.classList.add('lh-details');
+      }
+
+      if (elem) header.appendChild(elem);
     }
     this.dom.find('.lh-audit__index', auditEl).textContent = `${index + 1}`;
 
     // Add chevron SVG to the end of the summary
     this.dom.find('.lh-chevron-container', auditEl).appendChild(this._createChevron());
-    this._setRatingClass(auditEl, audit.result.score, scoreDisplayMode);
+    for (const audit of audits) {
+      const exists = this.dom.findAll('.lh-audit__score-icons', auditEl).length > 0;
+      if (!exists) continue;
+      const scoreIcon = this.dom.createElement('div', 'lh-audit__score-icon');
+      this._setRatingClass(scoreIcon, audit.result.score, scoreDisplayMode);
+      this.dom.find('.lh-audit__score-icons', auditEl).appendChild(scoreIcon);
 
-    if (audit.result.scoreDisplayMode === 'error') {
-      auditEl.classList.add(`lh-audit--error`);
-      const textEl = this.dom.find('.lh-audit__display-text', auditEl);
-      textEl.textContent = Util.UIStrings.errorLabel;
-      textEl.classList.add('tooltip-boundary');
-      const tooltip = this.dom.createChildOf(textEl, 'div', 'tooltip tooltip--error');
-      tooltip.textContent = audit.result.errorMessage || Util.UIStrings.errorMissingAuditInfo;
-    } else if (audit.result.explanation) {
-      const explEl = this.dom.createChildOf(titleEl, 'div', 'lh-audit-explanation');
-      explEl.textContent = audit.result.explanation;
-    }
-    const warnings = audit.result.warnings;
-    if (!warnings || warnings.length === 0) return auditEl;
-
-    // Add list of warnings or singular warning
-    const warningsEl = this.dom.createChildOf(titleEl, 'div', 'lh-warnings');
-    if (warnings.length === 1) {
-      warningsEl.textContent = `${Util.UIStrings.warningHeader} ${warnings.join('')}`;
-    } else {
-      warningsEl.textContent = Util.UIStrings.warningHeader;
-      const warningsUl = this.dom.createChildOf(warningsEl, 'ul');
-      for (const warning of warnings) {
-        const item = this.dom.createChildOf(warningsUl, 'li');
-        item.textContent = warning;
+      // Add an icon to each details' letter node.
+      if (isDiff) {
+        this.dom.findAll('.lh-letter-node', auditEl)[audits.indexOf(audit)].prepend(scoreIcon.cloneNode());
       }
     }
+
+    for (const audit of audits) {
+      if (audit.result.scoreDisplayMode === 'error') {
+        auditEl.classList.add(`lh-audit--error`);
+        const textEl = this.dom.find('.lh-audit__display-text', auditEl);
+        textEl.textContent = Util.UIStrings.errorLabel;
+        textEl.classList.add('tooltip-boundary');
+        const tooltip = this.dom.createChildOf(textEl, 'div', 'tooltip tooltip--error');
+        tooltip.textContent = audit.result.errorMessage || Util.UIStrings.errorMissingAuditInfo;
+      } else if (audit.result.explanation) {
+        const explEl = this.dom.createChildOf(titleEl, 'div', 'lh-audit-explanation');
+        explEl.textContent = audit.result.explanation;
+        // hack
+        if (isDiff) explEl.textContent = this._createLetterNode(audits.indexOf(audit)).textContent + ': ' + explEl.textContent;
+      }
+      const warnings = audit.result.warnings;
+      if (!warnings || warnings.length === 0) continue;
+
+      // Add list of warnings or singular warning
+      const warningsEl = this.dom.createChildOf(titleEl, 'div', 'lh-warnings');
+      if (warnings.length === 1) {
+        warningsEl.textContent = `${Util.UIStrings.warningHeader} ${warnings.join('')}`;
+        if (isDiff) warningsEl.prepend(this._createLetterNode(audits.indexOf(audit)));
+      } else {
+        warningsEl.textContent = Util.UIStrings.warningHeader;
+        const warningsUl = this.dom.createChildOf(warningsEl, 'ul');
+        for (const warning of warnings) {
+          const item = this.dom.createChildOf(warningsUl, 'li');
+          item.textContent = warning;
+        }
+      }
+    }
+
     return auditEl;
   }
 
@@ -195,13 +228,13 @@ class CategoryRenderer {
   /**
    * Takes an array of auditRefs, groups them if requested, then returns an
    * array of audit and audit-group elements.
-   * @param {Array<LH.ReportResult.AuditRef>} auditRefs
+   * @param {Array<LH.ReportResult.AuditRef[]>} auditRefs
    * @param {Object<string, LH.Result.ReportGroup>} groupDefinitions
    * @return {Array<Element>}
    */
   _renderGroupedAudits(auditRefs, groupDefinitions) {
     // Audits grouped by their group (or under notAGroup).
-    /** @type {Map<string, Array<LH.ReportResult.AuditRef>>} */
+    /** @type {Map<string, Array<LH.ReportResult.AuditRef[]>>} */
     const grouped = new Map();
 
     // Add audits without a group first so they will appear first.
@@ -209,7 +242,7 @@ class CategoryRenderer {
     grouped.set(notAGroup, []);
 
     for (const auditRef of auditRefs) {
-      const groupId = auditRef.group || notAGroup;
+      const groupId = auditRef[0].group || notAGroup;
       const groupAuditRefs = grouped.get(groupId) || [];
       groupAuditRefs.push(auditRef);
       grouped.set(groupId, groupAuditRefs);
@@ -245,7 +278,7 @@ class CategoryRenderer {
   /**
    * Take a set of audits, group them if they have groups, then render in a top-level
    * clump that can't be expanded/collapsed.
-   * @param {Array<LH.ReportResult.AuditRef>} auditRefs
+   * @param {Array<LH.ReportResult.AuditRef[]>} auditRefs
    * @param {Object<string, LH.Result.ReportGroup>} groupDefinitions
    * @return {Element}
    */
@@ -259,15 +292,15 @@ class CategoryRenderer {
   /**
    * Take a set of audits and render in a top-level, expandable clump that starts
    * in a collapsed state.
-   * @param {Exclude<TopLevelClumpId, 'failed'>} clumpId
-   * @param {{auditRefs: Array<LH.ReportResult.AuditRef>, description?: string}} clumpOpts
+   * @param {TopLevelClumpId} clumpId
+   * @param {{auditRefs: Array<LH.ReportResult.AuditRef | LH.ReportResult.AuditRef[]>, description?: string}} clumpOpts
    * @return {Element}
    */
   renderClump(clumpId, {auditRefs, description}) {
     const clumpTmpl = this.dom.cloneTemplate('#tmpl-lh-clump', this.templateContext);
     const clumpElement = this.dom.find('.lh-clump', clumpTmpl);
 
-    if (clumpId === 'warning') {
+    if (clumpId === 'warning' || clumpId === 'changed' || clumpId === 'failed') {
       clumpElement.setAttribute('open', '');
     }
 
@@ -417,17 +450,108 @@ class CategoryRenderer {
     // Render each clump.
     for (const [clumpId, auditRefs] of clumps) {
       if (auditRefs.length === 0) continue;
+      const auditRefsCoercedToSingleItemArray = auditRefs.map(auditRef => [auditRef]);
 
       if (clumpId === 'failed') {
-        const clumpElem = this.renderUnexpandableClump(auditRefs, groupDefinitions);
+        const clumpElem = this.renderUnexpandableClump(auditRefsCoercedToSingleItemArray, groupDefinitions);
         clumpElem.classList.add(`lh-clump--failed`);
         element.appendChild(clumpElem);
         continue;
       }
 
       const description = clumpId === 'manual' ? category.manualDescription : undefined;
-      const clumpElem = this.renderClump(clumpId, {auditRefs, description});
+      const clumpElem = this.renderClump(clumpId, {auditRefs: auditRefsCoercedToSingleItemArray, description});
       element.appendChild(clumpElem);
+    }
+
+    return element;
+  }
+
+  /**
+   * @param {Array<LH.ReportResult.Category>} allCategory
+   * @param {Array<Object<string, LH.Result.ReportGroup>>} allGroupDefinitions
+   * @return {Element}
+   */
+  renderDiff(allCategory, allGroupDefinitions) {
+    const baseCategory = allCategory[0];
+    const baseGroupDefinitions = allGroupDefinitions[0];
+
+    const element = this.dom.createElement('div', 'lh-category');
+    this.createPermalinkSpan(element, baseCategory.id);
+    element.appendChild(this.renderCategoryHeader(baseCategory, baseGroupDefinitions));
+
+    // const idx = baseCategory.auditRefs.findIndex(a => a.id === 'html-has-lang');
+    // console.log(allCategory[0].auditRefs[idx],
+    //   allCategory[1].auditRefs[idx],)
+    // element.append(this.renderAuditDiff([
+    //   allCategory[0].auditRefs[idx],
+    //   allCategory[1].auditRefs[idx],
+    // ], idx));
+
+    // return element;
+
+    if (allCategory.length >= 2) {
+      // Top level clumps for audits, in order they will appear in the report.
+      /** @type {Map<TopLevelClumpId, Array<LH.ReportResult.AuditRef[]>>} */
+      const clumps = new Map();
+      clumps.set('changed', []);
+      clumps.set('failed', []);
+      clumps.set('passed', []);
+
+      /** @type {Map<string, Array<LH.ReportResult.AuditRef>>} */
+      const auditRefsGroupedById = new Map();
+      for (const category of allCategory) {
+        for (const auditRef of category.auditRefs) {
+          const auditRefs = auditRefsGroupedById.get(auditRef.id) || [];
+          auditRefs.push(auditRef);
+          auditRefsGroupedById.set(auditRef.id, auditRefs);
+        }
+      }
+
+      // Sort audits into clumps.
+      for (const [id, auditRefs] of auditRefsGroupedById) {
+        let allPassed = true;
+        let allFailed = true;
+        let na = false;
+        for (const auditRef of auditRefs) {
+          const clumpId = this._getClumpIdForAuditRef(auditRef);
+          if (clumpId === 'passed') {
+            allFailed = false;
+          } else if (clumpId === 'failed') {
+            allPassed = false;
+          } else {
+            na = true;
+          }
+        }
+
+        if (na) continue;
+        /** @type {TopLevelClumpId} */
+        let clumpId = 'changed';
+        if (allPassed) clumpId = 'passed';
+        if (allFailed) clumpId = 'failed';
+
+        const clump = /** @type {Array<LH.ReportResult.AuditRef[]>} */ (clumps.get(clumpId)); // already defined
+        clump.push(auditRefs);
+        clumps.set(clumpId, clump);
+      }
+
+      // Render each clump.
+      for (const [clumpId, auditRefs] of clumps) {
+        if (auditRefs.length === 0) continue;
+
+        // if (clumpId === 'failed') {
+        //   const clumpElem = this.renderUnexpandableClump(auditRefs, baseGroupDefinitions);
+        //   clumpElem.classList.add(`lh-clump--failed`);
+        //   element.appendChild(clumpElem);
+        //   continue;
+        // }
+
+        const description = clumpId === 'manual' ? baseCategory.manualDescription : undefined;
+        const clumpElem = this.renderClump(clumpId, {auditRefs, description});
+        element.appendChild(clumpElem);
+      }
+    } else if (allCategory.length > 2) {
+      // ...
     }
 
     return element;
@@ -441,6 +565,20 @@ class CategoryRenderer {
   createPermalinkSpan(element, id) {
     const permalinkEl = this.dom.createChildOf(element, 'span', 'lh-permalink');
     permalinkEl.id = id;
+  }
+
+  /**
+   * @param {number} index
+   */
+  _createLetterNode(index) {
+    const letter = this.dom.createElement('text', 'lh-letter-node');
+    letter.textContent = String.fromCharCode('A'.charCodeAt(0) + index);
+
+    // colors from https://stackoverflow.com/a/31817723
+    const colors = ['#00b016', '#0013cd', '#d6d40a', '#d900b5', '#e02800', '#69ee00', '#c27e00', '#7900a8', '#008fda', '#00db53', '#3f00c8', '#dd004e', '#9c0008', '#9c00e0', '#c3007f'];
+    if (index < colors.length) letter.style.backgroundColor = colors[index];
+
+    return letter;
   }
 }
 

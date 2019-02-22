@@ -136,7 +136,8 @@ class PwaCategoryRenderer extends CategoryRenderer {
    * @return {Element}
    */
   _renderAudits(auditRefs, groupDefinitions) {
-    const auditsElem = this.renderUnexpandableClump(auditRefs, groupDefinitions);
+    const auditRefsCoercedToSingleItemArray = auditRefs.map(auditRef => [auditRef]);
+    const auditsElem = this.renderUnexpandableClump(auditRefsCoercedToSingleItemArray, groupDefinitions);
 
     // Add a 'badged' class to group if all audits in that group pass.
     const passsingGroupIds = this._getPassingGroupIds(auditRefs);

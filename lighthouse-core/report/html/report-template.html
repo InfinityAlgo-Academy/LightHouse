@@ -41,7 +41,7 @@ limitations under the License.
       const renderer = new ReportRenderer(dom);
 
       const container = document.querySelector('main');
-      renderer.renderReport(window.__LIGHTHOUSE_JSON__, container);
+      renderer.render(window.__LIGHTHOUSE_JSON__, container);
 
       // Hook in JS features and page-level event listeners after the report
       // is in the document.

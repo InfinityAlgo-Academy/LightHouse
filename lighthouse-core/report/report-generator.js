@@ -33,14 +33,34 @@ class ReportGenerator {
    * @return {string}
    */
   static generateReportHtml(lhr) {
-    const sanitizedJson = JSON.stringify(lhr)
+    // const sanitizedJson = JSON.stringify(lhr)
+    //   .replace(/</g, '\\u003c') // replaces opening script tags
+    //   .replace(/\u2028/g, '\\u2028') // replaces line separators ()
+    //   .replace(/\u2029/g, '\\u2029'); // replaces paragraph separators
+    const sanitizedJavascript = htmlReportAssets.REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
+
+    const lhrs = [];
+    if (process.env.BASE_LHR) {
+      const baseLhr = JSON.parse(require('fs').readFileSync(process.env.BASE_LHR).toString('utf-8'));
+      lhrs.push(baseLhr);
+      baseLhr.audits['html-has-lang'].score = 1;
+      baseLhr.audits['html-has-lang'].rawValue = 1;
+      delete baseLhr.audits['html-has-lang'].details;
+    }
+    lhrs.push(lhr);
+    if (process.env.MORE_LHR) {
+      const paths = process.env.MORE_LHR.split(',');
+      const lhrJsons = paths.map(p => require('fs').readFileSync(p).toString('utf-8'));
+      lhrs.push(...lhrJsons.map(json => JSON.parse(json)));
+    }
+
+    const allSanitizedJson = JSON.stringify(lhrs.length === 1 ? lhrs[0] : lhrs)
       .replace(/</g, '\\u003c') // replaces opening script tags
       .replace(/\u2028/g, '\\u2028') // replaces line separators ()
       .replace(/\u2029/g, '\\u2029'); // replaces paragraph separators
-    const sanitizedJavascript = htmlReportAssets.REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
 
     return ReportGenerator.replaceStrings(htmlReportAssets.REPORT_TEMPLATE, [
-      {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
+      {search: '%%LIGHTHOUSE_JSON%%', replacement: allSanitizedJson},
       {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: sanitizedJavascript},
       {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: htmlReportAssets.REPORT_CSS},
       {search: '%%LIGHTHOUSE_TEMPLATES%%', replacement: htmlReportAssets.REPORT_TEMPLATES},
