@@ -435,6 +435,8 @@
 
 .lh-metric__value {
   white-space: nowrap; /* No wrapping between metric value and the icon */
+  width: 90px;
+  text-align: right;
 }
 
 
