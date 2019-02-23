@@ -22,30 +22,42 @@
 
 class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
-   * @param {LH.ReportResult.AuditRef} audit
+   * @param {LH.ReportResult.AuditRef[]} audits
    * @return {Element}
    */
-  _renderMetric(audit) {
+  _renderMetric(audits) {
+    const baseAudit = audits[0];
+    const isDiff = audits.length > 1;
+
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-metric', this.templateContext);
     const element = this.dom.find('.lh-metric', tmpl);
-    element.id = audit.result.id;
-    const rating = Util.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
+    element.id = baseAudit.result.id;
+    const rating = Util.calculateRating(baseAudit.result.score, baseAudit.result.scoreDisplayMode);
     element.classList.add(`lh-metric--${rating}`);
 
     const titleEl = this.dom.find('.lh-metric__title', tmpl);
-    titleEl.textContent = audit.result.title;
-
-    const valueEl = this.dom.find('.lh-metric__value', tmpl);
-    valueEl.textContent = Util.formatDisplayValue(audit.result.displayValue);
+    titleEl.textContent = baseAudit.result.title;
 
     const descriptionEl = this.dom.find('.lh-metric__description', tmpl);
-    descriptionEl.appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.description));
+    descriptionEl.appendChild(this.dom.convertMarkdownLinkSnippets(baseAudit.result.description));
 
-    if (audit.result.scoreDisplayMode === 'error') {
-      descriptionEl.textContent = '';
-      valueEl.textContent = 'Error!';
-      const tooltip = this.dom.createChildOf(descriptionEl, 'span');
-      tooltip.textContent = audit.result.errorMessage || 'Report error: no metric information';
+    const valuesEl = this.dom.find('.lh-metric__values', tmpl);
+    for (const audit of audits) {
+      const valueEl = this.dom.createChildOf(valuesEl, 'div', 'lh-metric__value');
+      valueEl.textContent = Util.formatDisplayValue(audit.result.displayValue);
+
+      if (audit.result.scoreDisplayMode === 'error') {
+        descriptionEl.textContent = '';
+        valueEl.textContent = 'Error!';
+        const tooltip = this.dom.createChildOf(descriptionEl, 'span');
+        tooltip.textContent = audit.result.errorMessage || 'Report error: no metric information';
+      }
+
+      if (isDiff) {
+        valueEl.style.backgroundColor = this._getLetterColor(audits.indexOf(audit));
+        valueEl.style.color = 'white';
+        valueEl.style.textShadow = '0 1px black';
+      }
     }
 
     return element;
@@ -135,10 +147,10 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const metricsColumn2El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-column');
 
     keyMetrics.forEach(item => {
-      metricsColumn1El.appendChild(this._renderMetric(item));
+      metricsColumn1El.appendChild(this._renderMetric([item]));
     });
     otherMetrics.forEach(item => {
-      metricsColumn2El.appendChild(this._renderMetric(item));
+      metricsColumn2El.appendChild(this._renderMetric([item]));
     });
 
     // 'Values are estimated and may vary' is used as the category description for PSI
@@ -243,34 +255,23 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Metrics
     const metricAuditsEl = this.renderAuditGroup(baseGroups.metrics);
-    for (const category of allCategory) {
-      const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
-      metricAuditsEl.appendChild(this._createLetterNode(allCategory.indexOf(category)));
 
-      const keyMetrics = metricAudits.filter(a => a.weight >= 3);
-      const otherMetrics = metricAudits.filter(a => a.weight < 3);
-
-      const metricsBoxesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-columns');
-      const metricsColumn1El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-column');
-      const metricsColumn2El = this.dom.createChildOf(metricsBoxesEl, 'div', 'lh-column');
-
-      keyMetrics.forEach(item => {
-        metricsColumn1El.appendChild(this._renderMetric(item));
-      });
-      otherMetrics.forEach(item => {
-        metricsColumn2El.appendChild(this._renderMetric(item));
-      });
-
-      // 'Values are estimated and may vary' is used as the category description for PSI
-      if (environment !== 'PSI') {
-        const estValuesEl = this.dom.createChildOf(metricsColumn2El, 'div',
-            'lh-metrics__disclaimer lh-metrics__disclaimer');
-        estValuesEl.textContent = Util.UIStrings.varianceDisclaimer;
-      }
-
-      metricAuditsEl.classList.add('lh-audit-group--metrics');
-      element.appendChild(metricAuditsEl);
+    const metricsIds = baseCategory.auditRefs.filter(audit => audit.group === 'metrics').map(m => m.id);
+    for (const id of metricsIds) {
+      metricAuditsEl.appendChild(this._renderMetric(
+        allCategory.map(category => {
+          const audit = category.auditRefs.find(a => a.id === id);
+          if (!audit) {
+            // this should never happen right?
+            throw new Error('missing a metric ...');
+          }
+          return audit;
+        })
+      ));
     }
+
+    metricAuditsEl.classList.add('lh-audit-group--metrics');
+    element.appendChild(metricAuditsEl);
 
     // Filmstrip
     for (const category of allCategory) {

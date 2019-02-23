@@ -424,6 +424,10 @@
   color: var(--secondary-text-color);
 }
 
+.lh-metric__values {
+  display: flex;
+}
+
 .lh-metric__value {
   white-space: nowrap; /* No wrapping between metric value and the icon */
 }

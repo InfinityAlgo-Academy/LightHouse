@@ -573,12 +573,18 @@ class CategoryRenderer {
   _createLetterNode(index) {
     const letter = this.dom.createElement('text', 'lh-letter-node');
     letter.textContent = String.fromCharCode('A'.charCodeAt(0) + index);
+    letter.style.backgroundColor = this._getLetterColor(index);
+    return letter;
+  }
 
+  /**
+   * @param {number} index
+   */
+  _getLetterColor(index) {
     // colors from https://stackoverflow.com/a/31817723
     const colors = ['#00b016', '#0013cd', '#d6d40a', '#d900b5', '#e02800', '#69ee00', '#c27e00', '#7900a8', '#008fda', '#00db53', '#3f00c8', '#dd004e', '#9c0008', '#9c00e0', '#c3007f'];
-    if (index < colors.length) letter.style.backgroundColor = colors[index];
-
-    return letter;
+    if (index < colors.length) return colors[index];
+    return '';
   }
 }
 
