@@ -242,6 +242,11 @@
   padding: 5px;
 }
 
+.lh-scores-header .lh-letter-node {
+  flex-basis: 100%;
+  margin: 15px;
+}
+
 /* Score */
 
 .lh-audit__score-icons {
@@ -811,6 +816,7 @@
 .lh-scores-header {
   display: flex;
   justify-content: left;
+  flex-wrap: wrap;
   overflow-x: hidden;
   position: relative;
   padding: var(--section-indent) calc(var(--section-indent) / 2) calc(var(--section-indent) * 2);
