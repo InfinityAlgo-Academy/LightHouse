@@ -455,37 +455,37 @@
   margin-left: calc(var(--body-font-size) / 2);
 }
 
-.lh-metric--pass .lh-metric__value {
+.lh-metric--pass.lh-metric__value {
   color: var(--pass-color);
 }
-.lh-metric--pass .lh-metric__value::after {
+.lh-metric--pass.lh-metric__value::after {
   background: var(--pass-icon-url) no-repeat 50% 50%;
 }
 
 
-.lh-metric--average .lh-metric__value {
+.lh-metric--average.lh-metric__value {
   color: var(--average-color);
   padding-left: 16px;
 }
-.lh-metric--average .lh-metric__value::after {
+.lh-metric--average.lh-metric__value::after {
   background: var(--average-icon-url) no-repeat 50% 50%;
 }
 
 
-.lh-metric--fail .lh-metric__value {
+.lh-metric--fail.lh-metric__value {
   color: var(--fail-color);
 }
-.lh-metric--fail .lh-metric__value::after {
+.lh-metric--fail.lh-metric__value::after {
   background: var(--fail-icon-url) no-repeat 50% 50%;
 }
 
-.lh-metric--error .lh-metric__value,
-.lh-metric--error .lh-metric__description {
+.lh-metric--error.lh-metric__value,
+.lh-metric--error.lh-metric__description {
   color: var(--fail-color);
 }
 
 /* Hide icon if there was an error */
-.lh-metric--error .lh-metric__value::after {
+.lh-metric--error.lh-metric__value::after {
   display: none;
 }
 

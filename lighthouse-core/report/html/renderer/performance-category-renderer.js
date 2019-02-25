@@ -31,8 +31,6 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-metric', this.templateContext);
     const element = this.dom.find('.lh-metric', tmpl);
     element.id = baseAudit.result.id;
-    const rating = Util.calculateRating(baseAudit.result.score, baseAudit.result.scoreDisplayMode);
-    element.classList.add(`lh-metric--${rating}`);
 
     const titleEl = this.dom.find('.lh-metric__title', tmpl);
     titleEl.textContent = baseAudit.result.title;
@@ -44,7 +42,10 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     for (const audit of audits) {
       const valueEl = this.dom.createChildOf(valuesEl, 'div', 'lh-metric__value');
       valueEl.textContent = Util.formatDisplayValue(audit.result.displayValue);
-
+      
+      const rating = Util.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
+      valueEl.classList.add(`lh-metric--${rating}`);
+      
       if (audit.result.scoreDisplayMode === 'error') {
         descriptionEl.textContent = '';
         valueEl.textContent = 'Error!';
