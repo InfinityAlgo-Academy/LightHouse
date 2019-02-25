@@ -35,6 +35,9 @@ const UIStrings = {
   dnsFailure: 'DNS servers could not resolve the provided domain.',
   /** Error message explaining that Lighthouse couldn't complete because the page has stopped responding to its instructions. */
   pageLoadFailedHung: 'Lighthouse was unable to reliably load the URL you requested because the page stopped responding.',
+  /** TODO */
+  noLyoutJank: 'TODO',
+
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -223,6 +226,13 @@ const ERRORS = {
   // DNS failure on main document (no resolution, timed out, etc)
   DNS_FAILURE: {
     code: 'DNS_FAILURE',
+    message: UIStrings.dnsFailure,
+    lhrRuntimeError: true,
+  },
+
+  // No Layout Stability trace events
+  NO_LAYOUT_JANK: {
+    code: 'NO_LAYOUT_JANK',
     message: UIStrings.dnsFailure,
     lhrRuntimeError: true,
   },

@@ -219,6 +219,8 @@ declare global {
           styleSheetUrl?: string;
           timerId?: string;
           url?: string;
+          is_main_frame?: boolean;
+          cumulative_score?: number;
         };
         frame?: string;
         name?: string;

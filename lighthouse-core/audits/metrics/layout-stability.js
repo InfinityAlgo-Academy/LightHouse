@@ -6,15 +6,15 @@
 'use strict';
 
 const Audit = require('../audit');
-const ComputedFid = require('../../computed/metrics/max-potential-fid.js');
+const ComputedFid = require('../../computed/metrics/layout-stability.js');
 const i18n = require('../../lib/i18n/i18n');
 
 const UIStrings = {
-  /** The name of the metric "Maximum Potential First Input Delay" that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
-  title: 'Max Potential FID',
-  /** Description of the Maximum Potential First Input Delay metric that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'The potential First Input Delay that your users could experience is the ' +
-      'duration, in milliseconds, of the longest task.',
+  /** The name of the metric "Layout Stability" that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the layout instability will be higher. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  title: 'Layout Instability',
+  /** Description of the Layout Stability metric that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the layout instability will be higher. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  description: 'The more the page\'s layout changes during its load, the higher the instability. ' +
+      'Perfectly solid == 0. Unpleasant experience >= 0.5.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -24,13 +24,13 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
  * the worst case First Input Delay that a user might experience.
  * Tasks before FCP are excluded because it is unlikely that the user will try to interact with a page before it has painted anything.
  */
-class MaxPotentialFID extends Audit {
+class LayoutStability extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'max-potential-fid',
+      id: 'layout-stability',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
@@ -43,9 +43,9 @@ class MaxPotentialFID extends Audit {
    */
   static get defaultOptions() {
     return {
-      // see https://www.desmos.com/calculator/g3nf1ehtnk
-      scorePODR: 100,
-      scoreMedian: 250,
+      // TODO: calibrate these
+      scorePODR: 0.1,
+      scoreMedian: 0.5,
     };
   }
 
@@ -67,10 +67,10 @@ class MaxPotentialFID extends Audit {
         context.options.scoreMedian
       ),
       rawValue: metricResult.timing,
-      displayValue: str_(i18n.UIStrings.ms, {timeInMs: metricResult.timing}),
+      displayValue: `${metricResult.timing.toLocaleString()} %`, // TODO: i18n
     };
   }
 }
 
-module.exports = MaxPotentialFID;
+module.exports = LayoutStability;
 module.exports.UIStrings = UIStrings;

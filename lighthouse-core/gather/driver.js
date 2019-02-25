@@ -96,6 +96,9 @@ class Driver {
       // Used instead of 'toplevel' in Chrome 71+
       'disabled-by-default-lighthouse',
 
+      // Used for Layout Stability metric
+      'loading',
+
       // All compile/execute events are captured by parent events in devtools.timeline..
       // But the v8 category provides some nice context for only <0.5% of the trace size
       'v8',

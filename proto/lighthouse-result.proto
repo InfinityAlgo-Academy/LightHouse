@@ -51,6 +51,8 @@ enum LighthouseError {
   PAGE_HUNG = 18;
   // DNS failure on main document (no resolution, timed out, etc)
   DNS_FAILURE = 19;
+  // No Layout Stability trace events
+  NO_LAYOUT_JANK = 20;
 }
 
 // The overarching Lighthouse Response object (LHR)
