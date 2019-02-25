@@ -571,6 +571,7 @@ class CategoryRenderer {
    * @param {number} index
    */
   _createLetterNode(index) {
+    // TODO add hover text for URL.
     const letter = this.dom.createElement('text', 'lh-letter-node');
     letter.textContent = String.fromCharCode('A'.charCodeAt(0) + index);
     letter.style.backgroundColor = this._getLetterColor(index);

@@ -42,10 +42,10 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     for (const audit of audits) {
       const valueEl = this.dom.createChildOf(valuesEl, 'div', 'lh-metric__value');
       valueEl.textContent = Util.formatDisplayValue(audit.result.displayValue);
-      
+
       const rating = Util.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
       valueEl.classList.add(`lh-metric--${rating}`);
-      
+
       if (audit.result.scoreDisplayMode === 'error') {
         descriptionEl.textContent = '';
         valueEl.textContent = 'Error!';
@@ -87,6 +87,48 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const displayValue = Util.formatDisplayValue(audit.result.displayValue);
       this.dom.find('.lh-load-opportunity__sparkline', element).title = displayValue;
       displayEl.title = displayValue;
+    }
+
+    return element;
+  }
+
+  /**
+   * @param {LH.ReportResult.AuditRef[]} audits
+   * @param {number} index
+   * @return {Element}
+   */
+  _renderOpportunityDiff(audits, index) {
+    const baseAudit = audits[0];
+
+    const oppTmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity', this.templateContext);
+    const element = this.populateAuditValues(audits, index, oppTmpl);
+    element.id = baseAudit.result.id;
+
+    const displayTexts = this.dom.find('.lh-audit__display-texts', element);
+    displayTexts.children[0].remove();
+
+    for (const audit of audits) {
+      const displayEl = this.dom.createChildOf(displayTexts, 'div', 'lh-audit__display-text');
+
+      if (!audit.result.details || audit.result.scoreDisplayMode === 'error') {
+        continue;
+      }
+      const details = audit.result.details;
+      if (details.type !== 'opportunity') {
+        continue;
+      }
+
+      // Overwrite the displayValue with opportunity's wastedMs
+      // const sparklineWidthPct = `${details.overallSavingsMs / scale * 100}%`;
+      // this.dom.find('.lh-sparkline__bar', element).style.width = sparklineWidthPct;
+      displayEl.textContent = Util.formatSeconds(details.overallSavingsMs, 0.01);
+
+      // Set [title] tooltips
+      if (audit.result.displayValue) {
+        const displayValue = Util.formatDisplayValue(audit.result.displayValue);
+        this.dom.find('.lh-load-opportunity__sparkline', element).title = displayValue;
+        displayEl.title = displayValue;
+      }
     }
 
     return element;
@@ -294,33 +336,75 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Opportunities
     const groupEl = this.renderAuditGroup(baseGroups['load-opportunities']);
+
+    // Group opportunity audits by id. Each entry in an array of length [allCategory.length]. If a category
+    // is missing an audit, a fake audit is made for it.
+    /** @type {Map<string, Array<LH.ReportResult.AuditRef>>} */
+    const opportunityAuditsGroupedById = new Map();
     for (const category of allCategory) {
+      const index = allCategory.indexOf(category);
+
       const opportunityAudits = category.auditRefs
+          .filter(audit => audit.group === 'load-opportunities' && !Util.showAsPassed(audit.result));
+      for (const auditRef of opportunityAudits) {
+        const auditRefs = opportunityAuditsGroupedById.get(auditRef.id) || new Array(allCategory.length);
+        auditRefs[index] = auditRef;
+        opportunityAuditsGroupedById.set(auditRef.id, auditRefs);
+      }
+    }
+    // fake audits.
+    for (const auditRefs of opportunityAuditsGroupedById.values()) {
+      const nonNullAudit = auditRefs.find(Boolean);
+      if (!nonNullAudit) continue; // never happens.
+
+      for (let i = 0; i < allCategory.length; i++) {
+        if (!auditRefs[i]) {
+          auditRefs[i] = {
+            ...nonNullAudit,
+            result: {
+              ...nonNullAudit.result,
+              rawValue: null,
+              displayValue: '-',
+              details: undefined,
+            },
+          };
+        }
+      }
+    }
+
+    const baseOpportunityAuditsSortedBySavings = baseCategory.auditRefs
           .filter(audit => audit.group === 'load-opportunities' && !Util.showAsPassed(audit.result))
           .sort((auditA, auditB) => this._getWastedMs(auditB) - this._getWastedMs(auditA));
 
-      if (opportunityAudits.length) {
-        groupEl.appendChild(this._createLetterNode(allCategory.indexOf(category)));
-
-        // Scale the sparklines relative to savings, minimum 2s to not overstate small savings
-        const minimumScale = 2000;
-        const wastedMsValues = opportunityAudits.map(audit => this._getWastedMs(audit));
-        const maxWaste = Math.max(...wastedMsValues);
-        const scale = Math.max(Math.ceil(maxWaste / 1000) * 1000, minimumScale);
-        const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity-header', this.templateContext);
-
-        this.dom.find('.lh-load-opportunity__col--one', tmpl).textContent =
-          Util.UIStrings.opportunityResourceColumnLabel;
-        this.dom.find('.lh-load-opportunity__col--two', tmpl).textContent =
-          Util.UIStrings.opportunitySavingsColumnLabel;
-
-        const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
-        groupEl.appendChild(headerEl);
-        opportunityAudits.forEach((item, i) =>
-            groupEl.appendChild(this._renderOpportunity(item, i, scale)));
-        groupEl.classList.add('lh-audit-group--load-opportunities');
-        element.appendChild(groupEl);
+    // Sorts ids by savings potential of base report. If audits exists in other LHRs but not in the base LHR,
+    // this extra logic will place those audits at the end.
+    const allOpportunityAuditsIdsSortedByBaseSavings = Array.from(opportunityAuditsGroupedById.keys()).sort(
+      (auditIdA, auditIdB) => {
+        const auditIdAIndex = baseOpportunityAuditsSortedBySavings.findIndex(audit => audit.id === auditIdA);
+        const auditIdBIndex = baseOpportunityAuditsSortedBySavings.findIndex(audit => audit.id === auditIdB);
+        if (auditIdAIndex >= 0 && auditIdBIndex === -1) return -1;
+        if (auditIdBIndex >= 0 && auditIdAIndex === -1) return 1;
+        return auditIdBIndex - auditIdAIndex;
       }
+    );
+
+    const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity-header', this.templateContext);
+    this.dom.find('.lh-load-opportunity__col--one', tmpl).textContent =
+          Util.UIStrings.opportunityResourceColumnLabel;
+    this.dom.find('.lh-load-opportunity__col--two', tmpl).textContent =
+        Util.UIStrings.opportunitySavingsColumnLabel;
+    const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
+    groupEl.appendChild(headerEl);
+    groupEl.appendChild(letterRows.cloneNode(true));
+
+    for (const id of allOpportunityAuditsIdsSortedByBaseSavings) {
+      const auditRefs = opportunityAuditsGroupedById.get(id);
+      if (!auditRefs) continue; // it always exists.
+
+      const index = allOpportunityAuditsIdsSortedByBaseSavings.indexOf(id);
+      groupEl.appendChild(this._renderOpportunityDiff(auditRefs, index));
+      groupEl.classList.add('lh-audit-group--load-opportunities');
+      element.appendChild(groupEl);
     }
 
     // Diagnostics

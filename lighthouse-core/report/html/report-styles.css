@@ -517,10 +517,20 @@
   flex: 4;
 }
 
+.lh-audit--load-opportunity .lh-audit__display-texts {
+  display: flex;
+}
+
 .lh-audit--load-opportunity .lh-audit__display-text {
   text-align: right;
-  flex: 0 0 calc(3 * var(--body-font-size));
+  width: 90px;
+  /* flex: 0 0 calc(3 * var(--body-font-size)); */
 }
+
+/* .lh-metric__value {
+  width: 90px;
+  text-align: right;
+} */
 
 
 /* Sparkline */

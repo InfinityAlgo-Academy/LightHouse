@@ -132,24 +132,24 @@ class ReportRenderer {
     const domFragment = this._dom.cloneTemplate('#tmpl-lh-scores-wrapper', this._templateContext);
     const placeholder = this._dom.find('.lh-scores-wrapper-placeholder', el);
     /** @type {HTMLDivElement} */ (placeholder.parentNode).replaceChild(domFragment, placeholder);
-    
+
     const minFetchTime = Math.min(...reports.map(report => new Date(report.fetchTime).getTime()));
     const maxFetchTime = Math.max(...reports.map(report => new Date(report.fetchTime).getTime()));
     const minFetchTimeFormatted = Util.formatDateTime(new Date(minFetchTime).toDateString());
     const maxFetchTimeFormatted = Util.formatDateTime(new Date(maxFetchTime).toDateString());
     this._dom.find('.lh-config__timestamp', el).textContent =
       `${minFetchTimeFormatted} - ${maxFetchTimeFormatted}`;
-    
+
     // punt
     this._dom.find('.lh-product-info__version', el).textContent = reports[0].lighthouseVersion;
 
     this._dom.createChildOf(this._dom.find('.lh-metadata__results', el), 'div').textContent =
       'Diff of Multiple Lighthouse Reports';
-    
+
     this._dom.find('.lh-metadata__url', el).remove();
     this._dom.find('.lh-toolbar__url', el).remove();
     this._dom.find('.lh-config__emulation', el).remove();
-    
+
     return el;
   }
 
