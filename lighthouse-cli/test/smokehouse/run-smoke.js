@@ -68,7 +68,7 @@ async function runSmokehouse(smokes) {
 /**
  * Determine batches of smoketests to run, based on argv
  * @param {string[]} argv
- * @return {Map<string|undefined, Array<typeof SMOKETESTS[0]>>}
+ * @return {Map<string|undefined, Array<Smokehouse.TestDfn>>}
  */
 function getSmoketestBatches(argv) {
   let smokes = [];
