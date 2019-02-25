@@ -27,7 +27,6 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
    */
   _renderMetric(audits) {
     const baseAudit = audits[0];
-    const isDiff = audits.length > 1;
 
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-metric', this.templateContext);
     const element = this.dom.find('.lh-metric', tmpl);
@@ -51,12 +50,6 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
         valueEl.textContent = 'Error!';
         const tooltip = this.dom.createChildOf(descriptionEl, 'span');
         tooltip.textContent = audit.result.errorMessage || 'Report error: no metric information';
-      }
-
-      if (isDiff) {
-        valueEl.style.backgroundColor = this._getLetterColor(audits.indexOf(audit));
-        valueEl.style.color = 'white';
-        valueEl.style.textShadow = '0 1px black';
       }
     }
 
@@ -255,6 +248,14 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Metrics
     const metricAuditsEl = this.renderAuditGroup(baseGroups.metrics);
+
+    const letterRows = this.dom.createElement('div', 'lh-metric__letters');
+    for (const category of allCategory) {
+      const letterNode = this._createLetterNode(allCategory.indexOf(category));
+      letterNode.classList.add('lh-metric__value');
+      letterRows.appendChild(letterNode);
+    }
+    metricAuditsEl.appendChild(letterRows);
 
     const metricsIds = baseCategory.auditRefs.filter(audit => audit.group === 'metrics').map(m => m.id);
     for (const id of metricsIds) {

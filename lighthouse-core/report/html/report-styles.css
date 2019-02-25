@@ -429,6 +429,11 @@
   color: var(--secondary-text-color);
 }
 
+.lh-metric__letters {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .lh-metric__values {
   display: flex;
 }
