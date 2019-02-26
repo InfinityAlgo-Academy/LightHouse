@@ -103,4 +103,29 @@ module.exports = [
       },
     },
   },
+  {
+    requestedUrl: 'http://localhost:10200/byte-efficiency/gzip.html',
+    finalUrl: 'http://localhost:10200/byte-efficiency/gzip.html',
+    audits: {
+      'network-requests': {
+        details: {
+          items: [
+            {
+              url: 'http://localhost:10200/byte-efficiency/gzip.html',
+            },
+            {
+              url: 'http://localhost:10200/byte-efficiency/script.js?gzip=1',
+              transferSize: 1136,
+              resourceSize: 52997,
+            },
+            {
+              url: 'http://localhost:10200/byte-efficiency/script.js',
+              transferSize: 53181,
+              resourceSize: 52997,
+            },
+          ],
+        },
+      },
+    },
+  },
 ];
