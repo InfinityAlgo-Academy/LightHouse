@@ -81,7 +81,7 @@ declare global {
       HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
-      /** Information on size and loading for all the images in the page. */
+      /** Information on size and loading for all the images in the page. Natural size information for `picture` and CSS images is only available if the image was one of the largest 50 images. */
       ImageElements: Artifacts.ImageElement[];
       /** Information on JS libraries and versions used by the page. */
       JSLibraries: {name: string, version: string, npmPkgName: string}[];
