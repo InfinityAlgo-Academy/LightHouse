@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * @license Copyright 2017 Google Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -6,7 +5,20 @@
  */
 'use strict';
 
-require('./bin.js').begin().catch(err => {
-  process.stderr.write(err.stack);
-  process.exit(1);
-});
+/**
+ * Config file for running byte efficiency smokehouse audits.
+ */
+module.exports = {
+  extends: 'lighthouse:full',
+  settings: {
+    onlyCategories: ['performance'],
+    precomputedLanternData: {
+      additionalRttByOrigin: {
+        'http://localhost:10200': 500,
+      },
+      serverResponseTimeByOrigin: {
+        'http://localhost:10200': 1000,
+      },
+    },
+  },
+};

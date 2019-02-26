@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * @license Copyright 2017 Google Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -6,7 +5,23 @@
  */
 'use strict';
 
-require('./bin.js').begin().catch(err => {
-  process.stderr.write(err.stack);
-  process.exit(1);
-});
+/**
+ * Expected Lighthouse audit values for lantern smoketests
+ */
+module.exports = [
+  {
+    requestedUrl: 'http://localhost:10200/online-only.html',
+    finalUrl: 'http://localhost:10200/online-only.html',
+    audits: {
+      'first-contentful-paint': {
+        rawValue: '>2000',
+      },
+      'first-cpu-idle': {
+        rawValue: '>2000',
+      },
+      'interactive': {
+        rawValue: '>2000',
+      },
+    },
+  },
+];
