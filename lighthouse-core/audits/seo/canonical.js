@@ -20,15 +20,15 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they need to have a valid rel=canonical link. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Canonical links suggest which URL to show in search results. ' +
     '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/canonical).',
-  /** [ICU Syntax] Explanatory message stating that there was a failure in an audit caused by multiple URLs conflicting with each other. "urlList" will be replaced by a list of URLs (e.g. https://example.com, https://example2.com, etc ). */
+  /** Explanatory message stating that there was a failure in an audit caused by multiple URLs conflicting with each other. "urlList" will be replaced by a list of URLs (e.g. https://example.com, https://example2.com, etc ). */
   explanationConflict: 'Multiple conflicting URLs ({urlList})',
-  /** [ICU Syntax] Explanatory message stating that there was a failure in an audit caused by a URL being invalid. "url" will be replaced by the invalid URL (e.g. https://example.com). */
+  /** Explanatory message stating that there was a failure in an audit caused by a URL being invalid. "url" will be replaced by the invalid URL (e.g. https://example.com). */
   explanationInvalid: 'Invalid URL ({url})',
-  /** [ICU Syntax] Explanatory message stating that there was a failure in an audit caused by a URL being relative instead of absolute. "url" will be replaced by the invalid URL (e.g. https://example.com). */
+  /** Explanatory message stating that there was a failure in an audit caused by a URL being relative instead of absolute. "url" will be replaced by the invalid URL (e.g. https://example.com). */
   explanationRelative: 'Relative URL ({url})',
-  /** [ICU Syntax] Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different hreflang than the current context. "url" will be replaced by the invalid URL (e.g. https://example.com). 'hreflang' is an HTML attribute and should not be translated. */
+  /** Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different hreflang than the current context. "url" will be replaced by the invalid URL (e.g. https://example.com). 'hreflang' is an HTML attribute and should not be translated. */
   explanationPointsElsewhere: 'Points to another `hreflang` location ({url})',
-  /** [ICU Syntax] Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different domain. "url" will be replaced by the invalid URL (e.g. https://example.com). */
+  /** Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different domain. "url" will be replaced by the invalid URL (e.g. https://example.com). */
   explanationDifferentDomain: 'Points to a different domain ({url})',
   /** Explanatory message stating that the page's canonical URL was pointing to the domain's root URL, which is a common mistake. "points" refers to the action of the 'rel=canonical' referencing another link. "root" refers to the starting/home page of the website. "domain" refers to the registered domain name of the website. */
   explanationRoot: 'Points to the domain\'s root URL (the homepage), ' +
