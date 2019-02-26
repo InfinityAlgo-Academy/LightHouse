@@ -384,7 +384,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
         const auditIdBIndex = baseOpportunityAuditsSortedBySavings.findIndex(audit => audit.id === auditIdB);
         if (auditIdAIndex >= 0 && auditIdBIndex === -1) return -1;
         if (auditIdBIndex >= 0 && auditIdAIndex === -1) return 1;
-        return auditIdBIndex - auditIdAIndex;
+        return auditIdAIndex - auditIdBIndex;
       }
     );
 
