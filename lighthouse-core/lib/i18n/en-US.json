@@ -713,7 +713,7 @@
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "The potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task.",
-    "description": "Description of the Estimated Input Latency metric that estimates the amount of time, in milliseconds, that the app takes to respond to user input. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
+    "description": "Description of the Maximum Potential First Input Delay metric that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
     "message": "Max Potential FID",
