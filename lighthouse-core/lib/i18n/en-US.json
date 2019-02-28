@@ -436,7 +436,7 @@
     "description": "Label for a time column in a data table; entries will be the number of milliseconds spent parsing script files for every script loaded by the page."
   },
   "lighthouse-core/audits/bootup-time.js | columnTotal": {
-    "message": "Total",
+    "message": "Total CPU Time",
     "description": "Label for the total time column in a data table; entries will be the number of milliseconds spent executing per resource loaded by the page."
   },
   "lighthouse-core/audits/bootup-time.js | description": {

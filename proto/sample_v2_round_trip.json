@@ -89,7 +89,7 @@
                         "granularity": 1.0, 
                         "itemType": "ms", 
                         "key": "total", 
-                        "text": "Total"
+                        "text": "Total CPU Time"
                     }, 
                     {
                         "granularity": 1.0, 
@@ -112,6 +112,12 @@
                         "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     }, 
                     {
+                        "scriptParseCompile": 0.092, 
+                        "scripting": 17.790999999999997, 
+                        "total": 391.76699999999977, 
+                        "url": "Other"
+                    }, 
+                    {
                         "scriptParseCompile": 1.674, 
                         "scripting": 89.50799999999998, 
                         "total": 101.21099999999998, 
@@ -125,7 +131,7 @@
                     }
                 ], 
                 "summary": {
-                    "wastedMs": 1150.932
+                    "wastedMs": 1150.573
                 }, 
                 "type": "table"
             }, 

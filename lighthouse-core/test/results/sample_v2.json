@@ -701,7 +701,7 @@
       "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/bootup).",
       "score": 0.92,
       "scoreDisplayMode": "numeric",
-      "rawValue": 1150.932,
+      "rawValue": 1150.573,
       "displayValue": "1.2 s",
       "details": {
         "type": "table",
@@ -715,7 +715,7 @@
             "key": "total",
             "granularity": 1,
             "itemType": "ms",
-            "text": "Total"
+            "text": "Total CPU Time"
           },
           {
             "key": "scripting",
@@ -738,6 +738,12 @@
             "scriptParseCompile": 2.777
           },
           {
+            "url": "Other",
+            "total": 391.76699999999977,
+            "scripting": 17.790999999999997,
+            "scriptParseCompile": 0.092
+          },
+          {
             "url": "http://localhost:10200/zone.js",
             "total": 101.21099999999998,
             "scripting": 89.50799999999998,
@@ -751,7 +757,7 @@
           }
         ],
         "summary": {
-          "wastedMs": 1150.932
+          "wastedMs": 1150.573
         }
       }
     },
@@ -4878,7 +4884,7 @@
         },
         {
           "values": {
-            "timeInMs": 1150.932
+            "timeInMs": 1150.573
           },
           "path": "audits[bootup-time].displayValue"
         }
