@@ -8,7 +8,8 @@
 /**
  * Adjustments needed for DevTools network throttling to simulate
  * more realistic network conditions.
- * See: crbug.com/721112
+ * @see https://crbug.com/721112
+ * @see https://docs.google.com/document/d/10lfVdS1iDWCRKQXPfbxEn4Or99D64mvNlugP1AQuFlE/edit
  */
 const DEVTOOLS_RTT_ADJUSTMENT_FACTOR = 3.75;
 const DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR = 0.9;
