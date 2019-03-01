@@ -10,7 +10,7 @@
 const URL = require('../../lib/url-shim');
 const i18n = require('../../lib/i18n/i18n.js');
 const Audit = require('../audit');
-const ViewportAudit = require('../viewport');
+const ComputedViewportMeta = require('../../computed/viewport-meta.js');
 const MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT = 60;
 
 const UIStrings = {
@@ -213,11 +213,12 @@ class FontSize extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
-    const hasViewportSet = ViewportAudit.audit(artifacts).rawValue;
-    if (!hasViewportSet) {
+  static async audit(artifacts, context) {
+    const viewportMeta = await ComputedViewportMeta.request(artifacts, context);
+    if (!viewportMeta.isMobileOptimized) {
       return {
         rawValue: false,
         explanation: str_(UIStrings.explanationViewport),

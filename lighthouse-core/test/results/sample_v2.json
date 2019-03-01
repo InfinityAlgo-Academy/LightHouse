@@ -3957,6 +3957,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:ViewportMeta",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:without-javascript",
         "duration": 100,
         "entryType": "measure"

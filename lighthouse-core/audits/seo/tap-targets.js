@@ -10,7 +10,7 @@
  * no other tap target that's too close so that the user might accidentally tap on.
  */
 const Audit = require('../audit');
-const ViewportAudit = require('../viewport');
+const ComputedViewportMeta = require('../../computed/viewport-meta.js');
 const {
   rectsTouchOrOverlap,
   getRectOverlapArea,
@@ -270,11 +270,12 @@ class TapTargets extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
-    const hasViewportSet = ViewportAudit.audit(artifacts).rawValue;
-    if (!hasViewportSet) {
+  static async audit(artifacts, context) {
+    const viewportMeta = await ComputedViewportMeta.request(artifacts, context);
+    if (!viewportMeta.isMobileOptimized) {
       return {
         rawValue: false,
         explanation: str_(UIStrings.explanationViewportMetaNotOptimized),

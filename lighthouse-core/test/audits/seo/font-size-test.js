@@ -15,22 +15,23 @@ const validViewport = 'width=device-width';
 
 describe('SEO: Font size audit', () => {
   const makeMetaElements = viewport => [{name: 'viewport', content: viewport}];
+  const getFakeContext = () => ({computedCache: new Map()});
 
-  it('fails when viewport is not set', () => {
+  it('fails when viewport is not set', async () => {
     const artifacts = {
       URL,
       MetaElements: [],
       FontSize: [],
     };
 
-    const auditResult = FontSizeAudit.audit(artifacts);
+    const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     assert.equal(auditResult.rawValue, false);
     expect(auditResult.explanation)
       .toBeDisplayString('Text is illegible because there\'s ' +
         'no viewport meta tag optimized for mobile screens.');
   });
 
-  it('fails when less than 60% of text is legible', () => {
+  it('fails when less than 60% of text is legible', async () => {
     const artifacts = {
       URL,
       MetaElements: makeMetaElements(validViewport),
@@ -46,13 +47,13 @@ describe('SEO: Font size audit', () => {
       },
     };
 
-    const auditResult = FontSizeAudit.audit(artifacts);
+    const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     assert.equal(auditResult.rawValue, false);
     expect(auditResult.explanation).toBeDisplayString('41% of text is too small.');
     expect(auditResult.displayValue).toBeDisplayString('59% legible text');
   });
 
-  it('passes when there is no text', () => {
+  it('passes when there is no text', async () => {
     const artifacts = {
       URL,
       MetaElements: makeMetaElements(validViewport),
@@ -67,11 +68,11 @@ describe('SEO: Font size audit', () => {
       },
     };
 
-    const auditResult = FontSizeAudit.audit(artifacts);
+    const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     assert.equal(auditResult.rawValue, true);
   });
 
-  it('passes when more than 60% of text is legible', () => {
+  it('passes when more than 60% of text is legible', async () => {
     const artifacts = {
       URL,
       MetaElements: makeMetaElements(validViewport),
@@ -86,12 +87,12 @@ describe('SEO: Font size audit', () => {
         ],
       },
     };
-    const auditResult = FontSizeAudit.audit(artifacts);
+    const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     assert.equal(auditResult.rawValue, true);
     expect(auditResult.displayValue).toBeDisplayString('90% legible text');
   });
 
-  it('groups entries with same source, sorts them by coverage', () => {
+  it('groups entries with same source, sorts them by coverage', async () => {
     const style1 = {
       styleSheetId: 1,
       type: 'Regular',
@@ -123,7 +124,7 @@ describe('SEO: Font size audit', () => {
         ],
       },
     };
-    const auditResult = FontSizeAudit.audit(artifacts);
+    const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
 
     assert.equal(auditResult.rawValue, false);
     assert.equal(auditResult.details.items.length, 2);
@@ -131,7 +132,7 @@ describe('SEO: Font size audit', () => {
     expect(auditResult.displayValue).toBeDisplayString('0% legible text');
   });
 
-  it('adds a category for failing text that wasn\'t analyzed', () => {
+  it('adds a category for failing text that wasn\'t analyzed', async () => {
     const artifacts = {
       URL,
       MetaElements: makeMetaElements(validViewport),
@@ -145,7 +146,7 @@ describe('SEO: Font size audit', () => {
         ],
       },
     };
-    const auditResult = FontSizeAudit.audit(artifacts);
+    const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     assert.equal(auditResult.rawValue, false);
     assert.equal(auditResult.details.items.length, 3);
     assert.equal(auditResult.details.items[1].source, 'Add\'l illegible text');
@@ -153,7 +154,7 @@ describe('SEO: Font size audit', () => {
     expect(auditResult.displayValue).toBeDisplayString('50% legible text');
   });
 
-  it('informs user if audit haven\'t covered all text on the page', () => {
+  it('informs user if audit haven\'t covered all text on the page', async () => {
     const artifacts = {
       URL,
       MetaElements: makeMetaElements(validViewport),
@@ -167,14 +168,14 @@ describe('SEO: Font size audit', () => {
         ],
       },
     };
-    const auditResult = FontSizeAudit.audit(artifacts);
+    const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     assert.equal(auditResult.rawValue, false);
     expect(auditResult.explanation)
       .toBeDisplayString('100% of text is too small (based on 50% sample).');
     expect(auditResult.displayValue).toBeDisplayString('0% legible text');
   });
 
-  it('maintains 2 trailing decimal places', () => {
+  it('maintains 2 trailing decimal places', async () => {
     const artifacts = {
       URL,
       MetaElements: makeMetaElements(validViewport),
@@ -189,11 +190,11 @@ describe('SEO: Font size audit', () => {
         ],
       },
     };
-    const auditResult = FontSizeAudit.audit(artifacts);
+    const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     expect(auditResult.displayValue).toBeDisplayString('89.78% legible text');
   });
 
-  it('maintains 2 trailing decimal places with only 1 leading digit', () => {
+  it('maintains 2 trailing decimal places with only 1 leading digit', async () => {
     const artifacts = {
       URL,
       MetaElements: makeMetaElements(validViewport),
@@ -208,7 +209,7 @@ describe('SEO: Font size audit', () => {
         ],
       },
     };
-    const auditResult = FontSizeAudit.audit(artifacts);
+    const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     expect(auditResult.displayValue).toBeDisplayString('2.48% legible text');
   });
 });
