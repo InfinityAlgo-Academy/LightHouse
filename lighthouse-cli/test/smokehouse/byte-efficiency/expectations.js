@@ -26,9 +26,13 @@ module.exports = [
         details: {
           overallSavingsBytes: '>45000',
           overallSavingsMs: '>500',
-          items: {
-            length: 1,
-          },
+          items: [
+            {
+              url: 'http://localhost:10200/byte-efficiency/script.js',
+              wastedBytes: '46481 +/- 100',
+              wastedPercent: '87 +/- 5',
+            },
+          ],
         },
       },
       'unused-css-rules': {
