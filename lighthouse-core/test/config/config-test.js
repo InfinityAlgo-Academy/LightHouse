@@ -699,14 +699,20 @@ describe('Config', () => {
   describe('mergePlugins', () => {
     const configFixturePath = __dirname + '/../fixtures/config-plugins/';
 
-    it('should append audits', () => {
+    it('should append audits and a group', () => {
       const configJson = {
         audits: ['installable-manifest', 'metrics'],
         plugins: ['lighthouse-plugin-simple'],
       };
       const config = new Config(configJson, {configPath: configFixturePath});
+      const groupIds = Object.keys(config.groups);
       assert.deepStrictEqual(config.audits.map(a => a.path),
         ['installable-manifest', 'metrics', 'redirects', 'user-timings']);
+      assert.ok(groupIds.length === 1);
+      assert.strictEqual(groupIds[groupIds.length - 1], 'lighthouse-plugin-simple-new-group');
+      assert.strictEqual(config.groups['lighthouse-plugin-simple-new-group'].title, 'New Group');
+      assert.strictEqual(config.categories['lighthouse-plugin-simple'].auditRefs[0].group,
+        'lighthouse-plugin-simple-new-group');
     });
 
     it('should append a category', () => {
