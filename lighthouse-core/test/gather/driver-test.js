@@ -487,6 +487,7 @@ describe('.gotoURL', () => {
       .mockResponse('Page.setLifecycleEventsEnabled', {})
       .mockResponse('Emulation.setScriptExecutionDisabled', {})
       .mockResponse('Page.navigate', {})
+      .mockResponse('Target.setAutoAttach', {})
       .mockResponse('Runtime.evaluate', {});
   });
 
@@ -928,5 +929,38 @@ describe('.goOnline', () => {
       downloadThroughput: 0,
       uploadThroughput: 0,
     });
+  });
+});
+
+describe('Multi-target management', () => {
+  it('enables the Network domain for iframes', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Target.sendMessageToTarget', {});
+
+    driver._eventEmitter.emit('Target.attachedToTarget', {
+      sessionId: 123,
+      targetInfo: {type: 'iframe'},
+    });
+    await flushAllTimersAndMicrotasks();
+
+    const sendMessageArgs = connectionStub.sendCommand
+      .findInvocation('Target.sendMessageToTarget');
+    expect(sendMessageArgs).toEqual({
+      message: '{"id":1,"method":"Network.enable"}',
+      sessionId: 123,
+    });
+  });
+
+  it('ignores other target types', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+    .mockResponse('Target.sendMessageToTarget', {});
+
+    driver._eventEmitter.emit('Target.attachedToTarget', {
+      sessionId: 123,
+      targetInfo: {type: 'service_worker'},
+    });
+    await flushAllTimersAndMicrotasks();
+
+    expect(connectionStub.sendCommand).not.toHaveBeenCalled();
   });
 });

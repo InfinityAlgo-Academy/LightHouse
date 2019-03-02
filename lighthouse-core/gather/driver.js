@@ -47,8 +47,8 @@ class Driver {
      */
     this._eventEmitter = /** @type {CrdpEventEmitter} */ (new EventEmitter());
     this._connection = connection;
-    // currently only used by WPT where just Page and Network are needed
-    this._devtoolsLog = new DevtoolsLog(/^(Page|Network)\./);
+    // Used to save network and lifecycle protocol traffic. Just Page, Network, and Target are needed.
+    this._devtoolsLog = new DevtoolsLog(/^(Page|Network|Target)\./);
     this.online = true;
     /** @type {Map<string, number>} */
     this._domainEnabledCounts = new Map();
@@ -68,6 +68,20 @@ class Driver {
      * @private
      */
     this._monitoredUrl = null;
+
+    let targetProxyMessageId = 0;
+    this.on('Target.attachedToTarget', event => {
+      targetProxyMessageId++;
+      // We're only interested in network requests from iframes for now as those are "part of the page".
+      if (event.targetInfo.type !== 'iframe') return;
+
+      // We want to receive information about network requests from iframes, so enable the Network domain.
+      // Network events from subtargets will be stringified and sent back on `Target.receivedMessageFromTarget`.
+      this.sendCommand('Target.sendMessageToTarget', {
+        message: JSON.stringify({id: targetProxyMessageId, method: 'Network.enable'}),
+        sessionId: event.sessionId,
+      });
+    });
 
     connection.on('protocolevent', event => {
       this._devtoolsLog.record(event);
@@ -1014,6 +1028,12 @@ class Driver {
 
     await this._beginNetworkStatusMonitoring(url);
     await this._clearIsolatedContextId();
+
+    // Enable auto-attaching to subtargets so we receive iframe information
+    await this.sendCommand('Target.setAutoAttach', {
+      autoAttach: true,
+      waitForDebuggerOnStart: false,
+    });
 
     await this.sendCommand('Page.enable');
     await this.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});

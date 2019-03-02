@@ -36,6 +36,11 @@ const SMOKETESTS = [{
   config: smokehouseDir + 'error-config.js',
   batch: 'errors',
 }, {
+  id: 'oopif',
+  expectations: smokehouseDir + 'oopif-expectations.js',
+  config: smokehouseDir + 'oopif-config.js',
+  batch: 'parallel-first',
+}, {
   id: 'pwa',
   expectations: smokehouseDir + 'pwa-expectations.js',
   config: smokehouseDir + 'pwa-config.js',
