@@ -56,6 +56,7 @@ Configuration:
   --print-config                 Print the normalized config for the given config and options, then exit.                                  [boolean]
   --additional-trace-categories  Additional categories to capture with the trace (comma-delimited).
   --config-path                  The path to the config JSON.
+                                 An example config file: lighthouse-core/config/lr-desktop-config.js
   --chrome-flags                 Custom flags to pass to Chrome (space-delimited). For a full list of flags, see
                                  http://peter.sh/experiments/chromium-command-line-switches/.
 
@@ -65,6 +66,7 @@ Configuration:
                                                                                                                                        [default: ""]
   --port                         The port to use for the debugging protocol. Use 0 for a random port                                    [default: 0]
   --preset                       Use a built-in configuration.                                            [choices: "full", "perf", "mixed-content"]
+                                 WARNING: If the --config-path flag is provided, this preset will be ignored.
   --hostname                     The hostname to use for the debugging protocol.                                              [default: "localhost"]
   --max-wait-for-load            The timeout (in milliseconds) to wait before the page is considered done loading and the run should continue.
                                  WARNING: Very high values can lead to large traces and instability                                 [default: 45000]
@@ -163,6 +165,12 @@ lighthouse -GA=./gmailartifacts https://gmail.com
 #### Notes on Error Reporting
 
 The first time you run the CLI you will be prompted with a message asking you if Lighthouse can anonymously report runtime exceptions. The Lighthouse team uses this information to detect new bugs and avoid regressions. Opting out will not affect your ability to use Lighthouse in any way. [Learn more](https://github.com/GoogleChrome/lighthouse/blob/master/docs/error-reporting.md).
+
+## Using the Node module
+You can also use Lighthouse programmatically with the Node module.
+
+Read [Using Lighthouse programmatically](./docs/readme.md#using-programmatically) for help getting started.\
+Read [Lighthouse Configuration](./docs/configuration.md) to learn more about the configuration options available.
 
 ## Viewing a report
 
