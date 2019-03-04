@@ -59,19 +59,19 @@ declare global {
 
     /** Simulation settings that control the amount of network & cpu throttling in the run. */
     interface ThrottlingSettings {
-      // The round trip time in milliseconds
+      /** The round trip time in milliseconds. */
       rttMs?: number;
-      // The network throughput in kilobytes per second
+      /** The network throughput in kilobytes per second. */
       throughputKbps?: number;
       // devtools settings
-      // The network request latency in milliseconds
+      /** The network request latency in milliseconds. */
       requestLatencyMs?: number;
-      // The network download throughput in kilobytes per second
+      /** The network download throughput in kilobytes per second. */
       downloadThroughputKbps?: number;
-      // The network upload throughput in kilobytes per second
+      /** The network upload throughput in kilobytes per second. */
       uploadThroughputKbps?: number;
       // used by both
-      // The amount of slowdown applied to the cpu (1/<cpuSlowdownMultiplier>)
+      /** The amount of slowdown applied to the cpu (1/<cpuSlowdownMultiplier>). */
       cpuSlowdownMultiplier?: number
     }
 
@@ -89,39 +89,39 @@ declare global {
      * interface and the Config's `settings` object.
      */
     interface SharedFlagsSettings {
-      // The output types (json, html, ...)
+      /** The type(s) of report output to be produced. */
       output?: OutputMode|OutputMode[];
-      // The locale setting
+      /** The locale to use for the output. */
       locale?: Locale;
-      // The maximum amount of time to wait for a page to load in ms
+      /** The maximum amount of time to wait for a page to load, in ms. */
       maxWaitForLoad?: number;
-      // List of URL patterns to block
+      /** List of URL patterns to block. */
       blockedUrlPatterns?: string[] | null;
-      // Comma-delimited list of trace categories to include
+      /** Comma-delimited list of trace categories to include. */
       additionalTraceCategories?: string | null;
-      // Flag indicating the run should only audit
+      /** Flag indicating the run should only audit. */
       auditMode?: boolean | string;
-      // Flag indicating the run should only gather
+      /** Flag indicating the run should only gather. */
       gatherMode?: boolean | string;
-      // Flag indicating that the browser storage should not be reset for the audit
+      /** Flag indicating that the browser storage should not be reset for the audit. */
       disableStorageReset?: boolean;
-      // Flag indicating that there shouldn't be any emulation during the run
+      /** Flag indicating that there shouldn't be any emulation during the run. */
       disableDeviceEmulation?: boolean;
-      // The form factor the emulation should use
+      /** The form factor the emulation should use. */
       emulatedFormFactor?: 'mobile'|'desktop'|'none';
-      // The method used to throttle the network
+      /** The method used to throttle the network. */
       throttlingMethod?: 'devtools'|'simulate'|'provided';
-      // The throttling config settings
+      /** The throttling config settings. */
       throttling?: ThrottlingSettings;
-      // List of audits that the run should conduct
+      /** If present, the run should only conduct this list of audits. */
       onlyAudits?: string[] | null;
-      // List of categories of audits the run should conduct
+      /** If present, the run should only conduct this list of categories. */
       onlyCategories?: string[] | null;
-      // List of audits that the run should skip
+      /** If present, the run should skip this list of audits. */
       skipAudits?: string[] | null;
-      // List of extra HTTP Headers to include
+      /** List of extra HTTP Headers to include. */
       extraHeaders?: Crdp.Network.Headers | null; // See extraHeaders TODO in bin.js
-      // Precomputed lantern estimates to use instead of observed analysis
+      /** Precomputed lantern estimates to use instead of observed analysis. */
       precomputedLanternData?: PrecomputedLanternData | null;
     }
 
@@ -130,9 +130,13 @@ declare global {
      * Lighthouse module but will not end up in the Config settings.
      */
     export interface Flags extends SharedFlagsSettings {
+      /** The port to use for the debugging protocol, if manually connecting. */
       port?: number;
+      /** The hostname to use for the debugging protocol, if manually connecting. */
       hostname?: string;
+      /** The level of logging to enable. */
       logLevel?: 'silent'|'error'|'info'|'verbose';
+      /** The path to the config JSON. */
       configPath?: string;
     }
 
@@ -143,31 +147,35 @@ declare global {
     export interface CliFlags extends Flags {
       _: string[];
       chromeFlags: string;
-      // Output path for the generated assets
+      /** Output path for the generated results. */
       outputPath: string;
-      // Flag to save the trace contents and screenshots to disk
+      /** Flag to save the trace contents and screenshots to disk. */
       saveAssets: boolean;
-      // Flag to open the report immediately
+      /** Flag to open the report immediately. */
       view: boolean;
-      // Enables error reporting
+      /** Flag to enable error reporting. */
       enableErrorReporting?: boolean;
-      // Flag to print out a list of all audits + categories
+      /** Flag to print a list of all audits + categories. */
       listAllAudits: boolean;
-      // Flag to print out a list of all required trace categories
+      /** Flag to print a list of all required trace categories. */
       listTraceCategories: boolean;
-      // A preset audit of selected audit categories to run
+      /** A preset audit of selected audit categories to run. */
       preset?: 'full'|'mixed-content'|'perf';
+      /** A flag to enable logLevel 'verbose'. */
       verbose: boolean;
+      /** A flag to enable logLevel 'silent'. */
       quiet: boolean;
-      // following are given defaults in cli-flags, so are not optional like in Flags or SharedFlagsSettings
+      /** A flag to print the normalized config for the given config and options, then exit. */
+      printConfig: boolean;
+      /** Path to the file where precomputed lantern data should be read from. */
+      precomputedLanternDataPath?: string;
+      /** Path to the file where precomputed lantern data should be written to. */
+      lanternDataOutputPath?: string;
+
+      // The following are given defaults in cli-flags, so are not optional like in Flags or SharedFlagsSettings.
       output: OutputMode[];
       port: number;
       hostname: string;
-      printConfig: boolean;
-      // Path to the file where precomputed lantern data should be read from.
-      precomputedLanternDataPath?: string;
-      // Path to the file where precomputed lantern data should be written to.
-      lanternDataOutputPath?: string;
     }
 
     export interface RunnerResult {
