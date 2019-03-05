@@ -93,6 +93,8 @@ declare global {
       output?: OutputMode|OutputMode[];
       /** The locale to use for the output. */
       locale?: Locale;
+      /** The maximum amount of time to wait for a page content render, in ms. If no content is rendered within this limit, the run is aborted with an error. */
+      maxWaitForFcp?: number;
       /** The maximum amount of time to wait for a page to load, in ms. */
       maxWaitForLoad?: number;
       /** List of URL patterns to block. */

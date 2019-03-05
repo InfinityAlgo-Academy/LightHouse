@@ -663,6 +663,19 @@ describe('.gotoURL', () => {
       expect(driver._waitForCPUIdle.getMockCancelFn()).toHaveBeenCalled();
     });
 
+    it('should cleanup listeners even when waits reject', async () => {
+      driver._waitForLoadEvent = createMockWaitForFn();
+
+      const loadPromise = makePromiseInspectable(driver.gotoURL(url, {waitForLoad: true}));
+
+      driver._waitForLoadEvent.mockReject();
+      await flushAllTimersAndMicrotasks();
+      expect(loadPromise).toBeDone('Did not reject load promise when load rejected');
+      await expect(loadPromise).rejects.toBeTruthy();
+      // Make sure we still cleaned up our listeners
+      expect(driver._waitForLoadEvent.getMockCancelFn()).toHaveBeenCalled();
+    });
+
     it('does not reject when page is secure', async () => {
       const secureSecurityState = {
         explanations: [],
@@ -737,6 +750,58 @@ describe('.gotoURL', () => {
         );
       }
     });
+  });
+});
+
+describe('._waitForFCP', () => {
+  it('should not resolve until FCP fires', async () => {
+    driver.on = driver.once = createMockOnceFn();
+
+    const waitPromise = makePromiseInspectable(driver._waitForFCP(60 * 1000).promise);
+    const listener = driver.on.findListener('Page.lifecycleEvent');
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Resolved without FCP');
+
+    listener({name: 'domContentLoaded'});
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Resolved on wrong event');
+
+    listener({name: 'firstContentfulPaint'});
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not resolve with FCP');
+    await waitPromise;
+  });
+
+  it('should timeout', async () => {
+    driver.on = driver.once = createMockOnceFn();
+
+    const waitPromise = makePromiseInspectable(driver._waitForFCP(5000).promise);
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Resolved before timeout');
+
+    jest.advanceTimersByTime(5001);
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not resolve after timeout');
+    await expect(waitPromise).rejects.toMatchObject({code: 'NO_FCP'});
+  });
+
+  it('should be cancellable', async () => {
+    driver.on = driver.once = createMockOnceFn();
+    driver.off = jest.fn();
+
+    const {promise: rawPromise, cancel} = driver._waitForFCP(5000);
+    const waitPromise = makePromiseInspectable(rawPromise);
+
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).not.toBeDone('Resolved before timeout');
+
+    cancel();
+    await flushAllTimersAndMicrotasks();
+    expect(waitPromise).toBeDone('Did not cancel promise');
+    expect(driver.off).toHaveBeenCalled();
+    await expect(waitPromise).rejects.toMatchObject({message: 'Wait for FCP canceled'});
   });
 });
 
