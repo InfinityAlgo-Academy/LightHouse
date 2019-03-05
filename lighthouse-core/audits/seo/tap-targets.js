@@ -303,8 +303,15 @@ class TapTargets extends Audit {
     const failingTapTargetCount = new Set(overlapFailures.map(f => f.tapTarget)).size;
     const passingTapTargetCount = tapTargetCount - failingTapTargetCount;
 
-    const score = tapTargetCount > 0 ? passingTapTargetCount / tapTargetCount : 1;
-    const displayValue = str_(UIStrings.displayValue, {decimalProportion: score});
+    let score = 1;
+    let passingTapTargetRatio = 1;
+    if (failingTapTargetCount > 0) {
+      passingTapTargetRatio = (passingTapTargetCount / tapTargetCount);
+      // If there are any failures then we don't want the audit to pass,
+      // so keep the score below 90.
+      score = passingTapTargetRatio * 0.89;
+    }
+    const displayValue = str_(UIStrings.displayValue, {decimalProportion: passingTapTargetRatio});
 
     return {
       rawValue: tableItems.length === 0,
