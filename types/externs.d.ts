@@ -61,14 +61,14 @@ declare global {
     interface ThrottlingSettings {
       /** The round trip time in milliseconds. */
       rttMs?: number;
-      /** The network throughput in kilobytes per second. */
+      /** The network throughput in kilobits per second. */
       throughputKbps?: number;
       // devtools settings
       /** The network request latency in milliseconds. */
       requestLatencyMs?: number;
-      /** The network download throughput in kilobytes per second. */
+      /** The network download throughput in kilobits per second. */
       downloadThroughputKbps?: number;
-      /** The network upload throughput in kilobytes per second. */
+      /** The network upload throughput in kilobits per second. */
       uploadThroughputKbps?: number;
       // used by both
       /** The amount of slowdown applied to the cpu (1/<cpuSlowdownMultiplier>). */

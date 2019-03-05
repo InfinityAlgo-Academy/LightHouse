@@ -48,7 +48,7 @@ Currently, `comcast` will also throttle the websocket port that Lighthouse uses 
 
 ```sh
 # Enable system traffic throttling
-comcast --latency=150 --target-bw=1600
+comcast --latency=150 --target-bw=1638
 
 # Run Lighthouse with its own throttling disabled
 lighthouse --throttling.requestLatencyMs=0 --throttling.downloadThroughputKbps=0 --throttling.uploadThroughputKbps=0 # ...
