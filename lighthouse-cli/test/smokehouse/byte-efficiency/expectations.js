@@ -32,6 +32,16 @@ module.exports = [
               wastedBytes: '46481 +/- 100',
               wastedPercent: '87 +/- 5',
             },
+            {
+              url: 'inline: \n  function unusedFunction() {\n    // Un...',
+              wastedBytes: '6581 +/- 100',
+              wastedPercent: '99.6 +/- 0.1',
+            },
+            {
+              url: 'inline: \n  // Used block #1\n  // FILLER DATA JUS...',
+              wastedBytes: '6559 +/- 100',
+              wastedPercent: 100,
+            },
           ],
         },
       },

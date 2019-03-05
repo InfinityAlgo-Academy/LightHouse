@@ -105,8 +105,8 @@ declare global {
       RobotsTxt: {status: number|null, content: string|null};
       /** Set of exceptions thrown during page load. */
       RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
-      /** The content of all scripts loaded by the page, keyed by networkRecord requestId. */
-      Scripts: Record<string, string>;
+      /** The content of all scripts loaded by the page, and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
+      Scripts: Array<{content: string, inline: boolean, requestId?: string}>;
       /** Version information for all ServiceWorkers active after the first page load. */
       ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: Crdp.ServiceWorker.ServiceWorkerRegistration[]};
       /** The status of an offline fetch of the page's start_url. -1 and a explanation if missing or there was an error. */
