@@ -10,10 +10,6 @@
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "runWarnings": [],
-  "runtimeError": {
-    "code": "NO_ERROR",
-    "message": ""
-  },
   "audits": {
     "is-on-https": {
       "id": "is-on-https",

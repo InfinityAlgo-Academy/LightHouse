@@ -112,6 +112,21 @@ describe('Runner', () => {
       }
     });
 
+    it('does not include a top-level runtimeError when gatherers were successful', async () => {
+      const config = new Config({
+        settings: {
+          auditMode: __dirname + '/fixtures/artifacts/perflog/',
+
+        },
+        audits: [
+          'content-width',
+        ],
+      });
+
+      const {lhr} = await Runner.run(undefined, {config});
+      assert.strictEqual(lhr.runtimeError, undefined);
+    });
+
     it('-GA is a normal run but it saves artifacts to disk', () => {
       const settings = {auditMode: artifactsPath, gatherMode: artifactsPath};
       const opts = {url, config: generateConfig(settings), driverMock};
