@@ -23,6 +23,8 @@ declare global {
       fetchTime: string;
       /** A set of warnings about unexpected things encountered while loading and testing the page. */
       LighthouseRunWarnings: string[];
+      /** Whether the page was loaded on either a real or emulated mobile device. */
+      TestedAsMobileDevice: boolean;
       /** The user agent string of the version of Chrome used. */
       HostUserAgent: string;
       /** The user agent string that Lighthouse used to load the page. */
