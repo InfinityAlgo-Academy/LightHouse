@@ -216,6 +216,10 @@ async function runLighthouse(url, flags, config) {
     await potentiallyKillChrome(launchedChrome);
     process.removeListener('unhandledRejection', handleTheUnhandled);
 
+    if (runnerResult && runnerResult.lhr.runtimeError) {
+      throw Error(runnerResult.lhr.runtimeError.message);
+    }
+
     return runnerResult;
   } catch (err) {
     await potentiallyKillChrome(launchedChrome).catch(() => {});

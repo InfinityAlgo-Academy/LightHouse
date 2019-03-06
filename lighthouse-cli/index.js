@@ -7,6 +7,6 @@
 'use strict';
 
 require('./bin.js').begin().catch(err => {
-  process.stderr.write(err.stack);
+  process.stderr.write(err);
   process.exit(1);
 });
