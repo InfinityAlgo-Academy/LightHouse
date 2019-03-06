@@ -4,8 +4,12 @@
 
 const log = require('lighthouse-logger');
 
-const NUMERICAL_EXPECTATION_REGEXP = /^(<=?|>=?)((\d|\.)+)$/;
 const VERBOSE = Boolean(process.env.LH_SMOKE_VERBOSE);
+const NUMBER_REGEXP = /(?:\d|\.)+/.source;
+const OPS_REGEXP = /<=?|>=?|\+\/-/.source;
+// An optional number, optional whitespace, an operator, optional whitespace, a number.
+const NUMERICAL_EXPECTATION_REGEXP =
+  new RegExp(`^(${NUMBER_REGEXP})?\\s*(${OPS_REGEXP})\\s*(${NUMBER_REGEXP})$`);
 
 /**
  * Checks if the actual value matches the expectation. Does not recursively search. This supports
@@ -20,17 +24,18 @@ const VERBOSE = Boolean(process.env.LH_SMOKE_VERBOSE);
 function matchesExpectation(actual, expected) {
   if (typeof actual === 'number' && NUMERICAL_EXPECTATION_REGEXP.test(expected)) {
     const parts = expected.match(NUMERICAL_EXPECTATION_REGEXP);
-    const operator = parts[1];
-    const number = parseFloat(parts[2]);
+    const [, prefixNumber, operator, postfixNumber] = parts;
     switch (operator) {
       case '>':
-        return actual > number;
+        return actual > postfixNumber;
       case '>=':
-        return actual >= number;
+        return actual >= postfixNumber;
       case '<':
-        return actual < number;
+        return actual < postfixNumber;
       case '<=':
-        return actual <= number;
+        return actual <= postfixNumber;
+      case '+/-':
+        return Math.abs(actual - prefixNumber) <= postfixNumber;
       default:
         throw new Error(`unexpected operator ${operator}`);
     }
@@ -62,7 +67,7 @@ function findDifference(path, actual, expected) {
 
   // If they aren't both an object we can't recurse further, so this is the difference.
   if (actual === null || expected === null || typeof actual !== 'object' ||
-    typeof expected !== 'object' || expected instanceof RegExp) {
+      typeof expected !== 'object' || expected instanceof RegExp) {
     return {
       path,
       actual,

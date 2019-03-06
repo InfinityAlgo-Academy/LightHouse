@@ -10,7 +10,7 @@
  * no other tap target that's too close so that the user might accidentally tap on.
  */
 const Audit = require('../audit');
-const ViewportAudit = require('../viewport');
+const ComputedViewportMeta = require('../../computed/viewport-meta.js');
 const {
   rectsTouchOrOverlap,
   getRectOverlapArea,
@@ -270,11 +270,12 @@ class TapTargets extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
-    const hasViewportSet = ViewportAudit.audit(artifacts).rawValue;
-    if (!hasViewportSet) {
+  static async audit(artifacts, context) {
+    const viewportMeta = await ComputedViewportMeta.request(artifacts, context);
+    if (!viewportMeta.isMobileOptimized) {
       return {
         rawValue: false,
         explanation: str_(UIStrings.explanationViewportMetaNotOptimized),
@@ -302,8 +303,15 @@ class TapTargets extends Audit {
     const failingTapTargetCount = new Set(overlapFailures.map(f => f.tapTarget)).size;
     const passingTapTargetCount = tapTargetCount - failingTapTargetCount;
 
-    const score = tapTargetCount > 0 ? passingTapTargetCount / tapTargetCount : 1;
-    const displayValue = str_(UIStrings.displayValue, {decimalProportion: score});
+    let score = 1;
+    let passingTapTargetRatio = 1;
+    if (failingTapTargetCount > 0) {
+      passingTapTargetRatio = (passingTapTargetCount / tapTargetCount);
+      // If there are any failures then we don't want the audit to pass,
+      // so keep the score below 90.
+      score = passingTapTargetRatio * 0.89;
+    }
+    const displayValue = str_(UIStrings.displayValue, {decimalProportion: passingTapTargetRatio});
 
     return {
       rawValue: tableItems.length === 0,

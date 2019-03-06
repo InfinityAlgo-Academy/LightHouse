@@ -10,7 +10,7 @@
 const URL = require('../../lib/url-shim');
 const i18n = require('../../lib/i18n/i18n.js');
 const Audit = require('../audit');
-const ViewportAudit = require('../viewport');
+const ComputedViewportMeta = require('../../computed/viewport-meta.js');
 const MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT = 60;
 
 const UIStrings = {
@@ -20,7 +20,7 @@ const UIStrings = {
   failureTitle: 'Document doesn\'t use legible font sizes',
   /** Description of a Lighthouse audit that tells the user *why* they need to use a larger font size. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).',
-  /** [ICU Syntax] Label for the audit identifying font sizes that are too small. */
+  /** Label for the audit identifying font sizes that are too small. */
   displayValue: '{decimalProportion, number, extendedPercent} legible text',
   /** Explanatory message stating that there was a failure in an audit caused by a missing page viewport meta tag configuration. "viewport" and "meta" are HTML terms and should not be translated. */
   explanationViewport: 'Text is illegible because there\'s no viewport meta tag optimized ' +
@@ -213,11 +213,12 @@ class FontSize extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
-    const hasViewportSet = ViewportAudit.audit(artifacts).rawValue;
-    if (!hasViewportSet) {
+  static async audit(artifacts, context) {
+    const viewportMeta = await ComputedViewportMeta.request(artifacts, context);
+    if (!viewportMeta.isMobileOptimized) {
       return {
         rawValue: false,
         explanation: str_(UIStrings.explanationViewport),

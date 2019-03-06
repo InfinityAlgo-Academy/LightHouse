@@ -1208,12 +1208,14 @@ Object {
     "extraHeaders": null,
     "gatherMode": false,
     "locale": "en-US",
+    "maxWaitForFcp": 15000,
     "maxWaitForLoad": 45000,
     "onlyAudits": null,
     "onlyCategories": null,
     "output": Array [
       "html",
     ],
+    "precomputedLanternData": null,
     "skipAudits": null,
     "throttling": Object {
       "cpuSlowdownMultiplier": 4,
@@ -1335,6 +1337,7 @@ Object {
     "extraHeaders": null,
     "gatherMode": false,
     "locale": "en-US",
+    "maxWaitForFcp": 15000,
     "maxWaitForLoad": 45000,
     "onlyAudits": Array [
       "metrics",
@@ -1343,6 +1346,7 @@ Object {
     "output": Array [
       "json",
     ],
+    "precomputedLanternData": null,
     "skipAudits": null,
     "throttling": Object {
       "cpuSlowdownMultiplier": 4,

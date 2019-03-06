@@ -436,7 +436,7 @@
     "description": "Label for a time column in a data table; entries will be the number of milliseconds spent parsing script files for every script loaded by the page."
   },
   "lighthouse-core/audits/bootup-time.js | columnTotal": {
-    "message": "Total",
+    "message": "Total CPU Time",
     "description": "Label for the total time column in a data table; entries will be the number of milliseconds spent executing per resource loaded by the page."
   },
   "lighthouse-core/audits/bootup-time.js | description": {
@@ -641,11 +641,11 @@
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
     "message": "Interactive at {timeInMs, number, seconds} s",
-    "description": "[ICU Syntax] Label for the audit identifying the time it took for the page to become interactive."
+    "description": "Label for the audit identifying the time it took for the page to become interactive."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
     "message": "Interactive on simulated mobile network at {timeInMs, number, seconds} s",
-    "description": "[ICU Syntax] Label for the audit identifying the time it took for the page to become interactive on a mobile network."
+    "description": "Label for the audit identifying the time it took for the page to become interactive on a mobile network."
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
     "message": "Page load is not fast enough on mobile networks",
@@ -713,7 +713,7 @@
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "The potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task.",
-    "description": "Description of the Estimated Input Latency metric that estimates the amount of time, in milliseconds, that the app takes to respond to user input. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
+    "description": "Description of the Maximum Potential First Input Delay metric that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
     "message": "Max Potential FID",
@@ -757,23 +757,23 @@
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "Multiple conflicting URLs ({urlList})",
-    "description": "[ICU Syntax] Explanatory message stating that there was a failure in an audit caused by multiple URLs conflicting with each other. \"urlList\" will be replaced by a list of URLs (e.g. https://example.com, https://example2.com, etc )."
+    "description": "Explanatory message stating that there was a failure in an audit caused by multiple URLs conflicting with each other. \"urlList\" will be replaced by a list of URLs (e.g. https://example.com, https://example2.com, etc )."
   },
   "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
     "message": "Points to a different domain ({url})",
-    "description": "[ICU Syntax] Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different domain. \"url\" will be replaced by the invalid URL (e.g. https://example.com)."
+    "description": "Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different domain. \"url\" will be replaced by the invalid URL (e.g. https://example.com)."
   },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "Invalid URL ({url})",
-    "description": "[ICU Syntax] Explanatory message stating that there was a failure in an audit caused by a URL being invalid. \"url\" will be replaced by the invalid URL (e.g. https://example.com)."
+    "description": "Explanatory message stating that there was a failure in an audit caused by a URL being invalid. \"url\" will be replaced by the invalid URL (e.g. https://example.com)."
   },
   "lighthouse-core/audits/seo/canonical.js | explanationPointsElsewhere": {
     "message": "Points to another `hreflang` location ({url})",
-    "description": "[ICU Syntax] Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different hreflang than the current context. \"url\" will be replaced by the invalid URL (e.g. https://example.com). 'hreflang' is an HTML attribute and should not be translated."
+    "description": "Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different hreflang than the current context. \"url\" will be replaced by the invalid URL (e.g. https://example.com). 'hreflang' is an HTML attribute and should not be translated."
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
     "message": "Relative URL ({url})",
-    "description": "[ICU Syntax] Explanatory message stating that there was a failure in an audit caused by a URL being relative instead of absolute. \"url\" will be replaced by the invalid URL (e.g. https://example.com)."
+    "description": "Explanatory message stating that there was a failure in an audit caused by a URL being relative instead of absolute. \"url\" will be replaced by the invalid URL (e.g. https://example.com)."
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRoot": {
     "message": "Points to the domain's root URL (the homepage), instead of an equivalent page of content",
@@ -793,7 +793,7 @@
   },
   "lighthouse-core/audits/seo/font-size.js | displayValue": {
     "message": "{decimalProportion, number, extendedPercent} legible text",
-    "description": "[ICU Syntax] Label for the audit identifying font sizes that are too small."
+    "description": "Label for the audit identifying font sizes that are too small."
   },
   "lighthouse-core/audits/seo/font-size.js | explanation": {
     "message": "{decimalProportion, number, extendedPercent} of text is too small.",
@@ -908,8 +908,8 @@
     "description": "Description of a Lighthouse audit that tells the user *why* they need to have a valid robots.txt file. Note: \"robots.txt\" is a canonical filename and should not be translated. This is displayed after a user expands the section to see more. No character length limits."
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
-    "message": "request for robots.txt returned HTTP status: {statusCode, number}",
-    "description": "[ICU Syntax] Label for the audit identifying that the robots.txt request has returned a specific HTTP status code. Note: \"robots.txt\" is a canonical filename and should not be translated. \"statusCode\" will be replaced with a 3 digit integer which represents the status of the HTTP connectiong for this page."
+    "message": "request for robots.txt returned HTTP status: {statusCode}",
+    "description": "Label for the audit identifying that the robots.txt request has returned a specific HTTP status code. Note: \"robots.txt\" is a canonical filename and should not be translated. \"statusCode\" will be replaced with a 3 digit integer which represents the status of the HTTP connectiong for this page."
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
     "message": "{itemCount, plural,\n    =1 {1 error found}\n    other {# errors found}\n    }",

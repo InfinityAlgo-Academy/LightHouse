@@ -113,7 +113,8 @@ declare global {
         audits?: Array<{path: string}>;
         /** Provide a category to display the plugin results in the report. */
         category: LH.Config.Category;
-        // TODO(bckenny): groups
+        /** Optionally provide more groups in addition to those specified by the base config. */
+        groups?: Record<string, LH.Config.GroupJson>;
       }
 
       export type MergeOptionsOfItems = <T extends {path?: string, options: Record<string, any>}>(items: T[]) => T[];

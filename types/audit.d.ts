@@ -100,7 +100,6 @@ declare global {
       id: string;
       /** A more detailed description that describes why the audit is important and links to Lighthouse documentation on the audit; markdown links supported. */
       description: string;
-      // TODO(bckenny): define details
       details?: Audit.Details;
     }
 
