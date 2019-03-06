@@ -264,7 +264,7 @@ class TapTargets extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['MetaElements', 'TapTargets'],
+      requiredArtifacts: ['MetaElements', 'TapTargets', 'TestedAsMobileDevice'],
     };
   }
 
@@ -274,6 +274,15 @@ class TapTargets extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    if (!artifacts.TestedAsMobileDevice) {
+      // Tap target sizes aren't important for desktop SEO, so disable the audit there.
+      // On desktop people also tend to have more precise pointing devices than fingers.
+      return {
+        rawValue: true,
+        notApplicable: true,
+      };
+    }
+
     const viewportMeta = await ComputedViewportMeta.request(artifacts, context);
     if (!viewportMeta.isMobileOptimized) {
       return {

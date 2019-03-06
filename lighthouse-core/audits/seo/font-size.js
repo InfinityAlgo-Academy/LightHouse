@@ -207,7 +207,7 @@ class FontSize extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['FontSize', 'URL', 'MetaElements'],
+      requiredArtifacts: ['FontSize', 'URL', 'MetaElements', 'TestedAsMobileDevice'],
     };
   }
 
@@ -217,6 +217,14 @@ class FontSize extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    if (!artifacts.TestedAsMobileDevice) {
+      // Font size isn't important to desktop SEO
+      return {
+        rawValue: true,
+        notApplicable: true,
+      };
+    }
+
     const viewportMeta = await ComputedViewportMeta.request(artifacts, context);
     if (!viewportMeta.isMobileOptimized) {
       return {

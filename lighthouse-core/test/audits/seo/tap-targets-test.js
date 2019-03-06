@@ -12,13 +12,14 @@ const assert = require('assert');
 
 const getFakeContext = () => ({computedCache: new Map()});
 
-function auditTapTargets(tapTargets, metaElements = [{
+function auditTapTargets(tapTargets, {MetaElements = [{
   name: 'viewport',
   content: 'width=device-width',
-}]) {
+}], TestedAsMobileDevice = true} = {}) {
   const artifacts = {
     TapTargets: tapTargets,
-    MetaElements: metaElements,
+    MetaElements,
+    TestedAsMobileDevice,
   };
 
   return TapTargetsAudit.audit(artifacts, getFakeContext());
@@ -203,11 +204,19 @@ describe('SEO: Tap targets audit', () => {
   });
 
   it('fails if no meta viewport tag is provided', async () => {
-    const auditResult = await auditTapTargets([], []);
+    const auditResult = await auditTapTargets([], {MetaElements: []});
     assert.equal(auditResult.rawValue, false);
 
     expect(auditResult.explanation).toBeDisplayString(
       /* eslint-disable max-len */
       'Tap targets are too small because there\'s no viewport meta tag optimized for mobile screens');
+  });
+
+  it('is not applicable on desktop', async () => {
+    const auditResult = await auditTapTargets(getBorderlineTapTargets({
+      overlapSecondClientRect: true,
+    }), {TestedAsMobileDevice: false});
+    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.notApplicable, true);
   });
 });
