@@ -66,7 +66,7 @@ describe('ManifestValues computed artifact', () => {
     assert.equal(results.allChecks.every(i => i.passing), true, 'not all checks passed');
   });
 
-  describe('color checks', async () => {
+  describe('color checks', () => {
     it('fails when a minimal manifest contains no background_color', async () => {
       const WebAppManifest = noUrlManifestParser(JSON.stringify({
         start_url: '/',
@@ -120,7 +120,7 @@ describe('ManifestValues computed artifact', () => {
     });
   });
 
-  describe('icons checks', async () => {
+  describe('icons checks', () => {
     describe('icons exist check', () => {
       it('fails when a manifest contains no icons array', async () => {
         const manifestSrc = JSON.stringify({
