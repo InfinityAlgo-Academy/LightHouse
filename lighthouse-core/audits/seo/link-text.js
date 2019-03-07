@@ -8,6 +8,7 @@
 const Audit = require('../audit');
 const URL = require('../../lib/url-shim');
 const BLOCKLIST = new Set([
+  // English
   'click here',
   'click this',
   'go',
@@ -17,6 +18,13 @@ const BLOCKLIST = new Set([
   'right here',
   'more',
   'learn more',
+  // Japanese
+  'ここをクリック',
+  'こちらをクリック',
+  'リンク',
+  '続きを読む',
+  '続く',
+  '全文表示',
 ]);
 const i18n = require('../../lib/i18n/i18n.js');
 
