@@ -123,6 +123,8 @@ declare global {
       skipAudits?: string[] | null;
       /** List of extra HTTP Headers to include. */
       extraHeaders?: Crdp.Network.Headers | null; // See extraHeaders TODO in bin.js
+      /** How Lighthouse was run, e.g. from the Chrome extension or from the npm module */
+      channel?: string
       /** Precomputed lantern estimates to use instead of observed analysis. */
       precomputedLanternData?: PrecomputedLanternData | null;
     }

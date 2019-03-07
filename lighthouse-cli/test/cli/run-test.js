@@ -50,6 +50,8 @@ describe('CLI run', function() {
       assert.deepStrictEqual(results.timing, lhr.timing);
       assert.ok(results.timing.total !== 0);
 
+      assert.equal(results.configSettings.channel, 'cli');
+
       fs.unlinkSync(filename);
     });
   }, 20 * 1000);

@@ -36,6 +36,7 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
   // disableStorageReset because it causes render server hang
   flags.disableStorageReset = true;
   flags.logLevel = flags.logLevel || 'info';
+  flags.channel = 'lr';
 
   const config = lrDevice === 'desktop' ? LR_PRESETS.desktop : LR_PRESETS.mobile;
   if (categoryIDs) {

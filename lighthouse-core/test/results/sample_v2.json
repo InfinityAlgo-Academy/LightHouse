@@ -3175,6 +3175,7 @@
     "disableStorageReset": false,
     "disableDeviceEmulation": false,
     "emulatedFormFactor": "mobile",
+    "channel": "cli",
     "locale": "en-US",
     "blockedUrlPatterns": null,
     "additionalTraceCategories": null,

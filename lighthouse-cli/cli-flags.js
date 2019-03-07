@@ -137,6 +137,7 @@ function getFlags(manualArgv) {
       .array('skipAudits')
       .array('output')
       .string('extraHeaders')
+      .string('channel')
       .string('precomputedLanternDataPath')
       .string('lanternDataOutputPath')
 
@@ -146,6 +147,7 @@ function getFlags(manualArgv) {
       .default('port', 0)
       .default('hostname', 'localhost')
       .default('enable-error-reporting', undefined) // Undefined so prompted by default
+      .default('channel', 'cli')
       .check(/** @param {LH.CliFlags} argv */ (argv) => {
         // Lighthouse doesn't need a URL if...
         //   - We're just listing the available options.

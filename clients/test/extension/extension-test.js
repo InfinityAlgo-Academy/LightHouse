@@ -27,6 +27,7 @@ describe('Lighthouse chrome extension', function() {
   let browser;
   let extensionPage;
   let originalManifest;
+  let lhr;
 
   function getAuditElementsIds({category, selector}) {
     return extensionPage.evaluate(
@@ -102,6 +103,8 @@ describe('Lighthouse chrome extension', function() {
       throw new Error(lighthouseResult.exceptionDetails.text);
     }
 
+    lhr = lighthouseResult.result.value.lhr;
+
     extensionPage = (await browser.pages()).find(page =>
       page.url().includes('blob:chrome-extension://')
     );
@@ -175,5 +178,9 @@ describe('Lighthouse chrome extension', function() {
   it('should pass the is-crawlable audit', async () => {
     // this audit has regressed in the extension twice, so make sure it passes
     assert.ok(await extensionPage.$('#is-crawlable.lh-audit--pass'), 'did not pass is-crawlable');
+  });
+
+  it('should specify the channel as extension', async () => {
+    assert.equal(lhr.configSettings.channel, 'extension');
   });
 });
