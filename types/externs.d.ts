@@ -142,6 +142,8 @@ declare global {
       logLevel?: 'silent'|'error'|'info'|'verbose';
       /** The path to the config JSON. */
       configPath?: string;
+      /** Run the specified plugins. */
+      plugins?: string[];
     }
 
     /**

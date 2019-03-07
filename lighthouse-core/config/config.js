@@ -362,7 +362,7 @@ class Config {
     const configDir = configPath ? path.dirname(configPath) : undefined;
 
     // Validate and merge in plugins (if any).
-    configJSON = Config.mergePlugins(configJSON, configDir);
+    configJSON = Config.mergePlugins(configJSON, flags, configDir);
 
     const settings = Config.initSettings(configJSON.settings, flags);
 
@@ -459,22 +459,23 @@ class Config {
 
   /**
    * @param {LH.Config.Json} configJSON
+   * @param {LH.Flags=} flags
    * @param {string=} configDir
    * @return {LH.Config.Json}
    */
-  static mergePlugins(configJSON, configDir) {
-    const pluginNames = configJSON.plugins;
+  static mergePlugins(configJSON, flags, configDir) {
+    const configPlugins = configJSON.plugins || [];
+    const flagPlugins = (flags && flags.plugins) || [];
+    const pluginNames = new Set([...configPlugins, ...flagPlugins]);
 
-    if (pluginNames) {
-      for (const pluginName of pluginNames) {
-        assertValidPluginName(configJSON, pluginName);
+    for (const pluginName of pluginNames) {
+      assertValidPluginName(configJSON, pluginName);
 
-        const pluginPath = Config.resolveModule(pluginName, configDir, 'plugin');
-        const rawPluginJson = require(pluginPath);
-        const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
+      const pluginPath = Config.resolveModule(pluginName, configDir, 'plugin');
+      const rawPluginJson = require(pluginPath);
+      const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
 
-        configJSON = Config.extendConfigJSON(configJSON, pluginJson);
-      }
+      configJSON = Config.extendConfigJSON(configJSON, pluginJson);
     }
 
     return configJSON;
