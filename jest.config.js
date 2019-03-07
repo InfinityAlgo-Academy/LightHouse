@@ -14,7 +14,7 @@ module.exports = {
     '!**/test/',
     '!**/scripts/',
   ],
-  setupTestFrameworkScriptFile: './lighthouse-core/test/test-utils.js',
+  setupFilesAfterEnv: ['./lighthouse-core/test/test-utils.js'],
   testEnvironment: 'node',
   testMatch: [
     '**/lighthouse-core/**/*-test.js',
