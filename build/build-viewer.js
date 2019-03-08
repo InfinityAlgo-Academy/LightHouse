@@ -88,7 +88,7 @@ async function copyAssets() {
  * @return {Promise<void>}
  */
 async function css() {
-  const reportCss = htmlReportAssets['report.css'];
+  const reportCss = htmlReportAssets.REPORT_CSS;
   const viewerCss = await readFileAsync(`${sourceDir}/app/styles/viewer.css`, {encoding: 'utf8'});
   await safeWriteFileAsync(`${distDir}/styles/viewer.css`, [reportCss, viewerCss].join('\n'));
 }
@@ -99,7 +99,7 @@ async function css() {
  */
 async function html() {
   let htmlSrc = await readFileAsync(`${sourceDir}/app/index.html`, {encoding: 'utf8'});
-  htmlSrc = htmlSrc.replace(/%%LIGHTHOUSE_TEMPLATES%%/, htmlReportAssets['report-templates.html']);
+  htmlSrc = htmlSrc.replace(/%%LIGHTHOUSE_TEMPLATES%%/, htmlReportAssets.REPORT_TEMPLATES);
 
   await safeWriteFileAsync(`${distDir}/index.html`, htmlSrc);
 }
@@ -124,7 +124,7 @@ async function compileJs() {
   const generatorJs = await generatorJsPromise;
 
   // Report renderer scripts.
-  const rendererJs = htmlReportAssets['report.js'];
+  const rendererJs = htmlReportAssets.REPORT_JAVASCRIPT;
 
   // idb-keyval dependency.
   const idbKeyvalPath = require.resolve('idb-keyval/dist/idb-keyval-min.js');

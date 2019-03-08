@@ -29,8 +29,8 @@ const REPORT_CSS = fs.readFileSync(__dirname + '/report-styles.css', 'utf8');
 const REPORT_TEMPLATES = fs.readFileSync(__dirname + '/templates.html', 'utf8');
 
 module.exports = {
-  'report-template.html': REPORT_TEMPLATE,
-  'report-templates.html': REPORT_TEMPLATES,
-  'report.js': REPORT_JAVASCRIPT,
-  'report.css': REPORT_CSS,
+  REPORT_TEMPLATE,
+  REPORT_TEMPLATES,
+  REPORT_JAVASCRIPT,
+  REPORT_CSS,
 };

@@ -39,17 +39,11 @@ lh_worker_dir="$frontend_dir/audits2_worker/lighthouse"
 # copy report files
 cp -pPR $report_dir/report-generator.js "$fe_lh_dir"
 cp -pPR $report_dir/html/renderer "$fe_lh_dir"
-# import report assets
-node -e "
-  const fs = require('fs');
-  const htmlReportAssets = require('./lighthouse-core/report/html/html-report-assets.js');
-  for (const [name, content] of Object.entries(htmlReportAssets)) {
-    const unicodeEscaped = content.replace(/[^\x00-\x7F]/g, c => '\\\\u' + c.charCodeAt(0).toString(16));
-    fs.writeFileSync('$fe_lh_dir/' + name, unicodeEscaped, 'ascii');
-  }
-"
 echo -e "\033[32m ✓\033[39m Report renderer files copied."
 
 # copy lighthouse-dt-bundle (potentially stale)
 cp -pPR "$lh_bg_js" "$lh_worker_dir/lighthouse-dt-bundle.js"
 echo -e "\033[96m ✓\033[39m (Potentially stale) lighthouse-dt-bundle copied."
+
+# bundle report generator
+yarn browserify lighthouse-core/report/report-generator.js -o $fe_lh_dir/report-generator.js -s ReportGenerator -t brfs

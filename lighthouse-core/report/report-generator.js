@@ -5,19 +5,11 @@
  */
 'use strict';
 
-/**
- * @param {keyof typeof import('./html/html-report-assets')} name
- */
-function getAsset(name) {
-  if (typeof module !== 'undefined' && module.exports) {
-    return require('./html/html-report-assets')[name];
-  } else {
-    // @ts-ignore - Devtools
-    return Runtime.cachedResources['audits2/lighthouse/' + name]; // eslint-disable-line
-  }
-}
+const htmlReportAssets = require('./html/html-report-assets');
 
 class ReportGenerator {
+  static get Assets() { return htmlReportAssets; }
+
   /**
    * Replaces all the specified strings in source without serial replacements.
    * @param {string} source
@@ -47,13 +39,13 @@ class ReportGenerator {
       .replace(/</g, '\\u003c') // replaces opening script tags
       .replace(/\u2028/g, '\\u2028') // replaces line separators ()
       .replace(/\u2029/g, '\\u2029'); // replaces paragraph separators
-    const sanitizedJavascript = getAsset('report.js').replace(/<\//g, '\\u003c/');
+    const sanitizedJavascript = htmlReportAssets.REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
 
-    return ReportGenerator.replaceStrings(getAsset('report-template.html'), [
+    return ReportGenerator.replaceStrings(htmlReportAssets.REPORT_TEMPLATE, [
       {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
       {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: sanitizedJavascript},
-      {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: getAsset('report.css')},
-      {search: '%%LIGHTHOUSE_TEMPLATES%%', replacement: getAsset('report-templates.html')},
+      {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: htmlReportAssets.REPORT_CSS},
+      {search: '%%LIGHTHOUSE_TEMPLATES%%', replacement: htmlReportAssets.REPORT_TEMPLATES},
     ]);
   }
 
@@ -125,9 +117,4 @@ class ReportGenerator {
   }
 }
 
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ReportGenerator;
-} else {
-  // @ts-ignore - Devtools
-  self.ReportGenerator = ReportGenerator; // eslint-disable-line
-}
+module.exports = ReportGenerator;
