@@ -89,7 +89,7 @@ class Driver {
   }
 
   static get traceCategories() {
-    return [
+    const r = [
       // Exclude default categories. We'll be selective to minimize trace size
       '-*',
 
@@ -115,7 +115,7 @@ class Driver {
 
       // Up to 450 (https://goo.gl/rBfhn4) JPGs added to the trace
       'disabled-by-default-devtools.screenshot',
-      'disabled-by-default-devtools.screenshot-sampled',
+      // 'disabled-by-default-devtools.screenshot-sampled',
 
       // This doesn't add its own events, but adds a `stackTrace` property to devtools.timeline events
       'disabled-by-default-devtools.timeline.stack',
@@ -124,6 +124,11 @@ class Driver {
       // 'disabled-by-default-v8.cpu_profiler',
       // 'disabled-by-default-v8.cpu_profiler.hires',
     ];
+
+    if (process.env.SAMPLED === '1') {
+      r.push('disabled-by-default-devtools.screenshot-sampled');
+    }
+    return r;
   }
 
   /**
