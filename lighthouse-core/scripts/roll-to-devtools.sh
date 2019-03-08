@@ -37,9 +37,22 @@ lh_bg_js="dist/lighthouse-dt-bundle.js"
 lh_worker_dir="$frontend_dir/audits2_worker/lighthouse"
 
 # copy report files
-cp -pPR $report_dir/{report-styles.css,templates.html,renderer} "$fe_lh_dir"
+cp -pPR $report_dir/renderer "$fe_lh_dir"
 echo -e "\033[32m ✓\033[39m Report renderer files copied."
 
 # copy lighthouse-dt-bundle (potentially stale)
 cp -pPR "$lh_bg_js" "$lh_worker_dir/lighthouse-dt-bundle.js"
 echo -e "\033[96m ✓\033[39m (Potentially stale) lighthouse-dt-bundle copied."
+
+# bundle html generator
+node -e "
+  const htmlReportAssets = require('./lighthouse-core/report/html/html-report-assets.js');
+  const reportGenerator = require('./lighthouse-core/report/report-generator.js');
+  console.log('const htmlReportAssets =', JSON.stringify(htmlReportAssets, null, 2), ';');
+  console.log('class ReportGenerator {');
+  console.log('  static Assets = htmlReportAssets;');
+  console.log('  static', reportGenerator.generateReportHtml.toString());
+  console.log('  static', reportGenerator.replaceStrings.toString());
+  console.log('}');
+  console.log('self.ReportGenerator = ReportGenerator');
+" > "$fe_lh_dir"/report-html-generator.js
