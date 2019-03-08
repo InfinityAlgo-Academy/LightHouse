@@ -13,7 +13,7 @@ function getAsset(name) {
     return require('./html/html-report-assets')[name];
   } else {
     // @ts-ignore - Devtools
-    return Runtime.cachedAssets['audits2/lighthouse/' + name];
+    return Runtime.cachedResources['audits2/lighthouse/' + name];
   }
 }
 
