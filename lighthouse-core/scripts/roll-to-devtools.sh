@@ -30,29 +30,25 @@ else
   echo -e "\033[96m ✓\033[39m Chromium folder in place."
 fi
 
-report_dir="lighthouse-core/report/html"
+report_dir="lighthouse-core/report"
 fe_lh_dir="$frontend_dir/audits2/lighthouse"
 
 lh_bg_js="dist/lighthouse-dt-bundle.js"
 lh_worker_dir="$frontend_dir/audits2_worker/lighthouse"
 
 # copy report files
-cp -pPR $report_dir/renderer "$fe_lh_dir"
+cp -pPR $report_dir/report-generator.js "$fe_lh_dir"
+cp -pPR $report_dir/html/renderer "$fe_lh_dir"/renderer
+# import report assets
+node -e "
+  const fs = require('fs');
+  const htmlReportAssets = require('./lighthouse-core/report/html/html-report-assets.js');
+  for (const [name, content] of Object.entries(htmlReportAssets)) {
+    fs.writeFileSync('$fe_lh_dir/' + name, content);
+  }
+"
 echo -e "\033[32m ✓\033[39m Report renderer files copied."
 
 # copy lighthouse-dt-bundle (potentially stale)
 cp -pPR "$lh_bg_js" "$lh_worker_dir/lighthouse-dt-bundle.js"
 echo -e "\033[96m ✓\033[39m (Potentially stale) lighthouse-dt-bundle copied."
-
-# bundle html generator
-node -e "
-  const htmlReportAssets = require('./lighthouse-core/report/html/html-report-assets.js');
-  const reportGenerator = require('./lighthouse-core/report/report-generator.js');
-  console.log('const htmlReportAssets =', JSON.stringify(htmlReportAssets, null, 2), ';');
-  console.log('class ReportGenerator {');
-  console.log('  static Assets = htmlReportAssets;');
-  console.log('  static', reportGenerator.generateReportHtml.toString());
-  console.log('  static', reportGenerator.replaceStrings.toString());
-  console.log('}');
-  console.log('self.ReportGenerator = ReportGenerator');
-" > "$fe_lh_dir"/report-html-generator.js
