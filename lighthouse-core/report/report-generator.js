@@ -13,7 +13,7 @@ function getAsset(name) {
     return require('./html/html-report-assets')[name];
   } else {
     // @ts-ignore - Devtools
-    return Runtime.cachedResources['audits2/lighthouse/' + name];
+    return Runtime.cachedResources['audits2/lighthouse/' + name]; // eslint-disable-line
   }
 }
 
@@ -129,5 +129,5 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = ReportGenerator;
 } else {
   // @ts-ignore - Devtools
-  self.ReportGenerator = ReportGenerator;
+  self.ReportGenerator = ReportGenerator; // eslint-disable-line
 }
