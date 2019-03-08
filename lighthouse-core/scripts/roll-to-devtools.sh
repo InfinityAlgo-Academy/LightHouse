@@ -38,7 +38,7 @@ lh_worker_dir="$frontend_dir/audits2_worker/lighthouse"
 
 # copy report files
 cp -pPR $report_dir/report-generator.js "$fe_lh_dir"
-cp -pPR $report_dir/html/renderer "$fe_lh_dir"/renderer
+cp -pPR $report_dir/html/renderer "$fe_lh_dir"
 # import report assets
 node -e "
   const fs = require('fs');
