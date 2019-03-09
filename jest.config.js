@@ -19,5 +19,8 @@ module.exports = {
   testMatch: [
     '**/lighthouse-core/**/*-test.js',
     '**/lighthouse-cli/**/*-test.js',
+    '**/lighthouse-viewer/**/*-test.js',
+    '**/lighthouse-viewer/**/*-test-pptr.js',
+    '**/clients/test/**/*-test.js',
   ],
 };

@@ -6,12 +6,11 @@
 'use strict';
 
 const assert = require('assert');
-const jest = require('jest-mock');
 const lhBackground = require('../lightrider-entry.js');
 const Runner = require('../../lighthouse-core/runner.js');
 const LHError = require('../../lighthouse-core/lib/lh-error.js');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('lightrider-entry', () => {
   describe('#runLighthouseInLR', () => {

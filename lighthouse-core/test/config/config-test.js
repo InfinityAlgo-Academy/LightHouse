@@ -186,7 +186,7 @@ describe('Config', () => {
   it('loads an audit from node_modules/', () => {
     return assert.throws(_ => new Config({
       // Use a lighthouse dep as a stand in for a module.
-      audits: ['mocha'],
+      audits: ['lighthouse-logger'],
     }), function(err) {
       // Should throw an audit validation error, but *not* an audit not found error.
       return !/locate audit/.test(err) && /audit\(\) method/.test(err);
@@ -1046,7 +1046,7 @@ describe('Config', () => {
 
     it('loads a gatherer from node_modules/', () => {
       // Use a lighthouse dep as a stand in for a module.
-      assert.throws(_ => loadGatherer('mocha'), function(err) {
+      assert.throws(_ => loadGatherer('lighthouse-logger'), function(err) {
         // Should throw a gatherer validation error, but *not* a gatherer not found error.
         return !/locate gatherer/.test(err) && /beforePass\(\) method/.test(err);
       });

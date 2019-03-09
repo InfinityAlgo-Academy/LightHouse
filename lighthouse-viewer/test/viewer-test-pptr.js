@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const path = require('path');
 const assert = require('assert');
@@ -49,7 +49,7 @@ describe('Lighthouse Viewer', function() {
       });
   }
 
-  before(async function() {
+  beforeAll(async function() {
     server.listen(portNumber, 'localhost');
 
     // start puppeteer
@@ -65,7 +65,7 @@ describe('Lighthouse Viewer', function() {
     await viewerPage.waitForSelector('.lh-container', {timeout: 30000});
   });
 
-  after(async function() {
+  afterAll(async function() {
     // Log any page load errors encountered in case before() failed.
     // eslint-disable-next-line no-console
     console.error(pageErrors);
