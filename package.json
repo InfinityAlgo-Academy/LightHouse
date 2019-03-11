@@ -119,7 +119,7 @@
     "jsdom": "^12.2.0",
     "make-dir": "^1.3.0",
     "npm-run-posix-or-windows": "^2.0.2",
-    "nyc": "^11.6.0",
+    "nyc": "^13.3.0",
     "package-json-versionify": "^1.0.4",
     "postinstall-prepare": "^1.0.1",
     "prettier": "^1.14.3",
