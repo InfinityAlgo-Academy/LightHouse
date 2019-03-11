@@ -88,7 +88,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
   /**
    * Get an audit's wastedMs to sort the opportunity by, and scale the sparkline width
-   * Opportunties with an error won't have a details object, so MIN_VALUE is returned to keep any
+   * Opportunities with an error won't have a details object, so MIN_VALUE is returned to keep any
    * erroring opportunities last in sort order.
    * @param {LH.ReportResult.AuditRef} audit
    * @return {number}
