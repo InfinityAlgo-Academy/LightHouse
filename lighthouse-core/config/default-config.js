@@ -119,7 +119,6 @@ const defaultConfig = {
       'seo/font-size',
       'seo/hreflang',
       'seo/embedded-content',
-      'seo/canonical',
       'seo/robots-txt',
       'seo/tap-targets',
     ],

@@ -58,8 +58,6 @@ declare global {
       AppCacheManifest: string | null;
       /** Array of all URLs cached in CacheStorage. */
       CacheContents: string[];
-      /** Href values of link[rel=canonical] nodes found in HEAD (or null, if no href attribute). */
-      Canonical: (string | null)[];
       /** Console deprecation and intervention warnings logged by Chrome during page load. */
       ChromeConsoleMessages: Crdp.Log.EntryAddedEvent[];
       /** CSS coverage information for styles used by page's final state. */
@@ -71,7 +69,7 @@ declare global {
       DOMStats: Artifacts.DOMStats;
       /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
       EmbeddedContent: Artifacts.EmbeddedContentInfo[];
-      /** All the link elements on the page. */
+      /** All the link elements on the page or equivalently declared in `Link` headers. @see https://html.spec.whatwg.org/multipage/links.html */
       LinkElements: Artifacts.LinkElement[];
       /** Information for font faces used in the page. */
       Fonts: Artifacts.Font[];
@@ -172,10 +170,20 @@ declare global {
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#Attributes */
       export interface LinkElement {
-        rel: string
-        href: string
+        /** The `rel` attribute of the link, normalized to lower case. @see https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types */
+        rel: 'alternate'|'canonical'|'dns-prefetch'|'preconnect'|'preload'|'stylesheet'|string;
+        /** The `href` attribute of the link or `null` if it was invalid in the header. */
+        href: string | null
+        /** The raw value of the `href` attribute. Only different from `href` when source is 'header' */
+        hrefRaw: string
+        /** The `hreflang` attribute of the link */
+        hreflang: string
+        /** The `as` attribute of the link */
         as: string
+        /** The `crossOrigin` attribute of the link */
         crossOrigin: 'anonymous'|'use-credentials'|null
+        /** Where the link was found, either in the DOM or in the headers of the main document */
+        source: 'head'|'body'|'headers'
       }
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
