@@ -11,6 +11,7 @@ module.exports = {
   collectCoverageFrom: [
     '**/lighthouse-core/**/*.js',
     '**/lighthouse-cli/**/*.js',
+    '**/lighthouse-viewer/**/*.js',
     '!**/test/',
     '!**/scripts/',
   ],
