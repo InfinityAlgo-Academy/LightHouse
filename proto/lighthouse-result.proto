@@ -130,6 +130,17 @@ message LighthouseResult {
       none = 3;
     }
 
+    enum ThrottlingMethod {
+      // Unknown. This should not be used.
+      THROTTLING_METHOD_UNSPECIFIED = 0;
+
+      devtools = 1;
+
+      simulate = 2;
+
+      provided = 3;
+    }
+
     // The form factor used in the audit
     EmulatedFormFactor emulated_form_factor = 1;
 
@@ -142,6 +153,44 @@ message LighthouseResult {
 
     // How Lighthouse was run, e.g. from the Chrome extension or from the npm module
     string channel = 4;
+
+    // The maximum amount of time to wait for a page content render, in ms. If no content is rendered within this limit, the run is aborted with an error.
+    int32 max_wait_for_fcp = 6;
+
+    // The maximum amount of time to wait for a page to load, in ms.
+    int32 max_wait_for_load = 7;
+
+    // List of URL patterns to block.
+    repeated string blocked_url_patterns = 8;
+
+    // Comma-delimited list of trace categories to include.
+    string additional_trace_categories = 9;
+
+    // Flag indicating that the browser storage should not be reset for the audit.
+    bool disable_storage_reset = 10;
+
+    // Flag indicating that there shouldn't be any emulation during the run.
+    bool disable_device_emulation = 11;
+
+    // The method used to throttle the network.
+    ThrottlingMethod throttling_method = 12;
+
+    // The throttling config settings.
+    ThrottlingSettings throttling = 13;
+
+    // If present, the run should only conduct this list of audits.
+    // nullable list of strings
+    google.protobuf.Value only_audits = 14;
+
+    // If present, the run should skip this list of audits.
+    // nullable list of strings
+    google.protobuf.Value skip_audits = 15;
+
+    // List of extra HTTP Headers to include.
+    map<string, string> extra_headers = 16;
+
+    // Precomputed lantern estimates to use instead of observed analysis.
+    PrecomputedLanternData precomputed_lantern_data = 17;
   }
 
   // The settings that were used to run this audit
@@ -347,4 +396,63 @@ message I18n {
 
   // The message holding all formatted strings
   RendererFormattedStrings renderer_formatted_strings = 1;
+}
+
+message ThrottlingSettings {
+  // The round trip time in milliseconds.
+  int32 rttMs = 1;
+
+  // The network throughput in kilobits per second.
+  int32 throughput_kbps = 2;
+
+  // The network request latency in milliseconds.
+  int32 request_latencyMs = 3;
+
+  // The network download throughput in kilobits per second.
+  int32 download_throughput_kbps = 4;
+
+  // The network upload throughput in kilobits per second.
+  int32 upload_throughput_kbps = 5;
+
+  // The amount of slowdown applied to the cpu (1/<cpuSlowdownMultiplier>).
+  int32 cpu_slowdown_multiplier = 6;
+}
+
+ message PrecomputedLanternData {
+  // TODO
+  map<string, int32> additional_rtt_by_origin = 1;
+
+  // TODO
+  map<string, int32> server_response_time_by_origin = 2;
+}
+
+message LighthouseConfig {
+  message Audit {
+    // TODO
+    string path = 1;
+
+    // TODO
+    object options = 2;
+  }
+
+  // Name of config to extend from.
+  string extends = 1;
+
+  // TODO
+  LighthouseResult.ConfigSettings settings = 2;
+
+  // TODO
+  repeated object passes = 3;
+
+  // TODO. Audit | string ?
+  repeated Audit audits = 4;
+
+  // TODO
+  map<string, object> categories = 5;
+
+  // TODO
+  map<string, object> groups = 6;
+
+  // TODO
+  repeated string plugins = 7;
 }
