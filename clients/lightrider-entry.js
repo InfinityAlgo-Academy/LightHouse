@@ -31,7 +31,7 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
   const {lrDevice, categoryIDs, logAssets, keepRawValues} = lrOpts;
 
   // Certain fixes need to kick in under LR, see https://github.com/GoogleChrome/lighthouse/issues/5839
-  global.isLightRider = true;
+  global.isLightrider = true;
 
   // disableStorageReset because it causes render server hang
   flags.disableStorageReset = true;
