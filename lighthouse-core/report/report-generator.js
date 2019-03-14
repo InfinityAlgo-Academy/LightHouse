@@ -8,7 +8,7 @@
 const htmlReportAssets = require('./html/html-report-assets');
 
 class ReportGenerator {
-  static get Assets() {
+  static getAssets() {
     return htmlReportAssets;
   }
 

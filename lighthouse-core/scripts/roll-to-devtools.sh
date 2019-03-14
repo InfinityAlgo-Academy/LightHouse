@@ -44,5 +44,5 @@ echo -e "\033[32m ✓\033[39m Report renderer files copied."
 cp -pPR "$lh_bg_js" "$lh_worker_dir/lighthouse-dt-bundle.js"
 echo -e "\033[96m ✓\033[39m (Potentially stale) lighthouse-dt-bundle copied."
 
-# bundle report generator
-yarn browserify lighthouse-core/report/report-generator.js -o $fe_lh_dir/report-generator.js -s ReportGenerator -t brfs
+# copy report generator
+cp dist/report-generator.js $fe_lh_dir
