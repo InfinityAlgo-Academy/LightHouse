@@ -10,6 +10,7 @@ const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.
 const assert = require('assert');
 const devtoolsLogItems = require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
 const redirectsDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
+const lrRequestDevtoolsLog = require('../fixtures/lr.devtoolslog.json');
 
 /* eslint-env jest */
 describe('network recorder', function() {
@@ -115,6 +116,20 @@ describe('network recorder', function() {
     responseReceived.params.response.timing = {requestTime: 0, receiveHeadersEnd: -1};
     const records = NetworkRecorder.recordsFromLogs(devtoolsLogs);
     expect(records).toMatchObject([{url: 'http://example.com', startTime: 1, endTime: 2}]);
+  });
+    const records = NetworkRecorder.recordsFromLogs(lrRequestDevtoolsLog);
+  
+
+    expect(records.find(r => r.url === 'https://www.paulirish.com/'))
+    .toMatchObject({
+      resourceSize: 75221,
+      transferSize: 22889,
+    });
+    expect(records.find(r => r.url === 'https://www.paulirish.com/javascripts/modernizr-2.0.js'))
+    .toMatchObject({
+      resourceSize: 9736,
+      transferSize: 4730,
+    });
   });
 
   describe('#findNetworkQuietPeriods', () => {
