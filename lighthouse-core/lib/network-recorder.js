@@ -102,25 +102,11 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
-   * frame root network requests don't always "finish" even when they're done loading data, use responseReceived instead
-   * @see https://github.com/GoogleChrome/lighthouse/issues/6067#issuecomment-423211201
-   * @param {LH.Artifacts.NetworkRequest} record
-   * @return {boolean}
-   */
-  static _isFrameRootRequestAndFinished(record) {
-    const isFrameRootRequest = record.url === record.documentURL;
-    const responseReceived = record.responseReceivedTime > 0;
-    return !!(isFrameRootRequest && responseReceived && record.endTime);
-  }
-
-  /**
    * @param {LH.Artifacts.NetworkRequest} record
    * @return {boolean}
    */
   static isNetworkRecordFinished(record) {
-    return record.finished ||
-      NetworkRecorder._isQUICAndFinished(record) ||
-      NetworkRecorder._isFrameRootRequestAndFinished(record);
+    return record.finished || NetworkRecorder._isQUICAndFinished(record);
   }
 
   /**
