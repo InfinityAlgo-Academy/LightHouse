@@ -74,9 +74,10 @@ class Driver {
       if (event.targetInfo.type !== 'iframe') return;
 
       // We want to receive information about network requests from iframes, so enable the Network domain.
-      // Network events from subtargets will be stringified and sent back on `Target.receivedMessageFromTarget`.
-      this.sendCommand({method: 'Network.enable', sessionId: event.sessionId});
-      this.sendCommand({method: 'Target.setAutoAttach', sessionId: event.sessionId}, {
+      // Network events from subtargets will be received as regular Network.* events.
+      this._innerSendCommand('Network.enable', event.sessionId);
+      // We want to receive information about *all* subframes, so recursively enable autoattach too.
+      this._innerSendCommand('Target.setAutoAttach', event.sessionId, {
         autoAttach: true,
         waitForDebuggerOnStart: false,
         flatten: true,
@@ -279,15 +280,11 @@ class Driver {
    * Call protocol methods, with a timeout.
    * To configure the timeout for the next call, use 'setNextProtocolTimeout'.
    * @template {keyof LH.CrdpCommands} C
-   * @param {C|{method: C, sessionId: string}} methodObj
+   * @param {C} method
    * @param {LH.CrdpCommands[C]['paramsType']} params
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
-  sendCommand(methodObj, ...params) {
-    /** @type {C} */
-    const method = typeof methodObj === 'string' ? methodObj : methodObj.method;
-    const sessionId = typeof methodObj === 'string' ? undefined : methodObj.sessionId;
-
+  sendCommand(method, ...params) {
     const timeout = this._nextProtocolTimeout;
     this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
     return new Promise(async (resolve, reject) => {
@@ -299,7 +296,7 @@ class Driver {
         reject(err);
       }), timeout);
       try {
-        const result = await this._innerSendCommand(method, sessionId, ...params);
+        const result = await this._innerSendCommand(method, undefined, ...params);
         resolve(result);
       } catch (err) {
         reject(err);
