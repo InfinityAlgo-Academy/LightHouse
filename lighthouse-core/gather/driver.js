@@ -70,21 +70,16 @@ class Driver {
     this._monitoredUrl = null;
 
     let targetProxyMessageId = 0;
-    this.on('Target.targetCreated', async event => {
+    this.on('Target.attachedToTarget', event => {
       targetProxyMessageId++;
       // We're only interested in network requests from iframes for now as those are "part of the page".
       if (event.targetInfo.type !== 'iframe') return;
-
-      // Attach to the target, so we can get a sessionId and send messages to it.
-      const {sessionId} = await this.sendCommand('Target.attachToTarget', {
-        targetId: event.targetInfo.targetId,
-      });
 
       // We want to receive information about network requests from iframes, so enable the Network domain.
       // Network events from subtargets will be stringified and sent back on `Target.receivedMessageFromTarget`.
       this.sendCommand('Target.sendMessageToTarget', {
         message: JSON.stringify({id: targetProxyMessageId, method: 'Network.enable'}),
-        sessionId,
+        sessionId: event.sessionId,
       });
     });
 
@@ -1046,9 +1041,11 @@ class Driver {
     await this._beginNetworkStatusMonitoring(url);
     await this._clearIsolatedContextId();
 
-    // Enable auto-discovering of subtargets, so we can find iframes.
-    // Prefer this over `setAutoAttach` because it doesn't really attach to all targets.
-    await this.sendCommand('Target.setDiscoverTargets', {discover: true});
+    // Enable auto-attaching to subtargets so we receive iframe information
+    await this.sendCommand('Target.setAutoAttach', {
+      autoAttach: true,
+      waitForDebuggerOnStart: false,
+    });
 
     await this.sendCommand('Page.enable');
     await this.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});
