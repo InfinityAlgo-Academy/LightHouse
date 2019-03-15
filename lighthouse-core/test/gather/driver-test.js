@@ -43,8 +43,8 @@ function createMockSendCommandFn() {
   };
 
   mockFn.findInvocation = command => {
-    expect(mockFn).toHaveBeenCalledWith(command, expect.anything());
-    return mockFn.mock.calls.find(call => call[0] === command)[1];
+    expect(mockFn).toHaveBeenCalledWith(command, undefined, expect.anything());
+    return mockFn.mock.calls.find(call => call[0] === command)[2];
   };
 
   return mockFn;
@@ -393,10 +393,7 @@ describe('.setExtraHTTPHeaders', () => {
       'x-men': 'wolverine',
     });
 
-    expect(connectionStub.sendCommand).toHaveBeenCalledWith(
-      'Network.setExtraHTTPHeaders',
-      expect.anything()
-    );
+    connectionStub.sendCommand.findInvocation('Network.setExtraHTTPHeaders');
   });
 
   it('should Network.setExtraHTTPHeaders when there are extra-headers', async () => {
@@ -1000,7 +997,8 @@ describe('.goOnline', () => {
 describe('Multi-target management', () => {
   it('enables the Network domain for iframes', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Target.sendMessageToTarget', {});
+      .mockResponse('Network.enable', {})
+      .mockResponse('Target.setAutoAttach', {});
 
     driver._eventEmitter.emit('Target.attachedToTarget', {
       sessionId: 123,
@@ -1008,11 +1006,11 @@ describe('Multi-target management', () => {
     });
     await flushAllTimersAndMicrotasks();
 
-    const sendMessageArgs = connectionStub.sendCommand
-      .findInvocation('Target.sendMessageToTarget');
-    expect(sendMessageArgs).toEqual({
-      message: '{"id":1,"method":"Network.enable"}',
-      sessionId: 123,
+    expect(connectionStub.sendCommand).toHaveBeenCalledWith('Network.enable', 123);
+    expect(connectionStub.sendCommand).toHaveBeenCalledWith('Target.setAutoAttach', 123, {
+      autoAttach: true,
+      flatten: true,
+      waitForDebuggerOnStart: false,
     });
   });
 
