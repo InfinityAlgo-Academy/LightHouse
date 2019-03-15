@@ -69,17 +69,17 @@ class Driver {
      */
     this._monitoredUrl = null;
 
-    let targetProxyMessageId = 0;
     this.on('Target.attachedToTarget', event => {
-      targetProxyMessageId++;
       // We're only interested in network requests from iframes for now as those are "part of the page".
       if (event.targetInfo.type !== 'iframe') return;
 
       // We want to receive information about network requests from iframes, so enable the Network domain.
       // Network events from subtargets will be stringified and sent back on `Target.receivedMessageFromTarget`.
-      this.sendCommand('Target.sendMessageToTarget', {
-        message: JSON.stringify({id: targetProxyMessageId, method: 'Network.enable'}),
-        sessionId: event.sessionId,
+      this.sendCommand({method: 'Network.enable', sessionId: event.sessionId});
+      this.sendCommand({method: 'Target.setAutoAttach', sessionId: event.sessionId}, {
+        autoAttach: true,
+        waitForDebuggerOnStart: false,
+        flatten: true,
       });
     });
 
@@ -279,11 +279,15 @@ class Driver {
    * Call protocol methods, with a timeout.
    * To configure the timeout for the next call, use 'setNextProtocolTimeout'.
    * @template {keyof LH.CrdpCommands} C
-   * @param {C} method
+   * @param {C|{method: C, sessionId: string}} methodObj
    * @param {LH.CrdpCommands[C]['paramsType']} params
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
-  sendCommand(method, ...params) {
+  sendCommand(methodObj, ...params) {
+    /** @type {C} */
+    const method = typeof methodObj === 'string' ? methodObj : methodObj.method;
+    const sessionId = typeof methodObj === 'string' ? undefined : methodObj.sessionId;
+
     const timeout = this._nextProtocolTimeout;
     this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
     return new Promise(async (resolve, reject) => {
@@ -295,7 +299,7 @@ class Driver {
         reject(err);
       }), timeout);
       try {
-        const result = await this._innerSendCommand(method, ...params);
+        const result = await this._innerSendCommand(method, sessionId, ...params);
         resolve(result);
       } catch (err) {
         reject(err);
@@ -310,18 +314,19 @@ class Driver {
    * @private
    * @template {keyof LH.CrdpCommands} C
    * @param {C} method
+   * @param {string|undefined} sessionId
    * @param {LH.CrdpCommands[C]['paramsType']} params
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
-  _innerSendCommand(method, ...params) {
+  _innerSendCommand(method, sessionId, ...params) {
     const domainCommand = /^(\w+)\.(enable|disable)$/.exec(method);
-    if (domainCommand) {
+    if (domainCommand && !sessionId) {
       const enable = domainCommand[2] === 'enable';
       if (!this._shouldToggleDomain(domainCommand[1], enable)) {
         return Promise.resolve();
       }
     }
-    return this._connection.sendCommand(method, ...params);
+    return this._connection.sendCommand(method, sessionId, ...params);
   }
 
   /**
@@ -1045,13 +1050,14 @@ class Driver {
     await this.sendCommand('Target.setAutoAttach', {
       autoAttach: true,
       waitForDebuggerOnStart: false,
+      flatten: true,
     });
 
     await this.sendCommand('Page.enable');
     await this.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});
     await this.sendCommand('Emulation.setScriptExecutionDisabled', {value: disableJS});
     // No timeout needed for Page.navigate. See https://github.com/GoogleChrome/lighthouse/pull/6413.
-    const waitforPageNavigateCmd = this._innerSendCommand('Page.navigate', {url});
+    const waitforPageNavigateCmd = this._innerSendCommand('Page.navigate', undefined, {url});
 
     if (waitForNavigated) {
       await this._waitForFrameNavigated();
