@@ -419,27 +419,21 @@ message ThrottlingSettings {
 }
 
  message PrecomputedLanternData {
-  // TODO
   map<string, google.protobuf.DoubleValue> additional_rtt_by_origin = 1;
 
-  // TODO
   map<string, google.protobuf.DoubleValue> server_response_time_by_origin = 2;
 }
 
 message LighthouseConfig {
   message Audit {
-    // TODO
     string path = 1;
 
-    // TODO
     google.protobuf.Struct options = 2;
   }
 
   message Gatherer {
-    // TODO
     string path = 1;
 
-    // TODO
     google.protobuf.Struct options = 2;
   }
 
@@ -470,21 +464,15 @@ message LighthouseConfig {
   // Name of config to extend from.
   string extends = 1;
 
-  // TODO
   LighthouseResult.ConfigSettings settings = 2;
 
-  // TODO
   repeated Pass passes = 3;
 
-  // TODO
   repeated Audit audits = 4;
 
-  // TODO
   map<string, Category> categories = 5;
 
-  // TODO
   map<string, Group> groups = 6;
 
-  // TODO
   repeated string plugins = 7;
 }
