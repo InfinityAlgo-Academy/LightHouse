@@ -155,42 +155,42 @@ message LighthouseResult {
     string channel = 4;
 
     // The maximum amount of time to wait for a page content render, in ms. If no content is rendered within this limit, the run is aborted with an error.
-    int32 max_wait_for_fcp = 6;
+    int32 max_wait_for_fcp = 5;
 
     // The maximum amount of time to wait for a page to load, in ms.
-    int32 max_wait_for_load = 7;
+    int32 max_wait_for_load = 6;
 
     // List of URL patterns to block.
-    repeated string blocked_url_patterns = 8;
+    repeated string blocked_url_patterns = 7;
 
     // Comma-delimited list of trace categories to include.
-    string additional_trace_categories = 9;
+    repeated string additional_trace_categories = 8;
 
     // Flag indicating that the browser storage should not be reset for the audit.
-    bool disable_storage_reset = 10;
+    bool disable_storage_reset = 9;
 
     // Flag indicating that there shouldn't be any emulation during the run.
-    bool disable_device_emulation = 11;
+    bool disable_device_emulation = 10;
 
     // The method used to throttle the network.
-    ThrottlingMethod throttling_method = 12;
+    ThrottlingMethod throttling_method = 11;
 
     // The throttling config settings.
-    ThrottlingSettings throttling = 13;
+    ThrottlingSettings throttling = 12;
 
     // If present, the run should only conduct this list of audits.
     // nullable list of strings
-    google.protobuf.Value only_audits = 14;
+    google.protobuf.Value only_audits = 13;
 
     // If present, the run should skip this list of audits.
     // nullable list of strings
-    google.protobuf.Value skip_audits = 15;
+    google.protobuf.Value skip_audits = 14;
 
     // List of extra HTTP Headers to include.
-    map<string, string> extra_headers = 16;
+    map<string, string> extra_headers = 15;
 
     // Precomputed lantern estimates to use instead of observed analysis.
-    PrecomputedLanternData precomputed_lantern_data = 17;
+    PrecomputedLanternData precomputed_lantern_data = 16;
   }
 
   // The settings that were used to run this audit
@@ -400,30 +400,30 @@ message I18n {
 
 message ThrottlingSettings {
   // The round trip time in milliseconds.
-  int32 rttMs = 1;
+  google.protobuf.DoubleValue rtt_ms = 1;
 
   // The network throughput in kilobits per second.
-  int32 throughput_kbps = 2;
+  google.protobuf.DoubleValue throughput_kbps = 2;
 
   // The network request latency in milliseconds.
-  int32 request_latencyMs = 3;
+  google.protobuf.DoubleValue request_latency_ms = 3;
 
   // The network download throughput in kilobits per second.
-  int32 download_throughput_kbps = 4;
+  google.protobuf.DoubleValue download_throughput_kbps = 4;
 
   // The network upload throughput in kilobits per second.
-  int32 upload_throughput_kbps = 5;
+  google.protobuf.DoubleValue upload_throughput_kbps = 5;
 
   // The amount of slowdown applied to the cpu (1/<cpuSlowdownMultiplier>).
-  int32 cpu_slowdown_multiplier = 6;
+  google.protobuf.DoubleValue cpu_slowdown_multiplier = 6;
 }
 
  message PrecomputedLanternData {
   // TODO
-  map<string, int32> additional_rtt_by_origin = 1;
+  map<string, google.protobuf.DoubleValue> additional_rtt_by_origin = 1;
 
   // TODO
-  map<string, int32> server_response_time_by_origin = 2;
+  map<string, google.protobuf.DoubleValue> server_response_time_by_origin = 2;
 }
 
 message LighthouseConfig {
@@ -432,7 +432,39 @@ message LighthouseConfig {
     string path = 1;
 
     // TODO
-    object options = 2;
+    google.protobuf.Struct options = 2;
+  }
+
+  message Gatherer {
+    // TODO
+    string path = 1;
+
+    // TODO
+    google.protobuf.Struct options = 2;
+  }
+
+  message Pass {
+    string pass_name = 1;
+    bool record_trace = 2;
+    bool use_throttling = 3;
+    google.protobuf.DoubleValue pause_after_load_ms = 4;
+    google.protobuf.DoubleValue network_quiet_threshold_ms = 5;
+    google.protobuf.DoubleValue cpu_quiet_threshold_ms = 6;
+    repeated string blocked_url_patterns = 7;
+    string blank_page = 8;
+    repeated Gatherer gatherers = 9;
+  }
+
+  message Category {
+    string title = 1;
+    repeated LhrCategory.AuditRef audit_refs = 2;
+    string description = 3;
+    string manual_description = 4;
+  }
+
+  message Group {
+    string title = 1;
+    string description = 2;
   }
 
   // Name of config to extend from.
@@ -442,16 +474,16 @@ message LighthouseConfig {
   LighthouseResult.ConfigSettings settings = 2;
 
   // TODO
-  repeated object passes = 3;
+  repeated Pass passes = 3;
 
-  // TODO. Audit | string ?
+  // TODO
   repeated Audit audits = 4;
 
   // TODO
-  map<string, object> categories = 5;
+  map<string, Category> categories = 5;
 
   // TODO
-  map<string, object> groups = 6;
+  map<string, Group> groups = 6;
 
   // TODO
   repeated string plugins = 7;
