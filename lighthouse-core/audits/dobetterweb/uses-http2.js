@@ -44,6 +44,9 @@ class UsesHTTP2Audit extends Audit {
       const seenURLs = new Set();
       // Filter requests that are on the same host as the page and not over h2.
       const resources = networkRecords.filter(record => {
+        // check if record is not served through the service worker, servicer worker uses http/1.1 as a protocol
+        // these can generate false positives (bug: https://github.com/GoogleChrome/lighthouse/issues/7158)
+        if (record.fetchedViaServiceWorker) return false;
         // test the protocol first to avoid (potentially) expensive URL parsing
         const isOldHttp = /HTTP\/[01][.\d]?/i.test(record.protocol);
         if (!isOldHttp) return false;
