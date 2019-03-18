@@ -73,11 +73,12 @@ class Driver {
       // We're only interested in network requests from iframes for now as those are "part of the page".
       if (event.targetInfo.type !== 'iframe') return;
 
+      const target = {targetId: event.targetInfo.targetId, sessionId: event.sessionId};
       // We want to receive information about network requests from iframes, so enable the Network domain.
       // Network events from subtargets will be received as regular Network.* events.
-      this._innerSendCommand('Network.enable', event.sessionId);
+      this._innerSendCommand('Network.enable', target);
       // We want to receive information about *all* subframes, so recursively enable autoattach too.
-      this._innerSendCommand('Target.setAutoAttach', event.sessionId, {
+      this._innerSendCommand('Target.setAutoAttach', target, {
         autoAttach: true,
         waitForDebuggerOnStart: false,
         flatten: true,
@@ -311,19 +312,19 @@ class Driver {
    * @private
    * @template {keyof LH.CrdpCommands} C
    * @param {C} method
-   * @param {string|undefined} sessionId
+   * @param {{sessionId: string, targetId: string}|undefined} target
    * @param {LH.CrdpCommands[C]['paramsType']} params
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
-  _innerSendCommand(method, sessionId, ...params) {
+  _innerSendCommand(method, target, ...params) {
     const domainCommand = /^(\w+)\.(enable|disable)$/.exec(method);
-    if (domainCommand && !sessionId) {
+    if (domainCommand && !target) {
       const enable = domainCommand[2] === 'enable';
       if (!this._shouldToggleDomain(domainCommand[1], enable)) {
         return Promise.resolve();
       }
     }
-    return this._connection.sendCommand(method, sessionId, ...params);
+    return this._connection.sendCommand(method, target, ...params);
   }
 
   /**

@@ -16,6 +16,8 @@ class ExtensionConnection extends Connection {
   constructor() {
     super();
     this._tabId = null;
+    /** @type {Set<string>} */
+    this._attachedTargetIds = new Set();
 
     this._onEvent = this._onEvent.bind(this);
     this._onUnexpectedDetach = this._onUnexpectedDetach.bind(this);
@@ -38,23 +40,77 @@ class ExtensionConnection extends Connection {
   }
 
   /**
+   * @private
+   * @param {chrome.debugger.Debuggee} debuggee
+   * @return {Promise<void>}
+   */
+  async _attachIfNecessary(debuggee) {
+    if (debuggee.tabId && this._tabId !== null) return;
+    if (debuggee.targetId && this._attachedTargetIds.has(debuggee.targetId)) return;
+
+    if (debuggee.targetId) chrome.debugger.getTargets(console.log)
+
+    return new Promise((resolve, reject) => {
+      chrome.debugger.attach(debuggee, '1.1', () => {
+        if (chrome.runtime.lastError) {
+          return reject(new Error(chrome.runtime.lastError.message));
+        }
+
+        if (debuggee.tabId) this._tabId = debuggee.tabId;
+        if (debuggee.targetId) this._attachedTargetIds.add(debuggee.targetId);
+        resolve();
+      });
+    });
+  }
+
+  /**
+   * @private
+   * @param {chrome.debugger.Debuggee} debuggee
+   * @return {Promise<void>}
+   */
+  async _detachIfNecessary(debuggee) {
+    if (debuggee.tabId && this._tabId === null) return;
+    if (debuggee.targetId && !this._attachedTargetIds.has(debuggee.targetId)) return;
+
+    return new Promise((resolve, reject) => {
+      chrome.debugger.detach(debuggee, () => {
+        if (chrome.runtime.lastError) {
+          return reject(new Error(chrome.runtime.lastError.message));
+        }
+
+        if (debuggee.tabId) this._tabId = null;
+        if (debuggee.targetId) this._attachedTargetIds.delete(debuggee.targetId);
+        resolve();
+      });
+    })
+  }
+
+  /**
    * @param {chrome.debugger.Debuggee} source
    * @param {string} detachReason
    * @return {never}
    * @private
    */
   _onUnexpectedDetach(source, detachReason) {
+    if (source.tabId) this._tabId = null;
+    if (source.targetId) this._attachedTargetIds.delete(source.targetId);
     this._detachCleanup();
     throw new Error('Lighthouse detached from browser: ' + detachReason);
   }
 
   /**
    * @private
+   * @return {Promise<void>}
    */
-  _detachCleanup() {
-    this._tabId = null;
+  async _detachCleanup() {
     chrome.debugger.onEvent.removeListener(this._onEvent);
     chrome.debugger.onDetach.removeListener(this._onUnexpectedDetach);
+
+    if (this._tabId) await this._detachIfNecessary({tabId: this._tabId});
+    for (const targetId of this._attachedTargetIds) {
+      await this._detachIfNecessary({targetId});
+    }
+
     this.dispose();
   }
 
@@ -62,70 +118,59 @@ class ExtensionConnection extends Connection {
    * @override
    * @return {Promise<void>}
    */
-  connect() {
+  async connect() {
     if (this._tabId !== null) {
       return Promise.resolve();
     }
 
-    return this._getCurrentTabId()
-      .then(tabId => {
-        this._tabId = tabId;
-        chrome.debugger.onEvent.addListener(this._onEvent);
-        chrome.debugger.onDetach.addListener(this._onUnexpectedDetach);
-
-        return new Promise((resolve, reject) => {
-          chrome.debugger.attach({tabId}, '1.1', () => {
-            if (chrome.runtime.lastError) {
-              return reject(new Error(chrome.runtime.lastError.message));
-            }
-            resolve();
-          });
-        });
-      });
+    const tabId = await this._getCurrentTabId();
+    chrome.debugger.onEvent.addListener(this._onEvent);
+    chrome.debugger.onDetach.addListener(this._onUnexpectedDetach);
+    await this._attachIfNecessary({tabId});
   }
 
   /**
    * @override
    * @return {Promise<void>}
    */
-  disconnect() {
+  async disconnect() {
     if (this._tabId === null) {
       log.warn('ExtensionConnection', 'disconnect() was called without an established connection.');
       return Promise.resolve();
     }
 
     const tabId = this._tabId;
-    return new Promise((resolve, reject) => {
-      chrome.debugger.detach({tabId}, () => {
-        if (chrome.runtime.lastError) {
-          return reject(new Error(chrome.runtime.lastError.message));
-        }
-        // Reload the target page to restore its state.
-        chrome.tabs.reload(tabId);
-        resolve();
-      });
-    }).then(_ => this._detachCleanup());
+    await this._detachIfNecessary({tabId});
+    // Reload the target page to restore its state.
+    chrome.tabs.reload(tabId);
+    await this._detachCleanup();
   }
 
   /**
    * Call protocol methods.
    * @template {keyof LH.CrdpCommands} C
    * @param {C} method
+   * @param {{sessionId: string, targetId: string}|undefined} target
    * @param {LH.CrdpCommands[C]['paramsType']} paramArgs,
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
-  sendCommand(method, ...paramArgs) {
+  async sendCommand(method, target, ...paramArgs) {
+    if (!this._tabId) {
+      log.error('ExtensionConnection', 'No tabId set for sendCommand');
+      throw new Error('No tabId set for sendCommand');
+    }
+
     // Reify params since we need it as a property so can't just spread again.
     const params = paramArgs.length ? paramArgs[0] : undefined;
 
+    /** @type {chrome.debugger.Debuggee} */
+    const debuggerTarget = target ? {targetId: target.targetId} : {tabId: this._tabId};
+    // Make sure we're attached to the target
+    await this._attachIfNecessary(debuggerTarget);
+
     return new Promise((resolve, reject) => {
       log.formatProtocol('method => browser', {method, params}, 'verbose');
-      if (!this._tabId) {
-        log.error('ExtensionConnection', 'No tabId set for sendCommand');
-        return reject(new Error('No tabId set for sendCommand'));
-      }
-
-      chrome.debugger.sendCommand({tabId: this._tabId}, method, params || {}, result => {
+      chrome.debugger.sendCommand(debuggerTarget, method, params || {}, result => {
         if (chrome.runtime.lastError) {
           // The error from the extension has a `message` property that is the
           // stringified version of the actual protocol error object.

@@ -70,7 +70,7 @@ describe('Lighthouse chrome extension', function() {
     });
 
     const page = await browser.newPage();
-    await page.goto('https://www.paulirish.com', {waitUntil: 'networkidle2'});
+    await page.goto('https://www.paulirish.com/page/2', {waitUntil: 'networkidle2'});
     const targets = await browser.targets();
     const extensionTarget = targets.find(({_targetInfo}) => {
       return _targetInfo.title === 'Lighthouse' && _targetInfo.type === 'background_page';
@@ -179,5 +179,9 @@ describe('Lighthouse chrome extension', function() {
 
   it('should specify the channel as extension', async () => {
     assert.equal(lhr.configSettings.channel, 'extension');
+  });
+
+  it('should find OOPIF network requests', async () => {
+    expect(lhr.audits['network-requests'].details.items.length).toBeGreaterThan(60);
   });
 });
