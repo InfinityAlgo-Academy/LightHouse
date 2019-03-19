@@ -26,26 +26,29 @@ describe('Resources are fetched over http/2', () => {
   }
 
   it('fails when some resources were requested via http/1.x', () => {
-    return UsesHTTP2Audit.audit(
-      getArtifacts(networkRecords, URL), {computedCache: new Map()}
-    ).then(auditResult => {
-      assert.equal(auditResult.rawValue, false);
-      assert.ok(auditResult.displayValue.match('3 requests not'));
-      assert.equal(auditResult.details.items.length, 3);
-      assert.equal(auditResult.details.items[0].url, 'https://webtide.com/wp-content/plugins/wp-pagenavi/pagenavi-css.css?ver=2.70');
-      const headers = auditResult.details.headings;
-      assert.equal(headers[0].text, 'URL', 'table headings are correct and in order');
-      assert.equal(headers[1].text, 'Protocol', 'table headings are correct and in order');
-    });
+    return UsesHTTP2Audit.audit(getArtifacts(networkRecords, URL), {computedCache: new Map()}).then(
+      auditResult => {
+        assert.equal(auditResult.rawValue, false);
+        assert.ok(auditResult.displayValue.match('3 requests not'));
+        assert.equal(auditResult.details.items.length, 3);
+        assert.equal(
+          auditResult.details.items[0].url,
+          'https://webtide.com/wp-content/plugins/wp-pagenavi/pagenavi-css.css?ver=2.70'
+        );
+        const headers = auditResult.details.headings;
+        assert.equal(headers[0].text, 'URL', 'table headings are correct and in order');
+        assert.equal(headers[1].text, 'Protocol', 'table headings are correct and in order');
+      }
+    );
   });
 
   it('displayValue is correct when only one resource fails', () => {
     const entryWithHTTP1 = networkRecords.slice(1, 2);
-    return UsesHTTP2Audit.audit(
-      getArtifacts(entryWithHTTP1, URL), {computedCache: new Map()}
-    ).then(auditResult => {
-      assert.ok(auditResult.displayValue.match('1 request not'));
-    });
+    return UsesHTTP2Audit.audit(getArtifacts(entryWithHTTP1, URL), {computedCache: new Map()}).then(
+      auditResult => {
+        assert.ok(auditResult.displayValue.match('1 request not'));
+      }
+    );
   });
 
   it('passes when all resources were requested via http/2', () => {
@@ -54,11 +57,34 @@ describe('Resources are fetched over http/2', () => {
       record.protocol = 'h2';
     });
 
-    return UsesHTTP2Audit.audit(
-      getArtifacts(h2Records, URL), {computedCache: new Map()}
-    ).then(auditResult => {
-      assert.equal(auditResult.rawValue, true);
-      assert.ok(auditResult.displayValue === '');
+    return UsesHTTP2Audit.audit(getArtifacts(h2Records, URL), {computedCache: new Map()}).then(
+      auditResult => {
+        assert.equal(auditResult.rawValue, true);
+        assert.ok(auditResult.displayValue === '');
+      }
+    );
+  });
+
+  it('results are correct when some requests are handled by service worker', () => {
+    const clonedNetworkRecords = JSON.parse(JSON.stringify(networkRecords));
+    clonedNetworkRecords.forEach(record => {
+      // convert http 1.1 to service worker requests
+      if (record.protocol === 'http/1.1') {
+        record.fetchedViaServiceWorker = true;
+      }
+    });
+
+    return UsesHTTP2Audit.audit(getArtifacts(clonedNetworkRecords, URL), {
+      computedCache: new Map(),
+    }).then(auditResult => {
+      assert.equal(auditResult.rawValue, false);
+      assert.ok(auditResult.displayValue.match('1 request not'));
+      // Protocol is http/1.0 which we don't mark as fetched fetchedViaServiceWorker on line 73.
+      assert.equal(
+        auditResult.details.items[0].url,
+        'https://webtide.com/wp-content/themes/clean-retina-pro/library/js/tinynav.js?ver=4.5.4'
+      );
+      assert.equal(auditResult.details.items[0].protocol, 'http/1.0');
     });
   });
 });

@@ -8,6 +8,10 @@
 const htmlReportAssets = require('./html/html-report-assets');
 
 class ReportGenerator {
+  static getAssets() {
+    return htmlReportAssets;
+  }
+
   /**
    * Replaces all the specified strings in source without serial replacements.
    * @param {string} source
