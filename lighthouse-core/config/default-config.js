@@ -346,7 +346,7 @@ const defaultConfig = {
         {id: 'first-cpu-idle', weight: 2, group: 'metrics'},
         {id: 'estimated-input-latency', weight: 0, group: 'metrics'},
         {id: 'max-potential-fid', weight: 0}, // intentionally left out of metrics so it won't be displayed yet
-        {id: 'layout-stability', weight: 0}, // intentionally left out of metrics so it won't be displayed yet
+        {id: 'layout-stability', weight: 0, group: 'metrics'}, // intentionally left out of metrics so it won't be displayed yet
 
         {id: 'render-blocking-resources', weight: 0, group: 'load-opportunities'},
         {id: 'uses-responsive-images', weight: 0, group: 'load-opportunities'},

@@ -142,11 +142,11 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     });
 
     // 'Values are estimated and may vary' is used as the category description for PSI
-    if (environment !== 'PSI') {
-      const estValuesEl = this.dom.createChildOf(metricsColumn2El, 'div',
-          'lh-metrics__disclaimer lh-metrics__disclaimer');
-      estValuesEl.textContent = Util.UIStrings.varianceDisclaimer;
-    }
+    // if (environment !== 'PSI') {
+    //   const estValuesEl = this.dom.createChildOf(metricsColumn2El, 'div',
+    //       'lh-metrics__disclaimer lh-metrics__disclaimer');
+    //   estValuesEl.textContent = Util.UIStrings.varianceDisclaimer;
+    // }
 
     metricAuditsEl.classList.add('lh-audit-group--metrics');
     element.appendChild(metricAuditsEl);
