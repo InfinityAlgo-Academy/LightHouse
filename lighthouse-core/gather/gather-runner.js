@@ -128,7 +128,7 @@ class GatherRunner {
     } catch (err) {
       // Ignore disconnecting error if browser was already closed.
       // See https://github.com/GoogleChrome/lighthouse/issues/1583
-      if (!(/close\/.*status: 500$/.test(err.message))) {
+      if (!(/close\/.*status: (500|404)$/.test(err.message))) {
         log.error('GatherRunner disconnect', err.message);
       }
     }
