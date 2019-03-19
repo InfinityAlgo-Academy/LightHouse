@@ -117,8 +117,11 @@ describe('network recorder', function() {
     const records = NetworkRecorder.recordsFromLogs(devtoolsLogs);
     expect(records).toMatchObject([{url: 'http://example.com', startTime: 1, endTime: 2}]);
   });
+
+  it('should use X-TotalFetchedSize in Lightrider for transferSize', () => {
+    global.isLightrider = true;
     const records = NetworkRecorder.recordsFromLogs(lrRequestDevtoolsLog);
-  
+    global.isLightrider = false;
 
     expect(records.find(r => r.url === 'https://www.paulirish.com/'))
     .toMatchObject({
