@@ -225,13 +225,13 @@ function elementIsInTextBlock(element) {
  * @returns {boolean}
  */
 /* istanbul ignore next */
-function elementIsPositionFixedOrAbsolute(element) {
+function elementIsPositionFixedStickyOrAbsolute(element) {
   const {position} = getComputedStyle(element);
-  if (position === 'fixed' || position === 'absolute') {
+  if (position === 'fixed' || position === 'absolute' || position === 'sticky') {
     return true;
   }
   if (element.parentElement) {
-    return elementIsPositionFixedOrAbsolute(element.parentElement);
+    return elementIsPositionFixedStickyOrAbsolute(element.parentElement);
   }
   return false;
 }
@@ -273,7 +273,7 @@ function gatherTapTargets() {
       // in the Web Content Accessibility Guidelines https://www.w3.org/TR/WCAG21/#target-size
       return;
     }
-    if (elementIsPositionFixedOrAbsolute(tapTargetElement)) {
+    if (elementIsPositionFixedStickyOrAbsolute(tapTargetElement)) {
       // Absolutely positioned elements might not be visible if they have a lower z-index
       // than other tap targets, but if we don't ignore them we can get false failures.
       //
@@ -311,7 +311,7 @@ class TapTargets extends Gatherer {
       const tapTargetsSelector = "${tapTargetsSelector}";
       ${pageFunctions.getElementsInDocumentString};
       ${filterClientRectsWithinAncestorsVisibleScrollArea.toString()};
-      ${elementIsPositionFixedOrAbsolute.toString()};
+      ${elementIsPositionFixedStickyOrAbsolute.toString()};
       ${elementIsVisible.toString()};
       ${elementHasAncestorTapTarget.toString()};
       ${getVisibleClientRects.toString()};
