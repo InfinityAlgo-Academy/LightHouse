@@ -180,11 +180,11 @@ message LighthouseResult {
 
     // If present, the run should only conduct this list of audits.
     // nullable list of strings
-    google.protobuf.Value only_audits = 13;
+    google.protobuf.ListValue only_audits = 13;
 
     // If present, the run should skip this list of audits.
     // nullable list of strings
-    google.protobuf.Value skip_audits = 14;
+    google.protobuf.ListValue skip_audits = 14;
 
     // List of extra HTTP Headers to include.
     map<string, string> extra_headers = 15;
@@ -427,13 +427,11 @@ message ThrottlingSettings {
 message LighthouseConfig {
   message Audit {
     string path = 1;
-
     google.protobuf.Struct options = 2;
   }
 
   message Gatherer {
     string path = 1;
-
     google.protobuf.Struct options = 2;
   }
 
