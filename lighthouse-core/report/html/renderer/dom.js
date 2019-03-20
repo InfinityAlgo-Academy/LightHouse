@@ -27,6 +27,8 @@ class DOM {
   constructor(document) {
     /** @type {Document} */
     this._document = document;
+    /** @type {string} */
+    this._lighthouseChannel = 'unknown';
   }
 
   /**
@@ -125,11 +127,19 @@ class DOM {
 
       // Append link if there are any.
       if (linkText && linkHref) {
+        const url = new URL(linkHref);
+
+        const DEVELOPERS_GOOGLE_ORIGIN = 'https://developers.google.com';
+        if (url.origin === DEVELOPERS_GOOGLE_ORIGIN) {
+          url.searchParams.set('utm_source', 'lighthouse');
+          url.searchParams.set('utm_medium', this._lighthouseChannel);
+        }
+
         const a = this.createElement('a');
         a.rel = 'noopener';
         a.target = '_blank';
         a.textContent = linkText;
-        a.href = (new URL(linkHref)).href;
+        a.href = url.href;
         element.appendChild(a);
       }
     }
@@ -157,6 +167,14 @@ class DOM {
     }
 
     return element;
+  }
+
+  /**
+   * The channel to use for UTM data when rendering links to the documentation.
+   * @param {string} lighthouseChannel
+   */
+  setLighthouseChannel(lighthouseChannel) {
+    this._lighthouseChannel = lighthouseChannel;
   }
 
   /**

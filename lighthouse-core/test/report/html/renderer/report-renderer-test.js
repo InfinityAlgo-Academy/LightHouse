@@ -199,6 +199,25 @@ describe('ReportRenderer', () => {
     assert.ok(output.querySelector('.score100'), 'has fireworks treatment');
   });
 
+  it('should add LHR channel to doc link parameters', () => {
+    const lhrChannel = sampleResults.configSettings.channel;
+    // Make sure we have a channel in the LHR.
+    assert.ok(lhrChannel.length > 2);
+
+    const container = renderer._dom._document.body;
+    const output = renderer.renderReport(sampleResults, container);
+
+    const utmChannels = [...output.querySelectorAll('a[href*="utm_source=lighthouse"')]
+      .map(a => new URL(a.href))
+      .filter(url => url.origin === 'https://developers.google.com')
+      .map(url => url.searchParams.get('utm_medium'));
+
+    assert.ok(utmChannels.length > 20);
+    utmChannels.forEach(anchorChannel => {
+      assert.strictEqual(anchorChannel, lhrChannel);
+    });
+  });
+
   it('renders `not_applicable` audits as `notApplicable`', () => {
     const clonedSampleResult = JSON.parse(JSON.stringify(sampleResultsOrig));
 

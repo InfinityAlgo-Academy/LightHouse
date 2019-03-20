@@ -23,6 +23,7 @@ describe('DOM', () => {
     global.URL = URL;
     const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
     dom = new DOM(document);
+    dom.setLighthouseChannel('someChannel');
   });
 
   afterAll(() => {
@@ -114,6 +115,20 @@ describe('DOM', () => {
       const result = dom.convertMarkdownLinkSnippets(text);
       assert.equal(result.innerHTML, 'Ensuring `&lt;td&gt;` cells using the `[headers]` are ' +
           'good. <a rel="noopener" target="_blank" href="https://dequeuniversity.com/rules/axe/3.1/td-headers-attr">Learn more</a>.');
+    });
+
+    it('appends utm params to the URLs with https://developers.google.com origin', () => {
+      const text = '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/description).';
+
+      const result = dom.convertMarkdownLinkSnippets(text);
+      assert.equal(result.innerHTML, '<a rel="noopener" target="_blank" href="https://developers.google.com/web/tools/lighthouse/audits/description?utm_source=lighthouse&amp;utm_medium=someChannel">Learn more</a>.');
+    });
+
+    it('doesn\'t append utm params to non https://developers.google.com origins', () => {
+      const text = '[Learn more](https://example.com/info).';
+
+      const result = dom.convertMarkdownLinkSnippets(text);
+      assert.equal(result.innerHTML, '<a rel="noopener" target="_blank" href="https://example.com/info">Learn more</a>.');
     });
   });
 

@@ -47,6 +47,8 @@ class ReportRenderer {
     // Mutate the UIStrings if necessary (while saving originals)
     const originalUIStrings = JSON.parse(JSON.stringify(Util.UIStrings));
 
+    this._dom.setLighthouseChannel(result.configSettings.channel || 'unknown');
+
     const report = Util.prepareReportResult(result);
 
     container.textContent = ''; // Remove previous report.
