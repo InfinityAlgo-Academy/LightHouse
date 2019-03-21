@@ -130,6 +130,17 @@ message LighthouseResult {
       none = 3;
     }
 
+    enum ThrottlingMethod {
+      // Unknown. This should not be used.
+      THROTTLING_METHOD_UNSPECIFIED = 0;
+
+      devtools = 1;
+
+      simulate = 2;
+
+      provided = 3;
+    }
+
     // The form factor used in the audit
     EmulatedFormFactor emulated_form_factor = 1;
 
@@ -138,10 +149,49 @@ message LighthouseResult {
 
     // List of the categories that were run, empty if all were run
     // nullable list of strings
+    // Note: this should have been google.protobuf.ListValue, but too late now.
     google.protobuf.Value only_categories = 3;
 
     // How Lighthouse was run, e.g. from the Chrome extension or from the npm module
     string channel = 4;
+
+    // The maximum amount of time to wait for a page content render, in ms. If no content is rendered within this limit, the run is aborted with an error.
+    int32 max_wait_for_fcp = 5;
+
+    // The maximum amount of time to wait for a page to load, in ms.
+    int32 max_wait_for_load = 6;
+
+    // List of URL patterns to block.
+    repeated string blocked_url_patterns = 7;
+
+    // Comma-delimited list of trace categories to include.
+    repeated string additional_trace_categories = 8;
+
+    // Flag indicating that the browser storage should not be reset for the audit.
+    bool disable_storage_reset = 9;
+
+    // Flag indicating that there shouldn't be any emulation during the run.
+    bool disable_device_emulation = 10;
+
+    // The method used to throttle the network.
+    ThrottlingMethod throttling_method = 11;
+
+    // The throttling config settings.
+    ThrottlingSettings throttling = 12;
+
+    // If present, the run should only conduct this list of audits.
+    // nullable list of strings
+    google.protobuf.ListValue only_audits = 13;
+
+    // If present, the run should skip this list of audits.
+    // nullable list of strings
+    google.protobuf.ListValue skip_audits = 14;
+
+    // List of extra HTTP Headers to include.
+    map<string, string> extra_headers = 15;
+
+    // Precomputed lantern estimates to use instead of observed analysis.
+    PrecomputedLanternData precomputed_lantern_data = 16;
   }
 
   // The settings that were used to run this audit
@@ -347,4 +397,81 @@ message I18n {
 
   // The message holding all formatted strings
   RendererFormattedStrings renderer_formatted_strings = 1;
+}
+
+message ThrottlingSettings {
+  // The round trip time in milliseconds.
+  google.protobuf.DoubleValue rtt_ms = 1;
+
+  // The network throughput in kilobits per second.
+  google.protobuf.DoubleValue throughput_kbps = 2;
+
+  // The network request latency in milliseconds.
+  google.protobuf.DoubleValue request_latency_ms = 3;
+
+  // The network download throughput in kilobits per second.
+  google.protobuf.DoubleValue download_throughput_kbps = 4;
+
+  // The network upload throughput in kilobits per second.
+  google.protobuf.DoubleValue upload_throughput_kbps = 5;
+
+  // The amount of slowdown applied to the cpu (1/<cpuSlowdownMultiplier>).
+  google.protobuf.DoubleValue cpu_slowdown_multiplier = 6;
+}
+
+ message PrecomputedLanternData {
+  map<string, google.protobuf.DoubleValue> additional_rtt_by_origin = 1;
+
+  map<string, google.protobuf.DoubleValue> server_response_time_by_origin = 2;
+}
+
+message LighthouseConfig {
+  message Audit {
+    string path = 1;
+    google.protobuf.Struct options = 2;
+  }
+
+  message Gatherer {
+    string path = 1;
+    google.protobuf.Struct options = 2;
+  }
+
+  message Pass {
+    string pass_name = 1;
+    bool record_trace = 2;
+    bool use_throttling = 3;
+    google.protobuf.DoubleValue pause_after_load_ms = 4;
+    google.protobuf.DoubleValue network_quiet_threshold_ms = 5;
+    google.protobuf.DoubleValue cpu_quiet_threshold_ms = 6;
+    repeated string blocked_url_patterns = 7;
+    string blank_page = 8;
+    repeated Gatherer gatherers = 9;
+  }
+
+  message Category {
+    string title = 1;
+    repeated LhrCategory.AuditRef audit_refs = 2;
+    string description = 3;
+    string manual_description = 4;
+  }
+
+  message Group {
+    string title = 1;
+    string description = 2;
+  }
+
+  // Name of config to extend from.
+  string extends = 1;
+
+  LighthouseResult.ConfigSettings settings = 2;
+
+  repeated Pass passes = 3;
+
+  repeated Audit audits = 4;
+
+  map<string, Category> categories = 5;
+
+  map<string, Group> groups = 6;
+
+  repeated string plugins = 7;
 }
