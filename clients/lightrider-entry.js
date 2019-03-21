@@ -21,6 +21,8 @@ const LR_PRESETS = {
 
 /**
  * Run lighthouse for connection and provide similar results as in CLI.
+ *
+ * If configOverride is provided, lrDevice and categoryIDs are ignored.
  * @param {Connection} connection
  * @param {string} url
  * @param {LH.Flags} flags Lighthouse flags, including `output`
