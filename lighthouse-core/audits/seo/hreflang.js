@@ -6,10 +6,7 @@
 'use strict';
 
 const Audit = require('../audit');
-const LinkHeader = require('http-link-header');
-const MainResource = require('../../computed/main-resource.js');
 const VALID_LANGS = importValidLangs();
-const LINK_HEADER = 'link';
 const NO_LANGUAGE = 'x-default';
 const i18n = require('../../lib/i18n/i18n.js');
 
@@ -61,17 +58,6 @@ function isValidHreflang(hreflang) {
   return VALID_LANGS.includes(lang.toLowerCase());
 }
 
-/**
- * @param {string} headerValue
- * @returns {boolean}
- */
-function headerHasValidHreflangs(headerValue) {
-  const linkHeader = LinkHeader.parse(headerValue);
-
-  return linkHeader.get('rel', 'alternate')
-    .every(link => !!link.hreflang && isValidHreflang(link.hreflang));
-}
-
 class Hreflang extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -82,52 +68,47 @@ class Hreflang extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['Hreflang', 'URL'],
+      requiredArtifacts: ['LinkElements', 'URL'],
     };
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @param {LH.Audit.Context} context
-   * @return {Promise<LH.Audit.Product>}
+   * @return {LH.Audit.Product}
    */
-  static audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const URL = artifacts.URL;
+  static audit(artifacts) {
+    /** @type {Array<{source: string|{type: 'node', snippet: string}}>} */
+    const invalidHreflangs = [];
 
-    return MainResource.request({devtoolsLog, URL}, context)
-      .then(mainResource => {
-        /** @type {Array<{source: string|{type: 'node', snippet: string}}>} */
-        const invalidHreflangs = [];
+    for (const link of artifacts.LinkElements) {
+      if (link.rel !== 'alternate') continue;
+      if (!link.hreflang || isValidHreflang(link.hreflang)) continue;
+      if (link.source === 'body') continue;
 
-        if (artifacts.Hreflang) {
-          artifacts.Hreflang.forEach(({href, hreflang}) => {
-            if (!isValidHreflang(hreflang)) {
-              invalidHreflangs.push({
-                source: {
-                  type: 'node',
-                  snippet: `<link name="alternate" hreflang="${hreflang}" href="${href}" />`,
-                },
-              });
-            }
-          });
-        }
+      if (link.source === 'head') {
+        invalidHreflangs.push({
+          source: {
+            type: 'node',
+            snippet: `<link rel="alternate" hreflang="${link.hreflang}" href="${link.href}" />`,
+          },
+        });
+      } else if (link.source === 'headers') {
+        invalidHreflangs.push({
+          source: `Link: <${link.href}>; rel="alternate"; hreflang="${link.hreflang}"`,
+        });
+      }
+    }
 
-        mainResource.responseHeaders && mainResource.responseHeaders
-          .filter(h => h.name.toLowerCase() === LINK_HEADER && !headerHasValidHreflangs(h.value))
-          .forEach(h => invalidHreflangs.push({source: `${h.name}: ${h.value}`}));
+    /** @type {LH.Audit.Details.Table['headings']} */
+    const headings = [
+      {key: 'source', itemType: 'code', text: 'Source'},
+    ];
+    const details = Audit.makeTableDetails(headings, invalidHreflangs);
 
-        /** @type {LH.Audit.Details.Table['headings']} */
-        const headings = [
-          {key: 'source', itemType: 'code', text: 'Source'},
-        ];
-        const details = Audit.makeTableDetails(headings, invalidHreflangs);
-
-        return {
-          rawValue: invalidHreflangs.length === 0,
-          details,
-        };
-      });
+    return {
+      rawValue: invalidHreflangs.length === 0,
+      details,
+    };
   }
 }
 
