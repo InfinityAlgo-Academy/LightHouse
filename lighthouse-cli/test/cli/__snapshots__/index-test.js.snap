@@ -1127,9 +1127,6 @@ Object {
           "path": "seo/font-size",
         },
         Object {
-          "path": "seo/hreflang",
-        },
-        Object {
           "path": "seo/embedded-content",
         },
         Object {

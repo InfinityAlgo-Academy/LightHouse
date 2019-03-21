@@ -117,7 +117,6 @@ const defaultConfig = {
       'dobetterweb/response-compression',
       'dobetterweb/tags-blocking-first-paint',
       'seo/font-size',
-      'seo/hreflang',
       'seo/embedded-content',
       'seo/robots-txt',
       'seo/tap-targets',

@@ -26,6 +26,9 @@
 <body>
   <!-- Big tap target, but it's invisible because it's behind the main content div -->
   <a style="background: red; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: -1;"></a>
+
+  <a style="background: red; position: sticky; top: 0; left: 0; display: block; width: 100vw; height: 40px; z-index: 1;">sticky</a>
+
   <div style="background: white; padding: 20px;">
     <h1>SEO Tap targets</h1>
 
@@ -108,13 +111,19 @@
     </div>
 
     <!-- Links in text blocks are exempted from size/overlap requirements and should not fail -->
-    <p style="width: 100px">
+    <p style="width: 100px;margin-bottom: 30px;">
       This is <a>a link in a text block.</a>
       This is <a>a link in a text block.</a>
       This is <a>a link in a text block.</a>
       This is <a>a link in a text block.</a>
       This is <a>a link in a text block.</a>
     </p>
+
+    <a style="background: #afa; display: block; width: 100%; height: 800px;">
+      This link is intentionally placed at the bottom of the page, so that when we've scrolled
+      to the bottom of the page it overlaps with the sticky header. (Should not fail though
+      because the overlap depends on the current scroll position.)
+    </a>
   </div>
 </body>
 </html>

@@ -302,7 +302,7 @@ module.exports = class NetworkRequest {
    * The total length of the encoded data is spread out among multiple events. The sum of the
    * values in onResponseReceived and all the onDataReceived events typically equals the value
    * seen on the onLoadingFinished event. In <1% of cases we see the values differ. As we process
-   * onResonseReceived and onDataReceived we accumulate the total encodedDataLength. When we
+   * onResponseReceived and onDataReceived we accumulate the total encodedDataLength. When we
    * process onLoadingFinished, we override the accumulated total. We do this so that if the
    * request is aborted or fails, we still get a value via the accumulation.
    *
