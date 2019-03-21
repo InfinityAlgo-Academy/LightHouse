@@ -29,7 +29,7 @@
     "test-lantern": "bash lighthouse-core/scripts/test-lantern.sh",
     "unit-core": "jest \"lighthouse-core/\"",
     "unit-cli": "jest \"lighthouse-cli/\"",
-    "unit-viewer": "jest lighthouse-viewer/**/*-test.js",
+    "unit-viewer": "jest \"lighthouse-viewer/.*-test.js\"",
     "unit": "yarn unit-core && yarn unit-cli && yarn unit-viewer",
     "unit:ci": "npm run unit-core -- --runInBand --ci --coverage && npm run unit-cli -- --runInBand --ci --coverage && npm run unit-viewer -- --runInBand --ci --coverage",
     "core-unit": "yarn unit-core",
