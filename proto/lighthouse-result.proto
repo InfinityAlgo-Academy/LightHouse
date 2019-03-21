@@ -149,6 +149,7 @@ message LighthouseResult {
 
     // List of the categories that were run, empty if all were run
     // nullable list of strings
+    // Note: this should have been google.protobuf.ListValue, but too late now.
     google.protobuf.Value only_categories = 3;
 
     // How Lighthouse was run, e.g. from the Chrome extension or from the npm module
