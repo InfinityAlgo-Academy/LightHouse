@@ -95,46 +95,6 @@ class Util {
   }
 
   /**
-   * @param {string|Array<string|number>=} displayValue
-   * @return {string}
-   */
-  static formatDisplayValue(displayValue) {
-    if (typeof displayValue === 'string') return displayValue;
-    if (!displayValue) return '';
-
-    const replacementRegex = /%([0-9]*(\.[0-9]+)?d|s)/;
-    const template = /** @type {string} */ (displayValue[0]);
-    if (typeof template !== 'string') {
-      // First value should always be the format string, but we don't want to fail to build
-      // a report, return a placeholder.
-      return 'UNKNOWN';
-    }
-
-    let output = template;
-    for (const replacement of displayValue.slice(1)) {
-      if (!replacementRegex.test(output)) {
-        // eslint-disable-next-line no-console
-        console.warn('Too many replacements given');
-        break;
-      }
-
-      output = output.replace(replacementRegex, match => {
-        const granularity = Number(match.match(/[0-9.]+/)) || 1;
-        return match === '%s' ?
-          replacement.toLocaleString() :
-          (Math.round(Number(replacement) / granularity) * granularity).toLocaleString();
-      });
-    }
-
-    if (replacementRegex.test(output)) {
-      // eslint-disable-next-line no-console
-      console.warn('Not enough replacements given');
-    }
-
-    return output;
-  }
-
-  /**
    * Used to determine if the "passed" for the purposes of showing up in the "failed" or "passed"
    * sections of the report.
    *

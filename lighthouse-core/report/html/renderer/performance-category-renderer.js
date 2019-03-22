@@ -36,7 +36,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     titleEl.textContent = audit.result.title;
 
     const valueEl = this.dom.find('.lh-metric__value', tmpl);
-    valueEl.textContent = Util.formatDisplayValue(audit.result.displayValue);
+    valueEl.textContent = audit.result.displayValue || '';
 
     const descriptionEl = this.dom.find('.lh-metric__description', tmpl);
     descriptionEl.appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.description));
@@ -78,7 +78,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Set [title] tooltips
     if (audit.result.displayValue) {
-      const displayValue = Util.formatDisplayValue(audit.result.displayValue);
+      const displayValue = audit.result.displayValue;
       this.dom.find('.lh-load-opportunity__sparkline', element).title = displayValue;
       displayEl.title = displayValue;
     }

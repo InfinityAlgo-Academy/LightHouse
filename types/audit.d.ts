@@ -38,8 +38,6 @@ declare global {
 
     export type ScoreDisplayMode = Audit.ScoreDisplayModes[keyof Audit.ScoreDisplayModes];
 
-    export type DisplayValue = string;
-
     export interface Meta {
       /** The string identifier of the audit, in kebab case. */
       id: string;
@@ -65,7 +63,7 @@ declare global {
     // Type returned by Audit.audit(). Only rawValue is required.
     export interface Product {
       rawValue: boolean | number | null;
-      displayValue?: DisplayValue;
+      displayValue?: string;
       explanation?: string;
       errorMessage?: string;
       warnings?: string[];
@@ -79,7 +77,7 @@ declare global {
     /* Audit result returned in Lighthouse report. All audits offer a description and score of 0-1 */
     export interface Result {
       rawValue: boolean | number | null;
-      displayValue?: DisplayValue;
+      displayValue?: string;
       explanation?: string;
       errorMessage?: string;
       warnings?: string[];
