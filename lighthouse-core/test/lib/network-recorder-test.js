@@ -267,9 +267,7 @@ describe('network recorder', function() {
       ];
 
       const periods = NetworkRecorder.findNetworkQuietPeriods(records, 0);
-      assert.deepStrictEqual(periods, [
-        {start: 1200, end: Infinity},
-      ]);
+      assert.deepStrictEqual(periods, []);
     });
 
     it('should handle QUIC requests', () => {
