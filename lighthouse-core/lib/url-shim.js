@@ -17,8 +17,9 @@ const Util = require('../report/html/renderer/util.js');
 const URL = /** @type {!Window["URL"]} */ (typeof self !== 'undefined' && self.URL) ||
     require('url').URL;
 
-// 25 most used tld plus one domains from http archive.
+// 25 most used tld plus one domains (aka public suffixes) from http archive.
 // @see https://github.com/GoogleChrome/lighthouse/pull/5065#discussion_r191926212
+// The canonical list is https://publicsuffix.org/learn/ but we're only using subset to conserve bytes
 const listOfTlds = [
   'com', 'co', 'gov', 'edu', 'ac', 'org', 'go', 'gob', 'or', 'net', 'in', 'ne', 'nic', 'gouv',
   'web', 'spb', 'blog', 'jus', 'kiev', 'mil', 'wi', 'qc', 'ca', 'bel', 'on',
