@@ -296,7 +296,6 @@ class FontSize extends Audit {
     }
 
     const decimalProportion = (percentageOfPassingText / 100);
-    /** @type {LH.Audit.DisplayValue} */
     const displayValue = str_(UIStrings.displayValue, {decimalProportion});
     const details = Audit.makeTableDetails(headings, tableData);
     const passed = percentageOfPassingText >= MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT;

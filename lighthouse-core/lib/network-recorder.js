@@ -102,25 +102,12 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
-   * frame root network requests don't always "finish" even when they're done loading data, use responseReceived instead
-   * @see https://github.com/GoogleChrome/lighthouse/issues/6067#issuecomment-423211201
-   * @param {LH.Artifacts.NetworkRequest} record
-   * @return {boolean}
-   */
-  static _isFrameRootRequestAndFinished(record) {
-    const isFrameRootRequest = record.url === record.documentURL;
-    const responseReceived = record.responseReceivedTime > 0;
-    return !!(isFrameRootRequest && responseReceived && record.endTime);
-  }
-
-  /**
    * @param {LH.Artifacts.NetworkRequest} record
    * @return {boolean}
    */
   static isNetworkRecordFinished(record) {
     return record.finished ||
-      NetworkRecorder._isQUICAndFinished(record) ||
-      NetworkRecorder._isFrameRootRequestAndFinished(record);
+      NetworkRecorder._isQUICAndFinished(record);
   }
 
   /**
@@ -304,21 +291,6 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
-   * Events from targets other than the main frame are proxied through `Target.receivedMessageFromTarget`.
-   * Their payloads are JSON-stringified into the `.message` property
-   * @param {LH.Crdp.Target.ReceivedMessageFromTargetEvent} data
-   */
-  onReceivedMessageFromTarget(data) {
-    /** @type {LH.Protocol.RawMessage} */
-    const protocolMessage = JSON.parse(data.message);
-
-    // Message was a response to some command, not an event, so we'll ignore it.
-    if ('id' in protocolMessage) return;
-    // Message was an event, replay it through our normal dispatch process.
-    this.dispatch(protocolMessage);
-  }
-
-  /**
    * Routes network events to their handlers, so we can construct networkRecords
    * @param {LH.Protocol.RawEventMessage} event
    */
@@ -331,7 +303,6 @@ class NetworkRecorder extends EventEmitter {
       case 'Network.loadingFinished': return this.onLoadingFinished(event.params);
       case 'Network.loadingFailed': return this.onLoadingFailed(event.params);
       case 'Network.resourceChangedPriority': return this.onResourceChangedPriority(event.params);
-      case 'Target.receivedMessageFromTarget': return this.onReceivedMessageFromTarget(event.params); // eslint-disable-line max-len
       default: return;
     }
   }

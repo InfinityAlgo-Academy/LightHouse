@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 const path = require('path');
 const assert = require('assert');
@@ -49,10 +49,7 @@ describe('Lighthouse chrome extension', function() {
       });
   }
 
-  before(async function() {
-    // eslint-disable-next-line
-    this.timeout(90 * 1000);
-
+  beforeAll(async function() {
     // read original manifest
     originalManifest = fs.readFileSync(manifestLocation);
 
@@ -108,9 +105,9 @@ describe('Lighthouse chrome extension', function() {
     extensionPage = (await browser.pages()).find(page =>
       page.url().includes('blob:chrome-extension://')
     );
-  });
+  }, 90 * 1000);
 
-  after(async () => {
+  afterAll(async () => {
     // put the default manifest back
     fs.writeFileSync(manifestLocation, originalManifest);
 

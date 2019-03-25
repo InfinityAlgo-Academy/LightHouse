@@ -6,6 +6,6 @@
 
 declare module NodeJS {
   interface Global {
-    isLightRider?: boolean;
+    isLightrider?: boolean;
   }
 }

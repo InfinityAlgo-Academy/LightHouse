@@ -75,8 +75,7 @@ class CategoryRenderer {
     const scoreDisplayMode = audit.result.scoreDisplayMode;
 
     if (audit.result.displayValue) {
-      const displayValue = Util.formatDisplayValue(audit.result.displayValue);
-      this.dom.find('.lh-audit__display-text', auditEl).textContent = displayValue;
+      this.dom.find('.lh-audit__display-text', auditEl).textContent = audit.result.displayValue;
     }
 
     const titleEl = this.dom.find('.lh-audit__title', auditEl);

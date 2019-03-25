@@ -39,6 +39,15 @@ describe('Images: aspect-ratio audit', () => {
     });
   }
 
+  testImage('is a css image', {
+    rawValue: true,
+    clientSize: [1000, 20],
+    naturalSize: [5, 5],
+    props: {
+      isCss: true,
+    },
+  });
+
   testImage('is much larger than natural aspect ratio', {
     rawValue: false,
     clientSize: [800, 500],

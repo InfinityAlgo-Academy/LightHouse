@@ -11,6 +11,7 @@ const assert = require('assert');
 const devtoolsLogItems = require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
 const redirectsDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
 const redirectsScriptDevtoolsLog = require('../fixtures/redirects-from-script.devtoolslog.json');
+const lrRequestDevtoolsLog = require('../fixtures/lr.devtoolslog.json');
 
 /* eslint-env jest */
 describe('network recorder', function() {
@@ -162,6 +163,23 @@ describe('network recorder', function() {
     expect(records).toMatchObject([{url: 'http://example.com', startTime: 1, endTime: 2}]);
   });
 
+  it('should use X-TotalFetchedSize in Lightrider for transferSize', () => {
+    global.isLightrider = true;
+    const records = NetworkRecorder.recordsFromLogs(lrRequestDevtoolsLog);
+    global.isLightrider = false;
+
+    expect(records.find(r => r.url === 'https://www.paulirish.com/'))
+    .toMatchObject({
+      resourceSize: 75221,
+      transferSize: 22889,
+    });
+    expect(records.find(r => r.url === 'https://www.paulirish.com/javascripts/modernizr-2.0.js'))
+    .toMatchObject({
+      resourceSize: 9736,
+      transferSize: 4730,
+    });
+  });
+
   describe('#findNetworkQuietPeriods', () => {
     function record(data) {
       const url = data.url || 'https://example.com';
@@ -249,9 +267,7 @@ describe('network recorder', function() {
       ];
 
       const periods = NetworkRecorder.findNetworkQuietPeriods(records, 0);
-      assert.deepStrictEqual(periods, [
-        {start: 1200, end: Infinity},
-      ]);
+      assert.deepStrictEqual(periods, []);
     });
 
     it('should handle QUIC requests', () => {

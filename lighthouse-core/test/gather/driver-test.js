@@ -1000,6 +1000,8 @@ describe('.goOnline', () => {
 describe('Multi-target management', () => {
   it('enables the Network domain for iframes', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Target.sendMessageToTarget', {})
+      .mockResponse('Target.sendMessageToTarget', {})
       .mockResponse('Target.sendMessageToTarget', {});
 
     driver._eventEmitter.emit('Target.attachedToTarget', {
@@ -1016,16 +1018,73 @@ describe('Multi-target management', () => {
     });
   });
 
-  it('ignores other target types', async () => {
+  it('enables the Network domain for iframes of iframes of iframes', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
-    .mockResponse('Target.sendMessageToTarget', {});
+      .mockResponse('Target.sendMessageToTarget', {})
+      .mockResponse('Target.sendMessageToTarget', {})
+      .mockResponse('Target.sendMessageToTarget', {});
+
+    driver._eventEmitter.emit('Target.receivedMessageFromTarget', {
+      sessionId: 'Outer',
+      message: JSON.stringify({
+        method: 'Target.receivedMessageFromTarget',
+        params: {
+          sessionId: 'Middle',
+          message: JSON.stringify({
+            method: 'Target.attachedToTarget',
+            params: {
+              sessionId: 'Inner',
+              targetInfo: {type: 'iframe'},
+            },
+          }),
+        },
+      }),
+    });
+
+    await flushAllTimersAndMicrotasks();
+
+    const sendMessageArgs = connectionStub.sendCommand
+      .findInvocation('Target.sendMessageToTarget');
+    const stringified = `{
+      "id": 3,
+      "method": "Target.sendMessageToTarget",
+      "params": {
+        "sessionId": "Middle",
+        "message": "{
+          \\"id\\": 2,
+          \\"method\\": \\"Target.sendMessageToTarget\\",
+          \\"params\\": {
+            \\"sessionId\\": \\"Inner\\",
+            \\"message\\":\\ "{
+              \\\\\\"id\\\\\\":1,
+              \\\\\\"method\\\\\\":\\\\\\"Network.enable\\\\\\"
+            }\\"
+          }}"
+        }
+      }`.replace(/\s+/g, '');
+
+    expect(sendMessageArgs).toEqual({
+      message: stringified,
+      sessionId: 'Outer',
+    });
+  });
+
+  it('ignores other target types, but still resumes them', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Target.sendMessageToTarget', {});
 
     driver._eventEmitter.emit('Target.attachedToTarget', {
-      sessionId: 123,
+      sessionId: 'SW1',
       targetInfo: {type: 'service_worker'},
     });
     await flushAllTimersAndMicrotasks();
 
-    expect(connectionStub.sendCommand).not.toHaveBeenCalled();
+
+    const sendMessageArgs = connectionStub.sendCommand
+      .findInvocation('Target.sendMessageToTarget');
+    expect(sendMessageArgs).toEqual({
+      message: JSON.stringify({id: 1, method: 'Runtime.runIfWaitingForDebugger'}),
+      sessionId: 'SW1',
+    });
   });
 });

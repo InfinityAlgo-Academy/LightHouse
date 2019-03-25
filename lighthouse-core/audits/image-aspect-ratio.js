@@ -72,10 +72,13 @@ class ImageAspectRatio extends Audit {
     /** @type {Array<{url: string, displayedAspectRatio: string, actualAspectRatio: string, doRatiosMatch: boolean}>} */
     const results = [];
     images.filter(image => {
+      // - filter out css background images since we don't have a reliable way to tell if it's a
+      //   sprite sheet, repeated for effect, etc
       // - filter out images that don't have following properties:
       //   networkRecord, width, height, images that use `object-fit`: `cover` or `contain`
       // - filter all svgs as they have no natural dimensions to audit
-      return image.mimeType &&
+      return !image.isCss &&
+        image.mimeType &&
         image.mimeType !== 'image/svg+xml' &&
         image.naturalHeight > 5 &&
         image.naturalWidth > 5 &&
