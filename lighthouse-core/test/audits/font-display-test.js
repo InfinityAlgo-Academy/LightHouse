@@ -170,6 +170,11 @@ describe('Performance: Font Display audit', () => {
         endTime: 2, startTime: 1,
         resourceType: 'Font',
       },
+      {
+        url: 'data:application/font-woff',
+        endTime: 7, startTime: 1,
+        resourceType: 'Font',
+      },
     ];
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
