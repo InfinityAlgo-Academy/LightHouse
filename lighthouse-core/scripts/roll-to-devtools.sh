@@ -36,13 +36,9 @@ fe_lh_dir="$frontend_dir/audits2/lighthouse"
 lh_bg_js="dist/lighthouse-dt-bundle.js"
 lh_worker_dir="$frontend_dir/audits2_worker/lighthouse"
 
-# copy report files
-cp -pPR $report_dir/renderer "$fe_lh_dir"
-echo -e "\033[32m ✓\033[39m Report renderer files copied."
-
 # copy lighthouse-dt-bundle (potentially stale)
 cp -pPR "$lh_bg_js" "$lh_worker_dir/lighthouse-dt-bundle.js"
 echo -e "\033[96m ✓\033[39m (Potentially stale) lighthouse-dt-bundle copied."
 
-# copy report generator
-cp dist/report-generator.js $fe_lh_dir
+# copy report generator + cached resources into $fe_lh_dir
+cp -r dist/dt-report-resources/ $fe_lh_dir
