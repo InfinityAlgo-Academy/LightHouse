@@ -52,7 +52,7 @@ class FontDisplay extends Audit {
     // Go through all the stylesheets to find all @font-face declarations
     for (const stylesheet of artifacts.CSSUsage.stylesheets) {
       // Eliminate newlines so we can more easily scan through with a regex
-      const newlinesStripped = stylesheet.content.replace(/\n/g, ' ');
+      const newlinesStripped = stylesheet.content.replace(/(\r|\n)+/g, ' ');
       // Find the @font-faces
       const fontFaceDeclarations = newlinesStripped.match(/@font-face\s*{(.*?)}/g) || [];
       // Go through all the @font-face declarations to find a declared `font-display: ` property

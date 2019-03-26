@@ -136,18 +136,20 @@ describe('Performance: Font Display audit', () => {
   it('passes when all fonts have a correct font-display rule', async () => {
     stylesheet.content = `
       @font-face {
+        /* make sure we can handle carriage returns */
+        \r\n
         font-display: block;
         /* try with " */
         src: url("./font-a.woff");
       }
 
-      @font-face {
+      @font-face {\r
         font-display: fallback;
         /* try up a directory with ' */
         src: url('../font-b.woff');
       }
 
-      @font-face {
+      @font-face {\n
         font-display: optional;
         /* try no path with no quotes ' */
         src: url(font.woff);
