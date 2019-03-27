@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
-    "message": "Pristupne tipke omogućuju korisnicima da se brzo usredotoče na određeni dio stranice. Za pravilno kretanje svaka pristupna tipka mora biti jedinstvena. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/accesskeys?application=lighthouse)."
+    "message": "Pristupne tipke omogućuju korisnicima da se brzo usredotoče na određeni dio stranice. Za pravilno kretanje svaka pristupna tipka mora biti jedinstvena. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | failureTitle": {
     "message": "Vrijednosti \"[accesskey]\" nisu jedinstvene"
@@ -9,7 +9,7 @@
     "message": "Vrijednosti \"[accesskey]\" su jedinstvene"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": {
-    "message": "Svaka \"uloga\" ARIA podržava poseban podskup atributa \"aria-*\". Njihovo nepodudaranje poništit će atribute \"aria-*\". [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/aria-allowed-attr?application=lighthouse)."
+    "message": "Svaka \"uloga\" ARIA-e podržava poseban podskup atributa \"aria-*\". Njihovo nepodudaranje poništit će atribute \"aria-*\". [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | failureTitle": {
     "message": "Atributi \"[aria-*]\" ne podudaraju se sa svojim ulogama"
@@ -18,7 +18,7 @@
     "message": "Atrubuti \"[aria-*]\" podudaraju se sa svojim ulogama"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
-    "message": "Neke uloge ARIA zahtijevaju atribute koji opisuju stanje elementa čitačima zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/aria-required-attr?application=lighthouse)."
+    "message": "Neke uloge ARIA-e zahtijevaju atribute koji opisuju stanje elementa čitačima zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | failureTitle": {
     "message": "\"[role]\" nemaju sve potrebne atribute \"[aria-*]\""
@@ -27,7 +27,7 @@
     "message": "\"[role]\" imaju sve potrebne atribute \"[aria-*]\""
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | description": {
-    "message": "Neke nadređene uloge ARIA moraju sadržavati posebne podređene uloge za izvršavanje svojih namijenjenih funkcija pristupačnosti. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/aria-required-children?application=lighthouse)."
+    "message": "Neke nadređene uloge ARIA-e moraju sadržavati posebne podređene uloge za izvršavanje svojih namijenjenih funkcija pristupačnosti. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
     "message": "Nedostaju elementi s ulogom \"[role]\" koji zahtijevaju specifičnu podređenu ulogu \"[role]\"."
@@ -36,7 +36,7 @@
     "message": "Prisutni su elementi s ulogom \"[role]\" za koje su potrebne posebne podređene uloge \"[role]\""
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
-    "message": "Određene nadređene uloge moraju sadržavati neke podređene uloge ARIA kako bi mogle pravilno izvršavati namijenjene funkcije pristupačnosti. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/aria-required-parent?application=lighthouse)."
+    "message": "Određene nadređene uloge moraju sadržavati neke podređene uloge ARIA-e kako bi mogle pravilno izvršavati namijenjene funkcije pristupačnosti. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/aria-required-parent?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | failureTitle": {
     "message": "Potrebni nadređeni element ne sadrži \"[role]\""
@@ -45,7 +45,7 @@
     "message": "\"[role]\" su sadržani u potrebnom nadređenom elementu"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | description": {
-    "message": "Uloge ARIA moraju sadržavati valjane vrijednosti da bi se mogle izvršavati njihove namijenjene funkcije pristupačnosti. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/aria-roles?application=lighthouse)."
+    "message": "Uloge ARIA-e moraju sadržavati valjane vrijednosti da bi se mogle izvršavati njihove namijenjene funkcije pristupačnosti. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/aria-roles?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | failureTitle": {
     "message": "Vrijednosti \"[role]\" nisu valjane"
@@ -54,7 +54,7 @@
     "message": "Vrijednosti \"[role]\" su valjane"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
-    "message": "Pomoćne tehnologije, poput čitača zaslona, ne mogu tumačiti atribute ARIA s nevažećim vrijednostima. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr-value?application=lighthouse)."
+    "message": "Pomoćne tehnologije, poput čitača zaslona, ne mogu tumačiti atribute ARIA-e s nevažećim vrijednostima. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | failureTitle": {
     "message": "Atributi \"[aria-*]\" ne sadrže valjane vrijednosti"
@@ -63,7 +63,7 @@
     "message": "Atributi \"[aria-*]\" sadrže valjane vrijednosti"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": {
-    "message": "Pomoćne tehnologije, poput čitača zaslona, ne mogu tumačiti atribute ARIA s nevažećim nazivima. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr?application=lighthouse)."
+    "message": "Pomoćne tehnologije, poput čitača zaslona, ne mogu tumačiti atribute ARIA-e s nevažećim nazivima. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | failureTitle": {
     "message": "Atributi \"[aria-*]\" nisu valjani ili su pogrešno napisani"
@@ -72,7 +72,7 @@
     "message": "Atributi \"[aria-*]\" su valjani i nisu pogrešno napisani"
   },
   "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Titlovi omogućuju gluhim i nagluhim korisnicima uporabu audioelemenata jer pružaju ključne informacije, primjerice tko govori, što govori i druge informacije osim govora. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/audio-caption?application=lighthouse)."
+    "message": "Titlovi omogućuju gluhim i nagluhim korisnicima uporabu audioelemenata jer pružaju ključne informacije, primjerice tko govori, što govori i druge informacije osim govora. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
     "message": "Elementi \"<audio>\" ne sadrže element \"<track>\" s \"[kind=\"captions\"]\"."
@@ -84,7 +84,7 @@
     "message": "Elementi koji nisu prošli provjeru"
   },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
-    "message": "Kada gumb nema pristupačan naziv, čitači zaslona najavljuju ga kao \"gumb\" te je on neupotrebljiv za korisnike koji se oslanjaju na čitače zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/button-name?application=lighthouse)."
+    "message": "Kada gumb nema pristupačan naziv, čitači zaslona najavljuju ga kao \"gumb\" te je on neupotrebljiv za korisnike koji se oslanjaju na čitače zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/button-name.js | failureTitle": {
     "message": "Gumbi nemaju pristupačan naziv"
@@ -93,7 +93,7 @@
     "message": "Gumbi imaju pristupačan naziv"
   },
   "lighthouse-core/audits/accessibility/bypass.js | description": {
-    "message": "Dodavanje načina za zaobilaženje repetitivnog sadržaja omogućuje korisnicima tipkovnice učinkovitije kretanje po stranici. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/bypass?application=lighthouse)."
+    "message": "Dodavanje načina za zaobilaženje repetitivnog sadržaja omogućuje korisnicima tipkovnice učinkovitije kretanje po stranici. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/bypass?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/bypass.js | failureTitle": {
     "message": "Stranica ne sadrži naslov, vezu za preskakanje ili regiju kao orijentir"
@@ -102,7 +102,7 @@
     "message": "Stranica sadrži naslov, vezu za preskakanje ili regiju kao orijentir"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | description": {
-    "message": "Mnogim je korisnicima teško ili nemoguće čitati tekst niskog kontrasta. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse)."
+    "message": "Mnogim je korisnicima teško ili nemoguće čitati tekst niskog kontrasta. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | failureTitle": {
     "message": "Boje u pozadini i prednjem planu nemaju zadovoljavajući omjer kontrasta."
@@ -111,7 +111,7 @@
     "message": "Boje u pozadini i prednjem planu imaju zadovoljavajući omjer kontrasta"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | description": {
-    "message": "Kada popisi definicija nisu valjano označeni, čitači zaslona mogu proizvesti zbunjujuć ili netočan izlaz. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/definition-list?application=lighthouse)."
+    "message": "Kada popisi definicija nisu valjano označeni, čitači zaslona mogu proizvesti zbunjujući ili netočan izlaz. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/definition-list?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
     "message": "\"<dl>\" ne sadrže samo pravilno naručene grupe \"<dt>\" i \"<dd>\", elemente \"<script>\" ili \"<template>\"."
@@ -120,7 +120,7 @@
     "message": "\"<dl>\" sadrži samo pravilno naručene grupe \"<dt>\" i \"<dd>\", elemente \"<script>\" ili \"<template>\"."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
-    "message": "Stavke na popisu definicija (\"<dt>\" i \"<dd>\") moraju biti upakirane u naređeni element \"<dl>\" da bi ih čitači zaslona mogli pravilno najaviti. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/dlitem?application=lighthouse)."
+    "message": "Stavke na popisu definicija (\"<dt>\" i \"<dd>\") moraju biti upakirane u naređeni element \"<dl>\" da bi ih čitači zaslona mogli pravilno najaviti. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/dlitem?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | failureTitle": {
     "message": "Stavke na popisu definicija nisu upakirane u elemente \"<dl>\""
@@ -138,7 +138,7 @@
     "message": "Dokument sadrži element \"<title>\""
   },
   "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Vrijednost atributa ID mora biti jedinstvena kako bi se spriječilo da pomoćne tehnologije propuste druge instance. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/duplicate-id?application=lighthouse)."
+    "message": "Vrijednost atributa ID mora biti jedinstvena kako bi se spriječilo da pomoćne tehnologije propuste druge instance. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/duplicate-id?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
     "message": "Atributi \"[id]\" na stranici nisu jedinstveni"
@@ -147,7 +147,7 @@
     "message": "Atributi \"[id]\" na stranici su jedinstveni"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
-    "message": "Korisnici čitača zaslona oslanjaju se na naslove okvira za opisivanje sadržaja okvira. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/frame-title?application=lighthouse)."
+    "message": "Korisnici čitača zaslona oslanjaju se na naslove okvira za opisivanje sadržaja okvira. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/frame-title?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/frame-title.js | failureTitle": {
     "message": "Elementi \"<frame>\" i \"<iframe>\" nemaju naslov"
@@ -156,7 +156,7 @@
     "message": "Elementi \"<frame>\" ili \"<iframe>\" sadrže naslov"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
-    "message": "Ako za stranicu nije naveden atribut jezika, čitač zaslona pretpostavlja da je stranica na zadanom jeziku koji je korisnik odabrao prilikom postavljanja čitača zaslona. Ako stranica nije stvarno na zadanom jeziku, čitač zaslona možda neće ispravno najaviti tekst sa stranice. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/html-lang?application=lighthouse)."
+    "message": "Ako za stranicu nije naveden atribut jezika, čitač zaslona pretpostavlja da je stranica na zadanom jeziku koji je korisnik odabrao prilikom postavljanja čitača zaslona. Ako stranica nije stvarno na zadanom jeziku, čitač zaslona možda neće ispravno najaviti tekst sa stranice. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | failureTitle": {
     "message": "Element \"<html>\" ne sadrži atribut \"[lang]\""
@@ -165,7 +165,7 @@
     "message": "Element \"<html>\" sadrži atribut \"[lang]\""
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | description": {
-    "message": "Navođenje valjanog [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) pomaže čitačima zaslona u pravilnom najavljivanju teksta. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse)."
+    "message": "Navođenje valjanog [BCP 47 jezika](https://www.w3.org/International/questions/qa-choosing-language-tags#question) pomaže čitačima zaslona u pravilnom najavljivanju teksta. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | failureTitle": {
     "message": "Element \"<html>\" nema valjanu vrijednost za svoj atribut \"[lang]\"."
@@ -174,7 +174,7 @@
     "message": "Element \"<html>\" sadrži valjanu vrijednost za svoj atribut [lang]\""
   },
   "lighthouse-core/audits/accessibility/image-alt.js | description": {
-    "message": "Informativni elementi trebali bi sadržavati kratak, opisni zamjenski tekst. Ukrasni elementi mogu se zanemariti praznim atributom alt. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/image-alt?application=lighthouse)."
+    "message": "Informativni elementi trebali bi sadržavati kratak, opisni zamjenski tekst. Ukrasni elementi mogu se zanemariti praznim atributom alt. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/image-alt.js | failureTitle": {
     "message": "Elementi slike nemaju atribute \"[alt]\""
@@ -183,7 +183,7 @@
     "message": "Elementi slike imaju atribute \"[alt]\""
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | description": {
-    "message": "Kada se slika upotrebljava kao gumb \"<input>\", navođenje zamjenskog teksta može pomoći korisnicima čitača zaslona da shvate svrhu gumba. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/input-image-alt?application=lighthouse)."
+    "message": "Kada se slika upotrebljava kao gumb \"<input>\", navođenje zamjenskog teksta može pomoći korisnicima čitača zaslona da shvate svrhu gumba. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/input-image-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | failureTitle": {
     "message": "Elementi \"<input type=\"image\">\" ne sadrže tekst \"[alt]\""
@@ -192,7 +192,7 @@
     "message": "Elementi \"<input type=\"image\">\" sadrže tekst \"[alt]\""
   },
   "lighthouse-core/audits/accessibility/label.js | description": {
-    "message": "Oznake osiguravaju da pomoćne tehnologije, poput čitača zaslona, pravilno najavljuju kontrole oblika. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/label?application=lighthouse)."
+    "message": "Oznake osiguravaju da pomoćne tehnologije, poput čitača zaslona, pravilno najavljuju kontrole oblika. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/label.js | failureTitle": {
     "message": "Elementi oblika ne sadrže povezane oznake"
@@ -201,7 +201,7 @@
     "message": "Elementi oblika imaju povezane oznake"
   },
   "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Tablica koja se upotrebljava u svrhe izgleda ne smije sadržavati elemente podataka kao što su elementi th ili opis ili atribut sažetka jer to može zbuniti korisnike čitača zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/layout-table?application=lighthouse)."
+    "message": "Tablica koja se upotrebljava u svrhe izgleda ne smije sadržavati elemente podataka kao što su elementi th ili opis ili atribut sažetka jer to može zbuniti korisnike čitača zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/layout-table?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
     "message": "Prezentacijski elementi za \"<table>\" ne izbjegavaju upotrebu atributa \"<th>\", \"<caption>\" ili \"[summary]\"."
@@ -210,7 +210,7 @@
     "message": "Prezentacijski elementi za \"<table>\" izbjegavaju upotrebu \"<th>\", \"<caption>\" ili atributa \"[summary]\"."
   },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
-    "message": "Tekst veze (i zamjenski tekst za slike, kada se upotrebljavaju kao veze) koji se može raspoznati, jedinstven je i ima mogućnost fokusiranja unapređuje doživljaj kretanja za korisnike čitača zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/link-name?application=lighthouse)."
+    "message": "Tekst veze (i zamjenski tekst za slike kada se upotrebljava kao veze) koji je prepoznatljiv, jedinstven i može se fokusirati omogućuje lakše kretanje korisnicima čitača zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/link-name.js | failureTitle": {
     "message": "Veze nemaju naziv koji je moguće raspoznati"
@@ -219,7 +219,7 @@
     "message": "Veze imaju naziv koji je moguće raspoznati"
   },
   "lighthouse-core/audits/accessibility/list.js | description": {
-    "message": "Čitači zaslona imaju poseban način najavljivanja popisa. Osiguravanje pravilne strukture popisa pomaže izlazu čitača zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/list?application=lighthouse)."
+    "message": "Čitači zaslona imaju poseban način najavljivanja popisa. Osiguravanje pravilne strukture popisa pomaže izlazu čitača zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/list?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/list.js | failureTitle": {
     "message": "Popisi ne sadrže samo elemente \"<li>\" i elemente koji podupiru skriptu (\"<script>\" i \"<template>\")."
@@ -228,7 +228,7 @@
     "message": "Popisi sadrže samo elemente \"<li>\" i elemente koji podupiru skriptu (\"<script>\" i \"<template>\")."
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "Za čitače zaslona stavke na popisu (\"<li>\") moraju biti sadržane unutar nadređenog \"<ul>\" ili \"<ol>\" kako bi ih se moglo pravilno najaviti. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/listitem?application=lighthouse)."
+    "message": "Za čitače zaslona stavke na popisu (\"<li>\") moraju biti sadržane unutar nadređenog \"<ul>\" ili \"<ol>\" kako bi ih se moglo pravilno najaviti. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/listitem?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
     "message": "Stavke popisa (\"<li>\") nisu sadržane unutar nadređenih elemenata \"<ul>\" ili \"<ol>\"."
@@ -237,7 +237,7 @@
     "message": "Stavke popisa (\"<li>\") sadržane su unutar nadređenih elemenata \"<ul>\" ili \"<ol>\""
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
-    "message": "Korisnici ne očekuju automatsko osvježavanje stranice, pa se fokus vraća na vrh stranice. To može biti frustrirajuće i zbuniti korisnike. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/meta-refresh?application=lighthouse)."
+    "message": "Korisnici ne očekuju automatsko osvježavanje stranice. Ako se to dogodi, fokus se vraća na vrh stranice. To može biti frustrirajuće i zbuniti korisnike. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | failureTitle": {
     "message": "Dokument upotrebljava \"<meta http-equiv=\"refresh\">\""
@@ -246,7 +246,7 @@
     "message": "Dokument ne upotrebljava \"<meta http-equiv=\"refresh\">\""
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | description": {
-    "message": "Onemogućavanje zumiranja problematično je za slabovidne korisnike koji se oslanjaju na povećavanje zaslona kako bi pravilno vidjeli sadržaj web-stranice. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/meta-viewport?application=lighthouse)."
+    "message": "Onemogućavanje zumiranja problematično je za slabovidne korisnike koji se oslanjaju na povećavanje zaslona kako bi pravilno vidjeli sadržaj web-stranice. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/meta-viewport?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | failureTitle": {
     "message": "\"[user-scalable=\"no\"]\" se upotrebljava u elementu \"<meta name=\"viewport\">\" ili je atribut \"[maximum-scale]\" manji od pet."
@@ -255,7 +255,7 @@
     "message": "\"[user-scalable=\"no\"]\" ne upotrebljava se u elementu \"<meta name=\"viewport\">\" i element \"[maximum-scale]\" nije manji od pet."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Čitači zaslona ne mogu prevesti sadržaj osim teksta. Dodavanje zamjenskog teksta elementima \"<object>\" pomaže čitačima zaslona u prenošenju značenja korisnicima. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/object-alt?application=lighthouse)."
+    "message": "Čitači zaslona ne mogu prevesti sadržaj osim teksta. Dodavanje zamjenskog teksta elementima \"<object>\" pomaže čitačima zaslona u prenošenju značenja korisnicima. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
     "message": "Elementi \"<object>\" ne sadrže tekst \"[alt]\""
@@ -264,7 +264,7 @@
     "message": "Elementi \"<object>\" sadrže tekst \"[alt]\""
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
-    "message": "Vrijednost viša od 0 podrazumijeva eksplicitno naređivanje kretanja. Iako je tehnički valjano, to često frustrira korisnike koji se oslaganju na pomoćne tehnologije. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/tabindex?application=lighthouse)."
+    "message": "Vrijednost viša od 0 podrazumijeva eksplicitno naređivanje kretanja. Iako je tehnički valjano, to često frustrira korisnike koji se oslanjaju na pomoćne tehnologije. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/tabindex?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/tabindex.js | failureTitle": {
     "message": "Neki elementi imaju vrijednost \"[tabindex]\" višu od 0"
@@ -273,7 +273,7 @@
     "message": "Nijedan element nema vrijednost \"[tabindex]\" višu od 0"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | description": {
-    "message": "Čitači zaslona sadrže značajke za olakšavanje kretanja po tablicama. Osiguravanje da se ćelije \"<td>\" koje upotrebljavaju atribut \"[headers]\" odnose samo na druge ćelije u istoj tablici može unaprijediti iskustvo za korisnike čitača zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/td-headers-attr?application=lighthouse)."
+    "message": "Čitači zaslona sadrže značajke za olakšavanje kretanja po tablicama. Potrebno je pripaziti da se ćelije \"<td>\" koje upotrebljavaju atribut \"[headers]\" odnose samo na druge ćelije u istoj tablici kako bi se korisnicima čitača zaslona omogućio bolji doživljaj. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
     "message": "Ćelije u elementu \"<table>\" koje upotrebljavaju atribut \"[headers]\" odnose se na druge ćelije te iste tablice."
@@ -282,7 +282,7 @@
     "message": "Ćelije u elementu \"<table>\" koje upotrebljavaju atribut \"[headers]\" odnose se samo na druge ćelije te iste tablice."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
-    "message": "Čitači zaslona sadrže značajke za olakšavanje kretanja po tablicama. Osiguravanje da se zaglavlja tablice uvijek odnose na neki skup ćelija može poboljšati doživljaj za korisnike čitača zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/th-has-data-cells?application=lighthouse)."
+    "message": "Čitači zaslona sadrže značajke za olakšavanje kretanja po tablicama. Osiguravanje da se zaglavlja tablice uvijek odnose na neki skup ćelija može poboljšati doživljaj za korisnike čitača zaslona. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | failureTitle": {
     "message": "Elementi \"<th>\" i elementi s \"[role=\"columnheader\"/\"rowheader\"]\" nemaju ćelije s podacima koje opisuju."
@@ -291,7 +291,7 @@
     "message": "Elementi \"<th>\" i elementi s \"[role=\"columnheader\"/\"rowheader\"]\" imaju ćelije s podacima koje opisuju."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | description": {
-    "message": "Navođenje valjanog [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) na elementima pomaže osigurati da čitač zaslona ispravno izgovara tekst. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse)."
+    "message": "Navođenje valjanog [BCP 47 jezika](https://www.w3.org/International/questions/qa-choosing-language-tags#question) na elementima pomaže osigurati da čitač zaslona ispravno izgovara tekst. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | failureTitle": {
     "message": "Atributi \"[lang]\" ne sadrže valjanu vrijednost"
@@ -300,7 +300,7 @@
     "message": "Atributi \"[lang]\" sadrže valjanu vrijednost"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | description": {
-    "message": "Kada videozapis sadrži titlove, gluhim i nagluhim osobama jednostavnije je pristupiti njegovim informacijama. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/video-caption?application=lighthouse)."
+    "message": "Kada videozapis sadrži titlove, gluhim i nagluhim osobama jednostavnije je pristupiti njegovim informacijama. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/video-caption?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/video-caption.js | failureTitle": {
     "message": "Elementi \"<video>\" ne sadrže element \"<track>\" s \"[kind=\"captions\"]\"."
@@ -309,7 +309,7 @@
     "message": "Elementi \"<video>\" sadrže element \"<track>\" s \"[kind=\"captions\"]\""
   },
   "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Audioopisi pružaju relevantne informacije za videozapise koje dijaloški okviri ne mogu pružiti, primjerice izraze lica i scene. [Saznajte više](https://dequeuniversity.com/rules/axe/2.2/video-description?application=lighthouse)."
+    "message": "Audioopisi pružaju relevantne informacije za videozapise koje dijaloški okviri ne mogu pružiti, primjerice izraze lica i scene. [Saznajte više](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
     "message": "Elementi \"<video>\" ne sadrže element \"<track>\" s \"[kind=\"description\"]\"."
@@ -327,7 +327,7 @@
     "message": "Raščlamba skripte"
   },
   "lighthouse-core/audits/bootup-time.js | columnTotal": {
-    "message": "Ukupno"
+    "message": "Ukupno vrijeme CPU-a"
   },
   "lighthouse-core/audits/bootup-time.js | description": {
     "message": "Savjetujemo vam da skratite vrijeme potrebno za raščlambu, kompiliranje i izvršavanje JS-a. Isporuka manjih JS-ova mogla bi vam pomoći da to postignete. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/bootup)."
@@ -381,10 +381,10 @@
     "message": "Umanjite JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Iz stilskih tablica uklonite nekorištena pravila da biste smanjili nepotrebnu potrošnju bajtova u mrežnoj aktivnosti. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/unused-css)."
+    "message": "Uklonite nepotrebna pravila iz stilskih tablica i odgodite učitavanje CSS-a koji se ne koristi za sadržaj na vidljivom dijelu stranice kako biste smanjili nepotrebnu potrošnju bajtova u mrežnoj aktivnosti. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/unused-css)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Odgodite nekorišteni CSS"
+    "message": "Uklonite CSS koji se ne koristi"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
     "message": "Uklonite JavaScript koji se ne koristi da biste smanjili potrošnju bajtova u mrežnoj aktivnosti."
@@ -476,6 +476,21 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Sav tekst ostaje vidljiv tijekom učitavanja web-fontova"
   },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
+    "message": "Brzo učitavanje stranice putem mobilne mreže omogućuje dobar doživljaj korisnicima na mobilnim uređajima. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)."
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
+    "message": "Interaktivno za {timeInMs, number, seconds} s"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
+    "message": "Interaktivno na simuliranoj mobilnoj mreži za {timeInMs, number, seconds} s"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
+    "message": "Učitavanje stranice nije dovoljno brzo na mobilnim mrežama"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
+    "message": "Učitavanje stranice dovoljno je brzo na mobilnim mrežama"
+  },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "Kategorija"
   },
@@ -489,7 +504,7 @@
     "message": "Minimizira rad glavne niti"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Prethodni je rezultat procjena vremena koje je potrebno da vaša aplikacija reagira na korisnički unos, u milisekundama, tijekom najintenzivnijih pet sekundi učitavanja stranice. Ako je latencija viša od 50 ms, korisnici mogu doživjeti vašu aplikaciju kao usporenu. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
+    "message": "Procijenjena latencija unosa procjena je vremena koje je potrebno da vaša aplikacija reagira na korisnički unos, u milisekundama, tijekom najintenzivnijih pet sekundi učitavanja stranice. Ako je latencija viša od 50 ms, korisnici mogu doživjeti vašu aplikaciju kao usporenu. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | title": {
     "message": "Procijenjena latencija unosa"
@@ -513,10 +528,16 @@
     "message": "Prvo smisleno bojenje"
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
-    "message": "Interaktivnost označava vrijeme u kojem stranica postaje potpuno interaktivna. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
+    "message": "Vrijeme do interaktivnosti količina je vremena koje je potrebno da stranica postane potpuno interaktivna. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
   },
   "lighthouse-core/audits/metrics/interactive.js | title": {
     "message": "Vrijeme do interaktivnosti"
+  },
+  "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
+    "message": "Potencijalno prvo kašnjenje unosa koje bi korisnik mogao doživjeti trajanje je, u milisekundama, najduljeg zadatka."
+  },
+  "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
+    "message": "Maksimalni potencijalni FID"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Indeks brzine prikazuje koliko se brzo sadržaj stranice vidljivo popunjava. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/speed-index)."
@@ -524,11 +545,179 @@
   "lighthouse-core/audits/metrics/speed-index.js | title": {
     "message": "Indeks brzine"
   },
+  "lighthouse-core/audits/network-rtt.js | description": {
+    "message": "Vrijeme od slanja upita do primanja odgovora (RTT) za mrežu ima velik utjecaj na izvedbu. Ako je RTT do izvorišta visok, to je znak da bi poslužitelji bliže korisniku mogli poboljšati izvedbu. [Saznajte više](https://hpbn.co/primer-on-latency-and-bandwidth/)."
+  },
+  "lighthouse-core/audits/network-rtt.js | title": {
+    "message": "Vrijeme od slanja upita do primanja odgovora za mrežu"
+  },
+  "lighthouse-core/audits/network-server-latency.js | description": {
+    "message": "Latencije poslužitelja mogu utjecati na izvedbu na webu. Ako je latencija poslužitelja izvorišta visoka, to je znak da je poslužitelj preopterećen ili da ima lošu pozadinsku izvedbu. [Saznajte više](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)."
+  },
+  "lighthouse-core/audits/network-server-latency.js | title": {
+    "message": "Pozadinske latencije poslužitelja"
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Preusmjeravanja uvode dodatna kašnjenja prije nego što se stranica može učitati. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/redirects)."
   },
   "lighthouse-core/audits/redirects.js | title": {
     "message": "Izbjegavajte višestruka preusmjeravanja stranica"
+  },
+  "lighthouse-core/audits/seo/canonical.js | description": {
+    "message": "Kanonske veze ukazuju na to koji URL prikazati u rezultatima pretraživanja. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/canonical)."
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
+    "message": "Više sukobljenih URL-ova ({urlList})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
+    "message": "Upućuje na neku drugu domenu ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
+    "message": "Nevažeći URL ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationPointsElsewhere": {
+    "message": "Upućuje na neku drugu \"hreflang\" lokaciju ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
+    "message": "Relativni URL ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationRoot": {
+    "message": "Upućuje na korijenski URL domene (početnu stranicu), a ne na ekvivalentnu stranicu sadržaja"
+  },
+  "lighthouse-core/audits/seo/canonical.js | failureTitle": {
+    "message": "Dokument ne sadrži važeći \"rel=canonical\""
+  },
+  "lighthouse-core/audits/seo/canonical.js | title": {
+    "message": "Dokument sadrži važeći \"rel=canonical\""
+  },
+  "lighthouse-core/audits/seo/font-size.js | description": {
+    "message": "Fontovi manji od 12 px premali su da bi bili čitljivi, pa posjetitelji na mobilnim uređajima moraju zumirati prstima. Neka više od 60% teksta na stranici ima veličinu od najmanje 12px. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/font-sizes)."
+  },
+  "lighthouse-core/audits/seo/font-size.js | displayValue": {
+    "message": "{decimalProportion, number, extendedPercent} čitljivog teksta"
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanation": {
+    "message": "{decimalProportion, number, extendedPercent} teksta nije dovoljno veliko."
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
+    "message": "Tekst nije čitljiv jer nijedna metaoznaka vidljivog dijela nije optimizirana za zaslone mobilnih uređaja."
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
+    "message": "{decimalProportion, number, extendedPercent} teksta nije dovoljno veliko (na temelju uzorka od {decimalProportionVisited, number, extendedPercent})."
+  },
+  "lighthouse-core/audits/seo/font-size.js | failureTitle": {
+    "message": "Dokument ne sadrži čitljive veličine fontova"
+  },
+  "lighthouse-core/audits/seo/font-size.js | title": {
+    "message": "Dokument upotrebljava čitljive veličine fontova"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | description": {
+    "message": "Veze s atributom hreflang govore tražilicama koju verziju stranice trebaju navesti u rezultatima pretraživanja za određeni jezik ili regiju. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/hreflang)."
+  },
+  "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
+    "message": "Dokument ne sadrži važeći \"hreflang\""
+  },
+  "lighthouse-core/audits/seo/hreflang.js | title": {
+    "message": "Dokument ima valjani \"hreflang\""
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | description": {
+    "message": "Stranice s neuspješnim HTTP kodom statusa možda se neće pravilno indeksirati. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code)."
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | failureTitle": {
+    "message": "Stranica ima neuspješan HTTP kôd statusa"
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | title": {
+    "message": "Stranica ima uspješan HTTP kôd statusa"
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | description": {
+    "message": "Tražilice ne mogu uključiti vaše stranice u rezultate pretraživanja ako nemaju dopuštenje da ih pretraže i indeksiraju. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/indexing)."
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": {
+    "message": "Indeksiranje je stranice blokirano"
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | title": {
+    "message": "Indeksiranje stranice nije blokirano"
+  },
+  "lighthouse-core/audits/seo/link-text.js | description": {
+    "message": "Opisni tekst veze pomaže tražilicama da razumiju vaš sadržaj. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)."
+  },
+  "lighthouse-core/audits/seo/link-text.js | displayValue": {
+    "message": "{itemCount,plural, =1{Pronađena je jedna veza}one{Pronađena je # veza}few{Pronađene su # veze}other{Pronađeno je # veza}}"
+  },
+  "lighthouse-core/audits/seo/link-text.js | failureTitle": {
+    "message": "Veze nemaju opisni tekst"
+  },
+  "lighthouse-core/audits/seo/link-text.js | title": {
+    "message": "Veze sadrže deskriptivan tekst"
+  },
+  "lighthouse-core/audits/seo/manual/structured-data.js | description": {
+    "message": "Pokrenite [alat za testiranje strukturiranih podataka](https://search.google.com/structured-data/testing-tool/) i [alat za analiziranje strukturiranih podataka](http://linter.structured-data.org/) da biste provjerili strukturirane podatke. [Saznajte više](https://developers.google.com/search/docs/guides/mark-up-content)."
+  },
+  "lighthouse-core/audits/seo/manual/structured-data.js | title": {
+    "message": "Strukturirani su podaci važeći"
+  },
+  "lighthouse-core/audits/seo/meta-description.js | description": {
+    "message": "Metaopisi mogu se uključiti u rezultate pretraživanja kako bi se jezgrovito sažeo sadržaj stranice. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/description)."
+  },
+  "lighthouse-core/audits/seo/meta-description.js | explanation": {
+    "message": "Tekst opisa nema sadržaj."
+  },
+  "lighthouse-core/audits/seo/meta-description.js | failureTitle": {
+    "message": "Dokument ne sadrži metaopis"
+  },
+  "lighthouse-core/audits/seo/meta-description.js | title": {
+    "message": "Dokument sadrži metaopis"
+  },
+  "lighthouse-core/audits/seo/plugins.js | description": {
+    "message": "Tražilice ne mogu indeksirati sadržaj dodataka, pa mnogi uređaji ograničavaju dodatke ili ih ne podržavaju. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/plugins)."
+  },
+  "lighthouse-core/audits/seo/plugins.js | failureTitle": {
+    "message": "Dokument upotrebljava dodatke"
+  },
+  "lighthouse-core/audits/seo/plugins.js | title": {
+    "message": "Dokument izbjegava dodatke"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | description": {
+    "message": "Ako je vaša robots.txt datoteka oštećena, alati za indeksiranje možda neće moći razumjeti kako želite da se vaša web-lokacija pretraži ili indeksira."
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
+    "message": "zahtjevi za robots.txt vraćaju HTTP status: {statusCode}"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
+    "message": "{itemCount,plural, =1{Pronađena je jedna pogreška}one{Pronađena je # pogreška}few{Pronađene su # pogreške}other{Pronađeno je # pogrešaka}}"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | explanation": {
+    "message": "Lighthouse nije uspio preuzeti robots.txt datoteku"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | failureTitle": {
+    "message": "robots.txt nije valjan"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | title": {
+    "message": "robots.txt je valjan"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | description": {
+    "message": "Interaktivni elementi kao što su gumbi i veze trebali bi biti dovoljno veliki (48 x 48 px) i oko njih bi trebalo biti dovoljno prostora da ih se može lako dodirnuti bez preklapanja s drugim elementima. [Saznajte više](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
+    "message": "{decimalProportion, number, percent} ciljeva dodira odgovarajuće veličine"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | explanationViewportMetaNotOptimized": {
+    "message": "Ciljevi dodira nisu dovoljno veliki jer nijedna metaoznaka vidljivog dijela nije optimizirana za zaslone mobilnih uređaja"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | failureTitle": {
+    "message": "Ciljevi dodira nisu odgovarajuće veličine"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": {
+    "message": "Preklapanje cilja"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | sizeHeader": {
+    "message": "Veličina"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": {
+    "message": "Cilj dodira"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | title": {
+    "message": "Ciljevi dodira odgovarajuće su veličine"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Vrijeme do prvog bajta navodi vrijeme u koje poslužitelj šalje odgovor. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."
@@ -572,6 +761,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "Rano se povežite s potrebnim izvorima"
   },
+  "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
+    "message": "Za \"{preloadURL}\" pronađen je <link> za predučitavanje, no preglednik ga nije upotrijebio. Provjerite upotrebljavate li atribut \"crossorigin\" pravilno."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Savjetujemo vam da koristite <link rel=preload> da biste dali prednost dohvaćanju resursa koji se trenutačno traže kasnije u učitavanju stranice. [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/preload)."
   },
@@ -582,49 +774,58 @@
     "message": "To su prilike za poboljšanje uporabe sustava ARIA u vašoj aplikaciji, što može unaprijediti doživljaj za korisnike pomoćne tehnologije, primjerice čitača zaslona."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "Atributi ARIA slijede najbolje primjere iz prakse"
+    "message": "ARIA"
+  },
+  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
+    "message": "Ovo su prilike za poboljšanje zamjenskog sadržaja za zvuk i videoprikaz. To može poboljšati doživljaj za korisnike s oštećenjem sluha ili vida."
+  },
+  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
+    "message": "Zvuk i videoprikaz"
+  },
+  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
+    "message": "Ove stavke ističu uobičajene najbolje primjere iz prakse za pristupačnost."
+  },
+  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
+    "message": "Najbolji primjeri iz prakse"
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
+    "message": "Ove provjere ističu prilike za [poboljšanje pristupačnosti vaše web-aplikacije](https://developers.google.com/web/fundamentals/accessibility). Budući da se automatskom provjerom može otkriti samo dio poteškoća s pristupačnošću, savjetujemo i ručno testiranje."
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
+    "message": "Područja adresa za te stavke koja alat za automatizirano testiranje ne može pokriti. Saznajte više u našem vodiču o [provođenju pregleda pristupačnosti](https://developers.google.com/web/fundamentals/accessibility/how-to-review)."
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
+    "message": "Pristupačnost"
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
     "message": "To su mogućnosti za poboljšanje čitljivosti vašeg sadržaja."
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Kontrast boje je zadovoljavajući"
-  },
-  "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupDescription": {
-    "message": "To su prilike za poboljšanje konfiguracije vaših HTML elemenata."
-  },
-  "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupTitle": {
-    "message": "Elementi ispravno upotrebljavaju atribute"
-  },
-  "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupDescription": {
-    "message": "To su prilike za pojednostavljivanje razumijevanja vašeg sadržaja za korisnika pomoćne tehnolgije, primjerice čitača zaslona."
-  },
-  "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupTitle": {
-    "message": "Elementi dobro opisuju sadržaj"
-  },
-  "lighthouse-core/config/default-config.js | a11yElementNamesGroupDescription": {
-    "message": "To su prilike za poboljšanje semantike kontrola u vašoj aplikaciji. Na taj način možete poboljšati doživljaj za korisnike pomoćne tehnologije, primjerice čitača zaslona."
-  },
-  "lighthouse-core/config/default-config.js | a11yElementNamesGroupTitle": {
-    "message": "Elementi imaju nazive koji se mogu raspoznati"
+    "message": "Kontrast"
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "To su prilike da unaprijedite tumačenje svojeg sadržaja za korisnike na različitim jezicima."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Naveden je valjani jezik za stranicu"
+    "message": "Internacionalizacija i lokalizacija"
   },
-  "lighthouse-core/config/default-config.js | a11yMetaGroupDescription": {
-    "message": "To su prilike za poboljšanje korisničkog doživljaja vaše web-lokacije."
+  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
+    "message": "To su prilike za poboljšanje semantike kontrola u vašoj aplikaciji. Na taj način možete poboljšati doživljaj za korisnike pomoćne tehnologije, primjerice čitača zaslona."
   },
-  "lighthouse-core/config/default-config.js | a11yMetaGroupTitle": {
-    "message": "Metaoznake koje se pravilno koriste"
+  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
+    "message": "Nazivi i oznake"
   },
-  "lighthouse-core/config/default-config.js | a11yWellStructuredGroupDescription": {
-    "message": "To su prilike da provjerite je li vaš HTML odgovarajuće strukturiran."
+  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
+    "message": "Ovo su prilike za poboljšanje kretanja tipkovnicom u vašoj aplikaciji."
   },
-  "lighthouse-core/config/default-config.js | a11yWellStructuredGroupTitle": {
-    "message": "Elementi su dobro strukturirani"
+  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
+    "message": "Kretanje"
+  },
+  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
+    "message": "Ovo su prilike za poboljšanje doživljaja čitanja podataka u tablicama ili na popisima koristeći se pomoćnim tehnologijama, primjerice čitačem zaslona."
+  },
+  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
+    "message": "Tablice i popisi"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
     "message": "Više informacija o izvedbi vaše aplikacije."
@@ -664,6 +865,15 @@
   },
   "lighthouse-core/config/default-config.js | pwaOptimizedGroupTitle": {
     "message": "PWA je optimiziran"
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryDescription": {
+    "message": "Ove provjere služe za optimizaciju vaše stranice za rangiranje rezultata tražilice. Lighthouse ne provjerava neke dodatne čimbenike koji mogu utjecati na vaše rangiranje u pretraživanju. [Saznajte više](https://support.google.com/webmasters/answer/35769)."
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
+    "message": "Pokrenite ove dodatne validatore na svojoj web-lokaciji da biste pregledali dodatne najbolje primjere iz prakse za SEO."
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryTitle": {
+    "message": "SEO"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL predmemoriranja"
@@ -714,7 +924,7 @@
     "message": "Lighthouse nije mogao pouzdano učitati URL koji ste zatražili jer je stranica prestala reagirati."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedInsecure": {
-    "message": "URL koji ste naveli nema valjane sigurnosne vjerodajnice. ({securityMessages})"
+    "message": "URL koji ste naveli nema valjane sigurnosne vjerodajnice. {securityMessages}"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
     "message": "Lighthouse nije mogao pouzdano učitati stranicu koju ste zatražili. Provjerite testirate li ispravan URL i odgovara li poslužitelj pravilno na sve zahtjeve. (Pojedinosti: {errorDetails})"
@@ -773,11 +983,20 @@
   "lighthouse-core/report/html/renderer/util.js | scorescaleLabel": {
     "message": "Ljestvica rezultata:"
   },
+  "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
+    "message": "Sažmi isječak"
+  },
+  "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
+    "message": "Proširi isječak"
+  },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "Na ovo izvođenje Lighthousea utjecale su neke poteškoće:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
     "message": "Vrijednosti se procjenjuju i mogu se razlikovati."
+  },
+  "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
+    "message": "Uspješni pregledi no s upozorenjima"
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Upozorenja: "

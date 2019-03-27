@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
-    "message": "Завдяки ключам доступу користувачі можуть швидко виділити частину сторінки. Щоб забезпечити належну навігацію, кожний ключ доступу має бути унікальний. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/accesskeys?application=lighthouse)."
+    "message": "Завдяки ключам доступу користувачі можуть швидко виділити частину сторінки. Щоб забезпечити належну навігацію, кожний ключ доступу має бути унікальний. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | failureTitle": {
     "message": "Значення [accesskey] неунікальні"
@@ -9,7 +9,7 @@
     "message": "Значення [accesskey] унікальні"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": {
-    "message": "Кожна роль ARIA підтримує конкретний набір атрибутів aria-*. Якщо вони не збігаються, атрибути aria-* стають недійсні. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/aria-allowed-attr?application=lighthouse)."
+    "message": "Кожна роль ARIA підтримує конкретний набір атрибутів aria-*. Якщо вони не збігаються, атрибути aria-* стають недійсні. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | failureTitle": {
     "message": "Атрибути [aria-*] не відповідають своїм ролям"
@@ -18,7 +18,7 @@
     "message": "Атрибути [aria-*] відповідають своїм ролям"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
-    "message": "Деякі ролі ARIA мають обов’язкові атрибути, що описують стан елемента для програм зчитування з екрана. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/aria-required-attr?application=lighthouse)."
+    "message": "Деякі ролі ARIA мають обов’язкові атрибути, що описують стан елемента для програм зчитування з екрана. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | failureTitle": {
     "message": "Ролі [role] не мають усіх обов’язкових атрибутів [aria-*]"
@@ -27,7 +27,7 @@
     "message": "Ролі [role] мають усі обов’язкові атрибути [aria-*]"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | description": {
-    "message": "Щоб виконувати потрібні функції спеціальних можливостей, деякі батьківські ролі ARIA повинні містити відповідні дочірні ролі. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/aria-required-children?application=lighthouse)."
+    "message": "Щоб виконувати потрібні функції спеціальних можливостей, деякі батьківські ролі ARIA повинні містити відповідні дочірні ролі. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
     "message": "Немає елементів із роллю [role], які вимагають наявності конкретної дочірньої ролі [role]."
@@ -36,7 +36,7 @@
     "message": "Присутні елементи з роллю [role], які вимагають наявності конкретних дочірніх ролей [role]"
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
-    "message": "Щоб належно виконувати потрібні функції спеціальних можливостей, відповідні батьківські ролі повинні містити деякі дочірні ролі ARIA. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/aria-required-parent?application=lighthouse)."
+    "message": "Щоб належно виконувати потрібні функції спеціальних можливостей, відповідні батьківські ролі повинні містити деякі дочірні ролі ARIA. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/aria-required-parent?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | failureTitle": {
     "message": "Ролі [role] не містяться в обов’язковому батьківському елементі"
@@ -45,7 +45,7 @@
     "message": "Ролі [role] містяться у відповідному батьківському елементі"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | description": {
-    "message": "Щоб належно виконувати функції спеціальних можливостей, ролі ARIA повинні мати дійсні значення. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/aria-roles?application=lighthouse)."
+    "message": "Щоб належно виконувати функції спеціальних можливостей, ролі ARIA повинні мати дійсні значення. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/aria-roles?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | failureTitle": {
     "message": "Значення [role] недійсні"
@@ -54,7 +54,7 @@
     "message": "Значення [role] дійсні"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
-    "message": "Допоміжні технології, як-от програми зчитування з екрана, не можуть тлумачити атрибути ARIA з недійсними значеннями. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr-value?application=lighthouse)."
+    "message": "Допоміжні технології, як-от програми зчитування з екрана, не можуть тлумачити атрибути ARIA з недійсними значеннями. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | failureTitle": {
     "message": "Атрибути [aria-*] не мають дійсних значень"
@@ -63,7 +63,7 @@
     "message": "Атрибути [aria-*] мають дійсні значення"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": {
-    "message": "Допоміжні технології, як-от програми зчитування з екрана, не можуть тлумачити атрибути ARIA з недійсними назвами. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr?application=lighthouse)."
+    "message": "Допоміжні технології, як-от програми зчитування з екрана, не можуть тлумачити атрибути ARIA з недійсними назвами. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | failureTitle": {
     "message": "Атрибути [aria-*] недійсні або написані неправильно"
@@ -72,7 +72,7 @@
     "message": "Атрибути [aria-*] дійсні та написані правильно"
   },
   "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Субтитри роблять звукові елементи ефективнішими для користувачів із глухотою та вадами слуху, зокрема надають важливу інформацію про те, хто та що говорить, а також інші не пов’язані з мовленням деталі. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/audio-caption?application=lighthouse)."
+    "message": "Субтитри роблять звукові елементи ефективнішими для користувачів із глухотою та вадами слуху, зокрема надають важливу інформацію про те, хто та що говорить, а також інші не пов’язані з мовленням деталі. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
     "message": "Елементи <audio> не містять елемента <track> з атрибутом [kind=\"captions\"]."
@@ -84,7 +84,7 @@
     "message": "Елементи, що не пройшли перевірку"
   },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
-    "message": "Коли кнопка не має доступної для зчитування назви, програми зчитування з екрана озвучують її словом \"кнопка\", через що вона стає непридатною для користувачів. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/button-name?application=lighthouse)."
+    "message": "Коли кнопка не має доступної для зчитування назви, програми зчитування з екрана озвучують її словом \"кнопка\", через що вона стає непридатною для користувачів таких програм. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/button-name.js | failureTitle": {
     "message": "Кнопки не мають доступних для зчитування назв"
@@ -93,7 +93,7 @@
     "message": "Кнопки мають доступну для зчитування назву"
   },
   "lighthouse-core/audits/accessibility/bypass.js | description": {
-    "message": "Якщо додати способи обходу вмісту, що повторюється, користувачам буде простіше переходити між елементами на сторінці за допомогою клавіатури. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/bypass?application=lighthouse)."
+    "message": "Якщо додати способи обходу вмісту, що повторюється, користувачам буде простіше переходити між елементами на сторінці за допомогою клавіатури. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/bypass?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/bypass.js | failureTitle": {
     "message": "Сторінка не містить заголовка, посилання для пропуску вмісту чи мітки області"
@@ -102,7 +102,7 @@
     "message": "Сторінка містить заголовок, посилання для пропуску вмісту чи мітку області"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | description": {
-    "message": "Для багатьох користувачів складно або неможливо читати текст із низькою контрастністю. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse)."
+    "message": "Для багатьох користувачів складно або неможливо читати текст із низькою контрастністю. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | failureTitle": {
     "message": "Між кольорами фону та переднього плану недостатній коефіцієнт контрастності."
@@ -111,7 +111,7 @@
     "message": "Між кольорами фону та переднього плану достатній коефіцієнт контрастності"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | description": {
-    "message": "Коли списки визначень мають неправильну розмітку, вихідні дані програм зчитування з екрана можуть бути незрозумілі або неточні. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/definition-list?application=lighthouse)."
+    "message": "Коли списки визначень мають неправильну розмітку, вихідні дані програм зчитування з екрана можуть бути незрозумілі або неточні. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/definition-list?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
     "message": "Списки визначення <dl> містять не лише належно впорядковані групи <dt> та <dd> чи елементи <script> або <template>."
@@ -120,7 +120,7 @@
     "message": "Списки визначень <dl> містять лише належно впорядковані групи <dt> та <dd>, а також елементи <script> або <template>."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
-    "message": "Щоб програми зчитування з екрана правильно озвучували елементи списку визначень (<dt> та <dd>), елементи має бути згруповано в батьківському елементі <dl>. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/dlitem?application=lighthouse)."
+    "message": "Щоб програми зчитування з екрана правильно озвучували елементи списку визначень (<dt> і <dd>), елементи має бути згруповано в батьківському елементі <dl>. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/dlitem?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | failureTitle": {
     "message": "Елементи списку визначень не згруповано в елементах <dl>"
@@ -138,7 +138,7 @@
     "message": "Документ має елемент <title>"
   },
   "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Значення атрибута ідентифікатора має бути унікальним, щоб допоміжні технології не пропускали інші копії. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/duplicate-id?application=lighthouse)."
+    "message": "Значення атрибута ідентифікатора має бути унікальним, щоб допоміжні технології не пропускали інші копії. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/duplicate-id?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
     "message": "Атрибути [id] на сторінці неунікальні"
@@ -147,7 +147,7 @@
     "message": "Атрибути [id] на сторінці унікальні"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
-    "message": "Користувачі програм зчитування з екрана використовують назви фреймів, щоб дізнатися їх вміст. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/frame-title?application=lighthouse)."
+    "message": "Користувачі програм зчитування з екрана використовують назви фреймів, щоб дізнатися їх вміст. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/frame-title?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/frame-title.js | failureTitle": {
     "message": "Елементи <frame> або <iframe> не мають назви"
@@ -156,7 +156,7 @@
     "message": "Елементи <frame> або <iframe> мають назву"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
-    "message": "Якщо для сторінки не вказано атрибут мови, програма зчитування з екрана припускає, що мовою сторінки є мова за умовчанням, яку користувач вибрав під час налаштування програми зчитування. Якщо насправді мова сторінки інша, програма зчитування з екрана може невірно звучувати текст на сторінці. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/html-lang?application=lighthouse)."
+    "message": "Якщо для сторінки не вказано атрибут мови, програма зчитування з екрана припускає, що мовою сторінки є мова за умовчанням, яку користувач вибрав під час налаштування програми зчитування. Якщо насправді мова сторінки інша, програма зчитування з екрана може неправильно озвучувати текст на сторінці. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | failureTitle": {
     "message": "Елемент <html> не має атрибута [lang]"
@@ -165,7 +165,7 @@
     "message": "Елемент <html> має атрибут [lang]"
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | description": {
-    "message": "Визначення дійсного тегу мови [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) допоможе програмам зчитування з екрана правильно озвучувати текст. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse)."
+    "message": "Визначення дійсного тегу мови [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) допоможе програмам зчитування з екрана правильно озвучувати текст. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | failureTitle": {
     "message": "Елемент <html> не має дійсного значення для свого атрибута [lang]."
@@ -174,7 +174,7 @@
     "message": "Елемент <html> має дійсне значення для свого атрибута [lang]"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | description": {
-    "message": "Інформативні елементи повинні містити короткий, описовий альтернативний текст. Декоративні елементи можуть ігноруватись і мати порожній атрибут alt. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/image-alt?application=lighthouse)."
+    "message": "Інформативні елементи повинні містити короткий, описовий альтернативний текст. Декоративні елементи можуть ігноруватись і мати порожній атрибут alt. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/image-alt.js | failureTitle": {
     "message": "Елементи зображення не мають атрибутів [alt]"
@@ -183,7 +183,7 @@
     "message": "Елементи зображення мають атрибути [alt]"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | description": {
-    "message": "Коли зображення використовується як кнопка <input>, додавши альтернативний текст, ви допоможете користувачам програм зчитування з екрана зрозуміти призначення кнопки. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/input-image-alt?application=lighthouse)."
+    "message": "Коли зображення використовується як кнопка <input>, додавши альтернативний текст, ви допоможете користувачам програм зчитування з екрана зрозуміти призначення кнопки. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/input-image-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | failureTitle": {
     "message": "Елементи <input type=\"image\"> не мають тексту [alt]"
@@ -192,7 +192,7 @@
     "message": "Елементи <input type=\"image\"> мають текст [alt]"
   },
   "lighthouse-core/audits/accessibility/label.js | description": {
-    "message": "Завдяки міткам допоміжні технології, як-от програми зчитування з екрана, правильно озвучують елементи керування формою. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/label?application=lighthouse)."
+    "message": "Завдяки міткам допоміжні технології, як-от програми зчитування з екрана, правильно озвучують елементи керування формою. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/label.js | failureTitle": {
     "message": "Елементи форми не мають пов’язаних міток"
@@ -201,7 +201,7 @@
     "message": "Елементи форми мають пов’язані мітки"
   },
   "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Таблиця, яка використовується як макет, не повинна містити елементів даних, як-от елементів th або caption чи атрибут summary, оскільки це може спантеличити користувачів програм зчитування з екрана. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/layout-table?application=lighthouse)."
+    "message": "Таблиця, яка використовується як макет, не повинна містити елементів даних, як-от елементів th або caption чи атрибут summary, оскільки це може спантеличити користувачів програм зчитування з екрана. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/layout-table?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
     "message": "Презентаційні елементи <table> використовують атрибути <th>, <caption> чи [summary]."
@@ -210,7 +210,7 @@
     "message": "Презентаційні елементи <table> не використовують атрибути <th>, <caption> або [summary]."
   },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
-    "message": "Унікальний і доступний для виділення текст посилання (а також альтернативний текст для зображень, коли вони використовуються як посилання), який можна розпізнати, покращує навігацію для користувачів програм зчитування з екрана. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/link-name?application=lighthouse)."
+    "message": "Унікальний і доступний для виділення текст посилання (а також альтернативний текст для зображень, коли вони використовуються як посилання), який можна розпізнати, покращує навігацію для користувачів програм зчитування з екрана. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/link-name.js | failureTitle": {
     "message": "Посилання не мають назв, які можна розпізнати"
@@ -219,7 +219,7 @@
     "message": "Посилання мають назви, які можна розпізнати"
   },
   "lighthouse-core/audits/accessibility/list.js | description": {
-    "message": "Програми зчитування з екрана озвучують списки в особливий спосіб. Правильна структура списків допомагає таким програмам зчитувати інформацію. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/list?application=lighthouse)."
+    "message": "Програми зчитування з екрана озвучують списки в особливий спосіб. Правильна структура списків допомагає таким програмам зчитувати інформацію. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/list?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/list.js | failureTitle": {
     "message": "Списки містять не лише елементи <li> й елементи для підтримки виконання сценарію (<script> і <template>)."
@@ -228,7 +228,7 @@
     "message": "Списки містять лише елементи <li> й елементи для підтримки виконання сценарію (<script> і <template>)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "Щоб програми зчитування з екрана правильно озвучували елементи списку (<li>), ці елементи повинні міститися в батьківських елементах <ul> або <ol>. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/listitem?application=lighthouse)."
+    "message": "Щоб програми зчитування з екрана правильно озвучували елементи списку (<li>), ці елементи повинні міститися в батьківських елементах <ul> або <ol>. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/listitem?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
     "message": "Елементів списку (<li>) немає в батьківських елементах <ul> або <ol>."
@@ -237,7 +237,7 @@
     "message": "Елементи списку (<li>) містяться в батьківських елементах <ul> або <ol>"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
-    "message": "Користувачі не очікують, що сторінка оновлюватиметься автоматично. Таке оновлення перемістить фокус назад угору сторінки. Це може роздратувати або спантеличити користувачів. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/meta-refresh?application=lighthouse)."
+    "message": "Користувачі не очікують, що сторінка оновлюватиметься автоматично. Таке оновлення перемістить фокус назад угору сторінки. Це може роздратувати або спантеличити користувачів. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | failureTitle": {
     "message": "Документ використовує метатег <meta http-equiv=\"refresh\">"
@@ -246,7 +246,7 @@
     "message": "Документ не використовує метатег <meta http-equiv=\"refresh\">"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | description": {
-    "message": "Вимкнення масштабування створює проблеми для користувачів із поганим зором, які збільшують екран, щоб краще бачити вміст веб-сторінки. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/meta-viewport?application=lighthouse)."
+    "message": "Вимкнення масштабування створює проблеми для користувачів із поганим зором, які збільшують екран, щоб краще бачити вміст веб-сторінки. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/meta-viewport?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | failureTitle": {
     "message": "Параметр [user-scalable=\"no\"] використовується в елементі <meta name=\"viewport\"> або атрибут [maximum-scale] менший ніж 5."
@@ -255,7 +255,7 @@
     "message": "Параметр [user-scalable=\"no\"] не використовується в елементі <meta name=\"viewport\">, а атрибут [maximum-scale] перевищує 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Програми зчитування з екрана перекладають лише текстовий вміст. Якщо додати текст заміщення до елементів <object>, це допоможе програмам зчитування з екрана передати їх значення користувачам. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/object-alt?application=lighthouse)."
+    "message": "Програми зчитування з екрана перекладають лише текстовий вміст. Якщо додати текст заміщення до елементів <object>, це допоможе програмам зчитування з екрана передати їх значення користувачам. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
     "message": "Елементи <object> не мають тексту [alt]"
@@ -264,7 +264,7 @@
     "message": "Елементи <object> мають текст [alt]"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
-    "message": "Значення, що перевищує 0, передбачає явне встановлення порядку навігації. Хоча технічно воно дійсне, це часто ускладнює взаємодію для користувачів, які застосовують допоміжні технології. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/tabindex?application=lighthouse)."
+    "message": "Значення, що перевищує 0, передбачає явне встановлення порядку навігації. Хоча технічно воно дійсне, це часто ускладнює взаємодію для користувачів, які застосовують допоміжні технології. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/tabindex?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/tabindex.js | failureTitle": {
     "message": "Деякі елементи мають значення [tabindex], що перевищує 0"
@@ -273,7 +273,7 @@
     "message": "Жоден елемент не має значення [tabindex], що перевищує 0"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | description": {
-    "message": "Програми зчитування з екрана мають функції, які полегшують навігацію в таблицях. Якщо клітинки <td>, які використовують атрибут [headers], стосуються лише інших клітинок у тій самій таблиці, це може покращити взаємодію для користувачів програм зчитування з екрана. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/td-headers-attr?application=lighthouse)."
+    "message": "Програми зчитування з екрана мають функції, які полегшують навігацію в таблицях. Якщо клітинки <td>, які використовують атрибут [headers], стосуються лише інших клітинок у тій самій таблиці, це може покращити взаємодію для користувачів програм зчитування з екрана. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
     "message": "Клітинки в елементі <table>, які використовують атрибут [headers], стосуються інших клітинок тієї ж таблиці."
@@ -282,7 +282,7 @@
     "message": "Клітинки в елементі <table>, які використовують атрибут [headers], стосуються лише інших клітинок тієї ж таблиці."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
-    "message": "Програми зчитування з екрана мають функції, які полегшують навігацію в таблицях. Якщо заголовки таблиці завжди стосуються певного набору клітинок, це може покращити взаємодію для користувачів програм зчитування з екрана. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/th-has-data-cells?application=lighthouse)."
+    "message": "Програми зчитування з екрана мають функції, які полегшують навігацію в таблицях. Якщо заголовки таблиці завжди стосуються певного набору клітинок, це може покращити взаємодію для користувачів програм зчитування з екрана. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | failureTitle": {
     "message": "Елементи <th> і елементи з роллю [role=\"columnheader\"/\"rowheader\"] не містять клітинок із даними, які описують."
@@ -291,7 +291,7 @@
     "message": "Елементи <th> і елементи з роллю [role=\"columnheader\"/\"rowheader\"] містять клітинки з даними, які описують."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | description": {
-    "message": "Визначення дійсного тегу мови [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) для елементів допоможе програмі зчитування з екрана правильно озвучувати текст. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse)."
+    "message": "Визначення дійсного тегу мови [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) для елементів допоможе програмі зчитування з екрана правильно озвучувати текст. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | failureTitle": {
     "message": "Атрибути [lang] не мають дійсного значення"
@@ -300,7 +300,7 @@
     "message": "Атрибути [lang] мають дійсне значення"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | description": {
-    "message": "Коли відео має субтитри, користувачам із глухотою та вадами слуху простіше зрозуміти його. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/video-caption?application=lighthouse)."
+    "message": "Коли відео має субтитри, користувачам із глухотою та вадами слуху простіше зрозуміти його. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/video-caption?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/video-caption.js | failureTitle": {
     "message": "Елементи <video> не містять елемента <track> з атрибутом [kind=\"captions\"]."
@@ -309,7 +309,7 @@
     "message": "Елементи <video> містять елемент <track> з атрибутом [kind=\"captions\"]"
   },
   "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Звукові описи надають важливу інформацію про відео, яку не можуть забезпечити діалоги, як-от міміка та місце дії. [Докладніше](https://dequeuniversity.com/rules/axe/2.2/video-description?application=lighthouse)."
+    "message": "Звукові описи надають важливу інформацію про відео (як-от міміка й оточення), яку не можуть забезпечити діалоги. [Докладніше](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
     "message": "Елементи <video> не містять елемента <track> з атрибутом [kind=\"description\"]."
@@ -327,7 +327,7 @@
     "message": "Синтаксичний аналіз сценарію"
   },
   "lighthouse-core/audits/bootup-time.js | columnTotal": {
-    "message": "Усього"
+    "message": "Загальний процесорний час"
   },
   "lighthouse-core/audits/bootup-time.js | description": {
     "message": "Радимо зменшити час синтаксичного аналізу, компілювання й запуску сценаріїв JavaScript. Завантажувати менші обсяги даних JavaScript може бути корисно. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/bootup)."
@@ -381,10 +381,10 @@
     "message": "Зменште файл JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Видаліть із таблиць стилів правила, які ви не використовуєте, щоб зменшити кількість зайвих байтів під час активності в мережі. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/unused-css)."
+    "message": "Видаліть із таблиць стилів правила, які не використовуєте, і відкладіть завантаження CSS, що не застосовується для вмісту у верхній частині сторінки, щоб зменшити кількість зайвих байтів під час активності в мережі. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/unused-css)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Відкладіть вміст CSS, який не використовується"
+    "message": "Видаліть вміст CSS, який не використовується"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
     "message": "Видаліть файли JavaScript, які ви не використовуєте, щоб зменшити кількість байтів під час активності в мережі."
@@ -476,6 +476,21 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Увесь текст залишається видимим під час завантаження веб-шрифтів"
   },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
+    "message": "Якщо сторінка швидко завантажується в мобільній мережі, це покращує враження користувачів мобільних пристроїв. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)."
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
+    "message": "Завантажується за {timeInMs, number, seconds} с"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
+    "message": "Завантажується через змодельовану мобільну мережу за {timeInMs, number, seconds} с"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
+    "message": "Швидкість завантаження сторінки через мобільну мережу недостатньо висока"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
+    "message": "Швидкість завантаження сторінки через мобільну мережу достатньо висока"
+  },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "Категорія"
   },
@@ -489,7 +504,7 @@
     "message": "Мінімізується робота основного потоку"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Результат вище показує, скільки часу в мілісекундах додаток відповідає на ввід користувача під час п’ятисекундного періоду завантаження сторінки. Якщо затримка перевищує 50 мс, користувачі можуть вважати ваш додаток повільним. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
+    "message": "Приблизна затримка введення показує, скільки часу в мілісекундах додаток відповідає на ввід користувача під час п’ятисекундного періоду завантаження сторінки. Якщо затримка перевищує 50 мс, користувачі можуть вважати ваш додаток повільним. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | title": {
     "message": "Приблизна затримка введення"
@@ -513,10 +528,16 @@
     "message": "Перше значне відображення"
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
-    "message": "Показник взаємодії позначає час повної активності сторінки. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
+    "message": "Час до повного завантаження – це період часу, через який сторінка повністю завантажиться. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
   },
   "lighthouse-core/audits/metrics/interactive.js | title": {
     "message": "Час до повної взаємодії"
+  },
+  "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
+    "message": "Потенційна затримка першого введення – це тривалість найдовшого завдання в мілісекундах."
+  },
+  "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
+    "message": "Макс. потенційна затримка першого введення"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Індекс швидкості показує, через скільки часу відображається вміст сторінки. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/speed-index)."
@@ -524,11 +545,179 @@
   "lighthouse-core/audits/metrics/speed-index.js | title": {
     "message": "Індекс швидкості"
   },
+  "lighthouse-core/audits/network-rtt.js | description": {
+    "message": "Час затримки передачі сигналу мережі суттєво впливає на ефективність. Якщо показник часу затримки передачі сигналу на сервер високий, це означає, що сервери, розташовані ближче до користувача, можуть покращити ефективність. [Докладніше](https://hpbn.co/primer-on-latency-and-bandwidth/)."
+  },
+  "lighthouse-core/audits/network-rtt.js | title": {
+    "message": "Час затримки передачі сигналу мережі"
+  },
+  "lighthouse-core/audits/network-server-latency.js | description": {
+    "message": "Затримка сервера може впливати на ефективність веб-сайту. Якщо показник затримки сервера високий, це означає, що сервер перевантажено або в нього низька ефективність. [Докладніше](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)."
+  },
+  "lighthouse-core/audits/network-server-latency.js | title": {
+    "message": "Затримка сервера"
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Переспрямування додають затримки під час завантаження сторінки. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/redirects)."
   },
   "lighthouse-core/audits/redirects.js | title": {
     "message": "Уникайте переспрямувань кількох сторінок"
+  },
+  "lighthouse-core/audits/seo/canonical.js | description": {
+    "message": "Канонічні посилання вказують, які URL-адреси показувати в результатах пошуку. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/canonical)."
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
+    "message": "Кілька конфліктних URL-адрес ({urlList})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
+    "message": "Указує на інший домен ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
+    "message": "Недійсна URL-адреса ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationPointsElsewhere": {
+    "message": "Указує на інше розташування атрибута hreflang ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
+    "message": "Відносна URL-адреса ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationRoot": {
+    "message": "Указує на основну URL-адресу домену (домашню сторінку), а не на еквівалентну сторінку вмісту"
+  },
+  "lighthouse-core/audits/seo/canonical.js | failureTitle": {
+    "message": "Документ не має дійсного посилання \"rel=canonical\""
+  },
+  "lighthouse-core/audits/seo/canonical.js | title": {
+    "message": "Документ має дійсне посилання \"rel=canonical\""
+  },
+  "lighthouse-core/audits/seo/font-size.js | description": {
+    "message": "Розміри шрифту до 12px замалі й нечитабельні. Щоб користувачі мобільних пристроїв змогли прочитати текст, їм потрібно буде збільшувати масштаб пальцями. Бажано, щоб понад 60% тексту на сторінці було написано щонайменше шрифтом 12px. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/font-sizes)."
+  },
+  "lighthouse-core/audits/seo/font-size.js | displayValue": {
+    "message": "{decimalProportion, number, extendedPercent} читабельного тексту"
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanation": {
+    "message": "{decimalProportion, number, extendedPercent} тексту має замалий шрифт."
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
+    "message": "Текст нечитабельний, оскільки метатег області перегляду не оптимізовано для мобільних пристроїв."
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
+    "message": "{decimalProportion, number, extendedPercent} тексту має замалий шрифт (на основі {decimalProportionVisited, number, extendedPercent} вибірки)."
+  },
+  "lighthouse-core/audits/seo/font-size.js | failureTitle": {
+    "message": "У документі використано нечитабельні розміри шрифтів"
+  },
+  "lighthouse-core/audits/seo/font-size.js | title": {
+    "message": "У документі використано читабельні розміри шрифтів"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | description": {
+    "message": "Посилання hreflang указують пошуковим системам версію сторінки, яку потрібно додати в результати пошуку для певної мови чи регіону. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/hreflang)."
+  },
+  "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
+    "message": "Документ не має дійсного атрибута hreflang"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | title": {
+    "message": "Документ має дійсний атрибут hreflang"
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | description": {
+    "message": "Сторінки з недійсними кодами статусу HTTP може бути проіндексовано неправильно. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code)."
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | failureTitle": {
+    "message": "Сторінка має недійсний код статусу HTTP"
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | title": {
+    "message": "Сторінка має дійсний код статусу HTTP"
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | description": {
+    "message": "Пошукові системи не зможуть включити ваші сторінки в результати пошуку, якщо в них немає дозволу сканувати їх. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/indexing)."
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": {
+    "message": "Сторінку не можна індексувати"
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | title": {
+    "message": "Сторінку можна індексувати"
+  },
+  "lighthouse-core/audits/seo/link-text.js | description": {
+    "message": "Описовий текст посилання допомагає пошуковим системам розуміти ваш вміст. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)."
+  },
+  "lighthouse-core/audits/seo/link-text.js | displayValue": {
+    "message": "{itemCount,plural, =1{Знайдено 1 посилання}one{Знайдено # посилання}few{Знайдено # посилання}many{Знайдено # посилань}other{Знайдено # посилання}}"
+  },
+  "lighthouse-core/audits/seo/link-text.js | failureTitle": {
+    "message": "Посилання не містять опису"
+  },
+  "lighthouse-core/audits/seo/link-text.js | title": {
+    "message": "Посилання містять опис"
+  },
+  "lighthouse-core/audits/seo/manual/structured-data.js | description": {
+    "message": "Щоб перевірити структуровані дані, скористайтесь [інструментом тестування](https://search.google.com/structured-data/testing-tool/) й [інструментом статичного аналізу структурованих даних](http://linter.structured-data.org/). [Докладніше](https://developers.google.com/search/docs/guides/mark-up-content)."
+  },
+  "lighthouse-core/audits/seo/manual/structured-data.js | title": {
+    "message": "Структуровані дані дійсні"
+  },
+  "lighthouse-core/audits/seo/meta-description.js | description": {
+    "message": "Результати пошуку можуть містити метаописи для короткого підсумку вмісту сторінки. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/description)."
+  },
+  "lighthouse-core/audits/seo/meta-description.js | explanation": {
+    "message": "Немає опису."
+  },
+  "lighthouse-core/audits/seo/meta-description.js | failureTitle": {
+    "message": "Документ не містить метаопису"
+  },
+  "lighthouse-core/audits/seo/meta-description.js | title": {
+    "message": "Документ містить метаопис"
+  },
+  "lighthouse-core/audits/seo/plugins.js | description": {
+    "message": "Пошукові системи не можуть індексувати вміст плагінів. Багато пристроїв обмежують або не підтримують плагіни. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/plugins)."
+  },
+  "lighthouse-core/audits/seo/plugins.js | failureTitle": {
+    "message": "Документ використовує плагіни"
+  },
+  "lighthouse-core/audits/seo/plugins.js | title": {
+    "message": "Документ уникає плагінів"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | description": {
+    "message": "Якщо файл robots.txt недійсний, веб-сканери можуть не зрозуміти, як потрібно індексувати або сканувати ваш веб-сайт."
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
+    "message": "у відповідь на запит robots.txt отримано такий статус HTTP: {statusCode}"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
+    "message": "{itemCount,plural, =1{Знайдено 1 помилку}one{Знайдено # помилку}few{Знайдено # помилки}many{Знайдено # помилок}other{Знайдено # помилки}}"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | explanation": {
+    "message": "Інструменту Lighthouse не вдалося завантажити файл robots.txt"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | failureTitle": {
+    "message": "Файл robots.txt недійсний"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | title": {
+    "message": "Файл robots.txt дійсний"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | description": {
+    "message": "Інтерактивні елементи, як-от кнопки та посилання, мають бути достатньо великі (48 x 48 пікселів), а навколо них має бути достатньо місця, щоб їх можна було легко натиснути, не зачепивши інші елементи. [Докладніше](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
+    "message": "{decimalProportion, number, percent} елементів для натискання мають правильний розмір"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | explanationViewportMetaNotOptimized": {
+    "message": "Елементи для натискання замалі, оскільки метатег області перегляду не оптимізовано для мобільних пристроїв"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | failureTitle": {
+    "message": "Елементи для натискання мають неправильний розмір"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": {
+    "message": "Елементи для натискання накладаються"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | sizeHeader": {
+    "message": "Розмір"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": {
+    "message": "Елемент для натискання"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | title": {
+    "message": "Елементи для натискання мають правильний розмір"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Час до першого байта визначає швидкість реакції сервера. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."
@@ -572,6 +761,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "Попередньо під’єднуйтеся до потрібних джерел"
   },
+  "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
+    "message": "Для {preloadURL} знайдено посилання для попереднього завантаження <link>, але веб-переглядач його не використав. Переконайтеся, що ви правильно використовуєте атрибут crossorigin."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Використовуйте <link rel=preload>, щоб указати пріоритетність завантаження ресурсів, які наразі запитуються пізніше під час завантаження сторінки. [Докладніше](https://developers.google.com/web/tools/lighthouse/audits/preload)."
   },
@@ -582,49 +774,58 @@
     "message": "Ці рекомендації допоможуть покращити використання ролей ARIA у вашому додатку, що може позитивно вплинути на взаємодію для користувачів допоміжних технологій, як-от програм зчитування з екрана."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "Атрибути ARIA відповідають рекомендаціям"
+    "message": "ARIA"
+  },
+  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
+    "message": "Ці рекомендації допоможуть надати альтернативний вміст для аудіо та відео. Це може покращити взаємодію для користувачів із вадами слуху або зору."
+  },
+  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
+    "message": "Аудіо та відео"
+  },
+  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
+    "message": "Ці елементи надають поширені практичні поради щодо спеціальних можливостей."
+  },
+  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
+    "message": "Практичні поради"
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
+    "message": "Ці перевірки визначають можливості для [покращення доступності веб-додатка](https://developers.google.com/web/fundamentals/accessibility). Радимо також проводити перевірки вручну, оскільки автоматично визначаються лише певні проблеми з доступністю."
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
+    "message": "Ці елементи опрацьовують області, які не може охопити автоматизований інструмент перевірки. Докладніше читайте в нашому посібнику з [перевірки доступності](https://developers.google.com/web/fundamentals/accessibility/how-to-review)."
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
+    "message": "Спеціальні можливості"
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
     "message": "Ці рекомендації допоможуть покращити читабельність вмісту."
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Контраст кольорів задовільний"
-  },
-  "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupDescription": {
-    "message": "Ця інформація допоможе покращити конфігурацію елементів HTML."
-  },
-  "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupTitle": {
-    "message": "Елементи використовують атрибути правильно"
-  },
-  "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupDescription": {
-    "message": "Ці рекомендації допоможуть зробити вміст зрозумілішим для користувачів допоміжних технологій, як-от програм зчитування з екрана."
-  },
-  "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupTitle": {
-    "message": "Елементи добре описують вміст"
-  },
-  "lighthouse-core/config/default-config.js | a11yElementNamesGroupDescription": {
-    "message": "Ці рекомендації допоможуть удосконалити семантику елементів керування в додатку. Це може покращити взаємодію для користувачів допоміжних технологій, як-от програм зчитування з екрана."
-  },
-  "lighthouse-core/config/default-config.js | a11yElementNamesGroupTitle": {
-    "message": "Елементи мають назви, які можна розпізнати"
+    "message": "Контраст"
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Ці рекомендації допоможуть покращити те, як користувачі тлумачать ваш вміст різними мовами."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Для сторінки вказано дійсну мову"
+    "message": "Інтернаціоналізація та локалізація"
   },
-  "lighthouse-core/config/default-config.js | a11yMetaGroupDescription": {
-    "message": "Ці рекомендації допоможуть покращити взаємодію з користувачами на вашому сайті."
+  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
+    "message": "Ці рекомендації допоможуть удосконалити семантику елементів керування в додатку. Це може покращити взаємодію для користувачів допоміжних технологій, як-от програм зчитування з екрана."
   },
-  "lighthouse-core/config/default-config.js | a11yMetaGroupTitle": {
-    "message": "Метатеги використано правильно"
+  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
+    "message": "Назви та мітки"
   },
-  "lighthouse-core/config/default-config.js | a11yWellStructuredGroupDescription": {
-    "message": "Це допоможе переконатися, що елементи HTML мають правильну структуру."
+  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
+    "message": "Ці рекомендації допоможуть покращити навігацію клавіатурою в додатку."
   },
-  "lighthouse-core/config/default-config.js | a11yWellStructuredGroupTitle": {
-    "message": "Елементи мають правильну структуру"
+  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
+    "message": "Навігація"
+  },
+  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
+    "message": "Ці рекомендації допоможуть покращити перегляд даних у таблиці чи списку за допомогою допоміжної технології, наприклад програми зчитування з екрана."
+  },
+  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
+    "message": "Таблиці та списки"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
     "message": "Докладніше про ефективність додатка."
@@ -664,6 +865,15 @@
   },
   "lighthouse-core/config/default-config.js | pwaOptimizedGroupTitle": {
     "message": "Оптимізовано для прогресивного веб-додатка"
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryDescription": {
+    "message": "Ці перевірки визначають, чи сторінка оптимізована для позиціонування результатів пошукової системи. Lighthouse не перевіряє певні додаткові чинники, які можуть впливати на позицію веб-сайту в результатах пошуку. [Докладніше](https://support.google.com/webmasters/answer/35769)."
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
+    "message": "Щоб отримати додаткові практичні поради щодо оптимізації пошукових систем, скористайтеся додатковими засобами перевірки на своєму сайті."
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryTitle": {
+    "message": "Оптим. пошук. систем"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL кешу"
@@ -714,7 +924,7 @@
     "message": "Інструменту Lighthouse не вдалося безпечно завантажити URL-адресу, яку ви вказали, оскільки сторінка перестала відповідати."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedInsecure": {
-    "message": "Указана вами URL-адреса не має дійсних облікових даних системи безпеки. ({securityMessages})"
+    "message": "Указана вами URL-адреса не має дійсних облікових даних системи безпеки. {securityMessages}"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
     "message": "Інструменту Lighthouse не вдалося безпечно завантажити сторінку, яку ви вказали. Переконайтеся, що ви тестуєте правильну URL-адресу, а сервер належним чином відповідає на всі запити. (Деталі: {errorDetails})"
@@ -773,11 +983,20 @@
   "lighthouse-core/report/html/renderer/util.js | scorescaleLabel": {
     "message": "Шкала результатів:"
   },
+  "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
+    "message": "Згорнути фрагмент"
+  },
+  "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
+    "message": "Розгорнути фрагмент"
+  },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "Під час запуску Lighthouse виникли перелічені нижче проблеми."
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
     "message": "Значення приблизні й можуть відрізнятися."
+  },
+  "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
+    "message": "Перевірки зі статусом \"Пройдено\", що містять застереження"
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Застереження. "

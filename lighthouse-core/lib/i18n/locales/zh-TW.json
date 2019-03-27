@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
-    "message": "快速鍵可讓使用者快速聚焦網頁的特定部分。要讓使用者正確瀏覽，每個快速鍵一律不得重複。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/accesskeys?application=lighthouse)。"
+    "message": "快速鍵可讓使用者快速聚焦網頁的特定部分。要讓使用者正確瀏覽，每個快速鍵一律不得重複。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | failureTitle": {
     "message": "[accesskey] 的值重複"
@@ -9,7 +9,7 @@
     "message": "[accesskey] 的值沒有重複"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": {
-    "message": "每個 ARIA「角色」都支援一部分特定的「aria-*`」屬性。若配對錯誤，「aria-*」屬性將失去效力。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/aria-allowed-attr?application=lighthouse)。"
+    "message": "每個 ARIA「角色」都支援一部分特定的「aria-*」屬性。若配對錯誤，「aria-*」屬性將失去效力。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | failureTitle": {
     "message": "[aria-*] 屬性與其角色不符"
@@ -18,7 +18,7 @@
     "message": "[aria-*] 屬性與其角色相符"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
-    "message": "部分 ARIA 角色的必要屬性會向螢幕閱讀器使用者說明元素的狀態。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/aria-required-attr?application=lighthouse)。"
+    "message": "部分 ARIA 角色的必要屬性會向螢幕閱讀器使用者說明元素的狀態。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | failureTitle": {
     "message": "[role] 未具備所有必要的 [aria-*] 屬性"
@@ -27,7 +27,7 @@
     "message": "[role] 具備所有必要的 [aria-*] 屬性"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | description": {
-    "message": "部分 ARIA 上層角色必須包含特定的下層角色，才能正確執行無障礙功能。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/aria-required-children?application=lighthouse)。"
+    "message": "部分 ARIA 上層角色必須包含特定的下層角色，才能正確執行其無障礙功能。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
     "message": "設有 [role] 的元素缺少必備的特定子元素 [role]。"
@@ -36,7 +36,7 @@
     "message": "設有 [role] 的元素具有必備的特定子元素 [role]"
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
-    "message": "部分 ARIA 下層角色必須包含在特定的上層角色中，才能正確執行其無障礙功能。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/aria-required-parent?application=lighthouse)。"
+    "message": "部分 ARIA 下層角色必須包含在特定的上層角色中，才能正確執行其無障礙功能。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/aria-required-parent?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | failureTitle": {
     "message": "[role] 未包含在必要的上層元素中"
@@ -45,7 +45,7 @@
     "message": "[role] 包含在必要的上層元素中"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | description": {
-    "message": "ARIA 角色必須具備有效的值，才能執行其無障礙功能。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/aria-roles?application=lighthouse)。"
+    "message": "ARIA 角色必須具備有效的值，才能執行其無障礙功能。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/aria-roles?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | failureTitle": {
     "message": "[role] 的值無效"
@@ -54,7 +54,7 @@
     "message": "[role] 的值有效"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
-    "message": "輔助技術 (如螢幕閱讀器) 無法解讀具有無效值的 ARIA 屬性。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr-value?application=lighthouse)。"
+    "message": "輔助技術 (例如螢幕閱讀器) 無法解讀數值無效的 ARIA 屬性。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | failureTitle": {
     "message": "[aria-*] 屬性缺少有效的值"
@@ -63,7 +63,7 @@
     "message": "[aria-*] 屬性具備有效的值"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": {
-    "message": "輔助技術 (例如螢幕閱讀器) 無法解讀名稱無效的 ARIA 屬性。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr?application=lighthouse)。"
+    "message": "輔助技術 (例如螢幕閱讀器) 無法解讀名稱無效的 ARIA 屬性。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | failureTitle": {
     "message": "[aria-*] 屬性無效或有錯字"
@@ -72,7 +72,7 @@
     "message": "[aria-*] 屬性有效且無拼字錯誤"
   },
   "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "字幕可提供說話者身分、說話內容等關鍵資訊以及其他非口語資訊，方便失聰或聽障使用者使用音訊元素。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/audio-caption?application=lighthouse)。"
+    "message": "字幕可提供說話者身分、說話內容等關鍵資訊以及其他非口語資訊，讓失聰或聽障使用者也能運用音訊元素。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
     "message": "<audio> 元素缺少帶有 [kind=\"captions\"] 的<track> 元素。"
@@ -84,7 +84,7 @@
     "message": "未通過稽核的元素"
   },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
-    "message": "如果沒有可解讀的按鈕名稱，螢幕閱讀器只會讀出「按鈕」，這樣仰賴螢幕閱讀器的使用者就無法知道這個按鈕的用途。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/button-name?application=lighthouse)。"
+    "message": "如果沒有可解讀的按鈕名稱，螢幕閱讀器只會讀出「按鈕」，這樣仰賴螢幕閱讀器的使用者就無法知道這個按鈕的用途。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/button-name.js | failureTitle": {
     "message": "按鈕沒有可存取的名稱"
@@ -93,7 +93,7 @@
     "message": "按鈕具有可解讀的名稱"
   },
   "lighthouse-core/audits/accessibility/bypass.js | description": {
-    "message": "針對重複的內容增設略過選項，可提高鍵盤使用者的網頁瀏覽效率。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/bypass?application=lighthouse)。"
+    "message": "針對重複的內容增設略過選項，可提高鍵盤使用者的網頁瀏覽效率。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/bypass?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/bypass.js | failureTitle": {
     "message": "這個網頁中沒有標題、略過連結或標記區域"
@@ -102,7 +102,7 @@
     "message": "這個網頁包含標題、略過連結或標記區域"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | description": {
-    "message": "低對比度的文字對許多讀者來說是難以閱讀或無法閱讀的。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse)。"
+    "message": "低對比度的文字對許多使用者來說是難以閱讀或無法閱讀的。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | failureTitle": {
     "message": "背景和前景顏色沒有足夠的對比度。"
@@ -111,7 +111,7 @@
     "message": "背景和前景顏色具有足夠的對比度"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | description": {
-    "message": "如果定義清單的標記不正確，螢幕閱讀器可能會輸出令人混淆或不正確的內容。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/definition-list?application=lighthouse)。"
+    "message": "如果定義清單的標記不正確，螢幕閱讀器可能會輸出令人混淆或不正確的內容。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/definition-list?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
     "message": "<dl> 所含項目不只有排序正確的 <dt> 和 <dd> 群組、<script> 或 <template> 元素。"
@@ -120,7 +120,7 @@
     "message": "<dl> 所含項目只有排序正確的 <dt> 和 <dd> 群組、<script> 或 <template> 元素。"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
-    "message": "定義清單項目 (<dt> 和 <dd>) 必須納入在上層 <dl> 元素中，才能確保螢幕閱讀器正確朗讀這些項目。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/dlitem?application=lighthouse)。"
+    "message": "定義清單項目 (「<dt>」和「<dd>」) 必須納入在上層「<dl>」元素中，才能確保螢幕閱讀器正確朗讀這些項目。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/dlitem?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/dlitem.js | failureTitle": {
     "message": "定義清單項目未納入在 <dl> 元素中"
@@ -138,7 +138,7 @@
     "message": "文件具有 <title> 元素"
   },
   "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "ID 屬性的值不得重複，以免輔助技術忽略其他重複的值。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/duplicate-id?application=lighthouse)。"
+    "message": "ID 屬性的值不得重複，以免輔助技術忽略其他重複的值。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/duplicate-id?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
     "message": "網頁中的 [id] 屬性重複"
@@ -147,7 +147,7 @@
     "message": "網頁中的 [id] 屬性沒有重複"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
-    "message": "螢幕閱讀器需使用頁框標題才能說明頁框內容。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/frame-title?application=lighthouse)。"
+    "message": "螢幕閱讀器使用者需使用頁框標題來說明頁框內容。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/frame-title?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | failureTitle": {
     "message": "<frame> 或 <iframe> 元素沒有名稱"
@@ -156,7 +156,7 @@
     "message": "<frame> 或 <iframe> 元素具有名稱"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
-    "message": "如果網頁未指定 [lang] 屬性，螢幕閱讀器會假設網頁採用的是使用者在設定螢幕閱讀器時所選擇的預設語言。如果網頁實際採用的並不是預設語言，那麼螢幕閱讀器可能無法正確朗讀網頁文字。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/html-lang?application=lighthouse)。"
+    "message": "如果網頁未指定 [lang] 屬性，螢幕閱讀器會假設網頁採用的是使用者在設定螢幕閱讀器時所選擇的預設語言。如果網頁實際採用的並不是預設語言，那麼螢幕閱讀器可能無法正確朗讀網頁文字。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | failureTitle": {
     "message": "<html> 元素缺少 [lang] 屬性"
@@ -165,7 +165,7 @@
     "message": "<html> 元素具有 [lang] 屬性"
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | description": {
-    "message": "指定有效的 [BCP 47 語言](https://www.w3.org/International/questions/qa-choosing-language-tags#question)，可協助螢幕閱讀器正確朗讀文字。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse)。"
+    "message": "指定有效的 [BCP 47 語言](https://www.w3.org/International/questions/qa-choosing-language-tags#question)，可協助螢幕閱讀器正確朗讀文字。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | failureTitle": {
     "message": "<html> 元素的 [lang] 屬性缺少有效的值。"
@@ -174,7 +174,7 @@
     "message": "<html> 元素的 [lang] 屬性具備有效的值"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | description": {
-    "message": "說明元素應提供簡短貼切的替代文字。如果是裝飾元素，只要將 alt 屬性留空，系統即會忽略該元素。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/image-alt?application=lighthouse)。"
+    "message": "說明元素應提供簡短貼切的替代文字。如果是裝飾元素，只要將 alt 屬性留空，系統即會忽略該元素。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | failureTitle": {
     "message": "圖片元素缺少 [alt] 屬性"
@@ -183,7 +183,7 @@
     "message": "圖片元素具有 [alt] 屬性"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | description": {
-    "message": "如果 <input> 按鈕是以圖片呈現，提供替代文字可協助螢幕閱讀器使用者瞭解該按鈕的用途。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/input-image-alt?application=lighthouse)."
+    "message": "如果「<input>」按鈕是以圖片呈現，提供替代文字可協助螢幕閱讀器使用者瞭解該按鈕的用途。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/input-image-alt?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | failureTitle": {
     "message": "<input type=\"image\"> 元素未設定 [alt] 文字"
@@ -192,7 +192,7 @@
     "message": "<input type=\"image\"> 元素具有 [alt] 文字"
   },
   "lighthouse-core/audits/accessibility/label.js | description": {
-    "message": "標籤可確保輔助技術 (例如螢幕閱讀器) 正確朗讀表單控制項。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/label?application=lighthouse)。"
+    "message": "標籤可確保輔助技術 (例如螢幕閱讀器) 正確朗讀表單控制項。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/label.js | failureTitle": {
     "message": "表單元素沒有相關聯的標籤"
@@ -201,7 +201,7 @@
     "message": "表單元素具有相關聯的標籤"
   },
   "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "用於版面配置的表格不應包含資料元素 (例如 th、字幕元素或摘要屬性)，因為這些元素可能會對螢幕閱讀器使用者造成混淆。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/layout-table?application=lighthouse)。"
+    "message": "用於版面配置的表格不應包含資料元素 (例如 th、字幕元素或摘要屬性)，否則可能會對螢幕閱讀器使用者造成混淆。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/layout-table?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
     "message": "表示性元素 <table> 未避免使用 <th>、<caption> 元素或 [summary] 屬性。"
@@ -210,7 +210,7 @@
     "message": "表示性元素 <table> 並未使用 <th>、<caption> 或 [summary] 屬性。"
   },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
-    "message": "使用可辨別、未重複且可聚焦的連結文字 (以及連結圖片的替代文字)，有助於改善螢幕閱讀器使用者的瀏覽體驗。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/link-name?application=lighthouse)。"
+    "message": "使用可辨別、未重複且可聚焦的連結文字 (以及連結圖片的替代文字)，有助於改善螢幕閱讀器使用者的瀏覽體驗。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/link-name.js | failureTitle": {
     "message": "連結缺少可辨別的名稱"
@@ -219,7 +219,7 @@
     "message": "連結具有可辨別的名稱"
   },
   "lighthouse-core/audits/accessibility/list.js | description": {
-    "message": "螢幕閱讀器會以特定方式朗讀清單。請務必採用正確的清單結構，這樣螢幕閱讀器才能順利讀出畫面上的內容。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/list?application=lighthouse)。"
+    "message": "螢幕閱讀器會以特定方式朗讀清單。請務必採用正確的清單結構，這樣螢幕閱讀器才能順利讀出畫面內容。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/list?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/list.js | failureTitle": {
     "message": "清單中並非只包含 <li> 元素和指令碼支援元素 (<script> 和 <template>)。"
@@ -228,7 +228,7 @@
     "message": "清單只包含 <li> 元素和指令碼支援元素 (<script> 和 <template>)。"
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "清單項目 (<li>) 必須包含在上層元素 <ul> 或 <ol> 中，螢幕閱讀器才能正確朗讀這些項目。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/listitem?application=lighthouse)。"
+    "message": "清單項目 (「<li>」) 必須包含在上層元素「<ul>」或「<ol>」中，螢幕閱讀器才能正確朗讀這些項目。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/listitem?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
     "message": "清單項目 (<li>) 未包含在 <ul> 或 <ol> 上層元素中。"
@@ -237,7 +237,7 @@
     "message": "清單項目 (<li>) 已包含在 <ul> 或 <ol> 上層元素中"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
-    "message": "使用者不會預期系統自動重新整理網頁，而且這麼做會將焦點移回網頁頂端。這可能會對使用者造成困擾或混淆。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/meta-refresh?application=lighthouse)。"
+    "message": "使用者不會預期系統自動重新整理網頁，而且重新整理會讓網頁焦點移回頂端。這可能會對使用者造成困擾或混淆。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | failureTitle": {
     "message": "這個文件採用了 <meta http-equiv=\"refresh\">"
@@ -246,7 +246,7 @@
     "message": "這個文件未使用 <meta http-equiv=\"refresh\">"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | description": {
-    "message": "停用縮放功能會對低視能使用者造成困擾，他們需透過螢幕放大功能才能清楚看見網頁內容。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/meta-viewport?application=lighthouse)。"
+    "message": "停用縮放功能會對低視能使用者造成困擾，他們需透過螢幕放大功能才能清楚看見網頁內容。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/meta-viewport?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | failureTitle": {
     "message": "<meta name=\"viewport\"> 元素中使用了 [user-scalable=\"no\"]，或是[maximum-scale] 屬性小於 5。"
@@ -255,7 +255,7 @@
     "message": "<meta name=\"viewport\"> 元素中未使用 [user-scalable=\"no\"]，而且 [maximum-scale] 屬性大於或等於 5。"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "螢幕閱讀器無法翻譯非文字內容。為 <object> 元素新增替代文字，可協助螢幕閱讀器向使用者傳達其意義。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/object-alt?application=lighthouse)。"
+    "message": "螢幕閱讀器無法翻譯非文字內容。為「<object>」元素新增替代文字，可協助螢幕閱讀器向使用者傳達該元素的意義。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
     "message": "<object> 元素未設定 [alt] 文字"
@@ -264,7 +264,7 @@
     "message": "<object> 元素具有 [alt] 文字"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
-    "message": "如果值大於 0，表示採用的是明確的瀏覽排序。雖然這在技術上可行，但經常會對仰賴輔助技術的使用者造成困擾。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/tabindex?application=lighthouse)。"
+    "message": "如果值大於 0，表示採用的是明確的瀏覽排序。雖然這在技術上可行，但經常會對仰賴輔助技術的使用者造成困擾。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/tabindex?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | failureTitle": {
     "message": "部分元素的 [tabindex] 值大於 0"
@@ -273,7 +273,7 @@
     "message": "所有元素的 [tabindex] 值皆未超過 0"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | description": {
-    "message": "螢幕閱讀器的功能可讓使用者更輕鬆地瀏覽表格。如果能確保採用 [headers] 屬性的 <td> 儲存格只參照同一表格中的其他儲存格，或許能讓螢幕閱讀器的使用體驗更上一層樓。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/td-headers-attr?application=lighthouse)。"
+    "message": "螢幕閱讀器的功能可讓使用者輕鬆瀏覽表格。如果能確保採用「[headers]」屬性的「<td>」儲存格只參照同一表格中的其他儲存格，或許能讓螢幕閱讀器的使用體驗更上一層樓。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
     "message": "<table> 元素中採用 [headers] 屬性的儲存格，參照了同一表格中的其他儲存格。"
@@ -282,7 +282,7 @@
     "message": "<table> 元素中採用 [headers] 屬性的儲存格，只參照了同一表格中的其他儲存格。"
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
-    "message": "螢幕閱讀器的功能可讓使用者輕鬆瀏覽表格。如果能確保表格標題一律參照特定一組儲存格，或許能讓螢幕閱讀器的使用體驗更上一層樓。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/th-has-data-cells?application=lighthouse)。"
+    "message": "螢幕閱讀器的功能可讓使用者輕鬆瀏覽表格。如果能確保表格標題一律參照特定一組儲存格，或許能讓螢幕閱讀器的使用體驗更上一層樓。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | failureTitle": {
     "message": "<th> 元素和帶有 [role=\"columnheader\"/\"rowheader\"] 的元素不具有其所描述的資料儲存格。"
@@ -291,7 +291,7 @@
     "message": "<th> 元素和帶有 [role=\"columnheader\"/\"rowheader\"] 的元素具有其所描述的資料儲存格。"
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | description": {
-    "message": "為元素指定有效的 [BCP 47 語言](https://www.w3.org/International/questions/qa-choosing-language-tags#question)，可協助確保螢幕閱讀器正確朗讀文字。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse)。"
+    "message": "為元素指定有效的 [BCP 47 語言](https://www.w3.org/International/questions/qa-choosing-language-tags#question)，可協助確保螢幕閱讀器正確朗讀文字。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | failureTitle": {
     "message": "[lang] 屬性缺少有效的值"
@@ -300,7 +300,7 @@
     "message": "[lang] 屬性具備有效的值"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | description": {
-    "message": "如果在影片中提供字幕，將有助於失聰或聽障使用者瞭解影片資訊。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/video-caption?application=lighthouse)。"
+    "message": "如果在影片中提供字幕，將有助於失聰或聽障使用者瞭解影片資訊。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/video-caption?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | failureTitle": {
     "message": "<video> 元素不含任何帶有 [kind=\"captions\"] 的 <track> 元素。"
@@ -309,7 +309,7 @@
     "message": "<video> 元素包含帶有 [kind=\"captions\"] 的 <track> 元素"
   },
   "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "音訊說明可為影片提供對話功能無法提供的相關資訊，例如面部表情和場景。[瞭解詳情](https://dequeuniversity.com/rules/axe/2.2/video-description?application=lighthouse)。"
+    "message": "音訊說明可為影片提供對話功能無法提供的相關資訊，例如面部表情和場景。[瞭解詳情](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)。"
   },
   "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
     "message": "<video> 元素不含任何帶有 [kind=\"description\"] 的 <track> 元素。"
@@ -327,7 +327,7 @@
     "message": "指令碼剖析"
   },
   "lighthouse-core/audits/bootup-time.js | columnTotal": {
-    "message": "總計"
+    "message": "CPU 總執行時間"
   },
   "lighthouse-core/audits/bootup-time.js | description": {
     "message": "建議減少剖析、編譯和執行 JS 所耗費的時間。提供較小的 JS 酬載可能會有幫助。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/bootup)"
@@ -381,10 +381,10 @@
     "message": "壓縮 JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "移除樣式表中的無用規則，盡量避免網路活動消耗不必要的流量。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/unused-css)"
+    "message": "移除樣式表中的無用規則，並延遲載入在不需捲動位置內容中未使用的 CSS，盡量避免網路活動消耗不必要的流量。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/unused-css)。"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "延後未使用的 CSS"
+    "message": "移除未使用的 CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
     "message": "移除未使用的 JavaScript，減少網路活動消耗的流量。"
@@ -476,6 +476,21 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "載入網站字型時沒有任何文字消失"
   },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
+    "message": "如果網頁在行動網路中能快速載入，可為行動裝置使用者提供良好的使用體驗。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)。"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
+    "message": "在 {timeInMs, number, seconds} 秒開始互動"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
+    "message": "在 {timeInMs, number, seconds} 秒於模擬行動網路上開始互動"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
+    "message": "網頁在行動網路中的載入速度不夠快"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
+    "message": "網頁在行動網路中的載入速度夠快"
+  },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "類別"
   },
@@ -489,7 +504,7 @@
     "message": "將主要執行緒的工作降到最低"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "上方的分數是在頁面載入視窗最忙碌的 5 秒期間，您的應用程式對於使用者輸入動作的預計回應時間 (以毫秒為單位)。如果延遲超過 50 毫秒，使用者可能會感覺應用程式的速度很慢。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)"
+    "message": "預估輸入延遲時間是在頁面載入作業最忙碌的 5 秒中，應用程式對於使用者輸入動作的預估回應時間 (以毫秒為單位)。如果延遲超過 50 毫秒，使用者可能會覺得應用程式的速度很慢。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)。"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | title": {
     "message": "預估輸入延遲"
@@ -513,10 +528,16 @@
     "message": "首次有效繪製"
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
-    "message": "可互動時間標記的是頁面提供完整互動功能的時間。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)"
+    "message": "互動準備時間是網頁進入完整互動狀態前花費的時間。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)。"
   },
   "lighthouse-core/audits/metrics/interactive.js | title": {
     "message": "可互動時間"
+  },
+  "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
+    "message": "使用者可能要等待的「首次輸入延遲時間」就是耗時最久的工作所需要的處理時間 (以毫秒為單位)。"
+  },
+  "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
+    "message": "FID 最大預估值"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "速度指數會顯示頁面內容填入的速度。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/speed-index)"
@@ -524,11 +545,179 @@
   "lighthouse-core/audits/metrics/speed-index.js | title": {
     "message": "速度指數"
   },
+  "lighthouse-core/audits/network-rtt.js | description": {
+    "message": "網路封包往返時間 (RTT) 對效能有很大的影響。如果將封包傳送到某個來源的 RTT 很高，表示靠近使用者端的伺服器在效能方面有改善空間。[瞭解詳情](https://hpbn.co/primer-on-latency-and-bandwidth/)。"
+  },
+  "lighthouse-core/audits/network-rtt.js | title": {
+    "message": "網路封包往返時間"
+  },
+  "lighthouse-core/audits/network-server-latency.js | description": {
+    "message": "伺服器延遲時間可能會影響網頁效能。如果來源端的伺服器延遲時間很高，表示伺服器有超載情形或後端效能不佳。[瞭解詳情](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)。"
+  },
+  "lighthouse-core/audits/network-server-latency.js | title": {
+    "message": "伺服器後端延遲時間"
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "重新導向會導致頁面延遲載入。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/redirects)"
   },
   "lighthouse-core/audits/redirects.js | title": {
     "message": "避免進行多次頁面重新導向"
+  },
+  "lighthouse-core/audits/seo/canonical.js | description": {
+    "message": "標準連結會建議要在搜尋結果中顯示哪個網址。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/canonical)。"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
+    "message": "多個衝突的網址 ({urlList})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
+    "message": "指向不同的網域 ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
+    "message": "無效的網址 ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationPointsElsewhere": {
+    "message": "指向其他「hreflang」位置 ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
+    "message": "相對網址 ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationRoot": {
+    "message": "指向目標為網域的根網址 (首頁)，而不是相應的內容網頁"
+  },
+  "lighthouse-core/audits/seo/canonical.js | failureTitle": {
+    "message": "文件缺少有效的「rel=canonical」"
+  },
+  "lighthouse-core/audits/seo/canonical.js | title": {
+    "message": "文件具備有效的「rel=canonical」"
+  },
+  "lighthouse-core/audits/seo/font-size.js | description": {
+    "message": "如果字型小於 12 像素，文字會太小而難以辨識；行動裝置訪客必須「以雙指撥動縮放」才能閱讀內容。網頁中應有超過 60% 的文字採用 12 像素以上的大小。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/font-sizes)。"
+  },
+  "lighthouse-core/audits/seo/font-size.js | displayValue": {
+    "message": "{decimalProportion, number, extendedPercent} 的文字清晰易讀"
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanation": {
+    "message": "{decimalProportion, number, extendedPercent} 的文字太小。"
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
+    "message": "文字難以辨識，這是因為網頁沒有針對行動裝置螢幕設定合適的檢視點中繼標記。"
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
+    "message": "{decimalProportion, number, extendedPercent} 的文字太小 (以 {decimalProportionVisited, number, extendedPercent} 範例為準)。"
+  },
+  "lighthouse-core/audits/seo/font-size.js | failureTitle": {
+    "message": "文件使用的字型大小難以辨識"
+  },
+  "lighthouse-core/audits/seo/font-size.js | title": {
+    "message": "文件使用的字型大小清晰易讀"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | description": {
+    "message": "hreflang 連結會告訴搜尋引擎在特定語言或區域的搜尋結果中該顯示哪種版本的網頁。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/hreflang)。"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
+    "message": "文件缺少有效的 hreflang"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | title": {
+    "message": "文件具備有效的「hreflang」"
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | description": {
+    "message": "如果網頁傳回失敗的 HTTP 狀態碼，可能無法正確編入索引。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code)。"
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | failureTitle": {
+    "message": "網頁傳回失敗的 HTTP 狀態碼"
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | title": {
+    "message": "網頁傳回成功的 HTTP 狀態碼"
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | description": {
+    "message": "如果搜尋引擎沒有檢索網頁的權限，將無法在搜尋結果中顯示你的網頁。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/indexing)。"
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": {
+    "message": "網頁的索引功能遭到封鎖"
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | title": {
+    "message": "網頁的索引功能未遭到封鎖"
+  },
+  "lighthouse-core/audits/seo/link-text.js | description": {
+    "message": "連結說明文字可協助搜尋引擎瞭解你的內容。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)。"
+  },
+  "lighthouse-core/audits/seo/link-text.js | displayValue": {
+    "message": "{itemCount,plural, =1{找到 1 個連結}other{找到 # 個連結}}"
+  },
+  "lighthouse-core/audits/seo/link-text.js | failureTitle": {
+    "message": "連結缺少說明文字"
+  },
+  "lighthouse-core/audits/seo/link-text.js | title": {
+    "message": "連結具有說明文字"
+  },
+  "lighthouse-core/audits/seo/manual/structured-data.js | description": {
+    "message": "執行[結構化資料測試工具](https://search.google.com/structured-data/testing-tool/) 和 [Structured Data Linter](http://linter.structured-data.org/) 來驗證結構化資料。[瞭解詳情](https://developers.google.com/search/docs/guides/mark-up-content)。"
+  },
+  "lighthouse-core/audits/seo/manual/structured-data.js | title": {
+    "message": "結構化資料有效"
+  },
+  "lighthouse-core/audits/seo/meta-description.js | description": {
+    "message": "你可以在搜尋結果中加入中繼說明，簡要描述網頁內容。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/description)。"
+  },
+  "lighthouse-core/audits/seo/meta-description.js | explanation": {
+    "message": "沒有說明文字。"
+  },
+  "lighthouse-core/audits/seo/meta-description.js | failureTitle": {
+    "message": "文件缺少中繼說明"
+  },
+  "lighthouse-core/audits/seo/meta-description.js | title": {
+    "message": "文件具有中繼說明"
+  },
+  "lighthouse-core/audits/seo/plugins.js | description": {
+    "message": "搜尋引擎無法為外掛程式內容建立索引，而且許多裝置對外掛程式設有限制或不提供支援。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/plugins)。"
+  },
+  "lighthouse-core/audits/seo/plugins.js | failureTitle": {
+    "message": "文件使用外掛程式"
+  },
+  "lighthouse-core/audits/seo/plugins.js | title": {
+    "message": "文件盡量不使用外掛程式"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | description": {
+    "message": "如果你的 robots.txt 檔案格式錯誤，檢索器可能無法瞭解你偏好的網站檢索方式或索引建立方式。"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
+    "message": "robots.txt 要求傳回以下 HTTP 狀態：{statusCode}"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
+    "message": "{itemCount,plural, =1{發現 1 項錯誤}other{發現 # 項錯誤}}"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | explanation": {
+    "message": "Lighthouse 無法下載 robots.txt 檔"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | failureTitle": {
+    "message": "robots.txt 無效"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | title": {
+    "message": "robots.txt 有效"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | description": {
+    "message": "按鈕和連結等互動元素的大小應至少有 48x48 像素，且周圍應保留足夠空間，讓使用者輕鬆點選，同時避免與其他元素重疊的情況。[瞭解詳情](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)。"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
+    "message": "{decimalProportion, number, percent} 的輕觸目標大小適中"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | explanationViewportMetaNotOptimized": {
+    "message": "輕觸目標太小，這是因為網頁沒有針對行動裝置螢幕設定合適的檢視點中繼標記"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | failureTitle": {
+    "message": "輕觸目標未設定成適當大小"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": {
+    "message": "重疊的目標"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | sizeHeader": {
+    "message": "大小"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": {
+    "message": "輕觸目標"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | title": {
+    "message": "輕觸目標已設定成適當大小"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "第一個位元組時間會指出您的伺服器傳送回應的時間。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/ttfb)"
@@ -572,6 +761,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "預先連上必要來源"
   },
+  "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
+    "message": "「{preloadURL}」有預先載入的 <link>，但未獲瀏覽器使用。請檢查你使用「crossorigin」屬性的方式是否正確。"
+  },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "建議使用 <link rel=preload> 指定在頁面載入後立即需要的資源，以優先擷取這類資源。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/preload)"
   },
@@ -582,49 +774,58 @@
     "message": "這些稽核建議可協助改善 ARIA 在應用程式中的使用情形，進而讓輔助技術 (例如螢幕閱讀器) 的使用體驗更上一層樓。"
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA 屬性遵循最佳做法"
+    "message": "ARIA"
+  },
+  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
+    "message": "你可以根據這些資訊判斷是否要提供用來替代音訊和影片的內容。這或許能改善聽障或視障人士的使用體驗。"
+  },
+  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
+    "message": "音訊和影片"
+  },
+  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
+    "message": "這些稽核項目會提供常見的無障礙功能最佳做法。"
+  },
+  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
+    "message": "最佳做法"
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
+    "message": "這些檢查會提供[網頁應用程式無障礙功能的改善建議] (https://developers.google.com/web/fundamentals/accessibility)。系統只能自動偵測一部分的無障礙功能問題，因此建議你另外進行手動測試。"
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
+    "message": "這些稽核項目會檢查自動化測試工具未涵蓋的區域。詳情請參閱[無障礙功能審查的執行指南](https://developers.google.com/web/fundamentals/accessibility/how-to-review)。"
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
+    "message": "無障礙功能"
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
     "message": "這些稽核建議有助於提高內容的易讀性。"
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "顏色對比度很理想"
-  },
-  "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupDescription": {
-    "message": "這些稽核建議可協助改善 HTML 元素的設定。"
-  },
-  "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupTitle": {
-    "message": "元素正確使用屬性"
-  },
-  "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupDescription": {
-    "message": "這些稽核建議可讓輔助技術 (例如螢幕閱讀器) 的使用者更容易理解你的網頁內容。"
-  },
-  "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupTitle": {
-    "message": "元素對於內容提供了貼切的描述"
-  },
-  "lighthouse-core/config/default-config.js | a11yElementNamesGroupDescription": {
-    "message": "這些稽核建議可協助提高應用程式中的控制項語義品質。這或許能改善輔助技術 (例如螢幕閱讀器) 的使用體驗。"
-  },
-  "lighthouse-core/config/default-config.js | a11yElementNamesGroupTitle": {
-    "message": "元素具有可辨別的名稱"
+    "message": "對比"
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "你可以根據這些稽核建議做出改善，讓其他地區的使用者更容易理解你的內容。"
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "網頁所指定的語言有效"
+    "message": "國際化和本地化"
   },
-  "lighthouse-core/config/default-config.js | a11yMetaGroupDescription": {
-    "message": "這些稽核建議可改善網站的使用者體驗。"
+  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
+    "message": "這些稽核建議可協助提高應用程式中的控制項語義品質。這或許能改善輔助技術 (例如螢幕閱讀器) 的使用體驗。"
   },
-  "lighthouse-core/config/default-config.js | a11yMetaGroupTitle": {
-    "message": "中繼標記的使用方式正確"
+  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
+    "message": "名稱和標籤"
   },
-  "lighthouse-core/config/default-config.js | a11yWellStructuredGroupDescription": {
-    "message": "這些稽核建議可確保 HTML 的結構正確。"
+  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
+    "message": "你可以根據這些資訊來改善應用程式的鍵盤瀏覽操作方式。"
   },
-  "lighthouse-core/config/default-config.js | a11yWellStructuredGroupTitle": {
-    "message": "元素具有正確結構"
+  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
+    "message": "瀏覽"
+  },
+  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
+    "message": "這些稽核結果建議你運用輔助技術 (例如螢幕閱讀器)，改善表格或清單資料的閱讀體驗。"
+  },
+  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
+    "message": "表格和清單"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
     "message": "關於您應用程式效能的更多資訊。"
@@ -664,6 +865,15 @@
   },
   "lighthouse-core/config/default-config.js | pwaOptimizedGroupTitle": {
     "message": "PWA 最佳化"
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryDescription": {
+    "message": "這些檢查可確保你的網頁採用的是最佳的搜尋引擎結果排名設定。有一些其他因素不在 Lighthouse 檢查範圍內，仍可能會影響你的搜尋排名。[瞭解詳情](https://support.google.com/webmasters/answer/35769)。"
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
+    "message": "在您的網站上執行這些額外的驗證工具，以檢查其他 SEO 最佳做法。"
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryTitle": {
+    "message": "搜尋引擎最佳化 (SEO)"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "快取 TTL"
@@ -714,7 +924,7 @@
     "message": "你要求的網頁已停止回應，因此 Lighthouse 無法穩定載入該網址。"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedInsecure": {
-    "message": "你所提供的網址缺少有效的安全性憑證。({securityMessages})"
+    "message": "你所提供的網址缺少有效的安全性憑證。{securityMessages}"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
     "message": "Lighthouse 無法穩定載入你要求的網頁。請確認你測試的網址是否正確，以及伺服器是否正確回應所有要求。(詳細資料：{errorDetails})"
@@ -773,11 +983,20 @@
   "lighthouse-core/report/html/renderer/util.js | scorescaleLabel": {
     "message": "分數量尺："
   },
+  "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
+    "message": "收合程式碼片段"
+  },
+  "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
+    "message": "展開程式碼片段"
+  },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "有問題導致 Lighthouse 無法順利執行這項作業："
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
     "message": "此為預估值，可能與實際情況有所出入。"
+  },
+  "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
+    "message": "通過稽核，但附有警告訊息"
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "警告： "

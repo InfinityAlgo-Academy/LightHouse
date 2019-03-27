@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
-    "message": "تتيح مفاتيح الوصول للمستخدمين التركيز بسرعة على جزء من الصفحة. للانتقال الصحيح، يجب أن يكون كل مفتاح وصول فريدًا. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/accesskeys?application=lighthouse)."
+    "message": "تتيح مفاتيح الوصول للمستخدمين التركيز بسرعة على جزء من الصفحة. للانتقال الصحيح، يجب أن يكون كل مفتاح وصول فريدًا. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | failureTitle": {
     "message": "قيم `[accesskey]` غير فريدة"
@@ -9,7 +9,7 @@
     "message": "قيم `[accesskey]` فريدة"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": {
-    "message": "يوفّر كل \"دور\" ARIA مجموعة فرعية محدّدة من سمات `aria-*`. يؤدي عدم تطابق هذه الأدوار إلى إبطال السمات `aria-*`. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/aria-allowed-attr?application=lighthouse)."
+    "message": "يوفّر كل \"دور\" ARIA مجموعة فرعية محدّدة من سمات `aria-*`. يؤدي عدم تطابق هذه الأدوار إلى إبطال السمات `aria-*`. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | failureTitle": {
     "message": "عدم تطابق سمات `[aria-*]` مع أدوارها"
@@ -18,7 +18,7 @@
     "message": "مطابقة سمات `[aria-*]` لأدوارها"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
-    "message": "تتطلّب بعض أدوار ARIA السمات التي تصف حالة العنصر إلى برامج قراءة الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/aria-required-attr?application=lighthouse)."
+    "message": "تتطلّب بعض أدوار ARIA تزويد برامج قراءة الشاشة بسمات تصف حالة العنصر. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | failureTitle": {
     "message": "عدم احتواء `[role]` على جميع سمات `[aria-*]` المطلوبة"
@@ -27,7 +27,7 @@
     "message": "احتواء `[role]` على جميع سمات `[aria-*]` المطلوبة"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | description": {
-    "message": "يجب أن تحتوي بعض أدوار ARIA الرئيسية على أدوار ثانوية محدّدة لأداء وظائف إمكانية الوصول المقصودة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/aria-required-children?application=lighthouse)."
+    "message": "يجب أن تحتوي بعض أدوار ARIA الرئيسية على أدوار ثانوية محدّدة لأداء وظائف إمكانية الوصول المقصودة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
     "message": "العناصر التي تتضمّن`[role]` والتي تتطلب `[role]` محدّدة للأطفال مفقودة."
@@ -36,7 +36,7 @@
     "message": "العناصر التي تتضمّن`[role]` والتي تتطلب `[role]` محدّدة للأطفال متوفرة"
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
-    "message": "يجب أن يتم احتواء بعض أدوار الأطفال ARIA ضمن أدوار رئيسية محدّدة لتنفيذ وظائف إمكانية الوصول المقصودة بشكل صحيح. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/aria-required-parent?application=lighthouse)."
+    "message": "يجب أن يتم احتواء بعض أدوار ثانوية ARIA ضمن أدوار رئيسية محدّدة لتنفيذ وظائف إمكانية الوصول المقصودة بشكل صحيح. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/aria-required-parent?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | failureTitle": {
     "message": "عدم تضمين `[role]` من خلال العنصر الرئيسي المطلوب"
@@ -45,7 +45,7 @@
     "message": "تضمين `[role]` من خلال العنصر الرئيسي المطلوب"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | description": {
-    "message": "يجب أن تحتوي أدوار ARIA على قيم صحيحة لتنفيذ وظائف إمكانية الوصول المقصودة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/aria-roles?application=lighthouse)."
+    "message": "يجب أن تحتوي أدوار ARIA على قيم صالحة لتنفيذ وظائف إمكانية الوصول المقصودة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/aria-roles?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | failureTitle": {
     "message": "قيم `[role]` غير صحيحة"
@@ -54,7 +54,7 @@
     "message": "قيم `[role]` صحيحة"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
-    "message": "لا يمكن لتقنيات المساعدة، مثل برامج قراءة الشاشة، تفسير سمات ARIA باستخدام قيم غير صحيحة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr-value?application=lighthouse)."
+    "message": "لا يمكن لتقنيات المساعدة، مثل برامج قراءة الشاشة، تفسير سمات ARIA باستخدام قيم غير صحيحة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | failureTitle": {
     "message": "عدم احتواء سمات `[aria-*]`على قيم صحيحة"
@@ -63,7 +63,7 @@
     "message": "احتواء سمات `[aria-*]`على قيم صحيحة"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": {
-    "message": "لا يمكن لتقنيات المساعدة، مثل برامج قراءة الشاشة، تفسير سمات ARIA بأسماء غير صحيحة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr?application=lighthouse)."
+    "message": "لا يمكن لتقنيات المساعدة، مثل برامج قراءة الشاشة، تفسير سمات ARIA بأسماء غير صحيحة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | failureTitle": {
     "message": "سمات `[aria-*]` غير صحيحة أو بها خطأ إملائي"
@@ -72,7 +72,7 @@
     "message": "سمات `[aria-*]` صحيحة وليس بها أخطاء إملائية"
   },
   "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "تجعل الشروح العناصر الصوتية قابلة للاستخدام للمستخدمين الصُم أو الذين يعانون من إعاقة سمعية، ما يوفّر معلومات مهمة، مثل الشخص المتحدث والحوار الذي يدور ومعلومات أخرى بخلاف الكلام. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/audio-caption?application=lighthouse)."
+    "message": "تسهّل الشروح على الصُم أو الذين يعانون من إعاقة سمعية استخدام العناصر الصوتية والاطّلاع بالتالي على معلومات مهمة، مثل هوية الشخص المتحدث والحوار الذي يدور ومعلومات أخرى بخلاف الكلام. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
     "message": "فقدان عناصر `<audio>` عنصر `<track>` يتضمّن `[kind=\"captions\"]`."
@@ -84,7 +84,7 @@
     "message": "العناصر التي تعذّرت"
   },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
-    "message": "عند عدم احتواء زر على اسم يمكن الوصول إليه، تعلن برامج قراءة الشاشة بأنه \"زر\"، ما يجعله غير قابل للاستخدام بالنسبة إلى المستخدمين الذين يعتمدون على برامج قراءة الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/button-name?application=lighthouse)."
+    "message": "في حال كان أحد الأزرار لا يحمل اسمًا يمكن الوصول إليه، تعلن برامج قراءة الشاشة بأنه \"زر\"، ما يجعله غير قابل للاستخدام بالنسبة إلى المستخدمين الذين يعتمدون على برامج قراءة الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/button-name.js | failureTitle": {
     "message": "عدم احتواء الأزرار على اسم يمكن الوصول إليه"
@@ -93,7 +93,7 @@
     "message": "احتواء الأزرار على اسم الوصول"
   },
   "lighthouse-core/audits/accessibility/bypass.js | description": {
-    "message": "تؤدي إضافة طرق لتخطي المحتوى المكرّر إلى السماح لمستخدمي لوحة المفاتيح بالتنقل في الصفحة بكفاءة أكبر. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/bypass?application=lighthouse)."
+    "message": "تؤدي إضافة طرق لتخطي المحتوى المكرّر إلى السماح لمستخدمي لوحة المفاتيح بالتنقل في الصفحة بكفاءة أكبر. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/bypass?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/bypass.js | failureTitle": {
     "message": "عدم احتواء الصفحة على عنوان أو رابط تخطٍ أو منطقة معالم"
@@ -102,7 +102,7 @@
     "message": "احتواء الصفحة على عنوان أو رابط تخطٍ أو منطقة معالم"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | description": {
-    "message": "يُعد النص منخفض التباين صعبًا أو مستحيل قراءته بالنسبة إلى العديد من المستخدمين. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse)."
+    "message": "يعتبر العديد من المستخدمين أنّه من الصعب أو المستحيل عليهم قراءة نص منخفض التباين. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | failureTitle": {
     "message": "عدم احتواء الخلفية وألوان الخلفية على نسبة تباين كافية"
@@ -111,7 +111,7 @@
     "message": "تمييز الخلفية والألوان الخلفية بنسبة تباين كافية"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | description": {
-    "message": "عندما لا يتم ترميز قوائم التعريفات بشكل صحيح، قد تقدم برامج قراءة الشاشة نتائج غير واضحة أو غير دقيقة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/definition-list?application=lighthouse)."
+    "message": "عندما لا يتم ترميز قوائم التعريفات بشكل صحيح، قد تقدم برامج قراءة الشاشة نتائج غير واضحة أو غير دقيقة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/definition-list?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
     "message": "عدم احتواء `<dl>` على مجموعات `<dt>` و`<dd>` المرتبة بشكلٍ صحيح فقط، أو العناصر `<script>` أو `<template>`."
@@ -120,7 +120,7 @@
     "message": "احتواء `<dl>` على مجموعات `<dt>` و`<dd>` المرتبة بشكلٍ صحيح فقط، أو العناصر `<script>` أو `<template>`."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
-    "message": "يجب التفاف عناصر قائمة التعريفات (`<dt>` و`<dd>`) في العنصر الرئيسي `<dl>` وذلك لضمان أن برامج قراءة الشاشة يمكنها الإعلان عنها بشكل صحيح. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/dlitem?application=lighthouse)."
+    "message": "يجب إدراج عناصر قائمة التعريفات (`<dt>` و`<dd>`) في عنصر رئيسي `<dl>` وذلك لضمان إمكانية إعلان برامج قراءة الشاشة عنها بشكل صحيح. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/dlitem?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | failureTitle": {
     "message": "عدم التفاف عناصر قائمة التعريفات في عناصر `<dl>`"
@@ -138,7 +138,7 @@
     "message": "احتواء المستند على عنصر `<title>`"
   },
   "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "يجب أن تكون قيمة سمة رقم التعريف فريدة لكي لا تتغاضى تقنيات المساعدة عن الأمثلة الأخرى. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/duplicate-id?application=lighthouse)."
+    "message": "يجب أن تكون قيمة سمة رقم التعريف فريدة لكي لا تتغاضى تقنيات المساعدة عن الأمثلة الأخرى. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/duplicate-id?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
     "message": "سمات `[id]` في الصفحة غير فريدة"
@@ -147,7 +147,7 @@
     "message": "سمات `[id]` في الصفحة فريدة"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
-    "message": "يعتمد مستخدمو برامج قراءة الشاشة على عناوين الإطارات لوصف محتوى الإطارات. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/frame-title?application=lighthouse)."
+    "message": "يعتمد مستخدمو برامج قراءة الشاشة على عناوين الإطارات لوصف محتوى الإطارات. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/frame-title?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/frame-title.js | failureTitle": {
     "message": "عدم تضمين عناصر `<frame>` أو`<iframe>` لأي عنوان"
@@ -156,7 +156,7 @@
     "message": "احتواء عناصر `<frame>` أو `<iframe>` على عنوان"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
-    "message": "في حال لم تحدّد الصفحة سمة اللغة، يفترض قارئ الشاشة أن تكون الصفحة باللغة التلقائية التي اختارها المستخدم عند إعداد قارئ الشاشة. في حال لم تكن الصفحة باللغة التلقائية فعليًا، حينئذٍ قد لا يُعلِن قارئ الشاشة عن نص الصفحة بشكل صحيح. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/html-lang?application=lighthouse)."
+    "message": "في حال لم تحدّد الصفحة سمة اللغة، يفترض قارئ الشاشة أن تكون الصفحة باللغة التلقائية التي اختارها المستخدم عند إعداد قارئ الشاشة. في حال لم تكن الصفحة باللغة التلقائية فعليًا، حينئذٍ قد لا يُعلِن قارئ الشاشة عن نص الصفحة بشكل صحيح. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | failureTitle": {
     "message": "عدم احتواء عنصر `<html>` على سمة `[lang]`"
@@ -165,7 +165,7 @@
     "message": "احتواء عنصر `<html>` على سمة `[lang]`"
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | description": {
-    "message": "يؤدي تحديد [BCP 47 language] (https://www.w3.org/International/questions/qa-choosing-language-tags#question) صحيحة إلى مساعدة برامج قراءة الشاشة على الإعلان عن النص بشكلٍ صحيح. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse)."
+    "message": "يؤدي تحديد [BCP 47 language] (https://www.w3.org/International/questions/qa-choosing-language-tags#question) صحيحة إلى مساعدة برامج قراءة الشاشة على الإعلان عن النص بشكلٍ صحيح. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | failureTitle": {
     "message": "عدم احتواء عنصر `<html>` على قيمة صحيحة للسمة `[lang]`."
@@ -174,7 +174,7 @@
     "message": "احتواء عنصر `<html>` على قيمة صحيحة لسمة `[lang]`"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | description": {
-    "message": "يجب أن تهدف العناصر الإعلامية إلى نص وصفي بديل وقصير. يمكن تجاهل العناصر الزخرفية بسمة النص البديل الفارغة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/image-alt?application=lighthouse)."
+    "message": "يجب أن تتضمن العناصر الإعلامية نصًا بديلاً وصفيًا وقصيرًا. يمكن تجاهل العناصر الزخرفية من خلال استخدام سمة نص بديل فارغة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/image-alt.js | failureTitle": {
     "message": "عدم احتواء عناصر الصور على سمات `[alt]`"
@@ -183,7 +183,7 @@
     "message": "احتواء عناصر الصور على سمات `[alt]`"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | description": {
-    "message": "عند استخدام صورة كزر `<input>`، يمكن أن يساعد توفير نص بديل مستخدمي قارئ الشاشة على فهم الغرض من الزر. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/input-image-alt?application=lighthouse)."
+    "message": "عند استخدام صورة كزر `<input>`، يمكن أن يساعد توفير نص بديل مستخدمي قارئ الشاشة على فهم الغرض من الزر. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/input-image-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | failureTitle": {
     "message": "عدم احتواء عناصر `<input type=\"image\">` على نص `[alt]`"
@@ -192,7 +192,7 @@
     "message": "احتواء عناصر `<input type=\"image\">` على نص `[alt]`"
   },
   "lighthouse-core/audits/accessibility/label.js | description": {
-    "message": "تضمن التصنيفات أنه يتم الإعلان عن عناصر تحكّم النموذج بشكل صحيح من خلال التقنيات المساعدة، مثل برامج قراءة الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/label?application=lighthouse)."
+    "message": "تضمن التصنيفات الإعلان عن عناصر التحكّم بالنموذج بشكل صحيح من خلال التقنيات المساعدة، مثل برامج قراءة الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/label.js | failureTitle": {
     "message": "عدم احتواء عناصر النموذج على تصنيفات مرتبطة"
@@ -201,7 +201,7 @@
     "message": "احتواء عناصر النموذج على التصنيفات المرتبطة"
   },
   "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "يجب ألا يشتمل الجدول المُستخدم لأغراض التنسيق على عناصر البيانات، مثل عناصر الشرح أو سمة الملخّص، لأن ذلك يمكن أن ينشئ تجربة محيرة لمستخدمي برامج قراءة الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/layout-table?application=lighthouse)."
+    "message": "يجب ألا يشتمل الجدول المُستخدم لأغراض التنسيق على عناصر البيانات، مثل عناصر الشرح أو سمة الملخّص، لأن ذلك قد يربك لمستخدمي برامج قراءة الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/layout-table?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
     "message": "عدم تجنب عناصر `<table>` للعرض التقديمي استخدام `<th>` أو `<caption>` أو السمة `[summary]`."
@@ -210,7 +210,7 @@
     "message": "تجنُب عناصر `<table>` للعرض التقديمي استخدام `<th>` أو `<caption>` أو السمة `[summary]`."
   },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
-    "message": "يحسّن نص الرابط (والنص البديل للصور، عند استخدامه كروابط) الذي يُعد مميّزًا وفريدًا وقابلاً للتركيز تجربة التنقل لمستخدمي برامج قراءة الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/link-name?application=lighthouse)."
+    "message": "يحسّن نص الرابط (والنص البديل للصور، عند استخدامه كروابط) الذي يُعد مميّزًا وفريدًا وقابلاً للتركيز تجربة التنقل لمستخدمي برامج قراءة الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/link-name.js | failureTitle": {
     "message": "عدم احتواء الروابط على اسم مميّز"
@@ -219,7 +219,7 @@
     "message": "احتواء الروابط على اسم مميز"
   },
   "lighthouse-core/audits/accessibility/list.js | description": {
-    "message": "تحتوي برامج قراءة الشاشة على طريقة محدّدة للإعلان عن القوائم. يؤدي ضمان بنية القائمة المناسبة إلى المساعدة على الاستماع إلى قارئ الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/list?application=lighthouse)."
+    "message": "تعتمد برامج قراءة الشاشة على طريقة محدّدة للإعلان عن القوائم. يؤدي ضمان بنية القائمة المناسبة إلى المساعدة على الاستماع إلى قارئ الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/list?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/list.js | failureTitle": {
     "message": "عدم احتواء القوائم على عناصر `<li>` فقط وعناصر دعم النص البرمجي (`<script>` و`<template>`)"
@@ -228,7 +228,7 @@
     "message": "احتواء القوائم على عناصر `<li>` وعناصر دعم النص البرمجي (`<script>` و`<template>`) فقط."
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "تتطلّب برامج قراءة الشاشة عناصر قائمة (`<li>`) ليتم احتواؤها ضمن العنصر الرئيسي `<ul>` أو `<ol>` حتى يتم الإعلان عنها بشكل صحيح. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/listitem?application=lighthouse)."
+    "message": "تتطلّب برامج قراءة الشاشة عناصر قائمة (`<li>`) يجب احتواؤها ضمن عنصر رئيسي `<ul>` أو `<ol>` حتى يتم الإعلان عنها بشكلٍ صحيح. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/listitem?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
     "message": "عناصر القائمة (`<li>`) لا تتضمّن العناصر الرئيسية `<ul>` أو `<ol>`"
@@ -237,7 +237,7 @@
     "message": "تضمين عناصر القائمة (`<li>`) في العناصر الرئيسية `<ul>` أو `<ol>`"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
-    "message": "لا يتوقع المستخدمون إعادة تحميل صفحة تلقائيًا، وسيؤدي ذلك إلى نقل التركيز مرة أخرى إلى أعلى الصفحة. وقد ينشأ عن ذلك تجربة محبطة ومربكة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/meta-refresh?application=lighthouse)."
+    "message": "لا يتوقع المستخدمون إعادة تحميل صفحة تلقائيًا، وسيؤدي ذلك إلى نقل التركيز مرة أخرى إلى أعلى الصفحة. وقد ينشأ عن ذلك تجربة محبطة ومربكة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | failureTitle": {
     "message": "استخدام المستند مع `<meta http-equiv=\"refresh\">`"
@@ -246,7 +246,7 @@
     "message": "عدم استخدام المستند مع `<meta http-equiv=\"refresh\">`"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | description": {
-    "message": "يمثّل إيقاف التكبير/التصغير مشكلة بالنسبة إلى المستخدمين ضعاف البصر الذين يعتمدون على تكبير الشاشة لمشاهدة محتوى صفحة الويب بشكل صحيح. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/meta-viewport?application=lighthouse)."
+    "message": "يمثّل إيقاف التكبير/التصغير مشكلة بالنسبة إلى المستخدمين ضعاف البصر الذين يعتمدون على تكبير الشاشة لمشاهدة محتوى صفحة الويب بشكل صحيح. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/meta-viewport?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | failureTitle": {
     "message": "استخدام `[user-scalable=\"no\"]` في العنصر `<meta name=\"viewport\">` أو السمة `[maximum-scale]` والتي تُعد أقل من 5."
@@ -255,7 +255,7 @@
     "message": "عدم استخدام `[user-scalable=\"no\"]` في العنصر `<meta name=\"viewport\">` والسمة `[maximum-scale]` لا تكون أقل من 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "لا يمكن لبرامج قراءة الشاشة ترجمة المحتوى غير النصي. تؤدي إضافة نص بديل إلى عناصر `<object>` إلى مساعدة برامج قراءة الشاشة على نقل المعنى إلى المستخدمين. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/object-alt?application=lighthouse)."
+    "message": "لا يمكن لبرامج قراءة الشاشة ترجمة المحتوى غير النصي. تؤدي إضافة نص بديل إلى عناصر `<object>` إلى مساعدة برامج قراءة الشاشة على نقل المعنى إلى المستخدمين. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
     "message": "عدم احتواء عناصر `<object>` على نص `[alt]`"
@@ -264,7 +264,7 @@
     "message": "احتواء عناصر `<object>` على نص `[alt]`"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
-    "message": "تشير القيمة الأكبر من 0 إلى وجود طلب تنقل صريح. على الرغم من أن ذلك صحيح تقنيًّا، غالبًا ما يؤدي ذلك إلى إنشاء تجارب محبطة للمستخدمين الذين يعتمدون على التقنيات المساعدة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/tabindex?application=lighthouse)."
+    "message": "تشير القيمة الأكبر من 0 إلى وجود طلب تنقل صريح. على الرغم من أن ذلك صحيح تقنيًّا، غالبًا ما يؤدي ذلك إلى إنشاء تجارب محبطة للمستخدمين الذين يعتمدون على التقنيات المساعدة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/tabindex?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/tabindex.js | failureTitle": {
     "message": "احتواء بعض العناصر على قيمة `[tabindex]` أكبر من 0"
@@ -273,7 +273,7 @@
     "message": "عدم توفُّر عنصر له قيمة `[tabindex]` أكبر من 0"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | description": {
-    "message": "تحتوي برامج قراءة الشاشة على ميزات لتسهيل التنقل بين الجداول. قد يؤدي ضمان أن الخلايا `<td>` التي تستخدم السمة `[headers]` تشير فقط إلى خلايا أخرى في الجدول نفسه إلى تحسين تجربة مستخدمي برامج قراءة الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/td-headers-attr?application=lighthouse)."
+    "message": "تحتوي برامج قراءة الشاشة على ميزات لتسهيل التنقل بين الجداول. يمكن تحسين تجربة استخدام برامج قراءة الشاشة من خلال ضمان إشارة الخلايا `<td>` التي تستخدم السمة `[headers]` إلى خلايا أخرى في الجدول نفسه فقط. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
     "message": "الخلايا في العنصر `<table>` التي تستخدم السمة `[headers]` تشير إلى وجود خلايا أخرى لهذا الجدول نفسه."
@@ -282,7 +282,7 @@
     "message": "الخلايا الواردة في عنصر `<table>` التي تستخدم السمة `[headers]` تشير فقط إلى خلايا أخرى في الجدول نفسه."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
-    "message": "تحتوي برامج قراءة الشاشة على ميزات لتسهيل التنقل بين الجداول. قد يؤدي ضمان أن عناوين الجداول تشير دائمًا إلى بعض مجموعات الخلايا إلى تحسين تجربة مستخدمي برامج قراءة الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/th-has-data-cells?application=lighthouse)."
+    "message": "تحتوي برامج قراءة الشاشة على ميزات لتسهيل التنقل بين الجداول. ويمكن تحسين تجربة استخدام برامج قراءة الشاشة من خلال الحرص على أن تشير عناوين الجداول دائمًا إلى بعض مجموعات الخلايا. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | failureTitle": {
     "message": "عدم احتواء عناصر `<th>` وعناصر تتضمّن `[role=\"columnheader\"/\"rowheader\"]` على خلايا البيانات التي يتم وصفها"
@@ -291,7 +291,7 @@
     "message": "احتواء عناصر `<th>` وعناصر `[role=\"columnheader\"/\"rowheader\"]` على خلايا البيانات التي يتم وصفها"
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | description": {
-    "message": "يؤدي تحديد [BCP 47 language] (https://www.w3.org/International/questions/qa-choosing-language-tags#question) صحيحة على العناصر إلى المساعدة في ضمان نطق النص بشكلٍ صحيح من خلال قارئ الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse)."
+    "message": "يؤدي تحديد [BCP 47 language] (https://www.w3.org/International/questions/qa-choosing-language-tags#question) صحيحة على العناصر إلى المساعدة على ضمان نطق النص بشكلٍ صحيح من خلال قارئ الشاشة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | failureTitle": {
     "message": "عدم احتواء سمات `[lang]` على قيمة صحيحة"
@@ -300,7 +300,7 @@
     "message": "احتواء سمات `[lang]` على قيمة صحيحة"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | description": {
-    "message": "عندما يقدم الفيديو شرحًا، يَسهُل على المستخدمين الصُم والذين يعانون من إعاقة سمعية الوصول إلى معلوماته. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/video-caption?application=lighthouse)."
+    "message": "عندما يقدم الفيديو شرحًا، يَسهُل على المستخدمين الصُم والذين يعانون من إعاقة سمعية الوصول إلى معلوماته. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/video-caption?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/video-caption.js | failureTitle": {
     "message": "عدم احتواء عناصر `<video>` على عنصر `<track>` يتضمّن `[kind=\"captions\"]`."
@@ -309,7 +309,7 @@
     "message": "احتواء عناصر `<video>` على عنصر `<track>` يتضمّن `[kind=\"captions\"]`"
   },
   "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "توفّر الأوصاف الصوتية معلومات ذات صلة للفيديوهات التي لا يمكن إجراء الحوار بها، مثل تعبيرات الوجه وأجواء الإضاءة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/2.2/video-description?application=lighthouse)."
+    "message": "توفّر الأوصاف الصوتية معلومات ذات صلة للفيديوهات، لا يمكن توفيرها في الحوار مثل تعبيرات الوجه وأجواء الإضاءة. [مزيد من المعلومات](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
     "message": "عدم احتواء عناصر `<video>` على عنصر `<track>` يتضمّن `[kind=\"description\"]`"
@@ -327,7 +327,7 @@
     "message": "تحليل النص البرمجي"
   },
   "lighthouse-core/audits/bootup-time.js | columnTotal": {
-    "message": "الإجمالي"
+    "message": "الوقت الإجمالي لوحدة المعالجة المركزية"
   },
   "lighthouse-core/audits/bootup-time.js | description": {
     "message": "يمكنك تقليل الوقت المستغرق في تحليل جافا سكريبت وإنشائه وتنفيذه. قد يتبين لك أن تسليم أحمال جافا سكريبت بحجم أصغر يساعد في ذلك. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/bootup)."
@@ -381,10 +381,10 @@
     "message": "تصغير جافا سكريبت"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "يمكنك إزالة القواعد غير المُستخدَمة من ورق الأنماط لتقليل وحدات البايت غير الضرورية التي يستهلكها نشاط الشبكة. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/unused-css)."
+    "message": "يمكنك إزالة القواعد الضارة من أوراق الأنماط وتأجيل تحميل خدمة CSS غير المستخدمة في محتوى الجزء المرئي من الصفحة للحد من وحدات البايت غير الضرورية المستهلكة من خلال نشاط الشبكة. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/unused-css)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "تأجيل CSS غير المُستخدَم"
+    "message": "إزالة خدمة CSS غير المُستخدَمة"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
     "message": "يمكنك إزالة جافا سكريبت غير المُستخدَم لتقليل وحدات البايت التي يستهلكها نشاط الشبكة."
@@ -476,6 +476,21 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "تظل جميع النصوص مرئية أثناء تحميل خط موقع ويب"
   },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
+    "message": "يضمن تحميل الصفحات بشكل سريع عبر شبكة الجوّال جودة تجربة الاستخدام. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)."
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
+    "message": "الوقت التفاعلي بالثواني: {timeInMs, number, seconds} "
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
+    "message": "الوقت التفاعلي على شبكة الجوّال التي تمت محاكاتها لمدة {timeInMs, number, seconds} من الثواني"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
+    "message": "تحميل الصفحة على شبكات الجوّال ليس سريعًا بشكلٍ كافٍ"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
+    "message": "تحميل الصفحة سريع بشكلٍ كافٍ في شبكات الجوّال"
+  },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "الفئة"
   },
@@ -489,7 +504,7 @@
     "message": "تقليل سلسلة العمل الرئيسية"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "إن النتيجة الواردة أعلاه تمثل تقديرًا لطول المدة التي يستغرقها تطبيقك في الاستجابة لإدخال المستخدم، بالمللي ثانية، أثناء فترة تحميل الصفحة الأكثر انشغالاً خلال 5 ثوانٍ. إذا كان وقت الاستجابة أكثر من 50 مللي ثانية، يمكن للمستخدمين اعتبار تطبيقك بأنه \"بطيء في التفاعل\". [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
+    "message": "إن وقت الاستجابة للإدخال المقدر يمثّل تقديرًا لطول المدة التي تستغرقها استجابة تطبيقك لإدخال المستخدم بالمللي ثانية، وذلك أثناء الثواني الخمس الأكثر انشغالاً في فترة تحميل الصفحة. وفي حال دام وقت الاستجابة أكثر من 50 مللي ثانية، يمكن للمستخدمين اعتبار تطبيقك بأنه \"بطيء في التفاعل\". [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | title": {
     "message": "وقت الاستجابة المُقدّر للإدخال"
@@ -513,10 +528,16 @@
     "message": "First Meaningful Paint"
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
-    "message": "يميّز \"الوضع التفاعلي\" الوقت الذي تكون فيه الصفحة تفاعلية بالكامل. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
+    "message": "وقت التفاعل هو مقدار الوقت المستغرق حتى تصبح الصفحة تفاعلية بالكامل. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
   },
   "lighthouse-core/audits/metrics/interactive.js | title": {
     "message": "وقت التفاعل"
+  },
+  "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
+    "message": "تأخير الإدخال الأول المحتمل الذي قد يواجهه المستخدمون هو المُدة بالمللي ثانية لأطول مهمة."
+  },
+  "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
+    "message": "الحد الأقصى المحتمل من تأخير الإدخال الأول (FID)"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "يوضح مؤشر السرعة مدى سرعة تعبئة محتوى الصفحة بشكلٍ واضح. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/speed-index)."
@@ -524,11 +545,179 @@
   "lighthouse-core/audits/metrics/speed-index.js | title": {
     "message": "مؤشر السرعة"
   },
+  "lighthouse-core/audits/network-rtt.js | description": {
+    "message": "تؤثر مُدد الإرسال والاستقبال للشبكة تأثيرًا كبيرًا في مستوى الأداء. في حال كانت مدة الإرسال والاستقبال كبيرة، يشير ذلك إلى احتمال تحسّن أداء الخوادم الأقرب إلى المستخدم. [مزيد من المعلومات](https://hpbn.co/primer-on-latency-and-bandwidth/)."
+  },
+  "lighthouse-core/audits/network-rtt.js | title": {
+    "message": "أوقات إرسال واستقبال الشبكة"
+  },
+  "lighthouse-core/audits/network-server-latency.js | description": {
+    "message": "قد تؤثر أوقات استجابة الخادم في أداء الويب. في حال كان وقت استجابة الخادم للأصل طويلاً، هذه إشارة إلى أنه تم تحميل الخادم بشكلٍ زائد أو مستوى أدائه ضعيف في الخلفية. [مزيد من المعلومات](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)."
+  },
+  "lighthouse-core/audits/network-server-latency.js | title": {
+    "message": "أوقات الاستجابة لواجهة الخادم الخلفية"
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "تؤدي عمليات إعادة التوجيه إلى حدوث تأخيرات إضافية قبل أن يتم تحميل الصفحة. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/redirects)."
   },
   "lighthouse-core/audits/redirects.js | title": {
     "message": "تجنُب عمليات إعادة توجيه الصفحات المتعددة"
+  },
+  "lighthouse-core/audits/seo/canonical.js | description": {
+    "message": "تقترح الروابط الأساسية عنوان URL للعرض في نتائج البحث. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/canonical)."
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
+    "message": "تتعدّد عناوين URL المتضاربة ({urlList})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
+    "message": "النقاط لنطاق مختلف ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
+    "message": "عنوان URL غير صالح ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationPointsElsewhere": {
+    "message": "النقاط لموقع \"hreflang\" الآخر ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
+    "message": "عنوان URL نسبي ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationRoot": {
+    "message": "يشير إلى عنوان URL الجذر للنطاق (الصفحة الرئيسية)، بدلاً من صفحة مكافئة للمحتوى"
+  },
+  "lighthouse-core/audits/seo/canonical.js | failureTitle": {
+    "message": "لا يحتوي المستند على سمة `rel=canonical` صالحة"
+  },
+  "lighthouse-core/audits/seo/canonical.js | title": {
+    "message": "يحتوي المستند على سمة `rel=canonical` صالحة"
+  },
+  "lighthouse-core/audits/seo/font-size.js | description": {
+    "message": "تُعد أحجام الخطوط الأقل من 12 بكسل صغيرة جدًا بحيث لا يمكن قراءتها بسهولة وتتطلب من مستخدمي الجوّال \"تحريك الإصبعين للتكبير أو التصغير\" من أجل قراءتها. يمكنك بذل قصارى جهدك للحصول على نسبة أكبر من 60% من نص الصفحة بمقدار أكبر من أو يساوي 12 بكسل. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/font-sizes)."
+  },
+  "lighthouse-core/audits/seo/font-size.js | displayValue": {
+    "message": "نص {decimalProportion, number, extendedPercent} مقروء"
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanation": {
+    "message": "{decimalProportion, number, extendedPercent} من النص صغير جدًا."
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
+    "message": "النص غير مقروء لأنه لا تتوفّر علامة وصفية لإطار العرض محسنة لشاشات الجوّال."
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
+    "message": "{decimalProportion, number, extendedPercent} من النص يكون صغيرًا جدًا (استنادًا إلى نموذج {decimalProportionVisited, number, extendedPercent})."
+  },
+  "lighthouse-core/audits/seo/font-size.js | failureTitle": {
+    "message": "لا يستخدم المستند أحجام الخطوط القابلة للقراءة"
+  },
+  "lighthouse-core/audits/seo/font-size.js | title": {
+    "message": "يستخدم المستند أحجام الخط القابلة للقراءة"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | description": {
+    "message": "تخبر روابط hreflang محركات البحث عن إصدار الصفحة الذي يجب إدارجه في نتائج البحث للغة أو منطقة معينة. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/hreflang)."
+  },
+  "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
+    "message": "لا يحتوي المستند على سمة \"hreflang\" صالحة"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | title": {
+    "message": "يحتوي المستند على سمة `hreflang` صالحة"
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | description": {
+    "message": "قد لا تتم فهرسة الصفحات التي تتضمّن رموز حالة HTTP غير صالحة بشكلٍ صحيح. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code)."
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | failureTitle": {
+    "message": "تحتوي الصفحة على رمز حالة HTTP غير صالح"
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | title": {
+    "message": "تحتوي الصفحة على رمز حالة HTTP صالح"
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | description": {
+    "message": "يتعذّر على محركات البحث تضمين صفحاتك في نتائج البحث في حال عدم حصولها على إذن للزحف إلى هذه الصفحات. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/indexing)."
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": {
+    "message": "يتم حظر الصفحة من الفهرسة"
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | title": {
+    "message": "الصفحة ليست محظورة من الفهرسة"
+  },
+  "lighthouse-core/audits/seo/link-text.js | description": {
+    "message": "يساعد نص الرابط الوصفي محركات البحث على فهم المحتوى. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)."
+  },
+  "lighthouse-core/audits/seo/link-text.js | displayValue": {
+    "message": "{itemCount,plural, =1{تم العثور على رابط واحد}zero{تم العثور على # رابط}two{تم العثور على رابطين (#)}few{تم العثور على # روابط}many{تم العثور على # رابطًا}other{تم العثور على # رابط}}"
+  },
+  "lighthouse-core/audits/seo/link-text.js | failureTitle": {
+    "message": "عدم احتواء الروابط على نص وصفي"
+  },
+  "lighthouse-core/audits/seo/link-text.js | title": {
+    "message": "تحتوي الروابط على نص وصفي"
+  },
+  "lighthouse-core/audits/seo/manual/structured-data.js | description": {
+    "message": "تشغيل [أداة اختبار البيانات المنظَّمة](https://search.google.com/structured-data/testing-tool/) و[Linter للبيانات المنظَّمة](http://linter.structured-data.org/) للتحقُّق من البيانات المنظَّمة. [مزيد من المعلومات](https://developers.google.com/search/docs/guides/mark-up-content)."
+  },
+  "lighthouse-core/audits/seo/manual/structured-data.js | title": {
+    "message": "البيانات المنظَّمة صالحة"
+  },
+  "lighthouse-core/audits/seo/meta-description.js | description": {
+    "message": "قد يتم تضمين الأوصاف التعريفية في نتائج البحث لتلخيص محتوى الصفحة بإيجاز. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/description)."
+  },
+  "lighthouse-core/audits/seo/meta-description.js | explanation": {
+    "message": "نص الوصف فارغ."
+  },
+  "lighthouse-core/audits/seo/meta-description.js | failureTitle": {
+    "message": "لا يحتوي المستند على وصف تعريفي"
+  },
+  "lighthouse-core/audits/seo/meta-description.js | title": {
+    "message": "يحتوي المستند على وصف تعريفي"
+  },
+  "lighthouse-core/audits/seo/plugins.js | description": {
+    "message": "لا يمكن لمحركات البحث فهرسة محتوى مكون إضافي وتحظر العديد من الأجهزة استخدام المكونات الإضافية أو لا توفّرها. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/plugins)."
+  },
+  "lighthouse-core/audits/seo/plugins.js | failureTitle": {
+    "message": "يستخدم المستند مكونات إضافية"
+  },
+  "lighthouse-core/audits/seo/plugins.js | title": {
+    "message": "يتجنّب المستند المكونات الإضافية"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | description": {
+    "message": "في حال كان ملف \"robots.txt\" مكتوبًا بصيغة غير صحيحة، يمكن ألا تفهم برامج الزحف كيف تريد أن يتم الزحف إلى موقعك الإلكتروني أو أن تتم فهرسته."
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
+    "message": "الطلب لملف \"robots.txt\" عرض حالة HTTP: {statusCode}"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
+    "message": "{itemCount,plural, =1{تم العثور على خطأ واحد}zero{تم العثور على # خطأ}two{تم العثور على خطأين (#)}few{تم العثور على # أخطاء}many{تم العثور على # خطأً}other{تم العثور على # خطأ}}"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | explanation": {
+    "message": "تعذّر على Lighthouse تنزيل ملف robots.txt"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | failureTitle": {
+    "message": "ملف \"robots.txt\" غير صالح"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | title": {
+    "message": "ملف \"robots.txt\" صالح"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | description": {
+    "message": "يجب أن تكون العناصر التفاعلية، مثل الأزرار والروابط كبيرة بشكلٍ كافٍ (48 × 48 بكسل) وتحيط بها مساحة كافية ليكون من السهل النقر عليها بدون النقر على أي عناصر أخرى. [مزيد من المعلومات](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
+    "message": "تم تحديد حجم {decimalProportion, number, percent} لأهداف النقر بشكلٍ مناسب"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | explanationViewportMetaNotOptimized": {
+    "message": "أهداف النقر صغيرة جدًا لأنه لا تتوفّر علامة وصفية لإطار العرض محسنة لشاشات الجوّال."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | failureTitle": {
+    "message": "لم يتم تحديد حجم أهداف النقر بشكل مناسب"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": {
+    "message": "استهداف متداخِل"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | sizeHeader": {
+    "message": "الحجم"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": {
+    "message": "هدف النقر"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | title": {
+    "message": "يتم تحديد حجم أهداف النقر بشكل مناسب"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "يحدد \"وقت وصول أول بايت\" الوقت الذي يُرسل فيه الخادم استجابة. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."
@@ -572,6 +761,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "الاتصال المسبق للأصول المطلوبة"
   },
+  "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
+    "message": "تم العثور على <link> للتحميل المسبق لـ \"{preloadURL}\"، ولكن لم يتم استخدامه من خلال المتصفِّح. يُرجى التحقُّق من استخدام السمة `crossorigin` بشكل صحيح."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "يمكنك استخدام <link rel = preload> لتحديد أولويات جلب الموارد المطلوبة حاليًا في وقتٍ لاحق في تحميل الصفحة. [مزيد من المعلومات](https://developers.google.com/web/tools/lighthouse/audits/preload)."
   },
@@ -582,49 +774,58 @@
     "message": "هذه هي فرص لتحسين استخدام ARIA في تطبيقك، ما قد يحسّن تجربة مستخدمي التكنولوجيا المساعدة، مثل قارئ الشاشة."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "تتبُّع سمات ARIA لأفضل الممارسات"
+    "message": "ARIA"
+  },
+  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
+    "message": "هذه الفرص تتيح توفير محتوى بديل للصوت والفيديو. قد يحسّن ذلك التجربة للمستخدمين الذين يعانون من إعاقات سمعية أو بصرية."
+  },
+  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
+    "message": "الصوت والفيديو"
+  },
+  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
+    "message": "تحدّد هذه العناصر أفضل الممارسات الشائعة المتعلقة بإمكانية الوصول."
+  },
+  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
+    "message": "أفضل الممارسات"
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
+    "message": "تحدّد عمليات التحقق هذه الفرص التي تتيح [تحسين إمكانية الوصول إلى تطبيق الويب](https://developers.google.com/web/fundamentals/accessibility). يمكن الكشف بشكل تلقائيّ عن مجموعة فرعية من مشاكل إمكانية الوصول فحسب، لذلك يُنصح أيضًا باستخدام الاختبار اليدوي."
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
+    "message": "تعالج هذه العناصر المناطق التي يتعذر على أداة الاختبار التلقائية تغطيتها. مزيد من المعلومات في دليلنا حول [إجراء مراجعة إمكانية الوصول](https://developers.google.com/web/fundamentals/accessibility/how-to-review)."
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
+    "message": "إمكانية الوصول"
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
     "message": "هذه هي فرص لتحسين سهولة قراءة المحتوى."
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "تباين الألوان مُرضٍ"
-  },
-  "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupDescription": {
-    "message": "هذه هي فرص لتحسين ضبط عناصر HTML."
-  },
-  "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupTitle": {
-    "message": "استخدام العناصر للسمات بشكل صحيح"
-  },
-  "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupDescription": {
-    "message": "هذه هي الفرص لتسهيل فهم المحتوى بالنسبة إلى مستخدم التكنولوجيا المساعدة، مثل قارئ الشاشة."
-  },
-  "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupTitle": {
-    "message": "وصف العناصر للمحتويات جيدًا"
-  },
-  "lighthouse-core/config/default-config.js | a11yElementNamesGroupDescription": {
-    "message": "هذه هي فرص لتحسين دلالات عناصر التحكُّم في التطبيق. قد يحسّن ذلك من تجربة مستخدمي التكنولوجيا المساعدة، مثل قارئ الشاشة."
-  },
-  "lighthouse-core/config/default-config.js | a11yElementNamesGroupTitle": {
-    "message": "احتواء العناصر على الأسماء المميزة"
+    "message": "التباين"
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "هذه هي فرص لتحسين تفسير المحتوى من خلال المستخدمين بلغات مختلفة."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "تحديد الصفحة للغة صحيحة"
+    "message": "التدويل والأقلمة"
   },
-  "lighthouse-core/config/default-config.js | a11yMetaGroupDescription": {
-    "message": "هذه هي الفرص لتحسين تجربة المستخدم لموقعك الإلكتروني."
+  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
+    "message": "هذه هي فرص لتحسين دلالات عناصر التحكُّم في التطبيق. قد يحسّن ذلك من تجربة مستخدمي التكنولوجيا المساعدة، مثل قارئ الشاشة."
   },
-  "lighthouse-core/config/default-config.js | a11yMetaGroupTitle": {
-    "message": "استخدام علامات وصفية بشكل صحيح"
+  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
+    "message": "الأسماء والتصنيفات"
   },
-  "lighthouse-core/config/default-config.js | a11yWellStructuredGroupDescription": {
-    "message": "هذه هي الفرص للتأكُّد من أن HTML منظّم بشكل مناسب."
+  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
+    "message": "هذه الفرص تتيح لك تحسين التنقل باستخدام لوحة المفاتيح في تطبيقك."
   },
-  "lighthouse-core/config/default-config.js | a11yWellStructuredGroupTitle": {
-    "message": "العناصر منظّمة بشكل جيد"
+  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
+    "message": "التنقل"
+  },
+  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
+    "message": "هذه الفرص تتسح تحسين تجربة قراءة بيانات القائمة أو الجدول باستخدام التكنولوجيا المساعدة، مثل قارئ الشاشة."
+  },
+  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
+    "message": "الجداول والقوائم"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
     "message": "مزيد من المعلومات حول أداء تطبيقك."
@@ -664,6 +865,15 @@
   },
   "lighthouse-core/config/default-config.js | pwaOptimizedGroupTitle": {
     "message": "تحسين PWA"
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryDescription": {
+    "message": "تضمن عمليات التحقُّق هذه تحسين أداء صفحتك لتظهر في ترتيب نتائج مُحرّك البحث. هناك عوامل إضافية لا يتحقّق منها Lighthouse قد تؤثر في ترتيب نتائج البحث. [مزيد من المعلومات](https://support.google.com/webmasters/answer/35769)."
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
+    "message": "تشغيل أدوات التحقُّق الإضافية هذه على موقعك الإلكتروني للتحقُّق من أفضل ممارسات تحسين محركات البحث الإضافية."
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryTitle": {
+    "message": "تحسين محركات البحث"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "ذاكرة التخزين المؤقت TTL"
@@ -714,7 +924,7 @@
     "message": "لم يتمكّن Lighthouse من تحميل عنوان URL الذي طلبته بشكل موثوق لأن الصفحة توقفت عن الاستجابة."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedInsecure": {
-    "message": "لا يحتوي عنوان URL الذي قدمته على بيانات اعتماد أمان صحيحة. ({securityMessages})"
+    "message": "لا يحتوي عنوان URL الذي قدمته على بيانات اعتماد أمان صحيحة. {securityMessages}"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
     "message": "لم يتمكّن Lighthouse من تحميل الصفحة المطلوبة بشكل موثوق. يمكنك التأكُّد من اختبار عنوان URL الصحيح وأن الخادم يستجيب بشكل صحيح لجميع الطلبات. (التفاصيل: {errorDetails})"
@@ -773,11 +983,20 @@
   "lighthouse-core/report/html/renderer/util.js | scorescaleLabel": {
     "message": "مقياس النتيجة:"
   },
+  "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
+    "message": "تصغير المقتطف"
+  },
+  "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
+    "message": "توسيع المقتطف"
+  },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "حدثت مشاكل تؤثر في تشغيل Lighthouse:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
     "message": "القيم تقديرية وقابلة للتغير"
+  },
+  "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
+    "message": "عمليات التدقيق التي تم اجتيازها، ولكن تتضمّن التحذيرات"
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "التحذيرات: "

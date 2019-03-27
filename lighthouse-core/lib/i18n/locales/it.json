@@ -1,6 +1,6 @@
 {
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
-    "message": "Le chiavi di accesso consentono all'utente di impostare rapidamente lo stato attivo su una particolare sezione della pagina. Per assicurare una navigazione corretta, ogni chiave di accesso deve essere univoca. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/accesskeys?application=lighthouse)."
+    "message": "Le chiavi di accesso consentono all'utente di impostare rapidamente lo stato attivo su una particolare sezione della pagina. Per assicurare una navigazione corretta, ogni chiave di accesso deve essere univoca. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | failureTitle": {
     "message": "I valori di \"[accesskey]\" non sono univoci"
@@ -9,7 +9,7 @@
     "message": "I valori di \"[accesskey]\" sono univoci"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": {
-    "message": "Ogni elemento \"role\" di ARIA supporta un determinato sottoinsieme di attributi \"aria-*\". Se non dovessero corrispondere, gli attributi \"aria-*\" non saranno considerati validi. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/aria-allowed-attr?application=lighthouse)."
+    "message": "Ogni elemento \"role\" di ARIA supporta un determinato sottoinsieme di attributi \"aria-*\". Se non dovessero corrispondere, gli attributi \"aria-*\" non saranno considerati validi. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | failureTitle": {
     "message": "Gli attributi \"[aria-*]\" non corrispondono ai rispettivi ruoli"
@@ -18,7 +18,7 @@
     "message": "Gli attributi \"[aria-*]\" corrispondono ai rispettivi ruoli"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
-    "message": "Alcuni ruoli di ARIA hanno attributi obbligatori in grado di descrivere lo stato dell'elemento agli screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/aria-required-attr?application=lighthouse)."
+    "message": "Alcuni ruoli di ARIA hanno attributi obbligatori in grado di descrivere lo stato dell'elemento agli screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | failureTitle": {
     "message": "Gli elementi \"[role]\" non hanno tutti gli attributi \"[aria-*]\" obbligatori"
@@ -27,7 +27,7 @@
     "message": "Gli elementi \"[role]\" hanno tutti gli attributi \"[aria-*]\" obbligatori"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | description": {
-    "message": "Alcuni ruoli principali di ARIA devono contenere specifici ruoli secondari per poter eseguire le funzionalità per l'accessibilità previste. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/aria-required-children?application=lighthouse)."
+    "message": "Alcuni ruoli principali di ARIA devono contenere specifici ruoli secondari per poter eseguire le funzionalità per l'accessibilità previste. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
     "message": "Non è presente alcun elemento con ruolo \"[role]\" che richiede specifici ruoli \"[role]\" secondari."
@@ -36,7 +36,7 @@
     "message": "Sono presenti elementi con ruolo \"[role]\" che richiedono specifici \"[role]\" secondari."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
-    "message": "Alcuni ruoli secondari di ARIA devono essere contenuti in specifici ruoli principali per poter eseguire in modo corretto le funzionalità per l'accessibilità previste. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/aria-required-parent?application=lighthouse)."
+    "message": "Alcuni ruoli secondari di ARIA devono essere contenuti in specifici ruoli principali per poter eseguire in modo corretto le funzionalità per l'accessibilità previste. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/aria-required-parent?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | failureTitle": {
     "message": "Gli elementi \"[role]\" non sono contenuti nei rispettivi elementi principali obbligatori"
@@ -45,7 +45,7 @@
     "message": "Gli elementi \"[role]\" sono contenuti nei rispettivi elementi principali obbligatori"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | description": {
-    "message": "I ruoli di ARIA devono contenere valori validi per poter eseguire le funzionalità per l'accessibilità previste. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/aria-roles?application=lighthouse)."
+    "message": "I ruoli di ARIA devono contenere valori validi per poter eseguire le funzionalità per l'accessibilità previste. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/aria-roles?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | failureTitle": {
     "message": "I valori di \"[role]\" non sono validi"
@@ -54,7 +54,7 @@
     "message": "I valori \"[role]\" sono validi"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
-    "message": "Le tecnologie per la disabilità, come gli screen reader, non sono in grado di interpretare gli attributi di ARIA con valori non validi. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr-value?application=lighthouse)."
+    "message": "Le tecnologie per la disabilità, come gli screen reader, non sono in grado di interpretare gli attributi di ARIA con valori non validi. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | failureTitle": {
     "message": "Gli attributi \"[aria-*]\" non hanno valori validi"
@@ -63,7 +63,7 @@
     "message": "Gli attributi \"[aria-*]\" hanno valori validi"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": {
-    "message": "Le tecnologie per la disabilità, come gli screen reader, non sono in grado di interpretare gli attributi di ARIA con nomi non validi. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/aria-valid-attr?application=lighthouse)."
+    "message": "Le tecnologie per la disabilità, come gli screen reader, non sono in grado di interpretare gli attributi di ARIA con nomi non validi. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | failureTitle": {
     "message": "Gli attributi \"[aria-*]\" non sono validi o contengono errori ortografici"
@@ -72,7 +72,7 @@
     "message": "Gli attributi \"[aria-*]\" sono validi e non contengono errori ortografici"
   },
   "lighthouse-core/audits/accessibility/audio-caption.js | description": {
-    "message": "Le didascalie forniscono informazioni essenziali relative agli elementi audio, come chi sta parlando, il contenuto del dialogo e altre informazioni di contorno utilizzabili da non udenti e utenti con problemi di udito. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/audio-caption?application=lighthouse)."
+    "message": "Le didascalie forniscono informazioni essenziali relative agli elementi audio, come chi sta parlando, il contenuto del dialogo e altre informazioni di contorno utilizzabili da non udenti e utenti con problemi di udito. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/audio-caption.js | failureTitle": {
     "message": "Gli elementi \"<audio>\" non contengono alcun elemento \"<track>\" con didascalie \"[kind=\"captions\"]\""
@@ -84,7 +84,7 @@
     "message": "Elementi respinti"
   },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
-    "message": "Quando un pulsante non ha un nome accessibile, gli screen reader lo descriveranno semplicemente come \"pulsante\", rendendolo inutilizzabile per gli utenti di screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/button-name?application=lighthouse)."
+    "message": "Quando un pulsante non ha un nome accessibile, gli screen reader lo descriveranno semplicemente come \"pulsante\", rendendolo inutilizzabile per gli utenti di screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/button-name.js | failureTitle": {
     "message": "I pulsanti non hanno nomi accessibili"
@@ -93,7 +93,7 @@
     "message": "I pulsanti hanno un nome accessibile"
   },
   "lighthouse-core/audits/accessibility/bypass.js | description": {
-    "message": "Quando si aggiungono metodi per ignorare contenuti ripetitivi, la navigazione della pagina diventa più efficiente per chi usa la tastiera. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/bypass?application=lighthouse)."
+    "message": "Quando si aggiungono metodi per ignorare contenuti ripetitivi, la navigazione della pagina diventa più efficiente per chi usa la tastiera. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/bypass?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/bypass.js | failureTitle": {
     "message": "La pagina non contiene alcun titolo, skip link o area di riferimento"
@@ -102,7 +102,7 @@
     "message": "La pagina contiene un titolo, uno skip link o un'area di riferimento"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | description": {
-    "message": "Il testo a basso contrasto è difficile, se non impossibile, da leggere per molti utenti. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse)."
+    "message": "Il testo a basso contrasto è difficile, se non impossibile, da leggere per molti utenti. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | failureTitle": {
     "message": "Il rapporto di contrasto tra i colori di sfondo e primo piano non è sufficiente."
@@ -111,7 +111,7 @@
     "message": "Il rapporto di contrasto tra i colori di sfondo e primo piano è sufficiente"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | description": {
-    "message": "Quando il mark up degli elenchi di definizioni non è stato eseguito in modo corretto, gli screen reader possono generare risultati ambigui o inesatti. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/definition-list?application=lighthouse)."
+    "message": "Quando il mark up degli elenchi di definizioni non è stato eseguito in modo corretto, gli screen reader possono generare risultati ambigui o inesatti. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/definition-list?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
     "message": "Gli elementi \"<dl>\" non contengono solo gruppi \"<dt>\" e \"<dd>\" ed elementi \"<script>\" o \"<template>\" nell'ordine corretto."
@@ -120,7 +120,7 @@
     "message": "Gli elementi \"<dl>\" contengono solo gruppi \"<dt>\" e \"<dd>\" ed elementi \"<script>\" o \"<template>\" nell'ordine corretto."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
-    "message": "Gli elementi dell'elenco di definizioni (\"<dt>\" e \"<dd>\") devono essere aggregati all'elemento \"<dl>\" principale per assicurare che gli screen reader possano descriverli correttamente. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/dlitem?application=lighthouse)."
+    "message": "Gli elementi dell'elenco di definizioni (\"<dt>\" e \"<dd>\") devono essere aggregati all'elemento \"<dl>\" principale per assicurare che gli screen reader possano descriverli correttamente. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/dlitem?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | failureTitle": {
     "message": "Gli elementi dell'elenco di definizioni non sono aggregati agli elementi \"<dl>\""
@@ -138,7 +138,7 @@
     "message": "Il documento contiene un elemento \"<title>\""
   },
   "lighthouse-core/audits/accessibility/duplicate-id.js | description": {
-    "message": "Il valore di un attributo id deve essere univoco per evitare che altre istanze vengano ignorate dalle tecnologie per la disabilità. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/duplicate-id?application=lighthouse)."
+    "message": "Il valore di un attributo id deve essere univoco per evitare che altre istanze vengano ignorate dalle tecnologie per la disabilità. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/duplicate-id?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/duplicate-id.js | failureTitle": {
     "message": "Gli attributi \"[id]\" sulla pagina non sono univoci"
@@ -147,7 +147,7 @@
     "message": "Gli attributi \"[id]\" sulla pagina sono univoci"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
-    "message": "Gli screen reader fanno ricorso ai titoli dei frame per descrivere i contenuti dei frame ai loro utenti. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/frame-title?application=lighthouse)."
+    "message": "Gli screen reader fanno ricorso ai titoli dei frame per descrivere i contenuti dei frame ai loro utenti. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/frame-title?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/frame-title.js | failureTitle": {
     "message": "Gli elementi \"<frame>\" o \"<iframe>\" non hanno un titolo"
@@ -156,7 +156,7 @@
     "message": "Gli elementi \"<frame>\" o \"<iframe>\" hanno un titolo"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
-    "message": "Se una pagina non specifica alcun attributo lang, lo screen reader presuppone che la pagina è impostata nella lingua predefinita scelta dall'utente per tale screen reader al momento della configurazione. Se la pagina non è effettivamente impostata nella lingua predefinita, lo screen reader potrebbe non pronunciare il testo della pagina in modo corretto. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/html-lang?application=lighthouse)."
+    "message": "Se una pagina non specifica alcun attributo lang, lo screen reader presuppone che la pagina è impostata nella lingua predefinita scelta dall'utente per tale screen reader al momento della configurazione. Se la pagina non è effettivamente impostata nella lingua predefinita, lo screen reader potrebbe non pronunciare il testo della pagina in modo corretto. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | failureTitle": {
     "message": "L'elemento \"<html>\" non ha un attributo \"[lang]\""
@@ -165,7 +165,7 @@
     "message": "L'elemento \"<html>\" ha un attributo \"[lang]\""
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | description": {
-    "message": "Specificare una [lingua definita nel documento BCP 47](https://www.w3.org/International/questions/qa-choosing-language-tags#question) aiuta gli screen reader a pronunciare il testo correttamente. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse)."
+    "message": "Specificare una [lingua definita nel documento BCP 47](https://www.w3.org/International/questions/qa-choosing-language-tags#question) aiuta gli screen reader a pronunciare il testo correttamente. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | failureTitle": {
     "message": "L'elemento \"<html>\" non ha un valore valido per il corrispettivo attributo \"[lang]\"."
@@ -174,7 +174,7 @@
     "message": "L'elemento \"<html>\" ha un valore valido per il corrispettivo attributo \"[lang]\""
   },
   "lighthouse-core/audits/accessibility/image-alt.js | description": {
-    "message": "Gli elementi informativi dovrebbero puntare a mostrare testo alternativo che sia breve e descrittivo. Gli elementi decorativi possono essere ignorati in un attributo alt vuoto. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/image-alt?application=lighthouse)."
+    "message": "Gli elementi informativi dovrebbero puntare a mostrare testo alternativo che sia breve e descrittivo. Gli elementi decorativi possono essere ignorati in un attributo ALT vuoto. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/image-alt.js | failureTitle": {
     "message": "Gli elementi immagine non hanno attributi \"[alt]\""
@@ -183,7 +183,7 @@
     "message": "Gli elementi immagine hanno attributi \"[alt]\""
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | description": {
-    "message": "Quando viene utilizzata un'immagine come pulsante di inserimento \"<input>\", fornire del testo alternativo può aiutare gli utenti di screen reader a comprendere lo scopo del pulsante. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/input-image-alt?application=lighthouse)."
+    "message": "Quando viene utilizzata un'immagine come pulsante di inserimento \"<input>\", fornire del testo alternativo può aiutare gli utenti di screen reader a comprendere lo scopo del pulsante. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/input-image-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | failureTitle": {
     "message": "Gli elementi \"<input type=\"image\">\" non hanno testo \"[alt]\""
@@ -192,7 +192,7 @@
     "message": "Gli elementi \"<input type=\"image\">\" hanno testo \"[alt]\""
   },
   "lighthouse-core/audits/accessibility/label.js | description": {
-    "message": "Le etichette fanno in modo che i comandi del modulo siano descritti in modo corretto dalle tecnologie per la disabilità, come gli screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/label?application=lighthouse)."
+    "message": "Le etichette fanno in modo che i comandi del modulo siano descritti in modo corretto dalle tecnologie per la disabilità, come gli screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/label.js | failureTitle": {
     "message": "Gli elementi del modulo non hanno le corrispondenti etichette"
@@ -201,7 +201,7 @@
     "message": "Gli elementi del modulo sono associati a etichette"
   },
   "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Una tabella utilizzata per il layout non deve includere elementi di dati, come elementi th, elementi didascalia o l'attributo riepilogo, per evitare di confondere gli utenti di screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/layout-table?application=lighthouse)."
+    "message": "Una tabella utilizzata per il layout non deve includere elementi di dati, come elementi th, elementi didascalia o l'attributo riepilogo, per evitare di confondere gli utenti di screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/layout-table?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
     "message": "Gli elementi “<table>“ della presentazione non evitano di utilizzare \"<th>\", \"<caption>\" o l'attributo \"[summary]\"."
@@ -210,7 +210,7 @@
     "message": "Gli elementi “<table>“ della presentazione evitano di utilizzare \"<th>\", \"<caption>\" o l'attributo \"[summary]\"."
   },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
-    "message": "Un testo del link, incluso il testo alternativo per le immagini (se usate come link), che sia distinguibile, univoco e di cui sia impostabile lo stato attivo migliora l'esperienza di navigazione per gli utenti di screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/link-name?application=lighthouse)."
+    "message": "Un testo del link, incluso il testo alternativo per le immagini (se usate come link), che sia distinguibile, univoco e di cui sia impostabile lo stato attivo migliora l'esperienza di navigazione per gli utenti di screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/link-name.js | failureTitle": {
     "message": "Il nome dei link non è distinguibile"
@@ -219,7 +219,7 @@
     "message": "I link hanno un nome distinguibile"
   },
   "lighthouse-core/audits/accessibility/list.js | description": {
-    "message": "Gli screen reader descrivono gli elenchi in un determinato modo. Assicurare che la struttura dell'elenco sia corretta agevola il compito dello screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/list?application=lighthouse)."
+    "message": "Gli screen reader descrivono gli elenchi in un determinato modo. Una struttura dell'elenco corretta agevola il compito dello screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/list?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/list.js | failureTitle": {
     "message": "Gli elenchi non contengono solo elementi \"<li>\" ed elementi che supportano script (\"<script>\" e \"<template>\")."
@@ -228,7 +228,7 @@
     "message": "Gli elenchi contengono solo elementi \"<li>\" ed elementi che supportano gli script (\"<script>\" e \"<template>\")."
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "Gli screen reader richiedono che gli elementi dell'elenco (\"<li>\") siano contenuti in un elemento \"<ul>\" o \"<ol>\" principale per poterli descrivere in modo corretto. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/listitem?application=lighthouse)."
+    "message": "Gli screen reader richiedono che gli elementi dell'elenco (\"<li>\") siano contenuti in un elemento \"<ul>\" o \"<ol>\" principale per poterli descrivere in modo corretto. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/listitem?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
     "message": "Gli elementi dell'elenco (\"<li>\") non sono contenuti negli elementi principali \"<ul>\" o \"<ol>\"."
@@ -237,7 +237,7 @@
     "message": "Gli elementi dell'elenco (\"<li>\") sono contenuti negli elementi principali \"<ul>\" o \"<ol>\"."
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
-    "message": "L'aggiornamento automatico della pagina è un evento imprevisto per l'utente e, una volta verificatosi, imposta di nuovo lo stato attivo sulla parte superiore della pagina. Ciò può costituire motivo di frustrazione o confusione per l'utente. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/meta-refresh?application=lighthouse)."
+    "message": "L'aggiornamento automatico della pagina è un evento imprevisto per l'utente e, una volta verificatosi, imposta di nuovo lo stato attivo sulla parte superiore della pagina. Ciò può costituire motivo di frustrazione o confusione per l'utente. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | failureTitle": {
     "message": "Il documento utilizza il meta tag \"<meta http-equiv=\"refresh\">\""
@@ -246,7 +246,7 @@
     "message": "Il documento non utilizza il meta tag \"<meta http-equiv=\"refresh\">\""
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | description": {
-    "message": "Disattivare lo zoom è problematico per gli utenti ipovedenti che si affidano all'ingrandimento dello schermo per vedere in modo chiaro i contenuti di una pagina web. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/meta-viewport?application=lighthouse)."
+    "message": "Disattivare lo zoom è problematico per gli utenti ipovedenti che si affidano all'ingrandimento dello schermo per vedere in modo chiaro i contenuti di una pagina web. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/meta-viewport?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | failureTitle": {
     "message": "\"[user-scalable=\"no\"]\" viene utilizzato dall'elemento \"<meta name=\"viewport\">\" o l'attributo \"[maximum-scale]\" è inferiore a 5."
@@ -255,7 +255,7 @@
     "message": "\"[user-scalable=\"no\"]\" non viene utilizzato dall'elemento \"<meta name=\"viewport\">\" e l'attributo \"[maximum-scale]\" non è inferiore a 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Gli screen reader non possono tradurre contenuti senza testo. Aggiungere testo alt agli elementi \"<object>\" aiuta gli screen reader a comunicare il significato all'utente. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/object-alt?application=lighthouse)."
+    "message": "Gli screen reader non possono tradurre contenuti senza testo. Aggiungere testo alternativo agli elementi \"<object>\" aiuta gli screen reader a comunicare il significato all'utente. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
     "message": "Gli elementi \"<object>\" non hanno testo \"[alt]\""
@@ -264,7 +264,7 @@
     "message": "Gli elementi \"<object>\" hanno testo \"[alt]\""
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
-    "message": "Un valore maggiore di 0 implica un ordine di navigazione esplicito. Sebbene sia tecnicamente valido, spesso ciò genera un'esperienza frustrante per gli utenti di tecnologie per la disabilità. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/tabindex?application=lighthouse)."
+    "message": "Un valore maggiore di 0 implica un ordine di navigazione esplicito. Sebbene sia tecnicamente valido, spesso ciò genera un'esperienza frustrante per gli utenti di tecnologie per la disabilità. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/tabindex?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/tabindex.js | failureTitle": {
     "message": "Alcuni elementi hanno un valore \"[tabindex]\" maggiore di 0"
@@ -273,7 +273,7 @@
     "message": "Nessun elemento ha un valore \"[tabindex]\" maggiore di 0"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | description": {
-    "message": "Gli screen reader sono dotati di funzionalità che semplificano la navigazione delle tabelle. Assicurare che le celle \"<td>\" che utilizzano l'attributo \"[headers]\" facciano riferimento esclusivamente ad altre celle nella stessa tabella può migliorare l'esperienza degli utenti di screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/td-headers-attr?application=lighthouse)."
+    "message": "Gli screen reader sono dotati di funzionalità che semplificano la navigazione delle tabelle. Assicurare che le celle \"<td>\" che utilizzano l'attributo \"[headers]\" facciano riferimento esclusivamente ad altre celle nella stessa tabella può migliorare l'esperienza degli utenti di screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
     "message": "Le celle in un elemento \"<table>\" che utilizzano l'attributo \"[headers]\" fanno riferimento ad altre celle della stessa tabella."
@@ -282,7 +282,7 @@
     "message": "Le celle in un elemento \"<table>\" che utilizzano l'attributo \"[headers]\" fanno riferimento esclusivamente ad altre celle della stessa tabella."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
-    "message": "Gli screen reader sono dotati di funzionalità che semplificano la navigazione delle tabelle. Assicurare che i titoli delle tabelle facciano sempre riferimento a un insieme di celle può migliorare l'esperienza degli utenti di screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/th-has-data-cells?application=lighthouse)."
+    "message": "Gli screen reader sono dotati di funzionalità che semplificano la navigazione delle tabelle. Assicurare che i titoli delle tabelle facciano sempre riferimento a un insieme di celle può migliorare l'esperienza degli utenti di screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | failureTitle": {
     "message": "Gli elementi \"<th>\" e gli elementi con ruolo \"[role=\"columnheader\"/\"rowheader\"]\" non hanno le celle di dati da essi descritte."
@@ -291,7 +291,7 @@
     "message": "Gli elementi \"<th>\" e gli elementi con ruolo \"[role=\"columnheader\"/\"rowheader\"]\" hanno le celle di dati da essi descritte."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | description": {
-    "message": "Specificare una [lingua definita nel documento BCP 47](https://www.w3.org/International/questions/qa-choosing-language-tags#question) valida per gli elementi aiuta ad assicurare che il testo sia proncunciato in modo corretto dallo screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/valid-lang?application=lighthouse)."
+    "message": "Specificare una [lingua definita nel documento BCP 47](https://www.w3.org/International/questions/qa-choosing-language-tags#question) valida per gli elementi aiuta ad assicurare che il testo sia proncunciato in modo corretto dallo screen reader. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | failureTitle": {
     "message": "Gli attributi \"[lang]\" non hanno un valore valido"
@@ -300,7 +300,7 @@
     "message": "Gli attributi \"[lang]\" hanno un valore valido"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | description": {
-    "message": "Quando un video fornisce una didascalia è più facile accederne alle informazioni per i non udenti o gli utenti con problemi di udito. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/video-caption?application=lighthouse)."
+    "message": "Quando un video fornisce una didascalia è più facile accederne alle informazioni per i non udenti o gli utenti con problemi di udito. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/video-caption?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/video-caption.js | failureTitle": {
     "message": "Gli elementi \"<video>\" non contengono alcun elemento \"<track>\" con didascalie \"[kind=\"captions\"]\""
@@ -309,7 +309,7 @@
     "message": "Gli elementi \"<video>\" contengono un elemento \"<track>\" con didascalie \"[kind=\"captions\"]\""
   },
   "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Le descrizioni audio forniscono informazioni importanti che il dialogo non può trasmettere, come espressioni facciali e scene. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/2.2/video-description?application=lighthouse)."
+    "message": "Le descrizioni audio forniscono informazioni importanti che il dialogo non può trasmettere, come espressioni facciali e scene. [Ulteriori informazioni](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
     "message": "Gli elementi \"<video>\" non contengono alcun elemento \"<track>\" con descrizione \"[kind=\"description\"]\""
@@ -327,7 +327,7 @@
     "message": "Analisi script"
   },
   "lighthouse-core/audits/bootup-time.js | columnTotal": {
-    "message": "Totale"
+    "message": "Tempo di CPU totale"
   },
   "lighthouse-core/audits/bootup-time.js | description": {
     "message": "Potresti ridurre i tempi di analisi, compilazione ed esecuzione di JS. A tale scopo potrebbe essere utile pubblicare payload JS di dimensioni inferiori. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/bootup)."
@@ -381,10 +381,10 @@
     "message": "Minimizza JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Rimuovi dai fogli di stile le regole inutilizzate per ridurre i byte superflui consumati dall'attività di rete. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/unused-css)."
+    "message": "Rimuovi le regole non valide dai fogli di stile e rimanda il caricamento dei CSS non utilizzati per i contenuti above the fold per ridurre i byte inutili consumati dall'attività di rete. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/unused-css)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Rimanda codice CSS inutilizzato"
+    "message": "Rimuovi il CSS inutilizzato"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
     "message": "Rimuovi il codice JavaScript inutilizzato per ridurre i byte consumati dall'attività di rete."
@@ -476,6 +476,21 @@
   "lighthouse-core/audits/font-display.js | title": {
     "message": "Tutto il testo rimane visibile durante il caricamento dei caratteri web"
   },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
+    "message": "Un caricamento di pagina veloce su una rete cellulare garantisce una buona esperienza utente mobile. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)."
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
+    "message": "Interattivo a {timeInMs, number, seconds} s"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
+    "message": "Interattivo su una rete mobile simulata a {timeInMs, number, seconds} s"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
+    "message": "Il caricamento della pagina non è abbastanza veloce sulle reti mobili"
+  },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
+    "message": "Il caricamento della pagina è abbastanza veloce sulle reti mobili"
+  },
   "lighthouse-core/audits/mainthread-work-breakdown.js | columnCategory": {
     "message": "Categoria"
   },
@@ -489,7 +504,7 @@
     "message": "Il lavoro del thread principale è ridotto al minimo"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "La valutazione in alto è una stima del tempo impiegato dall'app, espresso in millisecondi, per rispondere all'input dell'utente durante il periodo di 5 s più impegnativo del caricamento della pagina. Se la latenza è superiore a 50 ms, gli utenti potrebbero considerare lenta la tua app. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
+    "message": "La latenza input stimata è una stima del tempo impiegato dall'app, espresso in millisecondi, per rispondere all'input dell'utente durante il periodo di 5 s più impegnativo del caricamento della pagina. Se la latenza è superiore a 50 ms, gli utenti potrebbero considerare lenta la tua applicazione. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | title": {
     "message": "Latenza input stimata"
@@ -513,10 +528,16 @@
     "message": "Visualizzazione primi contenuti utili"
   },
   "lighthouse-core/audits/metrics/interactive.js | description": {
-    "message": "La metrica Tempo per interattività indica il momento in cui la pagina diventa completamente interattiva. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
+    "message": "Il tempo all'interattività è la quantità di tempo che la pagina impiega affinché diventi completamente interattiva. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)."
   },
   "lighthouse-core/audits/metrics/interactive.js | title": {
     "message": "Tempo per interattività"
+  },
+  "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
+    "message": "Il potenziale ritardo prima interazione che i tuoi utenti potrebbero sperimentare è la durata, in millisecondi, del task più lungo."
+  },
+  "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
+    "message": "RPI potenziale massimo"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "La metrica Indice velocità mostra la velocità con cui diventano visibili i contenuti di una pagina. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/speed-index)."
@@ -524,11 +545,179 @@
   "lighthouse-core/audits/metrics/speed-index.js | title": {
     "message": "Indice velocità"
   },
+  "lighthouse-core/audits/network-rtt.js | description": {
+    "message": "I tempi di round trip della rete (RTT) influiscono sulla prestazione. Quando l'RTT verso un'origine è elevato, significa che i server più vicini all'utente potrebbero migliorare la prestazione. [Ulteriori informazioni](https://hpbn.co/primer-on-latency-and-bandwidth/)."
+  },
+  "lighthouse-core/audits/network-rtt.js | title": {
+    "message": "Tempi di round trip della rete"
+  },
+  "lighthouse-core/audits/network-server-latency.js | description": {
+    "message": "Le latenze dei server possono influire sulle prestazioni della rete. Quando la latenza del server di un'origine è elevata, significa che il server è sovraccarico oppure ha prestazioni di backend scadenti. [Ulteriori informazioni](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall)."
+  },
+  "lighthouse-core/audits/network-server-latency.js | title": {
+    "message": "Latenze server backend"
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "I reindirizzamenti comportano ulteriori ritardi prima del caricamento della pagina. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/redirects)."
   },
   "lighthouse-core/audits/redirects.js | title": {
     "message": "Evita i reindirizzamenti tra più pagine"
+  },
+  "lighthouse-core/audits/seo/canonical.js | description": {
+    "message": "I link canonici suggeriscono quale URL mostrare nei risultati di ricerca. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/canonical)."
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
+    "message": "URL ({urlList}) multipli in conflitto"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
+    "message": "Indirizza a un dominio diverso ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
+    "message": "URL ({url}) non valido"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationPointsElsewhere": {
+    "message": "Indirizza a un'altra posizione \"hreflang\" ({url})"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
+    "message": "URL ({url}) relativo"
+  },
+  "lighthouse-core/audits/seo/canonical.js | explanationRoot": {
+    "message": "Indirizza all'URL principale del dominio (la home page), anziché a una pagina di contenuto equivalente"
+  },
+  "lighthouse-core/audits/seo/canonical.js | failureTitle": {
+    "message": "Il documento non contiene un \"rel=canonical\" valido"
+  },
+  "lighthouse-core/audits/seo/canonical.js | title": {
+    "message": "Il documento contiene un \"rel=canonical\" valido"
+  },
+  "lighthouse-core/audits/seo/font-size.js | description": {
+    "message": "Le dimensioni dei caratteri minori di 12 px sono troppo piccole per essere leggibili e richiederebbero ai visitatori di dispositivi mobili di \"pizzicare per eseguire lo zoom\" e poter leggere la pagina. Cerca di avere più del 60% del testo della pagina con una dimensione uguale o superiore a 12 px. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/font-sizes)."
+  },
+  "lighthouse-core/audits/seo/font-size.js | displayValue": {
+    "message": "{decimalProportion, number, extendedPercent} del testo leggibile"
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanation": {
+    "message": "{decimalProportion, number, extendedPercent} del testo è troppo piccolo."
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
+    "message": "Il testo è illeggibile perché non esiste un meta tag viewport ottimizzato per gli schermi dei dispositivi mobili."
+  },
+  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
+    "message": "{decimalProportion, number, extendedPercent} del testo è troppo piccolo (in base a un campione del {decimalProportionVisited, number, extendedPercent})."
+  },
+  "lighthouse-core/audits/seo/font-size.js | failureTitle": {
+    "message": "Il documento non usa dimensioni dei caratteri leggibili"
+  },
+  "lighthouse-core/audits/seo/font-size.js | title": {
+    "message": "Il documento utilizza dimensioni dei caratteri leggibili"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | description": {
+    "message": "I link hreflang indicano ai motori di ricerca quale versione di una pagina devono elencare nei risultati di ricerca per una determinata lingua o regione. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/hreflang)."
+  },
+  "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
+    "message": "Il documento non contiene alcun \"hreflang\" valido"
+  },
+  "lighthouse-core/audits/seo/hreflang.js | title": {
+    "message": "Il documento contiene un \"hreflang\" valido"
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | description": {
+    "message": "Le pagine con codici di stato HTTP non validi potrebbero non essere indicizzate correttamente. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code)."
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | failureTitle": {
+    "message": "La pagina ha un codice di stato HTTP non valido"
+  },
+  "lighthouse-core/audits/seo/http-status-code.js | title": {
+    "message": "La pagina ha un codice di stato HTTP valido"
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | description": {
+    "message": "I motori di ricerca non sono in grado di includere le pagine nei risultati di ricerca se non dispongono dell'autorizzazione per eseguirne la scansione. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/indexing)."
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": {
+    "message": "L'indicizzazione della pagina è bloccata"
+  },
+  "lighthouse-core/audits/seo/is-crawlable.js | title": {
+    "message": "L'indicizzazione della pagina non è bloccata"
+  },
+  "lighthouse-core/audits/seo/link-text.js | description": {
+    "message": "Il testo del link descrittivo aiuta i motori di ricerca a comprendere i tuoi contenuti. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)."
+  },
+  "lighthouse-core/audits/seo/link-text.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 link trovato}other{# link trovati}}"
+  },
+  "lighthouse-core/audits/seo/link-text.js | failureTitle": {
+    "message": "I link non contengono testo descrittivo"
+  },
+  "lighthouse-core/audits/seo/link-text.js | title": {
+    "message": "I link hanno un testo descrittivo"
+  },
+  "lighthouse-core/audits/seo/manual/structured-data.js | description": {
+    "message": "Esegui lo [Strumento di test per i dati strutturati](https://search.google.com/structured-data/testing-tool/) e [Structured Data Linter](http://linter.structured-data.org/) per convalidare i dati strutturati. [Ulteriori informazioni](https://developers.google.com/search/docs/guides/mark-up-content)."
+  },
+  "lighthouse-core/audits/seo/manual/structured-data.js | title": {
+    "message": "Dati strutturati validi"
+  },
+  "lighthouse-core/audits/seo/meta-description.js | description": {
+    "message": "Le meta descrizioni possono essere incluse nei risultati di ricerca per riassumere brevemente il contenuto della pagina. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/description)."
+  },
+  "lighthouse-core/audits/seo/meta-description.js | explanation": {
+    "message": "Il testo della descrizione è vuoto."
+  },
+  "lighthouse-core/audits/seo/meta-description.js | failureTitle": {
+    "message": "Il documento non ha una meta descrizione"
+  },
+  "lighthouse-core/audits/seo/meta-description.js | title": {
+    "message": "Il documento ha una meta descrizione"
+  },
+  "lighthouse-core/audits/seo/plugins.js | description": {
+    "message": "I motori di ricerca non possono indicizzare il contenuto del plug-in e molti dispositivi limitano i plug-in o non li supportano. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/plugins)."
+  },
+  "lighthouse-core/audits/seo/plugins.js | failureTitle": {
+    "message": "Il documento utilizza plug-in"
+  },
+  "lighthouse-core/audits/seo/plugins.js | title": {
+    "message": "Il documento non fa uso di plug-in"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | description": {
+    "message": "Se il file robots.txt non è valido, i crawler potrebbero non essere in grado di capire come vuoi che il tuo sito web venga sottoposto a scansione o indicizzato."
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
+    "message": "La richiesta per robots.txt restituisce uno stato HTTP: {statusCode}"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
+    "message": "{itemCount,plural, =1{1 errore trovato}other{# errori trovati}}"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | explanation": {
+    "message": "Lighthouse non può completare il download del file robots.txt"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | failureTitle": {
+    "message": "robots.txt non è valido"
+  },
+  "lighthouse-core/audits/seo/robots-txt.js | title": {
+    "message": "robots.txt è valido"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | description": {
+    "message": "Gli elementi interattivi come pulsanti e link dovrebbero essere abbastanza grandi (48 x 48 px) e avere abbastanza spazio intorno a loro, per essere facili da toccare senza sovrapporsi ad altri elementi. [Ulteriori informazioni](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)."
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
+    "message": "{decimalProportion, number, percent} dei target dei tocchi è dimensionato in modo appropriato"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | explanationViewportMetaNotOptimized": {
+    "message": "I target dei tocchi sono troppo piccoli perché non esiste un meta tag viewport ottimizzato per gli schermi dei dispositivi mobili"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | failureTitle": {
+    "message": "I target dei tocchi non sono dimensionati in modo appropriato"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": {
+    "message": "Target sovrapposto"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | sizeHeader": {
+    "message": "Dimensioni"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": {
+    "message": "Target dei tocchi"
+  },
+  "lighthouse-core/audits/seo/tap-targets.js | title": {
+    "message": "I target dei tocchi sono dimensionati in modo appropriato"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "La metrica Tempo per primo byte identifica il momento in cui il server invia una risposta. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."
@@ -572,6 +761,9 @@
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "Precollegati alle origini necessarie"
   },
+  "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
+    "message": "È stato trovato un <link> per \"{preloadURL}\", ma non è stato utilizzato dal browser. Verifica che l'attributo \"crossorigin\" sia utilizzato in modo corretto."
+  },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Potresti usare <link rel=preload> per dare la priorità al recupero delle risorse attualmente richieste in un secondo momento nel caricamento della pagina. [Ulteriori informazioni](https://developers.google.com/web/tools/lighthouse/audits/preload)."
   },
@@ -582,49 +774,58 @@
     "message": "Si tratta di opportunità per facilitare l'uso di ARIA nella tua applicazione e migliorare l'esperienza per gli utenti di tecnologie per la disabilità, come uno screen reader."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "Gli attributi di ARIA rispettano le best practice"
+    "message": "ARIA"
+  },
+  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
+    "message": "Si tratta di opportunità per fornire contenuti alternativi per audio e video. Ciò può migliorare l'esperienza per gli utenti con problemi di udito o di vista."
+  },
+  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
+    "message": "Audio e video"
+  },
+  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
+    "message": "Questi elementi evidenziano le best practice di accessibilità comuni."
+  },
+  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
+    "message": "Best practice"
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
+    "message": "Questi controlli evidenziano le opportunità per [migliorare l'accessibilità della tua applicazione web] (https://developers.google.com/web/fundamentals/accessibility). Solo un sottoinsieme di problemi di accessibilità può essere rilevato automaticamente in modo da incoraggiare anche i test manuali."
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
+    "message": "Questi elementi riguardano aree che uno strumento di test automatizzato non può coprire. Ulteriori informazioni nella nostra guida su come [effettuare un esame di accessibilità](https://developers.google.com/web/fundamentals/accessibility/how-to-review)."
+  },
+  "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
+    "message": "Accessibilità"
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
     "message": "Si tratta di opportunità per migliorare la leggibilità dei contenuti."
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Il contrasto di colore è soddisfacente"
-  },
-  "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupDescription": {
-    "message": "Si tratta di opportunità per migliorare la configurazione dei tuoi elementi HTML."
-  },
-  "lighthouse-core/config/default-config.js | a11yCorrectAttributesGroupTitle": {
-    "message": "Gli elementi utilizzano gli attributi in modo corretto"
-  },
-  "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupDescription": {
-    "message": "Si tratta di opportunità per agevolare la comprensione dei tuoi contenuti per gli utenti di tecnologie per la disabilità, come uno screen reader."
-  },
-  "lighthouse-core/config/default-config.js | a11yDescribeContentsGroupTitle": {
-    "message": "Gli elementi descrivono i contenuti in modo chiaro"
-  },
-  "lighthouse-core/config/default-config.js | a11yElementNamesGroupDescription": {
-    "message": "Si tratta di opportunità per migliorare la semantica dei comandi della tua applicazione. Ciò può migliorare l'esperienza per gli utenti di tecnologie per la disabilità, come uno screen reader."
-  },
-  "lighthouse-core/config/default-config.js | a11yElementNamesGroupTitle": {
-    "message": "Gli elementi hanno nomi distinguibili"
+    "message": "Contrasto"
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Si tratta di opportunità per migliorare l'interpretazione data ai tuoi contenuti da utenti di lingua diversa."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "La pagina specifica una lingua valida"
+    "message": "Internazionalizzazione e localizzazione"
   },
-  "lighthouse-core/config/default-config.js | a11yMetaGroupDescription": {
-    "message": "Si tratta di opportunità per migliorare l'esperienza dell'utente sul tuo sito."
+  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
+    "message": "Si tratta di opportunità per migliorare la semantica dei comandi della tua applicazione. Ciò può migliorare l'esperienza per gli utenti di tecnologie per la disabilità, come uno screen reader."
   },
-  "lighthouse-core/config/default-config.js | a11yMetaGroupTitle": {
-    "message": "I meta tag sono utilizzati in modo corretto"
+  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
+    "message": "Nomi ed etichette"
   },
-  "lighthouse-core/config/default-config.js | a11yWellStructuredGroupDescription": {
-    "message": "Si tratta di opportunità per far sì che il tuo codice HTML sia strutturato in modo corretto."
+  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
+    "message": "Si tratta di opportunità per migliorare la navigazione da tastiera nella tua applicazione."
   },
-  "lighthouse-core/config/default-config.js | a11yWellStructuredGroupTitle": {
-    "message": "Gli elementi sono strutturati in modo coerente"
+  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
+    "message": "Navigazione"
+  },
+  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
+    "message": "Si tratta di opportunità per migliorare l'esperienza di lettura dei dati nelle tabelle o negli elenchi per gli utenti di tecnologie per la disabilità, come uno screen reader."
+  },
+  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
+    "message": "Tabelle ed elenchi"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
     "message": "Ulteriori informazioni sulle prestazioni della tua applicazione."
@@ -664,6 +865,15 @@
   },
   "lighthouse-core/config/default-config.js | pwaOptimizedGroupTitle": {
     "message": "Ottimizzato per PWA"
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryDescription": {
+    "message": "Questi controlli assicurano che la pagina sia ottimizzata per il ranking dei risultati del motore di ricerca. Ci sono altri fattori che Lighthouse non controlla che potrebbero influenzare il ranking nella ricerca. [Ulteriori informazioni](https://support.google.com/webmasters/answer/35769)."
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
+    "message": "Esegui questi altri strumenti di convalida sul tuo sito per controllare ulteriori best practice per SEO."
+  },
+  "lighthouse-core/config/default-config.js | seoCategoryTitle": {
+    "message": "SEO"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL cache"
@@ -714,7 +924,7 @@
     "message": "Lighthouse non può completare il caricamento dell'URL richiesto perché la pagina non risponde più."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedInsecure": {
-    "message": "Le credenziali di sicurezza dell'URL fornito non sono valide. ({securityMessages})"
+    "message": "Le credenziali di sicurezza dell'URL fornito non sono valide. {securityMessages}"
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
     "message": "Lighthouse non può completare il caricamento della pagina richiesta. Assicurati che l'URL verificato sia quello corretto e che il server stia rispondendo opportunamente a tutte le richieste. (Dettagli: {errorDetails})"
@@ -773,11 +983,20 @@
   "lighthouse-core/report/html/renderer/util.js | scorescaleLabel": {
     "message": "Scala di valutazione:"
   },
+  "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
+    "message": "Comprimi snippet"
+  },
+  "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
+    "message": "Espandi snippet"
+  },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "Si sono verificati dei problemi che incidono su questa esecuzione di Lighthouse:"
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
     "message": "I valori sono delle stime e potrebbero variare."
+  },
+  "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
+    "message": "Controlli superati ma con avvisi"
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Avvisi: "
