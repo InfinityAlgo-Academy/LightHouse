@@ -16,9 +16,7 @@ module.exports = function(config) {
     transpilers: [],
     coverageAnalysis: 'off',
     mutate: [
-      'lighthouse-core/**/*.js',
-      '!lighthouse-core/scripts/**/*.js',
-      '!lighthouse-core/test/**/*.js',
+      'lighthouse-core/computed/**/*.js',
     ],
     reporters: ['clear-text', 'progress', 'html'],
     htmlReporter: {
