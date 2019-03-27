@@ -102,7 +102,7 @@ class MainThreadTasks {
       if (!currentTask) {
         // We can't start a task with an end event
         if (event.ph === 'E') {
-          throw new Error('Fatal trace logic error L105');
+          throw new Error('Fatal trace logic error - unexpected end event');
         }
 
         currentTask = MainThreadTasks._createNewTaskNode(event);
@@ -118,7 +118,7 @@ class MainThreadTasks {
         currentTask = newTask;
       } else {
         if (currentTask.event.ph !== 'B') {
-          throw new Error('Fatal trace logic error L121');
+          throw new Error(`Fatal trace logic error - expected start event, got ${currentTask.event.ph}`);
         }
 
         // We're ending an event, update the end time and the currentTask to its parent
