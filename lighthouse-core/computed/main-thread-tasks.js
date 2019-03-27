@@ -78,8 +78,13 @@ class MainThreadTasks {
     const tasks = [];
     /** @type {TaskNode|undefined} */
     let currentTask;
+    let lastTraceTs = 0;
 
     for (const event of mainThreadEvents) {
+      // Keep track of the last trace event timestamp
+      if (event.ts > lastTraceTs) lastTraceTs = event.ts;
+      if (currentTask && currentTask.endTime > lastTraceTs) lastTraceTs = currentTask.endTime;
+
       // Only look at X (Complete), B (Begin), and E (End) events as they have most data
       if (event.ph !== 'X' && event.ph !== 'B' && event.ph !== 'E') continue;
 
@@ -120,6 +125,12 @@ class MainThreadTasks {
         currentTask.endTime = event.ts;
         currentTask = currentTask.parent;
       }
+    }
+
+    while (currentTask && !Number.isFinite(currentTask.endTime)) {
+      // The last event didn't finish before tracing stopped, just end it when tracing ended.
+      currentTask.endTime = lastTraceTs;
+      currentTask = currentTask.parent;
     }
 
     return tasks;

@@ -143,4 +143,56 @@ describe('MainResource computed artifact', () => {
     assert.deepStrictEqual(taskC.attributableURLs, ['urlB.1', 'urlB.2', 'urlC']);
     assert.deepStrictEqual(taskD.attributableURLs, ['urlB.1', 'urlB.2', 'urlC', 'urlD']);
   });
+
+  it('should handle the last trace event not ending', async () => {
+    /*
+    An artistic rendering of the below trace:
+    █████████████████████████████TaskA████████████|
+          ████████████████TaskB███████████████████|
+                                            █TaskC|
+                                                  ^ trace abruptly ended
+    */
+    const traceEvents = [
+      ...boilerplateTrace,
+      // These events would normally be accompanied by an 'E' event
+      {ph: 'B', name: 'TaskA', pid, tid, ts: baseTs, args},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 5e3, args},
+      {ph: 'B', name: 'TaskC', pid, tid, ts: baseTs + 100e3, args},
+    ];
+
+    traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
+
+    const context = {computedCache: new Map()};
+    const tasks = await MainThreadTasks.request({traceEvents}, context);
+    expect(tasks).toHaveLength(3);
+
+    const taskA = tasks.find(task => task.event.name === 'TaskA');
+    const taskB = tasks.find(task => task.event.name === 'TaskB');
+    const taskC = tasks.find(task => task.event.name === 'TaskC');
+    expect(taskA).toEqual({
+      parent: undefined,
+      attributableURLs: [],
+
+      children: [taskB],
+      event: traceEvents[3],
+      startTime: 0,
+      endTime: 100,
+      duration: 100,
+      selfTime: 5,
+      group: taskGroups.other,
+    });
+
+    expect(taskB).toEqual({
+      parent: taskA,
+      attributableURLs: [],
+
+      children: [taskC],
+      event: traceEvents[4],
+      startTime: 5,
+      endTime: 100,
+      duration: 95,
+      selfTime: 95,
+      group: taskGroups.other,
+    });
+  });
 });
