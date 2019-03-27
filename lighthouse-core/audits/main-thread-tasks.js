@@ -32,10 +32,10 @@ class MainThreadTasks extends Audit {
     const tasks = await MainThreadTasksComputed.request(trace, context);
 
     const results = tasks
-      .filter(task => task.duration > 5 && task.parent)
+      // Filter to just the sizable toplevel tasks; toplevel tasks are tasks without a parent.
+      .filter(task => task.duration > 5 && !task.parent)
       .map(task => {
         return {
-          type: task.group.id,
           duration: task.duration,
           startTime: task.startTime,
         };
@@ -43,7 +43,6 @@ class MainThreadTasks extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'type', itemType: 'text', text: 'Task Type'},
       {key: 'startTime', itemType: 'ms', granularity: 1, text: 'Start Time'},
       {key: 'duration', itemType: 'ms', granularity: 1, text: 'End Time'},
     ];
