@@ -74,9 +74,10 @@ class MainThreadTasks {
   /**
    * @param {LH.TraceEvent[]} mainThreadEvents
    * @param {PriorTaskData} priorTaskData
+   * @param {number} traceEndTs
    * @return {TaskNode[]}
    */
-  static _createTasksFromEvents(mainThreadEvents, priorTaskData) {
+  static _createTasksFromEvents(mainThreadEvents, priorTaskData, traceEndTs) {
     /** @type {TaskNode[]} */
     const tasks = [];
     /** @type {TaskNode|undefined} */
@@ -133,6 +134,14 @@ class MainThreadTasks {
       }
     }
 
+    // Starting from the last and bottom-most task, we finish any tasks that didn't end yet.
+    while (currentTask && !Number.isFinite(currentTask.endTime)) {
+      // The last event didn't finish before tracing stopped, use traceEnd timestamp instead.
+      currentTask.endTime = traceEndTs;
+      currentTask = currentTask.parent;
+    }
+
+    // At this point we expect all tasks to have a finite startTime and endTime.
     return tasks;
   }
 
@@ -215,12 +224,13 @@ class MainThreadTasks {
 
   /**
    * @param {LH.TraceEvent[]} traceEvents
+   * @param {number} traceEndTs
    * @return {TaskNode[]}
    */
-  static getMainThreadTasks(traceEvents) {
+  static getMainThreadTasks(traceEvents, traceEndTs) {
     const timers = new Map();
     const priorTaskData = {timers};
-    const tasks = MainThreadTasks._createTasksFromEvents(traceEvents, priorTaskData);
+    const tasks = MainThreadTasks._createTasksFromEvents(traceEvents, priorTaskData, traceEndTs);
 
     // Compute the recursive properties we couldn't compute earlier, starting at the toplevel tasks
     for (const task of tasks) {
@@ -254,8 +264,8 @@ class MainThreadTasks {
    * @return {Promise<Array<TaskNode>>} networkRecords
    */
   static async compute_(trace, context) {
-    const {mainThreadEvents} = await TraceOfTab.request(trace, context);
-    return MainThreadTasks.getMainThreadTasks(mainThreadEvents);
+    const {mainThreadEvents, timestamps} = await TraceOfTab.request(trace, context);
+    return MainThreadTasks.getMainThreadTasks(mainThreadEvents, timestamps.traceEnd);
   }
 }
 
