@@ -207,6 +207,15 @@ describe('DependencyGraph/Node', () => {
       assert.equal(clonedIdMap.get('G'), undefined);
       assert.equal(clonedIdMap.get('H'), undefined);
     });
+
+    it('should throw if original node is not in cloned graph', () => {
+      const graph = createComplexGraph();
+      assert.throws(
+        // clone from root to nodeB, but called on nodeD
+        _ => graph.nodeD.cloneWithRelationships(node => node.id === 'B'),
+        /^Error: Cloned graph missing node$/
+      );
+    });
   });
 
   describe('.traverse', () => {
@@ -216,6 +225,26 @@ describe('DependencyGraph/Node', () => {
       graph.nodeA.traverse(node => ids.push(node.id));
 
       assert.deepEqual(ids, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']);
+    });
+
+    it('should include a shortest traversal path to every dependent node', () => {
+      const graph = createComplexGraph();
+      const paths = [];
+      graph.nodeA.traverse((node, traversalPath) => {
+        assert.strictEqual(node.id, traversalPath[0].id);
+        paths.push(traversalPath.map(node => node.id));
+      });
+
+      assert.deepStrictEqual(paths, [
+        ['A'],
+        ['B', 'A'],
+        ['C', 'A'],
+        ['D', 'B', 'A'],
+        ['E', 'D', 'B', 'A'],
+        ['F', 'E', 'D', 'B', 'A'],
+        ['G', 'E', 'D', 'B', 'A'],
+        ['H', 'G', 'E', 'D', 'B', 'A'],
+      ]);
     });
 
     it('should respect getNext', () => {
