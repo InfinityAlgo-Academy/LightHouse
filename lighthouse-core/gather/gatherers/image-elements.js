@@ -22,7 +22,7 @@ function collectImageElementInfo() {
   function getClientRect(element) {
     const clientRect = element.getBoundingClientRect();
     return {
-      // manually copy the properties because ClientRect does not JSONify
+      // Just grab the DOMRect properties we want, excluding x/y/width/height
       top: clientRect.top,
       bottom: clientRect.bottom,
       left: clientRect.left,
