@@ -47,12 +47,24 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
     const results = await lighthouse(url, flags, config, connection);
     if (!results) return;
 
+    let assetsLogged = [];
     if (logAssets) {
+      let oldLog = console.log;
+      console.log = function (...args) {
+        assetsLogged.push(args.map(String).join(" "));
+      };
       await assetSaver.logAssets(results.artifacts, results.lhr.audits);
+      console.log = oldLog;
     }
 
     // pre process the LHR for proto
     if (flags.output === 'json' && typeof results.report === 'string') {
+      if (assetsLogged.length) {
+        const reportJson = JSON.parse(results.report);
+        reportJson.assets = assetsLogged.join("\n");
+        results.report = JSON.stringify(reportJson);
+      }
+
       return preprocessor.processForProto(results.report, {keepRawValues});
     }
 
