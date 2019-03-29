@@ -179,7 +179,16 @@ class Runner {
       ...timingEntriesFromRunner,
       // As entries can share a name, dedupe based on the startTime timestamp
     ].map(entry => /** @type {[number, PerformanceEntry]} */ ([entry.startTime, entry]));
-    const timingEntries = Array.from(new Map(timingEntriesKeyValues).values());
+    const timingEntries = Array.from(new Map(timingEntriesKeyValues).values())
+    // Truncate timestamps to hundredths of a millisecond saves ~4KB. No need for microsecond
+    // resolution.
+    .map(entry => {
+      return /** @type {PerformanceEntry} */ ({
+        ...entry,
+        duration: parseFloat(entry.duration.toFixed(2)),
+        startTime: parseFloat(entry.startTime.toFixed(2)),
+      });
+    });
     const runnerEntry = timingEntries.find(e => e.name === 'lh:runner:run');
     return {entries: timingEntries, total: runnerEntry && runnerEntry.duration || 0};
   }
