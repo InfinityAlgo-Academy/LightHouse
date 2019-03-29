@@ -69,7 +69,6 @@ module.exports = [
     audits: {
       'font-display': {
         score: 0,
-        rawValue: false,
         details: {
           items: {
             length: 2,
