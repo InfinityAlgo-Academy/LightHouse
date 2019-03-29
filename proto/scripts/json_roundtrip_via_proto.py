@@ -33,7 +33,7 @@ with open(path_sample_preprocessed, 'r') as f:
 proto_lhr = lhr_pb2.LighthouseResult()
 
 # fill proto lhr with data from JSON
-Parse(json.dumps(data), proto_lhr)
+Parse(json.dumps(data), proto_lhr, ignore_unknown_fields=True)
 
 # convert proto back into json
 round_trip_lhr = json.loads(MessageToJson(proto_lhr, including_default_value_fields=False))
