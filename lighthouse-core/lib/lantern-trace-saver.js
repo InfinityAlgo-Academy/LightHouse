@@ -18,8 +18,8 @@ function convertNodeTimingsToTrace(nodeTimings) {
   /** @param {number} ms */
   const toMicroseconds = ms => baseTs + ms * 1000;
 
-  traceEvents.push(createFakeTracingStartedEvent());
-  traceEvents.push({...createFakeTracingStartedEvent(), name: 'TracingStartedInBrowser'});
+  traceEvents.push(createFakeTracingStartedInPageEvent());
+  traceEvents.push(createFakeTracingStartedInBrowserEvent());
 
   // Create a fake requestId counter
   let requestId = 1;
@@ -53,13 +53,35 @@ function convertNodeTimingsToTrace(nodeTimings) {
   return {traceEvents};
 
   /**
-   * @return {LH.TraceEvent}
+   * @return {LH.TraceEvent.TracingStartedInPage}
    */
-  function createFakeTracingStartedEvent() {
+  function createFakeTracingStartedInPageEvent() {
     const argsData = {
       frameTreeNodeId: 1,
       sessionId: '1.1',
+      persistentIds: true,
       page: frame,
+    };
+
+    return {
+      ...baseEvent,
+      ts: baseTs - 1e5,
+      ph: 'I',
+      s: 't',
+      cat: 'disabled-by-default-devtools.timeline',
+      name: 'TracingStartedInPage',
+      args: {data: argsData},
+      dur: 0,
+    };
+  }
+
+  /**
+   * @return {LH.TraceEvent.TracingStartedInBrowser}
+   */
+  function createFakeTracingStartedInBrowserEvent() {
+    const argsData = {
+      frameTreeNodeId: 1,
+      sessionId: '1.1',
       persistentIds: true,
       frames: [{frame, url: 'about:blank', name: '', processId: 1}],
     };
@@ -70,7 +92,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       ph: 'I',
       s: 't',
       cat: 'disabled-by-default-devtools.timeline',
-      name: 'TracingStartedInPage',
+      name: 'TracingStartedInBrowser',
       args: {data: argsData},
       dur: 0,
     };
@@ -141,6 +163,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       requestMethod: record.requestMethod,
       url: record.url,
       priority: record.priority,
+      stackTrace: [],
     };
 
     const receiveResponseData = {

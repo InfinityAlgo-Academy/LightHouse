@@ -164,7 +164,10 @@ class PageDependencyGraph {
       cpuNode.addDependent(networkNode);
     }
 
-    /** @param {CPUNode} cpuNode @param {string} url */
+    /**
+     * @param {CPUNode} cpuNode
+     * @param {string} url
+     */
     function addDependencyOnUrl(cpuNode, url) {
       if (!url) return;
       // Allow network requests that end up to 100ms before the task started
@@ -197,17 +200,12 @@ class PageDependencyGraph {
       for (const evt of node.childEvents) {
         if (!evt.args.data) continue;
 
-        const argsUrl = evt.args.data.url;
-        const stackTraceUrls = (evt.args.data.stackTrace || []).map(l => l.url).filter(Boolean);
-
         switch (evt.name) {
           case 'TimerInstall':
-            // @ts-ignore - 'TimerInstall' event means timerId exists.
             timers.set(evt.args.data.timerId, node);
-            stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
+            evt.args.data.stackTrace.forEach(({url}) => addDependencyOnUrl(node, url));
             break;
           case 'TimerFire': {
-            // @ts-ignore - 'TimerFire' event means timerId exists.
             const installer = timers.get(evt.args.data.timerId);
             if (!installer) break;
             installer.addDependent(node);
@@ -216,40 +214,40 @@ class PageDependencyGraph {
 
           case 'InvalidateLayout':
           case 'ScheduleStyleRecalculation':
-            stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
+            (evt.args.data.stackTrace || []).forEach(({url}) => addDependencyOnUrl(node, url));
             break;
 
           case 'EvaluateScript':
-            // @ts-ignore - 'EvaluateScript' event means argsUrl is defined.
-            addDependencyOnUrl(node, argsUrl);
-            stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
+            // TODO - why is this evt.args.data check necessary, if done right before the
+            // switch statement?
+            if (evt.args.data) {
+              addDependencyOnUrl(node, evt.args.data.url);
+              (evt.args.data.stackTrace || []).forEach(({url}) => addDependencyOnUrl(node, url));
+            }
             break;
 
           case 'XHRReadyStateChange':
             // Only create the dependency if the request was completed
-            // @ts-ignore - 'XHRReadyStateChange' event means readyState is defined.
             if (evt.args.data.readyState !== 4) break;
 
-            // @ts-ignore - 'XHRReadyStateChange' event means argsUrl is defined.
-            addDependencyOnUrl(node, argsUrl);
-            stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
+            addDependencyOnUrl(node, evt.args.data.url);
+            (evt.args.data.stackTrace || []).forEach(({url}) => addDependencyOnUrl(node, url));
             break;
 
           case 'FunctionCall':
           case 'v8.compile':
-            // @ts-ignore - events mean argsUrl is defined.
-            addDependencyOnUrl(node, argsUrl);
+            if (evt.args.data) {
+              addDependencyOnUrl(node, evt.args.data.url);
+            }
             break;
 
           case 'ParseAuthorStyleSheet':
-            // @ts-ignore - 'ParseAuthorStyleSheet' event means styleSheetUrl is defined.
             addDependencyOnUrl(node, evt.args.data.styleSheetUrl);
             break;
 
           case 'ResourceSendRequest':
-            // @ts-ignore - 'ResourceSendRequest' event means requestId is defined.
             addDependentNetworkRequest(node, evt.args.data.requestId);
-            stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
+            (evt.args.data.stackTrace || []).forEach(({url}) => addDependencyOnUrl(node, url));
             break;
         }
       }

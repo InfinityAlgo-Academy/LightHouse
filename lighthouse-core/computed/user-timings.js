@@ -38,7 +38,7 @@ class UserTimings {
       return evt.name !== 'requestStart' &&
           evt.name !== 'navigationStart' &&
           evt.name !== 'paintNonDefaultBackgroundColor' &&
-          evt.args.frame === undefined;
+          !('frame' in evt.args);
     })
     .forEach(ut => {
       // Mark events fall under phases R and I (or i)

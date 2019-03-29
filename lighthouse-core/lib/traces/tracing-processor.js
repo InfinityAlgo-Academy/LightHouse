@@ -202,7 +202,9 @@ class TraceProcessor {
    */
   static findMainFrameIds(events) {
     // Prefer the newer TracingStartedInBrowser event first, if it exists
-    const startedInBrowserEvt = events.find(e => e.name === 'TracingStartedInBrowser');
+    const startedInBrowserEvt = events.find(
+      /** @return {e is LH.TraceEvent.TracingStartedInBrowser} */
+      e => e.name === 'TracingStartedInBrowser');
     if (startedInBrowserEvt && startedInBrowserEvt.args.data &&
         startedInBrowserEvt.args.data.frames) {
       const mainFrame = startedInBrowserEvt.args.data.frames.find(frame => !frame.parent);
@@ -225,7 +227,9 @@ class TraceProcessor {
     // Support legacy browser versions that do not emit TracingStartedInBrowser event.
     // The first TracingStartedInPage in the trace is definitely our renderer thread of interest
     // Beware: the tracingStartedInPage event can appear slightly after a navigationStart
-    const startedInPageEvt = events.find(e => e.name === 'TracingStartedInPage');
+    const startedInPageEvt = events.find(
+      /** @return {e is LH.TraceEvent.TracingStartedInPage} */
+      e => e.name === 'TracingStartedInPage');
     if (startedInPageEvt && startedInPageEvt.args && startedInPageEvt.args.data) {
       const frameId = startedInPageEvt.args.data.page;
       if (frameId) {

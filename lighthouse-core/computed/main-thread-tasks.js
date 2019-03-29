@@ -87,7 +87,6 @@ class MainThreadTasks {
       // Save the timer data, TimerInstall events are instant events `ph === 'I'` so process them first.
       if (event.name === 'TimerInstall' && currentTask) {
         /** @type {string} */
-        // @ts-ignore - timerId exists when name is TimerInstall
         const timerId = event.args.data.timerId;
         priorTaskData.timers.set(timerId, currentTask);
       }
@@ -164,9 +163,6 @@ class MainThreadTasks {
    * @param {PriorTaskData} priorTaskData
    */
   static _computeRecursiveAttributableURLs(task, parentURLs, priorTaskData) {
-    const argsData = task.event.args.data || {};
-    const stackFrameURLs = (argsData.stackTrace || []).map(entry => entry.url);
-
     /** @type {Array<string|undefined>} */
     let taskURLs = [];
     switch (task.event.name) {
@@ -177,27 +173,35 @@ class MainThreadTasks {
        */
       case 'v8.compile':
       case 'EvaluateScript':
+        if (task.event.args.data) {
+          taskURLs = [task.event.args.data.url].concat(
+            (task.event.args.data.stackTrace || []).map(entry => entry.url));
+        }
+        break;
       case 'FunctionCall':
-        taskURLs = [argsData.url].concat(stackFrameURLs);
+        taskURLs = [task.event.args.data.url];
         break;
       case 'v8.compileModule':
-        taskURLs = [task.event.args.fileName].concat(stackFrameURLs);
+        taskURLs = [task.event.args.fileName];
+        if (task.event.args.data) {
+          taskURLs = taskURLs.concat(
+            task.event.args.data.stackTrace.map(entry => entry.url));
+        }
         break;
       case 'TimerFire': {
-        /** @type {string} */
-        // @ts-ignore - timerId exists when name is TimerFire
         const timerId = task.event.args.data.timerId;
         const timerInstallerTaskNode = priorTaskData.timers.get(timerId);
         if (!timerInstallerTaskNode) break;
-        taskURLs = timerInstallerTaskNode.attributableURLs.concat(stackFrameURLs);
+        taskURLs = timerInstallerTaskNode.attributableURLs;
         break;
       }
       default:
-        taskURLs = stackFrameURLs;
+        if (task.event.args.data && 'stackTrace' in task.event.args.data) {
+          taskURLs = (task.event.args.data.stackTrace || []).map(entry => entry.url);
+        }
         break;
     }
 
-    /** @type {string[]} */
     const attributableURLs = Array.from(parentURLs);
     for (const url of taskURLs) {
       // Don't add empty URLs

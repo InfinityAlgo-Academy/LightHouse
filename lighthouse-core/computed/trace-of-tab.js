@@ -37,8 +37,12 @@ class TraceOfTab {
   }
 
   /**
+   * Accepts a filter that can optionally be a type predicate.
+   *
+   * @template {LH.TraceEvent} T
    * @param {LH.TraceEvent[]} traceEvents
-   * @param {(e: LH.TraceEvent) => boolean} filter
+   * @param {((e: LH.TraceEvent) => e is T) | ((e: LH.TraceEvent) => boolean)} filter
+   * @return {T[]}
    */
   static filteredStableSort(traceEvents, filter) {
     // create an array of the indices that we want to keep
@@ -61,9 +65,9 @@ class TraceOfTab {
       sorted.push(traceEvents[indices[i]]);
     }
 
+    // @ts-ignore - TODO ???
     return sorted;
   }
-
 
   /**
    * Finds key trace events, identifies main process/thread, and returns timings of trace events
@@ -74,12 +78,13 @@ class TraceOfTab {
   static async compute_(trace) {
     // Parse the trace for our key events and sort them by timestamp. Note: sort
     // *must* be stable to keep events correctly nested.
-    const keyEvents = TraceOfTab.filteredStableSort(trace.traceEvents, e => {
-      return e.cat.includes('blink.user_timing') ||
+    const keyEvents = TraceOfTab.filteredStableSort(trace.traceEvents,
+      /** @return {e is LH.TraceEvent.Other} */ e => {
+        return e.cat.includes('blink.user_timing') ||
           e.cat.includes('loading') ||
           e.cat.includes('devtools.timeline') ||
           e.cat === '__metadata';
-    });
+      });
 
     // Find the inspected frame
     const mainFrameIds = TracingProcessor.findMainFrameIds(keyEvents);

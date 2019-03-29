@@ -25,6 +25,7 @@ function generateTraceEvents(entries, threadId = 0) {
       // 1) Remove 'lh:' for readability
       // 2) Colons in user_timing names get special handling in traceviewer we don't want. https://goo.gl/m23Vz7
       //    Replace with a 'Modifier letter colon' ;)
+      // @ts-ignore - allow string.
       name: entry.name.replace('lh:', '').replace(/:/g, '\ua789'),
       cat: 'blink.user_timing',
       ts: entry.startTime * 1000,

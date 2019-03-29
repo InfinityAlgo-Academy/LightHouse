@@ -6,6 +6,7 @@
 
 import _Crdp from 'devtools-protocol/types/protocol';
 import _CrdpMappings from 'devtools-protocol/types/protocol-mapping'
+import _TraceEvent from './trace-events'
 
 declare global {
   // Augment global Error type to include node's optional `code` property
@@ -219,44 +220,8 @@ declare global {
       [futureProps: string]: any;
     }
 
-    /**
-     * @see https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview
-     */
-    export interface TraceEvent {
-      name: string;
-      cat: string;
-      args: {
-        fileName?: string;
-        snapshot?: string;
-        data?: {
-          documentLoaderURL?: string;
-          frames?: {
-            frame: string;
-            parent?: string;
-            processId?: number;
-          }[];
-          page?: string;
-          readyState?: number;
-          requestId?: string;
-          stackTrace?: {
-            url: string
-          }[];
-          styleSheetUrl?: string;
-          timerId?: string;
-          url?: string;
-        };
-        frame?: string;
-        name?: string;
-        labels?: string;
-      };
-      pid: number;
-      tid: number;
-      ts: number;
-      dur: number;
-      ph: 'B'|'b'|'D'|'E'|'e'|'F'|'I'|'M'|'N'|'n'|'O'|'R'|'S'|'T'|'X';
-      s?: 't';
-      id?: string;
-    }
+    export import TraceEvent = _TraceEvent;
+    export type TraceEvent = _TraceEvent.TraceEvent;
 
     export interface DevToolsJsonTarget {
       description: string;

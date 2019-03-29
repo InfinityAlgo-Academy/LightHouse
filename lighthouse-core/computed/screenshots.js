@@ -16,7 +16,8 @@ class Screenshots {
   */
   static async compute_(trace) {
     return trace.traceEvents
-      .filter(evt => evt.name === SCREENSHOT_TRACE_NAME)
+      .filter(/** @return {e is LH.TraceEvent.Screenshot} */
+        e => e.name === SCREENSHOT_TRACE_NAME)
       .map(evt => {
         return {
           timestamp: evt.ts / 1000,
