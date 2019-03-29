@@ -165,6 +165,16 @@ class MainThreadTasks {
   static _computeRecursiveAttributableURLs(task, parentURLs, priorTaskData) {
     /** @type {Array<string|undefined>} */
     let taskURLs = [];
+
+    /**
+     * @param {LH.TraceEvent & {args: {data?: {stackTrace?: {url: string}[]}}}} evt 
+     * @return {string[]}
+    */
+    const getStackTraceUrls = (evt) => {
+      if (!evt.args.data) return [];
+      return (evt.args.data.stackTrace || []).map(entry => entry.url);
+    };
+
     switch (task.event.name) {
       /**
        * Some trace events reference a specific script URL that triggered them.
@@ -174,12 +184,16 @@ class MainThreadTasks {
       case 'v8.compile':
       case 'EvaluateScript':
         if (task.event.args.data) {
-          taskURLs = [task.event.args.data.url].concat(
-            (task.event.args.data.stackTrace || []).map(entry => entry.url));
+          // works, good
+          taskURLs = [task.event.args.data.url].concat(getStackTraceUrls(task.event));
+          // taskURLs = [task.event.args.data.url].concat(
+          //   (task.event.args.data.stackTrace || []).map(entry => entry.url));
         }
         break;
       case 'FunctionCall':
-        taskURLs = [task.event.args.data.url];
+        // errors, good
+        taskURLs = [task.event.args.data.url].concat(getStackTraceUrls(task.event));
+        // taskURLs = [task.event.args.data.url];
         break;
       case 'v8.compileModule':
         taskURLs = [task.event.args.fileName];
