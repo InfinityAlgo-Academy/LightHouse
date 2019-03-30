@@ -18,8 +18,9 @@ function convertNodeTimingsToTrace(nodeTimings) {
   /** @param {number} ms */
   const toMicroseconds = ms => baseTs + ms * 1000;
 
-  traceEvents.push(createFakeTracingStartedInPageEvent());
-  traceEvents.push(createFakeTracingStartedInBrowserEvent());
+  traceEvents.push(createFakeTracingStartedEvent());
+  // @ts-ignore - TODO(cjamcl) #7790
+  traceEvents.push({...createFakeTracingStartedEvent(), name: 'TracingStartedInBrowser'});
 
   // Create a fake requestId counter
   let requestId = 1;
@@ -53,38 +54,13 @@ function convertNodeTimingsToTrace(nodeTimings) {
   return {traceEvents};
 
   /**
-   * TODO(cjamcl) - TODO(cjamcl) #7790 This type has not been generated yet.
-   * LH.TraceEvent.TracingStartedInPage
    * @return {LH.TraceEvent}
    */
-  function createFakeTracingStartedInPageEvent() {
+  function createFakeTracingStartedEvent() {
     const argsData = {
       frameTreeNodeId: 1,
       sessionId: '1.1',
-      persistentIds: true,
       page: frame,
-    };
-
-    return {
-      ...baseEvent,
-      ts: baseTs - 1e5,
-      ph: 'I',
-      s: 't',
-      cat: 'disabled-by-default-devtools.timeline',
-      // @ts-ignore - TODO(cjamcl) #7790
-      name: 'TracingStartedInPage',
-      args: {data: argsData},
-      dur: 0,
-    };
-  }
-
-  /**
-   * @return {LH.TraceEvent.TracingStartedInBrowser.I}
-   */
-  function createFakeTracingStartedInBrowserEvent() {
-    const argsData = {
-      frameTreeNodeId: 1,
-      sessionId: '1.1',
       persistentIds: true,
       frames: [{frame, url: 'about:blank', name: '', processId: 1}],
     };
@@ -92,12 +68,13 @@ function convertNodeTimingsToTrace(nodeTimings) {
     return {
       ...baseEvent,
       ts: baseTs - 1e5,
-      tts: baseTs - 1e5,
       ph: 'I',
       s: 't',
       cat: 'disabled-by-default-devtools.timeline',
-      name: 'TracingStartedInBrowser',
+      // @ts-ignore - TODO(cjamcl) #7790 This type has not been generated yet.
+      name: 'TracingStartedInPage',
       args: {data: argsData},
+      dur: 0,
     };
   }
 
