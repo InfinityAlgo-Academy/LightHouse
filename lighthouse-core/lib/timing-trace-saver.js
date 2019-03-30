@@ -33,6 +33,7 @@ function generateTraceEvents(entries, threadId = 0) {
       dur: 0,
       pid: 0,
       tid: threadId,
+      // @ts-ignore - None of the generated types happen to have a 'b' phase yet.
       ph: 'b',
       id: '0x' + (i++).toString(16),
     };
