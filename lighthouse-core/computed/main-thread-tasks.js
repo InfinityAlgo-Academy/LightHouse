@@ -164,8 +164,14 @@ class MainThreadTasks {
    * @param {PriorTaskData} priorTaskData
    */
   static _computeRecursiveAttributableURLs(task, parentURLs, priorTaskData) {
+    // @ts-ignore - TODO(cjamcl) #7790 Types in transition. New types for trace events w/ no other
+    // changes need a little guidance.
     const argsData = task.event.args.data || {};
-    const stackFrameURLs = (argsData.stackTrace || []).map(entry => entry.url);
+
+    /** @type {string[]} */
+    const stackFrameURLs = (argsData.stackTrace || [])
+      // @ts-ignore - TODO(cjamcl) #7790
+      .map(entry => entry.url);
 
     /** @type {Array<string|undefined>} */
     let taskURLs = [];
@@ -178,9 +184,12 @@ class MainThreadTasks {
       case 'v8.compile':
       case 'EvaluateScript':
       case 'FunctionCall':
+        // @ts-ignore - TODO(cjamcl) #7790
         taskURLs = [argsData.url].concat(stackFrameURLs);
         break;
+      // @ts-ignore - TODO(cjamcl) #7790 This type has not been generated yet.
       case 'v8.compileModule':
+        // @ts-ignore - TODO(cjamcl) #7790 This type has not been generated yet.
         taskURLs = [task.event.args.fileName].concat(stackFrameURLs);
         break;
       case 'TimerFire': {

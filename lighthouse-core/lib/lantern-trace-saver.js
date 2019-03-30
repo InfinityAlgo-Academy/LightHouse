@@ -18,8 +18,8 @@ function convertNodeTimingsToTrace(nodeTimings) {
   /** @param {number} ms */
   const toMicroseconds = ms => baseTs + ms * 1000;
 
-  traceEvents.push(createFakeTracingStartedEvent());
-  traceEvents.push({...createFakeTracingStartedEvent(), name: 'TracingStartedInBrowser'});
+  traceEvents.push(createFakeTracingStartedInPageEvent());
+  traceEvents.push(createFakeTracingStartedInBrowserEvent());
 
   // Create a fake requestId counter
   let requestId = 1;
@@ -53,15 +53,16 @@ function convertNodeTimingsToTrace(nodeTimings) {
   return {traceEvents};
 
   /**
+   * TODO(cjamcl) - TODO(cjamcl) #7790 This type has not been generated yet.
+   * LH.TraceEvent.TracingStartedInPage
    * @return {LH.TraceEvent}
    */
-  function createFakeTracingStartedEvent() {
+  function createFakeTracingStartedInPageEvent() {
     const argsData = {
       frameTreeNodeId: 1,
       sessionId: '1.1',
-      page: frame,
       persistentIds: true,
-      frames: [{frame, url: 'about:blank', name: '', processId: 1}],
+      page: frame,
     };
 
     return {
@@ -70,9 +71,33 @@ function convertNodeTimingsToTrace(nodeTimings) {
       ph: 'I',
       s: 't',
       cat: 'disabled-by-default-devtools.timeline',
+      // @ts-ignore - TODO(cjamcl) #7790
       name: 'TracingStartedInPage',
       args: {data: argsData},
       dur: 0,
+    };
+  }
+
+  /**
+   * @return {LH.TraceEvent.TracingStartedInBrowser.I}
+   */
+  function createFakeTracingStartedInBrowserEvent() {
+    const argsData = {
+      frameTreeNodeId: 1,
+      sessionId: '1.1',
+      persistentIds: true,
+      frames: [{frame, url: 'about:blank', name: '', processId: 1}],
+    };
+
+    return {
+      ...baseEvent,
+      ts: baseTs - 1e5,
+      tts: baseTs - 1e5,
+      ph: 'I',
+      s: 't',
+      cat: 'disabled-by-default-devtools.timeline',
+      name: 'TracingStartedInBrowser',
+      args: {data: argsData},
     };
   }
 
@@ -96,6 +121,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       {
         ...baseEvent,
         ph: 'X',
+        // @ts-ignore - TODO(cjamcl) #7790 This type has not been generated yet.
         name: 'Task',
         ts: eventTs,
         dur: (timing.endTime - timing.startTime) * 1000,
@@ -104,6 +130,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
     ];
 
     const nestedBaseTs = cpuNode.event.ts || 0;
+    // @ts-ignore - TODO(cjamcl) #7790
     const multiplier = (timing.endTime - timing.startTime) * 1000 / cpuNode.event.dur;
     // https://github.com/ChromeDevTools/devtools-frontend/blob/5429ac8a61ad4fa/front_end/timeline_model/TimelineModel.js#L1129-L1130
     const netReqEvents = new Set(['ResourceSendRequest', 'ResourceFinish',
@@ -112,6 +139,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       if (netReqEvents.has(event.name)) continue;
       const ts = eventTs + (event.ts - nestedBaseTs) * multiplier;
       const newEvent = {...event, ...{pid: baseEvent.pid, tid: baseEvent.tid}, ts};
+      // @ts-ignore - TODO(cjamcl) #7790
       if (event.dur) newEvent.dur = event.dur * multiplier;
       events.push(newEvent);
     }
@@ -133,7 +161,6 @@ function convertNodeTimingsToTrace(nodeTimings) {
     if (startTime === endTime) endTime += 0.3;
 
     const requestData = {requestId: requestId.toString(), frame};
-    /** @type {Omit<LH.TraceEvent, 'name'|'ts'|'args'>} */
     const baseRequestEvent = {...baseEvent, ph: 'I', s: 't', dur: 0};
 
     const sendRequestData = {
@@ -157,6 +184,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       decodedBodyLength: record.resourceSize,
       didFail: !!record.failed,
       finishTime: endTime,
+      encodedDataLength: record.transferSize,
     };
 
     /** @type {LH.TraceEvent[]} */
@@ -164,12 +192,16 @@ function convertNodeTimingsToTrace(nodeTimings) {
       {
         ...baseRequestEvent,
         name: 'ResourceSendRequest',
+        ph: 'I',
+        tts: 0,
         ts: toMicroseconds(startTime),
         args: {data: sendRequestData},
       },
       {
         ...baseRequestEvent,
         name: 'ResourceFinish',
+        ph: 'I',
+        tts: 0,
         ts: toMicroseconds(endTime),
         args: {data: resourceFinishData},
       },
@@ -179,6 +211,8 @@ function convertNodeTimingsToTrace(nodeTimings) {
       events.push({
         ...baseRequestEvent,
         name: 'ResourceReceiveResponse',
+        ph: 'I',
+        tts: 0,
         ts: toMicroseconds((startTime + endTime) / 2),
         args: {data: receiveResponseData},
       });

@@ -85,6 +85,7 @@ class TraceOfTab {
     const mainFrameIds = TracingProcessor.findMainFrameIds(keyEvents);
 
     // Filter to just events matching the frame ID for sanity
+    // @ts-ignore - Can't narrow types based on categories.
     const frameEvents = keyEvents.filter(e => e.args.frame === mainFrameIds.frameId);
 
     // Our navStart will be the last frame navigation in the trace
@@ -141,6 +142,7 @@ class TraceOfTab {
     const traceEnd = trace.traceEvents.reduce((max, evt) => {
       return max.ts > evt.ts ? max : evt;
     });
+    // @ts-ignore - TODO(cjamcl) #7790
     const fakeEndOfTraceEvt = {ts: traceEnd.ts + (traceEnd.dur || 0)};
 
     /** @param {{ts: number}=} event */

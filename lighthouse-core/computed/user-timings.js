@@ -37,8 +37,9 @@ class UserTimings {
       // https://cs.chromium.org/search/?q=trace_event.*?user_timing&sq=package:chromium&type=cs
       return evt.name !== 'requestStart' &&
           evt.name !== 'navigationStart' &&
+          // @ts-ignore - TODO(cjamcl) #7790 This type has not been generated yet.
           evt.name !== 'paintNonDefaultBackgroundColor' &&
-          evt.args.frame === undefined;
+          !('frame' in evt.args);
     })
     .forEach(ut => {
       // Mark events fall under phases R and I (or i)

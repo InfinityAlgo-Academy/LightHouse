@@ -39,6 +39,7 @@ class LanternInteractive extends LanternMetric {
     return dependencyGraph.cloneWithRelationships(node => {
       // Include everything that might be a long task
       if (node.type === BaseNode.TYPES.CPU) {
+        // @ts-ignore - TODO(cjamcl) #7790
         return node.event.dur > minimumCpuTaskDuration;
       }
 

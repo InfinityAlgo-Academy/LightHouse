@@ -90,7 +90,9 @@ class PageDependencyGraph {
       // Skip all trace events that aren't schedulable tasks with sizable duration
       if (
         !TracingProcessor.isScheduleableTask(evt) ||
+        // @ts-ignore - TODO(cjamcl) #7790
         !evt.dur ||
+        // @ts-ignore - TODO(cjamcl) #7790
         evt.dur < minimumEvtDur
       ) {
         i++;
@@ -102,6 +104,7 @@ class PageDependencyGraph {
       const children = [];
       i++; // Start examining events after this one
       for (
+        // @ts-ignore - TODO(cjamcl) #7790
         const endTime = evt.ts + evt.dur;
         i < traceOfTab.mainThreadEvents.length && traceOfTab.mainThreadEvents[i].ts < endTime;
         i++
@@ -195,10 +198,18 @@ class PageDependencyGraph {
     const timers = new Map();
     for (const node of cpuNodes) {
       for (const evt of node.childEvents) {
+        // @ts-ignore - TODO(cjamcl) #7790 Types in transition. New types for trace events w/ no
+        // other changes need a little guidance.
         if (!evt.args.data) continue;
 
+        // @ts-ignore - TODO(cjamcl) #7790
         const argsUrl = evt.args.data.url;
-        const stackTraceUrls = (evt.args.data.stackTrace || []).map(l => l.url).filter(Boolean);
+
+        /** @type {string[]} */
+        // @ts-ignore - TODO(cjamcl) #7790
+        const stackTraceUrls = (evt.args.data.stackTrace || [])
+          // @ts-ignore - TODO(cjamcl) #7790
+          .map(l => l.url).filter(Boolean);
 
         switch (evt.name) {
           case 'TimerInstall':

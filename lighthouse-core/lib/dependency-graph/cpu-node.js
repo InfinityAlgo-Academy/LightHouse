@@ -35,6 +35,7 @@ class CPUNode extends BaseNode {
    * @return {number}
    */
   get endTime() {
+    // @ts-ignore - TODO(cjamcl) #7790
     return this._event.ts + this._event.dur;
   }
 

@@ -277,6 +277,7 @@ class Simulator {
       ? this._layoutTaskMultiplier
       : this._cpuSlowdownMultiplier;
     const totalDuration = Math.min(
+      // @ts-ignore - TODO(cjamcl) #7790
       Math.round(cpuNode.event.dur / 1000 * multiplier),
       DEFAULT_MAXIMUM_CPU_TASK_DURATION
     );

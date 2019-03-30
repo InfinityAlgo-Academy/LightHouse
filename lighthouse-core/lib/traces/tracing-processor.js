@@ -180,15 +180,18 @@ class TraceProcessor {
     const topLevelEvents = [];
     // note: mainThreadEvents is already sorted by event start
     for (const event of tabTrace.mainThreadEvents) {
+      // @ts-ignore - TODO(cjamcl) #7790
       if (!TraceProcessor.isScheduleableTask(event) || !event.dur) continue;
 
       const start = (event.ts - tabTrace.navigationStartEvt.ts) / 1000;
+      // @ts-ignore - TODO(cjamcl) #7790
       const end = (event.ts + event.dur - tabTrace.navigationStartEvt.ts) / 1000;
       if (start > endTime || end < startTime) continue;
 
       topLevelEvents.push({
         start,
         end,
+        // @ts-ignore - TODO(cjamcl) #7790
         duration: event.dur / 1000,
       });
     }
@@ -202,9 +205,12 @@ class TraceProcessor {
    */
   static findMainFrameIds(events) {
     // Prefer the newer TracingStartedInBrowser event first, if it exists
-    const startedInBrowserEvt = events.find(e => e.name === 'TracingStartedInBrowser');
+    const startedInBrowserEvt = events.find(
+      /** @return {e is LH.TraceEvent.TracingStartedInBrowser.I} */
+      e => e.name === 'TracingStartedInBrowser');
     if (startedInBrowserEvt && startedInBrowserEvt.args.data &&
         startedInBrowserEvt.args.data.frames) {
+      // @ts-ignore - TODO(cjamcl) #7790
       const mainFrame = startedInBrowserEvt.args.data.frames.find(frame => !frame.parent);
       const frameId = mainFrame && mainFrame.frame;
       const pid = mainFrame && mainFrame.processId;
@@ -225,6 +231,8 @@ class TraceProcessor {
     // Support legacy browser versions that do not emit TracingStartedInBrowser event.
     // The first TracingStartedInPage in the trace is definitely our renderer thread of interest
     // Beware: the tracingStartedInPage event can appear slightly after a navigationStart
+    /** @type {{args: {data: {page: string}} } & LH.TraceEvent.Base} */
+    // @ts-ignore - Type generation does not currently attempt retired tasks types.
     const startedInPageEvt = events.find(e => e.name === 'TracingStartedInPage');
     if (startedInPageEvt && startedInPageEvt.args && startedInPageEvt.args.data) {
       const frameId = startedInPageEvt.args.data.page;
@@ -246,8 +254,11 @@ class TraceProcessor {
    */
   static isScheduleableTask(evt) {
     return evt.name === SCHEDULABLE_TASK_TITLE_LH ||
+    // @ts-ignore - Type generation does not currently attempt retired tasks types.
     evt.name === SCHEDULABLE_TASK_TITLE_ALT1 ||
+    // @ts-ignore
     evt.name === SCHEDULABLE_TASK_TITLE_ALT2 ||
+    // @ts-ignore
     evt.name === SCHEDULABLE_TASK_TITLE_ALT3;
   }
 }
