@@ -375,10 +375,10 @@ export namespace _TraceEvent {
       args: {
       
       };
-      dur: number;
+      dur?: number;
       name: 'RunTask';
       ph: 'X';
-      tdur: number;
+      tdur?: number;
       tts: number;
     }
   }
@@ -432,7 +432,7 @@ export namespace _TraceEvent {
         args: {
         
         };
-        dur: number;
+        dur?: number;
         name: 'ThreadControllerImpl::DoWork';
         ph: 'X';
         tdur: number;
@@ -446,10 +446,10 @@ export namespace _TraceEvent {
           src_file?: string;
           src_func?: string;
         };
-        bind_id: string;
-        dur: number;
-        flow_in: boolean;
-        id: string;
+        bind_id?: string;
+        dur?: number;
+        flow_in?: boolean;
+        id?: string;
         name: 'ThreadControllerImpl::RunTask';
         ph: 'X';
         tdur: number;
@@ -553,10 +553,10 @@ export namespace _TraceEvent {
         args: {
         
         };
-        dur: number;
+        dur?: number;
         name: 'v8.compile';
         ph: 'X';
-        tdur: number;
+        tdur?: number;
         tts: number;
       }
     }
