@@ -37,6 +37,16 @@ const toplevelTaskNames = new Set([
   'ThreadControllerImpl::RunTask',
 ]);
 
+/**
+ * @param {LH.TraceEvent} evt
+ * @return {evt is (LH.TraceEvent.ThreadControllerImpl.DoWork.X  |
+ *                  LH.TraceEvent.ThreadControllerImpl.RunTask.X |
+ *                  LH.TraceEvent.TaskQueueManager.ProcessTaskFromWorkQueue.X)}
+ */
+function isToplevelTask(evt) {
+  return toplevelTaskNames.has(evt.name);
+}
+
 const traceEventsToAlwaysKeep = new Set([
   'Screenshot',
   'TracingStartedInBrowser',
@@ -94,9 +104,8 @@ function filterOutUnnecessaryTasksByNameAndDuration(events) {
  */
 function filterOutOrphanedTasks(events) {
   const toplevelRanges = events
-    .filter(evt => toplevelTaskNames.has(evt.name))
-    // @ts-ignore - TODO(cjamcl) #7790
-    .map(evt => [evt.ts, evt.ts + evt.dur]);
+    .filter(isToplevelTask)
+    .map(evt => [evt.ts, evt.ts + (evt.dur || 0)]);
 
   /** @param {LH.TraceEvent} e */
   const isInToplevelTask = e => toplevelRanges.some(([start, end]) => e.ts >= start && e.ts <= end);
