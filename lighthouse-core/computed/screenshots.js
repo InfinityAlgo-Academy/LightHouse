@@ -16,9 +16,7 @@ class Screenshots {
   */
   static async compute_(trace) {
     return trace.traceEvents
-      // @ts-ignore - TODO(cjamcl) #7790 This type has not been generated yet.
-      // .filter(/** @return {e is LH.TraceEvent.Screenshot} */
-      .filter(/** @return {e is any} */ e => e.name === SCREENSHOT_TRACE_NAME)
+      .filter(/** @return {e is LH.TraceEvent.Screenshot.O} */ e => e.name === SCREENSHOT_TRACE_NAME)
       .map(evt => {
         return {
           timestamp: evt.ts / 1000,

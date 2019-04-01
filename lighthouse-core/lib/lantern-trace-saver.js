@@ -71,10 +71,11 @@ function convertNodeTimingsToTrace(nodeTimings) {
       ph: 'I',
       s: 't',
       cat: 'disabled-by-default-devtools.timeline',
-      // @ts-ignore - TODO(cjamcl) #7790 This type has not been generated yet.
       name: 'TracingStartedInPage',
       args: {data: argsData},
       dur: 0,
+      tdur: 0,
+      tts: 0,
     };
   }
 
