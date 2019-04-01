@@ -206,7 +206,7 @@ class TraceProcessor {
   static findMainFrameIds(events) {
     // Prefer the newer TracingStartedInBrowser event first, if it exists
     const startedInBrowserEvt = events.find(
-      /** @return {e is LH.TraceEvent.TracingStartedInBrowser.I} */
+      /** @return {e is LH.TraceEvent.TracingStartedInBrowser} */
       e => e.name === 'TracingStartedInBrowser');
     if (startedInBrowserEvt && startedInBrowserEvt.args.data &&
         startedInBrowserEvt.args.data.frames) {

@@ -39,9 +39,9 @@ const toplevelTaskNames = new Set([
 
 /**
  * @param {LH.TraceEvent} evt
- * @return {evt is (LH.TraceEvent.ThreadControllerImpl.DoWork.X  |
- *                  LH.TraceEvent.ThreadControllerImpl.RunTask.X |
- *                  LH.TraceEvent.TaskQueueManager.ProcessTaskFromWorkQueue.X)}
+ * @return {evt is (LH.TraceEvent.ThreadControllerImpl.DoWork  |
+ *                  LH.TraceEvent.ThreadControllerImpl.RunTask |
+ *                  LH.TraceEvent.TaskQueueManager.ProcessTaskFromWorkQueue)}
  */
 function isToplevelTask(evt) {
   return toplevelTaskNames.has(evt.name);

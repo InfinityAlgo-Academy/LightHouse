@@ -6,7 +6,7 @@
 
 import _Crdp from 'devtools-protocol/types/protocol';
 import _CrdpMappings from 'devtools-protocol/types/protocol-mapping'
-import _TraceEvent from './trace-events'
+import {TraceEvent as _TraceEvent} from './trace-events'
 
 declare global {
   // Augment global Error type to include node's optional `code` property
@@ -221,7 +221,7 @@ declare global {
     }
 
     export import TraceEvent = _TraceEvent;
-    export type TraceEvent = _TraceEvent.TraceEvent;
+    export type TraceEvent = TraceEvent.TraceEvent;
 
     export interface DevToolsJsonTarget {
       description: string;

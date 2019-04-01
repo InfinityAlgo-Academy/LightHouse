@@ -6,7 +6,7 @@
 
 // https://github.com/Hoten/chrome-trace-events-tsc/blob/master/dist/lh-trace-events.d.ts
 
-export namespace _TraceEvent {
+export namespace TraceEvent {
   interface Base {
     cat: string;
     pid: number;
@@ -15,42 +15,121 @@ export namespace _TraceEvent {
   }
 
   type TraceEvent = 
-    DomContentLoadedEventEnd.R |
-    EvaluateScript.X |
+    TraceEvent.DomContentLoadedEventEnd |
+    TraceEvent.EvaluateScript |
+    TraceEvent.FirstContentfulPaint |
+    TraceEvent.FirstMeaningfulPaint |
+    TraceEvent.FirstMeaningfulPaintCandidate |
+    TraceEvent.FirstPaint |
+    TraceEvent.FunctionCall |
+    TraceEvent.InvalidateLayout |
+    TraceEvent.Layout |
+    TraceEvent.LoadEventEnd |
+    TraceEvent.NavigationStart |
+    TraceEvent.PaintNonDefaultBackgroundColor |
+    TraceEvent.ParseAuthorStyleSheet |
+    TraceEvent.Process_labels |
+    TraceEvent.RequestStart |
+    TraceEvent.ResourceFinish |
+    TraceEvent.ResourceReceiveResponse |
+    TraceEvent.ResourceSendRequest |
+    TraceEvent.RunTask |
+    TraceEvent.ScheduleStyleRecalculation |
+    TraceEvent.Screenshot |
+    TaskQueueManager.ProcessTaskFromWorkQueue |
+    TraceEvent.Thread_name |
+    ThreadControllerImpl.DoWork |
+    ThreadControllerImpl.RunTask |
+    TraceEvent.TimerFire |
+    TraceEvent.TimerInstall |
+    TraceEvent.TracingStartedInBrowser |
+    TraceEvent.TracingStartedInPage |
+    V8.Compile |
+    TraceEvent.XHRReadyStateChange;
+
+  type DomContentLoadedEventEnd = 
+    DomContentLoadedEventEnd.R;
+
+  type EvaluateScript = 
+    EvaluateScript.X;
+
+  type FirstContentfulPaint = 
     FirstContentfulPaint.I |
-    FirstContentfulPaint.R |
-    FirstMeaningfulPaint.R |
-    FirstMeaningfulPaintCandidate.R |
+    FirstContentfulPaint.R;
+
+  type FirstMeaningfulPaint = 
+    FirstMeaningfulPaint.R;
+
+  type FirstMeaningfulPaintCandidate = 
+    FirstMeaningfulPaintCandidate.R;
+
+  type FirstPaint = 
     FirstPaint.I |
-    FirstPaint.R |
+    FirstPaint.R;
+
+  type FunctionCall = 
     FunctionCall.B |
-    FunctionCall.E |
-    InvalidateLayout.I |
+    FunctionCall.E;
+
+  type InvalidateLayout = 
+    InvalidateLayout.I;
+
+  type Layout = 
     Layout.B |
-    Layout.E |
-    LoadEventEnd.R |
-    NavigationStart.R |
-    PaintNonDefaultBackgroundColor.R |
-    ParseAuthorStyleSheet.X |
-    Process_labels.M |
-    RequestStart.R |
-    ResourceFinish.I |
-    ResourceReceiveResponse.I |
-    ResourceSendRequest.I |
-    RunTask.X |
-    ScheduleStyleRecalculation.I |
-    Screenshot.O |
-    TaskQueueManager.ProcessTaskFromWorkQueue.X |
-    Thread_name.M |
-    ThreadControllerImpl.DoWork.X |
-    ThreadControllerImpl.RunTask.X |
-    TimerFire.X |
-    TimerInstall.I |
-    TracingStartedInBrowser.I |
-    TracingStartedInPage.I |
-    V8.Compile.B |
-    V8.Compile.E |
-    V8.Compile.X |
+    Layout.E;
+
+  type LoadEventEnd = 
+    LoadEventEnd.R;
+
+  type NavigationStart = 
+    NavigationStart.R;
+
+  type PaintNonDefaultBackgroundColor = 
+    PaintNonDefaultBackgroundColor.R;
+
+  type ParseAuthorStyleSheet = 
+    ParseAuthorStyleSheet.X;
+
+  type Process_labels = 
+    Process_labels.M;
+
+  type RequestStart = 
+    RequestStart.R;
+
+  type ResourceFinish = 
+    ResourceFinish.I;
+
+  type ResourceReceiveResponse = 
+    ResourceReceiveResponse.I;
+
+  type ResourceSendRequest = 
+    ResourceSendRequest.I;
+
+  type RunTask = 
+    RunTask.X;
+
+  type ScheduleStyleRecalculation = 
+    ScheduleStyleRecalculation.I;
+
+  type Screenshot = 
+    Screenshot.O;
+
+  type Thread_name = 
+    Thread_name.M;
+
+  type TimerFire = 
+    TimerFire.X;
+
+  type TimerInstall = 
+    TimerInstall.I;
+
+  type TracingStartedInBrowser = 
+    TracingStartedInBrowser.I;
+
+  type TracingStartedInPage = 
+    TracingStartedInPage.I;
+
+  type XHRReadyStateChange = 
     XHRReadyStateChange.X;
 
   namespace DomContentLoadedEventEnd {
@@ -454,6 +533,9 @@ export namespace _TraceEvent {
   }
 
   namespace TaskQueueManager {
+    type ProcessTaskFromWorkQueue = 
+      TaskQueueManager.ProcessTaskFromWorkQueue.X;
+  
     namespace ProcessTaskFromWorkQueue {
       interface X extends Base {
         args: {
@@ -480,6 +562,12 @@ export namespace _TraceEvent {
   }
 
   namespace ThreadControllerImpl {
+    type DoWork = 
+      ThreadControllerImpl.DoWork.X;
+  
+    type RunTask = 
+      ThreadControllerImpl.RunTask.X;
+  
     namespace DoWork {
       interface X extends Base {
         args: {
@@ -588,6 +676,11 @@ export namespace _TraceEvent {
   }
 
   namespace V8 {
+    type Compile = 
+      V8.Compile.B |
+      V8.Compile.E |
+      V8.Compile.X;
+  
     namespace Compile {
       interface B extends Base {
         args: {
@@ -661,4 +754,4 @@ export namespace _TraceEvent {
   }
 }
 
-export default _TraceEvent;
+export default TraceEvent;
