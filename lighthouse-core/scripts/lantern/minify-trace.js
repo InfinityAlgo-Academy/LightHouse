@@ -91,8 +91,7 @@ function filterOutUnnecessaryTasksByNameAndDuration(events) {
   const {pid} = TracingProcessor.findMainFrameIds(events);
 
   return events.filter(evt => {
-    // @ts-ignore - TODO(cjamcl) #7790
-    if (toplevelTaskNames.has(evt.name) && evt.dur < 1000) return false;
+    if (isToplevelTask(evt) && (evt.dur || 0) < 1000) return false;
     if (evt.pid === pid && traceEventsToKeepInProcess.has(evt.name)) return true;
     return traceEventsToAlwaysKeep.has(evt.name);
   });
