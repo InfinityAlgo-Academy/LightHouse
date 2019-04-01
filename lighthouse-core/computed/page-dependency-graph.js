@@ -90,9 +90,8 @@ class PageDependencyGraph {
       // Skip all trace events that aren't schedulable tasks with sizable duration
       if (
         !TracingProcessor.isScheduleableTask(evt) ||
-        // @ts-ignore - TODO(cjamcl) #7790
+        !TracingProcessor.isTaskWithDuration(evt) ||
         !evt.dur ||
-        // @ts-ignore - TODO(cjamcl) #7790
         evt.dur < minimumEvtDur
       ) {
         i++;

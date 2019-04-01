@@ -261,6 +261,14 @@ class TraceProcessor {
     // @ts-ignore
     evt.name === SCHEDULABLE_TASK_TITLE_ALT3;
   }
+
+  /**
+   * @param {LH.TraceEvent} evt
+   * @return {evt is LH.TraceEvent & {dur?: number}}
+   */
+  static isTaskWithDuration(evt) {
+    return 'dur' in evt && typeof evt !== 'undefined';
+  }
 }
 
 /**
