@@ -193,7 +193,7 @@ class PageDependencyGraph {
       cpuNode.addDependency(minCandidate);
     }
 
-    /** @type {Map<string, CPUNode>} */
+    /** @type {Map<number, CPUNode>} */
     const timers = new Map();
     for (const node of cpuNodes) {
       for (const evt of node.childEvents) {
@@ -212,12 +212,10 @@ class PageDependencyGraph {
 
         switch (evt.name) {
           case 'TimerInstall':
-            // @ts-ignore - 'TimerInstall' event means timerId exists.
             timers.set(evt.args.data.timerId, node);
             stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
             break;
           case 'TimerFire': {
-            // @ts-ignore - 'TimerFire' event means timerId exists.
             const installer = timers.get(evt.args.data.timerId);
             if (!installer) break;
             installer.addDependent(node);
@@ -237,27 +235,22 @@ class PageDependencyGraph {
 
           case 'XHRReadyStateChange':
             // Only create the dependency if the request was completed
-            // @ts-ignore - 'XHRReadyStateChange' event means readyState is defined.
             if (evt.args.data.readyState !== 4) break;
 
-            // @ts-ignore - 'XHRReadyStateChange' event means argsUrl is defined.
             addDependencyOnUrl(node, argsUrl);
             stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
             break;
 
           case 'FunctionCall':
           case 'v8.compile':
-            // @ts-ignore - events mean argsUrl is defined.
             addDependencyOnUrl(node, argsUrl);
             break;
 
           case 'ParseAuthorStyleSheet':
-            // @ts-ignore - 'ParseAuthorStyleSheet' event means styleSheetUrl is defined.
             addDependencyOnUrl(node, evt.args.data.styleSheetUrl);
             break;
 
           case 'ResourceSendRequest':
-            // @ts-ignore - 'ResourceSendRequest' event means requestId is defined.
             addDependentNetworkRequest(node, evt.args.data.requestId);
             stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
             break;

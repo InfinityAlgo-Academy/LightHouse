@@ -180,8 +180,8 @@ class TraceProcessor {
     const topLevelEvents = [];
     // note: mainThreadEvents is already sorted by event start
     for (const event of tabTrace.mainThreadEvents) {
-      // @ts-ignore - TODO(cjamcl) #7790
-      if (!TraceProcessor.isScheduleableTask(event) || !event.dur) continue;
+      if (!TraceProcessor.isScheduleableTask(event)) continue;
+      if (!TraceProcessor.isTaskWithDuration(event)) continue;
 
       const start = (event.ts - tabTrace.navigationStartEvt.ts) / 1000;
       // @ts-ignore - TODO(cjamcl) #7790

@@ -184,7 +184,6 @@ class MainThreadTasks {
       case 'v8.compile':
       case 'EvaluateScript':
       case 'FunctionCall':
-        // @ts-ignore - TODO(cjamcl) #7790
         taskURLs = [argsData.url].concat(stackFrameURLs);
         break;
       // @ts-ignore - TODO(cjamcl) #7790 This type has not been generated yet.
