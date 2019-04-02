@@ -85,8 +85,8 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
       const connectionForA = pool.acquire(recordA);
       const connectionForB = pool.acquire(recordB);
       for (let i = 0; i < 10; i++) {
-        assert.equal(pool.acquire(recordA), connectionForA);
-        assert.equal(pool.acquire(recordB), connectionForB);
+        assert.equal(pool.acquireActiveConnectionFromRecord(recordA), connectionForA);
+        assert.equal(pool.acquireActiveConnectionFromRecord(recordB), connectionForB);
       }
 
       assert.deepStrictEqual(pool.connectionsInUse(), [connectionForA, connectionForB]);
@@ -152,7 +152,8 @@ describe('DependencyGraph/Simulator/ConnectionPool', () => {
       }
 
       assert.ok(pool.acquire(coldRecord, opts), 'should have acquired connection');
-      assert.ok(pool.acquire(warmRecord, opts), 'should have acquired connection');
+      assert.ok(pool.acquireActiveConnectionFromRecord(warmRecord, opts),
+        'should have acquired connection');
     });
 
     it('should acquire in order of warmness', () => {

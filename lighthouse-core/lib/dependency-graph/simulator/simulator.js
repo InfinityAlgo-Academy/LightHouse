@@ -300,8 +300,7 @@ class Simulator {
       const sizeInMb = (record.resourceSize || 0) / 1024 / 1024;
       timeElapsed = 8 + 20 * sizeInMb - timingData.timeElapsed;
     } else {
-      // If we're estimating time remaining, we already acquired a connection for this record, definitely non-null
-      const connection = /** @type {TcpConnection} */ (this._acquireConnection(record));
+      const connection = this._connectionPool.acquireActiveConnectionFromRecord(record);
       const dnsResolutionTime = this._dns.getTimeUntilResolution(record, {
         requestedAt: timingData.startTime,
         shouldUpdateCache: true,
@@ -352,8 +351,7 @@ class Simulator {
     if (node.type !== BaseNode.TYPES.NETWORK) throw new Error('Unsupported');
 
     const record = node.record;
-    // If we're updating the progress, we already acquired a connection for this record, definitely non-null
-    const connection = /** @type {TcpConnection} */ (this._acquireConnection(record));
+    const connection = this._connectionPool.acquireActiveConnectionFromRecord(record);
     const dnsResolutionTime = this._dns.getTimeUntilResolution(record, {
       requestedAt: timingData.startTime,
       shouldUpdateCache: true,
@@ -503,7 +501,7 @@ module.exports = Simulator;
  * @typedef NodeTimingIntermediate
  * @property {number} [startTime]
  * @property {number} [endTime]
- * @property {number} [queuedTime]
+ * @property {number} [queuedTime] Helpful for debugging.
  * @property {number} [estimatedTimeElapsed]
  * @property {number} [timeElapsed]
  * @property {number} [timeElapsedOvershoot]

@@ -376,7 +376,6 @@ declare global {
       }
 
       export interface NetworkAnalysis {
-        records: Array<NetworkRequest>;
         rtt: number;
         additionalRttByOrigin: Map<string, number>;
         serverResponseTimeByOrigin: Map<string, number>;

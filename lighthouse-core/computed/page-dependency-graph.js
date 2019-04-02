@@ -133,9 +133,9 @@ class PageDependencyGraph {
         rootNode.addDependent(node);
       }
 
-      const redirects = Array.from(node.record.redirects || []);
-      redirects.push(node.record);
+      if (!node.record.redirects) return;
 
+      const redirects = [...node.record.redirects, node.record];
       for (let i = 1; i < redirects.length; i++) {
         const redirectNode = networkNodeOutput.idToNodeMap.get(redirects[i - 1].requestId);
         const actualNode = networkNodeOutput.idToNodeMap.get(redirects[i].requestId);

@@ -57,7 +57,7 @@ class NetworkAnalysis {
     const records = await NetworkRecords.request(devtoolsLog, context);
     const throughput = NetworkAnalyzer.estimateThroughput(records);
     const rttAndServerResponseTime = NetworkAnalysis.computeRTTAndServerResponseTime(records);
-    return {records, throughput, ...rttAndServerResponseTime};
+    return {throughput, ...rttAndServerResponseTime};
   }
 }
 
