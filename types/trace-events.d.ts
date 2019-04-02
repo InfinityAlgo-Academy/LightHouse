@@ -4,7 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-// https://github.com/Hoten/chrome-trace-events-tsc/blob/master/dist/lh-trace-events.d.ts
+/**
+ * Generated from https://github.com/Hoten/chrome-trace-events-tsc/blob/master/dist/lh-trace-events.d.ts
+ * @see https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview
+ */
 
 export namespace TraceEvent {
   interface Base {
