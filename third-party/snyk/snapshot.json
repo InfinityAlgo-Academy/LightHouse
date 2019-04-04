@@ -57,10 +57,11 @@
       {"id":"npm:highcharts:20180225","severity":"high","semver":{"vulnerable":["<6.1.0"]}}
     ],
     "jquery":[
+      {"id":"SNYK-JS-JQUERY-174006","severity":"medium","semver":{"vulnerable":["*"]}},
       {"id":"npm:jquery:20160529","severity":"low","semver":{"vulnerable":["=3.0.0-rc1"]}},
       {"id":"npm:jquery:20150627","severity":"medium","semver":{"vulnerable":["<1.12.2",">=1.12.3 <2.2.2",">=2.2.3 <3.0.0"]}},
       {"id":"npm:jquery:20140902","severity":"medium","semver":{"vulnerable":[">=1.4.2 <1.6.2"]}},
-      {"id":"npm:jquery:20120206","severity":"medium","semver":{"vulnerable":["<1.9.0 >=1.7.1"]}},
+      {"id":"npm:jquery:20120206","severity":"medium","semver":{"vulnerable":[">=1.7.1 <1.9.0"]}},
       {"id":"npm:jquery:20110606","severity":"medium","semver":{"vulnerable":["<1.6.3"]}}
     ],
     "jquery-mobile":[

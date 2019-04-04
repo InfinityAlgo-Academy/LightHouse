@@ -2629,7 +2629,7 @@
       "score": 0,
       "scoreDisplayMode": "binary",
       "rawValue": false,
-      "displayValue": "1 vulnerability detected",
+      "displayValue": "2 vulnerabilities detected",
       "details": {
         "type": "table",
         "headings": [
@@ -2652,7 +2652,7 @@
         "items": [
           {
             "highestSeverity": "Medium",
-            "vulnCount": 1,
+            "vulnCount": 2,
             "detectedLib": {
               "text": "jQuery@2.1.1",
               "url": "https://snyk.io/vuln/npm:jquery?lh=2.1.1&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit",
