@@ -21,14 +21,16 @@ const LR_PRESETS = {
 
 /**
  * Run lighthouse for connection and provide similar results as in CLI.
+ *
+ * If configOverride is provided, lrDevice and categoryIDs are ignored.
  * @param {Connection} connection
  * @param {string} url
  * @param {LH.Flags} flags Lighthouse flags, including `output`
- * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, keepRawValues: boolean}} lrOpts Options coming from Lightrider
+ * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, keepRawValues: boolean, configOverride?: LH.Config.Json}} lrOpts Options coming from Lightrider
  * @return {Promise<string|Array<string>|void>}
  */
 async function runLighthouseInLR(connection, url, flags, lrOpts) {
-  const {lrDevice, categoryIDs, logAssets, keepRawValues} = lrOpts;
+  const {lrDevice, categoryIDs, logAssets, keepRawValues, configOverride} = lrOpts;
 
   // Certain fixes need to kick in under LR, see https://github.com/GoogleChrome/lighthouse/issues/5839
   global.isLightrider = true;
@@ -38,10 +40,15 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
   flags.logLevel = flags.logLevel || 'info';
   flags.channel = 'lr';
 
-  const config = lrDevice === 'desktop' ? LR_PRESETS.desktop : LR_PRESETS.mobile;
-  if (categoryIDs) {
-    config.settings = config.settings || {};
-    config.settings.onlyCategories = categoryIDs;
+  let config;
+  if (configOverride) {
+    config = configOverride;
+  } else {
+    config = lrDevice === 'desktop' ? LR_PRESETS.desktop : LR_PRESETS.mobile;
+    if (categoryIDs) {
+      config.settings = config.settings || {};
+      config.settings.onlyCategories = categoryIDs;
+    }
   }
 
   try {

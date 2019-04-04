@@ -55,21 +55,28 @@ describe('round trip JSON comparison subsets', () => {
   });
 
   it('has the same config values', () => {
-    expect(roundTripJson.configSettings).toMatchObject(sampleJson.configSettings);
+    // Config settings from proto round trip should be a subset of the actual settings.
+    expect(sampleJson.configSettings).toMatchObject(roundTripJson.configSettings);
   });
 });
 
-// Note: In a failing diff, if you see details.summary going from {} to null, it's OK.
-// Jest considers this not a failure, and neither do we, here in the python roundtrip
-// Meanwhile, The PSI roundtrip maintains {} to {}.
 describe('round trip JSON comparison to everything', () => {
   let sampleJson;
 
   beforeEach(() => {
     sampleJson = JSON.parse(preprocessor.processForProto(sample));
+
+    // Proto conversion turns empty summaries into null. This is OK,
+    // and is handled in the PSI roundtrip just fine, but messes up the easy
+    // jest sub-object matcher. So, we put the empty object back in its place.
+    for (const audit of Object.values(roundTripJson.audits)) {
+      if (audit.details && audit.details.summary === null) {
+        audit.details.summary = {};
+      }
+    }
   });
 
   it('has the same JSON overall', () => {
-    expect(roundTripJson).toMatchObject(sampleJson);
+    expect(sampleJson).toMatchObject(roundTripJson);
   });
 });
