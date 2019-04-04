@@ -195,4 +195,45 @@ describe('MainResource computed artifact', () => {
       group: taskGroups.other,
     });
   });
+
+  const invalidEventSets = [
+    [
+      // TaskA overlaps with TaskB, X first
+      {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 100e3, args},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 5e3, args},
+      {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 115e3, args},
+    ],
+    [
+      // TaskA overlaps with TaskB, B first
+      {ph: 'B', name: 'TaskA', pid, tid, ts: baseTs, args},
+      {ph: 'X', name: 'TaskB', pid, tid, ts: baseTs + 5e3, dur: 100e3, args},
+      {ph: 'E', name: 'TaskA', pid, tid, ts: baseTs + 90e3, args},
+    ],
+    [
+      // TaskA is missing a B event
+      {ph: 'E', name: 'TaskA', pid, tid, ts: baseTs, args},
+      {ph: 'B', name: 'TaskB', pid, tid, ts: baseTs + 5e3, args},
+      {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 115e3, args},
+    ],
+    [
+      // TaskB is missing a B event after an X
+      {ph: 'X', name: 'TaskA', pid, tid, ts: baseTs, dur: 100e3, args},
+      {ph: 'E', name: 'TaskB', pid, tid, ts: baseTs + 10e3, args},
+    ],
+  ];
+
+  for (const invalidEvents of invalidEventSets) {
+    it('should throw on invalid task input', async () => {
+      const traceEvents = [
+        ...boilerplateTrace,
+        ...invalidEvents,
+      ];
+
+      traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
+
+      const context = {computedCache: new Map()};
+      const promise = MainThreadTasks.request({traceEvents}, context);
+      await expect(promise).rejects.toBeTruthy();
+    });
+  }
 });

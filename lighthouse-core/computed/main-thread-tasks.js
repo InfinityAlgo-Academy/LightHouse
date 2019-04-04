@@ -148,11 +148,16 @@ class MainThreadTasks {
 
   /**
    * @param {TaskNode} task
+   * @param {TaskNode|undefined} parent
    * @return {number}
    */
-  static _computeRecursiveSelfTime(task) {
+  static _computeRecursiveSelfTime(task, parent) {
+    if (parent && task.endTime > parent.endTime) {
+      throw new Error('Fatal trace logic error - child cannot end after parent');
+    }
+
     const childTime = task.children
-      .map(MainThreadTasks._computeRecursiveSelfTime)
+      .map(child => MainThreadTasks._computeRecursiveSelfTime(child, task))
       .reduce((sum, child) => sum + child, 0);
     task.duration = task.endTime - task.startTime;
     task.selfTime = task.duration - childTime;
@@ -237,7 +242,7 @@ class MainThreadTasks {
     for (const task of tasks) {
       if (task.parent) continue;
 
-      MainThreadTasks._computeRecursiveSelfTime(task);
+      MainThreadTasks._computeRecursiveSelfTime(task, undefined);
       MainThreadTasks._computeRecursiveAttributableURLs(task, [], priorTaskData);
       MainThreadTasks._computeRecursiveTaskGroup(task);
     }
