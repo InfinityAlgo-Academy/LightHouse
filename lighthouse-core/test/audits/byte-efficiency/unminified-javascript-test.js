@@ -16,9 +16,10 @@ const resourceType = 'Script';
 describe('Page uses optimized responses', () => {
   it('fails when given unminified scripts', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({
-      Scripts: [
+      ScriptElements: [
         {
           requestId: '123.1',
+          src: 'foo.js',
           content: `
             var foo = new Set();
             foo.add(1);
@@ -31,6 +32,7 @@ describe('Page uses optimized responses', () => {
         },
         {
           requestId: '123.2',
+          src: 'other.js',
           content: `
             const foo = new Set();
             foo.add(1);
@@ -43,6 +45,7 @@ describe('Page uses optimized responses', () => {
         },
         {
           requestId: '123.3',
+          src: 'valid-ish.js',
           content: /* eslint-disable no-useless-escape */
           `
             const foo = 1
@@ -51,6 +54,7 @@ describe('Page uses optimized responses', () => {
         },
         {
           requestId: '123.4',
+          src: 'invalid.js',
           content: '#$*%dense',
         },
       ],
@@ -75,7 +79,7 @@ describe('Page uses optimized responses', () => {
 
   it('fails when given unminified scripts even with missing network record', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({
-      Scripts: [
+      ScriptElements: [
         {
           requestId: '123.1',
           content: `
@@ -106,13 +110,15 @@ describe('Page uses optimized responses', () => {
 
   it('passes when scripts are already minified', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({
-      Scripts: [
+      ScriptElements: [
         {
           requestId: '123.1',
+          src: 'foo.js',
           content: 'var f=new Set();f.add(1);f.add(2);if(f.has(2))console.log(1234)',
         },
         {
           requestId: '123.2',
+          src: 'other.js',
           content: `
           const foo = new Set();
           foo.add(1);
@@ -125,6 +131,7 @@ describe('Page uses optimized responses', () => {
         },
         {
           requestId: '123.3',
+          src: 'invalid.js',
           content: 'for{(wtf',
         },
       ],

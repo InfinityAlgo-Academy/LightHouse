@@ -42,7 +42,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['Scripts', 'devtoolsLogs', 'traces'],
+      requiredArtifacts: ['ScriptElements', 'devtoolsLogs', 'traces'],
     };
   }
 
@@ -78,10 +78,11 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
     /** @type {Array<LH.Audit.ByteEfficiencyItem>} */
     const items = [];
     const warnings = [];
-    for (const {requestId, inline, content} of artifacts.Scripts) {
+    for (const {requestId, src, content} of artifacts.ScriptElements) {
       if (!content) continue;
+
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
-      const displayUrl = inline || !networkRecord ?
+      const displayUrl = !src || !networkRecord ?
         `inline: ${content.substr(0, 40)}...` :
         networkRecord.url;
       try {

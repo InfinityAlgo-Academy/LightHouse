@@ -98,7 +98,6 @@ const defaultConfig = {
     networkQuietThresholdMs: 1000,
     cpuQuietThresholdMs: 1000,
     gatherers: [
-      'scripts',
       'css-usage',
       'viewport-dimensions',
       'runtime-exceptions',
@@ -108,6 +107,7 @@ const defaultConfig = {
       'image-elements',
       'link-elements',
       'meta-elements',
+      'script-elements',
       'dobetterweb/appcache',
       'dobetterweb/doctype',
       'dobetterweb/domstats',

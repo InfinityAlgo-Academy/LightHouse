@@ -1070,9 +1070,6 @@ Object {
       "cpuQuietThresholdMs": 1000,
       "gatherers": Array [
         Object {
-          "path": "scripts",
-        },
-        Object {
           "path": "css-usage",
         },
         Object {
@@ -1098,6 +1095,9 @@ Object {
         },
         Object {
           "path": "meta-elements",
+        },
+        Object {
+          "path": "script-elements",
         },
         Object {
           "path": "dobetterweb/appcache",

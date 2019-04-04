@@ -105,8 +105,8 @@ declare global {
       RobotsTxt: {status: number|null, content: string|null};
       /** Set of exceptions thrown during page load. */
       RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
-      /** The content of all scripts loaded by the page, and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
-      Scripts: Array<{content: string, inline: boolean, requestId?: string}>;
+      /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
+      ScriptElements: Array<Artifacts.ScriptElement>;
       /** Version information for all ServiceWorkers active after the first page load. */
       ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: Crdp.ServiceWorker.ServiceWorkerRegistration[]};
       /** The status of an offline fetch of the page's start_url. -1 and a explanation if missing or there was an error. */
@@ -184,6 +184,19 @@ declare global {
         crossOrigin: 'anonymous'|'use-credentials'|null
         /** Where the link was found, either in the DOM or in the headers of the main document */
         source: 'head'|'body'|'headers'
+      }
+
+      export interface ScriptElement {
+        type: string | null
+        src: string | null
+        async: boolean
+        defer: boolean
+        /** Where the script was discovered, either in the head, the body, or network records. */
+        source: 'head'|'body'|'network'
+        /** The content of the inline script or the network record with the matching URL, null if the script had a src and no network record could be found. */
+        content: string | null
+        /** The ID of the network request that matched the URL of the src or the main document if inline, null if no request could be found. */
+        requestId: string | null
       }
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
