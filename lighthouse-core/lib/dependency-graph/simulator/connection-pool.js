@@ -18,22 +18,10 @@ const CONNECTIONS_PER_ORIGIN = 6;
 module.exports = class ConnectionPool {
   /**
    * @param {LH.Artifacts.NetworkRequest[]} records
-   * @param {Object=} options
+   * @param {Required<LH.Gatherer.Simulation.Options>} options
    */
   constructor(records, options) {
-    this._options = Object.assign(
-      {
-        rtt: undefined,
-        throughput: undefined,
-        additionalRttByOrigin: new Map(),
-        serverResponseTimeByOrigin: new Map(),
-      },
-      options
-    );
-
-    if (!this._options.rtt || !this._options.throughput) {
-      throw new Error('Cannot create pool with no rtt or throughput');
-    }
+    this._options = options;
 
     this._records = records;
     /** @type {Map<string, TcpConnection[]>} */
