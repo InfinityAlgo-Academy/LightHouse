@@ -99,18 +99,6 @@ declare global {
         /** A brief description of the purpose of the display group. */
         description?: string;
       }
-
-      /**
-       * A description of configuration used for gathering.
-       */
-      export interface RuntimeConfig {
-        environment: {
-          name: 'Device Emulation'|'Network Throttling'|'CPU Throttling';
-          description: string;
-        }[];
-        blockedUrlPatterns: string[];
-        extraHeaders: Crdp.Network.Headers;
-      }
     }
   }
 }
