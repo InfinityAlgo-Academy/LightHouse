@@ -15,6 +15,15 @@ const URL = require('./url-shim');
 
 const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extension', 'about'];
 
+// Lightrider X-Header names for timing information.
+// See: _updateTransferSizeForLightrider and _updateTimingsForLightrider.
+const HEADER_TCP = 'X-TCPMs';
+const HEADER_SSL = 'X-SSLMs';
+const HEADER_REQ = 'X-RequestMs';
+const HEADER_RES = 'X-ResponseMs';
+const HEADER_TOTAL = 'X-TotalMs';
+const HEADER_FETCHED_SIZE = 'X-TotalFetchedSize';
+
 /**
  * @typedef HeaderEntry
  * @property {string} name
@@ -26,6 +35,18 @@ const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extens
  * @property {string} scheme
  * @property {string} host
  * @property {string} securityOrigin
+ */
+
+/**
+ * @typedef LightriderStatistics
+ * The difference in endTime between the observed Lighthouse endTime and Lightrider's derived endTime.
+ * @property {number} endTimeDeltaMs
+ * The time spent making a TCP connection (connect + SSL).
+ * @property {number} TCPMs
+ * The time spent requesting a resource from a remote server, we use this to approx RTT.
+ * @property {number} requestMs
+ * The time spent transferring a resource from a remote server.
+ * @property {number} responseMs
  */
 
 /** @type {SelfMap<LH.Crdp.Page.ResourceType>} */
@@ -48,7 +69,7 @@ const RESOURCE_TYPES = {
   CSPViolationReport: 'CSPViolationReport',
 };
 
-module.exports = class NetworkRequest {
+class NetworkRequest {
   constructor() {
     this.requestId = '';
     this.connectionId = '0';
@@ -72,6 +93,9 @@ module.exports = class NetworkRequest {
     this.resourceSize = 0;
     this.fromDiskCache = false;
     this.fromMemoryCache = false;
+
+    /** @type {LightriderStatistics|undefined} Extra timing information available only when run in Lightrider. */
+    this.lrStatistics = undefined;
 
     this.finished = false;
     this.requestMethod = '';
@@ -205,6 +229,7 @@ module.exports = class NetworkRequest {
 
     this._updateResponseReceivedTimeIfNecessary();
     this._updateTransferSizeForLightrider();
+    this._updateTimingsForLightrider();
   }
 
   /**
@@ -223,6 +248,7 @@ module.exports = class NetworkRequest {
 
     this._updateResponseReceivedTimeIfNecessary();
     this._updateTransferSizeForLightrider();
+    this._updateTimingsForLightrider();
   }
 
   /**
@@ -309,6 +335,8 @@ module.exports = class NetworkRequest {
 
     this.responseReceivedTime = Math.min(this.responseReceivedTime, headersReceivedTime);
     this.responseReceivedTime = Math.max(this.responseReceivedTime, this.startTime);
+    // We're only at responseReceived (_onResponse) at this point.
+    // This endTime may be redefined again after onLoading is done.
     this.endTime = Math.max(this.endTime, this.responseReceivedTime);
   }
 
@@ -338,13 +366,74 @@ module.exports = class NetworkRequest {
    * both dataReceived and loadingFinished.
    */
   _updateTransferSizeForLightrider() {
-    // Bail if we somehow already have transfer size data.
+    // Bail if we aren't in Lightrider.
     if (!global.isLightrider) return;
 
-    const totalFetchedSize = this.responseHeaders.find(item => item.name === 'X-TotalFetchedSize');
+    const totalFetchedSize = this.responseHeaders.find(item => item.name === HEADER_FETCHED_SIZE);
     // Bail if the header was missing.
     if (!totalFetchedSize) return;
-    this.transferSize = parseFloat(totalFetchedSize.value);
+    const floatValue = parseFloat(totalFetchedSize.value);
+    // Bail if the header cannot be parsed.
+    if (isNaN(floatValue)) return;
+    this.transferSize = floatValue;
+  }
+
+  /**
+   * LR gets additional, accurate timing information from its underlying fetch infrastructure.  This
+   * is passed in via X-Headers similar to 'X-TotalFetchedSize'.
+   */
+  _updateTimingsForLightrider() {
+    // Bail if we aren't in Lightrider.
+    if (!global.isLightrider) return;
+
+    // For more info on timing nomenclature: https://www.w3.org/TR/resource-timing-2/#processing-model
+
+    //    StartTime
+    //    | ConnectStart
+    //    | |     SSLStart  SSLEnd
+    //    | |     |         | ConnectEnd
+    //    | |     |         | | SendStart/End   ReceiveHeadersEnd
+    //    | |     |         | | |               |                EndTime
+    //    ▼ ▼     ▼         ▼ ▼ ▼               ▼                ▼
+    //    [ [TCP  [   SSL   ] ] [   Request   ] [   Response   ] ]
+    //    ▲ ▲     ▲         ▲ ▲ ▲             ▲ ▲              ▲ ▲
+    //    | |     '-SSLMs---' | '-requestMs---' '-responseMs---' |
+    //    | '----TCPMs--------'                                  |
+    //    |                                                      |
+    //    '------------------------TotalMs-----------------------'
+
+    const totalHeader = this.responseHeaders.find(item => item.name === HEADER_TOTAL);
+    // Bail if there was no totalTime.
+    if (!totalHeader) return;
+
+    const totalMs = parseInt(totalHeader.value);
+    const TCPMsHeader = this.responseHeaders.find(item => item.name === HEADER_TCP);
+    const SSLMsHeader = this.responseHeaders.find(item => item.name === HEADER_SSL);
+    const requestMsHeader = this.responseHeaders.find(item => item.name === HEADER_REQ);
+    const responseMsHeader = this.responseHeaders.find(item => item.name === HEADER_RES);
+
+    // Make sure all times are initialized and are non-negative.
+    const TCPMs = TCPMsHeader ? Math.max(0, parseInt(TCPMsHeader.value)) : 0;
+    const SSLMs = SSLMsHeader ? Math.max(0, parseInt(SSLMsHeader.value)) : 0;
+    const requestMs = requestMsHeader ? Math.max(0, parseInt(requestMsHeader.value)) : 0;
+    const responseMs = responseMsHeader ? Math.max(0, parseInt(responseMsHeader.value)) : 0;
+
+    // Bail if the timings don't add up.
+    if (TCPMs + requestMs + responseMs !== totalMs) {
+      return;
+    }
+
+    // Bail if SSL time is > TCP time.
+    if (SSLMs > TCPMs) {
+      return;
+    }
+
+    this.lrStatistics = {
+      endTimeDeltaMs: (this.endTime - (this.startTime + (totalMs / 1000))) * 1000,
+      TCPMs: TCPMs,
+      requestMs: requestMs,
+      responseMs: responseMs,
+    };
   }
 
   /**
@@ -377,4 +466,13 @@ module.exports = class NetworkRequest {
   static get TYPES() {
     return RESOURCE_TYPES;
   }
-};
+}
+
+NetworkRequest.HEADER_TCP = HEADER_TCP;
+NetworkRequest.HEADER_SSL = HEADER_SSL;
+NetworkRequest.HEADER_REQ = HEADER_REQ;
+NetworkRequest.HEADER_RES = HEADER_RES;
+NetworkRequest.HEADER_TOTAL = HEADER_TOTAL;
+NetworkRequest.HEADER_FETCHED_SIZE = HEADER_FETCHED_SIZE;
+
+module.exports = NetworkRequest;
