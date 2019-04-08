@@ -18,7 +18,7 @@
     "message": "`[aria-*]` विशेषताओं के मिलान उनकी भूमिकाओं से होता है"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
-    "message": "कुछ ARIA भूमिकाओं में ऐसी विशेषताओं की ज़रूरत होती है, जो स्क्रीन रीडर को एलिमेंट की स्थिति बताती हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=lighthouse)."
+    "message": "कुछ ARIA भूमिकाओं में ऐसी विशेषताओं की ज़रूरत होती है जो स्क्रीन रीडर को एलिमेंट की स्थिति बताती हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | failureTitle": {
     "message": "`[role]` की ज़रूरी `[aria-*]` विशेषताएं नहीं हैं"
@@ -84,7 +84,7 @@
     "message": "विफल रहने वाले एलिमेंट"
   },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
-    "message": "बटन का एक्सेस करने लायक कोई नाम नहीं होने पर, स्क्रीन रीडर उसे \"बटन\" के रूप में बताते हैं. इस वजह से यह उन इस्तेमाल करने वालों के लिए बेकार हो जाता है, जो स्क्रीन रीडर पर भरोसा करते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse)."
+    "message": "बटन का एक्सेस करने लायक कोई नाम नहीं होने पर, स्क्रीन रीडर उसे \"बटन\" के रूप में बताते हैं. इस वजह से यह उन इस्तेमाल करने वालों के लिए बेकार हो जाता है जो स्क्रीन रीडर पर भरोसा करते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/button-name.js | failureTitle": {
     "message": "बटन के नाम एक्सेस करने लायक नहीं हैं"
@@ -255,7 +255,7 @@
     "message": "`[user-scalable=\"no\"]` का इस्तेमाल `<meta name=\"viewport\">` एलिमेंट में नहीं किया जा सकता और `[maximum-scale]` विशेषता पाँच से कम नहीं है."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "स्क्रीन री़डर ऐसी सामग्री का अनुवाद नहीं कर सकते जिसमें टेक्स्ट नहीं होता है. `<object>` एलिमेंट में वैकल्पिक टेक्स्ट शामिल करने से, स्क्रीन रीडर को इस्तेमाल करने वालों को मतलब समझाने में मदद मिलती है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse)."
+    "message": "स्क्रीन रीडर ऐसी सामग्री का अनुवाद नहीं कर सकते जिसमें टेक्स्ट नहीं होता है. `<object>` एलिमेंट में वैकल्पिक टेक्स्ट शामिल करने से, स्क्रीन रीडर को इस्तेमाल करने वालों को मतलब समझाने में मदद मिलती है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
     "message": "`<object>` एलिमेंट में `[alt]` टेक्स्ट नहीं है"
@@ -264,7 +264,7 @@
     "message": "`<object>` एलिमेंट में `[alt]` टेक्स्ट है"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
-    "message": "0 से ज़्यादा मान साफ़ तौर पर नेविगेशन क्रमों को लागू करता है. हालांकि तकनीकी रूप से मान्य है. यह अक्सर ऐसे इस्तेमाल करने वालों को निराश करता है, जो सहायक तकनीकों पर भरोसा करते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/tabindex?application=lighthouse)."
+    "message": "0 से ज़्यादा मान साफ़ तौर पर नेविगेशन क्रम को लागू करता है. हालांकि तकनीकी रूप से मान्य है. यह अक्सर ऐसे इस्तेमाल करने वालों को निराश करता है जो सहायक तकनीकों पर भरोसा करते हैं. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/tabindex?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/tabindex.js | failureTitle": {
     "message": "कुछ एलिमेंट का `[tabindex]` मान 0 से ज़्यादा होता है"
@@ -273,7 +273,7 @@
     "message": "किसी भी एलिमेंट का `[tabindex]` मान 0 से ज़्यादा नहीं हो सकता"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | description": {
-    "message": "स्क्रीन रीडर में ऐसी सुविधाएं होती हैं जिनसे टेबल में जाना आसान हो जाता है. `[headers]` विशेषता का इस्तेमाल करने वाले `<td>` सेल सिर्फ़ उसी टेबल में दूसरे सेल का हवाला देते हैं, इसे पक्का करने पर स्क्रीन रीडर इस्तेमाल करने वालों को बेहतर अनुभव मिल सकता है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)."
+    "message": "स्क्रीन रीडर में ऐसी सुविधाएं होती हैं जिनसे टेबल में जाना आसान हो जाता है. `[headers]` विशेषता का इस्तेमाल करने वाले `<td>` सेल सिर्फ़ उसी टेबल में दूसरे सेल के बारे में बताते हैं, इसे पक्का करने पर स्क्रीन रीडर इस्तेमाल करने वालों को बेहतर अनुभव मिल सकता है. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
     "message": "`[headers]` विशेषता का इस्तेमाल करने वाले `<table>` एलिमेंट में मौजूद सेल, उसी टेबल में दूसरे सेल का हवाला देते हैं."
@@ -309,7 +309,7 @@
     "message": "`<video>` एलिमेंट में `[kind=\"captions\"]`वाला `<track>` एलिमेंट है"
   },
   "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "ऑडियो के ब्यौरे में वीडियो से जुड़ी काम की ऐसी जानकारी दी जाती है, जो बातचीत से नहीं दी जा सकती, जैसे चेहरे के हावभाव और सीन. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)."
+    "message": "ऑडियो के ब्यौरे में वीडियो से जुड़ी काम की ऐसी जानकारी दी जाती है जो बातचीत से नहीं दी जा सकती, जैसे चेहरे के हावभाव और सीन. [ज़्यादा जानें](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)."
   },
   "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
     "message": "`<video>` एलिमेंट में `[kind=\"description\"]`वाले `<track>` एलिमेंट शामिल नहीं हैं."
@@ -504,7 +504,7 @@
     "message": "मुख्य थ्रेड के काम को कम करता है"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "अंदाजन इनपुट देरी इस बात का अनुमान होता है कि पेज लोड होने की सबसे व्यस्त 5 सेकंड की विंडो के दौरान आपके ऐप्लिकेशन को इस्तेमाल करने वाले के इनपुट का जवाब देने में, मिलीसेकंड में कितना समय लगेगा. अगर इंतज़ार का समय 60 मिलीसेकंड से ज़्यादा है, तो इस्तेमाल करने वाले आपके ऐप्लिकेशन को धीमा मान सकते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
+    "message": "अंदाजन इनपुट देरी इस बात का अनुमान होता है कि पेज लोड होने की सबसे व्यस्त 5 सेकंड की विंडो के दौरान आपके ऐप्लिकेशन को इस्तेमाल करने वाले के इनपुट का जवाब देने में, मिलीसेकंड में कितना समय लगेगा. अगर इंतज़ार का समय 50 मिलीसेकंड से ज़्यादा है, तो इस्तेमाल करने वाले आपके ऐप्लिकेशन को धीमा मान सकते हैं. [ज़्यादा जानें](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | title": {
     "message": "अनुमानित इनपुट प्रतीक्षा समय"
