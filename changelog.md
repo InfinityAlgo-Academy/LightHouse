@@ -1,3 +1,85 @@
+ <a name="4.3.0"></a>
+# 4.3.0 (2019-04-08)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/4.2.0...4.3.0)
+
+## New contributors!
+
+Thanks to @rdlabo and @yashrajbharti for their first contributions!
+
+## Report
+
+* include utm params in links to docs ([#7441](https://github.com/googlechrome/lighthouse/pull/7441))
+* fix PWA badge from disappearing on scroll ([#7512](https://github.com/googlechrome/lighthouse/pull/7512))
+
+## Core
+
+* artifacts: rename Scripts to ScriptElements artifact ([#7920](https://github.com/googlechrome/lighthouse/pull/7920))
+* canonical: move canonical audit to LinkElements ([#7080](https://github.com/googlechrome/lighthouse/pull/7080))
+* font-display: handle carriage returns ([#7712](https://github.com/googlechrome/lighthouse/pull/7712))
+* font-display: ignore data URLs ([#7684](https://github.com/googlechrome/lighthouse/pull/7684))
+* image-aspect-ratio: ignore css background images ([#7516](https://github.com/googlechrome/lighthouse/pull/7516))
+* jsonld: add structured data validation ([#6750](https://github.com/googlechrome/lighthouse/pull/6750))
+* lhr: truncate measure timings to hundredths ([#7748](https://github.com/googlechrome/lighthouse/pull/7748))
+* logging: don't log when closing already closed page ([#7576](https://github.com/googlechrome/lighthouse/pull/7576))
+* main-thread-tasks: improve event-order error messages ([#7745](https://github.com/googlechrome/lighthouse/pull/7745))
+* main-thread-tasks: handle last task not finishing ([#7728](https://github.com/googlechrome/lighthouse/pull/7728))
+* main-thread-tasks: use toplevel tasks in main thread audit ([#7711](https://github.com/googlechrome/lighthouse/pull/7711))
+* oopif: attach to all descendants ([#7608](https://github.com/googlechrome/lighthouse/pull/7608))
+* oopif: skip OOPIF network records in some gatherers ([#7640](https://github.com/googlechrome/lighthouse/pull/7640))
+* optimized-images: cap execution to 5 seconds ([#7237](https://github.com/googlechrome/lighthouse/pull/7237))
+* settings: add lighthouse channel ([#7312](https://github.com/googlechrome/lighthouse/pull/7312))
+* remove hreflang gatherer ([#7477](https://github.com/googlechrome/lighthouse/pull/7477))
+* tap-targets: exclude sticky elements from tap targets audit ([#7603](https://github.com/googlechrome/lighthouse/pull/7603))
+* vuln-libs: match against all semver ranges provided by snyk ([#7402](https://github.com/googlechrome/lighthouse/pull/7402))
+* uses-http2: ignore requests from service-worker ([#7197](https://github.com/googlechrome/lighthouse/pull/7197))
+
+## Docs
+
+* add plugin recipe ([#6965](https://github.com/googlechrome/lighthouse/pull/6965))
+* readme: Foo integration ([#8035](https://github.com/googlechrome/lighthouse/pull/8035))
+* url-shim: add comment about public suffix lst ([#7671](https://github.com/googlechrome/lighthouse/pull/7671))
+
+## Clients
+
+* devtools: refactor build script ([#7421](https://github.com/googlechrome/lighthouse/pull/7421), [#7567](https://github.com/googlechrome/lighthouse/pull/7567))
+* lr: always use transferSize from X-TotalFetchedSize header ([#7478](https://github.com/googlechrome/lighthouse/pull/7478))
+* lr: gather network timing numbers from headers ([#7888](https://github.com/googlechrome/lighthouse/pull/7888))
+* lr: add custom config support ([#7613](https://github.com/googlechrome/lighthouse/pull/7613))
+
+## Tests
+
+* better fatal trace logic error coverage ([#7959](https://github.com/googlechrome/lighthouse/pull/7959))
+* fix test coverage generation ([#7475](https://github.com/googlechrome/lighthouse/pull/7475))
+* finish removing mocha ([#7429](https://github.com/googlechrome/lighthouse/pull/7429))
+* upgrade jest to fix current node 11 build ([#7413](https://github.com/googlechrome/lighthouse/pull/7413))
+* smoke: remove trivial uses of rawValue from expectations ([#7780](https://github.com/googlechrome/lighthouse/pull/7780))
+* smoke: set Content-Type for files served by static-server.js ([#7612](https://github.com/googlechrome/lighthouse/pull/7612), [#8015](https://github.com/googlechrome/lighthouse/pull/8015), [#8078](https://github.com/googlechrome/lighthouse/pull/8078))
+
+## Misc
+
+* chore: remove old dep postinstall-prepare ([#7647](https://github.com/googlechrome/lighthouse/pull/7647))
+* remove unused typedef ([#8075](https://github.com/googlechrome/lighthouse/pull/8075))
+* specify types for some dependency-graph options objects ([#7962](https://github.com/googlechrome/lighthouse/pull/7962))
+* simplifications in simulator/connection-pool ([#7894](https://github.com/googlechrome/lighthouse/pull/7894))
+* drive-by code cleanup in BaseNode ([#7723](https://github.com/googlechrome/lighthouse/pull/7723))
+* remove lhr-lite.d.ts ([#7991](https://github.com/googlechrome/lighthouse/pull/7991))
+* remove obsolete Util.formatDisplayValue ([#7628](https://github.com/googlechrome/lighthouse/pull/7628))
+* various spelling fixes ([#7370](https://github.com/googlechrome/lighthouse/pull/7370), [#7492](https://github.com/googlechrome/lighthouse/pull/7492), [#7427](https://github.com/googlechrome/lighthouse/pull/7427))
+* fix unit-viewer command for windows ([#7624](https://github.com/googlechrome/lighthouse/pull/7624))
+* remove obsolete unused files ([#7476](https://github.com/googlechrome/lighthouse/pull/7476))
+* cli: add --plugins flag to load from the command line ([#7407](https://github.com/googlechrome/lighthouse/pull/7407))
+* gather: update comment re: ClientRect copying ([#7785](https://github.com/googlechrome/lighthouse/pull/7785))
+
+## Deps
+
+* update nyc to latest ([#7431](https://github.com/googlechrome/lighthouse/pull/7431))
+* snyk: update snyk snapshot ([#7392](https://github.com/googlechrome/lighthouse/pull/7392), [#7589](https://github.com/googlechrome/lighthouse/pull/7589), [#7943](https://github.com/googlechrome/lighthouse/pull/7943))
+
+## I18n
+
+* Hindi for seo and a11y ([#7786](https://github.com/googlechrome/lighthouse/pull/7786), [#8070](https://github.com/googlechrome/lighthouse/pull/8070))
+* add new translations for SEO; updates for a11y and perf ([#7720](https://github.com/googlechrome/lighthouse/pull/7720))
+
  <a name="4.2.0"></a>
 # 4.2.0 (2019-03-06)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/v4.1.0...v4.2.0)
