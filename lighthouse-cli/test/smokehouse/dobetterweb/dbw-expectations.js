@@ -142,6 +142,17 @@ module.exports = [
           }],
         },
       },
+      'dom-size': {
+        score: 1,
+        rawValue: 31,
+        details: {
+          items: [
+            {statistic: 'Total DOM Elements', value: '31'},
+            {statistic: 'Maximum DOM Depth', value: '3'},
+            {statistic: 'Maximum Child Elements', value: '29'},
+          ],
+        },
+      },
     },
   },
 ];

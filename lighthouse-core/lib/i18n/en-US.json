@@ -589,7 +589,7 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnStatistic": {
     "message": "Statistic",
-    "description": "Table column header for the type of statistic. These statistics describe how big the DOM is (count of DOM nodes, children, depth)."
+    "description": "Table column header for the type of statistic. These statistics describe how big the DOM is (count of DOM elements, children, depth)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": {
     "message": "Value",
@@ -600,20 +600,20 @@
     "description": "Description of a Lighthouse audit that tells the user *why* they should reduce the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM nodes and greatest DOM depth. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 node}\n    other {# nodes}\n    }",
-    "description": "[ICU Syntax] Label for an audit identifying the number of DOM nodes found in the page."
+    "message": "{itemCount, plural,\n    =1 {1 element}\n    other {# elements}\n    }",
+    "description": "[ICU Syntax] Label for an audit identifying the number of DOM elements found in the page."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "Avoid an excessive DOM size",
-    "description": "Title of a diagnostic audit that provides detail on the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM nodes and greatest DOM depth. This imperative title is shown to users when there is a significant amount of execution time that could be reduced."
+    "description": "Title of a diagnostic audit that provides detail on the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM elements and greatest DOM depth. This imperative title is shown to users when there is a significant amount of execution time that could be reduced."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": {
     "message": "Maximum DOM Depth",
     "description": "Label for the numeric value of the maximum depth in the page's DOM tree."
   },
-  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": {
-    "message": "Total DOM Nodes",
-    "description": "Label for the total number of DOM nodes found in the page."
+  "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMElements": {
+    "message": "Total DOM Elements",
+    "description": "Label for the total number of DOM elements found in the page."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
     "message": "Maximum Child Elements",
@@ -621,7 +621,7 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Avoids an excessive DOM size",
-    "description": "Title of a diagnostic audit that provides detail on the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM nodes and greatest DOM depth. This descriptive title is shown to users when the amount is acceptable and no user action is required."
+    "description": "Title of a diagnostic audit that provides detail on the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM elements and greatest DOM depth. This descriptive title is shown to users when the amount is acceptable and no user action is required."
   },
   "lighthouse-core/audits/font-display.js | description": {
     "message": "Leverage the font-display CSS feature to ensure text is user-visible while webfonts are loading. [Learn more](https://developers.google.com/web/updates/2016/02/font-display).",

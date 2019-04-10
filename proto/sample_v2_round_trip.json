@@ -512,8 +512,8 @@
                 ], 
                 "items": [
                     {
-                        "statistic": "Total DOM Nodes", 
-                        "value": "53"
+                        "statistic": "Total DOM Elements", 
+                        "value": "31"
                     }, 
                     {
                         "element": {
@@ -532,7 +532,7 @@
                 ], 
                 "type": "table"
             }, 
-            "displayValue": "53 nodes", 
+            "displayValue": "31 elements", 
             "id": "dom-size", 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 

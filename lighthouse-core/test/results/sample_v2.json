@@ -2457,8 +2457,8 @@
       "description": "Browser engineers recommend pages contain fewer than ~1,500 DOM nodes. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/tools/lighthouse/audits/dom-size).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 53,
-      "displayValue": "53 nodes",
+      "rawValue": 31,
+      "displayValue": "31 elements",
       "details": {
         "type": "table",
         "headings": [
@@ -2480,9 +2480,9 @@
         ],
         "items": [
           {
-            "statistic": "Total DOM Nodes",
+            "statistic": "Total DOM Elements",
             "element": "",
-            "value": "53"
+            "value": "31"
           },
           {
             "statistic": "Maximum DOM Depth",
@@ -5297,7 +5297,7 @@
       "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": [
         {
           "values": {
-            "itemCount": 53
+            "itemCount": 31
           },
           "path": "audits[dom-size].displayValue"
         }
@@ -5311,7 +5311,7 @@
       "lighthouse-core/audits/dobetterweb/dom-size.js | columnValue": [
         "audits[dom-size].details.headings[2].text"
       ],
-      "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMNodes": [
+      "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMElements": [
         "audits[dom-size].details.items[0].statistic"
       ],
       "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMDepth": [

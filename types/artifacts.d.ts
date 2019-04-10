@@ -154,7 +154,8 @@ declare global {
       }
 
       export interface DOMStats {
-        totalDOMNodes: number;
+        /** The total number of elements found within the page's body. */
+        totalBodyElements: number;
         width: {max: number, pathToElement: Array<string>, snippet: string};
         depth: {max: number, pathToElement: Array<string>, snippet: string};
       }
