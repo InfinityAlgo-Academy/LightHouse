@@ -26,7 +26,6 @@ limitations under the License.
 <!-- Lighthouse score scale -->
 <template id="tmpl-lh-scorescale">
   <div class="lh-scorescale">
-    <span class="lh-scorescale-label"></span>
     <span class="lh-scorescale-range lh-scorescale-range--pass">90-100</span>
     <span class="lh-scorescale-range lh-scorescale-range--average">50-89</span>
     <span class="lh-scorescale-range lh-scorescale-range--fail">0-49</span>
@@ -133,21 +132,8 @@ limitations under the License.
 <!-- Lighthouse score container -->
 <template id="tmpl-lh-scores-wrapper">
   <style>
-    .lh-scores-wrapper__background,
-    .lh-scores-wrapper__shadow {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
-      border-radius: 8px;
-    }
-    .lh-scores-wrapper__shadow {
-      border-radius: 0;
-      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 0px -2px
-    }
     .lh-scores-container {
+      display: grid;
       padding-bottom: calc(var(--section-indent) / 2);
       position: relative;
       width: 100%;
@@ -155,8 +141,6 @@ limitations under the License.
   </style>
   <div class="lh-scores-wrapper">
     <div class="lh-scores-container">
-      <div class="lh-scores-wrapper__background"></div>
-      <div class="lh-scores-wrapper__shadow"></div>
     </div>
   </div>
 </template>
@@ -209,19 +193,6 @@ limitations under the License.
     }
     .lh-metadata__url {
       color: currentColor;
-    }
-    .lh-scores-wrapper {
-      margin-top: -30px;
-    }
-    .lh-scores-wrapper__shadow {
-      opacity: 0;
-    }
-    .lh-scores-wrapper__background,
-    .lh-scores-wrapper__shadow {
-      box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      will-change: opacity, transform;
-      transform-origin: top;
     }
 
     .lh-product-info, .lh-toolbar__metadata {

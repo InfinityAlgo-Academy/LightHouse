@@ -84,12 +84,21 @@
 
   --body-fontsize: 16px;
   --body-lineheight: 24px;
+  --color-black-100: #F5F5F5;
+  --color-black-200: #E0E0E0;
+  --color-black-400: #BDBDBD;
+  --color-black-500: #9E9E9E;
+  --color-black-600: #757575;
+  --color-black-800: #424242;
+  --color-black-900: #212121;
+  --color-black: #000000;
   --color-green-700: #018642;
   --color-green: #0CCE6B;
   --color-orange-700: #D04900;
   --color-orange: #FFA400;
   --color-red-700: #EB0F00;
   --color-red: #FF4E42;
+  --color-white: #FFFFFF;
   --score-container-padding: 12px;
   --score-container-width: 160px;
   --score-number-fontsize-big: 42px;
@@ -860,11 +869,11 @@
 }
 
 .lh-scorescale {
+  display: inline-flex;
+  margin: 12px auto 0 auto;
+  border: 1px solid var(--color-black-200);
   color: var(--medium-75-gray);
-  padding: 0 calc(var(--section-indent) * 1.5) 0;
-  text-align: right;
-  transform-origin: bottom right;
-  will-change: opacity; /* opacity is changed on scroll */
+  padding: 8px 8px;
 }
 
 .lh-scorescale-range {

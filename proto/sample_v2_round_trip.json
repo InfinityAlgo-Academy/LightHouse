@@ -3595,7 +3595,6 @@
             "opportunityResourceColumnLabel": "Opportunity", 
             "opportunitySavingsColumnLabel": "Estimated Savings", 
             "passedAuditsGroupTitle": "Passed audits", 
-            "scorescaleLabel": "Score scale:", 
             "snippetCollapseButtonLabel": "Collapse snippet", 
             "snippetExpandButtonLabel": "Expand snippet", 
             "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:", 

@@ -49,8 +49,6 @@ class ReportUIFeatures {
     /** @type {HTMLElement} */
     this.lighthouseIcon; // eslint-disable-line no-unused-expressions
     /** @type {!HTMLElement} */
-    this.scoresWrapperBg; // eslint-disable-line no-unused-expressions
-    /** @type {!HTMLElement} */
     this.productInfo; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement} */
     this.toolbar; // eslint-disable-line no-unused-expressions
@@ -138,7 +136,6 @@ class ReportUIFeatures {
     this.headerBackground = this._dom.find('.lh-header-bg', this._document);
     this.headerContent = this._dom.find('.lh-header', this._document);
     this.lighthouseIcon = this._dom.find('.lh-lighthouse', this._document);
-    this.scoresWrapperBg = this._dom.find('.lh-scores-wrapper__background', this._document);
     this.productInfo = this._dom.find('.lh-product-info', this._document);
     this.toolbar = this._dom.find('.lh-toolbar', this._document);
     this.toolbarMetadata = this._dom.find('.lh-toolbar__metadata', this._document);
@@ -224,29 +221,12 @@ class ReportUIFeatures {
     const scrollPct = Math.max(0, Math.min(1,
       this.latestKnownScrollY / (this.headerHeight - collapsedHeaderHeight)));
 
-    const scoresContainer = /** @type {HTMLElement} */ (this.scoresWrapperBg.parentElement);
-
     this.headerSticky.style.transform = `translateY(${heightDiff * scrollPct * -1}px)`;
     this.headerBackground.style.transform = `translateY(${scrollPct * this.headerOverlap}px)`;
     this.lighthouseIcon.style.transform =
       `translate3d(0,` +
       `-${scrollPct * this.headerOverlap * -1}px, 0) scale(${1 - scrollPct})`;
     this.headerContent.style.opacity = (1 - scrollPct).toString();
-
-    // Switch up the score background & shadows
-    this.scoresWrapperBg.style.opacity = (1 - scrollPct).toString();
-    this.scoresWrapperBg.style.transform = `scaleY(${1 - scrollPct * 0.2})`;
-    const scoreShadow = this._dom.find('.lh-scores-wrapper__shadow', scoresContainer);
-    scoreShadow.style.opacity = scrollPct.toString();
-    scoreShadow.style.transform = `scaleY(${1 - scrollPct * 0.2})`;
-
-    // Fade & move the scorescale
-    try {
-      const scoreScalePositionDelta = 32;
-      const scoreScale = this._dom.find('.lh-scorescale', scoresContainer);
-      scoreScale.style.opacity = `${1 - scrollPct}`;
-      scoreScale.style.transform = `translateY(${scrollPct * -scoreScalePositionDelta}px)`;
-    } catch (e) {}
 
     // Move the toolbar & export
     this.toolbar.style.transform = `translateY(${heightDiff * scrollPct}px)`;

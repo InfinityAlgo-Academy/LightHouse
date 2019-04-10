@@ -233,8 +233,6 @@ class ReportRenderer {
       scoreHeader.append(...defaultGauges, ...customGauges);
 
       const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
-      this._dom.find('.lh-scorescale-label', scoreScale).textContent =
-        Util.UIStrings.scorescaleLabel;
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
       scoresContainer.appendChild(scoreHeader);
       scoresContainer.appendChild(scoreScale);
