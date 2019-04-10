@@ -877,29 +877,30 @@
 }
 
 .lh-scorescale-range {
-  margin-left: 10px;
+  margin: 0 12px;
+  font-family: 'Roboto Mono', monospace;
   white-space: nowrap;
 }
 
 .lh-scorescale-range::before {
   content: '';
   width: var(--body-font-size);
-  height: calc(var(--body-font-size) * .60);
-  border-radius: 4px;
+  height: calc(var(--body-font-size) * .50);
+  border-radius: 10px;
   display: inline-block;
   margin: 0 5px;
 }
 
 .lh-scorescale-range--pass::before {
-  background-color: var(--pass-color);
+  background-color: var(--color-green);
 }
 
 .lh-scorescale-range--average::before {
-  background-color: var(--average-color);
+  background-color: var(--color-orange);
 }
 
 .lh-scorescale-range--fail::before {
-  background-color: var(--fail-color);
+  background-color: var(--color-red);
 }
 
 /* Hide category score gauages if it's a single category report */
@@ -918,6 +919,10 @@
   border-bottom: 1px solid var(--color-black-200);
   max-width: var(--report-width);
   margin: 0 auto;
+}
+
+.lh-category:first-of-type {
+  border-top: 1px solid var(--color-black-200);
 }
 
 /* section hash link jump should preserve fixed header
