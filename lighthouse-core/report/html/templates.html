@@ -171,9 +171,9 @@ limitations under the License.
       will-change: transform, opacity;
     }
     .lh-header {
-      width: 100%;
+      max-width: var(--report-width);
+      margin: 0 auto;
       height: var(--report-header-height);
-      max-width: 100%; /* support text-overflow on url */
       position: relative;
     }
     .lh-metadata {
