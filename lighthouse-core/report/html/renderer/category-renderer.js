@@ -316,13 +316,13 @@ class CategoryRenderer {
     // Cast `null` to 0
     const numericScore = Number(category.score);
     const gauge = this.dom.find('.lh-gauge', tmpl);
-    // 329 is ~= 2 * Math.PI * gauge radius (53)
+    // 352 is ~= 2 * Math.PI * gauge radius (56)
     // https://codepen.io/xgad/post/svg-radial-progress-meters
-    // score of 50: `stroke-dasharray: 164.5 329`;
+    // score of 50: `stroke-dasharray: 176 352`;
     /** @type {?SVGCircleElement} */
     const gaugeArc = gauge.querySelector('.lh-gauge-arc');
     if (gaugeArc) {
-      gaugeArc.style.strokeDasharray = `${numericScore * 329} 329`;
+      gaugeArc.style.strokeDasharray = `${numericScore * 352} 352`;
     }
 
     const scoreOutOf100 = Math.round(numericScore * 100);
