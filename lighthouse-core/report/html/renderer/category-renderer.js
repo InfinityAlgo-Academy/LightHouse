@@ -390,9 +390,10 @@ class CategoryRenderer {
    * @return {Element}
    */
   render(category, groupDefinitions = {}) {
-    const element = this.dom.createElement('div', 'lh-category');
-    this.createPermalinkSpan(element, category.id);
-    element.appendChild(this.renderCategoryHeader(category, groupDefinitions));
+    const element = this.dom.createElement('div', 'lh-category-wrapper');
+    const categoryEl = this.dom.createChildOf(element, 'div', 'lh-category');
+    this.createPermalinkSpan(categoryEl, category.id);
+    categoryEl.appendChild(this.renderCategoryHeader(category, groupDefinitions));
 
     // Top level clumps for audits, in order they will appear in the report.
     /** @type {Map<TopLevelClumpId, Array<LH.ReportResult.AuditRef>>} */
@@ -418,13 +419,13 @@ class CategoryRenderer {
       if (clumpId === 'failed') {
         const clumpElem = this.renderUnexpandableClump(auditRefs, groupDefinitions);
         clumpElem.classList.add(`lh-clump--failed`);
-        element.appendChild(clumpElem);
+        categoryEl.appendChild(clumpElem);
         continue;
       }
 
       const description = clumpId === 'manual' ? category.manualDescription : undefined;
       const clumpElem = this.renderClump(clumpId, {auditRefs, description});
-      element.appendChild(clumpElem);
+      categoryEl.appendChild(clumpElem);
     }
 
     return element;

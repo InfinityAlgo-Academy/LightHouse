@@ -915,12 +915,15 @@
 
 .lh-category {
   padding: var(--section-padding);
-  border-bottom: 1px solid var(--color-black-200);
   max-width: var(--report-width);
   margin: 0 auto;
 }
 
-.lh-category:first-of-type {
+.lh-category-wrapper {
+  border-bottom: 1px solid var(--color-black-200);
+}
+
+.lh-category:first-of-type .lh-category-wrapper {
   border-top: 1px solid var(--color-black-200);
 }
 
