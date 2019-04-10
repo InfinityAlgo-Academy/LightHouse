@@ -862,7 +862,6 @@
 
 .lh-scores-header .lh-gauge__wrapper,
 .lh-scores-header .lh-gauge--pwa__wrapper {
-  padding: 0 var(--score-container-padding);
   width: var(--score-container-width);
 }
 
