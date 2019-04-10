@@ -19,8 +19,8 @@
   --text-font-family: Roboto, Helvetica, Arial, sans-serif;
   --monospace-font-family: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
   --body-background-color: #fff;
-  --body-font-size: 14px;
-  --body-line-height: 18px;
+  --body-font-size: 16px;
+  --body-line-height: 24px;
   --subheader-font-size: 14px;
   --subheader-line-height: 20px;
   --subheader-color: hsl(206, 6%, 25%);
@@ -82,8 +82,6 @@
   --chevron-size: 12px;
   --circle-size: calc(3 * var(--header-font-size));
 
-  --body-fontsize: 16px;
-  --body-lineheight: 24px;
   --color-black-100: #F5F5F5;
   --color-black-200: #E0E0E0;
   --color-black-400: #BDBDBD;
@@ -137,8 +135,7 @@
 
 @media only screen and (max-width: 480px) {
   .lh-vars {
-    --body-fontsize: 14px;
-    --body-lineheight: 20px;
+    --body-font-size: 14px;
     --score-container-padding: 8px;
     --score-container-width: 112px;
     --score-number-fontsize-big: 34px;
@@ -184,7 +181,7 @@
   --text-font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
   --monospace-font-family: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
   --body-font-size: 12px;
-  --body-line-height: 16px;
+  --body-line-height: 20px;
   --subheader-font-size: 14px;
   --subheader-line-height: 18px;
   --header-font-size: 16px;
@@ -222,6 +219,7 @@
   line-height: var(--body-line-height);
   background: var(--body-background-color);
   scroll-behavior: smooth;
+  color: var(--color-black-900);
 }
 
 .lh-root :focus {
@@ -356,7 +354,8 @@
 
 .lh-category-header__description  {
   font-size: var(--body-font-size);
-  margin: calc(var(--default-padding) / 2) 0 var(--default-padding);
+  margin: 0px auto;
+  max-width: 400px;
 }
 
 
