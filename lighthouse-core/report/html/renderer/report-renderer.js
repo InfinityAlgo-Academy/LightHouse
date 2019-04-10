@@ -204,7 +204,8 @@ class ReportRenderer {
 
     for (const category of report.reportCategories) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
-      categories.appendChild(renderer.render(category, report.categoryGroups));
+      const wrapper = renderer.dom.createChildOf(categories, 'div', 'lh-category-wrapper');
+      wrapper.appendChild(renderer.render(category, report.categoryGroups));
     }
 
     // Fireworks
