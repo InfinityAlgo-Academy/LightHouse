@@ -874,6 +874,7 @@
   display: inline-flex;
   margin: 12px auto 0 auto;
   border: 1px solid var(--color-black-200);
+  border-radius: 20px;
   color: var(--medium-75-gray);
   padding: 8px 8px;
 }
