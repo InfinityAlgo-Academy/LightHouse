@@ -97,6 +97,7 @@
   --color-red-700: #EB0F00;
   --color-red: #FF4E42;
   --color-white: #FFFFFF;
+  --header-padding: 20px 0 20px 0;
   --score-container-padding: 12px;
   --score-container-width: 160px;
   --score-number-fontsize-big: 42px;
@@ -108,6 +109,7 @@
   --score-title-lineheight-big: 36px;
   --score-title-lineheight: 26px;
   --section-padding: 40px;
+  --topbar-padding: 0 8px;
 
   --pass-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>check</title><path fill="%23178239" d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/></svg>');
   --average-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>info</title><path fill="%23E67700" d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm2 30h-4V22h4v12zm0-16h-4v-4h4v4z"/></svg>');
@@ -136,6 +138,7 @@
 @media only screen and (max-width: 480px) {
   .lh-vars {
     --body-font-size: 14px;
+    --header-padding: 16px 0 16px 0;
     --score-container-padding: 8px;
     --score-container-width: 112px;
     --score-number-fontsize-big: 34px;
@@ -147,6 +150,7 @@
     --score-title-lineheight-big: 26px;
     --score-title-lineheight: 20px;
     --section-padding: 24px;
+    --topbar-height: 32px;
   }
 
   .two-col.audits .audit {
