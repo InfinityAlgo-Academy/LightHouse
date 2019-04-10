@@ -5,10 +5,12 @@
  */
 'use strict';
 
-const cli = require('../../lighthouse-cli/run');
+const cli = require('../../lighthouse-cli/run.js');
 const cliFlags = require('../../lighthouse-cli/cli-flags.js');
 
-const {server} = require('../../lighthouse-cli/test/fixtures/static-server');
+const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
+
+/** @typedef {import('net').AddressInfo} AddressInfo */
 
 /**
  * Update the report artifacts
@@ -16,7 +18,11 @@ const {server} = require('../../lighthouse-cli/test/fixtures/static-server');
 async function update() {
   // get an available port
   server.listen(0, 'localhost');
-  const port = await new Promise(res => server.on('listening', () => res(server.address().port)));
+  const port = await new Promise(res => server.on('listening', () => {
+    // Not a pipe or a domain socket, so will not be a string. See https://nodejs.org/api/net.html#net_server_address.
+    const address = /** @type {AddressInfo} */ (server.address());
+    res(address.port);
+  }));
 
   const url = `http://localhost:${port}/dobetterweb/dbw_tester.html`;
   const flags = cliFlags.getFlags(`--gather-mode=lighthouse-core/test/results/artifacts ${url}`);

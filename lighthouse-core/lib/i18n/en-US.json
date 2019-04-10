@@ -1211,6 +1211,10 @@
     "message": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. ({errorCode})",
     "description": "Error message explaining that the network trace was not able to be recorded for the Lighthouse run."
   },
+  "lighthouse-core/lib/lh-error.js | criTimeout": {
+    "message": "Timeout waiting for initial Debugger Protocol connection.",
+    "description": "Error message explaining that Lighthouse timed out while waiting for the initial connection to the Chrome Devtools protocol."
+  },
   "lighthouse-core/lib/lh-error.js | didntCollectScreenshots": {
     "message": "Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. ({errorCode})",
     "description": "Error message explaining that the Lighthouse run was not able to collect screenshots through Chrome."
