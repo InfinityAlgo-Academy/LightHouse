@@ -632,11 +632,17 @@ limitations under the License.
     }
 
     .lh-gauge__label {
-      font-size: var(--score-title-fontsize);
-      line-height: var(--score-title-lineheight);
-      margin-top: calc(0.5 * var(--score-title-lineheight));
+      font-size: var(--score-title-font-size);
+      line-height: var(--score-title-line-height);
+      margin-top: calc(0.5 * var(--score-title-line-height));
       text-align: center;
       color: black;
+    }
+
+    .lh-category .lh-gauge__label {
+      font-size: var(--score-title-font-size-big);
+      line-height: var(--score-title-line-height-big);
+      margin-top: calc(0.5 * var(--score-title-line-height-big));
     }
 
   </style>
