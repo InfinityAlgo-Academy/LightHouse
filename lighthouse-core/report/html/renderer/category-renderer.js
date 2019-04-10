@@ -159,8 +159,6 @@ class CategoryRenderer {
     const gaugeEl = this.renderScoreGauge(category, groupDefinitions);
     gaugeContainerEl.appendChild(gaugeEl);
 
-    this.dom.find('.lh-category-header__title', tmpl).appendChild(
-      this.dom.convertMarkdownCodeSnippets(category.title));
     if (category.description) {
       const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
       this.dom.find('.lh-category-header__description', tmpl).appendChild(descEl);
