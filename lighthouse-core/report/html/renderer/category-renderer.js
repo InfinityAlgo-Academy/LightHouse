@@ -83,6 +83,24 @@ class CategoryRenderer {
     this.dom.find('.lh-audit__description', auditEl)
         .appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.description));
 
+    if (audit.result.stackPacks) {
+      audit.result.stackPacks.forEach(pack => {
+        const packElm = this.dom.createElement('div');
+        packElm.classList.add('lh-audit__stackpack');
+
+        const packElmImg = this.dom.createElement('img');
+        packElmImg.classList.add('lh-audit__stackpack__img');
+        packElmImg.src = pack.iconDataURL;
+        packElmImg.alt = pack.title;
+        packElm.appendChild(packElmImg);
+
+        packElm.appendChild(this.dom.convertMarkdownLinkSnippets(pack.description));
+
+        this.dom.find('.lh-audit__stackpacks', auditEl)
+          .appendChild(packElm);
+      });
+    }
+
     const header = /** @type {HTMLDetailsElement} */ (this.dom.find('details', auditEl));
     if (audit.result.details) {
       const elem = this.detailsRenderer.render(audit.result.details);

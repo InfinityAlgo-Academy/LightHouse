@@ -140,7 +140,7 @@
     "intl-messageformat": "^2.2.0",
     "intl-messageformat-parser": "^1.4.0",
     "jpeg-js": "0.1.2",
-    "js-library-detector": "^5.1.0",
+    "js-library-detector": "^5.4.0",
     "jsonld": "^1.5.0",
     "jsonlint-mod": "^1.7.4",
     "lighthouse-logger": "^1.2.0",
@@ -158,7 +158,8 @@
     "update-notifier": "^2.5.0",
     "ws": "3.3.2",
     "yargs": "3.32.0",
-    "yargs-parser": "7.0.0"
+    "yargs-parser": "7.0.0",
+    "@lighthouse/stack-packs": "file:./stack-packs"
   },
   "resolutions": {
     "chrome-launcher/@types/node": "*"

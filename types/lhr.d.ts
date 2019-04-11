@@ -60,6 +60,8 @@ declare global {
       timing: Result.Timing;
       /** The record of all formatted string locations in the LHR and their corresponding source values. */
       i18n: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths: I18NMessages};
+      /** An array containing the result of all stackpacks */
+      stackPacks: Result.StackPack[];
     }
 
     // Result namespace
@@ -98,6 +100,20 @@ declare global {
         title: string;
         /** A brief description of the purpose of the display group. */
         description?: string;
+      }
+
+      /**
+       * A description of a stack pack
+       */
+      export interface StackPack {
+        /** The unique stackpack's name stripped from special characters */
+        id: string;
+        /** The name of the stack pack which we display on our report */
+        title: string;
+        /** The base64 url of the icon  */
+        iconDataURL: string;
+        /** An object containing the descriptions of the audits, keyed by the audits' `id` identifier. */
+        descriptions: Record<string, string>;
       }
     }
   }

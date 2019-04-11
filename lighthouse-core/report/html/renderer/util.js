@@ -77,6 +77,20 @@ class Util {
       category.auditRefs.forEach(auditMeta => {
         const result = clone.audits[auditMeta.id];
         auditMeta.result = result;
+
+        // attach the stackpacks to the auditRef object
+        if (clone.stackPacks) {
+          clone.stackPacks.forEach(pack => {
+            if (pack.descriptions[auditMeta.id]) {
+              auditMeta.result.stackPacks = auditMeta.result.stackPacks || [];
+              auditMeta.result.stackPacks.push({
+                title: pack.title,
+                iconDataURL: pack.iconDataURL,
+                description: pack.descriptions[auditMeta.id],
+              });
+            }
+          });
+        }
       });
     }
 

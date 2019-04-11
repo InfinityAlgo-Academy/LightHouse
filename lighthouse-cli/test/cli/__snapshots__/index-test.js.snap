@@ -1109,9 +1109,6 @@ Object {
           "path": "dobetterweb/domstats",
         },
         Object {
-          "path": "dobetterweb/js-libraries",
-        },
-        Object {
           "path": "dobetterweb/optimized-images",
         },
         Object {

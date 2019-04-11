@@ -20,6 +20,8 @@ const LHError = require('../lib/lh-error.js');
 
 /* eslint-env jest */
 
+jest.mock('../lib/gatherer-stacks.js', () => () => Promise.resolve([]));
+
 describe('Runner', () => {
   /** @type {jest.Mock} */
   let saveArtifactsSpy;

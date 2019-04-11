@@ -172,6 +172,9 @@ message LighthouseResult {
 
   // The performance timing data for the Lighthouse run
   Timing timing = 14;
+
+  // The Stack Pack data used by audits in this run.
+  repeated StackPack stack_packs = 15;
 }
 
 // Message containing a category
@@ -349,4 +352,19 @@ message I18n {
 
   // The message holding all formatted strings
   RendererFormattedStrings renderer_formatted_strings = 1;
+}
+
+// Message containing Stack Pack information.
+message StackPack {
+  // The human readable id of the Stack Pack.
+  string id = 1;
+
+  // The user facing title of the Stack Pack.
+  string title = 2;
+
+  // The icon as a data url.
+  string icon_data_url = 3;
+
+  // Map of audit-ids to Stack Pack descriptions.
+  map<string, string> descriptions = 4;
 }
