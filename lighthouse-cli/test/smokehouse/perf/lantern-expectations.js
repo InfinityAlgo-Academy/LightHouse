@@ -10,17 +10,19 @@
  */
 module.exports = [
   {
-    requestedUrl: 'http://localhost:10200/online-only.html',
-    finalUrl: 'http://localhost:10200/online-only.html',
-    audits: {
-      'first-contentful-paint': {
-        rawValue: '>2000',
-      },
-      'first-cpu-idle': {
-        rawValue: '>2000',
-      },
-      'interactive': {
-        rawValue: '>2000',
+    lhr: {
+      requestedUrl: 'http://localhost:10200/online-only.html',
+      finalUrl: 'http://localhost:10200/online-only.html',
+      audits: {
+        'first-contentful-paint': {
+          rawValue: '>2000',
+        },
+        'first-cpu-idle': {
+          rawValue: '>2000',
+        },
+        'interactive': {
+          rawValue: '>2000',
+        },
       },
     },
   },

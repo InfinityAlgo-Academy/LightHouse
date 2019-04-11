@@ -103,46 +103,74 @@ function findDifference(path, actual, expected) {
 }
 
 /**
- * Collate results into comparisons of actual and expected scores on each audit.
- * @param {Smokehouse.ExpectedLHR} actual
- * @param {Smokehouse.ExpectedLHR} expected
- * @return {Smokehouse.LHRComparison}
+ * @param {string} name – name of the value being asserted on (e.g. the result of a certain audit)
+ * @param {any} actualResult
+ * @param {any} expectedResult
+ * @return {Smokehouse.Comparison}
+ */
+function makeComparison(name, actualResult, expectedResult) {
+  const diff = findDifference(name, actualResult, expectedResult);
+
+  return {
+    name,
+    actual: actualResult,
+    expected: expectedResult,
+    equal: !diff,
+    diff,
+  };
+}
+
+/**
+ * Collate results into comparisons of actual and expected scores on each audit/artifact.
+ * @param {Smokehouse.ExpectedRunnerResult} actual
+ * @param {Smokehouse.ExpectedRunnerResult} expected
+ * @return {Smokehouse.Comparison[]}
  */
 function collateResults(actual, expected) {
-  const auditNames = Object.keys(expected.audits);
-  const collatedAudits = auditNames.map(auditName => {
-    const actualResult = actual.audits[auditName];
+  /** @type {Smokehouse.Comparison[]} */
+  let artifactAssertions = [];
+  if (expected.artifacts) {
+    const expectedArtifacts = expected.artifacts;
+    const artifactNames = /** @type {(keyof LH.Artifacts)[]} */ (Object.keys(expectedArtifacts));
+    artifactAssertions = artifactNames.map(artifactName => {
+      const actualResult = (actual.artifacts || {})[artifactName];
+      if (!actualResult) {
+        throw new Error(`Config run did not generate artifact ${artifactName}`);
+      }
+
+      const expectedResult = expectedArtifacts[artifactName];
+      return makeComparison(artifactName + ' artifact', actualResult, expectedResult);
+    });
+  }
+
+  /** @type {Smokehouse.Comparison[]} */
+  let auditAssertions = [];
+  auditAssertions = Object.keys(expected.lhr.audits).map(auditName => {
+    const actualResult = actual.lhr.audits[auditName];
     if (!actualResult) {
       throw new Error(`Config did not trigger run of expected audit ${auditName}`);
     }
 
-    const expectedResult = expected.audits[auditName];
-    const diff = findDifference(auditName, actualResult, expectedResult);
-
-    return {
-      category: auditName,
-      actual: actualResult,
-      expected: expectedResult,
-      equal: !diff,
-      diff,
-    };
+    const expectedResult = expected.lhr.audits[auditName];
+    return makeComparison(auditName + ' audit', actualResult, expectedResult);
   });
 
-  return {
-    audits: collatedAudits,
-    errorCode: {
-      category: 'error code',
+  return [
+    {
+      name: 'error code',
       actual: actual.errorCode,
       expected: expected.errorCode,
       equal: actual.errorCode === expected.errorCode,
     },
-    finalUrl: {
-      category: 'final url',
-      actual: actual.finalUrl,
-      expected: expected.finalUrl,
-      equal: actual.finalUrl === expected.finalUrl,
+    {
+      name: 'final url',
+      actual: actual.lhr.finalUrl,
+      expected: expected.lhr.finalUrl,
+      equal: actual.lhr.finalUrl === expected.lhr.finalUrl,
     },
-  };
+    ...artifactAssertions,
+    ...auditAssertions,
+  ];
 }
 
 /**
@@ -165,9 +193,9 @@ function reportAssertion(assertion) {
 
   if (assertion.equal) {
     if (isPlainObject(assertion.actual)) {
-      console.log(`  ${log.greenify(log.tick)} ${assertion.category}`);
+      console.log(`  ${log.greenify(log.tick)} ${assertion.name}`);
     } else {
-      console.log(`  ${log.greenify(log.tick)} ${assertion.category}: ` +
+      console.log(`  ${log.greenify(log.tick)} ${assertion.name}: ` +
           log.greenify(assertion.actual));
     }
   } else {
@@ -184,7 +212,7 @@ function reportAssertion(assertion) {
 `;
       console.log(msg);
     } else {
-      console.log(`  ${log.redify(log.cross)} ${assertion.category}:
+      console.log(`  ${log.redify(log.cross)} ${assertion.name}:
               expected: ${JSON.stringify(assertion.expected)}
                  found: ${JSON.stringify(assertion.actual)}
 `);
@@ -199,22 +227,22 @@ function reportAssertion(assertion) {
 /**
  * Log all the comparisons between actual and expected test results, then print
  * summary. Returns count of passed and failed tests.
- * @param {Smokehouse.LHRComparison} results
+ * @param {Smokehouse.Comparison[]} comparisons
  * @return {{passed: number, failed: number}}
  */
-function report(results) {
+function report(comparisons) {
   let correctCount = 0;
   let failedCount = 0;
 
-  [results.finalUrl, results.errorCode, ...results.audits].forEach(auditAssertion => {
-    if (auditAssertion.equal) {
+  comparisons.forEach(assertion => {
+    if (assertion.equal) {
       correctCount++;
     } else {
       failedCount++;
     }
 
-    if (!auditAssertion.equal || VERBOSE) {
-      reportAssertion(auditAssertion);
+    if (!assertion.equal || VERBOSE) {
+      reportAssertion(assertion);
     }
   });
 

@@ -37,187 +37,198 @@ const passHeaders = headersParam([[
  */
 module.exports = [
   {
-    requestedUrl: BASE_URL + 'seo-tester.html?' + passHeaders,
-    finalUrl: BASE_URL + 'seo-tester.html?' + passHeaders,
-    audits: {
-      'viewport': {
-        score: 1,
-      },
-      'document-title': {
-        score: 1,
-      },
-      'meta-description': {
-        score: 1,
-      },
-      'http-status-code': {
-        score: 1,
-      },
-      'font-size': {
-        score: 1,
-        details: {
-          items: {
-            length: 6,
+    lhr: {
+      requestedUrl: BASE_URL + 'seo-tester.html?' + passHeaders,
+      finalUrl: BASE_URL + 'seo-tester.html?' + passHeaders,
+      audits: {
+        'viewport': {
+          score: 1,
+        },
+        'document-title': {
+          score: 1,
+        },
+        'meta-description': {
+          score: 1,
+        },
+        'http-status-code': {
+          score: 1,
+        },
+        'font-size': {
+          score: 1,
+          details: {
+            items: {
+              length: 6,
+            },
           },
         },
+        'link-text': {
+          score: 1,
+        },
+        'is-crawlable': {
+          score: 1,
+        },
+        'hreflang': {
+          score: 1,
+        },
+        'plugins': {
+          score: 1,
+        },
+        'canonical': {
+          score: 1,
+        },
+        'robots-txt': {
+          score: null,
+          scoreDisplayMode: 'notApplicable',
+        },
       },
-      'link-text': {
-        score: 1,
-      },
-      'is-crawlable': {
-        score: 1,
-      },
-      'hreflang': {
-        score: 1,
-      },
-      'plugins': {
-        score: 1,
-      },
-      'canonical': {
-        score: 1,
-      },
-      'robots-txt': {
-        score: null,
-        scoreDisplayMode: 'notApplicable',
-      },
-    },
-  },
+    }},
   {
-    requestedUrl: BASE_URL + 'seo-failure-cases.html?' + failureHeaders,
-    finalUrl: BASE_URL + 'seo-failure-cases.html?' + failureHeaders,
-    audits: {
-      'viewport': {
-        score: 0,
-      },
-      'document-title': {
-        score: 0,
-      },
-      'meta-description': {
-        score: 0,
-      },
-      'http-status-code': {
-        score: 1,
-      },
-      'font-size': {
-        score: 0,
-        explanation:
+    lhr: {
+      requestedUrl: BASE_URL + 'seo-failure-cases.html?' + failureHeaders,
+      finalUrl: BASE_URL + 'seo-failure-cases.html?' + failureHeaders,
+      audits: {
+        'viewport': {
+          score: 0,
+        },
+        'document-title': {
+          score: 0,
+        },
+        'meta-description': {
+          score: 0,
+        },
+        'http-status-code': {
+          score: 1,
+        },
+        'font-size': {
+          score: 0,
+          explanation:
           'Text is illegible because there\'s no viewport meta tag optimized for mobile screens.',
-      },
-      'link-text': {
-        score: 0,
-        displayValue: '4 links found',
-        details: {
-          items: {
-            length: 4,
+        },
+        'link-text': {
+          score: 0,
+          displayValue: '4 links found',
+          details: {
+            items: {
+              length: 4,
+            },
           },
         },
-      },
-      'is-crawlable': {
-        score: 0,
-        details: {
-          items: {
-            length: 2,
+        'is-crawlable': {
+          score: 0,
+          details: {
+            items: {
+              length: 2,
+            },
           },
         },
-      },
-      'hreflang': {
-        score: 0,
-        details: {
-          items: {
-            length: 3,
+        'hreflang': {
+          score: 0,
+          details: {
+            items: {
+              length: 3,
+            },
           },
         },
-      },
-      'plugins': {
-        score: 0,
-        details: {
-          items: {
-            length: 3,
+        'plugins': {
+          score: 0,
+          details: {
+            items: {
+              length: 3,
+            },
           },
         },
-      },
-      'canonical': {
-        score: 0,
-        explanation: 'Multiple conflicting URLs (https://example.com/other, https://example.com/)',
+        'canonical': {
+          score: 0,
+          explanation: 'Multiple conflicting URLs (https://example.com/other, https://example.com/)',
+        },
       },
     },
   },
   {
-    // Note: most scores are null (audit error) because the page 403ed.
-    requestedUrl: BASE_URL + 'seo-failure-cases.html?status_code=403',
-    finalUrl: BASE_URL + 'seo-failure-cases.html?status_code=403',
-    audits: {
-      'http-status-code': {
-        score: 0,
-        displayValue: '403',
+    lhr: {
+      // Note: most scores are null (audit error) because the page 403ed.
+      requestedUrl: BASE_URL + 'seo-failure-cases.html?status_code=403',
+      finalUrl: BASE_URL + 'seo-failure-cases.html?status_code=403',
+      audits: {
+        'http-status-code': {
+          score: 0,
+          displayValue: '403',
+        },
+        'viewport': {
+          score: null,
+        },
+        'document-title': {
+          score: null,
+        },
+        'meta-description': {
+          score: null,
+        },
+        'font-size': {
+          score: null,
+        },
+        'link-text': {
+          score: null,
+        },
+        'is-crawlable': {
+          score: null,
+        },
+        'hreflang': {
+          score: null,
+        },
+        'plugins': {
+          score: null,
+        },
+        'canonical': {
+          score: null,
+        },
       },
-      'viewport': {
-        score: null,
-      },
-      'document-title': {
-        score: null,
-      },
-      'meta-description': {
-        score: null,
-      },
-      'font-size': {
-        score: null,
-      },
-      'link-text': {
-        score: null,
-      },
-      'is-crawlable': {
-        score: null,
-      },
-      'hreflang': {
-        score: null,
-      },
-      'plugins': {
-        score: null,
-      },
-      'canonical': {
-        score: null,
-      },
-    },
-  },
+    }},
   {
-    requestedUrl: BASE_URL + 'seo-tap-targets.html',
-    finalUrl: BASE_URL + 'seo-tap-targets.html',
-    audits: {
-      'tap-targets': {
-        score: (() => {
-          const PASSING_TAP_TARGETS = 11;
-          const TOTAL_TAP_TARGETS = 12;
-          const SCORE_FACTOR = 0.89;
-          return Math.floor(PASSING_TAP_TARGETS / TOTAL_TAP_TARGETS * SCORE_FACTOR * 100) / 100;
-        })(),
-        details: {
-          items: [
-            {
-              'tapTarget': {
-                'type': 'node',
-                'snippet': '<a ' +
+    lhr: {
+      finalUrl: BASE_URL + 'seo-tap-targets.html',
+      requestedUrl: BASE_URL + 'seo-tap-targets.html',
+      audits: {
+        'tap-targets': {
+          score: (() => {
+            const PASSING_TAP_TARGETS = 11;
+            const TOTAL_TAP_TARGETS = 12;
+            const SCORE_FACTOR = 0.89;
+            return Math.floor(PASSING_TAP_TARGETS / TOTAL_TAP_TARGETS * SCORE_FACTOR * 100) / 100;
+          })(),
+          details: {
+            items: [
+              {
+                'tapTarget': {
+                  'type': 'node',
+                  'snippet': '<a ' +
                  'style="display: block; width: 100px; height: 30px;background: #ddd;">' +
                  '\n        too small target\n      </a>',
-                'path': '2,HTML,1,BODY,3,DIV,21,DIV,0,A',
-                'selector': 'body > div > div > a',
-              },
-              'overlappingTarget': {
-                'type': 'node',
-                'snippet': '<a ' +
+                  'path': '2,HTML,1,BODY,3,DIV,21,DIV,0,A',
+                  'selector': 'body > div > div > a',
+                },
+                'overlappingTarget': {
+                  'type': 'node',
+                  'snippet': '<a ' +
                   'style="display: block; width: 100px; height: 100px;background: #aaa;">' +
                   '\n        big enough target\n      </a>',
-                'path': '2,HTML,1,BODY,3,DIV,21,DIV,1,A',
-                'selector': 'body > div > div > a',
+                  'path': '2,HTML,1,BODY,3,DIV,21,DIV,1,A',
+                  'selector': 'body > div > div > a',
+                },
+                'size': '100x30',
+                'width': 100,
+                'height': 30,
+                'tapTargetScore': 1440,
+                'overlappingTargetScore': 432,
+                'overlapScoreRatio': 0.3,
               },
-              'size': '100x30',
-              'width': 100,
-              'height': 30,
-              'tapTargetScore': 1440,
-              'overlappingTargetScore': 432,
-              'overlapScoreRatio': 0.3,
-            },
-          ],
+            ],
+          },
         },
+      },
+    },
+    artifacts: {
+      TapTargets: {
+        length: 11,
       },
     },
   },

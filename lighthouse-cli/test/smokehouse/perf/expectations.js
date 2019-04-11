@@ -10,68 +10,72 @@
  */
 module.exports = [
   {
-    requestedUrl: 'http://localhost:10200/preload.html',
-    finalUrl: 'http://localhost:10200/preload.html',
-    audits: {
-      'speed-index': {
-        score: '>=0.80',
-      },
-      'first-meaningful-paint': {
-        score: '>=0.90',
-      },
-      'first-cpu-idle': {
-        score: '>=0.90',
-      },
-      'interactive': {
-        score: '>=0.90',
-      },
-      'time-to-first-byte': {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/preload.html',
+      finalUrl: 'http://localhost:10200/preload.html',
+      audits: {
+        'speed-index': {
+          score: '>=0.80',
+        },
+        'first-meaningful-paint': {
+          score: '>=0.90',
+        },
+        'first-cpu-idle': {
+          score: '>=0.90',
+        },
+        'interactive': {
+          score: '>=0.90',
+        },
+        'time-to-first-byte': {
         // Can be flaky, so test float rawValue instead of boolean score
-        rawValue: '<1000',
-      },
-      'network-requests': {
-        details: {
-          items: {
-            length: '>5',
+          rawValue: '<1000',
+        },
+        'network-requests': {
+          details: {
+            items: {
+              length: '>5',
+            },
           },
         },
-      },
-      'uses-rel-preload': {
-        score: '<1',
-        rawValue: '>500',
-        warnings: {
-          0: /level-2.*warning/,
-          length: 1,
-        },
-        details: {
-          items: {
+        'uses-rel-preload': {
+          score: '<1',
+          rawValue: '>500',
+          warnings: {
+            0: /level-2.*warning/,
             length: 1,
           },
+          details: {
+            items: {
+              length: 1,
+            },
+          },
         },
-      },
-      'uses-rel-preconnect': {
-        score: '<1',
-        warnings: {
-          0: /fonts.googleapis/,
-          length: 1,
-        },
-        details: {
-          items: {
+        'uses-rel-preconnect': {
+          score: '<1',
+          warnings: {
+            0: /fonts.googleapis/,
             length: 1,
+          },
+          details: {
+            items: {
+              length: 1,
+            },
           },
         },
       },
     },
   },
   {
-    requestedUrl: 'http://localhost:10200/perf/fonts.html',
-    finalUrl: 'http://localhost:10200/perf/fonts.html',
-    audits: {
-      'font-display': {
-        score: 0,
-        details: {
-          items: {
-            length: 2,
+    lhr: {
+      requestedUrl: 'http://localhost:10200/perf/fonts.html',
+      finalUrl: 'http://localhost:10200/perf/fonts.html',
+      audits: {
+        'font-display': {
+          score: 0,
+          details: {
+            items: {
+              length: 2,
+            },
           },
         },
       },
