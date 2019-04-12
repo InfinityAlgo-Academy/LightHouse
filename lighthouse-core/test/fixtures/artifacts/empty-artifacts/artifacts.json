@@ -2,5 +2,6 @@
   "URL": {
     "requestedUrl": "https://example.com/",
     "finalUrl": "https://example.com/"
-  }
+  },
+  "Stacks": []
 }

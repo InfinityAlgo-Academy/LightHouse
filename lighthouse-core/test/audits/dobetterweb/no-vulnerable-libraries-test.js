@@ -13,7 +13,7 @@ const assert = require('assert');
 describe('Avoids front-end JavaScript libraries with known vulnerabilities', () => {
   describe('#normalizeVersion', () => {
     it('should leave valid and unsavable versions untouched', () => {
-      assert.equal(NoVulnerableLibrariesAudit.normalizeVersion(null), null);
+      assert.equal(NoVulnerableLibrariesAudit.normalizeVersion(undefined), undefined);
       assert.equal(NoVulnerableLibrariesAudit.normalizeVersion('52.1.13'), '52.1.13');
       assert.equal(NoVulnerableLibrariesAudit.normalizeVersion('52.1.13-rc.1'), '52.1.13-rc.1');
       assert.equal(NoVulnerableLibrariesAudit.normalizeVersion('c0ab71056b936'), 'c0ab71056b936');
@@ -31,7 +31,7 @@ describe('Avoids front-end JavaScript libraries with known vulnerabilities', () 
       Stacks: [
         {detector: 'js', name: 'lib1', version: '1.0.0', npm: 'lib1'},
         {detector: 'js', name: 'angular', version: '1.1.4', npm: 'angular'},
-        {detector: 'js', name: 'lib3', version: null, npm: 'lib3'},
+        {detector: 'js', name: 'lib3', version: undefined, npm: 'lib3'},
       ],
     });
     assert.equal(auditResult.rawValue, false);
@@ -89,7 +89,7 @@ Array [
     const auditResult = NoVulnerableLibrariesAudit.audit({
       Stacks: [
         {detector: 'js', name: 'lib1', version: '3.10.1', npm: 'lib1'},
-        {detector: 'js', name: 'lib2', version: null, npm: 'lib2'},
+        {detector: 'js', name: 'lib2', version: undefined, npm: 'lib2'},
       ],
     });
     assert.equal(auditResult.rawValue, true);

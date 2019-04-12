@@ -53,7 +53,7 @@ async function browserifyFile(entryPath, distPath) {
 
   bundle
     // Transform the fs.readFile etc into inline strings.
-    .transform('brfs', {global: true, parserOpts: {ecmaVersion: 9}})
+    .transform('brfs', {global: true, parserOpts: {ecmaVersion: 10}})
     // Strip everything out of package.json includes except for the version.
     .transform('package-json-versionify');
 
@@ -121,6 +121,7 @@ function minifyScript(filePath) {
     shouldPrintComment: () => false, // Don't include @license or @preserve comments either
     plugins: [
       'syntax-object-rest-spread',
+      'syntax-async-generators',
     ],
     // sourceMaps: 'both'
   };

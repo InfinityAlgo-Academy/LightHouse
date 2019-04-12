@@ -30,12 +30,12 @@ class JsLibrariesAudit extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    const libDetails = (artifacts.Stacks || [])
+    const libDetails = artifacts.Stacks
       .filter(stack => stack.detector === 'js')
       .map(stack => ({
         name: stack.name,
-        version: stack.version || undefined, // null if not detected
-        npm: stack.npm || undefined, // ~70% of libs come with this field
+        version: stack.version,
+        npm: stack.npm,
       }));
 
     /** @type {LH.Audit.Details.Table['headings']} */

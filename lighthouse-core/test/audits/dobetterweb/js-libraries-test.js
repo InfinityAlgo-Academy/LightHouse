@@ -21,7 +21,7 @@ describe('Returns detected front-end JavaScript libraries', () => {
     const auditResult2 = JsLibrariesAudit.audit({
       Stacks: [
         {detector: 'js', name: 'lib1', version: '3.10.1', npm: 'lib1'},
-        {detector: 'js', name: 'lib2', version: null, npm: 'lib2'},
+        {detector: 'js', name: 'lib2', version: undefined, npm: 'lib2'},
       ],
     });
     assert.equal(auditResult2.rawValue, true);
@@ -29,11 +29,11 @@ describe('Returns detected front-end JavaScript libraries', () => {
     // LOTS of frontend libs
     const auditResult3 = JsLibrariesAudit.audit({
       Stacks: [
-        {detector: 'js', name: 'React', version: null, npm: 'react'},
-        {detector: 'js', name: 'Polymer', version: null, npm: 'polymer-core'},
-        {detector: 'js', name: 'Preact', version: null, npm: 'preact'},
-        {detector: 'js', name: 'Angular', version: null, npm: 'angular'},
-        {detector: 'js', name: 'jQuery', version: null, npm: 'jquery'},
+        {detector: 'js', name: 'React', version: undefined, npm: 'react'},
+        {detector: 'js', name: 'Polymer', version: undefined, npm: 'polymer-core'},
+        {detector: 'js', name: 'Preact', version: undefined, npm: 'preact'},
+        {detector: 'js', name: 'Angular', version: undefined, npm: 'angular'},
+        {detector: 'js', name: 'jQuery', version: undefined, npm: 'jquery'},
       ],
     });
     assert.equal(auditResult3.rawValue, true);
@@ -43,7 +43,7 @@ describe('Returns detected front-end JavaScript libraries', () => {
     const auditResult = JsLibrariesAudit.audit({
       Stacks: [
         {detector: 'js', name: 'lib1', version: '3.10.1', npm: 'lib1'},
-        {detector: 'js', name: 'lib2', version: null, npm: 'lib2'},
+        {detector: 'js', name: 'lib2', version: undefined, npm: 'lib2'},
       ],
     });
     const expected = [

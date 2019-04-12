@@ -93,6 +93,7 @@
     "angular": "^1.7.4",
     "archiver": "^3.0.0",
     "babel-core": "^6.26.0",
+    "babel-plugin-syntax-async-generators": "^6.13.0",
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
     "brfs": "^1.6.1",
     "browserify": "^16.2.3",
@@ -130,6 +131,7 @@
     "zone.js": "^0.7.3"
   },
   "dependencies": {
+    "@lighthouse/stack-packs": "file:./stack-packs",
     "axe-core": "3.1.2",
     "chrome-launcher": "^0.10.5",
     "configstore": "^3.1.1",
@@ -158,8 +160,7 @@
     "update-notifier": "^2.5.0",
     "ws": "3.3.2",
     "yargs": "3.32.0",
-    "yargs-parser": "7.0.0",
-    "@lighthouse/stack-packs": "file:./stack-packs"
+    "yargs-parser": "7.0.0"
   },
   "resolutions": {
     "chrome-launcher/@types/node": "*"

@@ -60,8 +60,8 @@ class NoVulnerableLibrariesAudit extends Audit {
 
   /**
    * Attempts to normalize the version.
-   * @param {?string} version
-   * @return {?string}
+   * @param {string|undefined} version
+   * @return {string|undefined}
    */
   static normalizeVersion(version) {
     if (!version) return version;
@@ -78,7 +78,7 @@ class NoVulnerableLibrariesAudit extends Audit {
 
   /**
    * @param {string} normalizedVersion
-   * @param {{name: string, version: string, npm?: string}} lib
+   * @param {LH.Artifacts.DetectedStack} lib
    * @param {SnykDB} snykDB
    * @return {Array<Vulnerability>}
    */
@@ -135,7 +135,7 @@ class NoVulnerableLibrariesAudit extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    const foundLibraries = (artifacts.Stacks || []).filter(stack => stack.detector === 'js');
+    const foundLibraries = artifacts.Stacks.filter(stack => stack.detector === 'js');
     const snykDB = NoVulnerableLibrariesAudit.snykDB;
 
     if (!foundLibraries.length) {

@@ -148,7 +148,7 @@ class Runner {
           rendererFormattedStrings: i18n.getRendererFormattedStrings(settings.locale),
           icuMessagePaths: {},
         },
-        stackPacks: stackPacks.getStackPacks(artifacts),
+        stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
       };
 
       // Replace ICU message references with localized strings; save replaced paths in lhr.

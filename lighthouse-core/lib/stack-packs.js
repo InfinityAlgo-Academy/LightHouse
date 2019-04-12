@@ -6,42 +6,48 @@
 'use strict';
 
 const stackPacks = require('@lighthouse/stack-packs');
+const log = require('lighthouse-logger');
 
+/**
+ * Pairs consisting of a stack pack's ID and the set of stacks needed to be
+ * detected in a page to display that pack's advice.
+ * @type {Array<{packId: string, requiredStacks: Array<string>}>}
+ */
 const stackPacksToInclude = [{
   packId: 'wordpress',
   requiredStacks: ['js:wordpress'],
 }];
 
 /**
- * @param {LH.Artifacts} artifacts
+ * Returns all packs that match the stacks found in the page.
+ * @param {LH.Artifacts['Stacks']} pageStacks
  * @return {Array<LH.Result.StackPack>}
  */
-function getStackPacks(artifacts) {
+function getStackPacks(pageStacks) {
   /** @type {Array<LH.Result.StackPack>} */
   const packs = [];
 
-  if (artifacts.Stacks) {
-    for (const pageStack of artifacts.Stacks) {
-      const stackPackToIncl = stackPacksToInclude.find(stackPackToIncl =>
-        stackPackToIncl.requiredStacks.includes(`${pageStack.detector}:${pageStack.id}`));
-      if (!stackPackToIncl) {
-        continue;
-      }
-
-      // Grab the full pack definition
-      const matchedPack = stackPacks.find(pack => pack.id === stackPackToIncl.packId);
-      if (!matchedPack) {
-        // we couldn't find a pack that's in our inclusion list, this is weird.
-        continue;
-      }
-
-      packs.push({
-        id: matchedPack.id,
-        title: matchedPack.title,
-        iconDataURL: matchedPack.iconDataURL,
-        descriptions: matchedPack.descriptions,
-      });
+  for (const pageStack of pageStacks) {
+    const stackPackToIncl = stackPacksToInclude.find(stackPackToIncl =>
+      stackPackToIncl.requiredStacks.includes(`${pageStack.detector}:${pageStack.id}`));
+    if (!stackPackToIncl) {
+      continue;
     }
+
+    // Grab the full pack definition
+    const matchedPack = stackPacks.find(pack => pack.id === stackPackToIncl.packId);
+    if (!matchedPack) {
+      log.warn('StackPacks',
+        `'${stackPackToIncl.packId}' stack pack was matched but is not found in stack-packs lib`);
+      continue;
+    }
+
+    packs.push({
+      id: matchedPack.id,
+      title: matchedPack.title,
+      iconDataURL: matchedPack.iconDataURL,
+      descriptions: matchedPack.descriptions,
+    });
   }
 
   return packs;

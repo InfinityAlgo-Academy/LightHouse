@@ -60,7 +60,7 @@ declare global {
       timing: Result.Timing;
       /** The record of all formatted string locations in the LHR and their corresponding source values. */
       i18n: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths: I18NMessages};
-      /** An array containing the result of all stackpacks */
+      /** An array containing the result of all stack packs. */
       stackPacks: Result.StackPack[];
     }
 
@@ -103,16 +103,18 @@ declare global {
       }
 
       /**
-       * A description of a stack pack
+       * A pack of secondary audit descriptions to be used when a page uses a
+       * specific technology stack, giving stack-specific advice for some of
+       * Lighthouse's audits.
        */
       export interface StackPack {
-        /** The unique stackpack's name stripped from special characters */
+        /** The unique string ID for this stack pack. */
         id: string;
-        /** The name of the stack pack which we display on our report */
+        /** The title of the stack pack, to be displayed in the report. */
         title: string;
-        /** The base64 url of the icon  */
+        /** A base64 data url to be used as the stack pack's icon. */
         iconDataURL: string;
-        /** An object containing the descriptions of the audits, keyed by the audits' `id` identifier. */
+        /** A set of descriptions for some of Lighthouse's audits, keyed by audit `id`. */
         descriptions: Record<string, string>;
       }
     }
