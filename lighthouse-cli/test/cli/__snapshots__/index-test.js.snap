@@ -1082,9 +1082,6 @@ Object {
           "path": "chrome-console-messages",
         },
         Object {
-          "path": "accessibility",
-        },
-        Object {
           "path": "anchor-elements",
         },
         Object {
@@ -1131,6 +1128,9 @@ Object {
         },
         Object {
           "path": "seo/tap-targets",
+        },
+        Object {
+          "path": "accessibility",
         },
       ],
       "networkQuietThresholdMs": 1000,
