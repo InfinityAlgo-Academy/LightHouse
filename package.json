@@ -86,6 +86,7 @@
     "@types/opn": "^3.0.28",
     "@types/raven": "^2.5.1",
     "@types/semver": "^5.5.0",
+    "@types/supports-color": "^5.3.0",
     "@types/uglify-es": "^3.0.0",
     "@types/update-notifier": "^1.0.2",
     "@types/ws": "^4.0.1",
@@ -130,6 +131,7 @@
     "zone.js": "^0.7.3"
   },
   "dependencies": {
+    "@lighthouse/stack-packs": "file:./stack-packs",
     "axe-core": "3.1.2",
     "chrome-launcher": "^0.10.5",
     "configstore": "^3.1.1",
@@ -158,8 +160,7 @@
     "update-notifier": "^2.5.0",
     "ws": "3.3.2",
     "yargs": "3.32.0",
-    "yargs-parser": "7.0.0",
-    "@lighthouse/stack-packs": "file:./stack-packs"
+    "yargs-parser": "7.0.0"
   },
   "resolutions": {
     "chrome-launcher/@types/node": "*"
