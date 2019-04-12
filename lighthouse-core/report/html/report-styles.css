@@ -112,6 +112,7 @@
   --shape-margin: 7px 12px 0 4px;
   --shape-size: 12px;
   --topbar-padding: 0 8px;
+  --triangle-polygon: polygon(50% 0, 100% 100%, 0% 100%);
 
   --pass-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>check</title><path fill="%23178239" d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/></svg>');
   --average-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>info</title><path fill="%23E67700" d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm2 30h-4V22h4v12zm0-16h-4v-4h4v4z"/></svg>');
@@ -334,7 +335,6 @@
 .lh-audit--pass .lh-audit__display-text {
   color: var(--color-green);
 }
-.lh-metric--pass .lh-metric__innerwrap::before,
 .lh-audit--pass .lh-audit__score-icon {
   border-radius: 100%;
   background: var(--color-green);
@@ -347,13 +347,11 @@
   background-image: var(--average-icon-url);
 }
 
-.lh-metric--fail .lh-metric__value,
 .lh-audit--fail .lh-audit__display-text {
   color: var(--color-red);
 }
-.lh-metric--fail .lh-metric__innerwrap::before,
 .lh-audit--fail .lh-audit__score-icon {
-  clip-path: polygon(50% 0, 100% 100%, 0% 100%);
+  clip-path: var(--triangle-polygon);
   background: var(--color-red);
 }
 
@@ -507,37 +505,38 @@
   margin: var(--shape-margin);
 }
 
-/* .lh-metric--pass .lh-metric__value {
-  color: var(--pass-color);
+.lh-metric--pass .lh-metric__value {
+  color: var(--color-green);
 }
-.lh-metric--pass .lh-metric__value::after {
-  background: var(--pass-icon-url) no-repeat 50% 50%;
+.lh-metric--pass .lh-metric__innerwrap::before {
+  border-radius: 100%;
+  background: var(--color-green);
 }
-
 
 .lh-metric--average .lh-metric__value {
-  color: var(--average-color);
+  color: var(--color-orange);
   padding-left: 16px;
 }
-.lh-metric--average .lh-metric__value::after {
+.lh-metric--average .lh-metric__innerwrap::before {
   background: var(--average-icon-url) no-repeat 50% 50%;
-} */
-
-
-/* .lh-metric--fail .lh-metric__value {
-  color: var(--fail-color);
 }
-.lh-metric--fail .lh-metric__value::after {
-  background: var(--fail-icon-url) no-repeat 50% 50%;
-} */
+
+
+.lh-metric--fail .lh-metric__value {
+  color: var(--color-red);
+}
+.lh-metric--fail .lh-metric__innerwrap::before {
+  clip-path: var(--triangle-polygon);
+  background: var(--color-red);
+}
 
 .lh-metric--error .lh-metric__value,
 .lh-metric--error .lh-metric__description {
-  color: var(--fail-color);
+  color: var(--color-red);
 }
 
 /* Hide icon if there was an error */
-.lh-metric--error .lh-metric__value::after {
+.lh-metric--error .lh-metric__innerwrap::before {
   display: none;
 }
 
