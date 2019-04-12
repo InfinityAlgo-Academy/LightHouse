@@ -41,15 +41,11 @@
   --expandable-indent: 20px;
   --secondary-text-color: #565656;
   /*--accent-color: #3879d9;*/
-  --fail-color: hsl(1, 73%, 45%);
-  --average-color: hsl(31, 100%, 45%); /* md orange 800 */
-  --pass-color: hsl(139, 70%, 30%);
   --informative-color: #0c50c7;
   --medium-75-gray: #757575;
   --medium-50-gray: hsl(210, 17%, 98%);
   --medium-100-gray: hsl(200, 12%, 95%);
   --warning-color: #ffab00; /* md amber a700 */
-  --report-border-color: #ccc;
   --report-secondary-border-color: #ebebeb;
   --metric-timeline-rule-color: #b3b3b3;
   --display-value-gray: hsl(216, 5%, 39%);
@@ -72,7 +68,6 @@
   --lh-sparkline-height: 5px;
   --lh-sparkline-thin-height: 3px;
   --lh-filmstrip-thumbnail-width: 60px;
-  --lh-score-icon-width: calc(var(--body-font-size) / 14 * 16);
   --lh-category-score-width: calc(5 * var(--body-font-size));
   --lh-audit-vpadding: 8px;
   --lh-audit-index-width: 18px;
