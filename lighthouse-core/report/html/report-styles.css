@@ -593,15 +593,15 @@
 }
 
 .lh-audit--pass .lh-sparkline__bar {
-  background: var(--pass-color);
+  background: var(--color-green);
 }
 
 .lh-audit--average .lh-sparkline__bar {
-  background: var(--average-color);
+  background: var(--color-orange);
 }
 
 .lh-audit--fail .lh-sparkline__bar {
-  background: var(--fail-color);
+  background: var(--color-red);
 }
 
 
@@ -649,7 +649,7 @@
 }
 
 .lh-audit--error .lh-audit__display-text {
-  color: var(--fail-color);
+  color: var(--color-red);
 }
 
 /* Audit Group */
@@ -782,7 +782,7 @@
 }
 
 .lh-audit--fail .lh-audit-explanation {
-  color: var(--fail-color);
+  color: var(--color-red);
 }
 
 /* Report */
@@ -831,7 +831,7 @@
 
 .lh-warnings {
   --item-margin: calc(var(--body-line-height) / 6);
-  border: 1px solid var(--average-color);
+  border: 1px solid var(--color-orange);
   border-radius: 4px;
   margin: var(--lh-audit-vpadding) 0;
   padding: calc(var(--lh-audit-vpadding) / 2) var(--lh-audit-vpadding);
