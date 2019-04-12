@@ -373,23 +373,14 @@
 }
 
 
-.lh-audit__index,
 .lh-audit__title,
 .lh-audit__display-text,
 .lh-load-opportunity__sparkline,
 .lh-chevron-container {
   margin: 0 var(--audit-item-gap);
 }
-.lh-audit__index {
-  margin-left: 0;
-}
 .lh-chevron-container {
   margin-right: 0;
-}
-
-
-.lh-audit__header .lh-audit__index {
-  width: var(--lh-audit-index-width);
 }
 
 .lh-audit__title {

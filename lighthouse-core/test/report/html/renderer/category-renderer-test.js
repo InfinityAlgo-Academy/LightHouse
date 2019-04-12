@@ -268,11 +268,11 @@ describe('CategoryRenderer', () => {
     it('increments the audit index across groups', () => {
       const elem = renderer.render(category, sampleResults.categoryGroups);
 
-      const passedAudits = elem.querySelectorAll('.lh-clump--passed .lh-audit__index');
-      const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit__index');
-      const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit__index');
+      const passedAudits = elem.querySelectorAll('.lh-clump--passed .lh-audit__title');
+      const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit__title');
+      const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit__title');
       const notApplicableAudits =
-        elem.querySelectorAll('.lh-clump--notapplicable .lh-audit__index');
+        elem.querySelectorAll('.lh-clump--notapplicable .lh-audit__title');
 
       const assertAllTheIndices = (nodeList) => {
         // Must be at least one for a decent test.
