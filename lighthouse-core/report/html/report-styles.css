@@ -357,6 +357,16 @@
   background: var(--color-red);
 }
 
+.lh-audit--manual .lh-audit__display-text,
+.lh-audit--notapplicable .lh-audit__display-text {
+  color: var(--color-black-400);
+}
+.lh-audit--manual .lh-audit__score-icon,
+.lh-audit--notapplicable .lh-audit__score-icon {
+  border-radius: 100%;
+  background: var(--color-black-400);
+}
+
 .lh-audit--error .lh-audit__score-icon {
   display: none;
 }
