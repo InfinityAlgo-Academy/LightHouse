@@ -7,6 +7,8 @@
 
 /* eslint-disable max-len */
 
+const fs = require('fs');
+const supportsColor = require('supports-color');
 const yargs = require('yargs');
 const pkg = require('../package.json');
 const printer = require('./printer');
@@ -19,7 +21,13 @@ function getFlags(manualArgv) {
   // @ts-ignore yargs() is incorrectly typed as not returning itself
   const y = manualArgv ? yargs(manualArgv) : yargs;
   return y.help('help')
-      .version(() => pkg.version)
+      .version(() => {
+        if (!supportsColor.stdout) {
+          return pkg.version;
+        }
+        const ascii = fs.readFileSync(__dirname + '/../assets/lh-ansii.txt', 'utf-8');
+        return `${pkg.version}\n${ascii}`;
+      })
       .showHelpOnFail(false, 'Specify --help for available options')
 
       .usage('lighthouse <url> <options>')
