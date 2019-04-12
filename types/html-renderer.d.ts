@@ -57,8 +57,18 @@ declare global {
       export interface Category extends Result.Category {
         auditRefs: Array<AuditRef>
       }
+
       export interface AuditRef extends Result.AuditRef {
-        result: Audit.Result
+        result: Audit.Result & { stackPacks?: StackPackDescription[] }
+      }
+
+      export interface StackPackDescription {
+         /** The title of the stack pack. */
+        title: string;
+        /** A base64 data url to be used as the stack pack's icon. */
+        iconDataURL: string;
+        /** The stack-specific description for this audit. */
+        description: string;
       }
     }
   }

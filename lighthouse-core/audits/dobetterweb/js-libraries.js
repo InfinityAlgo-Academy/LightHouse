@@ -21,7 +21,7 @@ class JsLibrariesAudit extends Audit {
       id: 'js-libraries',
       title: 'Detected JavaScript libraries',
       description: 'All front-end JavaScript libraries detected on the page.',
-      requiredArtifacts: ['JSLibraries'],
+      requiredArtifacts: ['Stacks'],
     };
   }
 
@@ -30,11 +30,13 @@ class JsLibrariesAudit extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    const libDetails = artifacts.JSLibraries.map(lib => ({
-      name: lib.name,
-      version: lib.version || undefined, // null if not detected
-      npm: lib.npmPkgName || undefined, // ~70% of libs come with this field
-    }));
+    const libDetails = artifacts.Stacks
+      .filter(stack => stack.detector === 'js')
+      .map(stack => ({
+        name: stack.name,
+        version: stack.version,
+        npm: stack.npm,
+      }));
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [

@@ -8,7 +8,7 @@
     "chrome-debug": "./lighthouse-core/scripts/manual-chrome-launcher.js"
   },
   "engines": {
-    "node": ">=8.10"
+    "node": ">=10.13"
   },
   "scripts": {
     "build-all": "npm-run-posix-or-windows build-all:task",
@@ -93,6 +93,7 @@
     "angular": "^1.7.4",
     "archiver": "^3.0.0",
     "babel-core": "^6.26.0",
+    "babel-plugin-syntax-async-generators": "^6.13.0",
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
     "brfs": "^1.6.1",
     "browserify": "^16.2.3",
@@ -130,6 +131,7 @@
     "zone.js": "^0.7.3"
   },
   "dependencies": {
+    "@lighthouse/stack-packs": "file:./stack-packs",
     "axe-core": "3.1.2",
     "chrome-launcher": "^0.10.5",
     "configstore": "^3.1.1",
@@ -140,7 +142,7 @@
     "intl-messageformat": "^2.2.0",
     "intl-messageformat-parser": "^1.4.0",
     "jpeg-js": "0.1.2",
-    "js-library-detector": "^5.1.0",
+    "js-library-detector": "^5.4.0",
     "jsonld": "^1.5.0",
     "jsonlint-mod": "^1.7.4",
     "lighthouse-logger": "^1.2.0",

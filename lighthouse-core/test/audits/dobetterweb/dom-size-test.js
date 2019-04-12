@@ -11,11 +11,11 @@ const options = DOMSize.defaultOptions;
 
 /* eslint-env jest */
 
-describe('Num DOM nodes audit', () => {
-  const numNodes = DOMSize.MAX_DOM_NODES;
+describe('DOMSize audit', () => {
+  const numElements = DOMSize.MAX_DOM_ELEMENTS;
   const artifact = {
     DOMStats: {
-      totalDOMNodes: numNodes,
+      totalBodyElements: numElements,
       depth: {max: 1, pathToElement: ['html', 'body', 'div', 'span']},
       width: {max: 2, pathToElement: ['html', 'body']},
     },
@@ -24,20 +24,20 @@ describe('Num DOM nodes audit', () => {
   it('calculates score hitting mid distribution', () => {
     const auditResult = DOMSize.audit(artifact, {options});
     assert.equal(auditResult.score, 0.43);
-    assert.equal(auditResult.rawValue, numNodes);
-    expect(auditResult.displayValue).toBeDisplayString('1,500 nodes');
-    assert.equal(auditResult.details.items[0].value, numNodes.toLocaleString());
+    assert.equal(auditResult.rawValue, numElements);
+    expect(auditResult.displayValue).toBeDisplayString('1,500 elements');
+    assert.equal(auditResult.details.items[0].value, numElements.toLocaleString());
     assert.equal(auditResult.details.items[1].value, '1');
     assert.equal(auditResult.details.items[2].value, '2');
   });
 
   it('calculates score hitting top distribution', () => {
-    artifact.DOMStats.totalDOMNodes = 400;
+    artifact.DOMStats.totalBodyElements = 400;
     assert.equal(DOMSize.audit(artifact, {options}).score, 1);
   });
 
   it('calculates score hitting bottom of distribution', () => {
-    artifact.DOMStats.totalDOMNodes = 5970;
+    artifact.DOMStats.totalBodyElements = 5970;
     assert.equal(DOMSize.audit(artifact, {options}).score, 0);
   });
 });

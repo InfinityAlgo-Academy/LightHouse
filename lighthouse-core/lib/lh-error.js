@@ -35,6 +35,8 @@ const UIStrings = {
   dnsFailure: 'DNS servers could not resolve the provided domain.',
   /** Error message explaining that Lighthouse couldn't complete because the page has stopped responding to its instructions. */
   pageLoadFailedHung: 'Lighthouse was unable to reliably load the URL you requested because the page stopped responding.',
+  /** Error message explaining that Lighthouse timed out while waiting for the initial connection to the Chrome Devtools protocol. */
+  criTimeout: 'Timeout waiting for initial Debugger Protocol connection.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -224,6 +226,13 @@ const ERRORS = {
   DNS_FAILURE: {
     code: 'DNS_FAILURE',
     message: UIStrings.dnsFailure,
+    lhrRuntimeError: true,
+  },
+
+  /** A timeout in the initial connection to the debugger protocol. */
+  CRI_TIMEOUT: {
+    code: 'CRI_TIMEOUT',
+    message: UIStrings.criTimeout,
     lhrRuntimeError: true,
   },
 

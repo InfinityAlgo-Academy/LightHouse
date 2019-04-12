@@ -14,6 +14,8 @@ const Config = require('../../config/config');
 const unresolvedPerfLog = require('./../fixtures/unresolved-perflog.json');
 const NetworkRequest = require('../../lib/network-request.js');
 
+jest.mock('../../lib/stack-collector.js', () => () => Promise.resolve([]));
+
 class TestGatherer extends Gatherer {
   constructor() {
     super();

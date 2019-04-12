@@ -491,7 +491,7 @@
             "title": "Document has a `<title>` element"
         }, 
         "dom-size": {
-            "description": "Browser engineers recommend pages contain fewer than ~1,500 DOM nodes. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/tools/lighthouse/audits/dom-size).", 
+            "description": "Browser engineers recommend pages contain fewer than ~1,500 DOM elements. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/tools/lighthouse/audits/dom-size).", 
             "details": {
                 "headings": [
                     {
@@ -512,8 +512,8 @@
                 ], 
                 "items": [
                     {
-                        "statistic": "Total DOM Nodes", 
-                        "value": "53"
+                        "statistic": "Total DOM Elements", 
+                        "value": "31"
                     }, 
                     {
                         "element": {
@@ -532,7 +532,7 @@
                 ], 
                 "type": "table"
             }, 
-            "displayValue": "53 nodes", 
+            "displayValue": "31 elements", 
             "id": "dom-size", 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
@@ -3602,7 +3602,8 @@
             "warningAuditsGroupTitle": "Passed audits but with warnings", 
             "warningHeader": "Warnings: "
         }
-    }, 
+    },
+    "stackPacks": [],
     "lighthouseVersion": "4.3.0", 
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html", 
     "runWarnings": [], 

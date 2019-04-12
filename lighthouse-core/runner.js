@@ -12,6 +12,7 @@ const ReportScoring = require('./scoring');
 const Audit = require('./audits/audit');
 const log = require('lighthouse-logger');
 const i18n = require('./lib/i18n/i18n.js');
+const stackPacks = require('./lib/stack-packs.js');
 const assetSaver = require('./lib/asset-saver');
 const fs = require('fs');
 const path = require('path');
@@ -147,6 +148,7 @@ class Runner {
           rendererFormattedStrings: i18n.getRendererFormattedStrings(settings.locale),
           icuMessagePaths: {},
         },
+        stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
       };
 
       // Replace ICU message references with localized strings; save replaced paths in lhr.

@@ -20,6 +20,8 @@ const assetSaver = require('../lighthouse-core/lib/asset-saver.js');
 
 const opn = require('opn');
 
+/** @typedef {import('../lighthouse-core/lib/lh-error.js')} LighthouseError */
+
 const _RUNTIME_ERROR_CODE = 1;
 const _PROTOCOL_TIMEOUT_EXIT_CODE = 67;
 const _PAGE_HUNG_EXIT_CODE = 68;
@@ -74,20 +76,20 @@ function showProtocolTimeoutError() {
   return process.exit(_PROTOCOL_TIMEOUT_EXIT_CODE);
 }
 
-/** @param {LH.LighthouseError} err @return {never} */
+/** @param {LighthouseError} err @return {never} */
 function showPageHungError(err) {
   console.error('Page hung:', err.friendlyMessage);
   return process.exit(_PAGE_HUNG_EXIT_CODE);
 }
 
-/** @param {LH.LighthouseError} err @return {never} */
+/** @param {LighthouseError} err @return {never} */
 function showInsecureDocumentRequestError(err) {
   console.error('Insecure document request:', err.friendlyMessage);
   return process.exit(_INSECURE_DOCUMENT_REQUEST_EXIT_CODE);
 }
 
 /**
- * @param {LH.LighthouseError} err
+ * @param {LighthouseError} err
  * @return {never}
  */
 function showRuntimeError(err) {
@@ -99,7 +101,7 @@ function showRuntimeError(err) {
 }
 
 /**
- * @param {LH.LighthouseError} err
+ * @param {LighthouseError} err
  * @return {never}
  */
 function handleError(err) {

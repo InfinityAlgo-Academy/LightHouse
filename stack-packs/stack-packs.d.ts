@@ -4,33 +4,13 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
- declare module Smokehouse {
-  export interface Difference {
-    path: string;
-    actual: any;
-    expected: any;
-  }
-
-  export interface Comparison {
-    name: string;
-    actual: any;
-    expected: any;
-    equal: boolean;
-    diff?: Difference | null;
-  }
-
-  export type ExpectedLHR = Pick<LH.Result, 'audits' | 'finalUrl' | 'requestedUrl'>
-
-  export type ExpectedRunnerResult = {
-    errorCode?: string;
-    lhr: ExpectedLHR,
-    artifacts?: Partial<LH.Artifacts>
-  }
-
-  export interface TestDfn {
-    id: string;
-    expectations: string;
-    config: string;
-    batch: string;
-  }
+interface Pack {
+  id: string;
+  iconDataURL: string;
+  title: string;
+  descriptions: Record<string, string>;
 }
+
+declare const stackPacks: Pack[];
+
+export = stackPacks;

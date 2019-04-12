@@ -33,6 +33,8 @@ declare global {
       BenchmarkIndex: number;
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       WebAppManifest: Artifacts.Manifest | null;
+      /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
+      Stacks: Artifacts.DetectedStack[];
       /** A set of page-load traces, keyed by passName. */
       traces: {[passName: string]: Trace};
       /** A set of DevTools debugger protocol records, keyed by passName. */
@@ -83,8 +85,6 @@ declare global {
       HTTPRedirect: {value: boolean};
       /** Information on size and loading for all the images in the page. Natural size information for `picture` and CSS images is only available if the image was one of the largest 50 images. */
       ImageElements: Artifacts.ImageElement[];
-      /** Information on JS libraries and versions used by the page. */
-      JSLibraries: {name: string, version: string, npmPkgName: string}[];
       /** JS coverage information for code used during page load. */
       JsUsage: Crdp.Profiler.ScriptCoverage[];
       /** Parsed version of the page's Web App Manifest, or null if none found. */
@@ -154,7 +154,8 @@ declare global {
       }
 
       export interface DOMStats {
-        totalDOMNodes: number;
+        /** The total number of elements found within the page's body. */
+        totalBodyElements: number;
         width: {max: number, pathToElement: Array<string>, snippet: string};
         depth: {max: number, pathToElement: Array<string>, snippet: string};
       }
@@ -444,6 +445,20 @@ declare global {
          * firstMeaningfulPaintCandidate events had to be attempted.
          */
         fmpFellBack: boolean;
+      }
+
+      /** Information on a tech stack (e.g. a JS library) used by the page. */
+      export interface DetectedStack {
+        /** The identifier for how this stack was detected. */
+        detector: 'js';
+        /** The unique string ID for the stack. */
+        id: string;
+        /** The name of the stack. */
+        name: string;
+        /** The version of the stack, if it could be detected. */
+        version?: string;
+        /** The package name on NPM, if it exists. */
+        npm?: string;
       }
     }
   }
