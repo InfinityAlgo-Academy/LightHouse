@@ -135,7 +135,7 @@ describe('CategoryRenderer', () => {
 
     const categoryEl = categoryDOM.querySelector('.lh-category-header');
     const value = categoryDOM.querySelector('.lh-gauge__percentage');
-    const title = categoryEl.querySelector('.lh-category-header__title');
+    const title = categoryEl.querySelector('.lh-gauge__label');
 
     assert.deepEqual(categoryEl, categoryEl.firstElementChild, 'first child is a score');
     const scoreInDom = Number(value.textContent);
@@ -205,7 +205,7 @@ describe('CategoryRenderer', () => {
 
       const score = categoryDOM.querySelector('.lh-category-header');
       const value = categoryDOM.querySelector('.lh-gauge__percentage');
-      const title = score.querySelector('.lh-category-header__title');
+      const title = score.querySelector('.lh-gauge__label');
       const description = score.querySelector('.lh-category-header__description');
 
       assert.deepEqual(score, score.firstElementChild, 'first child is a score');

@@ -17,10 +17,10 @@
 
 .lh-vars {
   --text-font-family: Roboto, Helvetica, Arial, sans-serif;
-  --monospace-font-family: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
+  --monospace-font-family: 'Roboto Mono', 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
   --body-background-color: #fff;
-  --body-font-size: 14px;
-  --body-line-height: 18px;
+  --body-font-size: 16px;
+  --body-line-height: 24px;
   --subheader-font-size: 14px;
   --subheader-line-height: 20px;
   --subheader-color: hsl(206, 6%, 25%);
@@ -82,6 +82,36 @@
   --chevron-size: 12px;
   --circle-size: calc(3 * var(--header-font-size));
 
+  /* TODO(cjamcl) clean up unused variables. */
+  --color-black-100: #F5F5F5;
+  --color-black-200: #E0E0E0;
+  --color-black-400: #BDBDBD;
+  --color-black-500: #9E9E9E;
+  --color-black-600: #757575;
+  --color-black-800: #424242;
+  --color-black-900: #212121;
+  --color-black: #000000;
+  --color-green-700: #018642;
+  --color-green: #0CCE6B;
+  --color-orange-700: #D04900;
+  --color-orange: #FFA400;
+  --color-red-700: #EB0F00;
+  --color-red: #FF4E42;
+  --color-white: #FFFFFF;
+  --header-padding: 20px 0 20px 0;
+  --score-container-padding: 12px;
+  --score-container-width: 160px;
+  --score-number-font-size-big: 42px;
+  --score-number-font-size: 34px;
+  --circle-size-big: 120px;
+  --circle-size: 96px;
+  --score-title-font-size-big: 28px;
+  --score-title-font-size: 20px;
+  --score-title-line-height-big: 36px;
+  --score-title-line-height: 26px;
+  --section-padding: 40px;
+  --topbar-padding: 0 8px;
+
   --pass-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>check</title><path fill="%23178239" d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/></svg>');
   --average-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>info</title><path fill="%23E67700" d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm2 30h-4V22h4v12zm0-16h-4v-4h4v4z"/></svg>');
   --fail-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>warn</title><path fill="%23C7221F" d="M2 42h44L24 4 2 42zm24-6h-4v-4h4v4zm0-8h-4v-8h4v8z"/></svg>');
@@ -104,6 +134,26 @@
   --pwa-fast-reliable-color-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><g fill-rule="nonzero" fill="none"><circle fill="%23CCE3F6" cx="12" cy="12" r="12"/><path d="M12 4.3l6.3 2.8v4.2c0 3.88-2.69 7.52-6.3 8.4-3.61-.88-6.3-4.51-6.3-8.4V7.1L12 4.3zm-.56 12.88l3.3-5.79.04-.08c.05-.1.01-.29-.26-.29h-1.96l.56-3.92h-.56L9.3 12.82c0 .03.07-.12-.03.07-.11.2-.12.37.2.37h1.97l-.56 3.92h.56z" fill="%23304FFE"/></g></svg>');
   --pwa-installable-color-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><g fill-rule="nonzero" fill="none"><circle fill="%23D4ECD5" cx="12" cy="12" r="12"/><path d="M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm3.5 7.7h-2.8v2.8h-1.4v-2.8H8.5v-1.4h2.8V8.5h1.4v2.8h2.8v1.4z" fill="%23009688"/></g></svg>');
   --pwa-optimized-color-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="%23FCE4EC" width="24" height="24" rx="12"/><path d="M5 5h14v14H5z"/><path fill="%23EC3F7A" d="M12 15.07l3.6 2.18-.95-4.1 3.18-2.76-4.2-.36L12 6.17l-1.64 3.86-4.2.36 3.2 2.76-.96 4.1z"/></g></svg>');
+}
+
+@media only screen and (max-width: 480px) {
+  .lh-vars {
+    --body-font-size: 14px;
+    --body-line-height: 20px;
+    --circle-size-big: 96px;
+    --circle-size: 72px;
+    --header-padding: 16px 0 16px 0;
+    --score-container-padding: 8px;
+    --score-container-width: 112px;
+    --score-number-font-size-big: 34px;
+    --score-number-font-size: 26px;
+    --score-title-font-size-big: 22px;
+    --score-title-font-size: 14px;
+    --score-title-line-height-big: 26px;
+    --score-title-line-height: 20px;
+    --section-padding: 24px;
+    --topbar-height: 32px;
+  }
 }
 
 .lh-vars.lh-devtools {
@@ -148,6 +198,7 @@
   line-height: var(--body-line-height);
   background: var(--body-background-color);
   scroll-behavior: smooth;
+  color: var(--color-black-900);
 }
 
 .lh-root :focus {
@@ -292,7 +343,8 @@
 }
 .lh-category-header__description  {
   font-size: var(--body-font-size);
-  margin: calc(var(--default-padding) / 2) 0 var(--default-padding);
+  margin: 0px auto;
+  max-width: 400px;
 }
 
 
@@ -715,16 +767,11 @@
 
 /* Report */
 
-.lh-container {
-  display: flex;
-  max-width: var(--report-width);
-  word-wrap: break-word;
-  margin: 0 auto;
-}
-
 .lh-header-sticky {
-  position: -webkit-sticky;
-  position: sticky;
+  /** TODO: Redesigned report has a small sticky header.
+  For now, disable the current sticky behavior. */
+  /* position: -webkit-sticky;
+  position: sticky; */
   top: 0;
   width: 100%;
   min-width: var(--report-min-width);
@@ -742,7 +789,6 @@
 .lh-header-container {
   display: block;
   margin: 0 auto;
-  max-width: var(--report-width);
   position: relative;
   word-wrap: break-word;
 }
@@ -750,11 +796,6 @@
 .lh-report {
   background-color: #fff;
   min-width: var(--report-min-width);
-}
-@media screen {
-  .lh-report {
-    width: var(--report-width);
-  }
 }
 
 .lh-exception {
@@ -795,9 +836,8 @@
 
 .lh-scores-header {
   display: flex;
-  justify-content: left;
-  overflow-x: hidden;
-  position: relative;
+  flex-wrap: wrap;
+  justify-content: center;
   padding: var(--section-indent) calc(var(--section-indent) / 2) calc(var(--section-indent) * 2);
 }
 .lh-scores-header__solo {
@@ -807,47 +847,48 @@
 
 .lh-scores-header .lh-gauge__wrapper,
 .lh-scores-header .lh-gauge--pwa__wrapper {
-  padding: 0 4px;
+  width: var(--score-container-width);
 }
 
 .lh-scores-header .lh-gauge--pwa__wrapper {
-  border-left: 1px solid var(--report-secondary-border-color);
   /* Can remove when this bug is resolved: https://bugs.chromium.org/p/chromium/issues/detail?id=942097 */
   will-change: transform;
 }
 
 .lh-scorescale {
+  display: inline-flex;
+  margin: 12px auto 0 auto;
+  border: 1px solid var(--color-black-200);
+  border-radius: 20px;
   color: var(--medium-75-gray);
-  padding: 0 calc(var(--section-indent) * 1.5) 0;
-  text-align: right;
-  transform-origin: bottom right;
-  will-change: opacity; /* opacity is changed on scroll */
+  padding: 8px 8px;
 }
 
 .lh-scorescale-range {
-  margin-left: 10px;
+  margin: 0 12px;
+  font-family: var(--monospace-font-family);
   white-space: nowrap;
 }
 
 .lh-scorescale-range::before {
   content: '';
   width: var(--body-font-size);
-  height: calc(var(--body-font-size) * .60);
-  border-radius: 4px;
+  height: calc(var(--body-font-size) * .50);
+  border-radius: 10px;
   display: inline-block;
   margin: 0 5px;
 }
 
 .lh-scorescale-range--pass::before {
-  background-color: var(--pass-color);
+  background-color: var(--color-green);
 }
 
 .lh-scorescale-range--average::before {
-  background-color: var(--average-color);
+  background-color: var(--color-orange);
 }
 
 .lh-scorescale-range--fail::before {
-  background-color: var(--fail-color);
+  background-color: var(--color-red);
 }
 
 /* Hide category score gauages if it's a single category report */
@@ -863,11 +904,16 @@
 
 .lh-category {
   padding: var(--section-padding);
+  max-width: var(--report-width);
+  margin: 0 auto;
 }
 
-.lh-category:first-of-type {
-  padding-top: calc(2 * var(--section-padding));
-  border: none;
+.lh-category-wrapper {
+  border-bottom: 1px solid var(--color-black-200);
+}
+
+.lh-category-wrapper:first-of-type {
+  border-top: 1px solid var(--color-black-200);
 }
 
 /* section hash link jump should preserve fixed header
@@ -886,21 +932,10 @@
   margin-bottom: var(--lh-section-vpadding);
 }
 
-.lh-category-header__title {
-  line-height: 24px;
-}
-
-.lh-category-header .lh-score__gauge .lh-gauge__label {
-  display: none;
-}
-
-
 .lh-category-header .lh-score__gauge {
-  float: right;
-}
-
-.lh-category-header .lh-score__gauge {
-  margin-left: var(--section-indent);
+  max-width: 400px;
+  width: auto;
+  margin: 0px auto;
 }
 
 .lh-category-header .lh-audit__title {

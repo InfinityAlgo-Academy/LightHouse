@@ -26,10 +26,9 @@ limitations under the License.
 <!-- Lighthouse score scale -->
 <template id="tmpl-lh-scorescale">
   <div class="lh-scorescale">
-    <span class="lh-scorescale-label"></span>
-    <span class="lh-scorescale-range lh-scorescale-range--pass">90-100</span>
-    <span class="lh-scorescale-range lh-scorescale-range--average">50-89</span>
-    <span class="lh-scorescale-range lh-scorescale-range--fail">0-49</span>
+      <span class="lh-scorescale-range lh-scorescale-range--fail">0-49</span>
+      <span class="lh-scorescale-range lh-scorescale-range--average">50-89</span>
+      <span class="lh-scorescale-range lh-scorescale-range--pass">90-100</span>
   </div>
 </template>
 
@@ -47,7 +46,6 @@ limitations under the License.
 <template id="tmpl-lh-category-header">
   <div class="lh-category-header">
     <div class="lh-score__gauge"></div>
-    <span class="lh-category-header__title"></span>
     <div class="lh-category-header__description"></div>
   </div>
 </template>
@@ -136,30 +134,17 @@ limitations under the License.
 <!-- Lighthouse score container -->
 <template id="tmpl-lh-scores-wrapper">
   <style>
-    .lh-scores-wrapper__background,
-    .lh-scores-wrapper__shadow {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
-      border-radius: 8px;
-    }
-    .lh-scores-wrapper__shadow {
-      border-radius: 0;
-      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 0px -2px
-    }
     .lh-scores-container {
-      padding-bottom: calc(var(--section-indent) / 2);
+      display: flex;
+      flex-direction: column;
+      margin-top: var(--topbar-height);
+      padding: var(--header-padding);
       position: relative;
       width: 100%;
     }
   </style>
   <div class="lh-scores-wrapper">
     <div class="lh-scores-container">
-      <div class="lh-scores-wrapper__background"></div>
-      <div class="lh-scores-wrapper__shadow"></div>
     </div>
   </div>
 </template>
@@ -190,9 +175,9 @@ limitations under the License.
       will-change: transform, opacity;
     }
     .lh-header {
-      width: 100%;
+      max-width: var(--report-width);
+      margin: 0 auto;
       height: var(--report-header-height);
-      max-width: 100%; /* support text-overflow on url */
       position: relative;
     }
     .lh-metadata {
@@ -212,19 +197,6 @@ limitations under the License.
     }
     .lh-metadata__url {
       color: currentColor;
-    }
-    .lh-scores-wrapper {
-      margin-top: -30px;
-    }
-    .lh-scores-wrapper__shadow {
-      opacity: 0;
-    }
-    .lh-scores-wrapper__background,
-    .lh-scores-wrapper__shadow {
-      box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      will-change: opacity, transform;
-      transform-origin: top;
     }
 
     .lh-product-info, .lh-toolbar__metadata {
@@ -533,8 +505,9 @@ limitations under the License.
   <style>
     .lh-footer {
       background-color: var(--header-bg-color);
-      border-top: 1px solid var(--report-secondary-border-color);
       padding: var(--section-indent) calc(var(--default-padding) * 2);
+      max-width: var(--report-width);
+      margin: 0 auto;
     }
     .lh-footer .lh-generated {
       text-align: center;
@@ -581,45 +554,41 @@ limitations under the License.
 <!-- Lighthouse score gauge -->
 <template id="tmpl-lh-gauge">
   <style>
-    .lh-gauge__wrapper {
-      --circle-size-half: calc(var(--circle-size) / 2);
-      --circle-background: hsl(216, 12%, 92%);
-      --circle-border-width: 9;
-      --inset-size: calc(var(--circle-size) - 2 * var(--circle-border-width));
-      --transition-length: 1s;
+    .lh-gauge__wrapper--pass {
+      color: var(--color-green);
+      fill: var(--color-green);
+      stroke: var(--color-green);
     }
 
-    .lh-gauge__wrapper--pass,
-    .lh-gauge__wrapper--pass .lh-gauge {
-      --circle-color: var(--pass-color);
-      color: var(--circle-color);
+    .lh-gauge__wrapper--average {
+      color: var(--color-orange);
+      fill: var(--color-orange);
+      stroke: var(--color-orange);
     }
 
-    .lh-gauge__wrapper--average,
-    .lh-gauge__wrapper--average .lh-gauge {
-      --circle-color: var(--average-color);
-      color: var(--circle-color);
-    }
-
-    .lh-gauge__wrapper--fail,
-    .lh-gauge__wrapper--fail .lh-gauge {
-      --circle-color: var(--fail-color);
-      color: var(--circle-color);
+    .lh-gauge__wrapper--fail {
+      color: var(--color-red);
+      fill: var(--color-red);
+      stroke: var(--color-red);
     }
 
     .lh-gauge {
-        max-width: 360px;
-        max-height: 360px;
-        stroke-linecap: round;
-        width: var(--circle-size);
-        height: var(--circle-size);
+      stroke-linecap: round;
+      width: var(--circle-size);
+      height: var(--circle-size);
+    }
+
+    .lh-category .lh-gauge {
+      width: var(--circle-size-big);
+      height: var(--circle-size-big);
     }
 
     .lh-gauge-base {
-        fill: none;
+        opacity: 0.1;
         stroke: var(--circle-background);
         stroke-width: var(--circle-border-width);
     }
+
     .lh-gauge-arc {
         fill: none;
         stroke: var(--circle-color);
@@ -629,29 +598,35 @@ limitations under the License.
     }
 
     @keyframes load-gauge {
-      from { stroke-dasharray: 0 329; }
+      from { stroke-dasharray: 0 352; }
     }
 
     .lh-gauge__percentage {
-      --spacer: calc((var(--circle-size) - var(--inset-size)) / 2);
       width: 100%;
       height: var(--inset-size);
       position: absolute;
       border-radius: inherit;
-      font-size: var(--header-font-size);
-      line-height: var(--header-font-size);
+      font-family: var(--monospace-font-family);
+      font-size: var(--score-number-font-size);
+      line-height: var(--score-number-font-size);
       text-align: center;
       top: calc(var(--circle-size) / 3);
     }
 
+    .lh-category .lh-gauge__percentage {
+      font-size: var(--score-number-font-size-big);
+      line-height: var(--score-number-font-size-big);
+      top: calc(var(--circle-size-big) / 3);
+    }
+
     .lh-gauge__wrapper {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       flex-direction: column;
       text-decoration: none;
-      flex: 1;
-      min-width: auto;
-      position: relative;
+      
+      --circle-border-width: 8;
+      --transition-length: 1s;
 
       /* Contain the layout style paint & layers during animation*/
       contain: content;
@@ -659,20 +634,27 @@ limitations under the License.
     }
 
     .lh-gauge__label {
-      font-size: var(--body-font-size);
-      line-height: var(--body-line-height);
-      margin-top: calc(0.5 * var(--body-line-height));
+      font-size: var(--score-title-font-size);
+      line-height: var(--score-title-line-height);
+      margin: calc(0.5 * var(--score-title-line-height));
       text-align: center;
       color: black;
     }
 
+    .lh-category .lh-gauge__label {
+      font-size: var(--score-title-font-size-big);
+      line-height: var(--score-title-line-height-big);
+      margin: calc(0.5 * var(--score-title-line-height-big));
+    }
+
   </style>
   <a href="#" class="lh-gauge__wrapper">
-    <svg viewBox="0 0 120 120" class="lh-gauge" fill="none" stroke-width="2">
-      <circle class="lh-gauge-base" r="53" cx="60" cy="60"></circle>
-      <circle class="lh-gauge-arc" transform="rotate(-90 60 60)" stroke-dasharray="0 329" stroke-dashoffset="0" r="53" cx="60" cy="60"></circle>
+    <svg viewBox="0 0 120 120" class="lh-gauge">
+      <circle class="lh-gauge-base" r="56" cx="60" cy="60"></circle>
+      <circle class="lh-gauge-arc" transform="rotate(-90 60 60)" r="56" cx="60" cy="60"></circle>
     </svg>
     <div class="lh-gauge__percentage"></div>
+    <!-- TODO: should likely be an h2  -->
     <div class="lh-gauge__label"></div>
   </a>
 </template>
@@ -681,19 +663,6 @@ limitations under the License.
 <!-- Lighthouse PWA badge gauge -->
 <template id="tmpl-lh-gauge--pwa">
   <style>
-    .lh-gauge--pwa__wrapper {
-      display: inline-flex;
-      align-items: center;
-      flex-direction: column;
-      text-decoration: none;
-      flex: 1;
-      min-width: auto;
-      position: relative;
-    }
-    .lh-gauge--pwa {
-      width: var(--circle-size);
-      height: var(--circle-size);
-    }
     .lh-gauge--pwa .lh-gauge--pwa__component {
       display: none;
     }
@@ -730,18 +699,10 @@ limitations under the License.
     .lh-gauge--pwa__wrapper.lh-badged--all .lh-gauge--pwa__check-circle {
       display: inline;
     }
-
-    .lh-gauge__label {
-      font-size: var(--body-font-size);
-      line-height: var(--body-line-height);
-      margin-top: calc(0.5 * var(--body-line-height));
-      text-align: center;
-      color: black;
-    }
   </style>
 
-  <a href="#" class="lh-gauge--pwa__wrapper">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" class="lh-gauge--pwa">
+  <a href="#" class="lh-gauge__wrapper lh-gauge--pwa__wrapper">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" class="lh-gauge lh-gauge--pwa">
       <defs>
         <linearGradient id="lh-gauge--pwa__bg-disk__gradient" x1="50%" y1="2.15%" x2="50%" y2="97.645%">
           <stop stop-color="#F1F3F4" offset="0%"></stop>

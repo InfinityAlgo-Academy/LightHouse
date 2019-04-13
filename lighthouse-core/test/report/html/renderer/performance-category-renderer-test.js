@@ -56,7 +56,7 @@ describe('PerfCategoryRenderer', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const score = categoryDOM.querySelector('.lh-category-header');
     const value = categoryDOM.querySelector('.lh-category-header  .lh-gauge__percentage');
-    const title = score.querySelector('.lh-category-header__title');
+    const title = score.querySelector('.lh-gauge__label');
 
     assert.deepEqual(score, score.firstElementChild, 'first child is a score');
     const scoreInDom = Number(value.textContent);
