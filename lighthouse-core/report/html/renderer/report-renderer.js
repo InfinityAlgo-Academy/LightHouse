@@ -204,6 +204,8 @@ class ReportRenderer {
 
     for (const category of report.reportCategories) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
+      // .lh-category-wrapper is full-width and provides horizontal rules between categories.
+      // .lh-category within has the max-width: var(--report-width);
       const wrapper = renderer.dom.createChildOf(categories, 'div', 'lh-category-wrapper');
       wrapper.appendChild(renderer.render(category, report.categoryGroups));
     }

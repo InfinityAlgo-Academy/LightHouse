@@ -136,7 +136,8 @@ limitations under the License.
 <template id="tmpl-lh-scores-wrapper">
   <style>
     .lh-scores-container {
-      display: grid;
+      display: flex;
+      flex-direction: column;
       margin-top: var(--topbar-height);
       padding: var(--header-padding);
       position: relative;
@@ -574,15 +575,13 @@ limitations under the License.
 
     .lh-gauge {
       stroke-linecap: round;
-      width: var(--score-size);
-      height: var(--score-size);
-      font-size: var(--score-number-fontsize);
-      font-family: 'Roboto Mono', monospace;
+      width: var(--circle-size);
+      height: var(--circle-size);
     }
 
     .lh-category .lh-gauge {
-      width: var(--score-size-big);
-      height: var(--score-size-big);
+      width: var(--circle-size-big);
+      height: var(--circle-size-big);
     }
 
     .lh-gauge-base {
@@ -600,7 +599,7 @@ limitations under the License.
     }
 
     @keyframes load-gauge {
-      from { stroke-dasharray: 0 329; }
+      from { stroke-dasharray: 0 352; }
     }
 
     .lh-gauge__percentage {
@@ -608,16 +607,23 @@ limitations under the License.
       height: var(--inset-size);
       position: absolute;
       border-radius: inherit;
-      font-size: var(--score-number-fontsize);
-      line-height: var(--score-number-fontsize);
+      font-family: var(--monospace-font-family);
+      font-size: var(--score-number-font-size);
+      line-height: var(--score-number-font-size);
       text-align: center;
-      top: calc(var(--score-size) / 3);
+      top: calc(var(--circle-size) / 3);
     }
 
     .lh-category .lh-gauge__percentage {
       font-size: var(--score-number-fontsize-big);
       line-height: var(--score-number-fontsize-big);
-      top: calc(var(--score-size-big) / 3);
+      top: calc(var(--circle-size-big) / 3);
+    }
+
+    .lh-category .lh-gauge__percentage {
+      font-size: var(--score-number-font-size-big);
+      line-height: var(--score-number-font-size-big);
+      top: calc(var(--circle-size-big) / 3);
     }
 
     .lh-gauge__wrapper {
@@ -655,6 +661,7 @@ limitations under the License.
       <circle class="lh-gauge-arc" transform="rotate(-90 60 60)" r="56" cx="60" cy="60"></circle>
     </svg>
     <div class="lh-gauge__percentage"></div>
+    <!-- TODO: should likely be an h2  -->
     <div class="lh-gauge__label"></div>
   </a>
 </template>
