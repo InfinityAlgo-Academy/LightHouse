@@ -873,6 +873,7 @@ details>.lh-audit-group__summary {
 
         const data = getApiResponseStub();
         data.lighthouseResult = lhr;
+        data.id = lhr.finalUrl;
         const apiResponse = new Ao(data);
 
         const locale = 'en_US'
