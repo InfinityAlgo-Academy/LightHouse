@@ -9,8 +9,129 @@
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
     "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html"
   },
+  "settings": {
+    "output": [
+      "html"
+    ],
+    "maxWaitForFcp": 15000,
+    "maxWaitForLoad": 45000,
+    "throttlingMethod": "devtools",
+    "throttling": {
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "requestLatencyMs": 562.5,
+      "downloadThroughputKbps": 1474.5600000000002,
+      "uploadThroughputKbps": 675,
+      "cpuSlowdownMultiplier": 4
+    },
+    "auditMode": false,
+    "gatherMode": "lighthouse-core/test/results/artifacts",
+    "disableStorageReset": false,
+    "disableDeviceEmulation": false,
+    "emulatedFormFactor": "mobile",
+    "channel": "cli",
+    "locale": "en-US",
+    "blockedUrlPatterns": null,
+    "additionalTraceCategories": null,
+    "extraHeaders": null,
+    "precomputedLanternData": null,
+    "onlyAudits": null,
+    "onlyCategories": null,
+    "skipAudits": null
+  },
   "Timing": [],
-  "LinkElements": [],
+  "LinkElements": [
+    {
+      "rel": "stylesheet",
+      "href": "http://localhost:54819/dobetterweb/dobetterweb/dbw_tester.css?delay=100",
+      "hrefRaw": "http://localhost:54819/dobetterweb/dobetterweb/dbw_tester.css?delay=100",
+      "hreflang": "",
+      "as": "",
+      "crossOrigin": null,
+      "source": "head"
+    },
+    {
+      "rel": "stylesheet",
+      "href": "http://localhost:54819/dobetterweb/unknown404.css?delay=200",
+      "hrefRaw": "http://localhost:54819/dobetterweb/unknown404.css?delay=200",
+      "hreflang": "",
+      "as": "",
+      "crossOrigin": null,
+      "source": "head"
+    },
+    {
+      "rel": "stylesheet",
+      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=2200",
+      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=2200",
+      "hreflang": "",
+      "as": "",
+      "crossOrigin": null,
+      "source": "head"
+    },
+    {
+      "rel": "stylesheet",
+      "href": "http://localhost:54819/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
+      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
+      "hreflang": "",
+      "as": "",
+      "crossOrigin": null,
+      "source": "head"
+    },
+    {
+      "rel": "import",
+      "href": "http://localhost:54819/dobetterweb/dbw_partial_a.html?delay=200",
+      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_partial_a.html?delay=200",
+      "hreflang": "",
+      "as": "",
+      "crossOrigin": null,
+      "source": "head"
+    },
+    {
+      "rel": "import",
+      "href": "http://localhost:54819/dobetterweb/dbw_partial_b.html?delay=200&isasync",
+      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_partial_b.html?delay=200&isasync",
+      "hreflang": "",
+      "as": "",
+      "crossOrigin": null,
+      "source": "head"
+    },
+    {
+      "rel": "stylesheet",
+      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=3000&capped",
+      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=3000&capped",
+      "hreflang": "",
+      "as": "",
+      "crossOrigin": null,
+      "source": "head"
+    },
+    {
+      "rel": "stylesheet",
+      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=2000&async=true",
+      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=2000&async=true",
+      "hreflang": "",
+      "as": "style",
+      "crossOrigin": null,
+      "source": "head"
+    },
+    {
+      "rel": "stylesheet",
+      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=3000&async=true",
+      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?delay=3000&async=true",
+      "hreflang": "",
+      "as": "",
+      "crossOrigin": null,
+      "source": "head"
+    },
+    {
+      "rel": "stylesheet",
+      "href": "http://localhost:54819/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
+      "hrefRaw": "http://localhost:54819/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
+      "hreflang": "",
+      "as": "",
+      "crossOrigin": null,
+      "source": "head"
+    }
+  ],
   "ScriptElements": [
     {
       "type": "text/javascript",
@@ -228,7 +349,14 @@
   },
   "WebAppManifest": null,
   "MetaElements": [
-    {"name": "viewport", "content": "width=device-width, initial-scale=1, minimum-scale=1"}
+    {
+      "name": "",
+      "content": ""
+    },
+    {
+      "name": "viewport",
+      "content": "width=device-width, initial-scale=1, minimum-scale=1"
+    }
   ],
   "RuntimeExceptions": [
     {
@@ -1553,780 +1681,6 @@
       }
     ]
   },
-  "EventListeners": [
-    {
-      "type": "load",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "24",
-      "lineNumber": 30,
-      "columnNumber": 110,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function onload(event) {\nthis.rel = 'stylesheet'\n}",
-        "objectId": "{\"injectedScriptId\":3,\"id\":60}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function onload(event) {\nthis.rel = 'stylesheet'\n}",
-        "objectId": "{\"injectedScriptId\":3,\"id\":61}"
-      },
-      "backendNodeId": 14,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 30,
-      "startColumn": 110,
-      "endLine": 30,
-      "endColumn": 133,
-      "executionContextId": 3,
-      "hash": "03B7BA432E3ACDD1BD41A5A63A45B174068EC257",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 23,
-      "objectName": "link",
-      "line": 31,
-      "col": 111
-    },
-    {
-      "type": "DOMNodeInserted",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 205,
-      "columnNumber": 49,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMNodeInserted on element');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":64}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMNodeInserted on element');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":65}"
-      },
-      "backendNodeId": 65,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "section#touchmove-section",
-      "line": 206,
-      "col": 50
-    },
-    {
-      "type": "touchmove",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 248,
-      "columnNumber": 43,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('touchmove');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":66}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('touchmove');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":67}"
-      },
-      "backendNodeId": 65,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "section#touchmove-section",
-      "line": 249,
-      "col": 44
-    },
-    {
-      "type": "DOMNodeInserted",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 199,
-      "columnNumber": 60,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMNodeInserted');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":72}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMNodeInserted');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":73}"
-      },
-      "backendNodeId": 23,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "body",
-      "line": 200,
-      "col": 61
-    },
-    {
-      "type": "touchmove",
-      "useCapture": false,
-      "passive": true,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 242,
-      "columnNumber": 54,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('touchmove');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":74}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('touchmove');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":75}"
-      },
-      "backendNodeId": 23,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "body",
-      "line": 243,
-      "col": 55
-    },
-    {
-      "type": "touchstart",
-      "useCapture": false,
-      "passive": true,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 261,
-      "columnNumber": 55,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('touchstart');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":76}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('touchstart');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":77}"
-      },
-      "backendNodeId": 23,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "body",
-      "line": 262,
-      "col": 56
-    },
-    {
-      "type": "DOMNodeInserted",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "25",
-      "lineNumber": 19,
-      "columnNumber": 55,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMNodeInserted');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":78}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMNodeInserted');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":79}"
-      },
-      "backendNodeId": 4,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-      "startLine": 0,
-      "startColumn": 0,
-      "endLine": 40,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "33DA02F13192F7E6B2A847607F18B65509E84951",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 1552,
-      "objectName": "#document",
-      "line": 20,
-      "col": 56
-    },
-    {
-      "type": "DOMNodeInserted",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 189,
-      "columnNumber": 55,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMNodeInserted');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":80}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMNodeInserted');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":81}"
-      },
-      "backendNodeId": 4,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "#document",
-      "line": 190,
-      "col": 56
-    },
-    {
-      "type": "wheel",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "25",
-      "lineNumber": 26,
-      "columnNumber": 37,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "e => {\n    console.log('wheel: arrow function');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":82}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "e => {\n    console.log('wheel: arrow function');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":83}"
-      },
-      "backendNodeId": 4,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-      "startLine": 0,
-      "startColumn": 0,
-      "endLine": 40,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "33DA02F13192F7E6B2A847607F18B65509E84951",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 1552,
-      "objectName": "#document",
-      "line": 27,
-      "col": 38
-    },
-    {
-      "type": "DOMNodeRemoved",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 194,
-      "columnNumber": 54,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMNodeRemoved');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":84}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMNodeRemoved');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":85}"
-      },
-      "backendNodeId": 4,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "#document",
-      "line": 195,
-      "col": 55
-    },
-    {
-      "type": "touchstart",
-      "useCapture": false,
-      "passive": true,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 237,
-      "columnNumber": 50,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('touchstart document');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":86}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('touchstart document');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":87}"
-      },
-      "backendNodeId": 4,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "#document",
-      "line": 238,
-      "col": 51
-    },
-    {
-      "type": "touchstart",
-      "useCapture": false,
-      "passive": true,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 253,
-      "columnNumber": 50,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n\n    e.preventDefault(); // intentionally surrounded by whitespace.\n\n    console.log('touchstart - preventDefault called');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":88}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n\n    e.preventDefault(); // intentionally surrounded by whitespace.\n\n    console.log('touchstart - preventDefault called');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":89}"
-      },
-      "backendNodeId": 4,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "#document",
-      "line": 254,
-      "col": 51
-    },
-    {
-      "type": "DOMNodeInserted",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 210,
-      "columnNumber": 53,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMNodeInserted');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":90}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMNodeInserted');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":91}"
-      },
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "Window",
-      "line": 211,
-      "col": 54
-    },
-    {
-      "type": "DOMContentLoaded",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 215,
-      "columnNumber": 54,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMContentLoaded');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":92}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('DOMContentLoaded');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":93}"
-      },
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "Window",
-      "line": 216,
-      "col": 55
-    },
-    {
-      "type": "wheel",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 222,
-      "columnNumber": 43,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('wheel');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":94}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('wheel');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":95}"
-      },
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "Window",
-      "line": 223,
-      "col": 44
-    },
-    {
-      "type": "touchstart",
-      "useCapture": false,
-      "passive": true,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 227,
-      "columnNumber": 48,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('touchstart');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":96}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('touchstart');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":97}"
-      },
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "Window",
-      "line": 228,
-      "col": 49
-    },
-    {
-      "type": "touchstart",
-      "useCapture": false,
-      "passive": true,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 266,
-      "columnNumber": 48,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('touchstart passive');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":98}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('touchstart passive');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":99}"
-      },
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "Window",
-      "line": 267,
-      "col": 49
-    },
-    {
-      "type": "mousewheel",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 232,
-      "columnNumber": 48,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('mousewheel');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":100}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('mousewheel');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":101}"
-      },
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "Window",
-      "line": 233,
-      "col": 49
-    },
-    {
-      "type": "scroll",
-      "useCapture": false,
-      "passive": false,
-      "once": false,
-      "scriptId": "29",
-      "lineNumber": 271,
-      "columnNumber": 44,
-      "handler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('scroll');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":102}"
-      },
-      "originalHandler": {
-        "type": "function",
-        "className": "Function",
-        "description": "function(e) {\n    console.log('scroll');\n  }",
-        "objectId": "{\"injectedScriptId\":3,\"id\":103}"
-      },
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "startLine": 147,
-      "startColumn": 8,
-      "endLine": 397,
-      "endColumn": 0,
-      "executionContextId": 3,
-      "hash": "8F4D1710C2EE2C10C5EB4AF2E44F02A488222D15",
-      "executionContextAuxData": {
-        "isDefault": true,
-        "frameId": "A36E31E517F452A18C51AA32F4163A8C"
-      },
-      "isLiveEdit": false,
-      "sourceMapURL": "",
-      "hasSourceURL": false,
-      "isModule": false,
-      "length": 5963,
-      "objectName": "Window",
-      "line": 272,
-      "col": 45
-    }
-  ],
   "AnchorElements": [
     {
       "href": "https://www.google.com/",
@@ -2378,20 +1732,22 @@
   "AppCacheManifest": "clock.appcache",
   "DOMStats": {
     "depth": {
-      "max": 4,
+      "max": 3,
       "pathToElement": [
         "html",
         "body",
         "div",
         "h2"
-      ]
+      ],
+      "snippet": "<h2>"
     },
     "width": {
-      "max": 22,
+      "max": 29,
       "pathToElement": [
         "html",
         "body"
-      ]
+      ],
+      "snippet": "<body>"
     },
     "totalBodyElements": 31
   },
@@ -2406,14 +1762,12 @@
   ],
   "OptimizedImages": [
     {
-      "fromProtocol": true,
+      "failed": false,
       "originalSize": 24620,
-      "jpegSize": 22129,
-      "webpSize": 16094,
-      "isSameOrigin": true,
-      "isBase64DataUri": false,
-      "requestId": "75994.19",
-      "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+      "jpegSize": 21575,
+      "webpSize": 15592,
+      "requestId": "1000083267.14",
+      "url": "http://localhost:54819/dobetterweb/lighthouse-480x318.jpg",
       "mimeType": "image/jpeg",
       "resourceSize": 24620
     }
@@ -2588,12 +1942,6 @@
       "endTime": 185605.113307
     }
   ],
-  "WebSQL": {
-    "id": "1",
-    "domain": "localhost",
-    "name": "mydb",
-    "version": "1.0"
-  },
   "FontSize": {
     "analyzedFailingNodesData": [],
     "analyzedFailingTextLength": 0,
@@ -2601,17 +1949,37 @@
     "visitedTextLength": 228,
     "totalTextLength": 228
   },
-  "Hreflang": [],
-  "EmbeddedContent": [],
-  "Canonical": [],
-  "Fonts": [],
+  "EmbeddedContent": [
+    {
+      "tagName": "OBJECT",
+      "type": null,
+      "src": null,
+      "data": null,
+      "code": null,
+      "params": []
+    },
+    {
+      "tagName": "OBJECT",
+      "type": null,
+      "src": null,
+      "data": null,
+      "code": null,
+      "params": []
+    }
+  ],
+  "RobotsTxt": {
+    "status": 404,
+    "content": null
+  },
+  "TapTargets": [],
   "ServiceWorker": {
-    "versions": []
+    "versions": [],
+    "registrations": []
   },
   "Offline": -1,
   "StartUrl": {
     "statusCode": -1,
-    "debugString": "No start URL to fetch: No usable web app manifest found on page http://localhost:10200/dobetterweb/dbw_tester.html"
+    "explanation": "No usable web app manifest found on page."
   },
   "HTTPRedirect": {
     "value": false

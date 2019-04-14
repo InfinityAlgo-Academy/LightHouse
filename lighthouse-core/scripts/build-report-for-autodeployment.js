@@ -12,10 +12,9 @@ const fs = require('fs');
 const path = require('path');
 
 const ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
-const lhr = require('../../lighthouse-core/test/results/sample_v2.json');
+const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
 
 console.log('🕒 Generating report for sample_v2.json...');
-// @ts-ignore
 const html = ReportGenerator.generateReport(lhr, 'html');
 const filename = path.join(__dirname, '../../dist/index.html');
 fs.writeFileSync(filename, html, {encoding: 'utf-8'});

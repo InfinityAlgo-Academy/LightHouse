@@ -1288,6 +1288,7 @@
       "score": 0,
       "scoreDisplayMode": "binary",
       "rawValue": false,
+      "explanation": "No usable web app manifest found on page.",
       "warnings": []
     },
     "pwa-cross-browser": {
@@ -2302,7 +2303,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "rawValue": 0,
-      "displayValue": "Potential savings of 8 KB",
+      "displayValue": "Potential savings of 9 KB",
       "warnings": [],
       "details": {
         "type": "opportunity",
@@ -2330,15 +2331,15 @@
         ],
         "items": [
           {
-            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
+            "url": "http://localhost:54819/dobetterweb/lighthouse-480x318.jpg",
             "fromProtocol": true,
-            "isCrossOrigin": false,
+            "isCrossOrigin": true,
             "totalBytes": 24620,
-            "wastedBytes": 8526
+            "wastedBytes": 9028
           }
         ],
         "overallSavingsMs": 0,
-        "overallSavingsBytes": 8526
+        "overallSavingsBytes": 9028
       }
     },
     "uses-optimized-images": {
@@ -2487,16 +2488,18 @@
           {
             "statistic": "Maximum DOM Depth",
             "element": {
-              "type": "code"
+              "type": "code",
+              "value": "<h2>"
             },
-            "value": "4"
+            "value": "3"
           },
           {
             "statistic": "Maximum Child Elements",
             "element": {
-              "type": "code"
+              "type": "code",
+              "value": "<body>"
             },
-            "value": "22"
+            "value": "29"
           }
         ]
       }
@@ -2952,30 +2955,38 @@
     },
     "is-crawlable": {
       "id": "is-crawlable",
-      "title": "Page is blocked from indexing",
+      "title": "Page isn’t blocked from indexing",
       "description": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/indexing).",
-      "score": null,
-      "scoreDisplayMode": "error",
-      "rawValue": null,
-      "errorMessage": "Required RobotsTxt gatherer did not run."
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "rawValue": true,
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "robots-txt": {
       "id": "robots-txt",
-      "title": "robots.txt is not valid",
+      "title": "robots.txt is valid",
       "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed.",
       "score": null,
-      "scoreDisplayMode": "error",
-      "rawValue": null,
-      "errorMessage": "Required RobotsTxt gatherer did not run."
+      "scoreDisplayMode": "notApplicable",
+      "rawValue": true
     },
     "tap-targets": {
       "id": "tap-targets",
-      "title": "Tap targets are not sized appropriately",
+      "title": "Tap targets are sized appropriately",
       "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).",
-      "score": null,
-      "scoreDisplayMode": "error",
-      "rawValue": null,
-      "errorMessage": "Required TapTargets gatherer did not run."
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "rawValue": true,
+      "displayValue": "100% appropriately sized tap targets",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "hreflang": {
       "id": "hreflang",
@@ -3035,6 +3046,7 @@
       "uploadThroughputKbps": 675,
       "cpuSlowdownMultiplier": 4
     },
+    "auditMode": true,
     "gatherMode": false,
     "disableStorageReset": false,
     "disableDeviceEmulation": false,
@@ -3565,7 +3577,7 @@
         },
         {
           "id": "robots-txt",
-          "weight": 1,
+          "weight": 0,
           "group": "seo-crawl"
         },
         {
@@ -3599,7 +3611,7 @@
         }
       ],
       "id": "seo",
-      "score": null
+      "score": 0.9
     },
     "pwa": {
       "title": "Progressive Web App",
@@ -5235,7 +5247,7 @@
         },
         {
           "values": {
-            "wastedBytes": 8526
+            "wastedBytes": 9028
           },
           "path": "audits[uses-webp-images].displayValue"
         },
@@ -5351,23 +5363,31 @@
       "lighthouse-core/audits/seo/link-text.js | description": [
         "audits[link-text].description"
       ],
-      "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": [
+      "lighthouse-core/audits/seo/is-crawlable.js | title": [
         "audits[is-crawlable].title"
       ],
       "lighthouse-core/audits/seo/is-crawlable.js | description": [
         "audits[is-crawlable].description"
       ],
-      "lighthouse-core/audits/seo/robots-txt.js | failureTitle": [
+      "lighthouse-core/audits/seo/robots-txt.js | title": [
         "audits[robots-txt].title"
       ],
       "lighthouse-core/audits/seo/robots-txt.js | description": [
         "audits[robots-txt].description"
       ],
-      "lighthouse-core/audits/seo/tap-targets.js | failureTitle": [
+      "lighthouse-core/audits/seo/tap-targets.js | title": [
         "audits[tap-targets].title"
       ],
       "lighthouse-core/audits/seo/tap-targets.js | description": [
         "audits[tap-targets].description"
+      ],
+      "lighthouse-core/audits/seo/tap-targets.js | displayValue": [
+        {
+          "values": {
+            "decimalProportion": 1
+          },
+          "path": "audits[tap-targets].displayValue"
+        }
       ],
       "lighthouse-core/audits/seo/hreflang.js | title": [
         "audits.hreflang.title"
