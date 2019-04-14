@@ -82,12 +82,12 @@ function getFlags(manualArgv) {
         'gather-mode':
             'Collect artifacts from a connected browser and save to disk. (Artifacts folder path may optionally be provided). If audit-mode is not also enabled, the run will quit early.',
         'audit-mode': 'Process saved artifacts from disk. (Artifacts folder path may be provided, otherwise defaults to ./latest-run/)',
-        'save-assets': 'Save the trace contents & screenshots to disk',
+        'save-assets': 'Save the trace contents & devtools logs to disk',
         'list-all-audits': 'Prints a list of all available audits and exits',
         'list-trace-categories': 'Prints a list of all required trace categories and exits',
         'additional-trace-categories':
             'Additional categories to capture with the trace (comma-delimited).',
-        'config-path': `The path to the config JSON. 
+        'config-path': `The path to the config JSON.
             An example config file: lighthouse-core/config/lr-desktop-config.js`,
         'preset': `Use a built-in configuration.
             WARNING: If the --config-path flag is provided, this preset will be ignored.`,
