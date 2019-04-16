@@ -465,6 +465,13 @@ class Util {
 
     return lines.filter(line => lineNumbersToKeep.has(line.lineNumber));
   }
+
+  /**
+   * @param {string} categoryId
+   */
+  static isPluginCategory(categoryId) {
+    return !['performance', 'accessibility', 'best-practices', 'seo', 'pwa'].includes(categoryId);
+  }
 }
 
 /**

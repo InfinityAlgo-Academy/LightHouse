@@ -331,7 +331,7 @@ class CategoryRenderer {
     wrapper.href = `#${category.id}`;
     wrapper.classList.add(`lh-gauge__wrapper--${Util.calculateRating(category.score)}`);
 
-    if (!['performance', 'accessibility', 'best-practices', 'seo', 'pwa'].includes(category.id)) {
+    if (Util.isPluginCategory(category.id)) {
       wrapper.classList.add('lh-gauge__wrapper--plugin');
     }
 
