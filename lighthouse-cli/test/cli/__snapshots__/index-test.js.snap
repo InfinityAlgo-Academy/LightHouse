@@ -370,6 +370,9 @@ Object {
       "path": "seo/canonical",
     },
     Object {
+      "path": "seo/structured-data-automatic",
+    },
+    Object {
       "path": "seo/manual/structured-data",
     },
   ],
@@ -970,6 +973,11 @@ Object {
         Object {
           "group": "seo-content",
           "id": "canonical",
+          "weight": 1,
+        },
+        Object {
+          "group": "seo-content",
+          "id": "structured-data-automatic",
           "weight": 1,
         },
         Object {

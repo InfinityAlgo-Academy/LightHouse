@@ -262,6 +262,7 @@ const defaultConfig = {
     'seo/hreflang',
     'seo/plugins',
     'seo/canonical',
+    'seo/structured-data-automatic',
     'seo/manual/structured-data',
   ],
 
@@ -465,6 +466,7 @@ const defaultConfig = {
         {id: 'robots-txt', weight: 1, group: 'seo-crawl'},
         {id: 'hreflang', weight: 1, group: 'seo-content'},
         {id: 'canonical', weight: 1, group: 'seo-content'},
+        {id: 'structured-data-automatic', weight: 1, group: 'seo-content'},
         {id: 'font-size', weight: 1, group: 'seo-mobile'},
         {id: 'plugins', weight: 1, group: 'seo-content'},
         {id: 'tap-targets', weight: 1, group: 'seo-mobile'},

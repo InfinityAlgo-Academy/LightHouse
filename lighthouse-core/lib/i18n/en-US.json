@@ -927,6 +927,22 @@
     "message": "robots.txt is valid",
     "description": "Title of a Lighthouse audit that provides detail on the site's robots.txt file. Note: \"robots.txt\" is a canonical filename and should not be translated. This descriptive title is shown when the robots.txt file is present and configured correctly."
   },
+  "lighthouse-core/audits/seo/structured-data-automatic.js | description": {
+    "message": "Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit is currently doing basic JSON-LD validation. See also the manual audit below to validate other types of structured data.",
+    "description": "Description of a Lighthouse audit that tells the user whether JSON-LD snippets on the page are invalid. This is displayed after a user expands the section to see more. No character length limits."
+  },
+  "lighthouse-core/audits/seo/structured-data-automatic.js | displayValue": {
+    "message": "{validSnippetProportion, number, percent} valid snippets",
+    "description": "Explanatory message stating what percentage of JSON-LD structured data snippets are invalid"
+  },
+  "lighthouse-core/audits/seo/structured-data-automatic.js | failureTitle": {
+    "message": "JSON-LD structured data syntax is invalid",
+    "description": "Title of a Lighthouse audit that provides detail on whether JSON-LD structured data snippets are valid. This descriptive title is shown when JSON-LD snippets with invalid content were found."
+  },
+  "lighthouse-core/audits/seo/structured-data-automatic.js | title": {
+    "message": "JSON-LD structured data syntax is valid",
+    "description": "Title of a Lighthouse audit that provides detail on whether JSON-LD structured data snippets are valid. This descriptive title is shown when no invalid JSON-LD snippets were found."
+  },
   "lighthouse-core/audits/seo/tap-targets.js | description": {
     "message": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).",
     "description": "Description of a Lighthouse audit that tells the user why buttons and links need to be big enough and what 'big enough' means. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."

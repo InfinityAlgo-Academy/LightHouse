@@ -80,6 +80,9 @@ module.exports = [
           score: null,
           scoreDisplayMode: 'notApplicable',
         },
+        'structured-data-automatic': {
+          score: 1,
+        },
       },
     }},
   {
@@ -140,6 +143,9 @@ module.exports = [
         'canonical': {
           score: 0,
           explanation: 'Multiple conflicting URLs (https://example.com/other, https://example.com/)',
+        },
+        'structured-data-automatic': {
+          score: 0,
         },
       },
     },
