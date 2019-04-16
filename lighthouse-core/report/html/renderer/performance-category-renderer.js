@@ -197,7 +197,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     if (diagnosticAudits.length) {
       const groupEl = this.renderAuditGroup(groups['diagnostics']);
-      diagnosticAudits.forEach((item, i) => groupEl.appendChild(this.renderAudit(item, i)));
+      diagnosticAudits.forEach(item => groupEl.appendChild(this.renderAudit(item)));
       groupEl.classList.add('lh-audit-group--diagnostics');
       element.appendChild(groupEl);
     }
