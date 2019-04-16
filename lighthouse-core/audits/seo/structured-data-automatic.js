@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../audit');
-const validateJsonLD = require('../../lib/sd-validation/sd-validation');
+const Audit = require('../audit.js');
+const validateJsonLD = require('../../lib/sd-validation/sd-validation.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
