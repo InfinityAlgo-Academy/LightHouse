@@ -63,9 +63,48 @@ class ReportUIFeatures {
     this._setupExportButton();
     this._setUpCollapseDetailsAfterPrinting();
     this._resetUIState();
+    this._setupScrollAnimation();
     this._document.addEventListener('keydown', this.printShortCutDetect);
     this._document.addEventListener('copy', this.onCopy);
   }
+
+  _setupScrollAnimation() {
+    const firstGauge = this._dom.find('.lh-scores-wrapper', this._document);
+    this.origCircleSize = parseFloat(window.getComputedStyle(firstGauge).getPropertyValue('--circle-size'));
+    this.destCircleSize = parseFloat(window.getComputedStyle(firstGauge).getPropertyValue('--circle-size-mini'));
+    // console.log({this.origCircleSize, this.destCircleSize});
+
+    this.headerHeight = this._dom.find('.lh-scores-container', this._document).offsetHeight;
+
+    this.lhVars = this._dom.find('.lh-vars', this._document);
+
+    this._document.addEventListener('scroll', this.onScroll.bind(this), {passive: true});
+  }
+
+  onScroll() {
+    this.latestKnownScrollY = window.scrollY;
+
+    if (!this.isAnimatingHeader) {
+      window.requestAnimationFrame(this.animateHeader.bind(this));
+    }
+    this.isAnimatingHeader = true;
+  }
+
+  /**
+   * .lh-header-sticky remains a fixed height and scrolls with the document
+   * .lh-header-sticky > .lh-header-container is pos abs
+   *
+   */
+  animateHeader() {
+    const collapsedHeaderHeight = 50;
+    const scrollPct = Math.max(0, Math.min(1,
+      this.latestKnownScrollY / (this.headerHeight - collapsedHeaderHeight)));
+    const newCircleSize = this.destCircleSize + (this.origCircleSize - this.destCircleSize) * (1 - scrollPct);
+    this.lhVars.style.setProperty('--circle-size', newCircleSize + "px");
+
+    this.isAnimatingHeader = false;
+  }
+
 
   /**
    * Fires a custom DOM event on target.
