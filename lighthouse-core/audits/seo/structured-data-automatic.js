@@ -16,7 +16,7 @@ const UIStrings = {
   failureTitle: 'JSON-LD structured data syntax is invalid',
   /** Description of a Lighthouse audit that tells the user whether JSON-LD snippets on the page are invalid. This is displayed after a user expands the section to see more. No character length limits. */
   /* eslint-disable-next-line max-len */
-  description: 'Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit is currently doing basic JSON-LD validation. See also the manual audit below to validate other types of structured data.',
+  description: 'Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit currently validates a subset of JSON-LD rules. See also the manual audit below to learn how to validate other types of structured data.',
   /** Explanatory message stating what percentage of JSON-LD structured data snippets are invalid */
   displayValue: '{validSnippetProportion, number, percent} valid snippets',
 };
