@@ -143,11 +143,7 @@ function getErrorMessages(errors) {
   }) => {
     if (validTypes && validator === 'schema-org') {
       const typeStrings = validTypes.map(type => {
-        const typeNameMatch = type.match(/[\w]+$/);
-
-        const typeName = typeNameMatch ? typeNameMatch[0] : type;
-        const typeUrl = type.replace('http://', 'https://');
-        return `[${typeName}](${typeUrl})`;
+        return `[${type.name}](${type.uri})`;
       });
       message = `Invalid ${typeStrings.join('/')}: ${message}`;
     }

@@ -17,7 +17,10 @@ declare global {
         validator: ValidatorType;
         lineNumber?: number | null;
         /** Schema.org type URIs of the invalid entity (undefined if type is invalid) */
-        validTypes?: Array<string>;
+        validTypes?: Array<{
+          uri: string;
+          name: string;
+        }>;
       }
 
       export interface ExpandedSchemaRepresentationItem {
