@@ -74,8 +74,8 @@ class StructuredDataAutomatic extends Audit {
     );
     const details = Audit.makeListDetails(renderedSnippets);
 
-    const invalidSnippets = validatedSnippets.filter(sn => sn.errors.length > 0);
-    const validSnippets = validatedSnippets.filter(sn => sn.errors.length === 0);
+    const invalidSnippets = validatedSnippets.filter(vs => vs.errors.length > 0);
+    const validSnippets = validatedSnippets.filter(vs => vs.errors.length === 0);
     const displayValue = str_(UIStrings.displayValue, {
       validSnippetProportion: validSnippets.length / jsonLDElements.length,
     });
@@ -112,7 +112,6 @@ function renderValidatedSnippet(validatedSnippet) {
   } else {
     title = 'Invalid JSON-LD element';
   }
-
   title += ` (${errors.length} Error${errors.length !== 1 ? 's' : ''})`;
 
   /** @type LH.Audit.Details.NodeValue */
