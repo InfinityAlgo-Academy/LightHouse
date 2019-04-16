@@ -43,7 +43,7 @@ class StructuredDataAutomatic extends Audit {
    */
   static async audit(artifacts) {
     const jsonLDElements = artifacts.ScriptElements.filter(
-      scr => scr.type === 'application/ld+json' && !!scr.content);
+      script => script.type === 'application/ld+json' && !!script.content);
 
     if (jsonLDElements.length === 0) {
       return {
@@ -68,9 +68,7 @@ class StructuredDataAutomatic extends Audit {
     });
 
     const renderedSnippets = await Promise.all(
-      validatedSnippets.map(async (snippetWithErrors) => {
-        return renderValidatedSnippet(snippetWithErrors);
-      })
+      validatedSnippets.map(snippetWithErrors => renderValidatedSnippet(snippetWithErrors))
     );
     const details = Audit.makeListDetails(renderedSnippets);
 
@@ -155,10 +153,7 @@ function getErrorMessages(errors) {
     }
 
     if (lineNumber) {
-      lineMessages.push({
-        lineNumber: lineNumber,
-        message,
-      });
+      lineMessages.push({lineNumber, message});
     } else {
       generalMessages.push({
         message,

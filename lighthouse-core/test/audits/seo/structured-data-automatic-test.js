@@ -30,11 +30,12 @@ describe('SEO: structured data audit', () => {
         },
         {
           'type': 'application/ld+json',
-          'content': JSON.stringify({
-            '@context': 'http://schema.org',
-            '@type': 'Event',
-            'title': 'Cat Convention',
-          }),
+          'content': `
+            ${JSON.stringify({
+    '@context': 'http://schema.org',
+    '@type': 'Event',
+    'title': 'Cat Convention',
+  })} `,
           'devtoolsNodePath': '3,HTML,0,HEAD,31,SCRIPT',
         },
       ],
