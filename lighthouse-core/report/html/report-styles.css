@@ -731,11 +731,19 @@
 .lh-audit-group__header {
   font-size: var(--body-font-size);
   margin: 0 0 var(--lh-audit-group-vpadding);
+}
+
+.lh-audit-group__header span.lh-audit-group__title {
   font-weight: bold;
 }
 
-.lh-audit-group__header span {
-  font-weight: 400;
+.lh-audit-group__header span.lh-audit-group__itemcount {
+  font-weight: bold;
+  color: var(--color-black-600);
+}
+
+.lh-audit-group__header span.lh-audit-group__description {
+  font-weight: 500;
   color: var(--color-black-600);
 }
 

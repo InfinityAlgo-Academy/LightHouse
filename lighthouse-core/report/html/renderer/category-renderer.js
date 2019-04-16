@@ -192,9 +192,12 @@ class CategoryRenderer {
     const groupEl = this.dom.createElement('div', 'lh-audit-group');
 
     const auditGroupHeader = this.dom.createElement('div', 'lh-audit-group__header');
-    auditGroupHeader.textContent = group.title;
+
+    this.dom.createChildOf(auditGroupHeader, 'span', 'lh-audit-group__title').textContent = group.title;
     if (group.description) {
-      auditGroupHeader.appendChild(this.dom.convertMarkdownLinkSnippets(` — ${group.description}`));
+      const descriptionEl = this.dom.convertMarkdownLinkSnippets(` — ${group.description}`);
+      descriptionEl.classList.add('lh-audit-group__description');
+      auditGroupHeader.appendChild(descriptionEl);
     }
     groupEl.appendChild(auditGroupHeader);
 
@@ -284,10 +287,12 @@ class CategoryRenderer {
 
     const headerEl = this.dom.find('.lh-audit-group__header', clumpElement);
     const title = this._clumpTitles[clumpId];
-    headerEl.textContent = title;
-    // if (description) {
-    //   headerEl.appendChild(this.dom.convertMarkdownLinkSnippets(` — ${description}`));
-    // }
+    this.dom.find('.lh-audit-group__title', headerEl).textContent = title;
+    if (description) {
+      const descriptionEl = this.dom.convertMarkdownLinkSnippets(` — ${description}`);
+      descriptionEl.classList.add('lh-audit-group__description');
+      headerEl.appendChild(descriptionEl);
+    }
 
     const itemCountEl = this.dom.find('.lh-audit-group__itemcount', clumpElement);
     itemCountEl.textContent = `(${auditRefs.length})`;
