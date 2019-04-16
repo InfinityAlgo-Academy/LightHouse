@@ -17,7 +17,7 @@ describe('JSON validation', () => {
     `);
 
     assert.equal(errors.length, 1);
-    assert.equal(errors[0].path, 2);
+    assert.strictEqual(errors[0].lineNumber, 2);
     assert.ok(errors[0].message.indexOf(`Expecting '}'`) === 0);
   });
 
@@ -28,7 +28,7 @@ describe('JSON validation', () => {
     }`);
 
     assert.equal(errors.length, 1);
-    assert.equal(errors[0].path, 2);
+    assert.strictEqual(errors[0].lineNumber, 2);
     assert.ok(errors[0].message.indexOf(`Expecting 'EOF', '}', ':', ',', ']'`) === 0);
   });
 
@@ -70,8 +70,9 @@ describe('JSON-LD validation', () => {
     }`);
 
     assert.equal(errors.length, 1);
-    assert.equal(errors[0].message, 'Unknown keyword');
+    assert.equal(errors[0].message, 'Unknown keyword "@test"');
     assert.equal(errors[0].path, '@test');
+    assert.strictEqual(errors[0].lineNumber, 4);
   });
 
   it('reports invalid context', async () => {
@@ -124,7 +125,8 @@ describe('schema.org validation', () => {
     }`);
 
     assert.equal(errors.length, 1);
-    assert.equal(errors[0].message, 'Unrecognized schema.org type http://schema.org/Cat');
+    assert.equal(errors[0].message, 'Unrecognized schema.org type: http://schema.org/Cat');
+    assert.strictEqual(errors[0].lineNumber, 3);
   });
 
   it('handles arrays of json schemas', async () => {
@@ -140,8 +142,8 @@ describe('schema.org validation', () => {
     ]`);
 
     assert.equal(errors.length, 2);
-    assert.equal(errors[0].message, 'Unrecognized schema.org type http://schema.org/Cat');
-    assert.equal(errors[1].message, 'Unrecognized schema.org type http://schema.org/Dog');
+    assert.equal(errors[0].message, 'Unrecognized schema.org type: http://schema.org/Cat');
+    assert.equal(errors[1].message, 'Unrecognized schema.org type: http://schema.org/Dog');
   });
 
   it('reports unknown types for objects with multiple types', async () => {
@@ -151,7 +153,7 @@ describe('schema.org validation', () => {
     }`);
 
     assert.equal(errors.length, 1);
-    assert.equal(errors[0].message, 'Unrecognized schema.org type http://schema.org/Dog');
+    assert.equal(errors[0].message, 'Unrecognized schema.org type: http://schema.org/Dog');
   });
 
   it('reports unexpected fields', async () => {
@@ -169,7 +171,9 @@ describe('schema.org validation', () => {
     }`);
 
     assert.equal(errors.length, 1);
+    assert.equal(errors[0].validTypes[0], 'http://schema.org/Article');
     assert.equal(errors[0].message, 'Unexpected property "controversial"');
+    assert.strictEqual(errors[0].lineNumber, 11);
   });
 
   it('passes if non-schema.org context', async () => {
@@ -205,5 +209,64 @@ describe('schema.org validation', () => {
     }`);
 
     assert.equal(errors.length, 0);
+  });
+
+  it('passes if valid json-ld uses absolute IRIs as keys', async () => {
+    const errors = await validateJSONLD(`{
+      "@type": "http://schema.org/Article",
+      "http://schema.org/author": {
+        "@type": "Person",
+        "http://schema.org/name": "Cat"
+      },
+      "http://schema.org/datePublished": "Oct 29th 2017",
+      "http://schema.org/dateModified": "Oct 29th 2017"
+    }`);
+
+    assert.equal(errors.length, 0);
+  });
+
+  it('fails if invalid json-ld uses absolute IRIs as keys', async () => {
+    const errors = await validateJSONLD(`{
+      "@type": "http://schema.org/Article",
+      "http://schema.org/author": {
+        "@type": "http://schema.org/Person",
+        "http://schema.org/invalidProperty": "",
+        "http://schema.org/name": "Cat"
+      },
+      "http://schema.org/datePublished": "Oct 29th 2017",
+      "http://schema.org/dateModified": "Oct 29th 2017"
+    }`);
+
+    assert.equal(errors.length, 1);
+    assert.strictEqual(errors[0].lineNumber, 5);
+  });
+
+  it('fails with correct errors for a deeply nested json-ld snipppet', async () => {
+    const errors = await validateJSONLD(`{
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "author": {
+        "@type": "Person",
+        "name": "Cat",
+        "funder": {
+          "@type": "Organization",
+          "name": "Cat International",
+          "location": [
+            {
+              "@type": "Place",
+              "name": "Catworld"
+            },
+            {
+              "@type": "Place",
+              "some": "where"
+            }
+          ]
+        }
+      }
+    }`);
+
+    assert.equal(errors.length, 1);
+    assert.equal(errors[0].message, 'Unexpected property "some"');
+    assert.strictEqual(errors[0].lineNumber, 17);
   });
 });
