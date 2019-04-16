@@ -144,6 +144,16 @@ describe('CategoryRenderer', () => {
 
     const audits = categoryDOM.querySelectorAll('.lh-audit');
     assert.equal(audits.length, category.auditRefs.length, 'renders correct number of audits');
+
+    assert.ok(categoryDOM.querySelector('.lh-gauge__wrapper--plugin') === null);
+  });
+
+  it('plugin category has plugin badge', () => {
+    const category = sampleResults.reportCategories.find(c => c.id === 'seo');
+    // Any category not of the core
+    category.id = 'someplugin';
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+    assert.ok(categoryDOM.querySelector('.lh-gauge__wrapper--plugin'));
   });
 
   it('handles markdown in category descriptions a category', () => {
