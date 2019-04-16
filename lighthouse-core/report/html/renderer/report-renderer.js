@@ -73,22 +73,21 @@ class ReportRenderer {
    * @param {LH.ReportResult} report
    * @return {DocumentFragment}
    */
-  _renderReportHeader(report) {
+  _renderReportTopbar(report) {
+    const el = this._dom.cloneTemplate('#tmpl-lh-topbar', this._templateContext);
+    const metadataUrl = /** @type {HTMLAnchorElement} */ (this._dom.find('.lh-topbar__url', el));
+    metadataUrl.href = metadataUrl.textContent = report.finalUrl;
+    return el;
+  }
+
+  /**
+   * @return {DocumentFragment}
+   */
+  _renderReportHeader() {
     const el = this._dom.cloneTemplate('#tmpl-lh-heading', this._templateContext);
     const domFragment = this._dom.cloneTemplate('#tmpl-lh-scores-wrapper', this._templateContext);
     const placeholder = this._dom.find('.lh-scores-wrapper-placeholder', el);
     /** @type {HTMLDivElement} */ (placeholder.parentNode).replaceChild(domFragment, placeholder);
-
-    this._dom.find('.lh-config__timestamp', el).textContent =
-        Util.formatDateTime(report.fetchTime);
-    this._dom.find('.lh-product-info__version', el).textContent = report.lighthouseVersion;
-    const metadataUrl = /** @type {HTMLAnchorElement} */ (this._dom.find('.lh-metadata__url', el));
-    const toolbarUrl = /** @type {HTMLAnchorElement}*/ (this._dom.find('.lh-toolbar__url', el));
-    metadataUrl.href = metadataUrl.textContent = report.finalUrl;
-    toolbarUrl.href = toolbarUrl.textContent = report.finalUrl;
-
-    const emulationDescriptions = Util.getEmulationDescriptions(report.configSettings || {});
-    this._dom.find('.lh-config__emulation', el).textContent = emulationDescriptions.summary;
     return el;
   }
 
@@ -170,7 +169,7 @@ class ReportRenderer {
       header = this._renderReportShortHeader();
     } else {
       headerContainer.classList.add('lh-header-sticky');
-      header = this._renderReportHeader(report);
+      header = this._renderReportHeader();
     }
     headerContainer.appendChild(header);
 
@@ -210,14 +209,18 @@ class ReportRenderer {
       wrapper.appendChild(renderer.render(category, report.categoryGroups));
     }
 
+    // TODO(hoten) - fireworks show will commence later.
     // Fireworks
-    const scoresAll100 = report.reportCategories.every(cat => cat.score === 1);
-    if (!this._dom.isDevTools() && scoresAll100) {
-      headerContainer.classList.add('score100');
-      this._dom.find('.lh-header', headerContainer).addEventListener('click', _ => {
-        headerContainer.classList.toggle('fireworks-paused');
-      });
-    }
+    // const scoresAll100 = report.reportCategories.every(cat => cat.score === 1);
+    // if (!this._dom.isDevTools() && scoresAll100) {
+    //   if (scoresAll100) {
+    //     const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
+    //     scoresContainer.classList.add('score100');
+    //     scoresContainer.addEventListener('click', _ => {
+    //       scoresContainer.classList.toggle('fireworks-paused');
+    //     });
+    //   }
+    // }
 
     if (scoreHeader) {
       const defaultGauges = [];
@@ -244,6 +247,10 @@ class ReportRenderer {
     reportSection.appendChild(this._renderReportFooter(report));
 
     const reportFragment = this._dom.createFragment();
+    if (!this._dom.isDevTools()) {
+      const topbarDocumentFragment = this._renderReportTopbar(report);
+      reportFragment.appendChild(topbarDocumentFragment);
+    }
     reportFragment.appendChild(headerContainer);
     reportFragment.appendChild(container);
 
