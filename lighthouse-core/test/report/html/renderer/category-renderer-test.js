@@ -167,7 +167,7 @@ describe('CategoryRenderer', () => {
     const description = categoryDOM
       .querySelector('.lh-clump--manual .lh-audit-group__description').textContent
       // remove " — "
-      .substring(3);
+      .replace(/^ — /, '');
     // may need to be adjusted if description includes a link at the beginning
     assert.ok(description.startsWith(pwaCategory.manualDescription.substring(0, 20)),
         'no manual description');
