@@ -165,7 +165,9 @@ describe('CategoryRenderer', () => {
 
     assert.ok(pwaCategory.manualDescription);
     const description = categoryDOM
-      .querySelector('.lh-clump--manual .lh-audit-group__description').textContent;
+      .querySelector('.lh-clump--manual .lh-audit-group__description').textContent
+      // remove " — "
+      .substring(3);
     // may need to be adjusted if description includes a link at the beginning
     assert.ok(description.startsWith(pwaCategory.manualDescription.substring(0, 20)),
         'no manual description');
@@ -263,32 +265,6 @@ describe('CategoryRenderer', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const auditsElements = categoryDOM.querySelectorAll('.lh-audit');
       assert.equal(auditsElements.length, category.auditRefs.length);
-    });
-
-    it('increments the audit index across groups', () => {
-      const elem = renderer.render(category, sampleResults.categoryGroups);
-
-      const passedAudits = elem.querySelectorAll('.lh-clump--passed .lh-audit__title');
-      const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit__title');
-      const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit__title');
-      const notApplicableAudits =
-        elem.querySelectorAll('.lh-clump--notapplicable .lh-audit__title');
-
-      const assertAllTheIndices = (nodeList) => {
-        // Must be at least one for a decent test.
-        assert.ok(nodeList.length > 0);
-
-        // Assert indices are continuous, starting at 1.
-        nodeList.forEach((node, i) => {
-          const auditIndex = Number.parseInt(node.textContent);
-          assert.strictEqual(auditIndex, i + 1);
-        });
-      };
-
-      assertAllTheIndices(passedAudits);
-      assertAllTheIndices(failedAudits);
-      assertAllTheIndices(manualAudits);
-      assertAllTheIndices(notApplicableAudits);
     });
 
     it('renders audits without a group before grouped ones', () => {
