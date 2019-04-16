@@ -149,8 +149,9 @@
     --circle-size-big: 96px;
     --circle-size: 72px;
     --header-padding: 16px 0 16px 0;
+    --plugin-badge-size: 28px;
+    --plugin-badge-size-big: 32px;
     --plugin-icon-size: 75%;
-    --plugin-size: 28px;
     --score-container-padding: 8px;
     --score-container-width: 112px;
     --score-number-font-size-big: 34px;
