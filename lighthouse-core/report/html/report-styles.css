@@ -103,6 +103,7 @@
   --header-padding: 20px 0 20px 0;
   --plugin-badge-bg: var(--color-white);
   --plugin-badge-size: 36px;
+  --plugin-badge-size-big: 42px;
   --plugin-icon-size: 65%;
   --score-container-padding: 12px;
   --score-container-width: 160px;
@@ -855,27 +856,6 @@
 .lh-scores-header .lh-gauge__wrapper,
 .lh-scores-header .lh-gauge--pwa__wrapper {
   width: var(--score-container-width);
-}
-
-.lh-scores-header .lh-gauge__svg-wrapper {
-  position: relative;
-}
-.lh-scores-header .lh-gauge__wrapper.lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper:before {
-  width: var(--plugin-badge-size);
-  height: var(--plugin-badge-size);
-  background-color: var(--plugin-badge-bg);
-  background-image: var(--plugin-icon-url);
-  background-repeat: no-repeat;
-  background-size: var(--plugin-icon-size);
-  background-position: 58% 50%;
-  content: "";
-  position: absolute;
-  right: -6px;
-  bottom: -2px;
-  display: block;
-  z-index: 100;
-  box-shadow: 0 0 4px rgba(0,0,0,.2);
-  border-radius: 25%;
 }
 
 .lh-scores-header .lh-gauge--pwa__wrapper {
