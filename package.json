@@ -131,7 +131,6 @@
     "zone.js": "^0.7.3"
   },
   "dependencies": {
-    "@lighthouse/stack-packs": "file:./stack-packs",
     "axe-core": "3.1.2",
     "chrome-launcher": "^0.10.5",
     "configstore": "^3.1.1",
