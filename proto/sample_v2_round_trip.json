@@ -2231,7 +2231,7 @@
             "title": "Structured data is valid"
         }, 
         "structured-data-automatic": {
-            "description": "Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit is currently doing basic JSON-LD validation. See also the manual audit below to validate other types of structured data.", 
+            "description": "Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit currently validates a subset of JSON-LD rules. See also the manual audit below to learn how to validate other types of structured data.", 
             "id": "structured-data-automatic", 
             "score": null, 
             "scoreDisplayMode": "notApplicable", 
