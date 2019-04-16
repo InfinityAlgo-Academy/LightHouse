@@ -193,7 +193,8 @@ class CategoryRenderer {
 
     const auditGroupHeader = this.dom.createElement('div', 'lh-audit-group__header');
 
-    this.dom.createChildOf(auditGroupHeader, 'span', 'lh-audit-group__title').textContent = group.title;
+    this.dom.createChildOf(auditGroupHeader, 'span', 'lh-audit-group__title')
+      .textContent = group.title;
     if (group.description) {
       const descriptionEl = this.dom.convertMarkdownLinkSnippets(` — ${group.description}`);
       descriptionEl.classList.add('lh-audit-group__description');
