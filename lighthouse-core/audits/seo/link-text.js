@@ -25,6 +25,25 @@ const BLOCKLIST = new Set([
   '続きを読む',
   '続く',
   '全文表示',
+  // Spanish
+  'click aquí',
+  'click aqui',
+  'clicka aquí',
+  'clicka aqui',
+  'pincha aquí',
+  'pincha aqui',
+  'aquí',
+  'aqui',
+  'más',
+  'mas',
+  'más información',
+  'más informacion',
+  'mas información',
+  'mas informacion',
+  'este',
+  'enlace',
+  'este enlace',
+  'empezar',
 ]);
 const i18n = require('../../lib/i18n/i18n.js');
 
