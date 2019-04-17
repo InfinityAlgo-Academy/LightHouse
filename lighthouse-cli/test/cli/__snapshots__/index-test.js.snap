@@ -4,372 +4,495 @@ exports[`CLI Tests print-config should print the default config and exit immedia
 Object {
   "audits": Array [
     Object {
+      "id": "is-on-https",
       "path": "is-on-https",
     },
     Object {
+      "id": "redirects-http",
       "path": "redirects-http",
     },
     Object {
+      "id": "service-worker",
       "path": "service-worker",
     },
     Object {
+      "id": "works-offline",
       "path": "works-offline",
     },
     Object {
+      "id": "viewport",
       "path": "viewport",
     },
     Object {
+      "id": "without-javascript",
       "path": "without-javascript",
     },
     Object {
+      "id": "first-contentful-paint",
       "path": "metrics/first-contentful-paint",
     },
     Object {
+      "id": "first-meaningful-paint",
       "path": "metrics/first-meaningful-paint",
     },
     Object {
+      "id": "load-fast-enough-for-pwa",
       "path": "load-fast-enough-for-pwa",
     },
     Object {
+      "id": "speed-index",
       "path": "metrics/speed-index",
     },
     Object {
+      "id": "screenshot-thumbnails",
       "path": "screenshot-thumbnails",
     },
     Object {
+      "id": "final-screenshot",
       "path": "final-screenshot",
     },
     Object {
+      "id": "estimated-input-latency",
       "path": "metrics/estimated-input-latency",
     },
     Object {
+      "id": "max-potential-fid",
       "path": "metrics/max-potential-fid",
     },
     Object {
+      "id": "errors-in-console",
       "path": "errors-in-console",
     },
     Object {
+      "id": "time-to-first-byte",
       "path": "time-to-first-byte",
     },
     Object {
+      "id": "first-cpu-idle",
       "path": "metrics/first-cpu-idle",
     },
     Object {
+      "id": "interactive",
       "path": "metrics/interactive",
     },
     Object {
+      "id": "user-timings",
       "path": "user-timings",
     },
     Object {
+      "id": "critical-request-chains",
       "path": "critical-request-chains",
     },
     Object {
+      "id": "redirects",
       "path": "redirects",
     },
     Object {
+      "id": "installable-manifest",
       "path": "installable-manifest",
     },
     Object {
+      "id": "splash-screen",
       "path": "splash-screen",
     },
     Object {
+      "id": "themed-omnibox",
       "path": "themed-omnibox",
     },
     Object {
+      "id": "content-width",
       "path": "content-width",
     },
     Object {
+      "id": "image-aspect-ratio",
       "path": "image-aspect-ratio",
     },
     Object {
+      "id": "deprecations",
       "path": "deprecations",
     },
     Object {
+      "id": "mainthread-work-breakdown",
       "path": "mainthread-work-breakdown",
     },
     Object {
+      "id": "bootup-time",
       "path": "bootup-time",
     },
     Object {
+      "id": "uses-rel-preload",
       "path": "uses-rel-preload",
     },
     Object {
+      "id": "uses-rel-preconnect",
       "path": "uses-rel-preconnect",
     },
     Object {
+      "id": "font-display",
       "path": "font-display",
     },
     Object {
+      "id": "diagnostics",
       "path": "diagnostics",
     },
     Object {
+      "id": "network-requests",
       "path": "network-requests",
     },
     Object {
+      "id": "network-rtt",
       "path": "network-rtt",
     },
     Object {
+      "id": "network-server-latency",
       "path": "network-server-latency",
     },
     Object {
+      "id": "main-thread-tasks",
       "path": "main-thread-tasks",
     },
     Object {
+      "id": "metrics",
       "path": "metrics",
     },
     Object {
+      "id": "offline-start-url",
       "path": "offline-start-url",
     },
     Object {
+      "id": "pwa-cross-browser",
       "path": "manual/pwa-cross-browser",
     },
     Object {
+      "id": "pwa-page-transitions",
       "path": "manual/pwa-page-transitions",
     },
     Object {
+      "id": "pwa-each-page-has-url",
       "path": "manual/pwa-each-page-has-url",
     },
     Object {
+      "id": "accesskeys",
       "path": "accessibility/accesskeys",
     },
     Object {
+      "id": "aria-allowed-attr",
       "path": "accessibility/aria-allowed-attr",
     },
     Object {
+      "id": "aria-required-attr",
       "path": "accessibility/aria-required-attr",
     },
     Object {
+      "id": "aria-required-children",
       "path": "accessibility/aria-required-children",
     },
     Object {
+      "id": "aria-required-parent",
       "path": "accessibility/aria-required-parent",
     },
     Object {
+      "id": "aria-roles",
       "path": "accessibility/aria-roles",
     },
     Object {
+      "id": "aria-valid-attr-value",
       "path": "accessibility/aria-valid-attr-value",
     },
     Object {
+      "id": "aria-valid-attr",
       "path": "accessibility/aria-valid-attr",
     },
     Object {
+      "id": "audio-caption",
       "path": "accessibility/audio-caption",
     },
     Object {
+      "id": "button-name",
       "path": "accessibility/button-name",
     },
     Object {
+      "id": "bypass",
       "path": "accessibility/bypass",
     },
     Object {
+      "id": "color-contrast",
       "path": "accessibility/color-contrast",
     },
     Object {
+      "id": "definition-list",
       "path": "accessibility/definition-list",
     },
     Object {
+      "id": "dlitem",
       "path": "accessibility/dlitem",
     },
     Object {
+      "id": "document-title",
       "path": "accessibility/document-title",
     },
     Object {
+      "id": "duplicate-id",
       "path": "accessibility/duplicate-id",
     },
     Object {
+      "id": "frame-title",
       "path": "accessibility/frame-title",
     },
     Object {
+      "id": "html-has-lang",
       "path": "accessibility/html-has-lang",
     },
     Object {
+      "id": "html-lang-valid",
       "path": "accessibility/html-lang-valid",
     },
     Object {
+      "id": "image-alt",
       "path": "accessibility/image-alt",
     },
     Object {
+      "id": "input-image-alt",
       "path": "accessibility/input-image-alt",
     },
     Object {
+      "id": "label",
       "path": "accessibility/label",
     },
     Object {
+      "id": "layout-table",
       "path": "accessibility/layout-table",
     },
     Object {
+      "id": "link-name",
       "path": "accessibility/link-name",
     },
     Object {
+      "id": "list",
       "path": "accessibility/list",
     },
     Object {
+      "id": "listitem",
       "path": "accessibility/listitem",
     },
     Object {
+      "id": "meta-refresh",
       "path": "accessibility/meta-refresh",
     },
     Object {
+      "id": "meta-viewport",
       "path": "accessibility/meta-viewport",
     },
     Object {
+      "id": "object-alt",
       "path": "accessibility/object-alt",
     },
     Object {
+      "id": "tabindex",
       "path": "accessibility/tabindex",
     },
     Object {
+      "id": "td-headers-attr",
       "path": "accessibility/td-headers-attr",
     },
     Object {
+      "id": "th-has-data-cells",
       "path": "accessibility/th-has-data-cells",
     },
     Object {
+      "id": "valid-lang",
       "path": "accessibility/valid-lang",
     },
     Object {
+      "id": "video-caption",
       "path": "accessibility/video-caption",
     },
     Object {
+      "id": "video-description",
       "path": "accessibility/video-description",
     },
     Object {
+      "id": "custom-controls-labels",
       "path": "accessibility/manual/custom-controls-labels",
     },
     Object {
+      "id": "custom-controls-roles",
       "path": "accessibility/manual/custom-controls-roles",
     },
     Object {
+      "id": "focus-traps",
       "path": "accessibility/manual/focus-traps",
     },
     Object {
+      "id": "focusable-controls",
       "path": "accessibility/manual/focusable-controls",
     },
     Object {
+      "id": "heading-levels",
       "path": "accessibility/manual/heading-levels",
     },
     Object {
+      "id": "interactive-element-affordance",
       "path": "accessibility/manual/interactive-element-affordance",
     },
     Object {
+      "id": "logical-tab-order",
       "path": "accessibility/manual/logical-tab-order",
     },
     Object {
+      "id": "managed-focus",
       "path": "accessibility/manual/managed-focus",
     },
     Object {
+      "id": "offscreen-content-hidden",
       "path": "accessibility/manual/offscreen-content-hidden",
     },
     Object {
+      "id": "use-landmarks",
       "path": "accessibility/manual/use-landmarks",
     },
     Object {
+      "id": "visual-order-follows-dom",
       "path": "accessibility/manual/visual-order-follows-dom",
     },
     Object {
+      "id": "uses-long-cache-ttl",
       "path": "byte-efficiency/uses-long-cache-ttl",
     },
     Object {
+      "id": "total-byte-weight",
       "path": "byte-efficiency/total-byte-weight",
     },
     Object {
+      "id": "offscreen-images",
       "path": "byte-efficiency/offscreen-images",
     },
     Object {
+      "id": "render-blocking-resources",
       "path": "byte-efficiency/render-blocking-resources",
     },
     Object {
+      "id": "unminified-css",
       "path": "byte-efficiency/unminified-css",
     },
     Object {
+      "id": "unminified-javascript",
       "path": "byte-efficiency/unminified-javascript",
     },
     Object {
+      "id": "unused-css-rules",
       "path": "byte-efficiency/unused-css-rules",
     },
     Object {
+      "id": "uses-webp-images",
       "path": "byte-efficiency/uses-webp-images",
     },
     Object {
+      "id": "uses-optimized-images",
       "path": "byte-efficiency/uses-optimized-images",
     },
     Object {
+      "id": "uses-text-compression",
       "path": "byte-efficiency/uses-text-compression",
     },
     Object {
+      "id": "uses-responsive-images",
       "path": "byte-efficiency/uses-responsive-images",
     },
     Object {
+      "id": "efficient-animated-content",
       "path": "byte-efficiency/efficient-animated-content",
     },
     Object {
+      "id": "appcache-manifest",
       "path": "dobetterweb/appcache-manifest",
     },
     Object {
+      "id": "doctype",
       "path": "dobetterweb/doctype",
     },
     Object {
+      "id": "dom-size",
       "path": "dobetterweb/dom-size",
     },
     Object {
+      "id": "external-anchors-use-rel-noopener",
       "path": "dobetterweb/external-anchors-use-rel-noopener",
     },
     Object {
+      "id": "geolocation-on-start",
       "path": "dobetterweb/geolocation-on-start",
     },
     Object {
+      "id": "no-document-write",
       "path": "dobetterweb/no-document-write",
     },
     Object {
+      "id": "no-vulnerable-libraries",
       "path": "dobetterweb/no-vulnerable-libraries",
     },
     Object {
+      "id": "js-libraries",
       "path": "dobetterweb/js-libraries",
     },
     Object {
+      "id": "notification-on-start",
       "path": "dobetterweb/notification-on-start",
     },
     Object {
+      "id": "password-inputs-can-be-pasted-into",
       "path": "dobetterweb/password-inputs-can-be-pasted-into",
     },
     Object {
+      "id": "uses-http2",
       "path": "dobetterweb/uses-http2",
     },
     Object {
+      "id": "uses-passive-event-listeners",
       "path": "dobetterweb/uses-passive-event-listeners",
     },
     Object {
+      "id": "meta-description",
       "path": "seo/meta-description",
     },
     Object {
+      "id": "http-status-code",
       "path": "seo/http-status-code",
     },
     Object {
+      "id": "font-size",
       "path": "seo/font-size",
     },
     Object {
+      "id": "link-text",
       "path": "seo/link-text",
     },
     Object {
+      "id": "is-crawlable",
       "path": "seo/is-crawlable",
     },
     Object {
+      "id": "robots-txt",
       "path": "seo/robots-txt",
     },
     Object {
+      "id": "tap-targets",
       "path": "seo/tap-targets",
     },
     Object {
+      "id": "hreflang",
       "path": "seo/hreflang",
     },
     Object {
+      "id": "plugins",
       "path": "seo/plugins",
     },
     Object {
+      "id": "canonical",
       "path": "seo/canonical",
     },
     Object {
+      "id": "structured-data",
       "path": "seo/manual/structured-data",
     },
   ],
@@ -1070,66 +1193,87 @@ Object {
       "cpuQuietThresholdMs": 1000,
       "gatherers": Array [
         Object {
+          "id": "CSSUsage",
           "path": "css-usage",
         },
         Object {
+          "id": "ViewportDimensions",
           "path": "viewport-dimensions",
         },
         Object {
+          "id": "RuntimeExceptions",
           "path": "runtime-exceptions",
         },
         Object {
+          "id": "ChromeConsoleMessages",
           "path": "chrome-console-messages",
         },
         Object {
+          "id": "AnchorElements",
           "path": "anchor-elements",
         },
         Object {
+          "id": "ImageElements",
           "path": "image-elements",
         },
         Object {
+          "id": "LinkElements",
           "path": "link-elements",
         },
         Object {
+          "id": "MetaElements",
           "path": "meta-elements",
         },
         Object {
+          "id": "ScriptElements",
           "path": "script-elements",
         },
         Object {
+          "id": "AppCacheManifest",
           "path": "dobetterweb/appcache",
         },
         Object {
+          "id": "Doctype",
           "path": "dobetterweb/doctype",
         },
         Object {
+          "id": "DOMStats",
           "path": "dobetterweb/domstats",
         },
         Object {
+          "id": "OptimizedImages",
           "path": "dobetterweb/optimized-images",
         },
         Object {
+          "id": "PasswordInputsWithPreventedPaste",
           "path": "dobetterweb/password-inputs-with-prevented-paste",
         },
         Object {
+          "id": "ResponseCompression",
           "path": "dobetterweb/response-compression",
         },
         Object {
+          "id": "TagsBlockingFirstPaint",
           "path": "dobetterweb/tags-blocking-first-paint",
         },
         Object {
+          "id": "FontSize",
           "path": "seo/font-size",
         },
         Object {
+          "id": "EmbeddedContent",
           "path": "seo/embedded-content",
         },
         Object {
+          "id": "RobotsTxt",
           "path": "seo/robots-txt",
         },
         Object {
+          "id": "TapTargets",
           "path": "seo/tap-targets",
         },
         Object {
+          "id": "Accessibility",
           "path": "accessibility",
         },
       ],
@@ -1145,12 +1289,15 @@ Object {
       "cpuQuietThresholdMs": 0,
       "gatherers": Array [
         Object {
+          "id": "ServiceWorker",
           "path": "service-worker",
         },
         Object {
+          "id": "Offline",
           "path": "offline",
         },
         Object {
+          "id": "StartUrl",
           "path": "start-url",
         },
       ],
@@ -1176,9 +1323,11 @@ Object {
       "cpuQuietThresholdMs": 0,
       "gatherers": Array [
         Object {
+          "id": "HTTPRedirect",
           "path": "http-redirect",
         },
         Object {
+          "id": "HTMLWithoutJavaScript",
           "path": "html-without-javascript",
         },
       ],
@@ -1226,6 +1375,7 @@ exports[`CLI Tests print-config should print the overridden config and exit imme
 Object {
   "audits": Array [
     Object {
+      "id": "metrics",
       "path": "metrics",
     },
   ],
