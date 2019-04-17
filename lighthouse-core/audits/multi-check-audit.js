@@ -42,9 +42,9 @@ class MultiCheckAudit extends Audit {
     }
 
     // Include the detailed pass/fail checklist as a diagnostic.
-    /** @type {LH.Audit.Details.Diagnostic} */
+    /** @type {LH.Audit.Details.DebugData} */
     const details = {
-      type: 'diagnostic',
+      type: 'debugdata',
       // TODO: Consider not nesting detailsItem under `items`.
       items: [detailsItem],
     };

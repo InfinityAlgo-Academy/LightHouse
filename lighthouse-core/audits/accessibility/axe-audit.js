@@ -63,11 +63,11 @@ class AxeAudit extends Audit {
       {key: 'node', itemType: 'node', text: str_(UIStrings.failingElementsHeader)},
     ];
 
-    /** @type {LH.Audit.Details.Diagnostic|undefined} */
-    let diagnostic;
+    /** @type {LH.Audit.Details.DebugData|undefined} */
+    let debugData;
     if (impact || tags) {
-      diagnostic = {
-        type: 'diagnostic',
+      debugData = {
+        type: 'debugdata',
         impact,
         tags,
       };
@@ -78,7 +78,7 @@ class AxeAudit extends Audit {
       extendedInfo: {
         value: rule,
       },
-      details: {...Audit.makeTableDetails(headings, items), diagnostic},
+      details: {...Audit.makeTableDetails(headings, items), debugData},
     };
   }
 }

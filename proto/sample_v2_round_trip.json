@@ -170,14 +170,14 @@
         "color-contrast": {
             "description": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse).", 
             "details": {
-                "diagnostic": {
+                "debugData": {
                     "impact": "serious", 
                     "tags": [
                         "cat.color", 
                         "wcag2aa", 
                         "wcag143"
                     ], 
-                    "type": "diagnostic"
+                    "type": "debugdata"
                 }, 
                 "headings": [
                     {
@@ -457,7 +457,7 @@
                         "totalTaskTime": 1548.5690000000002
                     }
                 ], 
-                "type": "diagnostic"
+                "type": "debugdata"
             }, 
             "id": "diagnostics", 
             "score": null, 
@@ -834,14 +834,14 @@
         "html-has-lang": {
             "description": "If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default language that the user chose when setting up the screen reader. If the page isn't actually in the default language, then the screen reader might not announce the page's text correctly. [Learn more](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse).", 
             "details": {
-                "diagnostic": {
+                "debugData": {
                     "impact": "serious", 
                     "tags": [
                         "cat.language", 
                         "wcag2a", 
                         "wcag311"
                     ], 
-                    "type": "diagnostic"
+                    "type": "debugdata"
                 }, 
                 "headings": [
                     {
@@ -885,7 +885,7 @@
         "image-alt": {
             "description": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse).", 
             "details": {
-                "diagnostic": {
+                "debugData": {
                     "impact": "critical", 
                     "tags": [
                         "cat.text-alternatives", 
@@ -894,7 +894,7 @@
                         "section508", 
                         "section508.22.a"
                     ], 
-                    "type": "diagnostic"
+                    "type": "debugdata"
                 }, 
                 "headings": [
                     {
@@ -1007,7 +1007,7 @@
                         "parseFailureReason": "No manifest was fetched"
                     }
                 ], 
-                "type": "diagnostic"
+                "type": "debugdata"
             }, 
             "explanation": "Failures: No manifest was fetched.", 
             "id": "installable-manifest", 
@@ -1098,7 +1098,7 @@
         "label": {
             "description": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse).", 
             "details": {
-                "diagnostic": {
+                "debugData": {
                     "impact": "critical", 
                     "tags": [
                         "cat.forms", 
@@ -1108,7 +1108,7 @@
                         "section508", 
                         "section508.22.n"
                     ], 
-                    "type": "diagnostic"
+                    "type": "debugdata"
                 }, 
                 "headings": [
                     {
@@ -1163,7 +1163,7 @@
         "link-name": {
             "description": "Link text (and alternate text for images, when used as links) that is discernible, unique, and focusable improves the navigation experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse).", 
             "details": {
-                "diagnostic": {
+                "debugData": {
                     "impact": "serious", 
                     "tags": [
                         "cat.name-role-value", 
@@ -1173,7 +1173,7 @@
                         "section508", 
                         "section508.22.a"
                     ], 
-                    "type": "diagnostic"
+                    "type": "debugdata"
                 }, 
                 "headings": [
                     {
@@ -1480,7 +1480,7 @@
                         "speedIndexTs": 185607736912.0
                     }
                 ], 
-                "type": "diagnostic"
+                "type": "debugdata"
             }, 
             "id": "metrics", 
             "score": null, 
@@ -1902,7 +1902,7 @@
         "object-alt": {
             "description": "Screen readers cannot translate non-text content. Adding alt text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse).", 
             "details": {
-                "diagnostic": {
+                "debugData": {
                     "impact": "serious", 
                     "tags": [
                         "cat.text-alternatives", 
@@ -1911,7 +1911,7 @@
                         "section508", 
                         "section508.22.a"
                     ], 
-                    "type": "diagnostic"
+                    "type": "debugdata"
                 }, 
                 "headings": [
                     {
@@ -2215,7 +2215,7 @@
                         "parseFailureReason": "No manifest was fetched"
                     }
                 ], 
-                "type": "diagnostic"
+                "type": "debugdata"
             }, 
             "explanation": "Failures: No manifest was fetched.", 
             "id": "splash-screen", 
@@ -2278,7 +2278,7 @@
                         "themeColor": null
                     }
                 ], 
-                "type": "diagnostic"
+                "type": "debugdata"
             }, 
             "explanation": "Failures: No manifest was fetched,\nNo `<meta name=\"theme-color\">` tag found.", 
             "id": "themed-omnibox", 

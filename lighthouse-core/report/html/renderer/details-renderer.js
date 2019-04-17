@@ -59,7 +59,7 @@ class DetailsRenderer {
 
       // Internal-only details, not for rendering.
       case 'screenshot':
-      case 'diagnostic':
+      case 'debugdata':
         return null;
       // Fallback for old LHRs, where no type meant don't render.
       case undefined:
