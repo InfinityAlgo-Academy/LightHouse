@@ -742,6 +742,9 @@
   font-weight: 500;
   color: var(--color-black-600);
 }
+.lh-audit-group__header span.lh-audit-group__description::before {
+  content: '—';
+}
 
 .lh-clump > .lh-audit-group__header,
 .lh-audit-group--diagnostics .lh-audit-group__header,

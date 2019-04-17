@@ -74,11 +74,8 @@ describe('DOM', () => {
             'PSI\'s perfCategory HTML doesn\'t include a lh-permalink element');
         // Assume using default locale.
         const title = result.perfCategoryEl.querySelector('.lh-audit-group--metrics')
-          .querySelector('.lh-audit-group__header').textContent;
-        const expectedDescription = Util.UIStrings.lsPerformanceCategoryDescription
-          // Replacing markdown because ".textContent" will be post-markdown.
-          .replace('[Lighthouse](https://developers.google.com/web/tools/lighthouse/)', 'Lighthouse');
-        assert.equal(title, `${Util.UIStrings.labDataTitle}—${expectedDescription}`);
+          .querySelector('.lh-audit-group__title').textContent;
+        assert.equal(title, Util.UIStrings.labDataTitle);
       });
 
       it('succeeds with stringified LHResult input', () => {
@@ -126,8 +123,11 @@ describe('DOM', () => {
           .replace('[Lighthouse](https://developers.google.com/web/tools/lighthouse/)', 'Lighthouse');
 
         // Assume using default locale.
-        const title = metricsGroupEl.querySelector('.lh-audit-group__header').textContent;
-        assert.equal(title, `${Util.UIStrings.labDataTitle}—${expectedDescription}`);
+        const title = metricsGroupEl.querySelector('.lh-audit-group__title').textContent;
+        const description =
+          metricsGroupEl.querySelector('.lh-audit-group__description').textContent;
+        assert.equal(title, Util.UIStrings.labDataTitle);
+        assert.equal(description, expectedDescription);
       });
     });
   });
