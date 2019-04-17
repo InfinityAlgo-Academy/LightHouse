@@ -15,7 +15,7 @@ const ReportGenerator = require('../../lighthouse-core/report/report-generator.j
 const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
 
 lhr.categories.test = {
-  id: 'plugin',
+  id: 'lighthouse-plugin-someplugin',
   title: 'Plugin',
   score: 0.5,
   auditRefs: [],
