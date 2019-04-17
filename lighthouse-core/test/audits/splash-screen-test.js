@@ -39,7 +39,7 @@ describe('PWA: splash screen audit', () => {
       const context = generateMockAuditContext();
 
       return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('No manifest was fetched'), result.explanation);
       });
     });
@@ -49,7 +49,7 @@ describe('PWA: splash screen audit', () => {
       artifacts.WebAppManifest = manifestParser('{,:}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       const context = generateMockAuditContext();
       return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('failed to parse as valid JSON'));
       });
     });
@@ -59,7 +59,7 @@ describe('PWA: splash screen audit', () => {
       artifacts.WebAppManifest = manifestParser('{}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       const context = generateMockAuditContext();
       return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation);
         assert.strictEqual(result.details.items[0].failures.length, 4);
       });
@@ -68,7 +68,7 @@ describe('PWA: splash screen audit', () => {
     it('passes with complete manifest and SW', () => {
       const context = generateMockAuditContext();
       return SplashScreenAudit.audit(generateMockArtifacts(), context).then(result => {
-        assert.strictEqual(result.rawValue, true, result.explanation);
+        assert.strictEqual(result.score, 1, result.explanation);
         assert.strictEqual(result.explanation, undefined, result.explanation);
       });
     });
@@ -81,7 +81,7 @@ describe('PWA: splash screen audit', () => {
       const context = generateMockAuditContext();
 
       return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('name'), result.explanation);
       });
     });
@@ -92,7 +92,7 @@ describe('PWA: splash screen audit', () => {
       const context = generateMockAuditContext();
 
       return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('background_color'), result.explanation);
       });
     });
@@ -104,7 +104,7 @@ describe('PWA: splash screen audit', () => {
       const context = generateMockAuditContext();
 
       return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('background_color'), result.explanation);
       });
     });
@@ -115,7 +115,7 @@ describe('PWA: splash screen audit', () => {
       const context = generateMockAuditContext();
 
       return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('theme_color'), result.explanation);
       });
     });
@@ -126,7 +126,7 @@ describe('PWA: splash screen audit', () => {
       const context = generateMockAuditContext();
 
       return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('PNG icon'), result.explanation);
       });
     });
@@ -136,7 +136,7 @@ describe('PWA: splash screen audit', () => {
       const context = generateMockAuditContext();
 
       return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('PNG icon'), result.explanation);
         const failures = result.details.items[0].failures;
         assert.strictEqual(failures.length, 1, failures);

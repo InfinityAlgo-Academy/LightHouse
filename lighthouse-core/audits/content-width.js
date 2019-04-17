@@ -35,12 +35,12 @@ class ContentWidth extends Audit {
 
     if (IsMobile) {
       return {
-        rawValue: widthsMatch,
+        score: Number(widthsMatch),
         explanation: this.createExplanation(widthsMatch, artifacts.ViewportDimensions),
       };
     } else {
       return {
-        rawValue: true,
+        score: 1,
         notApplicable: true,
       };
     }

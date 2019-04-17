@@ -118,7 +118,7 @@ class LinkText extends Audit {
     }
 
     return {
-      rawValue: failingLinks.length === 0,
+      score: Number(failingLinks.length === 0),
       details,
       displayValue,
     };

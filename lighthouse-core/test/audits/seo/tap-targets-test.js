@@ -118,21 +118,21 @@ function getBorderlineTapTargets(options = {}) {
 describe('SEO: Tap targets audit', () => {
   it('passes when there are no tap targets', async () => {
     const auditResult = await auditTapTargets([]);
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     expect(auditResult.displayValue).toBeDisplayString('100% appropriately sized tap targets');
     assert.equal(auditResult.score, 1);
   });
 
   it('passes when tap targets don\'t overlap', async () => {
     const auditResult = await auditTapTargets(getBorderlineTapTargets());
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 
   it('passes when a target is fully contained in an overlapping target', async () => {
     const auditResult = await auditTapTargets(getBorderlineTapTargets({
       addFullyContainedTapTarget: true,
     }));
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 
   it('fails if two tap targets overlaps each other horizontally', async () => {
@@ -141,7 +141,7 @@ describe('SEO: Tap targets audit', () => {
         overlapRight: true,
       })
     );
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score.toFixed(3), '0.297');
     assert.equal(Math.round(auditResult.score * 100), 30);
     const failure = auditResult.details.items[0];
     assert.equal(failure.tapTarget.snippet, '<main></main>');
@@ -161,7 +161,7 @@ describe('SEO: Tap targets audit', () => {
         overlapBelow: true,
       })
     );
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score.toFixed(3), 0.297);
   });
 
   it('fails when one of the client rects overlaps', async () => {
@@ -170,7 +170,7 @@ describe('SEO: Tap targets audit', () => {
         overlapSecondClientRect: true,
       })
     );
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score.toFixed(3), 0.297);
   });
 
   it('reports 2 items if a target overlapped both vertically and horizontally', async () => {
@@ -205,7 +205,7 @@ describe('SEO: Tap targets audit', () => {
 
   it('fails if no meta viewport tag is provided', async () => {
     const auditResult = await auditTapTargets([], {MetaElements: []});
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
 
     expect(auditResult.explanation).toBeDisplayString(
       /* eslint-disable max-len */
@@ -216,7 +216,7 @@ describe('SEO: Tap targets audit', () => {
     const auditResult = await auditTapTargets(getBorderlineTapTargets({
       overlapSecondClientRect: true,
     }), {TestedAsMobileDevice: false});
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.notApplicable, true);
   });
 });

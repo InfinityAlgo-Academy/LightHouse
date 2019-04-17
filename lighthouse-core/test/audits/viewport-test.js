@@ -18,14 +18,14 @@ describe('Mobile-friendly: viewport audit', () => {
     const auditResult = await Audit.audit({
       MetaElements: [],
     }, fakeContext);
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.explanation, 'No viewport meta tag found');
   });
 
   it('fails when HTML contains a non-mobile friendly viewport meta tag', async () => {
     const viewport = 'maximum-scale=1';
     const auditResult = await Audit.audit({MetaElements: makeMetaElements(viewport)}, fakeContext);
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.warnings[0], undefined);
   });
 
@@ -34,6 +34,6 @@ describe('Mobile-friendly: viewport audit', () => {
     const auditResult = await Audit.audit({
       MetaElements: makeMetaElements(viewport),
     }, fakeContext);
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 });

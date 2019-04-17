@@ -36,7 +36,7 @@ class AppCacheManifestAttr extends Audit {
     const displayValue = usingAppcache ? `Found "${artifacts.AppCacheManifest}"` : '';
 
     return {
-      rawValue: !usingAppcache,
+      score: usingAppcache ? 0 : 1,
       displayValue,
     };
   }

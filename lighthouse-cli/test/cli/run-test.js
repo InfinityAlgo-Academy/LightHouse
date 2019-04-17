@@ -59,7 +59,7 @@ describe('CLI run', function() {
 
     it('returns results that match the saved results', () => {
       const {lhr} = passedResults;
-      assert.equal(fileResults.audits.viewport.rawValue, false);
+      assert.equal(fileResults.audits.viewport.score, 0);
 
       // passed results match saved results
       assert.strictEqual(fileResults.fetchTime, lhr.fetchTime);

@@ -113,7 +113,7 @@ class UserTimings extends Audit {
 
       return {
         // mark the audit as notApplicable if there were no user timings
-        rawValue: userTimings.length === 0,
+        score: Number(userTimings.length === 0),
         notApplicable: userTimings.length === 0,
         displayValue,
         extendedInfo: {

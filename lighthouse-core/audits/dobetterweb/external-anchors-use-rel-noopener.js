@@ -67,7 +67,7 @@ class ExternalAnchorsUseRelNoopenerAudit extends Audit {
     const details = Audit.makeTableDetails(headings, failingAnchors);
 
     return {
-      rawValue: failingAnchors.length === 0,
+      score: Number(failingAnchors.length === 0),
       extendedInfo: {
         value: failingAnchors,
       },

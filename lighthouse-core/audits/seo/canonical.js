@@ -117,7 +117,7 @@ class Canonical extends Audit {
     // the canonical link is totally invalid
     if (invalidCanonicalLink) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: str_(UIStrings.explanationInvalid, {url: invalidCanonicalLink.hrefRaw}),
       };
     }
@@ -125,7 +125,7 @@ class Canonical extends Audit {
     // the canonical link is valid, but it's relative which isn't allowed
     if (relativeCanonicallink) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: str_(UIStrings.explanationRelative, {url: relativeCanonicallink.hrefRaw}),
       };
     }
@@ -136,7 +136,7 @@ class Canonical extends Audit {
     // there's no canonical URL at all, we're done
     if (canonicalURLs.length === 0) {
       return {
-        rawValue: true,
+        score: 1,
         notApplicable: true,
       };
     }
@@ -144,7 +144,7 @@ class Canonical extends Audit {
     // we have multiple conflicting canonical URls, we're done
     if (canonicalURLs.length > 1) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: str_(UIStrings.explanationConflict, {urlList: canonicalURLs.join(', ')}),
       };
     }
@@ -166,7 +166,7 @@ class Canonical extends Audit {
       baseURL.href !== canonicalURL.href
     ) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: str_(UIStrings.explanationPointsElsewhere, {url: baseURL.href}),
       };
     }
@@ -175,7 +175,7 @@ class Canonical extends Audit {
     // a common mistake to publish a page with canonical pointing to e.g. a test domain or localhost
     if (getPrimaryDomain(canonicalURL) !== getPrimaryDomain(baseURL)) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: str_(UIStrings.explanationDifferentDomain, {url: canonicalURL}),
       };
     }
@@ -187,7 +187,7 @@ class Canonical extends Audit {
       baseURL.pathname !== '/'
     ) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: str_(UIStrings.explanationRoot),
       };
     }
@@ -220,7 +220,7 @@ class Canonical extends Audit {
     if (mistakeAuditProduct) return mistakeAuditProduct;
 
     return {
-      rawValue: true,
+      score: 1,
     };
   }
 }

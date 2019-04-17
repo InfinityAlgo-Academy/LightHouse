@@ -34,7 +34,7 @@ class AxeAudit extends Audit {
     const isNotApplicable = notApplicables.find(result => result.id === this.meta.id);
     if (isNotApplicable) {
       return {
-        rawValue: true,
+        score: 1,
         notApplicable: true,
       };
     }
@@ -74,7 +74,7 @@ class AxeAudit extends Audit {
     }
 
     return {
-      rawValue: typeof rule === 'undefined',
+      score: Number(rule === undefined),
       extendedInfo: {
         value: rule,
       },

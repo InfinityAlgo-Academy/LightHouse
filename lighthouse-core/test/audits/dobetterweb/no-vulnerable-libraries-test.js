@@ -34,7 +34,7 @@ describe('Avoids front-end JavaScript libraries with known vulnerabilities', () 
         {detector: 'js', name: 'lib3', version: undefined, npm: 'lib3'},
       ],
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
     assert.equal(auditResult.extendedInfo.jsLibs.length, 3);
     assert.equal(auditResult.details.items[0].highestSeverity, 'High');
@@ -79,7 +79,7 @@ Array [
       ],
     });
 
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
     assert.equal(auditResult.details.items[0].detectedLib.type, 'link');
     assert.equal(auditResult.details.items[0].detectedLib.text, 'jquery@1.8.0');
@@ -92,7 +92,7 @@ Array [
         {detector: 'js', name: 'lib2', version: undefined, npm: 'lib2'},
       ],
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
     assert.equal(auditResult.extendedInfo.jsLibs.length, 2);
   });
@@ -101,6 +101,6 @@ Array [
     const auditResult = NoVulnerableLibrariesAudit.audit({
       Stacks: [],
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 });

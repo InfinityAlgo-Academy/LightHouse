@@ -43,7 +43,7 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
     ];
 
     return {
-      rawValue: passwordInputsWithPreventedPaste.length === 0,
+      score: Number(passwordInputsWithPreventedPaste.length === 0),
       extendedInfo: {
         value: passwordInputsWithPreventedPaste,
       },

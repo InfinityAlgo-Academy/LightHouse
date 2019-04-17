@@ -106,7 +106,7 @@ class Hreflang extends Audit {
     const details = Audit.makeTableDetails(headings, invalidHreflangs);
 
     return {
-      rawValue: invalidHreflangs.length === 0,
+      score: Number(invalidHreflangs.length === 0),
       details,
     };
   }

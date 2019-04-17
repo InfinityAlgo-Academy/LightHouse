@@ -19,7 +19,7 @@ class MissingID extends LighthouseAudit {
 
   static audit(_) {
     return {
-      rawValue: true,
+      score: 1,
     };
   }
 }

@@ -20,7 +20,7 @@ describe('Mobile-friendly: content-width audit', () => {
       },
     });
 
-    assert.equal(result.rawValue, false);
+    assert.equal(result.score, 0);
     assert.ok(result.explanation);
   });
 
@@ -31,7 +31,7 @@ describe('Mobile-friendly: content-width audit', () => {
         innerWidth: 300,
         outerWidth: 300,
       },
-    }, {settings: {emulatedFormFactor: 'mobile'}}).rawValue, true);
+    }, {settings: {emulatedFormFactor: 'mobile'}}).score, 1);
   });
 
   it('not applicable when run on desktop', () => {

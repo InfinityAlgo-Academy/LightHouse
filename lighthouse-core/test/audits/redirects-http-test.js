@@ -16,7 +16,7 @@ describe('Security: HTTP->HTTPS audit', () => {
       HTTPRedirect: {
         value: false,
       },
-    }).rawValue, false);
+    }).score, 0);
   });
 
   it('passes when redirect detected', () => {
@@ -24,6 +24,6 @@ describe('Security: HTTP->HTTPS audit', () => {
       HTTPRedirect: {
         value: true,
       },
-    }).rawValue, true);
+    }).score, 1);
   });
 });

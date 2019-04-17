@@ -15,7 +15,7 @@ describe('Returns detected front-end JavaScript libraries', () => {
     const auditResult1 = JsLibrariesAudit.audit({
       Stacks: [],
     });
-    assert.equal(auditResult1.rawValue, true);
+    assert.equal(auditResult1.score, 1);
 
     // duplicates. TODO: consider failing in this case
     const auditResult2 = JsLibrariesAudit.audit({
@@ -24,7 +24,7 @@ describe('Returns detected front-end JavaScript libraries', () => {
         {detector: 'js', name: 'lib2', version: undefined, npm: 'lib2'},
       ],
     });
-    assert.equal(auditResult2.rawValue, true);
+    assert.equal(auditResult2.score, 1);
 
     // LOTS of frontend libs
     const auditResult3 = JsLibrariesAudit.audit({
@@ -36,7 +36,7 @@ describe('Returns detected front-end JavaScript libraries', () => {
         {detector: 'js', name: 'jQuery', version: undefined, npm: 'jquery'},
       ],
     });
-    assert.equal(auditResult3.rawValue, true);
+    assert.equal(auditResult3.score, 1);
   });
 
   it('generates expected details', () => {
@@ -58,7 +58,7 @@ describe('Returns detected front-end JavaScript libraries', () => {
         version: undefined,
       },
     ];
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.deepStrictEqual(auditResult.details.items, expected);
   });
 });
