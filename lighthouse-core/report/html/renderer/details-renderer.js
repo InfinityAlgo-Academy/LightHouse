@@ -373,7 +373,7 @@ class DetailsRenderer {
     for (const thumbnail of details.items) {
       const frameEl = this._dom.createChildOf(filmstripEl, 'div', 'lh-filmstrip__frame');
       this._dom.createChildOf(frameEl, 'img', 'lh-filmstrip__thumbnail', {
-        src: `data:image/jpeg;base64,${thumbnail.data}`,
+        src: thumbnail.data,
         alt: `Screenshot`,
       });
     }
