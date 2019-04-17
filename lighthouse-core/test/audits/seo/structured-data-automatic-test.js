@@ -44,7 +44,6 @@ describe('SEO: structured data audit', () => {
     const auditResult = await AutomaticStructuredDataAudit.audit(artifacts);
 
     expect(auditResult).toMatchObject({
-      rawValue: false,
       score: 0,
       details: {
         type: 'list',
@@ -100,6 +99,7 @@ describe('SEO: structured data audit', () => {
 
     const auditResult = await AutomaticStructuredDataAudit.audit(artifacts);
     expect(auditResult.notApplicable).toBe(true);
+    expect(auditResult.score).toBe(1);
   });
 
   it('passes if all json ld snippets are valid', async () => {
@@ -119,7 +119,6 @@ describe('SEO: structured data audit', () => {
 
     const auditResult = await AutomaticStructuredDataAudit.audit(artifacts);
     expect(auditResult.score).toBe(1);
-    expect(auditResult.rawValue).toBe(true);
     expect(auditResult.displayValue).toBeDisplayString('100% valid snippets');
   });
 });

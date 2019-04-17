@@ -48,7 +48,7 @@ class StructuredDataAutomatic extends Audit {
     if (jsonLDElements.length === 0) {
       return {
         notApplicable: true,
-        rawValue: true,
+        score: 1,
       };
     }
 
@@ -79,7 +79,6 @@ class StructuredDataAutomatic extends Audit {
     });
 
     return {
-      rawValue: invalidSnippets.length === 0,
       score: invalidSnippets.length === 0 ? 1 : 0,
       details,
       displayValue,
