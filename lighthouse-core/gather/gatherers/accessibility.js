@@ -45,6 +45,8 @@ function runA11yChecks() {
       'html-xml-lang-mismatch': {enabled: false},
       'blink': {enabled: false},
       'server-side-image-map': {enabled: false},
+      'aria-hidden-focus': {enabled: false},
+      'form-field-multiple-labels': {enabled: false},
     },
     // @ts-ignore
   }).then(axeResult => {
