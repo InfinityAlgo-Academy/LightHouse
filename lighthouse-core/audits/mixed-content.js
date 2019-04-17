@@ -139,7 +139,6 @@ class MixedContent extends Audit {
       const score = (secureRecords.length + 0.5 * upgradeableResources.length) / totalRecords;
 
       return {
-        rawValue: upgradeableResources.length === 0,
         score,
         displayValue: displayValue,
         details,

@@ -25,7 +25,7 @@ describe('SEO: link text audit', () => {
     };
 
     const auditResult = LinkTextAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
     assert.equal(auditResult.details.items[0].href, invalidLink.href);
     assert.equal(auditResult.details.items[0].text, invalidLink.text);
@@ -45,7 +45,7 @@ describe('SEO: link text audit', () => {
     };
 
     const auditResult = LinkTextAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 
   it('ignores javascript: links', () => {
@@ -61,7 +61,7 @@ describe('SEO: link text audit', () => {
     };
 
     const auditResult = LinkTextAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 
   it('ignores mailto: links', () => {
@@ -76,7 +76,7 @@ describe('SEO: link text audit', () => {
     };
 
     const auditResult = LinkTextAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 
   it('ignores links with no href', () => {
@@ -90,7 +90,7 @@ describe('SEO: link text audit', () => {
     };
 
     const auditResult = LinkTextAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 
   it('ignores links with nofollow', () => {
@@ -104,7 +104,7 @@ describe('SEO: link text audit', () => {
     };
 
     const auditResult = LinkTextAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 
   it('passes when all links have descriptive texts', () => {
@@ -120,6 +120,6 @@ describe('SEO: link text audit', () => {
     };
 
     const auditResult = LinkTextAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 });

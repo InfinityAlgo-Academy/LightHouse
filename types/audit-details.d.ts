@@ -8,7 +8,7 @@ declare global {
   module LH.Audit {
     export type Details =
       Details.CriticalRequestChain |
-      Details.Diagnostic |
+      Details.DebugData |
       Details.Filmstrip |
       Details.List |
       Details.Opportunity |
@@ -51,7 +51,7 @@ declare global {
         overallSavingsBytes?: number;
         headings: OpportunityColumnHeading[];
         items: OpportunityItem[];
-        diagnostic?: Diagnostic;
+        debugData?: DebugData;
       }
 
       export interface Screenshot {
@@ -68,15 +68,15 @@ declare global {
           wastedMs?: number;
           wastedBytes?: number;
         };
-        diagnostic?: Diagnostic;
+        debugData?: DebugData;
       }
 
       /**
        * A details type that is not rendered in the final report; usually used
-       * for including diagnostic information in the LHR. Can contain anything.
+       * for including debug information in the LHR. Can contain anything.
        */
-      export interface Diagnostic {
-        type: 'diagnostic';
+      export interface DebugData {
+        type: 'debugdata';
         [p: string]: any;
       }
 
@@ -102,8 +102,8 @@ declare global {
       }
 
       export type TableItem = {
-        diagnostic?: Diagnostic;
-        [p: string]: string | number | boolean | undefined | Diagnostic | NodeValue | LinkValue | UrlValue | CodeValue;
+        debugData?: DebugData;
+        [p: string]: string | number | boolean | undefined | DebugData | NodeValue | LinkValue | UrlValue | CodeValue;
       }
 
       export interface OpportunityColumnHeading {
@@ -128,8 +128,8 @@ declare global {
         wastedBytes?: number;
         totalBytes?: number;
         wastedMs?: number;
-        diagnostic?: Diagnostic;
-        [p: string]: number | boolean | string | undefined | Diagnostic;
+        debugData?: DebugData;
+        [p: string]: number | boolean | string | undefined | DebugData;
       }
 
       /**

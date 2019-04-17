@@ -18,7 +18,7 @@ describe('Page does not use document.write()', () => {
       ChromeConsoleMessages: [],
       URL: {finalUrl: URL},
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 
@@ -33,7 +33,7 @@ describe('Page does not use document.write()', () => {
         {entry: {source: 'deprecation', url: 'https://example.com/two'}},
       ],
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
   });
 });

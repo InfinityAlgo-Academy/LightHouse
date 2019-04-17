@@ -38,7 +38,7 @@ class FinalScreenshot extends Audit {
     }
 
     return {
-      rawValue: true,
+      score: 1,
       details: {
         type: 'screenshot',
         timestamp: finalScreenshot.timestamp,

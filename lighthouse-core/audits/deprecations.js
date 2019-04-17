@@ -61,7 +61,7 @@ class Deprecations extends Audit {
     }
 
     return {
-      rawValue: deprecations.length === 0,
+      score: Number(deprecations.length === 0),
       displayValue,
       extendedInfo: {
         value: deprecations,

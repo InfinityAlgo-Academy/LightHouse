@@ -30,7 +30,7 @@ class Doctype extends Audit {
   static audit(artifacts) {
     if (!artifacts.Doctype) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: 'Document must contain a doctype',
       };
     }
@@ -42,14 +42,14 @@ class Doctype extends Audit {
 
     if (doctypePublicId !== '') {
       return {
-        rawValue: false,
+        score: 0,
         explanation: 'Expected publicId to be an empty string',
       };
     }
 
     if (doctypeSystemId !== '') {
       return {
-        rawValue: false,
+        score: 0,
         explanation: 'Expected systemId to be an empty string',
       };
     }
@@ -59,11 +59,11 @@ class Doctype extends Audit {
        https://html.spec.whatwg.org/multipage/parsing.html#the-initial-insertion-mode */
     if (doctypeName === 'html') {
       return {
-        rawValue: true,
+        score: 1,
       };
     } else {
       return {
-        rawValue: false,
+        score: 0,
         explanation: 'Doctype name must be the lowercase string `html`',
       };
     }

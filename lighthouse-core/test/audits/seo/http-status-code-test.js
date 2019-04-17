@@ -29,7 +29,7 @@ describe('SEO: HTTP code audit', () => {
       };
 
       return HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()}).then(auditResult => {
-        assert.equal(auditResult.rawValue, false);
+        assert.equal(auditResult.score, 0);
         assert.ok(auditResult.displayValue.includes(statusCode), false);
       });
     });
@@ -51,7 +51,7 @@ describe('SEO: HTTP code audit', () => {
     };
 
     return HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()}).then(auditResult => {
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     });
   });
 });
