@@ -912,8 +912,12 @@ class Driver {
       /**
        * @param {LH.Crdp.Security.SecurityStateChangedEvent} event
        */
-      const securityStateChangedListener = ({securityState, explanations}) => {
-        if (securityState === 'insecure') {
+      const securityStateChangedListener = ({
+        securityState,
+        explanations,
+        schemeIsCryptographic,
+      }) => {
+        if (securityState === 'insecure' && schemeIsCryptographic) {
           cancel();
           const insecureDescriptions = explanations
             .filter(exp => exp.securityState === 'insecure')
