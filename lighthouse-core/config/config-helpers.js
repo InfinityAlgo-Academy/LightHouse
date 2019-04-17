@@ -10,7 +10,7 @@ const Audit = require('../audits/audit.js');
 const Runner = require('../runner.js');
 
 /**
- * If any items with identical `path` properties are found in the input array,
+ * If any items with identical `id` properties are found in the input array,
  * merge their `options` properties into the first instance and then discard any
  * other instances.
  * Until support of jsdoc templates with constraints, type in config.d.ts.
