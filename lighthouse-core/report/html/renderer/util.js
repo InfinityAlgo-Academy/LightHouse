@@ -470,7 +470,7 @@ class Util {
    * @param {string} categoryId
    */
   static isPluginCategory(categoryId) {
-    return !['performance', 'accessibility', 'best-practices', 'seo', 'pwa'].includes(categoryId);
+    return categoryId.startsWith('lighthouse-plugin-');
   }
 }
 

@@ -152,7 +152,7 @@ describe('CategoryRenderer', () => {
     const category = JSON.parse(
       JSON.stringify(sampleResults.reportCategories.find(c => c.id === 'seo')));
     // Any category not of the core
-    category.id = 'someplugin';
+    category.id = 'lighthouse-plugin-someplugin';
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     assert.ok(categoryDOM.querySelector('.lh-gauge__wrapper--plugin'));
   });
