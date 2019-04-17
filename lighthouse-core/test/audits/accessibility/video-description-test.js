@@ -23,7 +23,7 @@ describe('Accessibility: video-description audit', () => {
     };
 
     const output = Audit.audit(artifacts);
-    assert.equal(output.rawValue, false);
+    assert.equal(output.score, 0);
   });
 
   it('generates an audit output (single node)', () => {
@@ -38,6 +38,6 @@ describe('Accessibility: video-description audit', () => {
     };
 
     const output = Audit.audit(artifacts);
-    assert.equal(output.rawValue, false);
+    assert.equal(output.score, 0);
   });
 });

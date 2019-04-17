@@ -15,7 +15,7 @@ describe('Console deprecations audit', () => {
     const auditResult = DeprecationsAudit.audit({
       ChromeConsoleMessages: [],
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 
@@ -30,7 +30,7 @@ describe('Console deprecations audit', () => {
         },
       ],
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.displayValue, '1 warning found');
     assert.equal(auditResult.details.items.length, 1);
     assert.equal(auditResult.details.items[0].url, '');
@@ -66,7 +66,7 @@ describe('Console deprecations audit', () => {
         },
       ],
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.displayValue, '2 warnings found');
     assert.equal(auditResult.details.items.length, 2);
     assert.equal(auditResult.details.items[0].url, URL);

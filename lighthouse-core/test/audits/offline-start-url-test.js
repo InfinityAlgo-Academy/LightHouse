@@ -36,7 +36,7 @@ describe('Offline start_url audit', () => {
     const context = generateMockAuditContext();
 
     const result = await OfflineStartUrlAudit.audit(artifacts, context);
-    assert.strictEqual(result.rawValue, false);
+    assert.strictEqual(result.score, 0);
     assert.strictEqual(result.explanation, explanation);
     assert.strictEqual(result.warnings.length, 0);
   });
@@ -48,7 +48,7 @@ describe('Offline start_url audit', () => {
     const context = generateMockAuditContext();
 
     const result = await OfflineStartUrlAudit.audit(artifacts, context);
-    assert.strictEqual(result.rawValue, true);
+    assert.strictEqual(result.score, 1);
     assert.strictEqual(result.explanation, undefined);
     assert.strictEqual(result.warnings.length, 0);
   });
@@ -65,7 +65,7 @@ describe('Offline start_url audit', () => {
     const context = generateMockAuditContext();
 
     const result = await OfflineStartUrlAudit.audit(artifacts, context);
-    assert.strictEqual(result.rawValue, true);
+    assert.strictEqual(result.score, 1);
     assert.strictEqual(result.explanation, undefined);
     assert.strictEqual(result.warnings.length, 1);
     assert.ok(result.warnings[0].includes('start_url must be same-origin as document'));

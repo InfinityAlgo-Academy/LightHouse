@@ -63,7 +63,7 @@ describe('SEO: Avoids plugins', () => {
       };
 
       const auditResult = PluginsAudit.audit(artifacts);
-      assert.equal(auditResult.rawValue, false);
+      assert.equal(auditResult.score, 0);
       assert.equal(auditResult.details.items.length, 1);
     });
   });
@@ -89,7 +89,7 @@ describe('SEO: Avoids plugins', () => {
     };
 
     const auditResult = PluginsAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 3);
   });
 
@@ -99,7 +99,7 @@ describe('SEO: Avoids plugins', () => {
     };
 
     const auditResult = PluginsAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 
   it('succeeds when all external content is valid', () => {
@@ -136,6 +136,6 @@ describe('SEO: Avoids plugins', () => {
     };
 
     const auditResult = PluginsAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 });

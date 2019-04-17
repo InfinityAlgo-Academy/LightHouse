@@ -44,7 +44,7 @@ describe('PWA: themed omnibox audit', () => {
     const context = generateMockAuditContext();
 
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
-      assert.strictEqual(result.rawValue, false);
+      assert.strictEqual(result.score, 0);
       assert.ok(result.explanation.includes('No manifest was fetched'), result.explanation);
     });
   });
@@ -59,7 +59,7 @@ describe('PWA: themed omnibox audit', () => {
     const context = generateMockAuditContext();
 
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
-      assert.equal(result.rawValue, false);
+      assert.equal(result.score, 0);
       assert.ok(result.explanation);
     });
   });
@@ -71,7 +71,7 @@ describe('PWA: themed omnibox audit', () => {
     }));
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
-      assert.equal(result.rawValue, true);
+      assert.equal(result.score, 1);
       assert.equal(result.explanation, undefined);
     });
   });
@@ -81,7 +81,7 @@ describe('PWA: themed omnibox audit', () => {
     const artifacts = generateMockArtifacts();
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
-      assert.equal(result.rawValue, true);
+      assert.equal(result.score, 1);
       assert.equal(result.explanation, undefined);
     });
   });
@@ -91,7 +91,7 @@ describe('PWA: themed omnibox audit', () => {
     artifacts.MetaElements = [];
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
-      assert.equal(result.rawValue, false);
+      assert.equal(result.score, 0);
       assert.ok(result.explanation);
     });
   });
@@ -101,7 +101,7 @@ describe('PWA: themed omnibox audit', () => {
     artifacts.MetaElements = [{name: 'theme-color', content: '#1234567'}];
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
-      assert.equal(result.rawValue, false);
+      assert.equal(result.score, 0);
       assert.ok(result.explanation.includes('valid CSS color'));
     });
   });
@@ -111,7 +111,7 @@ describe('PWA: themed omnibox audit', () => {
     artifacts.MetaElements = [{name: 'theme-color', content: '#fafa33'}];
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
-      assert.equal(result.rawValue, true);
+      assert.equal(result.score, 1);
       assert.equal(result.explanation, undefined);
     });
   });
@@ -121,7 +121,7 @@ describe('PWA: themed omnibox audit', () => {
     artifacts.MetaElements = [{name: 'theme-color', content: 'red'}];
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
-      assert.equal(result.rawValue, true);
+      assert.equal(result.score, 1);
       assert.equal(result.explanation, undefined);
     });
   });
@@ -132,7 +132,7 @@ describe('PWA: themed omnibox audit', () => {
     const context = generateMockAuditContext();
 
     const result = await ThemedOmniboxAudit.audit(artifacts, context);
-    assert.equal(result.rawValue, true);
+    assert.equal(result.score, 1);
     assert.equal(result.explanation, undefined);
   });
 
@@ -143,7 +143,7 @@ describe('PWA: themed omnibox audit', () => {
     }));
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
-      assert.equal(result.rawValue, false);
+      assert.equal(result.score, 0);
       assert.ok(result.explanation.includes('does not have `theme_color`'), result.explanation);
     });
   });
@@ -153,7 +153,7 @@ describe('PWA: themed omnibox audit', () => {
     artifacts.MetaElements = [{name: 'theme-color'}];
     const context = generateMockAuditContext();
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
-      assert.equal(result.rawValue, false);
+      assert.equal(result.score, 0);
       assert.ok(result.explanation.includes('theme-color meta tag'), result.explanation);
     });
   });

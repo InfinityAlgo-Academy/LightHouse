@@ -73,7 +73,7 @@ describe('Performance: Font Display audit', () => {
       {url: networkRecords[1].url, wastedMs: 3000},
       {url: networkRecords[2].url, wastedMs: 1000},
     ];
-    assert.strictEqual(result.rawValue, false);
+    assert.strictEqual(result.score, 0);
     expect(result.details.items).toEqual(items);
   });
 
@@ -129,7 +129,7 @@ describe('Performance: Font Display audit', () => {
     ];
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
-    assert.strictEqual(result.rawValue, true);
+    assert.strictEqual(result.score, 1);
     expect(result.details.items).toEqual([]);
   });
 
@@ -180,7 +180,7 @@ describe('Performance: Font Display audit', () => {
     ];
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
-    assert.strictEqual(result.rawValue, true);
+    assert.strictEqual(result.score, 1);
     expect(result.details.items).toEqual([]);
   });
 
@@ -220,7 +220,7 @@ describe('Performance: Font Display audit', () => {
     ];
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
-    assert.strictEqual(result.rawValue, false);
+    assert.strictEqual(result.score, 0);
     expect(result.details.items.map(item => item.url)).toEqual([
       'https://edition.i.cdn.cnn.com/.a/fonts/cnn/3.7.2/cnnclock-black.woff2',
       'https://registry.api.cnn.io/assets/fave/fonts/2.0.15/cnnsans-bold.woff',
@@ -259,6 +259,6 @@ describe('Performance: Font Display audit', () => {
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
     expect(result.details.items).toEqual([]);
-    assert.strictEqual(result.rawValue, true);
+    assert.strictEqual(result.score, 1);
   });
 });

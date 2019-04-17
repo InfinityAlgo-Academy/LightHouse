@@ -26,7 +26,7 @@ describe('SEO: Font size audit', () => {
     };
 
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     expect(auditResult.explanation)
       .toBeDisplayString('Text is illegible because there\'s ' +
         'no viewport meta tag optimized for mobile screens.');
@@ -50,7 +50,7 @@ describe('SEO: Font size audit', () => {
     };
 
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     expect(auditResult.explanation).toBeDisplayString('41% of text is too small.');
     expect(auditResult.displayValue).toBeDisplayString('59% legible text');
   });
@@ -72,7 +72,7 @@ describe('SEO: Font size audit', () => {
     };
 
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 
   it('passes when more than 60% of text is legible', async () => {
@@ -92,7 +92,7 @@ describe('SEO: Font size audit', () => {
       TestedAsMobileDevice: true,
     };
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     expect(auditResult.displayValue).toBeDisplayString('90% legible text');
   });
 
@@ -131,7 +131,7 @@ describe('SEO: Font size audit', () => {
     };
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
 
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
     assert.equal(auditResult.details.items[0].coverage, '57.14%');
     expect(auditResult.displayValue).toBeDisplayString('0% legible text');
@@ -153,7 +153,7 @@ describe('SEO: Font size audit', () => {
       TestedAsMobileDevice: true,
     };
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 3);
     assert.equal(auditResult.details.items[1].source, 'Add\'l illegible text');
     assert.equal(auditResult.details.items[1].coverage, '40.00%');
@@ -176,7 +176,7 @@ describe('SEO: Font size audit', () => {
       TestedAsMobileDevice: true,
     };
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     expect(auditResult.explanation).toBeDisplayString(
       '100% of text is too small (based on 50% sample).'
     );
@@ -231,7 +231,7 @@ describe('SEO: Font size audit', () => {
       TestedAsMobileDevice: false,
     };
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
-    expect(auditResult.rawValue).toBe(true);
+    expect(auditResult.score).toBe(1);
     expect(auditResult.notApplicable).toBe(true);
   });
 });

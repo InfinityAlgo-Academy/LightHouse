@@ -54,13 +54,13 @@ class HTTPStatusCode extends Audit {
         if (statusCode >= HTTP_UNSUCCESSFUL_CODE_LOW &&
           statusCode <= HTTP_UNSUCCESSFUL_CODE_HIGH) {
           return {
-            rawValue: false,
+            score: 0,
             displayValue: `${statusCode}`,
           };
         }
 
         return {
-          rawValue: true,
+          score: 1,
         };
       });
   }

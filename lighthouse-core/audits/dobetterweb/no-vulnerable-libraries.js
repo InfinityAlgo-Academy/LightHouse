@@ -140,7 +140,7 @@ class NoVulnerableLibrariesAudit extends Audit {
 
     if (!foundLibraries.length) {
       return {
-        rawValue: true,
+        score: 1,
       };
     }
 
@@ -194,7 +194,7 @@ class NoVulnerableLibrariesAudit extends Audit {
     const details = Audit.makeTableDetails(headings, vulnerabilityResults, {});
 
     return {
-      rawValue: totalVulns === 0,
+      score: Number(totalVulns === 0),
       displayValue,
       extendedInfo: {
         jsLibs: libraryVulns,

@@ -34,7 +34,7 @@ class AxeAudit extends Audit {
     const isNotApplicable = notApplicables.find(result => result.id === this.meta.id);
     if (isNotApplicable) {
       return {
-        rawValue: true,
+        score: 1,
         notApplicable: true,
       };
     }
@@ -63,22 +63,22 @@ class AxeAudit extends Audit {
       {key: 'node', itemType: 'node', text: str_(UIStrings.failingElementsHeader)},
     ];
 
-    /** @type {LH.Audit.Details.Diagnostic|undefined} */
-    let diagnostic;
+    /** @type {LH.Audit.Details.DebugData|undefined} */
+    let debugData;
     if (impact || tags) {
-      diagnostic = {
-        type: 'diagnostic',
+      debugData = {
+        type: 'debugdata',
         impact,
         tags,
       };
     }
 
     return {
-      rawValue: typeof rule === 'undefined',
+      score: Number(rule === undefined),
       extendedInfo: {
         value: rule,
       },
-      details: {...Audit.makeTableDetails(headings, items), diagnostic},
+      details: {...Audit.makeTableDetails(headings, items), debugData},
     };
   }
 }

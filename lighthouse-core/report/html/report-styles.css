@@ -80,9 +80,9 @@
   --lh-audit-group-vpadding: 8px;
   --lh-section-vpadding: 12px;
   --chevron-size: 12px;
-  --circle-size: calc(3 * var(--header-font-size));
 
   /* TODO(cjamcl) clean up unused variables. */
+  --audits-margin-bottom: 40px;
   --circle-size-big: 120px;
   --circle-size: 96px;
   --color-black-100: #F5F5F5;
@@ -100,10 +100,13 @@
   --color-red-700: #EB0F00;
   --color-red: #FF4E42;
   --color-white: #FFFFFF;
+  --env-item-bg: var(--color-black-100);
+  --env-name-min-width: 220px;
+  --env-tem-padding: 10px 0px;
   --header-padding: 20px 0 20px 0;
   --plugin-badge-bg: var(--color-white);
-  --plugin-badge-size: 36px;
   --plugin-badge-size-big: 42px;
+  --plugin-badge-size: 36px;
   --plugin-icon-size: 65%;
   --score-container-padding: 12px;
   --score-container-width: 160px;
@@ -144,13 +147,15 @@
 
 @media only screen and (max-width: 480px) {
   .lh-vars {
+    --audits-margin-bottom: 20px;
     --body-font-size: 14px;
     --body-line-height: 20px;
     --circle-size-big: 96px;
     --circle-size: 72px;
+    --env-name-min-width: 120px;
     --header-padding: 16px 0 16px 0;
-    --plugin-badge-size: 28px;
     --plugin-badge-size-big: 32px;
+    --plugin-badge-size: 28px;
     --plugin-icon-size: 75%;
     --score-container-padding: 8px;
     --score-container-width: 112px;
@@ -169,7 +174,7 @@
   --text-font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
   --monospace-font-family: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
   --body-font-size: 12px;
-  --body-line-height: 16px;
+  --body-line-height: 20px;
   --subheader-font-size: 14px;
   --subheader-line-height: 18px;
   --header-font-size: 16px;
@@ -224,6 +229,10 @@
 
 .lh-root details > summary {
   cursor: pointer;
+}
+
+.lh-container {
+  word-break: break-word;
 }
 
 .lh-audit-group a,

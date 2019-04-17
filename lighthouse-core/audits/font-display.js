@@ -137,7 +137,6 @@ class FontDisplay extends Audit {
 
     return {
       score: Number(results.length === 0),
-      rawValue: results.length === 0,
       details,
     };
   }

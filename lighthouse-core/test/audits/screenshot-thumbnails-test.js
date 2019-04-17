@@ -33,7 +33,7 @@ describe('Screenshot thumbnails', () => {
         assert.equal(expectedData.length, result.data.length);
       });
 
-      assert.ok(results.rawValue);
+      assert.equal(results.score, 1);
       assert.equal(results.details.items[0].timing, 82);
       assert.equal(results.details.items[2].timing, 245);
       assert.equal(results.details.items[9].timing, 818);
