@@ -64,6 +64,10 @@ describe('Config', () => {
         super();
         this.secret = secretVal;
       }
+
+      get name() {
+        return `MyGatherer${this.secret}`;
+      }
     }
     const myGatherer1 = new MyGatherer(1729);
     const myGatherer2 = new MyGatherer(6);
@@ -223,6 +227,10 @@ describe('Config', () => {
 
     assert.throws(_ => new Config({
       audits: [basePath + '/missing-id'],
+    }), /does not have.*id/i);
+
+    assert.throws(_ => new Config({
+      audits: [{id: 'foobar', path: basePath + '/missing-id'}],
     }), /meta.id property/);
 
     assert.throws(_ => new Config({
@@ -350,6 +358,8 @@ describe('Config', () => {
   });
 
   it('filters the config', () => {
+    class MyGatherer extends Gatherer {}
+
     const config = new Config({
       settings: {
         onlyCategories: ['needed-category'],
@@ -357,11 +367,16 @@ describe('Config', () => {
       },
       passes: [
         {recordTrace: true, gatherers: []},
-        {passName: 'a11y', gatherers: ['accessibility']},
+        {passName: 'a11y', gatherers: [
+          {id: 'Accessibility', implementation: MyGatherer, path: undefined},
+          {id: 'OriginalAccessibilityThatWillBeDropped', path: 'accessibility'},
+        ]},
       ],
       audits: [
         'accessibility/color-contrast',
-        'metrics/first-meaningful-paint',
+        // Change the default IDs to ensure the correct audit gets pulled in by ID, not always meta.id.
+        {id: 'first-meaningful-paint', path: 'metrics/first-contentful-paint'},
+        {id: 'original-fmp-that-will-be-dropped', path: 'metrics/first-meaningful-paint'},
         'metrics/first-cpu-idle',
         'metrics/estimated-input-latency',
       ],
@@ -381,14 +396,26 @@ describe('Config', () => {
         'unused-category': {
           auditRefs: [
             {id: 'estimated-input-latency'},
+            {id: 'sneaky-id-fmp'},
           ],
         },
       },
     });
 
-    assert.equal(config.audits.length, 3, 'reduces audit count');
-    assert.equal(config.passes.length, 2, 'preserves both passes');
-    assert.ok(config.passes[0].recordTrace, 'preserves recordTrace pass');
+    expect(config.audits).toHaveLength(3);
+    expect(config.audits).toMatchObject([
+      {id: 'color-contrast'},
+      {id: 'first-meaningful-paint', path: 'metrics/first-contentful-paint'},
+      {id: 'first-cpu-idle'},
+    ]);
+
+    expect(config.passes).toHaveLength(2);
+    expect(config.passes[0].recordTrace).toBe(true);
+    expect(config.passes[1].gatherers).toHaveLength(1);
+    expect(config.passes[1].gatherers).toMatchObject([
+      {id: 'Accessibility', path: undefined, implementation: MyGatherer},
+    ]);
+
     assert.ok(!config.categories['unused-category'], 'removes unused categories');
     assert.equal(config.categories['needed-category'].auditRefs.length, 2);
     assert.equal(config.categories['other-category'].auditRefs.length, 1);
@@ -961,8 +988,20 @@ describe('Config', () => {
       const merged = Config.requireAudits(audits);
       // Round-trip through JSON to drop live 'implementation' prop.
       const mergedJson = JSON.parse(JSON.stringify(merged));
-      assert.deepEqual(mergedJson,
-        [{path: 'user-timings', options: {}}, {path: 'is-on-https', options: {x: 2, y: 1}}]);
+      expect(mergedJson).toEqual([
+        {id: 'user-timings', path: 'user-timings', options: {}},
+        {id: 'is-on-https', path: 'is-on-https', options: {x: 2, y: 1}},
+      ]);
+    });
+
+    it('should not merge audits with different IDs', () => {
+      const auditInputs = [
+        {id: 'https-a', path: 'is-on-https', options: {x: 1, y: 1}},
+        {id: 'https-b', path: 'is-on-https', options: {x: 2}},
+      ];
+      const auditDefns = Config.requireAudits(auditInputs);
+      expect(auditDefns).toHaveLength(2);
+      expect(auditDefns[0].implementation).toBe(auditDefns[1].implementation);
     });
 
     it('throws for invalid auditDefns', () => {
@@ -984,11 +1023,15 @@ describe('Config', () => {
       ];
 
       const merged = Config.requireGatherers([{gatherers}]);
-      // Round-trip through JSON to drop live 'instance'/'implementation' props.
-      const mergedJson = JSON.parse(JSON.stringify(merged));
-
-      assert.deepEqual(mergedJson[0].gatherers,
-        [{path: 'viewport-dimensions', options: {x: 1, y: 1}, instance: {}}]);
+      expect(merged[0].gatherers).toHaveLength(1);
+      const gatherer = merged[0].gatherers[0];
+      expect(gatherer).toHaveProperty('instance');
+      expect(gatherer).toHaveProperty('implementation');
+      expect(gatherer).toMatchObject({
+        id: 'ViewportDimensions',
+        path: 'viewport-dimensions',
+        options: {x: 1, y: 1},
+      });
     });
 
     function loadGatherer(gathererEntry) {
@@ -998,6 +1041,7 @@ describe('Config', () => {
 
     it('loads a core gatherer', () => {
       const gatherer = loadGatherer('viewport-dimensions');
+      assert.equal(gatherer.id, 'ViewportDimensions');
       assert.equal(gatherer.instance.name, 'ViewportDimensions');
       assert.equal(typeof gatherer.instance.beforePass, 'function');
     });
@@ -1005,6 +1049,7 @@ describe('Config', () => {
     it('loads gatherers from custom paths', () => {
       const customPath = path.resolve(__dirname, '../fixtures/valid-custom-gatherer');
       const gatherer = loadGatherer(customPath);
+      assert.equal(gatherer.id, 'CustomGatherer');
       assert.equal(gatherer.instance.name, 'CustomGatherer');
       assert.equal(typeof gatherer.instance.beforePass, 'function');
     });
@@ -1015,6 +1060,7 @@ describe('Config', () => {
       }, {configPath: __filename});
       const gatherer = config.passes[0].gatherers[0];
 
+      assert.equal(gatherer.id, 'CustomGatherer');
       assert.equal(gatherer.instance.name, 'CustomGatherer');
       assert.equal(typeof gatherer.instance.beforePass, 'function');
     });
@@ -1022,6 +1068,7 @@ describe('Config', () => {
     it('returns gatherer when gatherer class, not package-name string, is provided', () => {
       class TestGatherer extends Gatherer {}
       const gatherer = loadGatherer(TestGatherer);
+      assert.equal(gatherer.id, 'TestGatherer');
       assert.equal(gatherer.instance.name, 'TestGatherer');
       assert.equal(typeof gatherer.instance.beforePass, 'function');
     });
@@ -1029,6 +1076,7 @@ describe('Config', () => {
     it('returns gatherer when gatherer instance, not package-name string, is provided', () => {
       class TestGatherer extends Gatherer {}
       const gatherer = loadGatherer(new TestGatherer());
+      assert.equal(gatherer.id, 'TestGatherer');
       assert.equal(gatherer.instance.name, 'TestGatherer');
       assert.equal(typeof gatherer.instance.beforePass, 'function');
     });
@@ -1036,6 +1084,7 @@ describe('Config', () => {
     it('returns gatherer when `gathererDefn` with instance is provided', () => {
       class TestGatherer extends Gatherer {}
       const gatherer = loadGatherer({instance: new TestGatherer()});
+      assert.equal(gatherer.id, 'TestGatherer');
       assert.equal(gatherer.instance.name, 'TestGatherer');
       assert.equal(typeof gatherer.instance.beforePass, 'function');
     });
@@ -1091,6 +1140,9 @@ describe('Config', () => {
 
       assert.throws(_ => loadGatherer(`${root}/missing-after-pass`),
         /afterPass\(\) method/);
+
+      assert.throws(_ => loadGatherer(`${root}/missing-name`),
+        /valid ID/);
     });
   });
 

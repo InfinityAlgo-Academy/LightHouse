@@ -14,9 +14,9 @@ const i18n = require('./../lib/i18n/i18n.js');
 const isDeepEqual = require('lodash.isequal');
 const log = require('lighthouse-logger');
 const path = require('path');
-const Audit = require('../audits/audit.js');
 const Runner = require('../runner.js');
 const ConfigPlugin = require('./config-plugin.js');
+const {requireAudits, mergeOptionsOfItems, resolveModule} = require('./config-helpers.js');
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
@@ -25,7 +25,7 @@ const ConfigPlugin = require('./config-plugin.js');
  * @param {Config['passes']} passes
  * @param {Config['audits']} audits
  */
-function validatePasses(passes, audits) {
+function assertValidPasses(passes, audits) {
   if (!Array.isArray(passes)) {
     return;
   }
@@ -35,10 +35,9 @@ function validatePasses(passes, audits) {
   // Log if we are running gathers that are not needed by the audits listed in the config
   passes.forEach(pass => {
     pass.gatherers.forEach(gathererDefn => {
-      const gatherer = gathererDefn.instance;
-      const isGatherRequiredByAudits = requiredGatherers.has(gatherer.name);
+      const isGatherRequiredByAudits = requiredGatherers.has(gathererDefn.id);
       if (!isGatherRequiredByAudits) {
-        const msg = `${gatherer.name} gatherer requested, however no audit requires it.`;
+        const msg = `${gathererDefn.id} gatherer requested, however no audit requires it.`;
         log.warn('config', msg);
       }
     });
@@ -60,14 +59,14 @@ function validatePasses(passes, audits) {
  * @param {Config['audits']} audits
  * @param {Config['groups']} groups
  */
-function validateCategories(categories, audits, groups) {
+function assertValidCategories(categories, audits, groups) {
   if (!categories) {
     return;
   }
 
   const auditsKeyedById = new Map((audits || []).map(audit =>
     /** @type {[string, LH.Config.AuditDefn]} */
-    ([audit.implementation.meta.id, audit])
+    ([audit.id, audit])
   ));
 
   Object.keys(categories).forEach(categoryId => {
@@ -99,67 +98,26 @@ function validateCategories(categories, audits, groups) {
 }
 
 /**
- * @param {typeof Audit} auditDefinition
- * @param {string=} auditPath
+ * @param {LH.Config.GathererDefn} gathererDefinition
  */
-function assertValidAudit(auditDefinition, auditPath) {
-  const auditName = auditPath ||
-    (auditDefinition && auditDefinition.meta && auditDefinition.meta.id);
+function assertValidGatherer(gathererDefinition) {
+  const {id, path, instance} = gathererDefinition;
+  const gathererName = id || path || instance.name || 'Unknown gatherer';
 
-  if (typeof auditDefinition.audit !== 'function' || auditDefinition.audit === Audit.audit) {
-    throw new Error(`${auditName} has no audit() method.`);
-  }
-
-  if (typeof auditDefinition.meta.id !== 'string') {
-    throw new Error(`${auditName} has no meta.id property, or the property is not a string.`);
-  }
-
-  if (typeof auditDefinition.meta.title !== 'string') {
-    throw new Error(
-      `${auditName} has no meta.title property, or the property is not a string.`
-    );
-  }
-
-  // If it'll have a ✔ or ✖ displayed alongside the result, it should have failureTitle
-  if (typeof auditDefinition.meta.failureTitle !== 'string' &&
-    auditDefinition.meta.scoreDisplayMode === Audit.SCORING_MODES.BINARY) {
-    throw new Error(`${auditName} has no failureTitle and should.`);
-  }
-
-  if (typeof auditDefinition.meta.description !== 'string') {
-    throw new Error(
-      `${auditName} has no meta.description property, or the property is not a string.`
-    );
-  } else if (auditDefinition.meta.description === '') {
-    throw new Error(
-      `${auditName} has an empty meta.description string. Please add a description for the UI.`
-    );
-  }
-
-  if (!Array.isArray(auditDefinition.meta.requiredArtifacts)) {
-    throw new Error(
-      `${auditName} has no meta.requiredArtifacts property, or the property is not an array.`
-    );
-  }
-}
-
-/**
- * @param {Gatherer} gathererInstance
- * @param {string=} gathererName
- */
-function assertValidGatherer(gathererInstance, gathererName) {
-  gathererName = gathererName || gathererInstance.name || 'gatherer';
-
-  if (typeof gathererInstance.beforePass !== 'function') {
+  if (typeof instance.beforePass !== 'function') {
     throw new Error(`${gathererName} has no beforePass() method.`);
   }
 
-  if (typeof gathererInstance.pass !== 'function') {
+  if (typeof instance.pass !== 'function') {
     throw new Error(`${gathererName} has no pass() method.`);
   }
 
-  if (typeof gathererInstance.afterPass !== 'function') {
+  if (typeof instance.afterPass !== 'function') {
     throw new Error(`${gathererName} has no afterPass() method.`);
+  }
+
+  if (typeof id !== 'string' || !id.trim()) {
+    throw new Error(`${gathererName} does not have a valid ID.`);
   }
 }
 
@@ -300,31 +258,6 @@ function deepCloneConfigJson(json) {
   return cloned;
 }
 
-/**
- * If any items with identical `path` properties are found in the input array,
- * merge their `options` properties into the first instance and then discard any
- * other instances.
- * Until support of jsdoc templates with constraints, type in config.d.ts.
- * See https://github.com/Microsoft/TypeScript/issues/24283
- * @type {LH.Config.MergeOptionsOfItems}
- */
-const mergeOptionsOfItems = (function(items) {
-  /** @type {Array<{path?: string, options?: Object<string, any>}>} */
-  const mergedItems = [];
-
-  for (const item of items) {
-    const existingItem = item.path && mergedItems.find(candidate => candidate.path === item.path);
-    if (!existingItem) {
-      mergedItems.push(item);
-      continue;
-    }
-
-    existingItem.options = Object.assign({}, existingItem.options, item.options);
-  }
-
-  return mergedItems;
-});
-
 class Config {
   /**
    * @constructor
@@ -384,8 +317,8 @@ class Config {
 
     Config.filterConfigIfNeeded(this);
 
-    validatePasses(this.passes, this.audits);
-    validateCategories(this.categories, this.audits, this.groups);
+    assertValidPasses(this.passes, this.audits);
+    assertValidCategories(this.categories, this.audits, this.groups);
 
     // TODO(bckenny): until tsc adds @implements support, assert that Config is a ConfigJson.
     /** @type {LH.Config.Json} */
@@ -471,7 +404,7 @@ class Config {
     for (const pluginName of pluginNames) {
       assertValidPluginName(configJSON, pluginName);
 
-      const pluginPath = Config.resolveModule(pluginName, configDir, 'plugin');
+      const pluginPath = resolveModule(pluginName, configDir, 'plugin');
       const rawPluginJson = require(pluginPath);
       const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
 
@@ -519,37 +452,6 @@ class Config {
   }
 
   /**
-   * Expands the audits from user-specified JSON to an internal audit definition format.
-   * @param {LH.Config.Json['audits']} audits
-   * @return {?Array<{path: string, options?: {}} | {implementation: typeof Audit, path?: string, options?: {}}>}
-   */
-  static expandAuditShorthand(audits) {
-    if (!audits) {
-      return null;
-    }
-
-    const newAudits = audits.map(audit => {
-      if (typeof audit === 'string') {
-        // just 'path/to/audit'
-        return {path: audit, options: {}};
-      } else if ('implementation' in audit && typeof audit.implementation.audit === 'function') {
-        // {implementation: AuditClass, ...}
-        return audit;
-      } else if ('path' in audit && typeof audit.path === 'string') {
-        // {path: 'path/to/audit', ...}
-        return audit;
-      } else if ('audit' in audit && typeof audit.audit === 'function') {
-        // just AuditClass
-        return {implementation: audit, options: {}};
-      } else {
-        throw new Error('Invalid Audit type ' + JSON.stringify(audit));
-      }
-    });
-
-    return newAudits;
-  }
-
-  /**
    * Expands the gatherers from user-specified to an internal gatherer definition format.
    *
    * Input Examples:
@@ -558,7 +460,7 @@ class Config {
    *  - {instance: myGathererInstance}
    *
    * @param {Array<LH.Config.GathererJson>} gatherers
-   * @return {Array<{instance?: Gatherer, implementation?: GathererConstructor, path?: string, options?: {}}>} passes
+   * @return {Array<{id?: string, instance?: Gatherer, implementation?: GathererConstructor, path?: string, options?: {}}>} passes
    */
   static expandGathererShorthand(gatherers) {
     const expanded = gatherers.map(gatherer => {
@@ -627,7 +529,7 @@ class Config {
 
     // 2. Resolve which audits will need to run
     const audits = config.audits && config.audits.filter(auditDefn =>
-        requestedAuditNames.has(auditDefn.implementation.meta.id));
+        requestedAuditNames.has(auditDefn.id));
 
     // 3. Resolve which gatherers will need to run
     const requiredGathererIds = Config.getGatherersNeededByAudits(audits);
@@ -768,8 +670,7 @@ class Config {
     const filteredPasses = passes.map(pass => {
       // remove any unncessary gatherers from within the passes
       pass.gatherers = pass.gatherers.filter(gathererDefn => {
-        const gatherer = gathererDefn.instance;
-        return requiredGatherers.has(gatherer.name);
+        return requiredGatherers.has(gathererDefn.id);
       });
 
       // disable the trace if no audit requires a trace
@@ -792,7 +693,7 @@ class Config {
 
   /**
    * Take an array of audits and audit paths and require any paths (possibly
-   * relative to the optional `configDir`) using `Config.resolveModule`,
+   * relative to the optional `configDir`) using `resolveModule`,
    * leaving only an array of AuditDefns.
    * @param {LH.Config.Json['audits']} audits
    * @param {string=} configDir
@@ -801,39 +702,9 @@ class Config {
   static requireAudits(audits, configDir) {
     const status = {msg: 'Requiring audits', id: 'lh:config:requireAudits'};
     log.time(status, 'verbose');
-    const expandedAudits = Config.expandAuditShorthand(audits);
-    if (!expandedAudits) {
-      return null;
-    }
-
-    const coreList = Runner.getAuditList();
-    const auditDefns = expandedAudits.map(audit => {
-      let implementation;
-      if ('implementation' in audit) {
-        implementation = audit.implementation;
-      } else {
-        // See if the audit is a Lighthouse core audit.
-        const auditPathJs = `${audit.path}.js`;
-        const coreAudit = coreList.find(a => a === auditPathJs);
-        let requirePath = `../audits/${audit.path}`;
-        if (!coreAudit) {
-          // Otherwise, attempt to find it elsewhere. This throws if not found.
-          requirePath = Config.resolveModule(audit.path, configDir, 'audit');
-        }
-        implementation = /** @type {typeof Audit} */ (require(requirePath));
-      }
-
-      return {
-        implementation,
-        path: audit.path,
-        options: audit.options || {},
-      };
-    });
-
-    const mergedAuditDefns = mergeOptionsOfItems(auditDefns);
-    mergedAuditDefns.forEach(audit => assertValidAudit(audit.implementation, audit.path));
+    const auditDefns = requireAudits(audits, configDir);
     log.timeEnd(status);
-    return mergedAuditDefns;
+    return auditDefns;
   }
 
   /**
@@ -849,14 +720,16 @@ class Config {
     let requirePath = `../gather/gatherers/${path}`;
     if (!coreGatherer) {
       // Otherwise, attempt to find it elsewhere. This throws if not found.
-      requirePath = Config.resolveModule(path, configDir, 'gatherer');
+      requirePath = resolveModule(path, configDir, 'gatherer');
     }
 
     const GathererClass = /** @type {GathererConstructor} */ (require(requirePath));
+    const instance = new GathererClass();
 
     return {
-      instance: new GathererClass(),
+      id: instance.name,
       implementation: GathererClass,
+      instance,
       path,
       options: options || {},
     };
@@ -865,7 +738,7 @@ class Config {
   /**
    * Takes an array of passes with every property now initialized except the
    * gatherers and requires them, (relative to the optional `configDir` if
-   * provided) using `Config.resolveModule`, returning an array of full Passes.
+   * provided) using `resolveModule`, returning an array of full Passes.
    * @param {?Array<Required<LH.Config.PassJson>>} passes
    * @param {string=} configDir
    * @return {Config['passes']}
@@ -882,6 +755,7 @@ class Config {
       const gathererDefns = Config.expandGathererShorthand(pass.gatherers).map(gathererDefn => {
         if (gathererDefn.instance) {
           return {
+            id: gathererDefn.id || gathererDefn.instance.name,
             instance: gathererDefn.instance,
             implementation: gathererDefn.implementation,
             path: gathererDefn.path,
@@ -889,8 +763,10 @@ class Config {
           };
         } else if (gathererDefn.implementation) {
           const GathererClass = gathererDefn.implementation;
+          const instance = new GathererClass();
           return {
-            instance: new GathererClass(),
+            id: gathererDefn.id || instance.name,
+            instance,
             implementation: gathererDefn.implementation,
             path: gathererDefn.path,
             options: gathererDefn.options || {},
@@ -905,58 +781,12 @@ class Config {
       });
 
       const mergedDefns = mergeOptionsOfItems(gathererDefns);
-      mergedDefns.forEach(gatherer => assertValidGatherer(gatherer.instance, gatherer.path));
+      mergedDefns.forEach(gatherer => assertValidGatherer(gatherer));
 
       return Object.assign(pass, {gatherers: mergedDefns});
     });
     log.timeEnd(status);
     return fullPasses;
-  }
-
-  /**
-   * Resolves the location of the specified module and returns an absolute
-   * string path to the file. Used for loading custom audits and gatherers.
-   * Throws an error if no module is found.
-   * @param {string} moduleIdentifier
-   * @param {string=} configDir The absolute path to the directory of the config file, if there is one.
-   * @param {string=} category Optional plugin category (e.g. 'audit') for better error messages.
-   * @return {string}
-   * @throws {Error}
-   */
-  static resolveModule(moduleIdentifier, configDir, category) {
-    // First try straight `require()`. Unlikely to be specified relative to this
-    // file, but adds support for Lighthouse modules from npm since
-    // `require()` walks up parent directories looking inside any node_modules/
-    // present. Also handles absolute paths.
-    try {
-      return require.resolve(moduleIdentifier);
-    } catch (e) {}
-
-    // See if the module resolves relative to the current working directory.
-    // Most useful to handle the case of invoking Lighthouse as a module, since
-    // then the config is an object and so has no path.
-    const cwdPath = path.resolve(process.cwd(), moduleIdentifier);
-    try {
-      return require.resolve(cwdPath);
-    } catch (e) {}
-
-    const errorString = 'Unable to locate ' +
-        (category ? `${category}: ` : '') +
-        `${moduleIdentifier} (tried to require() from '${__dirname}' and load from '${cwdPath}'`;
-
-    if (!configDir) {
-      throw new Error(errorString + ')');
-    }
-
-    // Finally, try looking up relative to the config file path. Just like the
-    // relative path passed to `require()` is found relative to the file it's
-    // in, this allows module paths to be specified relative to the config file.
-    const relativePath = path.resolve(configDir, moduleIdentifier);
-    try {
-      return require.resolve(relativePath);
-    } catch (requireError) {}
-
-    throw new Error(errorString + ` and '${relativePath}')`);
   }
 }
 

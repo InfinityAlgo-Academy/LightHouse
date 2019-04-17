@@ -89,6 +89,7 @@ declare global {
       }
 
       export interface GathererDefn {
+        id: string;
         implementation?: typeof Gatherer;
         instance: InstanceType<typeof Gatherer>;
         path?: string;
@@ -96,6 +97,7 @@ declare global {
       }
 
       export interface AuditDefn {
+        id: string;
         implementation: typeof Audit;
         path?: string;
         options: {};
@@ -117,7 +119,7 @@ declare global {
         groups?: Record<string, LH.Config.GroupJson>;
       }
 
-      export type MergeOptionsOfItems = <T extends {path?: string, options: Record<string, any>}>(items: T[]) => T[];
+      export type MergeOptionsOfItems = <T extends {id: string, path?: string, options: Record<string, any>}>(items: T[]) => T[];
 
       export type Merge = {
         <T extends Record<string, any>, U extends Record<string, any>>(base: T|null|undefined, extension: U, overwriteArrays?: boolean): T & U;

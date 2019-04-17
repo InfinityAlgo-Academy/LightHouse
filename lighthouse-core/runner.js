@@ -271,6 +271,7 @@ class Runner {
    * @private
    */
   static async _runAudit(auditDefn, artifacts, sharedAuditContext) {
+    const auditId = auditDefn.id;
     const audit = auditDefn.implementation;
     const status = {
       msg: `Evaluating: ${i18n.getFormatted(audit.meta.title, 'en-US')}`,
@@ -336,6 +337,7 @@ class Runner {
     }
 
     log.timeEnd(status);
+    auditResult.id = auditId;
     return auditResult;
   }
 
