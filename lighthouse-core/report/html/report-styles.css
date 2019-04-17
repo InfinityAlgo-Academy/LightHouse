@@ -105,8 +105,8 @@
   --env-tem-padding: 10px 0px;
   --header-padding: 20px 0 20px 0;
   --plugin-badge-bg: var(--color-white);
-  --plugin-badge-size-big: 42px;
-  --plugin-badge-size: 36px;
+  --plugin-badge-size-big: calc(var(--circle-size-big) / 2.7);
+  --plugin-badge-size: calc(var(--circle-size) / 2.7);
   --plugin-icon-size: 65%;
   --score-container-padding: 12px;
   --score-container-width: 160px;
@@ -154,8 +154,6 @@
     --circle-size: 72px;
     --env-name-min-width: 120px;
     --header-padding: 16px 0 16px 0;
-    --plugin-badge-size-big: 32px;
-    --plugin-badge-size: 28px;
     --plugin-icon-size: 75%;
     --score-container-padding: 8px;
     --score-container-width: 112px;
