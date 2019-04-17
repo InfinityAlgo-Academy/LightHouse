@@ -716,10 +716,6 @@
   margin-bottom: var(--section-padding);
 }
 
-.lh-audit-group__caption {
-  flex: 1;
-}
-
 .lh-audit-group__itemcount {
   color: var(--color-black-600);
   font-weight: bold;

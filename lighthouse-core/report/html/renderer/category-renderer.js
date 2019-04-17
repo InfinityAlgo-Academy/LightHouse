@@ -191,12 +191,13 @@ class CategoryRenderer {
   renderAuditGroup(group) {
     const groupEl = this.dom.createElement('div', 'lh-audit-group');
 
+    // Group header DOM roughly matches the clump header DOM, and that's OK.
     const auditGroupHeader = this.dom.createElement('div', 'lh-audit-group__header');
 
     this.dom.createChildOf(auditGroupHeader, 'span', 'lh-audit-group__title')
       .textContent = group.title;
     if (group.description) {
-      const descriptionEl = this.dom.convertMarkdownLinkSnippets(` — ${group.description}`);
+      const descriptionEl = this.dom.convertMarkdownLinkSnippets(`—${group.description}`);
       descriptionEl.classList.add('lh-audit-group__description');
       auditGroupHeader.appendChild(descriptionEl);
     }
@@ -290,7 +291,7 @@ class CategoryRenderer {
     const title = this._clumpTitles[clumpId];
     this.dom.find('.lh-audit-group__title', headerEl).textContent = title;
     if (description) {
-      const descriptionEl = this.dom.convertMarkdownLinkSnippets(` — ${description}`);
+      const descriptionEl = this.dom.convertMarkdownLinkSnippets(`—${description}`);
       descriptionEl.classList.add('lh-audit-group__description');
       headerEl.appendChild(descriptionEl);
     }

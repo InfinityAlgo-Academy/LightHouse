@@ -78,7 +78,7 @@ describe('DOM', () => {
         const expectedDescription = Util.UIStrings.lsPerformanceCategoryDescription
           // Replacing markdown because ".textContent" will be post-markdown.
           .replace('[Lighthouse](https://developers.google.com/web/tools/lighthouse/)', 'Lighthouse');
-        assert.equal(title, `${Util.UIStrings.labDataTitle} — ${expectedDescription}`);
+        assert.equal(title, `${Util.UIStrings.labDataTitle}—${expectedDescription}`);
       });
 
       it('succeeds with stringified LHResult input', () => {
@@ -127,7 +127,7 @@ describe('DOM', () => {
 
         // Assume using default locale.
         const title = metricsGroupEl.querySelector('.lh-audit-group__header').textContent;
-        assert.equal(title, `${Util.UIStrings.labDataTitle} — ${expectedDescription}`);
+        assert.equal(title, `${Util.UIStrings.labDataTitle}—${expectedDescription}`);
       });
     });
   });
