@@ -5417,6 +5417,24 @@
       ],
       "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": [
         "categoryGroups[a11y-tables-lists].description"
+      ],
+      "lighthouse-core/config/default-config.js | seoMobileGroupTitle": [
+        "categoryGroups[seo-mobile].title"
+      ],
+      "lighthouse-core/config/default-config.js | seoMobileGroupDescription": [
+        "categoryGroups[seo-mobile].description"
+      ],
+      "lighthouse-core/config/default-config.js | seoContentGroupTitle": [
+        "categoryGroups[seo-content].title"
+      ],
+      "lighthouse-core/config/default-config.js | seoContentGroupDescription": [
+        "categoryGroups[seo-content].description"
+      ],
+      "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": [
+        "categoryGroups[seo-crawl].title"
+      ],
+      "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": [
+        "categoryGroups[seo-crawl].description"
       ]
     }
   },
