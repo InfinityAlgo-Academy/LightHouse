@@ -99,7 +99,7 @@ describe('Runner', () => {
     });
 
     it('-A throws if the settings change', async () => {
-      const settings = {auditMode: artifactsPath, disableDeviceEmulation: true};
+      const settings = {auditMode: artifactsPath, emulatedFormFactor: 'desktop'};
       const opts = {config: generateConfig(settings), driverMock};
       try {
         await Runner.run(null, opts);
@@ -110,7 +110,7 @@ describe('Runner', () => {
     });
 
     it('-A throws if the URL changes', async () => {
-      const settings = {auditMode: artifactsPath, disableDeviceEmulation: true};
+      const settings = {auditMode: artifactsPath, emulatedFormFactor: 'desktop'};
       const opts = {url: 'https://differenturl.com', config: generateConfig(settings), driverMock};
       try {
         await Runner.run(null, opts);

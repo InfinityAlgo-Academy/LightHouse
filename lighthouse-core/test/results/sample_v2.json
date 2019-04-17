@@ -2961,7 +2961,6 @@
     "auditMode": true,
     "gatherMode": false,
     "disableStorageReset": false,
-    "disableDeviceEmulation": false,
     "emulatedFormFactor": "mobile",
     "channel": "cli",
     "locale": "en-US",

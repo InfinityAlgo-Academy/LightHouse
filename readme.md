@@ -91,7 +91,6 @@ Options:
   --version                     Show version number                                                                                        [boolean]
   --blocked-url-patterns        Block any network requests to the specified URL patterns                                                     [array]
   --disable-storage-reset       Disable clearing the browser cache and other storage APIs before a run                                     [boolean]
-  --disable-device-emulation    Disable all device form factor emulation. Deprecated: use --emulated-form-factor=none instead              [boolean]
   --throttling-method                  Controls throttling method         [choices: "devtools", "provided", "simulate"]
   --throttling.rttMs                   Controls simulated network RTT (TCP layer)
   --throttling.throughputKbps          Controls simulated network download throughput
@@ -106,7 +105,7 @@ Examples:
   lighthouse <url> --config-path=./myconfig.js                              Runs Lighthouse with your own configuration: custom audits, report
                                                                             generation, etc.
   lighthouse <url> --output=json --output-path=./report.json --save-assets  Save trace, devtoolslog, and named JSON report.
-  lighthouse <url> --disable-device-emulation                               Disable device emulation and all throttling.
+  lighthouse <url> --emulated-form-factor=none                              Disable device emulation and all throttling.
     --throttling-method=provided
   lighthouse <url> --chrome-flags="--window-size=412,660"                   Launch Chrome with a specific window size
   lighthouse <url> --quiet --chrome-flags="--headless"                      Launch Headless Chrome, turn off logging
