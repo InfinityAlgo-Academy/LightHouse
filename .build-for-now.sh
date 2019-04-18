@@ -8,6 +8,10 @@
 
 set -x
 
+# now doesn't support node 10 yet
+cat package.json | sed 's|"node": .*|"node": "*"|' > package.json.fixed
+mv package.json.fixed package.json
+
 yarn install
 
 # Create dist if it's not already there
