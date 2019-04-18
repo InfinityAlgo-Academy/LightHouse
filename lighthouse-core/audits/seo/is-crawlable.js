@@ -139,7 +139,7 @@ class IsCrawlable extends Audit {
         const details = Audit.makeTableDetails(headings, blockingDirectives);
 
         return {
-          rawValue: blockingDirectives.length === 0,
+          score: Number(blockingDirectives.length === 0),
           details,
         };
       });

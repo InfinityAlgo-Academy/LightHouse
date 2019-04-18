@@ -28,7 +28,7 @@ describe('Resources are fetched over http/2', () => {
   it('fails when some resources were requested via http/1.x', () => {
     return UsesHTTP2Audit.audit(getArtifacts(networkRecords, URL), {computedCache: new Map()}).then(
       auditResult => {
-        assert.equal(auditResult.rawValue, false);
+        assert.equal(auditResult.score, 0);
         assert.ok(auditResult.displayValue.match('3 requests not'));
         assert.equal(auditResult.details.items.length, 3);
         assert.equal(
@@ -59,7 +59,7 @@ describe('Resources are fetched over http/2', () => {
 
     return UsesHTTP2Audit.audit(getArtifacts(h2Records, URL), {computedCache: new Map()}).then(
       auditResult => {
-        assert.equal(auditResult.rawValue, true);
+        assert.equal(auditResult.score, 1);
         assert.ok(auditResult.displayValue === '');
       }
     );
@@ -77,7 +77,7 @@ describe('Resources are fetched over http/2', () => {
     return UsesHTTP2Audit.audit(getArtifacts(clonedNetworkRecords, URL), {
       computedCache: new Map(),
     }).then(auditResult => {
-      assert.equal(auditResult.rawValue, false);
+      assert.equal(auditResult.score, 0);
       assert.ok(auditResult.displayValue.match('1 request not'));
       // Protocol is http/1.0 which we don't mark as fetched fetchedViaServiceWorker on line 73.
       assert.equal(

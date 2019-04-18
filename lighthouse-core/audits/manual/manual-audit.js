@@ -28,7 +28,7 @@ class ManualAudit extends Audit {
    */
   static audit() {
     return {
-      rawValue: false,
+      score: 0,
       // displayValue: '(needs manual verification)'
     };
   }

@@ -231,35 +231,6 @@ describe('GatherRunner', function() {
     });
   });
 
-  it('stops device emulation when disableDeviceEmulation flag is true', () => {
-    const tests = {
-      calledDeviceEmulation: false,
-      calledNetworkEmulation: false,
-      calledCpuEmulation: false,
-    };
-    const createEmulationCheck = variable => () => {
-      tests[variable] = true;
-      return true;
-    };
-    const driver = getMockedEmulationDriver(
-      createEmulationCheck('calledDeviceEmulation', false),
-      createEmulationCheck('calledNetworkEmulation', true),
-      createEmulationCheck('calledCpuEmulation', true)
-    );
-
-    return GatherRunner.setupDriver(driver, {
-      settings: {
-        disableDeviceEmulation: true,
-        throttlingMethod: 'devtools',
-        throttling: {},
-      },
-    }).then(_ => {
-      assert.equal(tests.calledDeviceEmulation, false);
-      assert.equal(tests.calledNetworkEmulation, true);
-      assert.equal(tests.calledCpuEmulation, true);
-    });
-  });
-
   it('uses correct emulation form factor', async () => {
     let emulationParams;
     const driver = getMockedEmulationDriver(

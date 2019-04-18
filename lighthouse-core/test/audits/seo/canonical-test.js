@@ -40,7 +40,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     });
   });
 
@@ -59,7 +59,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, false);
+      assert.equal(auditResult.score, 0);
       expect(auditResult.explanation)
         .toBeDisplayString('Multiple conflicting URLs (https://www.example.com, https://example.com)');
     });
@@ -79,8 +79,8 @@ describe('SEO: Document has valid canonical link', () => {
 
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      const {rawValue, explanation} = auditResult;
-      assert.equal(rawValue, false);
+      const {score, explanation} = auditResult;
+      assert.equal(score, false);
       expect(explanation).toBeDisplayString('Invalid URL (https:// example.com)');
     });
   });
@@ -99,8 +99,8 @@ describe('SEO: Document has valid canonical link', () => {
 
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      const {rawValue, explanation} = auditResult;
-      assert.equal(rawValue, false);
+      const {score, explanation} = auditResult;
+      assert.equal(score, 0);
       expect(explanation).toBeDisplayString('Relative URL (/)');
     });
   });
@@ -121,7 +121,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, false);
+      assert.equal(auditResult.score, 0);
       expect(auditResult.explanation)
         .toBeDisplayString('Points to another `hreflang` location (https://example.com/)');
     });
@@ -141,7 +141,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, false);
+      assert.equal(auditResult.score, 0);
       expect(auditResult.explanation)
         .toBeDisplayString('Points to a different domain (https://example.com/)');
     });
@@ -164,7 +164,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     const context = {computedCache: new Map()};
     const auditResult = await CanonicalAudit.audit(artifacts, context);
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 
   it('fails when canonical points to the root while current URL is not the root', () => {
@@ -181,7 +181,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, false);
+      assert.equal(auditResult.score, 0);
       expect(auditResult.explanation).toBeDisplayString('Points to the domain\'s root URL (the ' +
         'homepage), instead of an equivalent page of content');
     });
@@ -202,7 +202,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     });
   });
 
@@ -220,7 +220,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     });
   });
 
@@ -238,7 +238,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     });
   });
 
@@ -256,7 +256,7 @@ describe('SEO: Document has valid canonical link', () => {
 
     const context = {computedCache: new Map()};
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     });
   });
 });

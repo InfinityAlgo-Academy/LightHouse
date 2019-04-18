@@ -101,8 +101,6 @@ declare global {
       gatherMode?: boolean | string;
       /** Flag indicating that the browser storage should not be reset for the audit. */
       disableStorageReset?: boolean;
-      /** Flag indicating that there shouldn't be any emulation during the run. */
-      disableDeviceEmulation?: boolean;
       /** The form factor the emulation should use. */
       emulatedFormFactor?: 'mobile'|'desktop'|'none';
       /** The method used to throttle the network. */

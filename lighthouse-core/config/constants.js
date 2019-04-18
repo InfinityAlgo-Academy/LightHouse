@@ -50,7 +50,6 @@ const defaultSettings = {
   auditMode: false,
   gatherMode: false,
   disableStorageReset: false,
-  disableDeviceEmulation: false,
   emulatedFormFactor: 'mobile',
   channel: 'node',
 

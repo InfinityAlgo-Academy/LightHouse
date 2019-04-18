@@ -160,7 +160,7 @@ class Plugins extends Audit {
     const details = Audit.makeTableDetails(headings, plugins);
 
     return {
-      rawValue: plugins.length === 0,
+      score: Number(plugins.length === 0),
       details,
     };
   }

@@ -22,7 +22,7 @@ describe('UX: geolocation audit', () => {
         {entry: {source: 'deprecation', url: 'https://example.com/two'}},
       ],
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
   });
 
@@ -30,7 +30,7 @@ describe('UX: geolocation audit', () => {
     const auditResult = GeolocationOnStartAudit.audit({
       ChromeConsoleMessages: [],
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 });

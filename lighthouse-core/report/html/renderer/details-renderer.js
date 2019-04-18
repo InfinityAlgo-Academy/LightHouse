@@ -59,7 +59,7 @@ class DetailsRenderer {
 
       // Internal-only details, not for rendering.
       case 'screenshot':
-      case 'diagnostic':
+      case 'debugdata':
         return null;
       // Fallback for old LHRs, where no type meant don't render.
       case undefined:
@@ -373,7 +373,7 @@ class DetailsRenderer {
     for (const thumbnail of details.items) {
       const frameEl = this._dom.createChildOf(filmstripEl, 'div', 'lh-filmstrip__frame');
       this._dom.createChildOf(frameEl, 'img', 'lh-filmstrip__thumbnail', {
-        src: `data:image/jpeg;base64,${thumbnail.data}`,
+        src: thumbnail.data,
         alt: `Screenshot`,
       });
     }

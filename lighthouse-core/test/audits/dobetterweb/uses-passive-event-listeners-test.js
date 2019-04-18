@@ -24,7 +24,7 @@ describe('Page uses passive events listeners where applicable', () => {
       ],
     });
 
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.extendedInfo.value.length, 2);
   });
 
@@ -32,7 +32,7 @@ describe('Page uses passive events listeners where applicable', () => {
     const auditResult = PassiveEventsAudit.audit({
       ChromeConsoleMessages: [],
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.extendedInfo.value.length, 0);
   });
 });

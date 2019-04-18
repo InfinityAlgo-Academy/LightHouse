@@ -49,6 +49,7 @@
       {"id":"npm:foundation-sites:20120717","severity":"medium","semver":{"vulnerable":["<3.0.6 >=3.0.0"]}}
     ],
     "handlebars":[
+      {"id":"SNYK-JS-HANDLEBARS-174183","severity":"high","semver":{"vulnerable":[">=4.1.0 <4.1.2","<4.0.14"]}},
       {"id":"SNYK-JS-HANDLEBARS-173692","severity":"high","semver":{"vulnerable":["<4.0.13"]}},
       {"id":"npm:handlebars:20151207","severity":"medium","semver":{"vulnerable":["<4.0.0"]}},
       {"id":"npm:handlebars:20110425","severity":"medium","semver":{"vulnerable":["<=1.0.0-beta.3"]}}
@@ -57,7 +58,7 @@
       {"id":"npm:highcharts:20180225","severity":"high","semver":{"vulnerable":["<6.1.0"]}}
     ],
     "jquery":[
-      {"id":"SNYK-JS-JQUERY-174006","severity":"medium","semver":{"vulnerable":["*"]}},
+      {"id":"SNYK-JS-JQUERY-174006","severity":"medium","semver":{"vulnerable":["<3.4.0"]}},
       {"id":"npm:jquery:20160529","severity":"low","semver":{"vulnerable":["=3.0.0-rc1"]}},
       {"id":"npm:jquery:20150627","severity":"medium","semver":{"vulnerable":["<1.12.2",">=1.12.3 <2.2.2",">=2.2.3 <3.0.0"]}},
       {"id":"npm:jquery:20140902","severity":"medium","semver":{"vulnerable":[">=1.4.2 <1.6.2"]}},
@@ -78,8 +79,8 @@
     ],
     "lodash":[
       {"id":"SNYK-JS-LODASH-73639","severity":"medium","semver":{"vulnerable":["<4.17.11"]}},
-      {"id":"SNYK-JS-LODASH-73638","severity":"low","semver":{"vulnerable":["<4.17.11"]}},
-      {"id":"npm:lodash:20180130","severity":"low","semver":{"vulnerable":["<4.17.5"]}}
+      {"id":"SNYK-JS-LODASH-73638","severity":"high","semver":{"vulnerable":["<4.17.11"]}},
+      {"id":"npm:lodash:20180130","severity":"medium","semver":{"vulnerable":["<4.17.5"]}}
     ],
     "moment":[
       {"id":"npm:moment:20170905","severity":"low","semver":{"vulnerable":["<2.19.3"]}},

@@ -79,7 +79,7 @@ class UsesHTTP2Audit extends Audit {
       const details = Audit.makeTableDetails(headings, resources);
 
       return {
-        rawValue: resources.length === 0,
+        score: Number(resources.length === 0),
         displayValue: displayValue,
         extendedInfo: {
           value: {

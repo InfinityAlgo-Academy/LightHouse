@@ -369,7 +369,12 @@ declare global {
         }[];
       }
 
-      export interface MeasureEntry extends PerformanceEntry {
+      export interface MeasureEntry {
+        // From PerformanceEntry
+        readonly duration: number;
+        readonly entryType: string;
+        readonly name: string;
+        readonly startTime: number;
         /** Whether timing entry was collected during artifact gathering. */
         gather?: boolean;
       }

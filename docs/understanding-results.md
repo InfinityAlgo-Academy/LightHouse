@@ -71,7 +71,6 @@ An object containing the results of the audits, keyed by their name.
       "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/https).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "rawValue": false,
       "displayValue": "1 insecure request found",
       "details": {
         "type": "table",
@@ -121,7 +120,7 @@ An object containing information about the configuration used by Lighthouse.
   },
   "gatherMode": false,
   "disableStorageReset": false,
-  "disableDeviceEmulation": false,
+  "emulatedFormFactor": "mobile",
   "blockedUrlPatterns": null,
   "additionalTraceCategories": null,
   "extraHeaders": null,

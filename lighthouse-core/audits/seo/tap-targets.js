@@ -278,7 +278,7 @@ class TapTargets extends Audit {
       // Tap target sizes aren't important for desktop SEO, so disable the audit there.
       // On desktop people also tend to have more precise pointing devices than fingers.
       return {
-        rawValue: true,
+        score: 1,
         notApplicable: true,
       };
     }
@@ -286,7 +286,7 @@ class TapTargets extends Audit {
     const viewportMeta = await ComputedViewportMeta.request(artifacts, context);
     if (!viewportMeta.isMobileOptimized) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: str_(UIStrings.explanationViewportMetaNotOptimized),
       };
     }
@@ -323,7 +323,6 @@ class TapTargets extends Audit {
     const displayValue = str_(UIStrings.displayValue, {decimalProportion: passingTapTargetRatio});
 
     return {
-      rawValue: tableItems.length === 0,
       score,
       details,
       displayValue,
