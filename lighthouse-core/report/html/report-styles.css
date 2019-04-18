@@ -99,7 +99,6 @@
   --env-name-min-width: 220px;
   --env-tem-padding: 10px 0px;
   --header-padding: 20px 0 20px 0;
-  --polygon-square: polygon(6% 6%, 94% 6%, 94% 94%, 6% 94%);
   --polygon-triangle: polygon(50% 0, 100% 100%, 0% 100%);
   --score-container-padding: 12px;
   --score-container-width: 160px;
@@ -112,6 +111,7 @@
   --section-padding: 40px;
   --shape-margin: 7px 12px 0 4px;
   --shape-size: 12px;
+  --square-size: calc(var(--shape-size) * 0.88);
   --topbar-bg: var(--color-black-100);
   --topbar-height: 36px;
   --topbar-icon-size: 24px;
@@ -322,7 +322,8 @@
 }
 .lh-audit--average .lh-audit__score-icon {
   background: var(--color-orange);
-  clip-path: var(--polygon-square);
+  width: var(--square-size);
+  height: var(--square-size);
 }
 
 .lh-audit--fail .lh-audit__display-text {
@@ -498,7 +499,8 @@
 }
 .lh-metric--average .lh-metric__innerwrap::before {
   background: var(--color-orange);
-  clip-path: var(--polygon-square);
+  width: var(--square-size);
+  height: var(--square-size);
 }
 
 .lh-metric--fail .lh-metric__value {
