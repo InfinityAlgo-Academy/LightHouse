@@ -114,7 +114,7 @@ const defaultConfig = {
       'css-usage',
       'viewport-dimensions',
       'runtime-exceptions',
-      'chrome-console-messages',
+      'console-messages',
       'anchor-elements',
       'image-elements',
       'link-elements',

@@ -23,7 +23,7 @@ class ErrorLogs extends Audit {
       description: 'Errors logged to the console indicate unresolved problems. ' +
         'They can come from network request failures and other browser concerns.',
       failureTitle: 'Browser errors were logged to the console',
-      requiredArtifacts: ['ChromeConsoleMessages', 'RuntimeExceptions'],
+      requiredArtifacts: ['ConsoleMessages', 'RuntimeExceptions'],
     };
   }
 
@@ -32,7 +32,7 @@ class ErrorLogs extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    const consoleEntries = artifacts.ChromeConsoleMessages;
+    const consoleEntries = artifacts.ConsoleMessages;
     const runtimeExceptions = artifacts.RuntimeExceptions;
     /** @type {Array<{source: string, description: string|undefined, url: string|undefined}>} */
     const consoleRows =

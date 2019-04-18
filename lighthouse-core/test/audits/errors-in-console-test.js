@@ -13,7 +13,7 @@ const assert = require('assert');
 describe('Console error logs audit', () => {
   it('passes when no console messages were found', () => {
     const auditResult = ErrorLogsAudit.audit({
-      ChromeConsoleMessages: [],
+      ConsoleMessages: [],
       RuntimeExceptions: [],
     });
     assert.equal(auditResult.rawValue, 0);
@@ -24,7 +24,7 @@ describe('Console error logs audit', () => {
 
   it('filter out the non error logs', () => {
     const auditResult = ErrorLogsAudit.audit({
-      ChromeConsoleMessages: [
+      ConsoleMessages: [
         {
           entry: {
             level: 'info',
@@ -42,7 +42,7 @@ describe('Console error logs audit', () => {
 
   it('fails when error logs are found ', () => {
     const auditResult = ErrorLogsAudit.audit({
-      ChromeConsoleMessages: [
+      ConsoleMessages: [
         {
           entry: {
             level: 'error',
@@ -98,7 +98,7 @@ describe('Console error logs audit', () => {
 
   it('handle the case when some logs fields are undefined', () => {
     const auditResult = ErrorLogsAudit.audit({
-      ChromeConsoleMessages: [
+      ConsoleMessages: [
         {
           entry: {
             level: 'error',
@@ -119,7 +119,7 @@ describe('Console error logs audit', () => {
   // Checks bug #4188
   it('handle the case when exception info is not present', () => {
     const auditResult = ErrorLogsAudit.audit({
-      ChromeConsoleMessages: [],
+      ConsoleMessages: [],
       RuntimeExceptions: [{
         'timestamp': 1506535813608.003,
         'exceptionDetails': {

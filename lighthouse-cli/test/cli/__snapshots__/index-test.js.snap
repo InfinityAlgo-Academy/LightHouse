@@ -1084,7 +1084,7 @@ Object {
           "path": "runtime-exceptions",
         },
         Object {
-          "path": "chrome-console-messages",
+          "path": "console-messages",
         },
         Object {
           "path": "anchor-elements",

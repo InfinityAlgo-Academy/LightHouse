@@ -406,7 +406,7 @@
       }
     }
   ],
-  "ChromeConsoleMessages": [
+  "ConsoleMessages": [
     {
       "entry": {
         "source": "other",

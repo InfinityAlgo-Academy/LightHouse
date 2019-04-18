@@ -48,10 +48,32 @@ declare global {
     }
 
     /**
-     * Artifacts provided by the default gatherers. Augment this interface when adding additional
-     * gatherers.
+     * Artifacts provided by the default gatherers that are exposed to plugins with a hardended API.
+     * NOTE: any breaking changes here are considered breaking Lighthouse changes that must be done
+     * on a major version bump.
      */
-    export interface GathererArtifacts {
+    export interface PublicGathererArtifacts {
+      /** Console deprecation and intervention warnings logged by Chrome during page load. */
+      ConsoleMessages: Crdp.Log.EntryAddedEvent[];
+      /** Information on size and loading for all the images in the page. Natural size information for `picture` and CSS images is only available if the image was one of the largest 50 images. */
+      ImageElements: Artifacts.ImageElement[];
+      /** All the link elements on the page or equivalently declared in `Link` headers. @see https://html.spec.whatwg.org/multipage/links.html */
+      LinkElements: Artifacts.LinkElement[];
+      /** The values of the <meta> elements in the head. */
+      MetaElements: Array<{name: string, content?: string}>;
+      /** Set of exceptions thrown during page load. */
+      RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
+      /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
+      ScriptElements: Array<Artifacts.ScriptElement>;
+      /** The dimensions and devicePixelRatio of the loaded viewport. */
+      ViewportDimensions: Artifacts.ViewportDimensions;
+    }
+
+    /**
+     * Artifacts provided by the default gatherers. Augment this interface when adding additional
+     * gatherers. Changes to these artifacts are not considered a breaking Lighthouse change.
+     */
+    export interface GathererArtifacts extends PublicGathererArtifacts {
       /** The results of running the aXe accessibility tests on the page. */
       Accessibility: Artifacts.Accessibility;
       /** Array of all anchors on the page. */
@@ -60,8 +82,6 @@ declare global {
       AppCacheManifest: string | null;
       /** Array of all URLs cached in CacheStorage. */
       CacheContents: string[];
-      /** Console deprecation and intervention warnings logged by Chrome during page load. */
-      ChromeConsoleMessages: Crdp.Log.EntryAddedEvent[];
       /** CSS coverage information for styles used by page's final state. */
       CSSUsage: {rules: Crdp.CSS.RuleUsage[], stylesheets: Artifacts.CSSStyleSheetInfo[]};
       /** Information on the document's doctype(or null if not present), specifically the name, publicId, and systemId.
@@ -71,26 +91,18 @@ declare global {
       DOMStats: Artifacts.DOMStats;
       /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
       EmbeddedContent: Artifacts.EmbeddedContentInfo[];
-      /** All the link elements on the page or equivalently declared in `Link` headers. @see https://html.spec.whatwg.org/multipage/links.html */
-      LinkElements: Artifacts.LinkElement[];
       /** Information for font faces used in the page. */
       Fonts: Artifacts.Font[];
       /** Information on poorly sized font usage and the text affected by it. */
       FontSize: Artifacts.FontSize;
-      /** The hreflang and href values of all link[rel=alternate] nodes found in HEAD. */
-      Hreflang: {href: string, hreflang: string}[];
       /** The page's document body innerText if loaded with JavaScript disabled. */
       HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
-      /** Information on size and loading for all the images in the page. Natural size information for `picture` and CSS images is only available if the image was one of the largest 50 images. */
-      ImageElements: Artifacts.ImageElement[];
       /** JS coverage information for code used during page load. */
       JsUsage: Crdp.Profiler.ScriptCoverage[];
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       Manifest: Artifacts.Manifest | null;
-      /** The values of the <meta> elements in the head. */
-      MetaElements: Array<{name: string, content?: string}>;
       /** The URL loaded with interception */
       MixedContent: {url: string};
       /** The status code of the attempted load of the page while network access is disabled. */
@@ -103,10 +115,6 @@ declare global {
       ResponseCompression: {requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize?: number}[];
       /** Information on fetching and the content of the /robots.txt file. */
       RobotsTxt: {status: number|null, content: string|null};
-      /** Set of exceptions thrown during page load. */
-      RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
-      /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
-      ScriptElements: Array<Artifacts.ScriptElement>;
       /** Version information for all ServiceWorkers active after the first page load. */
       ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: Crdp.ServiceWorker.ServiceWorkerRegistration[]};
       /** The status of an offline fetch of the page's start_url. -1 and a explanation if missing or there was an error. */
@@ -115,8 +123,6 @@ declare global {
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** Information about tap targets including their position and size. */
       TapTargets: Artifacts.TapTarget[];
-      /** The dimensions and devicePixelRatio of the loaded viewport. */
-      ViewportDimensions: Artifacts.ViewportDimensions;
     }
 
     module Artifacts {
