@@ -116,6 +116,7 @@ class ScreenshotThumbnails extends Audit {
           }
         });
       }
+
       let base64Data;
       const cachedThumbnail = cachedThumbnails.get(frameForTimestamp);
       if (cachedThumbnail) {
@@ -129,7 +130,7 @@ class ScreenshotThumbnails extends Audit {
       thumbnails.push({
         timing: Math.round(targetTimestamp - speedline.beginning),
         timestamp: targetTimestamp * 1000,
-        data: base64Data,
+        data: `data:image/jpeg;base64,${base64Data}`,
       });
     }
 

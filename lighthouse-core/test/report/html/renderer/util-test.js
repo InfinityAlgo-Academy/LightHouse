@@ -94,8 +94,6 @@ describe('util helpers', () => {
 
   it('builds device emulation string', () => {
     const get = opts => Util.getEmulationDescriptions(opts).deviceEmulation;
-    assert.equal(get({disableDeviceEmulation: true}), 'No emulation');
-    assert.equal(get({disableDeviceEmulation: false}), 'No emulation');
     assert.equal(get({emulatedFormFactor: 'none'}), 'No emulation');
     assert.equal(get({emulatedFormFactor: 'mobile'}), 'Emulated Nexus 5X');
     assert.equal(get({emulatedFormFactor: 'desktop'}), 'Emulated Desktop');

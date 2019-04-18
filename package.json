@@ -45,7 +45,7 @@
     "devtools": "bash lighthouse-core/scripts/roll-to-devtools.sh",
     "compile-devtools": "bash lighthouse-core/scripts/compile-against-devtools.sh",
     "chrome": "node lighthouse-core/scripts/manual-chrome-launcher.js",
-    "fast": "yarn start --disable-device-emulation --throttlingMethod=provided",
+    "fast": "yarn start --emulated-form-factor=none --throttlingMethod=provided",
     "deploy-viewer": "yarn build-viewer --deploy",
     "bundlesize": "bundlesize",
     "timing-trace": "node lighthouse-core/scripts/generate-timing-trace.js",
@@ -131,7 +131,7 @@
     "zone.js": "^0.7.3"
   },
   "dependencies": {
-    "axe-core": "3.1.2",
+    "axe-core": "3.2.2",
     "chrome-launcher": "^0.10.5",
     "configstore": "^3.1.1",
     "cssstyle": "1.2.1",

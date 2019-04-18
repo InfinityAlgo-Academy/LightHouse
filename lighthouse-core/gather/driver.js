@@ -912,8 +912,12 @@ class Driver {
       /**
        * @param {LH.Crdp.Security.SecurityStateChangedEvent} event
        */
-      const securityStateChangedListener = ({securityState, explanations}) => {
-        if (securityState === 'insecure') {
+      const securityStateChangedListener = ({
+        securityState,
+        explanations,
+        schemeIsCryptographic,
+      }) => {
+        if (securityState === 'insecure' && schemeIsCryptographic) {
           cancel();
           const insecureDescriptions = explanations
             .filter(exp => exp.securityState === 'insecure')
@@ -1406,12 +1410,10 @@ class Driver {
    * @return {Promise<void>}
    */
   async beginEmulation(settings) {
-    if (!settings.disableDeviceEmulation) {
-      if (settings.emulatedFormFactor === 'mobile') {
-        await emulation.enableNexus5X(this);
-      } else if (settings.emulatedFormFactor === 'desktop') {
-        await emulation.enableDesktop(this);
-      }
+    if (settings.emulatedFormFactor === 'mobile') {
+      await emulation.enableNexus5X(this);
+    } else if (settings.emulatedFormFactor === 'desktop') {
+      await emulation.enableDesktop(this);
     }
 
     await this.setThrottling(settings, {useThrottling: true});

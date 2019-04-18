@@ -40,30 +40,6 @@ class ReportUIFeatures {
     this._copyAttempt = false;
     /** @type {HTMLElement} */
     this.exportButton; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLElement} */
-    this.headerSticky; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLElement} */
-    this.headerBackground; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLElement} */
-    this.headerContent; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLElement} */
-    this.lighthouseIcon; // eslint-disable-line no-unused-expressions
-    /** @type {!HTMLElement} */
-    this.productInfo; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLElement} */
-    this.toolbar; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLElement} */
-    this.toolbarMetadata; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLElement} */
-    this.env; // eslint-disable-line no-unused-expressions
-    /** @type {number} */
-    this.headerOverlap = 0;
-    /** @type {number} */
-    this.headerHeight = 0;
-    /** @type {number} */
-    this.latestKnownScrollY = 0;
-    /** @type {boolean} */
-    this.isAnimatingHeader = false;
 
     this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     this.onCopy = this.onCopy.bind(this);
@@ -71,7 +47,6 @@ class ReportUIFeatures {
     this.onExport = this.onExport.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.printShortCutDetect = this.printShortCutDetect.bind(this);
-    this.onScroll = this.onScroll.bind(this);
     this.onChevronClick = this.onChevronClick.bind(this);
   }
 
@@ -87,7 +62,6 @@ class ReportUIFeatures {
     this._setupMediaQueryListeners();
     this._setupExportButton();
     this._setUpCollapseDetailsAfterPrinting();
-    this._setupHeaderAnimation();
     this._resetUIState();
     this._document.addEventListener('keydown', this.printShortCutDetect);
     this._document.addEventListener('copy', this.onCopy);
@@ -126,26 +100,6 @@ class ReportUIFeatures {
 
     const dropdown = this._dom.find('.lh-export__dropdown', this._document);
     dropdown.addEventListener('click', this.onExport);
-  }
-
-  _setupHeaderAnimation() {
-    const scoresWrapper = this._dom.find('.lh-scores-wrapper', this._document);
-    const computedMarginTop = window.getComputedStyle(scoresWrapper).marginTop;
-    this.headerOverlap = parseFloat(computedMarginTop || '0');
-    this.headerSticky = this._dom.find('.lh-header-sticky', this._document);
-    this.headerBackground = this._dom.find('.lh-header-bg', this._document);
-    this.headerContent = this._dom.find('.lh-header', this._document);
-    this.lighthouseIcon = this._dom.find('.lh-lighthouse', this._document);
-    this.productInfo = this._dom.find('.lh-product-info', this._document);
-    this.toolbar = this._dom.find('.lh-toolbar', this._document);
-    this.toolbarMetadata = this._dom.find('.lh-toolbar__metadata', this._document);
-    const computedHeight = window.getComputedStyle(this.headerBackground).height;
-    this.headerHeight = parseFloat(computedHeight || '0');
-
-    this._document.addEventListener('scroll', this.onScroll, {passive: true});
-
-    const toolbarChevron = this._dom.find('.lh-toggle-arrow', this.toolbar);
-    toolbarChevron.addEventListener('click', this.onChevronClick);
   }
 
   /**
@@ -196,15 +150,6 @@ class ReportUIFeatures {
     }
   }
 
-  onScroll() {
-    this.latestKnownScrollY = window.scrollY;
-
-    if (!this.isAnimatingHeader) {
-      window.requestAnimationFrame(this.animateHeader.bind(this));
-    }
-    this.isAnimatingHeader = true;
-  }
-
   onChevronClick() {
     const toggle = this._dom.find('.lh-config__settings-toggle', this._document);
 
@@ -213,33 +158,6 @@ class ReportUIFeatures {
     } else {
       toggle.setAttribute('open', 'true');
     }
-  }
-
-  animateHeader() {
-    const collapsedHeaderHeight = 50;
-    const heightDiff = this.headerHeight - collapsedHeaderHeight + this.headerOverlap;
-    const scrollPct = Math.max(0, Math.min(1,
-      this.latestKnownScrollY / (this.headerHeight - collapsedHeaderHeight)));
-
-    this.headerSticky.style.transform = `translateY(${heightDiff * scrollPct * -1}px)`;
-    this.headerBackground.style.transform = `translateY(${scrollPct * this.headerOverlap}px)`;
-    this.lighthouseIcon.style.transform =
-      `translate3d(0,` +
-      `-${scrollPct * this.headerOverlap * -1}px, 0) scale(${1 - scrollPct})`;
-    this.headerContent.style.opacity = (1 - scrollPct).toString();
-
-    // Move the toolbar & export
-    this.toolbar.style.transform = `translateY(${heightDiff * scrollPct}px)`;
-    const exportParent = this.exportButton.parentElement;
-    if (exportParent) {
-      exportParent.style.transform = `translateY(${heightDiff * scrollPct}px)`;
-    }
-    this.exportButton.style.transform = `scale(${1 - 0.2 * scrollPct})`;
-    // Start showing the productinfo when we are at the 50% mark of our animation
-    const opacity = scrollPct < 0.5 ? 0 : (scrollPct - 0.5) * 2;
-    this.productInfo.style.opacity = this.toolbarMetadata.style.opacity = opacity.toString();
-
-    this.isAnimatingHeader = false;
   }
 
   closeExportDropdown() {

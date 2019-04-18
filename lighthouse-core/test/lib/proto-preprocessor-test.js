@@ -27,7 +27,6 @@ describe('processing for proto', () => {
         },
         'gatherMode': false,
         'disableStorageReset': false,
-        'disableDeviceEmulation': false,
         'emulatedFormFactor': 'mobile',
         'locale': 'en-US',
         'blockedUrlPatterns': null,

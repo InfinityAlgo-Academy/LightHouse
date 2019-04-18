@@ -77,6 +77,19 @@ const UIStrings = {
   '[Learn more](https://support.google.com/webmasters/answer/35769).',
   /** Description of the Search Engine Optimization (SEO) manual checks category, the additional validators must be run by hand in order to check all SEO best practices. This is displayed at the top of a list of manually run audits focused on optimizing a website for indexing by search engines. No character length limits. */
   seoCategoryManualDescription: 'Run these additional validators on your site to check additional SEO best practices.',
+  /* Title of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight opportunities to make a page more usable on mobile devices. */
+  seoMobileGroupTitle: 'Mobile Friendly',
+  /* Description of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight opportunities to make a page more usable on mobile devices. */
+  seoMobileGroupDescription: 'Make sure your pages are mobile friendly so users don’t have to pinch or zoom ' +
+  'in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/).',
+  /* Title of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight ways to make a website content more easily understood by search engine crawler bots. */
+  seoContentGroupTitle: 'Content Best Practices',
+  /* Description of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight ways to make a website content more easily understood by search engine crawler bots. */
+  seoContentGroupDescription: 'Format your HTML in a way that enables crawlers to better understand your app’s content.',
+  /* Title of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight ways to make a website accessible to search engine crawlers. */
+  seoCrawlingGroupTitle: 'Crawling and Indexing',
+  /* Description of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight ways to make a website accessible to search engine crawlers. */
+  seoCrawlingGroupDescription: 'To appear in search results, crawlers need access to your app.',
   /** Title of the Fast and Reliable section of the web app category. Within this section are audits that check if the web site loaded quickly and can reliably load even if the internet connection is very slow or goes offline. */
   pwaFastReliableGroupTitle: 'Fast and reliable',
   /** Title of the Installable section of the web app category. Within this section are audits that check if Chrome supports installing the web site as an app on their device. */
@@ -319,17 +332,16 @@ const defaultConfig = {
       description: str_(UIStrings.a11yTablesListsVideoGroupDescription),
     },
     'seo-mobile': {
-      title: 'Mobile Friendly',
-      description: 'Make sure your pages are mobile friendly so users don’t have to pinch or zoom ' +
-          'in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/).',
+      title: str_(UIStrings.seoMobileGroupTitle),
+      description: str_(UIStrings.seoMobileGroupDescription),
     },
     'seo-content': {
-      title: 'Content Best Practices',
-      description: 'Format your HTML in a way that enables crawlers to better understand your app’s content.',
+      title: str_(UIStrings.seoContentGroupTitle),
+      description: str_(UIStrings.seoContentGroupDescription),
     },
     'seo-crawl': {
-      title: 'Crawling and Indexing',
-      description: 'To appear in search results, crawlers need access to your app.',
+      title: str_(UIStrings.seoCrawlingGroupTitle),
+      description: str_(UIStrings.seoCrawlingGroupDescription),
     },
   },
   categories: {
