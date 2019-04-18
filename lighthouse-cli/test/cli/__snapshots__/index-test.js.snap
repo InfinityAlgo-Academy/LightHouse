@@ -964,6 +964,11 @@ Object {
         },
         Object {
           "group": "seo-content",
+          "id": "image-alt",
+          "weight": 1,
+        },
+        Object {
+          "group": "seo-content",
           "id": "hreflang",
           "weight": 1,
         },

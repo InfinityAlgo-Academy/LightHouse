@@ -3492,6 +3492,11 @@
           "group": "seo-crawl"
         },
         {
+          "id": "image-alt",
+          "weight": 1,
+          "group": "seo-content"
+        },
+        {
           "id": "hreflang",
           "weight": 1,
           "group": "seo-content"
@@ -3522,7 +3527,7 @@
         }
       ],
       "id": "seo",
-      "score": 0.9
+      "score": 0.82
     },
     "pwa": {
       "title": "Progressive Web App",

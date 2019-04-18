@@ -3480,6 +3480,11 @@
                 }, 
                 {
                     "group": "seo-content", 
+                    "id": "image-alt", 
+                    "weight": 1.0
+                }, 
+                {
+                    "group": "seo-content", 
                     "id": "hreflang", 
                     "weight": 1.0
                 }, 
@@ -3511,7 +3516,7 @@
             "description": "These checks ensure that your page is optimized for search engine results ranking. There are additional factors Lighthouse does not check that may affect your search ranking. [Learn more](https://support.google.com/webmasters/answer/35769).", 
             "id": "seo", 
             "manualDescription": "Run these additional validators on your site to check additional SEO best practices.", 
-            "score": 0.9, 
+            "score": 0.82, 
             "title": "SEO"
         }
     }, 

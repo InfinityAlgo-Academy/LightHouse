@@ -475,6 +475,7 @@ const defaultConfig = {
         {id: 'link-text', weight: 1, group: 'seo-content'},
         {id: 'is-crawlable', weight: 1, group: 'seo-crawl'},
         {id: 'robots-txt', weight: 1, group: 'seo-crawl'},
+        {id: 'image-alt', weight: 1, group: 'seo-content'},
         {id: 'hreflang', weight: 1, group: 'seo-content'},
         {id: 'canonical', weight: 1, group: 'seo-content'},
         {id: 'font-size', weight: 1, group: 'seo-mobile'},
