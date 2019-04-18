@@ -10,12 +10,30 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
+const {runLighthouse} = require('../../lighthouse-cli/run.js');
 
 const ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
-const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
+const v2 = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
 
-console.log('🕒 Generating report for sample_v2.json...');
-const html = ReportGenerator.generateReport(lhr, 'html');
-const filename = path.join(__dirname, '../../dist/index.html');
-fs.writeFileSync(filename, html, {encoding: 'utf-8'});
-console.log('✅', filename, 'written.');
+(async function() {
+  const flags = {
+    auditMode: './lighthouse-core/test/results/artifacts',
+    throttlingMethod: 'devtools',
+    output: [],
+  };
+  // @ts-ignore
+  const runnerResultAr = await runLighthouse(undefined, {locale: 'ar', ...flags}, undefined);
+
+  const filenameSlugToLHR = {
+    'index': v2,
+    'index.ar': runnerResultAr.lhr,
+  };
+
+  // Generate and write reports
+  Object.entries(filenameSlugToLHR).forEach(([slug, lhr]) => {
+    const html = ReportGenerator.generateReport(lhr, 'html');
+    const filename = path.join(__dirname, `../../dist/${slug}.html`);
+    fs.writeFileSync(filename, html, {encoding: 'utf-8'});
+    console.log('✅', filename, 'written.');
+  });
+})();
