@@ -6,9 +6,6 @@
       "use": "@now/static-build"
     }
   ],
-  "engines": {
-    "node": ">=10.13"
-  },
   "github": {
     "silent": true
   }

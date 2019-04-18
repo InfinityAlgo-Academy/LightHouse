@@ -9,7 +9,8 @@
 set -x
 
 # Manually install this one report dependency. Avoid installing all deps (for speed)
-yarn install --production
+rm package.json
+yarn add details-element-polyfill@2.2.0
 
 # Create dist if it's not already there
 mkdir -p dist

@@ -13,12 +13,12 @@ const path = require('path');
 const replaceLHRLocale = require('./i18n/swap-in-new-locale.js');
 
 const ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
-const v2 = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
+const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
 
 (async function() {
   const filenameToLhr = {
-    'index.html': v2,
-    'index.ar.html': replaceLHRLocale(JSON.parse(JSON.stringify(v2)), 'ar'),
+    'index.html': lhr,
+    'index.ar.html': replaceLHRLocale(JSON.parse(JSON.stringify(lhr)), 'ar'),
   };
 
   // Generate and write reports
