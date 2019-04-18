@@ -76,10 +76,7 @@
   --lh-section-vpadding: 12px;
   --chevron-size: 12px;
 
-  /* TODO(cjamcl) clean up unused variables. */
-  --audits-margin-bottom: 40px;
-  --circle-size-big: 120px;
-  --circle-size: 96px;
+  /* Palette. */
   --color-black-100: #F5F5F5;
   --color-black-200: #E0E0E0;
   --color-black-400: #BDBDBD;
@@ -95,6 +92,11 @@
   --color-red-700: #EB0F00;
   --color-red: #FF4E42;
   --color-white: #FFFFFF;
+
+  /* TODO(cjamcl) clean up unused variables. */
+  --audits-margin-bottom: 40px;
+  --circle-size-big: 120px;
+  --circle-size: 96px;
   --env-item-bg: var(--color-black-100);
   --env-name-min-width: 220px;
   --env-tem-padding: 10px 0px;
@@ -115,6 +117,13 @@
   --topbar-height: 36px;
   --topbar-icon-size: 24px;
   --topbar-padding: 0 8px;
+
+  --color-average-secondary: var(--color-orange-700);
+  --color-average: var(--color-orange);
+  --color-fail-secondary: var(--color-red-700);
+  --color-fail: var(--color-red);
+  --color-pass-secondary: var(--color-green-700);
+  --color-pass: var(--color-green);
 
   --logo-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192"><g fill="none" fill-rule="evenodd"><path d="M0 0h192v192H0z"/><path d="M67.705 179.352l2.603-20.82 49.335-16.39 4.652 37.21A87.893 87.893 0 0 1 96 184a87.893 87.893 0 0 1-28.295-4.648zM52.44 172.48C25.894 157.328 8 128.754 8 96 8 47.399 47.399 8 96 8s88 39.399 88 88c0 32.754-17.894 61.328-44.44 76.48L130 96h6V80h-8V48L96 28 64 48v32h-8v16h6l-9.56 76.48zM113.875 96l2.882 23.05-43.318 14.433L78.125 96h35.75zM80 80V56.868l16-10 16 10V80H80z" fill="%23000000"/></g></svg>');
 
@@ -309,29 +318,29 @@
 }
 
 .lh-audit--pass .lh-audit__display-text {
-  color: var(--color-green-700);
+  color: var(--color-pass-secondary);
 }
 .lh-audit--pass .lh-audit__score-icon {
   border-radius: 100%;
-  background: var(--color-green);
+  background: var(--color-pass);
 }
 
 .lh-audit--average .lh-audit__display-text {
-  color: var(--color-orange-700);
+  color: var(--color-average-secondary);
 }
 .lh-audit--average .lh-audit__score-icon {
-  background: var(--color-orange);
+  background: var(--color-average);
   width: var(--square-size);
   height: var(--square-size);
 }
 
 .lh-audit--fail .lh-audit__display-text {
-  color: var(--color-red-700);
+  color: var(--color-fail-secondary);
 }
 .lh-audit--fail .lh-audit__score-icon {
   border-left: calc(var(--shape-size) / 2) solid transparent;
   border-right: calc(var(--shape-size) / 2) solid transparent;
-  border-bottom: var(--shape-size) solid var(--color-red);
+  border-bottom: var(--shape-size) solid var(--color-fail);
 }
 
 .lh-audit--manual .lh-audit__display-text,
@@ -487,34 +496,34 @@
 }
 
 .lh-metric--pass .lh-metric__value {
-  color: var(--color-green-700);
+  color: var(--color-pass-secondary);
 }
 .lh-metric--pass .lh-metric__innerwrap::before {
   border-radius: 100%;
-  background: var(--color-green);
+  background: var(--color-pass);
 }
 
 .lh-metric--average .lh-metric__value {
-  color: var(--color-orange-700);
+  color: var(--color-average-secondary);
 }
 .lh-metric--average .lh-metric__innerwrap::before {
-  background: var(--color-orange);
+  background: var(--color-average);
   width: var(--square-size);
   height: var(--square-size);
 }
 
 .lh-metric--fail .lh-metric__value {
-  color: var(--color-red-700);
+  color: var(--color-fail-secondary);
 }
 .lh-metric--fail .lh-metric__innerwrap::before {
   border-left: calc(var(--shape-size) / 2) solid transparent;
   border-right: calc(var(--shape-size) / 2) solid transparent;
-  border-bottom: var(--shape-size) solid var(--color-red);
+  border-bottom: var(--shape-size) solid var(--color-fail);
 }
 
 .lh-metric--error .lh-metric__value,
 .lh-metric--error .lh-metric__description {
-  color: var(--color-red-700);
+  color: var(--color-fail-secondary);
 }
 
 /* Hide icon if there was an error */
@@ -574,15 +583,15 @@
 }
 
 .lh-audit--pass .lh-sparkline__bar {
-  background: var(--color-green);
+  background: var(--color-pass);
 }
 
 .lh-audit--average .lh-sparkline__bar {
-  background: var(--color-orange);
+  background: var(--color-average);
 }
 
 .lh-audit--fail .lh-sparkline__bar {
-  background: var(--color-red);
+  background: var(--color-fail);
 }
 
 
@@ -630,7 +639,7 @@
 }
 
 .lh-audit--error .lh-audit__display-text {
-  color: var(--color-red);
+  color: var(--color-fail);
 }
 
 /* Audit Group */
@@ -740,7 +749,7 @@
 }
 
 .lh-audit--fail .lh-audit-explanation {
-  color: var(--color-red);
+  color: var(--color-fail);
 }
 
 /* Report */
@@ -789,7 +798,7 @@
 
 .lh-warnings {
   --item-margin: calc(var(--body-line-height) / 6);
-  border: 1px solid var(--color-orange);
+  border: 1px solid var(--color-average);
   border-radius: 4px;
   margin: var(--lh-audit-vpadding) 0;
   padding: calc(var(--lh-audit-vpadding) / 2) var(--lh-audit-vpadding);
@@ -858,15 +867,15 @@
 }
 
 .lh-scorescale-range--pass::before {
-  background-color: var(--color-green);
+  background-color: var(--color-pass);
 }
 
 .lh-scorescale-range--average::before {
-  background-color: var(--color-orange);
+  background-color: var(--color-average);
 }
 
 .lh-scorescale-range--fail::before {
-  background-color: var(--color-red);
+  background-color: var(--color-fail);
 }
 
 /* Hide category score gauages if it's a single category report */
