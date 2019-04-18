@@ -17,9 +17,10 @@ const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/result
 
 (async function() {
   const filenameToLhr = {
-    'index.ar.html': replaceLHRLocale(JSON.parse(JSON.stringify(lhr)), 'ar'),
-    // Last file to be written is served as the root
     'index.html': lhr,
+    'index.ar.html': replaceLHRLocale(JSON.parse(JSON.stringify(lhr)), 'ar'),
+    // Now serves the first alphabetical file as the root
+    'index.aaaaaaaaaaaaaaaaaaaaa.html': lhr,
   };
 
   // Generate and write reports
