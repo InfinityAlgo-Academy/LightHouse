@@ -56,8 +56,11 @@ limitations under the License.
   <details class="lh-clump lh-audit-group">
     <summary>
       <div class="lh-audit-group__summary">
-        <div class="lh-audit-group__header"></div>
-        <div class="lh-audit-group__itemcount"></div>
+        <div class="lh-audit-group__header">
+          <span class="lh-audit-group__title"></span>
+          <span class="lh-audit-group__itemcount"></span>
+          <!-- .lh-audit-group__description will be added here -->
+        </div>
         <div class=""></div>
       </div>
     </summary>
@@ -70,10 +73,9 @@ limitations under the License.
     <details class="lh-expandable-details">
       <summary>
         <div class="lh-audit__header lh-expandable-details__summary">
-          <span class="lh-audit__index"></span>
+          <span class="lh-audit__score-icon"></span>
           <span class="lh-audit__title"></span>
           <span class="lh-audit__display-text"></span>
-          <div class="lh-audit__score-icon"></div>
           <div class="lh-chevron-container"></div>
         </div>
       </summary>
@@ -102,7 +104,7 @@ limitations under the License.
           <div class="lh-audit__header lh-expandable-details__summary">
             <div class="lh-load-opportunity__cols">
               <div class="lh-load-opportunity__col lh-load-opportunity__col--one">
-                <span class="lh-audit__index"></span>
+                <span class="lh-audit__score-icon"></span>
                 <div class="lh-audit__title"></div>
               </div>
               <div class="lh-load-opportunity__col lh-load-opportunity__col--two">
@@ -455,32 +457,32 @@ limitations under the License.
 <template id="tmpl-lh-gauge">
   <style>
     .lh-gauge__wrapper--pass {
-      color: var(--color-green);
-      fill: var(--color-green);
-      stroke: var(--color-green);
+      color: var(--color-pass);
+      fill: var(--color-pass);
+      stroke: var(--color-pass);
     }
 
     .lh-gauge__wrapper--average {
-      color: var(--color-orange);
-      fill: var(--color-orange);
-      stroke: var(--color-orange);
+      color: var(--color-average);
+      fill: var(--color-average);
+      stroke: var(--color-average);
     }
 
     .lh-gauge__wrapper--fail {
-      color: var(--color-red);
-      fill: var(--color-red);
-      stroke: var(--color-red);
+      color: var(--color-fail);
+      fill: var(--color-fail);
+      stroke: var(--color-fail);
     }
 
     .lh-gauge {
       stroke-linecap: round;
-      width: var(--circle-size);
-      height: var(--circle-size);
+      width: var(--gauge-circle-size);
+      height: var(--gauge-circle-size);
     }
 
     .lh-category .lh-gauge {
-      width: var(--circle-size-big);
-      height: var(--circle-size-big);
+      width: var(--gauge-circle-size-big);
+      height: var(--gauge-circle-size-big);
     }
 
     .lh-gauge-base {
@@ -510,13 +512,19 @@ limitations under the License.
       font-size: var(--score-number-font-size);
       line-height: var(--score-number-font-size);
       text-align: center;
-      top: calc(var(--circle-size) / 3);
+      top: calc(var(--gauge-circle-size) / 3);
+    }
+
+    .lh-category .lh-gauge__percentage {
+      font-size: var(--score-number-fontsize-big);
+      line-height: var(--score-number-fontsize-big);
+      top: calc(var(--gauge-circle-size-big) / 3);
     }
 
     .lh-category .lh-gauge__percentage {
       font-size: var(--score-number-font-size-big);
       line-height: var(--score-number-font-size-big);
-      top: calc(var(--circle-size-big) / 3);
+      top: calc(var(--gauge-circle-size-big) / 3);
     }
 
     .lh-gauge__wrapper {
@@ -836,7 +844,7 @@ limitations under the License.
         .lh-snippet__line--message code {
           padding: 10px;
           padding-left: 5px;
-          color: var(--fail-color);
+          color: var(--color-fail);
           font-family: var(--text-font-family);
         }
         .lh-snippet__line--message code {
@@ -854,8 +862,8 @@ limitations under the License.
           display: inline-block;
           vertical-align: middle;
           margin-right: 4px;
-          width: var(--lh-score-icon-width);
-          height: var(--lh-score-icon-width);
+          width: var(--icon-shape-size);
+          height: var(--icon-shape-size);
           background-image: var(--fail-icon-url);
         }
         .lh-snippet__line-number {

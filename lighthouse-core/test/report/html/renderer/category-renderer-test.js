@@ -265,32 +265,6 @@ describe('CategoryRenderer', () => {
       assert.equal(auditsElements.length, category.auditRefs.length);
     });
 
-    it('increments the audit index across groups', () => {
-      const elem = renderer.render(category, sampleResults.categoryGroups);
-
-      const passedAudits = elem.querySelectorAll('.lh-clump--passed .lh-audit__index');
-      const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit__index');
-      const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit__index');
-      const notApplicableAudits =
-        elem.querySelectorAll('.lh-clump--notapplicable .lh-audit__index');
-
-      const assertAllTheIndices = (nodeList) => {
-        // Must be at least one for a decent test.
-        assert.ok(nodeList.length > 0);
-
-        // Assert indices are continuous, starting at 1.
-        nodeList.forEach((node, i) => {
-          const auditIndex = Number.parseInt(node.textContent);
-          assert.strictEqual(auditIndex, i + 1);
-        });
-      };
-
-      assertAllTheIndices(passedAudits);
-      assertAllTheIndices(failedAudits);
-      assertAllTheIndices(manualAudits);
-      assertAllTheIndices(notApplicableAudits);
-    });
-
     it('renders audits without a group before grouped ones', () => {
       const categoryClone = JSON.parse(JSON.stringify(category));
 

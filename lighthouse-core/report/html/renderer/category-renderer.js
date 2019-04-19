@@ -54,22 +54,20 @@ class CategoryRenderer {
 
   /**
    * @param {LH.ReportResult.AuditRef} audit
-   * @param {number} index
    * @return {Element}
    */
-  renderAudit(audit, index) {
+  renderAudit(audit) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-audit', this.templateContext);
-    return this.populateAuditValues(audit, index, tmpl);
+    return this.populateAuditValues(audit, tmpl);
   }
 
   /**
    * Populate an DOM tree with audit details. Used by renderAudit and renderOpportunity
    * @param {LH.ReportResult.AuditRef} audit
-   * @param {number} index
    * @param {DocumentFragment} tmpl
    * @return {Element}
    */
-  populateAuditValues(audit, index, tmpl) {
+  populateAuditValues(audit, tmpl) {
     const auditEl = this.dom.find('.lh-audit', tmpl);
     auditEl.id = audit.result.id;
     const scoreDisplayMode = audit.result.scoreDisplayMode;
@@ -109,7 +107,6 @@ class CategoryRenderer {
         header.appendChild(elem);
       }
     }
-    this.dom.find('.lh-audit__index', auditEl).textContent = `${index + 1}`;
 
     // Add chevron SVG to the end of the summary
     this.dom.find('.lh-chevron-container', auditEl).appendChild(this._createChevron());
@@ -193,16 +190,17 @@ class CategoryRenderer {
    */
   renderAuditGroup(group) {
     const groupEl = this.dom.createElement('div', 'lh-audit-group');
-    const summaryEl = this.dom.createChildOf(groupEl, 'div');
-    const summaryInnerEl = this.dom.createChildOf(summaryEl, 'div', 'lh-audit-group__summary');
-    const headerEl = this.dom.createChildOf(summaryInnerEl, 'div', 'lh-audit-group__header');
 
+    const auditGroupHeader = this.dom.createElement('div', 'lh-audit-group__header');
+
+    this.dom.createChildOf(auditGroupHeader, 'span', 'lh-audit-group__title')
+      .textContent = group.title;
     if (group.description) {
-      const auditGroupDescription = this.dom.createElement('div', 'lh-audit-group__description');
-      auditGroupDescription.appendChild(this.dom.convertMarkdownLinkSnippets(group.description));
-      groupEl.appendChild(auditGroupDescription);
+      const descriptionEl = this.dom.convertMarkdownLinkSnippets(group.description);
+      descriptionEl.classList.add('lh-audit-group__description');
+      auditGroupHeader.appendChild(descriptionEl);
     }
-    headerEl.textContent = group.title;
+    groupEl.appendChild(auditGroupHeader);
 
     return groupEl;
   }
@@ -232,14 +230,12 @@ class CategoryRenderer {
 
     /** @type {Array<Element>} */
     const auditElements = [];
-    // Continuous numbering across all groups.
-    let index = 0;
 
     for (const [groupId, groupAuditRefs] of grouped) {
       if (groupId === notAGroup) {
         // Push not-grouped audits individually.
         for (const auditRef of groupAuditRefs) {
-          auditElements.push(this.renderAudit(auditRef, index++));
+          auditElements.push(this.renderAudit(auditRef));
         }
         continue;
       }
@@ -248,7 +244,7 @@ class CategoryRenderer {
       const groupDef = groupDefinitions[groupId];
       const auditGroupElem = this.renderAuditGroup(groupDef);
       for (const auditRef of groupAuditRefs) {
-        auditGroupElem.appendChild(this.renderAudit(auditRef, index++));
+        auditGroupElem.appendChild(this.renderAudit(auditRef));
       }
       auditGroupElem.classList.add(`lh-audit-group--${groupId}`);
       auditElements.push(auditGroupElem);
@@ -292,17 +288,15 @@ class CategoryRenderer {
 
     const headerEl = this.dom.find('.lh-audit-group__header', clumpElement);
     const title = this._clumpTitles[clumpId];
-    headerEl.textContent = title;
+    this.dom.find('.lh-audit-group__title', headerEl).textContent = title;
     if (description) {
-      const markdownDescriptionEl = this.dom.convertMarkdownLinkSnippets(description);
-      const auditGroupDescription = this.dom.createElement('div', 'lh-audit-group__description');
-      auditGroupDescription.appendChild(markdownDescriptionEl);
-      clumpElement.appendChild(auditGroupDescription);
+      const descriptionEl = this.dom.convertMarkdownLinkSnippets(description);
+      descriptionEl.classList.add('lh-audit-group__description');
+      headerEl.appendChild(descriptionEl);
     }
 
     const itemCountEl = this.dom.find('.lh-audit-group__itemcount', clumpElement);
-    // TODO(i18n): support multiple locales here
-    itemCountEl.textContent = `${auditRefs.length} audits`;
+    itemCountEl.textContent = `(${auditRefs.length})`;
 
     // Add all audit results to the clump.
     const auditElements = auditRefs.map(this.renderAudit.bind(this));
