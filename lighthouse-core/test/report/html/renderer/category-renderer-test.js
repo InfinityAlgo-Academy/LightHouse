@@ -145,13 +145,14 @@ describe('CategoryRenderer', () => {
     const audits = categoryDOM.querySelectorAll('.lh-audit');
     assert.equal(audits.length, category.auditRefs.length, 'renders correct number of audits');
 
-    assert.equal(categoryDOM.querySelector('.lh-gauge__wrapper--plugin'), null);
+    // No plugin categories in sampleResults.
+    assert.equal(
+      categoryDOM.querySelector('.lh-gauge__wrapper--plugin'), null, 'renders no plugin badges');
   });
 
   it('plugin category has plugin badge', () => {
     const category = JSON.parse(
       JSON.stringify(sampleResults.reportCategories.find(c => c.id === 'seo')));
-    // Any category not of the core
     category.id = 'lighthouse-plugin-someplugin';
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     assert.ok(categoryDOM.querySelector('.lh-gauge__wrapper--plugin'));

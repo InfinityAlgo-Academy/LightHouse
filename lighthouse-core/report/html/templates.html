@@ -497,11 +497,11 @@ limitations under the License.
         animation-delay: 250ms;
     }
 
-    /* The plugin badge overlay */
     .lh-gauge__svg-wrapper {
       position: relative;
     }
-    .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper:before {
+    /* The plugin badge overlay */
+    .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
       width: var(--plugin-badge-size);
       height: var(--plugin-badge-size);
       background-color: var(--plugin-badge-bg);
@@ -518,7 +518,7 @@ limitations under the License.
       box-shadow: 0 0 4px rgba(0,0,0,.2);
       border-radius: 25%;
     }
-    .lh-category .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper:before {
+    .lh-category .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
       width: var(--plugin-badge-size-big);
       height: var(--plugin-badge-size-big);
     }
