@@ -164,7 +164,7 @@ class Util {
    */
   static formatNumber(number, granularity = 0.1) {
     const coarseValue = Math.round(number / granularity) * granularity;
-    return coarseValue.toLocaleString(Util.numberDateLocale);
+    return Util.numberFormatter.format(coarseValue);
   }
 
   /**
@@ -173,9 +173,8 @@ class Util {
    * @return {string}
    */
   static formatBytesToKB(size, granularity = 0.1) {
-    const kbs = (Math.round(size / 1024 / granularity) * granularity)
-      .toLocaleString(Util.numberDateLocale);
-    return `${kbs}${NBSP}KB`;
+    const kbs = Math.round(size / 1024 / granularity) * granularity;
+    return `${Util.numberFormatter.format(kbs)}${NBSP}KB`;
   }
 
   /**
@@ -185,7 +184,7 @@ class Util {
    */
   static formatMilliseconds(ms, granularity = 10) {
     const coarseTime = Math.round(ms / granularity) * granularity;
-    return `${coarseTime.toLocaleString(Util.numberDateLocale)}${NBSP}ms`;
+    return `${Util.numberFormatter.format(coarseTime)}${NBSP}ms`;
   }
 
   /**
@@ -195,7 +194,7 @@ class Util {
    */
   static formatSeconds(ms, granularity = 0.1) {
     const coarseTime = Math.round(ms / 1000 / granularity) * granularity;
-    return `${coarseTime.toLocaleString(Util.numberDateLocale)}${NBSP}s`;
+    return `${Util.numberFormatter.format(coarseTime)}${NBSP}s`;
   }
 
   /**
@@ -420,6 +419,8 @@ class Util {
 
     // When testing, use a locale with more exciting numeric formatting
     if (Util.numberDateLocale === 'en-XA') Util.numberDateLocale = 'de';
+
+    Util.numberFormatter = new Intl.NumberFormat(Util.numberDateLocale);
   }
 
   /**
@@ -470,6 +471,8 @@ class Util {
  * @type {LH.Locale}
  */
 Util.numberDateLocale = 'en';
+
+Util.numberFormatter = new Intl.NumberFormat(Util.numberDateLocale);
 
 /**
  * Report-renderer-specific strings.
