@@ -260,6 +260,20 @@ function getFormatted(icuMessageIdOrRawString, locale) {
 }
 
 /**
+ * @param {LH.Locale} locale
+ * @param {string} icuMessageId
+ * @param {*} [values]
+ * @return {string}
+ */
+function formatMessageFromIdWithValues(locale, icuMessageId, values) {
+  const icuMessageIdRegex = /(.* \| .*)$/;
+  if (!icuMessageIdRegex.test(icuMessageId)) throw new Error('This is not an ICU message ID');
+
+  const {formattedString} = _formatIcuMessage(locale, icuMessageId, '', values);
+  return formattedString;
+}
+
+/**
  * @param {string} icuMessageInstanceId
  * @param {LH.Locale} locale
  * @return {{icuMessageInstance: IcuMessageInstance, formattedString: string}}
@@ -331,6 +345,7 @@ module.exports = {
   getRendererFormattedStrings,
   createMessageInstanceIdFn,
   getFormatted,
+  formatMessageFromIdWithValues,
   replaceIcuMessageInstanceIds,
   isIcuMessage,
 };

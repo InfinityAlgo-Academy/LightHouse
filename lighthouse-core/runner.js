@@ -234,6 +234,7 @@ class Runner {
         gatherMode: undefined,
         auditMode: undefined,
         output: undefined,
+        channel: undefined,
       };
       const normalizedGatherSettings = Object.assign({}, artifacts.settings, overrides);
       const normalizedAuditSettings = Object.assign({}, settings, overrides);
