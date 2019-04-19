@@ -499,6 +499,32 @@ limitations under the License.
         animation-delay: 250ms;
     }
 
+    .lh-gauge__svg-wrapper {
+      position: relative;
+    }
+    /* The plugin badge overlay */
+    .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
+      width: var(--plugin-badge-size);
+      height: var(--plugin-badge-size);
+      background-color: var(--plugin-badge-bg);
+      background-image: var(--plugin-icon-url);
+      background-repeat: no-repeat;
+      background-size: var(--plugin-icon-size);
+      background-position: 58% 50%;
+      content: "";
+      position: absolute;
+      right: -6px;
+      bottom: -2px;
+      display: block;
+      z-index: 100;
+      box-shadow: 0 0 4px rgba(0,0,0,.2);
+      border-radius: 25%;
+    }
+    .lh-category .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
+      width: var(--plugin-badge-size-big);
+      height: var(--plugin-badge-size-big);
+    }
+
     @keyframes load-gauge {
       from { stroke-dasharray: 0 352; }
     }
@@ -557,10 +583,13 @@ limitations under the License.
 
   </style>
   <a href="#" class="lh-gauge__wrapper">
-    <svg viewBox="0 0 120 120" class="lh-gauge">
-      <circle class="lh-gauge-base" r="56" cx="60" cy="60"></circle>
-      <circle class="lh-gauge-arc" transform="rotate(-90 60 60)" r="56" cx="60" cy="60"></circle>
-    </svg>
+    <!-- Wrapper exists for the ::before plugin icon. Cannot create pseudo-elements on svgs. -->
+    <div class="lh-gauge__svg-wrapper">
+      <svg viewBox="0 0 120 120" class="lh-gauge">
+        <circle class="lh-gauge-base" r="56" cx="60" cy="60"></circle>
+        <circle class="lh-gauge-arc" transform="rotate(-90 60 60)" r="56" cx="60" cy="60"></circle>
+      </svg>
+    </div>
     <div class="lh-gauge__percentage"></div>
     <!-- TODO: should likely be an h2  -->
     <div class="lh-gauge__label"></div>

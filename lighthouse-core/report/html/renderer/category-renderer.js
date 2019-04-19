@@ -325,6 +325,10 @@ class CategoryRenderer {
     wrapper.href = `#${category.id}`;
     wrapper.classList.add(`lh-gauge__wrapper--${Util.calculateRating(category.score)}`);
 
+    if (Util.isPluginCategory(category.id)) {
+      wrapper.classList.add('lh-gauge__wrapper--plugin');
+    }
+
     // Cast `null` to 0
     const numericScore = Number(category.score);
     const gauge = this.dom.find('.lh-gauge', tmpl);
