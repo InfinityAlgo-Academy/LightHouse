@@ -53,13 +53,12 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
   /**
    * @param {LH.ReportResult.AuditRef} audit
-   * @param {number} index
    * @param {number} scale
    * @return {Element}
    */
-  _renderOpportunity(audit, index, scale) {
+  _renderOpportunity(audit, scale) {
     const oppTmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity', this.templateContext);
-    const element = this.populateAuditValues(audit, index, oppTmpl);
+    const element = this.populateAuditValues(audit, oppTmpl);
     element.id = audit.result.id;
 
     if (!audit.result.details || audit.result.scoreDisplayMode === 'error') {
@@ -182,8 +181,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
       const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
       groupEl.appendChild(headerEl);
-      opportunityAudits.forEach((item, i) =>
-          groupEl.appendChild(this._renderOpportunity(item, i, scale)));
+      opportunityAudits.forEach(item => groupEl.appendChild(this._renderOpportunity(item, scale)));
       groupEl.classList.add('lh-audit-group--load-opportunities');
       element.appendChild(groupEl);
     }
@@ -199,7 +197,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     if (diagnosticAudits.length) {
       const groupEl = this.renderAuditGroup(groups['diagnostics']);
-      diagnosticAudits.forEach((item, i) => groupEl.appendChild(this.renderAudit(item, i)));
+      diagnosticAudits.forEach(item => groupEl.appendChild(this.renderAudit(item)));
       groupEl.classList.add('lh-audit-group--diagnostics');
       element.appendChild(groupEl);
     }

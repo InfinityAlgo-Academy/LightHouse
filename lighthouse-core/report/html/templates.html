@@ -56,8 +56,11 @@ limitations under the License.
   <details class="lh-clump lh-audit-group">
     <summary>
       <div class="lh-audit-group__summary">
-        <div class="lh-audit-group__header"></div>
-        <div class="lh-audit-group__itemcount"></div>
+        <div class="lh-audit-group__header">
+          <span class="lh-audit-group__title"></span>
+          <span class="lh-audit-group__itemcount"></span>
+          <!-- .lh-audit-group__description will be added here -->
+        </div>
         <div class=""></div>
       </div>
     </summary>
@@ -70,10 +73,9 @@ limitations under the License.
     <details class="lh-expandable-details">
       <summary>
         <div class="lh-audit__header lh-expandable-details__summary">
-          <span class="lh-audit__index"></span>
+          <span class="lh-audit__score-icon"></span>
           <span class="lh-audit__title"></span>
           <span class="lh-audit__display-text"></span>
-          <div class="lh-audit__score-icon"></div>
           <div class="lh-chevron-container"></div>
         </div>
       </summary>
@@ -102,7 +104,7 @@ limitations under the License.
           <div class="lh-audit__header lh-expandable-details__summary">
             <div class="lh-load-opportunity__cols">
               <div class="lh-load-opportunity__col lh-load-opportunity__col--one">
-                <span class="lh-audit__index"></span>
+                <span class="lh-audit__score-icon"></span>
                 <div class="lh-audit__title"></div>
               </div>
               <div class="lh-load-opportunity__col lh-load-opportunity__col--two">
@@ -455,32 +457,31 @@ limitations under the License.
 <template id="tmpl-lh-gauge">
   <style>
     .lh-gauge__wrapper--pass {
-      color: var(--color-green);
-      fill: var(--color-green);
-      stroke: var(--color-green);
+      color: var(--color-pass);
+      fill: var(--color-pass);
+      stroke: var(--color-pass);
     }
 
     .lh-gauge__wrapper--average {
-      color: var(--color-orange);
-      fill: var(--color-orange);
-      stroke: var(--color-orange);
+      color: var(--color-average);
+      fill: var(--color-average);
+      stroke: var(--color-average);
     }
 
     .lh-gauge__wrapper--fail {
-      color: var(--color-red);
-      fill: var(--color-red);
-      stroke: var(--color-red);
+      color: var(--color-fail);
+      fill: var(--color-fail);
+      stroke: var(--color-fail);
     }
 
     .lh-gauge {
       stroke-linecap: round;
-      width: var(--circle-size);
-      height: var(--circle-size);
+      width: var(--gauge-circle-size);
+      height: var(--gauge-circle-size);
     }
 
     .lh-category .lh-gauge {
-      width: var(--circle-size-big);
-      height: var(--circle-size-big);
+      --gauge-circle-size: var(--gauge-circle-size-big);
     }
 
     .lh-gauge-base {
@@ -497,6 +498,32 @@ limitations under the License.
         animation-delay: 250ms;
     }
 
+    .lh-gauge__svg-wrapper {
+      position: relative;
+    }
+    /* The plugin badge overlay */
+    .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
+      width: var(--plugin-badge-size);
+      height: var(--plugin-badge-size);
+      background-color: var(--plugin-badge-bg);
+      background-image: var(--plugin-icon-url);
+      background-repeat: no-repeat;
+      background-size: var(--plugin-icon-size);
+      background-position: 58% 50%;
+      content: "";
+      position: absolute;
+      right: -6px;
+      bottom: -2px;
+      display: block;
+      z-index: 100;
+      box-shadow: 0 0 4px rgba(0,0,0,.2);
+      border-radius: 25%;
+    }
+    .lh-category .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
+      width: var(--plugin-badge-size-big);
+      height: var(--plugin-badge-size-big);
+    }
+
     @keyframes load-gauge {
       from { stroke-dasharray: 0 352; }
     }
@@ -510,13 +537,12 @@ limitations under the License.
       font-size: var(--score-number-font-size);
       line-height: var(--score-number-font-size);
       text-align: center;
-      top: calc(var(--circle-size) / 3);
+      top: calc(var(--gauge-circle-size) / 3);
     }
 
     .lh-category .lh-gauge__percentage {
-      font-size: var(--score-number-font-size-big);
-      line-height: var(--score-number-font-size-big);
-      top: calc(var(--circle-size-big) / 3);
+      --gauge-circle-size: var(--gauge-circle-size-big);
+      --score-number-fontsize: var(--score-number-fontsize-big);
     }
 
     .lh-gauge__wrapper {
@@ -542,17 +568,19 @@ limitations under the License.
     }
 
     .lh-category .lh-gauge__label {
-      font-size: var(--score-title-font-size-big);
-      line-height: var(--score-title-line-height-big);
-      margin: calc(0.5 * var(--score-title-line-height-big));
+      --score-title-font-size: var(--score-title-font-size-big);
+      --score-title-line-height: var(--score-title-line-height-big);
     }
 
   </style>
   <a href="#" class="lh-gauge__wrapper">
-    <svg viewBox="0 0 120 120" class="lh-gauge">
-      <circle class="lh-gauge-base" r="56" cx="60" cy="60"></circle>
-      <circle class="lh-gauge-arc" transform="rotate(-90 60 60)" r="56" cx="60" cy="60"></circle>
-    </svg>
+    <!-- Wrapper exists for the ::before plugin icon. Cannot create pseudo-elements on svgs. -->
+    <div class="lh-gauge__svg-wrapper">
+      <svg viewBox="0 0 120 120" class="lh-gauge">
+        <circle class="lh-gauge-base" r="56" cx="60" cy="60"></circle>
+        <circle class="lh-gauge-arc" transform="rotate(-90 60 60)" r="56" cx="60" cy="60"></circle>
+      </svg>
+    </div>
     <div class="lh-gauge__percentage"></div>
     <!-- TODO: should likely be an h2  -->
     <div class="lh-gauge__label"></div>
@@ -836,7 +864,7 @@ limitations under the License.
         .lh-snippet__line--message code {
           padding: 10px;
           padding-left: 5px;
-          color: var(--fail-color);
+          color: var(--color-fail);
           font-family: var(--text-font-family);
         }
         .lh-snippet__line--message code {
@@ -854,8 +882,8 @@ limitations under the License.
           display: inline-block;
           vertical-align: middle;
           margin-right: 4px;
-          width: var(--lh-score-icon-width);
-          height: var(--lh-score-icon-width);
+          width: var(--score-shape-size);
+          height: var(--score-shape-size);
           background-image: var(--fail-icon-url);
         }
         .lh-snippet__line-number {

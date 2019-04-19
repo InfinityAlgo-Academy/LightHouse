@@ -73,9 +73,9 @@ describe('DOM', () => {
         assert.ok(!result.perfCategoryEl.outerHTML.includes('lh-permalink'),
             'PSI\'s perfCategory HTML doesn\'t include a lh-permalink element');
         // Assume using default locale.
-        const titleEl = result.perfCategoryEl.querySelector('.lh-audit-group--metrics')
-          .querySelector('.lh-audit-group__header');
-        assert.equal(titleEl.textContent, Util.UIStrings.labDataTitle);
+        const title = result.perfCategoryEl.querySelector('.lh-audit-group--metrics')
+          .querySelector('.lh-audit-group__title').textContent;
+        assert.equal(title, Util.UIStrings.labDataTitle);
       });
 
       it('succeeds with stringified LHResult input', () => {
@@ -119,14 +119,16 @@ describe('DOM', () => {
         const metricsGroupEl = perfCategoryEl.querySelector('.lh-audit-group--metrics');
 
         // Assume using default locale.
-        const titleEl = metricsGroupEl.querySelector('.lh-audit-group__header');
-        assert.equal(titleEl.textContent, Util.UIStrings.labDataTitle);
+        // Replacing markdown because ".textContent" will be post-markdown.
+        const expectedDescription = Util.UIStrings.lsPerformanceCategoryDescription
+          .replace('[Lighthouse](https://developers.google.com/web/tools/lighthouse/)', 'Lighthouse');
 
-        // Description supports markdown links, so take everything after the last link.
-        const descriptionEnd = /[^)]+$/.exec(Util.UIStrings.lsPerformanceCategoryDescription)[0];
-        assert.ok(descriptionEnd.length > 6); // If this gets too short, pick a different comparison :)
-        const descriptionEl = metricsGroupEl.querySelector('.lh-audit-group__description');
-        assert.ok(descriptionEl.textContent.endsWith(descriptionEnd));
+        // Assume using default locale.
+        const title = metricsGroupEl.querySelector('.lh-audit-group__title').textContent;
+        const description =
+          metricsGroupEl.querySelector('.lh-audit-group__description').textContent;
+        assert.equal(title, Util.UIStrings.labDataTitle);
+        assert.equal(description, expectedDescription);
       });
     });
   });

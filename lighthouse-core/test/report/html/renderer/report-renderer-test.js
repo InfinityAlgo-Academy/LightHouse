@@ -124,6 +124,26 @@ describe('ReportRenderer', () => {
       }
     });
 
+    it('renders plugin score gauge', () => {
+      const sampleResultsCopy = JSON.parse(JSON.stringify(sampleResults));
+      sampleResultsCopy.categories['lighthouse-plugin-someplugin'] = {
+        id: 'lighthouse-plugin-someplugin',
+        title: 'Some Plugin',
+        auditRefs: [],
+      };
+      const container = renderer._dom._document.body;
+      const output = renderer.renderReport(sampleResultsCopy, container);
+      const scoresHeaderElem = output.querySelector('.lh-scores-header');
+
+      const gaugeCount = scoresHeaderElem.querySelectorAll('.lh-gauge').length;
+      const pluginGaugeCount =
+        scoresHeaderElem.querySelectorAll('.lh-gauge__wrapper--plugin').length;
+
+      // 5 core categories + the 1 plugin.
+      assert.equal(6, gaugeCount);
+      assert.equal(1, pluginGaugeCount);
+    });
+
     it('should not mutate a report object', () => {
       const container = renderer._dom._document.body;
       const originalResults = JSON.parse(JSON.stringify(sampleResults));
