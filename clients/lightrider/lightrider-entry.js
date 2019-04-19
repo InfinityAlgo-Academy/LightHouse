@@ -26,11 +26,11 @@ const LR_PRESETS = {
  * @param {Connection} connection
  * @param {string} url
  * @param {LH.Flags} flags Lighthouse flags, including `output`
- * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, keepRawValues: boolean, configOverride?: LH.Config.Json}} lrOpts Options coming from Lightrider
+ * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, configOverride?: LH.Config.Json}} lrOpts Options coming from Lightrider
  * @return {Promise<string|Array<string>|void>}
  */
 async function runLighthouseInLR(connection, url, flags, lrOpts) {
-  const {lrDevice, categoryIDs, logAssets, keepRawValues, configOverride} = lrOpts;
+  const {lrDevice, categoryIDs, logAssets, configOverride} = lrOpts;
 
   // Certain fixes need to kick in under LR, see https://github.com/GoogleChrome/lighthouse/issues/5839
   global.isLightrider = true;
@@ -61,7 +61,7 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
 
     // pre process the LHR for proto
     if (flags.output === 'json' && typeof results.report === 'string') {
-      return preprocessor.processForProto(results.report, {keepRawValues});
+      return preprocessor.processForProto(results.report);
     }
 
     return results.report;

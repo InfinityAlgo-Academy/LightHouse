@@ -137,6 +137,7 @@
             }, 
             "displayValue": "1.2\u00a0s", 
             "id": "bootup-time", 
+            "numericValue": 1150.573, 
             "score": 0.92, 
             "scoreDisplayMode": "numeric", 
             "title": "JavaScript execution time"
@@ -460,6 +461,7 @@
                 "type": "debugdata"
             }, 
             "id": "diagnostics", 
+            "numericValue": 1.0, 
             "score": null, 
             "scoreDisplayMode": "informative", 
             "title": "Diagnostics"
@@ -536,6 +538,7 @@
             }, 
             "displayValue": "31 elements", 
             "id": "dom-size", 
+            "numericValue": 31.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Avoids an excessive DOM size"
@@ -562,6 +565,7 @@
                 "type": "opportunity"
             }, 
             "id": "efficient-animated-content", 
+            "numericValue": 0.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Use video formats for animated content"
@@ -611,6 +615,7 @@
                 "type": "table"
             }, 
             "id": "errors-in-console", 
+            "numericValue": 5.0, 
             "score": 0.0, 
             "scoreDisplayMode": "binary", 
             "title": "Browser errors were logged to the console"
@@ -619,6 +624,7 @@
             "description": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).", 
             "displayValue": "20\u00a0ms", 
             "id": "estimated-input-latency", 
+            "numericValue": 16.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Estimated Input Latency"
@@ -688,6 +694,7 @@
             "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).", 
             "displayValue": "4.0\u00a0s", 
             "id": "first-contentful-paint", 
+            "numericValue": 3969.135, 
             "score": 0.51, 
             "scoreDisplayMode": "numeric", 
             "title": "First Contentful Paint"
@@ -696,6 +703,7 @@
             "description": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive).", 
             "displayValue": "4.9\u00a0s", 
             "id": "first-cpu-idle", 
+            "numericValue": 4927.278, 
             "score": 0.72, 
             "scoreDisplayMode": "numeric", 
             "title": "First CPU Idle"
@@ -704,6 +712,7 @@
             "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint).", 
             "displayValue": "4.0\u00a0s", 
             "id": "first-meaningful-paint", 
+            "numericValue": 3969.136, 
             "score": 0.51, 
             "scoreDisplayMode": "numeric", 
             "title": "First Meaningful Paint"
@@ -1020,6 +1029,7 @@
             "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).", 
             "displayValue": "4.9\u00a0s", 
             "id": "interactive", 
+            "numericValue": 4927.278, 
             "score": 0.78, 
             "scoreDisplayMode": "numeric", 
             "title": "Time to Interactive"
@@ -1240,6 +1250,7 @@
         "load-fast-enough-for-pwa": {
             "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g).", 
             "id": "load-fast-enough-for-pwa", 
+            "numericValue": 4927.278, 
             "score": 1.0, 
             "scoreDisplayMode": "binary", 
             "title": "Page load is fast enough on mobile networks"
@@ -1337,6 +1348,7 @@
                 "type": "table"
             }, 
             "id": "main-thread-tasks", 
+            "numericValue": 16.0, 
             "score": null, 
             "scoreDisplayMode": "informative", 
             "title": "Tasks"
@@ -1398,6 +1410,7 @@
             }, 
             "displayValue": "1.5\u00a0s", 
             "id": "mainthread-work-breakdown", 
+            "numericValue": 1548.5690000000002, 
             "score": 0.96, 
             "scoreDisplayMode": "numeric", 
             "title": "Minimizes main-thread work"
@@ -1413,6 +1426,7 @@
             "description": "The potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task.", 
             "displayValue": "120\u00a0ms", 
             "id": "max-potential-fid", 
+            "numericValue": 122.537, 
             "score": 0.92, 
             "scoreDisplayMode": "numeric", 
             "title": "Max Potential FID"
@@ -1484,6 +1498,7 @@
                 "type": "debugdata"
             }, 
             "id": "metrics", 
+            "numericValue": 4927.278, 
             "score": null, 
             "scoreDisplayMode": "informative", 
             "title": "Metrics"
@@ -1724,6 +1739,7 @@
                 "type": "table"
             }, 
             "id": "network-requests", 
+            "numericValue": 18.0, 
             "score": null, 
             "scoreDisplayMode": "informative", 
             "title": "Network Requests"
@@ -1758,6 +1774,7 @@
             }, 
             "displayValue": "0\u00a0ms", 
             "id": "network-rtt", 
+            "numericValue": 1.7249999999999943, 
             "score": null, 
             "scoreDisplayMode": "informative", 
             "title": "Network Round Trip Times"
@@ -1792,6 +1809,7 @@
             }, 
             "displayValue": "570\u00a0ms", 
             "id": "network-server-latency", 
+            "numericValue": 572.829, 
             "score": null, 
             "scoreDisplayMode": "informative", 
             "title": "Server Backend Latencies"
@@ -1974,6 +1992,7 @@
                 "type": "opportunity"
             }, 
             "id": "offscreen-images", 
+            "numericValue": 0.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Defer offscreen images", 
@@ -2052,6 +2071,7 @@
                 "type": "opportunity"
             }, 
             "id": "redirects", 
+            "numericValue": 0.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Avoid multiple page redirects"
@@ -2115,6 +2135,7 @@
             }, 
             "displayValue": "Potential savings of 1,130\u00a0ms", 
             "id": "render-blocking-resources", 
+            "numericValue": 1129.0, 
             "score": 0.46, 
             "scoreDisplayMode": "numeric", 
             "title": "Eliminate render-blocking resources"
@@ -2200,6 +2221,7 @@
             "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index).", 
             "displayValue": "4.4\u00a0s", 
             "id": "speed-index", 
+            "numericValue": 4417.0, 
             "score": 0.74, 
             "scoreDisplayMode": "numeric", 
             "title": "Speed Index"
@@ -2297,6 +2319,7 @@
             }, 
             "displayValue": "Root document took 570\u00a0ms", 
             "id": "time-to-first-byte", 
+            "numericValue": 570.5630000000001, 
             "score": 1.0, 
             "scoreDisplayMode": "binary", 
             "title": "Server response times are low (TTFB)"
@@ -2362,6 +2385,7 @@
             }, 
             "displayValue": "Total size was 157\u00a0KB", 
             "id": "total-byte-weight", 
+            "numericValue": 160738.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Avoids enormous network payloads"
@@ -2376,6 +2400,7 @@
                 "type": "opportunity"
             }, 
             "id": "unminified-css", 
+            "numericValue": 0.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Minify CSS"
@@ -2414,6 +2439,7 @@
             }, 
             "displayValue": "Potential savings of 30\u00a0KB", 
             "id": "unminified-javascript", 
+            "numericValue": 150.0, 
             "score": 0.88, 
             "scoreDisplayMode": "numeric", 
             "title": "Minify JavaScript", 
@@ -2429,6 +2455,7 @@
                 "type": "opportunity"
             }, 
             "id": "unused-css-rules", 
+            "numericValue": 0.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Remove unused CSS"
@@ -2646,6 +2673,7 @@
             }, 
             "displayValue": "11 resources found", 
             "id": "uses-long-cache-ttl", 
+            "numericValue": 103455.0, 
             "score": 0.58, 
             "scoreDisplayMode": "numeric", 
             "title": "Serve static assets with an efficient cache policy"
@@ -2660,6 +2688,7 @@
                 "type": "opportunity"
             }, 
             "id": "uses-optimized-images", 
+            "numericValue": 0.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Efficiently encode images", 
@@ -2710,6 +2739,7 @@
                 "type": "opportunity"
             }, 
             "id": "uses-rel-preconnect", 
+            "numericValue": 0.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Preconnect to required origins", 
@@ -2724,6 +2754,7 @@
                 "type": "opportunity"
             }, 
             "id": "uses-rel-preload", 
+            "numericValue": 0.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Preload key requests"
@@ -2738,6 +2769,7 @@
                 "type": "opportunity"
             }, 
             "id": "uses-responsive-images", 
+            "numericValue": 0.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Properly size images", 
@@ -2781,6 +2813,7 @@
             }, 
             "displayValue": "Potential savings of 63\u00a0KB", 
             "id": "uses-text-compression", 
+            "numericValue": 300.0, 
             "score": 0.75, 
             "scoreDisplayMode": "numeric", 
             "title": "Enable text compression"
@@ -2824,6 +2857,7 @@
             }, 
             "displayValue": "Potential savings of 9\u00a0KB", 
             "id": "uses-webp-images", 
+            "numericValue": 0.0, 
             "score": 1.0, 
             "scoreDisplayMode": "numeric", 
             "title": "Serve images in next-gen formats", 

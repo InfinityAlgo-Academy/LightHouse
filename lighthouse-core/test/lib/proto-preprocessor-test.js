@@ -78,7 +78,7 @@ describe('processing for proto', () => {
       'audits': {
         'critical-request-chains': {
           'scoreDisplayMode': 'not-applicable',
-          'rawValue': 14.3,
+          'numericValue': 14.3,
           'displayValue': ['hello %d', 123],
         },
       },

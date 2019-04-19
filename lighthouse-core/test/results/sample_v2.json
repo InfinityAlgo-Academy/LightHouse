@@ -77,7 +77,7 @@
       "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).",
       "score": 0.51,
       "scoreDisplayMode": "numeric",
-      "rawValue": 3969.135,
+      "numericValue": 3969.135,
       "displayValue": "4.0 s"
     },
     "first-meaningful-paint": {
@@ -86,7 +86,7 @@
       "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint).",
       "score": 0.51,
       "scoreDisplayMode": "numeric",
-      "rawValue": 3969.136,
+      "numericValue": 3969.136,
       "displayValue": "4.0 s"
     },
     "load-fast-enough-for-pwa": {
@@ -95,7 +95,7 @@
       "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g).",
       "score": 1,
       "scoreDisplayMode": "binary",
-      "rawValue": 4927.278
+      "numericValue": 4927.278
     },
     "speed-index": {
       "id": "speed-index",
@@ -103,7 +103,7 @@
       "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index).",
       "score": 0.74,
       "scoreDisplayMode": "numeric",
-      "rawValue": 4417,
+      "numericValue": 4417,
       "displayValue": "4.4 s"
     },
     "screenshot-thumbnails": {
@@ -188,7 +188,7 @@
       "description": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 16,
+      "numericValue": 16,
       "displayValue": "20 ms"
     },
     "max-potential-fid": {
@@ -197,7 +197,7 @@
       "description": "The potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task.",
       "score": 0.92,
       "scoreDisplayMode": "numeric",
-      "rawValue": 122.537,
+      "numericValue": 122.537,
       "displayValue": "120 ms"
     },
     "errors-in-console": {
@@ -206,7 +206,7 @@
       "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns.",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "rawValue": 5,
+      "numericValue": 5,
       "details": {
         "type": "table",
         "headings": [
@@ -256,7 +256,7 @@
       "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).",
       "score": 1,
       "scoreDisplayMode": "binary",
-      "rawValue": 570.5630000000001,
+      "numericValue": 570.5630000000001,
       "displayValue": "Root document took 570 ms",
       "details": {
         "type": "opportunity",
@@ -271,7 +271,7 @@
       "description": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive).",
       "score": 0.72,
       "scoreDisplayMode": "numeric",
-      "rawValue": 4927.278,
+      "numericValue": 4927.278,
       "displayValue": "4.9 s"
     },
     "interactive": {
@@ -280,7 +280,7 @@
       "description": "Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).",
       "score": 0.78,
       "scoreDisplayMode": "numeric",
-      "rawValue": 4927.278,
+      "numericValue": 4927.278,
       "displayValue": "4.9 s"
     },
     "user-timings": {
@@ -447,7 +447,7 @@
       "description": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 0,
+      "numericValue": 0,
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -620,7 +620,7 @@
       "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this.",
       "score": 0.96,
       "scoreDisplayMode": "numeric",
-      "rawValue": 1548.5690000000002,
+      "numericValue": 1548.5690000000002,
       "displayValue": "1.5 s",
       "details": {
         "type": "table",
@@ -682,7 +682,7 @@
       "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/bootup).",
       "score": 0.92,
       "scoreDisplayMode": "numeric",
-      "rawValue": 1150.573,
+      "numericValue": 1150.573,
       "displayValue": "1.2 s",
       "details": {
         "type": "table",
@@ -748,7 +748,7 @@
       "description": "Consider using <link rel=preload> to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 0,
+      "numericValue": 0,
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -763,7 +763,7 @@
       "description": "Consider adding preconnect or dns-prefetch resource hints to establish early connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 0,
+      "numericValue": 0,
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -791,7 +791,7 @@
       "description": "Collection of useful page vitals.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "rawValue": 1,
+      "numericValue": 1,
       "details": {
         "type": "debugdata",
         "items": [
@@ -823,7 +823,7 @@
       "description": "Lists the network requests that were made during page load.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "rawValue": 18,
+      "numericValue": 18,
       "details": {
         "type": "table",
         "headings": [
@@ -1064,7 +1064,7 @@
       "description": "Network round trip times (RTT) have a large impact on performance. If the RTT to an origin is high, it's an indication that servers closer to the user could improve performance. [Learn more](https://hpbn.co/primer-on-latency-and-bandwidth/).",
       "score": null,
       "scoreDisplayMode": "informative",
-      "rawValue": 1.7249999999999943,
+      "numericValue": 1.7249999999999943,
       "displayValue": "0 ms",
       "details": {
         "type": "table",
@@ -1099,7 +1099,7 @@
       "description": "Server latencies can impact web performance. If the server latency of an origin is high, it's an indication the server is overloaded or has poor backend performance. [Learn more](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall).",
       "score": null,
       "scoreDisplayMode": "informative",
-      "rawValue": 572.829,
+      "numericValue": 572.829,
       "displayValue": "570 ms",
       "details": {
         "type": "table",
@@ -1134,7 +1134,7 @@
       "description": "Lists the toplevel main thread tasks that executed during page load.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "rawValue": 16,
+      "numericValue": 16,
       "details": {
         "type": "table",
         "headings": [
@@ -1225,7 +1225,7 @@
       "description": "Collects all available metrics.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "rawValue": 4927.278,
+      "numericValue": 4927.278,
       "details": {
         "type": "debugdata",
         "items": [
@@ -1910,7 +1910,7 @@
       "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/cache-policy).",
       "score": 0.58,
       "scoreDisplayMode": "numeric",
-      "rawValue": 103455,
+      "numericValue": 103455,
       "displayValue": "11 resources found",
       "details": {
         "type": "table",
@@ -2024,7 +2024,7 @@
       "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 160738,
+      "numericValue": 160738,
       "displayValue": "Total size was 157 KB",
       "details": {
         "type": "table",
@@ -2090,7 +2090,7 @@
       "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 0,
+      "numericValue": 0,
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2107,7 +2107,7 @@
       "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).",
       "score": 0.46,
       "scoreDisplayMode": "numeric",
-      "rawValue": 1129,
+      "numericValue": 1129,
       "displayValue": "Potential savings of 1,130 ms",
       "details": {
         "type": "opportunity",
@@ -2164,7 +2164,7 @@
       "description": "Minifying CSS files can reduce network payload sizes. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/minify-css).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 0,
+      "numericValue": 0,
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2180,7 +2180,7 @@
       "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://developers.google.com/speed/docs/insights/MinifyResources).",
       "score": 0.88,
       "scoreDisplayMode": "numeric",
-      "rawValue": 150,
+      "numericValue": 150,
       "displayValue": "Potential savings of 30 KB",
       "warnings": [],
       "details": {
@@ -2220,7 +2220,7 @@
       "description": "Remove dead rules from stylesheets and defer the loading of CSS not used for above-the-fold content to reduce unnecessary bytes consumed by network activity. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/unused-css).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 0,
+      "numericValue": 0,
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2236,7 +2236,7 @@
       "description": "Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/webp).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 0,
+      "numericValue": 0,
       "displayValue": "Potential savings of 9 KB",
       "warnings": [],
       "details": {
@@ -2282,7 +2282,7 @@
       "description": "Optimized images load faster and consume less cellular data. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/optimize-images).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 0,
+      "numericValue": 0,
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2299,7 +2299,7 @@
       "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/text-compression).",
       "score": 0.75,
       "scoreDisplayMode": "numeric",
-      "rawValue": 300,
+      "numericValue": 300,
       "displayValue": "Potential savings of 63 KB",
       "details": {
         "type": "opportunity",
@@ -2342,7 +2342,7 @@
       "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/oversized-images).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 0,
+      "numericValue": 0,
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2359,7 +2359,7 @@
       "description": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/)",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 0,
+      "numericValue": 0,
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2390,7 +2390,7 @@
       "description": "Browser engineers recommend pages contain fewer than ~1,500 DOM elements. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/tools/lighthouse/audits/dom-size).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "rawValue": 31,
+      "numericValue": 31,
       "displayValue": "31 elements",
       "details": {
         "type": "table",

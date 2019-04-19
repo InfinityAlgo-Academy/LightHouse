@@ -561,7 +561,8 @@ describe('Runner', () => {
           static audit(artifacts, context) {
             context.LighthouseRunWarnings.push(warningString);
             return {
-              rawValue: 5,
+              numericValue: 5,
+              score: 1,
             };
           }
         },

@@ -270,7 +270,7 @@ class Audit {
 
       score,
       scoreDisplayMode,
-      rawValue: product.rawValue,
+      numericValue: product.rawValue,
 
       displayValue: product.displayValue,
       explanation: product.explanation,

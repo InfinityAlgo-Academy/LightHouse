@@ -75,7 +75,7 @@ module.exports = [
         },
         'render-blocking-resources': {
           score: '<1',
-          rawValue: '>100',
+          numericValue: '>100',
           details: {
             items: {
               length: 7,
@@ -145,7 +145,7 @@ module.exports = [
         },
         'dom-size': {
           score: 1,
-          rawValue: 31,
+          numericValue: 31,
           details: {
             items: [
               {statistic: 'Total DOM Elements', value: '31'},
