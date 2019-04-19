@@ -118,8 +118,9 @@ describe('DOM', () => {
         const {perfCategoryEl} = prepareLabData(sampleResultsStr, document);
         const metricsGroupEl = perfCategoryEl.querySelector('.lh-audit-group--metrics');
 
+        // Assume using default locale.
+        // Replacing markdown because ".textContent" will be post-markdown.
         const expectedDescription = Util.UIStrings.lsPerformanceCategoryDescription
-          // Replacing markdown because ".textContent" will be post-markdown.
           .replace('[Lighthouse](https://developers.google.com/web/tools/lighthouse/)', 'Lighthouse');
 
         // Assume using default locale.

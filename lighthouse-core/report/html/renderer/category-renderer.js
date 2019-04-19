@@ -191,7 +191,6 @@ class CategoryRenderer {
   renderAuditGroup(group) {
     const groupEl = this.dom.createElement('div', 'lh-audit-group');
 
-    // Group header DOM roughly matches the clump header DOM, and that's OK.
     const auditGroupHeader = this.dom.createElement('div', 'lh-audit-group__header');
 
     this.dom.createChildOf(auditGroupHeader, 'span', 'lh-audit-group__title')
