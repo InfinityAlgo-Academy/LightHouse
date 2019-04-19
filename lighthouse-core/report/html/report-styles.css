@@ -95,11 +95,11 @@
 
   /* TODO(cjamcl) clean up unused variables. */
   --audits-margin-bottom: 40px;
-  --circle-size-big: 120px;
-  --circle-size: 96px;
   --env-item-bg: var(--color-black-100);
   --env-name-min-width: 220px;
   --env-tem-padding: 10px 0px;
+  --gauge-circle-size-big: 120px;
+  --gauge-circle-size: 96px;
   --header-padding: 20px 0 20px 0;
   --icon-shape-size: 12px;
   --icon-square-size: calc(var(--icon-shape-size) * 0.88);
@@ -146,9 +146,9 @@
     --audits-margin-bottom: 20px;
     --body-font-size: 14px;
     --body-line-height: 20px;
-    --circle-size-big: 96px;
-    --circle-size: 72px;
     --env-name-min-width: 120px;
+    --gauge-circle-size-big: 96px;
+    --gauge-circle-size: 72px;
     --header-padding: 16px 0 16px 0;
     --icon-shape-size: 10px;
     --score-container-padding: 8px;
@@ -687,7 +687,7 @@
 
 /* Removing too much whitespace */
 .lh-audit-group--metrics {
-  margin-top: calc(var(--circle-size)/2 * -1);
+  margin-top: calc(var(--gauge-circle-size)/2 * -1);
   border-bottom: none;
 }
 .lh-audit-group--metrics .lh-audit-group__summary {
@@ -915,7 +915,7 @@
 
 .lh-category-header {
   font-size: var(--header-font-size);
-  min-height: var(--circle-size);
+  min-height: var(--gauge-circle-size);
   margin-bottom: var(--lh-section-vpadding);
 }
 
