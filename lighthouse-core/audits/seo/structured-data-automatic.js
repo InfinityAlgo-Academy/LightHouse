@@ -67,8 +67,8 @@ class StructuredDataAutomatic extends Audit {
       return b.errors.length - a.errors.length;
     });
 
-    const renderedSnippets = await Promise.all(
-      validatedSnippets.map(snippetWithErrors => renderValidatedSnippet(snippetWithErrors))
+    const renderedSnippets = validatedSnippets.map(
+      snippetWithErrors => renderValidatedSnippet(snippetWithErrors)
     );
     const details = Audit.makeListDetails(renderedSnippets);
 
