@@ -19,11 +19,6 @@ const UIStrings = {
   description: 'Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit currently validates a subset of JSON-LD rules. See also the manual audit below to learn how to validate other types of structured data.',
   /** Explanatory message stating what percentage of JSON-LD structured data snippets are invalid */
   displayValue: '{validSnippetProportion, number, percent} valid snippets',
-  /** [ICU Syntax] Label indicating how many JSON-LD errors are in a snippet */
-  snippetTitle: `{snippetName} ({errorCount, plural,
-    =1 {1 Error}
-    other {# Errors}
-    })`,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -106,18 +101,15 @@ function renderValidatedSnippet(validatedSnippet) {
     topLevelName = parsedContent['name'];
   } catch (err) {}
 
-  let snippetName = '';
+  let title = '';
   if (topLevelName && topLevelType) {
-    snippetName = `${topLevelType}: ${topLevelName}`;
+    title = `${topLevelType}: ${topLevelName}`;
   } else if (topLevelType) {
-    snippetName = `@type ${topLevelType}`;
+    title = `@type ${topLevelType}`;
   } else {
-    snippetName = 'Invalid JSON-LD element';
+    title = 'Invalid JSON-LD element';
   }
-  const title = str_(UIStrings.snippetTitle, {
-    snippetName,
-    errorCount: errors.length,
-  });
+  title += ` (${errors.length} Error${errors.length !== 1 ? 's' : ''})`;
 
   /** @type LH.Audit.Details.NodeValue */
   const node = {
@@ -152,7 +144,6 @@ function getErrorMessages(errors) {
       const typeStrings = validTypes.map(type => {
         return `[${type.name}](${type.uri})`;
       });
-      // No i18n because it's part of the English error message
       message = `Invalid ${typeStrings.join('/')}: ${message}`;
     }
 
