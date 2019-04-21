@@ -939,6 +939,10 @@
     "message": "JSON-LD structured data syntax is invalid",
     "description": "Title of a Lighthouse audit that provides detail on whether JSON-LD structured data snippets are valid. This descriptive title is shown when JSON-LD snippets with invalid content were found."
   },
+  "lighthouse-core/audits/seo/structured-data-automatic.js | snippetTitle": {
+    "message": "{snippetName} ({errorCount, plural,\n    =1 {1 Error}\n    other {# Errors}\n    })",
+    "description": "[ICU Syntax] Label indicating how many JSON-LD errors are in a snippet"
+  },
   "lighthouse-core/audits/seo/structured-data-automatic.js | title": {
     "message": "JSON-LD structured data syntax is valid",
     "description": "Title of a Lighthouse audit that provides detail on whether JSON-LD structured data snippets are valid. This descriptive title is shown when no invalid JSON-LD snippets were found."
