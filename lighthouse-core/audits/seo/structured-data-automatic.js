@@ -54,7 +54,7 @@ class StructuredDataAutomatic extends Audit {
 
     const validatedSnippets = await Promise.all(jsonLDElements.map(async (element) => {
       // We don't want to show empty lines around the snippet
-      const content = (element.content || '').trim();
+      const content = /** @type string */ (element.content).trim();
 
       return {
         devtoolsNodePath: element.devtoolsNodePath,
