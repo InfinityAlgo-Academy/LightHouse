@@ -109,6 +109,8 @@ function renderValidatedSnippet(validatedSnippet) {
   } else {
     title = 'Invalid JSON-LD element';
   }
+  // No 18n here, because it's tricky to do because of the if statement above. The
+  // entity type and error messages are in English anyway.
   title += ` (${errors.length} Error${errors.length !== 1 ? 's' : ''})`;
 
   /** @type LH.Audit.Details.NodeValue */
