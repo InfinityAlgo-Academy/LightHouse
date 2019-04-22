@@ -131,6 +131,13 @@ describe('CLI bin', function() {
 
       expect(getRunLighthouseArgs()[1]).toHaveProperty('outputPath', 'stdout');
     });
+
+    it('should have no default path when using csv', async () => {
+      cliFlags = {...cliFlags, output: ['csv']};
+      await bin.begin();
+
+      expect(getRunLighthouseArgs()[1]).toHaveProperty('outputPath', '');
+    });
   });
 
   describe('extraHeaders', () => {
