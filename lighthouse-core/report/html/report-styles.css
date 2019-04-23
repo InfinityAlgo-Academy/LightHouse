@@ -830,7 +830,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: var(--section-indent) calc(var(--section-indent) / 2) calc(var(--section-indent) * 2);
 }
 .lh-scores-header__solo {
   padding: 0;
@@ -852,7 +851,6 @@
   margin: 12px auto 0 auto;
   border: 1px solid var(--color-black-200);
   border-radius: 20px;
-  color: var(--medium-75-gray);
   padding: 8px 8px;
 }
 
