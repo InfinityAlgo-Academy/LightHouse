@@ -202,7 +202,7 @@
   100% { opacity: 0.6;}
 }
 
-.lh-root * {
+.lh-root *, .lh-root *::before, .lh-root *::after {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
