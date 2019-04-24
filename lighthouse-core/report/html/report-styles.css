@@ -377,7 +377,6 @@
 }
 
 
-.lh-audit__title,
 .lh-audit__display-text,
 .lh-load-opportunity__sparkline,
 .lh-chevron-container {
@@ -387,14 +386,20 @@
   margin-right: 0;
 }
 
-.lh-audit__title {
+.lh-audit__display-text {
   flex: 1;
+}
+
+/* Prepend display text with separator. But not in Opportunities. */
+.lh-audit-group:not(.lh-audit-group--load-opportunities) .lh-audit__display-text:not(:empty):before {
+  content: '—';
 }
 
 /* Expandable Details (Audit Groups, Audits) */
 .lh-audit__header {
   display: flex;
   padding: var(--lh-audit-vpadding) var(--text-indent);
+  font-weight: 500;
 }
 
 .lh-audit--load-opportunity .lh-audit__header {
@@ -556,7 +561,6 @@
 
 .lh-load-opportunity__col {
   display: flex;
-  justify-content: space-between;
 }
 
 .lh-load-opportunity__col--one {
