@@ -604,7 +604,6 @@
 /* Filmstrip */
 
 .lh-filmstrip-container {
-  padding: 0 var(--expandable-indent);
   /* smaller gap between metrics and filmstrip */
   margin: -8px auto 0 auto;
 }
@@ -628,12 +627,26 @@
 }
 
 @media screen and (max-width: 750px) {
+  /* Force filmstrip container to width of page,
+    even though parent element is limited in its width. */
+  .lh-filmstrip-container {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
   .lh-filmstrip {
     flex-wrap: wrap;
-    justify-content: left;
   }
   .lh-filmstrip__frame {
-    margin: calc(var(--default-padding) / 3);
+    width: 20%;
+    margin-bottom: 5px;
+  }
+  .lh-filmstrip__thumbnail {
+    display: block;
+    margin: auto;
   }
 }
 
