@@ -15,8 +15,12 @@ const i18n = require('./i18n.js');
  * Replaces all strings within an LHR with ones from a different locale
  * @param {LH.Result} lhr
  * @param {LH.Locale} requestedLocale
+ * @return {LH.Result}
  */
 function swapLocale(lhr, requestedLocale) {
+  // copy LHR to avoid mutating provided LHR
+  lhr = JSON.parse(JSON.stringify(lhr));
+
   const locale = i18n.lookupLocale(requestedLocale);
   const {icuMessagePaths} = lhr.i18n;
 
