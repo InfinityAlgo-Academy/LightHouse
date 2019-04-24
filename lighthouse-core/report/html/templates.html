@@ -562,14 +562,16 @@ limitations under the License.
     .lh-gauge__label {
       font-size: var(--score-title-font-size);
       line-height: var(--score-title-line-height);
-      margin: calc(0.5 * var(--score-title-line-height));
+      margin-bottom: calc(0.5 * var(--score-title-line-height));
       text-align: center;
       color: black;
     }
 
+    /* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendent selector */
     .lh-category .lh-gauge__label {
       --score-title-font-size: var(--score-title-font-size-big);
       --score-title-line-height: var(--score-title-line-height-big);
+      margin: calc(0.5 * var(--score-title-line-height));
     }
 
   </style>

@@ -223,20 +223,28 @@ class ReportRenderer {
     // }
 
     if (scoreHeader) {
+      // Group gauges in this order: default, pwa, plugins.
       const defaultGauges = [];
-      const customGauges = [];
+      const customGauges = []; // PWA.
+      const pluginGauges = [];
       for (const category of report.reportCategories) {
         const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
         const categoryGauge = renderer.renderScoreGauge(category, report.categoryGroups || {});
 
-        // Group gauges that aren't default at the end of the header
-        if (renderer.renderScoreGauge === categoryRenderer.renderScoreGauge) {
+        if (Util.isPluginCategory(category.id)) {
+          pluginGauges.push(categoryGauge);
+        } else if (renderer.renderScoreGauge === categoryRenderer.renderScoreGauge) {
+          // The renderer for default categories is just the default CategoryRenderer.
+          // If the functions are equal, then renderer is an instance of CategoryRenderer.
+          // For example, the PWA category uses PwaCategoryRenderer, which overrides
+          // CategoryRenderer.renderScoreGauge, so it would fail this check and be placed
+          // in the customGauges bucket.
           defaultGauges.push(categoryGauge);
         } else {
           customGauges.push(categoryGauge);
         }
       }
-      scoreHeader.append(...defaultGauges, ...customGauges);
+      scoreHeader.append(...defaultGauges, ...customGauges, ...pluginGauges);
 
       const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
