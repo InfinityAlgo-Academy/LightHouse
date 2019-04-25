@@ -225,12 +225,9 @@ limitations under the License.
     }
     .lh-export__button {
       opacity: 0.54;
-      font-size: var(--lh-export-icon-size);
-      background-color: transparent;
+      width: var(--lh-export-icon-size);
+      height: var(--lh-export-icon-size);
       cursor: pointer;
-      outline: none;
-      border: none;
-      will-change: transform;
       font-weight: 800;
       margin-right: 5px;
     }
@@ -308,7 +305,12 @@ limitations under the License.
     <a href="" class="lh-topbar__url" target="_blank" rel="noopener"></a>
     
     <div class="lh-export">
-      <button class="report-icon report-icon--share lh-export__button" title="Export report">&vellip;</button>
+      <div class="report-icon report-icon--share lh-export__button" title="Export report">
+        <svg width="100%" height="100%" viewBox="0 0 24 24" fill="#000000">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+        </svg>
+      </div>
       <div class="lh-export__dropdown">
         <!-- TODO(i18n): localize export dropdown -->
         <a href="#" class="report-icon report-icon--print" data-action="print-summary">Print Summary</a>
