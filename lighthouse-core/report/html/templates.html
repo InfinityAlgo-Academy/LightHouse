@@ -144,10 +144,49 @@ limitations under the License.
       position: relative;
       width: 100%;
     }
+
+    .lh-sticky-header {
+      --gauge-circle-size: 36px;
+      --plugin-badge-size: 18px;
+      --plugin-icon-size: 75%;
+      --score-container-width: 60px;
+      --score-number-font-size: 13px;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: var(--topbar-height);
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      background-color: var(--color-sticky-header-bg);
+      border-bottom: 1px solid var(--color-black-200);
+      padding-top: var(--score-container-padding);
+      padding-bottom: 4px;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .lh-sticky-header--visible {
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    .lh-sticky-header .lh-gauge__label {
+      display: none;
+    }
+
+    .lh-highlighter {
+      width: var(--score-container-width);
+      height: 1px;
+      background: var(--color-highlighter-bg);
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+    }
   </style>
   <div class="lh-scores-wrapper">
-    <div class="lh-scores-container">
-    </div>
+    <div class="lh-scores-container"></div>
   </div>
 </template>
 
@@ -513,7 +552,7 @@ limitations under the License.
       content: "";
       position: absolute;
       right: -6px;
-      bottom: -2px;
+      bottom: 5px;
       display: block;
       z-index: 100;
       box-shadow: 0 0 4px rgba(0,0,0,.2);
