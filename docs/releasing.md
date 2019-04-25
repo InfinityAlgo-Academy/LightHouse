@@ -31,73 +31,22 @@ We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patc
 ## Release Process
 
 ```sh
-# use a custom lighthouse-pristine checkout to make sure your dev files aren't involved.
+# Run the tests
+bash ./lighthouse-core/scripts/release/release-test.sh
+# Prepare the commit, replace x.x.x with the desired version
+bash ./lighthouse-core/scripts/release/release-prepare-commit.sh x.x.x
 
-# * Install the latest.*
-yarn
+# Open the PR and await merge...
+echo "It's been merged! 🎉"
 
-# * Bump it *
-yarn version --no-git-tag-version
-# manually bump extension v in clients/extension/manifest.json
-yarn update:sample-json
+# Run the tests again :)
+bash ./lighthouse-core/scripts/release/release-test.sh
+# Package everything for publishing
+bash ./lighthouse-core/scripts/release/release-prepare-package.sh
 
-# * Build it. This also builds the cli, extension, and viewer. *
-yarn build-all
-
-# * Test err'thing *
-echo "Test the CLI."
-yarn start "https://example.com" --view
-yarn smoke
-
-echo "Test the extension"
-# ...
-
-echo "Test a fresh local install"
-# (starting from lighthouse-pristine root...)
-npm pack
-cd ..; rm -rf tmp; mkdir tmp; cd tmp
-npm init -y
-npm install ../lighthouse-pristine/lighthouse-*.tgz
-npm explore lighthouse -- npm run smoke
-npm explore lighthouse -- npm run chrome # try the manual launcher
-npm explore lighthouse -- npm run fast -- http://example.com
-cd ..; rm -rf ./tmp;
-
-cd ../lighthouse-pristine; command rm -f lighthouse-*.tgz
-
-echo "Test the lighthouse-viewer build"
-# Manual test for now:
-# Start a server in dist/viewer/ and open the page in a tab. You should see the viewer.
-# Drop in a results.json or paste an existing gist url (e.g. https://gist.github.com/ebidel/b9fd478b5f40bf5fab174439dc18f83a).
-# Check for errors!
-cd dist/viewer ; python -m SimpleHTTPServer
-# go to http://localhost:8000/
-
-# * Update changelog *
-git fetch --tags
-yarn changelog
-# add new contributors, e.g. from git shortlog -s -e -n v2.3.0..HEAD
-#    and https://github.com/GoogleChrome/lighthouse/graphs/contributors
-echo "Edit the changelog for readability and brevity"
-
-# * Put up the PR *
-echo "Branch and commit the version bump."
-git checkout -b bumpv240
-git commit -am "2.4.0"
-echo "Generate a PR and get it merged."
-
-echo "Once it's merged, pull master and tag the (squashed) commit"
-git tag -a v2.4.0 -m "v2.4.0"
-git push --tags
-
-
-# * Deploy-time *
-echo "Rebuild extension and viewer to get the latest, tagged master commit"
-yarn build-all;
-
-# zip the extension files
+# Upload the extension
 node build/build-extension.js package; cd dist/extension-package/
-echo "Go here: https://chrome.google.com/webstore/developer/edit/blipmdconlkpinefehnmjammfjpmpbjk "
+open https://chrome.google.com/webstore/developer/edit/blipmdconlkpinefehnmjammfjpmpbjk
 echo "Upload the package zip to CWS dev dashboard"
 # Be in lighthouse-extension-owners group
 # Open <https://chrome.google.com/webstore/developer/dashboard>
@@ -106,12 +55,11 @@ echo "Upload the package zip to CWS dev dashboard"
 # Select `lighthouse-4.X.X.zip`
 # _Publish_ at the bottom
 
-echo "Verify the npm package won't include unncessary files"
-npm pack --dry-run
-npx pkgfiles
-
-echo "ship it"
+# Make sure you're in the Lighthouse pristine repo we just tested.
+cd ../lighthouse-pristine
+# Publish to NPM
 npm publish
+# Publish viewer
 yarn deploy-viewer
 
 # * Tell the world!!! *
