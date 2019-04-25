@@ -71,7 +71,7 @@ class ErrorLogs extends Audit {
 
     return {
       score: Number(numErrors === 0),
-      rawValue: numErrors,
+      numericValue: numErrors,
       details,
     };
   }

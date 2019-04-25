@@ -461,7 +461,6 @@
                 "type": "debugdata"
             }, 
             "id": "diagnostics", 
-            "numericValue": 1.0, 
             "score": null, 
             "scoreDisplayMode": "informative", 
             "title": "Diagnostics"

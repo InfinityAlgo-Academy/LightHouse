@@ -117,7 +117,7 @@ class Metrics extends Audit {
 
     return {
       score: 1,
-      rawValue: (interactive && interactive.timing) || 0,
+      numericValue: (interactive && interactive.timing) || 0,
       details,
     };
   }

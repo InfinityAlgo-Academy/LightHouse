@@ -135,7 +135,7 @@ class DOMSize extends Audit {
 
     return {
       score,
-      rawValue: stats.totalBodyElements,
+      numericValue: stats.totalBodyElements,
       displayValue: str_(UIStrings.displayValue, {itemCount: stats.totalBodyElements}),
       extendedInfo: {
         value: items,

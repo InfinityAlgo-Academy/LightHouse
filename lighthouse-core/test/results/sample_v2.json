@@ -791,7 +791,6 @@
       "description": "Collection of useful page vitals.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 1,
       "details": {
         "type": "debugdata",
         "items": [

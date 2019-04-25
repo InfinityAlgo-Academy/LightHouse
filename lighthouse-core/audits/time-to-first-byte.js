@@ -69,7 +69,7 @@ class TTFBMetric extends Audit {
     };
 
     return {
-      rawValue: ttfb,
+      numericValue: ttfb,
       score: Number(passed),
       displayValue,
       details,

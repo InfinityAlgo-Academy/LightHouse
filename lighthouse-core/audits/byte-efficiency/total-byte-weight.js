@@ -99,7 +99,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
 
     return {
       score,
-      rawValue: totalBytes,
+      numericValue: totalBytes,
       displayValue: str_(UIStrings.displayValue, {totalBytes}),
       extendedInfo: {
         value: {
