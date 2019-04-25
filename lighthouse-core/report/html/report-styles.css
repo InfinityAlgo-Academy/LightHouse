@@ -118,6 +118,8 @@
   --score-title-font-size: 20px;
   --score-title-line-height-big: 36px;
   --score-title-line-height: 26px;
+  --scorescale-height: 6px;
+  --scorescale-width: 18px;
   --section-padding: 40px;
   --topbar-bg: var(--color-black-100);
   --topbar-height: 36px;
@@ -857,6 +859,8 @@
 }
 
 .lh-scorescale-range {
+  display: flex;
+  align-items: center;
   margin: 0 12px;
   font-family: var(--monospace-font-family);
   white-space: nowrap;
@@ -864,11 +868,11 @@
 
 .lh-scorescale-range::before {
   content: '';
-  width: var(--body-font-size);
-  height: calc(var(--body-font-size) * .50);
+  width: var(--scorescale-width);
+  height: var(--scorescale-height);
   border-radius: 10px;
-  display: inline-block;
-  margin: 0 5px;
+  display: block;
+  margin-right: 10px;
 }
 
 .lh-scorescale-range--pass::before {
