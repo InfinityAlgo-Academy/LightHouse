@@ -23,8 +23,21 @@ const htmlReportAssets = require('../lighthouse-core/report/html/html-report-ass
  */
 function convertToAsciiAndWriteFile(name, content) {
   assert(content);
-  // eslint-disable-next-line no-control-regex
-  const escaped = content.replace(/[^\x00-\x7F]/g, c => '\\\\u' + c.charCodeAt(0).toString(16));
+
+  let unicodeEscapePrefix = '\\\\u'; // js
+  if (name.endsWith('.html')) {
+    // Can't support unicode characters in inline stylesheets or js, would have to parse
+    // and apply context-specific escapes. Instead, since no ascii is used in html yet,
+    // punt and throw if any ascii is found.
+    // eslint-disable-next-line no-control-regex
+    assert(!content.match(/[^\x00-\x7F]/));
+  } else if (name.endsWith('.css')) {
+    unicodeEscapePrefix = '\\';
+  }
+
+  const escaped =
+    // eslint-disable-next-line no-control-regex
+    content.replace(/[^\x00-\x7F]/g, c => unicodeEscapePrefix + c.charCodeAt(0).toString(16));
   fs.writeFileSync(`${distDir}/${name}`, escaped);
 }
 
