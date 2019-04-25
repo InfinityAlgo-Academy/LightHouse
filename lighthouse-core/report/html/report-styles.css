@@ -630,16 +630,6 @@
 }
 
 @media screen and (max-width: 750px) {
-  /* Force filmstrip container to width of page,
-    even though parent element is limited in its width. */
-  .lh-filmstrip-container {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-  }
   .lh-filmstrip {
     flex-wrap: wrap;
   }
