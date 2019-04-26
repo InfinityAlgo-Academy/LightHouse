@@ -92,14 +92,19 @@ class StructuredDataAutomatic extends Audit {
 function renderValidatedSnippet(validatedSnippet) {
   const {content, devtoolsNodePath, errors} = validatedSnippet;
 
-  let parsedContent;
-  let topLevelType;
-  let topLevelName;
+  /** @type {LH.StructuredData.JsonLDDocument} */
+  let parsedContent = {};
+  let topLevelType = '';
+  let topLevelName = '';
   try {
     parsedContent = JSON.parse(content);
-    topLevelType = parsedContent['@type'];
-    topLevelName = parsedContent['name'];
   } catch (err) {}
+  if (parsedContent['@type']) {
+    topLevelType = parsedContent['@type'];
+  }
+  if (parsedContent.name) {
+    topLevelName = parsedContent.name.toString();
+  }
 
   let title = '';
   if (topLevelName && topLevelType) {

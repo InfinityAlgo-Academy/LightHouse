@@ -23,13 +23,22 @@ declare global {
         }>;
       }
 
+      export type JsonLDPrimitive = string | number | boolean | undefined
+      export type JsonLDPropertyValue = JsonLDPrimitive | JsonLDPrimitive[] | JsonLDDocument
+
+      export type JsonLDDocument = {
+        '@type'?: string,
+        "name"?: JsonLDPropertyValue,
+        [property: string]: JsonLDPropertyValue
+      }
+
       export interface ExpandedSchemaRepresentationItem {
         [schemaRef: string]: Array<
-            string |
+            boolean | string |  ExpandedSchemaRepresentationItem |
             {
               '@id'?: string;
               '@type'?: string;
-              '@value'?: string;
+              '@value'?: JsonLDPrimitive
             }
           >;
       }
