@@ -63,6 +63,7 @@
   --lh-score-icon-background-size: 24px;
   --lh-group-icon-background-size: var(--lh-score-icon-background-size);
   --lh-export-icon-size: var(--lh-score-icon-background-size);
+  --lh-export-icon-color: var(--medium-75-gray);
   --lh-score-margin: 12px;
   --lh-table-header-bg: #f8f9fa;
   --lh-table-higlight-bg: hsla(0, 0%, 75%, 0.1);
