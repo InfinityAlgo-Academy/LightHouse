@@ -17,8 +17,11 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user whether JSON-LD snippets on the page are invalid. This is displayed after a user expands the section to see more. No character length limits. */
   /* eslint-disable-next-line max-len */
   description: 'Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit currently validates a subset of JSON-LD rules. See also the manual audit below to learn how to validate other types of structured data.',
-  /** Explanatory message stating what percentage of JSON-LD structured data snippets are invalid */
-  displayValue: '{validSnippetProportion, number, percent} valid snippets',
+  /** Explanatory message stating how many JSON-LD structured data snippets are invalid */
+  displayValue: `{invalidSnippetCount, plural,
+    =1 {# invalid snippet}
+    other {# invalid snippets}
+    }`,
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -73,9 +76,8 @@ class StructuredDataAutomatic extends Audit {
     const details = Audit.makeListDetails(renderedSnippets);
 
     const invalidSnippets = validatedSnippets.filter(vs => vs.errors.length > 0);
-    const validSnippets = validatedSnippets.filter(vs => vs.errors.length === 0);
     const displayValue = str_(UIStrings.displayValue, {
-      validSnippetProportion: validSnippets.length / jsonLDElements.length,
+      invalidSnippetCount: invalidSnippets.length,
     });
 
     return {

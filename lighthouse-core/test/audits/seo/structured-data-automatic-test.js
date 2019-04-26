@@ -79,7 +79,7 @@ describe('SEO: structured data audit', () => {
       },
     });
 
-    expect(auditResult.displayValue).toBeDisplayString('50% valid snippets');
+    expect(auditResult.displayValue).toBeDisplayString('1 invalid snippet');
   });
 
   it('is not applicable if there are no json ld snippets with content on the page', async () => {
@@ -119,6 +119,6 @@ describe('SEO: structured data audit', () => {
 
     const auditResult = await AutomaticStructuredDataAudit.audit(artifacts);
     expect(auditResult.score).toBe(1);
-    expect(auditResult.displayValue).toBeDisplayString('100% valid snippets');
+    expect(auditResult.displayValue).toBeDisplayString('0 invalid snippets');
   });
 });
