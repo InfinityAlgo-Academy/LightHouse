@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('./audit');
-const URL = require('../lib/url-shim').URL;
+const URL = require('../lib/url-shim');
 const PASSING_FONT_DISPLAY_REGEX = /^(block|fallback|optional|swap)$/;
 const CSS_URL_REGEX = /url\((.*?)\)/;
 const CSS_URL_GLOBAL_REGEX = new RegExp(CSS_URL_REGEX, 'g');
@@ -82,11 +82,11 @@ class FontDisplay extends Audit {
 
             return s;
           });
-
         // Convert the relative CSS URL to an absolute URL and add it to the passing set
         for (const relativeURL of relativeURLs) {
           try {
-            const relativeRoot = stylesheet.header.sourceURL || artifacts.URL.finalUrl;
+            const relativeRoot = URL.isValid(stylesheet.header.sourceURL) ?
+              stylesheet.header.sourceURL : artifacts.URL.finalUrl;
             const absoluteURL = new URL(relativeURL, relativeRoot);
             passingURLs.add(absoluteURL.href);
           } catch (err) {
