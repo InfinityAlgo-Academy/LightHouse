@@ -45,11 +45,18 @@ describe('round trip JSON comparison subsets', () => {
   });
 
   it('has the same top level values', () => {
+    // Don't test all top level properties that are objects.
     Object.keys(sampleJson).forEach(audit => {
       if (typeof sampleJson[audit] === 'object' && !Array.isArray(sampleJson[audit])) {
         delete sampleJson[audit];
       }
     });
+
+    // Properties set to their type's default value will be omitted in the roundTripJson.
+    // For an explicit list of properties, remove sampleJson values if set to a default.
+    if (Array.isArray(sampleJson.stackPacks) && sampleJson.stackPacks.length === 0) {
+      delete sampleJson.stackPacks;
+    }
 
     expect(roundTripJson).toMatchObject(sampleJson);
   });

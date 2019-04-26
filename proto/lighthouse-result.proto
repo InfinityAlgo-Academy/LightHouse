@@ -161,6 +161,9 @@ message LighthouseResult {
       string entry_type = 2;
       google.protobuf.DoubleValue start_time = 3;
       google.protobuf.DoubleValue duration = 4;
+
+      // Whether timing entry was collected during artifact gathering.
+      bool gather = 5;
     }
 
     // The total duration of Lighthouse's run
