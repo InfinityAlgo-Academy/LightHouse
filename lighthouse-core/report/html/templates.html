@@ -539,7 +539,12 @@ limitations under the License.
 
     .lh-gauge__svg-wrapper {
       position: relative;
+      height: var(--gauge-circle-size);
     }
+    .lh-category .lh-gauge__svg-wrapper {
+      --gauge-circle-size: var(--gauge-circle-size-big);
+    }
+
     /* The plugin badge overlay */
     .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
       width: var(--plugin-badge-size);
@@ -576,12 +581,12 @@ limitations under the License.
       font-size: var(--score-number-font-size);
       line-height: var(--score-number-font-size);
       text-align: center;
-      top: calc(var(--gauge-circle-size) / 3);
+      top: calc(var(--score-container-padding) + var(--gauge-circle-size) / 3);
     }
 
     .lh-category .lh-gauge__percentage {
       --gauge-circle-size: var(--gauge-circle-size-big);
-      --score-number-fontsize: var(--score-number-fontsize-big);
+      --score-number-font-size: var(--score-number-font-size-big);
     }
 
     .lh-gauge__wrapper {
@@ -602,7 +607,7 @@ limitations under the License.
     .lh-gauge__label {
       font-size: var(--score-title-font-size);
       line-height: var(--score-title-line-height);
-      margin-bottom: calc(0.5 * var(--score-title-line-height));
+      margin-top: 10px;
       text-align: center;
       color: black;
     }
@@ -611,7 +616,7 @@ limitations under the License.
     .lh-category .lh-gauge__label {
       --score-title-font-size: var(--score-title-font-size-big);
       --score-title-line-height: var(--score-title-line-height-big);
-      margin: calc(0.5 * var(--score-title-line-height));
+      margin-top: 14px;
     }
 
   </style>

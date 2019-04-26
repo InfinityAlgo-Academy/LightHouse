@@ -398,7 +398,7 @@
 /* Expandable Details (Audit Groups, Audits) */
 .lh-audit__header {
   display: flex;
-  padding: var(--lh-audit-vpadding) var(--text-indent);
+  padding: var(--lh-audit-vpadding) 0;
 }
 
 .lh-audit--load-opportunity .lh-audit__header {
@@ -650,6 +650,15 @@
   border-bottom: 1px solid var(--report-secondary-border-color);
 }
 
+/* Apply border-top to just the first audit. */
+.lh-audit {
+  border-top: 1px solid var(--report-secondary-border-color);
+}
+.lh-audit ~ .lh-audit {
+  border-top: none;
+}
+
+
 .lh-audit--error .lh-audit__display-text {
   color: var(--color-fail);
 }
@@ -657,7 +666,7 @@
 /* Audit Group */
 
 .lh-audit-group {
-  margin: var(--lh-audit-group-vpadding) 0;
+  margin-bottom: var(--audits-margin-bottom);
 }
 
 .lh-audit-group__header::before {
@@ -692,11 +701,6 @@
   background-image: var(--pwa-optimized-color-url);
 }
 
-/* Removing too much whitespace */
-.lh-audit-group--metrics {
-  margin-top: calc(var(--gauge-circle-size)/2 * -1);
-  border-bottom: none;
-}
 .lh-audit-group--metrics .lh-audit-group__summary {
   margin-top: 0;
   margin-bottom: 0;
@@ -721,6 +725,8 @@
 .lh-audit-group__header {
   font-size: var(--body-font-size);
   margin: 0 0 var(--lh-audit-group-vpadding);
+  /* When the header takes 100% width, the chevron becomes small. */
+  max-width: calc(100% - var(--chevron-size));
 }
 
 .lh-audit-group__header span.lh-audit-group__title {
@@ -836,6 +842,10 @@
 .lh-scores-header__solo {
   padding: 0;
   border: 0;
+}
+
+.lh-gauge__wrapper {
+  padding: var(--score-container-padding);
 }
 
 .lh-scores-header .lh-gauge__wrapper,
