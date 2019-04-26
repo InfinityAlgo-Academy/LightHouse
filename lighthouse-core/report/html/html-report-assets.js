@@ -25,8 +25,32 @@ const REPORT_JAVASCRIPT = [
   fs.readFileSync(__dirname + '/renderer/pwa-category-renderer.js', 'utf8'),
   fs.readFileSync(__dirname + '/renderer/report-renderer.js', 'utf8'),
 ].join(';\n');
-const REPORT_CSS = fs.readFileSync(__dirname + '/report-styles.css', 'utf8');
+
+const REPORT_CSS = [
+  fs.readFileSync(__dirname + '/report-styles.css', 'utf8'),
+  `.lh-vars { ${generateSvgVars()} }`,
+].join('\n');
 const REPORT_TEMPLATES = fs.readFileSync(__dirname + '/templates.html', 'utf8');
+
+/**
+ * @param {string} pathToSvg 
+ */
+function loadSvgAsDataUrl(pathToSvg) {
+  const svgContents = fs.readFileSync(pathToSvg).toString('utf-8')
+    .replace(/\n/g, '')
+    .replace(/#/g, '%23');
+  return `data:image/svg+xml;utf8,${svgContents}`;
+}
+
+function generateSvgVars() {
+  return fs.readdirSync(__dirname + '/svg')
+    .filter(fileName => fileName.endsWith('.svg'))
+    .map(fileName => {
+      const varName = fileName.replace('.svg', '');
+      const contents = loadSvgAsDataUrl(__dirname + '/svg/' + fileName);
+      return `--${varName}: url('${contents}');`;
+    }).join('\n');
+}
 
 // Changes to this export interface should be reflected in build/dt-report-generator-bundle.js
 // and clients/devtools-report-assets.js
