@@ -6,6 +6,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 
 const REPORT_TEMPLATE = fs.readFileSync(__dirname + '/report-template.html', 'utf8');
 const REPORT_JAVASCRIPT = [
@@ -51,14 +52,17 @@ function makeSvgVar(varName, dataUrl) {
 }
 
 function makeSvgVarsStylesheet() {
+  const dirNameRelRoot = path.relative(__dirname + '/../../../', __dirname);
   const vars = fs.readdirSync(__dirname + '/svg')
     .filter(fileName => fileName.endsWith('.svg'))
     .map(fileName => {
       const varName = fileName.replace('.svg', '');
       const dataUrl = loadSvgAsDataUrl(__dirname + '/svg/' + fileName);
-      return makeSvgVar(varName, dataUrl);
+      const commentBlock = `/* ./${dirNameRelRoot}/${fileName} */`;
+      const varDeclaration = makeSvgVar(varName, dataUrl);
+      return `${commentBlock}\n${varDeclaration}`;
     });
-  return `.lh-vars { ${vars.join('\n')} }`;
+  return `.lh-vars {\n${vars.join('\n')}\n}`;
 }
 
 // Changes to this export interface should be reflected in build/dt-report-generator-bundle.js
