@@ -99,6 +99,17 @@ describe('CLI bin', function() {
     });
   });
 
+  describe('budget', () => {
+    it('should load the config from the path', async () => {
+      const budgetPath = '../../../lighthouse-core/test/fixtures/simple-budget.json';
+      cliFlags = {...cliFlags, budgetPath: require.resolve(budgetPath)};
+      const budgetFile = require(budgetPath);
+      await bin.begin();
+
+      expect(getRunLighthouseArgs()[1].budgets).toEqual(budgetFile);
+    });
+  });
+
   describe('logging', () => {
     it('should have info by default', async () => {
       await bin.begin();

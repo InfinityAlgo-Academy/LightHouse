@@ -2962,6 +2962,7 @@
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
     "channel": "cli",
+    "budgets": null,
     "locale": "en-US",
     "blockedUrlPatterns": null,
     "additionalTraceCategories": null,
