@@ -132,8 +132,8 @@ html, body {
   padding: 3px 5px;
   font-size: .8em;
   text-align: center;
-  display: inline;
-  margin-left: 5px;
+  display: block;
+  margin-top: 5px;
 }
 
 .subpage {

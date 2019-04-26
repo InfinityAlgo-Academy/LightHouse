@@ -25,7 +25,7 @@ class NotificationOnStart extends ViolationAudit {
       description: 'Users are mistrustful of or confused by sites that request to send ' +
           'notifications without context. Consider tying the request to user gestures ' +
           'instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/notifications-on-load).',
-      requiredArtifacts: ['ChromeConsoleMessages'],
+      requiredArtifacts: ['ConsoleMessages'],
     };
   }
 

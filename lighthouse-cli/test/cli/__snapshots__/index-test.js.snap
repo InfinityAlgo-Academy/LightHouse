@@ -967,6 +967,11 @@ Object {
         },
         Object {
           "group": "seo-content",
+          "id": "image-alt",
+          "weight": 1,
+        },
+        Object {
+          "group": "seo-content",
           "id": "hreflang",
           "weight": 1,
         },
@@ -1087,7 +1092,7 @@ Object {
           "path": "runtime-exceptions",
         },
         Object {
-          "path": "chrome-console-messages",
+          "path": "console-messages",
         },
         Object {
           "path": "anchor-elements",
@@ -1201,8 +1206,8 @@ Object {
     "additionalTraceCategories": null,
     "auditMode": false,
     "blockedUrlPatterns": null,
+    "budgets": null,
     "channel": "cli",
-    "disableDeviceEmulation": false,
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
     "extraHeaders": null,
@@ -1331,8 +1336,8 @@ Object {
     "additionalTraceCategories": null,
     "auditMode": true,
     "blockedUrlPatterns": null,
+    "budgets": null,
     "channel": "cli",
-    "disableDeviceEmulation": false,
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
     "extraHeaders": null,

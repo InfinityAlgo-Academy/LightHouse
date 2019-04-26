@@ -13,7 +13,7 @@ const assert = require('assert');
 describe('Console deprecations audit', () => {
   it('passes when no console messages were found', () => {
     const auditResult = DeprecationsAudit.audit({
-      ChromeConsoleMessages: [],
+      ConsoleMessages: [],
     });
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
@@ -21,7 +21,7 @@ describe('Console deprecations audit', () => {
 
   it('handles deprecations that do not have url or line numbers', () => {
     const auditResult = DeprecationsAudit.audit({
-      ChromeConsoleMessages: [
+      ConsoleMessages: [
         {
           entry: {
             source: 'deprecation',
@@ -41,7 +41,7 @@ describe('Console deprecations audit', () => {
     const URL = 'http://example.com';
 
     const auditResult = DeprecationsAudit.audit({
-      ChromeConsoleMessages: [
+      ConsoleMessages: [
         {
           entry: {
             source: 'deprecation',

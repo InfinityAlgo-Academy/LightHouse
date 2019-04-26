@@ -108,21 +108,17 @@ class CriConnection extends Connection {
         });
       });
 
+      // This error handler is critical to ensuring Lighthouse exits cleanly even when Chrome crashes.
+      // See https://github.com/GoogleChrome/lighthouse/pull/8583.
+      request.on('error', reject);
+
       request.setTimeout(CONNECT_TIMEOUT, () => {
-        request.abort();
-
-        // After aborting, we expect an ECONNRESET error. Ignore.
-        request.on('error', err => {
-          // @ts-ignore - not in @types yet. See https://nodejs.org/api/errors.html#errors_class_systemerror.
-          if (err.code !== 'ECONNRESET') {
-            throw err;
-          }
-        });
-
         // Reject on error with code specifically indicating timeout in connection setup.
         const err = new LighthouseError(LighthouseError.errors.CRI_TIMEOUT);
         log.error('CriConnection', err.friendlyMessage);
         reject(err);
+
+        request.abort();
       });
     });
   }

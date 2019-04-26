@@ -46,8 +46,8 @@ describe('DetailsRenderer', () => {
       const el = renderer.render({
         type: 'filmstrip',
         items: [
-          {timing: 1020, data: 'foobar'},
-          {timing: 3030, data: 'foobaz'},
+          {timing: 1020, data: 'data:image/jpeg;base64,foobar'},
+          {timing: 3030, data: 'data:image/jpeg;base64,foobaz'},
         ],
       });
 

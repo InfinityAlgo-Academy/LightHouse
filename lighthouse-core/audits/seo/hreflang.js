@@ -35,7 +35,7 @@ function importValidLangs() {
   // @ts-ignore
   global.axe = {utils: {}};
   // @ts-ignore
-  require('axe-core/lib/commons/utils/valid-langs.js');
+  require('axe-core/lib/core/utils/valid-langs.js');
   // @ts-ignore
   const validLangs = global.axe.utils.validLangs();
   // @ts-ignore

@@ -65,7 +65,7 @@ class SpeedIndex extends Audit {
         context.options.scorePODR,
         context.options.scoreMedian
       ),
-      rawValue: metricResult.timing,
+      numericValue: metricResult.timing,
       displayValue: str_(i18n.UIStrings.seconds, {timeInMs: metricResult.timing}),
     };
   }

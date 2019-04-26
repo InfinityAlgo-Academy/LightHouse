@@ -25,7 +25,7 @@ class Deprecations extends Audit {
       failureTitle: 'Uses deprecated APIs',
       description: 'Deprecated APIs will eventually be removed from the browser. ' +
           '[Learn more](https://www.chromestatus.com/features#deprecated).',
-      requiredArtifacts: ['ChromeConsoleMessages'],
+      requiredArtifacts: ['ConsoleMessages'],
     };
   }
 
@@ -34,7 +34,7 @@ class Deprecations extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    const entries = artifacts.ChromeConsoleMessages;
+    const entries = artifacts.ConsoleMessages;
 
     const deprecations = entries.filter(log => log.entry.source === 'deprecation').map(log => {
       return {

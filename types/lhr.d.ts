@@ -61,7 +61,7 @@ declare global {
       /** The record of all formatted string locations in the LHR and their corresponding source values. */
       i18n: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths: I18NMessages};
       /** An array containing the result of all stack packs. */
-      stackPacks: Result.StackPack[];
+      stackPacks?: Result.StackPack[];
     }
 
     // Result namespace

@@ -65,7 +65,7 @@ describe('CLI run', function() {
       assert.strictEqual(fileResults.fetchTime, lhr.fetchTime);
       assert.strictEqual(fileResults.requestedUrl, lhr.requestedUrl);
       assert.strictEqual(fileResults.finalUrl, lhr.finalUrl);
-      assert.strictEqual(fileResults.audits.viewport.rawValue, lhr.audits.viewport.rawValue);
+      assert.strictEqual(fileResults.audits.viewport.score, lhr.audits.viewport.score);
       assert.strictEqual(
           Object.keys(fileResults.audits).length,
           Object.keys(lhr.audits).length);

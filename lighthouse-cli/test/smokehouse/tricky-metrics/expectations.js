@@ -16,11 +16,11 @@ module.exports = [
       audits: {
         'first-cpu-idle': {
           score: '<75',
-          rawValue: '>9000',
+          numericValue: '>9000',
         },
         'interactive': {
           score: '<75',
-          rawValue: '>9000',
+          numericValue: '>9000',
         },
       },
     },
@@ -31,7 +31,7 @@ module.exports = [
       finalUrl: 'http://localhost:10200/delayed-fcp.html',
       audits: {
         'first-contentful-paint': {
-          rawValue: '>1', // We just want to check that it doesn't error
+          numericValue: '>1', // We just want to check that it doesn't error
         },
       },
     },

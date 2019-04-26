@@ -68,7 +68,6 @@ describe('Sentry', () => {
       expect(raven.mergeContext.mock.calls[0][0]).toEqual({
         extra: {
           url: 'http://example.com',
-          deviceEmulation: true,
           emulatedFormFactor: 'desktop',
           throttlingMethod: 'devtools',
         },

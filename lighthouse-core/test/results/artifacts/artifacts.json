@@ -27,9 +27,35 @@
     "auditMode": false,
     "gatherMode": "lighthouse-core/test/results/artifacts",
     "disableStorageReset": false,
-    "disableDeviceEmulation": false,
     "emulatedFormFactor": "mobile",
     "channel": "cli",
+    "budgets": [
+      {
+        "resourceSizes": [
+          {
+            "resourceType": "script",
+            "budget": 125
+          },
+          {
+            "resourceType": "total",
+            "budget": 500
+          }
+        ],
+        "timings": [
+          {
+            "metric": "interactive",
+            "budget": 5000,
+            "tolerance": 1000
+          }
+        ],
+         "resourceCounts": [
+          {
+           "resourceType": "third-party",
+           "budget": 0
+          }
+        ]
+      }
+    ],
     "locale": "en-US",
     "blockedUrlPatterns": null,
     "additionalTraceCategories": null,
@@ -407,7 +433,7 @@
       }
     }
   ],
-  "ChromeConsoleMessages": [
+  "ConsoleMessages": [
     {
       "entry": {
         "source": "other",

@@ -37,7 +37,7 @@ describe('Performance: bootup-time audit', () => {
       assert.deepEqual(roundedValueOf(output, 'https://www.google-analytics.com/analytics.js'), {scripting: 40.6, scriptParseCompile: 9.6, total: 53.4});
       assert.deepEqual(roundedValueOf(output, 'Other'), {scripting: 11.7, scriptParseCompile: 0, total: 1123.8}); // eslint-disable-line max-len
 
-      assert.equal(Math.round(output.rawValue), 225);
+      assert.equal(Math.round(output.numericValue), 225);
       assert.equal(output.details.items.length, 5);
       assert.equal(output.score, 1);
     });
@@ -58,7 +58,7 @@ describe('Performance: bootup-time audit', () => {
 
     assert.equal(output.details.items.length, 8);
     assert.equal(output.score, 0.98);
-    assert.equal(Math.round(output.rawValue), 720);
+    assert.equal(Math.round(output.numericValue), 720);
   });
 
   it('should get no data when no events are present', () => {
@@ -72,7 +72,7 @@ describe('Performance: bootup-time audit', () => {
       .then(output => {
         assert.equal(output.details.items.length, 0);
         assert.equal(output.score, 1);
-        assert.equal(Math.round(output.rawValue), 0);
+        assert.equal(Math.round(output.numericValue), 0);
       });
   });
 });

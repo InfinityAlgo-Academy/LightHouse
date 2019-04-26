@@ -55,7 +55,7 @@ An object containing the results of the audits, keyed by their name.
 | explanation | <code>string&#124;undefined</code> | A string indicating the reason for audit failure. |
 | warnings | <code>string[]&#124;undefined</code> | Messages identifying potentially invalid cases |
 | errorMessage | <code>string&#124;undefined</code> | A message set |
-| rawValue | <code>boolean&#124;number</code> | The unscored value determined by the audit. Typically this will match the score if there's no additional information to impart. For performance audits, this value is typically a number indicating the metric value. |
+| numericValue | <code>number&#124;undefined</code> | The unscored value determined by the audit. Typically this will match the score if there's no additional information to impart. For performance audits, this value is typically a number indicating the metric value. |
 | displayValue | `string` | The string to display in the report alongside audit results. If empty, nothing additional is shown. This is typically used to explain additional information such as the number and nature of failing items. |
 | score | <code>number</code> | The scored value determined by the audit as a number `0-1`, representing displayed scores of 0-100. |
 | scoreDisplayMode | <code>"binary"&#124;"numeric"&#124;"error"&#124;"manual"&#124;"notApplicable"&#124;"informative"</code> | A string identifying how the score should be interpreted for display i.e. is the audit pass/fail (score of 1 or 0), did it fail, should it be ignored, or are there shades of gray (scores between 0-1 inclusive). |
@@ -120,7 +120,7 @@ An object containing information about the configuration used by Lighthouse.
   },
   "gatherMode": false,
   "disableStorageReset": false,
-  "disableDeviceEmulation": false,
+  "emulatedFormFactor": "mobile",
   "blockedUrlPatterns": null,
   "additionalTraceCategories": null,
   "extraHeaders": null,
