@@ -2934,8 +2934,8 @@
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
-    "structured-data-automatic": {
-      "id": "structured-data-automatic",
+    "json-ld": {
+      "id": "json-ld",
       "title": "JSON-LD structured data syntax is valid",
       "description": "Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit currently validates a subset of JSON-LD rules. See also the manual audit below to learn how to validate other types of structured data.",
       "score": null,
@@ -3514,7 +3514,7 @@
           "group": "seo-content"
         },
         {
-          "id": "structured-data-automatic",
+          "id": "json-ld",
           "weight": 0,
           "group": "seo-content"
         },
@@ -4611,7 +4611,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:structured-data-automatic",
+        "name": "lh:audit:json-ld",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5341,11 +5341,11 @@
       "lighthouse-core/audits/seo/canonical.js | description": [
         "audits.canonical.description"
       ],
-      "lighthouse-core/audits/seo/structured-data-automatic.js | title": [
-        "audits[structured-data-automatic].title"
+      "lighthouse-core/audits/seo/json-ld.js | title": [
+        "audits[json-ld].title"
       ],
-      "lighthouse-core/audits/seo/structured-data-automatic.js | description": [
-        "audits[structured-data-automatic].description"
+      "lighthouse-core/audits/seo/json-ld.js | description": [
+        "audits[json-ld].description"
       ],
       "lighthouse-core/audits/seo/manual/structured-data.js | title": [
         "audits[structured-data].title"

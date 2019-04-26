@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const AutomaticStructuredDataAudit = require('../../../audits/seo/structured-data-automatic.js');
+const AutomaticStructuredDataAudit = require('../../../audits/seo/json-ld.js');
 
 /* eslint-env jest */
 

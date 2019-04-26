@@ -80,7 +80,7 @@ module.exports = [
           score: null,
           scoreDisplayMode: 'notApplicable',
         },
-        'structured-data-automatic': {
+        'json-ld': {
           score: 1,
         },
       },
@@ -144,7 +144,7 @@ module.exports = [
           score: 0,
           explanation: 'Multiple conflicting URLs (https://example.com/other, https://example.com/)',
         },
-        'structured-data-automatic': {
+        'json-ld': {
           score: 0,
         },
       },

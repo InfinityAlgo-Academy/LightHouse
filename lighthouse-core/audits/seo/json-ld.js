@@ -32,7 +32,7 @@ class StructuredDataAutomatic extends Audit {
    */
   static get meta() {
     return {
-      id: 'structured-data-automatic',
+      id: 'json-ld',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),

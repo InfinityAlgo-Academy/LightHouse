@@ -370,7 +370,7 @@ Object {
       "path": "seo/canonical",
     },
     Object {
-      "path": "seo/structured-data-automatic",
+      "path": "seo/json-ld",
     },
     Object {
       "path": "seo/manual/structured-data",
@@ -982,7 +982,7 @@ Object {
         },
         Object {
           "group": "seo-content",
-          "id": "structured-data-automatic",
+          "id": "json-ld",
           "weight": 1,
         },
         Object {
