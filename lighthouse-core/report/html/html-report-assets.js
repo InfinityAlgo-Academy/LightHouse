@@ -28,12 +28,12 @@ const REPORT_JAVASCRIPT = [
 
 const REPORT_CSS = [
   fs.readFileSync(__dirname + '/report-styles.css', 'utf8'),
-  `.lh-vars { ${generateSvgVars()} }`,
+  makeSvgVarsStylesheet(),
 ].join('\n');
 const REPORT_TEMPLATES = fs.readFileSync(__dirname + '/templates.html', 'utf8');
 
 /**
- * @param {string} pathToSvg 
+ * @param {string} pathToSvg
  */
 function loadSvgAsDataUrl(pathToSvg) {
   const svgContents = fs.readFileSync(pathToSvg).toString('utf-8')
@@ -42,14 +42,23 @@ function loadSvgAsDataUrl(pathToSvg) {
   return `data:image/svg+xml;utf8,${svgContents}`;
 }
 
-function generateSvgVars() {
-  return fs.readdirSync(__dirname + '/svg')
+/**
+ * @param {string} varName
+ * @param {string} dataUrl
+ */
+function makeSvgVar(varName, dataUrl) {
+  return `--${varName}: url('${dataUrl}');`;
+}
+
+function makeSvgVarsStylesheet() {
+  const vars = fs.readdirSync(__dirname + '/svg')
     .filter(fileName => fileName.endsWith('.svg'))
     .map(fileName => {
       const varName = fileName.replace('.svg', '');
-      const contents = loadSvgAsDataUrl(__dirname + '/svg/' + fileName);
-      return `--${varName}: url('${contents}');`;
-    }).join('\n');
+      const dataUrl = loadSvgAsDataUrl(__dirname + '/svg/' + fileName);
+      return makeSvgVar(varName, dataUrl);
+    });
+  return `.lh-vars { ${vars.join('\n')} }`;
 }
 
 // Changes to this export interface should be reflected in build/dt-report-generator-bundle.js
