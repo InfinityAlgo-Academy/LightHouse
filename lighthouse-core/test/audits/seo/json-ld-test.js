@@ -121,4 +121,30 @@ describe('SEO: structured data audit', () => {
     expect(auditResult.score).toBe(1);
     expect(auditResult.displayValue).toBeDisplayString('0 invalid snippets');
   });
+
+  // eslint-disable-next-line max-len
+  it('does not use [object object] in the title if the top-level name property is an object', async () => {
+    const artifacts = {
+      ScriptElements: [
+        {
+          'type': 'application/ld+json',
+          'content': JSON.stringify({
+            '@context': {
+              'schema': 'http://schema.org/',
+              'name': {'@id': 'schema:name', '@container': '@language'},
+            },
+            'name': {
+              'en': 'sth',
+              'fr': 'qqc',
+            },
+            '@type': 'schema:Event',
+          }),
+          'devtoolsNodePath': '3,HTML,0,HEAD,30,SCRIPT',
+        },
+      ],
+    };
+
+    const auditResult = await AutomaticStructuredDataAudit.audit(artifacts);
+    expect(auditResult.details.items[0].title).toBe('@type schema:Event (0 Errors)');
+  });
 });

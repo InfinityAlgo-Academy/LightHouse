@@ -104,7 +104,7 @@ function renderValidatedSnippet(validatedSnippet) {
   if (parsedContent['@type']) {
     topLevelType = parsedContent['@type'];
   }
-  if (parsedContent.name) {
+  if (typeof parsedContent.name === 'string') {
     topLevelName = parsedContent.name.toString();
   }
 
