@@ -746,6 +746,7 @@ describe('Config', () => {
         const configJson = {
           settings: {
             budgets: [{
+              path: '/',
               resourceCounts: [{
                 resourceType: 'image',
                 budget: 500,

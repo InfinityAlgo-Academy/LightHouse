@@ -4,6 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
+const URL = require('../lib/url-shim');
 
 class Budget {
   /**
@@ -21,14 +22,10 @@ class Budget {
   }
 
   /**
-   * @param {LH.Budget.ResourceBudget} resourceBudget
-   * @return {LH.Budget.ResourceBudget}
+   * @return {Array<string>}
    */
-  static validateResourceBudget(resourceBudget) {
-    const {resourceType, budget, ...invalidRest} = resourceBudget;
-    Budget.assertNoExcessProperties(invalidRest, 'Resource Budget');
-
-    const validResourceTypes = [
+  static validResourceTypes() {
+    return [
       'total',
       'document',
       'script',
@@ -39,9 +36,19 @@ class Budget {
       'other',
       'third-party',
     ];
-    if (!validResourceTypes.includes(resourceBudget.resourceType)) {
+  }
+
+  /**
+   * @param {LH.Budget.ResourceBudget} resourceBudget
+   * @return {LH.Budget.ResourceBudget}
+   */
+  static validateResourceBudget(resourceBudget) {
+    const {resourceType, budget, ...invalidRest} = resourceBudget;
+    Budget.assertNoExcessProperties(invalidRest, 'Resource Budget');
+
+    if (!this.validResourceTypes().includes(resourceBudget.resourceType)) {
       throw new Error(`Invalid resource type: ${resourceBudget.resourceType}. \n` +
-        `Valid resource types are: ${ validResourceTypes.join(', ') }`);
+        `Valid resource types are: ${this.validResourceTypes().join(', ') }`);
     }
     if (isNaN(resourceBudget.budget)) {
       throw new Error('Invalid budget: ${resourceBudget.budget}');
@@ -50,6 +57,55 @@ class Budget {
       resourceType,
       budget,
     };
+  }
+
+  /**
+ * @param {string} path
+ * @return string
+ */
+  static validatePath(path) {
+    if (!path) {
+      throw new Error(`A valid path must be provided`);
+    }
+
+    const hasLeadingSlash = path[0] === '/';
+    const validWildcardQuantity = ((path.match(/\*/g) || []).length <= 1);
+    const validDollarSignQuantity = ((path.match(/\*/g) || []).length <= 1);
+    const validDollarSignPlacement = (path.indexOf('$') === -1) || (path[path.length - 1] === '$');
+
+    const isValid = hasLeadingSlash && validWildcardQuantity
+      && validDollarSignQuantity && validDollarSignPlacement;
+
+    if (!isValid) {
+      throw new Error(`Invalid path ${path}`);
+    }
+    return path;
+  }
+
+  /**
+* @param {string} url
+* @param {string} pattern
+* @return boolean
+*/
+  static urlMatchesPattern(url, pattern) {
+    const urlPath = new URL(url).pathname + new URL(url).search;
+
+    const hasWildcard = pattern.includes('*');
+    const hasEndingPattern = pattern.includes('$');
+
+    if (!hasWildcard && !hasEndingPattern) {
+      return urlPath.startsWith(pattern);
+    } else if (!hasWildcard && hasEndingPattern) {
+      return urlPath.endsWith(pattern.slice(0, -1));
+    } else if (hasWildcard && !hasEndingPattern) {
+      const subStrs = pattern.split('*');
+      const remainingUrl = urlPath.slice(subStrs[0].length);
+      return urlPath.startsWith(subStrs[0]) && remainingUrl.includes(subStrs[1]);
+    } else if (hasWildcard && hasEndingPattern) {
+      const subStrs = pattern.split('*');
+      return urlPath.startsWith(subStrs[0]) && urlPath.endsWith(subStrs[1].slice(0, -1));
+    }
+    return false;
   }
 
   /**
@@ -98,31 +154,31 @@ class Budget {
       /** @type {LH.Budget} */
       const budget = {};
 
-      const {resourceSizes, resourceCounts, timings, ...invalidRest} = b;
+      const {path, resourceSizes, resourceCounts, timings, ...invalidRest} = b;
       Budget.assertNoExcessProperties(invalidRest, 'Budget');
 
-      if (b.resourceSizes !== undefined) {
-        budget.resourceSizes = b.resourceSizes.map((r) => {
+      budget.path = Budget.validatePath(path);
+
+      if (resourceSizes !== undefined) {
+        budget.resourceSizes = resourceSizes.map((r) => {
+          r.budget = r.budget * 1024;
           return Budget.validateResourceBudget(r);
         });
       }
 
-      if (b.resourceCounts !== undefined) {
-        budget.resourceCounts = b.resourceCounts.map((r) => {
+      if (resourceCounts !== undefined) {
+        budget.resourceCounts = resourceCounts.map((r) => {
           return Budget.validateResourceBudget(r);
         });
       }
 
-      if (b.timings !== undefined) {
-        budget.timings = b.timings.map((t) => {
+      if (timings !== undefined) {
+        budget.timings = timings.map((t) => {
           return Budget.validateTimingBudget(t);
         });
       }
-      budgets.push({
-        resourceSizes,
-        resourceCounts,
-        timings,
-      });
+
+      budgets.push(budget);
     });
     return budgets;
   }

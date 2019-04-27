@@ -67,12 +67,12 @@ describe('PerfCategoryRenderer', () => {
   it('renders the sections', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const sections = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group');
-    assert.equal(sections.length, 4);
+    assert.equal(sections.length, 5);
   });
 
   it('renders the metrics', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
-    const metricsSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[0];
+    const metricsSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[1];
 
     const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
     const timelineElements = metricsSection.querySelectorAll('.lh-metric');

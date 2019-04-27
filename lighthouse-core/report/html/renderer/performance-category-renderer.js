@@ -122,6 +122,23 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       element.appendChild(this.renderCategoryHeader(category, groups));
     }
 
+    // Budgets
+    const budgetAudits = category.auditRefs.filter(audit => audit.group === 'budgets');
+    if (budgetAudits && budgetAudits[0] && budgetAudits[0].result &&
+      budgetAudits[0].result.details) {
+      const budgetsGroupEl = this.renderAuditGroup(groups['budgets']);
+      const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity-header', this.templateContext);
+      budgetsGroupEl.appendChild(this.dom.find('.lh-load-opportunity__header', tmpl));
+
+      const resourceBudgetDetails = budgetAudits[0].result.details;
+      const table = this.detailsRenderer.render(resourceBudgetDetails);
+      if (table) {
+        budgetsGroupEl.appendChild(table);
+        budgetsGroupEl.classList.add('lh-audit-group--budgets');
+        element.appendChild(budgetsGroupEl);
+      }
+    }
+
     // Metrics
     const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
     const metricAuditsEl = this.renderAuditGroup(groups.metrics);

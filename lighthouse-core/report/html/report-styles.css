@@ -679,6 +679,19 @@
   vertical-align: middle;
 }
 
+.lh-audit-group--budgets .lh-table tbody tr td:nth-child(4),
+.lh-audit-group--budgets .lh-table tbody tr td:nth-child(5){
+  color: var(--color-red-700);
+}
+
+.lh-audit-group--budgets .lh-table tbody tr td:nth-child(4){
+  text-align: right;
+}
+
+.lh-audit-group--budgets .lh-table {
+  width: 100%;
+}
+
 .lh-audit-group--pwa-fast-reliable .lh-audit-group__header::before {
   content: '';
   background-image: var(--pwa-fast-reliable-gray-url);
@@ -699,6 +712,11 @@
 }
 .lh-audit-group--pwa-optimized.lh-badged .lh-audit-group__header::before {
   background-image: var(--pwa-optimized-color-url);
+}
+
+.lh-audit-group--metrics {
+  padding-top: calc(var(--circle-size)/2 * -1);
+  border-bottom: none;
 }
 
 .lh-audit-group--metrics .lh-audit-group__summary {
