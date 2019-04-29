@@ -11,6 +11,7 @@ const assert = require('assert');
 const fs = require('fs');
 const badNavStartTrace = require('../fixtures/traces/bad-nav-start-ts.json');
 const lateTracingStartedTrace = require('../fixtures/traces/tracingstarted-after-navstart.json');
+const noTracingStartedTrace = require('../fixtures/traces/no-tracingstarted-m74.json');
 const preactTrace = require('../fixtures/traces/preactjs.com_ts_of_undefined.json');
 const noFMPtrace = require('../fixtures/traces/no_fmp_event.json');
 const noFCPtrace = require('../fixtures/traces/airhorner_no_fcp.json');
@@ -160,6 +161,12 @@ describe('Trace of Tab computed artifact:', () => {
     const trace = await TraceOfTab.compute_(tracingStartedInBrowserTrace);
     assert.equal(trace.mainFrameIds.frameId, 'B192D1F3355A6F961EC8F0B01623C1FB');
     assert.equal(trace.navigationStartEvt.ts, 2193564790059);
+  });
+
+  it('handles no TracingStarted errors in m74+', async () => {
+    const trace = await TraceOfTab.compute_(noTracingStartedTrace);
+    expect(trace.mainFrameIds.frameId).toEqual('0E0B1AF0B1BA04676037345D18A71577');
+    expect(trace.firstContentfulPaintEvt.ts).toEqual(2610265036367);
   });
 
   it('stably sorts events', async () => {
