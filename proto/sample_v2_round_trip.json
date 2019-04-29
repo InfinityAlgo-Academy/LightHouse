@@ -2096,12 +2096,12 @@
                     }, 
                     {
                         "key": "totalBytes", 
-                        "label": "Size (KB)", 
+                        "label": "Size", 
                         "valueType": "bytes"
                     }, 
                     {
                         "key": "wastedMs", 
-                        "label": "Potential Savings (ms)", 
+                        "label": "Potential Savings", 
                         "valueType": "timespanMs"
                     }
                 ], 
@@ -2338,7 +2338,7 @@
                     {
                         "itemType": "bytes", 
                         "key": "totalBytes", 
-                        "text": "Size (KB)"
+                        "text": "Size"
                     }
                 ], 
                 "items": [
@@ -2418,12 +2418,12 @@
                     }, 
                     {
                         "key": "totalBytes", 
-                        "label": "Size (KB)", 
+                        "label": "Size", 
                         "valueType": "bytes"
                     }, 
                     {
                         "key": "wastedBytes", 
-                        "label": "Potential Savings (KB)", 
+                        "label": "Potential Savings", 
                         "valueType": "bytes"
                     }
                 ], 
@@ -2586,7 +2586,7 @@
                         "granularity": 1.0, 
                         "itemType": "bytes", 
                         "key": "totalBytes", 
-                        "text": "Size (KB)"
+                        "text": "Size"
                     }
                 ], 
                 "items": [
@@ -2788,12 +2788,12 @@
                     }, 
                     {
                         "key": "totalBytes", 
-                        "label": "Size (KB)", 
+                        "label": "Size", 
                         "valueType": "bytes"
                     }, 
                     {
                         "key": "wastedBytes", 
-                        "label": "Potential Savings (KB)", 
+                        "label": "Potential Savings", 
                         "valueType": "bytes"
                     }
                 ], 
@@ -2835,12 +2835,12 @@
                     }, 
                     {
                         "key": "totalBytes", 
-                        "label": "Size (KB)", 
+                        "label": "Size", 
                         "valueType": "bytes"
                     }, 
                     {
                         "key": "wastedBytes", 
-                        "label": "Potential Savings (KB)", 
+                        "label": "Potential Savings", 
                         "valueType": "bytes"
                     }
                 ], 

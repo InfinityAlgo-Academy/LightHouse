@@ -1196,7 +1196,7 @@
     "description": "Label for the TTL column in data tables, entries will be the time to live value of the cache header on a web resource"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
-    "message": "Size (KB)",
+    "message": "Size",
     "description": "Label for the size column in data tables, entries will be the size of a web resource in kilobytes"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
@@ -1208,11 +1208,11 @@
     "description": "Label for the URL column in data tables, entries will be the URL of a web resource"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potential Savings (KB)",
+    "message": "Potential Savings",
     "description": "Label for the wasted bytes column in data tables, entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potential Savings (ms)",
+    "message": "Potential Savings",
     "description": "Label for the wasted bytes column in data tables, entries will be the number of milliseconds the user could reduce page load by if they implemented the suggestions"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
