@@ -209,14 +209,15 @@ limitations under the License.
     .lh-topbar__logo {
       width: var(--topbar-icon-size);
       height: var(--topbar-icon-size);
-      background-image: var(--logo-url);
-      background-size: cover;
+    }
+    .lh-topbar__logo .shape {
+      fill: var(--body-text-color);
     }
 
     .lh-topbar__url {
       margin: var(--topbar-padding);
       text-decoration: none;
-      color: var(--color-black);
+      color: var(--body-text-color);
     }
 
     .lh-export {
@@ -224,7 +225,6 @@ limitations under the License.
       will-change: transform;
     }
     .lh-export__button {
-      background-color: #fff;
       border: 1px solid #dadada;
       border-radius: 2px;
       cursor: pointer;
@@ -246,7 +246,7 @@ limitations under the License.
     }
     .lh-export__dropdown {
       position: absolute;
-      background-color: #fff;
+      background-color: var(--body-background-color);
       border: 1px solid var(--report-border-color);
       border-radius: 3px;
       padding: calc(var(--default-padding) / 2) 0;
@@ -269,7 +269,7 @@ limitations under the License.
     }
     .lh-export__dropdown a:hover,
     .lh-export__dropdown a:focus {
-      background-color: #efefef;
+      background-color: var(--color-black-200);
       outline: none;
     }
     .lh-export__dropdown .report-icon {
@@ -305,7 +305,13 @@ limitations under the License.
   </style>
 
   <div class="lh-topbar">
-    <div class="lh-topbar__logo"></div>
+    <!-- Flat Lighthouse logo.  -->
+    <svg class="lh-topbar__logo" viewBox="0 0 192 192">
+      <g fill="none" fill-rule="evenodd">
+        <path d="M0 0h192v192H0z"/>
+        <path class="shape" d="M67.705 179.352l2.603-20.82 49.335-16.39 4.652 37.21A87.893 87.893 0 0 1 96 184a87.893 87.893 0 0 1-28.295-4.648zM52.44 172.48C25.894 157.328 8 128.754 8 96 8 47.399 47.399 8 96 8s88 39.399 88 88c0 32.754-17.894 61.328-44.44 76.48L130 96h6V80h-8V48L96 28 64 48v32h-8v16h6l-9.56 76.48zM113.875 96l2.882 23.05-43.318 14.433L78.125 96h35.75zM80 80V56.868l16-10 16 10V80H80z"/>
+      </g>
+    </svg>
 
     <a href="" class="lh-topbar__url" target="_blank" rel="noopener"></a>
     
@@ -609,7 +615,7 @@ limitations under the License.
       line-height: var(--score-title-line-height);
       margin-top: 10px;
       text-align: center;
-      color: black;
+      color: var(--body-text-color);
     }
 
     /* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendent selector */
@@ -646,6 +652,21 @@ limitations under the License.
       fill: #B0B0B0;
     }
 
+    .lh-gauge--pwa__disc {
+      fill: var(--color-black-200);
+    }
+
+    .lh-gauge--pwa__logo--primary-color {
+      fill: #304FFE;
+    }
+
+    .lh-gauge--pwa__logo--secondary-color {
+      fill: #3D3D3D;
+    }
+    .dark .lh-gauge--pwa__logo--secondary-color {
+      fill: #D8B6B6;
+    }
+
     /* No passing groups. */
     .lh-gauge--pwa__wrapper:not([class*='lh-badged--']) .lh-gauge--pwa__na-line {
       display: inline;
@@ -679,10 +700,6 @@ limitations under the License.
   <a href="#" class="lh-gauge__wrapper lh-gauge--pwa__wrapper">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" class="lh-gauge lh-gauge--pwa">
       <defs>
-        <linearGradient id="lh-gauge--pwa__bg-disk__gradient" x1="50%" y1="2.15%" x2="50%" y2="97.645%">
-          <stop stop-color="#F1F3F4" offset="0%"></stop>
-          <stop stop-color="#DEE6EA" offset="100%"></stop>
-        </linearGradient>
         <linearGradient id="lh-gauge--pwa__check-circle__gradient" x1="50%" y1="0%" x2="50%" y2="100%">
           <stop stop-color="#00C852" offset="0%"></stop>
           <stop stop-color="#009688" offset="100%"></stop>
@@ -708,11 +725,11 @@ limitations under the License.
 
       <g stroke="none" fill-rule="nonzero">
         <!-- Background and PWA logo (color by default) -->
-        <circle fill="url(#lh-gauge--pwa__bg-disk__gradient)" cx="30" cy="30" r="30"></circle>
+        <circle class="lh-gauge--pwa__disc" cx="30" cy="30" r="30"></circle>
         <g class="lh-gauge--pwa__logo">
-          <path fill="#3D3D3D" d="M35.66 19.39l.7-1.75h2L37.4 15 38.6 12l3.4 9h-2.51l-.58-1.61z"/>
-          <path fill="#304FFE" d="M33.52 21l3.65-9h-2.42l-2.5 5.82L30.5 12h-1.86l-1.9 5.82-1.35-2.65-1.21 3.72L25.4 21h2.38l1.72-5.2 1.64 5.2z"/>
-          <path fill="#3D3D3D" fill-rule="nonzero" d="M20.3 17.91h1.48c.45 0 .85-.05 1.2-.15l.39-1.18 1.07-3.3a2.64 2.64 0 0 0-.28-.37c-.55-.6-1.36-.91-2.42-.91H18v9h2.3V17.9zm1.96-3.84c.22.22.33.5.33.87 0 .36-.1.65-.29.87-.2.23-.59.35-1.15.35h-.86v-2.41h.87c.52 0 .89.1 1.1.32z"/>
+          <path class="lh-gauge--pwa__logo--secondary-color" d="M35.66 19.39l.7-1.75h2L37.4 15 38.6 12l3.4 9h-2.51l-.58-1.61z"/>
+          <path class="lh-gauge--pwa__logo--primary-color" d="M33.52 21l3.65-9h-2.42l-2.5 5.82L30.5 12h-1.86l-1.9 5.82-1.35-2.65-1.21 3.72L25.4 21h2.38l1.72-5.2 1.64 5.2z"/>
+          <path class="lh-gauge--pwa__logo--secondary-color" fill-rule="nonzero" d="M20.3 17.91h1.48c.45 0 .85-.05 1.2-.15l.39-1.18 1.07-3.3a2.64 2.64 0 0 0-.28-.37c-.55-.6-1.36-.91-2.42-.91H18v9h2.3V17.9zm1.96-3.84c.22.22.33.5.33.87 0 .36-.1.65-.29.87-.2.23-.59.35-1.15.35h-.86v-2.41h.87c.52 0 .89.1 1.1.32z"/>
         </g>
 
         <!-- No badges. -->
