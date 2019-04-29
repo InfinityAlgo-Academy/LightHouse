@@ -25,7 +25,12 @@ async function update() {
   }));
 
   const url = `http://localhost:${port}/dobetterweb/dbw_tester.html`;
-  const flags = cliFlags.getFlags(`--gather-mode=lighthouse-core/test/results/artifacts ${url}`);
+  const rawFlags = [
+    '--gather-mode=lighthouse-core/test/results/artifacts',
+    '--throttling-method=devtools',
+    url,
+  ].join(' ');
+  const flags = cliFlags.getFlags(rawFlags);
   await cli.runLighthouse(url, flags, undefined);
   await new Promise(res => server.close(res));
 }

@@ -447,7 +447,7 @@
     "message": "Стойност"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Браузърните инженери препоръчват страниците да съдържат под ~ 1500 елемента в DOM. Най-добре е йерархичната структура да е с дълбочина под 32 елемента и всеки родителски елемент да има по-малко от 60 дъщерни. Големият размер на DOM може да доведе до използване на повече памет, удължаване на [стиловите изчисления](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и забавяне поради [преоформяне](https://developers.google.com/speed/articles/reflow). [Научете повече](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
+    "message": "Браузърните инженери препоръчват страниците да съдържат под ~1500 елемента в DOM. Най-добре е йерархичната структура да е с дълбочина под 32 елемента и всеки родителски елемент да има по-малко от 60 дъщерни. Големият размер на DOM може да доведе до използване на повече памет, удължаване на [стиловите изчисления](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и забавяне поради [преоформяне](https://developers.google.com/speed/articles/reflow). [Научете повече](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 елемент}other{# елемента}}"
@@ -876,22 +876,22 @@
     "message": "SEO"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "Форматирайте HTML кода си по начин, който дава възможност на роботите да разберат по-добре съдържанието на приложението ви."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "Най-добри практики за съдържанието"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "За да се показва приложението ви в резултатите от търсенето, роботите се нуждаят от достъп до него."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "Обхождане и индексиране"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "Уверете се, че страниците ви са удобни за мобилни устройства, така че да не е необходимо потребителите да събират пръсти или да увеличават мащаба, за да прочетат съдържанието. [Научете повече](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "Удобство за мобилни устройства"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Време на валидност на кеша"
@@ -1053,7 +1053,7 @@
     "message": "Добре е да използвате [приставка за WordPress за оптимизиране на изображенията](https://wordpress.org/plugins/search/optimize+images/), която компресира графичните ви файлове, като същевременно запазва качеството им."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Качвайте изображенията директно чрез [мултимедийната библиотека](https://codex.wordpress.org/Media_Library_Screen), за да разполагате с графични файлове с необходимите размери, и след това ги вмъквайте от библиотеката или използвайте приспособлението за изображения, така че да се използват файловете с оптимални размери (включително за адаптивните гранични точки). Избягвайте използването на пълноразмерни изображения, освен ако размерите не са подходящи за съответното предназначение. [Научете повече](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Качвайте изображенията директно чрез [мултимедийната библиотека](https://codex.wordpress.org/Media_Library_Screen), за да разполагате с графични файлове с необходимите размери, и след това ги вмъквайте от библиотеката или използвайте приспособлението за изображения, така че да се използват файловете с оптимални размери (включително за адаптивните гранични точки). Избягвайте използването на пълноразмерни изображения, освен ако размерите са подходящи за съответното предназначение. [Научете повече](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Можете да активирате компресирането на текста в конфигурацията на уеб сървъра си."

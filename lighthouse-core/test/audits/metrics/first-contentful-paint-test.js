@@ -27,6 +27,6 @@ describe('Performance: first-contentful-paint audit', () => {
     const settings = {throttlingMethod: 'provided'};
     const result = await Audit.audit(artifacts, {settings, options, computedCache: new Map()});
     assert.equal(result.score, 1);
-    assert.equal(result.rawValue, 498.87);
+    assert.equal(result.numericValue, 498.87);
   });
 });

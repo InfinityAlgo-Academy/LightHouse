@@ -222,7 +222,7 @@ class UsesRelPreloadAudit extends Audit {
 
     return {
       score: UnusedBytes.scoreForWastedMs(wastedMs),
-      rawValue: wastedMs,
+      numericValue: wastedMs,
       displayValue: wastedMs ?
         str_(i18n.UIStrings.displayValueMsSavings, {wastedMs}) :
         '',

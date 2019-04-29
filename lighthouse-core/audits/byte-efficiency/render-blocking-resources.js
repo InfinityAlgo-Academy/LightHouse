@@ -224,7 +224,7 @@ class RenderBlockingResources extends Audit {
     return {
       displayValue,
       score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
-      rawValue: wastedMs,
+      numericValue: wastedMs,
       details,
     };
   }

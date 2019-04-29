@@ -81,8 +81,8 @@ class CategoryRenderer {
     this.dom.find('.lh-audit__description', auditEl)
         .appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.description));
 
-    if (audit.result.stackPacks) {
-      audit.result.stackPacks.forEach(pack => {
+    if (audit.stackPacks) {
+      audit.stackPacks.forEach(pack => {
         const packElm = this.dom.createElement('div');
         packElm.classList.add('lh-audit__stackpack');
 

@@ -876,22 +876,22 @@
     "message": "검색엔진 최적화"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "크롤러가 앱 콘텐츠를 효과적으로 파악할 수 있도록 HTML 형식을 지정하세요."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "콘텐츠 권장사항"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "검색결과에 표시하려면 크롤러가 앱에 액세스할 수 있어야 합니다."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "크롤링 및 색인 생성"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "사용자가 콘텐츠를 읽기 위해 페이지를 확대하거나 축소할 필요가 없도록 모바일 친화적인 페이지를 지원하세요. [자세히 알아보기](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "모바일 친화적"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "캐시 TTL"

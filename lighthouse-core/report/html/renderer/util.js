@@ -72,21 +72,21 @@ class Util {
       }
     }
 
-    // For convenience, smoosh all AuditResults into their auditDfn (which has just weight & group)
+    // For convenience, smoosh all AuditResults into their auditRef (which has just weight & group)
     for (const category of clone.reportCategories) {
-      category.auditRefs.forEach(auditMeta => {
-        const result = clone.audits[auditMeta.id];
-        auditMeta.result = result;
+      category.auditRefs.forEach(auditRef => {
+        const result = clone.audits[auditRef.id];
+        auditRef.result = result;
 
         // attach the stackpacks to the auditRef object
         if (clone.stackPacks) {
           clone.stackPacks.forEach(pack => {
-            if (pack.descriptions[auditMeta.id]) {
-              auditMeta.result.stackPacks = auditMeta.result.stackPacks || [];
-              auditMeta.result.stackPacks.push({
+            if (pack.descriptions[auditRef.id]) {
+              auditRef.stackPacks = auditRef.stackPacks || [];
+              auditRef.stackPacks.push({
                 title: pack.title,
                 iconDataURL: pack.iconDataURL,
-                description: pack.descriptions[auditMeta.id],
+                description: pack.descriptions[auditRef.id],
               });
             }
           });

@@ -60,7 +60,7 @@ describe('ReportUIFeatures', () => {
       };
     };
 
-    global.window = {};
+    global.window = document.window;
     global.window.getComputedStyle = function() {
       return {
         marginTop: '10px',

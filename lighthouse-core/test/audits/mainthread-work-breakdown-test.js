@@ -56,7 +56,7 @@ describe('Performance: page execution timings audit', () => {
 
     const output = await PageExecutionTimings.audit(artifacts, {options, computedCache: new Map()});
     assert.deepStrictEqual(keyOutput(output), acceptableTraceExpectations);
-    assert.equal(Math.round(output.rawValue), 1360);
+    assert.equal(Math.round(output.numericValue), 1360);
     assert.equal(output.details.items.length, 7);
     assert.equal(output.score, 0.98);
   });
@@ -75,7 +75,7 @@ describe('Performance: page execution timings audit', () => {
       assert.ok(Math.abs(actual - expected) <= 2, `expected ${expected} got ${actual}`);
     }
 
-    assert.equal(Math.round(output.rawValue), 4081);
+    assert.equal(Math.round(output.numericValue), 4081);
     assert.equal(output.details.items.length, 7);
     assert.equal(output.score, 0.49);
   });
@@ -85,7 +85,7 @@ describe('Performance: page execution timings audit', () => {
 
     const output = await PageExecutionTimings.audit(artifacts, {options, computedCache: new Map()});
     assert.deepStrictEqual(keyOutput(output), siteWithRedirectTraceExpectations);
-    assert.equal(Math.round(output.rawValue), 784);
+    assert.equal(Math.round(output.numericValue), 784);
     assert.equal(output.details.items.length, 7);
     assert.equal(output.score, 1);
   });
@@ -95,7 +95,7 @@ describe('Performance: page execution timings audit', () => {
 
     const output = await PageExecutionTimings.audit(artifacts, {options, computedCache: new Map()});
     assert.deepStrictEqual(keyOutput(output), loadTraceExpectations);
-    assert.equal(Math.round(output.rawValue), 933);
+    assert.equal(Math.round(output.numericValue), 933);
     assert.equal(output.details.items.length, 6);
     assert.equal(output.score, 1);
   });
@@ -107,7 +107,7 @@ describe('Performance: page execution timings audit', () => {
     return PageExecutionTimings.audit(artifacts, context).then(output => {
       assert.equal(output.details.items.length, 0);
       assert.equal(output.score, 1);
-      assert.equal(Math.round(output.rawValue), 0);
+      assert.equal(Math.round(output.numericValue), 0);
     });
   });
 });

@@ -81,7 +81,7 @@ declare global {
       /** Overrides scoreDisplayMode with notApplicable if set to true */
       notApplicable?: boolean;
       /** A numeric value that has a meaning specific to the audit, e.g. the number of nodes in the DOM or the timestamp of a specific load event. More information can be found in the audit details, if present. */
-      rawValue?: number;
+      numericValue?: number;
       /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
       details?: Audit.Details;
     }

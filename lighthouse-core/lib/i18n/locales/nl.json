@@ -876,22 +876,22 @@
     "message": "SEO"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "Maak je html zo op dat crawlers de content van je app beter begrijpen."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "Praktische tips voor content"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "Crawlers hebben toegang nodig tot je app om je website in zoekresultaten weer te geven."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "Crawlen en indexeren"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "Zorg ervoor dat je pagina's geschikt zijn voor mobiele apparaten zodat gebruikers hun vingers niet hoeven samen te knijpen of hoeven te zoomen om de contentpagina's te lezen. [Meer informatie](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "Geschikt voor mobiele apparaten"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache-TTL"
@@ -1050,7 +1050,7 @@
     "message": "Lees meer over [browsercaching in WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
-    "message": "Je kunt overwegen een [beeldoptimalisatieplug-in voor WordPress](https://wordpress.org/plugins/search/optimize+images/) te gebruiken om je afbeeldingen te comprimeren terwijl de beeldkwaliteit behouden blijft."
+    "message": "Overweeg een [beeldoptimalisatieplug-in voor WordPress](https://wordpress.org/plugins/search/optimize+images/) te gebruiken om je afbeeldingen te comprimeren terwijl de beeldkwaliteit behouden blijft."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
     "message": "Upload afbeeldingen rechtstreeks via de [mediabibliotheek](https://codex.wordpress.org/Media_Library_Screen) om er zeker van te zijn dat de vereiste afbeeldingsformaten beschikbaar zijn. Voeg de afbeeldingen vervolgens in vanuit de mediabibliotheek. Ook kun je de afbeeldingswidget gebruiken om ervoor te zorgen dat de optimale afbeeldingsformaten worden gebruikt (inclusief voor responsieve breakpoints). Vermijd afbeeldingen op volledig formaat, tenzij de afmetingen geschikt zijn voor waar ze worden geplaatst. [Meer informatie](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
@@ -1059,6 +1059,6 @@
     "message": "Je kunt tekstcompressie inschakelen bij je webserverinstellingen."
   },
   "stack-packs/packs/wordpress.js | uses_webp_images": {
-    "message": "Je kunt overwegen een [plug-in](https://wordpress.org/plugins/search/convert+webp/) of service te gebruiken die je geüploade afbeeldingen automatisch converteert naar de optimale formaten."
+    "message": "Overweeg een [plug-in](https://wordpress.org/plugins/search/convert+webp/) of service te gebruiken die je geüploade afbeeldingen automatisch converteert naar de optimale formaten."
   }
 }

@@ -59,7 +59,8 @@ declare global {
       }
 
       export interface AuditRef extends Result.AuditRef {
-        result: Audit.Result & { stackPacks?: StackPackDescription[] }
+        result: Audit.Result;
+        stackPacks?: StackPackDescription[];
       }
 
       export interface StackPackDescription {

@@ -79,8 +79,9 @@ describe('ReportRenderer', () => {
       const output = renderer.renderReport(sampleResults, container);
       assert.ok(output.querySelector('.lh-header-sticky'), 'has a header');
       assert.ok(output.querySelector('.lh-report'), 'has report body');
+      // 3 sets of gauges - one in sticky header, one in scores header, and one in each section.
       assert.equal(output.querySelectorAll('.lh-gauge__wrapper, .lh-gauge--pwa__wrapper').length,
-          sampleResults.reportCategories.length * 2, 'renders category gauges');
+          sampleResults.reportCategories.length * 3, 'renders category gauges');
       // no fireworks
       assert.ok(output.querySelector('.score100') === null, 'has no fireworks treatment');
     });
