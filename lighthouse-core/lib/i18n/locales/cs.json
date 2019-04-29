@@ -876,22 +876,22 @@
     "message": "SEO"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "Naformátujte soubor HTML způsobem, který umožní prohledávačům lépe porozumět obsahu vaší aplikace."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "Doporučené postupy pro obsah"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "Aby se vaše aplikace mohla zobrazovat ve výsledcích vyhledávání, prohledávače k ní musí mít přístup."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "Procházení a indexování"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "Zajistěte, aby stránky byly optimalizovány pro mobily a aby uživatelé nemuseli obsah stránky zvětšovat. [Další informace](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "Optimalizováno pro mobily"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Hodnota TTL (Time to Live) mezipaměti"
@@ -1026,7 +1026,7 @@
     "message": "Nainstalujte [plugin služby WordPress pro líné načítání](https://wordpress.org/plugins/search/lazy+load/), který umožňuje odložit načítání obrázků mimo obrazovku, nebo přejděte na motiv, který tuto funkci poskytuje. Zvažte také použití [pluginu AMP](https://wordpress.org/plugins/amp/)."
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
-    "message": "K dispozici je celá řada pluginů služby WordPress, které vám pomohou [vložit kritické podklady přímo do kódu](https://wordpress.org/plugins/search/critical+css/) nebo [odložit načítání méně důležitých zdrojů](https://wordpress.org/plugins/search/defer+css+javascript/). Upozorňujeme, že optimalizace pomocí těchto pluginů může rozbít váš motiv nebo pluginy. V kódu proto pravděpodobně budete muset provést změny."
+    "message": "K dispozici je celá řada pluginů služby WordPress, které vám pomohou [vložit kritické podklady přímo do kódu](https://wordpress.org/plugins/search/critical+css/) nebo [odložit načítání méně důležitých zdrojů](https://wordpress.org/plugins/search/defer+css+javascript/). Upozorňujeme, že optimalizace pomocí těchto pluginů může narušit funkčnost vašeho motivu nebo pluginů. V kódu proto pravděpodobně budete muset provést změny."
   },
   "stack-packs/packs/wordpress.js | time_to_first_byte": {
     "message": "Na reakční dobu serveru mají vliv motivy, pluginy a specifikace serverů. Zvažte vyhledání optimalizovaného motivu, pečlivý výběr optimalizačního pluginu či upgradování serveru."
@@ -1044,7 +1044,7 @@
     "message": "Zvažte snížení počtu [pluginů služby WordPress](https://wordpress.org/plugins/), které na stránce načítají nevyužité styly CSS. Pluginy, které přidávají nadbytečné styly CSS, můžete vyhledat pomocí funkce [Coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) v nástrojích pro vývojáře v Chromu. Odpovědný motiv či plugin můžete identifikovat podle adresy URL šablony stylů. Hledejte pluginy, které v seznamu mají mnoho šablon stylů, u nichž je při použití funkce Coverage velké množství kódu označeno červeně. Plugin by měl šablonu stylů do fronty zařadit jen v případě, že je na stránce opravdu použita."
   },
   "stack-packs/packs/wordpress.js | unused_javascript": {
-    "message": "Zvažte snížení počtu [pluginů služby WordPress](https://wordpress.org/plugins/), které na stránce nečítají nepoužívaný kód JavaScript. Pluginy, které přidávají nadbytečný kód JS, můžete vyhledat pomocí funkce [Coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) v nástrojích pro vývojáře v Chromu. Odpovědný motiv či plugin poznáte podle adresy URL skriptu. Hledejte pluginy, které v seznamu mají mnoho skriptů, u nichž je při použití funkce Coverage velké množství kódu označeno červeně. Plugin by měl skript do fronty zařadit jen v případě, že se na stránce opravdu používá."
+    "message": "Zvažte snížení počtu [pluginů služby WordPress](https://wordpress.org/plugins/), které na stránce načítají nepoužívaný kód JavaScript. Pluginy, které přidávají nadbytečný kód JS, můžete vyhledat pomocí funkce [Coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) v nástrojích pro vývojáře v Chromu. Odpovědný motiv či plugin poznáte podle adresy URL skriptu. Hledejte pluginy, které v seznamu mají mnoho skriptů, u nichž je při použití funkce Coverage velké množství kódu označeno červeně. Plugin by měl skript do fronty zařadit jen v případě, že se na stránce opravdu používá."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
     "message": "Přečtěte si o [ukládání do mezipaměti prohlížeče ve službě WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."

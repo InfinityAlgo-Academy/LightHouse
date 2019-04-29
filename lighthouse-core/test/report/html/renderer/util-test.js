@@ -152,6 +152,7 @@ describe('util helpers', () => {
 
       // Original audit results should be restored.
       const preparedResult = Util.prepareReportResult(clonedSampleResult);
+
       assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
     });
 

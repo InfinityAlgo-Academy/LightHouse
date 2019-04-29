@@ -876,22 +876,22 @@
     "message": "SEO"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "Formatieren Sie Ihren HTML-Code so, dass Crawler den Inhalt Ihrer App besser verstehen."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "Best Practices für Inhalte"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "Damit Ihre Website in den Suchergebnissen angezeigt werden kann, benötigen Crawler Zugriff auf Ihre App."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "Crawling und Indexierung"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "Achten Sie darauf, dass Ihre Seiten für Mobilgeräte optimiert sind, damit Nutzer problemlos Inhalte lesen können, ohne mit den Fingern heranzoomen zu müssen. [Weitere Informationen](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "Für Mobilgeräte optimiert"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache-TTL"
@@ -1029,22 +1029,22 @@
     "message": "Es gibt eine Reihe von WordPress-Plug-ins, mit denen Sie [wichtige Assets einbetten](https://wordpress.org/plugins/search/critical+css/) oder [weniger wichtige Ressourcen aufschieben](https://wordpress.org/plugins/search/defer+css+javascript/) können. Beachten Sie, dass über diese Plug-ins bereitgestellte Optimierungen dazu führen können, dass Ihre Designs oder Plug-ins nicht funktionieren. Daher müssen Sie wahrscheinlich Änderungen am Code vornehmen."
   },
   "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Sowohl Designs, Plug-ins als auch Serverspezifikationen tragen zur Serverantwortzeit bei. Versuchen Sie, ein noch weiter optimiertes Design zu finden, ein Optimierungs-Plug-in sorgfältig auszuwählen und/oder ein Upgrade für Ihren Server auszuführen."
+    "message": "Sowohl Designs, Plug-ins als auch Serverspezifikationen tragen zur Serverantwortzeit bei. Versuchen Sie, ein noch weiter optimiertes Design zu finden, wählen Sie ein geeignetes Optimierungs-Plug-in aus und/oder upgraden Sie Ihren Server."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
-    "message": "Sie haben die Möglichkeit, Auszüge in Ihrer Beitragsliste einzublenden (z. B. über das Tag \"Mehr\"), und somit die Anzahl der Beiträge auf einer Seite zu verringern, wodurch lange Beiträge auf mehrere Seiten aufgeteilt werden oder ein Plug-in für das Lazy Loading von Kommentaren verwendet wird."
+    "message": "Sie haben die Möglichkeit, Auszüge in Ihrer Beitragsliste einzublenden (z. B. über das Tag \"Mehr\"), die Anzahl der Beiträge auf einer Seite zu verringern, lange Beiträge auf mehrere Seiten aufzuteilen oder ein Plug-in für das Lazy Loading von Kommentaren zu verwenden."
   },
   "stack-packs/packs/wordpress.js | unminified_css": {
-    "message": "Ihre Website kann durch eine Reihe von [WordPress-Plug-ins](https://wordpress.org/plugins/search/minify+css/) beschleunigt werden, durch die Ihre Stile verkettet und komprimiert werden. Sofern möglich, können Sie diese Komprimierung auch im Voraus über einen Erstellungsprozess vornehmen."
+    "message": "Ihre Website kann durch eine Reihe von [WordPress-Plug-ins](https://wordpress.org/plugins/search/minify+css/) beschleunigt werden, durch die Ihre Stile verkettet und komprimiert werden. Sofern möglich, können Sie diese Komprimierung auch im Voraus über einen Build-Prozess vornehmen."
   },
   "stack-packs/packs/wordpress.js | unminified_javascript": {
-    "message": "Ihre Website kann durch eine Reihe von [WordPress-Plug-ins](https://wordpress.org/plugins/search/minify+javascript/) beschleunigt werden, durch die Ihre Skripte verkettet und komprimiert werden. Sofern möglich, können Sie diese Komprimierung auch im Voraus über einen Erstellungsprozess vornehmen."
+    "message": "Ihre Website kann durch eine Reihe von [WordPress-Plug-ins](https://wordpress.org/plugins/search/minify+javascript/) beschleunigt werden, durch die Ihre Skripte verkettet und komprimiert werden. Sofern möglich, können Sie diese Komprimierung auch im Voraus über einen Build-Prozess vornehmen."
   },
   "stack-packs/packs/wordpress.js | unused_css_rules": {
-    "message": "Sie können versuchen, die Anzahl der [WordPress-Plug-ins](https://wordpress.org/plugins/), über die nicht verwendete CSS auf Ihre Seite geladen werden, zu verringern oder zu verändern. Wenn Sie die Plug-ins ermitteln möchten, über die irrelevante CSS hinzugefügt werden, versuchen Sie, die [Testabdeckung](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) mithilfe von Chrome-Entwicklertools zu prüfen. Das entsprechende Design/Plug-in können Sie anhand der URL des Stylesheets erkennen. Suchen Sie in der Liste nach Plug-ins mit vielen Stylesheets, bei denen häufig die Farbe Rot in der Testabdeckung zu finden ist. Ein Stylesheet sollte nur dann in ein Plug-in aufgenommen werden, wenn es auch tatsächlich auf der Seite verwendet wird."
+    "message": "Prüfen Sie, ob Sie [WordPress-Plug-ins](https://wordpress.org/plugins/), über die nicht verwendete CSS auf Ihre Seite geladen werden, entfernen oder durch alternative Plug-ins ersetzen können. Wenn Sie die Plug-ins ermitteln möchten, über die irrelevante CSS hinzugefügt werden, können Sie das Prüftool zur [Codeabdeckung](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in den Chrome-Entwicklertools verwenden. Das entsprechende Design/Plug-in können Sie anhand der URL des Stylesheets erkennen. Suchen Sie in der Liste nach Plug-ins mit vielen Stylesheets, bei denen im Prüftool zur Codeabdeckung viel nicht verwendeter Code (markiert in Rot) angezeigt wird. Ein Stylesheet sollte nur dann in ein Plug-in aufgenommen werden, wenn es auch tatsächlich auf der Seite verwendet wird."
   },
   "stack-packs/packs/wordpress.js | unused_javascript": {
-    "message": "Sie können versuchen, die Anzahl der [WordPress-Plug-ins](https://wordpress.org/plugins/), über die nicht verwendetes JavaScript auf Ihre Seite geladen werden, zu verringern oder zu verändern. Wenn Sie die Plug-ins ermitteln möchten, über die irrelevante JavaScripts hinzugefügt werden, versuchen Sie, die [Testabdeckung](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) mithilfe von Chrome-Entwicklertools zu prüfen. Das entsprechende Design/Plug-in können Sie anhand der URL des Skripts erkennen. Suchen Sie in der Liste nach Plug-ins mit vielen Skripten, bei denen häufig die Farbe Rot in der Testabdeckung zu finden ist. Ein Skript sollte nur dann in ein Plug-in aufgenommen werden, wenn es auch tatsächlich auf der Seite verwendet wird."
+    "message": "Prüfen Sie, ob Sie [WordPress-Plug-ins](https://wordpress.org/plugins/), über die nicht verwendetes JavaScript auf Ihre Seite geladen wird, entfernen oder durch alternative Plug-ins ersetzen können. Wenn Sie die Plug-ins ermitteln möchten, über die irrelevante JavaScripts hinzugefügt werden, können Sie das Prüftool zur [Codeabdeckung](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in den Chrome-Entwicklertools verwenden. Das entsprechende Design/Plug-in können Sie anhand der URL des Skripts erkennen. Suchen Sie in der Liste nach Plug-ins mit vielen Skripts, bei denen im Prüftool zur Codeabdeckung viel nicht verwendeter Code (markiert in Rot) angezeigt wird. Ein Skript sollte nur dann in ein Plug-in aufgenommen werden, wenn es auch tatsächlich auf der Seite verwendet wird."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
     "message": "[Hier erhalten Sie Informationen zum Browser-Caching in WordPress.](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)"
@@ -1053,7 +1053,7 @@
     "message": "Sie haben die Möglichkeit, ein [WordPress-Plug-in für die Bildoptimierung](https://wordpress.org/plugins/search/optimize+images/) zu verwenden, durch das Ihre Bilder komprimiert werden, die Qualität jedoch erhalten bleibt."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Sie haben die Möglichkeit, Bilder direkt über die [Medienbibliothek](https://codex.wordpress.org/Media_Library_Screen) hochzuladen, damit die erforderlichen Bildgrößen verfügbar sind. Die Bilder können Sie dann die Medienbibliothek einfügen oder auch das Bild-Widget nutzen, um dafür zu sorgen, dass die optimalen Bildgrößen verwendet werden (einschließlich derjenigen für die responsiven Haltepunkte). Bilder in Originalgröße sollten nur verwendet werden, wenn die Abmessungen für die entsprechende Nutzung geeignet sind. [Weitere Informationen](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Sie haben die Möglichkeit, Bilder direkt über die [Medienbibliothek](https://codex.wordpress.org/Media_Library_Screen) hochzuladen, damit die erforderlichen Bildgrößen verfügbar sind. Die Bilder können Sie dann aus der Medienbibliothek einfügen oder auch das Bild-Widget nutzen, um dafür zu sorgen, dass die optimalen Bildgrößen verwendet werden (einschließlich derjenigen für die responsiven Haltepunkte). Bilder in Originalgröße sollten nur verwendet werden, wenn die Abmessungen für die entsprechende Nutzung geeignet sind. [Weitere Informationen](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Sie können die Textkomprimierung in der Konfiguration Ihres Webservers aktivieren."
