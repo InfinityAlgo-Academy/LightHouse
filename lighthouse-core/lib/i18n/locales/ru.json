@@ -876,22 +876,22 @@
     "message": "Поисковая оптимизация"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "Оптимизируйте HTML-код, чтобы поисковые роботы могли лучше проанализировать контент приложения."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "Рекомендации в отношении контента"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "Чтобы ваше приложение появлялось в результатах поиска, предоставьте доступ к нему поисковым роботам."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "Сканирование и индексирование"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "Убедитесь, что ваши страницы оптимизированы для мобильных устройств, чтобы пользователям не приходилось менять масштаб страниц или подстраивать их под размер экрана. [Подробнее…](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "Оптимизация для мобильных устройств"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Время жизни кеша"
@@ -1035,10 +1035,10 @@
     "message": "Мы рекомендуем включить показ только начального фрагмента записей (например, с помощью тега More). Вы также можете сократить количество записей на одной странице, разбить длинные записи на несколько страниц или использовать отложенную загрузку комментариев."
   },
   "stack-packs/packs/wordpress.js | unminified_css": {
-    "message": "Увеличьте скорость загрузки страниц вашего сайта с помощью [плагинов WordPress](https://wordpress.org/plugins/search/minify+css/), которые позволяют объединять, уменьшать и сжимать стили. Рекомендуем использовать такие плагины на этапе сборки."
+    "message": "Увеличьте скорость загрузки страниц сайта с помощью [плагинов WordPress](https://wordpress.org/plugins/search/minify+css/), которые позволяют объединять, уменьшать и сжимать стили. Рекомендуем использовать такие плагины на этапе сборки."
   },
   "stack-packs/packs/wordpress.js | unminified_javascript": {
-    "message": "Увеличьте скорость загрузки страниц вашего сайта с помощью [плагинов WordPress](https://wordpress.org/plugins/search/minify+javascript/), которые позволяют объединять, уменьшать и сжимать скрипты. Рекомендуем использовать такие плагины на этапе сборки."
+    "message": "Увеличьте скорость загрузки страниц сайта с помощью [плагинов WordPress](https://wordpress.org/plugins/search/minify+javascript/), которые позволяют объединять, уменьшать и сжимать скрипты. Рекомендуем использовать такие плагины на этапе сборки."
   },
   "stack-packs/packs/wordpress.js | unused_css_rules": {
     "message": "Рекомендуем заменить или удалить [плагины WordPress](https://wordpress.org/plugins/), которые загружают неиспользуемый код CSS на странице сайта. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в Инструментах разработчика Chrome. Определить нужный плагин или тему можно по URL таблицы стилей. Обращайте внимание на плагины с большим количеством таблиц стилей, в которых при анализе покрытия кода преобладает красный цвет. Таблица стилей должна попадать в очередь, только если она используется на странице."

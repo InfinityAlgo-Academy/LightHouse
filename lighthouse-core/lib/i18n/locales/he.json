@@ -876,22 +876,22 @@
     "message": "אופטימיזציה למנועי חיפוש"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "יש לכתוב את קוד ה-HTML באופן שיאפשר לסורקים להבין את תוכן האפליקציה בצורה טובה יותר."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "שיטות מומלצות לגבי תוכן"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "כדי שהאפליקציה תופיע בתוצאות החיפוש, סורקים צריכים לקבל גישה אליה."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "סריקה והוספה לאינדקס"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "הדפים צריכים להתאים לניידים, כדי שמשתמשים לא יצטרכו לעשות תנועת צביטה או התקרבות כדי לקרוא את דפי התוכן. [מידע נוסף](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "התאמה לניידים"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "אורך חיים (TTL) של מטמון"
@@ -927,7 +927,7 @@
     "message": "משהו השתבש בתיעוד של טעינת הדף ובמעקב אחריה. יש להריץ שוב את Lighthouse. ({errorCode})"
   },
   "lighthouse-core/lib/lh-error.js | criTimeout": {
-    "message": "חלף הזמן הקצוב לתפוגה בעת ההמתנה לחיבור הראשוני של פרוטוקול Debugger."
+    "message": "חלף הזמן הקצוב לתפוגה בהמתנה לחיבור הראשוני של פרוטוקול Debugger."
   },
   "lighthouse-core/lib/lh-error.js | didntCollectScreenshots": {
     "message": "Chrome לא אסף צילומי מסך במהלך טעינת הדף. צריך לוודא שיש תוכן גלוי בדף, ולאחר מכן להריץ מחדש את Lighthouse. ({errorCode})"
@@ -1023,7 +1023,7 @@
     "message": "אפשר להעלות את ה-GIF לשירות שיאפשר להטמיע אותו כסרטון HTML5."
   },
   "stack-packs/packs/wordpress.js | offscreen_images": {
-    "message": "אפשר להתקין [פלאגין לטעינה מדורגת WordPress](https://wordpress.org/plugins/search/lazy+load/) שנותן לך אפשרות לדחות טעינה של רכיבים שאינם מופיעים מיד במסך. ניתן גם להשתמש בעיצוב שמספק את התכונה הזו. עוד אפשרות היא להשתמש ב[פלאגין של AMP](https://wordpress.org/plugins/amp/)."
+    "message": "אפשר להתקין [פלאגין של WordPress לטעינה מדורגת](https://wordpress.org/plugins/search/lazy+load/) שמאפשר לדחות טעינה של רכיבים שאינם מופיעים מיד במסך. ניתן גם להשתמש בעיצוב שמספק את התכונה הזו. עוד אפשרות היא להשתמש ב[פלאגין של AMP](https://wordpress.org/plugins/amp/)."
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
     "message": "יש כמה יישומי פלאגין של WordPress שיכולים לעזור לך [להטביע נכסים קריטיים](https://wordpress.org/plugins/search/critical+css/) או [לדחות טעינה של משאבים פחות חשובים](https://wordpress.org/plugins/search/defer+css+javascript/). חשוב: ייתכן שהאופטימיזציות המבוצעות על-ידי יישומי הפלאגין האלה יגרמו לתקלות בתכונות של העיצוב או יישומי הפלאגין האחרים, ולכן כנראה שיהיה צורך לבצע שינויים בקוד."
@@ -1035,13 +1035,13 @@
     "message": "אפשר להציג קטעים ברשימות הפוסטים (למשל, עם תג 'עוד'), לצמצם את מספר הפוסטים המוצגים בדף נתון, לחלק פוסטים ארוכים למספר דפים או להשתמש בפלאגין כדי לטעון תגובות בצורה מדורגת."
   },
   "stack-packs/packs/wordpress.js | unminified_css": {
-    "message": "יש כמה [יישומי פלאגין של WordPress](https://wordpress.org/plugins/search/minify+css/) שיכולים להאיץ את האתר בעזרת שרשור, הקטנה ודחיסה של הסקריפטים. ניתן גם להשתמש בתהליך build כדי לבצע את ההקטנה מראש, אם אפשר."
+    "message": "יש כמה [יישומי פלאגין של WordPress](https://wordpress.org/plugins/search/minify+css/) שיכולים להאיץ את האתר בעזרת שרשור, הקטנה ודחיסה של הסגנונות. ניתן גם להשתמש בתהליך build כדי לבצע את ההקטנה מראש, אם אפשר."
   },
   "stack-packs/packs/wordpress.js | unminified_javascript": {
     "message": "יש כמה [יישומי פלאגין של WordPress](https://wordpress.org/plugins/search/minify+javascript/) שיכולים להאיץ את האתר בעזרת שרשור, הקטנה ודחיסה של הסקריפטים. ניתן גם להשתמש בתהליך build כדי לבצע את ההקטנה מראש, אם אפשר."
   },
   "stack-packs/packs/wordpress.js | unused_css_rules": {
-    "message": "אפשר לצמצם את מספר [יישומי הפלאגין של WordPress](https://wordpress.org/plugins/) שטוענים תוכן CSS בלתי נחוץ בדף, או להשבית אותם. כדי לזהות יישומי פלאגין שמוסיפים תוכן CSS מיותר יש לך אפשרות להפעיל [כיסוי קוד](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) ב-Chrome DevTools. ניתן לזהות את העיצוב/הפלאגין שמוסיפים CSS לפי כתובת ה-URL שבגיליון הסגנון. יישומי הפלאגין הבעייתיים הם אלה שברשימת גיליונות הסגנון שלהם יש כמות גדולה של כיסוי קוד באדום. פלאגין צריך להכניס גיליון סגנון לתור רק אם נעשה בו שימוש בדף."
+    "message": "אפשר לצמצם את מספר [יישומי הפלאגין של WordPress](https://wordpress.org/plugins/) שטוענים תוכן CSS בלתי נחוץ בדף, או להשבית אותם. כדי לזהות יישומי פלאגין שמוסיפים תוכן CSS מיותר, אפשר להפעיל [כיסוי קוד](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) ב-Chrome DevTools. ניתן לזהות את העיצוב/הפלאגין שמוסיפים CSS לפי כתובת ה-URL שבגיליון הסגנון. יישומי הפלאגין הבעייתיים הם אלה שברשימת גיליונות הסגנון שלהם יש כמות גדולה של כיסוי קוד באדום. פלאגין צריך להכניס גיליון סגנון לתור רק אם נעשה בו שימוש בדף."
   },
   "stack-packs/packs/wordpress.js | unused_javascript": {
     "message": "אפשר לצמצם את מספר [יישומי הפלאגין של WordPress](https://wordpress.org/plugins/) שטוענים תוכן JavaScript בלתי נחוץ בדף, או להסיר אותם. כדי לזהות יישומי פלאגין שמוסיפים תוכן JS מיותר אפשר להפעיל [כיסוי קוד](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) ב-Chrome DevTools. ניתן לזהות את העיצוב/הפלאגין שמוסיפים CSS לפי כתובת ה-URL שבסקריפט. יישומי הפלאגין הבעייתיים הם אלה שברשימת הסקריפטים שלהם יש כמות גדולה של כיסוי קוד באדום. פלאגין צריך להכניס סקריפט לתור רק אם נעשה בו שימוש בדף."
@@ -1053,7 +1053,7 @@
     "message": "אפשר להשתמש ב[בפלאגין של WordPress לאופטימיזציית תמונות](https://wordpress.org/plugins/search/optimize+images/) שדוחס את התמונות בלי לפגוע באיכות שלהן."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "העלאה של תמונות באופן ישיר דרך [ספריית המדיה](https://codex.wordpress.org/Media_Library_Screen) תאפשר לך לוודא שגודלי התמונות הדרושים זמינים. לאחר מכן אפשר להוסיף אותן מספריית המדיה או להשתמש בווידג'ט התמונות כדי לוודא שנעשה שימוש בגודלי התמונה האופטימליים (כולל תמונות בשביל נקודות מעבר רספונסיביות). יש להימנע משימוש בתמונות בגודל מלא, אלא אם המימדים מתאים לשימוש שנעשה בהן. [מידע נוסף](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "העלאה של תמונות באופן ישיר דרך [ספריית המדיה](https://codex.wordpress.org/Media_Library_Screen) תאפשר לך לוודא שהתמונות זמינות במידות הדרושות. לאחר מכן אפשר להוסיף אותן מספריית המדיה או להשתמש בווידג'ט התמונות כדי לוודא שנעשה שימוש בתמונות במידות האופטימליות (כולל תמונות בשביל נקודות מעבר רספונסיביות). יש להימנע משימוש בתמונות בגודל מלא, אלא אם המימדים מתאים לשימוש שנעשה בהן. [מידע נוסף](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "אפשר להפעיל דחיסת טקסט בהגדרות שרת האינטרנט."

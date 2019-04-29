@@ -876,22 +876,22 @@
     "message": "SEO"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "Μορφοποιήστε το HTML με τρόπο που να επιτρέπει στους ανιχνευτές να κατανοούν καλύτερα το περιεχόμενο της εφαρμογής σας."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "Βέλτιστες πρακτικές περιεχομένου"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "Για να εμφανίζεται στα αποτελέσματα αναζήτησης, οι ανιχνευτές χρειάζονται πρόσβαση στην εφαρμογή σας."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "Ανίχνευση και δημιουργία ευρετηρίου"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "Βεβαιωθείτε ότι οι σελίδες σας είναι φιλικές προς κινητά, ώστε οι χρήστες να μην χρειάζεται να πλησιάζουν τα δάχτυλά τους ή να κάνουν μεγέθυνση, για να διαβάζουν τις σελίδες περιεχομένου. [Μάθετε περισσότερα](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "Φιλική προς κινητά"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL κρυφής μνήμης"

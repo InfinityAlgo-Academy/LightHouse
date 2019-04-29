@@ -876,22 +876,22 @@
     "message": "Оптим. пошук. систем"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "Відформатуйте HTML так, щоб веб-сканери краще розуміли вміст вашого додатка."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "Практичні поради щодо вмісту"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "Щоб ваш вміст з’являвся в результатах пошуку, веб-сканерам потрібно надати доступ до додатка."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "Сканування й індексування"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "Переконайтеся, що ваші сторінки адаптовані для мобільних пристроїв і користувачам не потрібно зменшувати чи збільшувати масштаб, щоб читати їх вміст. [Докладніше](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "Для мобільних пристроїв"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL кешу"
