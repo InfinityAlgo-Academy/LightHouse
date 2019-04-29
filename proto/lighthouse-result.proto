@@ -371,7 +371,7 @@ message StackPack {
   string title = 2;
 
   // The icon as a data url.
-  string icon_data_url = 3;
+  string icon_data_URL = 3;
 
   // Map of audit-ids to Stack Pack descriptions.
   map<string, string> descriptions = 4;

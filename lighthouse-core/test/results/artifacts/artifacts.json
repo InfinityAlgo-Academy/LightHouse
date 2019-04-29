@@ -1784,6 +1784,11 @@
       "name": "jQuery",
       "version": "2.1.1",
       "npm": "jquery"
+    },
+    {
+      "detector": "js",
+      "id": "wordpress",
+      "name": "WordPress"
     }
   ],
   "OptimizedImages": [
