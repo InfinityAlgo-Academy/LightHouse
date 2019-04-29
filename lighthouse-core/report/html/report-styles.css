@@ -390,7 +390,7 @@
   flex: 1;
 }
 
-/* Prepend display text with separator. But not in Opportunities. */
+/* Prepend display text with em dash separator. But not in Opportunities. */
 .lh-audit-group:not(.lh-audit-group--load-opportunities) .lh-audit__display-text:not(:empty):before {
   content: '—';
 }
