@@ -161,6 +161,9 @@ message LighthouseResult {
       string entry_type = 2;
       google.protobuf.DoubleValue start_time = 3;
       google.protobuf.DoubleValue duration = 4;
+
+      // Whether timing entry was collected during artifact gathering.
+      bool gather = 5;
     }
 
     // The total duration of Lighthouse's run
@@ -368,7 +371,7 @@ message StackPack {
   string title = 2;
 
   // The icon as a data url.
-  string icon_data_url = 3;
+  string icon_data_URL = 3;
 
   // Map of audit-ids to Stack Pack descriptions.
   map<string, string> descriptions = 4;

@@ -36,9 +36,9 @@ describe('Performance: uses-rel-preconnect audit', () => {
     };
 
     const context = {settings: {}, computedCache: new Map()};
-    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, context);
+    const {score, numericValue, details} = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(score, 1);
-    assert.equal(rawValue, 0);
+    assert.equal(numericValue, 0);
     assert.equal(details.items.length, 0);
   });
 
@@ -61,9 +61,9 @@ describe('Performance: uses-rel-preconnect audit', () => {
     };
 
     const context = {settings: {}, computedCache: new Map()};
-    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, context);
+    const {score, numericValue, details} = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(score, 1);
-    assert.equal(rawValue, 0);
+    assert.equal(numericValue, 0);
     assert.equal(details.items.length, 0);
   });
 
@@ -83,9 +83,9 @@ describe('Performance: uses-rel-preconnect audit', () => {
     };
 
     const context = {settings: {}, computedCache: new Map()};
-    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, context);
+    const {score, numericValue, details} = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(score, 1);
-    assert.equal(rawValue, 0);
+    assert.equal(numericValue, 0);
     assert.equal(details.items.length, 0);
   });
 
@@ -111,9 +111,9 @@ describe('Performance: uses-rel-preconnect audit', () => {
     };
 
     const context = {settings: {}, computedCache: new Map()};
-    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, context);
+    const {score, numericValue, details} = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(score, 1);
-    assert.equal(rawValue, 0);
+    assert.equal(numericValue, 0);
     assert.equal(details.items.length, 0);
   });
 
@@ -134,9 +134,9 @@ describe('Performance: uses-rel-preconnect audit', () => {
     };
 
     const context = {settings: {}, computedCache: new Map()};
-    const {score, rawValue, details} = await UsesRelPreconnect.audit(artifacts, context);
+    const {score, numericValue, details} = await UsesRelPreconnect.audit(artifacts, context);
     assert.equal(score, 1);
-    assert.equal(rawValue, 0);
+    assert.equal(numericValue, 0);
     assert.equal(details.items.length, 0);
   });
 
@@ -201,8 +201,8 @@ describe('Performance: uses-rel-preconnect audit', () => {
     };
 
     const context = {settings: {}, computedCache: new Map()};
-    const {rawValue, extendedInfo} = await UsesRelPreconnect.audit(artifacts, context);
-    assert.equal(rawValue, 300);
+    const {numericValue, extendedInfo} = await UsesRelPreconnect.audit(artifacts, context);
+    assert.equal(numericValue, 300);
     assert.equal(extendedInfo.value.length, 1);
     assert.deepStrictEqual(extendedInfo.value, [
       {url: 'https://cdn.example.com', wastedMs: 300},
@@ -242,8 +242,8 @@ describe('Performance: uses-rel-preconnect audit', () => {
     };
 
     const context = {settings: {}, computedCache: new Map()};
-    const {rawValue, extendedInfo} = await UsesRelPreconnect.audit(artifacts, context);
-    assert.equal(rawValue, 300);
+    const {numericValue, extendedInfo} = await UsesRelPreconnect.audit(artifacts, context);
+    assert.equal(numericValue, 300);
     assert.equal(extendedInfo.value.length, 2);
     assert.deepStrictEqual(extendedInfo.value, [
       {url: 'https://othercdn.example.com', wastedMs: 300},

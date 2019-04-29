@@ -876,22 +876,22 @@
     "message": "SEO"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "Oblikujte HTML na način, ki iskalnikom po vsebini omogoča boljše razumevanje vsebine vaše aplikacije."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "Najboljši postopki glede vsebine"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "Če želite, da bo prikazana v rezultatih iskanja, morajo imeti iskalniki po vsebini dostop do vaše aplikacije."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "Iskanje po vsebini in indeksiranje"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "Poskrbite, da so strani prilagojene za mobilne naprave, da uporabnikom ne bo treba vleči s prsti skupaj ali povečevati slike, če bodo želeli brati strani z vsebino. [Več o tem](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "Prilagojeno za mobilne naprave"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL predpomnjenja"

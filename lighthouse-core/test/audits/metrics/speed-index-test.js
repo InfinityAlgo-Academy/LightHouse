@@ -24,7 +24,7 @@ describe('Performance: speed-index audit', () => {
     const settings = {throttlingMethod: 'provided'};
     return Audit.audit(artifacts, {options, settings, computedCache: new Map()}).then(result => {
       assert.equal(result.score, 1);
-      assert.equal(result.rawValue, 605);
+      assert.equal(result.numericValue, 605);
     });
   }, 10000);
 });

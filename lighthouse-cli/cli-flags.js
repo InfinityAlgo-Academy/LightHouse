@@ -59,7 +59,7 @@ function getFlags(manualArgv) {
           'save-assets', 'list-all-audits', 'list-trace-categories', 'print-config', 'additional-trace-categories',
           'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'emulated-form-factor',
           'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
-          'only-audits', 'only-categories', 'skip-audits',
+          'only-audits', 'only-categories', 'skip-audits', 'budget-path',
         ],
         'Configuration:')
       .describe({
@@ -88,6 +88,7 @@ function getFlags(manualArgv) {
             'Additional categories to capture with the trace (comma-delimited).',
         'config-path': `The path to the config JSON.
             An example config file: lighthouse-core/config/lr-desktop-config.js`,
+        'budget-path': `The path to the budget.json file for LightWallet.`,
         'preset': `Use a built-in configuration.
             WARNING: If the --config-path flag is provided, this preset will be ignored.`,
         'chrome-flags':
@@ -141,6 +142,7 @@ function getFlags(manualArgv) {
       .string('channel')
       .string('precomputedLanternDataPath')
       .string('lanternDataOutputPath')
+      .string('budgetPath')
 
       // default values
       .default('chrome-flags', '')

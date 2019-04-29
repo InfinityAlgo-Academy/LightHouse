@@ -261,4 +261,25 @@ describe('Performance: Font Display audit', () => {
     expect(result.details.items).toEqual([]);
     assert.strictEqual(result.score, 1);
   });
+
+  it('handles custom source URLs from sourcemaps', async () => {
+    // Make sure we don't use sourceURL when it's not a valid URL, see https://github.com/GoogleChrome/lighthouse/issues/8534
+    stylesheet.header.sourceURL = 'custom-url-from-source-map';
+    stylesheet.content = `
+      @font-face {
+        src: url(font-0.woff);
+        font-display: swap
+      }
+    `;
+
+    networkRecords = [{
+      url: `https://example.com/foo/bar/font-0.woff`,
+      endTime: 2, startTime: 1,
+      resourceType: 'Font',
+    }];
+
+    const result = await FontDisplayAudit.audit(getArtifacts(), context);
+    expect(result.details.items).toEqual([]);
+    assert.strictEqual(result.score, 1);
+  });
 });

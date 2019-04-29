@@ -36,7 +36,7 @@ describe('Render blocking resources audit', () => {
     const computedCache = new Map();
     const result = await RenderBlockingResourcesAudit.audit(artifacts, {settings, computedCache});
     assert.equal(result.score, 1);
-    assert.equal(result.rawValue, 0);
+    assert.equal(result.numericValue, 0);
   });
 
   describe('#estimateSavingsWithGraphs', () => {

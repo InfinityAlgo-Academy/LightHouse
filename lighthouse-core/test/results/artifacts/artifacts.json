@@ -29,6 +29,33 @@
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
     "channel": "cli",
+    "budgets": [
+      {
+        "resourceSizes": [
+          {
+            "resourceType": "script",
+            "budget": 125
+          },
+          {
+            "resourceType": "total",
+            "budget": 500
+          }
+        ],
+        "timings": [
+          {
+            "metric": "interactive",
+            "budget": 5000,
+            "tolerance": 1000
+          }
+        ],
+         "resourceCounts": [
+          {
+           "resourceType": "third-party",
+           "budget": 0
+          }
+        ]
+      }
+    ],
     "locale": "en-US",
     "blockedUrlPatterns": null,
     "additionalTraceCategories": null,
@@ -1757,6 +1784,11 @@
       "name": "jQuery",
       "version": "2.1.1",
       "npm": "jquery"
+    },
+    {
+      "detector": "js",
+      "id": "wordpress",
+      "name": "WordPress"
     }
   ],
   "OptimizedImages": [

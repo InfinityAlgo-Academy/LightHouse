@@ -876,22 +876,22 @@
     "message": "SEO"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "จัด HTML ให้อยู่ในรูปแบบที่ช่วยให้โปรแกรมรวบรวมข้อมูลเข้าใจเนื้อหาแอปได้ง่ายขึ้น"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "แนวทางปฏิบัติที่ดีที่สุดเกี่ยวกับเนื้อหา"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "โปรแกรมรวบรวมข้อมูลจะต้องเข้าถึงแอปของคุณได้เพื่อให้แอปปรากฏในผลการค้นหา"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "การรวบรวมข้อมูลและจัดทำดัชนี"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "ตรวจสอบว่าหน้าเว็บเหมาะกับอุปกรณ์เคลื่อนที่ ผู้ใช้จะได้ไม่ต้องบีบนิ้วหรือซูมเข้าเพื่ออ่านหน้าเนื้อหา [ดูข้อมูลเพิ่มเติม](https://developers.google.com/search/mobile-sites/)"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "เหมาะกับอุปกรณ์เคลื่อนที่"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "แคช TTL"

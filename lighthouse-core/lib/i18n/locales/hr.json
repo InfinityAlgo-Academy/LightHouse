@@ -447,7 +447,7 @@
     "message": "Vrijednost"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Inženjeri preglednika preporučuju da stranice sadrže manje od ~1500 elemenata DOM-a. Idealno je da je dubina stabla manja od 32 elementa i da ima manje od 60 elemenata podređenih/nadređenih jedinica. Veliki DOM može pojačati upotrebu memorije, uzrokovati dulje [izračune stilova](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) i proizvesti zahtjevna [preoblikovanja izgleda](https://developers.google.com/speed/articles/reflow). [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
+    "message": "Inženjeri preglednika preporučuju da stranice sadrže manje od ~1500 elemenata DOM-a. Idealno je da je dubina stabla manja od 32 elementa i da ima manje od 60 elemenata podređenih/nadređenih jedinica. Veliki DOM može trošiti više memorije, uzrokovati dulje [izračune stilova](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) i proizvesti zahtjevna [preoblikovanja izgleda](https://developers.google.com/speed/articles/reflow). [Saznajte više](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{Jedan element}one{# element}few{# elementa}other{# elemenata}}"
@@ -876,22 +876,22 @@
     "message": "SEO"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "Formatirajte HTML na način koji omogućuje alatima za indeksiranje da bolje razumiju sadržaj vaše aplikacije."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "Najbolji primjeri sadržaja"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "Da bi se vaša aplikacija pojavila u rezultatima pretraživanja, omogućite alatima za indeksiranje da joj pristupe."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "Pretraživanje i indeksiranje"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "Prilagodite svoje stranice mobilnim uređajima kako ih korisnici ne bi trebali sami povećavati da bi čitali sadržaj. [Saznajte više](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "Prilagođeno mobilnim uređajima"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL predmemoriranja"
@@ -1029,7 +1029,7 @@
     "message": "Brojni WordPressovi dodaci omogućuju vam da [ugradite kritične elemente](https://wordpress.org/plugins/search/critical+css/) ili [odgodite nevažnije resurse](https://wordpress.org/plugins/search/defer+css+javascript/). Upozoravamo da optimizacije koje pružaju ti dodaci mogu oštetiti značajke vaše teme ili dodataka, pa ćete vjerojatno trebati unijeti promjene u kôd."
   },
   "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Specifikacije za teme, dodatke i poslužitelj doprinose vremenu odgovora poslužitelja. Savjetujemo vam da pronađete optimiziraniju temu, pažljivo odaberete dodatak za optimizaciju i/ili nadogradite poslužitelj."
+    "message": "Specifikacije za teme, dodatke i poslužitelj produljuju vrijeme odgovora poslužitelja. Savjetujemo vam da pronađete optimiziraniju temu, pažljivo odaberete dodatak za optimizaciju i/ili nadogradite poslužitelj."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
     "message": "Savjetujemo vam da prikažete odlomke na popisu postova (na primjer pomoću više oznaka), smanjite broj postova koji se prikazuju na određenoj stranici, razlomite dugačke postove na više stranica ili koristite dodatak za lijeno učitavanje komentara."
