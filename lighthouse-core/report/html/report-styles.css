@@ -457,9 +457,12 @@
 }
 
 /* Prepend display text with em dash separator. But not in Opportunities. */
-.lh-audit-group:not(.lh-audit-group--load-opportunities) .lh-audit__display-text:not(:empty):before {
+.lh-audit__display-text:not(:empty):before {
   content: '—';
   margin-right: var(--audit-item-gap);
+}
+.lh-audit-group.lh-audit-group--load-opportunities .lh-audit__display-text:not(:empty):before {
+  display: none;
 }
 
 /* Expandable Details (Audit Groups, Audits) */
