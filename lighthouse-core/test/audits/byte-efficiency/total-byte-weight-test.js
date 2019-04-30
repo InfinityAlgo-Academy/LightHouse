@@ -47,7 +47,7 @@ describe('Total byte weight audit', () => {
     ]);
 
     return TotalByteWeight.audit(artifacts, {options, computedCache: new Map()}).then(result => {
-      assert.strictEqual(result.rawValue, 150 * 1024);
+      assert.strictEqual(result.numericValue, 150 * 1024);
       assert.strictEqual(result.score, 1);
       const results = result.details.items;
       assert.strictEqual(results.length, 3);
@@ -73,7 +73,7 @@ describe('Total byte weight audit', () => {
 
     return TotalByteWeight.audit(artifacts, {options, computedCache: new Map()}).then(result => {
       assert.ok(0.40 < result.score && result.score < 0.6, 'score is around 0.5');
-      assert.strictEqual(result.rawValue, 4180 * 1024);
+      assert.strictEqual(result.numericValue, 4180 * 1024);
       const results = result.details.items;
       assert.strictEqual(results.length, 10, 'results are clipped at top 10');
       assert.strictEqual(result.extendedInfo.value.totalCompletedRequests, 11);
@@ -88,7 +88,7 @@ describe('Total byte weight audit', () => {
     ]);
 
     return TotalByteWeight.audit(artifacts, {options, computedCache: new Map()}).then(result => {
-      assert.strictEqual(result.rawValue, 15000 * 1024);
+      assert.strictEqual(result.numericValue, 15000 * 1024);
       assert.strictEqual(result.score, 0);
     });
   });

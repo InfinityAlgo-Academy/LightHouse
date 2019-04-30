@@ -47,13 +47,13 @@ const UIStrings = {
   /** Label for the URL column in data tables, entries will be the URL of a web resource */
   columnURL: 'URL',
   /** Label for the size column in data tables, entries will be the size of a web resource in kilobytes */
-  columnSize: 'Size (KB)',
+  columnSize: 'Size',
   /** Label for the TTL column in data tables, entries will be the time to live value of the cache header on a web resource */
   columnCacheTTL: 'Cache TTL',
   /** Label for the wasted bytes column in data tables, entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions */
-  columnWastedBytes: 'Potential Savings (KB)',
+  columnWastedBytes: 'Potential Savings',
   /** Label for the wasted bytes column in data tables, entries will be the number of milliseconds the user could reduce page load by if they implemented the suggestions */
-  columnWastedMs: 'Potential Savings (ms)',
+  columnWastedMs: 'Potential Savings',
   /** Label for the time spent column in data tables, entries will be the number of milliseconds spent during a particular activity */
   columnTimeSpent: 'Time Spent',
 };

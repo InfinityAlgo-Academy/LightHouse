@@ -32,7 +32,7 @@ function getFlags(manualArgv) {
           'lighthouse <url> --output=json --output-path=./report.json --save-assets',
           'Save trace, screenshots, and named JSON report.')
       .example(
-          'lighthouse <url> --disable-device-emulation --throttling-method=provided',
+          'lighthouse <url> --emulated-form-factor=none --throttling-method=provided',
           'Disable device emulation and all throttling')
       .example(
           'lighthouse <url> --chrome-flags="--window-size=412,660"',
@@ -59,7 +59,7 @@ function getFlags(manualArgv) {
           'save-assets', 'list-all-audits', 'list-trace-categories', 'print-config', 'additional-trace-categories',
           'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'emulated-form-factor',
           'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
-          'only-audits', 'only-categories', 'skip-audits',
+          'only-audits', 'only-categories', 'skip-audits', 'budget-path',
         ],
         'Configuration:')
       .describe({
@@ -70,7 +70,6 @@ function getFlags(manualArgv) {
         'blocked-url-patterns': 'Block any network requests to the specified URL patterns',
         'disable-storage-reset':
             'Disable clearing the browser cache and other storage APIs before a run',
-        'disable-device-emulation': 'Disable all device form factor emulation. Deprecated: use --emulated-form-factor=none instead',
         'emulated-form-factor': 'Controls the emulated device form factor (mobile vs. desktop) if not disabled',
         'throttling-method': 'Controls throttling method',
         'throttling.rttMs': 'Controls simulated network RTT (TCP layer)',
@@ -82,13 +81,14 @@ function getFlags(manualArgv) {
         'gather-mode':
             'Collect artifacts from a connected browser and save to disk. (Artifacts folder path may optionally be provided). If audit-mode is not also enabled, the run will quit early.',
         'audit-mode': 'Process saved artifacts from disk. (Artifacts folder path may be provided, otherwise defaults to ./latest-run/)',
-        'save-assets': 'Save the trace contents & screenshots to disk',
+        'save-assets': 'Save the trace contents & devtools logs to disk',
         'list-all-audits': 'Prints a list of all available audits and exits',
         'list-trace-categories': 'Prints a list of all required trace categories and exits',
         'additional-trace-categories':
             'Additional categories to capture with the trace (comma-delimited).',
-        'config-path': `The path to the config JSON. 
+        'config-path': `The path to the config JSON.
             An example config file: lighthouse-core/config/lr-desktop-config.js`,
+        'budget-path': `The path to the budget.json file for LightWallet.`,
         'preset': `Use a built-in configuration.
             WARNING: If the --config-path flag is provided, this preset will be ignored.`,
         'chrome-flags':
@@ -115,7 +115,7 @@ function getFlags(manualArgv) {
         'output': `Reporter for the results, supports multiple values`,
         'output-path': `The file path to output the results. Use 'stdout' to write to stdout.
   If using JSON output, default is stdout.
-  If using HTML output, default is a file in the working directory with a name based on the test URL and date.
+  If using HTML or CSV output, default is a file in the working directory with a name based on the test URL and date.
   If using multiple outputs, --output-path is appended with the standard extension for each output type. "reports/my-run" -> "reports/my-run.report.html", "reports/my-run.report.json", etc.
   Example: --output-path=./lighthouse-results.html`,
         'view': 'Open HTML report in your browser',
@@ -123,7 +123,7 @@ function getFlags(manualArgv) {
 
       // boolean values
       .boolean([
-        'disable-storage-reset', 'disable-device-emulation', 'save-assets', 'list-all-audits',
+        'disable-storage-reset', 'save-assets', 'list-all-audits',
         'list-trace-categories', 'view', 'verbose', 'quiet', 'help', 'print-config',
       ])
       .choices('output', printer.getValidOutputOptions())
@@ -142,6 +142,7 @@ function getFlags(manualArgv) {
       .string('channel')
       .string('precomputedLanternDataPath')
       .string('lanternDataOutputPath')
+      .string('budgetPath')
 
       // default values
       .default('chrome-flags', '')

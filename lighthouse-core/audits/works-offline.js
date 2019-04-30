@@ -39,7 +39,7 @@ class WorksOffline extends Audit {
     }
 
     return {
-      rawValue: passed,
+      score: Number(passed),
       warnings,
     };
   }

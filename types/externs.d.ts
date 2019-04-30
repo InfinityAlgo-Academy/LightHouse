@@ -101,8 +101,6 @@ declare global {
       gatherMode?: boolean | string;
       /** Flag indicating that the browser storage should not be reset for the audit. */
       disableStorageReset?: boolean;
-      /** Flag indicating that there shouldn't be any emulation during the run. */
-      disableDeviceEmulation?: boolean;
       /** The form factor the emulation should use. */
       emulatedFormFactor?: 'mobile'|'desktop'|'none';
       /** The method used to throttle the network. */
@@ -121,6 +119,8 @@ declare global {
       channel?: string
       /** Precomputed lantern estimates to use instead of observed analysis. */
       precomputedLanternData?: PrecomputedLanternData | null;
+      /** The budget.json object for LightWallet. */
+      budgets?: Array<Budget> | null;
     }
 
     /**
@@ -171,6 +171,8 @@ declare global {
       precomputedLanternDataPath?: string;
       /** Path to the file where precomputed lantern data should be written to. */
       lanternDataOutputPath?: string;
+      /** Path to the budget.json file for LightWallet. */
+      budgetPath?: string | null;
 
       // The following are given defaults in cli-flags, so are not optional like in Flags or SharedFlagsSettings.
       output: OutputMode[];
@@ -219,6 +221,7 @@ declare global {
         fileName?: string;
         snapshot?: string;
         data?: {
+          isLoadingMainFrame?: boolean;
           documentLoaderURL?: string;
           frames?: {
             frame: string;

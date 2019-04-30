@@ -23,7 +23,7 @@ describe('SEO: Document has valid hreflang code', () => {
     };
 
     const auditResult = HreflangAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 5);
   });
 
@@ -43,7 +43,7 @@ describe('SEO: Document has valid hreflang code', () => {
       };
 
       const auditResult = HreflangAudit.audit(artifacts);
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     }
   });
 
@@ -64,13 +64,13 @@ describe('SEO: Document has valid hreflang code', () => {
       };
 
       const auditResult = HreflangAudit.audit(artifacts);
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
       inHead = !inHead;
     }
   });
 
   it('succeeds when there are no rel=alternate link elements nor headers', () => {
-    assert.equal(HreflangAudit.audit({LinkElements: []}).rawValue, true);
+    assert.equal(HreflangAudit.audit({LinkElements: []}).score, 1);
   });
 
   it('returns all failing items', () => {
@@ -84,7 +84,7 @@ describe('SEO: Document has valid hreflang code', () => {
     };
 
     const auditResult = HreflangAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 4);
   });
 });

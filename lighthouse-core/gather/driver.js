@@ -525,7 +525,14 @@ class Driver {
    * @return {Promise<{url: string, data: string}|null>}
    */
   async getAppManifest() {
-    this.setNextProtocolTimeout(3000);
+    // In all environments but LR, Page.getAppManifest finishes very quickly.
+    // In LR, there is a bug that causes this command to hang until outgoing
+    // requests finish. This has been seen in long polling (where it will never
+    // return) and when other requests take a long time to finish. We allow 10 seconds
+    // for outgoing requests to finish. Anything more, and we continue the run without
+    // a manifest.
+    // Googlers, see: http://b/124008171
+    this.setNextProtocolTimeout(10000);
     let response;
     try {
       response = await this.sendCommand('Page.getAppManifest');
@@ -912,8 +919,12 @@ class Driver {
       /**
        * @param {LH.Crdp.Security.SecurityStateChangedEvent} event
        */
-      const securityStateChangedListener = ({securityState, explanations}) => {
-        if (securityState === 'insecure') {
+      const securityStateChangedListener = ({
+        securityState,
+        explanations,
+        schemeIsCryptographic,
+      }) => {
+        if (securityState === 'insecure' && schemeIsCryptographic) {
           cancel();
           const insecureDescriptions = explanations
             .filter(exp => exp.securityState === 'insecure')
@@ -1333,9 +1344,6 @@ class Driver {
     const uniqueCategories = Array.from(new Set(traceCategories));
 
     // Check any domains that could interfere with or add overhead to the trace.
-    if (this.isDomainEnabled('Debugger')) {
-      throw new Error('Debugger domain enabled when starting trace');
-    }
     if (this.isDomainEnabled('CSS')) {
       throw new Error('CSS domain enabled when starting trace');
     }
@@ -1402,16 +1410,26 @@ class Driver {
   }
 
   /**
+   * Enables `Debugger` domain to receive async stacktrace information on network request initiators.
+   * This is critical for tracing certain performance simulation situations.
+   *
+   * @return {Promise<void>}
+   */
+  async enableAsyncStacks() {
+    await this.sendCommand('Debugger.enable');
+    await this.sendCommand('Debugger.setSkipAllPauses', {skip: true});
+    await this.sendCommand('Debugger.setAsyncCallStackDepth', {maxDepth: 8});
+  }
+
+  /**
    * @param {LH.Config.Settings} settings
    * @return {Promise<void>}
    */
   async beginEmulation(settings) {
-    if (!settings.disableDeviceEmulation) {
-      if (settings.emulatedFormFactor === 'mobile') {
-        await emulation.enableNexus5X(this);
-      } else if (settings.emulatedFormFactor === 'desktop') {
-        await emulation.enableDesktop(this);
-      }
+    if (settings.emulatedFormFactor === 'mobile') {
+      await emulation.enableNexus5X(this);
+    } else if (settings.emulatedFormFactor === 'desktop') {
+      await emulation.enableDesktop(this);
     }
 
     await this.setThrottling(settings, {useThrottling: true});

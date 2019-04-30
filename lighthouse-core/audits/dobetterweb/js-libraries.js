@@ -46,7 +46,7 @@ class JsLibrariesAudit extends Audit {
     const details = Audit.makeTableDetails(headings, libDetails, {});
 
     return {
-      rawValue: true, // Always pass for now.
+      score: 1, // Always pass for now.
       details,
     };
   }

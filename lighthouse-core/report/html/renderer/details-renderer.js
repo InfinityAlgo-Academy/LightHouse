@@ -59,7 +59,7 @@ class DetailsRenderer {
 
       // Internal-only details, not for rendering.
       case 'screenshot':
-      case 'diagnostic':
+      case 'debugdata':
         return null;
       // Fallback for old LHRs, where no type meant don't render.
       case undefined:
@@ -124,7 +124,11 @@ class DetailsRenderer {
       element.appendChild(hostElem);
     }
 
-    if (title) element.title = url;
+    if (title) {
+      element.title = url;
+      // set the url on the element's dataset which we use to check 3rd party origins
+      element.dataset.url = url;
+    }
     return element;
   }
 
@@ -331,7 +335,7 @@ class DetailsRenderer {
 
   /**
    * @param {LH.Audit.Details.List} details
-   * @returns {Element}
+   * @return {Element}
    */
   _renderList(details) {
     const listContainer = this._dom.createElement('div', 'lh-list');
@@ -373,7 +377,7 @@ class DetailsRenderer {
     for (const thumbnail of details.items) {
       const frameEl = this._dom.createChildOf(filmstripEl, 'div', 'lh-filmstrip__frame');
       this._dom.createChildOf(frameEl, 'img', 'lh-filmstrip__thumbnail', {
-        src: `data:image/jpeg;base64,${thumbnail.data}`,
+        src: thumbnail.data,
         alt: `Screenshot`,
       });
     }

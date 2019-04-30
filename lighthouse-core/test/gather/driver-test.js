@@ -700,6 +700,31 @@ describe('.gotoURL', () => {
       await loadPromise;
     });
 
+    it('does not reject when page is insecure but http', async () => {
+      const secureSecurityState = {
+        explanations: [],
+        securityState: 'insecure',
+        schemeIsCryptographic: false,
+      };
+
+      driver.on = driver.once = createMockOnceFn()
+        .mockEvent('Security.securityStateChanged', secureSecurityState);
+
+      const startUrl = 'https://www.example.com';
+      const loadOptions = {
+        waitForLoad: true,
+        passContext: {
+          settings: {
+            maxWaitForLoad: 1,
+          },
+        },
+      };
+
+      const loadPromise = driver.gotoURL(startUrl, loadOptions);
+      await flushAllTimersAndMicrotasks();
+      await loadPromise;
+    });
+
     it('rejects when page is insecure', async () => {
       const insecureSecurityState = {
         explanations: [
@@ -717,6 +742,7 @@ describe('.gotoURL', () => {
           },
         ],
         securityState: 'insecure',
+        schemeIsCryptographic: true,
       };
 
       driver.on = driver.once = createMockOnceFn();
@@ -746,7 +772,8 @@ describe('.gotoURL', () => {
       } catch (err) {
         expect(err).toHaveProperty('code', 'INSECURE_DOCUMENT_REQUEST');
         expect(err.friendlyMessage).toBeDisplayString(
-          'The URL you have provided does not have valid security credentials. reason 1. reason 2.'
+          'The URL you have provided does not have a valid security certificate. ' +
+          'reason 1. reason 2.'
         );
       }
     });

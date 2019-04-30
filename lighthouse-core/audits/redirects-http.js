@@ -28,7 +28,7 @@ class RedirectsHTTP extends Audit {
    */
   static audit(artifacts) {
     return {
-      rawValue: artifacts.HTTPRedirect.value,
+      score: Number(artifacts.HTTPRedirect.value),
     };
   }
 }

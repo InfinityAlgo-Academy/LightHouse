@@ -13,15 +13,15 @@ const assert = require('assert');
 describe('Console deprecations audit', () => {
   it('passes when no console messages were found', () => {
     const auditResult = DeprecationsAudit.audit({
-      ChromeConsoleMessages: [],
+      ConsoleMessages: [],
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 
   it('handles deprecations that do not have url or line numbers', () => {
     const auditResult = DeprecationsAudit.audit({
-      ChromeConsoleMessages: [
+      ConsoleMessages: [
         {
           entry: {
             source: 'deprecation',
@@ -30,7 +30,7 @@ describe('Console deprecations audit', () => {
         },
       ],
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.displayValue, '1 warning found');
     assert.equal(auditResult.details.items.length, 1);
     assert.equal(auditResult.details.items[0].url, '');
@@ -41,7 +41,7 @@ describe('Console deprecations audit', () => {
     const URL = 'http://example.com';
 
     const auditResult = DeprecationsAudit.audit({
-      ChromeConsoleMessages: [
+      ConsoleMessages: [
         {
           entry: {
             source: 'deprecation',
@@ -66,7 +66,7 @@ describe('Console deprecations audit', () => {
         },
       ],
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.displayValue, '2 warnings found');
     assert.equal(auditResult.details.items.length, 2);
     assert.equal(auditResult.details.items[0].url, URL);

@@ -95,7 +95,7 @@ class LoadFastEnough4Pwa extends Audit {
       score,
       displayValue,
       explanation,
-      rawValue: tti.timing,
+      numericValue: tti.timing,
     };
   }
 }

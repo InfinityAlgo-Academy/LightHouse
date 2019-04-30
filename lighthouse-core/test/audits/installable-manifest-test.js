@@ -38,7 +38,7 @@ describe('PWA: webapp install banner audit', () => {
       const context = generateMockAuditContext();
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('No manifest was fetched'), result.explanation);
       });
     });
@@ -48,7 +48,7 @@ describe('PWA: webapp install banner audit', () => {
       artifacts.WebAppManifest = manifestParser('{,:}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       const context = generateMockAuditContext();
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('failed to parse as valid JSON'));
       });
     });
@@ -58,7 +58,7 @@ describe('PWA: webapp install banner audit', () => {
       artifacts.WebAppManifest = manifestParser('{}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       const context = generateMockAuditContext();
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation);
         assert.strictEqual(result.details.items[0].failures.length, 4);
       });
@@ -67,7 +67,7 @@ describe('PWA: webapp install banner audit', () => {
     it('passes with complete manifest and SW', () => {
       const context = generateMockAuditContext();
       return InstallableManifestAudit.audit(generateMockArtifacts(), context).then(result => {
-        assert.strictEqual(result.rawValue, true, result.explanation);
+        assert.strictEqual(result.score, 1, result.explanation);
         assert.strictEqual(result.explanation, undefined, result.explanation);
       });
     });
@@ -80,7 +80,7 @@ describe('PWA: webapp install banner audit', () => {
       const context = generateMockAuditContext();
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('start_url'), result.explanation);
 
         const details = result.details.items[0];
@@ -96,7 +96,7 @@ describe('PWA: webapp install banner audit', () => {
       const context = generateMockAuditContext();
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('short_name'), result.explanation);
 
         const details = result.details.items[0];
@@ -112,7 +112,7 @@ describe('PWA: webapp install banner audit', () => {
       const context = generateMockAuditContext();
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('name'), result.explanation);
 
         const details = result.details.items[0];
@@ -128,7 +128,7 @@ describe('PWA: webapp install banner audit', () => {
       const context = generateMockAuditContext();
 
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.rawValue, false);
+        assert.strictEqual(result.score, 0);
         assert.ok(result.explanation.includes('PNG icon'), result.explanation);
 
         const details = result.details.items[0];
@@ -144,7 +144,7 @@ describe('PWA: webapp install banner audit', () => {
     const context = generateMockAuditContext();
 
     return InstallableManifestAudit.audit(artifacts, context).then(result => {
-      assert.strictEqual(result.rawValue, false);
+      assert.strictEqual(result.score, 0);
       assert.ok(result.explanation.includes('PNG icon'), result.explanation);
 
       const details = result.details.items[0];

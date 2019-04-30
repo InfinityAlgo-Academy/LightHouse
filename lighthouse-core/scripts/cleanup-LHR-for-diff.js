@@ -26,10 +26,10 @@ function cleanAndFormatLHR(lhrString) {
   /** @type {LH.Result} */
   const lhr = JSON.parse(lhrString);
 
-  // TODO: Resolve the below so we don't need to delete it:
+  // TODO: Resolve the below so we don't need to force it to a boolean value:
   // 1) The string|boolean story for proto
   // 2) Travis gets a absolute path during yarn diff:sample-json
-  delete lhr.configSettings.auditMode;
+  lhr.configSettings.auditMode = true;
 
   // Set timing values, which change from run to run, to predictable values
   lhr.timing.total = 12345.6789;

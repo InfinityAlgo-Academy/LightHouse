@@ -20,7 +20,7 @@ class MissingDescription extends LighthouseAudit {
 
   static audit(_) {
     return {
-      rawValue: true,
+      score: 1,
     };
   }
 }

@@ -34,13 +34,13 @@ class Viewport extends Audit {
 
     if (!viewportMeta.hasViewportTag) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: 'No viewport meta tag found',
       };
     }
 
     return {
-      rawValue: viewportMeta.isMobileOptimized,
+      score: Number(viewportMeta.isMobileOptimized),
       warnings: viewportMeta.parserWarnings,
     };
   }

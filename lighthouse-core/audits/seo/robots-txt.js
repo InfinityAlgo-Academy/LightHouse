@@ -202,19 +202,19 @@ class RobotsTxt extends Audit {
 
     if (!status) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: str_(UIStrings.explanation),
       };
     }
 
     if (status >= HTTP_SERVER_ERROR_CODE_LOW) {
       return {
-        rawValue: false,
+        score: 0,
         displayValue: str_(UIStrings.displayValueHttpBadCode, {statusCode: status}),
       };
     } else if (status >= HTTP_CLIENT_ERROR_CODE_LOW || content === '') {
       return {
-        rawValue: true,
+        score: 1,
         notApplicable: true,
       };
     }
@@ -242,7 +242,7 @@ class RobotsTxt extends Audit {
     }
 
     return {
-      rawValue: validationErrors.length === 0,
+      score: Number(validationErrors.length === 0),
       details,
       displayValue,
     };

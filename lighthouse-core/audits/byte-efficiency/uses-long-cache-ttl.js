@@ -238,18 +238,18 @@ class CacheHeaders extends Audit {
         if (url.includes('?')) queryStringCount++;
 
         // Include cacheControl info (if it exists) per url as a diagnostic.
-        /** @type {LH.Audit.Details.Diagnostic|undefined} */
-        let diagnostic;
+        /** @type {LH.Audit.Details.DebugData|undefined} */
+        let debugData;
         if (cacheControl) {
-          diagnostic = {
-            type: 'diagnostic',
+          debugData = {
+            type: 'debugdata',
             ...cacheControl,
           };
         }
 
         results.push({
           url,
-          diagnostic,
+          debugData,
           cacheLifetimeMs: cacheLifetimeInSeconds * 1000,
           cacheHitProbability,
           totalBytes,
@@ -284,7 +284,7 @@ class CacheHeaders extends Audit {
 
       return {
         score,
-        rawValue: totalWastedBytes,
+        numericValue: totalWastedBytes,
         displayValue: str_(UIStrings.displayValue, {itemCount: results.length}),
         extendedInfo: {
           value: {

@@ -11,7 +11,7 @@ const LighthouseAudit = require('../../../audits/audit');
 class MissingMeta extends LighthouseAudit {
   static audit(_) {
     return {
-      rawValue: true,
+      score: 1,
     };
   }
 }

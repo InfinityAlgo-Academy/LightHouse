@@ -46,8 +46,8 @@ describe('DetailsRenderer', () => {
       const el = renderer.render({
         type: 'filmstrip',
         items: [
-          {timing: 1020, data: 'foobar'},
-          {timing: 3030, data: 'foobaz'},
+          {timing: 1020, data: 'data:image/jpeg;base64,foobar'},
+          {timing: 3030, data: 'data:image/jpeg;base64,foobaz'},
         ],
       });
 
@@ -182,7 +182,7 @@ describe('DetailsRenderer', () => {
 
     it('does not render internal-only diagnostic details', () => {
       const details = {
-        type: 'diagnostic',
+        type: 'debugdata',
         items: [{
           failures: ['No manifest was fetched'],
           isParseFailure: true,
@@ -393,6 +393,7 @@ describe('DetailsRenderer', () => {
 
       assert.equal(urlEl.localName, 'div');
       assert.equal(urlEl.title, urlText);
+      assert.equal(urlEl.dataset.url, urlText);
       assert.ok(urlEl.firstChild.classList.contains('lh-text'));
       assert.equal(urlEl.textContent, displayUrlText);
     });
@@ -417,6 +418,7 @@ describe('DetailsRenderer', () => {
 
       assert.equal(urlEl.localName, 'div');
       assert.equal(urlEl.title, urlText);
+      assert.equal(urlEl.dataset.url, urlText);
       assert.ok(urlEl.firstChild.classList.contains('lh-text'));
       assert.equal(urlEl.textContent, displayUrlText);
     });

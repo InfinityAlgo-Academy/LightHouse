@@ -10,6 +10,13 @@
  */
 module.exports = [
   {
+    artifacts: {
+      Stacks: [{
+        id: 'jquery',
+      }, {
+        id: 'wordpress',
+      }],
+    },
     lhr: {
       requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
       finalUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
@@ -75,7 +82,7 @@ module.exports = [
         },
         'render-blocking-resources': {
           score: '<1',
-          rawValue: '>100',
+          numericValue: '>100',
           details: {
             items: {
               length: 7,
@@ -140,12 +147,15 @@ module.exports = [
           details: {
             items: [{
               name: 'jQuery',
+            },
+            {
+              name: 'WordPress',
             }],
           },
         },
         'dom-size': {
           score: 1,
-          rawValue: 31,
+          numericValue: 31,
           details: {
             items: [
               {statistic: 'Total DOM Elements', value: '31'},

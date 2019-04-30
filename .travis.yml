@@ -26,6 +26,7 @@ before_script:
   # see comment above about puppeteer
   - export CHROME_PATH="$(which google-chrome-stable)"
   - sh -e /etc/init.d/xvfb start
+  - google-chrome-stable --version
   - yarn build-all
 script:
   - yarn bundlesize

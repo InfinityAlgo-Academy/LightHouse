@@ -281,6 +281,31 @@ describe('PageDependencyGraph computed artifact:', () => {
       assert.equal(nodes[2].isMainDocument(), false);
     });
 
+    it('should link up script initiators', () => {
+      const request1 = createRequest(1, '1', 0);
+      const request2 = createRequest(2, '2', 5);
+      const request3 = createRequest(3, '3', 5);
+      const request4 = createRequest(4, '4', 20);
+      request4.initiator = {
+        type: 'script',
+        stack: {callFrames: [{url: '2'}], parent: {parent: {callFrames: [{url: '3'}]}}},
+      };
+      const networkRecords = [request1, request2, request3, request4];
+
+      addTaskEvents(0, 0, []);
+
+      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const nodes = [];
+      graph.traverse(node => nodes.push(node));
+
+      assert.equal(nodes.length, 4);
+      assert.deepEqual(nodes.map(node => node.id), [1, 2, 3, 4]);
+      assert.deepEqual(nodes[0].getDependencies(), []);
+      assert.deepEqual(nodes[1].getDependencies(), [nodes[0]]);
+      assert.deepEqual(nodes[2].getDependencies(), [nodes[0]]);
+      assert.deepEqual(nodes[3].getDependencies(), [nodes[1], nodes[2]]);
+    });
+
     it('should throw when root node is not related to main document', () => {
       const request1 = createRequest(1, '1', 0, null, NetworkRequest.TYPES.Other);
       const request2 = createRequest(2, '2', 5, null, NetworkRequest.TYPES.Document);

@@ -63,7 +63,7 @@ describe('ReportGenerator', () => {
     it('should inject the report CSS', () => {
       const result = ReportGenerator.generateReportHtml({});
       assert.ok(!result.includes('/*%%LIGHTHOUSE_CSS%%*/'));
-      assert.ok(result.includes('--pass-color'));
+      assert.ok(result.includes('--color-green'));
     });
 
     it('should inject the report renderer javascript', () => {

@@ -73,22 +73,21 @@ class ReportRenderer {
    * @param {LH.ReportResult} report
    * @return {DocumentFragment}
    */
-  _renderReportHeader(report) {
+  _renderReportTopbar(report) {
+    const el = this._dom.cloneTemplate('#tmpl-lh-topbar', this._templateContext);
+    const metadataUrl = /** @type {HTMLAnchorElement} */ (this._dom.find('.lh-topbar__url', el));
+    metadataUrl.href = metadataUrl.textContent = report.finalUrl;
+    return el;
+  }
+
+  /**
+   * @return {DocumentFragment}
+   */
+  _renderReportHeader() {
     const el = this._dom.cloneTemplate('#tmpl-lh-heading', this._templateContext);
     const domFragment = this._dom.cloneTemplate('#tmpl-lh-scores-wrapper', this._templateContext);
     const placeholder = this._dom.find('.lh-scores-wrapper-placeholder', el);
     /** @type {HTMLDivElement} */ (placeholder.parentNode).replaceChild(domFragment, placeholder);
-
-    this._dom.find('.lh-config__timestamp', el).textContent =
-        Util.formatDateTime(report.fetchTime);
-    this._dom.find('.lh-product-info__version', el).textContent = report.lighthouseVersion;
-    const metadataUrl = /** @type {HTMLAnchorElement} */ (this._dom.find('.lh-metadata__url', el));
-    const toolbarUrl = /** @type {HTMLAnchorElement}*/ (this._dom.find('.lh-toolbar__url', el));
-    metadataUrl.href = metadataUrl.textContent = report.finalUrl;
-    toolbarUrl.href = toolbarUrl.textContent = report.finalUrl;
-
-    const emulationDescriptions = Util.getEmulationDescriptions(report.configSettings || {});
-    this._dom.find('.lh-config__emulation', el).textContent = emulationDescriptions.summary;
     return el;
   }
 
@@ -126,7 +125,7 @@ class ReportRenderer {
       if (!runtime.description) return;
 
       const item = this._dom.cloneTemplate('#tmpl-lh-env__items', env);
-      this._dom.find('.lh-env__name', item).textContent = `${runtime.name}:`;
+      this._dom.find('.lh-env__name', item).textContent = runtime.name;
       this._dom.find('.lh-env__description', item).textContent = runtime.description;
       env.appendChild(item);
     });
@@ -160,6 +159,39 @@ class ReportRenderer {
 
   /**
    * @param {LH.ReportResult} report
+   * @param {CategoryRenderer} categoryRenderer
+   * @param {Record<string, CategoryRenderer>} specificCategoryRenderers
+   * @return {DocumentFragment[]}
+   */
+  _renderScoreGauges(report, categoryRenderer, specificCategoryRenderers) {
+    // Group gauges in this order: default, pwa, plugins.
+    const defaultGauges = [];
+    const customGauges = []; // PWA.
+    const pluginGauges = [];
+
+    for (const category of report.reportCategories) {
+      const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
+      const categoryGauge = renderer.renderScoreGauge(category, report.categoryGroups || {});
+
+      if (Util.isPluginCategory(category.id)) {
+        pluginGauges.push(categoryGauge);
+      } else if (renderer.renderScoreGauge === categoryRenderer.renderScoreGauge) {
+        // The renderer for default categories is just the default CategoryRenderer.
+        // If the functions are equal, then renderer is an instance of CategoryRenderer.
+        // For example, the PWA category uses PwaCategoryRenderer, which overrides
+        // CategoryRenderer.renderScoreGauge, so it would fail this check and be placed
+        // in the customGauges bucket.
+        defaultGauges.push(categoryGauge);
+      } else {
+        customGauges.push(categoryGauge);
+      }
+    }
+
+    return [...defaultGauges, ...customGauges, ...pluginGauges];
+  }
+
+  /**
+   * @param {LH.ReportResult} report
    * @return {DocumentFragment}
    */
   _renderReport(report) {
@@ -170,7 +202,7 @@ class ReportRenderer {
       header = this._renderReportShortHeader();
     } else {
       headerContainer.classList.add('lh-header-sticky');
-      header = this._renderReportHeader(report);
+      header = this._renderReportHeader();
     }
     headerContainer.appendChild(header);
 
@@ -210,31 +242,23 @@ class ReportRenderer {
       wrapper.appendChild(renderer.render(category, report.categoryGroups));
     }
 
+    // TODO(hoten) - fireworks show will commence later.
     // Fireworks
-    const scoresAll100 = report.reportCategories.every(cat => cat.score === 1);
-    if (!this._dom.isDevTools() && scoresAll100) {
-      headerContainer.classList.add('score100');
-      this._dom.find('.lh-header', headerContainer).addEventListener('click', _ => {
-        headerContainer.classList.toggle('fireworks-paused');
-      });
-    }
+    // const scoresAll100 = report.reportCategories.every(cat => cat.score === 1);
+    // if (!this._dom.isDevTools() && scoresAll100) {
+    //   if (scoresAll100) {
+    //     const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
+    //     scoresContainer.classList.add('score100');
+    //     scoresContainer.addEventListener('click', _ => {
+    //       scoresContainer.classList.toggle('fireworks-paused');
+    //     });
+    //   }
+    // }
 
     if (scoreHeader) {
-      const defaultGauges = [];
-      const customGauges = [];
-      for (const category of report.reportCategories) {
-        const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
-        const categoryGauge = renderer.renderScoreGauge(category, report.categoryGroups || {});
-
-        // Group gauges that aren't default at the end of the header
-        if (renderer.renderScoreGauge === categoryRenderer.renderScoreGauge) {
-          defaultGauges.push(categoryGauge);
-        } else {
-          customGauges.push(categoryGauge);
-        }
-      }
-      scoreHeader.append(...defaultGauges, ...customGauges);
-
+      const scoreGauges =
+        this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers);
+      scoreHeader.append(...scoreGauges);
       const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
       scoresContainer.appendChild(scoreHeader);
@@ -244,6 +268,23 @@ class ReportRenderer {
     reportSection.appendChild(this._renderReportFooter(report));
 
     const reportFragment = this._dom.createFragment();
+
+    if (!this._dom.isDevTools()) {
+      const topbarDocumentFragment = this._renderReportTopbar(report);
+      reportFragment.appendChild(topbarDocumentFragment);
+    }
+
+    if (scoreHeader && !this._dom.isDevTools()) {
+      const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
+      this._dom.createChildOf(stickyHeader, 'div', 'lh-highlighter');
+
+      const scoreGauges =
+        this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers);
+      stickyHeader.append(...scoreGauges);
+
+      reportFragment.appendChild(stickyHeader);
+    }
+
     reportFragment.appendChild(headerContainer);
     reportFragment.appendChild(container);
 

@@ -144,6 +144,21 @@ describe('CategoryRenderer', () => {
 
     const audits = categoryDOM.querySelectorAll('.lh-audit');
     assert.equal(audits.length, category.auditRefs.length, 'renders correct number of audits');
+
+    // No plugin categories in sampleResults.
+    assert.equal(
+      categoryDOM.querySelector('.lh-gauge__wrapper--plugin'), null, 'renders no plugin badges');
+  });
+
+  it('plugin category has plugin badge', () => {
+    const category = JSON.parse(
+      JSON.stringify(sampleResults.reportCategories.find(c => c.id === 'seo')));
+    category.id = 'lighthouse-plugin-someplugin';
+    category.title = 'Some Plugin';
+    const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+    assert.ok(categoryDOM.querySelector('.lh-gauge__wrapper--plugin'));
+    const label = categoryDOM.querySelector('.lh-gauge__label').textContent;
+    assert.equal(category.title, label);
   });
 
   it('handles markdown in category descriptions a category', () => {
@@ -263,32 +278,6 @@ describe('CategoryRenderer', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
       const auditsElements = categoryDOM.querySelectorAll('.lh-audit');
       assert.equal(auditsElements.length, category.auditRefs.length);
-    });
-
-    it('increments the audit index across groups', () => {
-      const elem = renderer.render(category, sampleResults.categoryGroups);
-
-      const passedAudits = elem.querySelectorAll('.lh-clump--passed .lh-audit__index');
-      const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit__index');
-      const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit__index');
-      const notApplicableAudits =
-        elem.querySelectorAll('.lh-clump--notapplicable .lh-audit__index');
-
-      const assertAllTheIndices = (nodeList) => {
-        // Must be at least one for a decent test.
-        assert.ok(nodeList.length > 0);
-
-        // Assert indices are continuous, starting at 1.
-        nodeList.forEach((node, i) => {
-          const auditIndex = Number.parseInt(node.textContent);
-          assert.strictEqual(auditIndex, i + 1);
-        });
-      };
-
-      assertAllTheIndices(passedAudits);
-      assertAllTheIndices(failedAudits);
-      assertAllTheIndices(manualAudits);
-      assertAllTheIndices(notApplicableAudits);
     });
 
     it('renders audits without a group before grouped ones', () => {

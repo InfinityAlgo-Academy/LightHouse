@@ -68,7 +68,7 @@ class HTTPS extends Audit {
       ];
 
       return {
-        rawValue: items.length === 0,
+        score: Number(items.length === 0),
         displayValue,
         extendedInfo: {
           value: items,
