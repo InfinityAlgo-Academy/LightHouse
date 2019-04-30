@@ -426,7 +426,6 @@ limitations under the License.
     }
   </style>
 
-
   <div class="lh-header-container">
     <div class="lh-scores-wrapper-placeholder"></div>
   </div>
@@ -601,7 +600,7 @@ limitations under the License.
       align-items: center;
       flex-direction: column;
       text-decoration: none;
-      
+
       --circle-border-width: 8;
       --transition-length: 1s;
 
@@ -848,6 +847,27 @@ limitations under the License.
   </div>
 </template>
 
+<template id="tmpl-lh-3p-filter">
+  <style>
+    .lh-3p-filter {
+      background: var(--lh-table-higlight-bg);
+      color: var(--medium-75-gray);
+      float: right;
+      padding: 6px;
+    }
+    .lh-3p-filter-label, .lh-3p-filter-input {
+      cursor: pointer;
+      vertical-align: middle;
+      user-select: none;
+    }
+  </style>
+  <div class="lh-3p-filter">
+    <label class="lh-3p-filter-label">
+      <input type="checkbox" class="lh-3p-filter-input" checked />
+      <span class="lh-3p-ui-string">Show 3rd party resources</span> (<span class="lh-3p-filter-count"></span>)
+    </label>
+  </div>
+</template>
 
 <!-- Lighthouse snippet component -->
 <template id="tmpl-lh-snippet">
@@ -857,7 +877,7 @@ limitations under the License.
             --snippet-highlight-light: #fbf1f2;
             --snippet-highlight-dark: #ffd6d8;
           }
-          
+
          .lh-snippet__header {
           position: relative;
           overflow: hidden;
@@ -908,7 +928,7 @@ limitations under the License.
           background: white;
           white-space: pre;
           display: flex;
-        }        
+        }
         .lh-snippet__line:not(.lh-snippet__line--message):first-child {
           padding-top: 4px;
         }
@@ -982,7 +1002,7 @@ limitations under the License.
             <div class="lh-snippet__line-icon"></div>
             <code></code>
           </div>
-        </template>   
+        </template>
     </div>
   </template>
-  
+

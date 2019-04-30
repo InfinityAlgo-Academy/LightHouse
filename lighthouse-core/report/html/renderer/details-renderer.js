@@ -124,7 +124,11 @@ class DetailsRenderer {
       element.appendChild(hostElem);
     }
 
-    if (title) element.title = url;
+    if (title) {
+      element.title = url;
+      // set the url on the element's dataset which we use to check 3rd party origins
+      element.dataset.url = url;
+    }
     return element;
   }
 

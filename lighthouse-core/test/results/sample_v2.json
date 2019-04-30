@@ -4631,6 +4631,7 @@
       "passedAuditsGroupTitle": "Passed audits",
       "snippetCollapseButtonLabel": "Collapse snippet",
       "snippetExpandButtonLabel": "Expand snippet",
+      "thirdPartyResourcesLabel": "Show 3rd-party resources",
       "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
       "varianceDisclaimer": "Values are estimated and may vary.",
       "warningAuditsGroupTitle": "Passed audits but with warnings",
