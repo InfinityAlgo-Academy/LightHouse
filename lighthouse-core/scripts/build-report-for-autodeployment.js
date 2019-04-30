@@ -10,24 +10,12 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
-const replaceLHRLocale = require('./i18n/swap-in-new-locale.js');
 
 const ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
 const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
 
-(async function() {
-  const filenameToLhr = {
-    'index.html': lhr,
-    'index.ar.html': replaceLHRLocale(JSON.parse(JSON.stringify(lhr)), 'ar'),
-    // Now serves the first alphabetical file as the root
-    'index.aaaaaaaaaaaaaaaaaaaaa.html': lhr,
-  };
-
-  // Generate and write reports
-  Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
-    const html = ReportGenerator.generateReport(lhr, 'html');
-    const filepath = path.join(__dirname, `../../dist/${filename}`);
-    fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
-    console.log('✅', filepath, 'written.');
-  });
-})();
+console.log('🕒 Generating report for sample_v2.json...');
+const html = ReportGenerator.generateReport(lhr, 'html');
+const filename = path.join(__dirname, '../../dist/index.html');
+fs.writeFileSync(filename, html, {encoding: 'utf-8'});
+console.log('✅', filename, 'written.');
