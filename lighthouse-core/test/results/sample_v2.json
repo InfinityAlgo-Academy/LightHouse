@@ -1910,7 +1910,7 @@
       "score": 0.58,
       "scoreDisplayMode": "numeric",
       "numericValue": 103455,
-      "displayValue": "11 resources found",
+      "displayValue": "10 resources found",
       "details": {
         "type": "table",
         "headings": [
@@ -2003,13 +2003,6 @@
             "cacheHitProbability": 0,
             "totalBytes": 144,
             "wastedBytes": 144
-          },
-          {
-            "url": "blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277",
-            "cacheLifetimeMs": 0,
-            "cacheHitProbability": 0,
-            "totalBytes": 0,
-            "wastedBytes": 0
           }
         ],
         "summary": {
@@ -5093,7 +5086,7 @@
       "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": [
         {
           "values": {
-            "itemCount": 11
+            "itemCount": 10
           },
           "path": "audits[uses-long-cache-ttl].displayValue"
         }

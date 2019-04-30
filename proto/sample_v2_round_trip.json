@@ -2659,13 +2659,6 @@
                         "totalBytes": 144.0, 
                         "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500", 
                         "wastedBytes": 144.0
-                    }, 
-                    {
-                        "cacheHitProbability": 0.0, 
-                        "cacheLifetimeMs": 0.0, 
-                        "totalBytes": 0.0, 
-                        "url": "blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277", 
-                        "wastedBytes": 0.0
                     }
                 ], 
                 "summary": {
@@ -2673,7 +2666,7 @@
                 }, 
                 "type": "table"
             }, 
-            "displayValue": "11 resources found", 
+            "displayValue": "10 resources found", 
             "id": "uses-long-cache-ttl", 
             "numericValue": 103455.0, 
             "score": 0.58, 
