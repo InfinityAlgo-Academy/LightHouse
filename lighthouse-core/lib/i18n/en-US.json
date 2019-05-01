@@ -751,6 +751,18 @@
     "message": "Avoid multiple page redirects",
     "description": "Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates."
   },
+  "lighthouse-core/audits/resource-summary.js | description": {
+    "message": "To set budgets for the quantity and size of page resources, add a budget.json file.",
+    "description": "Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits."
+  },
+  "lighthouse-core/audits/resource-summary.js | displayValue": {
+    "message": "{requestCount, plural, =1 {1 request} other {# requests}} • { byteCount, number, bytes } KB",
+    "description": "[ICU Syntax] Label for an audit identifying the number of requests and kilobytes used to load the page."
+  },
+  "lighthouse-core/audits/resource-summary.js | title": {
+    "message": "Keep request counts low and transfer sizes small",
+    "description": "Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page."
+  },
   "lighthouse-core/audits/seo/canonical.js | description": {
     "message": "Canonical links suggest which URL to show in search results. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/canonical).",
     "description": "Description of a Lighthouse audit that tells the user *why* they need to have a valid rel=canonical link. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
@@ -1223,13 +1235,49 @@
     "message": "Potential savings of {wastedMs, number, milliseconds} ms",
     "description": "Label shown per-audit to show how many milliseconds faster the page load could be if the user implemented the suggestions. The `{wastedMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 140 ms)"
   },
+  "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
+    "message": "Document",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Document' resources loaded by a web page."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
+    "message": "Font",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Font' resources loaded by a web page."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
+    "message": "Image",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Image' resources loaded by a web page."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
+    "message": "Media",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Media' resources loaded by a web page. 'Media' refers to audio and video files."
+  },
   "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms",
     "description": "Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms)"
   },
+  "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
+    "message": "Other",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page that don't fit into the categories of Document, Script, Stylesheet, Image, Media, & Font."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": {
+    "message": "Script",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Script' resources loaded by a web page. 'Script' refers to JavaScript or other files that are executable by a browser."
+  },
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s",
     "description": "Used to show the duration in seconds that something lasted. The {timeInMs} placeholder will be replaced with the time duration, shown in seconds (e.g. 5.2 s)"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
+    "message": "Stylesheet",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Stylesheet' resources loaded by a web page. 'Stylesheet' refers to CSS stylesheets."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
+    "message": "Third-party",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all third-party resources loaded by a web page. 'Third-party resources are items loaded from URLs that aren't controlled by the owner of the web page."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
+    "message": "Total",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page."
   },
   "lighthouse-core/lib/lh-error.js | badTraceRecording": {
     "message": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. ({errorCode})",
