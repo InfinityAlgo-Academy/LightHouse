@@ -60,11 +60,31 @@ limitations under the License.
           <span class="lh-audit-group__title"></span>
           <span class="lh-audit-group__itemcount"></span>
           <!-- .lh-audit-group__description will be added here -->
+          <!-- .lh-metrics-toggle will be added here -->
         </div>
         <div class=""></div>
       </div>
     </summary>
   </details>
+</template>
+
+<!-- Lighthouse metrics toggle -->
+<template id="tmpl-lh-metrics-toggle">
+  <div class="lh-metrics-toggle">
+    <input class="lh-metrics-toggle__input" type="checkbox" name="toggle-metric-descriptions">
+    <label for="toggle-metric-descriptions">
+      <div class="lh-metrics-toggle__icon lh-metrics-toggle__icon--less" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+          <path class="lh-metrics-toggle__lines" d="M4 9h16v2H4zm0 4h10v2H4z" />
+        </svg>
+      </div>
+      <div class="lh-metrics-toggle__icon lh-metrics-toggle__icon--more" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path class="lh-metrics-toggle__lines" d="M3 18h12v-2H3v2zM3 6v2h18V6H3zm0 7h18v-2H3v2z" />
+        </svg>
+      </div>
+    </label>
+  </div>
 </template>
 
 <!-- Lighthouse audit -->
@@ -88,10 +108,10 @@ limitations under the License.
 <!-- Lighthouse perf metric -->
 <template id="tmpl-lh-metric">
   <div class="lh-metric">
-    <div class="lh-metric__innerwrap tooltip-boundary">
+    <div class="lh-metric__innerwrap">
       <span class="lh-metric__title"></span>
       <div class="lh-metric__value"></div>
-      <div class="lh-metric__description tooltip"></div>
+      <div class="lh-metric__description"></div>
     </div>
   </div>
 </template>

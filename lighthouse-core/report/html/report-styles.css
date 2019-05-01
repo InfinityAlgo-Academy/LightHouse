@@ -86,6 +86,7 @@
   --color-black-800: #424242;
   --color-black-900: #212121;
   --color-black: #000000;
+  --color-blue: #2962FF;
   --color-green-700: #018642;
   --color-green: #0CCE6B;
   --color-orange-700: #D04900;
@@ -102,6 +103,7 @@
   --env-item-bg: var(--color-black-100);
   --env-name-min-width: 220px;
   --env-tem-padding: 10px 0px;
+  --expandable-padding: 0 0 2px calc(var(--score-shape-margin-left) + var(--score-shape-size) + var(--score-shape-margin-right));
   --gauge-circle-size-big: 120px;
   --gauge-circle-size: 96px;
   --header-padding: 20px 0 20px 0;
@@ -117,7 +119,10 @@
   --score-container-width: 160px;
   --score-number-font-size-big: 42px;
   --score-number-font-size: 34px;
-  --score-shape-margin: 7px 12px 0 4px;
+  --score-shape-margin-left: 4px;
+  --score-shape-margin-right: 12px;
+  --score-shape-margin-top: 7px;
+  --score-shape-margin: var(--score-shape-margin-top) var(--score-shape-margin-right) 0 var(--score-shape-margin-left);
   --score-shape-size: 12px;
   --score-title-font-size-big: 28px;
   --score-title-font-size: 20px;
@@ -141,6 +146,7 @@
   --color-highlighter-bg: var(--body-text-color);
 
   --color-hover: #FAFAFA;
+  --color-metric-toggle-lines: #7F7F7F;
 
   --plugin-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="%23757575"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>');
   --plugin-icon-url-dark: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="%23FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>');
@@ -210,7 +216,8 @@
     --score-container-width: 112px;
     --score-number-font-size-big: 34px;
     --score-number-font-size: 26px;
-    --score-shape-margin: 5px 12px 0 2px;
+    --score-shape-margin-left: 2px;
+    --score-shape-margin-top: 7px;
     --score-shape-size: 10px;
     --score-title-font-size-big: 22px;
     --score-title-font-size: 14px;
@@ -525,11 +532,14 @@
 .lh-metric {
   border-bottom: 1px solid var(--report-secondary-border-color);
 }
+.lh-metric:first-of-type {
+  border-top: 1px solid var(--report-secondary-border-color);
+}
 
 .lh-metric__innerwrap {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  font-weight: 500;
   padding: 8px var(--text-indent);
 }
 
@@ -539,10 +549,7 @@
 
 .lh-metric__title {
   flex: 1;
-}
-
-.lh-metric__name {
-  flex: 1;
+  font-weight: 500;
 }
 
 .lh-metrics__disclaimer {
@@ -553,13 +560,68 @@
 }
 
 .lh-metric__description {
+  display: none;
   color: var(--secondary-text-color);
+  padding: var(--expandable-padding);
+}
+.lh-audit-group--metrics__show-descriptions .lh-metric__description {
+  display: block;
 }
 
 .lh-metric__value {
   white-space: nowrap; /* No wrapping between metric value and the icon */
+  font-weight: 500;
 }
 
+.lh-metrics-toggle {
+  position: relative;
+}
+.lh-metrics-toggle__input {
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.lh-metrics-toggle label {
+  display: flex;
+  background-color: #eee;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.lh-metrics-toggle__input:focus + label {
+  outline: -webkit-focus-ring-color auto 3px;
+}
+.lh-metrics-toggle__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 5px;
+  width: 50%;
+  height: 28px;
+}
+.lh-metrics-toggle__input:not(:checked) + label .lh-metrics-toggle__icon--less,
+.lh-metrics-toggle__input:checked + label .lh-metrics-toggle__icon--more {
+  background-color: var(--color-blue);
+  --color-metric-toggle-lines: var(--color-white);
+}
+.lh-metrics-toggle__lines {
+  fill: var(--color-metric-toggle-lines);
+}
+.lh-metrics-toggle label .lh-metrics-toggle__icon--less {
+  padding-left: 8px;
+}
+.lh-metrics-toggle label .lh-metrics-toggle__icon--more {
+  padding-right: 8px;
+}
+
+/* Pushes the metric description toggle button to the right. */
+.lh-audit-group--metrics .lh-audit-group__header {
+  display: flex;
+}
+.lh-audit-group--metrics .lh-audit-group__header span.lh-audit-group__title {
+  flex: 1;
+}
 
 .lh-metric .lh-metric__innerwrap::before {
   content: '';
