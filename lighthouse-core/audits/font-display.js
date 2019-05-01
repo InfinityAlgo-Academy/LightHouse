@@ -116,6 +116,7 @@ class FontDisplay extends Audit {
       .filter(record => !passingFontURLs.has(record.url))
       // ...and that aren't data URLs, the blocking concern doesn't really apply
       .filter(record => !/^data:/.test(record.url))
+      .filter(record => !/^blob:/.test(record.url))
       .map(record => {
         // In reality the end time should be calculated with paint time included
         // all browsers wait 3000ms to block text so we make sure 3000 is our max wasted time

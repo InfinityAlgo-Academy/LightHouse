@@ -393,6 +393,7 @@ describe('DetailsRenderer', () => {
 
       assert.equal(urlEl.localName, 'div');
       assert.equal(urlEl.title, urlText);
+      assert.equal(urlEl.dataset.url, urlText);
       assert.ok(urlEl.firstChild.classList.contains('lh-text'));
       assert.equal(urlEl.textContent, displayUrlText);
     });
@@ -417,6 +418,7 @@ describe('DetailsRenderer', () => {
 
       assert.equal(urlEl.localName, 'div');
       assert.equal(urlEl.title, urlText);
+      assert.equal(urlEl.dataset.url, urlText);
       assert.ok(urlEl.firstChild.classList.contains('lh-text'));
       assert.equal(urlEl.textContent, displayUrlText);
     });

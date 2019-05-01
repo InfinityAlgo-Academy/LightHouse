@@ -24,6 +24,7 @@ function networkRecord(options = {}) {
     statusCode: options.statusCode || 200,
     resourceType: options.resourceType || NetworkRequest.TYPES.Script,
     transferSize: options.transferSize || 10000,
+    protocol: options.protocol || 'http/1.1',
     responseHeaders: headers,
   };
 }
@@ -207,7 +208,8 @@ describe('Cache headers audit', () => {
     const networkRecords = [
       networkRecord({statusCode: 500}),
       networkRecord({url: 'https://example.com/dynamic.js?userId=crazy', transferSize: 10}),
-      networkRecord({url: 'data:image/jpeg;base64,what'}),
+      networkRecord({url: 'data:image/jpeg;base64,what', protocol: 'data'}),
+      networkRecord({url: 'blob:http://example.com/ca6df701-9c67-49fd-a787', protocol: 'blob'}),
       networkRecord({resourceType: NetworkRequest.TYPES.XHR}),
     ];
 

@@ -60,11 +60,31 @@ limitations under the License.
           <span class="lh-audit-group__title"></span>
           <span class="lh-audit-group__itemcount"></span>
           <!-- .lh-audit-group__description will be added here -->
+          <!-- .lh-metrics-toggle will be added here -->
         </div>
         <div class=""></div>
       </div>
     </summary>
   </details>
+</template>
+
+<!-- Lighthouse metrics toggle -->
+<template id="tmpl-lh-metrics-toggle">
+  <div class="lh-metrics-toggle">
+    <input class="lh-metrics-toggle__input" type="checkbox" name="toggle-metric-descriptions">
+    <label for="toggle-metric-descriptions">
+      <div class="lh-metrics-toggle__icon lh-metrics-toggle__icon--less" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+          <path class="lh-metrics-toggle__lines" d="M4 9h16v2H4zm0 4h10v2H4z" />
+        </svg>
+      </div>
+      <div class="lh-metrics-toggle__icon lh-metrics-toggle__icon--more" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path class="lh-metrics-toggle__lines" d="M3 18h12v-2H3v2zM3 6v2h18V6H3zm0 7h18v-2H3v2z" />
+        </svg>
+      </div>
+    </label>
+  </div>
 </template>
 
 <!-- Lighthouse audit -->
@@ -88,10 +108,10 @@ limitations under the License.
 <!-- Lighthouse perf metric -->
 <template id="tmpl-lh-metric">
   <div class="lh-metric">
-    <div class="lh-metric__innerwrap tooltip-boundary">
+    <div class="lh-metric__innerwrap">
       <span class="lh-metric__title"></span>
       <div class="lh-metric__value"></div>
-      <div class="lh-metric__description tooltip"></div>
+      <div class="lh-metric__description"></div>
     </div>
   </div>
 </template>
@@ -426,7 +446,6 @@ limitations under the License.
     }
   </style>
 
-
   <div class="lh-header-container">
     <div class="lh-scores-wrapper-placeholder"></div>
   </div>
@@ -601,7 +620,7 @@ limitations under the License.
       align-items: center;
       flex-direction: column;
       text-decoration: none;
-      
+
       --circle-border-width: 8;
       --transition-length: 1s;
 
@@ -618,7 +637,7 @@ limitations under the License.
       color: var(--body-text-color);
     }
 
-    /* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendent selector */
+    /* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendant selector */
     .lh-category .lh-gauge__label {
       --score-title-font-size: var(--score-title-font-size-big);
       --score-title-line-height: var(--score-title-line-height-big);
@@ -848,6 +867,27 @@ limitations under the License.
   </div>
 </template>
 
+<template id="tmpl-lh-3p-filter">
+  <style>
+    .lh-3p-filter {
+      background: var(--lh-table-higlight-bg);
+      color: var(--medium-75-gray);
+      float: right;
+      padding: 6px;
+    }
+    .lh-3p-filter-label, .lh-3p-filter-input {
+      cursor: pointer;
+      vertical-align: middle;
+      user-select: none;
+    }
+  </style>
+  <div class="lh-3p-filter">
+    <label class="lh-3p-filter-label">
+      <input type="checkbox" class="lh-3p-filter-input" checked />
+      <span class="lh-3p-ui-string">Show 3rd party resources</span> (<span class="lh-3p-filter-count"></span>)
+    </label>
+  </div>
+</template>
 
 <!-- Lighthouse snippet component -->
 <template id="tmpl-lh-snippet">
@@ -857,7 +897,7 @@ limitations under the License.
             --snippet-highlight-light: #fbf1f2;
             --snippet-highlight-dark: #ffd6d8;
           }
-          
+
          .lh-snippet__header {
           position: relative;
           overflow: hidden;
@@ -908,7 +948,7 @@ limitations under the License.
           background: white;
           white-space: pre;
           display: flex;
-        }        
+        }
         .lh-snippet__line:not(.lh-snippet__line--message):first-child {
           padding-top: 4px;
         }
@@ -982,7 +1022,7 @@ limitations under the License.
             <div class="lh-snippet__line-icon"></div>
             <code></code>
           </div>
-        </template>   
+        </template>
     </div>
   </template>
-  
+

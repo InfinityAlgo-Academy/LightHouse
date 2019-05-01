@@ -5,10 +5,36 @@
  */
 'use strict';
 
+/**
+ * @param {unknown} arr
+ * @return {arr is Array<Record<string, unknown>>}
+ */
+function isArrayOfUnknownObjects(arr) {
+  return Array.isArray(arr) && arr.every(isObjectOfUnknownProperties);
+}
+
+/**
+ * @param {unknown} val
+ * @return {val is Record<string, unknown>}
+ */
+function isObjectOfUnknownProperties(val) {
+  return typeof val === 'object' && val !== null && !Array.isArray(val);
+}
+
+/**
+ * Returns whether `val` is numeric. Will not coerce to a number. `NaN` will
+ * return false, however ±Infinity will return true.
+ * @param {unknown} val
+ * @return {val is number}
+ */
+function isNumber(val) {
+  return typeof val === 'number' && !isNaN(val);
+}
+
 class Budget {
   /**
    * Asserts that obj has no own properties, throwing a nice error message if it does.
-   * Plugin and object name are included for nicer logging.
+   * `objectName` is included for nicer logging.
    * @param {Record<string, unknown>} obj
    * @param {string} objectName
    */
@@ -21,13 +47,14 @@ class Budget {
   }
 
   /**
-   * @param {LH.Budget.ResourceBudget} resourceBudget
+   * @param {Record<string, unknown>} resourceBudget
    * @return {LH.Budget.ResourceBudget}
    */
   static validateResourceBudget(resourceBudget) {
     const {resourceType, budget, ...invalidRest} = resourceBudget;
     Budget.assertNoExcessProperties(invalidRest, 'Resource Budget');
 
+    /** @type {Array<LH.Budget.ResourceType>} */
     const validResourceTypes = [
       'total',
       'document',
@@ -39,27 +66,29 @@ class Budget {
       'other',
       'third-party',
     ];
-    if (!validResourceTypes.includes(resourceBudget.resourceType)) {
-      throw new Error(`Invalid resource type: ${resourceBudget.resourceType}. \n` +
+    // Assume resourceType is an allowed string, throw if not.
+    if (!validResourceTypes.includes(/** @type {LH.Budget.ResourceType} */ (resourceType))) {
+      throw new Error(`Invalid resource type: ${resourceType}. \n` +
         `Valid resource types are: ${ validResourceTypes.join(', ') }`);
     }
-    if (isNaN(resourceBudget.budget)) {
-      throw new Error('Invalid budget: ${resourceBudget.budget}');
+    if (!isNumber(budget)) {
+      throw new Error(`Invalid budget: ${budget}`);
     }
     return {
-      resourceType,
+      resourceType: /** @type {LH.Budget.ResourceType} */ (resourceType),
       budget,
     };
   }
 
   /**
-   * @param {LH.Budget.TimingBudget} timingBudget
+   * @param {Record<string, unknown>} timingBudget
    * @return {LH.Budget.TimingBudget}
    */
   static validateTimingBudget(timingBudget) {
     const {metric, budget, tolerance, ...invalidRest} = timingBudget;
     Budget.assertNoExcessProperties(invalidRest, 'Timing Budget');
 
+    /** @type {Array<LH.Budget.TimingMetric>} */
     const validTimingMetrics = [
       'first-contentful-paint',
       'first-cpu-idle',
@@ -67,18 +96,19 @@ class Budget {
       'first-meaningful-paint',
       'estimated-input-latency',
     ];
-    if (!validTimingMetrics.includes(timingBudget.metric)) {
-      throw new Error(`Invalid timing metric: ${timingBudget.metric}. \n` +
+    // Assume metric is an allowed string, throw if not.
+    if (!validTimingMetrics.includes(/** @type {LH.Budget.TimingMetric} */ (metric))) {
+      throw new Error(`Invalid timing metric: ${metric}. \n` +
         `Valid timing metrics are: ${validTimingMetrics.join(', ')}`);
     }
-    if (isNaN(timingBudget.budget)) {
-      throw new Error('Invalid budget: ${timingBudget.budget}');
+    if (!isNumber(budget)) {
+      throw new Error(`Invalid budget: ${budget}`);
     }
-    if (timingBudget.tolerance !== undefined && isNaN(timingBudget.tolerance)) {
-      throw new Error('Invalid tolerance: ${timingBudget.tolerance}');
+    if (typeof tolerance !== 'undefined' && !isNumber(tolerance)) {
+      throw new Error(`Invalid tolerance: ${tolerance}`);
     }
     return {
-      metric,
+      metric: /** @type {LH.Budget.TimingMetric} */ (metric),
       budget,
       tolerance,
     };
@@ -87,43 +117,44 @@ class Budget {
   /**
    * More info on the Budget format:
    * https://github.com/GoogleChrome/lighthouse/issues/6053#issuecomment-428385930
-   * @param {Array<LH.Budget>} budgetArr
+   * @param {unknown} budgetJson
    * @return {Array<LH.Budget>}
    */
-  static initializeBudget(budgetArr) {
-    /** @type {Array<LH.Budget>} */
-    const budgets = [];
+  static initializeBudget(budgetJson) {
+    // Clone to prevent modifications of original and to deactivate any live properties.
+    budgetJson = JSON.parse(JSON.stringify(budgetJson));
+    if (!isArrayOfUnknownObjects(budgetJson)) {
+      throw new Error('Budget file is not defined as an array of budgets.');
+    }
 
-    budgetArr.forEach((b) => {
+    const budgets = budgetJson.map((b, index) => {
       /** @type {LH.Budget} */
       const budget = {};
 
       const {resourceSizes, resourceCounts, timings, ...invalidRest} = b;
       Budget.assertNoExcessProperties(invalidRest, 'Budget');
 
-      if (b.resourceSizes !== undefined) {
-        budget.resourceSizes = b.resourceSizes.map((r) => {
-          return Budget.validateResourceBudget(r);
-        });
+      if (isArrayOfUnknownObjects(resourceSizes)) {
+        budget.resourceSizes = resourceSizes.map(Budget.validateResourceBudget);
+      } else if (resourceSizes !== undefined) {
+        throw new Error(`Invalid resourceSizes entry in budget at index ${index}`);
       }
 
-      if (b.resourceCounts !== undefined) {
-        budget.resourceCounts = b.resourceCounts.map((r) => {
-          return Budget.validateResourceBudget(r);
-        });
+      if (isArrayOfUnknownObjects(resourceCounts)) {
+        budget.resourceCounts = resourceCounts.map(Budget.validateResourceBudget);
+      } else if (resourceCounts !== undefined) {
+        throw new Error(`Invalid resourceCounts entry in budget at index ${index}`);
       }
 
-      if (b.timings !== undefined) {
-        budget.timings = b.timings.map((t) => {
-          return Budget.validateTimingBudget(t);
-        });
+      if (isArrayOfUnknownObjects(timings)) {
+        budget.timings = timings.map(Budget.validateTimingBudget);
+      } else if (timings !== undefined) {
+        throw new Error(`Invalid timings entry in budget at index ${index}`);
       }
-      budgets.push({
-        resourceSizes,
-        resourceCounts,
-        timings,
-      });
+
+      return budget;
     });
+
     return budgets;
   }
 }

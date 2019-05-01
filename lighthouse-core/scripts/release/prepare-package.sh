@@ -5,7 +5,7 @@ LH_PRISTINE_ROOT="$DIRNAME/../../../../lighthouse-pristine"
 
 set -euxo pipefail
 
-bash "$DIRNAME/release-prepare-pristine.sh"
+bash "$DIRNAME/prepare-pristine.sh"
 
 cd "$LH_PRISTINE_ROOT"
 

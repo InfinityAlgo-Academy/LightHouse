@@ -16,7 +16,7 @@
  */
 'use strict';
 
-/* globals self URL */
+/* globals self, URL */
 
 const ELLIPSIS = '\u2026';
 const NBSP = '\xa0';
@@ -28,6 +28,14 @@ const RATINGS = {
   FAIL: {label: 'fail'},
   ERROR: {label: 'error'},
 };
+
+// 25 most used tld plus one domains (aka public suffixes) from http archive.
+// @see https://github.com/GoogleChrome/lighthouse/pull/5065#discussion_r191926212
+// The canonical list is https://publicsuffix.org/learn/ but we're only using subset to conserve bytes
+const listOfTlds = [
+  'com', 'co', 'gov', 'edu', 'ac', 'org', 'go', 'gob', 'or', 'net', 'in', 'ne', 'nic', 'gouv',
+  'web', 'spb', 'blog', 'jus', 'kiev', 'mil', 'wi', 'qc', 'ca', 'bel', 'on',
+];
 
 class Util {
   static get PASS_THRESHOLD() {
@@ -337,6 +345,51 @@ class Util {
   }
 
   /**
+   * @param {string|URL} value
+   * @return {URL}
+   */
+  static createOrReturnURL(value) {
+    if (value instanceof URL) {
+      return value;
+    }
+
+    return new URL(value);
+  }
+
+  /**
+   * Gets the tld of a domain
+   *
+   * @param {string} hostname
+   * @return {string} tld
+   */
+  static getTld(hostname) {
+    const tlds = hostname.split('.').slice(-2);
+
+    if (!listOfTlds.includes(tlds[0])) {
+      return `.${tlds[tlds.length - 1]}`;
+    }
+
+    return `.${tlds.join('.')}`;
+  }
+
+  /**
+   * Returns a primary domain for provided hostname (e.g. www.example.com -> example.com).
+   * @param {string|URL} url hostname or URL object
+   * @returns {string}
+   */
+  static getRootDomain(url) {
+    const hostname = Util.createOrReturnURL(url).hostname;
+    const tld = Util.getTld(hostname);
+
+    // tld is .com or .co.uk which means we means that length is 1 to big
+    // .com => 2 & .co.uk => 3
+    const splitTld = tld.split('.');
+
+    // get TLD + root domain
+    return hostname.split('.').slice(-splitTld.length).join('.');
+  }
+
+  /**
    * @param {LH.Config.Settings} settings
    * @return {Array<{name: string, description: string}>}
    */
@@ -524,6 +577,9 @@ Util.UIStrings = {
   lsPerformanceCategoryDescription: '[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.',
   /** Title of the lab data section of the Performance category. Within this section are various speed metrics which quantify the pageload performance into values presented in seconds and milliseconds. "Lab" is an abbreviated form of "laboratory", and refers to the fact that the data is from a controlled test of a website, not measurements from real users visiting that site.  */
   labDataTitle: 'Lab Data',
+
+  /** This label is for a checkbox above a table of items loaded by a web page. The checkbox is used to show or hide third-party (or "3rd-party") resources in the table, where "third-party resources" refers to items loaded by a web page from URLs that aren't controlled by the owner of the web page. */
+  thirdPartyResourcesLabel: 'Show 3rd-party resources',
 };
 
 if (typeof module !== 'undefined' && module.exports) {

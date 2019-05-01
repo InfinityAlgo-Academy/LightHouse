@@ -32,17 +32,17 @@ We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patc
 
 ```sh
 # Run the tests
-bash ./lighthouse-core/scripts/release/release-test.sh
+bash ./lighthouse-core/scripts/release/test.sh
 # Prepare the commit, replace x.x.x with the desired version
-bash ./lighthouse-core/scripts/release/release-prepare-commit.sh x.x.x
+bash ./lighthouse-core/scripts/release/prepare-commit.sh x.x.x
 
 # Open the PR and await merge...
 echo "It's been merged! 🎉"
 
 # Run the tests again :)
-bash ./lighthouse-core/scripts/release/release-test.sh
+bash ./lighthouse-core/scripts/release/test.sh
 # Package everything for publishing
-bash ./lighthouse-core/scripts/release/release-prepare-package.sh
+bash ./lighthouse-core/scripts/release/prepare-package.sh
 
 # Upload the extension
 node build/build-extension.js package; cd dist/extension-package/
