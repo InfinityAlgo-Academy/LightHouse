@@ -694,11 +694,11 @@ Object {
         },
         Object {
           "group": "metrics",
-          "id": "estimated-input-latency",
+          "id": "max-potential-fid",
           "weight": 0,
         },
         Object {
-          "id": "max-potential-fid",
+          "id": "estimated-input-latency",
           "weight": 0,
         },
         Object {

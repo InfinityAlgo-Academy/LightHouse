@@ -13,8 +13,8 @@ const UIStrings = {
   /** The name of the metric "Maximum Potential First Input Delay" that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
   title: 'Max Potential FID',
   /** Description of the Maximum Potential First Input Delay metric that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'The potential First Input Delay that your users could experience is the ' +
-      'duration, in milliseconds, of the longest task.',
+  description: 'The maximum potential First Input Delay that your users could experience is the ' +
+      'duration, in milliseconds, of the longest task. [Learn more](https://developers.google.com/web/updates/2018/05/first-input-delay).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
