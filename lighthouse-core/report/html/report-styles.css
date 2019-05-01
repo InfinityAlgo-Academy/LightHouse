@@ -439,6 +439,16 @@
   display: none;
 }
 
+.lh-audit--informative .lh-audit__display-text {
+  color: var(--color-black-600);
+}
+
+.lh-audit--informative .lh-audit__score-icon {
+  border: none;
+  border-radius: 100%;
+  background: var(--color-black-400);
+}
+
 .lh-audit__description,
 .lh-audit__stackpack {
   color: var(--secondary-text-color);
