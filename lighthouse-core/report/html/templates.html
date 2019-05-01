@@ -206,7 +206,12 @@ limitations under the License.
     }
   </style>
   <div class="lh-scores-wrapper">
-    <div class="lh-scores-container"></div>
+    <div class="lh-scores-container">
+      <div class="pyro">
+        <div class="before"></div>
+        <div class="after"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -382,6 +387,8 @@ limitations under the License.
     */
     .pyro {
       display: none;
+      z-index: 1;
+      pointer-events: none;
     }
     .score100 .pyro {
       display: block;
