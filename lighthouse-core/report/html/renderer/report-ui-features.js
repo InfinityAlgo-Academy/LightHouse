@@ -126,7 +126,7 @@ class ReportUIFeatures {
       anchorElement.addEventListener('click', e => {
         e.preventDefault();
         window.history.pushState({}, '', anchorElement.hash);
-        this._moveHighlighter();
+        this._moveHighlighterOnClick();
         this._dom.find(anchorElement.hash, this._document).scrollIntoView({behavior: 'smooth'});
       });
     }
@@ -571,33 +571,25 @@ class ReportUIFeatures {
     this.stickyHeaderEl.classList.toggle('lh-sticky-header--visible', showStickyHeader);
     // Only update highlighter location if user didn't click to a new category
     if (!this.isHighlightJumpingToDestination) {
-      console.log('RUH ROH')
       this.highlightEl.style.left = offset;
     }
   }
 
-  _moveHighlighter() {
+  _moveHighlighterOnClick() {
     const gaugeToHighlight = this.stickyHeaderEl.querySelector(`.lh-gauge__wrapper[href="${location.hash}"]`);
     if (!gaugeToHighlight) return;
     const offset = gaugeToHighlight.getBoundingClientRect().left + 'px';
 
-    const onTransitionEnd = _ => {
-      // Animated scrolls won't take longer than 3s, but can take less.
-      // https://cs.chromium.org/chromium/src/cc/animation/scroll_offset_animation_curve.cc?l=21&rcl=d9c820120d06865a43a4862c02758e93140f1a44
-      setTimeout(_ => {
-        this.isHighlightJumpingToDestination = false;
-        console.log('transitionend fired delayed', this.isHighlightJumpingToDestination);
-        this.highlightEl.removeEventListener('transitionend', onTransitionEnd);
-      }, 3000);
-      console.log('transitionend fired', this.isHighlightJumpingToDestination);
-    };
-    this.highlightEl.addEventListener('transitionend', onTransitionEnd);
-    this.highlightEl.addEventListener('transitioncancel', _ => this.highlightEl.removeEventListener('transitionend', onTransitionEnd));
-
     this.isHighlightJumpingToDestination = true;
     this.highlightEl.style.left = offset;
-  }
 
+    window.clearTimeout(this.highlighterTimeout);
+    // Animated scrolls won't take longer than 3s
+    // https://cs.chromium.org/chromium/src/cc/animation/scroll_offset_animation_curve.cc?l=21&rcl=d9c820120d06865a43a4862c02758e93140f1a44
+    this.highlighterTimeout = window.setTimeout(_ => {
+      this.isHighlightJumpingToDestination = false;
+    }, 3000);
+  }
 }
 
 if (typeof module !== 'undefined' && module.exports) {
