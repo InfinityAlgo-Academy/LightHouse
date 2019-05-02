@@ -41,17 +41,17 @@
             "budget": 500
           }
         ],
+        "resourceCounts": [
+          {
+            "resourceType": "third-party",
+            "budget": 0
+          }
+        ],
         "timings": [
           {
             "metric": "interactive",
             "budget": 5000,
             "tolerance": 1000
-          }
-        ],
-         "resourceCounts": [
-          {
-           "resourceType": "third-party",
-           "budget": 0
           }
         ]
       }
