@@ -14,10 +14,9 @@ const Budget = require('../config/budget.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page. */
-  title: 'Keep request counts and file sizes small',
+  title: 'Performance budget',
   /** Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits. */
-  description: 'To set budgets for the quantity and size of page resources,' +
-    ' add a budget.json file.',
+  description: 'How the network resources match up against the provided budget.',
   /** [ICU Syntax] Label identifying the number of requests*/
   requestCount: `{count, plural,
     =1 {1 request}
@@ -90,6 +89,7 @@ class ResourceBudget extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const budgetHeaders = [
+      // {key: 'overBudget', itemType: 'text', text: 'Over Budget'},
       {key: 'countOverBudget', itemType: 'text', text: ''},
       {key: 'sizeOverBudget', itemType: 'bytes', text: 'Over Budget'},
     ];
@@ -169,6 +169,13 @@ class ResourceBudget extends Audit {
     const budget = (context.settings.budgets || []).reverse().find((budget) => {
       return Budget.urlMatchesPattern(mainResource.url, budget.path);
     });
+    // Don't return results if no budget was provided or matched
+    if (!budget) {
+      return {
+        score: 0,
+        notApplicable: true
+      }
+    }
     const resourceSummary = ComputedResourceSummary.summarize(networkRecords, mainResource.url);
 
     const headings = ResourceBudget.tableHeadings(budget);

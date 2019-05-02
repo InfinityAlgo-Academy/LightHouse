@@ -67,7 +67,7 @@ class Runner {
           throw new Error('Cannot run audit mode on empty URL');
         }
         if (runOpts.url && !URL.equalWithExcludedFragments(runOpts.url, requestedUrl)) {
-          throw new Error('Cannot run audit mode on different URL');
+          throw new Error(`Cannot run audit mode on different URL: ${runOpts.url} ${requestedUrl}`);
         }
       } else {
         if (typeof runOpts.url !== 'string' || runOpts.url.length === 0) {

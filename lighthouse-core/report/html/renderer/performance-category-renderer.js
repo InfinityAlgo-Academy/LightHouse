@@ -123,15 +123,15 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Budgets
-    const budgetAudits = category.auditRefs.filter(audit => audit.group === 'budgets');
-    if (budgetAudits && budgetAudits[0] && budgetAudits[0].result &&
-      budgetAudits[0].result.details) {
+    const budgetAudit = category.auditRefs.find(audit => audit.id === 'resource-budget');
+    if (budgetAudit && budgetAudit.result.details) {
+      // Group header
       const budgetsGroupEl = this.renderAuditGroup(groups['budgets']);
       const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity-header', this.templateContext);
       budgetsGroupEl.appendChild(this.dom.find('.lh-load-opportunity__header', tmpl));
 
-      const resourceBudgetDetails = budgetAudits[0].result.details;
-      const table = this.detailsRenderer.render(resourceBudgetDetails);
+      // Just the budget details table
+      const table = this.detailsRenderer.render(budgetAudit.result.details);
       if (table) {
         budgetsGroupEl.appendChild(table);
         budgetsGroupEl.classList.add('lh-audit-group--budgets');
