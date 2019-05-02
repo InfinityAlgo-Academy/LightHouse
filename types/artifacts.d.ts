@@ -127,6 +127,8 @@ declare global {
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** Information about tap targets including their position and size. */
       TapTargets: Artifacts.TapTarget[];
+      /** Screenshot of the entire page (rather than just the above the fold content). */
+      FullPageScreenshot: {data: string}
     }
 
     module Artifacts {
@@ -341,7 +343,9 @@ declare global {
         selector: string,
         path: string,
         href: string,
-        clientRects: Rect[]
+        clientRects: Rect[],
+        boundingRect: Rect,
+        textContent: string
       }
 
       export interface ViewportDimensions {

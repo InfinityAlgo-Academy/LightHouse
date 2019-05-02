@@ -7,6 +7,7 @@
 import _CategoryRenderer = require('../lighthouse-core/report/html/renderer/category-renderer.js');
 import _CriticalRequestChainRenderer = require('../lighthouse-core/report/html/renderer/crc-details-renderer.js');
 import _SnippetRenderer = require('../lighthouse-core/report/html/renderer/snippet-renderer.js');
+import _ElementScreenshotRenderer = require('../lighthouse-core/report/html/renderer/element-screenshot-renderer.js');
 import _DetailsRenderer = require('../lighthouse-core/report/html/renderer/details-renderer.js');
 import _DOM = require('../lighthouse-core/report/html/renderer/dom.js');
 import _PerformanceCategoryRenderer = require('../lighthouse-core/report/html/renderer/performance-category-renderer.js');
@@ -21,6 +22,7 @@ declare global {
   var CategoryRenderer: typeof _CategoryRenderer;
   var CriticalRequestChainRenderer: typeof _CriticalRequestChainRenderer;
   var SnippetRenderer: typeof _SnippetRenderer;
+  var ElementScreenshotRenderer: typeof _ElementScreenshotRenderer
   var DetailsRenderer: typeof _DetailsRenderer;
   var DOM: typeof _DOM;
   var getFilenamePrefix: typeof _FileNamer.getFilenamePrefix;
@@ -35,6 +37,7 @@ declare global {
     CategoryRenderer: typeof _CategoryRenderer;
     CriticalRequestChainRenderer: typeof _CriticalRequestChainRenderer;
     SnippetRenderer: typeof _SnippetRenderer;
+    ElementScreenshotRenderer: typeof _ElementScreenshotRenderer
     DetailsRenderer: typeof _DetailsRenderer;
     DOM: typeof _DOM;
     PerformanceCategoryRenderer: typeof _PerformanceCategoryRenderer;

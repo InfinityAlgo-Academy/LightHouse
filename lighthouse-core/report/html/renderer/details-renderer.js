@@ -16,7 +16,7 @@
  */
 'use strict';
 
-/* globals self CriticalRequestChainRenderer SnippetRenderer Util URL */
+/* globals self CriticalRequestChainRenderer SnippetRenderer ElementScreenshotRenderer Util URL */
 
 /** @typedef {import('./dom.js')} DOM */
 
@@ -352,15 +352,43 @@ class DetailsRenderer {
    */
   renderNode(item) {
     const element = this._dom.createElement('span', 'lh-node');
-    if (item.snippet) {
-      element.textContent = item.snippet;
-    }
     if (item.selector) {
       element.title = item.selector;
     }
     if (item.path) element.setAttribute('data-path', item.path);
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
+    element.innerHTML = `<div style="color: black;font-family: var(--text-font-family);margin-bottom: 10px;">${item.textContent}</div>`;
+    const snippetEl = document.createElement('div');
+    snippetEl.style.fontSize = '12px';
+    snippetEl.innerText = item.snippet;
+    element.appendChild(snippetEl);
+
+    const fullpageScreenshotUrl = __LIGHTHOUSE_JSON__.audits['full-page-screenshot'].details.data;
+
+    if (item.boundingRect) {
+      /** @type {Element} */
+      let elementScreenshot;
+      element.addEventListener('mouseenter', () => {
+        elementScreenshot = ElementScreenshotRenderer.render(
+          this._dom,
+          this._templateContext,
+          item,
+          fullpageScreenshotUrl
+        );
+        element.prepend(elementScreenshot);
+      });
+
+      element.addEventListener('mouseleave', () => {
+        if (!window.keepForDebug) {
+          if (elementScreenshot) {
+            elementScreenshot.remove();
+          }
+        }
+      });
+    }
+
+
     return element;
   }
 

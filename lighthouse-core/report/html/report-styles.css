@@ -1083,7 +1083,7 @@
 
 .lh-categories {
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .lh-category {
@@ -1365,4 +1365,30 @@
   0% { opacity: 0; }
   75% { opacity: 1; }
   100% { opacity: 1;  filter: drop-shadow(1px 0px 1px #aaa) drop-shadow(0px 2px 4px hsla(206, 6%, 25%, 0.15)); pointer-events: auto; }
+}
+
+/* Element screenshot */
+.lh-element-screenshot {
+  position: relative;
+  pointer-events: none;
+}
+.lh-element-screenshot__content {
+  position: absolute;
+  right: 0px;
+  top: -190px;
+  box-shadow: 2px 2px 6px #999;
+}
+.lh-element-screenshot__image {
+  outline: 2px solid #777;
+  background-color: white;
+  background-repeat: no-repeat;
+}
+.lh-element-screenshot__mask {
+  position: absolute;
+  background: #555;
+  opacity: 0.8;
+}
+.lh-element-screenshot__element-marker {
+  position: absolute;
+  outline: 2px solid rgba(237, 150, 150, 1);
 }

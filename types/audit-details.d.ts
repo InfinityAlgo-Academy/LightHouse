@@ -161,6 +161,8 @@ declare global {
         path?: string;
         selector?: string;
         snippet?: string;
+        boundingRect?: Artifacts.Rect;
+        textContent: string;
       }
 
       /**

@@ -50,6 +50,10 @@ function runA11yChecks() {
     },
     // @ts-ignore
   }).then(axeResult => {
+    // Scroll back to the top of the page so that element positions
+    // are relative to the top of the page
+    document.documentElement.scrollTop = 0;
+
     // Augment the node objects with outerHTML snippet & custom path string
     // @ts-ignore
     axeResult.violations.forEach(v => v.nodes.forEach(node => {
@@ -57,6 +61,11 @@ function runA11yChecks() {
       node.path = getNodePath(node.element);
       // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
       node.snippet = getOuterHTMLSnippet(node.element);
+      node.textContent = node.element.textContent;
+      node.boundingRect = JSON.parse(JSON.stringify(node.element.getBoundingClientRect()));
+      if (node.boundingRect.height === 0 || node.boundingRect.width === 0) {
+        delete node.boundingRect;
+      }
       // avoid circular JSON concerns
       node.element = node.any = node.all = node.none = undefined;
     }));

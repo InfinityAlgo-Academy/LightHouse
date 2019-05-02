@@ -257,6 +257,8 @@ function gatherTapTargets() {
   /** @type {LH.Artifacts.TapTarget[]} */
   const targets = [];
 
+  document.documentElement.scrollTop = 0;
+
   /** @type {Element[]} */
   // @ts-ignore - getElementsInDocument put into scope via stringification
   const tapTargetElements = getElementsInDocument(tapTargetsSelector);
@@ -292,6 +294,7 @@ function gatherTapTargets() {
       snippet: truncate(tapTargetElement.outerHTML, 300),
       // @ts-ignore - getNodePath put into scope via stringification
       path: getNodePath(tapTargetElement),
+      textContent: tapTargetElement.textContent,
       // @ts-ignore - getNodeSelector put into scope via stringification
       selector: getNodeSelector(tapTargetElement),
       href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',

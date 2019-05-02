@@ -137,6 +137,7 @@ const defaultConfig = {
       'seo/tap-targets',
       // Always run axe last because it scrolls the page down to the bottom
       'accessibility',
+      'full-page-screenshot',
     ],
   },
   {
@@ -169,6 +170,7 @@ const defaultConfig = {
     'metrics/speed-index',
     'screenshot-thumbnails',
     'final-screenshot',
+    'full-page-screenshot',
     'metrics/estimated-input-latency',
     'metrics/max-potential-fid',
     'errors-in-console',
