@@ -72,7 +72,7 @@ function mergeTouchingClientRects(clientRects) {
         (rectsLineUpHorizontally || rectsLineUpVertically);
 
       if (canMerge) {
-        const replacementClientRect = getBoundingRect(crA, crB);
+        const replacementClientRect = getBoundingRect([crA, crB]);
         const mergedRectCenter = getRectCenterPoint(replacementClientRect);
 
         if (
