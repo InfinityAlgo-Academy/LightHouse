@@ -12,6 +12,35 @@ const _set = require('lodash.set');
 const i18n = require('./i18n.js');
 
 /**
+ * @fileoverview Use the lhr.i18n.icuMessagePaths object to change locales
+ *
+ * `icuMessagePaths` is an object keyed by `icuMessageId`s. Within each is either
+ * 1) an array of strings, which are just object paths to where that message is used in the LHR
+ * 2) an array of `LH.I18NMessageValuesEntry`s which include both a `path` and a `values` object
+ *    which will be used in the replacement within `i18n._formatIcuMessage()`
+ *
+ * An example:
+ *    "icuMessagePaths": {
+      "lighthouse-core/audits/metrics/first-contentful-paint.js | title": [
+        "audits[first-contentful-paint].title"
+      ],
+      "lighthouse-core/audits/time-to-first-byte.js | displayValue": [
+        {
+          "values": {
+            "timeInMs": 570.5630000000001
+          },
+          "path": "audits[time-to-first-byte].displayValue"
+        }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
+        "audits[mainthread-work-breakdown].details.headings[1].text",
+        "audits[network-rtt].details.headings[1].text",
+        "audits[network-server-latency].details.headings[1].text"
+      ],
+      ...
+ */
+
+/**
  * Replaces all strings within an LHR with ones from a different locale
  * @param {LH.Result} lhr
  * @param {LH.Locale} requestedLocale
@@ -27,15 +56,26 @@ function swapLocale(lhr, requestedLocale) {
   Object.entries(icuMessagePaths).forEach(([icuMessageId, messageInstancesInLHR]) => {
     for (const instance of messageInstancesInLHR) {
       // The path that _formatPathAsString() generated
-      const path = /** @type {LH.I18NMessageValuesEntry} */ (instance).path || /** @type {string} */ (instance);
-      const values = /** @type {LH.I18NMessageValuesEntry} */ (instance).values || undefined;
-      // Get new formatted strings in revised locale
-      const formattedStr = i18n.formatMessageFromIdWithValues(locale, icuMessageId, values);
-      // Write string back into the LHR
-      _set(lhr, path, formattedStr);
+      let path;
+      let values;
+      if (typeof instance === 'string') {
+        path = instance;
+      } else {
+        path = /** @type {LH.I18NMessageValuesEntry} */ (instance).path;
+        // `values` are the string template values to be used. eg. `values: {wastedBytes: 9028}`
+        values = /** @type {LH.I18NMessageValuesEntry} */ (instance).values;
+      }
+      // If we couldn't find the new replacement message, keep things as is.
+      try {
+        // Get new formatted strings in revised locale
+        const formattedStr = i18n.formatMessageFromIdWithValues(locale, icuMessageId, values);
+        // Write string back into the LHR
+        _set(lhr, path, formattedStr);
+      } catch (e) {}
     }
   });
 
+  lhr.i18n.rendererFormattedStrings = i18n.getRendererFormattedStrings(locale);
   // Tweak the config locale
   lhr.configSettings.locale = locale;
   return lhr;

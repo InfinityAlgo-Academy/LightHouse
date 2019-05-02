@@ -150,7 +150,7 @@ const _icuMessageInstanceMap = new Map();
  *
  * @param {LH.Locale} locale
  * @param {string} icuMessageId
- * @param {string} icuMessage
+ * @param {string=} icuMessage
  * @param {*} [values]
  * @return {{formattedString: string, icuMessage: string}}
  */
@@ -160,10 +160,11 @@ function _formatIcuMessage(locale, icuMessageId, icuMessage, values) {
   // fallback to the original english message if we couldn't find a message in the specified locale
   // better to have an english message than no message at all, in some number cases it won't even matter
   const messageForMessageFormat = localeMessage || icuMessage;
+  if (messageForMessageFormat === undefined) throw new Error('No ICU message string to format');
   // when using accented english, force the use of a different locale for number formatting
   const localeForMessageFormat = locale === 'en-XA' ? 'de-DE' : locale;
   // pre-process values for the message format like KB and milliseconds
-  const valuesForMessageFormat = _preprocessMessageValues(icuMessage, values);
+  const valuesForMessageFormat = _preprocessMessageValues(messageForMessageFormat, values);
 
   const formatter = new MessageFormat(messageForMessageFormat, localeForMessageFormat, formats);
   const formattedString = formatter.format(valuesForMessageFormat);
@@ -269,7 +270,7 @@ function formatMessageFromIdWithValues(locale, icuMessageId, values) {
   const icuMessageIdRegex = /(.* \| .*)$/;
   if (!icuMessageIdRegex.test(icuMessageId)) throw new Error('This is not an ICU message ID');
 
-  const {formattedString} = _formatIcuMessage(locale, icuMessageId, '', values);
+  const {formattedString} = _formatIcuMessage(locale, icuMessageId, undefined, values);
   return formattedString;
 }
 
