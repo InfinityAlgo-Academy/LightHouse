@@ -56,7 +56,7 @@ module.exports = [
       'unused-javascript': {
         score: '<1',
         details: {
-          overallSavingsBytes: '>=25000',
+          overallSavingsBytes: '>=20000',
           overallSavingsMs: '>300',
           items: {
             length: 2,

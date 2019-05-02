@@ -1,3 +1,24 @@
+ <a name="4.3.1"></a>
+# 4.3.1 (2019-04-30)
+[Full Changelog](https://github.com/googlechrome/lighthouse/compare/v4.3.0...v4.3.1)
+
+## Core
+
+* support traces missing TracingStartedInBrowser ([#7122](https://github.com/googlechrome/lighthouse/pull/7122))
+* driver: only fail security state if scheme is not cryptographic ([#8338](https://github.com/googlechrome/lighthouse/pull/8338))
+
+## Clients
+
+* extension: remove github link in favor of copy to clipboard ([#8294](https://github.com/googlechrome/lighthouse/pull/8294))
+
+## Deps
+
+* snyk: update snyk snapshot ([#8354](https://github.com/googlechrome/lighthouse/pull/8354))
+
+## Misc
+
+* add releasing scripts ([#8387](https://github.com/googlechrome/lighthouse/pull/8387))
+
  <a name="4.3.0"></a>
 # 4.3.0 (2019-04-08)
 [Full Changelog](https://github.com/googlechrome/lighthouse/compare/4.2.0...4.3.0)
