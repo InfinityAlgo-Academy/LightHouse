@@ -150,16 +150,16 @@ const _icuMessageInstanceMap = new Map();
  *
  * @param {LH.Locale} locale
  * @param {string} icuMessageId
- * @param {string=} icuMessage
+ * @param {string=} fallbackMessage
  * @param {*} [values]
  * @return {{formattedString: string, icuMessage: string}}
  */
-function _formatIcuMessage(locale, icuMessageId, icuMessage, values) {
+function _formatIcuMessage(locale, icuMessageId, fallbackMessage, values) {
   const localeMessages = LOCALES[locale];
   const localeMessage = localeMessages[icuMessageId] && localeMessages[icuMessageId].message;
   // fallback to the original english message if we couldn't find a message in the specified locale
   // better to have an english message than no message at all, in some number cases it won't even matter
-  const messageForMessageFormat = localeMessage || icuMessage;
+  const messageForMessageFormat = localeMessage || fallbackMessage;
   if (messageForMessageFormat === undefined) throw new Error('No ICU message string to format');
   // when using accented english, force the use of a different locale for number formatting
   const localeForMessageFormat = locale === 'en-XA' ? 'de-DE' : locale;
