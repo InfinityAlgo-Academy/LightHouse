@@ -356,6 +356,9 @@ message I18n {
 
     // The label for the button to show only a few lines of a snippet
     string snippet_collapse_button_label = 19;
+
+    // This label is for a filter checkbox above a table of items
+    string third_party_resources_label = 20;
   }
 
   // The message holding all formatted strings
@@ -371,7 +374,7 @@ message StackPack {
   string title = 2;
 
   // The icon as a data url.
-  string icon_data_url = 3;
+  string icon_data_URL = 3;
 
   // Map of audit-ids to Stack Pack descriptions.
   map<string, string> descriptions = 4;

@@ -56,6 +56,7 @@ function collectTagsThatBlockFirstPaint() {
               !scriptTag.hasAttribute('async') &&
               !scriptTag.hasAttribute('defer') &&
               !/^data:/.test(scriptTag.src) &&
+              !/^blob:/.test(scriptTag.src) &&
               scriptTag.getAttribute('type') !== 'module'
             );
           } else if (tag.tagName === 'LINK') {

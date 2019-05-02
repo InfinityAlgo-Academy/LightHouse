@@ -10,6 +10,13 @@
  */
 module.exports = [
   {
+    artifacts: {
+      Stacks: [{
+        id: 'jquery',
+      }, {
+        id: 'wordpress',
+      }],
+    },
     lhr: {
       requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
       finalUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
@@ -18,7 +25,7 @@ module.exports = [
           score: 0,
           details: {
             items: {
-              length: 6,
+              length: 8,
             },
           },
         },
@@ -140,6 +147,9 @@ module.exports = [
           details: {
             items: [{
               name: 'jQuery',
+            },
+            {
+              name: 'WordPress',
             }],
           },
         },

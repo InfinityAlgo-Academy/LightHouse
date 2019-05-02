@@ -496,7 +496,7 @@ class Config {
   }
 
   /**
-   * @param {LH.Config.SettingsJson=} settingsJson
+   * @param {LH.SharedFlagsSettings=} settingsJson
    * @param {LH.Flags=} flags
    * @return {LH.Config.Settings}
    */

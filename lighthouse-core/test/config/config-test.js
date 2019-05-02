@@ -761,7 +761,7 @@ describe('Config', () => {
 
       it('should throw when provided an invalid budget', () => {
         assert.throws(() => new Config({settings: {budgets: ['invalid123']}}),
-          /Budget has unrecognized properties/);
+          /Budget file is not defined as an array of budgets/);
       });
     });
 

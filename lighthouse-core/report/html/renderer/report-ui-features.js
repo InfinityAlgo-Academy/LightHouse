@@ -16,14 +16,24 @@
  */
 'use strict';
 
+/* eslint-env browser */
+
 /**
  * @fileoverview Adds export button, print, and other dynamic functionality to
  * the report.
  */
 
-/* globals self URL Blob CustomEvent getFilenamePrefix window */
+/* globals getFilenamePrefix Util */
 
 /** @typedef {import('./dom.js')} DOM */
+
+/**
+ * @param {HTMLTableElement} tableEl
+ * @return {Array<HTMLTableRowElement>}
+ */
+function getTableRows(tableEl) {
+  return Array.from(tableEl.tBodies[0].rows);
+}
 
 class ReportUIFeatures {
   /**
@@ -48,15 +58,23 @@ class ReportUIFeatures {
     this.stickyHeaderEl; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement} */
     this.highlightEl; // eslint-disable-line no-unused-expressions
+    /** @type {HTMLInputElement} */
+    this.metricDescriptionToggleEl; // eslint-disable-line no-unused-expressions
+    /** @type {HTMLElement} */
+    this.metricAuditGroup; // eslint-disable-line no-unused-expressions
 
     this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     this.onCopy = this.onCopy.bind(this);
     this.onExportButtonClick = this.onExportButtonClick.bind(this);
     this.onExport = this.onExport.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
-    this.printShortCutDetect = this.printShortCutDetect.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
     this.onChevronClick = this.onChevronClick.bind(this);
+    this.collapseAllDetails = this.collapseAllDetails.bind(this);
+    this.expandAllDetails = this.expandAllDetails.bind(this);
+    this._toggleDarkTheme = this._toggleDarkTheme.bind(this);
     this._updateStickyHeaderOnScroll = this._updateStickyHeaderOnScroll.bind(this);
+    this._toggleMetricDescription = this._toggleMetricDescription.bind(this);
   }
 
   /**
@@ -69,14 +87,19 @@ class ReportUIFeatures {
 
     this.json = report;
     this._setupMediaQueryListeners();
+    this._setupSmoothScroll();
     this._setupExportButton();
+    this._setupThirdPartyFilter();
     this._setupStickyHeaderElements();
     this._setUpCollapseDetailsAfterPrinting();
     this._resetUIState();
-    this._document.addEventListener('keydown', this.printShortCutDetect);
+    this._document.addEventListener('keyup', this.onKeyUp);
     this._document.addEventListener('copy', this.onCopy);
     this._document.addEventListener('scroll', this._updateStickyHeaderOnScroll);
     window.addEventListener('resize', this._updateStickyHeaderOnScroll);
+    this._setupMetricDescriptionToggleElements();
+    const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
+    topbarLogo.addEventListener('click', this._toggleDarkTheme);
   }
 
   /**
@@ -97,6 +120,17 @@ class ReportUIFeatures {
     this.onMediaQueryChange(mediaQuery);
   }
 
+  _setupSmoothScroll() {
+    for (const el of this._dom.findAll('a.lh-gauge__wrapper', this._document)) {
+      const anchorElement = /** @type {HTMLAnchorElement} */ (el);
+      anchorElement.addEventListener('click', e => {
+        e.preventDefault();
+        window.history.pushState({}, '', anchorElement.hash);
+        this._dom.find(anchorElement.hash, this._document).scrollIntoView({behavior: 'smooth'});
+      });
+    }
+  }
+
   /**
    * Handle media query change events.
    * @param {MediaQueryList|MediaQueryListEvent} mql
@@ -112,6 +146,92 @@ class ReportUIFeatures {
 
     const dropdown = this._dom.find('.lh-export__dropdown', this._document);
     dropdown.addEventListener('click', this.onExport);
+  }
+
+  _setupThirdPartyFilter() {
+    // Some audits should not display the third party filter option.
+    const thirdPartyFilterAuditExclusions = [
+      // This audit deals explicitly with third party resources.
+      'uses-rel-preconnect',
+    ];
+
+    // Get all tables with a text url column.
+    /** @type {Array<HTMLTableElement>} */
+    const tables = Array.from(this._document.querySelectorAll('.lh-table'));
+    const tablesWithUrls = tables
+      .filter(el => el.querySelector('td.lh-table-column--url'))
+      .filter(el => {
+        const containingAudit = el.closest('.lh-audit');
+        if (!containingAudit) throw new Error('.lh-table not within audit');
+        return !thirdPartyFilterAuditExclusions.includes(containingAudit.id);
+      });
+
+    tablesWithUrls.forEach((tableEl, index) => {
+      const thirdPartyRows = this._getThirdPartyRows(tableEl, this.json.finalUrl);
+      // No 3rd parties, no checkbox!
+      if (!thirdPartyRows.size) return;
+
+      // create input box
+      const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._document);
+      const filterInput = this._dom.find('input', filterTemplate);
+      const id = `lh-3p-filter-label--${index}`;
+
+      filterInput.id = id;
+      filterInput.addEventListener('change', e => {
+        // Remove rows from the dom and keep track of them to readd on uncheck.
+        // Why removing instead of hiding? To keep nth-child(even) background-colors working.
+        if (e.target instanceof HTMLInputElement && !e.target.checked) {
+          for (const row of thirdPartyRows.values()) {
+            row.remove();
+          }
+        } else {
+          // Add row elements back to original positions.
+          for (const [position, row] of thirdPartyRows.entries()) {
+            const childrenArr = getTableRows(tableEl);
+            tableEl.tBodies[0].insertBefore(row, childrenArr[position]);
+          }
+        }
+      });
+
+      this._dom.find('label', filterTemplate).setAttribute('for', id);
+      this._dom.find('.lh-3p-filter-count', filterTemplate).textContent =
+          `${thirdPartyRows.size}`;
+      this._dom.find('.lh-3p-ui-string', filterTemplate).textContent =
+          Util.UIStrings.thirdPartyResourcesLabel;
+
+      // Finally, add checkbox to the DOM.
+      if (!tableEl.parentNode) return; // Keep tsc happy.
+      tableEl.parentNode.insertBefore(filterTemplate, tableEl);
+    });
+  }
+
+  /**
+   * From a table with URL entries, finds the rows containing third-party URLs
+   * and returns a Map of those rows, mapping from row index to row Element.
+   * @param {HTMLTableElement} el
+   * @param {string} finalUrl
+   * @return {Map<number, HTMLTableRowElement>}
+   */
+  _getThirdPartyRows(el, finalUrl) {
+    const urlItems = this._dom.findAll('.lh-text__url', el);
+    const finalUrlRootDomain = Util.getRootDomain(finalUrl);
+
+    /** @type {Map<number, HTMLTableRowElement>} */
+    const thirdPartyRows = new Map();
+    for (const urlItem of urlItems) {
+      const datasetUrl = urlItem.dataset.url;
+      if (!datasetUrl) continue;
+      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalUrlRootDomain;
+      if (!isThirdParty) continue;
+
+      const urlRowEl = urlItem.closest('tr');
+      if (urlRowEl) {
+        const rowPosition = getTableRows(el).indexOf(urlRowEl);
+        thirdPartyRows.set(rowPosition, urlRowEl);
+      }
+    }
+
+    return thirdPartyRows;
   }
 
   _setupStickyHeaderElements() {
@@ -138,6 +258,26 @@ class ReportUIFeatures {
     }
 
     this._copyAttempt = false;
+  }
+
+  _setupMetricDescriptionToggleElements() {
+    const metricDescriptionToggleEl = this._document.querySelector('.lh-metrics-toggle__input');
+    // No metrics if performance category wasn't run.
+    if (!metricDescriptionToggleEl) return;
+
+    this.metricDescriptionToggleEl = /** @type {HTMLInputElement} */ (metricDescriptionToggleEl);
+    this.metricAuditGroup = this._dom.find('.lh-audit-group--metrics', this._document);
+    this.metricDescriptionToggleEl.addEventListener('input', this._toggleMetricDescription);
+    this.metricAuditGroup.addEventListener('click', e => {
+      const el = /** @type {HTMLElement} */ (e.target);
+      if (el.closest('.lh-metric__title')) this.metricDescriptionToggleEl.click();
+    });
+  }
+
+  _toggleMetricDescription() {
+    this.metricDescriptionToggleEl.blur();
+    const show = this.metricDescriptionToggleEl.checked;
+    this.metricAuditGroup.classList.toggle('lh-audit-group--metrics__show-descriptions', show);
   }
 
   /**
@@ -273,6 +413,17 @@ class ReportUIFeatures {
   }
 
   /**
+   * Keyup handler for the document.
+   * @param {KeyboardEvent} e
+   */
+  onKeyUp(e) {
+    // Ctrl+P - Expands audit details when user prints via keyboard shortcut.
+    if ((e.ctrlKey || e.metaKey) && e.keyCode === 80) {
+      this.closeExportDropdown();
+    }
+  }
+
+  /**
    * Opens a new tab to the online viewer and sends the local page's JSON results
    * to the online viewer using postMessage.
    * @param {LH.Result} reportJson
@@ -302,16 +453,6 @@ class ReportUIFeatures {
     const fetchTime = json.fetchTime || fallbackFetchTime;
     const windowName = `${json.lighthouseVersion}-${json.requestedUrl}-${fetchTime}`;
     const popup = window.open(`${VIEWER_ORIGIN}${viewerPath}`, windowName);
-  }
-
-  /**
-   * Expands audit details when user prints via keyboard shortcut.
-   * @param {KeyboardEvent} e
-   */
-  printShortCutDetect(e) {
-    if ((e.ctrlKey || e.metaKey) && e.keyCode === 80) { // Ctrl+P
-      this.closeExportDropdown();
-    }
   }
 
   /**
@@ -398,6 +539,13 @@ class ReportUIFeatures {
     // cleanup.
     this._document.body.removeChild(a);
     setTimeout(_ => URL.revokeObjectURL(href), 500);
+  }
+
+  /**
+   * @private
+   */
+  _toggleDarkTheme() {
+    this._document.body.classList.toggle('dark');
   }
 
   _updateStickyHeaderOnScroll() {

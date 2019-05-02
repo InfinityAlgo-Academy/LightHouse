@@ -13,6 +13,7 @@ const NBSP = '\xa0';
 
 /* eslint-env jest */
 /* eslint-disable no-console */
+/* global URL */
 
 describe('util helpers', () => {
   let origConsoleWarn;
@@ -152,7 +153,69 @@ describe('util helpers', () => {
 
       // Original audit results should be restored.
       const preparedResult = Util.prepareReportResult(clonedSampleResult);
+
       assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+    });
+
+    it('appends stack pack descriptions to auditRefs', () => {
+      const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+      const iconDataURL = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"%3E%3C/svg%3E';
+      clonedSampleResult.stackPacks = [{
+        id: 'snackpack',
+        title: 'SnackPack',
+        iconDataURL,
+        descriptions: {
+          'unused-css-rules': 'Consider using snacks in packs.',
+        },
+      }];
+      const preparedResult = Util.prepareReportResult(clonedSampleResult);
+
+      const perfAuditRefs = preparedResult.categories.performance.auditRefs;
+      const unusedCssRef = perfAuditRefs.find(ref => ref.id === 'unused-css-rules');
+      assert.deepStrictEqual(unusedCssRef.stackPacks, [{
+        title: 'SnackPack',
+        iconDataURL,
+        description: 'Consider using snacks in packs.',
+      }]);
+
+      // No stack pack on audit wth no stack pack.
+      const interactiveRef = perfAuditRefs.find(ref => ref.id === 'interactive');
+      assert.strictEqual(interactiveRef.stackPacks, undefined);
+    });
+  });
+
+  describe('getTld', () => {
+    it('returns the correct tld', () => {
+      assert.equal(Util.getTld('example.com'), '.com');
+      assert.equal(Util.getTld('example.co.uk'), '.co.uk');
+      assert.equal(Util.getTld('example.com.br'), '.com.br');
+      assert.equal(Util.getTld('example.tokyo.jp'), '.jp');
+    });
+  });
+
+  describe('getRootDomain', () => {
+    it('returns the correct rootDomain from a string', () => {
+      assert.equal(Util.getRootDomain('https://www.example.com/index.html'), 'example.com');
+      assert.equal(Util.getRootDomain('https://example.com'), 'example.com');
+      assert.equal(Util.getRootDomain('https://www.example.co.uk'), 'example.co.uk');
+      assert.equal(Util.getRootDomain('https://example.com.br/app/'), 'example.com.br');
+      assert.equal(Util.getRootDomain('https://example.tokyo.jp'), 'tokyo.jp');
+      assert.equal(Util.getRootDomain('https://sub.example.com'), 'example.com');
+      assert.equal(Util.getRootDomain('https://sub.example.tokyo.jp'), 'tokyo.jp');
+      assert.equal(Util.getRootDomain('http://localhost'), 'localhost');
+      assert.equal(Util.getRootDomain('http://localhost:8080'), 'localhost');
+    });
+
+    it('returns the correct rootDomain from an URL object', () => {
+      assert.equal(Util.getRootDomain(new URL('https://www.example.com/index.html')), 'example.com');
+      assert.equal(Util.getRootDomain(new URL('https://example.com')), 'example.com');
+      assert.equal(Util.getRootDomain(new URL('https://www.example.co.uk')), 'example.co.uk');
+      assert.equal(Util.getRootDomain(new URL('https://example.com.br/app/')), 'example.com.br');
+      assert.equal(Util.getRootDomain(new URL('https://example.tokyo.jp')), 'tokyo.jp');
+      assert.equal(Util.getRootDomain(new URL('https://sub.example.com')), 'example.com');
+      assert.equal(Util.getRootDomain(new URL('https://sub.example.tokyo.jp')), 'tokyo.jp');
+      assert.equal(Util.getRootDomain(new URL('http://localhost')), 'localhost');
+      assert.equal(Util.getRootDomain(new URL('http://localhost:8080')), 'localhost');
     });
   });
 });

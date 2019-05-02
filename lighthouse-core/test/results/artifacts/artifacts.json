@@ -41,17 +41,17 @@
             "budget": 500
           }
         ],
+        "resourceCounts": [
+          {
+            "resourceType": "third-party",
+            "budget": 0
+          }
+        ],
         "timings": [
           {
             "metric": "interactive",
             "budget": 5000,
             "tolerance": 1000
-          }
-        ],
-         "resourceCounts": [
-          {
-           "resourceType": "third-party",
-           "budget": 0
           }
         ]
       }
@@ -1784,6 +1784,11 @@
       "name": "jQuery",
       "version": "2.1.1",
       "npm": "jquery"
+    },
+    {
+      "detector": "js",
+      "id": "wordpress",
+      "name": "WordPress"
     }
   ],
   "OptimizedImages": [

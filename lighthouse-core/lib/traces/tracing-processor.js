@@ -237,6 +237,29 @@ class TraceProcessor {
       }
     }
 
+    // Support the case where everything else fails, see https://github.com/GoogleChrome/lighthouse/issues/7118.
+    // If we can't find either TracingStarted event, then we'll fallback to the first navStart that
+    // looks like it was loading the main frame with a real URL. Because the schema for this event
+    // has changed across Chrome versions, we'll be extra defensive about finding this case.
+    const navStartEvt = events.find(e => Boolean(e.name === 'navigationStart' && e.args &&
+      e.args.data && e.args.data.isLoadingMainFrame && e.args.data.documentLoaderURL));
+    // Find the first resource that was requested and make sure it agrees on the id.
+    const firstResourceSendEvt = events.find(e => e.name === 'ResourceSendRequest');
+    // We know that these properties exist if we found the events, but TSC doesn't.
+    if (navStartEvt && navStartEvt.args && navStartEvt.args.data &&
+        firstResourceSendEvt &&
+        firstResourceSendEvt.pid === navStartEvt.pid &&
+        firstResourceSendEvt.tid === navStartEvt.tid) {
+      const frameId = navStartEvt.args.frame;
+      if (frameId) {
+        return {
+          pid: navStartEvt.pid,
+          tid: navStartEvt.tid,
+          frameId,
+        };
+      }
+    }
+
     throw new LHError(LHError.errors.NO_TRACING_STARTED);
   }
 

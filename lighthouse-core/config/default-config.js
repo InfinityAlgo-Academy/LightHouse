@@ -192,6 +192,7 @@ const defaultConfig = {
     'main-thread-tasks',
     'metrics',
     'offline-start-url',
+    'resource-summary',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -354,8 +355,8 @@ const defaultConfig = {
         {id: 'speed-index', weight: 4, group: 'metrics'},
         {id: 'interactive', weight: 5, group: 'metrics'},
         {id: 'first-cpu-idle', weight: 2, group: 'metrics'},
-        {id: 'estimated-input-latency', weight: 0, group: 'metrics'},
-        {id: 'max-potential-fid', weight: 0}, // intentionally left out of metrics so it won't be displayed yet
+        {id: 'max-potential-fid', weight: 0, group: 'metrics'},
+        {id: 'estimated-input-latency', weight: 0}, // intentionally left out of metrics so it won't be displayed
 
         {id: 'render-blocking-resources', weight: 0, group: 'load-opportunities'},
         {id: 'uses-responsive-images', weight: 0, group: 'load-opportunities'},
@@ -379,6 +380,7 @@ const defaultConfig = {
         {id: 'bootup-time', weight: 0, group: 'diagnostics'},
         {id: 'mainthread-work-breakdown', weight: 0, group: 'diagnostics'},
         {id: 'font-display', weight: 0, group: 'diagnostics'},
+        {id: 'resource-summary', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},
         {id: 'network-rtt', weight: 0},

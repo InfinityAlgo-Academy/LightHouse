@@ -447,7 +447,7 @@
     "message": "值"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "瀏覽器工程師建議網頁包含的 DOM 元素數量應少於 1,500 個。最理想的情況是樹狀結構深度包含的元素少於 32 個，且子項/父項元素少於 60 個。大型 DOM 會增加記憶體用量、延長[樣式運算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)的時間，並產生高昂的[版面配置重排](https://developers.google.com/speed/articles/reflow)費用。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/dom-size)。"
+    "message": "瀏覽器工程師建議網頁包含的 DOM 元素數量應少於 1,500 個左右。最理想的情況是樹狀結構深度包含的元素少於 32 個，且子項/父項元素少於 60 個。大型 DOM 會增加記憶體用量、延長[樣式運算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)的時間，並產生費工的[版面配置重排](https://developers.google.com/speed/articles/reflow)。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/dom-size)。"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 個元素}other{# 個元素}}"
@@ -876,22 +876,22 @@
     "message": "搜尋引擎最佳化 (SEO)"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "請設定適當的 HTML 格式，讓檢索器更容易辨識你的應用程式內容。"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "內容最佳做法"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "檢索器需要存取你的應用程式，才能將網站顯示在搜尋結果中。"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "檢索及建立索引"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "請確認你的網頁適合透過行動裝置瀏覽，讓使用者不須撥動雙指或縮放螢幕即可閱讀網頁內容。[瞭解詳情](https://developers.google.com/search/mobile-sites/)。"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "適合透過行動裝置瀏覽"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "快取 TTL"
@@ -1020,7 +1020,7 @@
     "message": "警告： "
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
-    "message": "建議你將 GIF 上傳到可將 GIF 做為 HTML5 影片嵌入的伺服器。"
+    "message": "建議你將 GIF 上傳到可將 GIF 做為 HTML5 影片嵌入的服務。"
   },
   "stack-packs/packs/wordpress.js | offscreen_images": {
     "message": "安裝可延遲載入所有畫面外圖片的[延遲載入 WordPress 外掛程式](https://wordpress.org/plugins/search/lazy+load/)，或改用提供這項功能的主題。你也可以考慮使用 [AMP 外掛程式](https://wordpress.org/plugins/amp/)。"
@@ -1053,7 +1053,7 @@
     "message": "建議你使用[圖片最佳化 WordPress 外掛程式](https://wordpress.org/plugins/search/optimize+images/)，壓縮圖片時不會影響到畫質。"
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "你可以直接透過[媒體庫](https://codex.wordpress.org/Media_Library_Screen)上傳圖片，確保你可以使用所需的圖片大小，然後透過從媒體庫插入圖片，或使用圖片小工具來確保你使用的是最佳圖片大小 (包括回應式中斷點適用的圖片大小)。除非可用空間足夠，否則請避免使用「原尺寸」圖片。[瞭解詳情](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)。"
+    "message": "你可以直接透過[媒體庫](https://codex.wordpress.org/Media_Library_Screen)上傳圖片，確保你可以使用所需的圖片大小，然後透過從媒體庫插入圖片，或使用圖片小工具來確保你使用的是最佳圖片大小 (包括回應式中斷點適用的圖片大小)。除非圖片尺寸符合使用目的，否則請避免使用「原尺寸」圖片。[瞭解詳情](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)。"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "你可以在網路伺服器設定中啟用文字壓縮功能。"

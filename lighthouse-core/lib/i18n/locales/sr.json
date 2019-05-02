@@ -876,22 +876,22 @@
     "message": "Оптимизација за претраживаче"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "Форматирајте HTML садржај на начин који омогућава пописивачима да боље разумеју садржај апликације."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "Најбоље праксе за садржај"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "Да би се апликација појавила у резултатима претраге, пописивачи треба да имају приступ до ње."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "Пописивање и индексирање"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "Проверите да ли су странице прилагођене мобилним уређајима да корисници не би морали да скупљају прсте или увећавају приказ како би читали странице са садржајем. [Сазнајте више](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "Прилагођено мобилним уређајима"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Време преживљавања кеша"
@@ -1035,10 +1035,10 @@
     "message": "Препоручујемо да прикажете одломке у листама постова (на пример, преко још ознака), смањите број постова који се приказују на одређеној страници, раздвојите дугачке постове на више странциа или користите додатну компоненту за лако учитавање коментара."
   },
   "stack-packs/packs/wordpress.js | unminified_css": {
-    "message": "Неке [WordPress додатне компоненте](https://wordpress.org/plugins/search/minify+css/) могу да убрзају сајт тако што концентришу, умањују и компримују стилове. Ово умањивање можете да обавите и унапред помоћу процеса дизајнирања ако је могуће."
+    "message": "Неке [WordPress додатне компоненте](https://wordpress.org/plugins/search/minify+css/) могу да убрзају сајт тако што повезују, умањују и компримују стилове. Ово умањивање можете да обавите и унапред помоћу процеса дизајнирања ако је могуће."
   },
   "stack-packs/packs/wordpress.js | unminified_javascript": {
-    "message": "Неке [WordPress додатне компоненте](https://wordpress.org/plugins/search/minify+javascript/) могу да убрзају сајт тако што концентришу, умањују и компримују скрипте. Ово умањивање можете да обавите и унапред помоћу процеса дизајнирања ако је могуће."
+    "message": "Неке [WordPress додатне компоненте](https://wordpress.org/plugins/search/minify+javascript/) могу да убрзају сајт тако што повезују, умањују и компримују скрипте. Ово умањивање можете да обавите и унапред помоћу процеса дизајнирања ако је могуће."
   },
   "stack-packs/packs/wordpress.js | unused_css_rules": {
     "message": "Препоручујемо да умањите или промените број [WordPress додатних компоненти](https://wordpress.org/plugins/) које на страници учитавају CSS који се не користи. Да бисте идентификовали додатне компоненте које додају сувишан CSS, пробајте да покренете [покривеност кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) у алатки Chrome DevTools. Можете да идентификујете одговорну тему/додатну компоненту у URL-у стилске странице. Потражите додатне компоненте које на листи имају много стилских страница са доста црвенила у покривености кода. Додатна компонента треба да стави стилску страницу на листу само ако се стварно користи на страници."
