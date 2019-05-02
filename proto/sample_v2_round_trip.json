@@ -2141,91 +2141,91 @@
             "score": 0.46, 
             "scoreDisplayMode": "numeric", 
             "title": "Eliminate render-blocking resources"
-        },
+        }, 
         "resource-summary": {
-            "description": "To set budgets for the quantity and size of page resources, add a budget.json file.",
+            "description": "To set budgets for the quantity and size of page resources, add a budget.json file.", 
             "details": {
-                "type": "table",
                 "headings": [
                     {
-                        "key": "label",
-                        "itemType": "text",
+                        "itemType": "text", 
+                        "key": "label", 
                         "text": "Resource Type"
-                    },
+                    }, 
                     {
-                        "key": "requestCount",
-                        "itemType": "numeric",
+                        "itemType": "numeric", 
+                        "key": "requestCount", 
                         "text": "Requests"
-                    },
+                    }, 
                     {
-                        "key": "size",
-                        "itemType": "bytes",
+                        "itemType": "bytes", 
+                        "key": "size", 
                         "text": "Transfer Size"
                     }
-                ],
+                ], 
                 "items": [
                     {
-                        "resourceType": "total",
-                        "label": "Total",
-                        "requestCount": 18,
-                        "size": 160738
-                    },
+                        "label": "Total", 
+                        "requestCount": 18.0, 
+                        "resourceType": "total", 
+                        "size": 160738.0
+                    }, 
                     {
-                        "resourceType": "script",
-                        "label": "Script",
-                        "requestCount": 4,
-                        "size": 103675
-                    },
+                        "label": "Script", 
+                        "requestCount": 4.0, 
+                        "resourceType": "script", 
+                        "size": 103675.0
+                    }, 
                     {
-                        "resourceType": "image",
-                        "label": "Image",
-                        "requestCount": 2,
-                        "size": 24741
-                    },
+                        "label": "Image", 
+                        "requestCount": 2.0, 
+                        "resourceType": "image", 
+                        "size": 24741.0
+                    }, 
                     {
-                        "resourceType": "document",
-                        "label": "Document",
-                        "requestCount": 3,
-                        "size": 14109
-                    },
+                        "label": "Document", 
+                        "requestCount": 3.0, 
+                        "resourceType": "document", 
+                        "size": 14109.0
+                    }, 
                     {
-                        "resourceType": "other",
-                        "label": "Other",
-                        "requestCount": 2,
-                        "size": 12861
-                    },
+                        "label": "Other", 
+                        "requestCount": 2.0, 
+                        "resourceType": "other", 
+                        "size": 12861.0
+                    }, 
                     {
-                        "resourceType": "stylesheet",
-                        "label": "Stylesheet",
-                        "requestCount": 7,
-                        "size": 5352
-                    },
+                        "label": "Stylesheet", 
+                        "requestCount": 7.0, 
+                        "resourceType": "stylesheet", 
+                        "size": 5352.0
+                    }, 
                     {
-                        "resourceType": "media",
-                        "label": "Media",
-                        "requestCount": 0,
-                        "size": 0
-                    },
+                        "label": "Media", 
+                        "requestCount": 0.0, 
+                        "resourceType": "media", 
+                        "size": 0.0
+                    }, 
                     {
-                        "resourceType": "font",
-                        "label": "Font",
-                        "requestCount": 0,
-                        "size": 0
-                    },
+                        "label": "Font", 
+                        "requestCount": 0.0, 
+                        "resourceType": "font", 
+                        "size": 0.0
+                    }, 
                     {
-                        "resourceType": "third-party",
-                        "label": "Third-party",
-                        "requestCount": 2,
-                        "size": 30174
+                        "label": "Third-party", 
+                        "requestCount": 2.0, 
+                        "resourceType": "third-party", 
+                        "size": 30174.0
                     }
-                ]
-            },
-            "displayValue": "18 requests • 157 KB",
-            "id": "resource-summary",
-            "score": null,
-            "scoreDisplayMode": "informative",
+                ], 
+                "type": "table"
+            }, 
+            "displayValue": "18 requests \u2022 157 KB", 
+            "id": "resource-summary", 
+            "score": null, 
+            "scoreDisplayMode": "informative", 
             "title": "Keep request counts low and transfer sizes small"
-        },
+        }, 
         "robots-txt": {
             "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed.", 
             "id": "robots-txt", 
@@ -3435,12 +3435,12 @@
                     "group": "diagnostics", 
                     "id": "font-display", 
                     "weight": 0.0
-                },
+                }, 
                 {
-                    "group": "diagnostics",
-                    "id": "resource-summary",
-                    "weight": 0
-                },
+                    "group": "diagnostics", 
+                    "id": "resource-summary", 
+                    "weight": 0.0
+                }, 
                 {
                     "id": "network-requests", 
                     "weight": 0.0
@@ -3718,24 +3718,24 @@
     "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html", 
     "i18n": {
         "rendererFormattedStrings": {
-            "auditGroupExpandTooltip": "Show audits",
-            "crcInitialNavigation": "Initial Navigation",
-            "crcLongestDurationLabel": "Maximum critical path latency:",
-            "errorLabel": "Error!",
-            "errorMissingAuditInfo": "Report error: no audit information",
-            "labDataTitle": "Lab Data",
-            "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
-            "manualAuditsGroupTitle": "Additional items to manually check",
-            "notApplicableAuditsGroupTitle": "Not applicable",
-            "opportunityResourceColumnLabel": "Opportunity",
-            "opportunitySavingsColumnLabel": "Estimated Savings",
-            "passedAuditsGroupTitle": "Passed audits",
-            "snippetCollapseButtonLabel": "Collapse snippet",
-            "snippetExpandButtonLabel": "Expand snippet",
-            "thirdPartyResourcesLabel": "Show 3rd-party resources",
-            "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
-            "varianceDisclaimer": "Values are estimated and may vary.",
-            "warningAuditsGroupTitle": "Passed audits but with warnings",
+            "auditGroupExpandTooltip": "Show audits", 
+            "crcInitialNavigation": "Initial Navigation", 
+            "crcLongestDurationLabel": "Maximum critical path latency:", 
+            "errorLabel": "Error!", 
+            "errorMissingAuditInfo": "Report error: no audit information", 
+            "labDataTitle": "Lab Data", 
+            "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.", 
+            "manualAuditsGroupTitle": "Additional items to manually check", 
+            "notApplicableAuditsGroupTitle": "Not applicable", 
+            "opportunityResourceColumnLabel": "Opportunity", 
+            "opportunitySavingsColumnLabel": "Estimated Savings", 
+            "passedAuditsGroupTitle": "Passed audits", 
+            "snippetCollapseButtonLabel": "Collapse snippet", 
+            "snippetExpandButtonLabel": "Expand snippet", 
+            "thirdPartyResourcesLabel": "Show 3rd-party resources", 
+            "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:", 
+            "varianceDisclaimer": "Values are estimated and may vary.", 
+            "warningAuditsGroupTitle": "Passed audits but with warnings", 
             "warningHeader": "Warnings: "
         }
     }, 
@@ -4174,19 +4174,19 @@
                 "entryType": "measure", 
                 "name": "lh:audit:offline-start-url", 
                 "startTime": 0.0
-            },
+            }, 
             {
-                "duration": 100,
-                "entryType": "measure",
-                "name": "lh:audit:resource-summary",
+                "duration": 100.0, 
+                "entryType": "measure", 
+                "name": "lh:audit:resource-summary", 
                 "startTime": 0.0
-            },
+            }, 
             {
-                "duration": 100,
-                "entryType": "measure",
-                "name": "lh:computed:ResourceSummary",
+                "duration": 100.0, 
+                "entryType": "measure", 
+                "name": "lh:computed:ResourceSummary", 
                 "startTime": 0.0
-            },
+            }, 
             {
                 "duration": 100.0, 
                 "entryType": "measure", 
