@@ -124,6 +124,8 @@ class ReportUIFeatures {
     for (const el of this._dom.findAll('a.lh-gauge__wrapper', this._document)) {
       const anchorElement = /** @type {HTMLAnchorElement} */ (el);
       anchorElement.addEventListener('click', e => {
+        if (!anchorElement.hash.startsWith('#')) return;
+
         e.preventDefault();
         window.history.pushState({}, '', anchorElement.hash);
         this._dom.find(anchorElement.hash, this._document).scrollIntoView({behavior: 'smooth'});

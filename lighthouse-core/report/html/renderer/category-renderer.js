@@ -330,8 +330,7 @@ class CategoryRenderer {
    */
   renderScoreGauge(category, groupDefinitions) { // eslint-disable-line no-unused-vars
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge', this.templateContext);
-    const wrapper = /** @type {HTMLAnchorElement} */ (this.dom.find('.lh-gauge__wrapper', tmpl));
-    wrapper.href = `#${category.id}`;
+    const wrapper = this.dom.find('.lh-gauge__wrapper', tmpl);
     wrapper.classList.add(`lh-gauge__wrapper--${Util.calculateRating(category.score)}`);
 
     if (Util.isPluginCategory(category.id)) {
