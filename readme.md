@@ -239,6 +239,8 @@ yarn
 yarn build-all
 ```
 
+If changing audit output, you'll likely also need to have the protocol-buffer compiler installed. See the [official installation instructions](https://github.com/protocolbuffers/protobuf#protocol-compiler-installation) or consult your [favorite package manager](https://formulae.brew.sh/formula/protobuf) for your OS.
+
 ### Run
 
 ```sh
