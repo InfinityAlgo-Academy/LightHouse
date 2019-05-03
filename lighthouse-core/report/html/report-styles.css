@@ -460,7 +460,6 @@
 }
 
 
-.lh-audit__title,
 .lh-audit__display-text,
 .lh-load-opportunity__sparkline,
 .lh-chevron-container {
@@ -470,13 +469,23 @@
   margin-right: 0;
 }
 
-.lh-audit__title {
+.lh-audit__display-text {
   flex: 1;
+}
+
+/* Prepend display text with em dash separator. But not in Opportunities. */
+.lh-audit__display-text:not(:empty):before {
+  content: '—';
+  margin-right: var(--audit-item-gap);
+}
+.lh-audit-group.lh-audit-group--load-opportunities .lh-audit__display-text:not(:empty):before {
+  display: none;
 }
 
 /* Expandable Details (Audit Groups, Audits) */
 .lh-audit__header {
   display: flex;
+  font-weight: 500;
   padding: var(--lh-audit-vpadding) 0;
 }
 
@@ -694,7 +703,6 @@
 
 .lh-load-opportunity__col {
   display: flex;
-  justify-content: space-between;
 }
 
 .lh-load-opportunity__col--one {
@@ -878,6 +886,7 @@
 }
 .lh-audit-group__header span.lh-audit-group__description::before {
   content: '—';
+  margin: 0px var(--audit-item-gap);
 }
 
 .lh-clump > .lh-audit-group__header,
