@@ -46,13 +46,17 @@ limitations under the License.
 <template id="tmpl-lh-category-header">
   <div class="lh-category-header">
     <div class="lh-score__gauge">
-      <!-- Will be added to .lh-gauge__label via renderCategoryHeader -->
-      <!-- <span class="tooltip-boundary">
-        <div class="lh-gauge__label-info-icon"></div>
-        <div class="lh-category-header__description tooltip"></div>
-      </span> -->
+      <!-- tmpl-lh-category-header-description-tooltip be added to .lh-gauge__label via renderCategoryHeader -->
     </div>
   </div>
+</template>
+
+<!-- Lighthouse category header description tooltip -->
+<template id="tmpl-lh-category-header-description-tooltip">
+  <span class="tooltip-boundary">
+    <div class="lh-gauge__label-info-icon"></div>
+    <div class="lh-category-header__description tooltip"></div>
+  </span>
 </template>
 
 <!-- Lighthouse clump -->

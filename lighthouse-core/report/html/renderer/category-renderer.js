@@ -178,12 +178,14 @@ class CategoryRenderer {
     gaugeContainerEl.appendChild(gaugeEl);
 
     if (category.description) {
-      const gaugeLabelEl = this.dom.find('.lh-gauge__label', gaugeContainerEl);
-      const tooltipBoundaryEl = this.dom.createChildOf(gaugeLabelEl, 'span', 'tooltip-boundary');
-      this.dom.createChildOf(tooltipBoundaryEl, 'div', 'lh-gauge__label-info-icon');
-      const tooltipEl = this.dom.createChildOf(tooltipBoundaryEl, 'div', 'tooltip');
+      const tooltipTmpl = this.dom.cloneTemplate('#tmpl-lh-category-header-description-tooltip',
+        this.templateContext);
+      const tooltipEl = this.dom.find('.tooltip-boundary', tooltipTmpl);
       const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
-      tooltipEl.appendChild(descEl);
+      this.dom.find('.tooltip', tooltipEl).appendChild(descEl);
+
+      const gaugeLabelEl = this.dom.find('.lh-gauge__label', gaugeContainerEl);
+      gaugeLabelEl.appendChild(tooltipEl);
     }
 
     return /** @type {Element} */ (tmpl.firstElementChild);

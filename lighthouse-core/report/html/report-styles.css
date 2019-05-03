@@ -1317,7 +1317,6 @@
   display: block;
   animation: fadeInTooltip 250ms;
   animation-fill-mode: forwards;
-  animation-delay: 850ms;
   bottom: 100%;
   z-index: 1;
   will-change: opacity;
