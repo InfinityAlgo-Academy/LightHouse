@@ -14,6 +14,14 @@ const path = require('path');
 const ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
 const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
 
+// Add a plugin to demo plugin rendering.
+lhr.categories['lighthouse-plugin-someplugin'] = {
+  id: 'lighthouse-plugin-someplugin',
+  title: 'Plugin',
+  score: 0.5,
+  auditRefs: [],
+};
+
 console.log('🕒 Generating report for sample_v2.json...');
 const html = ReportGenerator.generateReport(lhr, 'html');
 const filename = path.join(__dirname, '../../dist/index.html');

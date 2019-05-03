@@ -77,6 +77,13 @@ async function begin() {
     configJson = require(`../lighthouse-core/config/${cliFlags.preset}-config.js`);
   }
 
+  if (cliFlags.budgetPath) {
+    cliFlags.budgetPath = path.resolve(process.cwd(), cliFlags.budgetPath);
+    /** @type {Array<LH.Budget>} */
+    const parsedBudget = JSON.parse(fs.readFileSync(cliFlags.budgetPath, 'utf8'));
+    cliFlags.budgets = parsedBudget;
+  }
+
   // set logging preferences
   cliFlags.logLevel = 'info';
   if (cliFlags.verbose) {
@@ -92,6 +99,12 @@ async function begin() {
     !cliFlags.outputPath
   ) {
     cliFlags.outputPath = 'stdout';
+  }
+
+  // @ts-ignore - deprecation message for removed disableDeviceEmulation; can remove warning in v6.
+  if (cliFlags.disableDeviceEmulation) {
+    log.warn('config', 'The "--disable-device-emulation" has been removed in v5.' +
+        ' Please use "--emulated-form-factor=none" instead.');
   }
 
   if (cliFlags.extraHeaders) {

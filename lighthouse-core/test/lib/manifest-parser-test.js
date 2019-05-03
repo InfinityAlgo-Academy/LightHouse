@@ -347,7 +347,6 @@ describe('Manifest Parser', function() {
       const display = parsedManifest.value.display;
       assert.ok(!display.warning);
       assert.equal(display.value, 'browser');
-      assert.equal(display.rawValue, undefined);
     });
 
     it('trims whitespace', () => {

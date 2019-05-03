@@ -17,24 +17,22 @@ const generatorFilename = `./lighthouse-core/report/report-generator.js`;
 const htmlReportAssets = require('../lighthouse-core/report/html/html-report-assets.js');
 
 /**
- * Used to save cached resources (Runtime.cachedResources). Content must be converted to ascii.
+ * Used to save cached resources (Runtime.cachedResources).
  * @param {string} name
  * @param {string} content
  */
-function convertToAsciiAndWriteFile(name, content) {
+function writeFile(name, content) {
   assert(content);
-  // eslint-disable-next-line no-control-regex
-  const escaped = content.replace(/[^\x00-\x7F]/g, c => '\\\\u' + c.charCodeAt(0).toString(16));
-  fs.writeFileSync(`${distDir}/${name}`, escaped);
+  fs.writeFileSync(`${distDir}/${name}`, content);
 }
 
 rimraf.sync(distDir);
 fs.mkdirSync(distDir);
 
-convertToAsciiAndWriteFile('report.js', htmlReportAssets.REPORT_JAVASCRIPT);
-convertToAsciiAndWriteFile('report.css', htmlReportAssets.REPORT_CSS);
-convertToAsciiAndWriteFile('template.html', htmlReportAssets.REPORT_TEMPLATE);
-convertToAsciiAndWriteFile('templates.html', htmlReportAssets.REPORT_TEMPLATES);
+writeFile('report.js', htmlReportAssets.REPORT_JAVASCRIPT);
+writeFile('report.css', htmlReportAssets.REPORT_CSS);
+writeFile('template.html', htmlReportAssets.REPORT_TEMPLATE);
+writeFile('templates.html', htmlReportAssets.REPORT_TEMPLATES);
 
 const pathToReportAssets = require.resolve('../clients/devtools-report-assets.js');
 browserify(generatorFilename, {standalone: 'Lighthouse.ReportGenerator'})

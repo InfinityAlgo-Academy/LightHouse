@@ -122,7 +122,7 @@ describe('PerfCategoryRenderer', () => {
       group: 'load-opportunities',
       result: {
         score: 0, scoreDisplayMode: 'numeric',
-        rawValue: 100, explanation: 'Yikes!!', title: 'Bug #2', description: '',
+        numericValue: 100, explanation: 'Yikes!!', title: 'Bug #2', description: '',
       },
     };
 
@@ -166,7 +166,7 @@ describe('PerfCategoryRenderer', () => {
         group: 'load-opportunities',
         result: {
           error: true, score: 0,
-          rawValue: 100, explanation: 'Yikes!!', title: 'Bug #2',
+          numericValue: 100, explanation: 'Yikes!!', title: 'Bug #2',
         },
       };
       const wastedMs = renderer._getWastedMs(auditWithDebug);

@@ -203,15 +203,6 @@ describe('DetailsRenderer', () => {
 
       assert.throws(() => renderer.render(details), /^Error: Unknown type: imaginary$/);
     });
-
-    it('supports old LHRs by not rendering when type is missing', () => {
-      // Disallowed by type system of current LH, but possible if trying to render an old LHR.
-      const details = {
-        timestamp: 15,
-      };
-
-      assert.strictEqual(renderer.render(details), null);
-    });
   });
 
   describe('Table rendering', () => {
@@ -393,6 +384,7 @@ describe('DetailsRenderer', () => {
 
       assert.equal(urlEl.localName, 'div');
       assert.equal(urlEl.title, urlText);
+      assert.equal(urlEl.dataset.url, urlText);
       assert.ok(urlEl.firstChild.classList.contains('lh-text'));
       assert.equal(urlEl.textContent, displayUrlText);
     });
@@ -417,6 +409,7 @@ describe('DetailsRenderer', () => {
 
       assert.equal(urlEl.localName, 'div');
       assert.equal(urlEl.title, urlText);
+      assert.equal(urlEl.dataset.url, urlText);
       assert.ok(urlEl.firstChild.classList.contains('lh-text'));
       assert.equal(urlEl.textContent, displayUrlText);
     });

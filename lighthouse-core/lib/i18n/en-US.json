@@ -712,11 +712,11 @@
     "description": "The name of the metric that marks the time at which the page is fully loaded and is able to quickly respond to user input (clicks, taps, and keypresses feel responsive). Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit."
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "The potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task.",
+    "message": "The maximum potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task. [Learn more](https://developers.google.com/web/updates/2018/05/first-input-delay).",
     "description": "Description of the Maximum Potential First Input Delay metric that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
-    "message": "Max Potential FID",
+    "message": "Max Potential First Input Delay",
     "description": "The name of the metric \"Maximum Potential First Input Delay\" that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
@@ -750,6 +750,18 @@
   "lighthouse-core/audits/redirects.js | title": {
     "message": "Avoid multiple page redirects",
     "description": "Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates."
+  },
+  "lighthouse-core/audits/resource-summary.js | description": {
+    "message": "To set budgets for the quantity and size of page resources, add a budget.json file.",
+    "description": "Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits."
+  },
+  "lighthouse-core/audits/resource-summary.js | displayValue": {
+    "message": "{requestCount, plural, =1 {1 request} other {# requests}} • { byteCount, number, bytes } KB",
+    "description": "[ICU Syntax] Label for an audit identifying the number of requests and kilobytes used to load the page."
+  },
+  "lighthouse-core/audits/resource-summary.js | title": {
+    "message": "Keep request counts low and transfer sizes small",
+    "description": "Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page."
   },
   "lighthouse-core/audits/seo/canonical.js | description": {
     "message": "Canonical links suggest which URL to show in search results. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/canonical).",
@@ -1196,7 +1208,7 @@
     "description": "Label for the TTL column in data tables, entries will be the time to live value of the cache header on a web resource"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
-    "message": "Size (KB)",
+    "message": "Size",
     "description": "Label for the size column in data tables, entries will be the size of a web resource in kilobytes"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
@@ -1208,11 +1220,11 @@
     "description": "Label for the URL column in data tables, entries will be the URL of a web resource"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
-    "message": "Potential Savings (KB)",
+    "message": "Potential Savings",
     "description": "Label for the wasted bytes column in data tables, entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedMs": {
-    "message": "Potential Savings (ms)",
+    "message": "Potential Savings",
     "description": "Label for the wasted bytes column in data tables, entries will be the number of milliseconds the user could reduce page load by if they implemented the suggestions"
   },
   "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": {
@@ -1223,13 +1235,49 @@
     "message": "Potential savings of {wastedMs, number, milliseconds} ms",
     "description": "Label shown per-audit to show how many milliseconds faster the page load could be if the user implemented the suggestions. The `{wastedMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 140 ms)"
   },
+  "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
+    "message": "Document",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Document' resources loaded by a web page."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
+    "message": "Font",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Font' resources loaded by a web page."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
+    "message": "Image",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Image' resources loaded by a web page."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
+    "message": "Media",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Media' resources loaded by a web page. 'Media' refers to audio and video files."
+  },
   "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms",
     "description": "Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms)"
   },
+  "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
+    "message": "Other",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page that don't fit into the categories of Document, Script, Stylesheet, Image, Media, & Font."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": {
+    "message": "Script",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Script' resources loaded by a web page. 'Script' refers to JavaScript or other files that are executable by a browser."
+  },
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s",
     "description": "Used to show the duration in seconds that something lasted. The {timeInMs} placeholder will be replaced with the time duration, shown in seconds (e.g. 5.2 s)"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
+    "message": "Stylesheet",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Stylesheet' resources loaded by a web page. 'Stylesheet' refers to CSS stylesheets."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
+    "message": "Third-party",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all third-party resources loaded by a web page. 'Third-party resources are items loaded from URLs that aren't controlled by the owner of the web page."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
+    "message": "Total",
+    "description": "Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page."
   },
   "lighthouse-core/lib/lh-error.js | badTraceRecording": {
     "message": "Something went wrong with recording the trace over your page load. Please run Lighthouse again. ({errorCode})",
@@ -1260,8 +1308,8 @@
     "description": "Error message explaining that Lighthouse couldn't complete because the page has stopped responding to its instructions."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedInsecure": {
-    "message": "The URL you have provided does not have valid security credentials. {securityMessages}",
-    "description": "Error message explaining that the credentials included in the Lighthouse run were invalid, so the URL cannot be accessed. securityMessages will be replaced with one or more strings from the browser explaining what was insecure about the page load."
+    "message": "The URL you have provided does not have a valid security certificate. {securityMessages}",
+    "description": "Error message explaining that the security certificate of the page Lighthouse observed was invalid, so the URL cannot be accessed. securityMessages will be replaced with one or more strings from the browser explaining what was insecure about the page load."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
     "message": "Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Details: {errorDetails})",
@@ -1342,6 +1390,10 @@
   "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
     "message": "Expand snippet",
     "description": "Label for button that shows all lines of the snippet when clicked"
+  },
+  "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
+    "message": "Show 3rd-party resources",
+    "description": "This label is for a checkbox above a table of items loaded by a web page. The checkbox is used to show or hide third-party (or \"3rd-party\") resources in the table, where \"third-party resources\" refers to items loaded by a web page from URLs that aren't controlled by the owner of the web page."
   },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "There were issues affecting this run of Lighthouse:",

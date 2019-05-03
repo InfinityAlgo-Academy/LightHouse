@@ -105,15 +105,6 @@ describe('URL Shim', () => {
     assert.equal(URL.getOrigin(urlD), null);
   });
 
-  describe('getTld', () => {
-    it('returns the correct tld', () => {
-      assert.equal(URL.getTld('example.com'), '.com');
-      assert.equal(URL.getTld('example.co.uk'), '.co.uk');
-      assert.equal(URL.getTld('example.com.br'), '.com.br');
-      assert.equal(URL.getTld('example.tokyo.jp'), '.jp');
-    });
-  });
-
   describe('rootDomainsMatch', () => {
     it('matches a subdomain and a root domain', () => {
       const urlA = 'http://example.com/js/test.js';

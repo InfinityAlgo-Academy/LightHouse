@@ -59,7 +59,7 @@ function getFlags(manualArgv) {
           'save-assets', 'list-all-audits', 'list-trace-categories', 'print-config', 'additional-trace-categories',
           'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'emulated-form-factor',
           'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
-          'only-audits', 'only-categories', 'skip-audits',
+          'only-audits', 'only-categories', 'skip-audits', 'budget-path',
         ],
         'Configuration:')
       .describe({
@@ -88,6 +88,7 @@ function getFlags(manualArgv) {
             'Additional categories to capture with the trace (comma-delimited).',
         'config-path': `The path to the config JSON.
             An example config file: lighthouse-core/config/lr-desktop-config.js`,
+        'budget-path': `The path to the budget.json file for LightWallet.`,
         'preset': `Use a built-in configuration.
             WARNING: If the --config-path flag is provided, this preset will be ignored.`,
         'chrome-flags':
@@ -114,7 +115,7 @@ function getFlags(manualArgv) {
         'output': `Reporter for the results, supports multiple values`,
         'output-path': `The file path to output the results. Use 'stdout' to write to stdout.
   If using JSON output, default is stdout.
-  If using HTML output, default is a file in the working directory with a name based on the test URL and date.
+  If using HTML or CSV output, default is a file in the working directory with a name based on the test URL and date.
   If using multiple outputs, --output-path is appended with the standard extension for each output type. "reports/my-run" -> "reports/my-run.report.html", "reports/my-run.report.json", etc.
   Example: --output-path=./lighthouse-results.html`,
         'view': 'Open HTML report in your browser',
@@ -141,6 +142,7 @@ function getFlags(manualArgv) {
       .string('channel')
       .string('precomputedLanternDataPath')
       .string('lanternDataOutputPath')
+      .string('budgetPath')
 
       // default values
       .default('chrome-flags', '')

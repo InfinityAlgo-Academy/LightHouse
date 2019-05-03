@@ -12,7 +12,7 @@
 
 const Gatherer = require('./gatherer');
 
-class ChromeConsoleMessages extends Gatherer {
+class ConsoleMessages extends Gatherer {
   constructor() {
     super();
     /** @type {Array<LH.Crdp.Log.EntryAddedEvent>} */
@@ -41,7 +41,7 @@ class ChromeConsoleMessages extends Gatherer {
 
   /**
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts['ChromeConsoleMessages']>}
+   * @return {Promise<LH.Artifacts['ConsoleMessages']>}
    */
   async afterPass(passContext) {
     await passContext.driver.sendCommand('Log.stopViolationsReport');
@@ -51,4 +51,4 @@ class ChromeConsoleMessages extends Gatherer {
   }
 }
 
-module.exports = ChromeConsoleMessages;
+module.exports = ConsoleMessages;
