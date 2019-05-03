@@ -716,7 +716,7 @@
     "description": "Description of the Maximum Potential First Input Delay metric that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
-    "message": "Max Potential FID",
+    "message": "Max Potential First Input Delay",
     "description": "The name of the metric \"Maximum Potential First Input Delay\" that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {

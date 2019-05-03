@@ -193,7 +193,7 @@
     },
     "max-potential-fid": {
       "id": "max-potential-fid",
-      "title": "Max Potential FID",
+      "title": "Max Potential First Input Delay",
       "description": "The maximum potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task. [Learn more](https://developers.google.com/web/updates/2018/05/first-input-delay).",
       "score": 0.92,
       "scoreDisplayMode": "numeric",
