@@ -145,7 +145,7 @@ class LighthouseReportViewer {
 
     this._validateReportJson(json);
 
-    // Redirect to old viewer if a v2 report. v3 and v4 both handled by v4 viewer.
+    // Redirect to old viewer if a v2 report. v3, v4, v5 handled by v5 viewer.
     if (json.lighthouseVersion.startsWith('2')) {
       this._loadInLegacyViewerVersion(json);
       return;
@@ -216,7 +216,6 @@ class LighthouseReportViewer {
     const warnMsg = `Version mismatch between viewer and JSON. Opening compatible viewer...`;
     logger.log(warnMsg, false);
 
-    // TODO: Handle 4x reports if we break viewer compat moving to v5.
     // Place report in IDB, then navigate current tab to the legacy viewer
     const viewerPath = new URL('../viewer2x/', location.href);
     idbKeyval.set('2xreport', reportJson).then(_ => {

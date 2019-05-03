@@ -14,7 +14,7 @@ describe('ViewportMeta computed artifact', () => {
   const makeMetaElements = viewport => [{name: 'viewport', content: viewport}];
 
   it('is not mobile optimized when page does not contain a viewport meta tag', async () => {
-    const {hasViewportTag, isMobileOptimized} = await ViewportMeta.compute_({MetaElements: []});
+    const {hasViewportTag, isMobileOptimized} = await ViewportMeta.compute_([]);
     assert.equal(hasViewportTag, false);
     assert.equal(isMobileOptimized, false);
   });
@@ -23,7 +23,7 @@ describe('ViewportMeta computed artifact', () => {
   it('is not mobile optimized when HTML contains a non-mobile friendly viewport meta tag', async () => {
     const viewport = 'maximum-scale=1';
     const {hasViewportTag, isMobileOptimized} =
-      await ViewportMeta.compute_({MetaElements: makeMetaElements(viewport)});
+      await ViewportMeta.compute_(makeMetaElements(viewport));
     assert.equal(hasViewportTag, true);
     assert.equal(isMobileOptimized, false);
   });
@@ -31,7 +31,7 @@ describe('ViewportMeta computed artifact', () => {
   it('is not mobile optimized when HTML contains an invalid viewport meta tag key', async () => {
     const viewport = 'nonsense=true';
     const {hasViewportTag, isMobileOptimized} =
-      await ViewportMeta.compute_({MetaElements: makeMetaElements(viewport)});
+      await ViewportMeta.compute_(makeMetaElements(viewport));
     assert.equal(hasViewportTag, true);
     assert.equal(isMobileOptimized, false);
   });
@@ -39,7 +39,7 @@ describe('ViewportMeta computed artifact', () => {
   it('is not mobile optimized when HTML contains an invalid viewport meta tag value', async () => {
     const viewport = 'initial-scale=microscopic';
     const {isMobileOptimized, parserWarnings} =
-      await ViewportMeta.compute_({MetaElements: makeMetaElements(viewport)});
+      await ViewportMeta.compute_(makeMetaElements(viewport));
     assert.equal(isMobileOptimized, false);
     assert.equal(parserWarnings[0], 'Invalid values found: {"initial-scale":"microscopic"}');
   });
@@ -48,7 +48,7 @@ describe('ViewportMeta computed artifact', () => {
   it('is not mobile optimized when HTML contains an invalid viewport meta tag key and value', async () => {
     const viewport = 'nonsense=true, initial-scale=microscopic';
     const {isMobileOptimized, parserWarnings} =
-      await ViewportMeta.compute_({MetaElements: makeMetaElements(viewport)});
+      await ViewportMeta.compute_(makeMetaElements(viewport));
     assert.equal(isMobileOptimized, false);
     assert.equal(parserWarnings[0], 'Invalid properties found: {"nonsense":"true"}');
     assert.equal(parserWarnings[1], 'Invalid values found: {"initial-scale":"microscopic"}');
@@ -64,7 +64,7 @@ describe('ViewportMeta computed artifact', () => {
 
     await Promise.all(viewports.map(async viewport => {
       const {isMobileOptimized} =
-        await ViewportMeta.compute_({MetaElements: makeMetaElements(viewport)});
+        await ViewportMeta.compute_(makeMetaElements(viewport));
       assert.equal(isMobileOptimized, true);
     }));
   });
@@ -76,7 +76,7 @@ describe('ViewportMeta computed artifact', () => {
     ];
     await Promise.all(viewports.map(async viewport => {
       const {isMobileOptimized, parserWarnings} =
-        await ViewportMeta.compute_({MetaElements: makeMetaElements(viewport)});
+        await ViewportMeta.compute_(makeMetaElements(viewport));
       assert.equal(isMobileOptimized, true);
       assert.equal(parserWarnings[0], undefined);
     }));

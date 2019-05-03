@@ -30,7 +30,7 @@ class Viewport extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const viewportMeta = await ComputedViewportMeta.request(artifacts, context);
+    const viewportMeta = await ComputedViewportMeta.request(artifacts.MetaElements, context);
 
     if (!viewportMeta.hasViewportTag) {
       return {

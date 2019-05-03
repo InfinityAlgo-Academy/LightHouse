@@ -61,9 +61,6 @@ class DetailsRenderer {
       case 'screenshot':
       case 'debugdata':
         return null;
-      // Fallback for old LHRs, where no type meant don't render.
-      case undefined:
-        return null;
 
       default: {
         // @ts-ignore tsc thinks this unreachable, but ts-ignore for error message just in case.
@@ -124,7 +121,11 @@ class DetailsRenderer {
       element.appendChild(hostElem);
     }
 
-    if (title) element.title = url;
+    if (title) {
+      element.title = url;
+      // set the url on the element's dataset which we use to check 3rd party origins
+      element.dataset.url = url;
+    }
     return element;
   }
 
@@ -331,7 +332,7 @@ class DetailsRenderer {
 
   /**
    * @param {LH.Audit.Details.List} details
-   * @returns {Element}
+   * @return {Element}
    */
   _renderList(details) {
     const listContainer = this._dom.createElement('div', 'lh-list');

@@ -47,15 +47,33 @@ const UIStrings = {
   /** Label for the URL column in data tables, entries will be the URL of a web resource */
   columnURL: 'URL',
   /** Label for the size column in data tables, entries will be the size of a web resource in kilobytes */
-  columnSize: 'Size (KB)',
+  columnSize: 'Size',
   /** Label for the TTL column in data tables, entries will be the time to live value of the cache header on a web resource */
   columnCacheTTL: 'Cache TTL',
   /** Label for the wasted bytes column in data tables, entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions */
-  columnWastedBytes: 'Potential Savings (KB)',
+  columnWastedBytes: 'Potential Savings',
   /** Label for the wasted bytes column in data tables, entries will be the number of milliseconds the user could reduce page load by if they implemented the suggestions */
-  columnWastedMs: 'Potential Savings (ms)',
+  columnWastedMs: 'Potential Savings',
   /** Label for the time spent column in data tables, entries will be the number of milliseconds spent during a particular activity */
   columnTimeSpent: 'Time Spent',
+  /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page. */
+  totalResourceType: 'Total',
+  /** Label for a row in a data table; entries will be the total number and byte size of all 'Document' resources loaded by a web page. */
+  documentResourceType: 'Document',
+  /** Label for a row in a data table; entries will be the total number and byte size of all 'Script' resources loaded by a web page. 'Script' refers to JavaScript or other files that are executable by a browser. */
+  scriptResourceType: 'Script',
+  /** Label for a row in a data table; entries will be the total number and byte size of all 'Stylesheet' resources loaded by a web page. 'Stylesheet' refers to CSS stylesheets. */
+  stylesheetResourceType: 'Stylesheet',
+  /** Label for a row in a data table; entries will be the total number and byte size of all 'Image' resources loaded by a web page. */
+  imageResourceType: 'Image',
+  /** Label for a row in a data table; entries will be the total number and byte size of all 'Media' resources loaded by a web page. 'Media' refers to audio and video files. */
+  mediaResourceType: 'Media',
+  /** Label for a row in a data table; entries will be the total number and byte size of all 'Font' resources loaded by a web page. */
+  fontResourceType: 'Font',
+  /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page that don't fit into the categories of Document, Script, Stylesheet, Image, Media, & Font.*/
+  otherResourceType: 'Other',
+  /** Label for a row in a data table; entries will be the total number and byte size of all third-party resources loaded by a web page. 'Third-party resources are items loaded from URLs that aren't controlled by the owner of the web page. */
+  thirdPartyResourceType: 'Third-party',
 };
 
 const formats = {
@@ -150,20 +168,21 @@ const _icuMessageInstanceMap = new Map();
  *
  * @param {LH.Locale} locale
  * @param {string} icuMessageId
- * @param {string} icuMessage
+ * @param {string=} fallbackMessage
  * @param {*} [values]
  * @return {{formattedString: string, icuMessage: string}}
  */
-function _formatIcuMessage(locale, icuMessageId, icuMessage, values) {
+function _formatIcuMessage(locale, icuMessageId, fallbackMessage, values) {
   const localeMessages = LOCALES[locale];
   const localeMessage = localeMessages[icuMessageId] && localeMessages[icuMessageId].message;
   // fallback to the original english message if we couldn't find a message in the specified locale
   // better to have an english message than no message at all, in some number cases it won't even matter
-  const messageForMessageFormat = localeMessage || icuMessage;
+  const messageForMessageFormat = localeMessage || fallbackMessage;
+  if (messageForMessageFormat === undefined) throw new Error('No ICU message string to format');
   // when using accented english, force the use of a different locale for number formatting
   const localeForMessageFormat = locale === 'en-XA' ? 'de-DE' : locale;
   // pre-process values for the message format like KB and milliseconds
-  const valuesForMessageFormat = _preprocessMessageValues(icuMessage, values);
+  const valuesForMessageFormat = _preprocessMessageValues(messageForMessageFormat, values);
 
   const formatter = new MessageFormat(messageForMessageFormat, localeForMessageFormat, formats);
   const formattedString = formatter.format(valuesForMessageFormat);
@@ -269,7 +288,7 @@ function formatMessageFromIdWithValues(locale, icuMessageId, values) {
   const icuMessageIdRegex = /(.* \| .*)$/;
   if (!icuMessageIdRegex.test(icuMessageId)) throw new Error('This is not an ICU message ID');
 
-  const {formattedString} = _formatIcuMessage(locale, icuMessageId, '', values);
+  const {formattedString} = _formatIcuMessage(locale, icuMessageId, undefined, values);
   return formattedString;
 }
 

@@ -24,7 +24,7 @@ describe('DOMSize audit', () => {
   it('calculates score hitting mid distribution', () => {
     const auditResult = DOMSize.audit(artifact, {options});
     assert.equal(auditResult.score, 0.43);
-    assert.equal(auditResult.rawValue, numElements);
+    assert.equal(auditResult.numericValue, numElements);
     expect(auditResult.displayValue).toBeDisplayString('1,500 elements');
     assert.equal(auditResult.details.items[0].value, numElements.toLocaleString());
     assert.equal(auditResult.details.items[1].value, '1');

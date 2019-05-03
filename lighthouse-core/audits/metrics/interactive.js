@@ -78,7 +78,7 @@ class InteractiveMetric extends Audit {
         context.options.scorePODR,
         context.options.scoreMedian
       ),
-      rawValue: timeInMs,
+      numericValue: timeInMs,
       displayValue: str_(i18n.UIStrings.seconds, {timeInMs}),
       extendedInfo: {
         value: extendedInfo,

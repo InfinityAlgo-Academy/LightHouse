@@ -31,7 +31,7 @@
  *
  * @param {LH.Result | string} LHResult The stringified version of {LH.Result}
  * @param {Document} document The host page's window.document
- * @return {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null}}
+ * @return {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null, scoreScaleEl: Element}}
  */
 function prepareLabData(LHResult, document) {
   const lhResult = (typeof LHResult === 'string') ?
@@ -64,7 +64,11 @@ function prepareLabData(LHResult, document) {
   scoreGaugeWrapperEl.removeAttribute('href');
 
   const finalScreenshotDataUri = _getFinalScreenshot(perfCategory);
-  return {scoreGaugeEl, perfCategoryEl, finalScreenshotDataUri};
+
+  const clonedScoreTemplate = dom.cloneTemplate('#tmpl-lh-scorescale', dom.document());
+  const scoreScaleEl = dom.find('.lh-scorescale', clonedScoreTemplate);
+
+  return {scoreGaugeEl, perfCategoryEl, finalScreenshotDataUri, scoreScaleEl};
 }
 
 /**

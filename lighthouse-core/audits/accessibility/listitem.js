@@ -6,7 +6,7 @@
 'use strict';
 
 /**
- * @fileoverview Ensures every HTML document has a `lang` attribute.
+ * @fileoverview Ensures every list item is contained within a parent list
  * See base class in axe-audit.js for audit() implementation.
  */
 

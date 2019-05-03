@@ -26,9 +26,9 @@ limitations under the License.
 <!-- Lighthouse score scale -->
 <template id="tmpl-lh-scorescale">
   <div class="lh-scorescale">
-      <span class="lh-scorescale-range lh-scorescale-range--fail">0-49</span>
-      <span class="lh-scorescale-range lh-scorescale-range--average">50-89</span>
-      <span class="lh-scorescale-range lh-scorescale-range--pass">90-100</span>
+      <span class="lh-scorescale-range lh-scorescale-range--fail">0&ndash;49</span>
+      <span class="lh-scorescale-range lh-scorescale-range--average">50&ndash;89</span>
+      <span class="lh-scorescale-range lh-scorescale-range--pass">90&ndash;100</span>
   </div>
 </template>
 
@@ -56,12 +56,35 @@ limitations under the License.
   <details class="lh-clump lh-audit-group">
     <summary>
       <div class="lh-audit-group__summary">
-        <div class="lh-audit-group__header"></div>
-        <div class="lh-audit-group__itemcount"></div>
+        <div class="lh-audit-group__header">
+          <span class="lh-audit-group__title"></span>
+          <span class="lh-audit-group__itemcount"></span>
+          <!-- .lh-audit-group__description will be added here -->
+          <!-- .lh-metrics-toggle will be added here -->
+        </div>
         <div class=""></div>
       </div>
     </summary>
   </details>
+</template>
+
+<!-- Lighthouse metrics toggle -->
+<template id="tmpl-lh-metrics-toggle">
+  <div class="lh-metrics-toggle">
+    <input class="lh-metrics-toggle__input" type="checkbox" name="toggle-metric-descriptions">
+    <label for="toggle-metric-descriptions">
+      <div class="lh-metrics-toggle__icon lh-metrics-toggle__icon--less" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+          <path class="lh-metrics-toggle__lines" d="M4 9h16v2H4zm0 4h10v2H4z" />
+        </svg>
+      </div>
+      <div class="lh-metrics-toggle__icon lh-metrics-toggle__icon--more" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path class="lh-metrics-toggle__lines" d="M3 18h12v-2H3v2zM3 6v2h18V6H3zm0 7h18v-2H3v2z" />
+        </svg>
+      </div>
+    </label>
+  </div>
 </template>
 
 <!-- Lighthouse audit -->
@@ -70,10 +93,9 @@ limitations under the License.
     <details class="lh-expandable-details">
       <summary>
         <div class="lh-audit__header lh-expandable-details__summary">
-          <span class="lh-audit__index"></span>
+          <span class="lh-audit__score-icon"></span>
           <span class="lh-audit__title"></span>
           <span class="lh-audit__display-text"></span>
-          <div class="lh-audit__score-icon"></div>
           <div class="lh-chevron-container"></div>
         </div>
       </summary>
@@ -86,10 +108,10 @@ limitations under the License.
 <!-- Lighthouse perf metric -->
 <template id="tmpl-lh-metric">
   <div class="lh-metric">
-    <div class="lh-metric__innerwrap tooltip-boundary">
+    <div class="lh-metric__innerwrap">
       <span class="lh-metric__title"></span>
       <div class="lh-metric__value"></div>
-      <div class="lh-metric__description tooltip"></div>
+      <div class="lh-metric__description"></div>
     </div>
   </div>
 </template>
@@ -102,7 +124,7 @@ limitations under the License.
           <div class="lh-audit__header lh-expandable-details__summary">
             <div class="lh-load-opportunity__cols">
               <div class="lh-load-opportunity__col lh-load-opportunity__col--one">
-                <span class="lh-audit__index"></span>
+                <span class="lh-audit__score-icon"></span>
                 <div class="lh-audit__title"></div>
               </div>
               <div class="lh-load-opportunity__col lh-load-opportunity__col--two">
@@ -142,9 +164,53 @@ limitations under the License.
       position: relative;
       width: 100%;
     }
+
+    .lh-sticky-header {
+      --gauge-circle-size: 36px;
+      --plugin-badge-size: 18px;
+      --plugin-icon-size: 75%;
+      --score-container-width: 60px;
+      --score-number-font-size: 13px;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: var(--topbar-height);
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      background-color: var(--color-sticky-header-bg);
+      border-bottom: 1px solid var(--color-black-200);
+      padding-top: var(--score-container-padding);
+      padding-bottom: 4px;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .lh-sticky-header--visible {
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    .lh-sticky-header .lh-gauge__label {
+      display: none;
+    }
+
+    .lh-highlighter {
+      width: var(--score-container-width);
+      height: 1px;
+      background: var(--color-highlighter-bg);
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+    }
   </style>
   <div class="lh-scores-wrapper">
     <div class="lh-scores-container">
+      <div class="pyro">
+        <div class="before"></div>
+        <div class="after"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -168,14 +234,15 @@ limitations under the License.
     .lh-topbar__logo {
       width: var(--topbar-icon-size);
       height: var(--topbar-icon-size);
-      background-image: var(--logo-url);
-      background-size: cover;
+    }
+    .lh-topbar__logo .shape {
+      fill: var(--body-text-color);
     }
 
     .lh-topbar__url {
       margin: var(--topbar-padding);
       text-decoration: none;
-      color: var(--color-black);
+      color: var(--body-text-color);
     }
 
     .lh-export {
@@ -183,7 +250,6 @@ limitations under the License.
       will-change: transform;
     }
     .lh-export__button {
-      background-color: #fff;
       border: 1px solid #dadada;
       border-radius: 2px;
       cursor: pointer;
@@ -205,7 +271,7 @@ limitations under the License.
     }
     .lh-export__dropdown {
       position: absolute;
-      background-color: #fff;
+      background-color: var(--body-background-color);
       border: 1px solid var(--report-border-color);
       border-radius: 3px;
       padding: calc(var(--default-padding) / 2) 0;
@@ -228,7 +294,7 @@ limitations under the License.
     }
     .lh-export__dropdown a:hover,
     .lh-export__dropdown a:focus {
-      background-color: #efefef;
+      background-color: var(--color-black-200);
       outline: none;
     }
     .lh-export__dropdown .report-icon {
@@ -264,7 +330,13 @@ limitations under the License.
   </style>
 
   <div class="lh-topbar">
-    <div class="lh-topbar__logo"></div>
+    <!-- Flat Lighthouse logo.  -->
+    <svg class="lh-topbar__logo" viewBox="0 0 192 192">
+      <g fill="none" fill-rule="evenodd">
+        <path d="M0 0h192v192H0z"/>
+        <path class="shape" d="M67.705 179.352l2.603-20.82 49.335-16.39 4.652 37.21A87.893 87.893 0 0 1 96 184a87.893 87.893 0 0 1-28.295-4.648zM52.44 172.48C25.894 157.328 8 128.754 8 96 8 47.399 47.399 8 96 8s88 39.399 88 88c0 32.754-17.894 61.328-44.44 76.48L130 96h6V80h-8V48L96 28 64 48v32h-8v16h6l-9.56 76.48zM113.875 96l2.882 23.05-43.318 14.433L78.125 96h35.75zM80 80V56.868l16-10 16 10V80H80z"/>
+      </g>
+    </svg>
 
     <a href="" class="lh-topbar__url" target="_blank" rel="noopener"></a>
     
@@ -315,6 +387,8 @@ limitations under the License.
     */
     .pyro {
       display: none;
+      z-index: 1;
+      pointer-events: none;
     }
     .score100 .pyro {
       display: block;
@@ -378,7 +452,6 @@ limitations under the License.
       }
     }
   </style>
-
 
   <div class="lh-header-container">
     <div class="lh-scores-wrapper-placeholder"></div>
@@ -455,32 +528,31 @@ limitations under the License.
 <template id="tmpl-lh-gauge">
   <style>
     .lh-gauge__wrapper--pass {
-      color: var(--color-green);
-      fill: var(--color-green);
-      stroke: var(--color-green);
+      color: var(--color-pass);
+      fill: var(--color-pass);
+      stroke: var(--color-pass);
     }
 
     .lh-gauge__wrapper--average {
-      color: var(--color-orange);
-      fill: var(--color-orange);
-      stroke: var(--color-orange);
+      color: var(--color-average);
+      fill: var(--color-average);
+      stroke: var(--color-average);
     }
 
     .lh-gauge__wrapper--fail {
-      color: var(--color-red);
-      fill: var(--color-red);
-      stroke: var(--color-red);
+      color: var(--color-fail);
+      fill: var(--color-fail);
+      stroke: var(--color-fail);
     }
 
     .lh-gauge {
       stroke-linecap: round;
-      width: var(--circle-size);
-      height: var(--circle-size);
+      width: var(--gauge-circle-size);
+      height: var(--gauge-circle-size);
     }
 
     .lh-category .lh-gauge {
-      width: var(--circle-size-big);
-      height: var(--circle-size-big);
+      --gauge-circle-size: var(--gauge-circle-size-big);
     }
 
     .lh-gauge-base {
@@ -497,6 +569,37 @@ limitations under the License.
         animation-delay: 250ms;
     }
 
+    .lh-gauge__svg-wrapper {
+      position: relative;
+      height: var(--gauge-circle-size);
+    }
+    .lh-category .lh-gauge__svg-wrapper {
+      --gauge-circle-size: var(--gauge-circle-size-big);
+    }
+
+    /* The plugin badge overlay */
+    .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
+      width: var(--plugin-badge-size);
+      height: var(--plugin-badge-size);
+      background-color: var(--plugin-badge-bg);
+      background-image: var(--plugin-icon-url);
+      background-repeat: no-repeat;
+      background-size: var(--plugin-icon-size);
+      background-position: 58% 50%;
+      content: "";
+      position: absolute;
+      right: -6px;
+      bottom: 0px;
+      display: block;
+      z-index: 100;
+      box-shadow: 0 0 4px rgba(0,0,0,.2);
+      border-radius: 25%;
+    }
+    .lh-category .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
+      width: var(--plugin-badge-size-big);
+      height: var(--plugin-badge-size-big);
+    }
+
     @keyframes load-gauge {
       from { stroke-dasharray: 0 352; }
     }
@@ -510,21 +613,21 @@ limitations under the License.
       font-size: var(--score-number-font-size);
       line-height: var(--score-number-font-size);
       text-align: center;
-      top: calc(var(--circle-size) / 3);
+      top: calc(var(--score-container-padding) + var(--gauge-circle-size) / 3);
     }
 
     .lh-category .lh-gauge__percentage {
-      font-size: var(--score-number-font-size-big);
-      line-height: var(--score-number-font-size-big);
-      top: calc(var(--circle-size-big) / 3);
+      --gauge-circle-size: var(--gauge-circle-size-big);
+      --score-number-font-size: var(--score-number-font-size-big);
     }
 
     .lh-gauge__wrapper {
+      position: relative;
       display: flex;
       align-items: center;
       flex-direction: column;
       text-decoration: none;
-      
+
       --circle-border-width: 8;
       --transition-length: 1s;
 
@@ -536,23 +639,27 @@ limitations under the License.
     .lh-gauge__label {
       font-size: var(--score-title-font-size);
       line-height: var(--score-title-line-height);
-      margin: calc(0.5 * var(--score-title-line-height));
+      margin-top: 10px;
       text-align: center;
-      color: black;
+      color: var(--body-text-color);
     }
 
+    /* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendant selector */
     .lh-category .lh-gauge__label {
-      font-size: var(--score-title-font-size-big);
-      line-height: var(--score-title-line-height-big);
-      margin: calc(0.5 * var(--score-title-line-height-big));
+      --score-title-font-size: var(--score-title-font-size-big);
+      --score-title-line-height: var(--score-title-line-height-big);
+      margin-top: 14px;
     }
 
   </style>
   <a href="#" class="lh-gauge__wrapper">
-    <svg viewBox="0 0 120 120" class="lh-gauge">
-      <circle class="lh-gauge-base" r="56" cx="60" cy="60"></circle>
-      <circle class="lh-gauge-arc" transform="rotate(-90 60 60)" r="56" cx="60" cy="60"></circle>
-    </svg>
+    <!-- Wrapper exists for the ::before plugin icon. Cannot create pseudo-elements on svgs. -->
+    <div class="lh-gauge__svg-wrapper">
+      <svg viewBox="0 0 120 120" class="lh-gauge">
+        <circle class="lh-gauge-base" r="56" cx="60" cy="60"></circle>
+        <circle class="lh-gauge-arc" transform="rotate(-90 60 60)" r="56" cx="60" cy="60"></circle>
+      </svg>
+    </div>
     <div class="lh-gauge__percentage"></div>
     <!-- TODO: should likely be an h2  -->
     <div class="lh-gauge__label"></div>
@@ -569,6 +676,21 @@ limitations under the License.
     .lh-gauge--pwa__wrapper:not(.lh-badged--all) .lh-gauge--pwa__logo > path {
       /* Gray logo unless everything is passing. */
       fill: #B0B0B0;
+    }
+
+    .lh-gauge--pwa__disc {
+      fill: var(--color-black-200);
+    }
+
+    .lh-gauge--pwa__logo--primary-color {
+      fill: #304FFE;
+    }
+
+    .lh-gauge--pwa__logo--secondary-color {
+      fill: #3D3D3D;
+    }
+    .dark .lh-gauge--pwa__logo--secondary-color {
+      fill: #D8B6B6;
     }
 
     /* No passing groups. */
@@ -604,10 +726,6 @@ limitations under the License.
   <a href="#" class="lh-gauge__wrapper lh-gauge--pwa__wrapper">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" class="lh-gauge lh-gauge--pwa">
       <defs>
-        <linearGradient id="lh-gauge--pwa__bg-disk__gradient" x1="50%" y1="2.15%" x2="50%" y2="97.645%">
-          <stop stop-color="#F1F3F4" offset="0%"></stop>
-          <stop stop-color="#DEE6EA" offset="100%"></stop>
-        </linearGradient>
         <linearGradient id="lh-gauge--pwa__check-circle__gradient" x1="50%" y1="0%" x2="50%" y2="100%">
           <stop stop-color="#00C852" offset="0%"></stop>
           <stop stop-color="#009688" offset="100%"></stop>
@@ -633,11 +751,11 @@ limitations under the License.
 
       <g stroke="none" fill-rule="nonzero">
         <!-- Background and PWA logo (color by default) -->
-        <circle fill="url(#lh-gauge--pwa__bg-disk__gradient)" cx="30" cy="30" r="30"></circle>
+        <circle class="lh-gauge--pwa__disc" cx="30" cy="30" r="30"></circle>
         <g class="lh-gauge--pwa__logo">
-          <path fill="#3D3D3D" d="M35.66 19.39l.7-1.75h2L37.4 15 38.6 12l3.4 9h-2.51l-.58-1.61z"/>
-          <path fill="#304FFE" d="M33.52 21l3.65-9h-2.42l-2.5 5.82L30.5 12h-1.86l-1.9 5.82-1.35-2.65-1.21 3.72L25.4 21h2.38l1.72-5.2 1.64 5.2z"/>
-          <path fill="#3D3D3D" fill-rule="nonzero" d="M20.3 17.91h1.48c.45 0 .85-.05 1.2-.15l.39-1.18 1.07-3.3a2.64 2.64 0 0 0-.28-.37c-.55-.6-1.36-.91-2.42-.91H18v9h2.3V17.9zm1.96-3.84c.22.22.33.5.33.87 0 .36-.1.65-.29.87-.2.23-.59.35-1.15.35h-.86v-2.41h.87c.52 0 .89.1 1.1.32z"/>
+          <path class="lh-gauge--pwa__logo--secondary-color" d="M35.66 19.39l.7-1.75h2L37.4 15 38.6 12l3.4 9h-2.51l-.58-1.61z"/>
+          <path class="lh-gauge--pwa__logo--primary-color" d="M33.52 21l3.65-9h-2.42l-2.5 5.82L30.5 12h-1.86l-1.9 5.82-1.35-2.65-1.21 3.72L25.4 21h2.38l1.72-5.2 1.64 5.2z"/>
+          <path class="lh-gauge--pwa__logo--secondary-color" fill-rule="nonzero" d="M20.3 17.91h1.48c.45 0 .85-.05 1.2-.15l.39-1.18 1.07-3.3a2.64 2.64 0 0 0-.28-.37c-.55-.6-1.36-.91-2.42-.91H18v9h2.3V17.9zm1.96-3.84c.22.22.33.5.33.87 0 .36-.1.65-.29.87-.2.23-.59.35-1.15.35h-.86v-2.41h.87c.52 0 .89.1 1.1.32z"/>
         </g>
 
         <!-- No badges. -->
@@ -756,6 +874,27 @@ limitations under the License.
   </div>
 </template>
 
+<template id="tmpl-lh-3p-filter">
+  <style>
+    .lh-3p-filter {
+      background: var(--lh-table-higlight-bg);
+      color: var(--medium-75-gray);
+      float: right;
+      padding: 6px;
+    }
+    .lh-3p-filter-label, .lh-3p-filter-input {
+      cursor: pointer;
+      vertical-align: middle;
+      user-select: none;
+    }
+  </style>
+  <div class="lh-3p-filter">
+    <label class="lh-3p-filter-label">
+      <input type="checkbox" class="lh-3p-filter-input" checked />
+      <span class="lh-3p-ui-string">Show 3rd party resources</span> (<span class="lh-3p-filter-count"></span>)
+    </label>
+  </div>
+</template>
 
 <!-- Lighthouse snippet component -->
 <template id="tmpl-lh-snippet">
@@ -765,7 +904,7 @@ limitations under the License.
             --snippet-highlight-light: #fbf1f2;
             --snippet-highlight-dark: #ffd6d8;
           }
-          
+
          .lh-snippet__header {
           position: relative;
           overflow: hidden;
@@ -816,7 +955,7 @@ limitations under the License.
           background: white;
           white-space: pre;
           display: flex;
-        }        
+        }
         .lh-snippet__line:not(.lh-snippet__line--message):first-child {
           padding-top: 4px;
         }
@@ -836,7 +975,7 @@ limitations under the License.
         .lh-snippet__line--message code {
           padding: 10px;
           padding-left: 5px;
-          color: var(--fail-color);
+          color: var(--color-fail);
           font-family: var(--text-font-family);
         }
         .lh-snippet__line--message code {
@@ -854,8 +993,8 @@ limitations under the License.
           display: inline-block;
           vertical-align: middle;
           margin-right: 4px;
-          width: var(--lh-score-icon-width);
-          height: var(--lh-score-icon-width);
+          width: var(--score-shape-size);
+          height: var(--score-shape-size);
           background-image: var(--fail-icon-url);
         }
         .lh-snippet__line-number {
@@ -890,7 +1029,7 @@ limitations under the License.
             <div class="lh-snippet__line-icon"></div>
             <code></code>
           </div>
-        </template>   
+        </template>
     </div>
   </template>
-  
+

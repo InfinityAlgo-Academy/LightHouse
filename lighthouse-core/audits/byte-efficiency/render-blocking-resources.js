@@ -70,10 +70,9 @@ class RenderBlockingResources extends Audit {
       title: str_(UIStrings.title),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       description: str_(UIStrings.description),
-      // This audit also looks at CSSUsage but has a graceful fallback if it failed, so do not mark
-      // it as a "requiredArtifact".
-      // TODO: look into adding an `optionalArtifacts` property that captures this
-      requiredArtifacts: ['URL', 'TagsBlockingFirstPaint', 'traces'],
+      // TODO: look into adding an `optionalArtifacts` property that captures the non-required nature
+      // of CSSUsage
+      requiredArtifacts: ['URL', 'TagsBlockingFirstPaint', 'traces', 'devtoolsLogs', 'CSSUsage'],
     };
   }
 
@@ -224,7 +223,7 @@ class RenderBlockingResources extends Audit {
     return {
       displayValue,
       score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
-      rawValue: wastedMs,
+      numericValue: wastedMs,
       details,
     };
   }

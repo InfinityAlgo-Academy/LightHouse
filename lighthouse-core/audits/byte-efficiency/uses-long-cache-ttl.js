@@ -152,11 +152,12 @@ class CacheHeaders extends Audit {
       NetworkRequest.TYPES.Stylesheet,
     ]);
 
-    const resourceUrl = record.url;
+    // It's not a request loaded over the network, caching makes no sense
+    if (URL.NON_NETWORK_PROTOCOLS.includes(record.protocol)) return false;
+
     return (
       CACHEABLE_STATUS_CODES.has(record.statusCode) &&
-      STATIC_RESOURCE_TYPES.has(record.resourceType || 'Other') &&
-      !resourceUrl.includes('data:')
+      STATIC_RESOURCE_TYPES.has(record.resourceType || 'Other')
     );
   }
 
@@ -284,7 +285,7 @@ class CacheHeaders extends Audit {
 
       return {
         score,
-        rawValue: totalWastedBytes,
+        numericValue: totalWastedBytes,
         displayValue: str_(UIStrings.displayValue, {itemCount: results.length}),
         extendedInfo: {
           value: {

@@ -12,6 +12,25 @@ const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
 
 /** @typedef {import('net').AddressInfo} AddressInfo */
 
+/** @type {LH.Config.Json} */
+const budgetedConfig = {
+  extends: 'lighthouse:default',
+  settings: {
+    budgets: [{
+      resourceSizes: [
+        {resourceType: 'script', budget: 125},
+        {resourceType: 'total', budget: 500},
+      ],
+      timings: [
+        {metric: 'interactive', budget: 5000, tolerance: 1000},
+      ],
+      resourceCounts: [
+        {resourceType: 'third-party', budget: 0},
+      ],
+    }],
+  },
+};
+
 /**
  * Update the report artifacts
  */
@@ -25,8 +44,13 @@ async function update() {
   }));
 
   const url = `http://localhost:${port}/dobetterweb/dbw_tester.html`;
-  const flags = cliFlags.getFlags(`--gather-mode=lighthouse-core/test/results/artifacts ${url}`);
-  await cli.runLighthouse(url, flags, undefined);
+  const rawFlags = [
+    '--gather-mode=lighthouse-core/test/results/artifacts',
+    '--throttling-method=devtools',
+    url,
+  ].join(' ');
+  const flags = cliFlags.getFlags(rawFlags);
+  await cli.runLighthouse(url, flags, budgetedConfig);
   await new Promise(res => server.close(res));
 }
 

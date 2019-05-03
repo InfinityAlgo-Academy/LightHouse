@@ -15,6 +15,14 @@ const replaceLHRLocale = require('./i18n/swap-in-new-locale.js');
 const ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
 const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
 
+// Add a plugin to demo plugin rendering.
+lhr.categories['lighthouse-plugin-someplugin'] = {
+  id: 'lighthouse-plugin-someplugin',
+  title: 'Plugin',
+  score: 0.5,
+  auditRefs: [],
+};
+
 (async function() {
   const filenameToLhr = {
     'index.html': lhr,

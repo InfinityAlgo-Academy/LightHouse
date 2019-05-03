@@ -35,7 +35,7 @@ describe('ReportScoring', () => {
   describe('#scoreAllCategories', () => {
     it('should score the categories', () => {
       const resultsByAuditId = {
-        'my-audit': {rawValue: 'you passed', score: 0},
+        'my-audit': {score: 0},
         'my-boolean-audit': {score: 1, extendedInfo: {}},
         'my-scored-audit': {score: 1},
         'my-failed-audit': {score: 0.2},

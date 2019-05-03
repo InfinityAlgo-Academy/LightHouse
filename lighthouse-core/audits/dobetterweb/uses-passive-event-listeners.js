@@ -25,7 +25,7 @@ class PassiveEventsAudit extends ViolationAudit {
       description: 'Consider marking your touch and wheel event listeners as `passive` ' +
           'to improve your page\'s scroll performance. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/passive-event-listeners).',
-      requiredArtifacts: ['ChromeConsoleMessages'],
+      requiredArtifacts: ['ConsoleMessages'],
     };
   }
 

@@ -27,8 +27,8 @@ module.exports = [
           score: '>=0.90',
         },
         'time-to-first-byte': {
-        // Can be flaky, so test float rawValue instead of boolean score
-          rawValue: '<1000',
+          // Can be flaky, so test float numericValue instead of boolean score
+          numericValue: '<1000',
         },
         'network-requests': {
           details: {
@@ -39,7 +39,7 @@ module.exports = [
         },
         'uses-rel-preload': {
           score: '<1',
-          rawValue: '>500',
+          numericValue: '>500',
           warnings: {
             0: /level-2.*warning/,
             length: 1,

@@ -772,7 +772,8 @@ describe('.gotoURL', () => {
       } catch (err) {
         expect(err).toHaveProperty('code', 'INSECURE_DOCUMENT_REQUEST');
         expect(err.friendlyMessage).toBeDisplayString(
-          'The URL you have provided does not have valid security credentials. reason 1. reason 2.'
+          'The URL you have provided does not have a valid security certificate. ' +
+          'reason 1. reason 2.'
         );
       }
     });
