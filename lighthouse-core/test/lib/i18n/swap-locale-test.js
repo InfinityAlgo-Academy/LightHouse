@@ -23,7 +23,7 @@ describe('swap-locale', () => {
 
     // With ICU string argument values
     expect(lhrEn.audits['dom-size'].displayValue).toEqual('31 elements');
-    expect(lhrEs.audits['dom-size'].displayValue).toEqual('31 nodos');
+    expect(lhrEs.audits['dom-size'].displayValue).toEqual('31 elementos');
 
     /* eslint-disable max-len */
     // Renderer formatted strings
