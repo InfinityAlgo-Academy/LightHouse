@@ -73,6 +73,16 @@ Don't:
 If no reference doc exists yet, then you can use the `description` as a stopgap for explaining
 both why the audit is important and how to fix it.
 
+## Updating sample artifacts and LHR JSON
+
+```
+yarn run update:sample-artifacts # update all artifacts
+yarn run update:sample-artifacts ScriptElements # update just one artifact
+yarn run update:sample-json # update sample LHR based on sample artifacts
+```
+
+When updating all artifacts, usually you'll need to revert changes to the `*.devtoolslog.json` and `*.trace.json` files and manually review changes to `artifacts.json` to make sure they are related to your work.
+
 ## Tracking Errors
 
 We track our errors in the wild with Sentry. In general, do not worry about wrapping your audits or gatherers in try/catch blocks and reporting every error that could possibly occur; `lighthouse-core/runner.js` and `lighthouse-core/gather/gather-runner.js` already catch and report any errors that occur while running a gatherer or audit, including errors fatal to the entire run. However, there are some situations when you might want to explicitly handle an error and report it to Sentry or wrap it to avoid reporting. Generally, you can interact with Sentry simply by requiring the `lighthouse-core/lib/sentry.js` file and call its methods. The module exports a delegate that will correctly handle the error reporting based on the user's opt-in preference and will simply no-op if they haven't so you don't need to check.
