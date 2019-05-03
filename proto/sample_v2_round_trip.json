@@ -3050,12 +3050,12 @@
                 {
                     "group": "a11y-navigation",
                     "id": "bypass",
-                    "weight": 10.0
+                    "weight": 3.0
                 },
                 {
                     "group": "a11y-color-contrast",
                     "id": "color-contrast",
-                    "weight": 6.0
+                    "weight": 3.0
                 },
                 {
                     "group": "a11y-tables-lists",
@@ -3070,12 +3070,12 @@
                 {
                     "group": "a11y-names-labels",
                     "id": "document-title",
-                    "weight": 2.0
+                    "weight": 3.0
                 },
                 {
                     "group": "a11y-best-practices",
                     "id": "duplicate-id",
-                    "weight": 5.0
+                    "weight": 1.0
                 },
                 {
                     "group": "a11y-names-labels",
@@ -3085,7 +3085,7 @@
                 {
                     "group": "a11y-language",
                     "id": "html-has-lang",
-                    "weight": 4.0
+                    "weight": 3.0
                 },
                 {
                     "group": "a11y-language",
@@ -3095,7 +3095,7 @@
                 {
                     "group": "a11y-names-labels",
                     "id": "image-alt",
-                    "weight": 8.0
+                    "weight": 10.0
                 },
                 {
                     "group": "a11y-names-labels",
@@ -3115,7 +3115,7 @@
                 {
                     "group": "a11y-names-labels",
                     "id": "link-name",
-                    "weight": 9.0
+                    "weight": 3.0
                 },
                 {
                     "group": "a11y-tables-lists",
@@ -3135,12 +3135,12 @@
                 {
                     "group": "a11y-best-practices",
                     "id": "meta-viewport",
-                    "weight": 3.0
+                    "weight": 10.0
                 },
                 {
                     "group": "a11y-names-labels",
                     "id": "object-alt",
-                    "weight": 4.0
+                    "weight": 3.0
                 },
                 {
                     "group": "a11y-navigation",
@@ -3220,7 +3220,7 @@
             "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
             "id": "accessibility",
             "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
-            "score": 0.36,
+            "score": 0.38,
             "title": "Accessibility"
         },
         "best-practices": {

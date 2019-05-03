@@ -138,23 +138,84 @@ describe('util helpers', () => {
   });
 
   describe('#prepareReportResult', () => {
-    it('corrects underscored `notApplicable` scoreDisplayMode', () => {
-      const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+    describe('backward compatibility', () => {
+      it('corrects underscored `notApplicable` scoreDisplayMode', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
 
-      let notApplicableCount = 0;
-      Object.values(clonedSampleResult.audits).forEach(audit => {
-        if (audit.scoreDisplayMode === 'notApplicable') {
-          notApplicableCount++;
-          audit.scoreDisplayMode = 'not_applicable';
-        }
+        let notApplicableCount = 0;
+        Object.values(clonedSampleResult.audits).forEach(audit => {
+          if (audit.scoreDisplayMode === 'notApplicable') {
+            notApplicableCount++;
+            audit.scoreDisplayMode = 'not_applicable';
+          }
+        });
+
+        assert.ok(notApplicableCount > 20); // Make sure something's being tested.
+
+        // Original audit results should be restored.
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+
+        assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
       });
 
-      assert.ok(notApplicableCount > 20); // Make sure something's being tested.
+      it('corrects undefined auditDetails.type to `debugdata`', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
 
-      // Original audit results should be restored.
-      const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        // Delete debugdata details types.
+        let undefinedCount = 0;
+        for (const audit of Object.values(clonedSampleResult.audits)) {
+          if (audit.details && audit.details.type === 'debugdata') {
+            undefinedCount++;
+            delete audit.details.type;
+          }
+        }
+        assert.ok(undefinedCount > 4); // Make sure something's being tested.
+        assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
 
-      assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+        // Original audit results should be restored.
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+      });
+
+      it('corrects `diagnostic` auditDetails.type to `debugdata`', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+
+        // Change debugdata details types.
+        let diagnosticCount = 0;
+        for (const audit of Object.values(clonedSampleResult.audits)) {
+          if (audit.details && audit.details.type === 'debugdata') {
+            diagnosticCount++;
+            audit.details.type = 'diagnostic';
+          }
+        }
+        assert.ok(diagnosticCount > 4); // Make sure something's being tested.
+        assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
+
+        // Original audit results should be restored.
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+      });
+
+      it('corrects screenshots in the `filmstrip` auditDetails.type', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+
+        // Strip filmstrip screenshots of data URL prefix.
+        let filmstripCount = 0;
+        for (const audit of Object.values(clonedSampleResult.audits)) {
+          if (audit.details && audit.details.type === 'filmstrip') {
+            filmstripCount++;
+            for (const screenshot of audit.details.items) {
+              screenshot.data = screenshot.data.slice('data:image/jpeg;base64,'.length);
+            }
+          }
+        }
+        assert.ok(filmstripCount > 0); // Make sure something's being tested.
+        assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
+
+        // Original audit results should be restored.
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+      });
     });
 
     it('appends stack pack descriptions to auditRefs', () => {

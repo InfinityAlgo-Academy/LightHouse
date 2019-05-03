@@ -61,9 +61,6 @@ class DetailsRenderer {
       case 'screenshot':
       case 'debugdata':
         return null;
-      // Fallback for old LHRs, where no type meant don't render.
-      case undefined:
-        return null;
 
       default: {
         // @ts-ignore tsc thinks this unreachable, but ts-ignore for error message just in case.

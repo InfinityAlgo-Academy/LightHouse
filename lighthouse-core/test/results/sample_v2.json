@@ -3298,12 +3298,12 @@
         },
         {
           "id": "bypass",
-          "weight": 10,
+          "weight": 3,
           "group": "a11y-navigation"
         },
         {
           "id": "color-contrast",
-          "weight": 6,
+          "weight": 3,
           "group": "a11y-color-contrast"
         },
         {
@@ -3318,12 +3318,12 @@
         },
         {
           "id": "document-title",
-          "weight": 2,
+          "weight": 3,
           "group": "a11y-names-labels"
         },
         {
           "id": "duplicate-id",
-          "weight": 5,
+          "weight": 1,
           "group": "a11y-best-practices"
         },
         {
@@ -3333,7 +3333,7 @@
         },
         {
           "id": "html-has-lang",
-          "weight": 4,
+          "weight": 3,
           "group": "a11y-language"
         },
         {
@@ -3343,7 +3343,7 @@
         },
         {
           "id": "image-alt",
-          "weight": 8,
+          "weight": 10,
           "group": "a11y-names-labels"
         },
         {
@@ -3363,7 +3363,7 @@
         },
         {
           "id": "link-name",
-          "weight": 9,
+          "weight": 3,
           "group": "a11y-names-labels"
         },
         {
@@ -3383,12 +3383,12 @@
         },
         {
           "id": "meta-viewport",
-          "weight": 3,
+          "weight": 10,
           "group": "a11y-best-practices"
         },
         {
           "id": "object-alt",
-          "weight": 4,
+          "weight": 3,
           "group": "a11y-names-labels"
         },
         {
@@ -3467,7 +3467,7 @@
         }
       ],
       "id": "accessibility",
-      "score": 0.36
+      "score": 0.38
     },
     "best-practices": {
       "title": "Best Practices",

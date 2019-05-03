@@ -21,6 +21,7 @@
 const ELLIPSIS = '\u2026';
 const NBSP = '\xa0';
 const PASS_THRESHOLD = 0.9;
+const SCREENSHOT_PREFIX = 'data:image/jpeg;base64,';
 
 const RATINGS = {
   PASS: {label: 'pass', minScore: PASS_THRESHOLD},
@@ -48,7 +49,8 @@ class Util {
 
   /**
    * Returns a new LHR that's reshaped for slightly better ergonomics within the report rendereer.
-   * Also, sets up the localized UI strings used within renderer and number/date formatting
+   * Also, sets up the localized UI strings used within renderer and makes changes to old LHRs to be
+   * compatible with current renderer.
    * The LHR passed in is not mutated.
    * TODO(team): we all agree the LHR shape change is technical debt we should fix
    * @param {LH.Result} result
@@ -62,23 +64,44 @@ class Util {
     if (!clone.configSettings.locale) {
       clone.configSettings.locale = 'en';
     }
+
+    for (const audit of Object.values(clone.audits)) {
+      // Turn 'not-applicable' (LHR <4.0) and 'not_applicable' (older proto versions)
+      // into 'notApplicable' (LHR ≥4.0).
+      // @ts-ignore tsc rightly flags that these values shouldn't occur.
+      // eslint-disable-next-line max-len
+      if (audit.scoreDisplayMode === 'not_applicable' || audit.scoreDisplayMode === 'not-applicable') {
+        audit.scoreDisplayMode = 'notApplicable';
+      }
+
+      if (audit.details) {
+        // Turn `auditDetails.type` of undefined (LHR <4.2) and 'diagnostic' (LHR <5.0)
+        // into 'debugdata' (LHR ≥5.0).
+        // @ts-ignore tsc rightly flags that these values shouldn't occur.
+        if (audit.details.type === undefined || audit.details.type === 'diagnostic') {
+          audit.details.type = 'debugdata';
+        }
+
+        // Add the jpg data URL prefix to filmstrip screenshots without them (LHR <5.0).
+        if (audit.details.type === 'filmstrip') {
+          for (const screenshot of audit.details.items) {
+            if (!screenshot.data.startsWith(SCREENSHOT_PREFIX)) {
+              screenshot.data = SCREENSHOT_PREFIX + screenshot.data;
+            }
+          }
+        }
+      }
+    }
+
+    // Set locale for number/date formatting and grab localized renderer strings from the LHR.
     Util.setNumberDateLocale(clone.configSettings.locale);
     if (clone.i18n && clone.i18n.rendererFormattedStrings) {
       Util.updateAllUIStrings(clone.i18n.rendererFormattedStrings);
     }
 
+    // Transform object of categories into array of categories.
     if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
     clone.reportCategories = Object.values(clone.categories);
-
-    // Turn 'not-applicable' and 'not_applicable' into 'notApplicable' to support old reports.
-    // TODO: remove when underscore/hyphen proto issue is resolved. See #6371, #6201, #6783.
-    for (const audit of Object.values(clone.audits)) {
-      // @ts-ignore tsc rightly flags that this value shouldn't occur.
-      // eslint-disable-next-line max-len
-      if (audit.scoreDisplayMode === 'not_applicable' || audit.scoreDisplayMode === 'not-applicable') {
-        audit.scoreDisplayMode = 'notApplicable';
-      }
-    }
 
     // For convenience, smoosh all AuditResults into their auditRef (which has just weight & group)
     for (const category of clone.reportCategories) {
