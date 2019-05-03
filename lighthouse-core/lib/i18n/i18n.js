@@ -178,7 +178,7 @@ function _formatIcuMessage(locale, icuMessageId, fallbackMessage, values) {
   // fallback to the original english message if we couldn't find a message in the specified locale
   // better to have an english message than no message at all, in some number cases it won't even matter
   const messageForMessageFormat = localeMessage || fallbackMessage;
-  if (messageForMessageFormat === undefined) throw new Error('No ICU message string to format');
+  if (messageForMessageFormat === undefined) throw new Error('No ICU message string to format' + icuMessageId);
   // when using accented english, force the use of a different locale for number formatting
   const localeForMessageFormat = locale === 'en-XA' ? 'de-DE' : locale;
   // pre-process values for the message format like KB and milliseconds

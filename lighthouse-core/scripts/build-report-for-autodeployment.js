@@ -10,7 +10,8 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
-const replaceLHRLocale = require('./i18n/swap-in-new-locale.js');
+const mkdirp = require('mkdirp').sync;
+const swapLocale = require('../lib/i18n/swap-locale.js');
 
 const ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
 const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
@@ -25,17 +26,24 @@ lhr.categories['lighthouse-plugin-someplugin'] = {
 
 (async function() {
   const filenameToLhr = {
-    'index.html': lhr,
-    'index.ar.html': replaceLHRLocale(JSON.parse(JSON.stringify(lhr)), 'ar'),
-    // Now serves the first alphabetical file as the root
-    'index.aaaaaaaaaaaaaaaaaaaaa.html': lhr,
+    'en': lhr,
+    'es': swapLocale(JSON.parse(JSON.stringify(lhr)), 'es'),
+    'ar': swapLocale(JSON.parse(JSON.stringify(lhr)), 'ar'),
+    // For whatever reason, Now.sh serves the first alphabetical file as the root
+    // 'index.aaaaaaaaaaaaaaaaaaaaa.html': lhr,
   };
 
   // Generate and write reports
   Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
-    const html = ReportGenerator.generateReport(lhr, 'html');
-    const filepath = path.join(__dirname, `../../dist/${filename}`);
-    fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
-    console.log('✅', filepath, 'written.');
+    let html = ReportGenerator.generateReportHtml(lhr);
+    for (const variant of ['', '-dt']) {
+      if (variant === '-dt') {
+        html = html.replace(`"lh-root lh-vars"`, `"lh-root lh-vars lh-devtools"`)
+      }
+      const filepath = path.join(__dirname, `../../dist/${filename}${variant}/index.html`);
+      mkdirp(path.dirname(filepath));
+      fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
+      console.log('✅', filepath, 'written.');
+    }
   });
 })();
