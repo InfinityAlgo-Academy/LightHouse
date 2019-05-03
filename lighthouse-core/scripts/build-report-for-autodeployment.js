@@ -26,18 +26,16 @@ lhr.categories['lighthouse-plugin-someplugin'] = {
 
 (async function() {
   const filenameToLhr = {
-    'en': lhr,
-    'es': swapLocale(JSON.parse(JSON.stringify(lhr)), 'es'),
-    'ar': swapLocale(JSON.parse(JSON.stringify(lhr)), 'ar'),
-    // For whatever reason, Now.sh serves the first alphabetical file as the root
-    // 'index.aaaaaaaaaaaaaaaaaaaaa.html': lhr,
+    'english': lhr,
+    'espanol': swapLocale(JSON.parse(JSON.stringify(lhr)), 'es'),
+    'arabic': swapLocale(JSON.parse(JSON.stringify(lhr)), 'ar'),
   };
 
   // Generate and write reports
   Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
     let html = ReportGenerator.generateReportHtml(lhr);
-    for (const variant of ['', '-dt']) {
-      if (variant === '-dt') {
+    for (const variant of ['', '-devtools']) {
+      if (variant === '-devtools') {
         html = html.replace(`"lh-root lh-vars"`, `"lh-root lh-vars lh-devtools"`)
       }
       const filepath = path.join(__dirname, `../../dist/${filename}${variant}/index.html`);
