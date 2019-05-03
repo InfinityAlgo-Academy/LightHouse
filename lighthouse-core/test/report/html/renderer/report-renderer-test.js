@@ -214,8 +214,7 @@ describe('ReportRenderer', () => {
     assert.equal(renderer._templateContext, otherDocument);
   });
 
-  // Fireworks temporarily canceled. See #8185
-  test.skip('should render an all 100 report with fireworks', () => {
+  it('should render an all 100 report with fireworks', () => {
     const container = renderer._dom._document.body;
 
     sampleResults.reportCategories.forEach(element => {
@@ -227,7 +226,7 @@ describe('ReportRenderer', () => {
     assert.ok(output.querySelector('.lh-header-sticky'), 'has a header');
     assert.ok(output.querySelector('.lh-report'), 'has report body');
     assert.equal(output.querySelectorAll('.lh-gauge__wrapper, .lh-gauge--pwa__wrapper').length,
-        sampleResults.reportCategories.length * 2, 'renders category gauges');
+        sampleResults.reportCategories.length * 3, 'renders category gauges');
     // fireworks!
     assert.ok(output.querySelector('.score100'), 'has fireworks treatment');
   });
