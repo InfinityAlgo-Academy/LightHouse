@@ -15,19 +15,19 @@ module.exports = [
       finalUrl: 'http://localhost:10200/preload.html',
       audits: {
         'speed-index': {
-          score: '>=0.80',
+          score: '>=0.80', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
         },
         'first-meaningful-paint': {
-          score: '>=0.90',
+          score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
         },
         'first-cpu-idle': {
-          score: '>=0.90',
+          score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
         },
         'interactive': {
-          score: '>=0.90',
+          score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
         },
         'time-to-first-byte': {
-          // Can be flaky, so test float numericValue instead of boolean score
+          // Can be flaky, so test float numericValue instead of binary score
           numericValue: '<1000',
         },
         'network-requests': {
