@@ -1273,6 +1273,13 @@
       "explanation": "No usable web app manifest found on page.",
       "warnings": []
     },
+    "performance-budget": {
+      "id": "performance-budget",
+      "title": "Performance budget",
+      "description": "Keep the quantity and size of network requests under the targets set by the provided performance budget.",
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
+    },
     "resource-summary": {
       "id": "resource-summary",
       "title": "Keep request counts low and transfer sizes small",
@@ -3201,6 +3208,10 @@
           "group": "diagnostics"
         },
         {
+          "id": "performance-budget",
+          "weight": 0
+        },
+        {
           "id": "resource-summary",
           "weight": 0,
           "group": "diagnostics"
@@ -3704,6 +3715,10 @@
       "title": "Opportunities",
       "description": "These optimizations can speed up your page load."
     },
+    "budgets": {
+      "title": "Budgets",
+      "description": "Performance budgets set standards for the performance of your site."
+    },
     "diagnostics": {
       "title": "Diagnostics",
       "description": "More information about the performance of your application."
@@ -4174,13 +4189,19 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:resource-summary",
+        "name": "lh:audit:performance-budget",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
         "name": "lh:computed:ResourceSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:resource-summary",
         "duration": 100,
         "entryType": "measure"
       },
@@ -4960,6 +4981,12 @@
       "lighthouse-core/audits/network-server-latency.js | description": [
         "audits[network-server-latency].description"
       ],
+      "lighthouse-core/audits/performance-budget.js | title": [
+        "audits[performance-budget].title"
+      ],
+      "lighthouse-core/audits/performance-budget.js | description": [
+        "audits[performance-budget].description"
+      ],
       "lighthouse-core/audits/resource-summary.js | title": [
         "audits[resource-summary].title"
       ],
@@ -5496,6 +5523,12 @@
       ],
       "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": [
         "categoryGroups[load-opportunities].description"
+      ],
+      "lighthouse-core/config/default-config.js | budgetsGroupTitle": [
+        "categoryGroups.budgets.title"
+      ],
+      "lighthouse-core/config/default-config.js | budgetsGroupDescription": [
+        "categoryGroups.budgets.description"
       ],
       "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": [
         "categoryGroups.diagnostics.title"

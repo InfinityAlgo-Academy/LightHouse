@@ -743,6 +743,18 @@
     "message": "Server Backend Latencies",
     "description": "Descriptive title of a Lighthouse audit that tells the user the server latencies observed from each origin the page connected to. This is displayed in a list of audit titles that Lighthouse generates."
   },
+  "lighthouse-core/audits/performance-budget.js | description": {
+    "message": "Keep the quantity and size of network requests under the targets set by the provided performance budget.",
+    "description": "Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits."
+  },
+  "lighthouse-core/audits/performance-budget.js | requestCountOverBudget": {
+    "message": "{count, plural,\n    =1 {1 request}\n    other {# requests}\n   }",
+    "description": "[ICU Syntax] Entry in a data table identifying the number of network requests of a particular type. Count will be a whole number. String should be as short as possible to be able to fit well into the table."
+  },
+  "lighthouse-core/audits/performance-budget.js | title": {
+    "message": "Performance budget",
+    "description": "Title of a Lighthouse audit that compares the size and quantity of page resources against targets set by the user. These targets are thought of as \"performance budgets\" because these metrics impact page performance (i.e. how quickly a page loads)."
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).",
     "description": "Description of a Lighthouse audit that tells users why they should reduce the number of server-side redirects on their page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
@@ -1114,6 +1126,14 @@
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
     "message": "Tables and lists",
     "description": "Title of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to improve the experience of reading tabular or list data using assistive technology."
+  },
+  "lighthouse-core/config/default-config.js | budgetsGroupDescription": {
+    "message": "Performance budgets set standards for the performance of your site.",
+    "description": "Description of the Budgets section of the Performance category. Within this section the budget results are displayed."
+  },
+  "lighthouse-core/config/default-config.js | budgetsGroupTitle": {
+    "message": "Budgets",
+    "description": "Title of the Budgets section of the Performance Category. 'Budgets' refers to a budget (like a financial budget), but applied to the amount of resources on a page, rather than money."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
     "message": "More information about the performance of your application.",

@@ -1100,7 +1100,7 @@
                         "name": "WordPress"
                     }
                 ],
-                "summary": null,
+                "summary": {},
                 "type": "table"
             },
             "id": "js-libraries",
@@ -1227,7 +1227,7 @@
             "details": {
                 "headings": [],
                 "items": [],
-                "summary": null,
+                "summary": {},
                 "type": "table"
             },
             "id": "link-text",
@@ -1883,7 +1883,7 @@
                         "vulnCount": 2.0
                     }
                 ],
-                "summary": null,
+                "summary": {},
                 "type": "table"
             },
             "displayValue": "2 vulnerabilities detected",
@@ -2030,6 +2030,13 @@
             "score": 0.0,
             "scoreDisplayMode": "binary",
             "title": "Prevents users to paste into password fields"
+        },
+        "performance-budget": {
+            "description": "Keep the quantity and size of network requests under the targets set by the provided performance budget.",
+            "id": "performance-budget",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
+            "title": "Performance budget"
         },
         "plugins": {
             "description": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/plugins).",
@@ -3437,6 +3444,10 @@
                     "weight": 0.0
                 },
                 {
+                    "id": "performance-budget",
+                    "weight": 0.0
+                },
+                {
                     "group": "diagnostics",
                     "id": "resource-summary",
                     "weight": 0.0
@@ -3670,6 +3681,10 @@
         "a11y-tables-lists": {
             "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
             "title": "Tables and lists"
+        },
+        "budgets": {
+            "description": "Performance budgets set standards for the performance of your site.",
+            "title": "Budgets"
         },
         "diagnostics": {
             "description": "More information about the performance of your application.",
@@ -4178,13 +4193,19 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
-                "name": "lh:audit:resource-summary",
+                "name": "lh:audit:performance-budget",
                 "startTime": 0.0
             },
             {
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:ResourceSummary",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:resource-summary",
                 "startTime": 0.0
             },
             {
