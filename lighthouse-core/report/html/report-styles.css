@@ -85,6 +85,7 @@
   --color-black-600: #757575;
   --color-black-800: #424242;
   --color-black-900: #212121;
+  --off-black: #111111;
   --color-black: #000000;
   --color-blue: #2962FF;
   --color-green-700: #018642;
@@ -135,6 +136,7 @@
   --topbar-height: 36px;
   --topbar-icon-size: 24px;
   --topbar-padding: 0 8px;
+  --metrics-toggle-color: var(--color-black-200);
 
   --color-average-secondary: var(--color-orange-700);
   --color-average: var(--color-orange);
@@ -180,7 +182,8 @@
   --topbar-bg: var(--color-black);
   --plugin-badge-bg: var(--color-black-800);
   --header-bg-color: var(--color-black-900);
-  --env-item-bg: rgba(0, 0, 0, 0.5);
+  --env-item-bg: var(--color-black);
+  --report-secondary-border-color: var(--color-black-200);
 
   --body-background-color: var(--color-black-900);
   --body-text-color: var(--color-black-100);
@@ -643,6 +646,11 @@
 .lh-metrics-toggle__lines {
   fill: var(--color-metric-toggle-lines);
 }
+
+.lh-metrics-toggle label {
+  background-color: var(--metrics-toggle-color);
+}
+
 .lh-metrics-toggle label .lh-metrics-toggle__icon--less {
   padding-left: 8px;
 }
