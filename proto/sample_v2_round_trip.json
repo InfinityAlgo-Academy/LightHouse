@@ -2033,9 +2033,104 @@
         },
         "performance-budget": {
             "description": "Keep the quantity and size of network requests under the targets set by the provided performance budget.",
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "text",
+                        "key": "label",
+                        "text": "Resource Type"
+                    },
+                    {
+                        "itemType": "numeric",
+                        "key": "requestCount",
+                        "text": "Requests"
+                    },
+                    {
+                        "itemType": "bytes",
+                        "key": "size",
+                        "text": "Transfer Size"
+                    },
+                    {
+                        "itemType": "text",
+                        "key": "countOverBudget"
+                    },
+                    {
+                        "itemType": "bytes",
+                        "key": "sizeOverBudget",
+                        "text": "Over Budget"
+                    }
+                ],
+                "items": [
+                    {
+                        "countOverBudget": "2 requests",
+                        "label": "Script",
+                        "requestCount": 4.0,
+                        "resourceType": "script",
+                        "size": 103675.0,
+                        "sizeOverBudget": 72955.0
+                    },
+                    {
+                        "countOverBudget": "8 requests",
+                        "label": "Total",
+                        "requestCount": 18.0,
+                        "resourceType": "total",
+                        "size": 160738.0,
+                        "sizeOverBudget": 58338.0
+                    },
+                    {
+                        "label": "Other",
+                        "requestCount": 2.0,
+                        "resourceType": "other",
+                        "size": 12861.0,
+                        "sizeOverBudget": 7741.0
+                    },
+                    {
+                        "countOverBudget": "1 request",
+                        "label": "Third-party",
+                        "requestCount": 2.0,
+                        "resourceType": "third-party",
+                        "size": 30174.0,
+                        "sizeOverBudget": 4574.0
+                    },
+                    {
+                        "countOverBudget": "5 requests",
+                        "label": "Stylesheet",
+                        "requestCount": 7.0,
+                        "resourceType": "stylesheet",
+                        "size": 5352.0,
+                        "sizeOverBudget": 232.0
+                    },
+                    {
+                        "label": "Image",
+                        "requestCount": 2.0,
+                        "resourceType": "image",
+                        "size": 24741.0
+                    },
+                    {
+                        "label": "Media",
+                        "requestCount": 0.0,
+                        "resourceType": "media",
+                        "size": 0.0
+                    },
+                    {
+                        "label": "Font",
+                        "requestCount": 0.0,
+                        "resourceType": "font",
+                        "size": 0.0
+                    },
+                    {
+                        "countOverBudget": "2 requests",
+                        "label": "Document",
+                        "requestCount": 3.0,
+                        "resourceType": "document",
+                        "size": 14109.0
+                    }
+                ],
+                "type": "table"
+            },
             "id": "performance-budget",
             "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "scoreDisplayMode": "informative",
             "title": "Performance budget"
         },
         "plugins": {

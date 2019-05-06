@@ -1278,7 +1278,103 @@
       "title": "Performance budget",
       "description": "Keep the quantity and size of network requests under the targets set by the provided performance budget.",
       "score": null,
-      "scoreDisplayMode": "notApplicable"
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "label",
+            "itemType": "text",
+            "text": "Resource Type"
+          },
+          {
+            "key": "requestCount",
+            "itemType": "numeric",
+            "text": "Requests"
+          },
+          {
+            "key": "size",
+            "itemType": "bytes",
+            "text": "Transfer Size"
+          },
+          {
+            "key": "countOverBudget",
+            "itemType": "text",
+            "text": ""
+          },
+          {
+            "key": "sizeOverBudget",
+            "itemType": "bytes",
+            "text": "Over Budget"
+          }
+        ],
+        "items": [
+          {
+            "resourceType": "script",
+            "label": "Script",
+            "requestCount": 4,
+            "size": 103675,
+            "countOverBudget": "2 requests",
+            "sizeOverBudget": 72955
+          },
+          {
+            "resourceType": "total",
+            "label": "Total",
+            "requestCount": 18,
+            "size": 160738,
+            "countOverBudget": "8 requests",
+            "sizeOverBudget": 58338
+          },
+          {
+            "resourceType": "other",
+            "label": "Other",
+            "requestCount": 2,
+            "size": 12861,
+            "sizeOverBudget": 7741
+          },
+          {
+            "resourceType": "third-party",
+            "label": "Third-party",
+            "requestCount": 2,
+            "size": 30174,
+            "countOverBudget": "1 request",
+            "sizeOverBudget": 4574
+          },
+          {
+            "resourceType": "stylesheet",
+            "label": "Stylesheet",
+            "requestCount": 7,
+            "size": 5352,
+            "countOverBudget": "5 requests",
+            "sizeOverBudget": 232
+          },
+          {
+            "resourceType": "image",
+            "label": "Image",
+            "requestCount": 2,
+            "size": 24741
+          },
+          {
+            "resourceType": "media",
+            "label": "Media",
+            "requestCount": 0,
+            "size": 0
+          },
+          {
+            "resourceType": "font",
+            "label": "Font",
+            "requestCount": 0,
+            "size": 0
+          },
+          {
+            "resourceType": "document",
+            "label": "Document",
+            "requestCount": 3,
+            "size": 14109,
+            "countOverBudget": "2 requests"
+          }
+        ]
+      }
     },
     "resource-summary": {
       "id": "resource-summary",
@@ -3086,7 +3182,113 @@
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
     "channel": "cli",
-    "budgets": null,
+    "budgets": [
+      {
+        "resourceSizes": [
+          {
+            "resourceType": "total",
+            "budget": 100
+          },
+          {
+            "resourceType": "stylesheet",
+            "budget": 5
+          },
+          {
+            "resourceType": "image",
+            "budget": 30
+          },
+          {
+            "resourceType": "media",
+            "budget": 0
+          },
+          {
+            "resourceType": "font",
+            "budget": 20
+          },
+          {
+            "resourceType": "script",
+            "budget": 30
+          },
+          {
+            "resourceType": "document",
+            "budget": 15
+          },
+          {
+            "resourceType": "other",
+            "budget": 5
+          },
+          {
+            "resourceType": "third-party",
+            "budget": 25
+          }
+        ],
+        "resourceCounts": [
+          {
+            "resourceType": "total",
+            "budget": 10
+          },
+          {
+            "resourceType": "stylesheet",
+            "budget": 2
+          },
+          {
+            "resourceType": "image",
+            "budget": 2
+          },
+          {
+            "resourceType": "media",
+            "budget": 0
+          },
+          {
+            "resourceType": "font",
+            "budget": 1
+          },
+          {
+            "resourceType": "script",
+            "budget": 2
+          },
+          {
+            "resourceType": "document",
+            "budget": 1
+          },
+          {
+            "resourceType": "other",
+            "budget": 2
+          },
+          {
+            "resourceType": "third-party",
+            "budget": 1
+          }
+        ],
+        "timings": [
+          {
+            "metric": "first-contentful-paint",
+            "budget": 3000,
+            "tolerance": 100
+          },
+          {
+            "metric": "first-cpu-idle",
+            "budget": 2900,
+            "tolerance": 100
+          },
+          {
+            "metric": "interactive",
+            "budget": 2900,
+            "tolerance": 100
+          },
+          {
+            "metric": "first-meaningful-paint",
+            "budget": 2000,
+            "tolerance": 100
+          },
+          {
+            "metric": "estimated-input-latency",
+            "budget": 100,
+            "tolerance": 100
+          }
+        ]
+      }
+    ],
     "locale": "en-US",
     "blockedUrlPatterns": null,
     "additionalTraceCategories": null,
@@ -5024,6 +5226,74 @@
       "lighthouse-core/audits/performance-budget.js | description": [
         "audits[performance-budget].description"
       ],
+      "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": [
+        "audits[performance-budget].details.items[0].label",
+        "audits[resource-summary].details.items[1].label"
+      ],
+      "lighthouse-core/audits/performance-budget.js | requestCountOverBudget": [
+        {
+          "values": {
+            "count": 2
+          },
+          "path": "audits[performance-budget].details.items[0].countOverBudget"
+        },
+        {
+          "values": {
+            "count": 8
+          },
+          "path": "audits[performance-budget].details.items[1].countOverBudget"
+        },
+        {
+          "values": {
+            "count": 1
+          },
+          "path": "audits[performance-budget].details.items[3].countOverBudget"
+        },
+        {
+          "values": {
+            "count": 5
+          },
+          "path": "audits[performance-budget].details.items[4].countOverBudget"
+        },
+        {
+          "values": {
+            "count": 2
+          },
+          "path": "audits[performance-budget].details.items[8].countOverBudget"
+        }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | totalResourceType": [
+        "audits[performance-budget].details.items[1].label",
+        "audits[resource-summary].details.items[0].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | otherResourceType": [
+        "audits[performance-budget].details.items[2].label",
+        "audits[resource-summary].details.items[4].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": [
+        "audits[performance-budget].details.items[3].label",
+        "audits[resource-summary].details.items[8].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": [
+        "audits[performance-budget].details.items[4].label",
+        "audits[resource-summary].details.items[5].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | imageResourceType": [
+        "audits[performance-budget].details.items[5].label",
+        "audits[resource-summary].details.items[2].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": [
+        "audits[performance-budget].details.items[6].label",
+        "audits[resource-summary].details.items[6].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | fontResourceType": [
+        "audits[performance-budget].details.items[7].label",
+        "audits[resource-summary].details.items[7].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | documentResourceType": [
+        "audits[performance-budget].details.items[8].label",
+        "audits[resource-summary].details.items[3].label"
+      ],
       "lighthouse-core/audits/resource-summary.js | title": [
         "audits[resource-summary].title"
       ],
@@ -5038,33 +5308,6 @@
           },
           "path": "audits[resource-summary].displayValue"
         }
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | totalResourceType": [
-        "audits[resource-summary].details.items[0].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": [
-        "audits[resource-summary].details.items[1].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | imageResourceType": [
-        "audits[resource-summary].details.items[2].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | documentResourceType": [
-        "audits[resource-summary].details.items[3].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | otherResourceType": [
-        "audits[resource-summary].details.items[4].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": [
-        "audits[resource-summary].details.items[5].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": [
-        "audits[resource-summary].details.items[6].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | fontResourceType": [
-        "audits[resource-summary].details.items[7].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": [
-        "audits[resource-summary].details.items[8].label"
       ],
       "lighthouse-core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"
