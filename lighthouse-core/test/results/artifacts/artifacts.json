@@ -2002,7 +2002,40 @@
     "status": 404,
     "content": null
   },
-  "TapTargets": [],
+  "TapTargets": [
+    {
+      "clientRects": [
+        {
+          "width": 200,
+          "height": 18,
+          "left": 8,
+          "top": 1268.8125,
+          "right": 208,
+          "bottom": 1286.8125
+        }
+      ],
+      "snippet": "<button class=\"small-button\">Do something</button>",
+      "path": "3,HTML,1,BODY,17,BUTTON",
+      "selector": "body > button.small-button",
+      "href": ""
+    },
+    {
+      "clientRects": [
+        {
+          "width": 200,
+          "height": 18,
+          "left": 8,
+          "top": 1286.8125,
+          "right": 208,
+          "bottom": 1304.8125
+        }
+      ],
+      "snippet": "<button class=\"small-button\">Do something else</button>",
+      "path": "3,HTML,1,BODY,18,BUTTON",
+      "selector": "body > button.small-button",
+      "href": ""
+    }
+  ],
   "ServiceWorker": {
     "versions": [],
     "registrations": []

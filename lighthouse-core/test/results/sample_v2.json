@@ -2979,15 +2979,52 @@
     },
     "tap-targets": {
       "id": "tap-targets",
-      "title": "Tap targets are sized appropriately",
+      "title": "Tap targets are not sized appropriately",
       "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).",
-      "score": 1,
+      "score": 0,
       "scoreDisplayMode": "binary",
-      "displayValue": "100% appropriately sized tap targets",
+      "displayValue": "0% appropriately sized tap targets",
       "details": {
         "type": "table",
-        "headings": [],
-        "items": []
+        "headings": [
+          {
+            "key": "tapTarget",
+            "itemType": "node",
+            "text": "Tap Target"
+          },
+          {
+            "key": "size",
+            "itemType": "text",
+            "text": "Size"
+          },
+          {
+            "key": "overlappingTarget",
+            "itemType": "node",
+            "text": "Overlapping Target"
+          }
+        ],
+        "items": [
+          {
+            "tapTarget": {
+              "type": "node",
+              "snippet": "<button class=\"small-button\">Do something</button>",
+              "path": "3,HTML,1,BODY,17,BUTTON",
+              "selector": "body > button.small-button"
+            },
+            "overlappingTarget": {
+              "type": "node",
+              "snippet": "<button class=\"small-button\">Do something else</button>",
+              "path": "3,HTML,1,BODY,18,BUTTON",
+              "selector": "body > button.small-button"
+            },
+            "tapTargetScore": 864,
+            "overlappingTargetScore": 720,
+            "overlapScoreRatio": 0.8333333333333334,
+            "size": "200x18",
+            "width": 200,
+            "height": 18
+          }
+        ]
       }
     },
     "hreflang": {
@@ -3623,7 +3660,7 @@
         }
       ],
       "id": "seo",
-      "score": 0.82
+      "score": 0.73
     },
     "pwa": {
       "title": "Progressive Web App",
@@ -5270,7 +5307,8 @@
         "audits[render-blocking-resources].details.headings[1].label",
         "audits[unminified-javascript].details.headings[1].label",
         "audits[uses-webp-images].details.headings[2].label",
-        "audits[uses-text-compression].details.headings[1].label"
+        "audits[uses-text-compression].details.headings[1].label",
+        "audits[tap-targets].details.headings[1].text"
       ],
       "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | title": [
         "audits[total-byte-weight].title"
@@ -5456,7 +5494,7 @@
       "lighthouse-core/audits/seo/robots-txt.js | description": [
         "audits[robots-txt].description"
       ],
-      "lighthouse-core/audits/seo/tap-targets.js | title": [
+      "lighthouse-core/audits/seo/tap-targets.js | failureTitle": [
         "audits[tap-targets].title"
       ],
       "lighthouse-core/audits/seo/tap-targets.js | description": [
@@ -5465,10 +5503,16 @@
       "lighthouse-core/audits/seo/tap-targets.js | displayValue": [
         {
           "values": {
-            "decimalProportion": 1
+            "decimalProportion": 0
           },
           "path": "audits[tap-targets].displayValue"
         }
+      ],
+      "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": [
+        "audits[tap-targets].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": [
+        "audits[tap-targets].details.headings[2].text"
       ],
       "lighthouse-core/audits/seo/hreflang.js | title": [
         "audits.hreflang.title"

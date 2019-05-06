@@ -81,7 +81,7 @@ yarn run update:sample-artifacts ScriptElements # update just one artifact
 yarn run update:sample-json # update sample LHR based on sample artifacts
 ```
 
-When updating all artifacts, usually you'll need to revert changes to the `*.devtoolslog.json` and `*.trace.json` files and manually review changes to `artifacts.json` to make sure they are related to your work.
+When updating artifacts, usually you'll need to revert changes to the `*.devtoolslog.json` and `*.trace.json` files and manually review changes to `artifacts.json` to make sure they are related to your work.
 
 ## Tracking Errors
 

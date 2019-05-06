@@ -2356,16 +2356,53 @@
         "tap-targets": {
             "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).",
             "details": {
-                "headings": [],
-                "items": [],
+                "headings": [
+                    {
+                        "itemType": "node", 
+                        "key": "tapTarget", 
+                        "text": "Tap Target"
+                    }, 
+                    {
+                        "itemType": "text", 
+                        "key": "size", 
+                        "text": "Size"
+                    }, 
+                    {
+                        "itemType": "node", 
+                        "key": "overlappingTarget", 
+                        "text": "Overlapping Target"
+                    }
+                ], 
+                "items": [
+                    {
+                        "height": 18.0, 
+                        "overlapScoreRatio": 0.8333333333333334, 
+                        "overlappingTarget": {
+                            "path": "3,HTML,1,BODY,18,BUTTON", 
+                            "selector": "body > button.small-button", 
+                            "snippet": "<button class=\"small-button\">Do something else</button>", 
+                            "type": "node"
+                        }, 
+                        "overlappingTargetScore": 720.0, 
+                        "size": "200x18", 
+                        "tapTarget": {
+                            "path": "3,HTML,1,BODY,17,BUTTON", 
+                            "selector": "body > button.small-button", 
+                            "snippet": "<button class=\"small-button\">Do something</button>", 
+                            "type": "node"
+                        }, 
+                        "tapTargetScore": 864.0, 
+                        "width": 200.0
+                    }
+                ], 
                 "type": "table"
-            },
-            "displayValue": "100% appropriately sized tap targets",
-            "id": "tap-targets",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
-            "title": "Tap targets are sized appropriately"
-        },
+            }, 
+            "displayValue": "0% appropriately sized tap targets", 
+            "id": "tap-targets", 
+            "score": 0.0, 
+            "scoreDisplayMode": "binary", 
+            "title": "Tap targets are not sized appropriately"
+        }, 
         "td-headers-attr": {
             "description": "Screen readers have features to make navigating tables easier. Ensuring `<td>` cells using the `[headers]` attribute only refer to other cells in the same table may improve the experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse).",
             "id": "td-headers-attr",
@@ -3641,11 +3678,11 @@
                     "id": "structured-data",
                     "weight": 0.0
                 }
-            ],
-            "description": "These checks ensure that your page is optimized for search engine results ranking. There are additional factors Lighthouse does not check that may affect your search ranking. [Learn more](https://support.google.com/webmasters/answer/35769).",
-            "id": "seo",
-            "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
-            "score": 0.82,
+            ], 
+            "description": "These checks ensure that your page is optimized for search engine results ranking. There are additional factors Lighthouse does not check that may affect your search ranking. [Learn more](https://support.google.com/webmasters/answer/35769).", 
+            "id": "seo", 
+            "manualDescription": "Run these additional validators on your site to check additional SEO best practices.", 
+            "score": 0.73, 
             "title": "SEO"
         }
     },

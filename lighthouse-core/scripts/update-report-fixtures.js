@@ -8,7 +8,6 @@
 const cli = require('../../lighthouse-cli/run.js');
 const cliFlags = require('../../lighthouse-cli/cli-flags.js');
 const assetSaver = require('../lib/asset-saver.js');
-
 const artifactPath = 'lighthouse-core/test/results/artifacts';
 
 const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
@@ -63,7 +62,7 @@ async function update(artifactName) {
     // Revert everything except the one artifact
     const newArtifacts = await assetSaver.loadArtifacts(artifactPath);
     if (!(artifactName in newArtifacts) && !(artifactName in oldArtifacts)) {
-      console.warn(`❌ Unknown artifact name: '${artifactName}'. Reverting artifacts...`); // eslint-disable-line no-console
+      throw Error('Unknown artifact name: ' + artifactName);
     }
     const finalArtifacts = oldArtifacts;
     finalArtifacts[artifactName] = newArtifacts[artifactName];
