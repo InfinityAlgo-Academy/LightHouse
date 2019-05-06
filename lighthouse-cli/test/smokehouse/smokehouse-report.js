@@ -10,7 +10,7 @@ const log = require('lighthouse-logger');
 
 const VERBOSE = Boolean(process.env.LH_SMOKE_VERBOSE);
 const NUMBER_REGEXP = /(?:\d|\.)+/.source;
-const OPS_REGEXP = /<=?|>=?|\+\/-/.source;
+const OPS_REGEXP = /<=?|>=?|\+\/-|±/.source;
 // An optional number, optional whitespace, an operator, optional whitespace, a number.
 const NUMERICAL_EXPECTATION_REGEXP =
   new RegExp(`^(${NUMBER_REGEXP})?\\s*(${OPS_REGEXP})\\s*(${NUMBER_REGEXP})$`);
@@ -20,6 +20,7 @@ const NUMERICAL_EXPECTATION_REGEXP =
  *    - Greater than/less than operators, e.g. "<100", ">90"
  *    - Regular expressions
  *    - Strict equality
+ *    - plus or minus a margin of error, e.g. '10+/-5', '100±10'
  *
  * @param {*} actual
  * @param {*} expected
@@ -39,6 +40,7 @@ function matchesExpectation(actual, expected) {
       case '<=':
         return actual <= postfixNumber;
       case '+/-':
+      case '±':
         return Math.abs(actual - prefixNumber) <= postfixNumber;
       default:
         throw new Error(`unexpected operator ${operator}`);
@@ -80,15 +82,12 @@ function findDifference(path, actual, expected) {
   }
 
   // We only care that all expected's own properties are on actual (and not the other way around).
+  // Note an expected `undefined` can match an actual that is either `undefined` or not defined.
   for (const key of Object.keys(expected)) {
     // Bracket numbers, but property names requiring quotes will still be unquoted.
     const keyAccessor = /^\d+$/.test(key) ? `[${key}]` : `.${key}`;
     const keyPath = path + keyAccessor;
     const expectedValue = expected[key];
-
-    if (!(key in actual)) {
-      return {path: keyPath, actual: undefined, expected: expectedValue};
-    }
 
     const actualValue = actual[key];
     const subDifference = findDifference(keyPath, actualValue, expectedValue);

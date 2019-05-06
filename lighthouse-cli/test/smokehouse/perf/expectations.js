@@ -6,7 +6,7 @@
 'use strict';
 
 /**
- * Expected Lighthouse audit values for --preset=perf tests
+ * Expected Lighthouse audit values for perf tests.
  */
 module.exports = [
   {
@@ -60,6 +60,84 @@ module.exports = [
             items: {
               length: 1,
             },
+          },
+        },
+      },
+    },
+  },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/perf/perf-budgets/load-things.html',
+      finalUrl: 'http://localhost:10200/perf/perf-budgets/load-things.html',
+      audits: {
+        'resource-summary': {
+          score: null,
+          displayValue: '11 requests • 164 KB',
+          details: {
+            items: [
+              {resourceType: 'total', requestCount: 11, size: '168000±1000'},
+              {resourceType: 'font', requestCount: 2, size: '80000±1000'},
+              {resourceType: 'script', requestCount: 3, size: '55000±1000'},
+              {resourceType: 'image', requestCount: 2, size: '28000±1000'},
+              {resourceType: 'document', requestCount: 1, size: '2100±100'},
+              {resourceType: 'other', requestCount: 2, size: '1250±50'},
+              {resourceType: 'stylesheet', requestCount: 1, size: '450±100'},
+              {resourceType: 'media', requestCount: 0, size: 0},
+              {resourceType: 'third-party', requestCount: 0, size: 0},
+            ],
+          },
+        },
+        'performance-budget': {
+          score: null,
+          details: {
+            // Undefined items are asserting that the property isn't included in the table item.
+            items: [
+              {
+                resourceType: 'total',
+                countOverBudget: '3 requests',
+                sizeOverBudget: '65000±1000',
+              },
+              {
+                resourceType: 'script',
+                countOverBudget: '2 requests',
+                sizeOverBudget: '25000±1000',
+              },
+              {
+                resourceType: 'font',
+                countOverBudget: undefined,
+                sizeOverBudget: '4000±500',
+              },
+              {
+                resourceType: 'document',
+                countOverBudget: '1 request',
+                sizeOverBudget: '1100±50',
+              },
+              {
+                resourceType: 'stylesheet',
+                countOverBudget: undefined,
+                sizeOverBudget: '450±100',
+              },
+              {
+                resourceType: 'image',
+                countOverBudget: '1 request',
+                sizeOverBudget: undefined,
+              },
+              {
+                resourceType: 'media',
+                countOverBudget: undefined,
+                sizeOverBudget: undefined,
+              },
+              {
+                resourceType: 'other',
+                countOverBudget: '1 request',
+                sizeOverBudget: undefined,
+              },
+              {
+                resourceType: 'third-party',
+                countOverBudget: undefined,
+                sizeOverBudget: undefined,
+              },
+            ],
           },
         },
       },
