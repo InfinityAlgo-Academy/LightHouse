@@ -21,23 +21,10 @@ describe('round trip JSON comparison subsets', () => {
     sampleJson = JSON.parse(preprocessor.processForProto(sample));
   });
 
-  it('has the same audit results sans details', () => {
-    Object.keys(sampleJson.audits).forEach(audit => {
-      delete sampleJson.audits[audit].details;
-    });
-
-    expect(roundTripJson.audits).toMatchObject(sampleJson.audits);
-  });
-
-  it('has the same audit results & details if applicable', () => {
-    Object.keys(sampleJson.audits).forEach(auditId => {
-      expect(roundTripJson.audits[auditId]).toMatchObject(sampleJson.audits[auditId]);
-
-      if ('details' in sampleJson.audits[auditId]) {
-        expect(roundTripJson.audits[auditId].details)
-          .toMatchObject(sampleJson.audits[auditId].details);
-      }
-    });
+  it('has the same audit results and details (if applicable)', () => {
+    for (const auditId of Object.keys(sampleJson.audits)) {
+      expect(roundTripJson.audits[auditId]).toEqual(sampleJson.audits[auditId]);
+    }
   });
 
   it('has the same i18n rendererFormattedStrings', () => {

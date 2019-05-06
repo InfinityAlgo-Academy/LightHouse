@@ -1273,10 +1273,113 @@
       "explanation": "No usable web app manifest found on page.",
       "warnings": []
     },
+    "performance-budget": {
+      "id": "performance-budget",
+      "title": "Performance budget",
+      "description": "Keep the quantity and size of network requests under the targets set by the provided performance budget. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "label",
+            "itemType": "text",
+            "text": "Resource Type"
+          },
+          {
+            "key": "requestCount",
+            "itemType": "numeric",
+            "text": "Requests"
+          },
+          {
+            "key": "size",
+            "itemType": "bytes",
+            "text": "Transfer Size"
+          },
+          {
+            "key": "countOverBudget",
+            "itemType": "text",
+            "text": ""
+          },
+          {
+            "key": "sizeOverBudget",
+            "itemType": "bytes",
+            "text": "Over Budget"
+          }
+        ],
+        "items": [
+          {
+            "resourceType": "script",
+            "label": "Script",
+            "requestCount": 4,
+            "size": 103675,
+            "countOverBudget": "2 requests",
+            "sizeOverBudget": 72955
+          },
+          {
+            "resourceType": "total",
+            "label": "Total",
+            "requestCount": 18,
+            "size": 160738,
+            "countOverBudget": "8 requests",
+            "sizeOverBudget": 58338
+          },
+          {
+            "resourceType": "other",
+            "label": "Other",
+            "requestCount": 2,
+            "size": 12861,
+            "sizeOverBudget": 7741
+          },
+          {
+            "resourceType": "third-party",
+            "label": "Third-party",
+            "requestCount": 2,
+            "size": 30174,
+            "countOverBudget": "1 request",
+            "sizeOverBudget": 4574
+          },
+          {
+            "resourceType": "stylesheet",
+            "label": "Stylesheet",
+            "requestCount": 7,
+            "size": 5352,
+            "countOverBudget": "5 requests",
+            "sizeOverBudget": 232
+          },
+          {
+            "resourceType": "image",
+            "label": "Image",
+            "requestCount": 2,
+            "size": 24741
+          },
+          {
+            "resourceType": "media",
+            "label": "Media",
+            "requestCount": 0,
+            "size": 0
+          },
+          {
+            "resourceType": "font",
+            "label": "Font",
+            "requestCount": 0,
+            "size": 0
+          },
+          {
+            "resourceType": "document",
+            "label": "Document",
+            "requestCount": 3,
+            "size": 14109,
+            "countOverBudget": "2 requests"
+          }
+        ]
+      }
+    },
     "resource-summary": {
       "id": "resource-summary",
       "title": "Keep request counts low and transfer sizes small",
-      "description": "To set budgets for the quantity and size of page resources, add a budget.json file.",
+      "description": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
       "score": null,
       "scoreDisplayMode": "informative",
       "displayValue": "18 requests • 157 KB",
@@ -2972,15 +3075,52 @@
     },
     "tap-targets": {
       "id": "tap-targets",
-      "title": "Tap targets are sized appropriately",
+      "title": "Tap targets are not sized appropriately",
       "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).",
-      "score": 1,
+      "score": 0,
       "scoreDisplayMode": "binary",
-      "displayValue": "100% appropriately sized tap targets",
+      "displayValue": "0% appropriately sized tap targets",
       "details": {
         "type": "table",
-        "headings": [],
-        "items": []
+        "headings": [
+          {
+            "key": "tapTarget",
+            "itemType": "node",
+            "text": "Tap Target"
+          },
+          {
+            "key": "size",
+            "itemType": "text",
+            "text": "Size"
+          },
+          {
+            "key": "overlappingTarget",
+            "itemType": "node",
+            "text": "Overlapping Target"
+          }
+        ],
+        "items": [
+          {
+            "tapTarget": {
+              "type": "node",
+              "snippet": "<button class=\"small-button\">Do something</button>",
+              "path": "3,HTML,1,BODY,17,BUTTON",
+              "selector": "body > button.small-button"
+            },
+            "overlappingTarget": {
+              "type": "node",
+              "snippet": "<button class=\"small-button\">Do something else</button>",
+              "path": "3,HTML,1,BODY,18,BUTTON",
+              "selector": "body > button.small-button"
+            },
+            "tapTargetScore": 864,
+            "overlappingTargetScore": 720,
+            "overlapScoreRatio": 0.8333333333333334,
+            "size": "200x18",
+            "width": 200,
+            "height": 18
+          }
+        ]
       }
     },
     "hreflang": {
@@ -3042,7 +3182,113 @@
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
     "channel": "cli",
-    "budgets": null,
+    "budgets": [
+      {
+        "resourceSizes": [
+          {
+            "resourceType": "total",
+            "budget": 100
+          },
+          {
+            "resourceType": "stylesheet",
+            "budget": 5
+          },
+          {
+            "resourceType": "image",
+            "budget": 30
+          },
+          {
+            "resourceType": "media",
+            "budget": 0
+          },
+          {
+            "resourceType": "font",
+            "budget": 20
+          },
+          {
+            "resourceType": "script",
+            "budget": 30
+          },
+          {
+            "resourceType": "document",
+            "budget": 15
+          },
+          {
+            "resourceType": "other",
+            "budget": 5
+          },
+          {
+            "resourceType": "third-party",
+            "budget": 25
+          }
+        ],
+        "resourceCounts": [
+          {
+            "resourceType": "total",
+            "budget": 10
+          },
+          {
+            "resourceType": "stylesheet",
+            "budget": 2
+          },
+          {
+            "resourceType": "image",
+            "budget": 2
+          },
+          {
+            "resourceType": "media",
+            "budget": 0
+          },
+          {
+            "resourceType": "font",
+            "budget": 1
+          },
+          {
+            "resourceType": "script",
+            "budget": 2
+          },
+          {
+            "resourceType": "document",
+            "budget": 1
+          },
+          {
+            "resourceType": "other",
+            "budget": 2
+          },
+          {
+            "resourceType": "third-party",
+            "budget": 1
+          }
+        ],
+        "timings": [
+          {
+            "metric": "first-contentful-paint",
+            "budget": 3000,
+            "tolerance": 100
+          },
+          {
+            "metric": "first-cpu-idle",
+            "budget": 2900,
+            "tolerance": 100
+          },
+          {
+            "metric": "interactive",
+            "budget": 2900,
+            "tolerance": 100
+          },
+          {
+            "metric": "first-meaningful-paint",
+            "budget": 2000,
+            "tolerance": 100
+          },
+          {
+            "metric": "estimated-input-latency",
+            "budget": 100,
+            "tolerance": 100
+          }
+        ]
+      }
+    ],
     "locale": "en-US",
     "blockedUrlPatterns": null,
     "additionalTraceCategories": null,
@@ -3199,6 +3445,10 @@
           "id": "font-display",
           "weight": 0,
           "group": "diagnostics"
+        },
+        {
+          "id": "performance-budget",
+          "weight": 0
         },
         {
           "id": "resource-summary",
@@ -3612,7 +3862,7 @@
         }
       ],
       "id": "seo",
-      "score": 0.82
+      "score": 0.73
     },
     "pwa": {
       "title": "Progressive Web App",
@@ -3703,6 +3953,10 @@
     "load-opportunities": {
       "title": "Opportunities",
       "description": "These optimizations can speed up your page load."
+    },
+    "budgets": {
+      "title": "Budgets",
+      "description": "Performance budgets set standards for the performance of your site."
     },
     "diagnostics": {
       "title": "Diagnostics",
@@ -4174,13 +4428,19 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:resource-summary",
+        "name": "lh:audit:performance-budget",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
         "name": "lh:computed:ResourceSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:resource-summary",
         "duration": 100,
         "entryType": "measure"
       },
@@ -4960,6 +5220,80 @@
       "lighthouse-core/audits/network-server-latency.js | description": [
         "audits[network-server-latency].description"
       ],
+      "lighthouse-core/audits/performance-budget.js | title": [
+        "audits[performance-budget].title"
+      ],
+      "lighthouse-core/audits/performance-budget.js | description": [
+        "audits[performance-budget].description"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": [
+        "audits[performance-budget].details.items[0].label",
+        "audits[resource-summary].details.items[1].label"
+      ],
+      "lighthouse-core/audits/performance-budget.js | requestCountOverBudget": [
+        {
+          "values": {
+            "count": 2
+          },
+          "path": "audits[performance-budget].details.items[0].countOverBudget"
+        },
+        {
+          "values": {
+            "count": 8
+          },
+          "path": "audits[performance-budget].details.items[1].countOverBudget"
+        },
+        {
+          "values": {
+            "count": 1
+          },
+          "path": "audits[performance-budget].details.items[3].countOverBudget"
+        },
+        {
+          "values": {
+            "count": 5
+          },
+          "path": "audits[performance-budget].details.items[4].countOverBudget"
+        },
+        {
+          "values": {
+            "count": 2
+          },
+          "path": "audits[performance-budget].details.items[8].countOverBudget"
+        }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | totalResourceType": [
+        "audits[performance-budget].details.items[1].label",
+        "audits[resource-summary].details.items[0].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | otherResourceType": [
+        "audits[performance-budget].details.items[2].label",
+        "audits[resource-summary].details.items[4].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": [
+        "audits[performance-budget].details.items[3].label",
+        "audits[resource-summary].details.items[8].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": [
+        "audits[performance-budget].details.items[4].label",
+        "audits[resource-summary].details.items[5].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | imageResourceType": [
+        "audits[performance-budget].details.items[5].label",
+        "audits[resource-summary].details.items[2].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": [
+        "audits[performance-budget].details.items[6].label",
+        "audits[resource-summary].details.items[6].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | fontResourceType": [
+        "audits[performance-budget].details.items[7].label",
+        "audits[resource-summary].details.items[7].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | documentResourceType": [
+        "audits[performance-budget].details.items[8].label",
+        "audits[resource-summary].details.items[3].label"
+      ],
       "lighthouse-core/audits/resource-summary.js | title": [
         "audits[resource-summary].title"
       ],
@@ -4974,33 +5308,6 @@
           },
           "path": "audits[resource-summary].displayValue"
         }
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | totalResourceType": [
-        "audits[resource-summary].details.items[0].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": [
-        "audits[resource-summary].details.items[1].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | imageResourceType": [
-        "audits[resource-summary].details.items[2].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | documentResourceType": [
-        "audits[resource-summary].details.items[3].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | otherResourceType": [
-        "audits[resource-summary].details.items[4].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": [
-        "audits[resource-summary].details.items[5].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": [
-        "audits[resource-summary].details.items[6].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | fontResourceType": [
-        "audits[resource-summary].details.items[7].label"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": [
-        "audits[resource-summary].details.items[8].label"
       ],
       "lighthouse-core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"
@@ -5243,7 +5550,8 @@
         "audits[render-blocking-resources].details.headings[1].label",
         "audits[unminified-javascript].details.headings[1].label",
         "audits[uses-webp-images].details.headings[2].label",
-        "audits[uses-text-compression].details.headings[1].label"
+        "audits[uses-text-compression].details.headings[1].label",
+        "audits[tap-targets].details.headings[1].text"
       ],
       "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | title": [
         "audits[total-byte-weight].title"
@@ -5429,7 +5737,7 @@
       "lighthouse-core/audits/seo/robots-txt.js | description": [
         "audits[robots-txt].description"
       ],
-      "lighthouse-core/audits/seo/tap-targets.js | title": [
+      "lighthouse-core/audits/seo/tap-targets.js | failureTitle": [
         "audits[tap-targets].title"
       ],
       "lighthouse-core/audits/seo/tap-targets.js | description": [
@@ -5438,10 +5746,16 @@
       "lighthouse-core/audits/seo/tap-targets.js | displayValue": [
         {
           "values": {
-            "decimalProportion": 1
+            "decimalProportion": 0
           },
           "path": "audits[tap-targets].displayValue"
         }
+      ],
+      "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": [
+        "audits[tap-targets].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": [
+        "audits[tap-targets].details.headings[2].text"
       ],
       "lighthouse-core/audits/seo/hreflang.js | title": [
         "audits.hreflang.title"
@@ -5496,6 +5810,12 @@
       ],
       "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": [
         "categoryGroups[load-opportunities].description"
+      ],
+      "lighthouse-core/config/default-config.js | budgetsGroupTitle": [
+        "categoryGroups.budgets.title"
+      ],
+      "lighthouse-core/config/default-config.js | budgetsGroupDescription": [
+        "categoryGroups.budgets.description"
       ],
       "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": [
         "categoryGroups.diagnostics.title"

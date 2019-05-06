@@ -121,6 +121,9 @@ Object {
       "path": "offline-start-url",
     },
     Object {
+      "path": "performance-budget",
+    },
+    Object {
       "path": "resource-summary",
     },
     Object {
@@ -815,6 +818,10 @@ Object {
           "weight": 0,
         },
         Object {
+          "id": "performance-budget",
+          "weight": 0,
+        },
+        Object {
           "group": "diagnostics",
           "id": "resource-summary",
           "weight": 0,
@@ -1042,6 +1049,10 @@ Object {
     "a11y-tables-lists": Object {
       "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
       "title": "Tables and lists",
+    },
+    "budgets": Object {
+      "description": "Performance budgets set standards for the performance of your site.",
+      "title": "Budgets",
     },
     "diagnostics": Object {
       "description": "More information about the performance of your application.",
@@ -1285,6 +1296,10 @@ Object {
     "a11y-tables-lists": Object {
       "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
       "title": "Tables and lists",
+    },
+    "budgets": Object {
+      "description": "Performance budgets set standards for the performance of your site.",
+      "title": "Budgets",
     },
     "diagnostics": Object {
       "description": "More information about the performance of your application.",

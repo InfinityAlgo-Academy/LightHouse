@@ -13,6 +13,10 @@ const i18n = require('../lib/i18n/i18n.js');
 const UIStrings = {
   /** Title of the Performance category of audits. Equivalent to 'Web performance', this term is inclusive of all web page speed and loading optimization topics. Also used as a label of a score gauge; try to limit to 20 characters. */
   performanceCategoryTitle: 'Performance',
+  /** Title of the Budgets section of the Performance Category. 'Budgets' refers to a budget (like a financial budget), but applied to the amount of resources on a page, rather than money. */
+  budgetsGroupTitle: 'Budgets',
+  /** Description of the Budgets section of the Performance category. Within this section the budget results are displayed. */
+  budgetsGroupDescription: 'Performance budgets set standards for the performance of your site.',
   /** Title of the speed metrics section of the Performance category. Within this section are various speed metrics which quantify the pageload performance into values presented in seconds and milliseconds. */
   metricGroupTitle: 'Metrics',
   /** Title of the opportunity section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the loading performance of their web page. 'Suggestion'/'Optimization'/'Recommendation' are reasonable synonyms for 'opportunity' in this case. */
@@ -192,6 +196,7 @@ const defaultConfig = {
     'main-thread-tasks',
     'metrics',
     'offline-start-url',
+    'performance-budget',
     'resource-summary',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
@@ -287,6 +292,10 @@ const defaultConfig = {
       title: str_(UIStrings.loadOpportunitiesGroupTitle),
       description: str_(UIStrings.loadOpportunitiesGroupDescription),
     },
+    'budgets': {
+      title: str_(UIStrings.budgetsGroupTitle),
+      description: str_(UIStrings.budgetsGroupDescription),
+    },
     'diagnostics': {
       title: str_(UIStrings.diagnosticsGroupTitle),
       description: str_(UIStrings.diagnosticsGroupDescription),
@@ -379,6 +388,7 @@ const defaultConfig = {
         {id: 'bootup-time', weight: 0, group: 'diagnostics'},
         {id: 'mainthread-work-breakdown', weight: 0, group: 'diagnostics'},
         {id: 'font-display', weight: 0, group: 'diagnostics'},
+        {id: 'performance-budget', weight: 0},
         {id: 'resource-summary', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},

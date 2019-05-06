@@ -182,6 +182,16 @@
 <!-- FAIL(efficient-animated-content): animated gif found -->
 <img src="lighthouse-rotating.gif" width="811" height="462">
 
+<!-- FAIL(tap-targets): buttons too close together -->
+<style>
+.small-button {
+  display: block;
+  width: 200px;
+}
+</style>
+<button class="small-button">Do something</button>
+<button class="small-button">Do something else</button>
+
 <!-- Some websites overwrite the original Error object. The captureJSCallUsage function
   relies on the native Error object and prepareStackTrace from V8. When overwriting the stack
   property the e.stack inside the gatherer won't be in the correct format
