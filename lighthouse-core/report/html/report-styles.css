@@ -76,6 +76,7 @@
   --lh-audit-group-vpadding: 8px;
   --lh-section-vpadding: 12px;
   --chevron-size: 12px;
+  --inner-audit-left-padding: calc(var(--score-shape-size) + var(--score-shape-margin-left) + var(--score-shape-margin-right));
 
   /* Palette. */
   --color-black-100: #F5F5F5;
@@ -105,8 +106,8 @@
   --env-name-min-width: 220px;
   --env-tem-padding: 10px 0px;
   --expandable-padding: 0 0 2px calc(var(--score-shape-margin-left) + var(--score-shape-size) + var(--score-shape-margin-right));
-  --gauge-circle-size-big: 120px;
-  --gauge-circle-size: 96px;
+  --gauge-circle-size-big: 112px;
+  --gauge-circle-size: 80px;
   --header-padding: 20px 0 20px 0;
   --highlighter-bg: var(--color-black-400);
   --icon-square-size: calc(var(--score-shape-size) * 0.88);
@@ -116,14 +117,13 @@
   --plugin-icon-size: 65%;
   --pwa-icon-margin: 0 6px 0 -2px;
   --pwa-icon-size: var(--topbar-icon-size);
-  --score-container-padding: 12px;
-  --score-container-width: 160px;
-  --score-number-font-size-big: 42px;
-  --score-number-font-size: 34px;
+  --score-container-padding: 8px;
+  --score-container-width: 148px;
+  --score-number-font-size-big: 38px;
+  --score-number-font-size: 28px;
   --score-shape-margin-left: 4px;
   --score-shape-margin-right: 12px;
-  --score-shape-margin-top: 7px;
-  --score-shape-margin: var(--score-shape-margin-top) var(--score-shape-margin-right) 0 var(--score-shape-margin-left);
+  --score-shape-margin: 0 var(--score-shape-margin-right) 0 var(--score-shape-margin-left);
   --score-shape-size: 12px;
   --score-title-font-size-big: 28px;
   --score-title-font-size: 20px;
@@ -133,7 +133,7 @@
   --scorescale-width: 18px;
   --section-padding: 40px;
   --topbar-bg: var(--color-black-100);
-  --topbar-height: 36px;
+  --topbar-height: 32px;
   --topbar-icon-size: 24px;
   --topbar-padding: 0 8px;
   --metrics-toggle-color: var(--color-black-200);
@@ -215,19 +215,17 @@
     --header-padding: 16px 0 16px 0;
     --plugin-icon-size: 75%;
     --pwa-icon-margin: 0 7px 0 -3px;
-    --score-container-padding: 8px;
     --score-container-width: 112px;
     --score-number-font-size-big: 34px;
     --score-number-font-size: 26px;
     --score-shape-margin-left: 2px;
-    --score-shape-margin-top: 7px;
     --score-shape-size: 10px;
     --score-title-font-size-big: 22px;
     --score-title-font-size: 14px;
     --score-title-line-height-big: 26px;
     --score-title-line-height: 20px;
     --section-padding: 24px;
-    --topbar-height: 32px;
+    --topbar-height: 28px;
     --topbar-icon-size: 20px;
   }
 
@@ -328,7 +326,6 @@
 }
 
 .lh-audit__description, .lh-audit__stackpack {
-  --inner-audit-left-padding: calc(var(--text-indent) + var(--lh-audit-index-width) + 2 * var(--audit-item-gap));
   --inner-audit-right-padding: calc(var(--text-indent) + 2px);
   padding-left: var(--inner-audit-left-padding);
   padding-right: var(--inner-audit-right-padding);
@@ -340,6 +337,7 @@
   font-size: var(--body-font-size);
   margin-top: var(--default-padding);
   margin-bottom: var(--default-padding);
+  margin-left: var(--inner-audit-left-padding);
   /* whatever the .lh-details side margins are */
   width: 100%;
 }
@@ -461,6 +459,7 @@
 }
 .lh-category-header__description  {
   font-size: var(--body-font-size);
+  text-align: center;
   margin: 0px auto;
   max-width: 400px;
 }
@@ -491,6 +490,7 @@
 /* Expandable Details (Audit Groups, Audits) */
 .lh-audit__header {
   display: flex;
+  align-items: center;
   font-weight: 500;
   padding: var(--lh-audit-vpadding) 0;
 }
@@ -563,9 +563,10 @@
 
 .lh-metric__innerwrap {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 8px var(--text-indent);
+  padding: 10px var(--text-indent);
 }
 
 .lh-metric__details {
@@ -579,7 +580,6 @@
 
 .lh-metrics__disclaimer {
   color: var(--medium-75-gray);
-  text-align: right;
   margin: var(--lh-section-vpadding) 0;
   padding: 0 var(--text-indent);
 }
@@ -711,9 +711,7 @@
 }
 
 .lh-load-opportunity__header .lh-load-opportunity__col {
-  background-color: var(--medium-50-gray);
   color: var(--medium-75-gray);
-  text-align: center;
   display: unset;
   line-height: calc(2.3 * var(--body-font-size));
 }
@@ -724,10 +722,12 @@
 
 .lh-load-opportunity__col--one {
   flex: 5;
+  align-items: center;
   margin-right: 2px;
 }
 .lh-load-opportunity__col--two {
   flex: 4;
+  text-align: right;
 }
 
 .lh-audit--load-opportunity .lh-audit__display-text {
@@ -888,6 +888,10 @@
   /* When the header takes 100% width, the chevron becomes small. */
   max-width: calc(100% - var(--chevron-size));
 }
+/* max-width makes the metric toggle not flush. metrics doesn't have a chevron so unset. */
+.lh-audit-group--metrics .lh-audit-group__header {
+  max-width: unset;
+}
 
 .lh-audit-group__header span.lh-audit-group__title {
   font-weight: bold;
@@ -970,10 +974,12 @@
 
 .lh-warnings {
   --item-margin: calc(var(--body-line-height) / 6);
-  border: 1px solid var(--color-average);
-  border-radius: 4px;
+  color: var(--color-average);
   margin: var(--lh-audit-vpadding) 0;
   padding: calc(var(--lh-audit-vpadding) / 2) var(--lh-audit-vpadding);
+}
+.lh-warnings span {
+  font-weight: bold;
 }
 
 .lh-warnings--toplevel {
@@ -1160,24 +1166,30 @@
 .lh-table {
   --image-preview-size: 24px;
   border-collapse: collapse;
+  /* Can't assign padding to table, so shorten the width instead. */
+  width: calc(100% - var(--inner-audit-left-padding));
 }
 
-.lh-table thead {
-  background-color: var(--lh-table-higlight-bg);
-}
 .lh-table thead th {
   font-weight: normal;
+  color: var(--color-black-600);
   /* See text-wrapping comment on .lh-container. */
   word-break: normal;
 }
 
-.lh-table tbody tr:nth-child(even) {
+.lh-table tbody tr:nth-child(odd) {
   background-color: var(--lh-table-higlight-bg);
 }
 
 .lh-table th,
 .lh-table td {
   padding: 8px 6px;
+}
+.lh-table th:first-child {
+  padding-left: 0;
+}
+.lh-table th:last-child {
+  padding-right: 0;
 }
 
 /* Looks unnecessary, but mostly for keeping the <th>s left-aligned */
