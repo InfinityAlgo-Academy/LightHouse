@@ -12,9 +12,9 @@ const i18n = require('../lib/i18n/i18n.js');
 const UIStrings = {
   /** Title of a Lighthouse audit that compares the size and quantity of page resources against targets set by the user. These targets are thought of as "performance budgets" because these metrics impact page performance (i.e. how quickly a page loads). */
   title: 'Performance budget',
-  /** Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits. */
+  /** Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Keep the quantity and size of network requests under the targets ' +
-    'set by the provided performance budget.',
+    'set by the provided performance budget. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).',
   /** [ICU Syntax] Entry in a data table identifying the number of network requests of a particular type. Count will be a whole number. String should be as short as possible to be able to fit well into the table. */
   requestCountOverBudget: `{count, plural,
     =1 {1 request}

@@ -744,8 +744,8 @@
     "description": "Descriptive title of a Lighthouse audit that tells the user the server latencies observed from each origin the page connected to. This is displayed in a list of audit titles that Lighthouse generates."
   },
   "lighthouse-core/audits/performance-budget.js | description": {
-    "message": "Keep the quantity and size of network requests under the targets set by the provided performance budget.",
-    "description": "Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits."
+    "message": "Keep the quantity and size of network requests under the targets set by the provided performance budget. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
+    "description": "Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits. 'Learn More' becomes link text to additional documentation."
   },
   "lighthouse-core/audits/performance-budget.js | requestCountOverBudget": {
     "message": "{count, plural,\n    =1 {1 request}\n    other {# requests}\n   }",
@@ -764,8 +764,8 @@
     "description": "Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates."
   },
   "lighthouse-core/audits/resource-summary.js | description": {
-    "message": "To set budgets for the quantity and size of page resources, add a budget.json file.",
-    "description": "Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits."
+    "message": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
+    "description": "Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits. 'Learn More' becomes link text to additional documentation."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
     "message": "{requestCount, plural, =1 {1 request} other {# requests}} • { byteCount, number, bytes } KB",
