@@ -108,6 +108,15 @@ describe('ReportUIFeatures', () => {
       assert.equal(dom.findAll('.lh-category', container).length, 5);
     });
 
+    it('should init a report with a single category', () => {
+      const lhr = JSON.parse(JSON.stringify(sampleResults));
+      lhr.categories = {
+        performance: lhr.categories.performance,
+      };
+      const container = render(lhr);
+      assert.equal(dom.findAll('.lh-category', container).length, 1);
+    });
+
     describe('third-party filtering', () => {
       let container;
 

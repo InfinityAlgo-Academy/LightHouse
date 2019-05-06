@@ -84,15 +84,19 @@ class ReportUIFeatures {
     this._setupMediaQueryListeners();
     this._setupExportButton();
     this._setupThirdPartyFilter();
-    this._setupStickyHeaderElements();
     this._setUpCollapseDetailsAfterPrinting();
     this._resetUIState();
     this._document.addEventListener('keyup', this.onKeyUp);
     this._document.addEventListener('copy', this.onCopy);
-    this._document.addEventListener('scroll', this._updateStickyHeaderOnScroll);
-    window.addEventListener('resize', this._updateStickyHeaderOnScroll);
     const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
     topbarLogo.addEventListener('click', this._toggleDarkTheme);
+
+    // There is only a sticky header when at least 2 categories are present.
+    if (Object.keys(this.json.categories).length >= 2) {
+      this._setupStickyHeaderElements();
+      this._document.addEventListener('scroll', this._updateStickyHeaderOnScroll);
+      window.addEventListener('resize', this._updateStickyHeaderOnScroll);
+    }
   }
 
   /**
