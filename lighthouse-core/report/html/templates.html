@@ -267,7 +267,7 @@ limitations under the License.
     }
     .lh-export__button.active + .lh-export__dropdown {
       opacity: 1;
-      clip: rect(0, 164px, 210px, 0);
+      clip: rect(0, 187px, 242px, 0);
     }
     .lh-export__dropdown {
       position: absolute;
@@ -304,6 +304,14 @@ limitations under the License.
       background-size: 18px;
       background-color: transparent;
       text-indent: 18px;
+    }
+    .dark .report-icon {
+      color: var(--color-black-900);
+      filter: invert(1);
+    }
+    .dark .lh-export__dropdown a:hover,
+    .dark .lh-export__dropdown a:focus {
+      background-color: #BDBDBD;
     }
     /* copy icon needs slight adjustments to look great */
     .lh-export__dropdown .report-icon--copy {
@@ -351,6 +359,7 @@ limitations under the License.
         <a href="#" class="report-icon report-icon--download" data-action="save-json">Save as JSON</a>
         <a href="#" class="report-icon report-icon--open lh-export--viewer" data-action="open-viewer">Open in Viewer</a>
         <a href="#" class="report-icon report-icon--open lh-export--gist" data-action="save-gist">Save as Gist</a>
+        <a href="#" class="report-icon report-icon--dark" data-action="toggle-dark">Toggle Dark Theme</a>
       </div>
     </div>
   </div>

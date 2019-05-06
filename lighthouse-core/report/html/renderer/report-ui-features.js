@@ -370,6 +370,10 @@ class ReportUIFeatures {
         this.saveAsGist();
         break;
       }
+      case 'toggle-dark': {
+        this._toggleDarkTheme();
+        break;
+      }
     }
 
     this.closeExportDropdown();
