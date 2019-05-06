@@ -185,7 +185,7 @@ describe('CategoryRenderer', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     assert.ok(categoryDOM.querySelector('.lh-gauge__wrapper--plugin'));
     const label = categoryDOM.querySelector('.lh-gauge__label').textContent;
-    assert.equal(category.title, label);
+    assert.equal(label, category.title);
   });
 
   it('handles markdown in category descriptions a category', () => {

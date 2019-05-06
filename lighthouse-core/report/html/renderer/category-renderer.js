@@ -184,8 +184,12 @@ class CategoryRenderer {
       const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
       this.dom.find('.tooltip', tooltipEl).appendChild(descEl);
 
+      // Wrap the label so the tooltip icon can be positioned relative to it.
+      const gaugeWrapper = this.dom.find('.lh-gauge__wrapper', gaugeContainerEl);
+      const labelWrapper = this.dom.createChildOf(gaugeWrapper, 'div', 'lh-gauge__label-wrapper');
       const gaugeLabelEl = this.dom.find('.lh-gauge__label', gaugeContainerEl);
-      gaugeLabelEl.appendChild(tooltipEl);
+      labelWrapper.appendChild(gaugeLabelEl);
+      labelWrapper.appendChild(tooltipEl);
     }
 
     return /** @type {Element} */ (tmpl.firstElementChild);
