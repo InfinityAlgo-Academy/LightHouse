@@ -58,10 +58,6 @@ class ReportUIFeatures {
     this.stickyHeaderEl; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement} */
     this.highlightEl; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLInputElement} */
-    this.metricDescriptionToggleEl; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLElement} */
-    this.metricAuditGroup; // eslint-disable-line no-unused-expressions
 
     this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     this.onCopy = this.onCopy.bind(this);
@@ -74,7 +70,6 @@ class ReportUIFeatures {
     this.expandAllDetails = this.expandAllDetails.bind(this);
     this._toggleDarkTheme = this._toggleDarkTheme.bind(this);
     this._updateStickyHeaderOnScroll = this._updateStickyHeaderOnScroll.bind(this);
-    this._toggleMetricDescription = this._toggleMetricDescription.bind(this);
   }
 
   /**
@@ -97,7 +92,6 @@ class ReportUIFeatures {
     this._document.addEventListener('copy', this.onCopy);
     this._document.addEventListener('scroll', this._updateStickyHeaderOnScroll);
     window.addEventListener('resize', this._updateStickyHeaderOnScroll);
-    this._setupMetricDescriptionToggleElements();
     const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
     topbarLogo.addEventListener('click', this._toggleDarkTheme);
   }
@@ -258,26 +252,6 @@ class ReportUIFeatures {
     }
 
     this._copyAttempt = false;
-  }
-
-  _setupMetricDescriptionToggleElements() {
-    const metricDescriptionToggleEl = this._document.querySelector('.lh-metrics-toggle__input');
-    // No metrics if performance category wasn't run.
-    if (!metricDescriptionToggleEl) return;
-
-    this.metricDescriptionToggleEl = /** @type {HTMLInputElement} */ (metricDescriptionToggleEl);
-    this.metricAuditGroup = this._dom.find('.lh-audit-group--metrics', this._document);
-    this.metricDescriptionToggleEl.addEventListener('input', this._toggleMetricDescription);
-    this.metricAuditGroup.addEventListener('click', e => {
-      const el = /** @type {HTMLElement} */ (e.target);
-      if (el.closest('.lh-metric__title')) this.metricDescriptionToggleEl.click();
-    });
-  }
-
-  _toggleMetricDescription() {
-    this.metricDescriptionToggleEl.blur();
-    const show = this.metricDescriptionToggleEl.checked;
-    this.metricAuditGroup.classList.toggle('lh-audit-group--metrics__show-descriptions', show);
   }
 
   /**

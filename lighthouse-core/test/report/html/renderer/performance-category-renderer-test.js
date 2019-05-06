@@ -41,6 +41,7 @@ describe('PerfCategoryRenderer', () => {
     const detailsRenderer = new DetailsRenderer(dom);
     renderer = new PerformanceCategoryRenderer(dom, detailsRenderer);
 
+    // TODO: don't call a LH.ReportResult `sampleResults`, which is typically always LH.Result
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
     category = sampleResults.reportCategories.find(cat => cat.id === 'performance');
   });
@@ -171,6 +172,38 @@ describe('PerfCategoryRenderer', () => {
       };
       const wastedMs = renderer._getWastedMs(auditWithDebug);
       assert.ok(Number.isFinite(wastedMs), 'Finite number not returned by wastedMs');
+    });
+  });
+
+  // This is done all in CSS, but tested here.
+  describe('metric description toggles', () => {
+    let container;
+    let toggle;
+    const metricsSelector = '.lh-audit-group--metrics';
+    const toggleSelector = '.lh-metrics-toggle__input';
+    const magicSelector = '.lh-metrics-toggle__input:checked ~ .lh-columns .lh-metric__description';
+    let getDescriptionsAfterCheckedToggle;
+
+    describe('works if there is a performance category', () => {
+      beforeAll(() => {
+        container = renderer.render(category, sampleResults.categoryGroups);
+        const metricsAuditGroup = container.querySelector(metricsSelector);
+        toggle = metricsAuditGroup.querySelector(toggleSelector);
+        // In the CSS, our magicSelector will flip display from `none` to `block`
+        getDescriptionsAfterCheckedToggle = _ => metricsAuditGroup.querySelectorAll(magicSelector);
+      });
+
+      it('descriptions hidden by default', () => {
+        assert.ok(getDescriptionsAfterCheckedToggle().length === 0);
+      });
+
+      it('can toggle description visibility', () => {
+        assert.ok(getDescriptionsAfterCheckedToggle().length === 0);
+        toggle.click();
+        assert.ok(getDescriptionsAfterCheckedToggle().length > 2);
+        toggle.click();
+        assert.ok(getDescriptionsAfterCheckedToggle().length === 0);
+      });
     });
   });
 });

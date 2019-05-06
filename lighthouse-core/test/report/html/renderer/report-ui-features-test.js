@@ -162,41 +162,4 @@ describe('ReportUIFeatures', () => {
       });
     });
   });
-
-  describe('metric description toggles', () => {
-    let container;
-    let metricsAuditGroup;
-    let toggle;
-    const metricsClass = 'lh-audit-group--metrics';
-    const toggleClass = 'lh-metrics-toggle__input';
-    const showClass = 'lh-audit-group--metrics__show-descriptions';
-
-    describe('works if there is a performance category', () => {
-      beforeAll(() => {
-        container = render(sampleResults);
-        metricsAuditGroup = dom.find(`.${metricsClass}`, container);
-        toggle = dom.find(`.${toggleClass}`, metricsAuditGroup);
-      });
-
-      it('descriptions hidden by default', () => {
-        assert.ok(!metricsAuditGroup.classList.contains(showClass));
-      });
-
-      it('can toggle description visibility', () => {
-        assert.ok(!metricsAuditGroup.classList.contains(showClass));
-        toggle.click();
-        assert.ok(metricsAuditGroup.classList.contains(showClass));
-        toggle.click();
-        assert.ok(!metricsAuditGroup.classList.contains(showClass));
-      });
-    });
-
-    it('report still works if performance category does not run', () => {
-      const lhr = JSON.parse(JSON.stringify(sampleResults));
-      delete lhr.categories.performance;
-      container = render(lhr);
-      assert.ok(!container.querySelector(`.${metricsClass}`));
-      assert.ok(!container.querySelector(`.${toggleClass}`));
-    });
-  });
 });
