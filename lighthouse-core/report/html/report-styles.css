@@ -566,7 +566,7 @@
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 10px var(--text-indent);
+  padding: 10px 0;
 }
 
 .lh-metric__details {
@@ -581,7 +581,6 @@
 .lh-metrics__disclaimer {
   color: var(--medium-75-gray);
   margin: var(--lh-section-vpadding) 0;
-  padding: 0 var(--text-indent);
 }
 
 .lh-metric__description {
