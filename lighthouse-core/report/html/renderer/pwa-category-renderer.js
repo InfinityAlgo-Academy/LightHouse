@@ -54,7 +54,7 @@ class PwaCategoryRenderer extends CategoryRenderer {
   renderScoreGauge(category, groupDefinitions) {
     // Defer to parent-gauge style if category error.
     if (category.score === null) {
-      return super.renderScoreGauge(category, groupDefinitions);
+      return super.renderScoreGauge(category, groupDefinitions, {showDescription: true});
     }
 
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge--pwa', this.templateContext);

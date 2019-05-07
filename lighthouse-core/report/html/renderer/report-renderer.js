@@ -171,7 +171,9 @@ class ReportRenderer {
 
     for (const category of report.reportCategories) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
-      const categoryGauge = renderer.renderScoreGauge(category, report.categoryGroups || {});
+      const categoryGauge = renderer.renderScoreGauge(category, report.categoryGroups || {}, {
+        showDescription: false,
+      });
       const wrapper = /** @type {HTMLAnchorElement} */
         (categoryRenderer.dom.find('.lh-gauge__wrapper', categoryGauge));
       wrapper.href = `#${category.id}`;
