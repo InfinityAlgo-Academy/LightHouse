@@ -315,8 +315,7 @@ class ReportUIFeatures {
    */
   onExportButtonClick(e) {
     e.preventDefault();
-    const el = /** @type {Element} */ (e.target);
-    el.classList.toggle('active');
+    this.exportButton.classList.toggle('active');
     this._document.addEventListener('keydown', this.onKeyDown);
   }
 

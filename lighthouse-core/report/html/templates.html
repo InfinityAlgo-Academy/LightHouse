@@ -178,7 +178,9 @@ limitations under the License.
       justify-content: center;
       background-color: var(--color-sticky-header-bg);
       border-bottom: 1px solid var(--color-black-200);
-      z-index: 1000;
+      padding-top: var(--score-container-padding);
+      padding-bottom: 4px;
+      z-index: 1;
       pointer-events: none;
       opacity: 0;
     }
@@ -247,20 +249,20 @@ limitations under the License.
       will-change: transform;
     }
     .lh-export__button {
-      border: 1px solid #dadada;
-      border-radius: 2px;
+      width: var(--lh-export-icon-size);
+      height: var(--lh-export-icon-size);
       cursor: pointer;
-      outline: none;
-      height: 23px;
-      width: 30px;
-      background-repeat: no-repeat;
-      background-size: 18px;
-      background-position: 50% 50%;
-      will-change: transform;
+      margin-right: 5px;
+    }
+    .lh-export__button svg {
+      fill: var(--lh-export-icon-color);
+    }
+    .dark .lh-export__button svg {
+      filter: invert(1);
     }
     .lh-export__button:focus,
     .lh-export__button.active {
-      box-shadow: 1px 1px 3px #ccc;
+      outline: none;
     }
     .lh-export__button.active + .lh-export__dropdown {
       opacity: 1;
@@ -346,7 +348,12 @@ limitations under the License.
     <a href="" class="lh-topbar__url" target="_blank" rel="noopener"></a>
 
     <div class="lh-export">
-      <button class="report-icon report-icon--share lh-export__button" title="Export report"></button>
+      <div class="report-icon report-icon--share lh-export__button" title="Export report">
+        <svg width="100%" height="100%" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+        </svg>
+      </div>
       <div class="lh-export__dropdown">
         <!-- TODO(i18n): localize export dropdown -->
         <a href="#" class="report-icon report-icon--print" data-action="print-summary">Print Summary</a>
