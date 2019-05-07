@@ -70,6 +70,9 @@ Object {
       "path": "installable-manifest",
     },
     Object {
+      "path": "apple-touch-icon",
+    },
+    Object {
       "path": "splash-screen",
     },
     Object {
@@ -921,6 +924,11 @@ Object {
         Object {
           "group": "pwa-optimized",
           "id": "without-javascript",
+          "weight": 1,
+        },
+        Object {
+          "group": "pwa-optimized",
+          "id": "apple-touch-icon",
           "weight": 1,
         },
         Object {

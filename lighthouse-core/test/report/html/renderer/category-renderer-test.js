@@ -366,7 +366,7 @@ describe('CategoryRenderer', () => {
       const manualAudits = elem.querySelectorAll('.lh-clump--manual .lh-audit');
 
       assert.equal(passedAudits.length, 2);
-      assert.equal(failedAudits.length, 8);
+      assert.equal(failedAudits.length, 9);
       assert.equal(warningAudits.length, 2);
       assert.equal(manualAudits.length, 3);
     });
@@ -380,7 +380,7 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 12);
+      assert.equal(failedAudits.length, 13);
     });
 
     it('expands warning audit group', () => {

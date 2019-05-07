@@ -476,6 +476,14 @@
         ]
       }
     },
+    "apple-touch-icon": {
+      "id": "apple-touch-icon",
+      "title": "Does not provide a valid `apple-touch-icon`",
+      "description": "For ideal appearance on iOS when users add to the home screen, define an apple-touch-icon. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/).",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "warnings": []
+    },
     "splash-screen": {
       "id": "splash-screen",
       "title": "Is not configured for a custom splash screen",
@@ -3930,6 +3938,11 @@
           "group": "pwa-optimized"
         },
         {
+          "id": "apple-touch-icon",
+          "weight": 1,
+          "group": "pwa-optimized"
+        },
+        {
           "id": "pwa-cross-browser",
           "weight": 0
         },
@@ -3943,7 +3956,7 @@
         }
       ],
       "id": "pwa",
-      "score": 0.42
+      "score": 0.41
     }
   },
   "categoryGroups": {
@@ -4309,6 +4322,12 @@
       {
         "startTime": 0,
         "name": "lh:computed:ManifestValues",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:apple-touch-icon",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5149,6 +5168,12 @@
       ],
       "lighthouse-core/audits/redirects.js | description": [
         "audits.redirects.description"
+      ],
+      "lighthouse-core/audits/apple-touch-icon.js | failureTitle": [
+        "audits[apple-touch-icon].title"
+      ],
+      "lighthouse-core/audits/apple-touch-icon.js | description": [
+        "audits[apple-touch-icon].description"
       ],
       "lighthouse-core/audits/mainthread-work-breakdown.js | title": [
         "audits[mainthread-work-breakdown].title"

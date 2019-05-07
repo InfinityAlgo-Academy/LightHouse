@@ -20,6 +20,14 @@
             "scoreDisplayMode": "binary",
             "title": "Uses Application Cache"
         },
+        "apple-touch-icon": {
+            "description": "For ideal appearance on iOS when users add to the home screen, define an apple-touch-icon. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/).",
+            "id": "apple-touch-icon",
+            "score": 0.0,
+            "scoreDisplayMode": "binary",
+            "title": "Does not provide a valid `apple-touch-icon`",
+            "warnings": []
+        },
         "aria-allowed-attr": {
             "description": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=lighthouse).",
             "id": "aria-allowed-attr",
@@ -3684,6 +3692,11 @@
                     "weight": 1.0
                 },
                 {
+                    "group": "pwa-optimized",
+                    "id": "apple-touch-icon",
+                    "weight": 1.0
+                },
+                {
                     "id": "pwa-cross-browser",
                     "weight": 0.0
                 },
@@ -3699,7 +3712,7 @@
             "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
             "id": "pwa",
             "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
-            "score": 0.42,
+            "score": 0.41,
             "title": "Progressive Web App"
         },
         "seo": {
@@ -4206,6 +4219,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:ManifestValues",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:apple-touch-icon",
                 "startTime": 0.0
             },
             {
