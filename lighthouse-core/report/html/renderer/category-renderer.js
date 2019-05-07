@@ -362,6 +362,22 @@ class CategoryRenderer {
   }
 
   /**
+   * @param {DocumentFragment} tmpl
+   * @param {LH.ReportResult.Category} category
+   * @param {{showDescription: boolean}} opts
+   */
+  _handleScoreGaugeTooltip(tmpl, category, opts) {
+    const {showDescription} = opts;
+
+    if (showDescription && category.description) {
+      const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
+      this.dom.find('.tooltip', tmpl).appendChild(descEl);
+    } else {
+      this.dom.find('.tooltip-boundary', tmpl).remove();
+    }
+  }
+
+  /**
    * @param {LH.ReportResult.AuditRef} audit
    * @return {boolean}
    */

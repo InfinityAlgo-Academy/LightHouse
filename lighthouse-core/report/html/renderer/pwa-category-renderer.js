@@ -49,12 +49,13 @@ class PwaCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.Category} category
    * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
+   * @param {{showDescription: boolean}} opts
    * @return {DocumentFragment}
    */
-  renderScoreGauge(category, groupDefinitions) {
+  renderScoreGauge(category, groupDefinitions, opts) {
     // Defer to parent-gauge style if category error.
     if (category.score === null) {
-      return super.renderScoreGauge(category, groupDefinitions, {showDescription: true});
+      return super.renderScoreGauge(category, groupDefinitions, opts);
     }
 
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge--pwa', this.templateContext);
@@ -74,7 +75,11 @@ class PwaCategoryRenderer extends CategoryRenderer {
     }
 
     this.dom.find('.lh-gauge__label', tmpl).textContent = category.title;
+
+    this._handleScoreGaugeTooltip(tmpl, category, opts);
+
     wrapper.title = this._getGaugeTooltip(category.auditRefs, groupDefinitions);
+
     return tmpl;
   }
 
