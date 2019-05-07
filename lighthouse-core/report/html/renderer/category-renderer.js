@@ -319,8 +319,6 @@ class CategoryRenderer {
    * @return {DocumentFragment}
    */
   renderScoreGauge(category, groupDefinitions, opts) { // eslint-disable-line no-unused-vars
-    const {showDescription} = opts;
-
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge', this.templateContext);
     const wrapper = this.dom.find('.lh-gauge__wrapper', tmpl);
     wrapper.classList.add(`lh-gauge__wrapper--${Util.calculateRating(category.score)}`);
@@ -351,12 +349,7 @@ class CategoryRenderer {
 
     this.dom.find('.lh-gauge__label', tmpl).textContent = category.title;
 
-    if (showDescription && category.description) {
-      const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
-      this.dom.find('.tooltip', tmpl).appendChild(descEl);
-    } else {
-      this.dom.find('.tooltip-boundary', tmpl).remove();
-    }
+    this._handleScoreGaugeTooltip(tmpl, category, opts);
 
     return tmpl;
   }
