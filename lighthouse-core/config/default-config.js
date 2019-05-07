@@ -389,7 +389,7 @@ const defaultConfig = {
         {id: 'bootup-time', weight: 0, group: 'diagnostics'},
         {id: 'mainthread-work-breakdown', weight: 0, group: 'diagnostics'},
         {id: 'font-display', weight: 0, group: 'diagnostics'},
-        {id: 'performance-budget', weight: 0},
+        {id: 'performance-budget', weight: 0, group: 'budgets'},
         {id: 'resource-summary', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},

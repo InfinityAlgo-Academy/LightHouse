@@ -839,6 +839,21 @@
   vertical-align: middle;
 }
 
+/* Style the "over budget" columns red. */
+.lh-audit-group--budgets .lh-table tbody tr td:nth-child(4),
+.lh-audit-group--budgets .lh-table tbody tr td:nth-child(5){
+  color: var(--color-red-700);
+}
+
+/* Align the "over budget request count" text to be close to the "over budget bytes" column. */
+.lh-audit-group--budgets .lh-table tbody tr td:nth-child(4){
+  text-align: right;
+}
+
+.lh-audit-group--budgets .lh-table {
+  width: 100%;
+}
+
 .lh-audit-group--pwa-fast-reliable .lh-audit-group__header::before {
   content: '';
   background-image: var(--pwa-fast-reliable-gray-url);
