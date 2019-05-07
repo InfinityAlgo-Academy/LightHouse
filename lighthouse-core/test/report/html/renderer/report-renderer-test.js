@@ -82,8 +82,6 @@ describe('ReportRenderer', () => {
       // 3 sets of gauges - one in sticky header, one in scores header, and one in each section.
       assert.equal(output.querySelectorAll('.lh-gauge__wrapper, .lh-gauge--pwa__wrapper').length,
           sampleResults.reportCategories.length * 3, 'renders category gauges');
-      // no fireworks
-      assert.ok(output.querySelector('.score100') === null, 'has no fireworks treatment');
     });
 
     it('renders additional reports by replacing the existing one', () => {
@@ -212,23 +210,6 @@ describe('ReportRenderer', () => {
     const otherDocument = window.document;
     renderer.setTemplateContext(otherDocument);
     assert.equal(renderer._templateContext, otherDocument);
-  });
-
-  it('should render an all 100 report with fireworks', () => {
-    const container = renderer._dom._document.body;
-
-    sampleResults.reportCategories.forEach(element => {
-      element.score = 1;
-    });
-
-    const output = renderer.renderReport(sampleResults, container);
-    // standard checks
-    assert.ok(output.querySelector('.lh-header-sticky'), 'has a header');
-    assert.ok(output.querySelector('.lh-report'), 'has report body');
-    assert.equal(output.querySelectorAll('.lh-gauge__wrapper, .lh-gauge--pwa__wrapper').length,
-        sampleResults.reportCategories.length * 3, 'renders category gauges');
-    // fireworks!
-    assert.ok(output.querySelector('.score100'), 'has fireworks treatment');
   });
 
   it('should add LHR channel to doc link parameters', () => {

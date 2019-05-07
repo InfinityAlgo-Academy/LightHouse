@@ -171,4 +171,22 @@ describe('ReportUIFeatures', () => {
       });
     });
   });
+
+  describe('fireworks', () => {
+    it('should render an non-all 100 report without fireworks', () => {
+      const lhr = JSON.parse(JSON.stringify(sampleResults));
+      lhr.categories.performance.score = 0.5;
+      const container = render(lhr);
+      assert.ok(container.querySelector('.score100') === null, 'has no fireworks treatment');
+    });
+
+    it('should render an all 100 report with fireworks', () => {
+      const lhr = JSON.parse(JSON.stringify(sampleResults));
+      Object.values(lhr.categories).forEach(element => {
+        element.score = 1;
+      });
+      const container = render(lhr);
+      assert.ok(container.querySelector('.score100'), 'has fireworks treatment');
+    });
+  });
 });
