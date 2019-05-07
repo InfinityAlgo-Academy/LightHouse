@@ -178,18 +178,10 @@ class CategoryRenderer {
     gaugeContainerEl.appendChild(gaugeEl);
 
     if (category.description) {
-      const tooltipTmpl = this.dom.cloneTemplate('#tmpl-lh-category-header-description-tooltip',
-        this.templateContext);
-      const tooltipEl = this.dom.find('.tooltip-boundary', tooltipTmpl);
       const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
-      this.dom.find('.tooltip', tooltipEl).appendChild(descEl);
-
-      // Wrap the label so the tooltip icon can be positioned relative to it.
-      const gaugeWrapper = this.dom.find('.lh-gauge__wrapper', gaugeContainerEl);
-      const labelWrapper = this.dom.createChildOf(gaugeWrapper, 'div', 'lh-gauge__label-wrapper');
-      const gaugeLabelEl = this.dom.find('.lh-gauge__label', gaugeContainerEl);
-      labelWrapper.appendChild(gaugeLabelEl);
-      labelWrapper.appendChild(tooltipEl);
+      this.dom.find('.tooltip', gaugeContainerEl).appendChild(descEl);
+    } else {
+      this.dom.find('.tooltip-boundary', gaugeContainerEl).remove();
     }
 
     return /** @type {Element} */ (tmpl.firstElementChild);

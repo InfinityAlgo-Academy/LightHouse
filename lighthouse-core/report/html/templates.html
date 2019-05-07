@@ -45,19 +45,8 @@ limitations under the License.
 <!-- Lighthouse category header -->
 <template id="tmpl-lh-category-header">
   <div class="lh-category-header">
-    <div class="lh-score__gauge">
-      <!-- If there is a description, .lh-gauge__label will be wrapped with .lh-gauge__label-wrapper,
-      and tmpl-lh-category-header-description-tooltip appended to the wrapper. See renderCategoryHeader. -->
-    </div>
+    <div class="lh-score__gauge"></div>
   </div>
-</template>
-
-<!-- Lighthouse category header description tooltip -->
-<template id="tmpl-lh-category-header-description-tooltip">
-  <span class="tooltip-boundary">
-    <div class="lh-gauge__label-info-icon"></div>
-    <div class="lh-category-header__description tooltip"></div>
-  </span>
 </template>
 
 <!-- Lighthouse clump -->
@@ -703,8 +692,14 @@ limitations under the License.
       </svg>
     </div>
     <div class="lh-gauge__percentage"></div>
-    <!-- TODO: should likely be an h2  -->
-    <div class="lh-gauge__label"></div>
+    <div class="lh-gauge__label-wrapper">
+      <!-- TODO: should likely be an h2  -->
+      <div class="lh-gauge__label"></div>
+      <span class="tooltip-boundary">
+        <div class="lh-gauge__label-info-icon"></div>
+        <div class="lh-category-header__description tooltip"></div>
+      </span>
+    </div>
   </a>
 </template>
 
@@ -835,7 +830,14 @@ limitations under the License.
       </g>
     </svg>
 
-    <div class="lh-gauge__label"></div>
+    <div class="lh-gauge__label-wrapper">
+      <!-- TODO: should likely be an h2  -->
+      <div class="lh-gauge__label"></div>
+      <span class="tooltip-boundary">
+        <div class="lh-gauge__label-info-icon"></div>
+        <div class="lh-category-header__description tooltip"></div>
+      </span>
+    </div>
   </a>
 </template>
 
