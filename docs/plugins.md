@@ -350,5 +350,5 @@ Most artifacts will try to represent as truthfully as possible what was observed
 
 ## Examples
 
-- [Google AdSpeed Insights](https://github.com/googleads/ad-speed-insights) - a well-written, but complex, plugin
+- [Publisher Ads Audits](https://github.com/googleads/pub-ads-lighthouse-plugin) - a well-written, but complex, plugin
 - [Lighthouse Plugin Recipe](./recipes/lighthouse-plugin-example)
