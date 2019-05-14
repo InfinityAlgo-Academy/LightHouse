@@ -18,6 +18,7 @@ const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-fea
 const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
 const CriticalRequestChainRenderer = require(
     '../../../../report/html/renderer/crc-details-renderer.js');
+const SnippetRenderer = require('../../../../report/html/renderer/snippet-renderer.js');
 const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
 const sampleResultsOrig = require('../../../results/sample_v2.json');
 
@@ -36,6 +37,7 @@ describe('ReportRenderer', () => {
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.DetailsRenderer = DetailsRenderer;
     global.CategoryRenderer = CategoryRenderer;
+    global.SnippetRenderer = SnippetRenderer;
 
     // lazy loaded because they depend on CategoryRenderer to be available globally
     global.PerformanceCategoryRenderer =
@@ -71,6 +73,7 @@ describe('ReportRenderer', () => {
     global.CategoryRenderer = undefined;
     global.PerformanceCategoryRenderer = undefined;
     global.PwaCategoryRenderer = undefined;
+    global.SnippetRenderer = undefined;
   });
 
   describe('renderReport', () => {
