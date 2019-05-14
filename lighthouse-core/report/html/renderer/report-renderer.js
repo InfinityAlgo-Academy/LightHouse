@@ -242,19 +242,6 @@ class ReportRenderer {
       wrapper.appendChild(renderer.render(category, report.categoryGroups));
     }
 
-    // TODO(hoten) - fireworks show will commence later.
-    // Fireworks
-    // const scoresAll100 = report.reportCategories.every(cat => cat.score === 1);
-    // if (!this._dom.isDevTools() && scoresAll100) {
-    //   if (scoresAll100) {
-    //     const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
-    //     scoresContainer.classList.add('score100');
-    //     scoresContainer.addEventListener('click', _ => {
-    //       scoresContainer.classList.toggle('fireworks-paused');
-    //     });
-    //   }
-    // }
-
     if (scoreHeader) {
       const scoreGauges =
         this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers);

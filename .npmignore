@@ -7,6 +7,7 @@ assets/
 build/
 coverage/
 dist/
+proto/
 
 lighthouse-core/scripts/*
 lighthouse-core/test/

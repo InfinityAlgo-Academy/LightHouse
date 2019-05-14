@@ -41,6 +41,7 @@ describe('PerfCategoryRenderer', () => {
     const detailsRenderer = new DetailsRenderer(dom);
     renderer = new PerformanceCategoryRenderer(dom, detailsRenderer);
 
+    // TODO: don't call a LH.ReportResult `sampleResults`, which is typically always LH.Result
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
     category = sampleResults.reportCategories.find(cat => cat.id === 'performance');
   });
@@ -67,7 +68,7 @@ describe('PerfCategoryRenderer', () => {
   it('renders the sections', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const sections = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group');
-    assert.equal(sections.length, 4);
+    assert.equal(sections.length, 5);
   });
 
   it('renders the metrics', () => {
@@ -150,7 +151,8 @@ describe('PerfCategoryRenderer', () => {
     const passedSection = categoryDOM.querySelector('.lh-category > .lh-clump--passed');
 
     const passedAudits = category.auditRefs.filter(audit =>
-        audit.group && audit.group !== 'metrics' && Util.showAsPassed(audit.result));
+      audit.group && audit.group !== 'metrics' && audit.id !== 'performance-budget'
+        && Util.showAsPassed(audit.result));
     const passedElements = passedSection.querySelectorAll('.lh-audit');
     assert.equal(passedElements.length, passedAudits.length);
   });
@@ -171,6 +173,68 @@ describe('PerfCategoryRenderer', () => {
       };
       const wastedMs = renderer._getWastedMs(auditWithDebug);
       assert.ok(Number.isFinite(wastedMs), 'Finite number not returned by wastedMs');
+    });
+  });
+
+  describe('budgets', () => {
+    it('renders a performance budget', () => {
+      const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+
+      const budgetsGroup = categoryDOM.querySelector('.lh-audit-group.lh-audit-group--budgets');
+      assert.ok(budgetsGroup);
+
+      const header = budgetsGroup.querySelector('.lh-audit-group__header');
+      assert.ok(header);
+
+      const budgetTable = budgetsGroup.querySelector('#performance-budget.lh-table');
+      assert.ok(budgetTable);
+
+      const lhrBudgetEntries = sampleResults.audits['performance-budget'].details.items;
+      const tableRows = budgetTable.querySelectorAll('tbody > tr');
+      assert.strictEqual(tableRows.length, lhrBudgetEntries.length);
+    });
+
+    it('does not render a budget table when performance-budget audit is notApplicable', () => {
+      const budgetlessCategory = JSON.parse(JSON.stringify(category));
+      const budgetRef = budgetlessCategory.auditRefs.find(a => a.id === 'performance-budget');
+      budgetRef.result.scoreDisplayMode = 'notApplicable';
+      delete budgetRef.result.details;
+
+      const categoryDOM = renderer.render(budgetlessCategory, sampleResults.categoryGroups);
+      const budgetsGroup = categoryDOM.querySelector('.lh-audit-group.lh-audit-group--budgets');
+      assert.strictEqual(budgetsGroup, null);
+    });
+  });
+
+  // This is done all in CSS, but tested here.
+  describe('metric description toggles', () => {
+    let container;
+    let toggle;
+    const metricsSelector = '.lh-audit-group--metrics';
+    const toggleSelector = '.lh-metrics-toggle__input';
+    const magicSelector = '.lh-metrics-toggle__input:checked ~ .lh-columns .lh-metric__description';
+    let getDescriptionsAfterCheckedToggle;
+
+    describe('works if there is a performance category', () => {
+      beforeAll(() => {
+        container = renderer.render(category, sampleResults.categoryGroups);
+        const metricsAuditGroup = container.querySelector(metricsSelector);
+        toggle = metricsAuditGroup.querySelector(toggleSelector);
+        // In the CSS, our magicSelector will flip display from `none` to `block`
+        getDescriptionsAfterCheckedToggle = _ => metricsAuditGroup.querySelectorAll(magicSelector);
+      });
+
+      it('descriptions hidden by default', () => {
+        assert.ok(getDescriptionsAfterCheckedToggle().length === 0);
+      });
+
+      it('can toggle description visibility', () => {
+        assert.ok(getDescriptionsAfterCheckedToggle().length === 0);
+        toggle.click();
+        assert.ok(getDescriptionsAfterCheckedToggle().length > 2);
+        toggle.click();
+        assert.ok(getDescriptionsAfterCheckedToggle().length === 0);
+      });
     });
   });
 });
