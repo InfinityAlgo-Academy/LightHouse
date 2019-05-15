@@ -54,21 +54,29 @@ class ElementScreenshotRenderer {
     const previewWidth = 412;
     const previewHeight = 300;
     const boundingRect = /** @type {LH.Artifacts.Rect} */ (item.boundingRect);
-    const topOffset = Math.max(20, previewHeight / 2 - boundingRect.height / 2);
+    // todo: is this really what this is?
+    const CONTEXT_SPACE_ABOVE_ELEMENT = 20
+    const elementOffsetTopWithinPreview = Math.max(CONTEXT_SPACE_ABOVE_ELEMENT, previewHeight / 2 - boundingRect.height / 2);
+    const elementOffsetLeftWithinPreview = Math.max(CONTEXT_SPACE_ABOVE_ELEMENT, previewWidth / 2 - boundingRect.width / 2);
 
+    // todo: seems like the el marker is always too far to the left, fix that
+
+    // window.keepForDebug = true
+    // console.log(item, boundingRect)
     const image = /** @type {HTMLElement} */
         (previewContainer.querySelector('.lh-element-screenshot__image'));
     image.style.width = previewWidth + 'px';
     image.style.height = previewHeight + 'px';
     image.style.backgroundImage = 'url(' + fullpageScreenshotUrl + ')';
-    image.style.backgroundPositionY = -(boundingRect.top - topOffset) + 'px';
+    image.style.backgroundPositionY = -(boundingRect.top - elementOffsetTopWithinPreview) + 'px';
+    image.style.backgroundPositionX = -(boundingRect.left - elementOffsetLeftWithinPreview) + 'px';
 
     const elMarker = /** @type {HTMLElement} */
         (previewContainer.querySelector('.lh-element-screenshot__element-marker'));
     elMarker.style.width = boundingRect.width + 'px';
     elMarker.style.height = boundingRect.height + 'px';
-    elMarker.style.left = boundingRect.left + 'px';
-    elMarker.style.top = topOffset + 'px';
+    elMarker.style.left = elementOffsetLeftWithinPreview + 'px';
+    elMarker.style.top = elementOffsetTopWithinPreview + 'px';
 
     const mask = /** @type {HTMLElement} */
         (previewContainer.querySelector('.lh-element-screenshot__mask'));
@@ -77,10 +85,11 @@ class ElementScreenshotRenderer {
     mask.style.height = previewHeight + 'px';
     mask.style.clipPath = 'url(#' + clipId + ')';
 
-    const top = topOffset / previewHeight;
+    const top = elementOffsetTopWithinPreview / previewHeight;
+    // debugger
     const bottom = top + boundingRect.height / previewHeight;
-    const left = boundingRect.left / previewWidth;
-    const right = boundingRect.right / previewWidth;
+    const left = elementOffsetLeftWithinPreview / previewWidth;
+    const right = left + boundingRect.width / previewWidth
     mask.appendChild(
         ElementScreenshotRenderer.renderClipPath(dom, clipId, {top, bottom, left, right})
     );
