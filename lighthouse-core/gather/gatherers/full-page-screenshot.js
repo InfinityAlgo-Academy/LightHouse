@@ -38,6 +38,8 @@ class FullPageScreenshot extends Gatherer {
 
     return {
       data,
+      width,
+      height
     };
   }
 }
