@@ -16,8 +16,6 @@ const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const CriticalRequestChainRenderer = require(
     '../../../../report/html/renderer/crc-details-renderer.js');
-const SnippetRenderer = require(
-    '../../../../report/html/renderer/snippet-renderer.js');
 const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
 const sampleResultsOrig = require('../../../results/sample_v2.json');
 
@@ -32,7 +30,6 @@ describe('CategoryRenderer', () => {
     global.URL = URL;
     global.Util = Util;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
-    global.SnippetRenderer = SnippetRenderer;
 
     const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
     const dom = new DOM(document);
@@ -46,7 +43,6 @@ describe('CategoryRenderer', () => {
     global.URL = undefined;
     global.Util = undefined;
     global.CriticalRequestChainRenderer = undefined;
-    global.SnippetRenderer = undefined;
   });
 
   it('renders an audit', () => {
