@@ -62,17 +62,16 @@ const NO_CPU_THROTTLE_METRICS = {
   rate: 1,
 };
 
-/**
- * @param {Driver} driver
- * @return {Promise<void>}
- */
-async function enableNexus5X(driver) {
-  await Promise.all([
-    driver.sendCommand('Emulation.setDeviceMetricsOverride', NEXUS5X_EMULATION_METRICS),
+async function enableEmulation(driver, {deviceMetrics, setTouchEmulationEnabled, userAgent, deviceMetricOverrides}) {
+  deviceMetricOverrides = deviceMetricOverrides || {};
+  deviceMetrics = Object.assign({}, deviceMetrics, deviceMetricOverrides);
+
+  return Promise.all([
+    driver.sendCommand('Emulation.setDeviceMetricsOverride', deviceMetrics),
     // Network.enable must be called for UA overriding to work
     driver.sendCommand('Network.enable'),
-    driver.sendCommand('Network.setUserAgentOverride', {userAgent: NEXUS5X_USERAGENT}),
-    driver.sendCommand('Emulation.setTouchEmulationEnabled', {enabled: true}),
+    driver.sendCommand('Network.setUserAgentOverride', {userAgent}),
+    driver.sendCommand('Emulation.setTouchEmulationEnabled', {enabled: setTouchEmulationEnabled}),
   ]);
 }
 
@@ -80,14 +79,26 @@ async function enableNexus5X(driver) {
  * @param {Driver} driver
  * @return {Promise<void>}
  */
-async function enableDesktop(driver) {
-  await Promise.all([
-    driver.sendCommand('Emulation.setDeviceMetricsOverride', DESKTOP_EMULATION_METRICS),
-    // Network.enable must be called for UA overriding to work
-    driver.sendCommand('Network.enable'),
-    driver.sendCommand('Network.setUserAgentOverride', {userAgent: DESKTOP_USERAGENT}),
-    driver.sendCommand('Emulation.setTouchEmulationEnabled', {enabled: false}),
-  ]);
+async function enableNexus5X(driver, deviceMetricOverrides) {
+  await enableEmulation(driver, {
+    deviceMetrics: NEXUS5X_EMULATION_METRICS,
+    userAgent: NEXUS5X_USERAGENT,
+    setTouchEmulationEnabled: true,
+    deviceMetricOverrides,
+  });
+}
+
+/**
+ * @param {Driver} driver
+ * @return {Promise<void>}
+ */
+async function enableDesktop(driver, deviceMetricOverrides) {
+  await enableEmulation(driver, {
+    deviceMetrics: DESKTOP_EMULATION_METRICS,
+    userAgent: DESKTOP_USERAGENT,
+    setTouchEmulationEnabled: false,
+    deviceMetricOverrides,
+  });
 }
 
 /**

@@ -1425,11 +1425,11 @@ class Driver {
    * @param {LH.Config.Settings} settings
    * @return {Promise<void>}
    */
-  async beginEmulation(settings) {
+  async beginEmulation(settings, deviceMetricOverrides) {
     if (settings.emulatedFormFactor === 'mobile') {
-      await emulation.enableNexus5X(this);
+      await emulation.enableNexus5X(this, deviceMetricOverrides);
     } else if (settings.emulatedFormFactor === 'desktop') {
-      await emulation.enableDesktop(this);
+      await emulation.enableDesktop(this, deviceMetricOverrides);
     }
 
     await this.setThrottling(settings, {useThrottling: true});

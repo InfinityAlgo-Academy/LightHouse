@@ -17,16 +17,14 @@ class FullPageScreenshot extends Gatherer {
 
     const driver = passContext.driver;
     const metrics = await driver.sendCommand('Page.getLayoutMetrics');
-    const width = await driver.evaluateAsync(`window.innerWidth`)
+    const width = await driver.evaluateAsync(`window.innerWidth`);
     let height = Math.ceil(metrics.contentSize.height);
 
     height = Math.min(maxScreenshotHeight, height);
 
-    await driver.sendCommand('Emulation.setDeviceMetricsOverride', {
-      // todo: figure out what this means and set appropriately
-      mobile: true,
-      width,
+    await driver.beginEmulation(passContext.settings, {
       height,
+      screenHeight: height,
       deviceScaleFactor: 1,
     });
 
@@ -36,10 +34,13 @@ class FullPageScreenshot extends Gatherer {
     });
     const data = 'data:image/jpeg;base64,' + result.data;
 
+    // Revert resized page
+    await driver.beginEmulation(passContext.settings);
+
     return {
       data,
       width,
-      height
+      height,
     };
   }
 }
