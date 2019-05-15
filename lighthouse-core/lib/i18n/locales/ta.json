@@ -447,10 +447,10 @@
     "message": "மதிப்பு"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Browser engineers recommend pages contain fewer than ~1,500 DOM elements. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
+    "message": "~1,500 DOM உறுப்புகளுக்குக் குறைவான உறுப்புகளைக் கொண்ட பக்கங்களை உலாவிப் பொறியாளர்கள் பரிந்துரைக்கின்றனர். 32 உறுப்புகளுக்குக் குறைவான கிளை அடுக்குகளும் 60க்குக் குறைவான துணைக்கிளை/கிளை உறுப்புகளும் இருப்பது உகந்தது. ஒரு பெரிய DOM, நினைவகப் பயன்பாட்டை அதிகரிக்கலாம், [ஸ்டைல் கணக்கீடுகளை] நீட்டிக்கலாம், மேலும் (https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) அதிகச் செலவு பிடிக்கும் [தளவமைப்பு மறுசீராக்கங்களை] ஏற்படுத்தலாம் (https://developers.google.com/speed/articles/reflow). [மேலும் அறிக](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 element}\n    other {# elements}\n    }"
+    "message": "{itemCount,plural, =1{1 உறுப்பு}other{# உறுப்புகள்}}"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | failureTitle": {
     "message": "அபரிமிதமான DOM அளவைத் தவிர்க்கவும்"
@@ -459,7 +459,7 @@
     "message": "அதிகபட்ச DOM கிளை அடுக்கு"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMElements": {
-    "message": "Total DOM Elements"
+    "message": "மொத்த DOM உறுப்புக்கள்"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": {
     "message": "அதிகபட்சத் துணை உறுப்புகள்"
@@ -876,22 +876,22 @@
     "message": "SEO"
   },
   "lighthouse-core/config/default-config.js | seoContentGroupDescription": {
-    "message": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    "message": "ஆப்ஸின் உள்ளடக்கத்தை crawlerகள் நன்கு புரிந்துகொள்ள வசதியாக HTMLலைப் பொருத்தமாக வடிவமைக்கவும்."
   },
   "lighthouse-core/config/default-config.js | seoContentGroupTitle": {
-    "message": "Content Best Practices"
+    "message": "உள்ளடக்கம் தொடர்பான சிறந்த நடைமுறைகள்"
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupDescription": {
-    "message": "To appear in search results, crawlers need access to your app."
+    "message": "தேடல் முடிவுகளில் தோன்ற உங்கள் ஆப்ஸிற்கான அணுகல் crawlerகளுக்குத் தேவை."
   },
   "lighthouse-core/config/default-config.js | seoCrawlingGroupTitle": {
-    "message": "Crawling and Indexing"
+    "message": "Crawling மற்றும் அட்டவணைப்படுத்துதல்"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "பக்கங்களின் உள்ளடக்கத்தைப் பயனர்கள் பின்ச் செய்தோ பெரிதாக்கியோ படிக்க வேண்டிய அவசியம் ஏற்படாதவாறு உங்கள் பக்கங்கள் மொபைலுக்கு ஏற்றவையாக இருக்க வேண்டும். [மேலும் அறிக](https://developers.google.com/search/mobile-sites/)."
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
-    "message": "Mobile Friendly"
+    "message": "மொபைலுக்கேற்றது"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "தற்காலிக நினைவக TTL"
@@ -927,7 +927,7 @@
     "message": "உங்கள் பக்கம் ஏற்றப்படுகையில் டிரேஸைப் பதிவுசெய்யும்போது ஏதோ தவறாகிவிட்டது. Lighthouseஸை மீண்டும் இயக்கவும். ({errorCode})"
   },
   "lighthouse-core/lib/lh-error.js | criTimeout": {
-    "message": "Timeout waiting for initial Debugger Protocol connection."
+    "message": "முதல் பிழைதிருத்தும் நெறிமுறை இணைப்பிற்கான நேரமுடிவு காத்திருப்பு."
   },
   "lighthouse-core/lib/lh-error.js | didntCollectScreenshots": {
     "message": "பக்கம் ஏற்றப்பட்டபோது ஸ்க்ரீன்ஷாட்கள் எதையும் Chrome சேகரிக்கவில்லை. பக்கத்தில் உள்ளடக்கம் காண்பிக்கப்படுவதை உறுதிசெய்து, Lighthouseஸை மீண்டும் இயக்கவும். ({errorCode})"
@@ -1020,45 +1020,45 @@
     "message": "எச்சரிக்கைகள்: "
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "உங்கள் GIFஃபை HTML5 வீடியோவாக உட்பொதிந்து கிடைக்கச் செய்யும் சேவையில் பதிவேற்ற முயலுங்கள்."
   },
   "stack-packs/packs/wordpress.js | offscreen_images": {
-    "message": "Install a [lazy-load WordPress plugin](https://wordpress.org/plugins/search/lazy+load/) that provides the ability to defer any offscreen images, or switch to a theme that provides that functionality. Also consider using [the AMP plugin](https://wordpress.org/plugins/amp/)."
+    "message": "[lazy-load WordPress செருகுநிரலை] நிறுவி (https://wordpress.org/plugins/search/lazy+load/) திரைக்கு வெளியிலுள்ள படங்களைத் தேவையான போது ஏற்றும் திறனைப் பெறலாம் அல்லது அந்தத் திறனுள்ள தீமிற்கு மாறலாம். [AMP செருகுநிரலையும்](https://wordpress.org/plugins/amp/) பயன்படுத்திப் பார்க்கவும்."
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
-    "message": "There are a number of WordPress plugins that can help you [inline critical assets](https://wordpress.org/plugins/search/critical+css/) or [defer less important resources](https://wordpress.org/plugins/search/defer+css+javascript/). Beware that optimizations provided by these plugins may break features of your theme or plugins, so you will likely need to make code changes."
+    "message": "[முக்கியமான சொத்துகளை முன்னிலைப்படுத்தவும்](https://wordpress.org/plugins/search/critical+css/) அல்லது [முக்கியத்துவம் குறைவான ஆதாரங்களைத் தவிர்க்கவும்](https://wordpress.org/plugins/search/defer+css+javascript/) உங்களுக்கு உதவக்கூடிய பல WordPress செருகுநிரல்கள் உள்ளன. இந்தச் செருகுநிரல்கள் வழங்கும் மேம்படுத்துதல்கள் உங்களின் தீம் அல்லது செருகுநிரலில் உள்ள அம்சத்தைப் பாதிக்கும். அதனால் நீங்கள் குறியீட்டில் சில மாற்றங்களைச் செய்ய வேண்டியிருக்கும்."
   },
   "stack-packs/packs/wordpress.js | time_to_first_byte": {
-    "message": "Themes, plugins, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization plugin, and/or upgrading your server."
+    "message": "தீம்கள், செருகுநிரல்கள் மற்றும் சேவையக விவரக்குறிப்புகள் அனைத்தும் சேவையகத்தின் வேகத்தை நிர்ணயிக்கும். இன்னும் பல மேம்படுத்தப்பட்ட தீம்மைக் கண்டறிந்து, மேம்படுத்தும் செருகுநிரலைக் கவனமாகத் தேர்ந்தெடுத்து மற்றும்/அல்லது சேவையகத்தை மேம்படுத்தவும்."
   },
   "stack-packs/packs/wordpress.js | total_byte_weight": {
-    "message": "Consider showing excerpts in your post lists (e.g. via the more tag), reducing the number of posts shown on a given page, breaking your long posts into multiple pages, or using a plugin to lazy-load comments."
+    "message": "இடுகை பட்டியல்களில் முக்கியமான பகுதியை மட்டும் காட்டலாம் (உதாரணமாக மேலும் என்ற குறிச்சொல்லுடன்), பக்கத்தில் இடுகைகளின் எண்ணிக்கையைக் குறைக்கலாம், ஒரு பெரிய இடுகையைப் பல சின்ன பக்கங்களாகப் பிரிக்கலாம் அல்லது தேவையுள்ள போது மட்டும் கருத்துகளைச் செருகுநிரல்கள் மூலம் ஏற்றலாம்."
   },
   "stack-packs/packs/wordpress.js | unminified_css": {
-    "message": "A number of [WordPress plugins](https://wordpress.org/plugins/search/minify+css/) can speed up your site by concatenating, minifying, and compressing your styles. You may also want to use a build process to do this minification up-front if possible."
+    "message": "பல [WordPress செருகுநிரல்கள்](https://wordpress.org/plugins/search/minify+javascript/) உங்கள் இணையதளத்தில் உள்ள ஸ்டைல்களைச் சிறிதாக்கி சுருக்கி மற்றும் ஒன்றிணைத்து அதை வேகப்படுத்தலாம். ஸ்கிரிப்ட்டைச் சிறிதாக்க பதிப்பு முறைமையைப் பயன்படுத்த நேரிடலாம்."
   },
   "stack-packs/packs/wordpress.js | unminified_javascript": {
-    "message": "A number of [WordPress plugins](https://wordpress.org/plugins/search/minify+javascript/) can speed up your site by concatenating, minifying, and compressing your scripts. You may also want to use a build process to do this minification up front if possible."
+    "message": "பல [WordPress செருகுநிரல்கள்](https://wordpress.org/plugins/search/minify+javascript/) உங்கள் இணையதளத்தில் உள்ள ஸ்கிரிப்ட்டைச் சிறிதாக்கி சுருக்கி மற்றும் ஒன்றிணைத்து அதை வேகப்படுத்தலாம். ஸ்கிரிப்ட்டைச் சிறிதாக்க பதிப்பு முறைமையைப் பயன்படுத்த நேரிடலாம்."
   },
   "stack-packs/packs/wordpress.js | unused_css_rules": {
-    "message": "Consider reducing, or switching, the number of [WordPress plugins](https://wordpress.org/plugins/) loading unused CSS in your page. To identify plugins that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the stylesheet. Look out for plugins that have many stylesheets in the list which have a lot of red in code coverage. A plugin should only enqueue a stylesheet if it is actually used on the page."
+    "message": "உங்கள் பக்கத்தில் [WordPress செருகுநிரல்கள்](https://wordpress.org/plugins/) ஏற்றும் பயன்படுத்தப்படாத CSSகளின் எண்ணிக்கையைக் குறைக்கவும் அல்லது மாற்றிப் பார்க்கவும். Chrome DevToolsஸில் [குறியீட்டுக் கவரேஜ்] (https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) என்பதை இயக்கி தேவையற்ற CSSஸைச் சேர்க்கும் செருகுநிரல்களைக் கண்டறியலாம். stylesheetடின் URLலில் இதற்குக் காரணமான தீம்/செருகுநிரலைக் கண்டறியலாம். அதிகமாகச் சிகப்பில் உள்ள குறியீட்டு கவரேஜைக் கொண்ட பட்டியலில் பல stylesheetகளைக் கொண்ட செருகுநிரல்களைக் கண்டறியவும். இணையப் பக்கத்தில் பயன்படுத்தும் பட்சத்தில் ஒரு செருகுநிரல் ஒரு stylesheetடை மட்டுமே வரிசையில் சேர்க்க வேண்டும்."
   },
   "stack-packs/packs/wordpress.js | unused_javascript": {
-    "message": "Consider reducing, or switching, the number of [WordPress plugins](https://wordpress.org/plugins/) loading unused JavaScript in your page. To identify plugins that are adding extraneous JS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the script. Look out for plugins that have many scripts in the list which have a lot of red in code coverage. A plugin should only enqueue a script if it is actually used on the page."
+    "message": "உங்கள் பக்கத்தில் [WordPress செருகுநிரல்கள்](https://wordpress.org/plugins/) ஏற்றும் பயன்படுத்தப்படாத JavaScriptகளின் எண்ணிக்கையைக் குறைக்கவும் அல்லது மாற்றிப் பார்க்கவும். Chrome DevToolsஸில் [குறியீட்டுக் கவரேஜ்](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) என்பதை இயக்கி தேவையற்ற JSகளைச் சேர்க்கும் செருகுநிரல்களைக் கண்டறியவும். ஸ்கிரிப்ட்டின் URLலில் இதற்குக் காரணமான தீம்/செருகுநிரலைக் கண்டறியலாம். அதிகமாகச் சிகப்பில் உள்ள குறியீட்டு கவரேஜைக் கொண்ட பட்டியலில் பல ஸ்கிரிப்ட்களைக் கொண்ட செருகுநிரல்களைக் கண்டறியவும். இணையப் பக்கத்தில் பயன்படுத்தும் பட்சத்தில் ஒரு செருகுநிரல் ஒரு ஸ்கிரிப்ட்டை மட்டுமே வரிசையில் சேர்க்க வேண்டும்."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Read about [Browser Caching in WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "[WordPressஸில் உலாவியின் தற்காலிக சேமிப்பு] பற்றி அறிய: (https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
-    "message": "Consider using an [image optimization WordPress plugin](https://wordpress.org/plugins/search/optimize+images/) that compresses your images while retaining quality."
+    "message": "[படங்களை மேம்படுத்தும் WordPress செருகுநிரல்](https://wordpress.org/plugins/search/optimize+images/) என்பதைப் பயன்படுத்தி உங்கள் படங்களின் தரத்தை இழக்காமல் சுருங்கச் செய்யலாம்."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Upload images directly through the [media library](https://codex.wordpress.org/Media_Library_Screen) to ensure that the required image sizes are available, and then insert them from the media library or use the image widget to ensure the optimal image sizes are used (including those for the responsive breakpoints). Avoid using `Full Size` images unless the dimensions are adequate for their usage. [Learn More](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "[மீடியா லைப்ரரி](https://codex.wordpress.org/Media_Library_Screen) மூலம் படத்தை நேரடியாகப் பதிவேற்றி சரியான அளவில் கிடைக்கிறதா என்று உறுதிப்படுத்தலாம், பிறகு மீடியா லைப்ரரியிலிருந்தோ பட விட்ஜெட்டைப் பயன்படுத்தியோ மேம்படுத்தப்பட்ட அளவில் படங்கள் பயன்படுத்தப்படுகிறதா என்பதை உறுதி செய்யவும் (பதிலளிக்கும் அளவு வரம்புகள் உட்பட). பயன்படுத்துவதற்கு ஏதுவான அளவுகள் உள்ளபோது மட்டுமே 'முழு அளவு' படங்களைப் பயன்படுத்தவும். [மேலும் அறிக](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
-    "message": "You can enable text compression in your web server configuration."
+    "message": "இணையச் சேவையக உள்ளமைவில் உரை சுருக்குதலை இயக்கலாம்."
   },
   "stack-packs/packs/wordpress.js | uses_webp_images": {
-    "message": "Consider using a [plugin](https://wordpress.org/plugins/search/convert+webp/) or service that will automatically convert your uploaded images to the optimal formats."
+    "message": "நீங்கள் பதிவேற்றிய படங்களை மேம்படுத்தப்பட்ட வடிவத்திற்குத் தானாக மாற்ற ஒரு [செருகுநிரலையோ](https://wordpress.org/plugins/search/convert+webp/) சேவையையோ பயன்படுத்திப் பாருங்கள்."
   }
 }

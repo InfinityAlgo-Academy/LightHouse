@@ -66,6 +66,9 @@ module.exports = [
         'content-width': {
           score: 1,
         },
+        'apple-touch-icon': {
+          score: 1,
+        },
 
         // "manual" audits. Just verify in the results.
         'pwa-cross-browser': {
@@ -126,6 +129,9 @@ module.exports = [
           details: {items: [pwaDetailsExpectations]},
         },
         'content-width': {
+          score: 1,
+        },
+        'apple-touch-icon': {
           score: 1,
         },
 

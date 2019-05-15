@@ -67,7 +67,7 @@ const SMOKE_TEST_DFNS = [{
 }, {
   id: 'perf',
   expectations: 'perf/expectations.js',
-  config: 'lighthouse-core/config/perf-config.js',
+  config: 'perf/perf-config.js',
   batch: 'perf-metric',
 }, {
   id: 'lantern',

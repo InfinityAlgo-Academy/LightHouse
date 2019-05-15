@@ -128,10 +128,10 @@ class CategoryRenderer {
 
     // Add list of warnings or singular warning
     const warningsEl = this.dom.createChildOf(titleEl, 'div', 'lh-warnings');
+    this.dom.createChildOf(warningsEl, 'span').textContent = Util.UIStrings.warningHeader;
     if (warnings.length === 1) {
-      warningsEl.textContent = `${Util.UIStrings.warningHeader} ${warnings.join('')}`;
+      warningsEl.appendChild(this.dom.document().createTextNode(warnings.join('')));
     } else {
-      warningsEl.textContent = Util.UIStrings.warningHeader;
       const warningsUl = this.dom.createChildOf(warningsEl, 'ul');
       for (const warning of warnings) {
         const item = this.dom.createChildOf(warningsUl, 'li');

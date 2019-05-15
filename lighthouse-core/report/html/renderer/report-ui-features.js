@@ -58,10 +58,6 @@ class ReportUIFeatures {
     this.stickyHeaderEl; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement} */
     this.highlightEl; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLInputElement} */
-    this.metricDescriptionToggleEl; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLElement} */
-    this.metricAuditGroup; // eslint-disable-line no-unused-expressions
 
     this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     this.onCopy = this.onCopy.bind(this);
@@ -74,7 +70,6 @@ class ReportUIFeatures {
     this.expandAllDetails = this.expandAllDetails.bind(this);
     this._toggleDarkTheme = this._toggleDarkTheme.bind(this);
     this._updateStickyHeaderOnScroll = this._updateStickyHeaderOnScroll.bind(this);
-    this._toggleMetricDescription = this._toggleMetricDescription.bind(this);
   }
 
   /**
@@ -87,19 +82,41 @@ class ReportUIFeatures {
 
     this.json = report;
     this._setupMediaQueryListeners();
-    this._setupSmoothScroll();
     this._setupExportButton();
     this._setupThirdPartyFilter();
-    this._setupStickyHeaderElements();
     this._setUpCollapseDetailsAfterPrinting();
     this._resetUIState();
     this._document.addEventListener('keyup', this.onKeyUp);
     this._document.addEventListener('copy', this.onCopy);
-    this._document.addEventListener('scroll', this._updateStickyHeaderOnScroll);
-    window.addEventListener('resize', this._updateStickyHeaderOnScroll);
-    this._setupMetricDescriptionToggleElements();
     const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
-    topbarLogo.addEventListener('click', this._toggleDarkTheme);
+    topbarLogo.addEventListener('click', () => this._toggleDarkTheme());
+
+    let turnOffTheLights = false;
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      turnOffTheLights = true;
+    }
+
+    // Fireworks.
+    const scoresAll100 = Object.values(report.categories).every(cat => cat.score === 1);
+    if (!this._dom.isDevTools() && scoresAll100) {
+      turnOffTheLights = true;
+      const scoresContainer = this._dom.find('.lh-scores-container', this._document);
+      scoresContainer.classList.add('score100');
+      scoresContainer.addEventListener('click', _ => {
+        scoresContainer.classList.toggle('fireworks-paused');
+      });
+    }
+
+    if (turnOffTheLights) {
+      this._toggleDarkTheme(true);
+    }
+
+    // There is only a sticky header when at least 2 categories are present.
+    if (Object.keys(this.json.categories).length >= 2) {
+      this._setupStickyHeaderElements();
+      this._document.addEventListener('scroll', this._updateStickyHeaderOnScroll);
+      window.addEventListener('resize', this._updateStickyHeaderOnScroll);
+    }
   }
 
   /**
@@ -118,17 +135,6 @@ class ReportUIFeatures {
     mediaQuery.addListener(this.onMediaQueryChange);
     // Ensure the handler is called on init
     this.onMediaQueryChange(mediaQuery);
-  }
-
-  _setupSmoothScroll() {
-    for (const el of this._dom.findAll('a.lh-gauge__wrapper', this._document)) {
-      const anchorElement = /** @type {HTMLAnchorElement} */ (el);
-      anchorElement.addEventListener('click', e => {
-        e.preventDefault();
-        window.history.pushState({}, '', anchorElement.hash);
-        this._dom.find(anchorElement.hash, this._document).scrollIntoView({behavior: 'smooth'});
-      });
-    }
   }
 
   /**
@@ -260,26 +266,6 @@ class ReportUIFeatures {
     this._copyAttempt = false;
   }
 
-  _setupMetricDescriptionToggleElements() {
-    const metricDescriptionToggleEl = this._document.querySelector('.lh-metrics-toggle__input');
-    // No metrics if performance category wasn't run.
-    if (!metricDescriptionToggleEl) return;
-
-    this.metricDescriptionToggleEl = /** @type {HTMLInputElement} */ (metricDescriptionToggleEl);
-    this.metricAuditGroup = this._dom.find('.lh-audit-group--metrics', this._document);
-    this.metricDescriptionToggleEl.addEventListener('input', this._toggleMetricDescription);
-    this.metricAuditGroup.addEventListener('click', e => {
-      const el = /** @type {HTMLElement} */ (e.target);
-      if (el.closest('.lh-metric__title')) this.metricDescriptionToggleEl.click();
-    });
-  }
-
-  _toggleMetricDescription() {
-    this.metricDescriptionToggleEl.blur();
-    const show = this.metricDescriptionToggleEl.checked;
-    this.metricAuditGroup.classList.toggle('lh-audit-group--metrics__show-descriptions', show);
-  }
-
   /**
    * Copies the report JSON to the clipboard (if supported by the browser).
    */
@@ -329,8 +315,7 @@ class ReportUIFeatures {
    */
   onExportButtonClick(e) {
     e.preventDefault();
-    const el = /** @type {Element} */ (e.target);
-    el.classList.toggle('active');
+    this.exportButton.classList.toggle('active');
     this._document.addEventListener('keydown', this.onKeyDown);
   }
 
@@ -394,6 +379,10 @@ class ReportUIFeatures {
       }
       case 'save-gist': {
         this.saveAsGist();
+        break;
+      }
+      case 'toggle-dark': {
+        this._toggleDarkTheme();
         break;
       }
     }
@@ -543,9 +532,10 @@ class ReportUIFeatures {
 
   /**
    * @private
+   * @param {boolean} [force]
    */
-  _toggleDarkTheme() {
-    this._document.body.classList.toggle('dark');
+  _toggleDarkTheme(force) {
+    this._document.body.classList.toggle('dark', force);
   }
 
   _updateStickyHeaderOnScroll() {
