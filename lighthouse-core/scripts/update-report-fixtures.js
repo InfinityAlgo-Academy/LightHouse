@@ -7,19 +7,34 @@
 
 const cli = require('../../lighthouse-cli/run.js');
 const cliFlags = require('../../lighthouse-cli/cli-flags.js');
-const assetSaver = require('../lib/asset-saver.js');
-const artifactPath = 'lighthouse-core/test/results/artifacts';
 
 const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
-const budgetedConfig = require('../test/results/sample-config.js');
 
 /** @typedef {import('net').AddressInfo} AddressInfo */
 
+/** @type {LH.Config.Json} */
+const budgetedConfig = {
+  extends: 'lighthouse:default',
+  settings: {
+    budgets: [{
+      resourceSizes: [
+        {resourceType: 'script', budget: 125},
+        {resourceType: 'total', budget: 500},
+      ],
+      timings: [
+        {metric: 'interactive', budget: 5000, tolerance: 1000},
+      ],
+      resourceCounts: [
+        {resourceType: 'third-party', budget: 0},
+      ],
+    }],
+  },
+};
+
 /**
- * Update the report artifacts. If artifactName is set only that artifact will be updated.
- * @param {keyof LH.Artifacts=} artifactName
+ * Update the report artifacts
  */
-async function update(artifactName) {
+async function update() {
   // get an available port
   server.listen(0, 'localhost');
   const port = await new Promise(res => server.on('listening', () => {
@@ -28,27 +43,15 @@ async function update(artifactName) {
     res(address.port);
   }));
 
-  const oldArtifacts = await assetSaver.loadArtifacts(artifactPath);
-
   const url = `http://localhost:${port}/dobetterweb/dbw_tester.html`;
   const rawFlags = [
-    `--gather-mode=${artifactPath}`,
+    '--gather-mode=lighthouse-core/test/results/artifacts',
+    '--throttling-method=devtools',
     url,
   ].join(' ');
   const flags = cliFlags.getFlags(rawFlags);
   await cli.runLighthouse(url, flags, budgetedConfig);
   await new Promise(res => server.close(res));
-
-  if (artifactName) {
-    // Revert everything except the one artifact
-    const newArtifacts = await assetSaver.loadArtifacts(artifactPath);
-    if (!(artifactName in newArtifacts) && !(artifactName in oldArtifacts)) {
-      throw Error('Unknown artifact name: ' + artifactName);
-    }
-    const finalArtifacts = oldArtifacts;
-    finalArtifacts[artifactName] = newArtifacts[artifactName];
-    await assetSaver.saveArtifacts(finalArtifacts, artifactPath);
-  }
 }
 
-update(/** @type {keyof LH.Artifacts | undefined} */ (process.argv[2]));
+update();

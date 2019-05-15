@@ -127,9 +127,10 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const metricAuditsEl = this.renderAuditGroup(groups.metrics);
 
     // Metric descriptions toggle.
+    const auditGroupHeader = this.dom.find('.lh-audit-group__header', metricAuditsEl);
     const toggleTmpl = this.dom.cloneTemplate('#tmpl-lh-metrics-toggle', this.templateContext);
     const toggleEl = this.dom.find('.lh-metrics-toggle', toggleTmpl);
-    metricAuditsEl.prepend(...toggleEl.childNodes);
+    auditGroupHeader.appendChild(toggleEl);
 
     const keyMetrics = metricAudits.filter(a => a.weight >= 3);
     const otherMetrics = metricAudits.filter(a => a.weight < 3);
@@ -147,7 +148,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // 'Values are estimated and may vary' is used as the category description for PSI
     if (environment !== 'PSI') {
-      const estValuesEl = this.dom.createChildOf(metricsColumn1El, 'div', 'lh-metrics__disclaimer');
+      const estValuesEl = this.dom.createChildOf(metricsColumn2El, 'div',
+          'lh-metrics__disclaimer lh-metrics__disclaimer');
       estValuesEl.textContent = Util.UIStrings.varianceDisclaimer;
     }
 
@@ -162,20 +164,6 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       timelineEl.id = thumbnailResult.id;
       const filmstripEl = this.detailsRenderer.render(thumbnailResult.details);
       filmstripEl && timelineEl.appendChild(filmstripEl);
-    }
-
-    // Budgets
-    const budgetAudit = category.auditRefs.find(audit => audit.id === 'performance-budget');
-    if (budgetAudit && budgetAudit.result.details) {
-      const table = this.detailsRenderer.render(budgetAudit.result.details);
-      if (table) {
-        table.id = budgetAudit.id;
-        table.classList.add('lh-audit');
-        const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
-        budgetsGroupEl.appendChild(table);
-        budgetsGroupEl.classList.add('lh-audit-group--budgets');
-        element.appendChild(budgetsGroupEl);
-      }
     }
 
     // Opportunities

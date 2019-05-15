@@ -33,8 +33,7 @@ module.exports = [
       audits: {
         'interactive': {
           // Make sure all of the CPU time is reflected in the perf metrics as well.
-          // The scripts stalls for 3 seconds and lantern has a 4x multiplier so 12s minimum.
-          numericValue: '>12000',
+          score: '<.2',
         },
         'bootup-time': {
           details: {
@@ -57,8 +56,7 @@ module.exports = [
       audits: {
         'interactive': {
           // Make sure all of the CPU time is reflected in the perf metrics as well.
-          // The scripts stalls for 3 seconds and lantern has a 4x multiplier so 12s minimum.
-          numericValue: '>12000',
+          score: '<.2',
         },
         'bootup-time': {
           details: {

@@ -73,6 +73,5 @@ lighthouse.getAuditList = Runner.getAuditList;
 lighthouse.traceCategories = require('./gather/driver').traceCategories;
 lighthouse.Audit = require('./audits/audit');
 lighthouse.Gatherer = require('./gather/gatherers/gatherer');
-lighthouse.NetworkRecords = require('./computed/network-records.js');
 
 module.exports = lighthouse;

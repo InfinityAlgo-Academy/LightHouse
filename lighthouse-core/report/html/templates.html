@@ -72,7 +72,7 @@ limitations under the License.
 <template id="tmpl-lh-metrics-toggle">
   <div class="lh-metrics-toggle">
     <input class="lh-metrics-toggle__input" type="checkbox" name="toggle-metric-descriptions">
-    <label class="lh-metrics-toggle__label" for="toggle-metric-descriptions">
+    <label for="toggle-metric-descriptions">
       <div class="lh-metrics-toggle__icon lh-metrics-toggle__icon--less" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
           <path class="lh-metrics-toggle__lines" d="M4 9h16v2H4zm0 4h10v2H4z" />
@@ -143,6 +143,7 @@ limitations under the License.
   </div>
 </template>
 
+
 <!-- Lighthouse perf opportunity header -->
 <template id="tmpl-lh-opportunity-header">
   <div class="lh-load-opportunity__header lh-load-opportunity__cols">
@@ -150,6 +151,7 @@ limitations under the License.
     <div class="lh-load-opportunity__col lh-load-opportunity__col--two"></div>
   </div>
 </template>
+
 
 <!-- Lighthouse score container -->
 <template id="tmpl-lh-scores-wrapper">
@@ -180,7 +182,7 @@ limitations under the License.
       border-bottom: 1px solid var(--color-black-200);
       padding-top: var(--score-container-padding);
       padding-bottom: 4px;
-      z-index: 1;
+      z-index: 1000;
       pointer-events: none;
       opacity: 0;
     }
@@ -204,12 +206,7 @@ limitations under the License.
     }
   </style>
   <div class="lh-scores-wrapper">
-    <div class="lh-scores-container">
-      <div class="pyro">
-        <div class="before"></div>
-        <div class="after"></div>
-      </div>
-    </div>
+    <div class="lh-scores-container"></div>
   </div>
 </template>
 
@@ -232,7 +229,6 @@ limitations under the License.
     .lh-topbar__logo {
       width: var(--topbar-icon-size);
       height: var(--topbar-icon-size);
-      user-select: none;
     }
     .lh-topbar__logo .shape {
       fill: var(--body-text-color);
@@ -249,24 +245,24 @@ limitations under the License.
       will-change: transform;
     }
     .lh-export__button {
-      width: var(--lh-export-icon-size);
-      height: var(--lh-export-icon-size);
+      border: 1px solid #dadada;
+      border-radius: 2px;
       cursor: pointer;
-      margin-right: 5px;
-    }
-    .lh-export__button svg {
-      fill: var(--lh-export-icon-color);
-    }
-    .dark .lh-export__button svg {
-      filter: invert(1);
+      outline: none;
+      height: 23px;
+      width: 30px;
+      background-repeat: no-repeat;
+      background-size: 18px;
+      background-position: 50% 50%;
+      will-change: transform;
     }
     .lh-export__button:focus,
     .lh-export__button.active {
-      outline: none;
+      box-shadow: 1px 1px 3px #ccc;
     }
     .lh-export__button.active + .lh-export__dropdown {
       opacity: 1;
-      clip: rect(-1px, 187px, 242px, -3px);
+      clip: rect(0, 164px, 210px, 0);
     }
     .lh-export__dropdown {
       position: absolute;
@@ -304,14 +300,6 @@ limitations under the License.
       background-color: transparent;
       text-indent: 18px;
     }
-    .dark .report-icon {
-      color: var(--color-black-900);
-      filter: invert(1);
-    }
-    .dark .lh-export__dropdown a:hover,
-    .dark .lh-export__dropdown a:focus {
-      background-color: #BDBDBD;
-    }
     /* copy icon needs slight adjustments to look great */
     .lh-export__dropdown .report-icon--copy {
       background-size: 16px;
@@ -346,14 +334,9 @@ limitations under the License.
     </svg>
 
     <a href="" class="lh-topbar__url" target="_blank" rel="noopener"></a>
-
+    
     <div class="lh-export">
-      <div class="report-icon report-icon--share lh-export__button" title="Export report">
-        <svg width="100%" height="100%" viewBox="0 0 24 24">
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
-        </svg>
-      </div>
+      <button class="report-icon report-icon--share lh-export__button" title="Export report"></button>
       <div class="lh-export__dropdown">
         <!-- TODO(i18n): localize export dropdown -->
         <a href="#" class="report-icon report-icon--print" data-action="print-summary">Print Summary</a>
@@ -363,7 +346,6 @@ limitations under the License.
         <a href="#" class="report-icon report-icon--download" data-action="save-json">Save as JSON</a>
         <a href="#" class="report-icon report-icon--open lh-export--viewer" data-action="open-viewer">Open in Viewer</a>
         <a href="#" class="report-icon report-icon--open lh-export--gist" data-action="save-gist">Save as Gist</a>
-        <a href="#" class="report-icon report-icon--dark" data-action="toggle-dark">Toggle Dark Theme</a>
       </div>
     </div>
   </div>
@@ -400,8 +382,6 @@ limitations under the License.
     */
     .pyro {
       display: none;
-      z-index: 1;
-      pointer-events: none;
     }
     .score100 .pyro {
       display: block;
@@ -711,7 +691,7 @@ limitations under the License.
       display: inline;
     }
     /* Just optimized. Same n/a line as no passing groups. */
-    .lh-gauge--pwa__wrapper.lh-badged--pwa-optimized:not(.lh-badged--pwa-installable):not(.lh-badged--pwa-fast-reliable) .lh-gauge--pwa__na-line {
+    .lh-gauge--pwa__wrapper.lh-badged--pwa-optimized .lh-gauge--pwa__na-line {
       display: inline;
     }
 

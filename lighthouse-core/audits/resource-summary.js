@@ -12,9 +12,9 @@ const i18n = require('../lib/i18n/i18n.js');
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page. */
   title: 'Keep request counts low and transfer sizes small',
-  /** Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits. */
   description: 'To set budgets for the quantity and size of page resources,' +
-    ' add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).',
+    ' add a budget.json file.',
   /** [ICU Syntax] Label for an audit identifying the number of requests and kilobytes used to load the page. */
   displayValue: `{requestCount, plural, =1 {1 request} other {# requests}}` +
     ` • { byteCount, number, bytes } KB`,

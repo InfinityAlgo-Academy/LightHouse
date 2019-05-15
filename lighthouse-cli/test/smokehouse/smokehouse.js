@@ -49,17 +49,15 @@ function runLighthouse(url, configPath, isDebug) {
   isDebug = isDebug || Boolean(process.env.LH_SMOKE_DEBUG);
 
   const command = 'node';
-  const randInt = Math.round(Math.random() * 100000);
-  const outputPath = `smokehouse-${randInt}.report.json`;
-  const artifactsDirectory = `./.tmp/smokehouse-artifacts-${randInt}`;
+  const outputPath = `smokehouse-${Math.round(Math.random() * 100000)}.report.json`;
+  const artifactsDirectory = './.tmp/smokehouse-artifacts';
   const args = [
     'lighthouse-cli/index.js',
     url,
     `--config-path=${configPath}`,
     `--output-path=${outputPath}`,
     '--output=json',
-    `-G=${artifactsDirectory}`,
-    `-A=${artifactsDirectory}`,
+    `-GA=${artifactsDirectory}`,
     '--quiet',
     '--port=0',
   ];
@@ -116,11 +114,8 @@ function runLighthouse(url, configPath, isDebug) {
     }
   }
 
-  // Artifacts are undefined if they weren't written to disk (e.g. if there was an error).
-  let artifacts;
-  try {
-    artifacts = JSON.parse(fs.readFileSync(`${artifactsDirectory}/artifacts.json`, 'utf8'));
-  } catch (e) {}
+  const artifacts = JSON.parse(
+    fs.readFileSync(`${artifactsDirectory}/artifacts.json`, 'utf8'));
 
   return {
     errorCode,

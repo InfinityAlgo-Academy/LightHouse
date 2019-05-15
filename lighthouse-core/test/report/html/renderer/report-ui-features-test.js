@@ -108,15 +108,6 @@ describe('ReportUIFeatures', () => {
       assert.equal(dom.findAll('.lh-category', container).length, 5);
     });
 
-    it('should init a report with a single category', () => {
-      const lhr = JSON.parse(JSON.stringify(sampleResults));
-      lhr.categories = {
-        performance: lhr.categories.performance,
-      };
-      const container = render(lhr);
-      assert.equal(dom.findAll('.lh-category', container).length, 1);
-    });
-
     describe('third-party filtering', () => {
       let container;
 
@@ -172,21 +163,40 @@ describe('ReportUIFeatures', () => {
     });
   });
 
-  describe('fireworks', () => {
-    it('should render an non-all 100 report without fireworks', () => {
-      const lhr = JSON.parse(JSON.stringify(sampleResults));
-      lhr.categories.performance.score = 0.5;
-      const container = render(lhr);
-      assert.ok(container.querySelector('.score100') === null, 'has no fireworks treatment');
+  describe('metric description toggles', () => {
+    let container;
+    let metricsAuditGroup;
+    let toggle;
+    const metricsClass = 'lh-audit-group--metrics';
+    const toggleClass = 'lh-metrics-toggle__input';
+    const showClass = 'lh-audit-group--metrics__show-descriptions';
+
+    describe('works if there is a performance category', () => {
+      beforeAll(() => {
+        container = render(sampleResults);
+        metricsAuditGroup = dom.find(`.${metricsClass}`, container);
+        toggle = dom.find(`.${toggleClass}`, metricsAuditGroup);
+      });
+
+      it('descriptions hidden by default', () => {
+        assert.ok(!metricsAuditGroup.classList.contains(showClass));
+      });
+
+      it('can toggle description visibility', () => {
+        assert.ok(!metricsAuditGroup.classList.contains(showClass));
+        toggle.click();
+        assert.ok(metricsAuditGroup.classList.contains(showClass));
+        toggle.click();
+        assert.ok(!metricsAuditGroup.classList.contains(showClass));
+      });
     });
 
-    it('should render an all 100 report with fireworks', () => {
+    it('report still works if performance category does not run', () => {
       const lhr = JSON.parse(JSON.stringify(sampleResults));
-      Object.values(lhr.categories).forEach(element => {
-        element.score = 1;
-      });
-      const container = render(lhr);
-      assert.ok(container.querySelector('.score100'), 'has fireworks treatment');
+      delete lhr.categories.performance;
+      container = render(lhr);
+      assert.ok(!container.querySelector(`.${metricsClass}`));
+      assert.ok(!container.querySelector(`.${toggleClass}`));
     });
   });
 });

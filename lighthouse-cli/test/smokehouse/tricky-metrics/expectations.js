@@ -15,11 +15,11 @@ module.exports = [
       finalUrl: 'http://localhost:10200/tricky-tti.html',
       audits: {
         'first-cpu-idle': {
-          // stalls for 5 seconds, 5 seconds out, so should be around 10s
+          score: '<75',
           numericValue: '>9000',
         },
         'interactive': {
-          // stalls for 5 seconds, 5 seconds out, so should be around 10s
+          score: '<75',
           numericValue: '>9000',
         },
       },
