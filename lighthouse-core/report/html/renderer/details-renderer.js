@@ -26,11 +26,13 @@ class DetailsRenderer {
   /**
    * @param {DOM} dom
    */
-  constructor(dom) {
+  constructor(dom, fullPageScreenshotAuditResult) {
     /** @type {DOM} */
     this._dom = dom;
     /** @type {ParentNode} */
     this._templateContext; // eslint-disable-line no-unused-expressions
+
+    this._fullPageScreenshotAuditResult = fullPageScreenshotAuditResult
   }
 
   /**
@@ -364,9 +366,7 @@ class DetailsRenderer {
     snippetEl.innerText = item.snippet;
     element.appendChild(snippetEl);
 
-    const fullpageScreenshotUrl = __LIGHTHOUSE_JSON__.audits['full-page-screenshot'].details.data;
-
-    if (item.boundingRect) {
+    if (item.boundingRect && this._fullPageScreenshotAuditResult) {
       /** @type {Element} */
       let elementScreenshot;
       element.addEventListener('mouseenter', () => {
@@ -374,7 +374,7 @@ class DetailsRenderer {
           this._dom,
           this._templateContext,
           item,
-          fullpageScreenshotUrl
+          this._fullPageScreenshotAuditResult
         );
         element.prepend(elementScreenshot);
       });

@@ -43,10 +43,12 @@ class ElementScreenshotRenderer {
    * @param {DOM} dom
    * @param {ParentNode} templateContext
    * @param {LH.Audit.Details.NodeValue} item
-   * @param {string} fullpageScreenshotUrl
    * @return {Element}
    */
-  static render(dom, templateContext, item, fullpageScreenshotUrl) {
+  static render(dom, templateContext, item, fullPageScreenshotAuditResult) {
+
+    const fullpageScreenshotUrl = fullPageScreenshotAuditResult.details.data
+
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
     const previewContainer = dom.find('.lh-element-screenshot', tmpl);
 
@@ -89,7 +91,7 @@ class ElementScreenshotRenderer {
     // debugger
     const bottom = top + boundingRect.height / previewHeight;
     const left = elementOffsetLeftWithinPreview / previewWidth;
-    const right = left + boundingRect.width / previewWidth
+    const right = left + boundingRect.width / previewWidth;
     mask.appendChild(
         ElementScreenshotRenderer.renderClipPath(dom, clipId, {top, bottom, left, right})
     );

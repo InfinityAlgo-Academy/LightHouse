@@ -218,8 +218,7 @@ class ReportRenderer {
     } else {
       headerContainer.classList.add('lh-header--solo-category');
     }
-
-    const detailsRenderer = new DetailsRenderer(this._dom);
+    const detailsRenderer = new DetailsRenderer(this._dom, report.audits["full-page-screenshot"]);
     const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
     categoryRenderer.setTemplateContext(this._templateContext);
 
