@@ -23,6 +23,52 @@
 
 /* globals self  */
 
+// todo: import from rect helpers
+/**
+ * @param {LH.Artifacts.Rect} rect
+ */
+function getRectCenterPoint(rect) {
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
+  };
+}
+
+function containWithin(value, range) {
+  if (value < range[0]) {
+    value = range[0];
+  }
+  if (value > range[1]) {
+    value = range[1];
+  }
+  return value;
+}
+
+function getScreenshotPositionDetails(highlightRect, displayAreaSize, screenshotSize) {
+  const highlightCenter = getRectCenterPoint(highlightRect);
+
+  // Try to center on highlighted area
+  const screenshotLeftVisibleEdge = containWithin(
+    highlightCenter.x - displayAreaSize.width / 2,
+    [0, screenshotSize.width - displayAreaSize.width]
+  );
+  const screenshotTopVisisbleEdge = containWithin(
+    highlightCenter.y - displayAreaSize.height / 2,
+    [0, screenshotSize.height - displayAreaSize.height]
+  );
+
+  return {
+    screenshotPositionInDisplayArea: {
+      left: screenshotLeftVisibleEdge,
+      top: screenshotTopVisisbleEdge,
+    },
+    highlightPositionInDisplayArea: {
+      left: highlightRect.left - screenshotLeftVisibleEdge,
+      top: highlightRect.top - screenshotTopVisisbleEdge,
+    },
+  };
+}
+
 class ElementScreenshotRenderer {
   static renderClipPath(dom, clipId, {top, bottom, left, right}) {
     const clipPathSvg = dom.createElement('div');
@@ -46,59 +92,58 @@ class ElementScreenshotRenderer {
    * @return {Element}
    */
   static render(dom, templateContext, item, fullPageScreenshotAuditResult) {
-
-    const fullpageScreenshotUrl = fullPageScreenshotAuditResult.details.data
+    const fullpageScreenshotUrl = fullPageScreenshotAuditResult.details.data;
 
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
     const previewContainer = dom.find('.lh-element-screenshot', tmpl);
 
-    // todo: support desktop screenshots
-    const previewWidth = 412;
-    const previewHeight = 300;
+    const displayAreaSize = {
+      width: 412,
+      height: 300,
+    };
     const boundingRect = /** @type {LH.Artifacts.Rect} */ (item.boundingRect);
-    // todo: is this really what this is?
-    const CONTEXT_SPACE_ABOVE_ELEMENT = 20
-    const elementOffsetTopWithinPreview = Math.max(CONTEXT_SPACE_ABOVE_ELEMENT, previewHeight / 2 - boundingRect.height / 2);
-    const elementOffsetLeftWithinPreview = Math.max(CONTEXT_SPACE_ABOVE_ELEMENT, previewWidth / 2 - boundingRect.width / 2);
 
-    // todo: seems like the el marker is always too far to the left, fix that
+    const positionDetails = getScreenshotPositionDetails(
+      boundingRect,
+       displayAreaSize,
+       fullPageScreenshotAuditResult.details
+    );
 
-    // window.keepForDebug = true
-    // console.log(item, boundingRect)
     const image = /** @type {HTMLElement} */
-        (previewContainer.querySelector('.lh-element-screenshot__image'));
-    image.style.width = previewWidth + 'px';
-    image.style.height = previewHeight + 'px';
+      (previewContainer.querySelector('.lh-element-screenshot__image'));
+    image.style.width = displayAreaSize.width + 'px';
+    image.style.height = displayAreaSize.height + 'px';
     image.style.backgroundImage = 'url(' + fullpageScreenshotUrl + ')';
-    image.style.backgroundPositionY = -(boundingRect.top - elementOffsetTopWithinPreview) + 'px';
-    image.style.backgroundPositionX = -(boundingRect.left - elementOffsetLeftWithinPreview) + 'px';
+    image.style.backgroundPositionY = -(positionDetails.screenshotPositionInDisplayArea.top) + 'px';
+    image.style.backgroundPositionX = -(positionDetails.screenshotPositionInDisplayArea.left) + 'px';
 
     const elMarker = /** @type {HTMLElement} */
-        (previewContainer.querySelector('.lh-element-screenshot__element-marker'));
+      (previewContainer.querySelector('.lh-element-screenshot__element-marker'));
     elMarker.style.width = boundingRect.width + 'px';
     elMarker.style.height = boundingRect.height + 'px';
-    elMarker.style.left = elementOffsetLeftWithinPreview + 'px';
-    elMarker.style.top = elementOffsetTopWithinPreview + 'px';
+    elMarker.style.left = positionDetails.highlightPositionInDisplayArea.left + 'px';
+    elMarker.style.top = positionDetails.highlightPositionInDisplayArea.top + 'px';
 
     const mask = /** @type {HTMLElement} */
-        (previewContainer.querySelector('.lh-element-screenshot__mask'));
+      (previewContainer.querySelector('.lh-element-screenshot__mask'));
     const clipId = 'clip-' + Math.floor(Math.random() * 100000000);
-    mask.style.width = previewWidth + 'px';
-    mask.style.height = previewHeight + 'px';
+    mask.style.width = displayAreaSize.width + 'px';
+    mask.style.height = displayAreaSize.height + 'px';
     mask.style.clipPath = 'url(#' + clipId + ')';
 
-    const top = elementOffsetTopWithinPreview / previewHeight;
-    // debugger
-    const bottom = top + boundingRect.height / previewHeight;
-    const left = elementOffsetLeftWithinPreview / previewWidth;
-    const right = left + boundingRect.width / previewWidth;
+    const top = positionDetails.highlightPositionInDisplayArea.top / displayAreaSize.height;
+    const bottom = top + boundingRect.height / displayAreaSize.height;
+    const left = positionDetails.highlightPositionInDisplayArea.left / displayAreaSize.width;
+    const right = left + boundingRect.width / displayAreaSize.width;
     mask.appendChild(
-        ElementScreenshotRenderer.renderClipPath(dom, clipId, {top, bottom, left, right})
+      ElementScreenshotRenderer.renderClipPath(dom, clipId, {top, bottom, left, right})
     );
 
     return previewContainer;
   }
 }
+
+ElementScreenshotRenderer.getScreenshotPositionDetails = getScreenshotPositionDetails;
 
 // Allow Node require()'ing.
 if (typeof module !== 'undefined' && module.exports) {
