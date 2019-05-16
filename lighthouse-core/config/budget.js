@@ -94,7 +94,7 @@ class Budget {
       'first-cpu-idle',
       'interactive',
       'first-meaningful-paint',
-      'estimated-input-latency',
+      'max-potential-fid',
     ];
     // Assume metric is an allowed string, throw if not.
     if (!validTimingMetrics.includes(/** @type {LH.Budget.TimingMetric} */ (metric))) {
