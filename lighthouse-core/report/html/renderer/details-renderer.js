@@ -32,7 +32,7 @@ class DetailsRenderer {
     /** @type {ParentNode} */
     this._templateContext; // eslint-disable-line no-unused-expressions
 
-    this._fullPageScreenshotAuditResult = fullPageScreenshotAuditResult
+    this._fullPageScreenshotAuditResult = fullPageScreenshotAuditResult;
   }
 
   /**

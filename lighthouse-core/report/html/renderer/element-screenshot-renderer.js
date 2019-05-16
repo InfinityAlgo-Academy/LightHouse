@@ -44,17 +44,17 @@ function containWithin(value, range) {
   return value;
 }
 
-function getScreenshotPositionDetails(highlightRect, displayAreaSize, screenshotSize) {
+function getScreenshotPositionDetails(highlightRect, displayedAreaSize, screenshotSize) {
   const highlightCenter = getRectCenterPoint(highlightRect);
 
   // Try to center on highlighted area
   const screenshotLeftVisibleEdge = containWithin(
-    highlightCenter.x - displayAreaSize.width / 2,
-    [0, screenshotSize.width - displayAreaSize.width]
+    highlightCenter.x - displayedAreaSize.width / 2,
+    [0, screenshotSize.width - displayedAreaSize.width]
   );
   const screenshotTopVisisbleEdge = containWithin(
-    highlightCenter.y - displayAreaSize.height / 2,
-    [0, screenshotSize.height - displayAreaSize.height]
+    highlightCenter.y - displayedAreaSize.height / 2,
+    [0, screenshotSize.height - displayedAreaSize.height]
   );
 
   return {
@@ -97,44 +97,58 @@ class ElementScreenshotRenderer {
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
     const previewContainer = dom.find('.lh-element-screenshot', tmpl);
 
-    const displayAreaSize = {
-      width: 412,
-      height: 300,
-    };
     const boundingRect = /** @type {LH.Artifacts.Rect} */ (item.boundingRect);
+
+    // For large elements zoom out to better show where on the page they are
+    let zoomFactor = 1;
+    const displayedAreaSize = {
+      width: Math.min(fullPageScreenshotAuditResult.details.width, 600),
+      height: 350,
+    };
+    if (boundingRect.height > 50) {
+      zoomFactor = 0.5;
+      displayedAreaSize.height = 700;
+    }
 
     const positionDetails = getScreenshotPositionDetails(
       boundingRect,
-       displayAreaSize,
+       displayedAreaSize,
        fullPageScreenshotAuditResult.details
     );
 
+    const contentEl = /** @type {HTMLElement} */
+      (previewContainer.querySelector('.lh-element-screenshot__content'));
+    // contentEl.style.transform = `scale(${zoomFactor})`;
+    contentEl.style.top = `-${displayedAreaSize.height * zoomFactor}px`;
+
     const image = /** @type {HTMLElement} */
       (previewContainer.querySelector('.lh-element-screenshot__image'));
-    image.style.width = displayAreaSize.width + 'px';
-    image.style.height = displayAreaSize.height + 'px';
+    image.style.width = displayedAreaSize.width * zoomFactor + 'px';
+    image.style.height = displayedAreaSize.height * zoomFactor + 'px';
     image.style.backgroundImage = 'url(' + fullpageScreenshotUrl + ')';
-    image.style.backgroundPositionY = -(positionDetails.screenshotPositionInDisplayArea.top) + 'px';
-    image.style.backgroundPositionX = -(positionDetails.screenshotPositionInDisplayArea.left) + 'px';
+    image.style.backgroundPositionY = -(positionDetails.screenshotPositionInDisplayArea.top * zoomFactor) + 'px';
+    image.style.backgroundPositionX = -(positionDetails.screenshotPositionInDisplayArea.left * zoomFactor) + 'px';
+    // image.style.backgroundSize = (zoomFactor * 100) + '%';
+    image.style.backgroundSize = `${fullPageScreenshotAuditResult.details.width * zoomFactor}px ${fullPageScreenshotAuditResult.details.height * zoomFactor}px`;
 
     const elMarker = /** @type {HTMLElement} */
       (previewContainer.querySelector('.lh-element-screenshot__element-marker'));
-    elMarker.style.width = boundingRect.width + 'px';
-    elMarker.style.height = boundingRect.height + 'px';
-    elMarker.style.left = positionDetails.highlightPositionInDisplayArea.left + 'px';
-    elMarker.style.top = positionDetails.highlightPositionInDisplayArea.top + 'px';
+    elMarker.style.width = boundingRect.width * zoomFactor + 'px';
+    elMarker.style.height = boundingRect.height * zoomFactor + 'px';
+    elMarker.style.left = positionDetails.highlightPositionInDisplayArea.left * zoomFactor + 'px';
+    elMarker.style.top = positionDetails.highlightPositionInDisplayArea.top * zoomFactor + 'px';
 
     const mask = /** @type {HTMLElement} */
       (previewContainer.querySelector('.lh-element-screenshot__mask'));
     const clipId = 'clip-' + Math.floor(Math.random() * 100000000);
-    mask.style.width = displayAreaSize.width + 'px';
-    mask.style.height = displayAreaSize.height + 'px';
+    mask.style.width = displayedAreaSize.width * zoomFactor + 'px';
+    mask.style.height = displayedAreaSize.height * zoomFactor + 'px';
     mask.style.clipPath = 'url(#' + clipId + ')';
 
-    const top = positionDetails.highlightPositionInDisplayArea.top / displayAreaSize.height;
-    const bottom = top + boundingRect.height / displayAreaSize.height;
-    const left = positionDetails.highlightPositionInDisplayArea.left / displayAreaSize.width;
-    const right = left + boundingRect.width / displayAreaSize.width;
+    const top = positionDetails.highlightPositionInDisplayArea.top / displayedAreaSize.height;
+    const bottom = top + boundingRect.height / displayedAreaSize.height;
+    const left = positionDetails.highlightPositionInDisplayArea.left / displayedAreaSize.width;
+    const right = left + boundingRect.width / displayedAreaSize.width;
     mask.appendChild(
       ElementScreenshotRenderer.renderClipPath(dom, clipId, {top, bottom, left, right})
     );
