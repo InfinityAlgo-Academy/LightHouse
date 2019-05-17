@@ -69,8 +69,8 @@ describe('DOM', () => {
     });
 
     it('does not inject duplicate styles', () => {
-      const clone = dom.cloneTemplate('#tmpl-lh-gauge', dom.document());
-      const clone2 = dom.cloneTemplate('#tmpl-lh-gauge', dom.document());
+      const clone = dom.cloneTemplate('#tmpl-lh-snippet', dom.document());
+      const clone2 = dom.cloneTemplate('#tmpl-lh-snippet', dom.document());
       assert.ok(clone.querySelector('style'));
       assert.ok(!clone2.querySelector('style'));
     });
