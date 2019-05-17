@@ -124,6 +124,10 @@ class ElementScreenshotRenderer {
     // contentEl.style.transform = `scale(${zoomFactor})`;
     contentEl.style.top = `-${displayedAreaSize.height * zoomFactor}px`;
 
+    // move to top right
+    // contentEl.style.setProperty('top', '0px', 'important');
+    // contentEl.style.setProperty('bottom', 'unset', 'important');
+
     const image = /** @type {HTMLElement} */
       (previewContainer.querySelector('.lh-element-screenshot__image'));
     image.style.width = displayedAreaSize.width * zoomFactor + 'px';
