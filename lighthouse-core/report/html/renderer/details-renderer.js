@@ -388,7 +388,6 @@ class DetailsRenderer {
       });
     }
 
-
     return element;
   }
 

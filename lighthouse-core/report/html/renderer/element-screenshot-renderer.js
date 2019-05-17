@@ -102,13 +102,16 @@ class ElementScreenshotRenderer {
     // For large elements zoom out to better show where on the page they are
     let zoomFactor = 1;
     const displayedAreaSize = {
-      width: Math.min(fullPageScreenshotAuditResult.details.width, 600),
-      height: 350,
+      width: 420,
+      height: 300,
     };
     if (boundingRect.height > 50) {
       zoomFactor = 0.5;
-      displayedAreaSize.height = 700;
+      displayedAreaSize.width = 840;
+      displayedAreaSize.height = 600;
     }
+
+    displayedAreaSize.width = Math.min(fullPageScreenshotAuditResult.details.width, displayedAreaSize.width);
 
     const positionDetails = getScreenshotPositionDetails(
       boundingRect,
