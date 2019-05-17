@@ -99,16 +99,16 @@ class ElementScreenshotRenderer {
 
     const boundingRect = /** @type {LH.Artifacts.Rect} */ (item.boundingRect);
 
-    // For large elements zoom out to better show where on the page they are
     let zoomFactor = 1;
     const displayedAreaSize = {
       width: 420,
       height: 300,
     };
+    // For large elements zoom out to better show where on the page they are
     if (boundingRect.height > 50) {
       zoomFactor = 0.5;
-      displayedAreaSize.width = 840;
-      displayedAreaSize.height = 600;
+      displayedAreaSize.width *= 2;
+      displayedAreaSize.height *= 2;
     }
 
     displayedAreaSize.width = Math.min(fullPageScreenshotAuditResult.details.width, displayedAreaSize.width);
