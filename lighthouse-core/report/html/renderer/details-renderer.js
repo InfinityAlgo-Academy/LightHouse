@@ -367,22 +367,49 @@ class DetailsRenderer {
     element.appendChild(snippetEl);
 
     if (item.boundingRect && this._fullPageScreenshotAuditResult) {
+      element.addEventListener('click', () => {
+        console.log('click', elementScreenshot);
+        // for mobile
+        // todo: figure out if needs any other handlers like click to show, maybe disable hover?
+        if (elementScreenshot) {
+          console.log('removing');
+          elementScreenshot.remove();
+          elementScreenshot = null;
+        } else {
+          elementScreenshot = ElementScreenshotRenderer.render(
+            this._dom,
+            this._templateContext,
+            item,
+            this._fullPageScreenshotAuditResult
+          );
+          element.prepend(elementScreenshot);
+        }
+      });
+
       /** @type {Element} */
       let elementScreenshot;
       element.addEventListener('mouseenter', () => {
-        elementScreenshot = ElementScreenshotRenderer.render(
-          this._dom,
-          this._templateContext,
-          item,
-          this._fullPageScreenshotAuditResult
-        );
-        element.prepend(elementScreenshot);
+        // temporary hack so that click happens before mouseenter on mobile
+        setTimeout(() => {
+          console.log('mouseenter', elementScreenshot);
+          if (!elementScreenshot) {
+            elementScreenshot = ElementScreenshotRenderer.render(
+              this._dom,
+              this._templateContext,
+              item,
+              this._fullPageScreenshotAuditResult
+            );
+            element.prepend(elementScreenshot);
+          }
+        }, 0);
       });
 
       element.addEventListener('mouseleave', () => {
         if (!window.keepForDebug) {
           if (elementScreenshot) {
+            console.log('mouseleave', elementScreenshot);
             elementScreenshot.remove();
+            elementScreenshot = null;
           }
         }
       });
