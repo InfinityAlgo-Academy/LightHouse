@@ -61,7 +61,6 @@ function runA11yChecks() {
       node.path = getNodePath(node.element);
       // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
       node.snippet = getOuterHTMLSnippet(node.element);
-      node.textContent = node.element.textContent;
       node.boundingRect = JSON.parse(JSON.stringify(node.element.getBoundingClientRect()));
       if (node.boundingRect.height === 0 || node.boundingRect.width === 0) {
         delete node.boundingRect;

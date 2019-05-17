@@ -162,7 +162,6 @@ declare global {
         selector?: string;
         snippet?: string;
         boundingRect?: Artifacts.Rect;
-        textContent: string;
       }
 
       /**

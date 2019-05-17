@@ -360,11 +360,7 @@ class DetailsRenderer {
     if (item.path) element.setAttribute('data-path', item.path);
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
-    element.innerHTML = `<div style="color: black;font-family: var(--text-font-family);margin-bottom: 10px;">${item.textContent}</div>`;
-    const snippetEl = document.createElement('div');
-    snippetEl.style.fontSize = '12px';
-    snippetEl.innerText = item.snippet;
-    element.appendChild(snippetEl);
+    element.textContent = item.snippet;
 
     if (item.boundingRect && this._fullPageScreenshotAuditResult) {
       element.addEventListener('click', () => {

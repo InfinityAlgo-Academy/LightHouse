@@ -53,7 +53,6 @@ class AxeAudit extends Audit {
           selector: Array.isArray(node.target) ? node.target.join(' ') : '',
           path: node.path,
           snippet: node.html || node.snippet,
-          textContent: node.textContent,
           boundingRect: node.boundingRect,
           explanation: node.failureSummary,
         }),

@@ -252,7 +252,6 @@ function targetToTableNode(target) {
   return {
     type: 'node',
     snippet: target.snippet,
-    textContent: target.textContent,
     path: target.path,
     selector: target.selector,
     boundingRect,
