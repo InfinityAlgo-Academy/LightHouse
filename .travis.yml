@@ -40,14 +40,7 @@ script:
   - yarn test-viewer
   - yarn test-lantern
   - yarn i18n:checks
-  # _JAVA_OPTIONS is breaking parsing of `compile-devtools` output. See #3338.
-  - unset _JAVA_OPTIONS
-  # FIXME(paulirish): re-enable after a roll of LH->CDT
-  # - yarn compile-devtools
 before_cache:
-  # the `yarn compile-devtools` task adds these to node_modules, which slows down caching
-  - rm -rf ./node_modules/temp-devtoolsfrontend/
-  - rm -rf ./node_modules/temp-devtoolsprotocol/
   # nyc, jest and other projects store files in here. They mess up the travis build cache.
   - rm -rf ./node_modules/.cache/
 after_success:

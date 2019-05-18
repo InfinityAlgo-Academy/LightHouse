@@ -3342,7 +3342,7 @@
             "tolerance": 100
           },
           {
-            "metric": "estimated-input-latency",
+            "metric": "max-potential-fid",
             "budget": 100,
             "tolerance": 100
           }

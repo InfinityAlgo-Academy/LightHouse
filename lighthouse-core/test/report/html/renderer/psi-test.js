@@ -82,7 +82,6 @@ describe('DOM', () => {
         const result = prepareLabData(sampleResultsStr, document);
         assert.ok(result.scoreGaugeEl instanceof document.defaultView.Element);
         assert.equal(result.scoreGaugeEl.querySelector('.lh-gauge__wrapper').href, '');
-        assert.ok(result.scoreGaugeEl.outerHTML.includes('<style>'), 'score gauge comes with CSS');
         assert.ok(result.scoreGaugeEl.outerHTML.includes('<svg'), 'score gauge comes with SVG');
 
         assert.ok(result.perfCategoryEl instanceof document.defaultView.Element);

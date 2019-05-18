@@ -42,7 +42,7 @@ const budgetedConfig = {
         {metric: 'first-cpu-idle', budget: 2900, tolerance: 100},
         {metric: 'interactive', budget: 2900, tolerance: 100},
         {metric: 'first-meaningful-paint', budget: 2000, tolerance: 100},
-        {metric: 'estimated-input-latency', budget: 100, tolerance: 100},
+        {metric: 'max-potential-fid', budget: 100, tolerance: 100},
       ],
     }],
   },
