@@ -19,6 +19,7 @@ function generateMockArtifacts(src = manifestSrc) {
 
   const clonedArtifacts = JSON.parse(JSON.stringify({
     WebAppManifest: exampleManifest,
+    InstallabilityErrors: {errors: []},
     URL: {finalUrl: 'https://example.com'},
   }));
   return clonedArtifacts;
@@ -151,6 +152,29 @@ describe('PWA: webapp install banner audit', () => {
       assert.strictEqual(details.failures.length, 1, details.failures);
       assert.strictEqual(details.hasStartUrl, true);
       assert.strictEqual(details.hasIconsAtLeast192px, false);
+    });
+  });
+
+  it('fails if ManifestValue checks pass, but InstallabilityErrors contains errors', () => {
+    const artifacts = generateMockArtifacts();
+    artifacts.InstallabilityErrors.errors.push('Some error.');
+    const context = generateMockAuditContext();
+    return InstallableManifestAudit.audit(artifacts, context).then(result => {
+      assert.strictEqual(result.score, 0);
+      assert.ok(artifacts.InstallabilityErrors.errors[0], result.explanation);
+    });
+  });
+
+  it('ignores InstallabilityErrors if our ManifestValue checks fail', () => {
+    const artifacts = generateMockArtifacts();
+    artifacts.WebAppManifest = null;
+    artifacts.InstallabilityErrors.errors.push('Some error.');
+    const context = generateMockAuditContext();
+    return InstallableManifestAudit.audit(artifacts, context).then(result => {
+      assert.strictEqual(result.score, 0);
+      assert.ok(result.explanation.includes('No manifest was fetched'), result.explanation);
+      assert.ok(!result.explanation.includes(artifacts.InstallabilityErrors.errors[0]),
+        result.explanation);
     });
   });
 });
