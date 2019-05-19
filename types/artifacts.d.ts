@@ -103,6 +103,8 @@ declare global {
       HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
+      /** Response from Page.getInstallabilityErrors. */
+      InstallabilityErrors: {errors: string[]};
       /** JS coverage information for code used during page load. */
       JsUsage: Crdp.Profiler.ScriptCoverage[];
       /** Parsed version of the page's Web App Manifest, or null if none found. */

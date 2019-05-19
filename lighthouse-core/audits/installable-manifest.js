@@ -34,7 +34,7 @@ class InstallableManifest extends MultiCheckAudit {
       description: 'Browsers can proactively prompt users to add your app to their homescreen, ' +
           'which can lead to higher engagement. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/install-prompt).',
-      requiredArtifacts: ['URL', 'WebAppManifest'],
+      requiredArtifacts: ['URL', 'WebAppManifest', 'InstallabilityErrors'],
     };
   }
 
@@ -80,12 +80,21 @@ class InstallableManifest extends MultiCheckAudit {
    */
   static async audit_(artifacts, context) {
     const manifestValues = await ManifestValues.request(artifacts.WebAppManifest, context);
-    const manifestFailures = InstallableManifest.assessManifest(manifestValues);
+    const failures = InstallableManifest.assessManifest(manifestValues);
+
+    // Page.getInstallabilityErrors covers a wider set of checks than our ManifestValues does.
+    // There is of course overlap, but instead of deduping the checks, we only present the
+    // more comprehensive checks from the protocol if all of our checks pass.
+    // Ideally we could remove all the checks in `bannerCheckIds` defined in `assessManifest`, but
+    // there are other audits that use those checks, and converting errors from the protocol to
+    // these failing checks would involve 1) asserting on the error message, which could change
+    // underneath us or 2) including an error code with the errors in Page.getInstallabilityErrors.
+    if (failures.length === 0) {
+      failures.push(...artifacts.InstallabilityErrors.errors);
+    }
 
     return {
-      failures: [
-        ...manifestFailures,
-      ],
+      failures,
       manifestValues,
     };
   }

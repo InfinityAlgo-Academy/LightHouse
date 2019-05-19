@@ -124,6 +124,7 @@ const defaultConfig = {
       'link-elements',
       'meta-elements',
       'script-elements',
+      'installability-errors',
       'dobetterweb/appcache',
       'dobetterweb/doctype',
       'dobetterweb/domstats',
