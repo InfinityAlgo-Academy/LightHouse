@@ -81,7 +81,7 @@ describe('ReportRenderer', () => {
       assert.ok(output.querySelector('.lh-report'), 'has report body');
       // 3 sets of gauges - one in sticky header, one in scores header, and one in each section.
       assert.equal(output.querySelectorAll('.lh-gauge__wrapper, .lh-gauge--pwa__wrapper').length,
-          sampleResults.reportCategories.length * 3, 'renders category gauges');
+          Object.keys(sampleResults.categories).length * 3, 'renders category gauges');
     });
 
     it('renders additional reports by replacing the existing one', () => {

@@ -169,7 +169,7 @@ class ReportRenderer {
     const customGauges = []; // PWA.
     const pluginGauges = [];
 
-    for (const category of report.reportCategories) {
+    for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       const categoryGauge = renderer.renderScoreGauge(category, report.categoryGroups || {});
 
@@ -212,7 +212,7 @@ class ReportRenderer {
     reportSection.appendChild(this._renderReportWarnings(report));
 
     let scoreHeader;
-    const isSoloCategory = report.reportCategories.length === 1;
+    const isSoloCategory = Object.keys(report.categories).length === 1;
     if (!isSoloCategory) {
       scoreHeader = this._dom.createElement('div', 'lh-scores-header');
     } else {
@@ -234,7 +234,7 @@ class ReportRenderer {
 
     const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
 
-    for (const category of report.reportCategories) {
+    for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       // .lh-category-wrapper is full-width and provides horizontal rules between categories.
       // .lh-category within has the max-width: var(--report-width);

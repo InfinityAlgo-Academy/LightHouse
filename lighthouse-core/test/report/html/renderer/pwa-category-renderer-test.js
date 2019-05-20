@@ -43,7 +43,7 @@ describe('PwaCategoryRenderer', () => {
 
   beforeEach(() => {
     // Clone category to allow modifications.
-    const pwaCategory = sampleResults.reportCategories.find(cat => cat.id === 'pwa');
+    const pwaCategory = sampleResults.categories.pwa;
     category = JSON.parse(JSON.stringify(pwaCategory));
   });
 
