@@ -80,7 +80,8 @@
   --chevron-size: 12px;
   --inner-audit-left-padding: calc(var(--score-shape-size) + var(--score-shape-margin-left) + var(--score-shape-margin-right));
 
-  /* Palette. */
+  /* Palette using Material Design Colors
+   * https://www.materialui.co/colors */
   --color-black-100: #F5F5F5;
   --color-black-200: #E0E0E0;
   --color-black-400: #BDBDBD;
@@ -100,6 +101,8 @@
   --color-white: #FFFFFF;
   --color-blue-200: #90CAF9;
   --color-blue-900: #0D47A1;
+  --color-cyan-500: #00BCD4;
+  --color-teal-600: #00897B;
 
 
   /* TODO(cjamcl) clean up unused variables. */
@@ -175,6 +178,7 @@
 .lh-vars.dark {
   --color-red-700: var(--color-red);
   --color-green-700: var(--color-green);
+  --color-teal-600: var(--color-cyan-500);
   --color-orange-700: var(--color-orange);
 
   --color-black-200: var(--color-black-800);
@@ -388,10 +392,11 @@
 }
 
 /* Node */
-.lh-node {
-  display: block;
+.lh-node__snippet {
   font-family: var(--monospace-font-family);
-  color: hsl(174, 100%, 27%);
+  color: var(--color-teal-600);
+  font-size: 12px;
+  line-height: 1.5em;
 }
 
 /* Score */

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global window, document, getOuterHTMLSnippet, getNodePath */
+/* global window, document, getOuterHTMLSnippet, getNodePath, getNodeLabel */
 
 const Gatherer = require('./gatherer');
 const fs = require('fs');
@@ -57,6 +57,8 @@ function runA11yChecks() {
       node.path = getNodePath(node.element);
       // @ts-ignore - getOuterHTMLSnippet put into scope via stringification
       node.snippet = getOuterHTMLSnippet(node.element);
+      // @ts-ignore - getNodeLabel put into scope via stringification
+      node.nodeLabel = getNodeLabel(node.element);
       // avoid circular JSON concerns
       node.element = node.any = node.all = node.none = undefined;
     }));
@@ -77,6 +79,7 @@ class Accessibility extends Gatherer {
     const expression = `(function () {
       ${pageFunctions.getOuterHTMLSnippetString};
       ${pageFunctions.getNodePathString};
+      ${pageFunctions.getNodeLabelString};
       ${axeLibSource};
       return (${runA11yChecks.toString()}());
     })()`;

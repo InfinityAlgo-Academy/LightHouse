@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector */
+/* global getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector, getNodeLabel */
 
 const Gatherer = require('../gatherer');
 const pageFunctions = require('../../../lib/page-functions.js');
@@ -239,7 +239,7 @@ function elementIsPositionFixedStickyOrAbsolute(element) {
 /**
  * @param {string} str
  * @param {number} maxLength
- * @returns {string}
+ * @return {string}
  */
 /* istanbul ignore next */
 function truncate(str, maxLength) {
@@ -294,6 +294,8 @@ function gatherTapTargets() {
       path: getNodePath(tapTargetElement),
       // @ts-ignore - getNodeSelector put into scope via stringification
       selector: getNodeSelector(tapTargetElement),
+      // @ts-ignore - getNodeLabel put into scope via stringification
+      nodeLabel: getNodeLabel(tapTargetElement),
       href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
     });
   });
@@ -323,6 +325,7 @@ class TapTargets extends Gatherer {
       ${rectContainsString};
       ${pageFunctions.getNodePathString};
       ${pageFunctions.getNodeSelectorString};
+      ${pageFunctions.getNodeLabelString};
       ${gatherTapTargets.toString()};
 
       return gatherTapTargets();

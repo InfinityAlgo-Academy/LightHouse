@@ -199,6 +199,7 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
+                            "nodeLabel": "Do better web tester page",
                             "path": "3,HTML,1,BODY,5,DIV,0,H2",
                             "selector": "h2",
                             "snippet": "<h2>Do better web tester page</h2>",
@@ -208,6 +209,7 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
+                            "nodeLabel": "Hi there!",
                             "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
                             "selector": "span",
                             "snippet": "<span>Hi there!</span>",
@@ -871,6 +873,7 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  The <html> element does not have a lang attribute",
+                            "nodeLabel": "html",
                             "path": "3,HTML",
                             "selector": "html",
                             "snippet": "<html manifest=\"clock.appcache\">",
@@ -924,6 +927,7 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+                            "nodeLabel": "img",
                             "path": "3,HTML,1,BODY,10,IMG",
                             "selector": "img[height=\"\\35 7\"]",
                             "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
@@ -933,6 +937,7 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+                            "nodeLabel": "img",
                             "path": "3,HTML,1,BODY,12,IMG",
                             "selector": "img[height=\"\\33 18\"]",
                             "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
@@ -942,8 +947,9 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+                            "nodeLabel": "img",
                             "path": "3,HTML,1,BODY,14,IMG",
-                            "selector": "img[src$=\"lighthouse-rotating.gif\"]",
+                            "selector": "img[src$=\"lighthouse-rotating\\.gif\"]",
                             "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
                             "type": "node"
                         }
@@ -951,8 +957,9 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-                            "path": "3,HTML,1,BODY,49,IMG",
-                            "selector": "img:nth-child(27)",
+                            "nodeLabel": "img",
+                            "path": "3,HTML,1,BODY,53,IMG",
+                            "selector": "img:nth-child(30)",
                             "snippet": "<img src=\"blob:http://localhost:62824/289254fd-ef1d-4c1a-96a8-ba291caa2140\">",
                             "type": "node"
                         }
@@ -1142,7 +1149,8 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-                            "path": "3,HTML,1,BODY,44,INPUT",
+                            "nodeLabel": "input",
+                            "path": "3,HTML,1,BODY,48,INPUT",
                             "selector": "input[onpaste=\"event\\.preventDefault\\(\\)\\;\"]",
                             "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
                             "type": "node"
@@ -1151,8 +1159,9 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-                            "path": "3,HTML,1,BODY,46,INPUT",
-                            "selector": "input:nth-child(25)",
+                            "nodeLabel": "input",
+                            "path": "3,HTML,1,BODY,50,INPUT",
+                            "selector": "input:nth-child(28)",
                             "snippet": "<input type=\"password\">",
                             "type": "node"
                         }
@@ -1160,7 +1169,8 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-                            "path": "3,HTML,1,BODY,48,INPUT",
+                            "nodeLabel": "input",
+                            "path": "3,HTML,1,BODY,52,INPUT",
                             "selector": "input[onpaste=\"return\\ false\\;\"]",
                             "snippet": "<input type=\"password\" onpaste=\"return false;\">",
                             "type": "node"
@@ -1207,8 +1217,9 @@
                     {
                         "node": {
                             "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-                            "path": "3,HTML,1,BODY,40,A",
-                            "selector": "a[href=\"javascript:void(0)\"]",
+                            "nodeLabel": "a",
+                            "path": "3,HTML,1,BODY,44,A",
+                            "selector": "a[href=\"javascript\\:void\\(0\\)\"]",
                             "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\"></a>",
                             "type": "node"
                         }
@@ -1216,8 +1227,9 @@
                     {
                         "node": {
                             "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-                            "path": "3,HTML,1,BODY,42,A",
-                            "selector": "a[href$=\"mailto:inbox@email.com\"]",
+                            "nodeLabel": "a",
+                            "path": "3,HTML,1,BODY,46,A",
+                            "selector": "a[href$=\"mailto\\:inbox\\@email\\.com\"]",
                             "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\"></a>",
                             "type": "node"
                         }
@@ -1952,7 +1964,8 @@
                 "items": [
                     {
                         "node": {
-                            "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty",
+                            "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+                            "nodeLabel": "object",
                             "path": "3,HTML,1,BODY,2,OBJECT",
                             "selector": "#\\35 934a",
                             "snippet": "<object id=\"5934a\"></object>",
@@ -1961,7 +1974,8 @@
                     },
                     {
                         "node": {
-                            "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty",
+                            "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+                            "nodeLabel": "object",
                             "path": "3,HTML,1,BODY,3,OBJECT",
                             "selector": "#\\35 934b",
                             "snippet": "<object id=\"5934b\"></object>",
@@ -2481,6 +2495,7 @@
                         "height": 18.0,
                         "overlapScoreRatio": 0.8333333333333334,
                         "overlappingTarget": {
+                            "nodeLabel": "Do something else",
                             "path": "3,HTML,1,BODY,18,BUTTON",
                             "selector": "body > button.small-button",
                             "snippet": "<button class=\"small-button\">Do something else</button>",
@@ -2489,6 +2504,7 @@
                         "overlappingTargetScore": 720.0,
                         "size": "200x18",
                         "tapTarget": {
+                            "nodeLabel": "Do something",
                             "path": "3,HTML,1,BODY,17,BUTTON",
                             "selector": "body > button.small-button",
                             "snippet": "<button class=\"small-button\">Do something</button>",

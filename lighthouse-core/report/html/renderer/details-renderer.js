@@ -352,8 +352,16 @@ class DetailsRenderer {
    */
   renderNode(item) {
     const element = this._dom.createElement('span', 'lh-node');
+    if (item.nodeLabel) {
+      const nodeLabelEl = this._dom.createElement('div');
+      nodeLabelEl.textContent = item.nodeLabel;
+      element.appendChild(nodeLabelEl);
+    }
     if (item.snippet) {
-      element.textContent = item.snippet;
+      const snippetEl = this._dom.createElement('div');
+      snippetEl.classList.add('lh-node__snippet');
+      snippetEl.textContent = item.snippet;
+      element.appendChild(snippetEl);
     }
     if (item.selector) {
       element.title = item.selector;
@@ -361,6 +369,7 @@ class DetailsRenderer {
     if (item.path) element.setAttribute('data-path', item.path);
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
+
     return element;
   }
 

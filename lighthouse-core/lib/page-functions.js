@@ -187,7 +187,7 @@ function getNodePath(node) {
 
 /**
  * @param {Element} node
- * @returns {string}
+ * @return {string}
  */
 /* istanbul ignore next */
 function getNodeSelector(node) {
@@ -218,6 +218,47 @@ function getNodeSelector(node) {
   return parts.join(' > ');
 }
 
+/**
+ * Generate a human-readable label for the given element, based on end-user facing
+ * strings like the innerText or alt attribute.
+ * Falls back to the tagName if no useful label is found.
+ * @param {HTMLElement} node
+ * @return {string|null}
+ */
+/* istanbul ignore next */
+function getNodeLabel(node) {
+  // Inline so that audits that import getNodeLabel don't
+  // also need to import truncate
+  /**
+   * @param {string} str
+   * @param {number} maxLength
+   * @return {string}
+   */
+  function truncate(str, maxLength) {
+    if (str.length <= maxLength) {
+      return str;
+    }
+    return str.slice(0, maxLength - 1) + '…';
+  }
+
+  const tagName = node.tagName.toLowerCase();
+  // html and body content is too broad to be useful, since they contain all page content
+  if (tagName !== 'html' && tagName !== 'body') {
+    const nodeLabel = node.innerText || node.getAttribute('alt') || node.getAttribute('aria-label');
+    if (nodeLabel) {
+      return truncate(nodeLabel, 80);
+    } else {
+      // If no useful label was found then try to get one from a child.
+      // E.g. if an a tag contains an image but no text we want the image alt/aria-label attribute.
+      const nodeToUseForLabel = node.querySelector('[alt], [aria-label]');
+      if (nodeToUseForLabel) {
+        return getNodeLabel(/** @type {HTMLElement} */ (nodeToUseForLabel));
+      }
+    }
+  }
+  return tagName;
+}
+
 module.exports = {
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
@@ -230,4 +271,6 @@ module.exports = {
   getNodePathString: getNodePath.toString(),
   getNodeSelectorString: getNodeSelector.toString(),
   getNodeSelector: getNodeSelector,
+  getNodeLabel: getNodeLabel,
+  getNodeLabelString: getNodeLabel.toString(),
 };
