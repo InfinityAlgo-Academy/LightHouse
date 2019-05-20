@@ -33,4 +33,12 @@
     config: string;
     batch: string;
   }
+
+  export interface TestDfnV2 {
+    url: string
+    config: LH.Config.Json
+    batch?: string
+    assertions?: ExpectedRunnerResult
+    describe?(getResults: () => Promise<ExpectedRunnerResult>): void
+  }
 }

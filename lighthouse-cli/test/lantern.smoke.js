@@ -8,7 +8,7 @@
 const config = {
   extends: 'lighthouse:full',
   settings: {
-    onlyCategories: ['performanceormance'],
+    onlyCategories: ['performance'],
     precomputedLanternData: {
       additionalRttByOrigin: {
         'http://localhost:10200': 500,
@@ -20,68 +20,62 @@ const config = {
   },
 };
 
+/** @type {Array<Smokehouse.TestDfnV2>} */
 module.exports = [
   {
     batch: 'performance',
     url: 'http://localhost:10200/online-only.html',
     config,
-    /** @param {() => Promise<Smokehouse.RunResult>} getResults */
-    describe(getResults) {
-      it('should compute the metric values using precomputedLanternData', async () => {
-        const {lhr} = await getResults();
-        expect(lhr.audits['first-contentful-paint'].numericValue).toBeGreaterThan(2000);
-        expect(lhr.audits['first-cpu-idle'].numericValue).toBeGreaterThan(2000);
-        expect(lhr.audits['interactive'].numericValue).toBeGreaterThan(2000);
-      });
+    assertions: {
+      audits: {
+        'first-contentful-paint': '>2000',
+        'first-cpu-idle': '>2000',
+        interactive: '>2000',
+      },
     },
   },
   {
     batch: 'performance',
     url: 'http://localhost:10200/tricky-main-thread.html?setTimeout',
     config,
-    /** @param {() => Promise<Smokehouse.RunResult>} getResults */
-    describe(getResults) {
-      it('should compute the metric values correctly', async () => {
-        const {lhr} = await getResults();
-
+    assertions: {
+      audits: {
         // The scripts stalls for 3 seconds and lantern has a 4x multiplier so 12s minimum.
-        expect(lhr.audits['interactive'].numericValue).toBeGreaterThan(12000);
-      });
-
-      it('should attribute bootup time correclty', async () => {
-        const {lhr} = await getResults();
-        const {items} = lhr.audits['bootup-time'].details;
-
-        expect(items[0].scripting).toBeGreaterThan(1000);
-
-        // FIXME: Appveyor finds the following assertion very flaky for some reason :(
-        if (process.env.APPVEYOR) return;
-        expect(items[0].url).toContain('main-thread-consumer');
-      });
+        interactive: '>12000',
+        'bootup-time': {
+          details: {
+            items: [
+              {
+                scripting: '>1000',
+                // FIXME: Appveyor finds the following assertion very flaky for some reason :(
+                url: process.env.APPVEYOR ? /main-thread/ : /main-thread-consumer/,
+              },
+            ],
+          },
+        },
+      },
     },
   },
   {
     batch: 'performance',
     url: 'http://localhost:10200/tricky-main-thread.html?fetch',
     config,
-    /** @param {() => Promise<Smokehouse.RunResult>} getResults */
-    describe(getResults) {
-      it('should compute the metric values correctly', async () => {
-        const {lhr} = await getResults();
-
+    assertions: {
+      audits: {
         // The scripts stalls for 3 seconds and lantern has a 4x multiplier so 12s minimum.
-        expect(lhr.audits['interactive'].numericValue).toBeGreaterThan(12000);
-      });
-
-      it('should attribute bootup time correclty', async () => {
-        const {lhr} = await getResults();
-        const {items} = lhr.audits['bootup-time'].details;
-
-        expect(items[0].scripting).toBeGreaterThan(1000);
-
-        // TODO: requires sampling profiler and async stacks, see https://github.com/GoogleChrome/lighthouse/issues/8526
-        // expect(items[0].url).toContain('main-thread-consumer');
-      });
+        interactive: '>12000',
+        'bootup-time': {
+          details: {
+            items: [
+              {
+                scripting: '>1000',
+                // TODO: requires sampling profiler and async stacks, see https://github.com/GoogleChrome/lighthouse/issues/8526
+                // url: /main-thread-consumer/,
+              },
+            ],
+          },
+        },
+      },
     },
   },
 ];
