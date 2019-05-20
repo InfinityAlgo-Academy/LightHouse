@@ -36,20 +36,6 @@ class CriConnection extends Connection {
   connect() {
     return this._runJsonCommand('new')
       .then(response => this._connectToSocket(/** @type {LH.DevToolsJsonTarget} */(response)))
-      .catch(_ => {
-        // Compat: headless didn't support `/json/new` before m59. (#970, crbug.com/699392)
-        // If no support, we fallback and reuse an existing open tab
-        log.warn('CriConnection', 'Cannot create new tab; reusing open tab.');
-        return this._runJsonCommand('list').then(tabs => {
-          if (!Array.isArray(tabs) || tabs.length === 0) {
-            return Promise.reject(new Error('Cannot create new tab, and no tabs already open.'));
-          }
-          const firstTab = tabs[0];
-          // first, we activate it to a foreground tab, then we connect
-          return this._runJsonCommand(`activate/${firstTab.id}`)
-              .then(() => this._connectToSocket(firstTab));
-        });
-      });
   }
 
   /**
