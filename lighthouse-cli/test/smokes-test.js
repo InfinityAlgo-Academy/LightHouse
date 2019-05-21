@@ -83,7 +83,7 @@ expect.extend({
           `  Expected: ${this.utils.printExpected(result.diff.expected)}`,
           `  Received: ${this.utils.printReceived(result.diff.actual)}`,
           `  Complete Result:`,
-          this.utils.RECEIVED_COLOR(fullActualWithNewlines),
+          this.utils.RECEIVED_COLOR(fullActualWithNewlines), // eslint-disable-line new-cap
         ].join('\n');
       } else {
         return [

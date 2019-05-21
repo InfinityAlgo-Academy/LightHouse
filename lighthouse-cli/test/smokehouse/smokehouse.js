@@ -62,7 +62,7 @@ async function run() {
     const counts = report(collated);
     passingCount += counts.passed;
     failingCount += counts.failed;
-  };
+  }
 
   if (passingCount) {
     console.log(log.greenify(`${passingCount} passing`));
@@ -73,4 +73,4 @@ async function run() {
   }
 }
 
-run()
+run();
