@@ -43,7 +43,7 @@ describe('PerfCategoryRenderer', () => {
 
     // TODO: don't call a LH.ReportResult `sampleResults`, which is typically always LH.Result
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
-    category = sampleResults.reportCategories.find(cat => cat.id === 'performance');
+    category = sampleResults.categories.performance;
   });
 
   afterAll(() => {

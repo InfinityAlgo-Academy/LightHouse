@@ -46,8 +46,7 @@ describe('CategoryRenderer', () => {
   });
 
   it('renders an audit', () => {
-    const auditRef = sampleResults.reportCategories
-      .find(c => c.id === 'pwa').auditRefs
+    const auditRef = sampleResults.categories.pwa.auditRefs
       .find(a => a.id === 'works-offline');
 
     const auditDOM = renderer.renderAudit(auditRef);
@@ -157,7 +156,7 @@ describe('CategoryRenderer', () => {
   });
 
   it('renders a category', () => {
-    const category = sampleResults.reportCategories.find(c => c.id === 'pwa');
+    const category = sampleResults.categories.pwa;
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
     const categoryEl = categoryDOM.querySelector('.lh-category-header');
@@ -179,7 +178,7 @@ describe('CategoryRenderer', () => {
 
   it('plugin category has plugin badge', () => {
     const category = JSON.parse(
-      JSON.stringify(sampleResults.reportCategories.find(c => c.id === 'seo')));
+      JSON.stringify(sampleResults.categories.seo));
     category.id = 'lighthouse-plugin-someplugin';
     category.title = 'Some Plugin';
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
@@ -189,7 +188,7 @@ describe('CategoryRenderer', () => {
   });
 
   it('handles markdown in category descriptions a category', () => {
-    const category = sampleResults.reportCategories.find(c => c.id === 'pwa');
+    const category = sampleResults.categories.pwa;
     const prevDesc = category.description;
     category.description += ' [link text](http://example.com).';
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
@@ -199,7 +198,7 @@ describe('CategoryRenderer', () => {
   });
 
   it('renders manual audits if the category contains them', () => {
-    const pwaCategory = sampleResults.reportCategories.find(cat => cat.id === 'pwa');
+    const pwaCategory = sampleResults.categories.pwa;
     const categoryDOM = renderer.render(pwaCategory, sampleResults.categoryGroups);
     assert.ok(categoryDOM.querySelector('.lh-clump--manual .lh-audit-group__summary'));
     assert.equal(categoryDOM.querySelectorAll('.lh-audit--manual').length, 3,
@@ -214,7 +213,7 @@ describe('CategoryRenderer', () => {
   });
 
   it('renders not applicable audits if the category contains them', () => {
-    const a11yCategory = sampleResults.reportCategories.find(cat => cat.id === 'accessibility');
+    const a11yCategory = sampleResults.categories.accessibility;
     const categoryDOM = renderer.render(a11yCategory, sampleResults.categoryGroups);
     assert.ok(categoryDOM.querySelector(
         '.lh-clump--notapplicable .lh-audit-group__summary'));
@@ -227,7 +226,7 @@ describe('CategoryRenderer', () => {
       'score shows informative and dash icon'
     );
 
-    const bestPracticeCat = sampleResults.reportCategories.find(cat => cat.id === 'best-practices');
+    const bestPracticeCat = sampleResults.categories['best-practices'];
     const categoryDOM2 = renderer.render(bestPracticeCat, sampleResults.categoryGroups);
     assert.ok(!categoryDOM2.querySelector('.lh-clump--notapplicable'));
   });
@@ -236,7 +235,7 @@ describe('CategoryRenderer', () => {
     let category;
 
     beforeEach(() => {
-      category = sampleResults.reportCategories.find(cat => cat.id === 'accessibility');
+      category = sampleResults.categories.accessibility;
     });
 
     it('renders the category header', () => {
@@ -352,7 +351,7 @@ describe('CategoryRenderer', () => {
 
   describe('clumping passed/failed/warning/manual', () => {
     it('separates audits in the DOM', () => {
-      const category = sampleResults.reportCategories.find(c => c.id === 'pwa');
+      const category = sampleResults.categories.pwa;
       const categoryClone = JSON.parse(JSON.stringify(category));
       // Give the first two passing grades warnings
       const passingRefs = categoryClone.auditRefs.filter(ref => ref.result.score === 1);
@@ -372,7 +371,7 @@ describe('CategoryRenderer', () => {
     });
 
     it('doesnt create a passed section if there were 0 passed', () => {
-      const origCategory = sampleResults.reportCategories.find(c => c.id === 'pwa');
+      const origCategory = sampleResults.categories.pwa;
       const category = JSON.parse(JSON.stringify(origCategory));
       category.auditRefs.forEach(audit => audit.result.score = 0);
       const elem = renderer.render(category, sampleResults.categoryGroups);
@@ -384,7 +383,7 @@ describe('CategoryRenderer', () => {
     });
 
     it('expands warning audit group', () => {
-      const category = sampleResults.reportCategories.find(c => c.id === 'pwa');
+      const category = sampleResults.categories.pwa;
       const categoryClone = JSON.parse(JSON.stringify(category));
       categoryClone.auditRefs[0].result.warnings = ['Some warning'];
 

@@ -99,12 +99,9 @@ class Util {
       Util.updateAllUIStrings(clone.i18n.rendererFormattedStrings);
     }
 
-    // Transform object of categories into array of categories.
-    if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
-    clone.reportCategories = Object.values(clone.categories);
-
     // For convenience, smoosh all AuditResults into their auditRef (which has just weight & group)
-    for (const category of clone.reportCategories) {
+    if (typeof clone.categories !== 'object') throw new Error('No categories provided.');
+    for (const category of Object.values(clone.categories)) {
       category.auditRefs.forEach(auditRef => {
         const result = clone.audits[auditRef.id];
         auditRef.result = result;

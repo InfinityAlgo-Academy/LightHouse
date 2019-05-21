@@ -1476,15 +1476,20 @@ class Driver {
   }
 
   /**
-   * Emulate internet disconnection.
+   * Clear the network cache on disk and in memory.
    * @return {Promise<void>}
    */
-  cleanBrowserCaches() {
+  async cleanBrowserCaches() {
+    const status = {msg: 'Cleaning browser cache', id: 'lh:driver:cleanBrowserCaches'};
+    log.time(status);
+
     // Wipe entire disk cache
-    return this.sendCommand('Network.clearBrowserCache')
-      // Toggle 'Disable Cache' to evict the memory cache
-      .then(_ => this.sendCommand('Network.setCacheDisabled', {cacheDisabled: true}))
-      .then(_ => this.sendCommand('Network.setCacheDisabled', {cacheDisabled: false}));
+    await this.sendCommand('Network.clearBrowserCache');
+    // Toggle 'Disable Cache' to evict the memory cache
+    await this.sendCommand('Network.setCacheDisabled', {cacheDisabled: true});
+    await this.sendCommand('Network.setCacheDisabled', {cacheDisabled: false});
+
+    log.timeEnd(status);
   }
 
   /**
