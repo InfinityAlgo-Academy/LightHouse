@@ -154,6 +154,16 @@ function collateResults(actual, expected) {
     return makeComparison(auditName + ' audit', actualResult, expectedResult);
   });
 
+  const urlAssertions = [];
+  if (expected.lhr.finalUrl) {
+    urlAssertions.push({
+      name: 'final url',
+      actual: actual.lhr.finalUrl,
+      expected: expected.lhr.finalUrl,
+      equal: actual.lhr.finalUrl === expected.lhr.finalUrl,
+    });
+  }
+
   return [
     {
       name: 'error code',
@@ -161,12 +171,7 @@ function collateResults(actual, expected) {
       expected: expected.errorCode,
       equal: actual.errorCode === expected.errorCode,
     },
-    {
-      name: 'final url',
-      actual: actual.lhr.finalUrl,
-      expected: expected.lhr.finalUrl,
-      equal: actual.lhr.finalUrl === expected.lhr.finalUrl,
-    },
+    ...urlAssertions,
     ...artifactAssertions,
     ...auditAssertions,
   ];

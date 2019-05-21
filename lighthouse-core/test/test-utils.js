@@ -16,7 +16,7 @@ expect.extend({
       expected.test(actual) :
       actual === expected;
 
-    const message = () =>
+    const messsage = () =>
       [
         `${this.utils.matcherHint('.toBeDisplayString')}\n`,
         `Expected object to be a display string matching:`,

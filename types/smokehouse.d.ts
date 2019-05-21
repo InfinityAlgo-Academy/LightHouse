@@ -39,6 +39,8 @@
     config: LH.Config.Json
     batch?: string
     assertions?: ExpectedRunnerResult
-    describe?(getResults: () => Promise<ExpectedRunnerResult>): void
+    describe?(getResults: () => Promise<ExpectedRunnerResult | undefined>): void
+    /** Dynamically populated by the test harness */
+    results?: ExpectedRunnerResult
   }
 }

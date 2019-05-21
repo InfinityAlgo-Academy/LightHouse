@@ -27,10 +27,12 @@ module.exports = [
     url: 'http://localhost:10200/online-only.html',
     config,
     assertions: {
-      audits: {
-        'first-contentful-paint': '>2000',
-        'first-cpu-idle': '>2000',
-        interactive: '>2000',
+      lhr: {
+        audits: {
+          'first-contentful-paint': {numericValue: '>2000'},
+          'first-cpu-idle': {numericValue: '>2000'},
+          interactive: {numericValue: '>2000'},
+        },
       },
     },
   },
@@ -39,18 +41,20 @@ module.exports = [
     url: 'http://localhost:10200/tricky-main-thread.html?setTimeout',
     config,
     assertions: {
-      audits: {
-        // The scripts stalls for 3 seconds and lantern has a 4x multiplier so 12s minimum.
-        interactive: '>12000',
-        'bootup-time': {
-          details: {
-            items: [
-              {
-                scripting: '>1000',
-                // FIXME: Appveyor finds the following assertion very flaky for some reason :(
-                url: process.env.APPVEYOR ? /main-thread/ : /main-thread-consumer/,
-              },
-            ],
+      lhr: {
+        audits: {
+          // The scripts stalls for 3 seconds and lantern has a 4x multiplier so 12s minimum.
+          interactive: {numericValue: '>12000'},
+          'bootup-time': {
+            details: {
+              items: [
+                {
+                  scripting: '>1000',
+                  // FIXME: Appveyor finds the following assertion very flaky for some reason :(
+                  url: process.env.APPVEYOR ? /main-thread/ : /main-thread-consumer/,
+                },
+              ],
+            },
           },
         },
       },
@@ -61,18 +65,20 @@ module.exports = [
     url: 'http://localhost:10200/tricky-main-thread.html?fetch',
     config,
     assertions: {
-      audits: {
-        // The scripts stalls for 3 seconds and lantern has a 4x multiplier so 12s minimum.
-        interactive: '>12000',
-        'bootup-time': {
-          details: {
-            items: [
-              {
-                scripting: '>1000',
-                // TODO: requires sampling profiler and async stacks, see https://github.com/GoogleChrome/lighthouse/issues/8526
-                // url: /main-thread-consumer/,
-              },
-            ],
+      lhr: {
+        audits: {
+          // The scripts stalls for 3 seconds and lantern has a 4x multiplier so 12s minimum.
+          interactive: {numericValue: '>12000'},
+          'bootup-time': {
+            details: {
+              items: [
+                {
+                  scripting: '>1000',
+                  // TODO: requires sampling profiler and async stacks, see https://github.com/GoogleChrome/lighthouse/issues/8526
+                  // url: /main-thread-consumer/,
+                },
+              ],
+            },
           },
         },
       },
