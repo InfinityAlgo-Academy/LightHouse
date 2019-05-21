@@ -44,7 +44,7 @@ module.exports = [
       lhr: {
         audits: {
           // The scripts stalls for 3 seconds and lantern has a 4x multiplier so 12s minimum.
-          'interactive': {numericValue: '>12000'},
+          'interactive': {numericValue: process.env.APPVEYOR ? '>3000' : '>12000'},
           'bootup-time': {
             details: {
               items: [
@@ -68,7 +68,7 @@ module.exports = [
       lhr: {
         audits: {
           // The scripts stalls for 3 seconds and lantern has a 4x multiplier so 12s minimum.
-          'interactive': {numericValue: '>12000'},
+          'interactive': {numericValue: process.env.APPVEYOR ? '>3000' : '>12000'},
           'bootup-time': {
             details: {
               items: [
