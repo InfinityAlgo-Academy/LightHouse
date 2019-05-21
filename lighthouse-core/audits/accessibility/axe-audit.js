@@ -55,6 +55,7 @@ class AxeAudit extends Audit {
           snippet: node.html || node.snippet,
           boundingRect: node.boundingRect,
           explanation: node.failureSummary,
+          nodeLabel: node.nodeLabel,
         }),
       }));
     }

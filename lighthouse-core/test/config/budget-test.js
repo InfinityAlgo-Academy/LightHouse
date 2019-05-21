@@ -146,6 +146,18 @@ describe('Budget', () => {
       assert.throws(_ => Budget.initializeBudget(budget),
         /Resource Budget has unrecognized properties: \[browser\]/);
     });
+
+    it('throws when a duplicate resourceType is specified in resourceSizes', () => {
+      budget[1].resourceSizes.push({resourceType: 'script', budget: 100});
+      assert.throws(_ => Budget.initializeBudget(budget),
+        /budgets\[1\]\.resourceSizes has duplicate entry of type 'script'/);
+    });
+
+    it('throws when a duplicate resourceType is specified in resourceCounts', () => {
+      budget[0].resourceCounts.push({resourceType: 'third-party', budget: 100});
+      assert.throws(_ => Budget.initializeBudget(budget),
+        /budgets\[0\]\.resourceCounts has duplicate entry of type 'third-party'/);
+    });
   });
 
   describe('timing budget validation', () => {
@@ -171,6 +183,12 @@ describe('Budget', () => {
       budget[0].timings[0].location = 'The middle somewhere, I don\'t know';
       assert.throws(_ => Budget.initializeBudget(budget),
         /Timing Budget has unrecognized properties: \[device, location\]/);
+    });
+
+    it('throws when a duplicate metric type is specified in timings', () => {
+      budget[0].timings.push({metric: 'interactive', budget: 1000});
+      assert.throws(_ => Budget.initializeBudget(budget),
+        /budgets\[0\]\.timings has duplicate entry of type 'interactive'/);
     });
   });
 });

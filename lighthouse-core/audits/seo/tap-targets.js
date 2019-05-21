@@ -255,6 +255,7 @@ function targetToTableNode(target) {
     path: target.path,
     selector: target.selector,
     boundingRect,
+    nodeLabel: target.nodeLabel,
   };
 }
 

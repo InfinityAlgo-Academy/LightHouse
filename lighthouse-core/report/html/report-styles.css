@@ -80,7 +80,8 @@
   --chevron-size: 12px;
   --inner-audit-left-padding: calc(var(--score-shape-size) + var(--score-shape-margin-left) + var(--score-shape-margin-right));
 
-  /* Palette. */
+  /* Palette using Material Design Colors
+   * https://www.materialui.co/colors */
   --color-black-100: #F5F5F5;
   --color-black-200: #E0E0E0;
   --color-black-400: #BDBDBD;
@@ -100,6 +101,8 @@
   --color-white: #FFFFFF;
   --color-blue-200: #90CAF9;
   --color-blue-900: #0D47A1;
+  --color-cyan-500: #00BCD4;
+  --color-teal-600: #00897B;
 
 
   /* TODO(cjamcl) clean up unused variables. */
@@ -175,6 +178,7 @@
 .lh-vars.dark {
   --color-red-700: var(--color-red);
   --color-green-700: var(--color-green);
+  --color-teal-600: var(--color-cyan-500);
   --color-orange-700: var(--color-orange);
 
   --color-black-200: var(--color-black-800);
@@ -388,10 +392,11 @@
 }
 
 /* Node */
-.lh-node {
-  display: block;
+.lh-node__snippet {
   font-family: var(--monospace-font-family);
-  color: hsl(174, 100%, 27%);
+  color: var(--color-teal-600);
+  font-size: 12px;
+  line-height: 1.5em;
 }
 
 /* Score */
@@ -1022,9 +1027,133 @@
   border: 0;
 }
 
-.lh-gauge__wrapper {
-  padding: var(--score-container-padding);
+/* Gauge */
+
+.lh-gauge__wrapper--pass {
+  color: var(--color-pass);
+  fill: var(--color-pass);
+  stroke: var(--color-pass);
 }
+
+.lh-gauge__wrapper--average {
+  color: var(--color-average);
+  fill: var(--color-average);
+  stroke: var(--color-average);
+}
+
+.lh-gauge__wrapper--fail {
+  color: var(--color-fail);
+  fill: var(--color-fail);
+  stroke: var(--color-fail);
+}
+
+.lh-gauge {
+  stroke-linecap: round;
+  width: var(--gauge-circle-size);
+  height: var(--gauge-circle-size);
+}
+
+.lh-category .lh-gauge {
+  --gauge-circle-size: var(--gauge-circle-size-big);
+}
+
+.lh-gauge-base {
+    opacity: 0.1;
+    stroke: var(--circle-background);
+    stroke-width: var(--circle-border-width);
+}
+
+.lh-gauge-arc {
+    fill: none;
+    stroke: var(--circle-color);
+    stroke-width: var(--circle-border-width);
+    animation: load-gauge var(--transition-length) ease forwards;
+    animation-delay: 250ms;
+}
+
+.lh-gauge__svg-wrapper {
+  position: relative;
+  height: var(--gauge-circle-size);
+}
+.lh-category .lh-gauge__svg-wrapper {
+  --gauge-circle-size: var(--gauge-circle-size-big);
+}
+
+/* The plugin badge overlay */
+.lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
+  width: var(--plugin-badge-size);
+  height: var(--plugin-badge-size);
+  background-color: var(--plugin-badge-bg);
+  background-image: var(--plugin-icon-url);
+  background-repeat: no-repeat;
+  background-size: var(--plugin-icon-size);
+  background-position: 58% 50%;
+  content: "";
+  position: absolute;
+  right: -6px;
+  bottom: 0px;
+  display: block;
+  z-index: 100;
+  box-shadow: 0 0 4px rgba(0,0,0,.2);
+  border-radius: 25%;
+}
+.lh-category .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
+  width: var(--plugin-badge-size-big);
+  height: var(--plugin-badge-size-big);
+}
+
+@keyframes load-gauge {
+  from { stroke-dasharray: 0 352; }
+}
+
+.lh-gauge__percentage {
+  width: 100%;
+  height: var(--inset-size);
+  position: absolute;
+  border-radius: inherit;
+  font-family: var(--monospace-font-family);
+  font-size: var(--score-number-font-size);
+  line-height: var(--score-number-font-size);
+  text-align: center;
+  top: calc(var(--score-container-padding) + var(--gauge-circle-size) / 3);
+}
+
+.lh-category .lh-gauge__percentage {
+  --gauge-circle-size: var(--gauge-circle-size-big);
+  --score-number-font-size: var(--score-number-font-size-big);
+}
+
+.lh-gauge__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-decoration: none;
+  padding: var(--score-container-padding);
+
+  --circle-border-width: 8;
+  --transition-length: 1s;
+
+  /* Contain the layout style paint & layers during animation*/
+  contain: content;
+  will-change: opacity; /* Only using for layer promotion */
+}
+
+.lh-gauge__label {
+  font-size: var(--score-title-font-size);
+  line-height: var(--score-title-line-height);
+  margin-top: 10px;
+  text-align: center;
+  color: var(--body-text-color);
+}
+
+/* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendant selector */
+.lh-category .lh-gauge__label {
+  --score-title-font-size: var(--score-title-font-size-big);
+  --score-title-line-height: var(--score-title-line-height-big);
+  margin-top: 14px;
+}
+
 
 .lh-scores-header .lh-gauge__wrapper,
 .lh-scores-header .lh-gauge--pwa__wrapper,

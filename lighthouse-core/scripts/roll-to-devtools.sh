@@ -21,6 +21,8 @@ else
   frontend_dir="$chromium_dir/third_party/blink/renderer/devtools/front_end"
 fi
 
+tests_dir="$frontend_dir/../../../web_tests/http/tests/devtools/audits2"
+
 if [[ ! -d "$frontend_dir" || ! -a "$frontend_dir/Runtime.js" ]]; then
   echo -e "\033[31m✖ Error!\033[39m"
   echo "This script requires a devtools frontend folder. We didn't find one here:"
@@ -42,3 +44,9 @@ echo -e "\033[96m ✓\033[39m (Potentially stale) lighthouse-dt-bundle copied."
 
 # copy report generator + cached resources into $fe_lh_dir
 cp -r dist/dt-report-resources/ $fe_lh_dir
+
+# update expected version string in tests
+VERSION=$(node -e "console.log(require('./package.json').version)")
+sed -i '' -e "s/Version:.*/Version: $VERSION/g" "$tests_dir"/*-expected.txt
+
+echo "Done. To rebase the test expectations, run: ~/chromium/src/third_party/blink/tools/run_web_tests.py --no-retry 'http/tests/devtools/audits2/*' --reset-results"
