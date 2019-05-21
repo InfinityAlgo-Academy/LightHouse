@@ -1,19 +1,15 @@
-#!/usr/bin/env node
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 Google Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-/* eslint-disable no-console */
-
 const fs = require('fs');
 const path = require('path');
-const spawnSync = require('child_process').spawnSync;
-const yargs = require('yargs');
+const mkdirp = require('mkdirp');
+const {spawn, spawnSync} = require('child_process');
 const log = require('lighthouse-logger');
-const {collateResults, report} = require('./smokehouse-report');
 
 const PROTOCOL_TIMEOUT_EXIT_CODE = 67;
 const PAGE_HUNG_EXIT_CODE = 68;
@@ -21,37 +17,47 @@ const INSECURE_DOCUMENT_REQUEST_EXIT_CODE = 69;
 const RETRIES = 3;
 
 /**
- * Attempt to resolve a path locally. If this fails, attempts to locate the path
- * relative to the current working directory.
- * @param {string} payloadPath
- * @return {string}
+ * @param {string} cmd
+ * @param {string[]} cmdArgs
+ * @return {Promise<{status: number, stdout: string, stderr: string}>}
  */
-function resolveLocalOrCwd(payloadPath) {
-  let resolved;
-  try {
-    resolved = require.resolve('./' + payloadPath);
-  } catch (e) {
-    const cwdPath = path.resolve(process.cwd(), payloadPath);
-    resolved = require.resolve(cwdPath);
-  }
+function spawnAsync(cmd, cmdArgs) {
+  let stdout = '';
+  let stderr = '';
 
-  return resolved;
+  return new Promise(resolve => {
+    const childProcess = spawn(cmd, cmdArgs);
+    childProcess.stdout.on('data', data => (stdout += data.toString()));
+    childProcess.stderr.on('data', data => (stderr += data.toString()));
+    childProcess.on('exit', code => resolve({status: code === null ? 1 : code, stderr, stdout}));
+  });
 }
 
 /**
  * Launch Chrome and do a full Lighthouse run.
  * @param {string} url
- * @param {string} configPath
- * @param {boolean=} isDebug
- * @return {Smokehouse.ExpectedRunnerResult}
+ * @param {string|LH.Config.Json} configPathOrConfig
+ * @param {{isDebug?: boolean, isAsync?: boolean, logger?: Pick<Console, 'log'|'error'>, exit?: (code: number) => void}} [options]
+ * @return {Promise<Smokehouse.ExpectedRunnerResult>}
  */
-function runLighthouse(url, configPath, isDebug) {
-  isDebug = isDebug || Boolean(process.env.LH_SMOKE_DEBUG);
+async function runLighthouse(url, configPathOrConfig, options = {}) {
+  const exitFn = options.exit || process.exit;
+  const logger = options.logger || console;
+  const isAsync = !!options.isAsync;
+  const isDebug = options.isDebug || Boolean(process.env.LH_SMOKE_DEBUG);
 
   const command = 'node';
   const randInt = Math.round(Math.random() * 100000);
   const outputPath = `smokehouse-${randInt}.report.json`;
-  const artifactsDirectory = `./.tmp/smokehouse-artifacts-${randInt}`;
+  const artifactsDirectory = path.join(__dirname, `../../../.tmp/smokehouse-artifacts-${randInt}`);
+  mkdirp.sync(artifactsDirectory);
+
+  let configPath = configPathOrConfig;
+  if (typeof configPath !== 'string') {
+    configPath = path.join(artifactsDirectory, 'config.json');
+    fs.writeFileSync(configPath, JSON.stringify(configPathOrConfig));
+  }
+
   const args = [
     'lighthouse-cli/index.js',
     url,
@@ -77,28 +83,32 @@ function runLighthouse(url, configPath, isDebug) {
   let runCount = 0;
   do {
     if (runCount > 0) {
-      console.log('  Lighthouse error: timed out waiting for debugger connection. Retrying...');
+      logger.log('  Lighthouse error: timed out waiting for debugger connection. Retrying...');
     }
 
     runCount++;
-    console.log(`${log.dim}$ ${command} ${args.join(' ')} ${log.reset}`);
-    runResults = spawnSync(command, args, {encoding: 'utf8', stdio: ['pipe', 'pipe', 'inherit']});
+    logger.log(`${log.dim}$ ${command} ${args.join(' ')} ${log.reset}`);
+    runResults = isAsync
+      ? await spawnAsync(command, args)
+      : spawnSync(command, args, {encoding: 'utf8', stdio: ['pipe', 'pipe', 'inherit']});
   } while (runResults.status === PROTOCOL_TIMEOUT_EXIT_CODE && runCount <= RETRIES);
 
   if (runResults.status === PROTOCOL_TIMEOUT_EXIT_CODE) {
-    console.error(`Lighthouse debugger connection timed out ${RETRIES} times. Giving up.`);
-    process.exit(1);
-  } else if (runResults.status !== 0
-     && runResults.status !== PAGE_HUNG_EXIT_CODE
-     && runResults.status !== INSECURE_DOCUMENT_REQUEST_EXIT_CODE) {
-    console.error(`Lighthouse run failed with exit code ${runResults.status}. stderr to follow:`);
-    console.error(runResults.stderr);
-    process.exit(runResults.status);
+    logger.error(`Lighthouse debugger connection timed out ${RETRIES} times. Giving up.`);
+    exitFn(1);
+  } else if (
+    runResults.status !== 0 &&
+    runResults.status !== PAGE_HUNG_EXIT_CODE &&
+    runResults.status !== INSECURE_DOCUMENT_REQUEST_EXIT_CODE
+  ) {
+    logger.error(`Lighthouse run failed with exit code ${runResults.status}. stderr to follow:`);
+    logger.error(runResults.stderr);
+    exitFn(runResults.status);
   }
 
   if (isDebug) {
-    console.log(`STDOUT: ${runResults.stdout}`);
-    console.error(`STDERR: ${runResults.stderr}`);
+    logger.log(`STDOUT: ${runResults.stdout}`);
+    logger.error(`STDERR: ${runResults.stderr}`);
   }
 
   let errorCode;
@@ -110,7 +120,7 @@ function runLighthouse(url, configPath, isDebug) {
   } else {
     lhr = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
     if (isDebug) {
-      console.log('LHR output available at: ', outputPath);
+      logger.log('LHR output available at: ', outputPath);
     } else if (fs.existsSync(outputPath)) {
       fs.unlinkSync(outputPath);
     }
@@ -129,40 +139,4 @@ function runLighthouse(url, configPath, isDebug) {
   };
 }
 
-const cli = yargs
-  .help('help')
-  .describe({
-    'config-path': 'The path to the config JSON file',
-    'expectations-path': 'The path to the expected audit results file',
-    'debug': 'Save the artifacts along with the output',
-  })
-  .require('config-path', true)
-  .require('expectations-path', true)
-  .argv;
-
-const configPath = resolveLocalOrCwd(cli['config-path']);
-/** @type {Smokehouse.ExpectedRunnerResult[]} */
-const expectations = require(resolveLocalOrCwd(cli['expectations-path']));
-
-// Loop sequentially over expectations, comparing against Lighthouse run, and
-// reporting result.
-let passingCount = 0;
-let failingCount = 0;
-expectations.forEach(expected => {
-  console.log(`Doing a run of '${expected.lhr.requestedUrl}'...`);
-  const results = runLighthouse(expected.lhr.requestedUrl, configPath, cli.debug);
-
-  console.log(`Asserting expected results match those found. (${expected.lhr.requestedUrl})`);
-  const collated = collateResults(results, expected);
-  const counts = report(collated);
-  passingCount += counts.passed;
-  failingCount += counts.failed;
-});
-
-if (passingCount) {
-  console.log(log.greenify(`${passingCount} passing`));
-}
-if (failingCount) {
-  console.log(log.redify(`${failingCount} failing`));
-  process.exit(1);
-}
+module.exports = {runLighthouse};
