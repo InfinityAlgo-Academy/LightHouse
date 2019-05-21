@@ -26,7 +26,7 @@ function createRequest(
   return {requestId, url, startTime, endTime, initiator, resourceType};
 }
 
-const TOPLEVEL_TASK_NAME = 'TaskQueueManager::ProcessTaskFromWorkQueue';
+const TOPLEVEL_TASK_NAME = 'RunTask';
 
 /* eslint-env jest */
 describe('PageDependencyGraph computed artifact:', () => {

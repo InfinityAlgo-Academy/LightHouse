@@ -8,15 +8,6 @@
 // The ideal input response latency, the time between the input task and the
 // first frame of the response.
 const BASE_RESPONSE_LATENCY = 16;
-// m71+ We added RunTask to `disabled-by-default-lighthouse`
-const SCHEDULABLE_TASK_TITLE_LH = 'RunTask';
-// m69-70 DoWork is different and we now need RunTask, see https://bugs.chromium.org/p/chromium/issues/detail?id=871204#c11
-const SCHEDULABLE_TASK_TITLE_ALT1 = 'ThreadControllerImpl::RunTask';
-// In m66-68 refactored to this task title, https://crrev.com/c/883346
-const SCHEDULABLE_TASK_TITLE_ALT2 = 'ThreadControllerImpl::DoWork';
-// m65 and earlier
-const SCHEDULABLE_TASK_TITLE_ALT3 = 'TaskQueueManager::ProcessTaskFromWorkQueue';
-
 
 const LHError = require('../lh-error');
 
@@ -264,14 +255,23 @@ class TraceProcessor {
   }
 
   /**
+   * Identifying tasks from a trace is fun!
+   * - In <= m65, tasks were named `TaskQueueManager::ProcessTaskFromWorkQueue`
+   * - In m66-68, `ThreadControllerImpl::DoWork`, https://crrev.com/c/883346
+   * - In m69-70, DoWork changed definitions and `ThreadControllerImpl::RunTask` became our event, https://bugs.chromium.org/p/chromium/issues/detail?id=871204#c11
+   * - In m71+, We added RunTask to `disabled-by-default-lighthouse`
+   * - In m74+ RunTask moved to the `devtools-timeline` category, making the LH cat moot, http://crrev.com/630929
+   * - Soon after, in http://crrev.com/642705 RunTask moved to `disabled-by-default-devtools.timeline`
+   * and regressed as didn't catch top-level events inside microtasks,
+   * - This was identified & fixed in http://crbug.com/953914. The fix made it to m75 before stable release.
+   *
+   * In summary: as of m75, `cat: 'disabled-by-default-devtools.timeline', name: 'RunTask'` events are top-level tasks.
+   *
    * @param {LH.TraceEvent} evt
    * @return {boolean}
    */
   static isScheduleableTask(evt) {
-    return evt.name === SCHEDULABLE_TASK_TITLE_LH ||
-    evt.name === SCHEDULABLE_TASK_TITLE_ALT1 ||
-    evt.name === SCHEDULABLE_TASK_TITLE_ALT2 ||
-    evt.name === SCHEDULABLE_TASK_TITLE_ALT3;
+    return evt.name === 'RunTask'
   }
 }
 

@@ -90,9 +90,7 @@ const taskGroups = {
     id: 'other',
     label: 'Other',
     traceEventNames: [
-      'MessageLoop::RunTask',
-      'TaskQueueManager::ProcessTaskFromWorkQueue',
-      'ThreadControllerImpl::DoWork',
+      'RunTask',
     ],
   },
 };

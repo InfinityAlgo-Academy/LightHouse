@@ -29,7 +29,7 @@ describe('Metrics: FMP', () => {
     trace.traceEvents.push({
       ...mainThreadEvt,
       cat: 'toplevel',
-      name: 'TaskQueueManager::ProcessTaskFromWorkQueue',
+      name: 'RunTask',
     });
   }
 

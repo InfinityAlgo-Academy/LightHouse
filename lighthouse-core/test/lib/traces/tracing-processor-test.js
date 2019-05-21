@@ -157,7 +157,7 @@ describe('TracingProcessor lib', () => {
 
     it('filters events based on start and end times', () => {
       const baseTime = 20000 * 1000;
-      const name = 'TaskQueueManager::ProcessTaskFromWorkQueue';
+      const name = 'RunTask';
       const tabTrace = {
         navigationStartEvt: {ts: baseTime},
         mainThreadEvents: [

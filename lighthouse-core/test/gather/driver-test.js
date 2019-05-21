@@ -352,8 +352,7 @@ describe('.beginTrace', () => {
 
     const tracingStartArgs = connectionStub.sendCommand.findInvocation('Tracing.start');
     expect(tracingStartArgs.categories).toContain('devtools.timeline');
-    expect(tracingStartArgs.categories).not.toContain('toplevel');
-    expect(tracingStartArgs.categories).toContain('disabled-by-default-lighthouse');
+    expect(tracingStartArgs.categories).toContain('disabled-by-default-devtools.timeline');
   });
 
   it('will use requested additionalTraceCategories', async () => {
@@ -364,20 +363,6 @@ describe('.beginTrace', () => {
     expect(tracingStartArgs.categories).toContain('xtra_cat');
     // Make sure it deduplicates categories too
     expect(tracingStartArgs.categories).not.toMatch(/loading.*loading/);
-  });
-
-  it('will adjust traceCategories based on chrome version', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Browser.getVersion', {product: 'Chrome/70.0.3577.0'})
-      .mockResponse('Page.enable', {})
-      .mockResponse('Tracing.start', {});
-
-    await driver.beginTrace();
-
-    const tracingStartArgs = connectionStub.sendCommand.findInvocation('Tracing.start');
-    // m70 doesn't have disabled-by-default-lighthouse, so 'toplevel' is used instead.
-    expect(tracingStartArgs.categories).toContain('toplevel');
-    expect(tracingStartArgs.categories).not.toContain('disabled-by-default-lighthouse');
   });
 });
 

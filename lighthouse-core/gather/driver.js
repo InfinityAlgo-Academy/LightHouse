@@ -100,9 +100,6 @@ class Driver {
       // Exclude default categories. We'll be selective to minimize trace size
       '-*',
 
-      // Used instead of 'toplevel' in Chrome 71+
-      'disabled-by-default-lighthouse',
-
       // All compile/execute events are captured by parent events in devtools.timeline..
       // But the v8 category provides some nice context for only <0.5% of the trace size
       'v8',
@@ -116,7 +113,7 @@ class Driver {
       // Not mandatory but not used much
       'blink.console',
 
-      // Most the events we need come in on these two
+      // Most the events we need, including top-level tasks, come in on these two
       'devtools.timeline',
       'disabled-by-default-devtools.timeline',
 
@@ -1332,15 +1329,6 @@ class Driver {
     const additionalCategories = (settings && settings.additionalTraceCategories &&
         settings.additionalTraceCategories.split(',')) || [];
     const traceCategories = this._traceCategories.concat(additionalCategories);
-
-    // In Chrome <71, gotta use the chatty 'toplevel' cat instead of our own.
-    // TODO(COMPAT): Once m71 ships to stable, drop this section
-    const milestone = (await this.getBrowserVersion()).milestone;
-    if (milestone < 71) {
-      const toplevelIndex = traceCategories.indexOf('disabled-by-default-lighthouse');
-      traceCategories[toplevelIndex] = 'toplevel';
-    }
-
     const uniqueCategories = Array.from(new Set(traceCategories));
 
     // Check any domains that could interfere with or add overhead to the trace.
