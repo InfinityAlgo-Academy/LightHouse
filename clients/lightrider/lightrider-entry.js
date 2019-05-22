@@ -55,7 +55,7 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
     if (!runnerResult) return;
 
     // pre process the LHR for proto
-    if (flags.output === 'json' && typeof runnerResult.report === 'string') {
+    if (typeof runnerResult.report === 'string') {
       // When LR is called with |internal: {keep_raw_response: true, save_lighthouse_assets: true}|,
       // this code will log artifacts to raw_response.artifacts.
       if (logAssets) {
