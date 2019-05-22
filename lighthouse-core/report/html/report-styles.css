@@ -260,6 +260,10 @@
   --audit-group-indent: 16px;
   --audit-indent: 16px;
   --expandable-indent: 16px;
+  --gauge-circle-size-big: 96px;
+  --gauge-circle-size: 72px;
+  /* There is no topbar in DevTools. */
+  --topbar-height: 0px;
 
   --lh-audit-vpadding: 4px;
   --lh-audit-hgap: 12px;
