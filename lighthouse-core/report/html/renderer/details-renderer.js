@@ -372,53 +372,66 @@ class DetailsRenderer {
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
 
+
+    // more efficient to convert to data url to blob?
+    // probably just have one class with a bug image instead of duplicating each time
+
     if (item.boundingRect && this._fullPageScreenshotAuditResult) {
-      element.addEventListener('click', () => {
-        console.log('click', elementScreenshot);
-        // for mobile
-        // todo: figure out if needs any other handlers like click to show, maybe disable hover?
-        if (elementScreenshot) {
-          console.log('removing');
-          elementScreenshot.remove();
-          elementScreenshot = null;
-        } else {
-          elementScreenshot = ElementScreenshotRenderer.render(
-            this._dom,
-            this._templateContext,
-            item,
-            this._fullPageScreenshotAuditResult
-          );
-          element.prepend(elementScreenshot);
-        }
-      });
+      const elementScreenshot = ElementScreenshotRenderer.render(
+        this._dom,
+        this._templateContext,
+        item,
+        this._fullPageScreenshotAuditResult
+      );
 
-      /** @type {Element} */
-      let elementScreenshot;
-      element.addEventListener('mouseenter', () => {
-        // temporary hack so that click happens before mouseenter on mobile
-        setTimeout(() => {
-          console.log('mouseenter', elementScreenshot);
-          if (!elementScreenshot) {
-            elementScreenshot = ElementScreenshotRenderer.render(
-              this._dom,
-              this._templateContext,
-              item,
-              this._fullPageScreenshotAuditResult
-            );
-            element.prepend(elementScreenshot);
-          }
-        }, 0);
-      });
+      element.prepend(elementScreenshot);
 
-      element.addEventListener('mouseleave', () => {
-        if (!window.keepForDebug) {
-          if (elementScreenshot) {
-            console.log('mouseleave', elementScreenshot);
-            elementScreenshot.remove();
-            elementScreenshot = null;
-          }
-        }
-      });
+      // element.addEventListener('click', () => {
+      //   console.log('click', elementScreenshot);
+      //   // for mobile
+      //   // todo: figure out if needs any other handlers like click to show, maybe disable hover?
+      //   if (elementScreenshot) {
+      //     console.log('removing');
+      //     elementScreenshot.remove();
+      //     elementScreenshot = null;
+      //   } else {
+      //     elementScreenshot = ElementScreenshotRenderer.render(
+      //       this._dom,
+      //       this._templateContext,
+      //       item,
+      //       this._fullPageScreenshotAuditResult
+      //     );
+      //     element.prepend(elementScreenshot);
+      //   }
+      // });
+
+      // /** @type {Element} */
+      // let elementScreenshot;
+      // element.addEventListener('mouseenter', () => {
+      //   // temporary hack so that click happens before mouseenter on mobile
+      //   setTimeout(() => {
+      //     console.log('mouseenter', elementScreenshot);
+      //     if (!elementScreenshot) {
+      //       elementScreenshot = ElementScreenshotRenderer.render(
+      //         this._dom,
+      //         this._templateContext,
+      //         item,
+      //         this._fullPageScreenshotAuditResult
+      //       );
+      //       element.prepend(elementScreenshot);
+      //     }
+      //   }, 0);
+      // });
+
+      // element.addEventListener('mouseleave', () => {
+      //   if (!window.keepForDebug) {
+      //     if (elementScreenshot) {
+      //       console.log('mouseleave', elementScreenshot);
+      //       elementScreenshot.remove();
+      //       elementScreenshot = null;
+      //     }
+      //   }
+      // });
     }
 
     return element;

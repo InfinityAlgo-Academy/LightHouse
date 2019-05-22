@@ -1500,19 +1500,26 @@
 .lh-element-screenshot {
   position: relative;
   pointer-events: none;
+  display: inline-block;
+  overflow: hidden;
+
+  float: left;
+  margin-right: 20px;
 }
 .lh-element-screenshot__content {
-  position: absolute;
+  /* position: absolute;
   right: 0px;
   box-shadow: 2px 2px 6px #999;
+  */
   overflow: hidden;
-  z-index: 1;
+  /*
+  z-index: 1; */
 
   /* Try always showing in bottom right **/
-  position: fixed;
+  /* position: fixed;
   right: 0 !important;
   bottom: 0;
-  top: auto !important;
+  top: auto !important; */
 }
 .lh-element-screenshot__image {
   outline: 2px solid #777;

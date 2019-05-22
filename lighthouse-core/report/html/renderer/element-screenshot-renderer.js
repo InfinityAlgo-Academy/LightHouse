@@ -101,11 +101,13 @@ class ElementScreenshotRenderer {
 
     let zoomFactor = 1;
     const displayedAreaSize = {
-      width: 420,
-      height: 300,
+      // width: 420,
+      // height: 300,
+      width: 147,
+      height: 100,
     };
     // For large elements zoom out to better show where on the page they are
-    if (boundingRect.height > 50) {
+    if (boundingRect.height > 50 || /* todo: maybe only apply the width criterium in the preview screenshot */ boundingRect.width > 100 ) {
       zoomFactor = 0.5;
       displayedAreaSize.width *= 2;
       displayedAreaSize.height *= 2;
