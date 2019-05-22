@@ -9,7 +9,7 @@
  * @fileoverview Checks that links, buttons, etc. are sufficiently large and that there's
  * no other tap target that's too close so that the user might accidentally tap on.
  */
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 const ComputedViewportMeta = require('../../computed/viewport-meta.js');
 const {
   rectsTouchOrOverlap,
@@ -18,8 +18,8 @@ const {
   allRectsContainedWithinEachOther,
   getLargestRect,
   getBoundingRectWithPadding,
-} = require('../../lib/rect-helpers');
-const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects');
+} = require('../../lib/rect-helpers.js');
+const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {

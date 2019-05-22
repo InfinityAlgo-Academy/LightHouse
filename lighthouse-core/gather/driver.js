@@ -5,17 +5,17 @@
  */
 'use strict';
 
-const NetworkRecorder = require('../lib/network-recorder');
-const emulation = require('../lib/emulation');
-const Element = require('../lib/element');
-const LHError = require('../lib/lh-error');
-const NetworkRequest = require('../lib/network-request');
+const NetworkRecorder = require('../lib/network-recorder.js');
+const emulation = require('../lib/emulation.js');
+const Element = require('../lib/element.js');
+const LHError = require('../lib/lh-error.js');
+const NetworkRequest = require('../lib/network-request.js');
 const EventEmitter = require('events').EventEmitter;
-const URL = require('../lib/url-shim');
-const constants = require('../config/constants');
+const URL = require('../lib/url-shim.js');
+const constants = require('../config/constants.js');
 
 const log = require('lighthouse-logger');
-const DevtoolsLog = require('./devtools-log');
+const DevtoolsLog = require('./devtools-log.js');
 
 const pageFunctions = require('../lib/page-functions.js');
 

@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit_ = require('../../../audits/byte-efficiency/byte-efficiency-audit');
-const NetworkNode = require('../../../lib/dependency-graph/network-node');
-const CPUNode = require('../../../lib/dependency-graph/cpu-node');
-const Simulator = require('../../../lib/dependency-graph/simulator/simulator');
+const ByteEfficiencyAudit_ = require('../../../audits/byte-efficiency/byte-efficiency-audit.js');
+const NetworkNode = require('../../../lib/dependency-graph/network-node.js');
+const CPUNode = require('../../../lib/dependency-graph/cpu-node.js');
+const Simulator = require('../../../lib/dependency-graph/simulator/simulator.js');
 const PageDependencyGraph = require('../../../computed/page-dependency-graph.js');
 const LoadSimulator = require('../../../computed/load-simulator.js');
 

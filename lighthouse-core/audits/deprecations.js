@@ -11,8 +11,8 @@
  * that contain deprecated API warnings sent by Chrome.
  */
 
-const Audit = require('./audit');
-const Util = require('../report/html/renderer/util');
+const Audit = require('./audit.js');
+const Util = require('../report/html/renderer/util.js');
 
 class Deprecations extends Audit {
   /**

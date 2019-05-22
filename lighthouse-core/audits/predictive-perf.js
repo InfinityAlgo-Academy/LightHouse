@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit');
-const Util = require('../report/html/renderer/util');
+const Audit = require('./audit.js');
+const Util = require('../report/html/renderer/util.js');
 
 const LanternFcp = require('../computed/metrics/lantern-first-contentful-paint.js');
 const LanternFmp = require('../computed/metrics/lantern-first-meaningful-paint.js');

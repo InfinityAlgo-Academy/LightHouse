@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const SplashScreenAudit = require('../../audits/splash-screen');
+const SplashScreenAudit = require('../../audits/splash-screen.js');
 const assert = require('assert');
-const manifestParser = require('../../lib/manifest-parser');
+const manifestParser = require('../../lib/manifest-parser.js');
 
 const manifestSrc = JSON.stringify(require('../fixtures/manifest.json'));
 const manifestDirtyJpgSrc = JSON.stringify(require('../fixtures/manifest-dirty-jpg.json'));

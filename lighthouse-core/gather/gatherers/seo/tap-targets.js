@@ -7,9 +7,9 @@
 
 /* global getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector, getNodeLabel */
 
-const Gatherer = require('../gatherer');
+const Gatherer = require('../gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
-const {rectContainsString, rectContains} = require('../../../lib/rect-helpers');
+const {rectContainsString, rectContains} = require('../../../lib/rect-helpers.js');
 
 const TARGET_SELECTORS = [
   'button',

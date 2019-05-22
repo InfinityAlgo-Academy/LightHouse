@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit');
-const LHError = require('../lib/lh-error');
+const Audit = require('./audit.js');
+const LHError = require('../lib/lh-error.js');
 const TraceOfTab = require('../computed/trace-of-tab.js');
 const Screenshots = require('../computed/screenshots.js');
 

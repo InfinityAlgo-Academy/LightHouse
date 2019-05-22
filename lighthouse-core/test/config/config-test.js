@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const Config = require('../../config/config');
+const Config = require('../../config/config.js');
 const assert = require('assert');
 const path = require('path');
 const defaultConfig = require('../../config/default-config.js');
 const log = require('lighthouse-logger');
-const Gatherer = require('../../gather/gatherers/gatherer');
-const Audit = require('../../audits/audit');
+const Gatherer = require('../../gather/gatherers/gatherer.js');
+const Audit = require('../../audits/audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 /* eslint-env jest */

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const htmlReportAssets = require('./html/html-report-assets');
+const htmlReportAssets = require('./html/html-report-assets.js');
 
 class ReportGenerator {
   /**

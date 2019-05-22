@@ -8,7 +8,7 @@
 jest.mock('raven');
 
 const raven = require('raven');
-const Sentry = require('../../lib/sentry');
+const Sentry = require('../../lib/sentry.js');
 
 /* eslint-env jest */
 

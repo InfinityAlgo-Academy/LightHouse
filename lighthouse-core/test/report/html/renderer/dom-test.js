@@ -8,7 +8,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
-const URL = require('../../../../lib/url-shim');
+const URL = require('../../../../lib/url-shim.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 
 const TEMPLATE_FILE = fs.readFileSync(__dirname +

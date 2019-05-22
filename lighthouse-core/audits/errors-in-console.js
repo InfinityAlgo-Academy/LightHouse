@@ -10,7 +10,7 @@
  * This is done by collecting Chrome console log messages and filtering out the non-error ones.
  */
 
-const Audit = require('./audit');
+const Audit = require('./audit.js');
 
 class ErrorLogs extends Audit {
   /**

@@ -7,9 +7,9 @@
 
 /** @typedef {LH.Artifacts.FontSize['analyzedFailingNodesData'][0]} FailingNodeData */
 
-const URL = require('../../lib/url-shim');
+const URL = require('../../lib/url-shim.js');
 const i18n = require('../../lib/i18n/i18n.js');
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 const ComputedViewportMeta = require('../../computed/viewport-meta.js');
 const MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT = 60;
 

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('./audit');
+const Audit = require('./audit.js');
 const TraceOfTab = require('../computed/trace-of-tab.js');
 const Speedline = require('../computed/speedline.js');
 const FirstContentfulPaint = require('../computed/metrics/first-contentful-paint.js');

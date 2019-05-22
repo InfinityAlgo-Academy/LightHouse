@@ -9,7 +9,7 @@
   */
 'use strict';
 
-const Gatherer = require('./gatherer');
+const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
 

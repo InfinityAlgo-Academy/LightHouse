@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../audit');
-const URL = require('../../lib/url-shim');
+const Audit = require('../audit.js');
+const URL = require('../../lib/url-shim.js');
 const MainResource = require('../../computed/main-resource.js');
 const i18n = require('../../lib/i18n/i18n.js');
 

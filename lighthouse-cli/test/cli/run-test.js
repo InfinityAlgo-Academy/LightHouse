@@ -10,7 +10,7 @@ const assert = require('assert');
 const path = require('path');
 const fs = require('fs');
 
-const run = require('../../run');
+const run = require('../../run.js');
 const parseChromeFlags = require('../../run').parseChromeFlags;
 const fastConfig = {
   'extends': 'lighthouse:default',

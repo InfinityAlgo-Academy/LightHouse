@@ -13,8 +13,8 @@
 
 'use strict';
 
-const Gatherer = require('../gatherer');
-const pageFunctions = require('../../../lib/page-functions');
+const Gatherer = require('../gatherer.js');
+const pageFunctions = require('../../../lib/page-functions.js');
 
 /**
  * Constructs a pretty label from element's selectors. For example, given

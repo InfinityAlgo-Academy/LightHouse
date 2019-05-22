@@ -7,8 +7,8 @@
 
 /* eslint-env jest */
 const EfficientAnimatedContent =
-  require('../../../audits/byte-efficiency/efficient-animated-content');
-const NetworkRequest = require('../../../lib/network-request');
+  require('../../../audits/byte-efficiency/efficient-animated-content.js');
+const NetworkRequest = require('../../../lib/network-request.js');
 const assert = require('assert');
 
 describe('Page uses videos for animated GIFs', () => {

@@ -8,7 +8,7 @@
 const assert = require('assert');
 
 // eslint-disable-next-line
-const NetworkAnalyzer = require('../../../../lib/dependency-graph/simulator/network-analyzer');
+const NetworkAnalyzer = require('../../../../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRecords = require('../../../../computed/network-records.js');
 const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
 

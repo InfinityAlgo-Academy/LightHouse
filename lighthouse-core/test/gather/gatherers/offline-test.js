@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const OfflineGather = require('../../../gather/gatherers/offline');
+const OfflineGather = require('../../../gather/gatherers/offline.js');
 const assert = require('assert');
 const tracingData = require('../../fixtures/traces/network-records.json');
 

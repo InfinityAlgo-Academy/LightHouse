@@ -9,7 +9,7 @@
 
 const yargs = require('yargs');
 const pkg = require('../package.json');
-const printer = require('./printer');
+const printer = require('./printer.js');
 
 /**
  * @param {string=} manualArgv

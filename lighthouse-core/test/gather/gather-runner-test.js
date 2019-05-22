@@ -7,10 +7,10 @@
 
 /* eslint-env jest */
 
-const Gatherer = require('../../gather/gatherers/gatherer');
-const GatherRunner = require('../../gather/gather-runner');
+const Gatherer = require('../../gather/gatherers/gatherer.js');
+const GatherRunner = require('../../gather/gather-runner.js');
 const assert = require('assert');
-const Config = require('../../config/config');
+const Config = require('../../config/config.js');
 const unresolvedPerfLog = require('./../fixtures/unresolved-perflog.json');
 const NetworkRequest = require('../../lib/network-request.js');
 
@@ -34,13 +34,13 @@ class TestGathererNoArtifact extends Gatherer {
   afterPass() {}
 }
 
-const fakeDriver = require('./fake-driver');
+const fakeDriver = require('./fake-driver.js');
 const fakeDriverUsingRealMobileDevice = fakeDriver.fakeDriverUsingRealMobileDevice;
 
 function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn,
   blockUrlFn, extraHeadersFn) {
-  const Driver = require('../../gather/driver');
-  const Connection = require('../../gather/connections/connection');
+  const Driver = require('../../gather/driver.js');
+  const Connection = require('../../gather/connections/connection.js');
   const EmulationDriver = class extends Driver {
     enableRuntimeEvents() {
       return Promise.resolve();
