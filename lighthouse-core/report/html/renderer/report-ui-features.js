@@ -185,7 +185,7 @@ class ReportUIFeatures {
 
       filterInput.id = id;
       filterInput.addEventListener('change', e => {
-        // Remove rows from the dom and keep track of them to readd on uncheck.
+        // Remove rows from the dom and keep track of them to re-add on uncheck.
         // Why removing instead of hiding? To keep nth-child(even) background-colors working.
         if (e.target instanceof HTMLInputElement && !e.target.checked) {
           for (const row of thirdPartyRows.values()) {
