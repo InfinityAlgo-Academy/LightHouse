@@ -12,13 +12,25 @@ const pkg = require('../package.json');
 const printer = require('./printer.js');
 
 /**
+ * Remove in Node 11 - [].flatMap
+ * @param {Array<Array<string>>} arr
+ * @return {string[]}
+ */
+function flatten(arr) {
+  /** @type {string[]} */
+  const result = [];
+  return result.concat(...arr);
+}
+
+/**
  * @param {string=} manualArgv
  * @return {LH.CliFlags}
  */
 function getFlags(manualArgv) {
-  // @ts-ignore yargs() is incorrectly typed as not returning itself
+  // @ts-ignore yargs() is incorrectly typed as not accepting a single string.
   const y = manualArgv ? yargs(manualArgv) : yargs;
-  return y.help('help')
+  // Intentionally left as type `any` because @types/yargs doesn't chain correctly.
+  const argv = y.help('help')
       .version(() => pkg.version)
       .showHelpOnFail(false, 'Specify --help for available options')
 
@@ -46,6 +58,9 @@ function getFlags(manualArgv) {
       .example(
           'lighthouse <url> --extra-headers=./path/to/file.json',
           'Path to JSON file of HTTP Header key/value pairs to send in requests')
+      .example(
+          'lighthouse <url> --only-categories=performance,pwa',
+          'Only run specific categories.')
 
       // List of options
       .group(['verbose', 'quiet'], 'Logging:')
@@ -171,6 +186,29 @@ function getFlags(manualArgv) {
           'For more information on Lighthouse, see https://developers.google.com/web/tools/lighthouse/.')
       .wrap(yargs.terminalWidth())
       .argv;
+
+  // Support comma-separated values for some array flags by splitting on any ',' found.
+  /** @type {Array<keyof LH.CliFlags>} */
+  const arrayKeysThatSupportCsv = [
+    'onlyAudits',
+    'onlyCategories',
+    'output',
+    'plugins',
+    'skipAudits',
+  ];
+  arrayKeysThatSupportCsv.forEach(key => {
+    // If a key is defined as an array in yargs, the value (if provided)
+    // will always be a string array. However, we keep argv and input as any,
+    // since assigning back to argv as string[] would be unsound for enums,
+    // for example: output is LH.OutputMode[].
+    const input = argv[key];
+    // Truthy check is necessary. isArray convinces TS that this is an array.
+    if (Array.isArray(input)) {
+      argv[key] = flatten(input.map(value => value.split(',')));
+    }
+  });
+
+  return argv;
 }
 
 module.exports = {
