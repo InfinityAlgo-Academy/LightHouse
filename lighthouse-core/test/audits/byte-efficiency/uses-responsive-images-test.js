@@ -147,6 +147,37 @@ describe('Page uses responsive images', () => {
     assert.equal(auditResult.items.length, 0);
   });
 
+  it('ignores CSS', () => {
+    const urlA = 'https://google.com/logo.png';
+    const naturalSizeA = generateSize(450, 450, 'natural');
+    const recordA = generateRecord(100, 300);
+
+    const auditResult = UsesResponsiveImagesAudit.audit_({
+      ViewportDimensions: {devicePixelRatio: 1},
+      ImageElements: [
+        {...generateImage(generateSize(10, 10), naturalSizeA, recordA, urlA), isCss: true},
+      ],
+    });
+
+    assert.equal(auditResult.items.length, 0);
+  });
+
+  it('handles failure', () => {
+    const urlA = 'https://google.com/logo.png';
+    const naturalSizeA = generateSize(NaN, 450, 'natural');
+    const recordA = generateRecord(100, 300);
+
+    const auditResult = UsesResponsiveImagesAudit.audit_({
+      ViewportDimensions: {devicePixelRatio: 1},
+      ImageElements: [
+        generateImage(generateSize(10, 10), naturalSizeA, recordA, urlA),
+      ],
+    });
+
+    assert.equal(auditResult.items.length, 0);
+    assert.equal(auditResult.warnings.length, 1);
+  });
+
   it('de-dupes images', () => {
     const urlA = 'https://google.com/logo.png';
     const naturalSizeA = generateSize(450, 450, 'natural');
