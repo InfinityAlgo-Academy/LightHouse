@@ -147,7 +147,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // 'Values are estimated and may vary' is used as the category description for PSI
     if (environment !== 'PSI') {
-      const estValuesEl = this.dom.createChildOf(metricsColumn1El, 'div', 'lh-metrics__disclaimer');
+      const estValuesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics__disclaimer');
       estValuesEl.textContent = Util.UIStrings.varianceDisclaimer;
     }
 
