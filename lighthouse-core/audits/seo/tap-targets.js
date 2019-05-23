@@ -9,8 +9,8 @@
  * @fileoverview Checks that links, buttons, etc. are sufficiently large and that there's
  * no other tap target that's too close so that the user might accidentally tap on.
  */
-const Audit = require('../audit');
-const ViewportAudit = require('../viewport');
+const Audit = require('../audit.js');
+const ComputedViewportMeta = require('../../computed/viewport-meta.js');
 const {
   rectsTouchOrOverlap,
   getRectOverlapArea,
@@ -18,8 +18,8 @@ const {
   allRectsContainedWithinEachOther,
   getLargestRect,
   getBoundingRectWithPadding,
-} = require('../../lib/rect-helpers');
-const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects');
+} = require('../../lib/rect-helpers.js');
+const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -251,6 +251,7 @@ function targetToTableNode(target) {
     snippet: target.snippet,
     path: target.path,
     selector: target.selector,
+    nodeLabel: target.nodeLabel,
   };
 }
 
@@ -264,19 +265,29 @@ class TapTargets extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['MetaElements', 'TapTargets'],
+      requiredArtifacts: ['MetaElements', 'TapTargets', 'TestedAsMobileDevice'],
     };
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
-    const hasViewportSet = ViewportAudit.audit(artifacts).rawValue;
-    if (!hasViewportSet) {
+  static async audit(artifacts, context) {
+    if (!artifacts.TestedAsMobileDevice) {
+      // Tap target sizes aren't important for desktop SEO, so disable the audit there.
+      // On desktop people also tend to have more precise pointing devices than fingers.
       return {
-        rawValue: false,
+        score: 1,
+        notApplicable: true,
+      };
+    }
+
+    const viewportMeta = await ComputedViewportMeta.request(artifacts.MetaElements, context);
+    if (!viewportMeta.isMobileOptimized) {
+      return {
+        score: 0,
         explanation: str_(UIStrings.explanationViewportMetaNotOptimized),
       };
     }
@@ -302,11 +313,17 @@ class TapTargets extends Audit {
     const failingTapTargetCount = new Set(overlapFailures.map(f => f.tapTarget)).size;
     const passingTapTargetCount = tapTargetCount - failingTapTargetCount;
 
-    const score = tapTargetCount > 0 ? passingTapTargetCount / tapTargetCount : 1;
-    const displayValue = str_(UIStrings.displayValue, {decimalProportion: score});
+    let score = 1;
+    let passingTapTargetRatio = 1;
+    if (failingTapTargetCount > 0) {
+      passingTapTargetRatio = (passingTapTargetCount / tapTargetCount);
+      // If there are any failures then we don't want the audit to pass,
+      // so keep the score below 90.
+      score = passingTapTargetRatio * 0.89;
+    }
+    const displayValue = str_(UIStrings.displayValue, {decimalProportion: passingTapTargetRatio});
 
     return {
-      rawValue: tableItems.length === 0,
       score,
       details,
       displayValue,

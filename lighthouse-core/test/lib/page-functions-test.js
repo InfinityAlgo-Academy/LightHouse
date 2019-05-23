@@ -8,7 +8,7 @@
 const assert = require('assert');
 const jsdom = require('jsdom');
 const DOM = require('../../report/html/renderer/dom.js');
-const pageFunctions = require('../../lib/page-functions');
+const pageFunctions = require('../../lib/page-functions.js');
 
 /* eslint-env jest */
 
@@ -57,6 +57,39 @@ describe('Page Functions', () => {
       const childEl = dom.createElement('div', '', {class: 'child'});
       parentEl.appendChild(childEl);
       assert.equal(pageFunctions.getNodeSelector(childEl), 'div#wrapper > div.child');
+    });
+  });
+
+  describe('getNodeLabel', () => {
+    it('Returns innerText if element has visible text', () => {
+      const el = dom.createElement('div');
+      el.innerText = 'Hello';
+      assert.equal(pageFunctions.getNodeLabel(el), 'Hello');
+    });
+
+    it('Falls back to children and alt/aria-label if a title can\'t be determined', () => {
+      const el = dom.createElement('div');
+      const childEl = dom.createElement('div', '', {'aria-label': 'Something'});
+      el.appendChild(childEl);
+      assert.equal(pageFunctions.getNodeLabel(el), 'Something');
+    });
+
+    it('Truncates long text', () => {
+      const el = dom.createElement('div');
+      el.setAttribute('alt', Array(100).fill('a').join(''));
+      assert.equal(pageFunctions.getNodeLabel(el).length, 80);
+    });
+
+    it('Uses tag name for html tags', () => {
+      const el = dom.createElement('html');
+      assert.equal(pageFunctions.getNodeLabel(el), 'html');
+    });
+
+    it('Uses tag name if there is no better label', () => {
+      const el = dom.createElement('div');
+      const childEl = dom.createElement('span');
+      el.appendChild(childEl);
+      assert.equal(pageFunctions.getNodeLabel(el), 'div');
     });
   });
 });

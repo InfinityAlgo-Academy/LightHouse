@@ -113,7 +113,10 @@ function writeEnStringsToLocaleFormat(strings) {
 }
 
 const strings = collectAllStringsInDir(path.join(LH_ROOT, 'lighthouse-core'));
-console.log('Collected!');
+console.log('Collected from LH core!');
+
+collectAllStringsInDir(path.join(LH_ROOT, 'stack-packs/packs'), strings);
+console.log('Collected from Stack Packs!');
 
 writeEnStringsToLocaleFormat(strings);
 console.log('Written to disk!');

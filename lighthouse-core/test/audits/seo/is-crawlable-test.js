@@ -41,7 +41,7 @@ describe('SEO: Is page crawlable audit', () => {
 
       const context = {computedCache: new Map()};
       return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-        assert.equal(auditResult.rawValue, false);
+        assert.equal(auditResult.score, 0);
         assert.equal(auditResult.details.items.length, 1);
       });
     });
@@ -66,7 +66,7 @@ describe('SEO: Is page crawlable audit', () => {
 
     const context = {computedCache: new Map()};
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     });
   });
 
@@ -86,7 +86,7 @@ describe('SEO: Is page crawlable audit', () => {
 
     const context = {computedCache: new Map()};
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     });
   });
 
@@ -129,7 +129,7 @@ describe('SEO: Is page crawlable audit', () => {
 
       const context = {computedCache: new Map()};
       return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-        assert.equal(auditResult.rawValue, false);
+        assert.equal(auditResult.score, 0);
         assert.equal(auditResult.details.items.length, 1);
       });
     });
@@ -156,7 +156,7 @@ describe('SEO: Is page crawlable audit', () => {
 
     const context = {computedCache: new Map()};
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     });
   });
 
@@ -176,7 +176,7 @@ describe('SEO: Is page crawlable audit', () => {
 
     const context = {computedCache: new Map()};
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     });
   });
 
@@ -199,7 +199,7 @@ describe('SEO: Is page crawlable audit', () => {
 
     const context = {computedCache: new Map()};
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     });
   });
 
@@ -247,7 +247,7 @@ describe('SEO: Is page crawlable audit', () => {
 
       const context = {computedCache: new Map()};
       return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-        assert.equal(auditResult.rawValue, false);
+        assert.equal(auditResult.score, 0);
         assert.equal(auditResult.details.items.length, 1);
       });
     });
@@ -286,7 +286,7 @@ describe('SEO: Is page crawlable audit', () => {
 
       const context = {computedCache: new Map()};
       return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-        assert.equal(auditResult.rawValue, true);
+        assert.equal(auditResult.score, 1);
       });
     });
 
@@ -316,7 +316,7 @@ describe('SEO: Is page crawlable audit', () => {
 
     const context = {computedCache: new Map()};
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.rawValue, false);
+      assert.equal(auditResult.score, 0);
       assert.equal(auditResult.details.items.length, 4);
     });
   });

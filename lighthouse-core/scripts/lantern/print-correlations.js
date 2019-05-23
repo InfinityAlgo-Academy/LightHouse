@@ -65,7 +65,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const constants = require('./constants');
+const constants = require('./constants.js');
 const chalk = require('chalk').default;
 
 const GOOD_DIFF_AS_PERCENT_THRESHOLD = 0.2;

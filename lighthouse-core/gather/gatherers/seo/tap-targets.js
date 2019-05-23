@@ -5,11 +5,11 @@
  */
 'use strict';
 
-/* global getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector */
+/* global getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector, getNodeLabel */
 
-const Gatherer = require('../gatherer');
+const Gatherer = require('../gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
-const {rectContainsString, rectContains} = require('../../../lib/rect-helpers');
+const {rectContainsString, rectContains} = require('../../../lib/rect-helpers.js');
 
 const TARGET_SELECTORS = [
   'button',
@@ -225,13 +225,13 @@ function elementIsInTextBlock(element) {
  * @returns {boolean}
  */
 /* istanbul ignore next */
-function elementIsPositionFixedOrAbsolute(element) {
+function elementIsPositionFixedStickyOrAbsolute(element) {
   const {position} = getComputedStyle(element);
-  if (position === 'fixed' || position === 'absolute') {
+  if (position === 'fixed' || position === 'absolute' || position === 'sticky') {
     return true;
   }
   if (element.parentElement) {
-    return elementIsPositionFixedOrAbsolute(element.parentElement);
+    return elementIsPositionFixedStickyOrAbsolute(element.parentElement);
   }
   return false;
 }
@@ -239,7 +239,7 @@ function elementIsPositionFixedOrAbsolute(element) {
 /**
  * @param {string} str
  * @param {number} maxLength
- * @returns {string}
+ * @return {string}
  */
 /* istanbul ignore next */
 function truncate(str, maxLength) {
@@ -273,7 +273,7 @@ function gatherTapTargets() {
       // in the Web Content Accessibility Guidelines https://www.w3.org/TR/WCAG21/#target-size
       return;
     }
-    if (elementIsPositionFixedOrAbsolute(tapTargetElement)) {
+    if (elementIsPositionFixedStickyOrAbsolute(tapTargetElement)) {
       // Absolutely positioned elements might not be visible if they have a lower z-index
       // than other tap targets, but if we don't ignore them we can get false failures.
       //
@@ -294,6 +294,8 @@ function gatherTapTargets() {
       path: getNodePath(tapTargetElement),
       // @ts-ignore - getNodeSelector put into scope via stringification
       selector: getNodeSelector(tapTargetElement),
+      // @ts-ignore - getNodeLabel put into scope via stringification
+      nodeLabel: getNodeLabel(tapTargetElement),
       href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
     });
   });
@@ -311,7 +313,7 @@ class TapTargets extends Gatherer {
       const tapTargetsSelector = "${tapTargetsSelector}";
       ${pageFunctions.getElementsInDocumentString};
       ${filterClientRectsWithinAncestorsVisibleScrollArea.toString()};
-      ${elementIsPositionFixedOrAbsolute.toString()};
+      ${elementIsPositionFixedStickyOrAbsolute.toString()};
       ${elementIsVisible.toString()};
       ${elementHasAncestorTapTarget.toString()};
       ${getVisibleClientRects.toString()};
@@ -323,6 +325,7 @@ class TapTargets extends Gatherer {
       ${rectContainsString};
       ${pageFunctions.getNodePathString};
       ${pageFunctions.getNodeSelectorString};
+      ${pageFunctions.getNodeLabelString};
       ${gatherTapTargets.toString()};
 
       return gatherTapTargets();

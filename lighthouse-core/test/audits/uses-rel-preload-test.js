@@ -205,7 +205,7 @@ describe('Performance: uses-rel-preload audit', () => {
     const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
     const context = {settings: {}, computedCache: new Map()};
     return UsesRelPreload.audit(artifacts, context).then(output => {
-      assert.equal(output.rawValue, 0);
+      assert.equal(output.numericValue, 0);
       assert.equal(output.details.items.length, 0);
     });
   });
@@ -217,7 +217,7 @@ describe('Performance: uses-rel-preload audit', () => {
     const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
     const context = {settings: {}, computedCache: new Map()};
     return UsesRelPreload.audit(artifacts, context).then(output => {
-      assert.equal(output.rawValue, 0);
+      assert.equal(output.numericValue, 0);
       assert.equal(output.details.items.length, 0);
     });
   });
@@ -237,6 +237,6 @@ describe('Performance: uses-rel-preload audit', () => {
     const context = {settings, computedCache: new Map()};
     const result = await UsesRelPreload.audit(artifacts, context);
     assert.equal(result.score, 1);
-    assert.equal(result.rawValue, 0);
+    assert.equal(result.numericValue, 0);
   });
 });

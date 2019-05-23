@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const UnusedCSSRules = require('./unused-css-rules');
+const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const UnusedCSSRules = require('./unused-css-rules.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const computeTokenLength = require('../../lib/minification-estimator').computeCSSTokenLength;
 
@@ -36,7 +36,7 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['CSSUsage', 'devtoolsLogs', 'traces'],
+      requiredArtifacts: ['CSSUsage', 'devtoolsLogs', 'traces', 'URL'],
     };
   }
 

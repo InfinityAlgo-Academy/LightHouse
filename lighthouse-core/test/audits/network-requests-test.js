@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const NetworkRequests = require('../../audits/network-requests');
+const NetworkRequests = require('../../audits/network-requests.js');
 const assert = require('assert');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
@@ -22,7 +22,7 @@ describe('Network requests audit', () => {
 
     return NetworkRequests.audit(artifacts, {computedCache: new Map()}).then(output => {
       assert.equal(output.score, 1);
-      assert.equal(output.rawValue, 66);
+      assert.equal(output.numericValue, 66);
       assert.equal(output.details.items.length, 66);
       assert.equal(output.details.items[0].url, 'https://pwa.rocks/');
       assert.equal(output.details.items[0].startTime, 0);

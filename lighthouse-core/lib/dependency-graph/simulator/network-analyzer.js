@@ -6,7 +6,8 @@
 'use strict';
 
 const INITIAL_CWD = 14 * 1024;
-const NetworkRequest = require('../../network-request');
+const NetworkRequest = require('../../network-request.js');
+const URL = require('../../url-shim.js');
 
 // Assume that 40% of TTFB was server response time by default for static assets
 const DEFAULT_SERVER_RESPONSE_PERCENTAGE = 0.4;
@@ -259,14 +260,14 @@ class NetworkAnalyzer {
    * available in the records themselves appears untrustworthy.
    *
    * @param {LH.Artifacts.NetworkRequest[]} records
-   * @param {object} [options]
+   * @param {{forceCoarseEstimates: boolean}} [options]
    * @return {Map<string, boolean>}
    */
   static estimateIfConnectionWasReused(records, options) {
-    options = Object.assign({forceCoarseEstimates: false}, options);
+    const {forceCoarseEstimates = false} = options || {};
 
     // Check if we can trust the connection information coming from the protocol
-    if (!options.forceCoarseEstimates && NetworkAnalyzer.canTrustConnectionInformation(records)) {
+    if (!forceCoarseEstimates && NetworkAnalyzer.canTrustConnectionInformation(records)) {
       // @ts-ignore
       return new Map(records.map(record => [record.requestId, !!record.connectionReused]));
     }
@@ -302,52 +303,46 @@ class NetworkAnalyzer {
    * is unavailable.
    *
    * @param {LH.Artifacts.NetworkRequest[]} records
-   * @param {object} [options]
-   * @return {Map<string, !NetworkAnalyzer.Summary>}
+   * @param {NetworkAnalyzer.RTTEstimateOptions} [options]
+   * @return {Map<string, NetworkAnalyzer.Summary>}
    */
   static estimateRTTByOrigin(records, options) {
-    options = Object.assign(
-      {
-        // TCP connection handshake information will be used when available, but for testing
-        // it's useful to see how the coarse estimates compare with higher fidelity data
-        forceCoarseEstimates: false,
-        // coarse estimates include lots of extra time and noise
-        // multiply by some factor to deflate the estimates a bit
-        coarseEstimateMultiplier: 0.3,
-        // useful for testing to isolate the different methods of estimation
-        useDownloadEstimates: true,
-        useSendStartEstimates: true,
-        useHeadersEndEstimates: true,
-      },
-      options
-    );
+    const {
+      forceCoarseEstimates = false,
+      // coarse estimates include lots of extra time and noise
+      // multiply by some factor to deflate the estimates a bit.
+      coarseEstimateMultiplier = 0.3,
+      useDownloadEstimates = true,
+      useSendStartEstimates = true,
+      useHeadersEndEstimates = true,
+    } = options || {};
 
     let estimatesByOrigin = NetworkAnalyzer._estimateRTTByOriginViaTCPTiming(records);
-    if (!estimatesByOrigin.size || options.forceCoarseEstimates) {
+    if (!estimatesByOrigin.size || forceCoarseEstimates) {
       estimatesByOrigin = new Map();
       const estimatesViaDownload = NetworkAnalyzer._estimateRTTByOriginViaDownloadTiming(records);
       const estimatesViaSendStart = NetworkAnalyzer._estimateRTTByOriginViaSendStartTiming(records);
       const estimatesViaTTFB = NetworkAnalyzer._estimateRTTByOriginViaHeadersEndTiming(records);
 
       for (const [origin, estimates] of estimatesViaDownload.entries()) {
-        if (!options.useDownloadEstimates) continue;
+        if (!useDownloadEstimates) continue;
         estimatesByOrigin.set(origin, estimates);
       }
 
       for (const [origin, estimates] of estimatesViaSendStart.entries()) {
-        if (!options.useSendStartEstimates) continue;
+        if (!useSendStartEstimates) continue;
         const existing = estimatesByOrigin.get(origin) || [];
         estimatesByOrigin.set(origin, existing.concat(estimates));
       }
 
       for (const [origin, estimates] of estimatesViaTTFB.entries()) {
-        if (!options.useHeadersEndEstimates) continue;
+        if (!useHeadersEndEstimates) continue;
         const existing = estimatesByOrigin.get(origin) || [];
         estimatesByOrigin.set(origin, existing.concat(estimates));
       }
 
       for (const estimates of estimatesByOrigin.values()) {
-        estimates.forEach((x, i) => (estimates[i] = x * options.coarseEstimateMultiplier));
+        estimates.forEach((x, i) => (estimates[i] = x * coarseEstimateMultiplier));
       }
     }
 
@@ -360,21 +355,17 @@ class NetworkAnalyzer {
    * estimated automatically if not provided.
    *
    * @param {LH.Artifacts.NetworkRequest[]} records
-   * @param {Object=} options
-   * @return {Map<string, !NetworkAnalyzer.Summary>}
+   * @param {NetworkAnalyzer.RTTEstimateOptions & {rttByOrigin?: Map<string, number>}} [options]
+   * @return {Map<string, NetworkAnalyzer.Summary>}
    */
   static estimateServerResponseTimeByOrigin(records, options) {
-    options = Object.assign(
-      {
-        rttByOrigin: null,
-      },
-      options
-    );
-
-    let rttByOrigin = options.rttByOrigin;
+    let rttByOrigin = (options || {}).rttByOrigin;
     if (!rttByOrigin) {
-      rttByOrigin = NetworkAnalyzer.estimateRTTByOrigin(records, options);
-      for (const [origin, summary] of rttByOrigin.entries()) {
+      /** @type {Map<string, number>} */
+      rttByOrigin = new Map();
+
+      const rttSummaryByOrigin = NetworkAnalyzer.estimateRTTByOrigin(records, options);
+      for (const [origin, summary] of rttSummaryByOrigin.entries()) {
         rttByOrigin.set(origin, summary.min);
       }
     }
@@ -443,11 +434,22 @@ class NetworkAnalyzer {
 
   /**
    * @param {Array<LH.Artifacts.NetworkRequest>} records
+   * @param {string} [finalURL]
    * @return {LH.Artifacts.NetworkRequest}
    */
-  static findMainDocument(records) {
+  static findMainDocument(records, finalURL) {
+    // Try to find an exact match with the final URL first if we have one
+    if (finalURL) {
+      // equalWithExcludedFragments is expensive, so check that the finalUrl starts with the request first
+      const mainResource = records.find(request => finalURL.startsWith(request.url) &&
+        URL.equalWithExcludedFragments(request.url, finalURL));
+      if (mainResource) return mainResource;
+      // TODO: beacon !mainResource to Sentry, https://github.com/GoogleChrome/lighthouse/issues/7041
+    }
+
     const documentRequests = records.filter(record => record.resourceType ===
         NetworkRequest.TYPES.Document);
+    if (!documentRequests.length) throw new Error('Unable to identify the main resource');
     // The main document is the earliest document request, using position in networkRecords array to break ties.
     return documentRequests.reduce((min, r) => (r.startTime < min.startTime ? r : min));
   }
@@ -461,4 +463,13 @@ module.exports = NetworkAnalyzer;
  * @property {number} max
  * @property {number} avg
  * @property {number} median
+ */
+
+/**
+ * @typedef NetworkAnalyzer.RTTEstimateOptions
+ * @property {boolean} [forceCoarseEstimates] TCP connection handshake information will be used when available, but in some circumstances this data can be unreliable. This flag exposes an option to ignore the handshake data and use the coarse download/TTFB timing data.
+ * @property {number} [coarseEstimateMultiplier] Coarse estimates include lots of extra time and noise multiply by some factor to deflate the estimates a bit.
+ * @property {boolean} [useDownloadEstimates] Useful for testing to isolate the different methods of estimation.
+ * @property {boolean} [useSendStartEstimates] Useful for testing to isolate the different methods of estimation.
+ * @property {boolean} [useHeadersEndEstimates] Useful for testing to isolate the different methods of estimation.
  */

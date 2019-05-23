@@ -6,10 +6,11 @@
 'use strict';
 
 const assert = require('assert');
-const lhBackground = require('../lightrider-entry.js');
+const lhBackground = require('../lightrider/lightrider-entry.js');
+const Runner = require('../../lighthouse-core/runner.js');
 const LHError = require('../../lighthouse-core/lib/lh-error.js');
 
-/* eslint-env mocha */
+/* eslint-env jest */
 
 describe('lightrider-entry', () => {
   describe('#runLighthouseInLR', () => {
@@ -55,6 +56,67 @@ describe('lightrider-entry', () => {
       const parsedResult = JSON.parse(result);
       assert.strictEqual(parsedResult.runtimeError.code, LHError.UNKNOWN_ERROR);
       assert.ok(parsedResult.runtimeError.message.includes(errorMsg));
+    });
+
+    it('specifies the channel as lr', async () => {
+      const runStub = jest.spyOn(Runner, 'run');
+
+      const mockConnection = {};
+      const url = 'https://example.com';
+
+      await lhBackground.runLighthouseInLR(mockConnection, url, {}, {});
+      const config = runStub.mock.calls[0][1].config;
+      assert.equal(config.settings.channel, 'lr');
+
+      runStub.mockRestore();
+    });
+
+    it('uses the desktop config preset when device is desktop', async () => {
+      const runStub = jest.spyOn(Runner, 'run');
+
+      const mockConnection = {};
+      const url = 'https://example.com';
+
+      const lrDevice = 'desktop';
+      await lhBackground.runLighthouseInLR(mockConnection, url, {}, {lrDevice});
+      const config = runStub.mock.calls[0][1].config;
+      assert.equal(config.settings.emulatedFormFactor, 'desktop');
+
+      runStub.mockRestore();
+    });
+
+    it('uses the mobile config preset when device is mobile', async () => {
+      const runStub = jest.spyOn(Runner, 'run');
+
+      const mockConnection = {};
+      const url = 'https://example.com';
+
+      const lrDevice = 'mobile';
+      await lhBackground.runLighthouseInLR(mockConnection, url, {}, {lrDevice});
+      const config = runStub.mock.calls[0][1].config;
+      assert.equal(config.settings.emulatedFormFactor, 'mobile');
+
+      runStub.mockRestore();
+    });
+
+    it('overrides the default config when one is provided', async () => {
+      const runStub = jest.spyOn(Runner, 'run');
+
+      const mockConnection = {};
+      const url = 'https://example.com';
+
+      const configOverride = {
+        default: 'lighthouse:default',
+        settings: {
+          onlyAudits: ['network-requests'],
+        },
+      };
+      await lhBackground.runLighthouseInLR(mockConnection, url, {}, {configOverride});
+      const config = runStub.mock.calls[0][1].config;
+      assert.equal(config.settings.onlyAudits.length, 1);
+      assert.equal(config.settings.onlyAudits[0], 'network-requests');
+
+      runStub.mockRestore();
     });
   });
 });

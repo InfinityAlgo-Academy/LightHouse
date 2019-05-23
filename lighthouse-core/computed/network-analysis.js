@@ -12,7 +12,7 @@ const NetworkRecords = require('./network-records.js');
 class NetworkAnalysis {
   /**
    * @param {Array<LH.Artifacts.NetworkRequest>} records
-   * @return {Omit<LH.Artifacts.NetworkAnalysis, 'throughput'|'records'>}
+   * @return {Omit<LH.Artifacts.NetworkAnalysis, 'throughput'>}
    */
   static computeRTTAndServerResponseTime(records) {
     // First pass compute the estimated observed RTT to each origin's servers.
@@ -57,7 +57,7 @@ class NetworkAnalysis {
     const records = await NetworkRecords.request(devtoolsLog, context);
     const throughput = NetworkAnalyzer.estimateThroughput(records);
     const rttAndServerResponseTime = NetworkAnalysis.computeRTTAndServerResponseTime(records);
-    return {records, throughput, ...rttAndServerResponseTime};
+    return {throughput, ...rttAndServerResponseTime};
   }
 }
 

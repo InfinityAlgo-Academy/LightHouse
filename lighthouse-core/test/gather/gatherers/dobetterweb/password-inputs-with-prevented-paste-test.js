@@ -8,7 +8,7 @@
 /* eslint-env jest */
 
 const PasswordInputsWithPreventedPasteGatherer =
-  require('../../../../gather/gatherers/dobetterweb/password-inputs-with-prevented-paste');
+  require('../../../../gather/gatherers/dobetterweb/password-inputs-with-prevented-paste.js');
 const assert = require('assert');
 let gatherer;
 

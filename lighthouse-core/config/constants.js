@@ -8,7 +8,8 @@
 /**
  * Adjustments needed for DevTools network throttling to simulate
  * more realistic network conditions.
- * See: crbug.com/721112
+ * @see https://crbug.com/721112
+ * @see https://docs.google.com/document/d/10lfVdS1iDWCRKQXPfbxEn4Or99D64mvNlugP1AQuFlE/edit
  */
 const DEVTOOLS_RTT_ADJUSTMENT_FACTOR = 3.75;
 const DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR = 0.9;
@@ -42,21 +43,24 @@ const throttling = {
 /** @type {LH.Config.Settings} */
 const defaultSettings = {
   output: 'json',
+  maxWaitForFcp: 15 * 1000,
   maxWaitForLoad: 45 * 1000,
   throttlingMethod: 'simulate',
   throttling: throttling.mobileSlow4G,
   auditMode: false,
   gatherMode: false,
   disableStorageReset: false,
-  disableDeviceEmulation: false,
   emulatedFormFactor: 'mobile',
+  channel: 'node',
 
   // the following settings have no defaults but we still want ensure that `key in settings`
   // in config will work in a typechecked way
+  budgets: null,
   locale: 'en-US', // actual default determined by Config using lib/i18n
   blockedUrlPatterns: null,
   additionalTraceCategories: null,
   extraHeaders: null,
+  precomputedLanternData: null,
   onlyAudits: null,
   onlyCategories: null,
   skipAudits: null,

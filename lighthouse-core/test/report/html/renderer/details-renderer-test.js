@@ -8,7 +8,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
-const URL = require('../../../../lib/url-shim');
+const URL = require('../../../../lib/url-shim.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const Util = require('../../../../report/html/renderer/util.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
@@ -46,8 +46,8 @@ describe('DetailsRenderer', () => {
       const el = renderer.render({
         type: 'filmstrip',
         items: [
-          {timing: 1020, data: 'foobar'},
-          {timing: 3030, data: 'foobaz'},
+          {timing: 1020, data: 'data:image/jpeg;base64,foobar'},
+          {timing: 3030, data: 'data:image/jpeg;base64,foobaz'},
         ],
       });
 
@@ -182,7 +182,7 @@ describe('DetailsRenderer', () => {
 
     it('does not render internal-only diagnostic details', () => {
       const details = {
-        type: 'diagnostic',
+        type: 'debugdata',
         items: [{
           failures: ['No manifest was fetched'],
           isParseFailure: true,
@@ -202,15 +202,6 @@ describe('DetailsRenderer', () => {
       };
 
       assert.throws(() => renderer.render(details), /^Error: Unknown type: imaginary$/);
-    });
-
-    it('supports old LHRs by not rendering when type is missing', () => {
-      // Disallowed by type system of current LH, but possible if trying to render an old LHR.
-      const details = {
-        timestamp: 15,
-      };
-
-      assert.strictEqual(renderer.render(details), null);
     });
   });
 
@@ -393,6 +384,7 @@ describe('DetailsRenderer', () => {
 
       assert.equal(urlEl.localName, 'div');
       assert.equal(urlEl.title, urlText);
+      assert.equal(urlEl.dataset.url, urlText);
       assert.ok(urlEl.firstChild.classList.contains('lh-text'));
       assert.equal(urlEl.textContent, displayUrlText);
     });
@@ -417,6 +409,7 @@ describe('DetailsRenderer', () => {
 
       assert.equal(urlEl.localName, 'div');
       assert.equal(urlEl.title, urlText);
+      assert.equal(urlEl.dataset.url, urlText);
       assert.ok(urlEl.firstChild.classList.contains('lh-text'));
       assert.equal(urlEl.textContent, displayUrlText);
     });

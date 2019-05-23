@@ -20,7 +20,7 @@ describe('Progressive Enhancement: without javascript audit', () => {
     };
 
     const result = withoutJsAudit.audit(artifacts);
-    assert.equal(result.rawValue, false);
+    assert.equal(result.score, 0);
     assert.ok(result.explanation);
   });
 
@@ -33,7 +33,7 @@ describe('Progressive Enhancement: without javascript audit', () => {
     };
 
     const result = withoutJsAudit.audit(artifacts);
-    assert.equal(result.rawValue, false);
+    assert.equal(result.score, 0);
     assert.ok(result.explanation);
   });
 
@@ -45,7 +45,7 @@ describe('Progressive Enhancement: without javascript audit', () => {
       },
     };
 
-    assert.equal(withoutJsAudit.audit(artifacts).rawValue, true);
+    assert.equal(withoutJsAudit.audit(artifacts).score, 1);
   });
 
   it('succeeds when the js-less body contains noscript', () => {
@@ -56,6 +56,6 @@ describe('Progressive Enhancement: without javascript audit', () => {
       },
     };
 
-    assert.equal(withoutJsAudit.audit(artifacts).rawValue, true);
+    assert.equal(withoutJsAudit.audit(artifacts).score, 1);
   });
 });

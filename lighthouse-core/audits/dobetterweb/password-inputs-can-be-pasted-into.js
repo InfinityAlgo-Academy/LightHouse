@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 
 class PasswordInputsCanBePastedIntoAudit extends Audit {
   /**
@@ -43,7 +43,7 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
     ];
 
     return {
-      rawValue: passwordInputsWithPreventedPaste.length === 0,
+      score: Number(passwordInputsWithPreventedPaste.length === 0),
       extendedInfo: {
         value: passwordInputsWithPreventedPaste,
       },

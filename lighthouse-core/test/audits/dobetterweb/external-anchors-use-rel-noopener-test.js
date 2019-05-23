@@ -22,7 +22,7 @@ describe('External anchors use rel="noopener"', () => {
       ],
       URL: {finalUrl: URL},
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
     assert.equal(auditResult.details.items.length, 0);
   });
@@ -36,7 +36,7 @@ describe('External anchors use rel="noopener"', () => {
       ],
       URL: {finalUrl: URL},
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
     assert.equal(auditResult.details.items.length, 0);
   });
@@ -49,7 +49,7 @@ describe('External anchors use rel="noopener"', () => {
       ],
       URL: {finalUrl: URL},
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
     assert.equal(auditResult.details.items.length, 0);
   });
@@ -62,7 +62,7 @@ describe('External anchors use rel="noopener"', () => {
       ],
       URL: {finalUrl: URL},
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 
@@ -74,7 +74,7 @@ describe('External anchors use rel="noopener"', () => {
       ],
       URL: {finalUrl: URL},
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 
@@ -86,7 +86,7 @@ describe('External anchors use rel="noopener"', () => {
       ],
       URL: {finalUrl: URL},
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
     assert.equal(auditResult.details.items.length, 2);
   });
@@ -98,7 +98,7 @@ describe('External anchors use rel="noopener"', () => {
       ],
       URL: {finalUrl: URL},
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
     assert.equal(auditResult.details.items.length, 1);
     assert.ok(auditResult.warnings.length, 'includes warning');
@@ -114,7 +114,7 @@ describe('External anchors use rel="noopener"', () => {
       ],
       URL: {finalUrl: URL},
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 4);
     assert.equal(auditResult.details.items.length, 4);
     assert.equal(auditResult.warnings.length, 4);

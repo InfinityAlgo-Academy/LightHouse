@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit_ = require('../../../audits/byte-efficiency/byte-efficiency-audit');
-const NetworkNode = require('../../../lib/dependency-graph/network-node');
-const CPUNode = require('../../../lib/dependency-graph/cpu-node');
-const Simulator = require('../../../lib/dependency-graph/simulator/simulator');
+const ByteEfficiencyAudit_ = require('../../../audits/byte-efficiency/byte-efficiency-audit.js');
+const NetworkNode = require('../../../lib/dependency-graph/network-node.js');
+const CPUNode = require('../../../lib/dependency-graph/cpu-node.js');
+const Simulator = require('../../../lib/dependency-graph/simulator/simulator.js');
 const PageDependencyGraph = require('../../../computed/page-dependency-graph.js');
 const LoadSimulator = require('../../../computed/load-simulator.js');
 
@@ -88,7 +88,7 @@ describe('Byte efficiency base audit', () => {
     assert.deepEqual(result.details.items, []);
   });
 
-  it('should set the rawValue', () => {
+  it('should set the numericValue', () => {
     const result = ByteEfficiencyAudit.createAuditProduct(
       {
         headings: baseHeadings,
@@ -101,7 +101,7 @@ describe('Byte efficiency base audit', () => {
     );
 
     // 900ms savings comes from the graph calculation
-    assert.equal(result.rawValue, 900);
+    assert.equal(result.numericValue, 900);
   });
 
   it('should score the wastedMs', () => {
@@ -200,7 +200,7 @@ describe('Byte efficiency base audit', () => {
       simulator
     );
 
-    assert.equal(result.rawValue, 300);
+    assert.equal(result.numericValue, 300);
   });
 
   it('should create load simulator with the specified settings', async () => {
@@ -224,14 +224,14 @@ describe('Byte efficiency base audit', () => {
     let settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
     let result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect modest savings
-    expect(result.rawValue).toBeLessThan(5000);
-    expect(result.rawValue).toMatchSnapshot();
+    expect(result.numericValue).toBeLessThan(5000);
+    expect(result.numericValue).toMatchSnapshot();
 
     settings = {throttlingMethod: 'simulate', throttling: ultraSlowThrottling};
     result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect lots of savings
-    expect(result.rawValue).not.toBeLessThan(5000);
-    expect(result.rawValue).toMatchSnapshot();
+    expect(result.numericValue).not.toBeLessThan(5000);
+    expect(result.numericValue).toMatchSnapshot();
   });
 
   it('should allow overriding of computeWasteWithTTIGraph', async () => {
@@ -262,7 +262,7 @@ describe('Byte efficiency base audit', () => {
     const result = await MockAudit.audit(artifacts, {settings, computedCache});
     const resultTti = await MockJustTTIAudit.audit(artifacts, {settings, computedCache});
     // expect less savings with just TTI
-    expect(resultTti.rawValue).toBeLessThan(result.rawValue);
-    expect({default: result.rawValue, justTTI: resultTti.rawValue}).toMatchSnapshot();
+    expect(resultTti.numericValue).toBeLessThan(result.numericValue);
+    expect({default: result.numericValue, justTTI: resultTti.numericValue}).toMatchSnapshot();
   });
 });

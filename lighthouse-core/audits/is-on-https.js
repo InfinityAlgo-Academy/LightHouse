@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('./audit');
-const URL = require('../lib/url-shim');
-const Util = require('../report/html/renderer/util');
+const Audit = require('./audit.js');
+const URL = require('../lib/url-shim.js');
+const Util = require('../report/html/renderer/util.js');
 const NetworkRecords = require('../computed/network-records.js');
 
 const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extension', 'about'];
@@ -68,7 +68,7 @@ class HTTPS extends Audit {
       ];
 
       return {
-        rawValue: items.length === 0,
+        score: Number(items.length === 0),
         displayValue,
         extendedInfo: {
           value: items,

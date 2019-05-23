@@ -70,6 +70,9 @@ Object {
       "path": "installable-manifest",
     },
     Object {
+      "path": "apple-touch-icon",
+    },
+    Object {
       "path": "splash-screen",
     },
     Object {
@@ -119,6 +122,12 @@ Object {
     },
     Object {
       "path": "offline-start-url",
+    },
+    Object {
+      "path": "performance-budget",
+    },
+    Object {
+      "path": "resource-summary",
     },
     Object {
       "path": "manual/pwa-cross-browser",
@@ -384,42 +393,42 @@ Object {
         Object {
           "group": "a11y-aria",
           "id": "aria-allowed-attr",
-          "weight": 3,
+          "weight": 10,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-required-attr",
-          "weight": 2,
+          "weight": 10,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-required-children",
-          "weight": 5,
+          "weight": 10,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-required-parent",
-          "weight": 2,
+          "weight": 10,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-roles",
-          "weight": 3,
+          "weight": 10,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-valid-attr-value",
-          "weight": 2,
+          "weight": 10,
         },
         Object {
           "group": "a11y-aria",
           "id": "aria-valid-attr",
-          "weight": 5,
+          "weight": 10,
         },
         Object {
           "group": "a11y-audio-video",
           "id": "audio-caption",
-          "weight": 4,
+          "weight": 10,
         },
         Object {
           "group": "a11y-names-labels",
@@ -429,57 +438,57 @@ Object {
         Object {
           "group": "a11y-navigation",
           "id": "bypass",
-          "weight": 10,
+          "weight": 3,
         },
         Object {
           "group": "a11y-color-contrast",
           "id": "color-contrast",
-          "weight": 6,
+          "weight": 3,
         },
         Object {
           "group": "a11y-tables-lists",
           "id": "definition-list",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
           "group": "a11y-tables-lists",
           "id": "dlitem",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
           "group": "a11y-names-labels",
           "id": "document-title",
-          "weight": 2,
+          "weight": 3,
         },
         Object {
           "group": "a11y-best-practices",
           "id": "duplicate-id",
-          "weight": 5,
+          "weight": 1,
         },
         Object {
           "group": "a11y-names-labels",
           "id": "frame-title",
-          "weight": 5,
+          "weight": 3,
         },
         Object {
           "group": "a11y-language",
           "id": "html-has-lang",
-          "weight": 4,
+          "weight": 3,
         },
         Object {
           "group": "a11y-language",
           "id": "html-lang-valid",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
           "group": "a11y-names-labels",
           "id": "image-alt",
-          "weight": 8,
+          "weight": 10,
         },
         Object {
           "group": "a11y-names-labels",
           "id": "input-image-alt",
-          "weight": 1,
+          "weight": 10,
         },
         Object {
           "group": "a11y-names-labels",
@@ -489,67 +498,67 @@ Object {
         Object {
           "group": "a11y-tables-lists",
           "id": "layout-table",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
           "group": "a11y-names-labels",
           "id": "link-name",
-          "weight": 9,
+          "weight": 3,
         },
         Object {
           "group": "a11y-tables-lists",
           "id": "list",
-          "weight": 5,
+          "weight": 3,
         },
         Object {
           "group": "a11y-tables-lists",
           "id": "listitem",
-          "weight": 4,
+          "weight": 3,
         },
         Object {
           "group": "a11y-best-practices",
           "id": "meta-refresh",
-          "weight": 1,
+          "weight": 10,
         },
         Object {
           "group": "a11y-best-practices",
           "id": "meta-viewport",
-          "weight": 3,
+          "weight": 10,
         },
         Object {
           "group": "a11y-names-labels",
           "id": "object-alt",
-          "weight": 4,
+          "weight": 3,
         },
         Object {
           "group": "a11y-navigation",
           "id": "tabindex",
-          "weight": 4,
+          "weight": 3,
         },
         Object {
           "group": "a11y-tables-lists",
           "id": "td-headers-attr",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
           "group": "a11y-tables-lists",
           "id": "th-has-data-cells",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
           "group": "a11y-language",
           "id": "valid-lang",
-          "weight": 1,
+          "weight": 3,
         },
         Object {
           "group": "a11y-audio-video",
           "id": "video-caption",
-          "weight": 4,
+          "weight": 10,
         },
         Object {
           "group": "a11y-audio-video",
           "id": "video-description",
-          "weight": 3,
+          "weight": 10,
         },
         Object {
           "id": "logical-tab-order",
@@ -694,11 +703,11 @@ Object {
         },
         Object {
           "group": "metrics",
-          "id": "estimated-input-latency",
+          "id": "max-potential-fid",
           "weight": 0,
         },
         Object {
-          "id": "max-potential-fid",
+          "id": "estimated-input-latency",
           "weight": 0,
         },
         Object {
@@ -812,6 +821,16 @@ Object {
           "weight": 0,
         },
         Object {
+          "group": "budgets",
+          "id": "performance-budget",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "resource-summary",
+          "weight": 0,
+        },
+        Object {
           "id": "network-requests",
           "weight": 0,
         },
@@ -909,6 +928,11 @@ Object {
           "weight": 1,
         },
         Object {
+          "group": "pwa-optimized",
+          "id": "apple-touch-icon",
+          "weight": 1,
+        },
+        Object {
           "id": "pwa-cross-browser",
           "weight": 0,
         },
@@ -960,6 +984,11 @@ Object {
         Object {
           "group": "seo-crawl",
           "id": "robots-txt",
+          "weight": 1,
+        },
+        Object {
+          "group": "seo-content",
+          "id": "image-alt",
           "weight": 1,
         },
         Object {
@@ -1030,6 +1059,10 @@ Object {
       "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
       "title": "Tables and lists",
     },
+    "budgets": Object {
+      "description": "Performance budgets set standards for the performance of your site.",
+      "title": "Budgets",
+    },
     "diagnostics": Object {
       "description": "More information about the performance of your application.",
       "title": "Diagnostics",
@@ -1070,9 +1103,6 @@ Object {
       "cpuQuietThresholdMs": 1000,
       "gatherers": Array [
         Object {
-          "path": "scripts",
-        },
-        Object {
           "path": "css-usage",
         },
         Object {
@@ -1082,10 +1112,7 @@ Object {
           "path": "runtime-exceptions",
         },
         Object {
-          "path": "chrome-console-messages",
-        },
-        Object {
-          "path": "accessibility",
+          "path": "console-messages",
         },
         Object {
           "path": "anchor-elements",
@@ -1100,6 +1127,9 @@ Object {
           "path": "meta-elements",
         },
         Object {
+          "path": "script-elements",
+        },
+        Object {
           "path": "dobetterweb/appcache",
         },
         Object {
@@ -1107,9 +1137,6 @@ Object {
         },
         Object {
           "path": "dobetterweb/domstats",
-        },
-        Object {
-          "path": "dobetterweb/js-libraries",
         },
         Object {
           "path": "dobetterweb/optimized-images",
@@ -1127,19 +1154,16 @@ Object {
           "path": "seo/font-size",
         },
         Object {
-          "path": "seo/hreflang",
-        },
-        Object {
           "path": "seo/embedded-content",
-        },
-        Object {
-          "path": "seo/canonical",
         },
         Object {
           "path": "seo/robots-txt",
         },
         Object {
           "path": "seo/tap-targets",
+        },
+        Object {
+          "path": "accessibility",
         },
       ],
       "networkQuietThresholdMs": 1000,
@@ -1202,18 +1226,21 @@ Object {
     "additionalTraceCategories": null,
     "auditMode": false,
     "blockedUrlPatterns": null,
-    "disableDeviceEmulation": false,
+    "budgets": null,
+    "channel": "cli",
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
     "extraHeaders": null,
     "gatherMode": false,
     "locale": "en-US",
+    "maxWaitForFcp": 15000,
     "maxWaitForLoad": 45000,
     "onlyAudits": null,
     "onlyCategories": null,
     "output": Array [
       "html",
     ],
+    "precomputedLanternData": null,
     "skipAudits": null,
     "throttling": Object {
       "cpuSlowdownMultiplier": 4,
@@ -1279,6 +1306,10 @@ Object {
       "description": "These are opportunities to to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
       "title": "Tables and lists",
     },
+    "budgets": Object {
+      "description": "Performance budgets set standards for the performance of your site.",
+      "title": "Budgets",
+    },
     "diagnostics": Object {
       "description": "More information about the performance of your application.",
       "title": "Diagnostics",
@@ -1329,12 +1360,14 @@ Object {
     "additionalTraceCategories": null,
     "auditMode": true,
     "blockedUrlPatterns": null,
-    "disableDeviceEmulation": false,
+    "budgets": null,
+    "channel": "cli",
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
     "extraHeaders": null,
     "gatherMode": false,
     "locale": "en-US",
+    "maxWaitForFcp": 15000,
     "maxWaitForLoad": 45000,
     "onlyAudits": Array [
       "metrics",
@@ -1343,6 +1376,7 @@ Object {
     "output": Array [
       "json",
     ],
+    "precomputedLanternData": null,
     "skipAudits": null,
     "throttling": Object {
       "cpuSlowdownMultiplier": 4,

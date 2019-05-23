@@ -7,10 +7,10 @@
 
 /** @typedef {LH.Artifacts.FontSize['analyzedFailingNodesData'][0]} FailingNodeData */
 
-const URL = require('../../lib/url-shim');
+const URL = require('../../lib/url-shim.js');
 const i18n = require('../../lib/i18n/i18n.js');
-const Audit = require('../audit');
-const ViewportAudit = require('../viewport');
+const Audit = require('../audit.js');
+const ComputedViewportMeta = require('../../computed/viewport-meta.js');
 const MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT = 60;
 
 const UIStrings = {
@@ -20,7 +20,7 @@ const UIStrings = {
   failureTitle: 'Document doesn\'t use legible font sizes',
   /** Description of a Lighthouse audit that tells the user *why* they need to use a larger font size. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).',
-  /** [ICU Syntax] Label for the audit identifying font sizes that are too small. */
+  /** Label for the audit identifying font sizes that are too small. */
   displayValue: '{decimalProportion, number, extendedPercent} legible text',
   /** Explanatory message stating that there was a failure in an audit caused by a missing page viewport meta tag configuration. "viewport" and "meta" are HTML terms and should not be translated. */
   explanationViewport: 'Text is illegible because there\'s no viewport meta tag optimized ' +
@@ -207,19 +207,28 @@ class FontSize extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['FontSize', 'URL', 'MetaElements'],
+      requiredArtifacts: ['FontSize', 'URL', 'MetaElements', 'TestedAsMobileDevice'],
     };
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
-    const hasViewportSet = ViewportAudit.audit(artifacts).rawValue;
-    if (!hasViewportSet) {
+  static async audit(artifacts, context) {
+    if (!artifacts.TestedAsMobileDevice) {
+      // Font size isn't important to desktop SEO
       return {
-        rawValue: false,
+        score: 1,
+        notApplicable: true,
+      };
+    }
+
+    const viewportMeta = await ComputedViewportMeta.request(artifacts.MetaElements, context);
+    if (!viewportMeta.isMobileOptimized) {
+      return {
+        score: 0,
         explanation: str_(UIStrings.explanationViewport),
       };
     }
@@ -234,7 +243,7 @@ class FontSize extends Audit {
 
     if (totalTextLength === 0) {
       return {
-        rawValue: true,
+        score: 1,
       };
     }
 
@@ -287,7 +296,6 @@ class FontSize extends Audit {
     }
 
     const decimalProportion = (percentageOfPassingText / 100);
-    /** @type {LH.Audit.DisplayValue} */
     const displayValue = str_(UIStrings.displayValue, {decimalProportion});
     const details = Audit.makeTableDetails(headings, tableData);
     const passed = percentageOfPassingText >= MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT;
@@ -311,7 +319,7 @@ class FontSize extends Audit {
     }
 
     return {
-      rawValue: passed,
+      score: Number(passed),
       details,
       displayValue,
       explanation,

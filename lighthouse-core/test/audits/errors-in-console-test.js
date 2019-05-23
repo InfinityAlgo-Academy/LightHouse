@@ -13,10 +13,10 @@ const assert = require('assert');
 describe('Console error logs audit', () => {
   it('passes when no console messages were found', () => {
     const auditResult = ErrorLogsAudit.audit({
-      ChromeConsoleMessages: [],
+      ConsoleMessages: [],
       RuntimeExceptions: [],
     });
-    assert.equal(auditResult.rawValue, 0);
+    assert.equal(auditResult.numericValue, 0);
     assert.equal(auditResult.score, 1);
     assert.ok(!auditResult.displayValue, 0);
     assert.equal(auditResult.details.items.length, 0);
@@ -24,7 +24,7 @@ describe('Console error logs audit', () => {
 
   it('filter out the non error logs', () => {
     const auditResult = ErrorLogsAudit.audit({
-      ChromeConsoleMessages: [
+      ConsoleMessages: [
         {
           entry: {
             level: 'info',
@@ -35,14 +35,14 @@ describe('Console error logs audit', () => {
       ],
       RuntimeExceptions: [],
     });
-    assert.equal(auditResult.rawValue, 0);
+    assert.equal(auditResult.numericValue, 0);
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 
   it('fails when error logs are found ', () => {
     const auditResult = ErrorLogsAudit.audit({
-      ChromeConsoleMessages: [
+      ConsoleMessages: [
         {
           entry: {
             level: 'error',
@@ -81,7 +81,7 @@ describe('Console error logs audit', () => {
       }],
     });
 
-    assert.equal(auditResult.rawValue, 3);
+    assert.equal(auditResult.numericValue, 3);
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 3);
     assert.equal(auditResult.details.items[0].url, 'http://www.example.com/favicon.ico');
@@ -98,7 +98,7 @@ describe('Console error logs audit', () => {
 
   it('handle the case when some logs fields are undefined', () => {
     const auditResult = ErrorLogsAudit.audit({
-      ChromeConsoleMessages: [
+      ConsoleMessages: [
         {
           entry: {
             level: 'error',
@@ -107,7 +107,7 @@ describe('Console error logs audit', () => {
       ],
       RuntimeExceptions: [],
     });
-    assert.equal(auditResult.rawValue, 1);
+    assert.equal(auditResult.numericValue, 1);
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
     // url is undefined
@@ -119,7 +119,7 @@ describe('Console error logs audit', () => {
   // Checks bug #4188
   it('handle the case when exception info is not present', () => {
     const auditResult = ErrorLogsAudit.audit({
-      ChromeConsoleMessages: [],
+      ConsoleMessages: [],
       RuntimeExceptions: [{
         'timestamp': 1506535813608.003,
         'exceptionDetails': {
@@ -138,7 +138,7 @@ describe('Console error logs audit', () => {
         },
       }],
     });
-    assert.equal(auditResult.rawValue, 1);
+    assert.equal(auditResult.numericValue, 1);
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
     assert.strictEqual(auditResult.details.items[0].url, 'http://example.com/fancybox.js');

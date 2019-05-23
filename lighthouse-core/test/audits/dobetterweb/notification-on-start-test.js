@@ -14,22 +14,22 @@ describe('UX: notification audit', () => {
   it('fails when notification has been automatically requested', () => {
     const text = 'Do not request notification permission without a user action.';
     const auditResult = NotificationOnStart.audit({
-      ChromeConsoleMessages: [
+      ConsoleMessages: [
         {entry: {source: 'violation', url: 'https://example.com/', text}},
         {entry: {source: 'violation', url: 'https://example2.com/two', text}},
         {entry: {source: 'violation', url: 'http://abc.com/', text: 'No document.write'}},
         {entry: {source: 'deprecation', url: 'https://example.com/two'}},
       ],
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
   });
 
   it('passes when notification has not been automatically requested', () => {
     const auditResult = NotificationOnStart.audit({
-      ChromeConsoleMessages: [],
+      ConsoleMessages: [],
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 });

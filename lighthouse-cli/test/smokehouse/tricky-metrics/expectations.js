@@ -6,29 +6,33 @@
 'use strict';
 
 /**
- * Expected Lighthouse audit values for tricky TTI tests
+ * Expected Lighthouse audit values for tricky metrics tests
  */
 module.exports = [
   {
-    requestedUrl: 'http://localhost:10200/tricky-tti.html',
-    finalUrl: 'http://localhost:10200/tricky-tti.html',
-    audits: {
-      'first-cpu-idle': {
-        score: '<75',
-        rawValue: '>9000',
-      },
-      'interactive': {
-        score: '<75',
-        rawValue: '>9000',
+    lhr: {
+      requestedUrl: 'http://localhost:10200/tricky-tti.html',
+      finalUrl: 'http://localhost:10200/tricky-tti.html',
+      audits: {
+        'first-cpu-idle': {
+          // stalls for 5 seconds, 5 seconds out, so should be around 10s
+          numericValue: '>9000',
+        },
+        'interactive': {
+          // stalls for 5 seconds, 5 seconds out, so should be around 10s
+          numericValue: '>9000',
+        },
       },
     },
   },
   {
-    requestedUrl: 'http://localhost:10200/delayed-fcp.html',
-    finalUrl: 'http://localhost:10200/delayed-fcp.html',
-    audits: {
-      'first-contentful-paint': {
-        rawValue: '>1', // We just want to check that it doesn't error
+    lhr: {
+      requestedUrl: 'http://localhost:10200/delayed-fcp.html',
+      finalUrl: 'http://localhost:10200/delayed-fcp.html',
+      audits: {
+        'first-contentful-paint': {
+          numericValue: '>1', // We just want to check that it doesn't error
+        },
       },
     },
   },

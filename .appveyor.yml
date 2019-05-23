@@ -9,12 +9,8 @@ branches:
 environment:
   fast_finish: true
   matrix:
-    - nodejs_version: "8"
+    - nodejs_version: "10"
       platform: x86
-    # other Node versions are skipped, as appveyor only allows 1 concurrent job
-    # and we want appveyor finishing ASAP. see #2382
-    # - nodejs_version: "9"
-    #   platform: x86
 
 build: off
 

@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const URL = require('../../lib/url-shim');
+const URL = require('../../lib/url-shim.js');
 const assert = require('assert');
 const superLongName =
     'https://example.com/thisIsASuperLongURLThatWillTriggerFilenameTruncationWhichWeWantToTest.js';
@@ -103,15 +103,6 @@ describe('URL Shim', () => {
     assert.equal(URL.getOrigin(urlB), null);
     assert.equal(URL.getOrigin(urlC), null);
     assert.equal(URL.getOrigin(urlD), null);
-  });
-
-  describe('getTld', () => {
-    it('returns the correct tld', () => {
-      assert.equal(URL.getTld('example.com'), '.com');
-      assert.equal(URL.getTld('example.co.uk'), '.co.uk');
-      assert.equal(URL.getTld('example.com.br'), '.com.br');
-      assert.equal(URL.getTld('example.tokyo.jp'), '.jp');
-    });
   });
 
   describe('rootDomainsMatch', () => {

@@ -9,36 +9,37 @@
   */
 'use strict';
 
-const Gatherer = require('./gatherer');
+const Gatherer = require('./gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
 
 /* global window, getElementsInDocument, Image */
 
-/** @return {Array<LH.Artifacts.ImageElement>} */
-/* istanbul ignore next */
-function collectImageElementInfo() {
-  /** @param {Element} element */
-  function getClientRect(element) {
-    const clientRect = element.getBoundingClientRect();
-    return {
-      // manually copy the properties because ClientRect does not JSONify
-      top: clientRect.top,
-      bottom: clientRect.bottom,
-      left: clientRect.left,
-      right: clientRect.right,
-    };
-  }
 
-  /** @type {Array<Element>} */
-  // @ts-ignore - added by getElementsInDocumentFnString
-  const allElements = getElementsInDocument();
+/** @param {Element} element */
+/* istanbul ignore next */
+function getClientRect(element) {
+  const clientRect = element.getBoundingClientRect();
+  return {
+    // Just grab the DOMRect properties we want, excluding x/y/width/height
+    top: clientRect.top,
+    bottom: clientRect.bottom,
+    left: clientRect.left,
+    right: clientRect.right,
+  };
+}
+
+/**
+ * @param {Array<Element>} allElements
+ * @return {Array<LH.Artifacts.ImageElement>}
+ */
+/* istanbul ignore next */
+function getHTMLImages(allElements) {
   const allImageElements = /** @type {Array<HTMLImageElement>} */ (allElements.filter(element => {
     return element.localName === 'img';
   }));
 
-  /** @type {Array<LH.Artifacts.ImageElement>} */
-  const htmlImages = allImageElements.map(element => {
+  return allImageElements.map(element => {
     const computedStyle = window.getComputedStyle(element);
     return {
       // currentSrc used over src to get the url as determined by the browser
@@ -57,29 +58,29 @@ function collectImageElementInfo() {
       ),
     };
   });
+}
 
+/**
+ * @param {Array<Element>} allElements
+ * @return {Array<LH.Artifacts.ImageElement>}
+ */
+/* istanbul ignore next */
+function getCSSImages(allElements) {
   // Chrome normalizes background image style from getComputedStyle to be an absolute URL in quotes.
   // Only match basic background-image: url("http://host/image.jpeg") declarations
   const CSS_URL_REGEX = /^url\("([^"]+)"\)$/;
-  // Only find images that aren't specifically scaled
-  const CSS_SIZE_REGEX = /(auto|contain|cover)/;
 
-  const cssImages = allElements.reduce((images, element) => {
+  /** @type {Array<LH.Artifacts.ImageElement>} */
+  const images = [];
+
+  for (const element of allElements) {
     const style = window.getComputedStyle(element);
-    if (!style.backgroundImage || !CSS_URL_REGEX.test(style.backgroundImage) ||
-        !style.backgroundSize || !CSS_SIZE_REGEX.test(style.backgroundSize)) {
-      return images;
-    }
+    // If the element didn't have a CSS background image, we're not interested.
+    if (!style.backgroundImage || !CSS_URL_REGEX.test(style.backgroundImage)) continue;
 
     const imageMatch = style.backgroundImage.match(CSS_URL_REGEX);
     // @ts-ignore test() above ensures that there is a match.
     const url = imageMatch[1];
-
-    // Heuristic to filter out sprite sheets
-    const differentImages = images.filter(image => image.src !== url);
-    if (images.length - differentImages.length > 2) {
-      return differentImages;
-    }
 
     images.push({
       src: url,
@@ -87,18 +88,25 @@ function collectImageElementInfo() {
       displayedHeight: element.clientHeight,
       clientRect: getClientRect(element),
       // CSS Images do not expose natural size, we'll determine the size later
-      naturalWidth: Number.MAX_VALUE,
-      naturalHeight: Number.MAX_VALUE,
+      naturalWidth: 0,
+      naturalHeight: 0,
       isCss: true,
       isPicture: false,
       usesObjectFit: false,
       resourceSize: 0, // this will get overwritten below
     });
+  }
 
-    return images;
-  }, /** @type {Array<LH.Artifacts.ImageElement>} */ ([]));
+  return images;
+}
 
-  return htmlImages.concat(cssImages);
+/** @return {Array<LH.Artifacts.ImageElement>} */
+/* istanbul ignore next */
+function collectImageElementInfo() {
+  /** @type {Array<Element>} */
+  // @ts-ignore - added by getElementsInDocumentFnString
+  const allElements = getElementsInDocument();
+  return getHTMLImages(allElements).concat(getCSSImages(allElements));
 }
 
 /**
@@ -130,12 +138,14 @@ class ImageElements extends Gatherer {
   async fetchElementWithSizeInformation(driver, element) {
     const url = JSON.stringify(element.src);
     try {
+      // We don't want this to take forever, 250ms should be enough for images that are cached
+      driver.setNextProtocolTimeout(250);
       /** @type {{naturalWidth: number, naturalHeight: number}} */
       const size = await driver.evaluateAsync(`(${determineNaturalSize.toString()})(${url})`);
       return Object.assign(element, size);
     } catch (_) {
       // determineNaturalSize fails on invalid images, which we treat as non-visible
-      return Object.assign(element, {naturalWidth: 0, naturalHeight: 0});
+      return element;
     }
   }
 
@@ -147,7 +157,9 @@ class ImageElements extends Gatherer {
   async afterPass(passContext, loadData) {
     const driver = passContext.driver;
     const indexedNetworkRecords = loadData.networkRecords.reduce((map, record) => {
-      if (/^image/.test(record.mimeType) && record.finished) {
+      // The network record is only valid for size information if it finished with a successful status
+      // code that indicates a complete resource response.
+      if (/^image/.test(record.mimeType) && record.finished && record.statusCode === 200) {
         map[record.url] = record;
       }
 
@@ -156,13 +168,23 @@ class ImageElements extends Gatherer {
 
     const expression = `(function() {
       ${pageFunctions.getElementsInDocumentString}; // define function on page
-      return (${collectImageElementInfo.toString()})();
+      ${getClientRect.toString()};
+      ${getHTMLImages.toString()};
+      ${getCSSImages.toString()};
+      ${collectImageElementInfo.toString()};
+
+      return collectImageElementInfo();
     })()`;
 
     /** @type {Array<LH.Artifacts.ImageElement>} */
     const elements = await driver.evaluateAsync(expression);
 
+    /** @type {Array<LH.Artifacts.ImageElement>} */
     const imageUsage = [];
+    const top50Images = Object.values(indexedNetworkRecords)
+      .sort((a, b) => b.resourceSize - a.resourceSize)
+      .slice(0, 50);
+
     for (let element of elements) {
       // Pull some of our information directly off the network record.
       const networkRecord = indexedNetworkRecords[element.src] || {};
@@ -177,8 +199,13 @@ class ImageElements extends Gatherer {
 
       // Images within `picture` behave strangely and natural size information isn't accurate,
       // CSS images have no natural size information at all. Try to get the actual size if we can.
-      // Additional fetch is expensive; don't bother if we don't have a networkRecord for the image.
-      if ((element.isPicture || element.isCss) && networkRecord) {
+      // Additional fetch is expensive; don't bother if we don't have a networkRecord for the image,
+      // or it's not in the top 50 largest images.
+      if (
+        (element.isPicture || element.isCss) &&
+        networkRecord &&
+        top50Images.includes(networkRecord)
+      ) {
         element = await this.fetchElementWithSizeInformation(driver, element);
       }
 

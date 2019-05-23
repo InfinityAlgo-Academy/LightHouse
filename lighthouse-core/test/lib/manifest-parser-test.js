@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const manifestParser = require('../../lib/manifest-parser');
+const manifestParser = require('../../lib/manifest-parser.js');
 const assert = require('assert');
 const manifestStub = require('../fixtures/manifest.json');
 
@@ -347,7 +347,6 @@ describe('Manifest Parser', function() {
       const display = parsedManifest.value.display;
       assert.ok(!display.warning);
       assert.equal(display.value, 'browser');
-      assert.equal(display.rawValue, undefined);
     });
 
     it('trims whitespace', () => {

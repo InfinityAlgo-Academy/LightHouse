@@ -10,7 +10,7 @@
 
 'use strict';
 
-const ViolationAudit = require('../violation-audit');
+const ViolationAudit = require('../violation-audit.js');
 
 class NoDocWriteAudit extends ViolationAudit {
   /**
@@ -24,7 +24,7 @@ class NoDocWriteAudit extends ViolationAudit {
       description: 'For users on slow connections, external scripts dynamically injected via ' +
           '`document.write()` can delay page load by tens of seconds. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/document-write).',
-      requiredArtifacts: ['ChromeConsoleMessages'],
+      requiredArtifacts: ['ConsoleMessages'],
     };
   }
 
@@ -44,7 +44,7 @@ class NoDocWriteAudit extends ViolationAudit {
     const details = ViolationAudit.makeTableDetails(headings, results);
 
     return {
-      rawValue: results.length === 0,
+      score: Number(results.length === 0),
       extendedInfo: {
         value: results,
       },

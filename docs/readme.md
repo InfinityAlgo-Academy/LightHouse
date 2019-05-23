@@ -82,6 +82,29 @@ log.setLevel(flags.logLevel);
 launchChromeAndRunLighthouse('https://example.com', flags).then(...);
 ```
 
+## Configuration
+In order to extend the Lighthouse configuration programmatically, you need to pass the config object as the 3rd argument. If omitted, a default configuration is used.
+
+**Example:**
+```js
+{
+  extends: 'lighthouse:default',
+  settings: {
+    onlyAudits: [
+      'first-meaningful-paint',
+      'speed-index-metric',
+      'estimated-input-latency',
+      'first-interactive',
+      'consistently-interactive',
+    ],
+  },
+}
+```
+
+You can extend base configuration from either [lighthouse:default](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/default-config.js) or [lighthouse:full](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/full-config.js). Alternatively, you can build up your own configuration from scratch to have complete control.
+
+For more information on the types of config you can provide, see [Lighthouse Configuration](https://github.com/GoogleChrome/lighthouse/blob/master/docs/configuration.md).
+
 ## Testing on a site with authentication
 
 When installed globally via `npm i -g lighthouse` or `yarn global add lighthouse`,
@@ -96,7 +119,7 @@ instance with an open debugging port.
 
 Lighthouse can run against a real mobile device. You can follow the [Remote Debugging on Android (Legacy Workflow)](https://developer.chrome.com/devtools/docs/remote-debugging-legacy) up through step 3.3, but the TL;DR is install & run adb, enable USB debugging, then port forward 9222 from the device to the machine with Lighthouse.
 
-You'll likely want to use the CLI flags `--disable-device-emulation --throttling.cpuSlowdownMultiplier`.
+You'll likely want to use the CLI flags `--emulated-form-factor=none --throttling.cpuSlowdownMultiplier=1` to disable any additional emulation.
 
 ```sh
 $ adb kill-server
@@ -108,7 +131,7 @@ $ adb devices -l
 
 $ adb forward tcp:9222 localabstract:chrome_devtools_remote
 
-$ lighthouse --port=9222 --disable-device-emulation --throttling.cpuSlowdownMultiplier=1 https://example.com
+$ lighthouse --port=9222 --emulated-form-factor=none --throttling.cpuSlowdownMultiplier=1 https://example.com
 ```
 
 ## Lighthouse as trace processor

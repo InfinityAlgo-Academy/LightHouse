@@ -28,7 +28,7 @@ trap teardown EXIT
 
 colorText "Generating a fresh LHR..." "$purple"
 set -x
-node "$lhroot_path/lighthouse-cli" -A="$lhroot_path/lighthouse-core/test/results/artifacts" --throttling-method=devtools --quiet --output=json --output-path="$freshLHRPath"
+node "$lhroot_path/lighthouse-cli" -A="$lhroot_path/lighthouse-core/test/results/artifacts" --config-path="$lhroot_path/lighthouse-core/test/results/sample-config.js" --quiet --output=json --output-path="$freshLHRPath"
 set +x
 
 # remove timing from both

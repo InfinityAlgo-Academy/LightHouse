@@ -10,7 +10,7 @@
 
 const path = require('path');
 const execFileSync = require('child_process').execFileSync;
-const constants = require('./constants');
+const constants = require('./constants.js');
 
 const INPUT_URL = process.argv[2];
 if (!INPUT_URL) throw new Error('Usage $0: <url>');

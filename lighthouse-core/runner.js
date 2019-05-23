@@ -7,16 +7,17 @@
 
 const isDeepEqual = require('lodash.isequal');
 const Driver = require('./gather/driver.js');
-const GatherRunner = require('./gather/gather-runner');
-const ReportScoring = require('./scoring');
-const Audit = require('./audits/audit');
+const GatherRunner = require('./gather/gather-runner.js');
+const ReportScoring = require('./scoring.js');
+const Audit = require('./audits/audit.js');
 const log = require('lighthouse-logger');
 const i18n = require('./lib/i18n/i18n.js');
-const assetSaver = require('./lib/asset-saver');
+const stackPacks = require('./lib/stack-packs.js');
+const assetSaver = require('./lib/asset-saver.js');
 const fs = require('fs');
 const path = require('path');
-const URL = require('./lib/url-shim');
-const Sentry = require('./lib/sentry');
+const URL = require('./lib/url-shim.js');
+const Sentry = require('./lib/sentry.js');
 const generateReport = require('./report/report-generator').generateReport;
 const LHError = require('./lib/lh-error.js');
 
@@ -147,6 +148,7 @@ class Runner {
           rendererFormattedStrings: i18n.getRendererFormattedStrings(settings.locale),
           icuMessagePaths: {},
         },
+        stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
       };
 
       // Replace ICU message references with localized strings; save replaced paths in lhr.
@@ -179,7 +181,16 @@ class Runner {
       ...timingEntriesFromRunner,
       // As entries can share a name, dedupe based on the startTime timestamp
     ].map(entry => /** @type {[number, PerformanceEntry]} */ ([entry.startTime, entry]));
-    const timingEntries = Array.from(new Map(timingEntriesKeyValues).values());
+    const timingEntries = Array.from(new Map(timingEntriesKeyValues).values())
+    // Truncate timestamps to hundredths of a millisecond saves ~4KB. No need for microsecond
+    // resolution.
+    .map(entry => {
+      return /** @type {PerformanceEntry} */ ({
+        ...entry,
+        duration: parseFloat(entry.duration.toFixed(2)),
+        startTime: parseFloat(entry.startTime.toFixed(2)),
+      });
+    });
     const runnerEntry = timingEntries.find(e => e.name === 'lh:runner:run');
     return {entries: timingEntries, total: runnerEntry && runnerEntry.duration || 0};
   }
@@ -223,6 +234,7 @@ class Runner {
         gatherMode: undefined,
         auditMode: undefined,
         output: undefined,
+        budgets: undefined,
       };
       const normalizedGatherSettings = Object.assign({}, artifacts.settings, overrides);
       const normalizedAuditSettings = Object.assign({}, settings, overrides);
@@ -262,7 +274,7 @@ class Runner {
   static async _runAudit(auditDefn, artifacts, sharedAuditContext) {
     const audit = auditDefn.implementation;
     const status = {
-      msg: `Evaluating: ${i18n.getFormatted(audit.meta.title, 'en-US')}`,
+      msg: `Auditing: ${i18n.getFormatted(audit.meta.title, 'en-US')}`,
       id: `lh:audit:${audit.meta.id}`,
     };
     log.time(status);
@@ -313,7 +325,15 @@ class Runner {
         ...sharedAuditContext,
       };
 
-      const product = await audit.audit(artifacts, auditContext);
+      // Only pass the declared `requiredArtifacts` to the audit
+      // The type is masquerading as `LH.Artifacts` but will only contain a subset of the keys
+      // to prevent consumers from unnecessary type assertions.
+      const requiredArtifacts = audit.meta.requiredArtifacts
+        .reduce((requiredArtifacts, artifactName) => {
+          requiredArtifacts[artifactName] = artifacts[artifactName];
+          return requiredArtifacts;
+        }, /** @type {LH.Artifacts} */ ({}));
+      const product = await audit.audit(requiredArtifacts, auditContext);
       auditResult = Audit.generateAuditResult(audit, product);
     } catch (err) {
       log.warn(audit.meta.id, `Caught exception: ${err.message}`);
@@ -331,7 +351,7 @@ class Runner {
   /**
    * Returns first runtimeError found in artifacts.
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Result['runtimeError']}
+   * @return {LH.Result['runtimeError']|undefined}
    */
   static getArtifactRuntimeError(artifacts) {
     for (const possibleErrorArtifact of Object.values(artifacts)) {
@@ -345,10 +365,7 @@ class Runner {
       }
     }
 
-    return {
-      code: LHError.NO_ERROR,
-      message: '',
-    };
+    return undefined;
   }
 
   /**
