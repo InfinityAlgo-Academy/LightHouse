@@ -14,7 +14,7 @@ const {
   getRectAtCenter,
   allRectsContainedWithinEachOther,
   getBoundingRectWithPadding,
-} = require('../../lib/rect-helpers');
+} = require('../../lib/rect-helpers.js');
 
 describe('Rect Helpers', () => {
   it('getRectOverlapArea', () => {

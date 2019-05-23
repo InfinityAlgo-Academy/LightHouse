@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const manifestParser = require('../../lib/manifest-parser');
+const manifestParser = require('../../lib/manifest-parser.js');
 const assert = require('assert');
 const manifestStub = require('../fixtures/manifest.json');
 

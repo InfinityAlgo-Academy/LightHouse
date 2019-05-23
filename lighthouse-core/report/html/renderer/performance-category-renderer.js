@@ -164,6 +164,20 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       filmstripEl && timelineEl.appendChild(filmstripEl);
     }
 
+    // Budgets
+    const budgetAudit = category.auditRefs.find(audit => audit.id === 'performance-budget');
+    if (budgetAudit && budgetAudit.result.details) {
+      const table = this.detailsRenderer.render(budgetAudit.result.details);
+      if (table) {
+        table.id = budgetAudit.id;
+        table.classList.add('lh-audit');
+        const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
+        budgetsGroupEl.appendChild(table);
+        budgetsGroupEl.classList.add('lh-audit-group--budgets');
+        element.appendChild(budgetsGroupEl);
+      }
+    }
+
     // Opportunities
     const opportunityAudits = category.auditRefs
         .filter(audit => audit.group === 'load-opportunities' && !Util.showAsPassed(audit.result))

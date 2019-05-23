@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const NetworkRecorder = require('../../lib/network-recorder');
+const NetworkRecorder = require('../../lib/network-recorder.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 const assert = require('assert');
 const devtoolsLogItems = require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');

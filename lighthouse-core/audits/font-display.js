@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit');
-const URL = require('../lib/url-shim');
+const Audit = require('./audit.js');
+const URL = require('../lib/url-shim.js');
 const PASSING_FONT_DISPLAY_REGEX = /^(block|fallback|optional|swap)$/;
 const CSS_URL_REGEX = /url\((.*?)\)/;
 const CSS_URL_GLOBAL_REGEX = new RegExp(CSS_URL_REGEX, 'g');

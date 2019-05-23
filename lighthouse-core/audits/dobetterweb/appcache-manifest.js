@@ -10,7 +10,7 @@
 
 'use strict';
 
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 
 class AppCacheManifestAttr extends Audit {
   /**

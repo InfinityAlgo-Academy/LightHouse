@@ -7,7 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const {createTraceString} = require('../lib/timing-trace-saver');
+const {createTraceString} = require('../lib/timing-trace-saver.js');
 
 /**
  * @fileoverview This script takes the timing entries saved during a Lighthouse run and generates

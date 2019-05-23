@@ -5,7 +5,7 @@
     "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
     "benchmarkIndex": 1000
   },
-  "lighthouseVersion": "4.3.0",
+  "lighthouseVersion": "5.0.0",
   "fetchTime": "2018-03-13T00:55:45.840Z",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -475,6 +475,14 @@
           }
         ]
       }
+    },
+    "apple-touch-icon": {
+      "id": "apple-touch-icon",
+      "title": "Does not provide a valid `apple-touch-icon`",
+      "description": "For ideal appearance on iOS when users add to the home screen, define an apple-touch-icon. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/).",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "warnings": []
     },
     "splash-screen": {
       "id": "splash-screen",
@@ -1590,7 +1598,8 @@
               "selector": "h2",
               "path": "3,HTML,1,BODY,5,DIV,0,H2",
               "snippet": "<h2>Do better web tester page</h2>",
-              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1"
+              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
+              "nodeLabel": "Do better web tester page"
             }
           },
           {
@@ -1599,7 +1608,8 @@
               "selector": "span",
               "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
               "snippet": "<span>Hi there!</span>",
-              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1"
+              "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
+              "nodeLabel": "Hi there!"
             }
           }
         ],
@@ -1681,7 +1691,8 @@
               "selector": "html",
               "path": "3,HTML",
               "snippet": "<html manifest=\"clock.appcache\">",
-              "explanation": "Fix any of the following:\n  The <html> element does not have a lang attribute"
+              "explanation": "Fix any of the following:\n  The <html> element does not have a lang attribute",
+              "nodeLabel": "html"
             }
           }
         ],
@@ -1725,7 +1736,8 @@
               "selector": "img[height=\"\\35 7\"]",
               "path": "3,HTML,1,BODY,10,IMG",
               "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
             }
           },
           {
@@ -1734,25 +1746,28 @@
               "selector": "img[height=\"\\33 18\"]",
               "path": "3,HTML,1,BODY,12,IMG",
               "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "img[src$=\"lighthouse-rotating.gif\"]",
+              "selector": "img[src$=\"lighthouse-rotating\\.gif\"]",
               "path": "3,HTML,1,BODY,14,IMG",
               "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "img:nth-child(27)",
-              "path": "3,HTML,1,BODY,49,IMG",
+              "selector": "img:nth-child(30)",
+              "path": "3,HTML,1,BODY,53,IMG",
               "snippet": "<img src=\"blob:http://localhost:62824/289254fd-ef1d-4c1a-96a8-ba291caa2140\">",
-              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
+              "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "img"
             }
           }
         ],
@@ -1796,27 +1811,30 @@
             "node": {
               "type": "node",
               "selector": "input[onpaste=\"event\\.preventDefault\\(\\)\\;\"]",
-              "path": "3,HTML,1,BODY,44,INPUT",
+              "path": "3,HTML,1,BODY,48,INPUT",
               "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
-              "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty"
+              "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
+              "nodeLabel": "input"
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "input:nth-child(25)",
-              "path": "3,HTML,1,BODY,46,INPUT",
+              "selector": "input:nth-child(28)",
+              "path": "3,HTML,1,BODY,50,INPUT",
               "snippet": "<input type=\"password\">",
-              "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty"
+              "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
+              "nodeLabel": "input"
             }
           },
           {
             "node": {
               "type": "node",
               "selector": "input[onpaste=\"return\\ false\\;\"]",
-              "path": "3,HTML,1,BODY,48,INPUT",
+              "path": "3,HTML,1,BODY,52,INPUT",
               "snippet": "<input type=\"password\" onpaste=\"return false;\">",
-              "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty"
+              "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
+              "nodeLabel": "input"
             }
           }
         ],
@@ -1860,19 +1878,21 @@
           {
             "node": {
               "type": "node",
-              "selector": "a[href=\"javascript:void(0)\"]",
-              "path": "3,HTML,1,BODY,40,A",
+              "selector": "a[href=\"javascript\\:void\\(0\\)\"]",
+              "path": "3,HTML,1,BODY,44,A",
               "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\"></a>",
-              "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
+              "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "a"
             }
           },
           {
             "node": {
               "type": "node",
-              "selector": "a[href$=\"mailto:inbox@email.com\"]",
-              "path": "3,HTML,1,BODY,42,A",
+              "selector": "a[href$=\"mailto\\:inbox\\@email\\.com\"]",
+              "path": "3,HTML,1,BODY,46,A",
               "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\"></a>",
-              "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\""
+              "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "a"
             }
           }
         ],
@@ -1945,7 +1965,8 @@
               "selector": "#\\35 934a",
               "path": "3,HTML,1,BODY,2,OBJECT",
               "snippet": "<object id=\"5934a\"></object>",
-              "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty"
+              "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "object"
             }
           },
           {
@@ -1954,7 +1975,8 @@
               "selector": "#\\35 934b",
               "path": "3,HTML,1,BODY,3,OBJECT",
               "snippet": "<object id=\"5934b\"></object>",
-              "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty"
+              "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+              "nodeLabel": "object"
             }
           }
         ],
@@ -3105,13 +3127,15 @@
               "type": "node",
               "snippet": "<button class=\"small-button\">Do something</button>",
               "path": "3,HTML,1,BODY,17,BUTTON",
-              "selector": "body > button.small-button"
+              "selector": "body > button.small-button",
+              "nodeLabel": "Do something"
             },
             "overlappingTarget": {
               "type": "node",
               "snippet": "<button class=\"small-button\">Do something else</button>",
               "path": "3,HTML,1,BODY,18,BUTTON",
-              "selector": "body > button.small-button"
+              "selector": "body > button.small-button",
+              "nodeLabel": "Do something else"
             },
             "tapTargetScore": 864,
             "overlappingTargetScore": 720,
@@ -3282,7 +3306,7 @@
             "tolerance": 100
           },
           {
-            "metric": "estimated-input-latency",
+            "metric": "max-potential-fid",
             "budget": 100,
             "tolerance": 100
           }
@@ -3448,7 +3472,8 @@
         },
         {
           "id": "performance-budget",
-          "weight": 0
+          "weight": 0,
+          "group": "budgets"
         },
         {
           "id": "resource-summary",
@@ -3930,6 +3955,11 @@
           "group": "pwa-optimized"
         },
         {
+          "id": "apple-touch-icon",
+          "weight": 1,
+          "group": "pwa-optimized"
+        },
+        {
           "id": "pwa-cross-browser",
           "weight": 0
         },
@@ -3943,7 +3973,7 @@
         }
       ],
       "id": "pwa",
-      "score": 0.42
+      "score": 0.41
     }
   },
   "categoryGroups": {
@@ -4309,6 +4339,12 @@
       {
         "startTime": 0,
         "name": "lh:computed:ManifestValues",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:apple-touch-icon",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5149,6 +5185,12 @@
       ],
       "lighthouse-core/audits/redirects.js | description": [
         "audits.redirects.description"
+      ],
+      "lighthouse-core/audits/apple-touch-icon.js | failureTitle": [
+        "audits[apple-touch-icon].title"
+      ],
+      "lighthouse-core/audits/apple-touch-icon.js | description": [
+        "audits[apple-touch-icon].description"
       ],
       "lighthouse-core/audits/mainthread-work-breakdown.js | title": [
         "audits[mainthread-work-breakdown].title"

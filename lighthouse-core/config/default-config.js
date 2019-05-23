@@ -7,7 +7,7 @@
 
 /* eslint-disable max-len */
 
-const constants = require('./constants');
+const constants = require('./constants.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -179,6 +179,7 @@ const defaultConfig = {
     'critical-request-chains',
     'redirects',
     'installable-manifest',
+    'apple-touch-icon',
     'splash-screen',
     'themed-omnibox',
     'content-width',
@@ -388,7 +389,7 @@ const defaultConfig = {
         {id: 'bootup-time', weight: 0, group: 'diagnostics'},
         {id: 'mainthread-work-breakdown', weight: 0, group: 'diagnostics'},
         {id: 'font-display', weight: 0, group: 'diagnostics'},
-        {id: 'performance-budget', weight: 0},
+        {id: 'performance-budget', weight: 0, group: 'budgets'},
         {id: 'resource-summary', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},
@@ -523,6 +524,7 @@ const defaultConfig = {
         {id: 'content-width', weight: 1, group: 'pwa-optimized'},
         {id: 'viewport', weight: 2, group: 'pwa-optimized'},
         {id: 'without-javascript', weight: 1, group: 'pwa-optimized'},
+        {id: 'apple-touch-icon', weight: 1, group: 'pwa-optimized'},
         // Manual audits
         {id: 'pwa-cross-browser', weight: 0},
         {id: 'pwa-page-transitions', weight: 0},

@@ -6,7 +6,7 @@
 
 'use strict';
 
-const LighthouseAudit = require('../../audits/audit');
+const LighthouseAudit = require('../../audits/audit.js');
 
 class ValidCustomAudit extends LighthouseAudit {
   static get meta() {

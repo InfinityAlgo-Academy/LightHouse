@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 const robotsParser = require('robots-parser');
-const URL = require('../../lib/url-shim');
+const URL = require('../../lib/url-shim.js');
 const MainResource = require('../../computed/main-resource.js');
 const BLOCKLIST = new Set([
   'noindex',

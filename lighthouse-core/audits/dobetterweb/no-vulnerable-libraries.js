@@ -12,8 +12,8 @@
 
 'use strict';
 
-const Audit = require('../audit');
-const Sentry = require('../../lib/sentry');
+const Audit = require('../audit.js');
+const Sentry = require('../../lib/sentry.js');
 const semver = require('semver');
 const snykDatabase = require('../../../third-party/snyk/snapshot.json');
 

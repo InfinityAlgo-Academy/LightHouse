@@ -10,14 +10,14 @@ const fs = require('fs');
 
 const jsdom = require('jsdom');
 
-const URL = require('../../../../lib/url-shim');
+const URL = require('../../../../lib/url-shim.js');
 const prepareLabData = require('../../../../report/html/renderer/psi.js');
 const Util = require('../../../../report/html/renderer/util.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
-const CategoryRenderer = require('../../../../report/html/renderer/category-renderer');
-const DetailsRenderer = require('../../../../report/html/renderer/details-renderer');
+const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
+const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const CriticalRequestChainRenderer =
-    require('../../../../report/html/renderer/crc-details-renderer');
+    require('../../../../report/html/renderer/crc-details-renderer.js');
 
 const sampleResultsStr = fs.readFileSync(__dirname + '/../../../results/sample_v2.json', 'utf-8');
 const sampleResultsRoundtripStr = fs.readFileSync(
@@ -43,7 +43,7 @@ describe('DOM', () => {
 
     // Delayed so that CategoryRenderer is in global scope
     const PerformanceCategoryRenderer =
-        require('../../../../report/html/renderer/performance-category-renderer');
+        require('../../../../report/html/renderer/performance-category-renderer.js');
     global.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
 
@@ -82,7 +82,6 @@ describe('DOM', () => {
         const result = prepareLabData(sampleResultsStr, document);
         assert.ok(result.scoreGaugeEl instanceof document.defaultView.Element);
         assert.equal(result.scoreGaugeEl.querySelector('.lh-gauge__wrapper').href, '');
-        assert.ok(result.scoreGaugeEl.outerHTML.includes('<style>'), 'score gauge comes with CSS');
         assert.ok(result.scoreGaugeEl.outerHTML.includes('<svg'), 'score gauge comes with SVG');
 
         assert.ok(result.perfCategoryEl instanceof document.defaultView.Element);

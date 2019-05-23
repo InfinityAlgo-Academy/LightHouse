@@ -135,8 +135,10 @@ describe('Lighthouse chrome extension', function() {
     for (const category of lighthouseCategories) {
       let expected = getAuditsOfCategory(category);
       if (category === 'performance') {
-        expected = getAuditsOfCategory(category).filter(a => !!a.group);
+        expected = getAuditsOfCategory(category)
+          .filter(a => !!a.group && a.id !== 'performance-budget');
       }
+      // Performance budget audit is not included in the Chrome extension of Lighthouse
       expected = expected.map(audit => audit.id);
       const elementIds = await getAuditElementsIds({category, selector: selectors.audits});
 

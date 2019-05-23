@@ -10,7 +10,7 @@
 
 'use strict';
 
-const ViolationAudit = require('../violation-audit');
+const ViolationAudit = require('../violation-audit.js');
 
 class NoDocWriteAudit extends ViolationAudit {
   /**

@@ -169,7 +169,7 @@ class ReportRenderer {
     const customGauges = []; // PWA.
     const pluginGauges = [];
 
-    for (const category of report.reportCategories) {
+    for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       const categoryGauge = renderer.renderScoreGauge(category, report.categoryGroups || {}, {
         showDescription: false,
@@ -217,7 +217,7 @@ class ReportRenderer {
     reportSection.appendChild(this._renderReportWarnings(report));
 
     let scoreHeader;
-    const isSoloCategory = report.reportCategories.length === 1;
+    const isSoloCategory = Object.keys(report.categories).length === 1;
     if (!isSoloCategory) {
       scoreHeader = this._dom.createElement('div', 'lh-scores-header');
     } else {
@@ -239,23 +239,12 @@ class ReportRenderer {
 
     const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
 
-    for (const category of report.reportCategories) {
+    for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       // .lh-category-wrapper is full-width and provides horizontal rules between categories.
       // .lh-category within has the max-width: var(--report-width);
       const wrapper = renderer.dom.createChildOf(categories, 'div', 'lh-category-wrapper');
       wrapper.appendChild(renderer.render(category, report.categoryGroups));
-    }
-
-    // Fireworks
-    const scoresAll100 = report.reportCategories.every(cat => cat.score === 1);
-    if (!this._dom.isDevTools() && scoresAll100) {
-      const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
-      scoresContainer.classList.add('score100');
-      this._dom._document.body.classList.add('dark');
-      scoresContainer.addEventListener('click', _ => {
-        scoresContainer.classList.toggle('fireworks-paused');
-      });
     }
 
     if (scoreHeader) {

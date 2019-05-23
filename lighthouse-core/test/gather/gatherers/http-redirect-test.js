@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const HTTPRedirectGather = require('../../../gather/gatherers/http-redirect');
+const HTTPRedirectGather = require('../../../gather/gatherers/http-redirect.js');
 const assert = require('assert');
 let httpRedirectGather;
 

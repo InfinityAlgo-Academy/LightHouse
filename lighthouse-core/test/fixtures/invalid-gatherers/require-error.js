@@ -6,7 +6,7 @@
 'use strict';
 
 // NOTE: this require path does not resolve correctly.
-const LighthouseGatherer = require('../terrible/path/no/seriously/gatherer');
+const LighthouseGatherer = require('../terrible/path/no/seriously/gatherer.js');
 
 class CustomGatherer extends LighthouseGatherer {}
 

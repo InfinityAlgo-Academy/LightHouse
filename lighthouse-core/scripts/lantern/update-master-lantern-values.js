@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const execFileSync = require('child_process').execFileSync;
 const prettyJSONStringify = require('pretty-json-stringify');
-const constants = require('./constants');
+const constants = require('./constants.js');
 
 const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_PATH;
 const SITE_INDEX_PATH = path.resolve(process.cwd(), INPUT_PATH);

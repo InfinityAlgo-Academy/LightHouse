@@ -447,7 +447,7 @@
     "message": "Valeur"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Les ingénieurs en navigation recommandent que les pages contiennent moins de 1 500 éléments DOM environ. La zone d'écoute idéale est une profondeur d'arborescence inférieure à 32 éléments et contenant moins de 60 éléments enfant/parent. Un grand DOM peut accroître l'utilisation de la mémoire, entraîner de plus longs [calculs de style](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) et des [redispositions] coûteuses (https://developers.google.com/speed/articles/reflow). [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/dom-size))."
+    "message": "Les ingénieurs en navigation recommandent que les pages contiennent moins de 1 500 éléments DOM environ. La zone d'écoute idéale est une profondeur d'arborescence inférieure à 32 éléments et contenant moins de 60 éléments enfant/parent. Un grand DOM peut accroître l'utilisation de la mémoire, entraîner de plus longs [calculs de style](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) et des [redispositions](https://developers.google.com/speed/articles/reflow) coûteuses. [En savoir plus](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 élément}one{# élément}other{# éléments}}"
@@ -1035,7 +1035,7 @@
     "message": "Vous pouvez envisager d'afficher des extraits dans vos listes d'articles (par exemple en utilisant la balise \"more\"), de réduire le nombre d'articles affichés dans une page donnée, de répartir vos articles longs sur plusieurs pages ou d'utiliser un plug-in qui charge de façon différée les commentaires."
   },
   "stack-packs/packs/wordpress.js | unminified_css": {
-    "message": "Un certain nombre de [plug-ins WordPress](https://wordpress.org/plugins/search/minify+css/) peuvent accélérer l'affichage de votre site en concaténant, en minimisant et en compressant vos styles. Vous pouvez aussi utiliser un processus de construction pour réaliser cette minimisation en amont, si possible."
+    "message": "Un certain nombre de [plug-ins WordPress](https://wordpress.org/plugins/search/minify+css/) peuvent accélérer l'affichage de votre site en concaténant, en minimisant et en compressant vos styles. Si possible, utilisez un processus de build pour réaliser cette minimisation en amont."
   },
   "stack-packs/packs/wordpress.js | unminified_javascript": {
     "message": "Un certain nombre de [plug-ins WordPress](https://wordpress.org/plugins/search/minify+javascript/) peuvent accélérer l'affichage de votre site en concaténant, en minimisant et en compressant vos scripts. Si possible, utilisez un processus de build pour réaliser cette minimisation en amont."

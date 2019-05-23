@@ -8,7 +8,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
-const URL = require('../../../../lib/url-shim');
+const URL = require('../../../../lib/url-shim.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 
 const TEMPLATE_FILE = fs.readFileSync(__dirname +
@@ -69,8 +69,8 @@ describe('DOM', () => {
     });
 
     it('does not inject duplicate styles', () => {
-      const clone = dom.cloneTemplate('#tmpl-lh-gauge', dom.document());
-      const clone2 = dom.cloneTemplate('#tmpl-lh-gauge', dom.document());
+      const clone = dom.cloneTemplate('#tmpl-lh-snippet', dom.document());
+      const clone2 = dom.cloneTemplate('#tmpl-lh-snippet', dom.document());
       assert.ok(clone.querySelector('style'));
       assert.ok(!clone2.querySelector('style'));
     });

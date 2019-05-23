@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const AxeAudit = require('../../../audits/accessibility/axe-audit');
+const AxeAudit = require('../../../audits/accessibility/axe-audit.js');
 const assert = require('assert');
 
 /* eslint-env jest */

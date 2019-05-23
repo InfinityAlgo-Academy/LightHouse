@@ -9,7 +9,7 @@
 const {promisify} = require('util');
 const execAsync = promisify(require('child_process').exec);
 
-const {server, serverForOffline} = require('../fixtures/static-server');
+const {server, serverForOffline} = require('../fixtures/static-server.js');
 const log = require('lighthouse-logger');
 
 /** @param {string} str */

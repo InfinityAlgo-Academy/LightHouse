@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const URL = require('../lib/url-shim');
-const Audit = require('./audit');
-const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
+const URL = require('../lib/url-shim.js');
+const Audit = require('./audit.js');
+const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
 const CriticalRequestChains = require('../computed/critical-request-chains.js');
 const i18n = require('../lib/i18n/i18n.js');
 const MainResource = require('../computed/main-resource.js');
