@@ -35,8 +35,6 @@ const UIStrings = {
   dnsFailure: 'DNS servers could not resolve the provided domain.',
   /** Error message explaining that Lighthouse couldn't complete because the page has stopped responding to its instructions. */
   pageLoadFailedHung: 'Lighthouse was unable to reliably load the URL you requested because the page stopped responding.',
-  /** TODO */
-  noLyoutJank: 'TODO',
   /** Error message explaining that Lighthouse timed out while waiting for the initial connection to the Chrome Devtools protocol. */
   criTimeout: 'Timeout waiting for initial Debugger Protocol connection.',
 };
@@ -241,7 +239,7 @@ const ERRORS = {
   // No Layout Stability trace events
   NO_LAYOUT_JANK: {
     code: 'NO_LAYOUT_JANK',
-    message: UIStrings.dnsFailure,
+    message: UIStrings.badTraceRecording,
   }
 
   // Hey! When adding a new error type, update lighthouse-result.proto too.

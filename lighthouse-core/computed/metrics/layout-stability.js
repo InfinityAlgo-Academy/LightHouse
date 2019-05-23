@@ -7,9 +7,7 @@
 
 const makeComputedArtifact = require('../computed-artifact.js');
 const MetricArtifact = require('./metric');
-const LanternMaxPotentialFID = require('./lantern-max-potential-fid.js');
 const LHError = require('../../lib/lh-error');
-const TracingProcessor = require('../../lib/traces/tracing-processor');
 
 class LayoutStability extends MetricArtifact {
   /**
@@ -18,6 +16,7 @@ class LayoutStability extends MetricArtifact {
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static computeSimulatedMetric(data, context) {
+    // @ts-ignore There's no difference between Simulated and Observed for LS
     return LayoutStability.computeObservedMetric(data);
   }
 

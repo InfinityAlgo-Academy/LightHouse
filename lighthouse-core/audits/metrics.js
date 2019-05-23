@@ -14,6 +14,7 @@ const FirstCPUIdle = require('../computed/metrics/first-cpu-idle.js');
 const Interactive = require('../computed/metrics/interactive.js');
 const SpeedIndex = require('../computed/metrics/speed-index.js');
 const EstimatedInputLatency = require('../computed/metrics/estimated-input-latency.js');
+const LayoutStability = require('../computed/metrics/layout-stability.js');
 
 class Metrics extends Audit {
   /**
@@ -59,6 +60,7 @@ class Metrics extends Audit {
     const interactive = await requestOrUndefined(Interactive, metricComputationData);
     const speedIndex = await requestOrUndefined(SpeedIndex, metricComputationData);
     const estimatedInputLatency = await EstimatedInputLatency.request(metricComputationData, context); // eslint-disable-line max-len
+    const layoutStability = await LayoutStability.request(metricComputationData, context); // eslint-disable-line max-len
 
     /** @type {UberMetricsItem} */
     const metrics = {
@@ -99,6 +101,8 @@ class Metrics extends Audit {
       observedLastVisualChangeTs: (speedline.complete + speedline.beginning) * 1000,
       observedSpeedIndex: speedline.speedIndex,
       observedSpeedIndexTs: (speedline.speedIndex + speedline.beginning) * 1000,
+
+      layoutStability: layoutStability.timing
     };
 
     for (const [name, value] of Object.entries(metrics)) {
@@ -157,6 +161,7 @@ class Metrics extends Audit {
  * @property {number} observedLastVisualChangeTs
  * @property {number} observedSpeedIndex
  * @property {number} observedSpeedIndexTs
+ * @property {number} layoutStability
  */
 
 module.exports = Metrics;

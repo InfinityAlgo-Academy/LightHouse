@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('../audit');
-const ComputedFid = require('../../computed/metrics/layout-stability.js');
+const ComputedLS = require('../../computed/metrics/layout-stability.js');
 const i18n = require('../../lib/i18n/i18n');
 
 const UIStrings = {
@@ -34,7 +34,7 @@ class LayoutStability extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
   }
 
@@ -58,7 +58,7 @@ class LayoutStability extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
-    const metricResult = await ComputedFid.request(metricComputationData, context);
+    const metricResult = await ComputedLS.request(metricComputationData, context);
 
     return {
       score: Audit.computeLogNormalScore(
@@ -66,7 +66,7 @@ class LayoutStability extends Audit {
         context.options.scorePODR,
         context.options.scoreMedian
       ),
-      rawValue: metricResult.timing,
+      numericValue: metricResult.timing,
       displayValue: `${metricResult.timing.toLocaleString()} %`, // TODO: i18n
     };
   }

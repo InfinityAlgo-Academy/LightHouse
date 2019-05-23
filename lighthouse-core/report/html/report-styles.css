@@ -776,7 +776,6 @@
   padding: 0 var(--expandable-indent);
   /* smaller gap between metrics and filmstrip */
   margin: -8px auto 0 auto;
-  margin-left: -310px;
 }
 
 .lh-filmstrip {
@@ -793,8 +792,8 @@
 
 .lh-filmstrip__thumbnail {
   border: 1px solid var(--report-secondary-border-color);
-  /* max-height: 100px;
-  max-width: 60px; */
+  max-height: 100px;
+  max-width: 60px;
 }
 
 @media screen and (max-width: 750px) {
@@ -1213,7 +1212,7 @@
 
 .lh-categories {
   width: 100%;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .lh-category {
