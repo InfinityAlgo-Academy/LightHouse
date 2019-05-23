@@ -1142,6 +1142,12 @@
   will-change: opacity; /* Only using for layer promotion */
 }
 
+/* Category header gauges shouldn't be links. */
+.lh-gauge__wrapper--disable {
+  pointer-events: none;
+  cursor: default;
+}
+
 .lh-gauge__label {
   font-size: var(--score-title-font-size);
   line-height: var(--score-title-line-height);
