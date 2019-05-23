@@ -14,7 +14,7 @@ const UIStrings = {
   title: 'Layout Instability',
   /** Description of the Layout Stability metric that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the layout instability will be higher. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'The more the page\'s layout changes during its load, the higher the instability. ' +
-      'Perfectly solid == 0. Unpleasant experience >= 0.5.',
+      'Perfectly solid == 0%. Unpleasant experience >= 50%',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -67,7 +67,7 @@ class LayoutStability extends Audit {
         context.options.scoreMedian
       ),
       numericValue: metricResult.timing,
-      displayValue: `${metricResult.timing.toLocaleString()} %`, // TODO: i18n
+      displayValue: `${(metricResult.timing * 10).toLocaleString()} %`, // TODO: i18n and figure out how this number should be shown
     };
   }
 }
