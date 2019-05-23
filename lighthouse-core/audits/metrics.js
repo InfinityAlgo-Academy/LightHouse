@@ -102,7 +102,7 @@ class Metrics extends Audit {
       observedSpeedIndex: speedline.speedIndex,
       observedSpeedIndexTs: (speedline.speedIndex + speedline.beginning) * 1000,
 
-      layoutStability: layoutStability.timing
+      layoutStability: layoutStability.timing,
     };
 
     for (const [name, value] of Object.entries(metrics)) {

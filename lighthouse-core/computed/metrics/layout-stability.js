@@ -12,10 +12,10 @@ const LHError = require('../../lib/lh-error');
 class LayoutStability extends MetricArtifact {
   /**
    * @param {LH.Artifacts.MetricComputationData} data
-   * @param {LH.Audit.Context} context
+   * @param {LH.Audit.Context} _
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
-  static computeSimulatedMetric(data, context) {
+  static computeSimulatedMetric(data, _) {
     // @ts-ignore There's no difference between Simulated and Observed for LS
     return LayoutStability.computeObservedMetric(data);
   }

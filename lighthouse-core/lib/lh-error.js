@@ -240,7 +240,7 @@ const ERRORS = {
   NO_LAYOUT_JANK: {
     code: 'NO_LAYOUT_JANK',
     message: UIStrings.badTraceRecording,
-  }
+  },
 
   // Hey! When adding a new error type, update lighthouse-result.proto too.
 };
