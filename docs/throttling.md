@@ -53,6 +53,6 @@ comcast --latency=150 --target-bw=1638
 # Run Lighthouse with its own throttling disabled
 lighthouse --throttling.requestLatencyMs=0 --throttling.downloadThroughputKbps=0 --throttling.uploadThroughputKbps=0 # ...
 
-# Disable the traffic throttling once you see "Retrieving trace"
+# Disable the traffic throttling once you see "Gathering trace"
 comcast --stop
 ```

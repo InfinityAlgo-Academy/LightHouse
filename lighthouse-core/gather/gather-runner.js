@@ -228,14 +228,14 @@ class GatherRunner {
 
     let trace;
     if (passConfig.recordTrace) {
-      const status = {msg: 'Retrieving trace', id: `lh:gather:getTrace`};
+      const status = {msg: 'Gathering trace', id: `lh:gather:getTrace`};
       log.time(status);
       trace = await driver.endTrace();
       log.timeEnd(status);
     }
 
     const status = {
-      msg: 'Retrieving devtoolsLog & network records',
+      msg: 'Gathering devtoolsLog & network records',
       id: `lh:gather:getDevtoolsLog`,
     };
     log.time(status);
@@ -265,7 +265,7 @@ class GatherRunner {
       // Abuse the passContext to pass through gatherer options
       passContext.options = gathererDefn.options || {};
       const status = {
-        msg: `Retrieving setup: ${gatherer.name}`,
+        msg: `Gathering setup: ${gatherer.name}`,
         id: `lh:gather:beforePass:${gatherer.name}`,
       };
       log.time(status, 'verbose');
@@ -295,7 +295,7 @@ class GatherRunner {
       // Abuse the passContext to pass through gatherer options
       passContext.options = gathererDefn.options || {};
       const status = {
-        msg: `Retrieving in-page: ${gatherer.name}`,
+        msg: `Gathering in-page: ${gatherer.name}`,
         id: `lh:gather:pass:${gatherer.name}`,
       };
       log.time(status);
@@ -327,7 +327,7 @@ class GatherRunner {
     for (const gathererDefn of gatherers) {
       const gatherer = gathererDefn.instance;
       const status = {
-        msg: `Retrieving: ${gatherer.name}`,
+        msg: `Gathering: ${gatherer.name}`,
         id: `lh:gather:afterPass:${gatherer.name}`,
       };
       log.time(status);

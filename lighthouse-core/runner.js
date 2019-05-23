@@ -274,7 +274,7 @@ class Runner {
   static async _runAudit(auditDefn, artifacts, sharedAuditContext) {
     const audit = auditDefn.implementation;
     const status = {
-      msg: `Evaluating: ${i18n.getFormatted(audit.meta.title, 'en-US')}`,
+      msg: `Auditing: ${i18n.getFormatted(audit.meta.title, 'en-US')}`,
       id: `lh:audit:${audit.meta.id}`,
     };
     log.time(status);
