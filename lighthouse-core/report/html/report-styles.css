@@ -260,6 +260,28 @@
   --audit-group-indent: 16px;
   --audit-indent: 16px;
   --expandable-indent: 16px;
+<<<<<<< HEAD
+=======
+  --gauge-circle-size-big: 72px;
+  --gauge-circle-size: 64px;
+  /* There is no topbar in DevTools. */
+  --topbar-height: 0px;
+
+  --audits-margin-bottom: 20px;
+  --env-name-min-width: 120px;
+  --header-padding: 16px 0 16px 0;
+  --plugin-icon-size: 75%;
+  --pwa-icon-margin: 0 7px 0 -3px;
+  --score-container-width: 92px;
+  --score-number-font-size-big: 34px;
+  --score-number-font-size: 26px;
+  --score-shape-margin-left: 2px;
+  --score-shape-size: 10px;
+  --score-title-font-size-big: 22px;
+  --score-title-font-size: 14px;
+  --score-title-line-height-big: 26px;
+  --score-title-line-height: 20px;
+>>>>>>> 9df49a9ff... devtools density
 
   --lh-audit-vpadding: 4px;
   --lh-audit-hgap: 12px;
