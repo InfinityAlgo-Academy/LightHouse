@@ -17,12 +17,18 @@ declare global {
   module LH {
     export interface Artifacts extends BaseArtifacts, GathererArtifacts {}
 
-    /** Artifacts always created by GatherRunner. */
+    /**
+     * Artifacts always created by GatherRunner. These artifacts are available to Lighthouse plugins.
+     * NOTE: any breaking changes here are considered breaking Lighthouse changes that must be done
+     * on a major version bump.
+     */
     export interface BaseArtifacts {
       /** The ISO-8601 timestamp of when the test page was fetched and artifacts collected. */
       fetchTime: string;
       /** A set of warnings about unexpected things encountered while loading and testing the page. */
       LighthouseRunWarnings: string[];
+      /** Whether the page was loaded on either a real or emulated mobile device. */
+      TestedAsMobileDevice: boolean;
       /** The user agent string of the version of Chrome used. */
       HostUserAgent: string;
       /** The user agent string that Lighthouse used to load the page. */
@@ -31,6 +37,8 @@ declare global {
       BenchmarkIndex: number;
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       WebAppManifest: Artifacts.Manifest | null;
+      /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
+      Stacks: Artifacts.DetectedStack[];
       /** A set of page-load traces, keyed by passName. */
       traces: {[passName: string]: Trace};
       /** A set of DevTools debugger protocol records, keyed by passName. */
@@ -44,10 +52,32 @@ declare global {
     }
 
     /**
-     * Artifacts provided by the default gatherers. Augment this interface when adding additional
-     * gatherers.
+     * Artifacts provided by the default gatherers that are exposed to plugins with a hardended API.
+     * NOTE: any breaking changes here are considered breaking Lighthouse changes that must be done
+     * on a major version bump.
      */
-    export interface GathererArtifacts {
+    export interface PublicGathererArtifacts {
+      /** Console deprecation and intervention warnings logged by Chrome during page load. */
+      ConsoleMessages: Crdp.Log.EntryAddedEvent[];
+      /** Information on size and loading for all the images in the page. Natural size information for `picture` and CSS images is only available if the image was one of the largest 50 images. */
+      ImageElements: Artifacts.ImageElement[];
+      /** All the link elements on the page or equivalently declared in `Link` headers. @see https://html.spec.whatwg.org/multipage/links.html */
+      LinkElements: Artifacts.LinkElement[];
+      /** The values of the <meta> elements in the head. */
+      MetaElements: Array<{name: string, content?: string}>;
+      /** Set of exceptions thrown during page load. */
+      RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
+      /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
+      ScriptElements: Array<Artifacts.ScriptElement>;
+      /** The dimensions and devicePixelRatio of the loaded viewport. */
+      ViewportDimensions: Artifacts.ViewportDimensions;
+    }
+
+    /**
+     * Artifacts provided by the default gatherers. Augment this interface when adding additional
+     * gatherers. Changes to these artifacts are not considered a breaking Lighthouse change.
+     */
+    export interface GathererArtifacts extends PublicGathererArtifacts {
       /** The results of running the aXe accessibility tests on the page. */
       Accessibility: Artifacts.Accessibility;
       /** Array of all anchors on the page. */
@@ -56,10 +86,6 @@ declare global {
       AppCacheManifest: string | null;
       /** Array of all URLs cached in CacheStorage. */
       CacheContents: string[];
-      /** Href values of link[rel=canonical] nodes found in HEAD (or null, if no href attribute). */
-      Canonical: (string | null)[];
-      /** Console deprecation and intervention warnings logged by Chrome during page load. */
-      ChromeConsoleMessages: Crdp.Log.EntryAddedEvent[];
       /** CSS coverage information for styles used by page's final state. */
       CSSUsage: {rules: Crdp.CSS.RuleUsage[], stylesheets: Artifacts.CSSStyleSheetInfo[]};
       /** Information on the document's doctype(or null if not present), specifically the name, publicId, and systemId.
@@ -69,28 +95,18 @@ declare global {
       DOMStats: Artifacts.DOMStats;
       /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
       EmbeddedContent: Artifacts.EmbeddedContentInfo[];
-      /** All the link elements on the page. */
-      LinkElements: Artifacts.LinkElement[];
       /** Information for font faces used in the page. */
       Fonts: Artifacts.Font[];
       /** Information on poorly sized font usage and the text affected by it. */
       FontSize: Artifacts.FontSize;
-      /** The hreflang and href values of all link[rel=alternate] nodes found in HEAD. */
-      Hreflang: {href: string, hreflang: string}[];
       /** The page's document body innerText if loaded with JavaScript disabled. */
       HTMLWithoutJavaScript: {bodyText: string, hasNoScript: boolean};
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
       HTTPRedirect: {value: boolean};
-      /** Information on size and loading for all the images in the page. */
-      ImageElements: Artifacts.ImageElement[];
-      /** Information on JS libraries and versions used by the page. */
-      JSLibraries: {name: string, version: string, npmPkgName: string}[];
       /** JS coverage information for code used during page load. */
       JsUsage: Crdp.Profiler.ScriptCoverage[];
       /** Parsed version of the page's Web App Manifest, or null if none found. */
       Manifest: Artifacts.Manifest | null;
-      /** The values of the <meta> elements in the head. */
-      MetaElements: Array<{name: string, content?: string}>;
       /** The URL loaded with interception */
       MixedContent: {url: string};
       /** The status code of the attempted load of the page while network access is disabled. */
@@ -103,10 +119,6 @@ declare global {
       ResponseCompression: {requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize?: number}[];
       /** Information on fetching and the content of the /robots.txt file. */
       RobotsTxt: {status: number|null, content: string|null};
-      /** Set of exceptions thrown during page load. */
-      RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
-      /** The content of all scripts loaded by the page, keyed by networkRecord requestId. */
-      Scripts: Record<string, string>;
       /** Version information for all ServiceWorkers active after the first page load. */
       ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: Crdp.ServiceWorker.ServiceWorkerRegistration[]};
       /** The status of an offline fetch of the page's start_url. -1 and a explanation if missing or there was an error. */
@@ -115,8 +127,6 @@ declare global {
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** Information about tap targets including their position and size. */
       TapTargets: Artifacts.TapTarget[];
-      /** The dimensions and devicePixelRatio of the loaded viewport. */
-      ViewportDimensions: Artifacts.ViewportDimensions;
     }
 
     module Artifacts {
@@ -135,6 +145,7 @@ declare global {
             snippet: string;
             target: string[];
             failureSummary?: string;
+            nodeLabel?: string;
           }[];
         }[];
         notApplicable: {
@@ -154,7 +165,8 @@ declare global {
       }
 
       export interface DOMStats {
-        totalDOMNodes: number;
+        /** The total number of elements found within the page's body. */
+        totalBodyElements: number;
         width: {max: number, pathToElement: Array<string>, snippet: string};
         depth: {max: number, pathToElement: Array<string>, snippet: string};
       }
@@ -170,10 +182,35 @@ declare global {
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#Attributes */
       export interface LinkElement {
-        rel: string
-        href: string
+        /** The `rel` attribute of the link, normalized to lower case. @see https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types */
+        rel: 'alternate'|'canonical'|'dns-prefetch'|'preconnect'|'preload'|'stylesheet'|string;
+        /** The `href` attribute of the link or `null` if it was invalid in the header. */
+        href: string | null
+        /** The raw value of the `href` attribute. Only different from `href` when source is 'header' */
+        hrefRaw: string
+        /** The `hreflang` attribute of the link */
+        hreflang: string
+        /** The `as` attribute of the link */
         as: string
+        /** The `crossOrigin` attribute of the link */
         crossOrigin: 'anonymous'|'use-credentials'|null
+        /** Where the link was found, either in the DOM or in the headers of the main document */
+        source: 'head'|'body'|'headers'
+      }
+
+      export interface ScriptElement {
+        type: string | null
+        src: string | null
+        async: boolean
+        defer: boolean
+        /** Path that uniquely identifies the node in the DOM */
+        devtoolsNodePath: string;
+        /** Where the script was discovered, either in the head, the body, or network records. */
+        source: 'head'|'body'|'network'
+        /** The content of the inline script or the network record with the matching URL, null if the script had a src and no network record could be found. */
+        content: string | null
+        /** The ID of the network request that matched the URL of the src or the main document if inline, null if no request could be found. */
+        requestId: string | null
       }
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
@@ -261,13 +298,10 @@ declare global {
 
       export interface OptimizedImage {
         failed: false;
-        fromProtocol: boolean;
         originalSize: number;
-        jpegSize: number;
-        webpSize: number;
+        jpegSize?: number;
+        webpSize?: number;
 
-        isSameOrigin: boolean;
-        isBase64DataUri: boolean;
         requestId: string;
         url: string;
         mimeType: string;
@@ -278,8 +312,6 @@ declare global {
         failed: true;
         errMsg: string;
 
-        isSameOrigin: boolean;
-        isBase64DataUri: boolean;
         requestId: string;
         url: string;
         mimeType: string;
@@ -306,11 +338,12 @@ declare global {
       }
 
       export interface TapTarget {
-        snippet: string,
-        selector: string,
-        path: string,
-        href: string,
-        clientRects: Rect[]
+        snippet: string;
+        selector: string;
+        nodeLabel?: string;
+        path: string;
+        href: string;
+        clientRects: Rect[];
       }
 
       export interface ViewportDimensions {
@@ -348,7 +381,12 @@ declare global {
         }[];
       }
 
-      export interface MeasureEntry extends PerformanceEntry {
+      export interface MeasureEntry {
+        // From PerformanceEntry
+        readonly duration: number;
+        readonly entryType: string;
+        readonly name: string;
+        readonly startTime: number;
         /** Whether timing entry was collected during artifact gathering. */
         gather?: boolean;
       }
@@ -371,7 +409,6 @@ declare global {
       }
 
       export interface NetworkAnalysis {
-        records: Array<NetworkRequest>;
         rtt: number;
         additionalRttByOrigin: Map<string, number>;
         serverResponseTimeByOrigin: Map<string, number>;
@@ -427,6 +464,20 @@ declare global {
          * firstMeaningfulPaintCandidate events had to be attempted.
          */
         fmpFellBack: boolean;
+      }
+
+      /** Information on a tech stack (e.g. a JS library) used by the page. */
+      export interface DetectedStack {
+        /** The identifier for how this stack was detected. */
+        detector: 'js';
+        /** The unique string ID for the stack. */
+        id: string;
+        /** The name of the stack. */
+        name: string;
+        /** The version of the stack, if it could be detected. */
+        version?: string;
+        /** The package name on NPM, if it exists. */
+        npm?: string;
       }
     }
   }

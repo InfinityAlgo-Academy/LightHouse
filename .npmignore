@@ -7,6 +7,7 @@ assets/
 build/
 coverage/
 dist/
+proto/
 
 lighthouse-core/scripts/*
 lighthouse-core/test/
@@ -40,6 +41,7 @@ latest.artifacts.log
 npm-debug.log
 yarn-error.log
 results.html
+*.lcov
 
 # dev files
 .appveyor.yml

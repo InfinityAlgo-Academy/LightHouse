@@ -59,10 +59,7 @@ class DetailsRenderer {
 
       // Internal-only details, not for rendering.
       case 'screenshot':
-      case 'diagnostic':
-        return null;
-      // Fallback for old LHRs, where no type meant don't render.
-      case undefined:
+      case 'debugdata':
         return null;
 
       default: {
@@ -124,7 +121,11 @@ class DetailsRenderer {
       element.appendChild(hostElem);
     }
 
-    if (title) element.title = url;
+    if (title) {
+      element.title = url;
+      // set the url on the element's dataset which we use to check 3rd party origins
+      element.dataset.url = url;
+    }
     return element;
   }
 
@@ -331,7 +332,7 @@ class DetailsRenderer {
 
   /**
    * @param {LH.Audit.Details.List} details
-   * @returns {Element}
+   * @return {Element}
    */
   _renderList(details) {
     const listContainer = this._dom.createElement('div', 'lh-list');
@@ -351,8 +352,16 @@ class DetailsRenderer {
    */
   renderNode(item) {
     const element = this._dom.createElement('span', 'lh-node');
+    if (item.nodeLabel) {
+      const nodeLabelEl = this._dom.createElement('div');
+      nodeLabelEl.textContent = item.nodeLabel;
+      element.appendChild(nodeLabelEl);
+    }
     if (item.snippet) {
-      element.textContent = item.snippet;
+      const snippetEl = this._dom.createElement('div');
+      snippetEl.classList.add('lh-node__snippet');
+      snippetEl.textContent = item.snippet;
+      element.appendChild(snippetEl);
     }
     if (item.selector) {
       element.title = item.selector;
@@ -360,6 +369,7 @@ class DetailsRenderer {
     if (item.path) element.setAttribute('data-path', item.path);
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
+
     return element;
   }
 
@@ -373,7 +383,7 @@ class DetailsRenderer {
     for (const thumbnail of details.items) {
       const frameEl = this._dom.createChildOf(filmstripEl, 'div', 'lh-filmstrip__frame');
       this._dom.createChildOf(frameEl, 'img', 'lh-filmstrip__thumbnail', {
-        src: `data:image/jpeg;base64,${thumbnail.data}`,
+        src: thumbnail.data,
         alt: `Screenshot`,
       });
     }

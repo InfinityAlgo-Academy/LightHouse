@@ -92,12 +92,12 @@ function rectsTouchOrOverlap(rectA, rectB) {
 
 /**
  * Returns a bounding rect for all the passed in rects, with padded with half of
- * `minimumSize` on all sides.
+ * `padding` on all sides.
  * @param {LH.Artifacts.Rect[]} rects
- * @param {number} minimumSize
+ * @param {number} padding
  * @return {LH.Artifacts.Rect}
  */
-function getBoundingRectWithPadding(rects, minimumSize) {
+function getBoundingRectWithPadding(rects, padding) {
   if (rects.length === 0) {
     throw new Error('No rects to take bounds of');
   }
@@ -114,7 +114,7 @@ function getBoundingRectWithPadding(rects, minimumSize) {
   }
 
   // Pad on all sides.
-  const halfMinSize = minimumSize / 2;
+  const halfMinSize = padding / 2;
   left -= halfMinSize;
   right += halfMinSize;
   top -= halfMinSize;
@@ -131,20 +131,10 @@ function getBoundingRectWithPadding(rects, minimumSize) {
 }
 
 /**
- * @param {LH.Artifacts.Rect} rectA
- * @param {LH.Artifacts.Rect} rectB
+ * @param {LH.Artifacts.Rect[]} rects
  */
-function getBoundingRect(rectA, rectB) {
-  const left = Math.min(rectA.left, rectB.left);
-  const right = Math.max(rectA.right, rectB.right);
-  const top = Math.min(rectA.top, rectB.top);
-  const bottom = Math.max(rectA.bottom, rectB.bottom);
-  return addRectWidthAndHeight({
-    left,
-    right,
-    top,
-    bottom,
-  });
+function getBoundingRect(rects) {
+  return getBoundingRectWithPadding(rects, 0);
 }
 
 /**

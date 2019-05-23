@@ -12,8 +12,8 @@
  * https://github.com/GoogleChrome/lighthouse/issues/4356#issuecomment-375489925
  */
 
-const Audit = require('../audit');
-const URL = require('../../lib/url-shim');
+const Audit = require('../audit.js');
+const URL = require('../../lib/url-shim.js');
 
 const HTTP_CLIENT_ERROR_CODE_LOW = 400;
 const HTTP_SERVER_ERROR_CODE_LOW = 500;
@@ -41,8 +41,8 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they need to have a valid robots.txt file. Note: "robots.txt" is a canonical filename and should not be translated. This is displayed after a user expands the section to see more. No character length limits. */
   description: 'If your robots.txt file is malformed, crawlers may not be able to understand ' +
   'how you want your website to be crawled or indexed.',
-  /** [ICU Syntax] Label for the audit identifying that the robots.txt request has returned a specific HTTP status code. Note: "robots.txt" is a canonical filename and should not be translated. "statusCode" will be replaced with a 3 digit integer which represents the status of the HTTP connectiong for this page. */
-  displayValueHttpBadCode: 'request for robots.txt returned HTTP status: {statusCode, number}',
+  /** Label for the audit identifying that the robots.txt request has returned a specific HTTP status code. Note: "robots.txt" is a canonical filename and should not be translated. "statusCode" will be replaced with a 3 digit integer which represents the status of the HTTP connectiong for this page. */
+  displayValueHttpBadCode: 'request for robots.txt returned HTTP status: {statusCode}',
   /** [ICU Syntax] Label for the audit identifying the number of errors that occured while validating the robots.txt file. "itemCount" will be replaced by the integer count of errors encountered. */
   displayValueValidationError: `{itemCount, plural,
     =1 {1 error found}
@@ -202,19 +202,19 @@ class RobotsTxt extends Audit {
 
     if (!status) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: str_(UIStrings.explanation),
       };
     }
 
     if (status >= HTTP_SERVER_ERROR_CODE_LOW) {
       return {
-        rawValue: false,
+        score: 0,
         displayValue: str_(UIStrings.displayValueHttpBadCode, {statusCode: status}),
       };
     } else if (status >= HTTP_CLIENT_ERROR_CODE_LOW || content === '') {
       return {
-        rawValue: true,
+        score: 1,
         notApplicable: true,
       };
     }
@@ -242,7 +242,7 @@ class RobotsTxt extends Audit {
     }
 
     return {
-      rawValue: validationErrors.length === 0,
+      score: Number(validationErrors.length === 0),
       details,
       displayValue,
     };

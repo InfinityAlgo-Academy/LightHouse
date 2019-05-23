@@ -15,7 +15,7 @@ describe('Main thread tasks audit', () => {
   it('should work', async () => {
     const artifacts = {traces: {defaultPass: acceptableTrace}};
     const result = await MainThreadTasks.audit(artifacts, {computedCache: new Map()});
-    expect(result.details.items).toHaveLength(76);
+    expect(result.details.items).toHaveLength(39);
 
     for (const item of result.details.items) {
       expect(Number.isFinite(item.startTime)).toBeTruthy();

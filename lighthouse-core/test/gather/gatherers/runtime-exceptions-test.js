@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const RuntimeExceptionsGatherer = require('../../../gather/gatherers/runtime-exceptions');
+const RuntimeExceptionsGatherer = require('../../../gather/gatherers/runtime-exceptions.js');
 const assert = require('assert');
 
 const mockDriver = {

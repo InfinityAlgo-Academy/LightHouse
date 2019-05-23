@@ -20,7 +20,7 @@ describe('SEO: robots.txt audit', () => {
     };
 
     const auditResult = RobotsTxtAudit.audit(artifacts);
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.ok(auditResult.explanation);
   });
 
@@ -46,7 +46,7 @@ describe('SEO: robots.txt audit', () => {
       };
 
       const auditResult = RobotsTxtAudit.audit(artifacts);
-      assert.equal(auditResult.rawValue, false);
+      assert.equal(auditResult.score, 0);
     });
   });
 
@@ -157,7 +157,7 @@ wrong
 
       const auditResult = RobotsTxtAudit.audit(artifacts);
 
-      assert.equal(auditResult.rawValue, false);
+      assert.equal(auditResult.score, 0);
       assert.equal(auditResult.details.items.length, expectedErrors);
       expect(auditResult.displayValue).toBeDisplayString(/\d errors? found/);
     });
@@ -185,7 +185,7 @@ wrong
       };
 
       const auditResult = RobotsTxtAudit.audit(artifacts);
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
       assert.equal(auditResult.notApplicable, true);
     });
   });
@@ -236,7 +236,7 @@ Request-rate: 1/30m
       };
 
       const auditResult = RobotsTxtAudit.audit(artifacts);
-      assert.equal(auditResult.rawValue, true);
+      assert.equal(auditResult.score, 1);
     });
   });
 });

@@ -8,7 +8,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
-const URL = require('../../../../lib/url-shim');
+const URL = require('../../../../lib/url-shim.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 
 const TEMPLATE_FILE = fs.readFileSync(__dirname +
@@ -23,6 +23,7 @@ describe('DOM', () => {
     global.URL = URL;
     const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
     dom = new DOM(document);
+    dom.setLighthouseChannel('someChannel');
   });
 
   afterAll(() => {
@@ -68,8 +69,8 @@ describe('DOM', () => {
     });
 
     it('does not inject duplicate styles', () => {
-      const clone = dom.cloneTemplate('#tmpl-lh-gauge', dom.document());
-      const clone2 = dom.cloneTemplate('#tmpl-lh-gauge', dom.document());
+      const clone = dom.cloneTemplate('#tmpl-lh-snippet', dom.document());
+      const clone2 = dom.cloneTemplate('#tmpl-lh-snippet', dom.document());
       assert.ok(clone.querySelector('style'));
       assert.ok(!clone2.querySelector('style'));
     });
@@ -114,6 +115,20 @@ describe('DOM', () => {
       const result = dom.convertMarkdownLinkSnippets(text);
       assert.equal(result.innerHTML, 'Ensuring `&lt;td&gt;` cells using the `[headers]` are ' +
           'good. <a rel="noopener" target="_blank" href="https://dequeuniversity.com/rules/axe/3.1/td-headers-attr">Learn more</a>.');
+    });
+
+    it('appends utm params to the URLs with https://developers.google.com origin', () => {
+      const text = '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/description).';
+
+      const result = dom.convertMarkdownLinkSnippets(text);
+      assert.equal(result.innerHTML, '<a rel="noopener" target="_blank" href="https://developers.google.com/web/tools/lighthouse/audits/description?utm_source=lighthouse&amp;utm_medium=someChannel">Learn more</a>.');
+    });
+
+    it('doesn\'t append utm params to non https://developers.google.com origins', () => {
+      const text = '[Learn more](https://example.com/info).';
+
+      const result = dom.convertMarkdownLinkSnippets(text);
+      assert.equal(result.innerHTML, '<a rel="noopener" target="_blank" href="https://example.com/info">Learn more</a>.');
     });
   });
 

@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const FontSizeGather = require('../../../../gather/gatherers/seo/font-size');
+const FontSizeGather = require('../../../../gather/gatherers/seo/font-size.js');
 let fontSizeGather;
 
 const smallText = ' body sm𝐀ll text ';

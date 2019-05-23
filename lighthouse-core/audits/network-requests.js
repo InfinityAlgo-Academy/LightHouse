@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit');
-const URL = require('../lib/url-shim');
+const Audit = require('./audit.js');
+const URL = require('../lib/url-shim.js');
 const NetworkRecords = require('../computed/network-records.js');
 
 class NetworkRequests extends Audit {
@@ -41,6 +41,11 @@ class NetworkRequests extends Audit {
         undefined : (time - earliestStartTime) * 1000;
 
       const results = records.map(record => {
+        const endTimeDeltaMs = record.lrStatistics && record.lrStatistics.endTimeDeltaMs;
+        const TCPMs = record.lrStatistics && record.lrStatistics.TCPMs;
+        const requestMs = record.lrStatistics && record.lrStatistics.requestMs;
+        const responseMs = record.lrStatistics && record.lrStatistics.responseMs;
+
         return {
           url: URL.elideDataURI(record.url),
           startTime: timeToMs(record.startTime),
@@ -50,6 +55,10 @@ class NetworkRequests extends Audit {
           statusCode: record.statusCode,
           mimeType: record.mimeType,
           resourceType: record.resourceType,
+          lrEndTimeDeltaMs: endTimeDeltaMs, // Only exists on Lightrider runs
+          lrTCPMs: TCPMs, // Only exists on Lightrider runs
+          lrRequestMs: requestMs, // Only exists on Lightrider runs
+          lrResponseMs: responseMs, // Only exists on Lightrider runs
         };
       });
 
@@ -81,7 +90,7 @@ class NetworkRequests extends Audit {
 
       return {
         score: 1,
-        rawValue: results.length,
+        numericValue: results.length,
         details: tableDetails,
       };
     });

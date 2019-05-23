@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('./audit');
+const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 
@@ -68,7 +68,7 @@ class NetworkServerLatency extends Audit {
 
     return {
       score: Math.max(1 - (maxLatency / 500), 0),
-      rawValue: maxLatency,
+      numericValue: maxLatency,
       displayValue: str_(i18n.UIStrings.ms, {timeInMs: maxLatency}),
       details: tableDetails,
     };

@@ -28,17 +28,21 @@ declare global {
     }
 
     export interface ScoreDisplayModes {
+      /** Scores of 0-1 (map to displayed scores of 0-100). */
       NUMERIC: 'numeric';
+      /** Pass/fail audit (0 and 1 are only possible scores). */
       BINARY: 'binary';
+      /** The audit exists only to tell you to review something yourself. Score is null and should be ignored. */
       MANUAL: 'manual';
+      /** The audit is an FYI only, and can't be interpreted as pass/fail. Score is null and should be ignored. */
       INFORMATIVE: 'informative';
+      /** The audit turned out to not apply to the page. Score is null and should be ignored. */
       NOT_APPLICABLE: 'notApplicable';
+      /** There was an error while running the audit (check `errorMessage` for details). Score is null and should be ignored. */
       ERROR: 'error';
     }
 
     export type ScoreDisplayMode = Audit.ScoreDisplayModes[keyof Audit.ScoreDisplayModes];
-
-    export type DisplayValue = string;
 
     export interface Meta {
       /** The string identifier of the audit, in kebab case. */
@@ -47,7 +51,7 @@ declare global {
       title: string;
       /** Short, user-visible title for the audit when failing. */
       failureTitle?: string;
-      /** Explanation of why the user should care about the audit. */
+      /** A more detailed description that describes why the audit is important and links to Lighthouse documentation on the audit; markdown links supported. */
       description: string;
       /** A list of the members of LH.Artifacts that must be present for the audit to execute. */
       requiredArtifacts: Array<keyof Artifacts>;
@@ -62,27 +66,35 @@ declare global {
       wastedPercent?: number;
     }
 
-    // Type returned by Audit.audit(). Only rawValue is required.
+    /** Type returned by Audit.audit(). Only score is required.  */
     export interface Product {
-      rawValue: boolean | number | null;
-      displayValue?: DisplayValue;
+      /** The scored value of the audit, provided in the range `0-1`, or null if `scoreDisplayMode` indicates not scored. */
+      score: number | null;
+      displayValue?: string;
+      /** An explanation of why the audit failed on the test page. */
       explanation?: string;
+      /** Error message from any exception thrown while running this audit. */
       errorMessage?: string;
       warnings?: string[];
-      score?: number;
+      /** Deprecated and does not make its way into the Lighthouse report. */
       extendedInfo?: {[p: string]: any};
       /** Overrides scoreDisplayMode with notApplicable if set to true */
       notApplicable?: boolean;
+      /** A numeric value that has a meaning specific to the audit, e.g. the number of nodes in the DOM or the timestamp of a specific load event. More information can be found in the audit details, if present. */
+      numericValue?: number;
+      /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
       details?: Audit.Details;
     }
 
-    /* Audit result returned in Lighthouse report. All audits offer a description and score of 0-1 */
+    /* Audit result returned in Lighthouse report. All audits offer a description and score of 0-1. */
     export interface Result {
-      rawValue: boolean | number | null;
-      displayValue?: DisplayValue;
+      displayValue?: string;
+      /** An explanation of why the audit failed on the test page. */
       explanation?: string;
+      /** Error message from any exception thrown while running this audit. */
       errorMessage?: string;
       warnings?: string[];
+      /** The scored value of the audit, provided in the range `0-1`, or null if `scoreDisplayMode` indicates not scored. */
       score: number|null;
       /**
        * A string identifying how the score should be interpreted:
@@ -100,6 +112,9 @@ declare global {
       id: string;
       /** A more detailed description that describes why the audit is important and links to Lighthouse documentation on the audit; markdown links supported. */
       description: string;
+      /** A numeric value that has a meaning specific to the audit, e.g. the number of nodes in the DOM or the timestamp of a specific load event. More information can be found in the audit details, if present. */
+      numericValue?: number;
+      /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
       details?: Audit.Details;
     }
 

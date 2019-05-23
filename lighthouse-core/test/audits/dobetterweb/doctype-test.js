@@ -15,7 +15,7 @@ describe('DOBETTERWEB: doctype audit', () => {
     const auditResult = Audit.audit({
       Doctype: null,
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.explanation, 'Document must contain a doctype');
   });
 
@@ -27,7 +27,7 @@ describe('DOBETTERWEB: doctype audit', () => {
         systemId: '',
       },
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.explanation, 'Doctype name must be the lowercase string `html`');
   });
 
@@ -39,7 +39,7 @@ describe('DOBETTERWEB: doctype audit', () => {
         systemId: '',
       },
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.explanation, 'Doctype name must be the lowercase string `html`');
   });
 
@@ -51,7 +51,7 @@ describe('DOBETTERWEB: doctype audit', () => {
         systemId: '',
       },
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.explanation, 'Expected publicId to be an empty string');
   });
 
@@ -63,7 +63,7 @@ describe('DOBETTERWEB: doctype audit', () => {
         systemId: '189655',
       },
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.explanation, 'Expected systemId to be an empty string');
   });
 
@@ -75,6 +75,6 @@ describe('DOBETTERWEB: doctype audit', () => {
         systemId: '',
       },
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
   });
 });

@@ -53,12 +53,8 @@ function processForProto(result) {
           audit.scoreDisplayMode = 'notApplicable';
         }
       }
-      // Drop raw values. #6199
-      if ('rawValue' in audit) {
-        delete audit.rawValue;
-      }
-      // Normalize displayValue to always be a string, not an array. #6200
 
+      // Normalize displayValue to always be a string, not an array. #6200
       if (Array.isArray(audit.displayValue)) {
         /** @type {Array<any>}*/
         const values = [];

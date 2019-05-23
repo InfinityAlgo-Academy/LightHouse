@@ -56,22 +56,20 @@ class CategoryRenderer {
 
   /**
    * @param {LH.ReportResult.AuditRef | LH.ReportResult.AuditRef[]} audit
-   * @param {number} index
    * @return {Element}
    */
-  renderAudit(audit, index) {
+  renderAudit(audit) {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-audit', this.templateContext);
-    return this.populateAuditValues(audit, index, tmpl);
+    return this.populateAuditValues(audit, tmpl);
   }
 
   /**
    * Populate an DOM tree with audit details. Used by renderAudit and renderOpportunity
    * @param {LH.ReportResult.AuditRef | LH.ReportResult.AuditRef[]} audits
-   * @param {number} index
    * @param {DocumentFragment} tmpl
    * @return {Element}
    */
-  populateAuditValues(audits, index, tmpl) {
+  populateAuditValues(audits, tmpl) {
     if (!Array.isArray(audits)) audits = [audits];
     const baseAudit = audits[0];
     const isDiff = audits.length > 1;
@@ -81,14 +79,33 @@ class CategoryRenderer {
     const scoreDisplayMode = baseAudit.result.scoreDisplayMode;
 
     if (baseAudit.result.displayValue) {
-      const displayValue = Util.formatDisplayValue(baseAudit.result.displayValue);
-      this.dom.find('.lh-audit__display-text', auditEl).textContent = displayValue;
+      this.dom.find('.lh-audit__display-text', auditEl).textContent =
+        baseAudit.result.displayValue;
     }
 
     const titleEl = this.dom.find('.lh-audit__title', auditEl);
     titleEl.appendChild(this.dom.convertMarkdownCodeSnippets(baseAudit.result.title));
     this.dom.find('.lh-audit__description', auditEl)
         .appendChild(this.dom.convertMarkdownLinkSnippets(baseAudit.result.description));
+
+    // TODO(hoten) - report diff - handle stack packs.
+    if (baseAudit.stackPacks) {
+      baseAudit.stackPacks.forEach(pack => {
+        const packElm = this.dom.createElement('div');
+        packElm.classList.add('lh-audit__stackpack');
+
+        const packElmImg = this.dom.createElement('img');
+        packElmImg.classList.add('lh-audit__stackpack__img');
+        packElmImg.src = pack.iconDataURL;
+        packElmImg.alt = pack.title;
+        packElm.appendChild(packElmImg);
+
+        packElm.appendChild(this.dom.convertMarkdownLinkSnippets(pack.description));
+
+        this.dom.find('.lh-audit__stackpacks', auditEl)
+          .appendChild(packElm);
+      });
+    }
 
     const header = /** @type {HTMLDetailsElement} */ (this.dom.find('details', auditEl));
     for (const audit of audits) {
@@ -108,7 +125,6 @@ class CategoryRenderer {
 
       if (elem) header.appendChild(elem);
     }
-    this.dom.find('.lh-audit__index', auditEl).textContent = `${index + 1}`;
 
     // Add chevron SVG to the end of the summary
     this.dom.find('.lh-chevron-container', auditEl).appendChild(this._createChevron());
@@ -126,6 +142,7 @@ class CategoryRenderer {
     }
 
     for (const audit of audits) {
+      // TODO(hoten) - report diff - were these error tooltips removed in the redesign?
       if (audit.result.scoreDisplayMode === 'error') {
         auditEl.classList.add(`lh-audit--error`);
         const textEl = this.dom.find('.lh-audit__display-text', auditEl);
@@ -144,11 +161,12 @@ class CategoryRenderer {
 
       // Add list of warnings or singular warning
       const warningsEl = this.dom.createChildOf(titleEl, 'div', 'lh-warnings');
+      this.dom.createChildOf(warningsEl, 'span').textContent = Util.UIStrings.warningHeader;
       if (warnings.length === 1) {
-        warningsEl.textContent = `${Util.UIStrings.warningHeader} ${warnings.join('')}`;
+        warningsEl.appendChild(this.dom.document().createTextNode(warnings[0]));
+        // TODO(hoten) - report diff - shouldn't the letter node show no matter how many warnings there are?
         if (isDiff) warningsEl.prepend(this._createLetterNode(audits.indexOf(audit)));
       } else {
-        warningsEl.textContent = Util.UIStrings.warningHeader;
         const warningsUl = this.dom.createChildOf(warningsEl, 'ul');
         for (const warning of warnings) {
           const item = this.dom.createChildOf(warningsUl, 'li');
@@ -177,7 +195,10 @@ class CategoryRenderer {
    */
   _setRatingClass(element, score, scoreDisplayMode) {
     const rating = Util.calculateRating(score, scoreDisplayMode);
-    element.classList.add(`lh-audit--${rating}`, `lh-audit--${scoreDisplayMode.toLowerCase()}`);
+    element.classList.add(`lh-audit--${scoreDisplayMode.toLowerCase()}`);
+    if (scoreDisplayMode !== 'informative') {
+      element.classList.add(`lh-audit--${rating}`);
+    }
     return element;
   }
 
@@ -193,8 +214,6 @@ class CategoryRenderer {
     const gaugeEl = this.renderScoreGauge(category, groupDefinitions);
     gaugeContainerEl.appendChild(gaugeEl);
 
-    this.dom.find('.lh-category-header__title', tmpl).appendChild(
-      this.dom.convertMarkdownCodeSnippets(category.title));
     if (category.description) {
       const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
       this.dom.find('.lh-category-header__description', tmpl).appendChild(descEl);
@@ -211,16 +230,17 @@ class CategoryRenderer {
    */
   renderAuditGroup(group) {
     const groupEl = this.dom.createElement('div', 'lh-audit-group');
-    const summaryEl = this.dom.createChildOf(groupEl, 'div');
-    const summaryInnerEl = this.dom.createChildOf(summaryEl, 'div', 'lh-audit-group__summary');
-    const headerEl = this.dom.createChildOf(summaryInnerEl, 'div', 'lh-audit-group__header');
 
+    const auditGroupHeader = this.dom.createElement('div', 'lh-audit-group__header');
+
+    this.dom.createChildOf(auditGroupHeader, 'span', 'lh-audit-group__title')
+      .textContent = group.title;
     if (group.description) {
-      const auditGroupDescription = this.dom.createElement('div', 'lh-audit-group__description');
-      auditGroupDescription.appendChild(this.dom.convertMarkdownLinkSnippets(group.description));
-      groupEl.appendChild(auditGroupDescription);
+      const descriptionEl = this.dom.convertMarkdownLinkSnippets(group.description);
+      descriptionEl.classList.add('lh-audit-group__description');
+      auditGroupHeader.appendChild(descriptionEl);
     }
-    headerEl.textContent = group.title;
+    groupEl.appendChild(auditGroupHeader);
 
     return groupEl;
   }
@@ -250,14 +270,12 @@ class CategoryRenderer {
 
     /** @type {Array<Element>} */
     const auditElements = [];
-    // Continuous numbering across all groups.
-    let index = 0;
 
     for (const [groupId, groupAuditRefs] of grouped) {
       if (groupId === notAGroup) {
         // Push not-grouped audits individually.
         for (const auditRef of groupAuditRefs) {
-          auditElements.push(this.renderAudit(auditRef, index++));
+          auditElements.push(this.renderAudit(auditRef));
         }
         continue;
       }
@@ -266,7 +284,7 @@ class CategoryRenderer {
       const groupDef = groupDefinitions[groupId];
       const auditGroupElem = this.renderAuditGroup(groupDef);
       for (const auditRef of groupAuditRefs) {
-        auditGroupElem.appendChild(this.renderAudit(auditRef, index++));
+        auditGroupElem.appendChild(this.renderAudit(auditRef));
       }
       auditGroupElem.classList.add(`lh-audit-group--${groupId}`);
       auditElements.push(auditGroupElem);
@@ -310,17 +328,15 @@ class CategoryRenderer {
 
     const headerEl = this.dom.find('.lh-audit-group__header', clumpElement);
     const title = this._clumpTitles[clumpId];
-    headerEl.textContent = title;
+    this.dom.find('.lh-audit-group__title', headerEl).textContent = title;
     if (description) {
-      const markdownDescriptionEl = this.dom.convertMarkdownLinkSnippets(description);
-      const auditGroupDescription = this.dom.createElement('div', 'lh-audit-group__description');
-      auditGroupDescription.appendChild(markdownDescriptionEl);
-      clumpElement.appendChild(auditGroupDescription);
+      const descriptionEl = this.dom.convertMarkdownLinkSnippets(description);
+      descriptionEl.classList.add('lh-audit-group__description');
+      headerEl.appendChild(descriptionEl);
     }
 
     const itemCountEl = this.dom.find('.lh-audit-group__itemcount', clumpElement);
-    // TODO(i18n): support multiple locales here
-    itemCountEl.textContent = `${auditRefs.length} audits`;
+    itemCountEl.textContent = `(${auditRefs.length})`;
 
     // Add all audit results to the clump.
     const auditElements = auditRefs.map(this.renderAudit.bind(this));
@@ -349,16 +365,20 @@ class CategoryRenderer {
     wrapper.href = `#${category.id}`;
     wrapper.classList.add(`lh-gauge__wrapper--${Util.calculateRating(category.score)}`);
 
+    if (Util.isPluginCategory(category.id)) {
+      wrapper.classList.add('lh-gauge__wrapper--plugin');
+    }
+
     // Cast `null` to 0
     const numericScore = Number(category.score);
     const gauge = this.dom.find('.lh-gauge', tmpl);
-    // 329 is ~= 2 * Math.PI * gauge radius (53)
+    // 352 is ~= 2 * Math.PI * gauge radius (56)
     // https://codepen.io/xgad/post/svg-radial-progress-meters
-    // score of 50: `stroke-dasharray: 164.5 329`;
+    // score of 50: `stroke-dasharray: 176 352`;
     /** @type {?SVGCircleElement} */
     const gaugeArc = gauge.querySelector('.lh-gauge-arc');
     if (gaugeArc) {
-      gaugeArc.style.strokeDasharray = `${numericScore * 329} 329`;
+      gaugeArc.style.strokeDasharray = `${numericScore * 352} 352`;
     }
 
     const scoreOutOf100 = Math.round(numericScore * 100);

@@ -97,7 +97,7 @@ describe('Performance: Redirects audit', () => {
     return RedirectsAudit.audit(artifacts, context).then(output => {
       assert.equal(Math.round(output.score * 100) / 100, 0.37);
       assert.equal(output.details.items.length, 4);
-      assert.equal(output.rawValue, 1890);
+      assert.equal(output.numericValue, 1890);
     });
   });
 
@@ -107,7 +107,7 @@ describe('Performance: Redirects audit', () => {
     return RedirectsAudit.audit(artifacts, context).then(output => {
       assert.equal(Math.round(output.score * 100) / 100, 0.46);
       assert.equal(output.details.items.length, 3);
-      assert.equal(Math.round(output.rawValue), 1110);
+      assert.equal(Math.round(output.numericValue), 1110);
     });
   });
 
@@ -119,7 +119,7 @@ describe('Performance: Redirects audit', () => {
       assert.equal(output.score, 1);
       // We will still generate a table and show wasted time
       assert.equal(output.details.items.length, 2);
-      assert.equal(Math.round(output.rawValue), 780);
+      assert.equal(Math.round(output.numericValue), 780);
     });
   });
 
@@ -129,7 +129,7 @@ describe('Performance: Redirects audit', () => {
     return RedirectsAudit.audit(artifacts, context).then(output => {
       assert.equal(output.score, 1);
       assert.equal(output.details.items.length, 0);
-      assert.equal(output.rawValue, 0);
+      assert.equal(output.numericValue, 0);
     });
   });
 });

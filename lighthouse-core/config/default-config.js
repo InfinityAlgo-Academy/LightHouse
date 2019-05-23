@@ -7,12 +7,16 @@
 
 /* eslint-disable max-len */
 
-const constants = require('./constants');
+const constants = require('./constants.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Title of the Performance category of audits. Equivalent to 'Web performance', this term is inclusive of all web page speed and loading optimization topics. Also used as a label of a score gauge; try to limit to 20 characters. */
   performanceCategoryTitle: 'Performance',
+  /** Title of the Budgets section of the Performance Category. 'Budgets' refers to a budget (like a financial budget), but applied to the amount of resources on a page, rather than money. */
+  budgetsGroupTitle: 'Budgets',
+  /** Description of the Budgets section of the Performance category. Within this section the budget results are displayed. */
+  budgetsGroupDescription: 'Performance budgets set standards for the performance of your site.',
   /** Title of the speed metrics section of the Performance category. Within this section are various speed metrics which quantify the pageload performance into values presented in seconds and milliseconds. */
   metricGroupTitle: 'Metrics',
   /** Title of the opportunity section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the loading performance of their web page. 'Suggestion'/'Optimization'/'Recommendation' are reasonable synonyms for 'opportunity' in this case. */
@@ -77,6 +81,19 @@ const UIStrings = {
   '[Learn more](https://support.google.com/webmasters/answer/35769).',
   /** Description of the Search Engine Optimization (SEO) manual checks category, the additional validators must be run by hand in order to check all SEO best practices. This is displayed at the top of a list of manually run audits focused on optimizing a website for indexing by search engines. No character length limits. */
   seoCategoryManualDescription: 'Run these additional validators on your site to check additional SEO best practices.',
+  /* Title of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight opportunities to make a page more usable on mobile devices. */
+  seoMobileGroupTitle: 'Mobile Friendly',
+  /* Description of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight opportunities to make a page more usable on mobile devices. */
+  seoMobileGroupDescription: 'Make sure your pages are mobile friendly so users don’t have to pinch or zoom ' +
+  'in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/).',
+  /* Title of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight ways to make a website content more easily understood by search engine crawler bots. */
+  seoContentGroupTitle: 'Content Best Practices',
+  /* Description of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight ways to make a website content more easily understood by search engine crawler bots. */
+  seoContentGroupDescription: 'Format your HTML in a way that enables crawlers to better understand your app’s content.',
+  /* Title of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight ways to make a website accessible to search engine crawlers. */
+  seoCrawlingGroupTitle: 'Crawling and Indexing',
+  /* Description of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight ways to make a website accessible to search engine crawlers. */
+  seoCrawlingGroupDescription: 'To appear in search results, crawlers need access to your app.',
   /** Title of the Fast and Reliable section of the web app category. Within this section are audits that check if the web site loaded quickly and can reliably load even if the internet connection is very slow or goes offline. */
   pwaFastReliableGroupTitle: 'Fast and reliable',
   /** Title of the Installable section of the web app category. Within this section are audits that check if Chrome supports installing the web site as an app on their device. */
@@ -98,30 +115,28 @@ const defaultConfig = {
     networkQuietThresholdMs: 1000,
     cpuQuietThresholdMs: 1000,
     gatherers: [
-      'scripts',
       'css-usage',
       'viewport-dimensions',
       'runtime-exceptions',
-      'chrome-console-messages',
-      'accessibility',
+      'console-messages',
       'anchor-elements',
       'image-elements',
       'link-elements',
       'meta-elements',
+      'script-elements',
       'dobetterweb/appcache',
       'dobetterweb/doctype',
       'dobetterweb/domstats',
-      'dobetterweb/js-libraries',
       'dobetterweb/optimized-images',
       'dobetterweb/password-inputs-with-prevented-paste',
       'dobetterweb/response-compression',
       'dobetterweb/tags-blocking-first-paint',
       'seo/font-size',
-      'seo/hreflang',
       'seo/embedded-content',
-      'seo/canonical',
       'seo/robots-txt',
       'seo/tap-targets',
+      // Always run axe last because it scrolls the page down to the bottom
+      'accessibility',
     ],
   },
   {
@@ -164,6 +179,7 @@ const defaultConfig = {
     'critical-request-chains',
     'redirects',
     'installable-manifest',
+    'apple-touch-icon',
     'splash-screen',
     'themed-omnibox',
     'content-width',
@@ -181,6 +197,8 @@ const defaultConfig = {
     'main-thread-tasks',
     'metrics',
     'offline-start-url',
+    'performance-budget',
+    'resource-summary',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -275,6 +293,10 @@ const defaultConfig = {
       title: str_(UIStrings.loadOpportunitiesGroupTitle),
       description: str_(UIStrings.loadOpportunitiesGroupDescription),
     },
+    'budgets': {
+      title: str_(UIStrings.budgetsGroupTitle),
+      description: str_(UIStrings.budgetsGroupDescription),
+    },
     'diagnostics': {
       title: str_(UIStrings.diagnosticsGroupTitle),
       description: str_(UIStrings.diagnosticsGroupDescription),
@@ -321,17 +343,16 @@ const defaultConfig = {
       description: str_(UIStrings.a11yTablesListsVideoGroupDescription),
     },
     'seo-mobile': {
-      title: 'Mobile Friendly',
-      description: 'Make sure your pages are mobile friendly so users don’t have to pinch or zoom ' +
-          'in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/).',
+      title: str_(UIStrings.seoMobileGroupTitle),
+      description: str_(UIStrings.seoMobileGroupDescription),
     },
     'seo-content': {
-      title: 'Content Best Practices',
-      description: 'Format your HTML in a way that enables crawlers to better understand your app’s content.',
+      title: str_(UIStrings.seoContentGroupTitle),
+      description: str_(UIStrings.seoContentGroupDescription),
     },
     'seo-crawl': {
-      title: 'Crawling and Indexing',
-      description: 'To appear in search results, crawlers need access to your app.',
+      title: str_(UIStrings.seoCrawlingGroupTitle),
+      description: str_(UIStrings.seoCrawlingGroupDescription),
     },
   },
   categories: {
@@ -343,8 +364,8 @@ const defaultConfig = {
         {id: 'speed-index', weight: 4, group: 'metrics'},
         {id: 'interactive', weight: 5, group: 'metrics'},
         {id: 'first-cpu-idle', weight: 2, group: 'metrics'},
-        {id: 'estimated-input-latency', weight: 0, group: 'metrics'},
-        {id: 'max-potential-fid', weight: 0}, // intentionally left out of metrics so it won't be displayed yet
+        {id: 'max-potential-fid', weight: 0, group: 'metrics'},
+        {id: 'estimated-input-latency', weight: 0}, // intentionally left out of metrics so it won't be displayed
 
         {id: 'render-blocking-resources', weight: 0, group: 'load-opportunities'},
         {id: 'uses-responsive-images', weight: 0, group: 'load-opportunities'},
@@ -368,6 +389,8 @@ const defaultConfig = {
         {id: 'bootup-time', weight: 0, group: 'diagnostics'},
         {id: 'mainthread-work-breakdown', weight: 0, group: 'diagnostics'},
         {id: 'font-display', weight: 0, group: 'diagnostics'},
+        {id: 'performance-budget', weight: 0, group: 'budgets'},
+        {id: 'resource-summary', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},
         {id: 'network-rtt', weight: 0},
@@ -383,42 +406,46 @@ const defaultConfig = {
       title: str_(UIStrings.a11yCategoryTitle),
       description: str_(UIStrings.a11yCategoryDescription),
       manualDescription: str_(UIStrings.a11yCategoryManualDescription),
+      // Audit weights are meant to match the aXe scoring system of
+      // minor, serious, and critical.
+      // See the audits listed at dequeuniversity.com/rules/axe/3.2.
+      // Click on an audit and check the right hand column to see its severity.
       auditRefs: [
         {id: 'accesskeys', weight: 3, group: 'a11y-navigation'},
-        {id: 'aria-allowed-attr', weight: 3, group: 'a11y-aria'},
-        {id: 'aria-required-attr', weight: 2, group: 'a11y-aria'},
-        {id: 'aria-required-children', weight: 5, group: 'a11y-aria'},
-        {id: 'aria-required-parent', weight: 2, group: 'a11y-aria'},
-        {id: 'aria-roles', weight: 3, group: 'a11y-aria'},
-        {id: 'aria-valid-attr-value', weight: 2, group: 'a11y-aria'},
-        {id: 'aria-valid-attr', weight: 5, group: 'a11y-aria'},
-        {id: 'audio-caption', weight: 4, group: 'a11y-audio-video'},
+        {id: 'aria-allowed-attr', weight: 10, group: 'a11y-aria'},
+        {id: 'aria-required-attr', weight: 10, group: 'a11y-aria'},
+        {id: 'aria-required-children', weight: 10, group: 'a11y-aria'},
+        {id: 'aria-required-parent', weight: 10, group: 'a11y-aria'},
+        {id: 'aria-roles', weight: 10, group: 'a11y-aria'},
+        {id: 'aria-valid-attr-value', weight: 10, group: 'a11y-aria'},
+        {id: 'aria-valid-attr', weight: 10, group: 'a11y-aria'},
+        {id: 'audio-caption', weight: 10, group: 'a11y-audio-video'},
         {id: 'button-name', weight: 10, group: 'a11y-names-labels'},
-        {id: 'bypass', weight: 10, group: 'a11y-navigation'},
-        {id: 'color-contrast', weight: 6, group: 'a11y-color-contrast'},
-        {id: 'definition-list', weight: 1, group: 'a11y-tables-lists'},
-        {id: 'dlitem', weight: 1, group: 'a11y-tables-lists'},
-        {id: 'document-title', weight: 2, group: 'a11y-names-labels'},
-        {id: 'duplicate-id', weight: 5, group: 'a11y-best-practices'},
-        {id: 'frame-title', weight: 5, group: 'a11y-names-labels'},
-        {id: 'html-has-lang', weight: 4, group: 'a11y-language'},
-        {id: 'html-lang-valid', weight: 1, group: 'a11y-language'},
-        {id: 'image-alt', weight: 8, group: 'a11y-names-labels'},
-        {id: 'input-image-alt', weight: 1, group: 'a11y-names-labels'},
+        {id: 'bypass', weight: 3, group: 'a11y-navigation'},
+        {id: 'color-contrast', weight: 3, group: 'a11y-color-contrast'},
+        {id: 'definition-list', weight: 3, group: 'a11y-tables-lists'},
+        {id: 'dlitem', weight: 3, group: 'a11y-tables-lists'},
+        {id: 'document-title', weight: 3, group: 'a11y-names-labels'},
+        {id: 'duplicate-id', weight: 1, group: 'a11y-best-practices'},
+        {id: 'frame-title', weight: 3, group: 'a11y-names-labels'},
+        {id: 'html-has-lang', weight: 3, group: 'a11y-language'},
+        {id: 'html-lang-valid', weight: 3, group: 'a11y-language'},
+        {id: 'image-alt', weight: 10, group: 'a11y-names-labels'},
+        {id: 'input-image-alt', weight: 10, group: 'a11y-names-labels'},
         {id: 'label', weight: 10, group: 'a11y-names-labels'},
-        {id: 'layout-table', weight: 1, group: 'a11y-tables-lists'},
-        {id: 'link-name', weight: 9, group: 'a11y-names-labels'},
-        {id: 'list', weight: 5, group: 'a11y-tables-lists'},
-        {id: 'listitem', weight: 4, group: 'a11y-tables-lists'},
-        {id: 'meta-refresh', weight: 1, group: 'a11y-best-practices'},
-        {id: 'meta-viewport', weight: 3, group: 'a11y-best-practices'},
-        {id: 'object-alt', weight: 4, group: 'a11y-names-labels'},
-        {id: 'tabindex', weight: 4, group: 'a11y-navigation'},
-        {id: 'td-headers-attr', weight: 1, group: 'a11y-tables-lists'},
-        {id: 'th-has-data-cells', weight: 1, group: 'a11y-tables-lists'},
-        {id: 'valid-lang', weight: 1, group: 'a11y-language'},
-        {id: 'video-caption', weight: 4, group: 'a11y-audio-video'},
-        {id: 'video-description', weight: 3, group: 'a11y-audio-video'},
+        {id: 'layout-table', weight: 3, group: 'a11y-tables-lists'},
+        {id: 'link-name', weight: 3, group: 'a11y-names-labels'},
+        {id: 'list', weight: 3, group: 'a11y-tables-lists'},
+        {id: 'listitem', weight: 3, group: 'a11y-tables-lists'},
+        {id: 'meta-refresh', weight: 10, group: 'a11y-best-practices'},
+        {id: 'meta-viewport', weight: 10, group: 'a11y-best-practices'},
+        {id: 'object-alt', weight: 3, group: 'a11y-names-labels'},
+        {id: 'tabindex', weight: 3, group: 'a11y-navigation'},
+        {id: 'td-headers-attr', weight: 3, group: 'a11y-tables-lists'},
+        {id: 'th-has-data-cells', weight: 3, group: 'a11y-tables-lists'},
+        {id: 'valid-lang', weight: 3, group: 'a11y-language'},
+        {id: 'video-caption', weight: 10, group: 'a11y-audio-video'},
+        {id: 'video-description', weight: 10, group: 'a11y-audio-video'},
         // Manual audits
         {id: 'logical-tab-order', weight: 0},
         {id: 'focusable-controls', weight: 0},
@@ -465,6 +492,7 @@ const defaultConfig = {
         {id: 'link-text', weight: 1, group: 'seo-content'},
         {id: 'is-crawlable', weight: 1, group: 'seo-crawl'},
         {id: 'robots-txt', weight: 1, group: 'seo-crawl'},
+        {id: 'image-alt', weight: 1, group: 'seo-content'},
         {id: 'hreflang', weight: 1, group: 'seo-content'},
         {id: 'canonical', weight: 1, group: 'seo-content'},
         {id: 'font-size', weight: 1, group: 'seo-mobile'},
@@ -496,6 +524,7 @@ const defaultConfig = {
         {id: 'content-width', weight: 1, group: 'pwa-optimized'},
         {id: 'viewport', weight: 2, group: 'pwa-optimized'},
         {id: 'without-javascript', weight: 1, group: 'pwa-optimized'},
+        {id: 'apple-touch-icon', weight: 1, group: 'pwa-optimized'},
         // Manual audits
         {id: 'pwa-cross-browser', weight: 0},
         {id: 'pwa-page-transitions', weight: 0},

@@ -5,17 +5,17 @@
  */
 'use strict';
 
-const NetworkRecorder = require('../lib/network-recorder');
-const emulation = require('../lib/emulation');
-const Element = require('../lib/element');
-const LHError = require('../lib/lh-error');
-const NetworkRequest = require('../lib/network-request');
+const NetworkRecorder = require('../lib/network-recorder.js');
+const emulation = require('../lib/emulation.js');
+const Element = require('../lib/element.js');
+const LHError = require('../lib/lh-error.js');
+const NetworkRequest = require('../lib/network-request.js');
 const EventEmitter = require('events').EventEmitter;
-const URL = require('../lib/url-shim');
-const constants = require('../config/constants');
+const URL = require('../lib/url-shim.js');
+const constants = require('../config/constants.js');
 
 const log = require('lighthouse-logger');
-const DevtoolsLog = require('./devtools-log');
+const DevtoolsLog = require('./devtools-log.js');
 
 const pageFunctions = require('../lib/page-functions.js');
 
@@ -47,7 +47,7 @@ class Driver {
      */
     this._eventEmitter = /** @type {CrdpEventEmitter} */ (new EventEmitter());
     this._connection = connection;
-    // currently only used by WPT where just Page and Network are needed
+    // Used to save network and lifecycle protocol traffic. Just Page and Network are needed.
     this._devtoolsLog = new DevtoolsLog(/^(Page|Network)\./);
     this.online = true;
     /** @type {Map<string, number>} */
@@ -69,17 +69,24 @@ class Driver {
      */
     this._monitoredUrl = null;
 
-    connection.on('protocolevent', event => {
-      this._devtoolsLog.record(event);
-      if (this._networkStatusMonitor) {
-        this._networkStatusMonitor.dispatch(event);
-      }
+    /**
+     * Used for sending messages to subtargets. Each message needs a unique ID even if we don't bother
+     * reading back the result of each command.
+     *
+     * @type {number}
+     * @private
+     */
+    this._targetProxyMessageId = 0;
 
-      // @ts-ignore TODO(bckenny): tsc can't type event.params correctly yet,
-      // typing as property of union instead of narrowing from union of
-      // properties. See https://github.com/Microsoft/TypeScript/pull/22348.
-      this._eventEmitter.emit(event.method, event.params);
+    this.on('Target.attachedToTarget', event => {
+      this._handleTargetAttached(event, []).catch(this._handleEventError);
     });
+
+    this.on('Target.receivedMessageFromTarget', event => {
+      this._handleReceivedMessageFromTarget(event, []).catch(this._handleEventError);
+    });
+
+    connection.on('protocolevent', this._handleProtocolEvent.bind(this));
 
     /**
      * @type {number}
@@ -262,6 +269,121 @@ class Driver {
   }
 
   /**
+   * @param {LH.Protocol.RawEventMessage} event
+   */
+  _handleProtocolEvent(event) {
+    this._devtoolsLog.record(event);
+    if (this._networkStatusMonitor) {
+      this._networkStatusMonitor.dispatch(event);
+    }
+
+    // @ts-ignore TODO(bckenny): tsc can't type event.params correctly yet,
+    // typing as property of union instead of narrowing from union of
+    // properties. See https://github.com/Microsoft/TypeScript/pull/22348.
+    this._eventEmitter.emit(event.method, event.params);
+  }
+
+  /**
+   * @param {Error} error
+   */
+  _handleEventError(error) {
+    log.error('Driver', 'Unhandled event error', error.message);
+  }
+
+  /**
+   * @param {LH.Crdp.Target.ReceivedMessageFromTargetEvent} event
+   * @param {string[]} parentSessionIds The list of session ids of the parents from youngest to oldest.
+   */
+  async _handleReceivedMessageFromTarget(event, parentSessionIds) {
+    const {targetId, sessionId, message} = event;
+    /** @type {LH.Protocol.RawMessage} */
+    const protocolMessage = JSON.parse(message);
+
+    // Message was a response to some command, not an event, so we'll ignore it.
+    if ('id' in protocolMessage) return;
+
+    // We receive messages from the outermost subtarget which wraps the messages from the inner subtargets.
+    // We are recursively processing them from outside in, so build the list of parentSessionIds accordingly.
+    const sessionIdPath = [sessionId, ...parentSessionIds];
+
+    if (protocolMessage.method === 'Target.receivedMessageFromTarget') {
+      // Unravel any messages from subtargets by recursively processing
+      await this._handleReceivedMessageFromTarget(protocolMessage.params, sessionIdPath);
+    }
+
+    if (protocolMessage.method === 'Target.attachedToTarget') {
+      // Process any attachedToTarget messages from subtargets
+      await this._handleTargetAttached(protocolMessage.params, sessionIdPath);
+    }
+
+    if (protocolMessage.method.startsWith('Network')) {
+      this._handleProtocolEvent({...protocolMessage, source: {targetId, sessionId}});
+    }
+  }
+
+  /**
+   * @param {LH.Crdp.Target.AttachedToTargetEvent} event
+   * @param {string[]} parentSessionIds The list of session ids of the parents from youngest to oldest.
+   */
+  async _handleTargetAttached(event, parentSessionIds) {
+    const sessionIdPath = [event.sessionId, ...parentSessionIds];
+
+    // We're only interested in network requests from iframes for now as those are "part of the page".
+    // If it's not an iframe, just resume it and move on.
+    if (event.targetInfo.type !== 'iframe') {
+      // We suspended the target when we auto-attached, so make sure it goes back to being normal.
+      await this.sendMessageToTarget(sessionIdPath, 'Runtime.runIfWaitingForDebugger');
+      return;
+    }
+
+    // Events from subtargets will be stringified and sent back on `Target.receivedMessageFromTarget`.
+    // We want to receive information about network requests from iframes, so enable the Network domain.
+    await this.sendMessageToTarget(sessionIdPath, 'Network.enable');
+    // We also want to receive information about subtargets of subtargets, so make sure we autoattach recursively.
+    await this.sendMessageToTarget(sessionIdPath, 'Target.setAutoAttach', {
+      autoAttach: true,
+      // Pause targets on startup so we don't miss anything
+      waitForDebuggerOnStart: true,
+    });
+
+    // We suspended the target when we auto-attached, so make sure it goes back to being normal.
+    await this.sendMessageToTarget(sessionIdPath, 'Runtime.runIfWaitingForDebugger');
+  }
+
+  /**
+   * Send protocol commands to a subtarget, wraps the message in as many `Target.sendMessageToTarget`
+   * commands as necessary.
+   *
+   * @template {keyof LH.CrdpCommands} C
+   * @param {string[]} sessionIdPath List of session ids to send to, from youngest-oldest/inside-out.
+   * @param {C} method
+   * @param {LH.CrdpCommands[C]['paramsType']} params
+   * @return {Promise<LH.CrdpCommands[C]['returnType']>}
+   */
+  sendMessageToTarget(sessionIdPath, method, ...params) {
+    this._targetProxyMessageId++;
+    /** @type {LH.Crdp.Target.SendMessageToTargetRequest} */
+    let payload = {
+      sessionId: sessionIdPath[0],
+      message: JSON.stringify({id: this._targetProxyMessageId, method, params: params[0]}),
+    };
+
+    for (const sessionId of sessionIdPath.slice(1)) {
+      this._targetProxyMessageId++;
+      payload = {
+        sessionId,
+        message: JSON.stringify({
+          id: this._targetProxyMessageId,
+          method: 'Target.sendMessageToTarget',
+          params: payload,
+        }),
+      };
+    }
+
+    return this.sendCommand('Target.sendMessageToTarget', payload);
+  }
+
+  /**
    * Call protocol methods, with a timeout.
    * To configure the timeout for the next call, use 'setNextProtocolTimeout'.
    * @template {keyof LH.CrdpCommands} C
@@ -353,6 +475,10 @@ class Driver {
    * @return {Promise<*>}
    */
   async _evaluateInContext(expression, contextId) {
+    // Use a higher than default timeout if the user hasn't specified a specific timeout.
+    // Otherwise, use whatever was requested.
+    const timeout = this._nextProtocolTimeout === DEFAULT_PROTOCOL_TIMEOUT ?
+      60000 : this._nextProtocolTimeout;
     const evaluationParams = {
       // We need to explicitly wrap the raw expression for several purposes:
       // 1. Ensure that the expression will be a native Promise and not a polyfill/non-Promise.
@@ -372,11 +498,11 @@ class Driver {
       includeCommandLineAPI: true,
       awaitPromise: true,
       returnByValue: true,
-      timeout: 60000,
+      timeout,
       contextId,
     };
 
-    this.setNextProtocolTimeout(60000);
+    this.setNextProtocolTimeout(timeout);
     const response = await this.sendCommand('Runtime.evaluate', evaluationParams);
     if (response.exceptionDetails) {
       // An error occurred before we could even create a Promise, should be *very* rare
@@ -399,7 +525,14 @@ class Driver {
    * @return {Promise<{url: string, data: string}|null>}
    */
   async getAppManifest() {
-    this.setNextProtocolTimeout(3000);
+    // In all environments but LR, Page.getAppManifest finishes very quickly.
+    // In LR, there is a bug that causes this command to hang until outgoing
+    // requests finish. This has been seen in long polling (where it will never
+    // return) and when other requests take a long time to finish. We allow 10 seconds
+    // for outgoing requests to finish. Anything more, and we continue the run without
+    // a manifest.
+    // Googlers, see: http://b/124008171
+    this.setNextProtocolTimeout(10000);
     let response;
     try {
       response = await this.sendCommand('Page.getAppManifest');
@@ -544,20 +677,25 @@ class Driver {
 
   /**
    * Returns a promise that resolve when a frame has a FCP.
+   * @param {number} maxWaitForFCPMs
    * @return {{promise: Promise<void>, cancel: function(): void}}
    */
-  _waitForFCP() {
+  _waitForFCP(maxWaitForFCPMs) {
     /** @type {(() => void)} */
     let cancel = () => {
       throw new Error('_waitForFCP.cancel() called before it was defined');
     };
 
-    const promise = new Promise(resolve => {
+    const promise = new Promise((resolve, reject) => {
+      const maxWaitTimeout = setTimeout(() => {
+        reject(new LHError(LHError.errors.NO_FCP));
+      }, maxWaitForFCPMs);
+
       /** @param {LH.Crdp.Page.LifecycleEventEvent} e */
       const lifecycleListener = e => {
         if (e.name === 'firstContentfulPaint') {
-          cancel();
           resolve();
+          cancel();
         }
       };
 
@@ -568,6 +706,8 @@ class Driver {
         if (canceled) return;
         canceled = true;
         this.off('Page.lifecycleEvent', lifecycleListener);
+        maxWaitTimeout && clearTimeout(maxWaitTimeout);
+        reject(new Error('Wait for FCP canceled'));
       };
     });
 
@@ -779,8 +919,12 @@ class Driver {
       /**
        * @param {LH.Crdp.Security.SecurityStateChangedEvent} event
        */
-      const securityStateChangedListener = ({securityState, explanations}) => {
-        if (securityState === 'insecure') {
+      const securityStateChangedListener = ({
+        securityState,
+        explanations,
+        schemeIsCryptographic,
+      }) => {
+        if (securityState === 'insecure' && schemeIsCryptographic) {
           cancel();
           const insecureDescriptions = explanations
             .filter(exp => exp.securityState === 'insecure')
@@ -839,17 +983,17 @@ class Driver {
    * @param {number} networkQuietThresholdMs
    * @param {number} cpuQuietThresholdMs
    * @param {number} maxWaitForLoadedMs
-   * @param {boolean} shouldWaitForFCP
+   * @param {number=} maxWaitForFCPMs
    * @return {Promise<void>}
    * @private
    */
   async _waitForFullyLoaded(pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs,
-      maxWaitForLoadedMs, shouldWaitForFCP) {
+      maxWaitForLoadedMs, maxWaitForFCPMs) {
     /** @type {NodeJS.Timer|undefined} */
     let maxTimeoutHandle;
 
     // Listener for onload. Resolves on first FCP event.
-    const waitForFCP = shouldWaitForFCP ? this._waitForFCP() : this._waitForNothing();
+    const waitForFCP = maxWaitForFCPMs ? this._waitForFCP(maxWaitForFCPMs) : this._waitForNothing();
     // Listener for onload. Resolves pauseAfterLoadMs ms after load.
     const waitForLoadEvent = this._waitForLoadEvent(pauseAfterLoadMs);
     // Network listener. Resolves when the network has been idle for networkQuietThresholdMs.
@@ -876,6 +1020,11 @@ class Driver {
     }).then(() => {
       return function() {
         log.verbose('Driver', 'loadEventFired and network considered idle');
+      };
+    }).catch(err => {
+      // Throw the error in the cleanupFn so we still cleanup all our handlers.
+      return function() {
+        throw err;
       };
     });
 
@@ -1011,10 +1160,17 @@ class Driver {
     await this._beginNetworkStatusMonitoring(url);
     await this._clearIsolatedContextId();
 
+    // Enable auto-attaching to subtargets so we receive iframe information
+    await this.sendCommand('Target.setAutoAttach', {
+      autoAttach: true,
+      // Pause targets on startup so we don't miss anything
+      waitForDebuggerOnStart: true,
+    });
+
     await this.sendCommand('Page.enable');
     await this.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});
     await this.sendCommand('Emulation.setScriptExecutionDisabled', {value: disableJS});
-    // No timeout needed for Page.navigate. See #6413.
+    // No timeout needed for Page.navigate. See https://github.com/GoogleChrome/lighthouse/pull/6413.
     const waitforPageNavigateCmd = this._innerSendCommand('Page.navigate', {url});
 
     if (waitForNavigated) {
@@ -1023,19 +1179,22 @@ class Driver {
       const passConfig = /** @type {Partial<LH.Config.Pass>} */ (passContext.passConfig || {});
       let {pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs} = passConfig;
       let maxWaitMs = passContext.settings && passContext.settings.maxWaitForLoad;
+      let maxFCPMs = passContext.settings && passContext.settings.maxWaitForFcp;
 
       /* eslint-disable max-len */
       if (typeof pauseAfterLoadMs !== 'number') pauseAfterLoadMs = DEFAULT_PAUSE_AFTER_LOAD;
       if (typeof networkQuietThresholdMs !== 'number') networkQuietThresholdMs = DEFAULT_NETWORK_QUIET_THRESHOLD;
       if (typeof cpuQuietThresholdMs !== 'number') cpuQuietThresholdMs = DEFAULT_CPU_QUIET_THRESHOLD;
       if (typeof maxWaitMs !== 'number') maxWaitMs = constants.defaultSettings.maxWaitForLoad;
+      if (typeof maxFCPMs !== 'number') maxFCPMs = constants.defaultSettings.maxWaitForFcp;
       /* eslint-enable max-len */
 
+      if (!waitForFCP) maxFCPMs = undefined;
       await this._waitForFullyLoaded(pauseAfterLoadMs, networkQuietThresholdMs, cpuQuietThresholdMs,
-          maxWaitMs, waitForFCP);
+          maxWaitMs, maxFCPMs);
     }
 
-    // Bring `Page.navigate` errors back into the promise chain. See #6739.
+    // Bring `Page.navigate` errors back into the promise chain. See https://github.com/GoogleChrome/lighthouse/pull/6739.
     await waitforPageNavigateCmd;
 
     return this._endNetworkStatusMonitoring();
@@ -1185,9 +1344,6 @@ class Driver {
     const uniqueCategories = Array.from(new Set(traceCategories));
 
     // Check any domains that could interfere with or add overhead to the trace.
-    if (this.isDomainEnabled('Debugger')) {
-      throw new Error('Debugger domain enabled when starting trace');
-    }
     if (this.isDomainEnabled('CSS')) {
       throw new Error('CSS domain enabled when starting trace');
     }
@@ -1254,16 +1410,26 @@ class Driver {
   }
 
   /**
+   * Enables `Debugger` domain to receive async stacktrace information on network request initiators.
+   * This is critical for tracing certain performance simulation situations.
+   *
+   * @return {Promise<void>}
+   */
+  async enableAsyncStacks() {
+    await this.sendCommand('Debugger.enable');
+    await this.sendCommand('Debugger.setSkipAllPauses', {skip: true});
+    await this.sendCommand('Debugger.setAsyncCallStackDepth', {maxDepth: 8});
+  }
+
+  /**
    * @param {LH.Config.Settings} settings
    * @return {Promise<void>}
    */
   async beginEmulation(settings) {
-    if (!settings.disableDeviceEmulation) {
-      if (settings.emulatedFormFactor === 'mobile') {
-        await emulation.enableNexus5X(this);
-      } else if (settings.emulatedFormFactor === 'desktop') {
-        await emulation.enableDesktop(this);
-      }
+    if (settings.emulatedFormFactor === 'mobile') {
+      await emulation.enableNexus5X(this);
+    } else if (settings.emulatedFormFactor === 'desktop') {
+      await emulation.enableDesktop(this);
     }
 
     await this.setThrottling(settings, {useThrottling: true});
@@ -1310,15 +1476,20 @@ class Driver {
   }
 
   /**
-   * Emulate internet disconnection.
+   * Clear the network cache on disk and in memory.
    * @return {Promise<void>}
    */
-  cleanBrowserCaches() {
+  async cleanBrowserCaches() {
+    const status = {msg: 'Cleaning browser cache', id: 'lh:driver:cleanBrowserCaches'};
+    log.time(status);
+
     // Wipe entire disk cache
-    return this.sendCommand('Network.clearBrowserCache')
-      // Toggle 'Disable Cache' to evict the memory cache
-      .then(_ => this.sendCommand('Network.setCacheDisabled', {cacheDisabled: true}))
-      .then(_ => this.sendCommand('Network.setCacheDisabled', {cacheDisabled: false}));
+    await this.sendCommand('Network.clearBrowserCache');
+    // Toggle 'Disable Cache' to evict the memory cache
+    await this.sendCommand('Network.setCacheDisabled', {cacheDisabled: true});
+    await this.sendCommand('Network.setCacheDisabled', {cacheDisabled: false});
+
+    log.timeEnd(status);
   }
 
   /**

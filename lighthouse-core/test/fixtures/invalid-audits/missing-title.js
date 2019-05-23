@@ -6,7 +6,7 @@
 
 'use strict';
 
-const LighthouseAudit = require('../../../audits/audit');
+const LighthouseAudit = require('../../../audits/audit.js');
 
 class MissingTitle extends LighthouseAudit {
   static get meta() {
@@ -19,7 +19,7 @@ class MissingTitle extends LighthouseAudit {
 
   static audit(_) {
     return {
-      rawValue: true,
+      score: 1,
     };
   }
 }

@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
-const Audit = require('../../../audits/metrics/first-contentful-paint');
+const Audit = require('../../../audits/metrics/first-contentful-paint.js');
 const assert = require('assert');
 const options = Audit.defaultOptions;
 
@@ -27,6 +27,6 @@ describe('Performance: first-contentful-paint audit', () => {
     const settings = {throttlingMethod: 'provided'};
     const result = await Audit.audit(artifacts, {settings, options, computedCache: new Map()});
     assert.equal(result.score, 1);
-    assert.equal(result.rawValue, 498.87);
+    assert.equal(result.numericValue, 498.87);
   });
 });

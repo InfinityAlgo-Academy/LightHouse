@@ -30,6 +30,11 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-metric', this.templateContext);
     const element = this.dom.find('.lh-metric', tmpl);
+    // TODO(hoten) - report diff - this rating class should be applied to each audit score icon.
+    // But the score icons in the metrics table use a ::before selector, unlike the other score icons.
+    // Need to change that.
+    const rating = Util.calculateRating(baseAudit.result.score, baseAudit.result.scoreDisplayMode);
+    element.classList.add(`lh-metric--${rating}`);
     element.id = baseAudit.result.id;
 
     const titleEl = this.dom.find('.lh-metric__title', tmpl);
@@ -41,7 +46,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const valuesEl = this.dom.find('.lh-metric__values', tmpl);
     for (const audit of audits) {
       const valueEl = this.dom.createChildOf(valuesEl, 'div', 'lh-metric__value');
-      valueEl.textContent = Util.formatDisplayValue(audit.result.displayValue);
+      valueEl.textContent = audit.result.displayValue || '';
 
       const rating = Util.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
       valueEl.classList.add(`lh-metric--${rating}`);
@@ -59,13 +64,12 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
   /**
    * @param {LH.ReportResult.AuditRef} audit
-   * @param {number} index
    * @param {number} scale
    * @return {Element}
    */
-  _renderOpportunity(audit, index, scale) {
+  _renderOpportunity(audit, scale) {
     const oppTmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity', this.templateContext);
-    const element = this.populateAuditValues(audit, index, oppTmpl);
+    const element = this.populateAuditValues(audit, oppTmpl);
     element.id = audit.result.id;
 
     if (!audit.result.details || audit.result.scoreDisplayMode === 'error') {
@@ -84,7 +88,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Set [title] tooltips
     if (audit.result.displayValue) {
-      const displayValue = Util.formatDisplayValue(audit.result.displayValue);
+      const displayValue = audit.result.displayValue;
       this.dom.find('.lh-load-opportunity__sparkline', element).title = displayValue;
       displayEl.title = displayValue;
     }
@@ -94,14 +98,13 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
   /**
    * @param {LH.ReportResult.AuditRef[]} audits
-   * @param {number} index
    * @return {Element}
    */
-  _renderOpportunityDiff(audits, index) {
+  _renderOpportunityDiff(audits) {
     const baseAudit = audits[0];
 
     const oppTmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity', this.templateContext);
-    const element = this.populateAuditValues(audits, index, oppTmpl);
+    const element = this.populateAuditValues(audits, oppTmpl);
     element.id = baseAudit.result.id;
 
     const displayTexts = this.dom.find('.lh-audit__display-texts', element);
@@ -125,7 +128,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
       // Set [title] tooltips
       if (audit.result.displayValue) {
-        const displayValue = Util.formatDisplayValue(audit.result.displayValue);
+        const displayValue = audit.result.displayValue;
         this.dom.find('.lh-load-opportunity__sparkline', element).title = displayValue;
         displayEl.title = displayValue;
       }
@@ -136,7 +139,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
   /**
    * Get an audit's wastedMs to sort the opportunity by, and scale the sparkline width
-   * Opportunties with an error won't have a details object, so MIN_VALUE is returned to keep any
+   * Opportunities with an error won't have a details object, so MIN_VALUE is returned to keep any
    * erroring opportunities last in sort order.
    * @param {LH.ReportResult.AuditRef} audit
    * @return {number}
@@ -171,9 +174,14 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       element.appendChild(this.renderCategoryHeader(category, groups));
     }
 
-    // Metrics
+    // Metrics.
     const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
     const metricAuditsEl = this.renderAuditGroup(groups.metrics);
+
+    // Metric descriptions toggle.
+    const toggleTmpl = this.dom.cloneTemplate('#tmpl-lh-metrics-toggle', this.templateContext);
+    const toggleEl = this.dom.find('.lh-metrics-toggle', toggleTmpl);
+    metricAuditsEl.prepend(...toggleEl.childNodes);
 
     const keyMetrics = metricAudits.filter(a => a.weight >= 3);
     const otherMetrics = metricAudits.filter(a => a.weight < 3);
@@ -191,8 +199,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // 'Values are estimated and may vary' is used as the category description for PSI
     if (environment !== 'PSI') {
-      const estValuesEl = this.dom.createChildOf(metricsColumn2El, 'div',
-          'lh-metrics__disclaimer lh-metrics__disclaimer');
+      const estValuesEl = this.dom.createChildOf(metricsColumn1El, 'div', 'lh-metrics__disclaimer');
       estValuesEl.textContent = Util.UIStrings.varianceDisclaimer;
     }
 
@@ -207,6 +214,20 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       timelineEl.id = thumbnailResult.id;
       const filmstripEl = this.detailsRenderer.render(thumbnailResult.details);
       filmstripEl && timelineEl.appendChild(filmstripEl);
+    }
+
+    // Budgets
+    const budgetAudit = category.auditRefs.find(audit => audit.id === 'performance-budget');
+    if (budgetAudit && budgetAudit.result.details) {
+      const table = this.detailsRenderer.render(budgetAudit.result.details);
+      if (table) {
+        table.id = budgetAudit.id;
+        table.classList.add('lh-audit');
+        const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
+        budgetsGroupEl.appendChild(table);
+        budgetsGroupEl.classList.add('lh-audit-group--budgets');
+        element.appendChild(budgetsGroupEl);
+      }
     }
 
     // Opportunities
@@ -230,8 +251,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
       const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
       groupEl.appendChild(headerEl);
-      opportunityAudits.forEach((item, i) =>
-          groupEl.appendChild(this._renderOpportunity(item, i, scale)));
+      opportunityAudits.forEach(item => groupEl.appendChild(this._renderOpportunity(item, scale)));
       groupEl.classList.add('lh-audit-group--load-opportunities');
       element.appendChild(groupEl);
     }
@@ -247,7 +267,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     if (diagnosticAudits.length) {
       const groupEl = this.renderAuditGroup(groups['diagnostics']);
-      diagnosticAudits.forEach((item, i) => groupEl.appendChild(this.renderAudit(item, i)));
+      diagnosticAudits.forEach(item => groupEl.appendChild(this.renderAudit(item)));
       groupEl.classList.add('lh-audit-group--diagnostics');
       element.appendChild(groupEl);
     }
@@ -363,7 +383,6 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
             ...nonNullAudit,
             result: {
               ...nonNullAudit.result,
-              rawValue: null,
               displayValue: '-',
               details: undefined,
             },
@@ -401,8 +420,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const auditRefs = opportunityAuditsGroupedById.get(id);
       if (!auditRefs) continue; // it always exists.
 
-      const index = allOpportunityAuditsIdsSortedByBaseSavings.indexOf(id);
-      groupEl.appendChild(this._renderOpportunityDiff(auditRefs, index));
+      groupEl.appendChild(this._renderOpportunityDiff(auditRefs));
       groupEl.classList.add('lh-audit-group--load-opportunities');
       element.appendChild(groupEl);
     }
@@ -421,7 +439,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
         if (diagnosticAudits.length) {
           groupEl.appendChild(this._createLetterNode(allCategory.indexOf(category)));
-          diagnosticAudits.forEach((item, i) => groupEl.appendChild(this.renderAudit(item, i)));
+          diagnosticAudits.forEach((item) => groupEl.appendChild(this.renderAudit(item)));
           groupEl.classList.add('lh-audit-group--diagnostics');
           element.appendChild(groupEl);
         }

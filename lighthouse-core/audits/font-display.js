@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit');
-const URL = require('../lib/url-shim').URL;
+const Audit = require('./audit.js');
+const URL = require('../lib/url-shim.js');
 const PASSING_FONT_DISPLAY_REGEX = /^(block|fallback|optional|swap)$/;
 const CSS_URL_REGEX = /url\((.*?)\)/;
 const CSS_URL_GLOBAL_REGEX = new RegExp(CSS_URL_REGEX, 'g');
@@ -52,7 +52,7 @@ class FontDisplay extends Audit {
     // Go through all the stylesheets to find all @font-face declarations
     for (const stylesheet of artifacts.CSSUsage.stylesheets) {
       // Eliminate newlines so we can more easily scan through with a regex
-      const newlinesStripped = stylesheet.content.replace(/\n/g, ' ');
+      const newlinesStripped = stylesheet.content.replace(/(\r|\n)+/g, ' ');
       // Find the @font-faces
       const fontFaceDeclarations = newlinesStripped.match(/@font-face\s*{(.*?)}/g) || [];
       // Go through all the @font-face declarations to find a declared `font-display: ` property
@@ -82,11 +82,11 @@ class FontDisplay extends Audit {
 
             return s;
           });
-
         // Convert the relative CSS URL to an absolute URL and add it to the passing set
         for (const relativeURL of relativeURLs) {
           try {
-            const relativeRoot = stylesheet.header.sourceURL || artifacts.URL.finalUrl;
+            const relativeRoot = URL.isValid(stylesheet.header.sourceURL) ?
+              stylesheet.header.sourceURL : artifacts.URL.finalUrl;
             const absoluteURL = new URL(relativeURL, relativeRoot);
             passingURLs.add(absoluteURL.href);
           } catch (err) {
@@ -114,6 +114,9 @@ class FontDisplay extends Audit {
       .filter(record => record.resourceType === 'Font')
       // ...that don't have a passing font-display value
       .filter(record => !passingFontURLs.has(record.url))
+      // ...and that aren't data URLs, the blocking concern doesn't really apply
+      .filter(record => !/^data:/.test(record.url))
+      .filter(record => !/^blob:/.test(record.url))
       .map(record => {
         // In reality the end time should be calculated with paint time included
         // all browsers wait 3000ms to block text so we make sure 3000 is our max wasted time
@@ -135,7 +138,6 @@ class FontDisplay extends Audit {
 
     return {
       score: Number(results.length === 0),
-      rawValue: results.length === 0,
       details,
     };
   }

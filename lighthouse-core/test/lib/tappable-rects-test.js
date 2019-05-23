@@ -7,8 +7,8 @@
 
 /* eslint-env jest */
 
-const {addRectTopAndBottom} = require('../../lib/rect-helpers');
-const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects');
+const {addRectTopAndBottom} = require('../../lib/rect-helpers.js');
+const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects.js');
 const assert = require('assert');
 
 describe('getTappableRectsFromClientRects', () => {

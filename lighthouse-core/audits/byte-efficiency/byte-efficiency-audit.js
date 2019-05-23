@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 const linearInterpolation = require('../../lib/statistics').linearInterpolation;
 const Interactive = require('../../computed/metrics/lantern-interactive.js');
 const i18n = require('../../lib/i18n/i18n.js');
@@ -197,7 +197,6 @@ class UnusedBytes extends Audit {
     const wastedKb = Math.round(wastedBytes / KB_IN_BYTES);
     const wastedMs = this.computeWasteWithTTIGraph(results, graph, simulator);
 
-    /** @type {LH.Audit.DisplayValue} */
     let displayValue = result.displayValue || '';
     if (typeof result.displayValue === 'undefined' && wastedBytes) {
       displayValue = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes});
@@ -209,7 +208,7 @@ class UnusedBytes extends Audit {
       explanation: result.explanation,
       warnings: result.warnings,
       displayValue,
-      rawValue: wastedMs,
+      numericValue: wastedMs,
       score: UnusedBytes.scoreForWastedMs(wastedMs),
       extendedInfo: {
         value: {

@@ -46,14 +46,12 @@ declare global {
       /** Descriptions of the groups referenced by CategoryMembers. */
       categoryGroups?: Record<string, Result.ReportGroup>;
 
-
-      // Additional non-LHR-lite information.
       /** The config settings used for these results. */
       configSettings: Config.Settings;
       /** List of top-level warnings for this Lighthouse run. */
       runWarnings: string[];
       /** A top-level error message that, if present, indicates a serious enough problem that this Lighthouse result may need to be discarded. */
-      runtimeError: {code: string, message: string};
+      runtimeError?: {code: string, message: string};
       /** The User-Agent string of the browser used run Lighthouse for these results. */
       userAgent: string;
       /** Information about the environment in which Lighthouse was run. */
@@ -62,6 +60,8 @@ declare global {
       timing: Result.Timing;
       /** The record of all formatted string locations in the LHR and their corresponding source values. */
       i18n: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths: I18NMessages};
+      /** An array containing the result of all stack packs. */
+      stackPacks?: Result.StackPack[];
     }
 
     // Result namespace
@@ -103,15 +103,19 @@ declare global {
       }
 
       /**
-       * A description of configuration used for gathering.
+       * A pack of secondary audit descriptions to be used when a page uses a
+       * specific technology stack, giving stack-specific advice for some of
+       * Lighthouse's audits.
        */
-      export interface RuntimeConfig {
-        environment: {
-          name: 'Device Emulation'|'Network Throttling'|'CPU Throttling';
-          description: string;
-        }[];
-        blockedUrlPatterns: string[];
-        extraHeaders: Crdp.Network.Headers;
+      export interface StackPack {
+        /** The unique string ID for this stack pack. */
+        id: string;
+        /** The title of the stack pack, to be displayed in the report. */
+        title: string;
+        /** A base64 data url to be used as the stack pack's icon. */
+        iconDataURL: string;
+        /** A set of descriptions for some of Lighthouse's audits, keyed by audit `id`. */
+        descriptions: Record<string, string>;
       }
     }
   }

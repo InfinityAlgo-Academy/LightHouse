@@ -10,7 +10,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const constants = require('./constants');
+const constants = require('./constants.js');
 const chalk = require('chalk').default;
 
 const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH;

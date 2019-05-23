@@ -26,10 +26,10 @@ describe('Performance: first-contentful-paint-3g audit', () => {
 
     const result = await FCP3G.audit(artifacts, {settings: {}, options, computedCache: new Map()});
     // Use InlineSnapshot here so changes to Lantern coefficients can be easily updated en masse
-    expect({score: result.score, value: Math.round(result.rawValue)}).toMatchInlineSnapshot(`
+    expect({score: result.score, value: Math.round(result.numericValue)}).toMatchInlineSnapshot(`
 Object {
-  "score": 1,
-  "value": 1661,
+  "score": 0.99,
+  "value": 2057,
 }
 `);
   });

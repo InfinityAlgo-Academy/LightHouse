@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const AxeAudit = require('../../../audits/accessibility/axe-audit');
+const AxeAudit = require('../../../audits/accessibility/axe-audit.js');
 const assert = require('assert');
 
 /* eslint-env jest */
@@ -33,7 +33,7 @@ describe('Accessibility: axe-audit', () => {
       };
 
       const output = FakeA11yAudit.audit(artifacts);
-      assert.equal(output.rawValue, false);
+      assert.equal(output.score, 0);
     });
   });
 });

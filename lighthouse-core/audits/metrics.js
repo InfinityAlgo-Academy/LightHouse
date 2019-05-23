@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('./audit');
+const Audit = require('./audit.js');
 const TraceOfTab = require('../computed/trace-of-tab.js');
 const Speedline = require('../computed/speedline.js');
 const FirstContentfulPaint = require('../computed/metrics/first-contentful-paint.js');
@@ -108,16 +108,16 @@ class Metrics extends Audit {
       }
     }
 
-    /** @type {LH.Audit.Details.Diagnostic} */
+    /** @type {LH.Audit.Details.DebugData} */
     const details = {
-      type: 'diagnostic',
+      type: 'debugdata',
       // TODO: Consider not nesting metrics under `items`.
       items: [metrics],
     };
 
     return {
       score: 1,
-      rawValue: (interactive && interactive.timing) || 0,
+      numericValue: (interactive && interactive.timing) || 0,
       details,
     };
   }

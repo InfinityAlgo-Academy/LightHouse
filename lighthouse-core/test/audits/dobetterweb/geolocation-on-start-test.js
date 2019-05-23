@@ -15,22 +15,22 @@ describe('UX: geolocation audit', () => {
     const text = 'Do not request geolocation permission without a user action.';
 
     const auditResult = GeolocationOnStartAudit.audit({
-      ChromeConsoleMessages: [
+      ConsoleMessages: [
         {entry: {source: 'violation', url: 'https://example.com/', text}},
         {entry: {source: 'violation', url: 'https://example2.com/two', text}},
         {entry: {source: 'violation', url: 'http://abc.com/', text: 'No document.write'}},
         {entry: {source: 'deprecation', url: 'https://example.com/two'}},
       ],
     });
-    assert.equal(auditResult.rawValue, false);
+    assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
   });
 
   it('passes when geolocation has not been automatically requested', () => {
     const auditResult = GeolocationOnStartAudit.audit({
-      ChromeConsoleMessages: [],
+      ConsoleMessages: [],
     });
-    assert.equal(auditResult.rawValue, true);
+    assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 });

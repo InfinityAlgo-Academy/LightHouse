@@ -7,7 +7,7 @@
 
 const assert = require('assert');
 
-const FinalScreenshotAudit = require('../../audits/final-screenshot');
+const FinalScreenshotAudit = require('../../audits/final-screenshot.js');
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 
 /* eslint-env jest */
@@ -19,8 +19,9 @@ describe('Final screenshot', () => {
     });
     const results = await FinalScreenshotAudit.audit(artifacts, {computedCache: new Map()});
 
-    assert.ok(results.rawValue);
-    assert.equal(results.details.timestamp, 225414990.064);
+    assert.equal(results.score, 1);
+    assert.equal(results.details.timing, 818);
+    assert.equal(results.details.timestamp, 225414990064);
     assert.ok(results.details.data.startsWith('data:image/jpeg;base64,/9j/4AAQSkZJRgABA'));
   });
 });

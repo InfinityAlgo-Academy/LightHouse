@@ -21,11 +21,20 @@ function deepClone(val) {
 const nicePluginName = 'lighthouse-plugin-nice-plugin';
 const nicePlugin = {
   audits: [{path: 'not/a/path/audit.js'}],
+  groups: {
+    'group-a': {
+      title: 'Group A',
+    },
+    'group-b': {
+      title: 'Group B',
+      description: 'This description is optional',
+    },
+  },
   category: {
     title: 'Nice Plugin',
     description: 'A nice plugin for nice testing',
     auditRefs: [
-      {id: 'nice-audit', weight: 1},
+      {id: 'nice-audit', weight: 1, group: 'group-a'},
       {id: 'installable-manifest', weight: 220},
     ],
   },
@@ -62,7 +71,7 @@ describe('ConfigPlugin', () => {
       description: 'A plugin that\'s trying to undermine you.',
       manualDescription: 'Still here.',
       auditRefs: [
-        {id: 'evil-audit', weight: 0},
+        {id: 'evil-audit', weight: 0, group: undefined},
       ],
     };
 
@@ -84,6 +93,7 @@ describe('ConfigPlugin', () => {
       categories: {
         'lighthouse-plugin-evil': evilCategory,
       },
+      groups: undefined,
     });
     assert.strictEqual(Object.getOwnPropertyDescriptor(pluginJson, 'audits').get, undefined);
   });
@@ -202,8 +212,10 @@ describe('ConfigPlugin', () => {
         const pluginJson = ConfigPlugin.parsePlugin(nicePlugin, nicePluginName);
 
         const auditRefs = pluginJson.categories[nicePluginName].auditRefs;
-        assert.deepStrictEqual(auditRefs[0], {id: 'nice-audit', weight: 1});
-        assert.deepStrictEqual(auditRefs[1], {id: 'installable-manifest', weight: 220});
+        assert.deepStrictEqual(auditRefs[0],
+          {id: 'nice-audit', weight: 1, group: 'lighthouse-plugin-nice-plugin-group-a'});
+        assert.deepStrictEqual(auditRefs[1],
+          {id: 'installable-manifest', weight: 220, group: undefined});
       });
 
       it('throws if auditRefs is missing', () => {
@@ -251,6 +263,66 @@ describe('ConfigPlugin', () => {
         assert.throws(() => ConfigPlugin.parsePlugin(pluginClone2, nicePluginName),
           /^Error: lighthouse-plugin-nice-plugin has an invalid auditRef weight/);
       });
+
+      it('throws if auditRef has an invalid group id', () => {
+        const pluginClone = deepClone(nicePlugin);
+        pluginClone.category.auditRefs[0].group = 55;
+        assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+          /^Error: lighthouse-plugin-nice-plugin has an invalid auditRef group/);
+      });
+    });
+  });
+
+  describe('`groups`', () => {
+    it('accepts a plugin with no groups', () => {
+      const pluginClone = deepClone(nicePlugin);
+      delete pluginClone.groups;
+      const pluginJson = ConfigPlugin.parsePlugin(pluginClone, nicePluginName);
+      assert.ok(pluginJson);
+    });
+
+    it('throws if groups is not an object', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.groups = [0, 1, 2, 3];
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin groups json is not defined as an object/);
+    });
+
+    it('throws if groups contains non-objects', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.groups['group-b'] = [0, 1, 2, 3];
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin has a group not defined as an object/);
+    });
+
+    it('throws if group title is invalid', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.groups['group-a'].title = 55;
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin has an invalid group title/);
+    });
+
+    it('throws if group description is invalid', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.groups['group-a'].description = 55;
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin has an invalid group description/);
+    });
+
+    it('throws if it contains groups with excess properties', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.groups['group-a'].city = 'Paris';
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin has unrecognized group properties:.*city.*/);
+    });
+
+    it('correctly passes through the contained groups', () => {
+      const pluginJson = ConfigPlugin.parsePlugin(nicePlugin, nicePluginName);
+      const groups = pluginJson.groups;
+      assert.deepStrictEqual(groups,
+        {'lighthouse-plugin-nice-plugin-group-a': {title: 'Group A', description: undefined},
+          'lighthouse-plugin-nice-plugin-group-b':
+          {title: 'Group B', description: 'This description is optional'}});
     });
   });
 });

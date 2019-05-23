@@ -27,6 +27,7 @@ function mockTracingData(prioritiesList, edges) {
       finished: true,
       priority,
       initiatorRequest: null,
+      statusCode: 200,
     }));
 
   // add mock initiator information
@@ -250,12 +251,23 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
   });
 
   it('handles redirects', () => {
-    const networkRecords = mockTracingData([HIGH, HIGH, HIGH], [[0, 1], [1, 2]]);
+    const networkRecords = mockTracingData([HIGH, HIGH, HIGH, HIGH], [[0, 1], [1, 2], [1, 3]]);
     const mainResource = networkRecords[0];
 
     // Make a fake redirect
     networkRecords[1].requestId = '1:redirected.0';
     networkRecords[2].requestId = '1';
+
+    networkRecords[3].requestId = '2';
+    networkRecords[3].url = 'https://example.com/redirect-stylesheet';
+    networkRecords[3].resourceType = undefined;
+    networkRecords[3].statusCode = 302;
+    networkRecords[3].redirectDestination = {
+      redirectDestination: {
+        resourceType: NetworkRequest.TYPES.Stylesheet,
+        priority: 'High',
+      },
+    };
 
     const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {
@@ -267,6 +279,10 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
             children: {
               1: {
                 request: networkRecords[2],
+                children: {},
+              },
+              2: {
+                request: networkRecords[3],
                 children: {},
               },
             },
@@ -309,7 +325,7 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
   });
 
   it('discards iframes as non-critical', () => {
-    const networkRecords = mockTracingData([HIGH, HIGH, HIGH], [[0, 1], [0, 2]]);
+    const networkRecords = mockTracingData([HIGH, HIGH, HIGH, HIGH], [[0, 1], [0, 2], [0, 3]]);
     const mainResource = networkRecords[0];
 
     // 1th record is the root document
@@ -326,6 +342,15 @@ describe('CriticalRequestChain gatherer: extractChain function', () => {
     networkRecords[2].mimeType = 'text/html';
     networkRecords[2].resourceType = NetworkRequest.TYPES.Document;
     networkRecords[2].frameId = '3';
+    // 4rd record is an iframe in the page with a redirect https://github.com/GoogleChrome/lighthouse/issues/6675
+    networkRecords[3].url = 'https://example.com/redirect-iframe';
+    networkRecords[3].resourceType = undefined;
+    networkRecords[3].statusCode = 302;
+    networkRecords[3].redirectDestination = {
+      resourceType: NetworkRequest.TYPES.Document,
+      priority: 'Low',
+    };
+    networkRecords[3].frameId = '4';
 
     const criticalChains = CriticalRequestChains.extractChain(networkRecords, mainResource);
     assert.deepEqual(criticalChains, {

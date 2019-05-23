@@ -13,6 +13,7 @@ const NBSP = '\xa0';
 
 /* eslint-env jest */
 /* eslint-disable no-console */
+/* global URL */
 
 describe('util helpers', () => {
   let origConsoleWarn;
@@ -94,8 +95,6 @@ describe('util helpers', () => {
 
   it('builds device emulation string', () => {
     const get = opts => Util.getEmulationDescriptions(opts).deviceEmulation;
-    assert.equal(get({disableDeviceEmulation: true}), 'No emulation');
-    assert.equal(get({disableDeviceEmulation: false}), 'No emulation');
     assert.equal(get({emulatedFormFactor: 'none'}), 'No emulation');
     assert.equal(get({emulatedFormFactor: 'mobile'}), 'Emulated Nexus 5X');
     assert.equal(get({emulatedFormFactor: 'desktop'}), 'Emulated Desktop');
@@ -138,55 +137,146 @@ describe('util helpers', () => {
     assert.equal(descriptions.cpuThrottling, '2x slowdown (Simulated)');
   });
 
-  it('formats display values', () => {
-    const format = arg => Util.formatDisplayValue(arg);
-    assert.equal(format(undefined), '');
-    assert.equal(format('Foo %s %d'), 'Foo %s %d');
-    assert.equal(format([]), 'UNKNOWN');
-    assert.equal(format(['%s %s', 'Hello', 'formatDisplayValue']), 'Hello formatDisplayValue');
-    assert.equal(format(['%s%', 99.9]), '99.9%');
-    assert.equal(format(['%d%', 99.9]), '100%');
-    assert.equal(format(['%s ms', 12345.678]), '12,345.678 ms');
-    assert.equal(format(['%10d ms', 12345.678]), '12,350 ms');
-    assert.equal(format(['%.01d ms', 12345.678]), '12,345.68 ms');
-    // handle edge cases
-    assert.equal(format(['%.01s literal', 1234]), '%.01s literal');
-    assert.equal(format(['%1.01.1d junk', 1234]), '%1.01.1d junk');
-  });
-
-  it('warns on improper display value formatting', () => {
-    assert.equal(Util.formatDisplayValue(['%s']), '%s');
-    assert.equal(Util.formatDisplayValue(['%s', 'foo', 'bar']), 'foo');
-    assert.deepEqual(consoleWarnCalls, [
-      'Not enough replacements given',
-      'Too many replacements given',
-    ]);
-  });
-
-  it('does not mutate the provided array', () => {
-    const displayValue = ['one:%s, two:%s', 'foo', 'bar'];
-    const cloned = JSON.parse(JSON.stringify(displayValue));
-    Util.formatDisplayValue(displayValue);
-    assert.deepStrictEqual(displayValue, cloned, 'displayValue was mutated');
-  });
-
   describe('#prepareReportResult', () => {
-    it('corrects underscored `notApplicable` scoreDisplayMode', () => {
-      const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+    describe('backward compatibility', () => {
+      it('corrects underscored `notApplicable` scoreDisplayMode', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
 
-      let notApplicableCount = 0;
-      Object.values(clonedSampleResult.audits).forEach(audit => {
-        if (audit.scoreDisplayMode === 'notApplicable') {
-          notApplicableCount++;
-          audit.scoreDisplayMode = 'not_applicable';
-        }
+        let notApplicableCount = 0;
+        Object.values(clonedSampleResult.audits).forEach(audit => {
+          if (audit.scoreDisplayMode === 'notApplicable') {
+            notApplicableCount++;
+            audit.scoreDisplayMode = 'not_applicable';
+          }
+        });
+
+        assert.ok(notApplicableCount > 20); // Make sure something's being tested.
+
+        // Original audit results should be restored.
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+
+        assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
       });
 
-      assert.ok(notApplicableCount > 20); // Make sure something's being tested.
+      it('corrects undefined auditDetails.type to `debugdata`', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
 
-      // Original audit results should be restored.
+        // Delete debugdata details types.
+        let undefinedCount = 0;
+        for (const audit of Object.values(clonedSampleResult.audits)) {
+          if (audit.details && audit.details.type === 'debugdata') {
+            undefinedCount++;
+            delete audit.details.type;
+          }
+        }
+        assert.ok(undefinedCount > 4); // Make sure something's being tested.
+        assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
+
+        // Original audit results should be restored.
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+      });
+
+      it('corrects `diagnostic` auditDetails.type to `debugdata`', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+
+        // Change debugdata details types.
+        let diagnosticCount = 0;
+        for (const audit of Object.values(clonedSampleResult.audits)) {
+          if (audit.details && audit.details.type === 'debugdata') {
+            diagnosticCount++;
+            audit.details.type = 'diagnostic';
+          }
+        }
+        assert.ok(diagnosticCount > 4); // Make sure something's being tested.
+        assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
+
+        // Original audit results should be restored.
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+      });
+
+      it('corrects screenshots in the `filmstrip` auditDetails.type', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+
+        // Strip filmstrip screenshots of data URL prefix.
+        let filmstripCount = 0;
+        for (const audit of Object.values(clonedSampleResult.audits)) {
+          if (audit.details && audit.details.type === 'filmstrip') {
+            filmstripCount++;
+            for (const screenshot of audit.details.items) {
+              screenshot.data = screenshot.data.slice('data:image/jpeg;base64,'.length);
+            }
+          }
+        }
+        assert.ok(filmstripCount > 0); // Make sure something's being tested.
+        assert.notDeepStrictEqual(clonedSampleResult.audits, sampleResult.audits);
+
+        // Original audit results should be restored.
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+      });
+    });
+
+    it('appends stack pack descriptions to auditRefs', () => {
+      const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+      const iconDataURL = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"%3E%3C/svg%3E';
+      clonedSampleResult.stackPacks = [{
+        id: 'snackpack',
+        title: 'SnackPack',
+        iconDataURL,
+        descriptions: {
+          'unused-css-rules': 'Consider using snacks in packs.',
+        },
+      }];
       const preparedResult = Util.prepareReportResult(clonedSampleResult);
-      assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+
+      const perfAuditRefs = preparedResult.categories.performance.auditRefs;
+      const unusedCssRef = perfAuditRefs.find(ref => ref.id === 'unused-css-rules');
+      assert.deepStrictEqual(unusedCssRef.stackPacks, [{
+        title: 'SnackPack',
+        iconDataURL,
+        description: 'Consider using snacks in packs.',
+      }]);
+
+      // No stack pack on audit wth no stack pack.
+      const interactiveRef = perfAuditRefs.find(ref => ref.id === 'interactive');
+      assert.strictEqual(interactiveRef.stackPacks, undefined);
+    });
+  });
+
+  describe('getTld', () => {
+    it('returns the correct tld', () => {
+      assert.equal(Util.getTld('example.com'), '.com');
+      assert.equal(Util.getTld('example.co.uk'), '.co.uk');
+      assert.equal(Util.getTld('example.com.br'), '.com.br');
+      assert.equal(Util.getTld('example.tokyo.jp'), '.jp');
+    });
+  });
+
+  describe('getRootDomain', () => {
+    it('returns the correct rootDomain from a string', () => {
+      assert.equal(Util.getRootDomain('https://www.example.com/index.html'), 'example.com');
+      assert.equal(Util.getRootDomain('https://example.com'), 'example.com');
+      assert.equal(Util.getRootDomain('https://www.example.co.uk'), 'example.co.uk');
+      assert.equal(Util.getRootDomain('https://example.com.br/app/'), 'example.com.br');
+      assert.equal(Util.getRootDomain('https://example.tokyo.jp'), 'tokyo.jp');
+      assert.equal(Util.getRootDomain('https://sub.example.com'), 'example.com');
+      assert.equal(Util.getRootDomain('https://sub.example.tokyo.jp'), 'tokyo.jp');
+      assert.equal(Util.getRootDomain('http://localhost'), 'localhost');
+      assert.equal(Util.getRootDomain('http://localhost:8080'), 'localhost');
+    });
+
+    it('returns the correct rootDomain from an URL object', () => {
+      assert.equal(Util.getRootDomain(new URL('https://www.example.com/index.html')), 'example.com');
+      assert.equal(Util.getRootDomain(new URL('https://example.com')), 'example.com');
+      assert.equal(Util.getRootDomain(new URL('https://www.example.co.uk')), 'example.co.uk');
+      assert.equal(Util.getRootDomain(new URL('https://example.com.br/app/')), 'example.com.br');
+      assert.equal(Util.getRootDomain(new URL('https://example.tokyo.jp')), 'tokyo.jp');
+      assert.equal(Util.getRootDomain(new URL('https://sub.example.com')), 'example.com');
+      assert.equal(Util.getRootDomain(new URL('https://sub.example.tokyo.jp')), 'tokyo.jp');
+      assert.equal(Util.getRootDomain(new URL('http://localhost')), 'localhost');
+      assert.equal(Util.getRootDomain(new URL('http://localhost:8080')), 'localhost');
     });
   });
 });
