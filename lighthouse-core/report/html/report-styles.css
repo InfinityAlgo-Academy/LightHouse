@@ -773,7 +773,6 @@
 /* Filmstrip */
 
 .lh-filmstrip-container {
-  padding: 0 var(--expandable-indent);
   /* smaller gap between metrics and filmstrip */
   margin: -8px auto 0 auto;
 }
@@ -799,10 +798,14 @@
 @media screen and (max-width: 750px) {
   .lh-filmstrip {
     flex-wrap: wrap;
-    justify-content: left;
   }
   .lh-filmstrip__frame {
-    margin: calc(var(--default-padding) / 3);
+    width: 20%;
+    margin-bottom: 5px;
+  }
+  .lh-filmstrip__thumbnail {
+    display: block;
+    margin: auto;
   }
 }
 
