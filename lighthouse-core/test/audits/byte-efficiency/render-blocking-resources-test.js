@@ -7,7 +7,7 @@
 
 const RenderBlockingResourcesAudit = require('../../../audits/byte-efficiency/render-blocking-resources.js'); // eslint-disable-line max-len
 
-const mobileSlow4G = require('../../../config/constants').throttling.mobileSlow4G;
+const mobileSlow4G = require('../../../config/constants.js').throttling.mobileSlow4G;
 const NetworkNode = require('../../../lib/dependency-graph/network-node.js');
 const CPUNode = require('../../../lib/dependency-graph/cpu-node.js');
 const Simulator = require('../../../lib/dependency-graph/simulator/simulator.js');

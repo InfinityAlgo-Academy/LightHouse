@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const processForProto = require('../../lib/proto-preprocessor').processForProto;
+const processForProto = require('../../lib/proto-preprocessor.js').processForProto;
 
 /* eslint-env jest */
 describe('processing for proto', () => {

@@ -13,7 +13,7 @@
 
 const isDeepEqual = require('lodash.isequal');
 const Audit = require('./audit.js');
-const mobileThrottling = require('../config/constants').throttling.mobileSlow4G;
+const mobileThrottling = require('../config/constants.js').throttling.mobileSlow4G;
 const Interactive = require('../computed/metrics/interactive.js');
 const i18n = require('../lib/i18n/i18n.js');
 

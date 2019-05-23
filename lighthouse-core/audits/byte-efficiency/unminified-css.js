@@ -8,7 +8,7 @@
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
 const UnusedCSSRules = require('./unused-css-rules.js');
 const i18n = require('../../lib/i18n/i18n.js');
-const computeTokenLength = require('../../lib/minification-estimator').computeCSSTokenLength;
+const computeTokenLength = require('../../lib/minification-estimator.js').computeCSSTokenLength;
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to minify (remove whitespace) the page's CSS code. This is displayed in a list of audit titles that Lighthouse generates. */

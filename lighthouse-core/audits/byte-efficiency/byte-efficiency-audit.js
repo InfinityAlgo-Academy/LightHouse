@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('../audit.js');
-const linearInterpolation = require('../../lib/statistics').linearInterpolation;
+const linearInterpolation = require('../../lib/statistics.js').linearInterpolation;
 const Interactive = require('../../computed/metrics/lantern-interactive.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const NetworkRecords = require('../../computed/network-records.js');

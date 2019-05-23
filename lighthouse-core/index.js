@@ -70,7 +70,7 @@ function generateConfig(configJson, flags) {
 
 lighthouse.generateConfig = generateConfig;
 lighthouse.getAuditList = Runner.getAuditList;
-lighthouse.traceCategories = require('./gather/driver').traceCategories;
+lighthouse.traceCategories = require('./gather/driver.js').traceCategories;
 lighthouse.Audit = require('./audits/audit.js');
 lighthouse.Gatherer = require('./gather/gatherers/gatherer.js');
 lighthouse.NetworkRecords = require('./computed/network-records.js');

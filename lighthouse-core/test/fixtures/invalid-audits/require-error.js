@@ -6,6 +6,7 @@
 'use strict';
 
 // NOTE: this require path does not resolve correctly.
+// eslint-disable-next-line local-rules/require-file-extension
 const LighthouseAudit = require('../terrible/path/come/on/audit.js');
 
 class RequireErrorAudit extends LighthouseAudit {
