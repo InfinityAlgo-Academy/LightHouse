@@ -1493,13 +1493,8 @@
       "id": "accesskeys",
       "title": "`[accesskey]` values are unique",
       "description": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "aria-allowed-attr": {
       "id": "aria-allowed-attr",
@@ -1561,8 +1556,13 @@
       "id": "button-name",
       "title": "Buttons have an accessible name",
       "description": "When a button doesn't have an accessible name, screen readers announce it as \"button\", making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "bypass": {
       "id": "bypass",
@@ -3523,7 +3523,7 @@
       "auditRefs": [
         {
           "id": "accesskeys",
-          "weight": 3,
+          "weight": 0,
           "group": "a11y-navigation"
         },
         {
@@ -3568,7 +3568,7 @@
         },
         {
           "id": "button-name",
-          "weight": 0,
+          "weight": 10,
           "group": "a11y-names-labels"
         },
         {
@@ -3742,7 +3742,7 @@
         }
       ],
       "id": "accessibility",
-      "score": 0.38
+      "score": 0.46
     },
     "best-practices": {
       "title": "Best Practices",

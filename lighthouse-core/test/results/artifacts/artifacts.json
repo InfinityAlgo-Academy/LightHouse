@@ -1337,6 +1337,18 @@
     ],
     "notApplicable": [
       {
+        "id": "accesskeys",
+        "impact": null,
+        "tags": [
+          "best-practice",
+          "cat.keyboard"
+        ],
+        "description": "Ensures every accesskey attribute value is unique",
+        "help": "accesskey attribute value must be unique",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/accesskeys?application=axeAPI",
+        "nodes": []
+      },
+      {
         "id": "aria-allowed-attr",
         "impact": null,
         "tags": [
@@ -1346,20 +1358,7 @@
         ],
         "description": "Ensures ARIA attributes are allowed for an element's role",
         "help": "Elements must only use allowed ARIA attributes",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "aria-dpub-role-fallback",
-        "impact": null,
-        "tags": [
-          "cat.aria",
-          "wcag2a",
-          "wcag131"
-        ],
-        "description": "Ensures unsupported DPUB roles are only used on elements with implicit fallback roles",
-        "help": "Unsupported DPUB ARIA roles should be used on elements with implicit fallback roles",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/aria-dpub-role-fallback?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/aria-allowed-attr?application=axeAPI",
         "nodes": []
       },
       {
@@ -1452,22 +1451,7 @@
         ],
         "description": "Ensures <audio> elements have captions",
         "help": "<audio> elements must have a captions track",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "button-name",
-        "impact": null,
-        "tags": [
-          "cat.name-role-value",
-          "wcag2a",
-          "wcag412",
-          "section508",
-          "section508.22.a"
-        ],
-        "description": "Ensures buttons have discernible text",
-        "help": "Buttons must have discernible text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/button-name?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/audio-caption?application=axeAPI",
         "nodes": []
       },
       {
@@ -1493,33 +1477,7 @@
         ],
         "description": "Ensures <dt> and <dd> elements are contained by a <dl>",
         "help": "<dt> and <dd> elements must be contained by a <dl>",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/dlitem?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "duplicate-id-active",
-        "impact": null,
-        "tags": [
-          "cat.parsing",
-          "wcag2a",
-          "wcag411"
-        ],
-        "description": "Ensures every id attribute value of active elements is unique",
-        "help": "IDs of active elements must be unique",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/duplicate-id-active?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "duplicate-id-aria",
-        "impact": null,
-        "tags": [
-          "cat.parsing",
-          "wcag2a",
-          "wcag411"
-        ],
-        "description": "Ensures every id attribute value used in ARIA and in labels is unique",
-        "help": "IDs used in ARIA and labels must be unique",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/duplicate-id-aria?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/dlitem?application=axeAPI",
         "nodes": []
       },
       {
@@ -1548,20 +1506,7 @@
         ],
         "description": "Ensures the lang attribute of the <html> element has a valid value",
         "help": "<html> element must have a valid value for the lang attribute",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/html-lang-valid?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "html-xml-lang-mismatch",
-        "impact": null,
-        "tags": [
-          "cat.language",
-          "wcag2a",
-          "wcag311"
-        ],
-        "description": "Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page",
-        "help": "HTML elements with lang and xml:lang must have the same base language",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/3.1/html-xml-lang-mismatch?application=axeAPI",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/3.2/html-lang-valid?application=axeAPI",
         "nodes": []
       },
       {

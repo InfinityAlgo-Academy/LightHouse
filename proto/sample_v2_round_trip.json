@@ -2,14 +2,9 @@
     "audits": {
         "accesskeys": {
             "description": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse).",
-            "details": {
-                "headings": [],
-                "items": [],
-                "type": "table"
-            },
             "id": "accesskeys",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
             "title": "`[accesskey]` values are unique"
         },
         "appcache-manifest": {
@@ -152,9 +147,14 @@
         },
         "button-name": {
             "description": "When a button doesn't have an accessible name, screen readers announce it as \"button\", making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse).",
+            "details": {
+                "headings": [],
+                "items": [],
+                "type": "table"
+            },
             "id": "button-name",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1.0,
+            "scoreDisplayMode": "binary",
             "title": "Buttons have an accessible name"
         },
         "bypass": {
@@ -3163,7 +3163,7 @@
                 {
                     "group": "a11y-navigation",
                     "id": "accesskeys",
-                    "weight": 3.0
+                    "weight": 0.0
                 },
                 {
                     "group": "a11y-aria",
@@ -3208,7 +3208,7 @@
                 {
                     "group": "a11y-names-labels",
                     "id": "button-name",
-                    "weight": 0.0
+                    "weight": 10.0
                 },
                 {
                     "group": "a11y-navigation",
@@ -3383,7 +3383,7 @@
             "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
             "id": "accessibility",
             "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
-            "score": 0.38,
+            "score": 0.46,
             "title": "Accessibility"
         },
         "best-practices": {
