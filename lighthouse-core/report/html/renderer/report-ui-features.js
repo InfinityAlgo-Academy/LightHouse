@@ -590,11 +590,13 @@ class ReportUIFeatures {
     // Category order matches gauge order in sticky header.
     const gaugeWrapperEls = this.stickyHeaderEl.querySelectorAll('.lh-gauge__wrapper');
     const gaugeToHighlight = gaugeWrapperEls[highlightIndex];
-    const offset = gaugeToHighlight.getBoundingClientRect().left + 'px';
+    // This is normally 0 - but in DevTools, it's not, since the entire report could be docked.
+    const origin = this.stickyHeaderEl.getBoundingClientRect().left;
+    const offset = gaugeToHighlight.getBoundingClientRect().left - origin;
 
     // Mutate at end to avoid layout thrashing.
     this.stickyHeaderEl.classList.toggle('lh-sticky-header--visible', showStickyHeader);
-    this.highlightEl.style.left = offset;
+    this.highlightEl.style.left = offset + 'px';
   }
 }
 
