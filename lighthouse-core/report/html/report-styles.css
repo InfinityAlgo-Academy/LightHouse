@@ -957,22 +957,6 @@
 }
 
 /* Report */
-
-.lh-header-sticky {
-  /** TODO: Redesigned report has a small sticky header.
-  For now, disable the current sticky behavior. */
-  /* position: -webkit-sticky;
-  position: sticky; */
-  top: 0;
-  width: 100%;
-  min-width: var(--report-min-width);
-  z-index: 2;
-  will-change: transform;
-}
-.lh-header-plain {
-  margin-top: var(--section-padding);
-}
-
 .lh-list > div:not(:last-child) {
   padding-bottom: 20px;
 }
