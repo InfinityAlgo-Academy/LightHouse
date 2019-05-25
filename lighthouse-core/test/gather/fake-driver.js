@@ -6,8 +6,6 @@
 'use strict';
 
 function makeFakeDriver({protocolGetVersionResponse}) {
-  let scrollPosition = {x: 0, y: 0};
-
   return {
     getBrowserVersion() {
       return Promise.resolve(Object.assign({}, protocolGetVersionResponse, {milestone: 71}));
@@ -58,13 +56,6 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     },
     evaluateAsync() {
       return Promise.resolve({});
-    },
-    scrollTo(position) {
-      scrollPosition = position;
-      return Promise.resolve();
-    },
-    getScrollPosition() {
-      return Promise.resolve(scrollPosition);
     },
     registerPerformanceObserver() {
       return Promise.resolve();

@@ -317,19 +317,6 @@ describe('.evaluateAsync', () => {
       expect.anything()
     );
   });
-
-  it('recovers from isolation failures', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 1337}}})
-      .mockResponse('Page.createIsolatedWorld', {executionContextId: 9001})
-      .mockResponse('Runtime.evaluate', Promise.reject(new Error('Cannot find context')))
-      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 1337}}})
-      .mockResponse('Page.createIsolatedWorld', {executionContextId: 9002})
-      .mockResponse('Runtime.evaluate', {result: {value: 'mocked value'}});
-
-    const value = await driver.evaluateAsync('"magic"', {useIsolation: true});
-    expect(value).toEqual('mocked value');
-  });
 });
 
 describe('.sendCommand', () => {
