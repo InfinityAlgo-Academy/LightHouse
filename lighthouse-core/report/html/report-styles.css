@@ -142,6 +142,7 @@
   --topbar-icon-size: 24px;
   --topbar-padding: 0 8px;
   --metrics-toggle-color: var(--color-black-200);
+  --top-of-page-offset: 0;
 
   --color-average-secondary: var(--color-orange-700);
   --color-average: var(--color-orange);
@@ -262,8 +263,8 @@
   --expandable-indent: 16px;
   --gauge-circle-size-big: 96px;
   --gauge-circle-size: 72px;
-  /* There is no topbar in DevTools. */
-  --topbar-height: 0px;
+  /* Consider offset of the DevTools UI. */
+  --top-of-page-offset: 54px;
 
   --lh-audit-vpadding: 4px;
   --lh-audit-hgap: 12px;

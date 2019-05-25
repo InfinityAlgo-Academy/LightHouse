@@ -46,6 +46,8 @@ class ReportUIFeatures {
     this._dom = dom;
     /** @type {Document} */
     this._document = this._dom.document();
+    /** @type {ParentNode} */
+    this._templateContext = this._dom.document();
     /** @type {boolean} */
     this._copyAttempt = false;
     /** @type {HTMLElement} */
@@ -78,33 +80,33 @@ class ReportUIFeatures {
    * @param {LH.Result} report
    */
   initFeatures(report) {
-    if (this._dom.isDevTools()) return;
-
     this.json = report;
-    this._setupMediaQueryListeners();
-    this._setupExportButton();
+
+    if (this._dom.isDevTools()) {
+      // Not ready for DevTools.
+      this._dom.find('.lh-export__button', this._document).remove();
+    } else {
+      this._setupMediaQueryListeners();
+      this._setupExportButton();
+      this._setUpCollapseDetailsAfterPrinting();
+      this._resetUIState();
+      this._document.addEventListener('keyup', this.onKeyUp);
+      this._document.addEventListener('copy', this.onCopy);
+      const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
+      topbarLogo.addEventListener('click', () => this._toggleDarkTheme());
+    }
+
     this._setupThirdPartyFilter();
-    this._setUpCollapseDetailsAfterPrinting();
-    this._resetUIState();
-    this._document.addEventListener('keyup', this.onKeyUp);
-    this._document.addEventListener('copy', this.onCopy);
-    const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
-    topbarLogo.addEventListener('click', () => this._toggleDarkTheme());
 
     let turnOffTheLights = false;
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       turnOffTheLights = true;
     }
 
-    // Fireworks.
-    const scoresAll100 = Object.values(report.categories).every(cat => cat.score === 1);
-    if (!this._dom.isDevTools() && scoresAll100) {
+    const scoresAll100 = Object.values(this.json.categories).every(cat => cat.score === 1);
+    if (scoresAll100) {
       turnOffTheLights = true;
-      const scoresContainer = this._dom.find('.lh-scores-container', this._document);
-      scoresContainer.classList.add('score100');
-      scoresContainer.addEventListener('click', _ => {
-        scoresContainer.classList.toggle('fireworks-paused');
-      });
+      this._enableFireworks();
     }
 
     if (turnOffTheLights) {
@@ -114,9 +116,32 @@ class ReportUIFeatures {
     // There is only a sticky header when at least 2 categories are present.
     if (Object.keys(this.json.categories).length >= 2) {
       this._setupStickyHeaderElements();
-      this._document.addEventListener('scroll', this._updateStickyHeaderOnScroll);
+
+      let elToAddScrollListener = this._document.body;
+      if (this._dom.isDevTools()) {
+        elToAddScrollListener = this._dom.find('.audits2-results-container', this._document);
+      }
+      elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
+
       window.addEventListener('resize', this._updateStickyHeaderOnScroll);
     }
+  }
+
+  /**
+   * Define a custom element for <templates> to be extracted from. For example:
+   *     this.setTemplateContext(new DOMParser().parseFromString(htmlStr, 'text/html'))
+   * @param {ParentNode} context
+   */
+  setTemplateContext(context) {
+    this._templateContext = context;
+  }
+
+  _enableFireworks() {
+    const scoresContainer = this._dom.find('.lh-scores-container', this._document);
+    scoresContainer.classList.add('score100');
+    scoresContainer.addEventListener('click', _ => {
+      scoresContainer.classList.toggle('fireworks-paused');
+    });
   }
 
   /**
@@ -179,7 +204,7 @@ class ReportUIFeatures {
       if (thirdPartyRows.size === urlItems.length || !thirdPartyRows.size) return;
 
       // create input box
-      const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._document);
+      const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._templateContext);
       const filterInput = this._dom.find('input', filterTemplate);
       const id = `lh-3p-filter-label--${index}`;
 

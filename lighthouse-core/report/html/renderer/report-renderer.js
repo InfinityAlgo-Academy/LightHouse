@@ -101,7 +101,6 @@ class ReportRenderer {
     return shortHeaderContainer;
   }
 
-
   /**
    * @param {LH.ReportResult} report
    * @return {DocumentFragment}
@@ -255,13 +254,10 @@ class ReportRenderer {
     reportSection.appendChild(this._renderReportFooter(report));
 
     const reportFragment = this._dom.createFragment();
+    const topbarDocumentFragment = this._renderReportTopbar(report);
+    reportFragment.appendChild(topbarDocumentFragment);
 
-    if (!this._dom.isDevTools()) {
-      const topbarDocumentFragment = this._renderReportTopbar(report);
-      reportFragment.appendChild(topbarDocumentFragment);
-    }
-
-    if (scoreHeader && !this._dom.isDevTools()) {
+    if (scoreHeader) {
       const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
       this._dom.createChildOf(stickyHeader, 'div', 'lh-highlighter');
 

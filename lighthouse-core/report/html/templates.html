@@ -174,7 +174,7 @@ limitations under the License.
       position: fixed;
       left: 0;
       right: 0;
-      top: var(--topbar-height);
+      top: calc(var(--topbar-height) + var(--top-of-page-offset));
       font-weight: 700;
       display: flex;
       justify-content: center;
@@ -220,7 +220,7 @@ limitations under the License.
   <style>
     .lh-topbar {
       position: fixed;
-      top: 0;
+      top: var(--top-of-page-offset);
       left: 0;
       right: 0;
       z-index: 1000;
