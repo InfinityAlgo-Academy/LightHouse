@@ -577,6 +577,9 @@
   .lh-column:first-of-type {
     margin-right: 0px;
   }
+  .lh-column:first-of-type .lh-metric:last-of-type {
+    border-bottom: 0;
+  }
 }
 
 
