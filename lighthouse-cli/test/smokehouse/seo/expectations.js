@@ -16,6 +16,60 @@ function headersParam(headers) {
   return new URLSearchParams([['extra_header', headerString]]).toString();
 }
 
+const expectedGatheredTapTargets = [
+  {
+    snippet: /large-link-at-bottom-of-page/,
+  },
+  {
+    snippet: /visible-target/,
+  },
+  {
+    snippet: /target-with-client-rect-outside-scroll-container/,
+  },
+  {
+    snippet: /link-containing-large-inline-block-element/,
+  },
+  {
+    snippet: /link-next-to-link-containing-large-inline-block-element/,
+  },
+  {
+    snippet: /tap-target-containing-other-tap-targets/,
+  },
+  {
+    snippet: /child-client-rect-hidden-by-overflow-hidden/,
+  },
+  {
+    snippet: /tap-target-next-to-child-client-rect-hidden-by-overflow-hidden/,
+  },
+  {
+    snippet: /child-client-rect-overlapping-other-target/,
+    shouldFail: true,
+  },
+  {
+    snippet: /tap-target-overlapped-by-other-targets-position-absolute-child-rect/,
+    shouldFail: true,
+  },
+  {
+    snippet: /position-absolute-tap-target-fully-contained-in-other-target/,
+  },
+  {
+    snippet: /tap-target-fully-containing-position-absolute-target/,
+  },
+  {
+    snippet: /too-small-failing-tap-target/,
+    shouldFail: true,
+  },
+  {
+    snippet: /large-enough-tap-target-next-to-too-small-tap-target/,
+  },
+  {
+    snippet: /links-with-same-link-target-1/,
+  },
+  {
+    snippet: /links-with-same-link-target-2/,
+  },
+];
+
 const failureHeaders = headersParam([[
   'x-robots-tag',
   'none',
@@ -190,38 +244,50 @@ module.exports = [
       audits: {
         'tap-targets': {
           score: (() => {
-            const PASSING_TAP_TARGETS = 11;
-            const TOTAL_TAP_TARGETS = 12;
+            const totalTapTargets = expectedGatheredTapTargets.length;
+            const passingTapTargets = expectedGatheredTapTargets.filter(t => !t.shouldFail).length;
             const SCORE_FACTOR = 0.89;
-            return Math.floor(PASSING_TAP_TARGETS / TOTAL_TAP_TARGETS * SCORE_FACTOR * 100) / 100;
+            return Math.round(passingTapTargets / totalTapTargets * SCORE_FACTOR * 100) / 100;
           })(),
           details: {
             items: [
               {
                 'tapTarget': {
                   'type': 'node',
-                  'snippet': '<a ' +
-                 'style="display: block; width: 100px; height: 30px;background: #ddd;">' +
-                 '\n        too small target\n      </a>',
-                  'path': '2,HTML,1,BODY,3,DIV,21,DIV,0,A',
+                  'path': '2,HTML,1,BODY,10,DIV,0,DIV,1,A',
                   'selector': 'body > div > div > a',
                   'nodeLabel': 'too small target',
                 },
                 'overlappingTarget': {
                   'type': 'node',
-                  'snippet': '<a ' +
-                  'style="display: block; width: 100px; height: 100px;background: #aaa;">' +
-                  '\n        big enough target\n      </a>',
-                  'path': '2,HTML,1,BODY,3,DIV,21,DIV,1,A',
+                  'path': '2,HTML,1,BODY,10,DIV,0,DIV,2,A',
                   'selector': 'body > div > div > a',
                   'nodeLabel': 'big enough target',
                 },
-                'size': '100x30',
-                'width': 100,
-                'height': 30,
                 'tapTargetScore': 1440,
                 'overlappingTargetScore': 432,
                 'overlapScoreRatio': 0.3,
+                'size': '100x30',
+                'width': 100,
+                'height': 30,
+              },
+              {
+                'tapTarget': {
+                  'type': 'node',
+                  'path': '2,HTML,1,BODY,3,DIV,24,A',
+                  'selector': 'body > div > a',
+                },
+                'overlappingTarget': {
+                  'type': 'node',
+                  'path': '2,HTML,1,BODY,3,DIV,25,A',
+                  'selector': 'body > div > a',
+                },
+                'tapTargetScore': 1920,
+                'overlappingTargetScore': 560,
+                'overlapScoreRatio': 0.2916666666666667,
+                'size': '40x40',
+                'width': 40,
+                'height': 40,
               },
             ],
           },
@@ -229,9 +295,7 @@ module.exports = [
       },
     },
     artifacts: {
-      TapTargets: {
-        length: 11,
-      },
+      TapTargets: expectedGatheredTapTargets.map(({snippet}) => ({snippet})),
     },
   },
 ];
