@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
 
-const ScreenshotThumbnailsAudit = require('../../audits/screenshot-thumbnails');
+const ScreenshotThumbnailsAudit = require('../../audits/screenshot-thumbnails.js');
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 

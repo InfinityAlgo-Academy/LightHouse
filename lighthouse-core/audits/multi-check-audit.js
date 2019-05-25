@@ -9,7 +9,7 @@
  * @fileoverview Base class for boolean audits that can have multiple reasons for failure
  */
 
-const Audit = require('./audit');
+const Audit = require('./audit.js');
 
 class MultiCheckAudit extends Audit {
   /**

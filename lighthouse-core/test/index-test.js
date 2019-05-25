@@ -9,7 +9,7 @@
 
 const pkg = require('../../package.json');
 const assert = require('assert');
-const lighthouse = require('..');
+const lighthouse = require('../index.js');
 
 describe('Module Tests', function() {
   it('should have a main attribute defined in the package.json', function() {

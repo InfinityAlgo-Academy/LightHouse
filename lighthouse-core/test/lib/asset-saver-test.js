@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const assetSaver = require('../../lib/asset-saver');
-const Metrics = require('../../lib/traces/pwmetrics-events');
+const assetSaver = require('../../lib/asset-saver.js');
+const Metrics = require('../../lib/traces/pwmetrics-events.js');
 const assert = require('assert');
 const fs = require('fs');
 

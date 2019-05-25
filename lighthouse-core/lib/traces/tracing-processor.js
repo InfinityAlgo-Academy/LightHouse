@@ -18,7 +18,7 @@ const SCHEDULABLE_TASK_TITLE_ALT2 = 'ThreadControllerImpl::DoWork';
 const SCHEDULABLE_TASK_TITLE_ALT3 = 'TaskQueueManager::ProcessTaskFromWorkQueue';
 
 
-const LHError = require('../lh-error');
+const LHError = require('../lh-error.js');
 
 class TraceProcessor {
   /**

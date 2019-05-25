@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const pwaDetailsExpectations = require('./pwa-expectations').PWA_DETAILS_EXPECTATIONS;
+const pwaDetailsExpectations = require('./pwa-expectations.js').PWA_DETAILS_EXPECTATIONS;
 
 const pwaRocksExpectations = {...pwaDetailsExpectations, hasIconsAtLeast512px: false};
 

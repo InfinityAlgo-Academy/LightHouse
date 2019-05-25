@@ -83,7 +83,7 @@ module.exports = [
           details: {
             overallSavingsBytes: '>60000',
             items: {
-              length: 4,
+              length: 5,
             },
           },
         },
@@ -106,14 +106,14 @@ module.exports = [
           },
         },
         'uses-responsive-images': {
-          displayValue: 'Potential savings of 75\xa0KB',
+          displayValue: 'Potential savings of 69\xa0KB',
           details: {
-            overallSavingsBytes: '>75000',
-            items: [
-              {wastedPercent: '<60'},
-              {wastedPercent: '<60'},
-              {wastedPercent: '<60'},
-            ],
+            overallSavingsBytes: '>65000',
+            items: {
+              0: {wastedPercent: '<60'},
+              1: {wastedPercent: '<60'},
+              length: 2,
+            },
           },
         },
       },

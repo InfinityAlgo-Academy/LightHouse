@@ -7,7 +7,7 @@
 
 const fs = require('fs');
 const assert = require('assert');
-const {computeCSSTokenLength, computeJSTokenLength} = require('../../lib/minification-estimator');
+const {computeCSSTokenLength, computeJSTokenLength} = require('../../lib/minification-estimator.js'); // eslint-disable-line max-len
 
 const angularFullScript = fs.readFileSync(require.resolve('angular/angular.js'), 'utf8');
 

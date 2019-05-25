@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const NetworkRequests = require('../../audits/network-requests');
+const NetworkRequests = require('../../audits/network-requests.js');
 const assert = require('assert');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 

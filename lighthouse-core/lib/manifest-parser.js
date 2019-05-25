@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const URL = require('./url-shim');
+const URL = require('./url-shim.js');
 const cssParsers = require('cssstyle/lib/parsers');
 
 const ALLOWED_DISPLAY_VALUES = [

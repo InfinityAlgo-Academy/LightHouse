@@ -6,7 +6,7 @@
 'use strict';
 
 const PasswordInputsCanBePastedIntoAudit =
-  require('../../../audits/dobetterweb/password-inputs-can-be-pasted-into');
+  require('../../../audits/dobetterweb/password-inputs-can-be-pasted-into.js');
 const assert = require('assert');
 
 /* eslint-env jest */

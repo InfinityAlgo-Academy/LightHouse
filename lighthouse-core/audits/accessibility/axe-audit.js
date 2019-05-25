@@ -10,7 +10,7 @@
  * generate audit results using aXe rule names.
  */
 
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {

@@ -7,10 +7,10 @@
 
 /* global window, document, getOuterHTMLSnippet, getNodePath, getNodeLabel */
 
-const Gatherer = require('./gatherer');
+const Gatherer = require('./gatherer.js');
 const fs = require('fs');
 const axeLibSource = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
-const pageFunctions = require('../../lib/page-functions');
+const pageFunctions = require('../../lib/page-functions.js');
 
 /**
  * This is run in the page, not Lighthouse itself.

@@ -13,7 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const LighthouseRunner = require('../lighthouse-core/runner');
+const LighthouseRunner = require('../lighthouse-core/runner.js');
 const babel = require('babel-core');
 const browserify = require('browserify');
 const makeDir = require('make-dir');

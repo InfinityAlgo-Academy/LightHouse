@@ -11,9 +11,9 @@
  */
 'use strict';
 
-const Audit = require('./audit');
+const Audit = require('./audit.js');
 
-const URL = require('../lib/url-shim');
+const URL = require('../lib/url-shim.js');
 const THRESHOLD_PX = 2;
 
 /** @typedef {Required<LH.Artifacts.ImageElement>} WellDefinedImage */

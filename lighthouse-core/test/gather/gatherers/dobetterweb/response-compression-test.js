@@ -8,7 +8,7 @@
 /* eslint-env jest */
 
 const ResponseCompression =
-    require('../../../../gather/gatherers/dobetterweb/response-compression');
+    require('../../../../gather/gatherers/dobetterweb/response-compression.js');
 const assert = require('assert');
 const mockDriver = require('../../fake-driver.js');
 

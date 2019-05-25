@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const URL = require('../../lib/url-shim');
+const URL = require('../../lib/url-shim.js');
 const assert = require('assert');
 const superLongName =
     'https://example.com/thisIsASuperLongURLThatWillTriggerFilenameTruncationWhichWeWantToTest.js';

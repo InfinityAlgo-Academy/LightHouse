@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('./audit');
-const NetworkRequest = require('../lib/network-request');
-const {taskGroups} = require('../lib/task-groups');
+const Audit = require('./audit.js');
+const NetworkRequest = require('../lib/network-request.js');
+const {taskGroups} = require('../lib/task-groups.js');
 const i18n = require('../lib/i18n/i18n.js');
 const NetworkRecords = require('../computed/network-records.js');
 const MainThreadTasks = require('../computed/main-thread-tasks.js');

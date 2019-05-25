@@ -11,8 +11,8 @@
 
 'use strict';
 
-const URL = require('../../lib/url-shim');
-const Audit = require('../audit');
+const URL = require('../../lib/url-shim.js');
+const Audit = require('../audit.js');
 const Util = require('../../report/html/renderer/util.js');
 const NetworkRecords = require('../../computed/network-records.js');
 

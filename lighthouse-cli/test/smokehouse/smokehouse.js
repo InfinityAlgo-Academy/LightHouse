@@ -13,7 +13,7 @@ const path = require('path');
 const spawnSync = require('child_process').spawnSync;
 const yargs = require('yargs');
 const log = require('lighthouse-logger');
-const {collateResults, report} = require('./smokehouse-report');
+const {collateResults, report} = require('./smokehouse-report.js');
 
 const PROTOCOL_TIMEOUT_EXIT_CODE = 67;
 const PAGE_HUNG_EXIT_CODE = 68;

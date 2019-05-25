@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const Runner = require('../runner');
-const GatherRunner = require('../gather/gather-runner');
-const driverMock = require('./gather/fake-driver');
-const Config = require('../config/config');
-const Audit = require('../audits/audit');
+const Runner = require('../runner.js');
+const GatherRunner = require('../gather/gather-runner.js');
+const driverMock = require('./gather/fake-driver.js');
+const Config = require('../config/config.js');
+const Audit = require('../audits/audit.js');
 const Gatherer = require('../gather/gatherers/gatherer.js');
-const assetSaver = require('../lib/asset-saver');
+const assetSaver = require('../lib/asset-saver.js');
 const fs = require('fs');
 const assert = require('assert');
 const path = require('path');

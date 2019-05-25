@@ -9,12 +9,12 @@
  */
 'use strict';
 
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
-const BaseNode = require('../../lib/dependency-graph/base-node');
-const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const UnusedCSS = require('./unused-css-rules');
-const NetworkRequest = require('../../lib/network-request');
+const BaseNode = require('../../lib/dependency-graph/base-node.js');
+const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const UnusedCSS = require('./unused-css-rules.js');
+const NetworkRequest = require('../../lib/network-request.js');
 const TraceOfTab = require('../../computed/trace-of-tab.js');
 const LoadSimulator = require('../../computed/load-simulator.js');
 const FirstContentfulPaint = require('../../computed/metrics/first-contentful-paint.js');

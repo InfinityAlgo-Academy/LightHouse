@@ -7,10 +7,10 @@
 
 const assert = require('assert');
 const parseCacheControl = require('parse-cache-control');
-const Audit = require('../audit');
-const NetworkRequest = require('../../lib/network-request');
-const URL = require('../../lib/url-shim');
-const linearInterpolation = require('../../lib/statistics').linearInterpolation;
+const Audit = require('../audit.js');
+const NetworkRequest = require('../../lib/network-request.js');
+const URL = require('../../lib/url-shim.js');
+const linearInterpolation = require('../../lib/statistics.js').linearInterpolation;
 const i18n = require('../../lib/i18n/i18n.js');
 const NetworkRecords = require('../../computed/network-records.js');
 
