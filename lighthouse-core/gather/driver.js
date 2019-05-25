@@ -86,6 +86,16 @@ class Driver {
       this._handleReceivedMessageFromTarget(event, []).catch(this._handleEventError);
     });
 
+    // We use isolated execution contexts for `evaluateAsync` that can be destroyed through navigation
+    // and other page actions. Cleanup our relevant bookkeeping as we see those events.
+    this.on('Runtime.executionContextDestroyed', event => {
+      if (event.executionContextId === this._isolatedExecutionContextId) {
+        this._clearIsolatedContextId();
+      }
+    });
+
+    this.on('Page.frameNavigated', () => this._clearIsolatedContextId());
+
     connection.on('protocolevent', this._handleProtocolEvent.bind(this));
 
     /**
@@ -464,7 +474,20 @@ class Driver {
    */
   async evaluateAsync(expression, options = {}) {
     const contextId = options.useIsolation ? await this._getOrCreateIsolatedContextId() : undefined;
-    return this._evaluateInContext(expression, contextId);
+
+    try {
+      // `await` is not redunant here because we want to `catch` the async errors
+      return await this._evaluateInContext(expression, contextId);
+    } catch (err) {
+      // If we were using isolation and the context disappeared on us, retry one more time.
+      if (contextId && err.message.includes('Cannot find context')) {
+        this._clearIsolatedContextId();
+        const freshContextId = await this._getOrCreateIsolatedContextId();
+        return this._evaluateInContext(expression, freshContextId);
+      }
+
+      throw err;
+    }
   }
 
   /**
@@ -1322,6 +1345,22 @@ class Driver {
         {depth: -1, pierce});
 
     return flattenedDocument.nodes ? flattenedDocument.nodes : [];
+  }
+
+  /**
+   * @param {{x: number, y: number}} position
+   * @return {Promise<void>}
+   */
+  scrollTo(position) {
+    const scrollExpression = `window.scrollTo(${position.x}, ${position.y})`;
+    return this.evaluateAsync(scrollExpression, {useIsolation: true});
+  }
+
+  /**
+   * @return {Promise<{x: number, y: number}>}
+   */
+  getScrollPosition() {
+    return this.evaluateAsync(`({x: window.scrollX, y: window.scrollY})`, {useIsolation: true});
   }
 
   /**
