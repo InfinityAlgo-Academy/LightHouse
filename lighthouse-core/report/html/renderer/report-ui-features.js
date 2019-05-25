@@ -84,6 +84,9 @@ class ReportUIFeatures {
 
     if (this._dom.isDevTools()) {
       // Not ready for DevTools.
+      // Saving as HTML save the entire AuditsPanel.
+      // Exporting to a file does not prompt the system file dialog.
+      // Toggling Dark Mode does not work.
       this._dom.find('.lh-export__button', this._document).remove();
     } else {
       this._setupMediaQueryListeners();
