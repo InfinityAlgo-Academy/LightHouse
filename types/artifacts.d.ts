@@ -127,6 +127,8 @@ declare global {
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** Information about tap targets including their position and size. */
       TapTargets: Artifacts.TapTarget[];
+      /** Screenshot of the entire page (rather than just the above the fold content). */
+      FullPageScreenshot: Artifacts.FullPageScreenshot;
     }
 
     module Artifacts {
@@ -478,6 +480,15 @@ declare global {
         version?: string;
         /** The package name on NPM, if it exists. */
         npm?: string;
+      }
+
+      export interface FullPageScreenshot {
+        /** base64 image URL  */
+        data: string;
+        width: number;
+        height: number;
+        timing: number;
+        timestamp: number;
       }
     }
   }

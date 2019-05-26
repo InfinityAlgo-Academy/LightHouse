@@ -1165,6 +1165,9 @@ Object {
         Object {
           "path": "accessibility",
         },
+        Object {
+          "path": "full-page-screenshot",
+        },
       ],
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
