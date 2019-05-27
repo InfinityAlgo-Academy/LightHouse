@@ -372,10 +372,6 @@ class DetailsRenderer {
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
 
-
-    // more efficient to convert to data url to blob?
-    // probably just have one class with a bug image instead of duplicating each time
-
     if (item.boundingRect && this._fullPageScreenshotAuditResult) {
       const elementScreenshot = ElementScreenshotRenderer.render(
         this._dom,
