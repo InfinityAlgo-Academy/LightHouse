@@ -108,7 +108,7 @@ class ElementScreenshotRenderer {
       height: elementSize.height,
     };
     // For large elements zoom out to better show where on the page they are
-    if (boundingRect.height > 50 || /* todo: maybe only apply the width criterium in the preview screenshot */ boundingRect.width > 100 ) {
+    if (boundingRect.height > elementSize.height / 2 || /* todo: maybe only apply the width criterium in the preview screenshot */ boundingRect.width > elementSize.width / 2 ) {
       zoomFactor = 0.5;
       displayedAreaSize.width *= 2;
       displayedAreaSize.height *= 2;
