@@ -377,10 +377,41 @@ class DetailsRenderer {
         this._dom,
         this._templateContext,
         item,
-        this._fullPageScreenshotAuditResult
+        this._fullPageScreenshotAuditResult,
+        {width: 147, height: 100}
       );
 
       element.prepend(elementScreenshot);
+
+      elementScreenshot.addEventListener('click', () => {
+        const overlay = this._dom.createElement('div');
+        overlay.style = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          z-index: 1;
+          background: rgba(0, 0, 0, 0.7);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        `;
+        overlay.appendChild(ElementScreenshotRenderer.render(
+          this._dom,
+          this._templateContext,
+          item,
+          this._fullPageScreenshotAuditResult,
+          {
+            width: window.innerWidth * 0.75,
+            height: window.innerHeight * 0.75,
+          }
+        ));
+        document.body.appendChild(overlay);
+        overlay.addEventListener('click', () => {
+          overlay.remove();
+        });
+      });
 
       // element.addEventListener('click', () => {
       //   console.log('click', elementScreenshot);

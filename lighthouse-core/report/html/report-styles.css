@@ -1510,6 +1510,7 @@
   margin-right: 20px;
 }
 .lh-element-screenshot__content {
+  cursor: pointer;
   /* position: absolute;
   right: 0px;
   box-shadow: 2px 2px 6px #999;

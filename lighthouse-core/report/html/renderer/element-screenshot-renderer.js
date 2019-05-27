@@ -91,7 +91,8 @@ class ElementScreenshotRenderer {
    * @param {LH.Audit.Details.NodeValue} item
    * @return {Element}
    */
-  static render(dom, templateContext, item, fullPageScreenshotAuditResult) {
+  static render(dom, templateContext, item, fullPageScreenshotAuditResult, elementSize) {
+    console.log(elementSize);
     const fullpageScreenshotUrl = fullPageScreenshotAuditResult.details.data;
 
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
@@ -103,8 +104,8 @@ class ElementScreenshotRenderer {
     const displayedAreaSize = {
       // width: 420,
       // height: 300,
-      width: 147,
-      height: 100,
+      width: elementSize.width,
+      height: elementSize.height,
     };
     // For large elements zoom out to better show where on the page they are
     if (boundingRect.height > 50 || /* todo: maybe only apply the width criterium in the preview screenshot */ boundingRect.width > 100 ) {
