@@ -1111,14 +1111,13 @@
 
 .lh-gauge__percentage {
   width: 100%;
-  height: var(--inset-size);
+  height: var(--gauge-circle-size);
   position: absolute;
-  border-radius: inherit;
   font-family: var(--monospace-font-family);
-  font-size: var(--score-number-font-size);
-  line-height: var(--score-number-font-size);
+  font-size: calc(var(--gauge-circle-size) * 0.34 + 1.3px);
+  line-height: 0;
   text-align: center;
-  top: calc(var(--score-container-padding) + var(--gauge-circle-size) / 3);
+  top: calc(var(--score-container-padding) + var(--gauge-circle-size) / 2);
 }
 
 .lh-category .lh-gauge__percentage {
