@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 const VALID_LANGS = importValidLangs();
 const NO_LANGUAGE = 'x-default';
 const i18n = require('../../lib/i18n/i18n.js');

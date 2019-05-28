@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('./audit');
+const Audit = require('./audit.js');
 const ComputedViewportMeta = require('../computed/viewport-meta.js');
 
 class Viewport extends Audit {

@@ -12,7 +12,7 @@ const path = require('path');
 const yargs = require('yargs');
 const log = require('lighthouse-logger');
 const {runLighthouse} = require('./run-lighthouse-in-child.js');
-const {collateResults, report} = require('./smokehouse-report');
+const {collateResults, report} = require('./smokehouse-report.js');
 
 /**
  * Attempt to resolve a path locally. If this fails, attempts to locate the path

@@ -9,7 +9,7 @@ const path = require('path');
 const fs = require('fs');
 
 const sample = fs.readFileSync(path.resolve(__dirname, '../results/sample_v2.json'));
-const roundTripJson = require('../../../proto/sample_v2_round_trip');
+const roundTripJson = require('../../../proto/sample_v2_round_trip.json');
 const preprocessor = require('../../lib/proto-preprocessor.js');
 
 /* eslint-env jest */

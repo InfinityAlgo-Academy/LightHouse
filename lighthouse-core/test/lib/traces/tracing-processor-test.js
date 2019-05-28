@@ -8,7 +8,7 @@
 const assert = require('assert');
 
 /* eslint-env jest */
-const TracingProcessor = require('../../../lib/traces/tracing-processor');
+const TracingProcessor = require('../../../lib/traces/tracing-processor.js');
 const pwaTrace = require('../../fixtures/traces/progressive-app.json');
 const defaultPercentiles = [0, 0.25, 0.5, 0.75, 0.9, 0.99, 1];
 

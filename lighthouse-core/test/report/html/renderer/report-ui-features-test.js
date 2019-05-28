@@ -124,6 +124,10 @@ describe('ReportUIFeatures', () => {
         const lhr = JSON.parse(JSON.stringify(sampleResults));
         lhr.requestedUrl = lhr.finalUrl = 'http://www.example.com';
         const webpAuditItemTemplate = sampleResults.audits['uses-webp-images'].details.items[0];
+        const renderBlockingAuditItemTemplate =
+          sampleResults.audits['render-blocking-resources'].details.items[0];
+        const textCompressionAuditItemTemplate =
+          sampleResults.audits['uses-text-compression'].details.items[0];
         // Interleave first/third party URLs to test restoring order.
         lhr.audits['uses-webp-images'].details.items = [
           {
@@ -137,6 +141,38 @@ describe('ReportUIFeatures', () => {
           {
             ...webpAuditItemTemplate,
             url: 'http://www.notexample.com/img3.jpg', // Third party, will be filtered.
+          },
+        ];
+
+        // Only third party URLs to test that checkbox is hidden
+        lhr.audits['render-blocking-resources'].details.items = [
+          {
+            ...renderBlockingAuditItemTemplate,
+            url: 'http://www.cdn.com/script1.js', // Third party.
+          },
+          {
+            ...renderBlockingAuditItemTemplate,
+            url: 'http://www.google.com/script2.js', // Third party.
+          },
+          {
+            ...renderBlockingAuditItemTemplate,
+            url: 'http://www.notexample.com/script3.js', // Third party.
+          },
+        ];
+
+        // Only first party URLs to test that checkbox is hidden
+        lhr.audits['uses-text-compression'].details.items = [
+          {
+            ...textCompressionAuditItemTemplate,
+            url: 'http://www.example.com/font1.ttf', // First party.
+          },
+          {
+            ...textCompressionAuditItemTemplate,
+            url: 'http://www.example.com/font2.ttf', // First party.
+          },
+          {
+            ...textCompressionAuditItemTemplate,
+            url: 'http://www.example.com/font3.ttf', // First party.
           },
         ];
 
@@ -160,7 +196,7 @@ describe('ReportUIFeatures', () => {
         expect(getUrlsInTable()).toEqual(['/img1.jpg', '/img2.jpg', '/img3.jpg']);
       });
 
-      it('adds no filter for audits that do not need them', () => {
+      it('adds no filter for audits in thirdPartyFilterAuditExclusions', () => {
         const checkboxClassName = 'lh-3p-filter-input';
 
         const yesCheckbox = dom.find(`#uses-webp-images .${checkboxClassName}`, container);
@@ -168,6 +204,20 @@ describe('ReportUIFeatures', () => {
 
         expect(() => dom.find(`#uses-rel-preconnect .${checkboxClassName}`, container))
           .toThrowError('query #uses-rel-preconnect .lh-3p-filter-input not found');
+      });
+
+      it('adds no filter for audits with tables containing only third party resources', () => {
+        const checkboxClassName = 'lh-3p-filter-input';
+
+        expect(() => dom.find(`#render-blocking-resources .${checkboxClassName}`, container))
+          .toThrowError('query #render-blocking-resources .lh-3p-filter-input not found');
+      });
+
+      it('adds no filter for audits with tables containing only first party resources', () => {
+        const checkboxClassName = 'lh-3p-filter-input';
+
+        expect(() => dom.find(`#uses-text-compression .${checkboxClassName}`, container))
+          .toThrowError('query #uses-text-compression .lh-3p-filter-input not found');
       });
     });
   });

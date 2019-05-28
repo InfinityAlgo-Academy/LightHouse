@@ -9,7 +9,7 @@ const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
 const Element = require('../../lib/element.js');
 const EventEmitter = require('events').EventEmitter;
-const {protocolGetVersionResponse} = require('./fake-driver');
+const {protocolGetVersionResponse} = require('./fake-driver.js');
 
 const redirectDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
 

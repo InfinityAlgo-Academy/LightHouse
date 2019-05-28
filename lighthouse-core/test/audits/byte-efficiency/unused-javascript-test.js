@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const UnusedJavaScript = require('../../../audits/byte-efficiency/unused-javascript');
+const UnusedJavaScript = require('../../../audits/byte-efficiency/unused-javascript.js');
 const assert = require('assert');
 
 /* eslint-env jest */

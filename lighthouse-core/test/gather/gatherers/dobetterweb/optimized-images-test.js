@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const OptimizedImages = require('../../../../gather/gatherers/dobetterweb/optimized-images');
+const OptimizedImages = require('../../../../gather/gatherers/dobetterweb/optimized-images.js');
 
 let options;
 let optimizedImages;

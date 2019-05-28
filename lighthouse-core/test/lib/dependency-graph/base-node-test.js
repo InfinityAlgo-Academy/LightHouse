@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const BaseNode = require('../../../lib/dependency-graph/base-node');
-const NetworkNode = require('../../../lib/dependency-graph/network-node');
+const BaseNode = require('../../../lib/dependency-graph/base-node.js');
+const NetworkNode = require('../../../lib/dependency-graph/network-node.js');
 
 const assert = require('assert');
 

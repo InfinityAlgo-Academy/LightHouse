@@ -10,8 +10,8 @@
 
 'use strict';
 
-const Audit = require('./audit');
-const {taskGroups} = require('../lib/task-groups');
+const Audit = require('./audit.js');
+const {taskGroups} = require('../lib/task-groups.js');
 const i18n = require('../lib/i18n/i18n.js');
 const MainThreadTasks = require('../computed/main-thread-tasks.js');
 

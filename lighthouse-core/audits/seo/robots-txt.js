@@ -12,8 +12,8 @@
  * https://github.com/GoogleChrome/lighthouse/issues/4356#issuecomment-375489925
  */
 
-const Audit = require('../audit');
-const URL = require('../../lib/url-shim');
+const Audit = require('../audit.js');
+const URL = require('../../lib/url-shim.js');
 
 const HTTP_CLIENT_ERROR_CODE_LOW = 400;
 const HTTP_SERVER_ERROR_CODE_LOW = 500;

@@ -43,7 +43,7 @@ function prepareLabData(LHResult, document) {
   dom.resetTemplates();
 
   const reportLHR = Util.prepareReportResult(lhResult);
-  const perfCategory = reportLHR.reportCategories.find(cat => cat.id === 'performance');
+  const perfCategory = reportLHR.categories.performance;
   if (!perfCategory) throw new Error(`No performance category. Can't make lab data section`);
   if (!reportLHR.categoryGroups) throw new Error(`No category groups found.`);
 

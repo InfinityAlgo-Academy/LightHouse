@@ -37,7 +37,7 @@ declare global {
       }
 
       /** Supported timing metrics. */
-      export type TimingMetric = 'first-contentful-paint' | 'first-cpu-idle' | 'interactive' | 'first-meaningful-paint' | 'estimated-input-latency';
+      export type TimingMetric = 'first-contentful-paint' | 'first-cpu-idle' | 'interactive' | 'first-meaningful-paint' | 'max-potential-fid';
 
       /** Supported values for the resourceType property of a ResourceBudget. */
       export type ResourceType = 'stylesheet' | 'image' | 'media' | 'font' | 'script' | 'document' | 'other' | 'total' | 'third-party';

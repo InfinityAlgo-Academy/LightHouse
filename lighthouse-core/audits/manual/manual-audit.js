@@ -10,7 +10,7 @@
  * their site.
  */
 
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 
 class ManualAudit extends Audit {
   /**

@@ -7,7 +7,7 @@
 
 const CacheHeadersAudit = require('../../../audits/byte-efficiency/uses-long-cache-ttl.js');
 const assert = require('assert');
-const NetworkRequest = require('../../../lib/network-request');
+const NetworkRequest = require('../../../lib/network-request.js');
 const options = CacheHeadersAudit.defaultOptions;
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 

@@ -12,7 +12,7 @@ const {
   rectContainsPoint,
   getBoundingRect,
   getRectCenterPoint,
-} = require('./rect-helpers');
+} = require('./rect-helpers.js');
 
 /**
  * Merge client rects together and remove small ones. This may result in a larger overall

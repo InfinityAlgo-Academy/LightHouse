@@ -11,7 +11,7 @@ const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
-const URL = require('../../../../lib/url-shim');
+const URL = require('../../../../lib/url-shim.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const CriticalRequestChainRenderer = require(
@@ -43,7 +43,7 @@ describe('PerfCategoryRenderer', () => {
 
     // TODO: don't call a LH.ReportResult `sampleResults`, which is typically always LH.Result
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
-    category = sampleResults.reportCategories.find(cat => cat.id === 'performance');
+    category = sampleResults.categories.performance;
   });
 
   afterAll(() => {
