@@ -575,6 +575,8 @@ class ReportUIFeatures {
    */
   _toggleDarkTheme(force) {
     const el = this._dom.find('.lh-vars', this._document);
+    // This seems unnecessary, but in DevTools, passing "undefined" as the second
+    // parameter acts like passing "false".
     if (typeof force === 'undefined') {
       el.classList.toggle('dark');
     } else {
