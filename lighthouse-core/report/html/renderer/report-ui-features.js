@@ -82,11 +82,15 @@ class ReportUIFeatures {
   initFeatures(report) {
     this.json = report;
 
+    // Some features in the top right drop down menu don't work in the DevTools
+    // client. They could with some tweaks, but currently they don't. For example:
+    // Toggling dark theme - in normal context, toggling the class on the body is fine.
+    //                       in DevTools, a different element must be toggled - the same
+    //                       element that the AuditsPanel applies the class to. Note, this
+    //                       also means that dark mode is not correctly enabled for fireworks.
+    // Saving as HTML/JSON - does not bring up a file dialog, as one would expect in DevTools.
+    //                       also, it saves the AuditsPanel HTML, which is funky.
     if (this._dom.isDevTools()) {
-      // Not ready for DevTools.
-      // Saving as HTML save the entire AuditsPanel.
-      // Exporting to a file does not prompt the system file dialog.
-      // Toggling Dark Mode does not work.
       this._dom.find('.lh-export__button', this._document).remove();
     } else {
       this._setupMediaQueryListeners();
