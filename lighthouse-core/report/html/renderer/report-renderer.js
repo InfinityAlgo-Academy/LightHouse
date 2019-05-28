@@ -223,35 +223,29 @@ class ReportRenderer {
       wrapper.appendChild(renderer.render(category, report.categoryGroups));
     }
 
-    if (scoreHeader) {
-      const scoreGauges =
-        this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers);
-      scoreHeader.append(...scoreGauges);
-      const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
-      const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
-      scoresContainer.appendChild(scoreHeader);
-      scoresContainer.appendChild(scoreScale);
-    }
-
-    reportSection.appendChild(this._renderReportFooter(report));
-
     const reportFragment = this._dom.createFragment();
     const topbarDocumentFragment = this._renderReportTopbar(report);
     reportFragment.appendChild(topbarDocumentFragment);
 
     if (scoreHeader) {
+      const makeScoreGauges = () =>
+        this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers);
+      
+      const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
+      const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
+      scoreHeader.append(...makeScoreGauges());
+      scoresContainer.appendChild(scoreHeader);
+      scoresContainer.appendChild(scoreScale);
+
       const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
       this._dom.createChildOf(stickyHeader, 'div', 'lh-highlighter');
-
-      const scoreGauges =
-        this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers);
-      stickyHeader.append(...scoreGauges);
-
+      stickyHeader.append(...makeScoreGauges());
       reportFragment.appendChild(stickyHeader);
     }
 
     reportFragment.appendChild(headerContainer);
     reportFragment.appendChild(container);
+    reportSection.appendChild(this._renderReportFooter(report));
 
     return reportFragment;
   }
