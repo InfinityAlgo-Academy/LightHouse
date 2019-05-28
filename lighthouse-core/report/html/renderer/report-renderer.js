@@ -230,7 +230,7 @@ class ReportRenderer {
     if (scoreHeader) {
       const makeScoreGauges = () =>
         this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers);
-      
+
       const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
       scoreHeader.append(...makeScoreGauges());

@@ -84,10 +84,6 @@ class ReportUIFeatures {
 
     // Some features in the top right drop down menu don't work in the DevTools
     // client. They could with some tweaks, but currently they don't. For example:
-    // Toggling dark theme - in normal context, toggling the class on the body is fine.
-    //                       in DevTools, a different element must be toggled - the same
-    //                       element that the AuditsPanel applies the class to. Note, this
-    //                       also means that dark mode is not correctly enabled for fireworks.
     // Saving as HTML/JSON - does not bring up a file dialog, as one would expect in DevTools.
     //                       also, it saves the AuditsPanel HTML, which is funky.
     if (this._dom.isDevTools()) {
@@ -99,10 +95,10 @@ class ReportUIFeatures {
       this._resetUIState();
       this._document.addEventListener('keyup', this.onKeyUp);
       this._document.addEventListener('copy', this.onCopy);
-      const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
-      topbarLogo.addEventListener('click', () => this._toggleDarkTheme());
     }
 
+    const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
+    topbarLogo.addEventListener('click', () => this._toggleDarkTheme());
     this._setupThirdPartyFilter();
 
     let turnOffTheLights = false;
@@ -578,7 +574,12 @@ class ReportUIFeatures {
    * @param {boolean} [force]
    */
   _toggleDarkTheme(force) {
-    this._document.body.classList.toggle('dark', force);
+    const el = this._dom.find('.lh-vars', this._document);
+    if (typeof force === 'undefined') {
+      el.classList.toggle('dark');
+    } else {
+      el.classList.toggle('dark', force);
+    }
   }
 
   _updateStickyHeaderOnScroll() {
