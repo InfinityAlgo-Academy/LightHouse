@@ -345,7 +345,7 @@
   */
   word-break: break-word;
 
-  margin-top: var(--top-of-page-offset);
+  /* margin-top: var(--top-of-page-offset); */
 }
 
 .lh-audit-group a,
