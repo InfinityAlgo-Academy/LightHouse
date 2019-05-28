@@ -344,8 +344,6 @@
       but they do not get any overflow:ellipsis treatment.
   */
   word-break: break-word;
-
-  /* margin-top: var(--top-of-page-offset); */
 }
 
 .lh-audit-group a,
