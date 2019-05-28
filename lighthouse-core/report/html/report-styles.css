@@ -264,6 +264,7 @@
   --gauge-circle-size-big: 96px;
   --gauge-circle-size: 72px;
   /* Consider offset of the DevTools UI. */
+  /* Value was derived from eyeballing changes made with the styles panel. */
   --top-of-page-offset: 54px;
 
   --lh-audit-vpadding: 4px;
