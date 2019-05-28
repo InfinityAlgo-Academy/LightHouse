@@ -142,7 +142,6 @@
   --topbar-icon-size: 24px;
   --topbar-padding: 0 8px;
   --metrics-toggle-color: var(--color-black-200);
-  --top-of-page-offset: 0;
 
   --color-average-secondary: var(--color-orange-700);
   --color-average: var(--color-orange);
@@ -261,9 +260,6 @@
   --audit-group-indent: 16px;
   --audit-indent: 16px;
   --expandable-indent: 16px;
-  /* Consider offset of the DevTools UI. */
-  /* Value was derived from eyeballing changes made with the styles panel. */
-  --top-of-page-offset: 54px;
 
   --gauge-circle-size-big: 72px;
   --gauge-circle-size: 64px;
