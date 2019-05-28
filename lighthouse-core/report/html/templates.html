@@ -191,6 +191,12 @@ limitations under the License.
       pointer-events: auto;
     }
 
+    /* Disable the gauge arc animation for the sticky header, so toggling display: none
+       does not play the animation. */
+    .lh-sticky-header .lh-gauge-arc {
+      animation: none;
+    }
+
     .lh-sticky-header .lh-gauge__label {
       display: none;
     }
