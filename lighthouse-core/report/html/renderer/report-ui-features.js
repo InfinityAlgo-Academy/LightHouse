@@ -124,6 +124,7 @@ class ReportUIFeatures {
     if (Object.keys(this.json.categories).length >= 2) {
       this._setupStickyHeaderElements();
 
+      /** @type {Document | HTMLElement} */
       let elToAddScrollListener = this._document;
       if (this._dom.isDevTools()) {
         elToAddScrollListener = this._dom.find('.audits2-results-container', this._document);
