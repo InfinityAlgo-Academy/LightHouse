@@ -36,6 +36,7 @@ script:
   - yarn unit:cicoverage
   - yarn type-check
   - yarn smoke:cicoverage
+  - yarn smokev2:cicoverage
   - yarn test-clients
   - yarn test-viewer
   - yarn test-lantern
