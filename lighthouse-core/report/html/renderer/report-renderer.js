@@ -184,22 +184,6 @@ class ReportRenderer {
    * @return {DocumentFragment}
    */
   _renderReport(report) {
-    const headerContainer = this._dom.createElement('div');
-    headerContainer.appendChild(this._renderReportHeader());
-
-    const container = this._dom.createElement('div', 'lh-container');
-    const reportSection = container.appendChild(this._dom.createElement('div', 'lh-report'));
-
-    reportSection.appendChild(this._renderReportWarnings(report));
-
-    let scoreHeader;
-    const isSoloCategory = Object.keys(report.categories).length === 1;
-    if (!isSoloCategory) {
-      scoreHeader = this._dom.createElement('div', 'lh-scores-header');
-    } else {
-      headerContainer.classList.add('lh-header--solo-category');
-    }
-
     const detailsRenderer = new DetailsRenderer(this._dom);
     const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
     categoryRenderer.setTemplateContext(this._templateContext);
@@ -213,19 +197,21 @@ class ReportRenderer {
       renderer.setTemplateContext(this._templateContext);
     });
 
-    const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
+    const headerContainer = this._dom.createElement('div');
+    headerContainer.appendChild(this._renderReportHeader());
 
-    for (const category of Object.values(report.categories)) {
-      const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
-      // .lh-category-wrapper is full-width and provides horizontal rules between categories.
-      // .lh-category within has the max-width: var(--report-width);
-      const wrapper = renderer.dom.createChildOf(categories, 'div', 'lh-category-wrapper');
-      wrapper.appendChild(renderer.render(category, report.categoryGroups));
+    const container = this._dom.createElement('div', 'lh-container');
+    const reportSection = this._dom.createElement('div', 'lh-report');
+
+    reportSection.appendChild(this._renderReportWarnings(report));
+
+    let scoreHeader;
+    const isSoloCategory = Object.keys(report.categories).length === 1;
+    if (!isSoloCategory) {
+      scoreHeader = this._dom.createElement('div', 'lh-scores-header');
+    } else {
+      headerContainer.classList.add('lh-header--solo-category');
     }
-
-    const reportFragment = this._dom.createFragment();
-    const topbarDocumentFragment = this._renderReportTopbar(report);
-    reportFragment.appendChild(topbarDocumentFragment);
 
     if (scoreHeader) {
       const makeScoreGauges = () =>
@@ -241,11 +227,25 @@ class ReportRenderer {
       this._dom.createChildOf(stickyHeader, 'div', 'lh-highlighter');
       stickyHeader.append(...makeScoreGauges());
       container.appendChild(stickyHeader);
-      container.insertBefore(stickyHeader, reportSection);
     }
 
-    container.insertBefore(headerContainer, reportSection);
+    const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
+
+    for (const category of Object.values(report.categories)) {
+      const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
+      // .lh-category-wrapper is full-width and provides horizontal rules between categories.
+      // .lh-category within has the max-width: var(--report-width);
+      const wrapper = renderer.dom.createChildOf(categories, 'div', 'lh-category-wrapper');
+      wrapper.appendChild(renderer.render(category, report.categoryGroups));
+    }
+
+    const reportFragment = this._dom.createFragment();
+    const topbarDocumentFragment = this._renderReportTopbar(report);
+
+    reportFragment.appendChild(topbarDocumentFragment);
     reportFragment.appendChild(container);
+    container.appendChild(headerContainer);
+    container.appendChild(reportSection);
     reportSection.appendChild(this._renderReportFooter(report));
 
     return reportFragment;
