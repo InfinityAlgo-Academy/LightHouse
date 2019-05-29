@@ -8,6 +8,7 @@
 const Gatherer = require('./gatherer.js');
 
 // JPEG quality setting
+// Exploration and examples of reports using different quality settings: https://docs.google.com/document/d/1ZSffucIca9XDW2eEwfoevrk-OTl7WQFeMf0CgeJAA8M/edit#
 const FULL_PAGE_SCREENSHOT_QUALITY = 30;
 // Maximum screenshot height in Chrome https://bugs.chromium.org/p/chromium/issues/detail?id=770769
 const MAX_SCREENSHOT_HEIGHT = 16384;
