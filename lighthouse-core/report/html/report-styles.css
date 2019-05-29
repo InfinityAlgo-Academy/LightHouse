@@ -296,10 +296,6 @@
   /* Is normally the height of the topbar. */
   top: 0;
 }
-.lh-devtools .lh-scores-container {
-  /* Is normally the height of the topbar. */
-  margin-top: 0;
-}
 
 @keyframes fadeIn {
   0% { opacity: 0;}
