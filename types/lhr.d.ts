@@ -8,6 +8,8 @@ import LHError = require('../lighthouse-core/lib/lh-error.js');
 
 declare global {
   module LH {
+    export type LighthouseError = LHError;
+
     export type I18NMessageEntry = string | {path: string, values: any};
 
     export interface I18NMessages {

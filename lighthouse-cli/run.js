@@ -65,25 +65,25 @@ function getDebuggableChrome(flags) {
 }
 
 /** @return {never} */
-function showConnectionError() {
+function printConnectionErrorAndExit() {
   console.error('Unable to connect to Chrome');
   return process.exit(_RUNTIME_ERROR_CODE);
 }
 
 /** @return {never} */
-function showProtocolTimeoutError() {
+function printProtocolTimeoutErrorAndExit() {
   console.error('Debugger protocol timed out while connecting to Chrome.');
   return process.exit(_PROTOCOL_TIMEOUT_EXIT_CODE);
 }
 
 /** @param {LighthouseError} err @return {never} */
-function showPageHungError(err) {
+function printPageHungErrorAndExit(err) {
   console.error('Page hung:', err.friendlyMessage);
   return process.exit(_PAGE_HUNG_EXIT_CODE);
 }
 
 /** @param {LighthouseError} err @return {never} */
-function showInsecureDocumentRequestError(err) {
+function printInsecureDocumentRequestErrorAndExit(err) {
   console.error('Insecure document request:', err.friendlyMessage);
   return process.exit(_INSECURE_DOCUMENT_REQUEST_EXIT_CODE);
 }
@@ -92,7 +92,7 @@ function showInsecureDocumentRequestError(err) {
  * @param {LighthouseError} err
  * @return {never}
  */
-function showRuntimeError(err) {
+function printRuntimeErrorAndExit(err) {
   console.error('Runtime error encountered:', err.friendlyMessage || err.message);
   if (err.stack) {
     console.error(err.stack);
@@ -104,17 +104,17 @@ function showRuntimeError(err) {
  * @param {LighthouseError} err
  * @return {never}
  */
-function handleError(err) {
+function printErrorAndExit(err) {
   if (err.code === 'ECONNREFUSED') {
-    return showConnectionError();
+    return printConnectionErrorAndExit();
   } else if (err.code === 'CRI_TIMEOUT') {
-    return showProtocolTimeoutError();
+    return printProtocolTimeoutErrorAndExit();
   } else if (err.code === 'PAGE_HUNG') {
-    return showPageHungError(err);
+    return printPageHungErrorAndExit(err);
   } else if (err.code === 'INSECURE_DOCUMENT_REQUEST') {
-    return showInsecureDocumentRequestError(err);
+    return printInsecureDocumentRequestErrorAndExit(err);
   } else {
-    return showRuntimeError(err);
+    return printRuntimeErrorAndExit(err);
   }
 }
 
@@ -218,10 +218,24 @@ async function runLighthouse(url, flags, config) {
     await potentiallyKillChrome(launchedChrome);
     process.removeListener('unhandledRejection', handleTheUnhandled);
 
+    // Runtime errors indicate something was *very* wrong with the page result.
+    // We don't want the user to have to parse the report to figure it out, so we'll still exit
+    // with an error code after we saved the results.
+    if (runnerResult && runnerResult.lhr.runtimeError) {
+      const {runtimeError} = runnerResult.lhr;
+      return printErrorAndExit({
+        name: 'LHError',
+        friendlyMessage: runtimeError.message,
+        lhrRuntimeError: true,
+        code: runtimeError.code,
+        message: runtimeError.message,
+      });
+    }
+
     return runnerResult;
   } catch (err) {
     await potentiallyKillChrome(launchedChrome).catch(() => {});
-    handleError(err);
+    return printErrorAndExit(err);
   }
 }
 

@@ -39,6 +39,21 @@ function resolveLocalOrCwd(payloadPath) {
 }
 
 /**
+ * Determines if the Lighthouse run ended in an unexpected fatal result.
+ * @param {number} exitCode
+ * @param {string} outputPath
+ */
+function isUnexpectedFatalResult(exitCode, outputPath) {
+  return exitCode !== 0
+    // These runtime errors are currently fatal but "expected" runtime errors we are asserting against.
+    && exitCode !== PAGE_HUNG_EXIT_CODE
+    && exitCode !== INSECURE_DOCUMENT_REQUEST_EXIT_CODE
+    // On runtime errors we exit with a error status code, but still output a report.
+    // If the report exists, it wasn't a fatal LH error we need to abort on, it's one we're asserting :)
+    && !fs.existsSync(outputPath);
+}
+
+/**
  * Launch Chrome and do a full Lighthouse run.
  * @param {string} url
  * @param {string} configPath
@@ -85,20 +100,18 @@ function runLighthouse(url, configPath, isDebug) {
     runResults = spawnSync(command, args, {encoding: 'utf8', stdio: ['pipe', 'pipe', 'inherit']});
   } while (runResults.status === PROTOCOL_TIMEOUT_EXIT_CODE && runCount <= RETRIES);
 
-  if (runResults.status === PROTOCOL_TIMEOUT_EXIT_CODE) {
-    console.error(`Lighthouse debugger connection timed out ${RETRIES} times. Giving up.`);
-    process.exit(1);
-  } else if (runResults.status !== 0
-     && runResults.status !== PAGE_HUNG_EXIT_CODE
-     && runResults.status !== INSECURE_DOCUMENT_REQUEST_EXIT_CODE) {
-    console.error(`Lighthouse run failed with exit code ${runResults.status}. stderr to follow:`);
-    console.error(runResults.stderr);
-    process.exit(runResults.status);
-  }
-
   if (isDebug) {
     console.log(`STDOUT: ${runResults.stdout}`);
     console.error(`STDERR: ${runResults.stderr}`);
+  }
+
+  if (runResults.status === PROTOCOL_TIMEOUT_EXIT_CODE) {
+    console.error(`Lighthouse debugger connection timed out ${RETRIES} times. Giving up.`);
+    process.exit(1);
+  } else if (isUnexpectedFatalResult(runResults.status, outputPath)) {
+    console.error(`Lighthouse run failed with exit code ${runResults.status}. stderr to follow:`);
+    console.error(runResults.stderr);
+    process.exit(runResults.status);
   }
 
   let errorCode;
