@@ -82,24 +82,16 @@ class ReportUIFeatures {
   initFeatures(report) {
     this.json = report;
 
-    // Some features in the top right drop down menu don't work in the DevTools
-    // client. They could with some tweaks, but currently they don't. For example:
-    // Saving as HTML/JSON - does not bring up a file dialog, as one would expect in DevTools.
-    //                       also, it saves the AuditsPanel HTML, which is funky.
-    if (this._dom.isDevTools()) {
-      this._dom.find('.lh-export__button', this._document).remove();
-    } else {
-      this._setupMediaQueryListeners();
-      this._setupExportButton();
-      this._setUpCollapseDetailsAfterPrinting();
-      this._resetUIState();
-      this._document.addEventListener('keyup', this.onKeyUp);
-      this._document.addEventListener('copy', this.onCopy);
-    }
+    this._setupMediaQueryListeners();
+    this._setupExportButton();
+    this._setUpCollapseDetailsAfterPrinting();
+    this._resetUIState();
+    this._setupThirdPartyFilter();
+    this._document.addEventListener('keyup', this.onKeyUp);
+    this._document.addEventListener('copy', this.onCopy);
 
     const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
     topbarLogo.addEventListener('click', () => this._toggleDarkTheme());
-    this._setupThirdPartyFilter();
 
     let turnOffTheLights = false;
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
