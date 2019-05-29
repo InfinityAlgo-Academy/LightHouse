@@ -84,9 +84,9 @@ class ReportUIFeatures {
 
     this._setupMediaQueryListeners();
     this._setupExportButton();
+    this._setupThirdPartyFilter();
     this._setUpCollapseDetailsAfterPrinting();
     this._resetUIState();
-    this._setupThirdPartyFilter();
     this._document.addEventListener('keyup', this.onKeyUp);
     this._document.addEventListener('copy', this.onCopy);
 
@@ -111,14 +111,9 @@ class ReportUIFeatures {
     // There is only a sticky header when at least 2 categories are present.
     if (Object.keys(this.json.categories).length >= 2) {
       this._setupStickyHeaderElements();
-
-      /** @type {Document | HTMLElement} */
-      let elToAddScrollListener = this._document;
-      if (this._dom.isDevTools()) {
-        elToAddScrollListener = this._dom.find('.lh-container', this._document);
-      }
+      const containerEl = this._dom.find('.lh-container', this._document);
+      const elToAddScrollListener = this._getScrollParent(containerEl);
       elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
-
       window.addEventListener('resize', this._updateStickyHeaderOnScroll);
     }
   }
@@ -130,6 +125,27 @@ class ReportUIFeatures {
    */
   setTemplateContext(context) {
     this._templateContext = context;
+  }
+
+  /**
+   * Finds the first scrollable ancestor of node. Falls back to the document.
+   * @param {HTMLElement} node
+   * @return {Node}
+   */
+  _getScrollParent(node) {
+    const isElement = node instanceof HTMLElement;
+    const overflowY = isElement && window.getComputedStyle(node).overflowY;
+    const isScrollable = overflowY !== 'visible' && overflowY !== 'hidden';
+
+    if (isScrollable && node.scrollHeight >= node.clientHeight) {
+      return node;
+    }
+
+    if (node.parentNode instanceof HTMLElement) {
+      return this._getScrollParent(node.parentNode);
+    } else {
+      return document;
+    }
   }
 
   _enableFireworks() {
