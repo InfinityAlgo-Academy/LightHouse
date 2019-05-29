@@ -84,9 +84,9 @@ class ReportUIFeatures {
 
     this._setupMediaQueryListeners();
     this._setupExportButton();
+    this._setupThirdPartyFilter();
     this._setUpCollapseDetailsAfterPrinting();
     this._resetUIState();
-    this._setupThirdPartyFilter();
     this._document.addEventListener('keyup', this.onKeyUp);
     this._document.addEventListener('copy', this.onCopy);
 
