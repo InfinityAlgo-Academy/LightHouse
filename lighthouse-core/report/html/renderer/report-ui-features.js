@@ -111,7 +111,8 @@ class ReportUIFeatures {
     // There is only a sticky header when at least 2 categories are present.
     if (Object.keys(this.json.categories).length >= 2) {
       this._setupStickyHeaderElements();
-      const elToAddScrollListener = this._getScrollParent(this._dom.find('.lh-container', this._document));
+      const containerEl = this._dom.find('.lh-container', this._document);
+      const elToAddScrollListener = this._getScrollParent(containerEl);
       elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
       window.addEventListener('resize', this._updateStickyHeaderOnScroll);
     }

@@ -228,18 +228,17 @@ class ReportRenderer {
     reportFragment.appendChild(topbarDocumentFragment);
 
     if (scoreHeader) {
-      const makeScoreGauges = () =>
-        this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers);
-
       const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
-      scoreHeader.append(...makeScoreGauges());
+      scoreHeader.append(
+        ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
       scoresContainer.appendChild(scoreHeader);
       scoresContainer.appendChild(scoreScale);
 
       const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
+      stickyHeader.append(
+        ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
       this._dom.createChildOf(stickyHeader, 'div', 'lh-highlighter');
-      stickyHeader.append(...makeScoreGauges());
       reportFragment.appendChild(stickyHeader);
     }
 
