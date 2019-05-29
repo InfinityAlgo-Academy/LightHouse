@@ -1143,9 +1143,13 @@
 }
 
 /* Category header gauges shouldn't be links. */
-.lh-gauge__wrapper--disable {
+.lh-category-wrapper .lh-gauge__wrapper {
   pointer-events: none;
   cursor: default;
+}
+.lh-gauge__label-info-icon {
+  pointer-events: fill;
+  cursor: help;
 }
 
 .lh-gauge__label {

@@ -322,7 +322,6 @@ class CategoryRenderer {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge', this.templateContext);
     const wrapper = this.dom.find('.lh-gauge__wrapper', tmpl);
     wrapper.classList.add(`lh-gauge__wrapper--${Util.calculateRating(category.score)}`);
-    wrapper.classList.add('lh-gauge__wrapper--disable');
 
     if (Util.isPluginCategory(category.id)) {
       wrapper.classList.add('lh-gauge__wrapper--plugin');
