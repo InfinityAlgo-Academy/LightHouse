@@ -23,7 +23,7 @@ class FullPageScreenshot extends Gatherer {
   async _takeScreenshot(passContext, maxScreenshotHeight) {
     const driver = passContext.driver;
     const metrics = await driver.sendCommand('Page.getLayoutMetrics');
-    const width = await driver.evaluateAsync(`window.innerWidth`) * 2;
+    const width = await driver.evaluateAsync(`window.innerWidth`);
     const height = Math.min(metrics.contentSize.height, maxScreenshotHeight);
 
     await driver.beginEmulation(passContext.settings, {
