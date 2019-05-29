@@ -174,8 +174,21 @@ class CategoryRenderer {
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-category-header', this.templateContext);
 
     const gaugeContainerEl = this.dom.find('.lh-score__gauge', tmpl);
-    const gaugeEl = this.renderScoreGauge(category, groupDefinitions, {showDescription: true});
+    const gaugeEl = this.renderScoreGauge(category, groupDefinitions);
     gaugeContainerEl.appendChild(gaugeEl);
+
+    if (category.description) {
+      const tooltipTmpl =
+        this.dom.cloneTemplate('#tmpl-lh-gauge-description-tooltip', this.templateContext);
+      this.dom.find('.lh-gauge__label', tooltipTmpl).textContent = category.title;
+      const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
+      this.dom.find('.tooltip', tooltipTmpl).appendChild(descEl);
+
+      // Swap score gauge's .lh-gauge__label with the tooltip's .lh-gauge__label-wrapper.
+      const labelEl = this.dom.find('.lh-gauge__label', tmpl);
+      const labelWrapperEl = this.dom.find('.lh-gauge__label-wrapper', tooltipTmpl);
+      labelEl.replaceWith(labelWrapperEl);
+    }
 
     return /** @type {Element} */ (tmpl.firstElementChild);
   }
@@ -315,10 +328,9 @@ class CategoryRenderer {
   /**
    * @param {LH.ReportResult.Category} category
    * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
-   * @param {{showDescription: boolean}} opts
    * @return {DocumentFragment}
    */
-  renderScoreGauge(category, groupDefinitions, opts) { // eslint-disable-line no-unused-vars
+  renderScoreGauge(category, groupDefinitions) { // eslint-disable-line no-unused-vars
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge', this.templateContext);
     const wrapper = this.dom.find('.lh-gauge__wrapper', tmpl);
     wrapper.classList.add(`lh-gauge__wrapper--${Util.calculateRating(category.score)}`);
@@ -349,25 +361,7 @@ class CategoryRenderer {
 
     this.dom.find('.lh-gauge__label', tmpl).textContent = category.title;
 
-    this._handleScoreGaugeTooltip(tmpl, category, opts);
-
     return tmpl;
-  }
-
-  /**
-   * @param {DocumentFragment} tmpl
-   * @param {LH.ReportResult.Category} category
-   * @param {{showDescription: boolean}} opts
-   */
-  _handleScoreGaugeTooltip(tmpl, category, opts) {
-    const {showDescription} = opts;
-
-    if (showDescription && category.description) {
-      const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
-      this.dom.find('.tooltip', tmpl).appendChild(descEl);
-    } else {
-      this.dom.find('.tooltip-boundary', tmpl).remove();
-    }
   }
 
   /**

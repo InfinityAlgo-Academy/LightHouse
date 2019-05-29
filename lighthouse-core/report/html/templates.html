@@ -547,17 +547,22 @@ limitations under the License.
       </svg>
     </div>
     <div class="lh-gauge__percentage"></div>
-    <div class="lh-gauge__label-wrapper">
-      <!-- TODO: should likely be an h2  -->
-      <div class="lh-gauge__label"></div>
-      <span class="tooltip-boundary">
-        <div class="lh-gauge__label-info-icon"></div>
-        <div class="lh-category-header__description tooltip"></div>
-      </span>
-    </div>
+    <!-- TODO: should likely be an h2  -->
+    <div class="lh-gauge__label"></div>
   </a>
 </template>
 
+<!-- Lighthouse score gauge description tooltip -->
+<template id="tmpl-lh-gauge-description-tooltip">
+  <div class="lh-gauge__label-wrapper">
+    <!-- TODO: should likely be an h2  -->
+    <div class="lh-gauge__label"></div>
+    <span class="tooltip-boundary">
+      <div class="lh-gauge__label-info-icon"></div>
+      <div class="lh-category-header__description tooltip"></div>
+    </span>
+  </div>
+</template>
 
 <!-- Lighthouse PWA badge gauge -->
 <template id="tmpl-lh-gauge--pwa">
