@@ -127,6 +127,7 @@ class ReportUIFeatures {
   }
 
   /**
+   * Finds the first scrollable ancestor of node. Falls back to the document.
    * @param {HTMLElement} node
    * @return {Node}
    */
