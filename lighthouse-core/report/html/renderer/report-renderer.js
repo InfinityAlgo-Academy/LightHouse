@@ -240,10 +240,11 @@ class ReportRenderer {
       const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
       this._dom.createChildOf(stickyHeader, 'div', 'lh-highlighter');
       stickyHeader.append(...makeScoreGauges());
-      reportFragment.appendChild(stickyHeader);
+      container.appendChild(stickyHeader);
+      container.insertBefore(stickyHeader, reportSection);
     }
 
-    reportFragment.appendChild(headerContainer);
+    container.insertBefore(headerContainer, reportSection);
     reportFragment.appendChild(container);
     reportSection.appendChild(this._renderReportFooter(report));
 

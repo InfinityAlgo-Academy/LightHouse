@@ -115,7 +115,7 @@ class ReportUIFeatures {
       /** @type {Document | HTMLElement} */
       let elToAddScrollListener = this._document;
       if (this._dom.isDevTools()) {
-        elToAddScrollListener = this._dom.find('.audits2-results-container', this._document);
+        elToAddScrollListener = this._dom.find('.lh-container', this._document);
       }
       elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
 

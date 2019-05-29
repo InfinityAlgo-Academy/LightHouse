@@ -285,6 +285,22 @@
   --lh-section-vpadding: 8px;
 }
 
+.lh-devtools.lh-root {
+  height: 100%;
+}
+.lh-devtools .lh-container {
+  overflow-y: scroll;
+  height: 100%;
+}
+.lh-devtools .lh-sticky-header {
+  /* Is normally the height of the topbar. */
+  top: 0;
+}
+.lh-devtools .lh-scores-container {
+  /* Is normally the height of the topbar. */
+  margin-top: 0;
+}
+
 @keyframes fadeIn {
   0% { opacity: 0;}
   100% { opacity: 0.6;}
