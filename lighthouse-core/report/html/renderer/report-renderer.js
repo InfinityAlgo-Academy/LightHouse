@@ -238,12 +238,6 @@ class ReportRenderer {
       const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
       stickyHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
-      // The highlighter is placed in the first gauge to avoid an layout issue where the first
-      // paint comes before the highlighter's calculated position is applied. This causes
-      // the initial positioning to be rendered for a split second. As a workaround, the
-      // highlighter is placed in the first score gauge so that the initial position is correct.
-      const firstGauge = this._dom.find('.lh-gauge__wrapper', stickyHeader);
-      this._dom.createChildOf(firstGauge, 'div', 'lh-highlighter');
       reportFragment.appendChild(stickyHeader);
     }
 

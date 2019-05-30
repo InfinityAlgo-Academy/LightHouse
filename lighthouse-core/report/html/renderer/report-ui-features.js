@@ -301,7 +301,10 @@ class ReportUIFeatures {
     this.topbarEl = this._dom.find('.lh-topbar', this._document);
     this.scoreScaleEl = this._dom.find('.lh-scorescale', this._document);
     this.stickyHeaderEl = this._dom.find('.lh-sticky-header', this._document);
-    this.highlightEl = this._dom.find('.lh-highlighter', this._document);
+
+    // Position highlighter at first gauge; will be transformed on scroll.
+    const firstGauge = this._dom.find('.lh-gauge__wrapper', this.stickyHeaderEl);
+    this.highlightEl = this._dom.createChildOf(firstGauge, 'div', 'lh-highlighter');
   }
 
   /**
