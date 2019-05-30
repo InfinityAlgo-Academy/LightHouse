@@ -116,8 +116,11 @@ class ReportUIFeatures {
       elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
       // We can't rely on listening to the window resize event for DevTools, so we first
       // attempt the new ResizeObserver web platform feature. It has poor cross browser
-      // support, so we should check that it's supported.
-      if (typeof window.ResizeObserver !== 'undefined') {
+      // support, so we should check that it's supported. However, there are some performance
+      // issues with using window.ResizeObserver - it updates much more often than the 'resize'
+      // event fires, and the experience is choppy in LH. For now, limit use to just DevTools,
+      // which doesn't seem affected for some reason.
+      if (this._dom.isDevTools()) {
         const resizeObserver = new window.ResizeObserver(this._updateStickyHeaderOnScroll);
         resizeObserver.observe(containerEl);
       } else {
