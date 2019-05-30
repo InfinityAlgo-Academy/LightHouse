@@ -487,8 +487,6 @@ declare global {
         data: string;
         width: number;
         height: number;
-        timing: number;
-        timestamp: number;
       }
     }
   }

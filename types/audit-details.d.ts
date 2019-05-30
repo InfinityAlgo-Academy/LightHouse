@@ -56,8 +56,6 @@ declare global {
 
       export interface Screenshot {
         type: 'screenshot';
-        timing: number;
-        timestamp: number;
         data: string;
       }
 

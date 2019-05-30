@@ -46,9 +46,6 @@ class FullPageScreenshot extends Gatherer {
       data,
       width,
       height,
-      // todo: do we need these? should we create a new type? should we make them optional on the existing type? should we try to provide accurate values?
-      timing: 0,
-      timestamp: 0,
     };
   }
 
