@@ -137,8 +137,6 @@ class ReportUIFeatures {
         this._dom.find('.lh-metrics-toggle__input', this._document));
       toggleInputEl.checked = true;
     }
-
-    return document;
   }
 
   /**
