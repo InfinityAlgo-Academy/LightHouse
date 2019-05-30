@@ -360,7 +360,6 @@ class CategoryRenderer {
     }
 
     this.dom.find('.lh-gauge__label', tmpl).textContent = category.title;
-
     return tmpl;
   }
 

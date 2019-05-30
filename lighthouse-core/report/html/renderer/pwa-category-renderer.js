@@ -74,9 +74,7 @@ class PwaCategoryRenderer extends CategoryRenderer {
     }
 
     this.dom.find('.lh-gauge__label', tmpl).textContent = category.title;
-
     wrapper.title = this._getGaugeTooltip(category.auditRefs, groupDefinitions);
-
     return tmpl;
   }
 
