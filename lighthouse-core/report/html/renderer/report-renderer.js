@@ -202,7 +202,6 @@ class ReportRenderer {
 
     const container = this._dom.createElement('div', 'lh-container');
     const reportSection = this._dom.createElement('div', 'lh-report');
-
     reportSection.appendChild(this._renderReportWarnings(report));
 
     let scoreHeader;
@@ -228,7 +227,6 @@ class ReportRenderer {
     }
 
     const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
-
     for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       // .lh-category-wrapper is full-width and provides horizontal rules between categories.

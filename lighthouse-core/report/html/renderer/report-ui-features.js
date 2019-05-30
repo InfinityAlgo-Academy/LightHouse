@@ -25,8 +25,6 @@
 
 /* globals getFilenamePrefix Util */
 
-/** @typedef {import('./dom.js')} DOM */
-
 /**
  * @param {HTMLTableElement} tableEl
  * @return {Array<HTMLTableRowElement>}
@@ -98,8 +96,11 @@ class ReportUIFeatures {
       turnOffTheLights = true;
     }
 
-    const scoresAll100 = Object.values(this.json.categories).every(cat => cat.score === 1);
-    if (scoresAll100) {
+    // Fireworks.
+    const scoresAll100 = Object.values(report.categories).every(cat => cat.score === 1);
+    const hasAllCoreCategories =
+      Object.keys(report.categories).filter(id => !Util.isPluginCategory(id)).length >= 5;
+    if (scoresAll100 && hasAllCoreCategories) {
       turnOffTheLights = true;
       this._enableFireworks();
     }
@@ -127,6 +128,17 @@ class ReportUIFeatures {
         window.addEventListener('resize', this._updateStickyHeaderOnScroll);
       }
     }
+
+    // Show the metric descriptions by default when there is an error.
+    const hasMetricError = report.categories.performance && report.categories.performance.auditRefs
+      .some(audit => Boolean(audit.group === 'metrics' && report.audits[audit.id].errorMessage));
+    if (hasMetricError) {
+      const toggleInputEl = /** @type {HTMLInputElement} */ (
+        this._dom.find('.lh-metrics-toggle__input', this._document));
+      toggleInputEl.checked = true;
+    }
+
+    return document;
   }
 
   /**
