@@ -92,7 +92,9 @@ class ReportUIFeatures {
     topbarLogo.addEventListener('click', () => this._toggleDarkTheme());
 
     let turnOffTheLights = false;
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    // Do not query the system preferences for DevTools - DevTools should only apply dark theme
+    // if dark is selected in the settings panel.
+    if (!this._dom.isDevTools() && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       turnOffTheLights = true;
     }
 
