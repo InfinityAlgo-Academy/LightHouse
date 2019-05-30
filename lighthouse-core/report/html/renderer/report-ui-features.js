@@ -147,7 +147,7 @@ class ReportUIFeatures {
     const {overflowY} = window.getComputedStyle(element);
     const isScrollable = overflowY !== 'visible' && overflowY !== 'hidden';
 
-    if (isScrollable && element.scrollHeight >= element.clientHeight) {
+    if (isScrollable) {
       return element;
     }
 
