@@ -114,7 +114,18 @@ class ReportUIFeatures {
       const containerEl = this._dom.find('.lh-container', this._document);
       const elToAddScrollListener = this._getScrollParent(containerEl);
       elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
-      window.addEventListener('resize', this._updateStickyHeaderOnScroll);
+      // We can't rely on listening to the window resize event for DevTools, so we first
+      // attempt the new ResizeObserver web platform feature. It has poor cross browser
+      // support, so we should check that it's supported. However, there are some performance
+      // issues with using window.ResizeObserver - it updates much more often than the 'resize'
+      // event fires, and the experience is choppy in LH. For now, limit use to just DevTools,
+      // which doesn't seem affected for some reason.
+      if (this._dom.isDevTools()) {
+        const resizeObserver = new window.ResizeObserver(this._updateStickyHeaderOnScroll);
+        resizeObserver.observe(containerEl);
+      } else {
+        window.addEventListener('resize', this._updateStickyHeaderOnScroll);
+      }
     }
   }
 
@@ -128,24 +139,23 @@ class ReportUIFeatures {
   }
 
   /**
-   * Finds the first scrollable ancestor of node. Falls back to the document.
-   * @param {HTMLElement} node
+   * Finds the first scrollable ancestor of `element`. Falls back to the document.
+   * @param {HTMLElement} element
    * @return {Node}
    */
-  _getScrollParent(node) {
-    const isElement = node instanceof HTMLElement;
-    const overflowY = isElement && window.getComputedStyle(node).overflowY;
+  _getScrollParent(element) {
+    const {overflowY} = window.getComputedStyle(element);
     const isScrollable = overflowY !== 'visible' && overflowY !== 'hidden';
 
-    if (isScrollable && node.scrollHeight >= node.clientHeight) {
-      return node;
+    if (isScrollable && element.scrollHeight >= element.clientHeight) {
+      return element;
     }
 
-    if (node.parentNode instanceof HTMLElement) {
-      return this._getScrollParent(node.parentNode);
-    } else {
-      return document;
+    if (element.parentElement) {
+      return this._getScrollParent(element.parentElement);
     }
+
+    return document;
   }
 
   _enableFireworks() {
