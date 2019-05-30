@@ -114,7 +114,7 @@ class ReportUIFeatures {
       const containerEl = this._dom.find('.lh-container', this._document);
       const elToAddScrollListener = this._getScrollParent(containerEl);
       elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
-      
+
       // Use ResizeObserver where available.
       // TODO: there is an issue with incorrect position numbers and, as a result, performance
       // issues due to layout thrashing.
