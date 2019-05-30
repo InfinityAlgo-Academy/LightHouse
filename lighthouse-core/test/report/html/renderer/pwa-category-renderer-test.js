@@ -242,7 +242,7 @@ describe('PwaCategoryRenderer', () => {
   describe('#renderScoreGauge', () => {
     it('renders an error score gauge in case of category error', () => {
       category.score = null;
-      const badgeGauge = pwaRenderer.renderScoreGauge(category, null);
+      const badgeGauge = pwaRenderer.renderScoreGauge(category);
 
       // Not a PWA gauge.
       assert.strictEqual(badgeGauge.querySelector('.lh-gauge--pwa__wrapper'), null);
