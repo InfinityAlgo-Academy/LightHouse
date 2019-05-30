@@ -290,7 +290,7 @@
 }
 .lh-devtools .lh-container {
   overflow-y: scroll;
-  height: 100%;
+  height: calc(100% - var(--topbar-height));
 }
 .lh-devtools .lh-sticky-header {
   /* Is normally the height of the topbar. */
