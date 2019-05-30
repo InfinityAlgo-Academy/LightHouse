@@ -117,10 +117,8 @@ class ReportUIFeatures {
       // We can't rely on listening to the window resize event for DevTools, so we first
       // attempt the new ResizeObserver web platform feature. It has poor cross browser
       // support, so we should check that it's supported.
-      // @ts-ignore - We don't have types for ResizeObserver.
-      if (typeof ResizeObserver !== 'undefined') {
-        // @ts-ignore
-        const resizeObserver = new ResizeObserver(this._updateStickyHeaderOnScroll);
+      if (typeof window.ResizeObserver !== 'undefined') {
+        const resizeObserver = new window.ResizeObserver(this._updateStickyHeaderOnScroll);
         resizeObserver.observe(containerEl);
       } else {
         window.addEventListener('resize', this._updateStickyHeaderOnScroll);
