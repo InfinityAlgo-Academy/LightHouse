@@ -269,7 +269,7 @@
   --header-padding: 16px 0 16px 0;
   --plugin-icon-size: 75%;
   --pwa-icon-margin: 0 7px 0 -3px;
-  --score-container-width: 92px;
+  --score-container-width: 97px;
   --score-number-font-size-big: 34px;
   --score-number-font-size: 26px;
   --score-shape-margin-left: 2px;
@@ -283,6 +283,18 @@
   --lh-audit-hgap: 12px;
   --lh-audit-group-vpadding: 12px;
   --lh-section-vpadding: 8px;
+}
+
+.lh-devtools.lh-root {
+  height: 100%;
+}
+.lh-devtools .lh-container {
+  overflow-y: scroll;
+  height: calc(100% - var(--topbar-height));
+}
+.lh-devtools .lh-sticky-header {
+  /* This is normally the height of the topbar, but we want it to stick to the top of our scroll container .lh-container` */
+  top: 0;
 }
 
 @keyframes fadeIn {
