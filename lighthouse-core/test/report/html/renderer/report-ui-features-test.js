@@ -238,5 +238,16 @@ describe('ReportUIFeatures', () => {
       const container = render(lhr);
       assert.ok(container.querySelector('.score100'), 'has fireworks treatment');
     });
+
+    it('should not render fireworks if all core categories are not present', () => {
+      const lhr = JSON.parse(JSON.stringify(sampleResults));
+      delete lhr.categories.performance;
+      delete lhr.categoryGroups.performace;
+      Object.values(lhr.categories).forEach(element => {
+        element.score = 1;
+      });
+      const container = render(lhr);
+      assert.ok(container.querySelector('.score100') === null, 'has no fireworks treatment');
+    });
   });
 });
