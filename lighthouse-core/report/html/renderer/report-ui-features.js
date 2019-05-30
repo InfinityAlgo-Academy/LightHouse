@@ -114,7 +114,17 @@ class ReportUIFeatures {
       const containerEl = this._dom.find('.lh-container', this._document);
       const elToAddScrollListener = this._getScrollParent(containerEl);
       elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
-      window.addEventListener('resize', this._updateStickyHeaderOnScroll);
+      // We can't rely on listening to the window resize event for DevTools, so we first
+      // attempt the new ResizeObserver web platform feature. It has poor cross browser
+      // support, so we should check that it's supported.
+      // @ts-ignore - We don't have types for ResizeObserver.
+      if (typeof ResizeObserver !== 'undefined') {
+        // @ts-ignore
+        const resizeObserver = new ResizeObserver(this._updateStickyHeaderOnScroll);
+        resizeObserver.observe(containerEl);
+      } else {
+        window.addEventListener('resize', this._updateStickyHeaderOnScroll);
+      }
     }
   }
 
