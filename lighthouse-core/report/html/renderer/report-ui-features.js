@@ -44,6 +44,8 @@ class ReportUIFeatures {
     this._dom = dom;
     /** @type {Document} */
     this._document = this._dom.document();
+    /** @type {ParentNode} */
+    this._templateContext = this._dom.document();
     /** @type {boolean} */
     this._copyAttempt = false;
     /** @type {HTMLElement} */
@@ -76,9 +78,8 @@ class ReportUIFeatures {
    * @param {LH.Result} report
    */
   initFeatures(report) {
-    if (this._dom.isDevTools()) return;
-
     this.json = report;
+
     this._setupMediaQueryListeners();
     this._setupExportButton();
     this._setupThirdPartyFilter();
@@ -86,6 +87,7 @@ class ReportUIFeatures {
     this._resetUIState();
     this._document.addEventListener('keyup', this.onKeyUp);
     this._document.addEventListener('copy', this.onCopy);
+
     const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
     topbarLogo.addEventListener('click', () => this._toggleDarkTheme());
 
@@ -98,13 +100,9 @@ class ReportUIFeatures {
     const scoresAll100 = Object.values(report.categories).every(cat => cat.score === 1);
     const hasAllCoreCategories =
       Object.keys(report.categories).filter(id => !Util.isPluginCategory(id)).length >= 5;
-    if (!this._dom.isDevTools() && scoresAll100 && hasAllCoreCategories) {
+    if (scoresAll100 && hasAllCoreCategories) {
       turnOffTheLights = true;
-      const scoresContainer = this._dom.find('.lh-scores-container', this._document);
-      scoresContainer.classList.add('score100');
-      scoresContainer.addEventListener('click', _ => {
-        scoresContainer.classList.toggle('fireworks-paused');
-      });
+      this._enableFireworks();
     }
 
     if (turnOffTheLights) {
@@ -114,8 +112,21 @@ class ReportUIFeatures {
     // There is only a sticky header when at least 2 categories are present.
     if (Object.keys(this.json.categories).length >= 2) {
       this._setupStickyHeaderElements();
-      this._document.addEventListener('scroll', this._updateStickyHeaderOnScroll);
-      window.addEventListener('resize', this._updateStickyHeaderOnScroll);
+      const containerEl = this._dom.find('.lh-container', this._document);
+      const elToAddScrollListener = this._getScrollParent(containerEl);
+      elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
+
+      // Use ResizeObserver where available.
+      // TODO: there is an issue with incorrect position numbers and, as a result, performance
+      // issues due to layout thrashing.
+      // See https://github.com/GoogleChrome/lighthouse/pull/9023/files#r288822287 for details.
+      // For now, limit to DevTools.
+      if (this._dom.isDevTools()) {
+        const resizeObserver = new window.ResizeObserver(this._updateStickyHeaderOnScroll);
+        resizeObserver.observe(containerEl);
+      } else {
+        window.addEventListener('resize', this._updateStickyHeaderOnScroll);
+      }
     }
 
     // Show the metric descriptions by default when there is an error.
@@ -126,6 +137,43 @@ class ReportUIFeatures {
         this._dom.find('.lh-metrics-toggle__input', this._document));
       toggleInputEl.checked = true;
     }
+  }
+
+  /**
+   * Define a custom element for <templates> to be extracted from. For example:
+   *     this.setTemplateContext(new DOMParser().parseFromString(htmlStr, 'text/html'))
+   * @param {ParentNode} context
+   */
+  setTemplateContext(context) {
+    this._templateContext = context;
+  }
+
+  /**
+   * Finds the first scrollable ancestor of `element`. Falls back to the document.
+   * @param {HTMLElement} element
+   * @return {Node}
+   */
+  _getScrollParent(element) {
+    const {overflowY} = window.getComputedStyle(element);
+    const isScrollable = overflowY !== 'visible' && overflowY !== 'hidden';
+
+    if (isScrollable) {
+      return element;
+    }
+
+    if (element.parentElement) {
+      return this._getScrollParent(element.parentElement);
+    }
+
+    return document;
+  }
+
+  _enableFireworks() {
+    const scoresContainer = this._dom.find('.lh-scores-container', this._document);
+    scoresContainer.classList.add('score100');
+    scoresContainer.addEventListener('click', _ => {
+      scoresContainer.classList.toggle('fireworks-paused');
+    });
   }
 
   /**
@@ -188,13 +236,13 @@ class ReportUIFeatures {
       if (thirdPartyRows.size === urlItems.length || !thirdPartyRows.size) return;
 
       // create input box
-      const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._document);
+      const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._templateContext);
       const filterInput = this._dom.find('input', filterTemplate);
       const id = `lh-3p-filter-label--${index}`;
 
       filterInput.id = id;
       filterInput.addEventListener('change', e => {
-        // Remove rows from the dom and keep track of them to readd on uncheck.
+        // Remove rows from the dom and keep track of them to re-add on uncheck.
         // Why removing instead of hiding? To keep nth-child(even) background-colors working.
         if (e.target instanceof HTMLInputElement && !e.target.checked) {
           for (const row of thirdPartyRows.values()) {
@@ -263,7 +311,10 @@ class ReportUIFeatures {
     this.topbarEl = this._dom.find('.lh-topbar', this._document);
     this.scoreScaleEl = this._dom.find('.lh-scorescale', this._document);
     this.stickyHeaderEl = this._dom.find('.lh-sticky-header', this._document);
-    this.highlightEl = this._dom.find('.lh-highlighter', this._document);
+
+    // Position highlighter at first gauge; will be transformed on scroll.
+    const firstGauge = this._dom.find('.lh-gauge__wrapper', this.stickyHeaderEl);
+    this.highlightEl = this._dom.createChildOf(firstGauge, 'div', 'lh-highlighter');
   }
 
   /**
@@ -554,7 +605,15 @@ class ReportUIFeatures {
    * @param {boolean} [force]
    */
   _toggleDarkTheme(force) {
-    this._document.body.classList.toggle('dark', force);
+    const el = this._dom.find('.lh-vars', this._document);
+    // This seems unnecessary, but in DevTools, passing "undefined" as the second
+    // parameter acts like passing "false".
+    // https://github.com/ChromeDevTools/devtools-frontend/blob/dd6a6d4153647c2a4203c327c595692c5e0a4256/front_end/dom_extension/DOMExtension.js#L809-L819
+    if (typeof force === 'undefined') {
+      el.classList.toggle('dark');
+    } else {
+      el.classList.toggle('dark', force);
+    }
   }
 
   _updateStickyHeaderOnScroll() {
@@ -574,11 +633,12 @@ class ReportUIFeatures {
     // Category order matches gauge order in sticky header.
     const gaugeWrapperEls = this.stickyHeaderEl.querySelectorAll('.lh-gauge__wrapper');
     const gaugeToHighlight = gaugeWrapperEls[highlightIndex];
-    const offset = gaugeToHighlight.getBoundingClientRect().left + 'px';
+    const origin = gaugeWrapperEls[0].getBoundingClientRect().left;
+    const offset = gaugeToHighlight.getBoundingClientRect().left - origin;
 
     // Mutate at end to avoid layout thrashing.
+    this.highlightEl.style.transform = `translate(${offset}px)`;
     this.stickyHeaderEl.classList.toggle('lh-sticky-header--visible', showStickyHeader);
-    this.highlightEl.style.left = offset;
   }
 }
 

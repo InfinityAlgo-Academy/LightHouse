@@ -92,17 +92,6 @@ class ReportRenderer {
   }
 
   /**
-   * @return {Element}
-   */
-  _renderReportShortHeader() {
-    const shortHeaderContainer = this._dom.createElement('div', 'lh-header-container');
-    const wrapper = this._dom.cloneTemplate('#tmpl-lh-scores-wrapper', this._templateContext);
-    shortHeaderContainer.appendChild(wrapper);
-    return shortHeaderContainer;
-  }
-
-
-  /**
    * @param {LH.ReportResult} report
    * @return {DocumentFragment}
    */
@@ -195,16 +184,8 @@ class ReportRenderer {
    * @return {DocumentFragment}
    */
   _renderReport(report) {
-    let header;
     const headerContainer = this._dom.createElement('div');
-    if (this._dom.isDevTools()) {
-      headerContainer.classList.add('lh-header-plain');
-      header = this._renderReportShortHeader();
-    } else {
-      headerContainer.classList.add('lh-header-sticky');
-      header = this._renderReportHeader();
-    }
-    headerContainer.appendChild(header);
+    headerContainer.appendChild(this._renderReportHeader());
 
     const container = this._dom.createElement('div', 'lh-container');
     const reportSection = container.appendChild(this._dom.createElement('div', 'lh-report'));
@@ -242,38 +223,27 @@ class ReportRenderer {
       wrapper.appendChild(renderer.render(category, report.categoryGroups));
     }
 
+    const reportFragment = this._dom.createFragment();
+    const topbarDocumentFragment = this._renderReportTopbar(report);
+    reportFragment.appendChild(topbarDocumentFragment);
+
     if (scoreHeader) {
-      const scoreGauges =
-        this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers);
-      scoreHeader.append(...scoreGauges);
       const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
+      scoreHeader.append(
+        ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
       scoresContainer.appendChild(scoreHeader);
       scoresContainer.appendChild(scoreScale);
-    }
 
-    reportSection.appendChild(this._renderReportFooter(report));
-
-    const reportFragment = this._dom.createFragment();
-
-    if (!this._dom.isDevTools()) {
-      const topbarDocumentFragment = this._renderReportTopbar(report);
-      reportFragment.appendChild(topbarDocumentFragment);
-    }
-
-    if (scoreHeader && !this._dom.isDevTools()) {
       const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
-      this._dom.createChildOf(stickyHeader, 'div', 'lh-highlighter');
-
-      const scoreGauges =
-        this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers);
-      stickyHeader.append(...scoreGauges);
-
+      stickyHeader.append(
+        ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
       reportFragment.appendChild(stickyHeader);
     }
 
     reportFragment.appendChild(headerContainer);
     reportFragment.appendChild(container);
+    reportSection.appendChild(this._renderReportFooter(report));
 
     return reportFragment;
   }

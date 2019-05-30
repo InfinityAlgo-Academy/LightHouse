@@ -77,7 +77,7 @@ describe('ReportRenderer', () => {
     it('should render a report', () => {
       const container = renderer._dom._document.body;
       const output = renderer.renderReport(sampleResults, container);
-      assert.ok(output.querySelector('.lh-header-sticky'), 'has a header');
+      assert.ok(output.querySelector('.lh-header-container'), 'has a header');
       assert.ok(output.querySelector('.lh-report'), 'has report body');
       // 3 sets of gauges - one in sticky header, one in scores header, and one in each section.
       assert.equal(output.querySelectorAll('.lh-gauge__wrapper, .lh-gauge--pwa__wrapper').length,

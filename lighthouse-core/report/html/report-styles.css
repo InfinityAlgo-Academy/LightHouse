@@ -261,6 +261,24 @@
   --audit-indent: 16px;
   --expandable-indent: 16px;
 
+  --gauge-circle-size-big: 72px;
+  --gauge-circle-size: 64px;
+
+  --audits-margin-bottom: 20px;
+  --env-name-min-width: 120px;
+  --header-padding: 16px 0 16px 0;
+  --plugin-icon-size: 75%;
+  --pwa-icon-margin: 0 7px 0 -3px;
+  --score-container-width: 92px;
+  --score-number-font-size-big: 34px;
+  --score-number-font-size: 26px;
+  --score-shape-margin-left: 2px;
+  --score-shape-size: 10px;
+  --score-title-font-size-big: 22px;
+  --score-title-font-size: 14px;
+  --score-title-line-height-big: 26px;
+  --score-title-line-height: 20px;
+
   --lh-audit-vpadding: 4px;
   --lh-audit-hgap: 12px;
   --lh-audit-group-vpadding: 12px;
@@ -554,6 +572,9 @@
   }
   .lh-column:first-of-type {
     margin-right: 0px;
+  }
+  .lh-column:first-of-type .lh-metric:last-of-type {
+    border-bottom: 0;
   }
 }
 
@@ -952,22 +973,6 @@
 }
 
 /* Report */
-
-.lh-header-sticky {
-  /** TODO: Redesigned report has a small sticky header.
-  For now, disable the current sticky behavior. */
-  /* position: -webkit-sticky;
-  position: sticky; */
-  top: 0;
-  width: 100%;
-  min-width: var(--report-min-width);
-  z-index: 2;
-  will-change: transform;
-}
-.lh-header-plain {
-  margin-top: var(--section-padding);
-}
-
 .lh-list > div:not(:last-child) {
   padding-bottom: 20px;
 }

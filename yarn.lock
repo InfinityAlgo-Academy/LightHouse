@@ -585,6 +585,11 @@
     "@types/events" "*"
     "@types/node" "*"
 
+"@types/resize-observer-browser@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@types/resize-observer-browser/-/resize-observer-browser-0.1.1.tgz#9b7cdae9cdc8b1a7020ca7588018dac64c770866"
+  integrity sha512-5/bJS/uGB5kmpRrrAWXQnmyKlv+4TlPn4f+A2NBa93p+mt6Ht+YcNGkQKf8HMx28a9hox49ZXShtbGqZkk41Sw==
+
 "@types/rimraf@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@types/rimraf/-/rimraf-2.0.2.tgz#7f0fc3cf0ff0ad2a99bb723ae1764f30acaf8b6e"

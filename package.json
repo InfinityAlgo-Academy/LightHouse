@@ -87,6 +87,7 @@
     "@types/node": "*",
     "@types/opn": "^3.0.28",
     "@types/raven": "^2.5.1",
+    "@types/resize-observer-browser": "^0.1.1",
     "@types/rimraf": "^2.0.2",
     "@types/semver": "^5.5.0",
     "@types/uglify-es": "^3.0.0",
@@ -183,7 +184,7 @@
     },
     {
       "path": "./dist/viewer/src/viewer.js",
-      "threshold": "70 Kb"
+      "threshold": "75 Kb"
     }
   ],
   "nyc": {
