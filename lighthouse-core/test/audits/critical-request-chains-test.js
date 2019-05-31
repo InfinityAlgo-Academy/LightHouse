@@ -82,7 +82,7 @@ describe('Performance: critical-request-chains audit', () => {
     const context = {computedCache: new Map()};
     return CriticalRequestChains.audit(artifacts, context).then(output => {
       expect(output.displayValue).toBeDisplayString('2 chains found');
-      assert.equal(output.rawValue, false);
+      assert.equal(output.score, 0);
       assert.ok(output.details);
     });
   });
@@ -93,7 +93,7 @@ describe('Performance: critical-request-chains audit', () => {
     return CriticalRequestChains.audit(artifacts, context).then(output => {
       assert.equal(output.details.longestChain.duration, 1000);
       assert.equal(output.displayValue, '');
-      assert.equal(output.rawValue, true);
+      assert.equal(output.score, 1);
     });
   });
 
@@ -102,7 +102,7 @@ describe('Performance: critical-request-chains audit', () => {
     const context = {computedCache: new Map()};
     return CriticalRequestChains.audit(artifacts, context).then(output => {
       assert.equal(output.displayValue, '');
-      assert.equal(output.rawValue, true);
+      assert.equal(output.score, 1);
     });
   });
 

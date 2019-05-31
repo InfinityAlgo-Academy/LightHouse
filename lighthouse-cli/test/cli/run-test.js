@@ -10,8 +10,8 @@ const assert = require('assert');
 const path = require('path');
 const fs = require('fs');
 
-const run = require('../../run');
-const parseChromeFlags = require('../../run').parseChromeFlags;
+const run = require('../../run.js');
+const parseChromeFlags = require('../../run.js').parseChromeFlags;
 const fastConfig = {
   'extends': 'lighthouse:default',
   'settings': {
@@ -19,40 +19,74 @@ const fastConfig = {
   },
 };
 
-const getFlags = require('../../cli-flags').getFlags;
+// Map plugin name to fixture since not actually installed in node_modules/.
+jest.mock('lighthouse-plugin-simple', () => {
+  // eslint-disable-next-line max-len
+  return require('../../../lighthouse-core/test/fixtures/config-plugins/lighthouse-plugin-simple/plugin-simple.js');
+}, {virtual: true});
+
+const getFlags = require('../../cli-flags.js').getFlags;
 
 describe('CLI run', function() {
-  it('runLighthouse completes a LH round trip', () => {
-    const url = 'chrome://version';
+  describe('LH round trip', () => {
+    /** @type {LH.RunnerResult} */
+    let passedResults;
     const filename = path.join(process.cwd(), 'run.ts.results.json');
-    const timeoutFlag = `--max-wait-for-load=${9000}`;
-    const flags = getFlags(`--output=json --output-path=${filename} ${timeoutFlag} ${url}`);
-    return run.runLighthouse(url, flags, fastConfig).then(passedResults => {
-      if (!passedResults) {
-        assert.fail('no results');
-        return;
+    /** @type {LH.Result} */
+    let fileResults;
+
+    beforeAll(async () => {
+      const url = 'chrome://version';
+      const timeoutFlag = `--max-wait-for-load=${9000}`;
+      const pluginsFlag = '--plugins=lighthouse-plugin-simple';
+
+      // eslint-disable-next-line max-len
+      const flags = getFlags(`--output=json --output-path=${filename} ${pluginsFlag} ${timeoutFlag} ${url}`);
+
+      const rawResult = await run.runLighthouse(url, flags, fastConfig);
+
+      if (!rawResult) {
+        return assert.fail('no results');
       }
+      passedResults = rawResult;
 
-      const {lhr} = passedResults;
       assert.ok(fs.existsSync(filename));
-      /** @type {LH.Result} */
-      const results = JSON.parse(fs.readFileSync(filename, 'utf-8'));
-      assert.equal(results.audits.viewport.rawValue, false);
+      fileResults = JSON.parse(fs.readFileSync(filename, 'utf-8'));
+    }, 20 * 1000);
 
-      // passed results match saved results
-      assert.strictEqual(results.fetchTime, lhr.fetchTime);
-      assert.strictEqual(results.requestedUrl, lhr.requestedUrl);
-      assert.strictEqual(results.finalUrl, lhr.finalUrl);
-      assert.strictEqual(results.audits.viewport.rawValue, lhr.audits.viewport.rawValue);
-      assert.strictEqual(
-          Object.keys(results.audits).length,
-          Object.keys(lhr.audits).length);
-      assert.deepStrictEqual(results.timing, lhr.timing);
-      assert.ok(results.timing.total !== 0);
-
+    afterAll(() => {
       fs.unlinkSync(filename);
     });
-  }, 20 * 1000);
+
+    it('returns results that match the saved results', () => {
+      const {lhr} = passedResults;
+      assert.equal(fileResults.audits.viewport.score, 0);
+
+      // passed results match saved results
+      assert.strictEqual(fileResults.fetchTime, lhr.fetchTime);
+      assert.strictEqual(fileResults.requestedUrl, lhr.requestedUrl);
+      assert.strictEqual(fileResults.finalUrl, lhr.finalUrl);
+      assert.strictEqual(fileResults.audits.viewport.score, lhr.audits.viewport.score);
+      assert.strictEqual(
+          Object.keys(fileResults.audits).length,
+          Object.keys(lhr.audits).length);
+      assert.deepStrictEqual(fileResults.timing, lhr.timing);
+    });
+
+    it('includes timing information', () => {
+      assert.ok(passedResults.lhr.timing.total !== 0);
+    });
+
+    it('correctly sets the channel', () => {
+      assert.equal(passedResults.lhr.configSettings.channel, 'cli');
+    });
+
+    it('merged the plugin into the config', () => {
+      // Audits have been pruned because of onlyAudits, but groups get merged in.
+      const groupNames = Object.keys(passedResults.lhr.categoryGroups || {});
+      assert.ok(groupNames.includes('lighthouse-plugin-simple-new-group'));
+    });
+  });
 });
 
 describe('flag coercing', () => {

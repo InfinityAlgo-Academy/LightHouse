@@ -37,11 +37,13 @@ describe('Performance: Font Display audit', () => {
       }
 
       @font-face {
+        font-display: 'optional'; // invalid quotes, should still fail for being invalid rule
         /* try up a directory with ' */
         src: url('../font-b.woff');
       }
 
       @font-face {
+        font-display: optional // missing a semi-colon, should still fail for being invalid block
         /* try no path with no quotes ' */
         src: url(font.woff);
       }
@@ -71,33 +73,33 @@ describe('Performance: Font Display audit', () => {
       {url: networkRecords[1].url, wastedMs: 3000},
       {url: networkRecords[2].url, wastedMs: 1000},
     ];
-    assert.strictEqual(result.rawValue, false);
-    assert.deepEqual(result.details.items, items);
+    assert.strictEqual(result.score, 0);
+    expect(result.details.items).toEqual(items);
   });
 
   it('resolves URLs relative to stylesheet URL when available', async () => {
     stylesheet.header.sourceURL = 'https://cdn.example.com/foo/bar/file.css';
     stylesheet.content = `
       @font-face {
-        font-display: 'block';
+        font-display: block;
         /* try with " and same directory */
         src: url("./font-a.woff");
       }
 
       @font-face {
-        font-display: 'block';
+        font-display: block;
         /* try with " and site origin */
         src: url("https://example.com/foo/bar/document-font.woff");
       }
 
       @font-face {
-        font-display: 'fallback';
+        font-display: fallback;
         /* try up a directory with ' */
         src: url('../font-b.woff');
       }
 
       @font-face {
-        font-display: 'optional';
+        font-display: optional;
         /* try no path with no quotes ' */
         src: url(font.woff);
       }
@@ -127,26 +129,28 @@ describe('Performance: Font Display audit', () => {
     ];
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
-    assert.strictEqual(result.rawValue, true);
-    assert.deepEqual(result.details.items, []);
+    assert.strictEqual(result.score, 1);
+    expect(result.details.items).toEqual([]);
   });
 
   it('passes when all fonts have a correct font-display rule', async () => {
     stylesheet.content = `
       @font-face {
-        font-display: 'block';
+        /* make sure we can handle carriage returns */
+        \r\n
+        font-display: block;
         /* try with " */
         src: url("./font-a.woff");
       }
 
-      @font-face {
-        font-display: 'fallback';
+      @font-face {\r
+        font-display: fallback;
         /* try up a directory with ' */
         src: url('../font-b.woff');
       }
 
-      @font-face {
-        font-display: 'optional';
+      @font-face {\n
+        font-display: optional;
         /* try no path with no quotes ' */
         src: url(font.woff);
       }
@@ -168,11 +172,16 @@ describe('Performance: Font Display audit', () => {
         endTime: 2, startTime: 1,
         resourceType: 'Font',
       },
+      {
+        url: 'data:application/font-woff',
+        endTime: 7, startTime: 1,
+        resourceType: 'Font',
+      },
     ];
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
-    assert.strictEqual(result.rawValue, true);
-    assert.deepEqual(result.details.items, []);
+    assert.strictEqual(result.score, 1);
+    expect(result.details.items).toEqual([]);
   });
 
   it('should handle real-world font-face declarations', async () => {
@@ -211,13 +220,66 @@ describe('Performance: Font Display audit', () => {
     ];
 
     const result = await FontDisplayAudit.audit(getArtifacts(), context);
-    assert.strictEqual(result.rawValue, false);
-    assert.deepEqual(result.details.items.map(item => item.url), [
+    assert.strictEqual(result.score, 0);
+    expect(result.details.items.map(item => item.url)).toEqual([
       'https://edition.i.cdn.cnn.com/.a/fonts/cnn/3.7.2/cnnclock-black.woff2',
       'https://registry.api.cnn.io/assets/fave/fonts/2.0.15/cnnsans-bold.woff',
       // FontAwesome should pass
       // 'https://example.com/foo/fonts/fontawesome-webfont.woff2?v=4.6.1',
       'https://fonts.gstatic.com/s/lato/v14/S6u9w4BMUTPHh50XSwiPGQ3q5d0.woff2',
     ]);
+  });
+
+  it('handles varied font-display declarations', async () => {
+    stylesheet.content = `
+      @font-face {
+        src: url(font-0.woff);
+        font-display: swap
+      }
+
+      @font-face {src: url(font-1.woff);font-display   : fallback
+      }
+
+      @font-face {
+        src: url(font-2.woff);
+        font-display:optional}
+
+      @font-face {
+        src: url(font-3.woff);
+        font-display    :  swap  ;  }
+
+      @font-face {src: url(font-4.woff);font-display:swap;}
+    `;
+
+    networkRecords = Array.from({length: 5}).map((_, idx) => ({
+      url: `https://example.com/foo/bar/font-${idx}.woff`,
+      endTime: 2, startTime: 1,
+      resourceType: 'Font',
+    }));
+
+    const result = await FontDisplayAudit.audit(getArtifacts(), context);
+    expect(result.details.items).toEqual([]);
+    assert.strictEqual(result.score, 1);
+  });
+
+  it('handles custom source URLs from sourcemaps', async () => {
+    // Make sure we don't use sourceURL when it's not a valid URL, see https://github.com/GoogleChrome/lighthouse/issues/8534
+    stylesheet.header.sourceURL = 'custom-url-from-source-map';
+    stylesheet.content = `
+      @font-face {
+        src: url(font-0.woff);
+        font-display: swap
+      }
+    `;
+
+    networkRecords = [{
+      url: `https://example.com/foo/bar/font-0.woff`,
+      endTime: 2, startTime: 1,
+      resourceType: 'Font',
+    }];
+
+    const result = await FontDisplayAudit.audit(getArtifacts(), context);
+    expect(result.details.items).toEqual([]);
+    assert.strictEqual(result.score, 1);
   });
 });

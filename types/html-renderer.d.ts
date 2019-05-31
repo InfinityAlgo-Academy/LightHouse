@@ -6,6 +6,7 @@
 
 import _CategoryRenderer = require('../lighthouse-core/report/html/renderer/category-renderer.js');
 import _CriticalRequestChainRenderer = require('../lighthouse-core/report/html/renderer/crc-details-renderer.js');
+import _SnippetRenderer = require('../lighthouse-core/report/html/renderer/snippet-renderer.js');
 import _DetailsRenderer = require('../lighthouse-core/report/html/renderer/details-renderer.js');
 import _DOM = require('../lighthouse-core/report/html/renderer/dom.js');
 import _PerformanceCategoryRenderer = require('../lighthouse-core/report/html/renderer/performance-category-renderer.js');
@@ -19,6 +20,7 @@ import _FileNamer = require('../lighthouse-core/lib/file-namer.js');
 declare global {
   var CategoryRenderer: typeof _CategoryRenderer;
   var CriticalRequestChainRenderer: typeof _CriticalRequestChainRenderer;
+  var SnippetRenderer: typeof _SnippetRenderer;
   var DetailsRenderer: typeof _DetailsRenderer;
   var DOM: typeof _DOM;
   var getFilenamePrefix: typeof _FileNamer.getFilenamePrefix;
@@ -32,6 +34,7 @@ declare global {
   interface Window {
     CategoryRenderer: typeof _CategoryRenderer;
     CriticalRequestChainRenderer: typeof _CriticalRequestChainRenderer;
+    SnippetRenderer: typeof _SnippetRenderer;
     DetailsRenderer: typeof _DetailsRenderer;
     DOM: typeof _DOM;
     PerformanceCategoryRenderer: typeof _PerformanceCategoryRenderer;
@@ -44,18 +47,27 @@ declare global {
 
   module LH {
     // During report generation, the LHR object is transformed a bit for convenience
-    // Primarily, the auditResult is added as .result onto the auditRef.
-    // Also: a reportCategories property is added. We're lazy sometimes. It'll be removed in due time.
+    // Primarily, the auditResult is added as .result onto the auditRef. We're lazy sometimes. It'll be removed in due time.
     export interface ReportResult extends Result {
       categories: Record<string, ReportResult.Category>;
-      reportCategories: Array<ReportResult.Category>;
     }
     export module ReportResult {
       export interface Category extends Result.Category {
         auditRefs: Array<AuditRef>
       }
+
       export interface AuditRef extends Result.AuditRef {
-        result: Audit.Result
+        result: Audit.Result;
+        stackPacks?: StackPackDescription[];
+      }
+
+      export interface StackPackDescription {
+         /** The title of the stack pack. */
+        title: string;
+        /** A base64 data url to be used as the stack pack's icon. */
+        iconDataURL: string;
+        /** The stack-specific description for this audit. */
+        description: string;
       }
     }
   }

@@ -51,6 +51,8 @@ enum LighthouseError {
   PAGE_HUNG = 18;
   // DNS failure on main document (no resolution, timed out, etc)
   DNS_FAILURE = 19;
+  // A timeout in the initial connection to the debugger protocol.
+  CRI_TIMEOUT = 20;
 }
 
 // The overarching Lighthouse Response object (LHR)
@@ -139,6 +141,9 @@ message LighthouseResult {
     // List of the categories that were run, empty if all were run
     // nullable list of strings
     google.protobuf.Value only_categories = 3;
+
+    // How Lighthouse was run, e.g. from the Chrome extension or from the npm module
+    string channel = 4;
   }
 
   // The settings that were used to run this audit
@@ -156,6 +161,9 @@ message LighthouseResult {
       string entry_type = 2;
       google.protobuf.DoubleValue start_time = 3;
       google.protobuf.DoubleValue duration = 4;
+
+      // Whether timing entry was collected during artifact gathering.
+      bool gather = 5;
     }
 
     // The total duration of Lighthouse's run
@@ -167,6 +175,9 @@ message LighthouseResult {
 
   // The performance timing data for the Lighthouse run
   Timing timing = 14;
+
+  // The Stack Pack data used by audits in this run.
+  repeated StackPack stack_packs = 15;
 }
 
 // Message containing a category
@@ -275,6 +286,11 @@ message AuditResult {
   // List of warnings associated with this audit
   // type of `Value` since this can be null
   google.protobuf.Value warnings = 10;
+
+  // A numeric value that has a meaning specific to the audit, e.g. the number
+  // of nodes in the DOM or the timestamp of a specific load event. More
+  // information can be found in the audit details, if present.
+  google.protobuf.DoubleValue numeric_value = 11;
 }
 
 // Message containing the i18n data for the LHR - Version 1
@@ -334,8 +350,32 @@ message I18n {
 
     // The heading that is shown above a list of audits that have warnings
     string warning_audits_group_title = 17;
+
+    // The label for the button to show all lines of a snippet
+    string snippet_expand_button_label = 18;
+
+    // The label for the button to show only a few lines of a snippet
+    string snippet_collapse_button_label = 19;
+
+    // This label is for a filter checkbox above a table of items
+    string third_party_resources_label = 20;
   }
 
   // The message holding all formatted strings
   RendererFormattedStrings renderer_formatted_strings = 1;
+}
+
+// Message containing Stack Pack information.
+message StackPack {
+  // The human readable id of the Stack Pack.
+  string id = 1;
+
+  // The user facing title of the Stack Pack.
+  string title = 2;
+
+  // The icon as a data url.
+  string icon_data_URL = 3;
+
+  // Map of audit-ids to Stack Pack descriptions.
+  map<string, string> descriptions = 4;
 }

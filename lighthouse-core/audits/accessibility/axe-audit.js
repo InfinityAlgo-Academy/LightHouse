@@ -10,7 +10,7 @@
  * generate audit results using aXe rule names.
  */
 
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -34,7 +34,7 @@ class AxeAudit extends Audit {
     const isNotApplicable = notApplicables.find(result => result.id === this.meta.id);
     if (isNotApplicable) {
       return {
-        rawValue: true,
+        score: 1,
         notApplicable: true,
       };
     }
@@ -44,30 +44,42 @@ class AxeAudit extends Audit {
     const impact = rule && rule.impact;
     const tags = rule && rule.tags;
 
-    /** @type {Array<{node: LH.Audit.DetailsRendererNodeDetailsJSON}>} */
+    /** @type {LH.Audit.Details.Table['items']}>} */
     let items = [];
     if (rule && rule.nodes) {
       items = rule.nodes.map(node => ({
-        node: /** @type {LH.Audit.DetailsRendererNodeDetailsJSON} */ ({
+        node: /** @type {LH.Audit.Details.NodeValue} */ ({
           type: 'node',
           selector: Array.isArray(node.target) ? node.target.join(' ') : '',
           path: node.path,
           snippet: node.html || node.snippet,
           explanation: node.failureSummary,
+          nodeLabel: node.nodeLabel,
         }),
       }));
     }
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'node', itemType: 'node', text: str_(UIStrings.failingElementsHeader)},
     ];
 
+    /** @type {LH.Audit.Details.DebugData|undefined} */
+    let debugData;
+    if (impact || tags) {
+      debugData = {
+        type: 'debugdata',
+        impact,
+        tags,
+      };
+    }
+
     return {
-      rawValue: typeof rule === 'undefined',
+      score: Number(rule === undefined),
       extendedInfo: {
         value: rule,
       },
-      details: {...Audit.makeTableDetails(headings, items), impact, tags},
+      details: {...Audit.makeTableDetails(headings, items), debugData},
     };
   }
 }

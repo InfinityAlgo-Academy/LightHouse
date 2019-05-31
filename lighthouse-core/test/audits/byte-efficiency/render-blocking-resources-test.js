@@ -7,11 +7,11 @@
 
 const RenderBlockingResourcesAudit = require('../../../audits/byte-efficiency/render-blocking-resources.js'); // eslint-disable-line max-len
 
-const mobileSlow4G = require('../../../config/constants').throttling.mobileSlow4G;
-const NetworkNode = require('../../../lib/dependency-graph/network-node');
-const CPUNode = require('../../../lib/dependency-graph/cpu-node');
-const Simulator = require('../../../lib/dependency-graph/simulator/simulator');
-const NetworkRequest = require('../../../lib/network-request');
+const mobileSlow4G = require('../../../config/constants.js').throttling.mobileSlow4G;
+const NetworkNode = require('../../../lib/dependency-graph/network-node.js');
+const CPUNode = require('../../../lib/dependency-graph/cpu-node.js');
+const Simulator = require('../../../lib/dependency-graph/simulator/simulator.js');
+const NetworkRequest = require('../../../lib/network-request.js');
 const assert = require('assert');
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
@@ -36,7 +36,7 @@ describe('Render blocking resources audit', () => {
     const computedCache = new Map();
     const result = await RenderBlockingResourcesAudit.audit(artifacts, {settings, computedCache});
     assert.equal(result.score, 1);
-    assert.equal(result.rawValue, 0);
+    assert.equal(result.numericValue, 0);
   });
 
   describe('#estimateSavingsWithGraphs', () => {

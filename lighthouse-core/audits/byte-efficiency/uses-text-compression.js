@@ -9,8 +9,8 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const URL = require('../../lib/url-shim');
+const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const URL = require('../../lib/url-shim.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -82,7 +82,7 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
       });
     });
 
-    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
+    /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},

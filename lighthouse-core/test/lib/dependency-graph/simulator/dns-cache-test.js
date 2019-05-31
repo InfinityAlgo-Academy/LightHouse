@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const DNSCache = require('../../../../lib/dependency-graph/simulator/dns-cache');
+const DNSCache = require('../../../../lib/dependency-graph/simulator/dns-cache.js');
 const MULTIPLIER = DNSCache.RTT_MULTIPLIER;
 
 /* eslint-env jest */
@@ -59,6 +59,14 @@ describe('DependencyGraph/Simulator/DNSCache', () => {
       expect(dns.getTimeUntilResolution(request, {requestedAt: 550})).toBe(100 * MULTIPLIER - 50);
       expect(dns.getTimeUntilResolution(request, {requestedAt: 1000})).toBe(0);
       expect(dns.getTimeUntilResolution(request, {requestedAt: 2000})).toBe(0);
+    });
+  });
+
+  describe('.setResolvedAt', () => {
+    it('should set the DNS resolution time for a record', () => {
+      dns.setResolvedAt(request.parsedURL.host, 123);
+      const resolutionTime = dns.getTimeUntilResolution(request);
+      expect(resolutionTime).toEqual(123);
     });
   });
 });

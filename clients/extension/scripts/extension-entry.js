@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const lighthouse = require('../../../lighthouse-core/index');
-const Config = require('../../../lighthouse-core/config/config');
+const lighthouse = require('../../../lighthouse-core/index.js');
+const Config = require('../../../lighthouse-core/config/config.js');
 const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
 const i18n = require('../../../lighthouse-core/lib/i18n/i18n.js');
 
-const ExtensionProtocol = require('../../../lighthouse-core/gather/connections/extension');
+const ExtensionProtocol = require('../../../lighthouse-core/gather/connections/extension.js');
 const log = require('lighthouse-logger');
 
 /** @typedef {import('../../../lighthouse-core/gather/connections/connection.js')} Connection */
@@ -82,6 +82,7 @@ async function runLighthouseInExtension(flags, categoryIDs) {
   // Default to 'info' logging level.
   flags.logLevel = flags.logLevel || 'info';
   flags.output = 'html';
+  flags.channel = 'extension';
 
   const connection = new ExtensionProtocol();
   const url = await connection.getCurrentTabURL();

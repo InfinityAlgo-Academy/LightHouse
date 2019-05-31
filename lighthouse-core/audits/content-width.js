@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('./audit');
+const Audit = require('./audit.js');
 
 class ContentWidth extends Audit {
   /**
@@ -19,34 +19,28 @@ class ContentWidth extends Audit {
       description: 'If the width of your app\'s content doesn\'t match the width ' +
           'of the viewport, your app might not be optimized for mobile screens. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/content-sized-correctly-for-viewport).',
-      requiredArtifacts: ['ViewportDimensions', 'HostUserAgent'],
+      requiredArtifacts: ['ViewportDimensions', 'TestedAsMobileDevice'],
     };
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @param {LH.Audit.Context} context
    * @return {LH.Audit.Product}
    */
-  static audit(artifacts, context) {
-    const userAgent = artifacts.HostUserAgent;
+  static audit(artifacts) {
+    const IsMobile = artifacts.TestedAsMobileDevice;
     const viewportWidth = artifacts.ViewportDimensions.innerWidth;
     const windowWidth = artifacts.ViewportDimensions.outerWidth;
     const widthsMatch = viewportWidth === windowWidth;
 
-    // TODO(phulce): refactor this `isMobile` boolean to be on context
-    const isMobileHost = userAgent.includes('Android') || userAgent.includes('Mobile');
-    const isMobile = context.settings.emulatedFormFactor === 'mobile' ||
-      (context.settings.emulatedFormFactor !== 'desktop' && isMobileHost);
-
-    if (isMobile) {
+    if (IsMobile) {
       return {
-        rawValue: widthsMatch,
+        score: Number(widthsMatch),
         explanation: this.createExplanation(widthsMatch, artifacts.ViewportDimensions),
       };
     } else {
       return {
-        rawValue: true,
+        score: 1,
         notApplicable: true,
       };
     }

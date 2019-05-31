@@ -23,7 +23,7 @@ describe('Performance: first-meaningful-paint audit', () => {
     const fmpResult = await FMPAudit.audit(artifacts, context);
 
     assert.equal(fmpResult.score, 1);
-    assert.equal(fmpResult.rawValue, 783.328);
+    assert.equal(fmpResult.numericValue, 783.328);
     expect(fmpResult.displayValue).toBeDisplayString('0.8\xa0s');
   });
 
@@ -37,7 +37,7 @@ describe('Performance: first-meaningful-paint audit', () => {
 
     expect({
       score: fmpResult.score,
-      rawValue: fmpResult.rawValue,
+      numericValue: fmpResult.numericValue,
     }).toMatchSnapshot();
   });
 });

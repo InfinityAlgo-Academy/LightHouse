@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../audit');
-const linearInterpolation = require('../../lib/statistics').linearInterpolation;
+const Audit = require('../audit.js');
+const linearInterpolation = require('../../lib/statistics.js').linearInterpolation;
 const Interactive = require('../../computed/metrics/lantern-interactive.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const NetworkRecords = require('../../computed/network-records.js');
@@ -27,7 +27,7 @@ const WASTED_MS_FOR_SCORE_OF_ZERO = 5000;
 /**
  * @typedef {object} ByteEfficiencyProduct
  * @property {Array<LH.Audit.ByteEfficiencyItem>} items
- * @property {LH.Result.Audit.OpportunityDetails['headings']} headings
+ * @property {LH.Audit.Details.Opportunity['headings']} headings
  * @property {string} [displayValue]
  * @property {string} [explanation]
  * @property {Array<string>} [warnings]
@@ -66,15 +66,26 @@ class UnusedBytes extends Audit {
    * @param {LH.Artifacts.NetworkRequest=} networkRecord
    * @param {number} totalBytes Uncompressed size of the resource
    * @param {LH.Crdp.Page.ResourceType=} resourceType
-   * @param {number=} compressionRatio
    * @return {number}
    */
-  static estimateTransferSize(networkRecord, totalBytes, resourceType, compressionRatio = 0.5) {
+  static estimateTransferSize(networkRecord, totalBytes, resourceType) {
     if (!networkRecord) {
       // We don't know how many bytes this asset used on the network, but we can guess it was
       // roughly the size of the content gzipped.
-      // See https://discuss.httparchive.org/t/file-size-and-compression-savings/145 for multipliers
-      return Math.round(totalBytes * compressionRatio);
+      // See https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer for specific CSS/Script examples
+      // See https://discuss.httparchive.org/t/file-size-and-compression-savings/145 for fallback multipliers
+      switch (resourceType) {
+        case 'Stylesheet':
+          // Stylesheets tend to compress extremely well.
+          return Math.round(totalBytes * 0.2);
+        case 'Script':
+        case 'Document':
+          // Scripts and HTML compress fairly well too.
+          return Math.round(totalBytes * 0.33);
+        default:
+          // Otherwise we'll just fallback to the average savings in HTTPArchive
+          return Math.round(totalBytes * 0.5);
+      }
     } else if (networkRecord.resourceType === resourceType) {
       // This was a regular standalone asset, just use the transfer size.
       return networkRecord.transferSize || 0;
@@ -186,7 +197,6 @@ class UnusedBytes extends Audit {
     const wastedKb = Math.round(wastedBytes / KB_IN_BYTES);
     const wastedMs = this.computeWasteWithTTIGraph(results, graph, simulator);
 
-    /** @type {LH.Audit.DisplayValue} */
     let displayValue = result.displayValue || '';
     if (typeof result.displayValue === 'undefined' && wastedBytes) {
       displayValue = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes});
@@ -198,7 +208,7 @@ class UnusedBytes extends Audit {
       explanation: result.explanation,
       warnings: result.warnings,
       displayValue,
-      rawValue: wastedMs,
+      numericValue: wastedMs,
       score: UnusedBytes.scoreForWastedMs(wastedMs),
       extendedInfo: {
         value: {

@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const CacheContentGather = require('../../../gather/gatherers/cache-contents');
+const CacheContentGather = require('../../../gather/gatherers/cache-contents.js');
 const assert = require('assert');
 let cacheContentGather;
 

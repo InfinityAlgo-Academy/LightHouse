@@ -16,7 +16,7 @@
  * This gatherer collects stylesheet metadata by itself, instead of relying on the styles gatherer which is slow (because it parses the stylesheet content).
  */
 
-const Gatherer = require('../gatherer');
+const Gatherer = require('../gatherer.js');
 const Sentry = require('../../../lib/sentry.js');
 const FONT_SIZE_PROPERTY_NAME = 'font-size';
 const TEXT_NODE_BLOCK_LIST = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT']);

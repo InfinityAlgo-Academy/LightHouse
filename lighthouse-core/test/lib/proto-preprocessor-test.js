@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const processForProto = require('../../lib/proto-preprocessor').processForProto;
+const processForProto = require('../../lib/proto-preprocessor.js').processForProto;
 
 /* eslint-env jest */
 describe('processing for proto', () => {
@@ -27,7 +27,6 @@ describe('processing for proto', () => {
         },
         'gatherMode': false,
         'disableStorageReset': false,
-        'disableDeviceEmulation': false,
         'emulatedFormFactor': 'mobile',
         'locale': 'en-US',
         'blockedUrlPatterns': null,
@@ -79,7 +78,7 @@ describe('processing for proto', () => {
       'audits': {
         'critical-request-chains': {
           'scoreDisplayMode': 'not-applicable',
-          'rawValue': 14.3,
+          'numericValue': 14.3,
           'displayValue': ['hello %d', 123],
         },
       },

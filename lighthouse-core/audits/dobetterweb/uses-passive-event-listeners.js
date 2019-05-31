@@ -11,7 +11,7 @@
 
 'use strict';
 
-const ViolationAudit = require('../violation-audit');
+const ViolationAudit = require('../violation-audit.js');
 
 class PassiveEventsAudit extends ViolationAudit {
   /**
@@ -25,7 +25,7 @@ class PassiveEventsAudit extends ViolationAudit {
       description: 'Consider marking your touch and wheel event listeners as `passive` ' +
           'to improve your page\'s scroll performance. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/passive-event-listeners).',
-      requiredArtifacts: ['ChromeConsoleMessages'],
+      requiredArtifacts: ['ConsoleMessages'],
     };
   }
 
@@ -36,6 +36,7 @@ class PassiveEventsAudit extends ViolationAudit {
   static audit(artifacts) {
     const results = ViolationAudit.getViolationResults(artifacts, /passive event listener/);
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'url', itemType: 'url', text: 'URL'},
       {key: 'label', itemType: 'text', text: 'Location'},
@@ -44,7 +45,7 @@ class PassiveEventsAudit extends ViolationAudit {
     const details = ViolationAudit.makeTableDetails(headings, results);
 
     return {
-      rawValue: results.length === 0,
+      score: Number(results.length === 0),
       extendedInfo: {
         value: results,
       },

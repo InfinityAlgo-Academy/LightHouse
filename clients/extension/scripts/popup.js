@@ -6,13 +6,25 @@
 'use strict';
 
 /** @typedef {typeof import('./extension-entry.js') & {console: typeof console}} BackgroundPage */
+/** @typedef {import('../../../lighthouse-core/lib/lh-error.js')} LighthouseError */
 
 /**
  * Error strings that indicate a problem in how Lighthouse was run, not in
  * Lighthouse itself, mapped to more useful strings to report to the user.
  */
 const NON_BUG_ERROR_MESSAGES = {
-  'Another debugger': 'You probably have DevTools open. Close DevTools to use Lighthouse',
+  // The user tries to review an error page or has network issues
+  'ERRORED_DOCUMENT_REQUEST': 'Unable to load the page. Please verify the url you ' +
+      'are trying to review.',
+  'FAILED_DOCUMENT_REQUEST': 'Unable to load the page. Please verify the url you ' +
+      'are trying to review.',
+  'DNS_FAILURE': 'DNS servers could not resolve the provided domain.',
+  'INSECURE_DOCUMENT_REQUEST': 'The URL you have provided does not have a valid' +
+      ' SSL certificate.',
+  'INVALID_URL': 'Lighthouse can only audit URLs that start' +
+      ' with http:// or https://.',
+
+  // chrome extension API errors
   'multiple tabs': 'You probably have multiple tabs open to the same origin. ' +
       'Close the other tabs to use Lighthouse.',
   // The extension debugger API is forbidden from attaching to the web store.
@@ -21,18 +33,9 @@ const NON_BUG_ERROR_MESSAGES = {
       'Chrome Web Store. If necessary, use the Lighthouse CLI to do so.',
   'Cannot access a chrome': 'The Lighthouse extension cannot audit ' +
       'Chrome-specific urls. If necessary, use the Lighthouse CLI to do so.',
-  // The user tries to review an error page or has network issues
-  'Unable to load the page': 'Unable to load the page. Please verify the url you ' +
-      'are trying to review.',
   'Cannot access contents of the page': 'Lighthouse can only audit URLs that start' +
       ' with http:// or https://.',
-  'INSECURE_DOCUMENT_REQUEST': 'The URL you have provided does not have valid' +
-      ' security credentials.',
-  'INVALID_URL': 'Lighthouse can only audit URLs that start' +
-      ' with http:// or https://.',
 };
-
-const MAX_ISSUE_ERROR_LENGTH = 60;
 
 const subpageVisibleClass = 'subpage--visible';
 
@@ -79,35 +82,40 @@ function find(query, context = document) {
 }
 
 /**
+ * @param {string} message
  * @param {Error} err
- * @return {HTMLAnchorElement}
+ * @return {HTMLButtonElement}
  */
-function buildReportErrorLink(err) {
+function buildErrorCopyButton(message, err) {
   const issueBody = `
 **Lighthouse Version**: ${getLighthouseVersion()}
 **Lighthouse Commit**: ${getLighthouseCommitHash()}
 **Chrome Version**: ${getChromeVersion()}
 **Initial URL**: ${siteURL}
-**Error Message**: ${err.message}
+**Error Message**: ${message}
 **Stack Trace**:
 \`\`\`
 ${err.stack}
 \`\`\`
     `;
 
-  const url = new URL('https://github.com/GoogleChrome/lighthouse/issues/new');
+  const errorButtonDefaultText = 'Copy details to clipboard 📋';
+  const errorButtonEl = document.createElement('button');
+  errorButtonEl.className = 'button button--report-error';
+  errorButtonEl.textContent = errorButtonDefaultText;
 
-  const errorTitle = err.message.substring(0, MAX_ISSUE_ERROR_LENGTH);
-  url.searchParams.append('title', `Extension Error: ${errorTitle}`);
-  url.searchParams.append('body', issueBody.trim());
+  errorButtonEl.addEventListener('click', async () => {
+    // @ts-ignore - tsc doesn't include `clipboard` on `navigator`
+    await navigator.clipboard.writeText(issueBody);
+    errorButtonEl.textContent = 'Copied to clipboard 📋';
 
-  const reportErrorEl = document.createElement('a');
-  reportErrorEl.className = 'button button--report-error';
-  reportErrorEl.href = url.href;
-  reportErrorEl.textContent = 'Report Error';
-  reportErrorEl.target = '_blank';
+    // Return button to inviting state after timeout.
+    setTimeout(() => {
+      errorButtonEl.textContent = errorButtonDefaultText;
+    }, 1000);
+  });
 
-  return reportErrorEl;
+  return errorButtonEl;
 }
 
 /**
@@ -176,13 +184,14 @@ async function onGenerateReportButtonClick(background, settings) {
     // Close popup once report is opened in a new tab
     window.close();
   } catch (err) {
-    let message = err.message;
+    let message = err.friendlyMessage || err.message;
     let includeReportLink = true;
 
     // Check for errors in how the user ran Lighthouse and replace with a more
     // helpful message (and remove 'Report Error' link).
     for (const [test, replacement] of Object.entries(NON_BUG_ERROR_MESSAGES)) {
-      if (message.includes(test)) {
+      if (err.message.includes(test) ||
+          (err.friendlyMessage && err.friendlyMessage.includes(test))) {
         message = replacement;
         includeReportLink = false;
         break;
@@ -193,7 +202,7 @@ async function onGenerateReportButtonClick(background, settings) {
 
     if (includeReportLink) {
       feedbackEl.className = 'feedback feedback-error';
-      feedbackEl.appendChild(buildReportErrorLink(err));
+      feedbackEl.appendChild(buildErrorCopyButton(message, err));
     }
 
     hideRunningSubpage();

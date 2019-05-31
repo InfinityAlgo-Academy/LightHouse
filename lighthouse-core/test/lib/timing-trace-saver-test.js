@@ -9,7 +9,7 @@
 
 /* eslint-disable no-console */
 
-const {generateTraceEvents, createTraceString} = require('../../lib/timing-trace-saver');
+const {generateTraceEvents, createTraceString} = require('../../lib/timing-trace-saver.js');
 
 const mockEntries = [{
   startTime: 650,

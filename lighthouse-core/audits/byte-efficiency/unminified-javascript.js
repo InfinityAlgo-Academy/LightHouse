@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit');
+const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
-const computeTokenLength = require('../../lib/minification-estimator').computeJSTokenLength;
+const computeTokenLength = require('../../lib/minification-estimator.js').computeJSTokenLength;
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to minify the page’s JS code to reduce file size. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -42,16 +42,17 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['Scripts', 'devtoolsLogs', 'traces'],
+      requiredArtifacts: ['ScriptElements', 'devtoolsLogs', 'traces'],
     };
   }
 
   /**
    * @param {string} scriptContent
-   * @param {LH.Artifacts.NetworkRequest} networkRecord
+   * @param {string} displayUrl
+   * @param {LH.Artifacts.NetworkRequest|undefined} networkRecord
    * @return {{url: string, totalBytes: number, wastedBytes: number, wastedPercent: number}}
    */
-  static computeWaste(scriptContent, networkRecord) {
+  static computeWaste(scriptContent, displayUrl, networkRecord) {
     const contentLength = scriptContent.length;
     const totalTokenLength = computeTokenLength(scriptContent);
 
@@ -61,7 +62,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
     const wastedBytes = Math.round(totalBytes * wastedRatio);
 
     return {
-      url: networkRecord.url,
+      url: displayUrl,
       totalBytes,
       wastedBytes,
       wastedPercent: 100 * wastedRatio,
@@ -77,13 +78,15 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
     /** @type {Array<LH.Audit.ByteEfficiencyItem>} */
     const items = [];
     const warnings = [];
-    for (const requestId of Object.keys(artifacts.Scripts)) {
-      const scriptContent = artifacts.Scripts[requestId];
-      const networkRecord = networkRecords.find(record => record.requestId === requestId);
-      if (!networkRecord || !scriptContent) continue;
+    for (const {requestId, src, content} of artifacts.ScriptElements) {
+      if (!content) continue;
 
+      const networkRecord = networkRecords.find(record => record.requestId === requestId);
+      const displayUrl = !src || !networkRecord ?
+        `inline: ${content.substr(0, 40)}...` :
+        networkRecord.url;
       try {
-        const result = UnminifiedJavaScript.computeWaste(scriptContent, networkRecord);
+        const result = UnminifiedJavaScript.computeWaste(content, displayUrl, networkRecord);
         // If the ratio is minimal, the file is likely already minified, so ignore it.
         // If the total number of bytes to be saved is quite small, it's also safe to ignore.
         if (result.wastedPercent < IGNORE_THRESHOLD_IN_PERCENT ||
@@ -91,11 +94,12 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
           !Number.isFinite(result.wastedBytes)) continue;
         items.push(result);
       } catch (err) {
-        warnings.push(`Unable to process ${networkRecord.url}: ${err.message}`);
+        const url = networkRecord ? networkRecord.url : '?';
+        warnings.push(`Unable to process script ${url}: ${err.message}`);
       }
     }
 
-    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
+    /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnSize)},

@@ -11,7 +11,7 @@
 
 'use strict';
 
-const ViolationAudit = require('../violation-audit');
+const ViolationAudit = require('../violation-audit.js');
 
 class GeolocationOnStart extends ViolationAudit {
   /**
@@ -25,7 +25,7 @@ class GeolocationOnStart extends ViolationAudit {
       description: 'Users are mistrustful of or confused by sites that request their ' +
           'location without context. Consider tying the request to user gestures instead. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).',
-      requiredArtifacts: ['ChromeConsoleMessages'],
+      requiredArtifacts: ['ConsoleMessages'],
     };
   }
 
@@ -37,6 +37,7 @@ class GeolocationOnStart extends ViolationAudit {
     // 'Only request geolocation information in response to a user gesture.'
     const results = ViolationAudit.getViolationResults(artifacts, /geolocation/);
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'url', itemType: 'url', text: 'URL'},
       {key: 'label', itemType: 'text', text: 'Location'},
@@ -46,7 +47,7 @@ class GeolocationOnStart extends ViolationAudit {
     const details = ViolationAudit.makeTableDetails(headings, results);
 
     return {
-      rawValue: results.length === 0,
+      score: Number(results.length === 0),
       extendedInfo: {
         value: results,
       },

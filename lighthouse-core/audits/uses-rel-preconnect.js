@@ -6,8 +6,8 @@
 
 'use strict';
 
-const Audit = require('./audit');
-const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit');
+const Audit = require('./audit.js');
+const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
 const URL = require('../lib/url-shim.js');
 const i18n = require('../lib/i18n/i18n.js');
 const NetworkRecords = require('../computed/network-records.js');
@@ -178,7 +178,7 @@ class UsesRelPreconnectAudit extends Audit {
     results = results
       .sort((a, b) => b.wastedMs - a.wastedMs);
 
-    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
+    /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
@@ -188,7 +188,7 @@ class UsesRelPreconnectAudit extends Audit {
 
     return {
       score: UnusedBytes.scoreForWastedMs(maxWasted),
-      rawValue: maxWasted,
+      numericValue: maxWasted,
       displayValue: maxWasted ?
         str_(i18n.UIStrings.displayValueMsSavings, {wastedMs: maxWasted}) :
         '',

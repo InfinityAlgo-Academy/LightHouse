@@ -8,7 +8,7 @@
 /* eslint-env jest */
 
 const TagsBlockingFirstPaint =
-    require('../../../../gather/gatherers/dobetterweb/tags-blocking-first-paint');
+    require('../../../../gather/gatherers/dobetterweb/tags-blocking-first-paint.js');
 const assert = require('assert');
 let tagsBlockingFirstPaint;
 const traceData = {

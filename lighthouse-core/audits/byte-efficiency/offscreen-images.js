@@ -9,9 +9,9 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit');
-const Sentry = require('../../lib/sentry');
-const URL = require('../../lib/url-shim');
+const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const Sentry = require('../../lib/sentry.js');
+const URL = require('../../lib/url-shim.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const Interactive = require('../../computed/metrics/interactive.js');
 const TraceOfTab = require('../../computed/trace-of-tab.js');
@@ -223,7 +223,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
         await TraceOfTab.request(trace, context).then(tot => tot.timestamps.traceEnd));
     }
 
-    /** @type {LH.Result.Audit.OpportunityDetails['headings']} */
+    /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
       {key: 'url', valueType: 'thumbnail', label: ''},
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},

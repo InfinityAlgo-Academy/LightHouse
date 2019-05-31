@@ -25,7 +25,7 @@ describe('Performance: estimated-input-latency audit', () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {options, settings, computedCache: new Map()};
     return Audit.audit(artifacts, context).then(output => {
-      assert.equal(Math.round(output.rawValue * 10) / 10, 17.1);
+      assert.equal(Math.round(output.numericValue * 10) / 10, 17.1);
       assert.equal(output.score, 1);
       expect(output.displayValue).toBeDisplayString('20\xa0ms');
     });

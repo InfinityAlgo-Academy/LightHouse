@@ -8,7 +8,7 @@
 jest.mock('raven');
 
 const raven = require('raven');
-const Sentry = require('../../lib/sentry');
+const Sentry = require('../../lib/sentry.js');
 
 /* eslint-env jest */
 
@@ -68,7 +68,6 @@ describe('Sentry', () => {
       expect(raven.mergeContext.mock.calls[0][0]).toEqual({
         extra: {
           url: 'http://example.com',
-          deviceEmulation: true,
           emulatedFormFactor: 'desktop',
           throttlingMethod: 'devtools',
         },

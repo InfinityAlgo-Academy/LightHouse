@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const NetworkAnalyzer = require('./network-analyzer');
-const TcpConnection = require('./tcp-connection');
+const NetworkAnalyzer = require('./network-analyzer.js');
+const TcpConnection = require('./tcp-connection.js');
 
 const DEFAULT_SERVER_RESPONSE_TIME = 30;
 const TLS_SCHEMES = ['https', 'wss'];
@@ -18,22 +18,10 @@ const CONNECTIONS_PER_ORIGIN = 6;
 module.exports = class ConnectionPool {
   /**
    * @param {LH.Artifacts.NetworkRequest[]} records
-   * @param {Object=} options
+   * @param {Required<LH.Gatherer.Simulation.Options>} options
    */
   constructor(records, options) {
-    this._options = Object.assign(
-      {
-        rtt: undefined,
-        throughput: undefined,
-        additionalRttByOrigin: new Map(),
-        serverResponseTimeByOrigin: new Map(),
-      },
-      options
-    );
-
-    if (!this._options.rtt || !this._options.throughput) {
-      throw new Error('Cannot create pool with no rtt or throughput');
-    }
+    this._options = options;
 
     this._records = records;
     /** @type {Map<string, TcpConnection[]>} */
@@ -139,14 +127,10 @@ module.exports = class ConnectionPool {
    * @return {?TcpConnection}
    */
   acquire(record, options = {}) {
-    if (this._connectionsByRecord.has(record)) {
-      // @ts-ignore
-      return this._connectionsByRecord.get(record);
-    }
+    if (this._connectionsByRecord.has(record)) throw new Error('Record already has a connection');
 
-    const origin = String(record.parsedURL.securityOrigin);
+    const origin = record.parsedURL.securityOrigin;
     const observedConnectionWasReused = !!this._connectionReusedByRequestId.get(record.requestId);
-    /** @type {TcpConnection[]} */
     const connections = this._connectionsByOrigin.get(origin) || [];
     const connectionToUse = this._findAvailableConnectionWithLargestCongestionWindow(connections, {
       ignoreConnectionReused: options.ignoreConnectionReused,
@@ -158,6 +142,20 @@ module.exports = class ConnectionPool {
     this._connectionsInUse.add(connectionToUse);
     this._connectionsByRecord.set(record, connectionToUse);
     return connectionToUse;
+  }
+
+  /**
+   * Return the connection currently being used to fetch a record. If no connection
+   * currently being used for this record, an error will be thrown.
+   *
+   * @param {LH.Artifacts.NetworkRequest} record
+   * @return {TcpConnection}
+   */
+  acquireActiveConnectionFromRecord(record) {
+    const activeConnection = this._connectionsByRecord.get(record);
+    if (!activeConnection) throw new Error('Could not find an active connection for record');
+
+    return activeConnection;
   }
 
   /**

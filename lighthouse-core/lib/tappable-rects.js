@@ -12,7 +12,7 @@ const {
   rectContainsPoint,
   getBoundingRect,
   getRectCenterPoint,
-} = require('./rect-helpers');
+} = require('./rect-helpers.js');
 
 /**
  * Merge client rects together and remove small ones. This may result in a larger overall
@@ -30,13 +30,15 @@ function getTappableRectsFromClientRects(clientRects) {
 }
 
 /**
+ * Sometimes a child will reach out of the parent by a few px, but still
+ * clearly belong to the same tap area in the users's eyes.
+ * We can be quite generous here, since merging too much tends to cause false
+ * passes instead of false failures (because there are more fingers)
  * @param {number} a
  * @param {number} b
  */
 function almostEqual(a, b) {
-  // Sometimes a child will reach out of the parent by
-  // 1px or 2px, so be somewhat tolerant for merging
-  return Math.abs(a - b) <= 2;
+  return Math.abs(a - b) <= 10;
 }
 
 /**
@@ -70,7 +72,7 @@ function mergeTouchingClientRects(clientRects) {
         (rectsLineUpHorizontally || rectsLineUpVertically);
 
       if (canMerge) {
-        const replacementClientRect = getBoundingRect(crA, crB);
+        const replacementClientRect = getBoundingRect([crA, crB]);
         const mergedRectCenter = getRectCenterPoint(replacementClientRect);
 
         if (

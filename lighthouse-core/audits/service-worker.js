@@ -20,7 +20,7 @@ class ServiceWorker extends Audit {
       description: 'The service worker is the technology that enables your app to use many ' +
          'Progressive Web App features, such as offline, add to homescreen, and push ' +
          'notifications. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker).',
-      requiredArtifacts: ['URL', 'ServiceWorker', 'Manifest'],
+      requiredArtifacts: ['URL', 'ServiceWorker', 'WebAppManifest'],
     };
   }
 
@@ -64,7 +64,7 @@ class ServiceWorker extends Audit {
   /**
    * Returns a failure message if there is no start_url or if the start_url isn't
    * contolled by the scopeUrl.
-   * @param {LH.Artifacts['Manifest']} manifest
+   * @param {LH.Artifacts['WebAppManifest']} manifest
    * @param {string} scopeUrl
    * @return {string|undefined}
    */
@@ -94,7 +94,7 @@ class ServiceWorker extends Audit {
     const versionsForOrigin = ServiceWorker.getVersionsForOrigin(versions, pageUrl);
     if (versionsForOrigin.length === 0) {
       return {
-        rawValue: false,
+        score: 0,
       };
     }
 
@@ -102,22 +102,23 @@ class ServiceWorker extends Audit {
         registrations, pageUrl);
     if (!controllingScopeUrl) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: `This origin has one or more service workers, however the page ("${pageUrl.href}") is not in scope.`, // eslint-disable-line max-len
       };
     }
 
-    const startUrlFailure = ServiceWorker.checkStartUrl(artifacts.Manifest, controllingScopeUrl);
+    const startUrlFailure = ServiceWorker.checkStartUrl(artifacts.WebAppManifest,
+        controllingScopeUrl);
     if (startUrlFailure) {
       return {
-        rawValue: false,
+        score: 0,
         explanation: `This page is controlled by a service worker, however ${startUrlFailure}.`,
       };
     }
 
     // SW controls both finalUrl and start_url.
     return {
-      rawValue: true,
+      score: 1,
     };
   }
 }

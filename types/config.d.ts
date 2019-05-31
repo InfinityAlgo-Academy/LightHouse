@@ -15,15 +15,12 @@ declare global {
        */
       export interface Json {
         extends?: 'lighthouse:default' | 'lighthouse:full' | string | boolean;
-        settings?: SettingsJson;
+        settings?: SharedFlagsSettings;
         passes?: PassJson[] | null;
         audits?: Config.AuditJson[] | null;
         categories?: Record<string, CategoryJson> | null;
         groups?: Record<string, Config.GroupJson> | null;
-      }
-
-      export interface SettingsJson extends SharedFlagsSettings {
-        extraHeaders?: Crdp.Network.Headers | null;
+        plugins?: Array<string>,
       }
 
       export interface PassJson {
@@ -79,7 +76,7 @@ declare global {
         group?: string;
       }
 
-      export interface Settings extends Required<SettingsJson> {
+      export interface Settings extends Required<SharedFlagsSettings> {
         throttling: Required<ThrottlingSettings>;
       }
 
@@ -106,6 +103,15 @@ declare global {
         auditRefs: AuditRef[];
       }
       export interface Group extends GroupJson {}
+
+      export interface Plugin {
+        /** Optionally provide more audits to run in addition to those specified by the base config. */
+        audits?: Array<{path: string}>;
+        /** Provide a category to display the plugin results in the report. */
+        category: LH.Config.Category;
+        /** Optionally provide more groups in addition to those specified by the base config. */
+        groups?: Record<string, LH.Config.GroupJson>;
+      }
 
       export type MergeOptionsOfItems = <T extends {path?: string, options: Record<string, any>}>(items: T[]) => T[];
 

@@ -5,11 +5,13 @@
  */
 'use strict';
 
-const NetworkRecorder = require('../../lib/network-recorder');
+const NetworkRecorder = require('../../lib/network-recorder.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 const assert = require('assert');
 const devtoolsLogItems = require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
 const redirectsDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
+const redirectsScriptDevtoolsLog = require('../fixtures/redirects-from-script.devtoolslog.json');
+const lrRequestDevtoolsLog = require('../fixtures/lr.devtoolslog.json');
 
 /* eslint-env jest */
 describe('network recorder', function() {
@@ -45,6 +47,50 @@ describe('network recorder', function() {
     assert.equal(redirectC.resourceType, undefined);
     assert.equal(mainDocument.resourceType, 'Document');
   });
+
+  it('sets initiators to redirects when original initiator is script', () => {
+    // The test page features script-initiated redirects:
+    /*
+        <!DOCTYPE html>
+        <script>
+        setTimeout(_ => {
+          // add an iframe to the page via script
+          // the iframe will open :10200/redirects-script.html
+          // which redirects to :10503/redirects-script.html
+          // which redirects to airhorner.com
+          const elem = document.createElement('iframe');
+          elem.src = 'http://localhost:10200/redirects-script.html?redirect=http%3A%2F%2Flocalhost%3A10503%2Fredirects-script.html%3Fredirect%3Dhttps%253A%252F%252Fairhorner.com%252F';
+          document.body.append(elem);
+        }, 400);
+        </script>
+    */
+
+    const records = NetworkRecorder.recordsFromLogs(redirectsScriptDevtoolsLog);
+    assert.equal(records.length, 4);
+
+    const [mainDocument, iframeRedirectA, iframeRedirectB, iframeDocument] = records;
+    assert.equal(mainDocument.initiatorRequest, undefined);
+    assert.equal(mainDocument.redirectSource, undefined);
+    assert.equal(mainDocument.redirectDestination, undefined);
+    assert.equal(iframeRedirectA.initiatorRequest, mainDocument);
+    assert.equal(iframeRedirectA.redirectSource, undefined);
+    assert.equal(iframeRedirectA.redirectDestination, iframeRedirectB);
+    assert.equal(iframeRedirectB.initiatorRequest, iframeRedirectA);
+    assert.equal(iframeRedirectB.redirectSource, iframeRedirectA);
+    assert.equal(iframeRedirectB.redirectDestination, iframeDocument);
+    assert.equal(iframeDocument.initiatorRequest, iframeRedirectB);
+    assert.equal(iframeDocument.redirectSource, iframeRedirectB);
+    assert.equal(iframeDocument.redirectDestination, undefined);
+
+    const redirectURLs = iframeDocument.redirects.map(request => request.url);
+    assert.deepStrictEqual(redirectURLs, [iframeRedirectA.url, iframeRedirectB.url]);
+
+    assert.equal(mainDocument.resourceType, 'Document');
+    assert.equal(iframeRedirectA.resourceType, undefined);
+    assert.equal(iframeRedirectB.resourceType, undefined);
+    assert.equal(iframeDocument.resourceType, 'Document');
+  });
+
 
   it('recordsFromLogs ignores records with an invalid URL', function() {
     const logs = [
@@ -115,6 +161,53 @@ describe('network recorder', function() {
     responseReceived.params.response.timing = {requestTime: 0, receiveHeadersEnd: -1};
     const records = NetworkRecorder.recordsFromLogs(devtoolsLogs);
     expect(records).toMatchObject([{url: 'http://example.com', startTime: 1, endTime: 2}]);
+  });
+
+  it('should use X-TotalFetchedSize in Lightrider for transferSize', () => {
+    global.isLightrider = true;
+    const records = NetworkRecorder.recordsFromLogs(lrRequestDevtoolsLog);
+    global.isLightrider = false;
+
+    expect(records.find(r => r.url === 'https://www.paulirish.com/'))
+    .toMatchObject({
+      resourceSize: 75221,
+      transferSize: 22889,
+    });
+    expect(records.find(r => r.url === 'https://www.paulirish.com/javascripts/modernizr-2.0.js'))
+    .toMatchObject({
+      resourceSize: 9736,
+      transferSize: 4730,
+    });
+  });
+
+  it('should set the source of network records', () => {
+    const devtoolsLogs = networkRecordsToDevtoolsLog([
+      {url: 'http://example.com'},
+      {url: 'http://iframe.com'},
+      {url: 'http://other-iframe.com'},
+    ]);
+
+    const requestId1 = devtoolsLogs.find(
+      log => log.params.request && log.params.request.url === 'http://iframe.com'
+    ).params.requestId;
+    const requestId2 = devtoolsLogs.find(
+      log => log.params.request && log.params.request.url === 'http://other-iframe.com'
+    ).params.requestId;
+
+    for (const log of devtoolsLogs) {
+      if (log.params.requestId === requestId1) log.source = {sessionId: '1', targetId: 'a'};
+
+      if (log.params.requestId === requestId2 && log.method === 'Network.loadingFinished') {
+        log.source = {sessionId: '2', targetId: 'b'};
+      }
+    }
+
+    const records = NetworkRecorder.recordsFromLogs(devtoolsLogs);
+    expect(records).toMatchObject([
+      {url: 'http://example.com', sessionId: undefined, targetId: undefined},
+      {url: 'http://iframe.com', sessionId: '1', targetId: 'a'},
+      {url: 'http://other-iframe.com', sessionId: '2', targetId: 'b'},
+    ]);
   });
 
   describe('#findNetworkQuietPeriods', () => {
@@ -204,9 +297,7 @@ describe('network recorder', function() {
       ];
 
       const periods = NetworkRecorder.findNetworkQuietPeriods(records, 0);
-      assert.deepStrictEqual(periods, [
-        {start: 1200, end: Infinity},
-      ]);
+      assert.deepStrictEqual(periods, []);
     });
 
     it('should handle QUIC requests', () => {

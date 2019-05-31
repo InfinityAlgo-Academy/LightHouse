@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const icons = require('../../lib/icons');
+const icons = require('../../lib/icons.js');
 const assert = require('assert');
-const manifestParser = require('../../lib/manifest-parser');
+const manifestParser = require('../../lib/manifest-parser.js');
 
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';

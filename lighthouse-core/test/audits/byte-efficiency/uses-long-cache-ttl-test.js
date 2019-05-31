@@ -7,7 +7,7 @@
 
 const CacheHeadersAudit = require('../../../audits/byte-efficiency/uses-long-cache-ttl.js');
 const assert = require('assert');
-const NetworkRequest = require('../../../lib/network-request');
+const NetworkRequest = require('../../../lib/network-request.js');
 const options = CacheHeadersAudit.defaultOptions;
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
@@ -24,6 +24,7 @@ function networkRecord(options = {}) {
     statusCode: options.statusCode || 200,
     resourceType: options.resourceType || NetworkRequest.TYPES.Script,
     transferSize: options.transferSize || 10000,
+    protocol: options.protocol || 'http/1.1',
     responseHeaders: headers,
   };
 }
@@ -74,6 +75,22 @@ describe('Cache headers audit', () => {
     });
   });
 
+  it('ignores nonpositive and nonfinite max-age headers', () => {
+    const infinityMaxAgeStringValue = '1'.repeat(400);
+    assert.equal(Number.parseInt(infinityMaxAgeStringValue), Infinity);
+    const networkRecords = [
+      networkRecord({headers: {'cache-control': 'max-age=' + infinityMaxAgeStringValue}}),
+      networkRecord({headers: {'cache-control': 'max-age=-' + infinityMaxAgeStringValue}}),
+      networkRecord({headers: {'cache-control': 'max-age=-100'}}),
+    ];
+
+    const context = {options, computedCache: new Map()};
+    return CacheHeadersAudit.audit(getArtifacts(networkRecords), context).then(result => {
+      const items = result.details.items;
+      assert.equal(items.length, 0);
+    });
+  });
+
   it('detects low value expires headers', () => {
     const expiresIn = seconds => new Date(Date.now() + seconds * 1000).toGMTString();
     const closeEnough = (actual, exp) => assert.ok(Math.abs(actual - exp) <= 1, 'invalid expires');
@@ -103,11 +120,10 @@ describe('Cache headers audit', () => {
 
     const networkRecords = [
       networkRecord({headers: {
-        'cache-control': 'must-revalidate,max-age=3600',
+        'cache-control': 'no-transform,max-age=3600',
         'expires': expiresIn(86400),
       }}),
       networkRecord({headers: {
-        'cache-control': 'private,must-revalidate',
         'expires': expiresIn(86400),
       }}),
     ];
@@ -173,11 +189,27 @@ describe('Cache headers audit', () => {
     });
   });
 
+  it('ignores assets where policy implies they should not be cached long periods', () => {
+    const networkRecords = [
+      networkRecord({headers: {'cache-control': 'must-revalidate'}}),
+      networkRecord({headers: {'cache-control': 'no-cache'}}),
+      networkRecord({headers: {'cache-control': 'private'}}),
+    ];
+
+    const context = {options, computedCache: new Map()};
+    return CacheHeadersAudit.audit(getArtifacts(networkRecords), context).then(result => {
+      const items = result.extendedInfo.value.results;
+      assert.equal(result.score, 1);
+      assert.equal(items.length, 0);
+    });
+  });
+
   it('ignores potentially uncacheable records', () => {
     const networkRecords = [
       networkRecord({statusCode: 500}),
       networkRecord({url: 'https://example.com/dynamic.js?userId=crazy', transferSize: 10}),
-      networkRecord({url: 'data:image/jpeg;base64,what'}),
+      networkRecord({url: 'data:image/jpeg;base64,what', protocol: 'data'}),
+      networkRecord({url: 'blob:http://example.com/ca6df701-9c67-49fd-a787', protocol: 'blob'}),
       networkRecord({resourceType: NetworkRequest.TYPES.XHR}),
     ];
 

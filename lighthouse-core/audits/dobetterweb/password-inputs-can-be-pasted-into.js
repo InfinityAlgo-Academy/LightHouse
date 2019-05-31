@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 
 class PasswordInputsCanBePastedIntoAudit extends Audit {
   /**
@@ -29,7 +29,7 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
   static audit(artifacts) {
     const passwordInputsWithPreventedPaste = artifacts.PasswordInputsWithPreventedPaste;
 
-    /** @type {Array<{node: LH.Audit.DetailsRendererNodeDetailsJSON}>} */
+    /** @type {LH.Audit.Details.Table['items']} */
     const items = [];
     passwordInputsWithPreventedPaste.forEach(input => {
       items.push({
@@ -37,12 +37,13 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
       });
     });
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'node', itemType: 'node', text: 'Failing Elements'},
     ];
 
     return {
-      rawValue: passwordInputsWithPreventedPaste.length === 0,
+      score: Number(passwordInputsWithPreventedPaste.length === 0),
       extendedInfo: {
         value: passwordInputsWithPreventedPaste,
       },

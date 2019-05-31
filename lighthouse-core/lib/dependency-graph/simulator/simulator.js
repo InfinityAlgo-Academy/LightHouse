@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const BaseNode = require('../base-node');
-const TcpConnection = require('./tcp-connection');
-const ConnectionPool = require('./connection-pool');
-const DNSCache = require('./dns-cache');
-const mobileSlow4G = require('../../../config/constants').throttling.mobileSlow4G;
+const BaseNode = require('../base-node.js');
+const TcpConnection = require('./tcp-connection.js');
+const ConnectionPool = require('./connection-pool.js');
+const DNSCache = require('./dns-cache.js');
+const mobileSlow4G = require('../../../config/constants.js').throttling.mobileSlow4G;
 
 /** @typedef {BaseNode.Node} Node */
 /** @typedef {import('../network-node')} NetworkNode */
@@ -106,7 +106,6 @@ class Simulator {
     this._cachedNodeListByStartTime = [];
     // NOTE: We don't actually need *all* of these sets, but the clarity that each node progresses
     // through the system is quite nice.
-    // TODO(phulce): consider refactoring this so that it's easier to follow
     for (const state of Object.values(NodeState)) {
       this._nodes[state] = new Set();
     }
@@ -301,8 +300,7 @@ class Simulator {
       const sizeInMb = (record.resourceSize || 0) / 1024 / 1024;
       timeElapsed = 8 + 20 * sizeInMb - timingData.timeElapsed;
     } else {
-      // If we're estimating time remaining, we already acquired a connection for this record, definitely non-null
-      const connection = /** @type {TcpConnection} */ (this._acquireConnection(record));
+      const connection = this._connectionPool.acquireActiveConnectionFromRecord(record);
       const dnsResolutionTime = this._dns.getTimeUntilResolution(record, {
         requestedAt: timingData.startTime,
         shouldUpdateCache: true,
@@ -353,8 +351,7 @@ class Simulator {
     if (node.type !== BaseNode.TYPES.NETWORK) throw new Error('Unsupported');
 
     const record = node.record;
-    // If we're updating the progress, we already acquired a connection for this record, definitely non-null
-    const connection = /** @type {TcpConnection} */ (this._acquireConnection(record));
+    const connection = this._connectionPool.acquireActiveConnectionFromRecord(record);
     const dnsResolutionTime = this._dns.getTimeUntilResolution(record, {
       requestedAt: timingData.startTime,
       shouldUpdateCache: true,
@@ -504,7 +501,7 @@ module.exports = Simulator;
  * @typedef NodeTimingIntermediate
  * @property {number} [startTime]
  * @property {number} [endTime]
- * @property {number} [queuedTime]
+ * @property {number} [queuedTime] Helpful for debugging.
  * @property {number} [estimatedTimeElapsed]
  * @property {number} [timeElapsed]
  * @property {number} [timeElapsedOvershoot]

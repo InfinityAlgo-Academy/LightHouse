@@ -12,6 +12,8 @@ module.exports = {
   extends: 'lighthouse:full',
   settings: {
     onlyAudits: [
+      'accesskeys', // run axe on the page since we've had problems with interactions
+      'network-requests',
       'offscreen-images',
       'uses-webp-images',
       'uses-optimized-images',
@@ -22,8 +24,6 @@ module.exports = {
       'unused-css-rules',
       'unused-javascript',
     ],
-
-    // TODO(phulce): re-write testers to work with faster lantern loading
     throttlingMethod: 'devtools',
   },
 };

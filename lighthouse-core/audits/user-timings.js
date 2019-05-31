@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('./audit');
+const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
 const ComputedUserTimings = require('../computed/user-timings.js');
 
@@ -94,6 +94,7 @@ class UserTimings extends Audit {
         }
       });
 
+      /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
         {key: 'name', itemType: 'text', text: str_(UIStrings.columnName)},
         {key: 'timingType', itemType: 'text', text: str_(UIStrings.columnType)},
@@ -104,7 +105,7 @@ class UserTimings extends Audit {
 
       const details = Audit.makeTableDetails(headings, tableRows);
 
-      /** @type {LH.Audit.Product['displayValue']} */
+      /** @type {string|undefined} */
       let displayValue;
       if (userTimings.length) {
         displayValue = str_(UIStrings.displayValue, {itemCount: userTimings.length});
@@ -112,7 +113,7 @@ class UserTimings extends Audit {
 
       return {
         // mark the audit as notApplicable if there were no user timings
-        rawValue: userTimings.length === 0,
+        score: Number(userTimings.length === 0),
         notApplicable: userTimings.length === 0,
         displayValue,
         extendedInfo: {

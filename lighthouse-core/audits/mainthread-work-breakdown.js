@@ -10,8 +10,8 @@
 
 'use strict';
 
-const Audit = require('./audit');
-const {taskGroups} = require('../lib/task-groups');
+const Audit = require('./audit.js');
+const {taskGroups} = require('../lib/task-groups.js');
 const i18n = require('../lib/i18n/i18n.js');
 const MainThreadTasks = require('../computed/main-thread-tasks.js');
 
@@ -105,6 +105,7 @@ class MainThreadWorkBreakdown extends Audit {
       };
     });
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'groupLabel', itemType: 'text', text: str_(UIStrings.columnCategory)},
       {key: 'duration', itemType: 'ms', granularity: 1, text: str_(i18n.UIStrings.columnTimeSpent)},
@@ -121,7 +122,7 @@ class MainThreadWorkBreakdown extends Audit {
 
     return {
       score,
-      rawValue: totalExecutionTime,
+      numericValue: totalExecutionTime,
       displayValue: str_(i18n.UIStrings.seconds, {timeInMs: totalExecutionTime}),
       details: tableDetails,
     };

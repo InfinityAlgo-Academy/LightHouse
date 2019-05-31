@@ -10,14 +10,14 @@ const fs = require('fs');
 
 const jsdom = require('jsdom');
 
-const URL = require('../../../../lib/url-shim');
+const URL = require('../../../../lib/url-shim.js');
 const prepareLabData = require('../../../../report/html/renderer/psi.js');
 const Util = require('../../../../report/html/renderer/util.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
-const CategoryRenderer = require('../../../../report/html/renderer/category-renderer');
-const DetailsRenderer = require('../../../../report/html/renderer/details-renderer');
+const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
+const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const CriticalRequestChainRenderer =
-    require('../../../../report/html/renderer/crc-details-renderer');
+    require('../../../../report/html/renderer/crc-details-renderer.js');
 
 const sampleResultsStr = fs.readFileSync(__dirname + '/../../../results/sample_v2.json', 'utf-8');
 const sampleResultsRoundtripStr = fs.readFileSync(
@@ -43,7 +43,7 @@ describe('DOM', () => {
 
     // Delayed so that CategoryRenderer is in global scope
     const PerformanceCategoryRenderer =
-        require('../../../../report/html/renderer/performance-category-renderer');
+        require('../../../../report/html/renderer/performance-category-renderer.js');
     global.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
 
@@ -73,16 +73,15 @@ describe('DOM', () => {
         assert.ok(!result.perfCategoryEl.outerHTML.includes('lh-permalink'),
             'PSI\'s perfCategory HTML doesn\'t include a lh-permalink element');
         // Assume using default locale.
-        const titleEl = result.perfCategoryEl.querySelector('.lh-audit-group--metrics')
-          .querySelector('.lh-audit-group__header');
-        assert.equal(titleEl.textContent, Util.UIStrings.labDataTitle);
+        const title = result.perfCategoryEl.querySelector('.lh-audit-group--metrics')
+          .querySelector('.lh-audit-group__title').textContent;
+        assert.equal(title, Util.UIStrings.labDataTitle);
       });
 
       it('succeeds with stringified LHResult input', () => {
         const result = prepareLabData(sampleResultsStr, document);
         assert.ok(result.scoreGaugeEl instanceof document.defaultView.Element);
         assert.equal(result.scoreGaugeEl.querySelector('.lh-gauge__wrapper').href, '');
-        assert.ok(result.scoreGaugeEl.outerHTML.includes('<style>'), 'score gauge comes with CSS');
         assert.ok(result.scoreGaugeEl.outerHTML.includes('<svg'), 'score gauge comes with SVG');
 
         assert.ok(result.perfCategoryEl instanceof document.defaultView.Element);
@@ -119,14 +118,16 @@ describe('DOM', () => {
         const metricsGroupEl = perfCategoryEl.querySelector('.lh-audit-group--metrics');
 
         // Assume using default locale.
-        const titleEl = metricsGroupEl.querySelector('.lh-audit-group__header');
-        assert.equal(titleEl.textContent, Util.UIStrings.labDataTitle);
+        // Replacing markdown because ".textContent" will be post-markdown.
+        const expectedDescription = Util.UIStrings.lsPerformanceCategoryDescription
+          .replace('[Lighthouse](https://developers.google.com/web/tools/lighthouse/)', 'Lighthouse');
 
-        // Description supports markdown links, so take everything after the last link.
-        const descriptionEnd = /[^)]+$/.exec(Util.UIStrings.lsPerformanceCategoryDescription)[0];
-        assert.ok(descriptionEnd.length > 6); // If this gets too short, pick a different comparison :)
-        const descriptionEl = metricsGroupEl.querySelector('.lh-audit-group__description');
-        assert.ok(descriptionEl.textContent.endsWith(descriptionEnd));
+        // Assume using default locale.
+        const title = metricsGroupEl.querySelector('.lh-audit-group__title').textContent;
+        const description =
+          metricsGroupEl.querySelector('.lh-audit-group__description').textContent;
+        assert.equal(title, Util.UIStrings.labDataTitle);
+        assert.equal(description, expectedDescription);
       });
     });
   });

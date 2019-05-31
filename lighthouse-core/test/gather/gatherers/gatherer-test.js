@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const Gatherer = require('../../../gather/gatherers/gatherer');
+const Gatherer = require('../../../gather/gatherers/gatherer.js');
 const assert = require('assert');
 
 describe('Gatherer', () => {

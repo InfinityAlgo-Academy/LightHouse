@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('./audit');
-const URL = require('../lib/url-shim');
-const Util = require('../report/html/renderer/util');
+const Audit = require('./audit.js');
+const URL = require('../lib/url-shim.js');
+const Util = require('../report/html/renderer/util.js');
 const NetworkRecords = require('../computed/network-records.js');
 
 const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extension', 'about'];
@@ -62,12 +62,13 @@ class HTTPS extends Audit {
 
       const items = Array.from(new Set(insecureURLs)).map(url => ({url}));
 
+      /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
         {key: 'url', itemType: 'url', text: 'Insecure URL'},
       ];
 
       return {
-        rawValue: items.length === 0,
+        score: Number(items.length === 0),
         displayValue,
         extendedInfo: {
           value: items,

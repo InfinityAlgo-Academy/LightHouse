@@ -47,15 +47,15 @@ function createSWArtifact(swOpts) {
  * Create a set of artifacts for the ServiceWorker audit.
  * @param {Array<{scriptURL: string, status: string, scopeURL?: string}>} swOpts
  * @param {string} finalUrl
- * @param {{}}} manifestJson Manifest object or null if no manifest desired.
+ * @param {{}}} manifestJson WebAppManifest object or null if no manifest desired.
  */
 function createArtifacts(swOpts, finalUrl, manifestJson) {
   const manifestUrl = getBaseDirectory(finalUrl) + 'manifest.json';
-  let Manifest;
+  let WebAppManifest;
   if (manifestJson === null) {
-    Manifest = null;
+    WebAppManifest = null;
   } else if (typeof manifestJson === 'object') {
-    Manifest = manifestParser(JSON.stringify(manifestJson), manifestUrl, finalUrl);
+    WebAppManifest = manifestParser(JSON.stringify(manifestJson), manifestUrl, finalUrl);
   } else {
     throw new Error('unsupported test manifest format');
   }
@@ -63,7 +63,7 @@ function createArtifacts(swOpts, finalUrl, manifestJson) {
   return {
     ServiceWorker: createSWArtifact(swOpts),
     URL: {finalUrl},
-    Manifest,
+    WebAppManifest,
   };
 }
 
@@ -77,7 +77,7 @@ describe('Offline: service worker audit', () => {
     const manifest = {start_url: finalUrl};
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
-    assert.deepStrictEqual(output, {rawValue: true});
+    assert.deepStrictEqual(output, {score: 1});
   });
 
   it('fails when controlling service worker is not activated', () => {
@@ -89,7 +89,7 @@ describe('Offline: service worker audit', () => {
     const manifest = {start_url: finalUrl};
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
-    assert.deepStrictEqual(output, {rawValue: false});
+    assert.deepStrictEqual(output, {score: 0});
   });
 
   it('discards service worker registrations for other origins', () => {
@@ -101,7 +101,7 @@ describe('Offline: service worker audit', () => {
     const manifest = {start_url: finalUrl};
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
-    assert.deepStrictEqual(output, {rawValue: false});
+    assert.deepStrictEqual(output, {score: 0});
   });
 
   it('fails when page URL is out of scope', () => {
@@ -114,7 +114,7 @@ describe('Offline: service worker audit', () => {
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
     expect(output).toMatchObject({
-      rawValue: false,
+      score: 0,
       explanation: expect.stringMatching(new RegExp(`${finalUrl}.*not in scope`)),
     });
   });
@@ -132,7 +132,7 @@ describe('Offline: service worker audit', () => {
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
     expect(output).toMatchObject({
-      rawValue: false,
+      score: 0,
       explanation: expect.stringMatching(new RegExp(`start_url.*${startUrl}.*${scopeURL}`)),
     });
   });
@@ -148,7 +148,7 @@ describe('Offline: service worker audit', () => {
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
     expect(output).toMatchObject({
-      rawValue: false,
+      score: 0,
       explanation: expect.stringMatching(new RegExp(`${finalUrl}.*not in scope`)),
     });
   });
@@ -166,7 +166,7 @@ describe('Offline: service worker audit', () => {
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
     expect(output).toMatchObject({
-      rawValue: false,
+      score: 0,
       explanation: expect.stringMatching(new RegExp(`start_url.*${startUrl}.*${scopeURL}`)),
     });
   });
@@ -182,7 +182,7 @@ describe('Offline: service worker audit', () => {
     const manifest = {start_url: finalUrl};
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
-    assert.deepStrictEqual(output, {rawValue: true});
+    assert.deepStrictEqual(output, {score: 1});
   });
 
   it('passes when multiple SWs control the scope', () => {
@@ -197,7 +197,7 @@ describe('Offline: service worker audit', () => {
     const manifest = {start_url: finalUrl};
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
-    assert.deepStrictEqual(output, {rawValue: true});
+    assert.deepStrictEqual(output, {score: 1});
   });
 
   it('passes when multiple SWs control the origin but only one is in scope', () => {
@@ -218,7 +218,7 @@ describe('Offline: service worker audit', () => {
     const manifest = {start_url: finalUrl};
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
-    assert.deepStrictEqual(output, {rawValue: true});
+    assert.deepStrictEqual(output, {score: 1});
   });
 
   it('fails when multiple SWs control the origin but are all out of scope', () => {
@@ -240,7 +240,7 @@ describe('Offline: service worker audit', () => {
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
     expect(output).toMatchObject({
-      rawValue: false,
+      score: 0,
       explanation: expect.stringMatching(new RegExp(`${finalUrl}.*not in scope`)),
     });
   });
@@ -262,7 +262,7 @@ describe('Offline: service worker audit', () => {
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
     expect(output).toMatchObject({
-      rawValue: false,
+      score: 0,
       explanation: expect.stringMatching(new RegExp(`start_url.*${startUrl}.*${scopeURL}`)),
     });
   });
@@ -277,7 +277,7 @@ describe('Offline: service worker audit', () => {
 
     const output = ServiceWorker.audit(createArtifacts(swOpts, finalUrl, manifest));
     expect(output).toMatchObject({
-      rawValue: false,
+      score: 0,
       explanation: expect.stringMatching(/start_url.*no manifest was fetched/),
     });
   });
@@ -290,11 +290,11 @@ describe('Offline: service worker audit', () => {
     }];
 
     const artifacts = createArtifacts(swOpts, finalUrl, {});
-    artifacts.Manifest = manifestParser('{,;}', finalUrl, finalUrl);
+    artifacts.WebAppManifest = manifestParser('{,;}', finalUrl, finalUrl);
 
     const output = ServiceWorker.audit(artifacts);
     expect(output).toMatchObject({
-      rawValue: false,
+      score: 0,
       explanation: expect.stringMatching(/start_url.*manifest failed to parse as valid JSON/),
     });
   });

@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('./audit');
-const URL = require('../lib/url-shim').URL;
-const PASSING_FONT_DISPLAY_REGEX = /block|fallback|optional|swap/;
+const Audit = require('./audit.js');
+const URL = require('../lib/url-shim.js');
+const PASSING_FONT_DISPLAY_REGEX = /^(block|fallback|optional|swap)$/;
 const CSS_URL_REGEX = /url\((.*?)\)/;
 const CSS_URL_GLOBAL_REGEX = new RegExp(CSS_URL_REGEX, 'g');
 const i18n = require('../lib/i18n/i18n.js');
@@ -52,16 +52,18 @@ class FontDisplay extends Audit {
     // Go through all the stylesheets to find all @font-face declarations
     for (const stylesheet of artifacts.CSSUsage.stylesheets) {
       // Eliminate newlines so we can more easily scan through with a regex
-      const newlinesStripped = stylesheet.content.replace(/\n/g, ' ');
+      const newlinesStripped = stylesheet.content.replace(/(\r|\n)+/g, ' ');
       // Find the @font-faces
       const fontFaceDeclarations = newlinesStripped.match(/@font-face\s*{(.*?)}/g) || [];
       // Go through all the @font-face declarations to find a declared `font-display: ` property
       for (const declaration of fontFaceDeclarations) {
-        const rawFontDisplay = declaration.match(/font-display:(.*?);/);
+        // Find the font-display value by matching a single token, optionally surrounded by whitespace,
+        // followed either by a semicolon or the end of a block.
+        const rawFontDisplay = declaration.match(/font-display\s*:\s*(\w+)\s*(;|\})/);
         // If they didn't have a font-display property, it's the default, and it's failing; bail
         if (!rawFontDisplay) continue;
         // If they don't have one of the passing font-display values, it's failing; bail
-        const hasPassingFontDisplay = PASSING_FONT_DISPLAY_REGEX.test(rawFontDisplay[0]);
+        const hasPassingFontDisplay = PASSING_FONT_DISPLAY_REGEX.test(rawFontDisplay[1]);
         if (!hasPassingFontDisplay) continue;
 
         // If it's passing, we'll try to find the URL it's referencing.
@@ -80,11 +82,11 @@ class FontDisplay extends Audit {
 
             return s;
           });
-
         // Convert the relative CSS URL to an absolute URL and add it to the passing set
         for (const relativeURL of relativeURLs) {
           try {
-            const relativeRoot = stylesheet.header.sourceURL || artifacts.URL.finalUrl;
+            const relativeRoot = URL.isValid(stylesheet.header.sourceURL) ?
+              stylesheet.header.sourceURL : artifacts.URL.finalUrl;
             const absoluteURL = new URL(relativeURL, relativeRoot);
             passingURLs.add(absoluteURL.href);
           } catch (err) {
@@ -112,6 +114,9 @@ class FontDisplay extends Audit {
       .filter(record => record.resourceType === 'Font')
       // ...that don't have a passing font-display value
       .filter(record => !passingFontURLs.has(record.url))
+      // ...and that aren't data URLs, the blocking concern doesn't really apply
+      .filter(record => !/^data:/.test(record.url))
+      .filter(record => !/^blob:/.test(record.url))
       .map(record => {
         // In reality the end time should be calculated with paint time included
         // all browsers wait 3000ms to block text so we make sure 3000 is our max wasted time
@@ -123,6 +128,7 @@ class FontDisplay extends Audit {
         };
       });
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
       {key: 'wastedMs', itemType: 'ms', text: str_(i18n.UIStrings.columnWastedMs)},
@@ -132,7 +138,6 @@ class FontDisplay extends Audit {
 
     return {
       score: Number(results.length === 0),
-      rawValue: results.length === 0,
       details,
     };
   }

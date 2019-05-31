@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit');
+const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const NetworkRecords = require('../../computed/network-records.js');
 
@@ -78,7 +78,10 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       results.push(result);
     });
     const totalCompletedRequests = results.length;
-    results = results.sort((itemA, itemB) => itemB.totalBytes - itemA.totalBytes).slice(0, 10);
+    results = results.sort((itemA, itemB) => {
+      return itemB.totalBytes - itemA.totalBytes ||
+        itemA.url.localeCompare(itemB.url);
+    }).slice(0, 10);
 
     const score = ByteEfficiencyAudit.computeLogNormalScore(
       totalBytes,
@@ -86,6 +89,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       context.options.scoreMedian
     );
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
       {key: 'totalBytes', itemType: 'bytes', text: str_(i18n.UIStrings.columnSize)},
@@ -95,7 +99,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
 
     return {
       score,
-      rawValue: totalBytes,
+      numericValue: totalBytes,
       displayValue: str_(UIStrings.displayValue, {totalBytes}),
       extendedInfo: {
         value: {

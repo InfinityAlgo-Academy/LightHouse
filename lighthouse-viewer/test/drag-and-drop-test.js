@@ -9,7 +9,7 @@
 
 const assert = require('assert');
 
-const testHelpers = require('./test-helpers');
+const testHelpers = require('./test-helpers.js');
 
 // Called before other src import so code that relies on `document` and
 // `window` have them defined.

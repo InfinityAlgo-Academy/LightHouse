@@ -11,8 +11,8 @@
  * that contain deprecated API warnings sent by Chrome.
  */
 
-const Audit = require('./audit');
-const Util = require('../report/html/renderer/util');
+const Audit = require('./audit.js');
+const Util = require('../report/html/renderer/util.js');
 
 class Deprecations extends Audit {
   /**
@@ -25,7 +25,7 @@ class Deprecations extends Audit {
       failureTitle: 'Uses deprecated APIs',
       description: 'Deprecated APIs will eventually be removed from the browser. ' +
           '[Learn more](https://www.chromestatus.com/features#deprecated).',
-      requiredArtifacts: ['ChromeConsoleMessages'],
+      requiredArtifacts: ['ConsoleMessages'],
     };
   }
 
@@ -34,7 +34,7 @@ class Deprecations extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    const entries = artifacts.ChromeConsoleMessages;
+    const entries = artifacts.ConsoleMessages;
 
     const deprecations = entries.filter(log => log.entry.source === 'deprecation').map(log => {
       return {
@@ -45,6 +45,7 @@ class Deprecations extends Audit {
       };
     });
 
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'value', itemType: 'code', text: 'Deprecation / Warning'},
       {key: 'url', itemType: 'url', text: 'URL'},
@@ -60,7 +61,7 @@ class Deprecations extends Audit {
     }
 
     return {
-      rawValue: deprecations.length === 0,
+      score: Number(deprecations.length === 0),
       displayValue,
       extendedInfo: {
         value: deprecations,
