@@ -68,3 +68,4 @@ class FullPageScreenshot extends Gatherer {
 }
 
 module.exports = FullPageScreenshot;
+module.exports.MAX_SCREENSHOT_HEIGHT = MAX_SCREENSHOT_HEIGHT;
