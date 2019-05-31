@@ -64,7 +64,7 @@ if [[ $(echo "$NEW_CONTRIBUTORS" | wc -l) -gt 1 ]]; then
 fi
 
 git add changelog.md lighthouse-core/test/results/ proto/
-git commit -m "$NEW_VERSION"
+git commit -m "v$NEW_VERSION"
 
 echo "Version bump commit ready on the ${TXT_BOLD}$BRANCH_NAME${TXT_RESET} branch!"
 
