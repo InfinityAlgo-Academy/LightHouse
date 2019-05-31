@@ -48,10 +48,11 @@ class GatherRunner {
    * Loads options.url with specified options. If the main document URL
    * redirects, options.url will be updated accordingly. As such, options.url
    * will always represent the post-redirected URL. options.requestedUrl is the
-   * pre-redirect starting URL.
+   * pre-redirect starting URL. If the navigation errors with "expected" errors such as
+   * NO_FCP, a `navigationError` is returned.
    * @param {Driver} driver
    * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<void>}
+   * @return {Promise<{navigationError?: LH.LighthouseError}>}
    */
   static async loadPage(driver, passContext) {
     const gatherers = passContext.passConfig.gatherers;
@@ -61,15 +62,25 @@ class GatherRunner {
       args: [gatherers.map(g => g.instance.name).join(', ')],
     };
     log.time(status);
+    try {
+      const finalUrl = await driver.gotoURL(passContext.url, {
+        waitForFCP: passContext.passConfig.recordTrace,
+        waitForLoad: true,
+        passContext,
+      });
+      passContext.url = finalUrl;
+    } catch (err) {
+      // If it's one of our loading-based LHErrors, we'll treat it as a page load error.
+      if (err.code === 'NO_FCP') {
+        return {navigationError: err};
+      }
 
-    const finalUrl = await driver.gotoURL(passContext.url, {
-      waitForFCP: passContext.passConfig.recordTrace,
-      waitForLoad: true,
-      passContext,
-    });
-    passContext.url = finalUrl;
+      throw err;
+    } finally {
+      log.timeEnd(status);
+    }
 
-    log.timeEnd(status);
+    return {};
   }
 
   /**
@@ -122,7 +133,7 @@ class GatherRunner {
    * Returns an error if the original network request failed or wasn't found.
    * @param {string} url The URL of the original requested page.
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {LHError|undefined}
+   * @return {LH.LighthouseError|undefined}
    */
   static getNetworkError(url, networkRecords) {
     const mainRecord = networkRecords.find(record => {
@@ -161,14 +172,24 @@ class GatherRunner {
    * main document request failure, a security issue, etc.
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
+   * @param {LighthouseError|undefined} navigationError
+   * @return {LighthouseError|undefined}
    */
-  static getPageLoadError(passContext, loadData) {
+  static getPageLoadError(passContext, loadData, navigationError) {
     const networkError = GatherRunner.getNetworkError(passContext.url, loadData.networkRecords);
 
     //  If the driver was offline, the load will fail without offline support. Ignore this case.
     if (!passContext.driver.online) return;
 
-    return networkError;
+    // Network errors are usually the most specific and provide the best reason for why the page failed to load.
+    // Prefer networkError over navigationError.
+    // Example: `DNS_FAILURE` is better than `NO_FCP`.
+    if (networkError) return networkError;
+
+    // Navigation errors are rather generic and express some failure of the page to render properly.
+    // Use `navigationError` as the last resort.
+    // Example: `NO_FCP`, the page never painted content for some unknown reason.
+    return navigationError;
   }
 
   /**
@@ -576,7 +597,7 @@ class GatherRunner {
 
     // Navigate, start recording, and run `pass()` on gatherers.
     await GatherRunner.beginRecording(passContext);
-    await GatherRunner.loadPage(driver, passContext);
+    const {navigationError: possibleNavError} = await GatherRunner.loadPage(driver, passContext);
     await GatherRunner.pass(passContext, gathererResults);
     const loadData = await GatherRunner.endRecording(passContext);
 
@@ -589,7 +610,7 @@ class GatherRunner {
     if (loadData.trace) baseArtifacts.traces[passConfig.passName] = loadData.trace;
 
     // If there were any load errors, treat all gatherers as if they errored.
-    const pageLoadError = GatherRunner.getPageLoadError(passContext, loadData);
+    const pageLoadError = GatherRunner.getPageLoadError(passContext, loadData, possibleNavError);
     if (pageLoadError) {
       log.error('GatherRunner', pageLoadError.friendlyMessage, passContext.url);
       passContext.LighthouseRunWarnings.push(pageLoadError.friendlyMessage);

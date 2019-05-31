@@ -198,8 +198,8 @@
   https://github.com/GoogleChrome/lighthouse/issues/1194 -->
 <script>window.Error = function(error) { this.stack = 'stacktrace'; };</script>
 
-<!--The javascriptDialogOpening test is disabled as we hit a platform bug frequently on travis-->
-<!--<script>window.confirm('Is DBW Mega Tester the best site?')</script>-->
+<!-- Does the automatic dialog suppression `driver.dismissJavaScriptDialogs()` work? -->
+<script>window.confirm('Is DBW Mega Tester the best site?')</script>
 
 <script>
 function stampTemplate(id, location) {

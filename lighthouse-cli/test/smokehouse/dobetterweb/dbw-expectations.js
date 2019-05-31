@@ -155,12 +155,12 @@ module.exports = [
         },
         'dom-size': {
           score: 1,
-          numericValue: 34,
+          numericValue: 35,
           details: {
             items: [
-              {statistic: 'Total DOM Elements', value: '34'},
+              {statistic: 'Total DOM Elements', value: '35'},
               {statistic: 'Maximum DOM Depth', value: '3'},
-              {statistic: 'Maximum Child Elements', value: '32'},
+              {statistic: 'Maximum Child Elements', value: '33'},
             ],
           },
         },
