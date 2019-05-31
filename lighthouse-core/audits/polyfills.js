@@ -32,7 +32,7 @@ class Polyfills extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.MANUAL,
       description: str_(UIStrings.description),
       title: str_(UIStrings.title),
-      requiredArtifacts: ['ScriptElements'],
+      requiredArtifacts: ['devtoolsLogs', 'ScriptElements'],
     };
   }
 
