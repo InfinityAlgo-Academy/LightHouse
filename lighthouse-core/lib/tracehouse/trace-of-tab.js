@@ -16,11 +16,10 @@
  * 4. Return all those items in one handy bundle.
  */
 
-const makeComputedArtifact = require('./computed-artifact.js');
 const log = require('lighthouse-logger');
-const TracingProcessor = require('../lib/traces/tracing-processor.js');
-const LHError = require('../lib/lh-error.js');
-const Sentry = require('../lib/sentry.js');
+const TracingProcessor = require('./tracing-processor.js');
+const LHError = require('../lh-error.js');
+const Sentry = require('../sentry.js');
 
 const ACCEPTABLE_NAVIGATION_URL_REGEX = /^(chrome|https?):/;
 
@@ -69,9 +68,9 @@ class TraceOfTab {
    * Finds key trace events, identifies main process/thread, and returns timings of trace events
    * in milliseconds since navigation start in addition to the standard microsecond monotonic timestamps.
    * @param {LH.Trace} trace
-   * @return {Promise<LH.Artifacts.TraceOfTab>}
+   * @return {LH.Artifacts.TraceOfTab}
   */
-  static async compute_(trace) {
+  static compute(trace) {
     // Parse the trace for our key events and sort them by timestamp. Note: sort
     // *must* be stable to keep events correctly nested.
     const keyEvents = TraceOfTab.filteredStableSort(trace.traceEvents, e => {
@@ -189,4 +188,4 @@ class TraceOfTab {
   }
 }
 
-module.exports = makeComputedArtifact(TraceOfTab);
+module.exports = TraceOfTab;

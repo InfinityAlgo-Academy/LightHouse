@@ -7,13 +7,14 @@
 
 /* eslint-env jest */
 
-const MainThreadTasks = require('../../computed/main-thread-tasks.js');
-const taskGroups = require('../../lib/task-groups.js').taskGroups;
-const pwaTrace = require('../fixtures/traces/progressive-app.json');
-const TracingProcessor = require('../../lib/traces/tracing-processor.js');
+const MainThreadTasks = require('../../../lib/tracehouse/main-thread-tasks.js');
+const TraceOfTab = require('../../../lib/tracehouse/trace-of-tab.js');
+const taskGroups = require('../../../lib/tracehouse/task-groups.js').taskGroups;
+const pwaTrace = require('../../fixtures/traces/progressive-app.json');
+const TracingProcessor = require('../../../lib/tracehouse/tracing-processor.js');
 const assert = require('assert');
 
-describe('MainResource computed artifact', () => {
+describe('Main Thread Tasks', () => {
   const pid = 1;
   const tid = 2;
   const frameId = 'BLAH';
@@ -29,9 +30,13 @@ describe('MainResource computed artifact', () => {
     ];
   });
 
-  it('should get all main thread tasks from a trace', async () => {
-    const context = {computedCache: new Map()};
-    const tasks = await MainThreadTasks.request({traceEvents: pwaTrace}, context);
+  function run(trace) {
+    const {mainThreadEvents, timestamps} = TraceOfTab.compute(trace);
+    return MainThreadTasks.getMainThreadTasks(mainThreadEvents, timestamps.traceEnd);
+  }
+
+  it('should get all main thread tasks from a trace', () => {
+    const tasks = run({traceEvents: pwaTrace});
     const toplevelTasks = tasks.filter(task => !task.parent);
     assert.equal(tasks.length, 2305);
     assert.equal(toplevelTasks.length, 296);
@@ -54,7 +59,7 @@ describe('MainResource computed artifact', () => {
     assert.equal(Math.round(totalTime), 396);
   });
 
-  it('should compute parent/child correctly', async () => {
+  it('should compute parent/child correctly', () => {
     /*
     An artistic rendering of the below trace:
     █████████████████████████████TaskA██████████████████████████████████████████████
@@ -71,8 +76,7 @@ describe('MainResource computed artifact', () => {
 
     traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
 
-    const context = {computedCache: new Map()};
-    const tasks = await MainThreadTasks.request({traceEvents}, context);
+    const tasks = run({traceEvents});
     assert.equal(tasks.length, 3);
 
     const taskA = tasks.find(task => task.event.name === 'TaskA');
@@ -105,7 +109,7 @@ describe('MainResource computed artifact', () => {
     });
   });
 
-  it('should compute attributableURLs correctly', async () => {
+  it('should compute attributableURLs correctly', () => {
     const baseTs = 1241250325;
     const url = s => ({args: {data: {url: s}}});
     const stackFrames = f => ({args: {data: {stackTrace: f.map(url => ({url}))}}});
@@ -131,8 +135,7 @@ describe('MainResource computed artifact', () => {
       evt.args = evt.args || args;
     });
 
-    const context = {computedCache: new Map()};
-    const tasks = await MainThreadTasks.request({traceEvents}, context);
+    const tasks = run({traceEvents});
     const taskA = tasks.find(task => task.event.name === 'TaskA');
     const taskB = tasks.find(task => task.event.name === 'TaskB');
     const taskC = tasks.find(task => task.event.name === 'EvaluateScript');
@@ -144,7 +147,7 @@ describe('MainResource computed artifact', () => {
     assert.deepStrictEqual(taskD.attributableURLs, ['urlB.1', 'urlB.2', 'urlC', 'urlD']);
   });
 
-  it('should handle the last trace event not ending', async () => {
+  it('should handle the last trace event not ending', () => {
     /*
     An artistic rendering of the below trace:
     █████████████████████████████TaskA████████████|
@@ -162,8 +165,7 @@ describe('MainResource computed artifact', () => {
 
     traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
 
-    const context = {computedCache: new Map()};
-    const tasks = await MainThreadTasks.request({traceEvents}, context);
+    const tasks = run({traceEvents});
     expect(tasks).toHaveLength(3);
 
     const taskA = tasks.find(task => task.event.name === 'TaskA');
@@ -223,7 +225,7 @@ describe('MainResource computed artifact', () => {
   ];
 
   for (const invalidEvents of invalidEventSets) {
-    it('should throw on invalid task input', async () => {
+    it('should throw on invalid task input', () => {
       const traceEvents = [
         ...boilerplateTrace,
         ...invalidEvents,
@@ -231,9 +233,7 @@ describe('MainResource computed artifact', () => {
 
       traceEvents.forEach(evt => Object.assign(evt, {cat: 'devtools.timeline'}));
 
-      const context = {computedCache: new Map()};
-      const promise = MainThreadTasks.request({traceEvents}, context);
-      await expect(promise).rejects.toBeTruthy();
+      expect(() => run({traceEvents})).toThrow();
     });
   }
 });

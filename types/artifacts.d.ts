@@ -9,7 +9,7 @@ import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simu
 import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
 import speedline = require('speedline-core');
 
-type _TaskNode = import('../lighthouse-core/computed/main-thread-tasks.js').TaskNode;
+type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
 
 type LanternSimulator = InstanceType<typeof _LanternSimulator>;
 

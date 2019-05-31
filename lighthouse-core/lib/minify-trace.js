@@ -10,13 +10,13 @@
 /**
  * @fileoverview Minifies a trace by removing unnecessary events, throttling screenshots, etc.
  *  See the following files for necessary events:
- *    - lighthouse-core/computed/trace-of-tab.js
  *    - lighthouse-core/computed/page-dependency-graph.js
  *    - lighthouse-core/lib/dependency-graph/cpu-node.js
- *    - lighthouse-core/lib/traces/tracing-processor.js
+ *    - lighthouse-core/lib/tracehouse/trace-of-tab.js
+ *    - lighthouse-core/lib/tracehouse/tracing-processor.js
  */
 
-const TracingProcessor = require('./traces/tracing-processor.js');
+const TracingProcessor = require('./tracehouse/tracing-processor.js');
 
 const toplevelTaskNames = new Set([
   'RunTask', // m71+

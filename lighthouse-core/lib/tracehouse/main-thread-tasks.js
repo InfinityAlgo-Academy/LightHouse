@@ -5,9 +5,7 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const {taskGroups, taskNameToGroup} = require('../lib/task-groups.js');
-const TraceOfTab = require('./trace-of-tab.js');
+const {taskGroups, taskNameToGroup} = require('./task-groups.js');
 
 /**
  * @fileoverview
@@ -26,7 +24,7 @@ const TraceOfTab = require('./trace-of-tab.js');
  * attributableURL for the script that was executing/forced this execution.
  */
 
-/** @typedef {import('../lib/task-groups.js').TaskGroup} TaskGroup */
+/** @typedef {import('./task-groups.js').TaskGroup} TaskGroup */
 
 /**
  * @typedef TaskNode
@@ -263,16 +261,6 @@ class MainThreadTasks {
 
     return tasks;
   }
-
-  /**
-   * @param {LH.Trace} trace
-   * @param {LH.Audit.Context} context
-   * @return {Promise<Array<TaskNode>>} networkRecords
-   */
-  static async compute_(trace, context) {
-    const {mainThreadEvents, timestamps} = await TraceOfTab.request(trace, context);
-    return MainThreadTasks.getMainThreadTasks(mainThreadEvents, timestamps.traceEnd);
-  }
 }
 
-module.exports = makeComputedArtifact(MainThreadTasks);
+module.exports = MainThreadTasks;

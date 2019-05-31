@@ -93,7 +93,7 @@ describe('Cache headers audit', () => {
 
   it('detects low value expires headers', () => {
     const expiresIn = seconds => new Date(Date.now() + seconds * 1000).toGMTString();
-    const closeEnough = (actual, exp) => assert.ok(Math.abs(actual - exp) <= 1, 'invalid expires');
+    const closeEnough = (actual, exp) => assert.ok(Math.abs(actual - exp) <= 5, 'invalid expires');
 
     const networkRecords = [
       networkRecord({headers: {expires: expiresIn(86400 * 365)}}), // a year
@@ -132,9 +132,9 @@ describe('Cache headers audit', () => {
     return CacheHeadersAudit.audit(getArtifacts(networkRecords), context).then(result => {
       const items = result.extendedInfo.value.results;
       assert.equal(items.length, 2);
-      assert.ok(Math.abs(items[0].cacheLifetimeMs - 3600 * 1000) <= 1, 'invalid expires parsing');
+      assert.ok(Math.abs(items[0].cacheLifetimeMs - 3600 * 1000) <= 5, 'invalid expires parsing');
       assert.equal(Math.round(items[0].wastedBytes), 8000);
-      assert.ok(Math.abs(items[1].cacheLifetimeMs - 86400 * 1000) <= 1, 'invalid expires parsing');
+      assert.ok(Math.abs(items[1].cacheLifetimeMs - 86400 * 1000) <= 5, 'invalid expires parsing');
       assert.equal(Math.round(items[1].wastedBytes), 4000);
     });
   });
