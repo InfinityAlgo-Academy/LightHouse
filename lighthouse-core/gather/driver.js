@@ -1423,6 +1423,8 @@ class Driver {
 
   /**
    * @param {LH.Config.Settings} settings
+   * @param {{height?: number, screenHeight: number?, deviceScaleFactor?: number}} [deviceMetricOverrides]
+   * Override device size for taking screenshots.
    * @return {Promise<void>}
    */
   async beginEmulation(settings, deviceMetricOverrides) {

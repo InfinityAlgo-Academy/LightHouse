@@ -7,20 +7,25 @@
 
 const Gatherer = require('./gatherer.js');
 
+// JPEG quality setting
+// Exploration and examples of reports using different quality settings: https://docs.google.com/document/d/1ZSffucIca9XDW2eEwfoevrk-OTl7WQFeMf0CgeJAA8M/edit#
+const FULL_PAGE_SCREENSHOT_QUALITY = 30;
+// Maximum screenshot height in Chrome https://bugs.chromium.org/p/chromium/issues/detail?id=770769
+const MAX_SCREENSHOT_HEIGHT = 16384;
+// Maximum data URL size in Chrome https://bugs.chromium.org/p/chromium/issues/detail?id=69227
+const MAX_DATA_URL_SIZE = 2 * 1024 * 1024;
+
 class FullPageScreenshot extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
+   * @param {number} maxScreenshotHeight
+   * @return {Promise<LH.Artifacts.FullPageScreenshot>}
    */
-  async afterPass(passContext) {
-    const quality = 30;
-    const maxScreenshotHeight = 20000;
-
+  async _takeScreenshot(passContext, maxScreenshotHeight) {
     const driver = passContext.driver;
     const metrics = await driver.sendCommand('Page.getLayoutMetrics');
     const width = await driver.evaluateAsync(`window.innerWidth`);
-    let height = Math.ceil(metrics.contentSize.height);
-
-    height = Math.min(maxScreenshotHeight, height);
+    const height = Math.min(metrics.contentSize.height, maxScreenshotHeight);
 
     await driver.beginEmulation(passContext.settings, {
       height,
@@ -30,7 +35,7 @@ class FullPageScreenshot extends Gatherer {
 
     const result = await driver.sendCommand('Page.captureScreenshot', {
       format: 'jpeg',
-      quality: quality,
+      quality: FULL_PAGE_SCREENSHOT_QUALITY,
     });
     const data = 'data:image/jpeg;base64,' + result.data;
 
@@ -43,6 +48,24 @@ class FullPageScreenshot extends Gatherer {
       height,
     };
   }
+
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @return {Promise<LH.Artifacts.FullPageScreenshot>}
+   */
+  async afterPass(passContext) {
+    let screenshot = await this._takeScreenshot(passContext, MAX_SCREENSHOT_HEIGHT);
+
+    if (screenshot.data.length > MAX_DATA_URL_SIZE) {
+      // Hitting the data URL size limit is rare, it only happens for pages on tall
+      // desktop sites with lots of images.
+      // So just cutting down the height a bit fixes the issue.
+      screenshot = await this._takeScreenshot(passContext, 5000);
+    }
+
+    return screenshot;
+  }
 }
 
 module.exports = FullPageScreenshot;
+module.exports.MAX_SCREENSHOT_HEIGHT = MAX_SCREENSHOT_HEIGHT;

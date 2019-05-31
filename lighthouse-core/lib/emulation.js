@@ -62,9 +62,17 @@ const NO_CPU_THROTTLE_METRICS = {
   rate: 1,
 };
 
-async function enableEmulation(driver, {deviceMetrics, setTouchEmulationEnabled, userAgent, deviceMetricOverrides}) {
-  deviceMetricOverrides = deviceMetricOverrides || {};
-  deviceMetrics = Object.assign({}, deviceMetrics, deviceMetricOverrides);
+/**
+ * @param {Driver} driver
+ * @param {EnableEmulationOptions} emulationOptions
+ */
+async function enableEmulation(
+  driver,
+  {deviceMetrics, setTouchEmulationEnabled, userAgent, deviceMetricOverrides}
+) {
+  if (deviceMetricOverrides) {
+    deviceMetrics = Object.assign({}, deviceMetrics, deviceMetricOverrides);
+  }
 
   return Promise.all([
     driver.sendCommand('Emulation.setDeviceMetricsOverride', deviceMetrics),
@@ -77,6 +85,7 @@ async function enableEmulation(driver, {deviceMetrics, setTouchEmulationEnabled,
 
 /**
  * @param {Driver} driver
+ * @param {DeviceMetricOverrides} [deviceMetricOverrides]
  * @return {Promise<void>}
  */
 async function enableNexus5X(driver, deviceMetricOverrides) {
@@ -90,6 +99,7 @@ async function enableNexus5X(driver, deviceMetricOverrides) {
 
 /**
  * @param {Driver} driver
+ * @param {DeviceMetricOverrides} [deviceMetricOverrides]
  * @return {Promise<void>}
  */
 async function enableDesktop(driver, deviceMetricOverrides) {
@@ -166,3 +176,16 @@ module.exports = {
   MOBILE_USERAGENT: NEXUS5X_USERAGENT,
   DESKTOP_USERAGENT,
 };
+
+/** @typedef {{
+ *   deviceMetrics: LH.Crdp.Emulation.SetDeviceMetricsOverrideRequest;
+ *   userAgent: string;
+ *   setTouchEmulationEnabled: boolean;
+ *   deviceMetricOverrides?: DeviceMetricOverrides;
+ * }} EnableEmulationOptions */
+
+/** @typedef {{
+ *   height?: number;
+ *   screenHeight: number?;
+ *   deviceScaleFactor?: number;
+ * }} DeviceMetricOverrides */
