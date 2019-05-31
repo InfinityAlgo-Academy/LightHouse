@@ -8,7 +8,7 @@
 /** @typedef {{object: string | undefined, property: string}} Poly */
 /** @typedef {{line: number, col: number, poly: Poly}} PolyIssue */
 
-const Audit = require('./audit');
+const Audit = require('./audit.js');
 const NetworkRecords = require('../computed/network-records.js');
 const i18n = require('../lib/i18n/i18n.js');
 
@@ -230,7 +230,7 @@ class Polyfills extends Audit {
     const urlToPolyIssues = new Map();
 
     for (const {requestId, content} of Object.values(scripts)) {
-      if (!content) continue
+      if (!content) continue;
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
       if (!networkRecord) continue;
       const extPolys = this.detectPolyfills(polyfills, content);
