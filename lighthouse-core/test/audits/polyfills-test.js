@@ -20,8 +20,11 @@ const createArtifacts = (scripts) => {
   }));
   return {
     devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
-    Scripts: scripts.reduce((acc, {code}, index) => {
-      acc[String(index)] = code;
+    ScriptElements: scripts.reduce((acc, {code}, index) => {
+      acc[String(index)] = {
+        content: code,
+        requestId: String(index),
+      };
       return acc;
     }, {}),
   };

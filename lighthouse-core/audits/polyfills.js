@@ -32,7 +32,7 @@ class Polyfills extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.MANUAL,
       description: str_(UIStrings.description),
       title: str_(UIStrings.title),
-      requiredArtifacts: ['Scripts'],
+      requiredArtifacts: ['ScriptElements'],
     };
   }
 
@@ -79,7 +79,7 @@ class Polyfills extends Audit {
     while ((result = re.exec(code)) !== null) {
       // discard first (it's the whole matching pattern)
       // index 1 is truthy if matching a newline, and is used to track the line number
-      // matches maps to each possible poly. Exec until no more matches
+      // matches maps to each possible poly.
       // only one of [isNewline, ...matches] is ever defined.
       const [, isNewline, ...matches] = result;
       if (isNewline) {
@@ -202,17 +202,17 @@ class Polyfills extends Audit {
       'String.raw',
     ].map(str => {
       const parts = str.split('.');
+      const object = parts.length > 1 ? parts.slice(0, parts.length - 1).join('.') : undefined;
+      const property = parts[parts.length - 1];
       return {
-        object: parts.length > 1 ?
-                parts.slice(0, parts.length - 1).join('.')
-          : undefined,
-        property: parts[parts.length - 1],
+        object,
+        property,
       };
     });
   }
 
   /**
-   * @param {LH.GathererArtifacts['Scripts']} scripts
+   * @param {LH.GathererArtifacts['ScriptElements']} scripts
    * @param {LH.Artifacts.NetworkRequest[]} networkRecords
    * @return {{
    *  polyCounter: Map<Poly, number>,
@@ -229,7 +229,8 @@ class Polyfills extends Audit {
     /** @type {Map<string, PolyIssue[]>} */
     const urlToPolyIssues = new Map();
 
-    for (const [requestId, content] of Object.entries(scripts)) {
+    for (const {requestId, content} of Object.values(scripts)) {
+      if (!content) continue
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
       if (!networkRecord) continue;
       const extPolys = this.detectPolyfills(polyfills, content);
@@ -255,7 +256,7 @@ class Polyfills extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Polyfills.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const {polyCounter, polyIssueCounter, urlToPolyIssues} =
-      this.calculatePolyIssues(artifacts.Scripts, networkRecords);
+      this.calculatePolyIssues(artifacts.ScriptElements, networkRecords);
 
     /** @type {Array<{url: string, description: string, location: string}>} */
     const tableRows = [];
@@ -275,6 +276,7 @@ class Polyfills extends Audit {
         });
       }
     });
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'url', itemType: 'url', text: 'URL'},
       {key: 'description', itemType: 'code', text: 'Description'},
@@ -285,7 +287,9 @@ class Polyfills extends Audit {
 
     return {
       score: Number(polyIssueCounter.size === 0),
-      rawValue: polyIssueCounter.size,
+      extendedInfo: {
+        value: polyIssueCounter.size,
+      },
       details,
     };
   }
