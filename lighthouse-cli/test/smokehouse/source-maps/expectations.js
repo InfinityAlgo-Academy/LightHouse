@@ -5,6 +5,15 @@
  */
 'use strict';
 
+const map = {
+  version: 3,
+  file: 'out.js',
+  sourceRoot: '',
+  sources: ['foo.js', 'bar.js'],
+  names: ['src', 'maps', 'are', 'fun'],
+  mappings: 'AAgBC,SAAQ,CAAEA',
+};
+
 /**
  * Expected Lighthouse audit values for Do Better Web tests.
  */
@@ -17,15 +26,16 @@ module.exports = [
         map: undefined,
       }, {
         url: 'http://localhost:10200/source-maps/source-maps-tester.html',
-        map: {
-          version: 3,
-          file: 'out.js',
-          sourceRoot: '',
-          sources: ['foo.js', 'bar.js'],
-          names: ['src', 'maps', 'are', 'fun'],
-          mappings: 'AAgBC,SAAQ,CAAEA',
-        },
+        map,
         error: undefined,
+      }, {
+        url: 'http://localhost:10200/source-maps/bundle.js',
+        map,
+        error: undefined,
+      }, {
+        url: 'http://localhost:10200/source-maps/bundle-map-500.js',
+        error: 'TypeError: Failed to fetch',
+        map: undefined,
       }],
     },
     lhr: {

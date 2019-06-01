@@ -45,21 +45,21 @@ class SourceMaps extends Gatherer {
 
   /**
    * @param {Driver} driver
-   * @param {string[]} urls
+   * @param {Array<{url: string, sourceMapURL: string}>} sourceMapsToFetch
    * @return {Promise<LH.Artifacts.SourceMap[]>}
    */
-  async fetchSourceMapsInPage(driver, urls) {
-    const urlsParam = JSON.stringify(urls);
+  async fetchSourceMapsInPage(driver, sourceMapsToFetch) {
+    const sourceMapUrlsParam = JSON.stringify(sourceMapsToFetch.map(obj => obj.sourceMapURL));
     // TODO: change default protocol timeout?
     // driver.setNextProtocolTimeout(250);
     /** @type {string[]} */
     const sourceMapJsons =
-      await driver.evaluateAsync(`(${fetchSourceMaps.toString()})(${urlsParam})`);
+      await driver.evaluateAsync(`(${fetchSourceMaps.toString()})(${sourceMapUrlsParam})`);
 
     /** @type {LH.Artifacts.SourceMap[]} */
     const sourceMaps = [];
     for (const [i, json] of sourceMapJsons.entries()) {
-      const url = urls[i];
+      const url = sourceMapsToFetch[i].url;
       if (json.startsWith('!')) {
         sourceMaps.push({url, error: json.substring(1)});
       } else {
@@ -132,8 +132,7 @@ class SourceMaps extends Gatherer {
     }
 
     try {
-      const sourceMapUrls = toFetch.map(obj => obj.sourceMapURL);
-      const fetchedSourceMaps = await this.fetchSourceMapsInPage(driver, sourceMapUrls);
+      const fetchedSourceMaps = await this.fetchSourceMapsInPage(driver, toFetch);
       sourceMaps.push(...fetchedSourceMaps);
     } catch (err) {
       // If we timeout, we timeout.
