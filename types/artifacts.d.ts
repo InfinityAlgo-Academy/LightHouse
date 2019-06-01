@@ -69,6 +69,8 @@ declare global {
       RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
       /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
       ScriptElements: Array<Artifacts.ScriptElement>;
+      /** Source maps of scripts executed in the page. */
+      SourceMaps: Array<Artifacts.SourceMap>;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
     }
@@ -207,15 +209,19 @@ declare global {
         devtoolsNodePath: string;
         /** Where the script was discovered, either in the head, the body, or network records. */
         source: 'head'|'body'|'network'
-        /** The ID of the network request that matched the URL of the src or the main document if inline, null if no request could be found. */
-        sourceMap?: SourceMap;
         /** The content of the inline script or the network record with the matching URL, null if the script had a src and no network record could be found. */
         content: string | null
         /** The ID of the network request that matched the URL of the src or the main document if inline, null if no request could be found. */
         requestId: string | null
       }
 
-      export type SourceMap = { map: import('source-map').RawSourceMap } | { error: string }
+      export type SourceMap = {
+        url: string
+        map: import('source-map').RawSourceMap
+      } | {
+        url: string
+        error: string
+      }
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
       export interface AnchorElement {
