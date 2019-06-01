@@ -60,23 +60,30 @@ class SourceMaps extends Gatherer {
     const sourceMaps = [];
     for (const [i, json] of sourceMapJsons.entries()) {
       const url = urls[i];
-
       if (json.startsWith('!')) {
         sourceMaps.push({url, error: json.substring(1)});
-        continue;
-      }
-
-      try {
-        sourceMaps.push({
-          url,
-          map: JSON.parse(json),
-        });
-      } catch (error) {
-        // Without this catch, this silently fails and the gatherer returns an empty object... why no visible error?
-        sourceMaps.push({url, error});
+      } else {
+        sourceMaps.push(this.parseSourceMapJson(url, json));
       }
     }
     return sourceMaps;
+  }
+
+  /**
+   * @param {string} url
+   * @param {string} json
+   * @return {LH.Artifacts.SourceMap}
+   */
+  parseSourceMapJson(url, json) {
+    try {
+      return {
+        url,
+        map: JSON.parse(json),
+      };
+    } catch (err) {
+      // Without this catch, this silently fails and the gatherer returns an empty object... why no visible error?
+      return {url, error: err.toString()};
+    }
   }
 
   /**
@@ -113,11 +120,8 @@ class SourceMaps extends Gatherer {
     for (const event of this._scriptParsedEvents) {
       if (event.sourceMapURL) {
         if (event.sourceMapURL.startsWith('data:')) {
-          const buffer = new Buffer(event.sourceMapURL.split(',')[1], 'base64');
-          sourceMaps.push({
-            url: event.url,
-            map: JSON.parse(buffer.toString()),
-          });
+          const buffer = Buffer.from(event.sourceMapURL.split(',')[1], 'base64');
+          sourceMaps.push(this.parseSourceMapJson(event.url, buffer.toString()));
         } else {
           toFetch.push({
             url: event.url,
