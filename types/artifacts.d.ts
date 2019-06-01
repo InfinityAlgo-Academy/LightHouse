@@ -207,11 +207,15 @@ declare global {
         devtoolsNodePath: string;
         /** Where the script was discovered, either in the head, the body, or network records. */
         source: 'head'|'body'|'network'
+        /** The ID of the network request that matched the URL of the src or the main document if inline, null if no request could be found. */
+        sourceMap?: SourceMap;
         /** The content of the inline script or the network record with the matching URL, null if the script had a src and no network record could be found. */
         content: string | null
         /** The ID of the network request that matched the URL of the src or the main document if inline, null if no request could be found. */
         requestId: string | null
       }
+
+      export type SourceMap = { map: import('source-map').RawSourceMap } | { error: string }
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
       export interface AnchorElement {
