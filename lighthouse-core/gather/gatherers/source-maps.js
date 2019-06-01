@@ -21,6 +21,7 @@ const LHError = require('../../lib/lh-error.js');
  * @param {string[]} urls
  * @return {Promise<string[]>}
  */
+/* istanbul ignore next */
 async function fetchSourceMaps(urls) {
   const responses = urls.map(async (url) => {
     try {
