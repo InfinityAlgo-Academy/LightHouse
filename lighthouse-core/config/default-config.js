@@ -124,7 +124,6 @@ const defaultConfig = {
       'link-elements',
       'meta-elements',
       'script-elements',
-      'source-maps',
       'dobetterweb/appcache',
       'dobetterweb/doctype',
       'dobetterweb/domstats',
