@@ -772,7 +772,7 @@
     "description": "Title of a Lighthouse audit that compares the size and quantity of page resources against targets set by the user. These targets are thought of as \"performance budgets\" because these metrics impact page performance (i.e. how quickly a page loads)."
   },
   "lighthouse-core/audits/polyfills.js | description": {
-    "message": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability. [Learn More](https://philipwalton.com/articles/loading-polyfills-only-when-needed/)",
+    "message": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
     "description": "eslint-disable-next-line max-len"
   },
   "lighthouse-core/audits/polyfills.js | title": {

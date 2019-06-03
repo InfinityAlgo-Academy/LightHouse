@@ -2168,7 +2168,7 @@
             "title": "Document avoids plugins"
         },
         "polyfills": {
-            "description": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability. [Learn More](https://philipwalton.com/articles/loading-polyfills-only-when-needed/)",
+            "description": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
             "details": {
                 "headings": [
                     {

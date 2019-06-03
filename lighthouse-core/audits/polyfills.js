@@ -16,7 +16,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that tells the user about all JavaScript polyfills loaded on the page. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Polyfills',
   // eslint-disable-next-line max-len
-  description: 'Polyfills enable older browsers to use new JavaScript language features. However, they aren\'t always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability. [Learn More](https://philipwalton.com/articles/loading-polyfills-only-when-needed/)',
+  description: 'Polyfills enable older browsers to use new JavaScript language features. However, they aren\'t always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
