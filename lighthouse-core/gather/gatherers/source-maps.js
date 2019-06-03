@@ -91,7 +91,9 @@ class SourceMaps extends Gatherer {
    * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
    */
   onScriptParsed(event) {
-    this._scriptParsedEvents.push(event);
+    if (event.sourceMapURL) {
+      this._scriptParsedEvents.push(event);
+    }
   }
 
   /**
@@ -119,16 +121,16 @@ class SourceMaps extends Gatherer {
     /** @type {Array<{url: string, sourceMapURL: string}>} */
     const toFetch = [];
     for (const event of this._scriptParsedEvents) {
-      if (event.sourceMapURL) {
-        if (event.sourceMapURL.startsWith('data:')) {
-          const buffer = Buffer.from(event.sourceMapURL.split(',')[1], 'base64');
-          sourceMaps.push(this.parseSourceMapJson(event.url, buffer.toString()));
-        } else {
-          toFetch.push({
-            url: event.url,
-            sourceMapURL: event.sourceMapURL,
-          });
-        }
+      if (!event.sourceMapURL) continue;
+
+      if (event.sourceMapURL.startsWith('data:')) {
+        const buffer = Buffer.from(event.sourceMapURL.split(',')[1], 'base64');
+        sourceMaps.push(this.parseSourceMapJson(event.url, buffer.toString()));
+      } else {
+        toFetch.push({
+          url: event.url,
+          sourceMapURL: event.sourceMapURL,
+        });
       }
     }
 

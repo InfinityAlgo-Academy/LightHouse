@@ -15,6 +15,6 @@ module.exports = {
     ],
   }],
   audits: [
-    'viewport' // Gotta do something.
+    'viewport', // Gotta do something.
   ],
 };
