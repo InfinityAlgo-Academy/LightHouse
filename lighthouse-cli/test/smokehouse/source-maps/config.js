@@ -9,12 +9,12 @@
  * Config file for running source maps smokehouse audits.
  */
 module.exports = {
-  extends: 'lighthouse:default',
   passes: [{
     gatherers: [
       'source-maps',
     ],
   }],
-  // If you don't specifiy onlyCategories, onlyAudits, or skipAudits, all gatherers run.
-  // Even source-maps, which is not used by any audits.
+  audits: [
+    'viewport' // Gotta do something.
+  ],
 };
