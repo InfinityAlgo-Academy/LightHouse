@@ -9,4 +9,4 @@
 const a = 1;
 // Use this obnoxious URL because using a non-existent url from localhost will return a
 // bunch of HTML, which will be parsed, and no fetch error occurs.
-//# sourceMappingURL=http://www.this-will-not-exist-blah-go-rockets.com/some-map.js.map
+//# sourceMappingURL=httpz://www.this-will-not-exist-blah-go-rockets.com/some-map.js.map
