@@ -18,20 +18,16 @@ const LHError = require('../../lib/lh-error.js');
  *
  * If an error occurs, the first character is '!'.
  *
- * @param {string[]} urls
- * @return {Promise<string[]>}
+ * @param {string} url
  */
 /* istanbul ignore next */
-async function fetchSourceMaps(urls) {
-  const responses = urls.map(async (url) => {
-    try {
-      const response = await fetch(url);
-      return response.text();
-    } catch (err) {
-      return '!' + err.toString();
-    }
-  });
-  return Promise.all(responses);
+async function fetchSourceMap(url) {
+  try {
+    const response = await fetch(url);
+    return response.text();
+  } catch (err) {
+    return '!' + err.toString();
+  }
 }
 
 /**
@@ -42,7 +38,6 @@ class SourceMaps extends Gatherer {
     super();
     /** @type {LH.Crdp.Debugger.ScriptParsedEvent[]} */
     this._scriptParsedEvents = [];
-
     this.onScriptParsed = this.onScriptParsed.bind(this);
   }
 
@@ -52,12 +47,14 @@ class SourceMaps extends Gatherer {
    * @return {Promise<LH.Artifacts.SourceMap[]>}
    */
   async fetchSourceMapsInPage(driver, sourceMapsToFetch) {
-    const sourceMapUrlsParam = JSON.stringify(sourceMapsToFetch.map(obj => obj.sourceMapURL));
     // TODO: change default protocol timeout?
     // driver.setNextProtocolTimeout(250);
     /** @type {string[]} */
-    const sourceMapJsons =
-      await driver.evaluateAsync(`(${fetchSourceMaps.toString()})(${sourceMapUrlsParam})`);
+    const sourceMapJsons = await Promise.all(
+      sourceMapsToFetch
+        .map(obj => driver.evaluateAsync(
+          `(${fetchSourceMap})(${JSON.stringify(obj.sourceMapURL)})`))
+    );
 
     /** @type {LH.Artifacts.SourceMap[]} */
     const sourceMaps = [];
