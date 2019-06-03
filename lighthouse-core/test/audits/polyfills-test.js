@@ -41,7 +41,7 @@ describe('Polyfills', () => {
     ]);
     const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 1);
-    assert.equal(result.rawValue, 0);
+    assert.equal(result.extendedInfo.value, 0);
   });
 
   it('code with a polyfill fails', async () => {
@@ -53,7 +53,7 @@ describe('Polyfills', () => {
     ]);
     const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.rawValue, 1);
+    assert.equal(result.extendedInfo.value, 1);
     assert.equal(result.details.items[0].description, 'String.prototype.repeat');
   });
 
@@ -66,7 +66,7 @@ describe('Polyfills', () => {
     ]);
     const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.rawValue, 2);
+    assert.equal(result.extendedInfo.value, 2);
   });
 
   it('multiple of the same polyfill from the same script are counted only once', async () => {
@@ -83,7 +83,7 @@ describe('Polyfills', () => {
     ]);
     const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.rawValue, 1);
+    assert.equal(result.extendedInfo.value, 1);
   });
 
   it('multiple of the same polyfill from different scripts display a counter', async () => {
@@ -99,7 +99,7 @@ describe('Polyfills', () => {
     ]);
     const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.rawValue, 2);
+    assert.equal(result.extendedInfo.value, 2);
     assert.equal(result.details.items[0].description, 'String.prototype.repeat (1 / 2)');
     assert.equal(result.details.items[1].description, 'String.prototype.repeat (2 / 2)');
   });
@@ -137,6 +137,6 @@ describe('Polyfills', () => {
     ]);
     const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.rawValue, 7);
+    assert.equal(result.extendedInfo.value, 7);
   });
 });
