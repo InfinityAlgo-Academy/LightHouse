@@ -7,7 +7,6 @@
 
 const Gatherer = require('./gatherer.js');
 const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
-const LHError = require('../../lib/lh-error.js');
 
 /* global fetch */
 
@@ -43,47 +42,21 @@ class SourceMaps extends Gatherer {
 
   /**
    * @param {Driver} driver
-   * @param {Array<{url: string, sourceMapURL: string}>} sourceMapsToFetch
-   * @return {Promise<LH.Artifacts.SourceMap[]>}
+   * @param {string} sourceMapUrl
+   * @return {Promise<import('source-map').RawSourceMap>}
    */
-  async fetchSourceMapsInPage(driver, sourceMapsToFetch) {
+  async fetchSourceMapInPage(driver, sourceMapUrl) {
     // TODO: change default protocol timeout?
     // driver.setNextProtocolTimeout(250);
-    /** @type {string[]} */
-    const sourceMapJsons = await Promise.all(
-      sourceMapsToFetch
-        .map(obj => driver.evaluateAsync(
-          `(${fetchSourceMap})(${JSON.stringify(obj.sourceMapURL)})`))
-    );
+    /** @type {string} */
+    const sourceMapJson =
+      await driver.evaluateAsync(`(${fetchSourceMap})(${JSON.stringify(sourceMapUrl)})`);
 
-    /** @type {LH.Artifacts.SourceMap[]} */
-    const sourceMaps = [];
-    for (const [i, json] of sourceMapJsons.entries()) {
-      const url = sourceMapsToFetch[i].url;
-      if (json.startsWith('!')) {
-        sourceMaps.push({url, errorMessage: json.substring(1)});
-      } else {
-        sourceMaps.push(this.parseSourceMapJson(url, json));
-      }
+    if (sourceMapJson.startsWith('!')) {
+      throw new Error(sourceMapJson.substring(1));
     }
-    return sourceMaps;
-  }
 
-  /**
-   * @param {string} url
-   * @param {string} json
-   * @return {LH.Artifacts.SourceMap}
-   */
-  parseSourceMapJson(url, json) {
-    try {
-      return {
-        url,
-        map: JSON.parse(json),
-      };
-    } catch (err) {
-      // Without this catch, this silently fails and the gatherer returns an empty object... why no visible error?
-      return {url, errorMessage: err.toString()};
-    }
+    return JSON.parse(sourceMapJson);
   }
 
   /**
@@ -116,30 +89,27 @@ class SourceMaps extends Gatherer {
 
     /** @type {LH.Artifacts.SourceMap[]} */
     const sourceMaps = [];
-
-    /** @type {Array<{url: string, sourceMapURL: string}>} */
-    const toFetch = [];
     for (const event of this._scriptParsedEvents) {
       if (!event.sourceMapURL) continue;
 
-      if (event.sourceMapURL.startsWith('data:')) {
-        const buffer = Buffer.from(event.sourceMapURL.split(',')[1], 'base64');
-        sourceMaps.push(this.parseSourceMapJson(event.url, buffer.toString()));
-      } else {
-        toFetch.push({
-          url: event.url,
-          sourceMapURL: event.sourceMapURL,
-        });
-      }
-    }
-
-    try {
-      const fetchedSourceMaps = await this.fetchSourceMapsInPage(driver, toFetch);
-      sourceMaps.push(...fetchedSourceMaps);
-    } catch (err) {
-      // If we timeout, we timeout.
-      if (err.code !== LHError.errors.PROTOCOL_TIMEOUT) {
-        throw err;
+      const url = event.url;
+      try {
+        if (event.sourceMapURL.startsWith('data:')) {
+          const buffer = Buffer.from(event.sourceMapURL.split(',')[1], 'base64');
+          sourceMaps.push({
+            url,
+            map: JSON.parse(buffer.toString()),
+          });
+        } else {
+          const fetchedSourceMap = await this.fetchSourceMapInPage(driver, event.sourceMapURL);
+          sourceMaps.push({
+            url,
+            map: fetchedSourceMap,
+          });
+        }
+      } catch (err) {
+        // Without this catch, this silently fails and the gatherer returns an empty object... why no visible error?
+        sourceMaps.push({url, errorMessage: err.toString()});
       }
     }
 

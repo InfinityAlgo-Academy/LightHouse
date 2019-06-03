@@ -31,7 +31,7 @@ module.exports = [
         errorMessage: undefined,
       }, {
         url: 'http://localhost:10200/source-maps/bundle-map-500.js',
-        errorMessage: 'TypeError: Failed to fetch',
+        errorMessage: 'Error: TypeError: Failed to fetch',
         map: undefined,
       }],
     },
