@@ -33,10 +33,10 @@ else
 fi
 
 report_dir="lighthouse-core/report/html"
-fe_lh_dir="$frontend_dir/audits2/lighthouse"
+fe_lh_dir="$frontend_dir/audits/lighthouse"
 
 lh_bg_js="dist/lighthouse-dt-bundle.js"
-lh_worker_dir="$frontend_dir/audits2_worker/lighthouse"
+lh_worker_dir="$frontend_dir/audits_worker/lighthouse"
 
 # copy lighthouse-dt-bundle (potentially stale)
 cp -pPR "$lh_bg_js" "$lh_worker_dir/lighthouse-dt-bundle.js"
