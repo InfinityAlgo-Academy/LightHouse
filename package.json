@@ -101,7 +101,7 @@
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
     "brfs": "^1.6.1",
     "browserify": "^16.2.3",
-    "bundlesize": "^0.14.4",
+    "bundlesize": "^0.17.2",
     "chalk": "^2.4.1",
     "codecov": "^3.2.0",
     "commitizen": "^2.10.1",
@@ -180,11 +180,19 @@
   "bundlesize": [
     {
       "path": "./dist/extension/scripts/lighthouse-ext-bundle.js",
-      "threshold": "520 Kb"
+      "maxSize": "520 kB"
+    },
+    {
+      "path": "./dist/lightrider/lighthouse-lr-bundle.js",
+      "maxSize": "1.1 MB"
     },
     {
       "path": "./dist/viewer/src/viewer.js",
-      "threshold": "75 Kb"
+      "maxSize": "75 kB"
+    },
+    {
+      "path": "./dist/lighthouse-dt-bundle.js",
+      "maxSize": "400 kB"
     }
   ],
   "nyc": {
