@@ -5,14 +5,11 @@
  */
 'use strict';
 
-const map = {
-  version: 3,
-  file: 'out.js',
-  sourceRoot: '',
-  sources: ['foo.js', 'bar.js'],
-  names: ['src', 'maps', 'are', 'fun'],
-  mappings: 'AAgBC,SAAQ,CAAEA',
-};
+const fs = require('fs');
+const path = require('path');
+
+const pathToMap = path.join(__dirname, '../../fixtures/source-maps/bundle.js.map');
+const map = JSON.parse(fs.readFileSync(pathToMap, 'utf-8'));
 
 /**
  * Expected Lighthouse audit values for Do Better Web tests.
