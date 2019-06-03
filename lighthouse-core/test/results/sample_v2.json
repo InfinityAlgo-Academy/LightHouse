@@ -1471,10 +1471,46 @@
     "polyfills": {
       "id": "polyfills",
       "title": "Polyfills",
-      "description": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability.",
+      "description": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability. [Learn More](https://philipwalton.com/articles/loading-polyfills-only-when-needed/)",
       "score": null,
-      "scoreDisplayMode": "error",
-      "errorMessage": "Required Scripts gatherer did not run."
+      "scoreDisplayMode": "manual",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "url",
+            "text": "URL"
+          },
+          {
+            "key": "description",
+            "itemType": "code",
+            "text": "Description"
+          },
+          {
+            "key": "location",
+            "itemType": "code",
+            "text": "Location"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/zone.js",
+            "description": "Object.defineProperty",
+            "location": "Ln: 1290, Col: 4"
+          },
+          {
+            "url": "http://localhost:10200/zone.js",
+            "description": "Object.defineProperties",
+            "location": "Ln: 1300, Col: 4"
+          },
+          {
+            "url": "http://localhost:10200/zone.js",
+            "description": "Object.create",
+            "location": "Ln: 1306, Col: 4"
+          }
+        ]
+      }
     },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",

@@ -2168,11 +2168,47 @@
             "title": "Document avoids plugins"
         },
         "polyfills": {
-            "description": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability.",
-            "errorMessage": "Required Scripts gatherer did not run.",
+            "description": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability. [Learn More](https://philipwalton.com/articles/loading-polyfills-only-when-needed/)",
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "url",
+                        "key": "url",
+                        "text": "URL"
+                    },
+                    {
+                        "itemType": "code",
+                        "key": "description",
+                        "text": "Description"
+                    },
+                    {
+                        "itemType": "code",
+                        "key": "location",
+                        "text": "Location"
+                    }
+                ],
+                "items": [
+                    {
+                        "description": "Object.defineProperty",
+                        "location": "Ln: 1290, Col: 4",
+                        "url": "http://localhost:10200/zone.js"
+                    },
+                    {
+                        "description": "Object.defineProperties",
+                        "location": "Ln: 1300, Col: 4",
+                        "url": "http://localhost:10200/zone.js"
+                    },
+                    {
+                        "description": "Object.create",
+                        "location": "Ln: 1306, Col: 4",
+                        "url": "http://localhost:10200/zone.js"
+                    }
+                ],
+                "type": "table"
+            },
             "id": "polyfills",
             "score": null,
-            "scoreDisplayMode": "error",
+            "scoreDisplayMode": "manual",
             "title": "Polyfills"
         },
         "pwa-cross-browser": {
