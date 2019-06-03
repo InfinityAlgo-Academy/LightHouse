@@ -220,7 +220,7 @@ declare global {
         map: import('source-map').RawSourceMap
       } | {
         url: string
-        error: string
+        errorMessage: string
       }
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */

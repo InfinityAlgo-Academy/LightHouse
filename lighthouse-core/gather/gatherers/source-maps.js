@@ -62,7 +62,7 @@ class SourceMaps extends Gatherer {
     for (const [i, json] of sourceMapJsons.entries()) {
       const url = sourceMapsToFetch[i].url;
       if (json.startsWith('!')) {
-        sourceMaps.push({url, error: json.substring(1)});
+        sourceMaps.push({url, errorMessage: json.substring(1)});
       } else {
         sourceMaps.push(this.parseSourceMapJson(url, json));
       }
@@ -83,7 +83,7 @@ class SourceMaps extends Gatherer {
       };
     } catch (err) {
       // Without this catch, this silently fails and the gatherer returns an empty object... why no visible error?
-      return {url, error: err.toString()};
+      return {url, errorMessage: err.toString()};
     }
   }
 
