@@ -42,6 +42,8 @@ class SourceMaps extends Gatherer {
     super();
     /** @type {LH.Crdp.Debugger.ScriptParsedEvent[]} */
     this._scriptParsedEvents = [];
+
+    this.onScriptParsed = this.onScriptParsed.bind(this);
   }
 
   /**
@@ -101,7 +103,7 @@ class SourceMaps extends Gatherer {
    */
   async beforePass(passContext) {
     const driver = passContext.driver;
-    driver.on('Debugger.scriptParsed', this.onScriptParsed.bind(this));
+    driver.on('Debugger.scriptParsed', this.onScriptParsed);
     await driver.sendCommand('Debugger.enable');
   }
 
