@@ -18,10 +18,10 @@ module.exports = [
     },
   },
   {
-    errorCode: 'INSECURE_DOCUMENT_REQUEST',
+    errorCode: undefined,
     lhr: {
       requestedUrl: 'https://expired.badssl.com',
-      finalUrl: 'https://expired.badssl.com',
+      finalUrl: 'https://expired.badssl.com/',
       audits: {},
     },
   },
