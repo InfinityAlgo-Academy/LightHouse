@@ -89,6 +89,8 @@ Output:
 Options:
   --help                        Show help                                                                                                  [boolean]
   --version                     Show version number                                                                                        [boolean]
+  --cli-flags-path              The path to a JSON file that contains the desired CLI flags to apply.
+                                Flags specified at the command line will still override the file-based ones.
   --blocked-url-patterns        Block any network requests to the specified URL patterns                                                     [array]
   --disable-storage-reset       Disable clearing the browser cache and other storage APIs before a run                                     [boolean]
   --throttling-method                  Controls throttling method         [choices: "devtools", "provided", "simulate"]
