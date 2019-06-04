@@ -15,8 +15,6 @@ const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
  * just need to be serialized again over the protocol, and source maps can
  * be huge.
  *
- * If an error occurs, the first character is '!'.
- *
  * @param {string} url
  */
 /* istanbul ignore next */
@@ -25,7 +23,7 @@ async function fetchSourceMap(url) {
     const response = await fetch(url);
     return response.text();
   } catch (err) {
-    return '!' + err.toString();
+    return {errorMessage: err.toString()};
   }
 }
 
@@ -48,12 +46,12 @@ class SourceMaps extends Gatherer {
   async fetchSourceMapInPage(driver, sourceMapUrl) {
     // TODO: change default protocol timeout?
     // driver.setNextProtocolTimeout(250);
-    /** @type {string} */
+    /** @type {string|{errorMessage: string}} */
     const sourceMapJson =
       await driver.evaluateAsync(`(${fetchSourceMap})(${JSON.stringify(sourceMapUrl)})`);
 
-    if (sourceMapJson.startsWith('!')) {
-      throw new Error(sourceMapJson.substring(1));
+    if (typeof sourceMapJson === 'object') {
+      throw new Error(sourceMapJson.errorMessage);
     }
 
     return JSON.parse(sourceMapJson);
