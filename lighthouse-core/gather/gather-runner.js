@@ -71,7 +71,7 @@ class GatherRunner {
       passContext.url = finalUrl;
     } catch (err) {
       // If it's one of our loading-based LHErrors, we'll treat it as a page load error.
-      if (err.code === 'NO_FCP') {
+      if (err.code === 'NO_FCP' || err.code === 'PAGE_HUNG') {
         return {navigationError: err};
       }
 
@@ -452,7 +452,7 @@ class GatherRunner {
       traces: {},
       devtoolsLogs: {},
       settings: options.settings,
-      URL: {requestedUrl: options.requestedUrl, finalUrl: ''},
+      URL: {requestedUrl: options.requestedUrl, finalUrl: options.requestedUrl},
       Timing: [],
     };
   }
@@ -551,6 +551,9 @@ class GatherRunner {
         };
         const passResults = await GatherRunner.runPass(passContext);
         Object.assign(artifacts, passResults.artifacts);
+
+        // If we encountered a pageLoadError, don't try to keep loading the page in future passes.
+        if (passResults.pageLoadError) break;
 
         if (isFirstPass) {
           await GatherRunner.populateBaseArtifacts(passContext);

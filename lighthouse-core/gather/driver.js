@@ -1452,7 +1452,7 @@ class Driver {
    * @param {string} url
    * @return {Promise<void>}
    */
-  clearDataForOrigin(url) {
+  async clearDataForOrigin(url) {
     const origin = new URL(url).origin;
 
     // Clear all types of storage except cookies, so the user isn't logged out.
@@ -1469,10 +1469,22 @@ class Driver {
       'cache_storage',
     ].join(',');
 
-    return this.sendCommand('Storage.clearDataForOrigin', {
-      origin: origin,
-      storageTypes: typesToClear,
-    });
+    // `Storage.clearDataForOrigin` is one of our PROTOCOL_TIMEOUT culprits and this command is also
+    // run in the context of PAGE_HUNG to cleanup. We'll keep the timeout low and just warn if it fails.
+    this.setNextProtocolTimeout(5000);
+
+    try {
+      await this.sendCommand('Storage.clearDataForOrigin', {
+        origin: origin,
+        storageTypes: typesToClear,
+      });
+    } catch (err) {
+      if (/** @type {LH.LighthouseError} */(err).code === 'PROTOCOL_TIMEOUT') {
+        log.warn('Driver', 'clearDataForOrigin timed out');
+      } else {
+        throw err;
+      }
+    }
   }
 
   /**

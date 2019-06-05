@@ -156,12 +156,6 @@ function collateResults(actual, expected) {
 
   return [
     {
-      name: 'error code',
-      actual: actual.errorCode,
-      expected: expected.errorCode,
-      equal: actual.errorCode === expected.errorCode,
-    },
-    {
       name: 'final url',
       actual: actual.lhr.finalUrl,
       expected: expected.lhr.finalUrl,

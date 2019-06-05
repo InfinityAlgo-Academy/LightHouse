@@ -10,19 +10,19 @@
  */
 module.exports = [
   {
-    errorCode: 'PAGE_HUNG',
     lhr: {
       requestedUrl: 'http://localhost:10200/infinite-loop.html',
       finalUrl: 'http://localhost:10200/infinite-loop.html',
       audits: {},
+      runtimeError: {code: 'PAGE_HUNG'},
     },
   },
   {
-    errorCode: undefined,
     lhr: {
       requestedUrl: 'https://expired.badssl.com',
       finalUrl: 'https://expired.badssl.com/',
       audits: {},
+      runtimeError: {code: 'FAILED_DOCUMENT_REQUEST'},
     },
   },
 ];
