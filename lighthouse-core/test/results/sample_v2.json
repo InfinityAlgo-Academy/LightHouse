@@ -191,6 +191,15 @@
       "numericValue": 16,
       "displayValue": "20 ms"
     },
+    "cumulative-long-queuing-delay": {
+      "id": "cumulative-long-queuing-delay",
+      "title": "Cumulative Long Queuing Delay",
+      "description": "[Experimental metric] Total time period between FCP and Time to Interactive during which queuing time for any input event would be higher than 50ms.",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 116.79800000000023,
+      "displayValue": "120 ms"
+    },
     "max-potential-fid": {
       "id": "max-potential-fid",
       "title": "Max Potential First Input Delay",
@@ -1248,6 +1257,7 @@
             "speedIndex": 4417,
             "speedIndexTs": 185607736912,
             "estimatedInputLatency": 16,
+            "cumulativeLongQueuingDelay": 117,
             "observedNavigationStart": 0,
             "observedNavigationStartTs": 185603319912,
             "observedFirstPaint": 3969,
@@ -3361,6 +3371,10 @@
           "weight": 0
         },
         {
+          "id": "cumulative-long-queuing-delay",
+          "weight": 0
+        },
+        {
           "id": "render-blocking-resources",
           "weight": 0,
           "group": "load-opportunities"
@@ -4213,6 +4227,24 @@
       {
         "startTime": 0,
         "name": "lh:computed:EstimatedInputLatency",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:cumulative-long-queuing-delay",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:CumulativeLongQueuingDelay",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:Interactive",
         "duration": 100,
         "entryType": "measure"
       },
