@@ -9,6 +9,8 @@
 
 const TraceOfTab = require('../../computed/trace-of-tab.js');
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
+const noFCPtrace = require('../fixtures/traces/airhorner_no_fcp.json');
+const noNavStartTrace = require('../fixtures/traces/no_navstart_event.json');
 
 describe('TraceOfTabComputed', () => {
   it('computes the artifact', async () => {
@@ -121,5 +123,35 @@ describe('TraceOfTabComputed', () => {
         traceEnd: 12539.872,
       },
     });
+  });
+
+  it('fails with NO_NAVSTART', async () => {
+    const context = {computedCache: new Map()};
+    await expect(TraceOfTab.request(noNavStartTrace, context))
+      .rejects.toMatchObject({code: 'NO_NAVSTART'});
+  });
+
+  it('fails with NO_FCP', async () => {
+    const context = {computedCache: new Map()};
+    await expect(TraceOfTab.request(noFCPtrace, context))
+      .rejects.toMatchObject({code: 'NO_FCP'});
+  });
+
+  it('fails with NO_TRACING_STARTED', async () => {
+    const context = {computedCache: new Map()};
+    const noTracingStartedTrace = {
+      traceEvents: pwaTrace.traceEvents.filter(event => {
+        if (event.name === 'TracingStartedInBrowser' ||
+            event.name === 'TracingStartedInPage' ||
+            event.name === 'ResourceSendRequest') {
+          return false;
+        }
+
+        return true;
+      }),
+    };
+
+    await expect(TraceOfTab.request(noTracingStartedTrace, context))
+      .rejects.toMatchObject({code: 'NO_TRACING_STARTED'});
   });
 });

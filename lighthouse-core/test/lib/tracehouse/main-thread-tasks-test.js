@@ -8,10 +8,10 @@
 /* eslint-env jest */
 
 const MainThreadTasks = require('../../../lib/tracehouse/main-thread-tasks.js');
-const TraceOfTab = require('../../../lib/tracehouse/trace-of-tab.js');
+const TraceProcessor = require('../../../lib/tracehouse/trace-processor.js');
 const taskGroups = require('../../../lib/tracehouse/task-groups.js').taskGroups;
 const pwaTrace = require('../../fixtures/traces/progressive-app.json');
-const TracingProcessor = require('../../../lib/tracehouse/tracing-processor.js');
+const TracingProcessor = require('../../../lib/tracehouse/trace-processor.js');
 const assert = require('assert');
 
 describe('Main Thread Tasks', () => {
@@ -31,7 +31,7 @@ describe('Main Thread Tasks', () => {
   });
 
   function run(trace) {
-    const {mainThreadEvents, timestamps} = TraceOfTab.compute(trace);
+    const {mainThreadEvents, timestamps} = TraceProcessor.computeTraceOfTab(trace);
     return MainThreadTasks.getMainThreadTasks(mainThreadEvents, timestamps.traceEnd);
   }
 

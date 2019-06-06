@@ -6,7 +6,34 @@
 'use strict';
 
 const makeComputedArtifact = require('./computed-artifact.js');
-const TraceOfTab_ = require('../lib/tracehouse/trace-of-tab.js');
+const LHError = require('../lib/lh-error.js');
+const TraceProcessor = require('../lib/tracehouse/trace-processor.js');
+
+// TraceProcessor throws generic errors, but we'd like our special localized and code-specific LHError
+// objects to be thrown instead.
+class LHTraceProcessor extends TraceProcessor {
+  /**
+   * @return {Error}
+   */
+  static createNoNavstartError() {
+    return new LHError(LHError.errors.NO_NAVSTART);
+  }
+
+  /**
+   * @return {Error}
+   */
+  static createNoFirstContentfulPaintError() {
+    return new LHError(LHError.errors.NO_FCP);
+  }
+
+  /**
+   * @return {Error}
+   */
+  static createNoTracingStartedError() {
+    return new LHError(LHError.errors.NO_TRACING_STARTED);
+  }
+}
+
 
 class TraceOfTab {
   /**
@@ -16,7 +43,7 @@ class TraceOfTab {
    * @return {Promise<LH.Artifacts.TraceOfTab>}
   */
   static async compute_(trace) {
-    return TraceOfTab_.compute(trace);
+    return LHTraceProcessor.computeTraceOfTab(trace);
   }
 }
 

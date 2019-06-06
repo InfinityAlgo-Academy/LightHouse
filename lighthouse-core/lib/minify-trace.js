@@ -12,11 +12,10 @@
  *  See the following files for necessary events:
  *    - lighthouse-core/computed/page-dependency-graph.js
  *    - lighthouse-core/lib/dependency-graph/cpu-node.js
- *    - lighthouse-core/lib/tracehouse/trace-of-tab.js
- *    - lighthouse-core/lib/tracehouse/tracing-processor.js
+ *    - lighthouse-core/lib/tracehouse/trace-processor.js
  */
 
-const TracingProcessor = require('./tracehouse/tracing-processor.js');
+const TracingProcessor = require('./tracehouse/trace-processor.js');
 
 const toplevelTaskNames = new Set([
   'RunTask', // m71+

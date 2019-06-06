@@ -8,7 +8,7 @@
 const makeComputedArtifact = require('../computed-artifact.js');
 const ComputedMetric = require('./metric.js');
 const LHError = require('../../lib/lh-error.js');
-const TracingProcessor = require('../../lib/tracehouse/tracing-processor.js');
+const TracingProcessor = require('../../lib/tracehouse/trace-processor.js');
 const LanternCumulativeLongQueuingDelay = require('./lantern-cumulative-long-queuing-delay.js');
 const TimetoInteractive = require('./interactive.js');
 
