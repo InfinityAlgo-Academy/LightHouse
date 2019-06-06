@@ -210,6 +210,10 @@ module.exports = [
       // Note: most scores are null (audit error) because the page 403ed.
       requestedUrl: BASE_URL + 'seo-failure-cases.html?status_code=403',
       finalUrl: BASE_URL + 'seo-failure-cases.html?status_code=403',
+      runtimeError: {
+        code: 'ERRORED_DOCUMENT_REQUEST',
+        message: /Status code: 403/,
+      },
       audits: {
         'http-status-code': {
           score: 0,

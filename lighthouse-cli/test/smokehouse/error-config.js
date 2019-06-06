@@ -14,6 +14,8 @@ module.exports = {
     maxWaitForLoad: 5000,
     onlyAudits: [
       'first-contentful-paint',
+      // TODO: this audit collects a non-base artifact, allowing the runtimeError to be collected.
+      'content-width',
     ],
   },
 };
