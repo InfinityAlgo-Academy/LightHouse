@@ -759,6 +759,10 @@
     "message": "Server Backend Latencies",
     "description": "Descriptive title of a Lighthouse audit that tells the user the server latencies observed from each origin the page connected to. This is displayed in a list of audit titles that Lighthouse generates."
   },
+  "lighthouse-core/audits/performance-budget.js | columnOverBudget": {
+    "message": "Over Budget",
+    "description": "Label for a column in a data table; entries will be how much the quantity or size of network requests exceeded a predetermined budget."
+  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Keep the quantity and size of network requests under the targets set by the provided performance budget. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
     "description": "Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits. 'Learn More' becomes link text to additional documentation."
@@ -1243,6 +1247,14 @@
     "message": "Cache TTL",
     "description": "Label for the TTL column in data tables, entries will be the time to live value of the cache header on a web resource"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
+    "message": "Requests",
+    "description": "Label for a column in a data table; entries will be the number of network requests done by a webpage."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnResourceType": {
+    "message": "Resource Type",
+    "description": "Label for a column in a data table; entries will be types of resources loaded over the network, e.g. \"Scripts\", \"Third-Party\", \"Stylesheet\"."
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnSize": {
     "message": "Size",
     "description": "Label for the size column in data tables, entries will be the size of a web resource in kilobytes"
@@ -1250,6 +1262,10 @@
   "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": {
     "message": "Time Spent",
     "description": "Label for the time spent column in data tables, entries will be the number of milliseconds spent during a particular activity"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnTransferSize": {
+    "message": "Transfer Size",
+    "description": "Label for a column in a data table; entries will be the number of kilobytes transferred to load a set of files."
   },
   "lighthouse-core/lib/i18n/i18n.js | columnURL": {
     "message": "URL",

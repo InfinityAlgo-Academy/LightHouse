@@ -5300,6 +5300,21 @@
       "lighthouse-core/audits/performance-budget.js | description": [
         "audits[performance-budget].description"
       ],
+      "lighthouse-core/lib/i18n/i18n.js | columnResourceType": [
+        "audits[performance-budget].details.headings[0].text",
+        "audits[resource-summary].details.headings[0].text"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnRequests": [
+        "audits[performance-budget].details.headings[1].text",
+        "audits[resource-summary].details.headings[1].text"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnTransferSize": [
+        "audits[performance-budget].details.headings[2].text",
+        "audits[resource-summary].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/performance-budget.js | columnOverBudget": [
+        "audits[performance-budget].details.headings[4].text"
+      ],
       "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": [
         "audits[performance-budget].details.items[0].label",
         "audits[resource-summary].details.items[1].label"
