@@ -396,6 +396,8 @@ describe('GatherRunner', function() {
       endTrace: asyncFunc,
       endDevtoolsLog: () => [],
       getBrowserVersion: async () => ({userAgent: ''}),
+      getScrollPosition: async () => 1,
+      scrollTo: async () => {},
     };
     const passConfig = {
       passName: 'default',
@@ -675,6 +677,34 @@ describe('GatherRunner', function() {
       assert.equal(calledDevtoolsLogCollect, true);
       assert.strictEqual(passData.devtoolsLog[0], fakeDevtoolsMessage);
     });
+  });
+
+  it('resets scroll position between every gatherer', async () => {
+    class ScrollMcScrollyGatherer extends TestGatherer {
+      afterPass(context) {
+        context.driver.scrollTo({x: 1000, y: 1000});
+      }
+    }
+
+    const url = 'https://example.com';
+    const driver = Object.assign({}, fakeDriver);
+    const scrollToSpy = jest.spyOn(driver, 'scrollTo');
+
+    const passConfig = {
+      recordTrace: true,
+      gatherers: [
+        {instance: new ScrollMcScrollyGatherer()},
+        {instance: new TestGatherer()},
+      ],
+    };
+
+    await GatherRunner.afterPass({url, driver, passConfig}, {}, {TestGatherer: []});
+    // One time for the afterPass of ScrollMcScrolly, two times for the resets of the two gatherers.
+    expect(scrollToSpy.mock.calls).toEqual([
+      [{x: 1000, y: 1000}],
+      [{x: 0, y: 0}],
+      [{x: 0, y: 0}],
+    ]);
   });
 
   it('does as many passes as are required', () => {

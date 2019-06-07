@@ -339,11 +339,16 @@ class GatherRunner {
    * @return {Promise<void>}
    */
   static async afterPass(passContext, loadData, gathererResults) {
+    const driver = passContext.driver;
     const config = passContext.passConfig;
     const gatherers = config.gatherers;
 
     const apStatus = {msg: `Running afterPass methods`, id: `lh:gather:afterPass`};
     log.time(apStatus, 'verbose');
+
+    // Some gatherers scroll the page which can cause unexpected results for other gatherers.
+    // We reset the scroll position in between each gatherer.
+    const scrollPosition = await driver.getScrollPosition();
 
     for (const gathererDefn of gatherers) {
       const gatherer = gathererDefn.instance;
@@ -362,6 +367,7 @@ class GatherRunner {
       gathererResult.push(artifactPromise);
       gathererResults[gatherer.name] = gathererResult;
       await artifactPromise.catch(() => {});
+      await driver.scrollTo(scrollPosition);
       log.timeEnd(status);
     }
     log.timeEnd(apStatus);
