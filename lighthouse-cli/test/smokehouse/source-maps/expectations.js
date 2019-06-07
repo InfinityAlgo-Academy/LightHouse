@@ -12,7 +12,7 @@ const pathToMap = path.join(__dirname, '../../fixtures/source-maps/bundle.js.map
 const map = JSON.parse(fs.readFileSync(pathToMap, 'utf-8'));
 
 /**
- * Expected Lighthouse audit values for Do Better Web tests.
+ * Expected Lighthouse audit values for source map tests.
  */
 module.exports = [
   {
