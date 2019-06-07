@@ -22,59 +22,30 @@
   --body-text-color: var(--color-black-900);
   --body-font-size: 16px;
   --body-line-height: 24px;
-  --subheader-font-size: 14px;
-  --subheader-line-height: 20px;
   --subheader-color: hsl(206, 6%, 25%);
-  --header-bg-color: #f1f3f4;
   --header-font-size: 20px;
   --header-line-height: 24px;
-  --title-font-size: 24px;
-  --title-line-height: 28px;
-  --caption-font-size: 12px;
   --caption-line-height: 16px;
   --default-padding: 12px;
   --section-padding: 16px;
   --section-indent: 16px;
-  --audit-group-indent: 16px;
   --audit-item-gap: 5px;
-  --audit-indent: 16px;
   --text-indent: 8px;
-  --expandable-indent: 20px;
   --secondary-text-color: var(--color-black-800);
-  /*--accent-color: #3879d9;*/
   --informative-color: var(--color-blue-900);
   --medium-75-gray: #757575;
   --medium-50-gray: hsl(210, 17%, 98%);
-  --medium-100-gray: hsl(200, 12%, 95%);
-  --warning-color: #ffab00; /* md amber a700 */
   --report-secondary-border-color: #ebebeb;
-  --metric-timeline-rule-color: #b3b3b3;
   --display-value-gray: hsl(216, 5%, 39%);
   --report-width: calc(60 * var(--body-font-size));
   --report-min-width: 400px;
-  /* Edge doesn't support calc(var(calc())) */
-  --report-width-half: calc(30 * var(--body-font-size));
   --report-header-height: 161px;
-  --report-header-color: #202124;
-  --navitem-font-size: var(--body-font-size);
-  --navitem-line-height: var(--body-line-height);
-  --navitem-hpadding: var(--body-font-size);
-  --navitem-vpadding: calc(var(--navitem-line-height) / 2);
-  --lh-score-highlight-bg: hsla(0, 0%, 90%, 0.2);
   --lh-score-icon-background-size: 24px;
-  --lh-group-icon-background-size: var(--lh-score-icon-background-size);
   --lh-export-icon-size: var(--lh-score-icon-background-size);
   --lh-export-icon-color: var(--medium-75-gray);
-  --lh-score-margin: 12px;
-  --lh-table-header-bg: #f8f9fa;
   --lh-table-higlight-bg: hsla(0, 0%, 75%, 0.1);
   --lh-sparkline-height: 5px;
-  --lh-sparkline-thin-height: 3px;
-  --lh-filmstrip-thumbnail-width: 60px;
-  --lh-category-score-width: calc(5 * var(--body-font-size));
   --lh-audit-vpadding: 8px;
-  --lh-audit-index-width: 18px;
-  --lh-audit-hgap: 12px;
   --lh-audit-group-vpadding: 8px;
   --lh-section-vpadding: 12px;
   --chevron-size: 12px;
@@ -89,7 +60,6 @@
   --color-black-600: #757575;
   --color-black-800: #424242;
   --color-black-900: #212121;
-  --off-black: #111111;
   --color-black: #000000;
   --color-blue: #2962FF;
   --color-green-700: #018642;
@@ -114,7 +84,6 @@
   --gauge-circle-size-big: 112px;
   --gauge-circle-size: 80px;
   --header-padding: 20px 0 20px 0;
-  --highlighter-bg: var(--color-black-400);
   --icon-square-size: calc(var(--score-shape-size) * 0.88);
   --plugin-badge-bg: var(--color-white);
   --plugin-badge-size-big: calc(var(--gauge-circle-size-big) / 2.7);
@@ -187,7 +156,6 @@
 
   --topbar-bg: var(--color-black);
   --plugin-badge-bg: var(--color-black-800);
-  --header-bg-color: var(--color-black-900);
   --env-item-bg: var(--color-black);
   --report-secondary-border-color: var(--color-black-200);
 
@@ -195,7 +163,6 @@
   --body-text-color: var(--color-black-100);
   --secondary-text-color: var(--color-black-400);
 
-  --highlighter-bg: var(--color-black-200);
   --plugin-icon-url: var(--plugin-icon-url-dark);
 
   --informative-color: var(--color-blue-200);
@@ -246,20 +213,12 @@
   --monospace-font-family: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
   --body-font-size: 12px;
   --body-line-height: 20px;
-  --subheader-font-size: 14px;
-  --subheader-line-height: 18px;
   --header-font-size: 16px;
   --header-line-height: 20px;
-  --title-font-size: 20px;
-  --title-line-height: 24px;
-  --caption-font-size: 11px;
   --caption-line-height: 14px;
   --default-padding: 12px;
   --section-padding: 12px;
   --section-indent: 8px;
-  --audit-group-indent: 16px;
-  --audit-indent: 16px;
-  --expandable-indent: 16px;
 
   --gauge-circle-size-big: 72px;
   --gauge-circle-size: 64px;
@@ -280,7 +239,6 @@
   --score-title-line-height: 20px;
 
   --lh-audit-vpadding: 4px;
-  --lh-audit-hgap: 12px;
   --lh-audit-group-vpadding: 12px;
   --lh-section-vpadding: 8px;
 }
