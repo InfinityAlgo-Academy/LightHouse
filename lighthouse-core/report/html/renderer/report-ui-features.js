@@ -461,6 +461,10 @@ class ReportUIFeatures {
     this._document.removeEventListener('keydown', this.onKeyDown);
   }
 
+  _print() {
+    self.print();
+  }
+
   /**
    * Keydown handler for the document.
    * @param {KeyboardEvent} e
