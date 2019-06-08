@@ -419,12 +419,12 @@ class ReportUIFeatures {
       case 'print-summary':
         this.collapseAllDetails();
         this.closeExportDropdown();
-        self.print();
+        this._print();
         break;
       case 'print-expanded':
         this.expandAllDetails();
         this.closeExportDropdown();
-        self.print();
+        this._print();
         break;
       case 'save-json': {
         const jsonStr = JSON.stringify(this.json, null, 2);
