@@ -19,7 +19,7 @@
 /* eslint-env browser */
 
 /**
- * @fileoverview Adds export button, print, and other dynamic functionality to
+ * @fileoverview Adds tools button, print, and other dynamic functionality to
  * the report.
  */
 
@@ -49,7 +49,7 @@ class ReportUIFeatures {
     /** @type {boolean} */
     this._copyAttempt = false;
     /** @type {HTMLElement} */
-    this.exportButton; // eslint-disable-line no-unused-expressions
+    this.toolsButton; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement} */
     this.topbarEl; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement} */
@@ -61,8 +61,8 @@ class ReportUIFeatures {
 
     this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     this.onCopy = this.onCopy.bind(this);
-    this.onExportButtonClick = this.onExportButtonClick.bind(this);
-    this.onExport = this.onExport.bind(this);
+    this.onToolsButtonClick = this.onToolsButtonClick.bind(this);
+    this.onToolAction = this.onToolAction.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.onChevronClick = this.onChevronClick.bind(this);
@@ -73,7 +73,7 @@ class ReportUIFeatures {
   }
 
   /**
-   * Adds export button, print, and other functionality to the report. The method
+   * Adds tools button, print, and other functionality to the report. The method
    * should be called whenever the report needs to be re-rendered.
    * @param {LH.Result} report
    */
@@ -81,7 +81,7 @@ class ReportUIFeatures {
     this.json = report;
 
     this._setupMediaQueryListeners();
-    this._setupExportButton();
+    this._setupToolsButton();
     this._setupThirdPartyFilter();
     this._setUpCollapseDetailsAfterPrinting();
     this._resetUIState();
@@ -205,12 +205,12 @@ class ReportUIFeatures {
     root.classList.toggle('lh-narrow', mql.matches);
   }
 
-  _setupExportButton() {
-    this.exportButton = this._dom.find('.lh-export__button', this._document);
-    this.exportButton.addEventListener('click', this.onExportButtonClick);
+  _setupToolsButton() {
+    this.toolsButton = this._dom.find('.lh-tools__button', this._document);
+    this.toolsButton.addEventListener('click', this.onToolsButtonClick);
 
-    const dropdown = this._dom.find('.lh-export__dropdown', this._document);
-    dropdown.addEventListener('click', this.onExport);
+    const dropdown = this._dom.find('.lh-tools__dropdown', this._document);
+    dropdown.addEventListener('click', this.onToolAction);
   }
 
   _setupThirdPartyFilter() {
@@ -377,17 +377,17 @@ class ReportUIFeatures {
     }
   }
 
-  closeExportDropdown() {
-    this.exportButton.classList.remove('active');
+  closeToolsDropdown() {
+    this.toolsButton.classList.remove('active');
   }
 
   /**
-   * Click handler for export button.
+   * Click handler for tools button.
    * @param {Event} e
    */
-  onExportButtonClick(e) {
+  onToolsButtonClick(e) {
     e.preventDefault();
-    this.exportButton.classList.toggle('active');
+    this.toolsButton.classList.toggle('active');
     this._document.addEventListener('keydown', this.onKeyDown);
   }
 
@@ -397,15 +397,15 @@ class ReportUIFeatures {
    * be in their closed state (not opened) and the templates should be unstamped.
    */
   _resetUIState() {
-    this.closeExportDropdown();
+    this.closeToolsDropdown();
     this._dom.resetTemplates();
   }
 
   /**
-   * Handler for "export as" button.
+   * Handler for tool button.
    * @param {Event} e
    */
-  onExport(e) {
+  onToolAction(e) {
     e.preventDefault();
 
     const el = /** @type {?Element} */ (e.target);
@@ -420,12 +420,12 @@ class ReportUIFeatures {
         break;
       case 'print-summary':
         this.collapseAllDetails();
-        this.closeExportDropdown();
+        this.closeToolsDropdown();
         self.print();
         break;
       case 'print-expanded':
         this.expandAllDetails();
-        this.closeExportDropdown();
+        this.closeToolsDropdown();
         self.print();
         break;
       case 'save-json': {
@@ -459,7 +459,7 @@ class ReportUIFeatures {
       }
     }
 
-    this.closeExportDropdown();
+    this.closeToolsDropdown();
     this._document.removeEventListener('keydown', this.onKeyDown);
   }
 
@@ -469,7 +469,7 @@ class ReportUIFeatures {
    */
   onKeyDown(e) {
     if (e.keyCode === 27) { // ESC
-      this.closeExportDropdown();
+      this.closeToolsDropdown();
     }
   }
 
@@ -480,7 +480,7 @@ class ReportUIFeatures {
   onKeyUp(e) {
     // Ctrl+P - Expands audit details when user prints via keyboard shortcut.
     if ((e.ctrlKey || e.metaKey) && e.keyCode === 80) {
-      this.closeExportDropdown();
+      this.closeToolsDropdown();
     }
   }
 

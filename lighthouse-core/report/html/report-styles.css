@@ -41,8 +41,8 @@
   --report-min-width: 400px;
   --report-header-height: 161px;
   --lh-score-icon-background-size: 24px;
-  --lh-export-icon-size: var(--lh-score-icon-background-size);
-  --lh-export-icon-color: var(--medium-75-gray);
+  --lh-tools-icon-size: var(--lh-score-icon-background-size);
+  --lh-tools-icon-color: var(--medium-75-gray);
   --lh-table-higlight-bg: hsla(0, 0%, 75%, 0.1);
   --lh-sparkline-height: 5px;
   --lh-audit-vpadding: 8px;

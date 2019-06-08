@@ -253,40 +253,40 @@ limitations under the License.
       color: var(--body-text-color);
     }
 
-    .lh-export {
+    .lh-tools {
       margin-left: auto;
       will-change: transform;
     }
-    .lh-export__button {
-      width: var(--lh-export-icon-size);
-      height: var(--lh-export-icon-size);
+    .lh-tools__button {
+      width: var(--lh-tools-icon-size);
+      height: var(--lh-tools-icon-size);
       cursor: pointer;
       margin-right: 5px;
     }
     /*
-      Some features in the top right drop down menu don't work in the DevTools
+      Some features in the tools dropdown menu don't work in the DevTools
       client. They could with some tweaks, but currently they don't. For example:
       Saving as HTML/JSON - does not bring up a file dialog, as one would expect in DevTools.
                             also, it saves the AuditsPanel HTML, which is funky.
     */
-    .lh-devtools .lh-export__button {
+    .lh-devtools .lh-tools__button {
       display: none;
     }
-    .lh-export__button svg {
-      fill: var(--lh-export-icon-color);
+    .lh-tools__button svg {
+      fill: var(--lh-tools-icon-color);
     }
-    .dark .lh-export__button svg {
+    .dark .lh-tools__button svg {
       filter: invert(1);
     }
-    .lh-export__button:focus,
-    .lh-export__button.active {
+    .lh-tools__button:focus,
+    .lh-tools__button.active {
       outline: none;
     }
-    .lh-export__button.active + .lh-export__dropdown {
+    .lh-tools__button.active + .lh-tools__dropdown {
       opacity: 1;
       clip: rect(-1px, 187px, 242px, -3px);
     }
-    .lh-export__dropdown {
+    .lh-tools__dropdown {
       position: absolute;
       background-color: var(--body-background-color);
       border: 1px solid var(--report-border-color);
@@ -301,7 +301,7 @@ limitations under the License.
       opacity: 0;
       transition: all 200ms cubic-bezier(0,0,0.2,1);
     }
-    .lh-export__dropdown a {
+    .lh-tools__dropdown a {
       display: block;
       color: currentColor;
       text-decoration: none;
@@ -309,12 +309,12 @@ limitations under the License.
       padding: 0 12px;
       line-height: 2;
     }
-    .lh-export__dropdown a:hover,
-    .lh-export__dropdown a:focus {
+    .lh-tools__dropdown a:hover,
+    .lh-tools__dropdown a:focus {
       background-color: var(--color-black-200);
       outline: none;
     }
-    .lh-export__dropdown .report-icon {
+    .lh-tools__dropdown .report-icon {
       cursor: pointer;
       background-repeat: no-repeat;
       background-position: 8px 50%;
@@ -326,22 +326,22 @@ limitations under the License.
       color: var(--color-black-900);
       filter: invert(1);
     }
-    .dark .lh-export__dropdown a:hover,
-    .dark .lh-export__dropdown a:focus {
+    .dark .lh-tools__dropdown a:hover,
+    .dark .lh-tools__dropdown a:focus {
       background-color: #BDBDBD;
     }
     /* copy icon needs slight adjustments to look great */
-    .lh-export__dropdown .report-icon--copy {
+    .lh-tools__dropdown .report-icon--copy {
       background-size: 16px;
       background-position: 9px 50%;
     }
     /* save-as-gist option hidden in report */
-    .lh-export__dropdown .lh-export--gist {
+    .lh-tools__dropdown .lh-tools--gist {
       display: none;
     }
 
     @media screen and (max-width: 964px) {
-      .lh-export__dropdown {
+      .lh-tools__dropdown {
         right: 0;
         left: initial;
       }
@@ -365,22 +365,22 @@ limitations under the License.
 
     <a href="" class="lh-topbar__url" target="_blank" rel="noopener"></a>
 
-    <div class="lh-export">
-      <div class="report-icon report-icon--share lh-export__button" title="Export report">
+    <div class="lh-tools">
+      <div class="report-icon report-icon--share lh-tools__button" title="Export report">
         <svg width="100%" height="100%" viewBox="0 0 24 24">
             <path d="M0 0h24v24H0z" fill="none"/>
             <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
         </svg>
       </div>
-      <div class="lh-export__dropdown">
-        <!-- TODO(i18n): localize export dropdown -->
+      <div class="lh-tools__dropdown">
+         <!-- TODO(i18n): localize tools dropdown -->
         <a href="#" class="report-icon report-icon--print" data-action="print-summary">Print Summary</a>
         <a href="#" class="report-icon report-icon--print" data-action="print-expanded">Print Expanded</a>
         <a href="#" class="report-icon report-icon--copy" data-action="copy">Copy JSON</a>
         <a href="#" class="report-icon report-icon--download" data-action="save-html">Save as HTML</a>
         <a href="#" class="report-icon report-icon--download" data-action="save-json">Save as JSON</a>
-        <a href="#" class="report-icon report-icon--open lh-export--viewer" data-action="open-viewer">Open in Viewer</a>
-        <a href="#" class="report-icon report-icon--open lh-export--gist" data-action="save-gist">Save as Gist</a>
+        <a href="#" class="report-icon report-icon--open lh-tools--viewer" data-action="open-viewer">Open in Viewer</a>
+        <a href="#" class="report-icon report-icon--open lh-tools--gist" data-action="save-gist">Save as Gist</a>
         <a href="#" class="report-icon report-icon--dark" data-action="toggle-dark">Toggle Dark Theme</a>
       </div>
     </div>
