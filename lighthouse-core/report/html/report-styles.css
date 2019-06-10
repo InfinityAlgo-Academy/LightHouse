@@ -1116,6 +1116,14 @@
   will-change: opacity; /* Only using for layer promotion */
 }
 
+/** Redirect outline focus to .lh-gauge. */
+.lh-gauge__wrapper:focus {
+  outline: none;
+}
+.lh-gauge__wrapper:focus .lh-gauge {
+  outline: -webkit-focus-ring-color auto 5px;
+}
+
 .lh-gauge__label {
   font-size: var(--score-title-font-size);
   line-height: var(--score-title-line-height);
