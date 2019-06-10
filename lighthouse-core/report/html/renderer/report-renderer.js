@@ -109,7 +109,7 @@ class ReportRenderer {
       {name: 'User agent (network)', description: report.environment &&
         report.environment.networkUserAgent},
       {name: 'CPU/Memory Power', description: report.environment &&
-        report.environment.benchmarkIndex.toFixed(0)},
+        Util.formatNumber(report.environment.benchmarkIndex)},
     ].forEach(runtime => {
       if (!runtime.description) return;
 
@@ -214,6 +214,14 @@ class ReportRenderer {
 
     if (scoreHeader) {
       const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
+      // i18n scoreScale #'s
+      this._dom.find('.lh-scorescale-range--fail', scoreScale).innerHTML =
+        `${Util.formatNumber(0)}&ndash;${Util.formatNumber(49)}`;
+      this._dom.find('.lh-scorescale-range--average', scoreScale).innerHTML =
+        `${Util.formatNumber(50)}&ndash;${Util.formatNumber(89)}`;
+      this._dom.find('.lh-scorescale-range--pass', scoreScale).innerHTML =
+        `${Util.formatNumber(90)}&ndash;${Util.formatNumber(100)}`;
+
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
       scoreHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));

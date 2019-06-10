@@ -38,6 +38,12 @@ const listOfTlds = [
   'web', 'spb', 'blog', 'jus', 'kiev', 'mil', 'wi', 'qc', 'ca', 'bel', 'on',
 ];
 
+// Numeric system aliases
+const localeAliases = new Map([
+  ['ar', 'ar-EG'],
+  ['th', 'th-TH-u-nu-thai'],
+  ['zh', 'zh-Hans-CN-u-nu-hanidec']]);
+
 class Util {
   static get PASS_THRESHOLD() {
     return PASS_THRESHOLD;
@@ -63,6 +69,9 @@ class Util {
     // If LHR is older (≤3.0.3), it has no locale setting. Set default.
     if (!clone.configSettings.locale) {
       clone.configSettings.locale = 'en';
+    }
+    if (localeAliases.has(clone.configSettings.locale)) {
+      clone.configSettings.locale = localeAliases.get(clone.configSettings.locale);
     }
 
     for (const audit of Object.values(clone.audits)) {
@@ -192,6 +201,7 @@ class Util {
    */
   static formatNumber(number, granularity = 0.1) {
     const coarseValue = Math.round(number / granularity) * granularity;
+    console.log(Util.numberDateLocale);
     return coarseValue.toLocaleString(Util.numberDateLocale);
   }
 

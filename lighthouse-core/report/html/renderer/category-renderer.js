@@ -299,7 +299,7 @@ class CategoryRenderer {
     }
 
     const itemCountEl = this.dom.find('.lh-audit-group__itemcount', clumpElement);
-    itemCountEl.textContent = `(${auditRefs.length})`;
+    itemCountEl.textContent = `(${Util.formatNumber(auditRefs.length)})`;
 
     // Add all audit results to the clump.
     const auditElements = auditRefs.map(this.renderAudit.bind(this));
@@ -346,7 +346,7 @@ class CategoryRenderer {
 
     const scoreOutOf100 = Math.round(numericScore * 100);
     const percentageEl = this.dom.find('.lh-gauge__percentage', tmpl);
-    percentageEl.textContent = scoreOutOf100.toString();
+    percentageEl.textContent = Util.formatNumber(scoreOutOf100);
     if (category.score === null) {
       percentageEl.textContent = '?';
       percentageEl.title = Util.UIStrings.errorLabel;
