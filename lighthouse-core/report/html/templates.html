@@ -186,7 +186,8 @@ limitations under the License.
     }
 
     .lh-sticky-header--visible {
-      display: flex;
+      display: grid;
+      grid-auto-flow: column;
       pointer-events: auto;
     }
 
@@ -204,8 +205,10 @@ limitations under the License.
       width: var(--score-container-width);
       height: 1px;
       background: var(--color-highlighter-bg);
+      /* Position at bottom of first gauge in sticky header. */
       position: absolute;
-      bottom: -5px;
+      grid-column: 1;
+      bottom: -1px;
     }
 
     .lh-gauge__wrapper:first-of-type {
