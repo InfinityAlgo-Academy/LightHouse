@@ -144,37 +144,39 @@
   --pwa-optimized-color-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="%230CCE6B" width="24" height="24" rx="12"/><path d="M5 5h14v14H5z"/><path fill="%23FFF" d="M12 15.07l3.6 2.18-.95-4.1 3.18-2.76-4.2-.36L12 6.17l-1.64 3.86-4.2.36 3.2 2.76-.96 4.1z"/></g></svg>');
 }
 
-.lh-vars.dark {
-  --color-red-700: var(--color-red);
-  --color-green-700: var(--color-green);
-  --color-teal-600: var(--color-cyan-500);
-  --color-orange-700: var(--color-orange);
-
-  --color-black-200: var(--color-black-800);
-  --color-black-400: var(--color-black-600);
-  --color-black-600: var(--color-black-500);
-
-  --topbar-bg: var(--color-black);
-  --plugin-badge-bg: var(--color-black-800);
-  --env-item-bg: var(--color-black);
-  --report-secondary-border-color: var(--color-black-200);
-
-  --body-background-color: var(--color-black-900);
-  --body-text-color: var(--color-black-100);
-  --secondary-text-color: var(--color-black-400);
-
-  --plugin-icon-url: var(--plugin-icon-url-dark);
-
-  --informative-color: var(--color-blue-200);
-
-  --medium-50-gray: #757575;
-  --medium-75-gray: var(--color-white);
-
-  --color-hover: rgba(0, 0, 0, 0.2);
-
-  --pwa-fast-reliable-gray-url: var(--pwa-fast-reliable-gray-url-dark);
-  --pwa-installable-gray-url: var(--pwa-installable-gray-url-dark);
-  --pwa-optimized-gray-url: var(--pwa-optimized-gray-url-dark);
+@media not print {
+  .lh-vars.dark {
+    --color-red-700: var(--color-red);
+    --color-green-700: var(--color-green);
+    --color-teal-600: var(--color-cyan-500);
+    --color-orange-700: var(--color-orange);
+  
+    --color-black-200: var(--color-black-800);
+    --color-black-400: var(--color-black-600);
+    --color-black-600: var(--color-black-500);
+  
+    --topbar-bg: var(--color-black);
+    --plugin-badge-bg: var(--color-black-800);
+    --env-item-bg: var(--color-black);
+    --report-secondary-border-color: var(--color-black-200);
+  
+    --body-background-color: var(--color-black-900);
+    --body-text-color: var(--color-black-100);
+    --secondary-text-color: var(--color-black-400);
+  
+    --plugin-icon-url: var(--plugin-icon-url-dark);
+  
+    --informative-color: var(--color-blue-200);
+  
+    --medium-50-gray: #757575;
+    --medium-75-gray: var(--color-white);
+  
+    --color-hover: rgba(0, 0, 0, 0.2);
+  
+    --pwa-fast-reliable-gray-url: var(--pwa-fast-reliable-gray-url-dark);
+    --pwa-installable-gray-url: var(--pwa-installable-gray-url-dark);
+    --pwa-optimized-gray-url: var(--pwa-optimized-gray-url-dark);
+  }
 }
 
 @media only screen and (max-width: 480px) {
