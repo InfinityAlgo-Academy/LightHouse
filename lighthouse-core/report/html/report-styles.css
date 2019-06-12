@@ -39,7 +39,6 @@
   --display-value-gray: hsl(216, 5%, 39%);
   --report-width: calc(60 * var(--body-font-size));
   --report-min-width: 400px;
-  --report-header-height: 161px;
   --lh-score-icon-background-size: 24px;
   --lh-tools-icon-size: var(--lh-score-icon-background-size);
   --lh-tools-icon-color: var(--medium-75-gray);
@@ -1212,8 +1211,10 @@
    https://css-tricks.com/hash-tag-links-padding/
 */
 .lh-category > .lh-permalink {
-  margin-top: calc((var(--report-header-height) + var(--default-padding)) * -1);
-  padding-bottom: calc(var(--report-header-height) + var(--default-padding));
+  --sticky-header-height: calc(var(--gauge-circle-size) + var(--score-container-padding) * 2);
+  --topbar-plus-header: calc(var(--topbar-height) + var(--sticky-header-height));
+  margin-top: calc(var(--topbar-plus-header) * -1);
+  padding-bottom: var(--topbar-plus-header);
   display: block;
   visibility: hidden;
 }
