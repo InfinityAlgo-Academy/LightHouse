@@ -420,12 +420,12 @@ class ReportUIFeatures {
       case 'print-summary':
         this.collapseAllDetails();
         this.closeToolsDropdown();
-        self.print();
+        this._print();
         break;
       case 'print-expanded':
         this.expandAllDetails();
         this.closeToolsDropdown();
-        self.print();
+        this._print();
         break;
       case 'save-json': {
         const jsonStr = JSON.stringify(this.json, null, 2);
@@ -460,6 +460,10 @@ class ReportUIFeatures {
 
     this.closeToolsDropdown();
     this._document.removeEventListener('keydown', this.onKeyDown);
+  }
+
+  _print() {
+    self.print();
   }
 
   /**

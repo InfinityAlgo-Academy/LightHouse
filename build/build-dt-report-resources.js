@@ -36,8 +36,8 @@ writeFile('templates.html', htmlReportAssets.REPORT_TEMPLATES);
 
 const pathToReportAssets = require.resolve('../clients/devtools-report-assets.js');
 browserify(generatorFilename, {standalone: 'Lighthouse.ReportGenerator'})
-  // Shims './html/html-report-assets' to resolve to devtools-report-assets.
-  .require(pathToReportAssets, {expose: './html/html-report-assets'})
+  // Shims './html/html-report-assets.js' to resolve to devtools-report-assets.js
+  .require(pathToReportAssets, {expose: './html/html-report-assets.js'})
   .bundle((err, src) => {
     if (err) throw err;
     fs.writeFileSync(bundleOutFile, src.toString());
