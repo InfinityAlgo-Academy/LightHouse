@@ -27,10 +27,10 @@ module.exports = [
       finalUrl: 'https://expired.badssl.com/',
       audits: {},
       // TODO: runtimeError only exists because of selection of audits.
-      runtimeError: {code: 'FAILED_DOCUMENT_REQUEST'},
+      runtimeError: {code: 'INSECURE_DOCUMENT_REQUEST'},
     },
     artifacts: {
-      ViewportDimensions: {code: 'FAILED_DOCUMENT_REQUEST'},
+      ViewportDimensions: {code: 'INSECURE_DOCUMENT_REQUEST'},
     },
   },
 ];

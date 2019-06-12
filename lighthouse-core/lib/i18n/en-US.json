@@ -1363,6 +1363,10 @@
     "message": "The URL you have provided does not have a valid security certificate. {securityMessages}",
     "description": "Error message explaining that the security certificate of the page Lighthouse observed was invalid, so the URL cannot be accessed. securityMessages will be replaced with one or more strings from the browser explaining what was insecure about the page load."
   },
+  "lighthouse-core/lib/lh-error.js | pageLoadFailedInterstitial": {
+    "message": "Chrome prevented page load with an interstitial. Make sure you are testing the correct URL and that the server is properly responding to all requests.",
+    "description": "Error message explaining that Chrome prevented the page from loading and displayed an interstitial screen instead, so the URL cannot be accessed."
+  },
   "lighthouse-core/lib/lh-error.js | pageLoadFailedWithDetails": {
     "message": "Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Details: {errorDetails})",
     "description": "Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability."

@@ -850,6 +850,135 @@ describe('GatherRunner', function() {
     });
   });
 
+  describe('#getInterstitialError', () => {
+    it('passes when the page is loaded', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      expect(GatherRunner.getInterstitialError([mainRecord])).toBeUndefined();
+    });
+
+    it('passes when page fails to load normally', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      mainRecord.failed = true;
+      mainRecord.localizedFailDescription = 'foobar';
+      expect(GatherRunner.getInterstitialError([mainRecord])).toBeUndefined();
+    });
+
+    it('passes when page gets a generic interstitial but somehow also loads everything', () => {
+      // This case, AFAIK, is impossible, but we'll err on the side of not tanking the run.
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      const interstitialRecord = new NetworkRequest();
+      interstitialRecord.url = 'data:text/html;base64,abcdef';
+      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
+      const records = [mainRecord, interstitialRecord];
+      expect(GatherRunner.getInterstitialError(records)).toBeUndefined();
+    });
+
+    it('fails when page gets a generic interstitial', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      mainRecord.failed = true;
+      mainRecord.localizedFailDescription = 'ERR_CONNECTION_RESET';
+      const interstitialRecord = new NetworkRequest();
+      interstitialRecord.url = 'data:text/html;base64,abcdef';
+      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
+      const records = [mainRecord, interstitialRecord];
+      const error = GatherRunner.getInterstitialError(records);
+      expect(error.message).toEqual('CHROME_INTERSTITIAL_ERROR');
+      expect(error.code).toEqual('CHROME_INTERSTITIAL_ERROR');
+      expect(error.friendlyMessage).toBeDisplayString(/^Chrome prevented/);
+    });
+
+    it('fails when page gets a security interstitial', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      mainRecord.failed = true;
+      mainRecord.localizedFailDescription = 'net::ERR_CERT_COMMON_NAME_INVALID';
+      const interstitialRecord = new NetworkRequest();
+      interstitialRecord.url = 'data:text/html;base64,abcdef';
+      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
+      const records = [mainRecord, interstitialRecord];
+      const error = GatherRunner.getInterstitialError(records);
+      expect(error.message).toEqual('INSECURE_DOCUMENT_REQUEST');
+      expect(error.code).toEqual('INSECURE_DOCUMENT_REQUEST');
+      expect(error.friendlyMessage).toBeDisplayString(/valid security certificate/);
+      expect(error.friendlyMessage).toBeDisplayString(/net::ERR_CERT_COMMON_NAME_INVALID/);
+    });
+  });
+
+  describe('#getPageLoadError', () => {
+    let navigationError;
+
+    beforeEach(() => {
+      navigationError = new Error('NAVIGATION_ERROR');
+    });
+
+    it('passes when the page is loaded', () => {
+      const passContext = {url: 'http://the-page.com', driver: {online: true}};
+      const mainRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+      mainRecord.url = passContext.url;
+      const error = GatherRunner.getPageLoadError(passContext, loadData, undefined);
+      expect(error).toBeUndefined();
+    });
+
+    it('passes when the page is offline', () => {
+      const passContext = {url: 'http://the-page.com', driver: {online: false}};
+      const mainRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+      mainRecord.url = passContext.url;
+      mainRecord.failed = true;
+
+      const error = GatherRunner.getPageLoadError(passContext, loadData, undefined);
+      expect(error).toBeUndefined();
+    });
+
+    it('fails with interstitial error first', () => {
+      const passContext = {url: 'http://the-page.com', driver: {online: true}};
+      const mainRecord = new NetworkRequest();
+      const interstitialRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord, interstitialRecord]};
+
+      mainRecord.url = passContext.url;
+      mainRecord.failed = true;
+      interstitialRecord.url = 'data:text/html;base64,abcdef';
+      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
+
+      const error = GatherRunner.getPageLoadError(passContext, loadData, navigationError);
+      expect(error.message).toEqual('CHROME_INTERSTITIAL_ERROR');
+    });
+
+    it('fails with network error next', () => {
+      const passContext = {url: 'http://the-page.com', driver: {online: true}};
+      const mainRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+
+      mainRecord.url = passContext.url;
+      mainRecord.failed = true;
+
+      const error = GatherRunner.getPageLoadError(passContext, loadData, navigationError);
+      expect(error.message).toEqual('FAILED_DOCUMENT_REQUEST');
+    });
+
+    it('fails with nav error last', () => {
+      const passContext = {url: 'http://the-page.com', driver: {online: true}};
+      const mainRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+
+      mainRecord.url = passContext.url;
+
+      const error = GatherRunner.getPageLoadError(passContext, loadData, navigationError);
+      expect(error.message).toEqual('NAVIGATION_ERROR');
+    });
+  });
+
   describe('artifact collection', () => {
     // Make sure our gatherers never execute in parallel
     it('runs gatherer lifecycle methods strictly in sequence', async () => {
