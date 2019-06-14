@@ -759,7 +759,8 @@
             "id": "font-display",
             "score": 1.0,
             "scoreDisplayMode": "binary",
-            "title": "All text remains visible during webfont loads"
+            "title": "All text remains visible during webfont loads",
+            "warnings": []
         },
         "font-size": {
             "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to \u201cpinch to zoom\u201d in order to read. Strive to have >60% of page text \u226512px. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).",

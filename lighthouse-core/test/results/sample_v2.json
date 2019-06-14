@@ -796,6 +796,7 @@
       "description": "Leverage the font-display CSS feature to ensure text is user-visible while webfonts are loading. [Learn more](https://developers.google.com/web/updates/2016/02/font-display).",
       "score": 1,
       "scoreDisplayMode": "binary",
+      "warnings": [],
       "details": {
         "type": "table",
         "headings": [],
