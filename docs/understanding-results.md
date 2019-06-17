@@ -158,7 +158,7 @@ An array containing the different categories, their scores, and the results of t
 | id | `string` | The string identifier of the category. |
 | title | `string` | The human-friendly display name of the category. |
 | description | `string` | A brief description of the purpose of the category, supports markdown links. |
-| score | `string` | The overall score of the category, the weighted average of all its audits. |
+| score | `number` | The overall score of the category, the weighted average of all its audits. |
 | auditRefs | `AuditEntry[]` | An array of all the audit results in the category. |
 
 ### AuditEntry Properties
