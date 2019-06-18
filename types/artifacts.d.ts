@@ -217,7 +217,15 @@ declare global {
 
       export type SourceMap = {
         url: string
-        map: import('source-map').RawSourceMap
+        map: {
+          version: number
+          sources: string[]
+          names: string[]
+          sourceRoot?: string
+          sourcesContent?: string[]
+          mappings: string
+          file: string
+        }
       } | {
         url: string
         errorMessage: string
