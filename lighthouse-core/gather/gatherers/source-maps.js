@@ -15,11 +15,9 @@ const Gatherer = require('./gatherer.js');
  * be huge.
  *
  * @param {string} url
- */
-/* istanbul ignore next */
-/**
  * @return {Promise<string|{errorMessage: string}>}
  */
+/* istanbul ignore next */
 async function fetchSourceMap(url) {
   try {
     // eslint-disable-next-line no-undef
@@ -106,12 +104,14 @@ class SourceMaps extends Gatherer {
     /** @type {LH.Artifacts.SourceMap[]} */
     const sourceMaps = [];
     for (const event of this._scriptParsedEvents) {
-      if (!event.sourceMapURL) continue;
-
       const scriptUrl = event.url;
-      const sourceMapOrError = event.sourceMapURL.startsWith('data:') ?
-        this.parseSourceMapFromDataUrl(event.sourceMapURL) :
-        await this.fetchSourceMapInPage(driver, event.sourceMapURL);
+      const sourceMapURL = event.sourceMapURL;
+      if (!sourceMapURL) continue;
+
+      const sourceMapOrError = sourceMapURL.startsWith('data:') ?
+        this.parseSourceMapFromDataUrl(sourceMapURL) :
+        await this.fetchSourceMapInPage(driver, sourceMapURL);
+
       sourceMaps.push({
         scriptUrl,
         ...sourceMapOrError,
