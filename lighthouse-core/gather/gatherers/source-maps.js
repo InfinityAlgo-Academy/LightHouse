@@ -5,8 +5,9 @@
  */
 'use strict';
 
+/** @typedef {import('../driver.js')} Driver */
+
 const Gatherer = require('./gatherer.js');
-const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
 
 /**
  * This function is careful not to parse the response as JSON, as it will
