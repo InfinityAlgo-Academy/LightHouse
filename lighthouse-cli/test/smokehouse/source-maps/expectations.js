@@ -7,9 +7,20 @@
 
 const fs = require('fs');
 const path = require('path');
+const assert = require('assert');
 
 const pathToMap = path.join(__dirname, '../../fixtures/source-maps/bundle.js.map');
 const map = JSON.parse(fs.readFileSync(pathToMap, 'utf-8'));
+
+assert(map);
+[
+  'version',
+  'file',
+  'sourceRoot',
+  'sources',
+  'names',
+  'mappings',
+].forEach(key => assert(key in map));
 
 /**
  * Expected Lighthouse audit values for source map tests.
