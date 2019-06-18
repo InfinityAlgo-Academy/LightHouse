@@ -58,6 +58,21 @@ class SourceMaps extends Gatherer {
   }
 
   /**
+   * @param {string} sourceMapURL
+   * @return {{map: LH.Artifacts.RawSourceMap} | {errorMessage: string}}
+   */
+  parseSourceMapFromDataUrl(sourceMapURL) {
+    try {
+      const buffer = Buffer.from(sourceMapURL.split(',')[1], 'base64');
+      return {
+        map: JSON.parse(buffer.toString()),
+      };
+    } catch (err) {
+      return {errorMessage: err.toString()};
+    }
+  }
+
+  /**
    * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
    */
   onScriptParsed(event) {
@@ -91,24 +106,13 @@ class SourceMaps extends Gatherer {
       if (!event.sourceMapURL) continue;
 
       const scriptUrl = event.url;
-      try {
-        if (event.sourceMapURL.startsWith('data:')) {
-          const buffer = Buffer.from(event.sourceMapURL.split(',')[1], 'base64');
-          sourceMaps.push({
-            scriptUrl,
-            map: JSON.parse(buffer.toString()),
-          });
-        } else {
-          const fetchedSourceMap = await this.fetchSourceMapInPage(driver, event.sourceMapURL);
-          sourceMaps.push({
-            scriptUrl,
-            ...fetchedSourceMap,
-          });
-        }
-      } catch (err) {
-        // Without this catch, this silently fails and the gatherer returns an empty object... why no visible error?
-        sourceMaps.push({scriptUrl, errorMessage: err.toString()});
-      }
+      const sourceMapOrError = event.sourceMapURL.startsWith('data:') ?
+        this.parseSourceMapFromDataUrl(event.sourceMapURL) :
+        await this.fetchSourceMapInPage(driver, event.sourceMapURL);
+      sourceMaps.push({
+        scriptUrl,
+        ...sourceMapOrError,
+      });
     }
 
     return sourceMaps;
