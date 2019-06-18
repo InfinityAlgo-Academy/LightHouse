@@ -107,7 +107,7 @@ class SourceMaps extends Gatherer {
         }
       } catch (err) {
         // Without this catch, this silently fails and the gatherer returns an empty object... why no visible error?
-        sourceMaps.push({url, errorMessage: err.toString()});
+        sourceMaps.push({scriptUrl, errorMessage: err.toString()});
       }
     }
 

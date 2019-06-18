@@ -18,19 +18,19 @@ module.exports = [
   {
     artifacts: {
       SourceMaps: [{
-        url: 'http://localhost:10200/source-maps/source-maps-tester.html',
+        scriptUrl: 'http://localhost:10200/source-maps/source-maps-tester.html',
         errorMessage: 'SyntaxError: Unexpected token { in JSON at position 1',
         map: undefined,
       }, {
-        url: 'http://localhost:10200/source-maps/source-maps-tester.html',
+        scriptUrl: 'http://localhost:10200/source-maps/source-maps-tester.html',
         map,
         errorMessage: undefined,
       }, {
-        url: 'http://localhost:10200/source-maps/bundle.js',
+        scriptUrl: 'http://localhost:10200/source-maps/bundle.js',
         map,
         errorMessage: undefined,
       }, {
-        url: 'http://localhost:10200/source-maps/bundle-map-500.js',
+        scriptUrl: 'http://localhost:10200/source-maps/bundle-map-500.js',
         errorMessage: 'TypeError: Failed to fetch',
         map: undefined,
       }],
