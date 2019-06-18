@@ -13,6 +13,12 @@
 <body>
   <!-- Note: none of these source maps are _actually_ maps of the 'generated' code here. -->
   <!-- It's whatever I typed into https://dopiaza.org/tools/datauri/index.php -->
+
+  <!-- No map here, but that's not an error. Include first so that if the gather does -->
+  <!-- erroneously flag this, all other expectations will be off by one. -->
+  <script src="bundle-no-map.js"></script>
+
+  <!-- failure -->
   <script>
     const a = 1;
     // Bad inline json:
@@ -20,6 +26,7 @@
     //# sourceMappingURL=data:application/json;charset=utf-8;base64,e3t9
   </script>
 
+  <!-- success -->
   <script>
     const a = 1;
     // Good inline json:
@@ -34,9 +41,11 @@
     //# sourceMappingURL=data:application/json;charset=utf-8;base64,ew0KICAidmVyc2lvbiIgOiAzLA0KICAiZmlsZSI6ICJvdXQuanMiLA0KICAic291cmNlUm9vdCIgOiAiIiwNCiAgInNvdXJjZXMiOiBbImZvby5qcyIsICJiYXIuanMiXSwNCiAgIm5hbWVzIjogWyJzcmMiLCAibWFwcyIsICJhcmUiLCAiZnVuIl0sDQogICJtYXBwaW5ncyI6ICJBQWdCQyxTQUFRLENBQUVBIg0KfQ==
   </script>
 
+  <!-- success -->
   <script src="bundle.js"></script>
 
-  <script src="bundle-map-500.js"></script>
+  <!-- failure -->
+  <script src="bundle-map-fetch-error.js"></script>
   
   map time map time! map time map time! 🎉
 </body>
