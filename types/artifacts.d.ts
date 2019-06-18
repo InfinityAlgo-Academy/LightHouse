@@ -227,8 +227,8 @@ declare global {
       }
 
       /**
-       * Source map for a given script found at scriptUrl. If there is an error in fetching the
-       * map, errorMessage will be defined instead of map.
+       * Source map for a given script found at scriptUrl. If there is an error in fetching or
+       * parsing the map, errorMessage will be defined instead of map.
        */
       export type SourceMap = {
         scriptUrl: string
