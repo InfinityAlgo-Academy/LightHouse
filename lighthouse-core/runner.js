@@ -60,7 +60,7 @@ class Runner {
       if (settings.auditMode && !settings.gatherMode) {
         // No browser required, just load the artifacts from disk.
         const path = Runner._getArtifactsPath(settings);
-        artifacts = await assetSaver.loadArtifacts(path);
+        artifacts = assetSaver.loadArtifacts(path);
         requestedUrl = artifacts.URL.requestedUrl;
 
         if (!requestedUrl) {

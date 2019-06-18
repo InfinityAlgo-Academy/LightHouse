@@ -17,8 +17,8 @@
 const cachedResources = Runtime.cachedResources;
 
 module.exports = {
-  REPORT_CSS: cachedResources['audits2/lighthouse/report.css'],
-  REPORT_JAVASCRIPT: cachedResources['audits2/lighthouse/report.js'],
-  REPORT_TEMPLATE: cachedResources['audits2/lighthouse/template.html'],
-  REPORT_TEMPLATES: cachedResources['audits2/lighthouse/templates.html'],
+  REPORT_CSS: cachedResources['audits/lighthouse/report.css'],
+  REPORT_JAVASCRIPT: cachedResources['audits/lighthouse/report.js'],
+  REPORT_TEMPLATE: cachedResources['audits/lighthouse/template.html'],
+  REPORT_TEMPLATES: cachedResources['audits/lighthouse/templates.html'],
 };

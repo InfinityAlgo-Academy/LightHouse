@@ -71,7 +71,7 @@ class GatherRunner {
       passContext.url = finalUrl;
     } catch (err) {
       // If it's one of our loading-based LHErrors, we'll treat it as a page load error.
-      if (err.code === 'NO_FCP') {
+      if (err.code === 'NO_FCP' || err.code === 'PAGE_HUNG') {
         return {navigationError: err};
       }
 
@@ -168,6 +168,37 @@ class GatherRunner {
   }
 
   /**
+   * Returns an error if we ended up on the `chrome-error` page and all other requests failed.
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
+   * @return {LH.LighthouseError|undefined}
+   */
+  static getInterstitialError(networkRecords) {
+    const interstitialRequest = networkRecords
+      .find(record => record.documentURL.startsWith('chrome-error://'));
+    // If the page didn't end up on a chrome interstitial, there's no error here.
+    if (!interstitialRequest) return undefined;
+
+    const pageNetworkRecords = networkRecords
+      .filter(record => !URL.NON_NETWORK_PROTOCOLS.includes(record.protocol) &&
+        !record.documentURL.startsWith('chrome-error://'));
+    // If none of the requests failed, there's no error here.
+    // We don't expect that this case could ever occur, but better safe than sorry.
+    // Note also that in cases of redirects, the initial requests could succeed and we still end up
+    // on the error interstitial page.
+    if (!pageNetworkRecords.some(record => record.failed)) return undefined;
+
+    // If a request failed with the `net::ERR_CERT_*` collection of errors, then it's a security issue.
+    const insecureRequest = pageNetworkRecords.find(record =>
+      record.failed && record.localizedFailDescription.startsWith('net::ERR_CERT'));
+    if (insecureRequest) {
+      return new LHError(LHError.errors.INSECURE_DOCUMENT_REQUEST, {securityMessages:
+        insecureRequest.localizedFailDescription});
+    }
+
+    return new LHError(LHError.errors.CHROME_INTERSTITIAL_ERROR);
+  }
+
+  /**
    * Returns an error if the page load should be considered failed, e.g. from a
    * main document request failure, a security issue, etc.
    * @param {LH.Gatherer.PassContext} passContext
@@ -177,9 +208,13 @@ class GatherRunner {
    */
   static getPageLoadError(passContext, loadData, navigationError) {
     const networkError = GatherRunner.getNetworkError(passContext.url, loadData.networkRecords);
+    const interstitialError = GatherRunner.getInterstitialError(loadData.networkRecords);
 
-    //  If the driver was offline, the load will fail without offline support. Ignore this case.
+    // If the driver was offline, the load will fail without offline support. Ignore this case.
     if (!passContext.driver.online) return;
+
+    // We want to special-case the interstitial beyond FAILED_DOCUMENT_REQUEST. See https://github.com/GoogleChrome/lighthouse/pull/8865#issuecomment-497507618
+    if (interstitialError) return interstitialError;
 
     // Network errors are usually the most specific and provide the best reason for why the page failed to load.
     // Prefer networkError over navigationError.
@@ -339,11 +374,16 @@ class GatherRunner {
    * @return {Promise<void>}
    */
   static async afterPass(passContext, loadData, gathererResults) {
+    const driver = passContext.driver;
     const config = passContext.passConfig;
     const gatherers = config.gatherers;
 
     const apStatus = {msg: `Running afterPass methods`, id: `lh:gather:afterPass`};
     log.time(apStatus, 'verbose');
+
+    // Some gatherers scroll the page which can cause unexpected results for other gatherers.
+    // We reset the scroll position in between each gatherer.
+    const scrollPosition = await driver.getScrollPosition();
 
     for (const gathererDefn of gatherers) {
       const gatherer = gathererDefn.instance;
@@ -362,6 +402,7 @@ class GatherRunner {
       gathererResult.push(artifactPromise);
       gathererResults[gatherer.name] = gathererResult;
       await artifactPromise.catch(() => {});
+      await driver.scrollTo(scrollPosition);
       log.timeEnd(status);
     }
     log.timeEnd(apStatus);
@@ -452,7 +493,7 @@ class GatherRunner {
       traces: {},
       devtoolsLogs: {},
       settings: options.settings,
-      URL: {requestedUrl: options.requestedUrl, finalUrl: ''},
+      URL: {requestedUrl: options.requestedUrl, finalUrl: options.requestedUrl},
       Timing: [],
     };
   }
@@ -551,6 +592,9 @@ class GatherRunner {
         };
         const passResults = await GatherRunner.runPass(passContext);
         Object.assign(artifacts, passResults.artifacts);
+
+        // If we encountered a pageLoadError, don't try to keep loading the page in future passes.
+        if (passResults.pageLoadError) break;
 
         if (isFirstPass) {
           await GatherRunner.populateBaseArtifacts(passContext);

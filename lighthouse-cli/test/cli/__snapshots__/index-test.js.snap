@@ -43,6 +43,9 @@ Object {
       "path": "metrics/estimated-input-latency",
     },
     Object {
+      "path": "metrics/cumulative-long-queuing-delay",
+    },
+    Object {
       "path": "metrics/max-potential-fid",
     },
     Object {
@@ -708,6 +711,10 @@ Object {
         },
         Object {
           "id": "estimated-input-latency",
+          "weight": 0,
+        },
+        Object {
+          "id": "cumulative-long-queuing-delay",
           "weight": 0,
         },
         Object {

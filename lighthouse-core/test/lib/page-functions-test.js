@@ -16,8 +16,13 @@ describe('Page Functions', () => {
   let dom;
 
   beforeAll(() => {
-    const {document} = new jsdom.JSDOM().window;
+    const {document, ShadowRoot} = new jsdom.JSDOM().window;
+    global.ShadowRoot = ShadowRoot;
     dom = new DOM(document);
+  });
+
+  afterAll(() => {
+    global.ShadowRoot = undefined;
   });
 
   describe('get outer HTML snippets', () => {
@@ -38,6 +43,13 @@ describe('Page Functions', () => {
       ), '<div id="1">');
     });
 
+    it('should handle dom nodes that cannot be cloned', () => {
+      const element = dom.createElement('div');
+      element.cloneNode = () => {
+        throw new Error('oops!');
+      };
+      assert.equal(pageFunctions.getOuterHTMLSnippet(element), '<div>');
+    });
     it('ignores when attribute not found', () => {
       assert.equal(pageFunctions.getOuterHTMLSnippet(
         dom.createElement('div', '', {'id': '1', 'style': 'style', 'aria-label': 'label'}),

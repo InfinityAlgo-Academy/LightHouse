@@ -37,38 +37,12 @@ const TARGET_SELECTORS = [
 const tapTargetsSelector = TARGET_SELECTORS.join(',');
 
 /**
- * @param {Element} element
+ * @param {HTMLElement} element
  * @returns {boolean}
  */
 /* istanbul ignore next */
 function elementIsVisible(element) {
-  const {overflowX, overflowY, display, visibility} = getComputedStyle(element);
-
-  if (
-    display === 'none' ||
-    (visibility === 'collapse' && ['TR', 'TBODY', 'COL', 'COLGROUP'].includes(element.tagName))
-  ) {
-    // Element not displayed
-    return false;
-  }
-
-  // only for block and inline-block, since clientWidth/Height are always 0 for inline elements
-  if (display === 'block' || display === 'inline-block') {
-    // if height/width is 0 and no overflow in that direction then
-    // there's no content that the user can see and tap on
-    if ((element.clientWidth === 0 && overflowX === 'hidden') ||
-        (element.clientHeight === 0 && overflowY === 'hidden')) {
-      return false;
-    }
-  }
-
-  const parent = element.parentElement;
-  if (parent && parent.tagName !== 'BODY') {
-    // if a parent is invisible then the current element is also invisible
-    return elementIsVisible(parent);
-  }
-
-  return true;
+  return !!(element.offsetWidth || element.offsetHeight || element.getClientRects().length);
 }
 
 /**
@@ -238,7 +212,7 @@ function gatherTapTargets() {
   // Capture element positions relative to the top of the page
   window.scrollTo(0, 0);
 
-  /** @type {Element[]} */
+  /** @type {HTMLElement[]} */
   // @ts-ignore - getElementsInDocument put into scope via stringification
   const tapTargetElements = getElementsInDocument(tapTargetsSelector);
 

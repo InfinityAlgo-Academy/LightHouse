@@ -33,9 +33,9 @@ const devtoolsLogSuffix = '.devtoolslog.json';
  * Load artifacts object from files located within basePath
  * Also save the traces to their own files
  * @param {string} basePath
- * @return {Promise<LH.Artifacts>}
+ * @return {LH.Artifacts}
  */
-async function loadArtifacts(basePath) {
+function loadArtifacts(basePath) {
   log.log('Reading artifacts from disk:', basePath);
 
   if (!fs.existsSync(basePath)) {

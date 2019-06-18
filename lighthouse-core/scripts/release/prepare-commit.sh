@@ -70,7 +70,7 @@ echo "Version bump commit ready on the ${TXT_BOLD}$BRANCH_NAME${TXT_RESET} branc
 
 echo "${TXT_DIM}Press any key to see the git diff, CTRL+C to exit...${TXT_RESET}"
 read -n 1 -r unused_variable
-git --no-pager diff HEAD^
+git diff HEAD^
 echo "${TXT_DIM}Press any key to push to GitHub, CTRL+C to exit...${TXT_RESET}"
 read -n 1 -r unused_variable
 git push -u origin "$BRANCH_NAME"

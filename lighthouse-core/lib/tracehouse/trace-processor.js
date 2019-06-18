@@ -1,9 +1,24 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 Google Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
+
+/**
+ * @fileoverview Singluar helper to parse a raw trace and extract the most useful data for
+ * various tools. This artifact will take a trace and then:
+ *
+ * 1. Find the TracingStartedInPage and navigationStart events of our intended tab & frame.
+ * 2. Find the firstContentfulPaint and marked firstMeaningfulPaint events
+ * 3. Isolate only the trace events from the tab's process (including all threads like compositor)
+ *      * Sort those trace events in chronological order (as order isn't guaranteed)
+ * 4. Return all those items in one handy bundle.
+ */
+
+const log = require('lighthouse-logger');
+
+const ACCEPTABLE_NAVIGATION_URL_REGEX = /^(chrome|https?):/;
 
 // The ideal input response latency, the time between the input task and the
 // first frame of the response.
@@ -17,10 +32,67 @@ const SCHEDULABLE_TASK_TITLE_ALT2 = 'ThreadControllerImpl::DoWork';
 // m65 and earlier
 const SCHEDULABLE_TASK_TITLE_ALT3 = 'TaskQueueManager::ProcessTaskFromWorkQueue';
 
-
-const LHError = require('../lh-error.js');
-
 class TraceProcessor {
+  /**
+   * @return {Error}
+   */
+  static createNoNavstartError() {
+    return new Error('No navigationStart event found');
+  }
+
+  /**
+   * @return {Error}
+   */
+  static createNoFirstContentfulPaintError() {
+    return new Error('No firstContentfulPaint event found');
+  }
+
+  /**
+   * @return {Error}
+   */
+  static createNoTracingStartedError() {
+    return new Error('No tracingStartedInBrowser event found');
+  }
+
+  /**
+   * Returns true if the event is a navigation start event of a document whose URL seems valid.
+   *
+   * @param {LH.TraceEvent} event
+   */
+  static _isNavigationStartOfInterest(event) {
+    return event.name === 'navigationStart' &&
+      (!event.args.data || !event.args.data.documentLoaderURL ||
+        ACCEPTABLE_NAVIGATION_URL_REGEX.test(event.args.data.documentLoaderURL));
+  }
+
+  /**
+   * @param {LH.TraceEvent[]} traceEvents
+   * @param {(e: LH.TraceEvent) => boolean} filter
+   */
+  static _filteredStableSort(traceEvents, filter) {
+    // create an array of the indices that we want to keep
+    const indices = [];
+    for (let srcIndex = 0; srcIndex < traceEvents.length; srcIndex++) {
+      if (filter(traceEvents[srcIndex])) {
+        indices.push(srcIndex);
+      }
+    }
+
+    // sort by ts, if there's no ts difference sort by index
+    indices.sort((indexA, indexB) => {
+      const result = traceEvents[indexA].ts - traceEvents[indexB].ts;
+      return result ? result : indexA - indexB;
+    });
+
+    // create a new array using the target indices from previous sort step
+    const sorted = [];
+    for (let i = 0; i < indices.length; i++) {
+      sorted.push(traceEvents[indices[i]]);
+    }
+
+    return sorted;
+  }
+
   /**
    * There should *always* be at least one top level event, having 0 typically means something is
    * drastically wrong with the trace and we should just give up early and loudly.
@@ -28,7 +100,7 @@ class TraceProcessor {
    * @param {LH.TraceEvent[]} events
    */
   static assertHasToplevelEvents(events) {
-    const hasToplevelTask = events.some(TraceProcessor.isScheduleableTask);
+    const hasToplevelTask = events.some(this.isScheduleableTask);
     if (!hasToplevelTask) {
       throw new Error('Could not find any top level events');
     }
@@ -122,8 +194,8 @@ class TraceProcessor {
     const totalTime = endTime - startTime;
     percentiles.sort((a, b) => a - b);
 
-    const ret = TraceProcessor.getMainThreadTopLevelEventDurations(events, startTime, endTime);
-    return TraceProcessor._riskPercentiles(ret.durations, totalTime, percentiles,
+    const ret = this.getMainThreadTopLevelEventDurations(events, startTime, endTime);
+    return this._riskPercentiles(ret.durations, totalTime, percentiles,
         ret.clippedLength);
   }
 
@@ -180,7 +252,7 @@ class TraceProcessor {
     const topLevelEvents = [];
     // note: mainThreadEvents is already sorted by event start
     for (const event of tabTrace.mainThreadEvents) {
-      if (!TraceProcessor.isScheduleableTask(event) || !event.dur) continue;
+      if (!this.isScheduleableTask(event) || !event.dur) continue;
 
       const start = (event.ts - tabTrace.navigationStartEvt.ts) / 1000;
       const end = (event.ts + event.dur - tabTrace.navigationStartEvt.ts) / 1000;
@@ -260,7 +332,7 @@ class TraceProcessor {
       }
     }
 
-    throw new LHError(LHError.errors.NO_TRACING_STARTED);
+    throw this.createNoTracingStartedError();
   }
 
   /**
@@ -273,7 +345,131 @@ class TraceProcessor {
     evt.name === SCHEDULABLE_TASK_TITLE_ALT2 ||
     evt.name === SCHEDULABLE_TASK_TITLE_ALT3;
   }
+
+
+  /**
+   * Finds key trace events, identifies main process/thread, and returns timings of trace events
+   * in milliseconds since navigation start in addition to the standard microsecond monotonic timestamps.
+   * @param {LH.Trace} trace
+   * @return {LH.Artifacts.TraceOfTab}
+  */
+  static computeTraceOfTab(trace) {
+    // Parse the trace for our key events and sort them by timestamp. Note: sort
+    // *must* be stable to keep events correctly nested.
+    const keyEvents = this._filteredStableSort(trace.traceEvents, e => {
+      return e.cat.includes('blink.user_timing') ||
+          e.cat.includes('loading') ||
+          e.cat.includes('devtools.timeline') ||
+          e.cat === '__metadata';
+    });
+
+    // Find the inspected frame
+    const mainFrameIds = this.findMainFrameIds(keyEvents);
+
+    // Filter to just events matching the frame ID for sanity
+    const frameEvents = keyEvents.filter(e => e.args.frame === mainFrameIds.frameId);
+
+    // Our navStart will be the last frame navigation in the trace
+    const navigationStart = frameEvents.filter(this._isNavigationStartOfInterest).pop();
+    if (!navigationStart) throw this.createNoNavstartError();
+
+    // Find our first paint of this frame
+    const firstPaint = frameEvents.find(e => e.name === 'firstPaint' && e.ts > navigationStart.ts);
+
+    // FCP will follow at/after the FP. Used in so many places we require it.
+    const firstContentfulPaint = frameEvents.find(
+      e => e.name === 'firstContentfulPaint' && e.ts > navigationStart.ts
+    );
+    if (!firstContentfulPaint) throw this.createNoFirstContentfulPaintError();
+
+    // fMP will follow at/after the FP
+    let firstMeaningfulPaint = frameEvents.find(
+      e => e.name === 'firstMeaningfulPaint' && e.ts > navigationStart.ts
+    );
+    let fmpFellBack = false;
+
+    // If there was no firstMeaningfulPaint event found in the trace, the network idle detection
+    // may have not been triggered before Lighthouse finished tracing.
+    // In this case, we'll use the last firstMeaningfulPaintCandidate we can find.
+    // However, if no candidates were found (a bogus trace, likely), we fail.
+    if (!firstMeaningfulPaint) {
+      const fmpCand = 'firstMeaningfulPaintCandidate';
+      fmpFellBack = true;
+      log.verbose('trace-of-tab', `No firstMeaningfulPaint found, falling back to last ${fmpCand}`);
+      const lastCandidate = frameEvents.filter(e => e.name === fmpCand).pop();
+      if (!lastCandidate) {
+        log.verbose('trace-of-tab', 'No `firstMeaningfulPaintCandidate` events found in trace');
+      }
+      firstMeaningfulPaint = lastCandidate;
+    }
+
+    const load = frameEvents.find(e => e.name === 'loadEventEnd' && e.ts > navigationStart.ts);
+    const domContentLoaded = frameEvents.find(
+      e => e.name === 'domContentLoadedEventEnd' && e.ts > navigationStart.ts
+    );
+
+    // subset all trace events to just our tab's process (incl threads other than main)
+    // stable-sort events to keep them correctly nested.
+    const processEvents = TraceProcessor
+      ._filteredStableSort(trace.traceEvents, e => e.pid === mainFrameIds.pid);
+
+    const mainThreadEvents = processEvents
+      .filter(e => e.tid === mainFrameIds.tid);
+
+    // traceEnd must exist since at least navigationStart event was verified as existing.
+    const traceEnd = trace.traceEvents.reduce((max, evt) => {
+      return max.ts > evt.ts ? max : evt;
+    });
+    const fakeEndOfTraceEvt = {ts: traceEnd.ts + (traceEnd.dur || 0)};
+
+    /** @param {{ts: number}=} event */
+    const getTimestamp = (event) => event && event.ts;
+    /** @type {LH.Artifacts.TraceTimes} */
+    const timestamps = {
+      navigationStart: navigationStart.ts,
+      firstPaint: getTimestamp(firstPaint),
+      firstContentfulPaint: firstContentfulPaint.ts,
+      firstMeaningfulPaint: getTimestamp(firstMeaningfulPaint),
+      traceEnd: fakeEndOfTraceEvt.ts,
+      load: getTimestamp(load),
+      domContentLoaded: getTimestamp(domContentLoaded),
+    };
+
+
+    /** @param {number} ts */
+    const getTiming = (ts) => (ts - navigationStart.ts) / 1000;
+    /** @param {number=} ts */
+    const maybeGetTiming = (ts) => ts === undefined ? undefined : getTiming(ts);
+    /** @type {LH.Artifacts.TraceTimes} */
+    const timings = {
+      navigationStart: 0,
+      firstPaint: maybeGetTiming(timestamps.firstPaint),
+      firstContentfulPaint: getTiming(timestamps.firstContentfulPaint),
+      firstMeaningfulPaint: maybeGetTiming(timestamps.firstMeaningfulPaint),
+      traceEnd: getTiming(timestamps.traceEnd),
+      load: maybeGetTiming(timestamps.load),
+      domContentLoaded: maybeGetTiming(timestamps.domContentLoaded),
+    };
+
+    return {
+      timings,
+      timestamps,
+      processEvents,
+      mainThreadEvents,
+      mainFrameIds,
+      navigationStartEvt: navigationStart,
+      firstPaintEvt: firstPaint,
+      firstContentfulPaintEvt: firstContentfulPaint,
+      firstMeaningfulPaintEvt: firstMeaningfulPaint,
+      loadEvt: load,
+      domContentLoadedEvt: domContentLoaded,
+      fmpFellBack,
+    };
+  }
 }
+
+module.exports = TraceProcessor;
+
 
 /**
  * @typedef ToplevelEvent
@@ -281,5 +477,3 @@ class TraceProcessor {
  * @prop {number} end
  * @prop {number} duration
  */
-
-module.exports = TraceProcessor;

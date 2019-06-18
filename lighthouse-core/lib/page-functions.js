@@ -6,7 +6,7 @@
 // @ts-nocheck
 'use strict';
 
-/* global window document Node */
+/* global window document Node ShadowRoot */
 
 /**
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
@@ -80,15 +80,15 @@ function checkTimeSinceLastLongTask() {
 /**
  * @param {string=} selector Optional simple CSS selector to filter nodes on.
  *     Combinators are not supported.
- * @return {Array<Element>}
+ * @return {Array<HTMLElement>}
  */
 /* istanbul ignore next */
 function getElementsInDocument(selector) {
   const realMatchesFn = window.__ElementMatches || window.Element.prototype.matches;
-  /** @type {Array<Element>} */
+  /** @type {Array<HTMLElement>} */
   const results = [];
 
-  /** @param {NodeListOf<Element>} nodes */
+  /** @param {NodeListOf<HTMLElement>} nodes */
   const _findAllElements = nodes => {
     for (let i = 0, el; el = nodes[i]; ++i) {
       if (!selector || realMatchesFn.call(el, selector)) {
@@ -107,23 +107,31 @@ function getElementsInDocument(selector) {
 
 /**
  * Gets the opening tag text of the given node.
- * @param {Element} element
+ * @param {Element|ShadowRoot} element
  * @param {Array<string>=} ignoreAttrs An optional array of attribute tags to not include in the HTML snippet.
  * @return {string}
  */
 /* istanbul ignore next */
 function getOuterHTMLSnippet(element, ignoreAttrs = []) {
-  const clone = element.cloneNode();
+  try {
+    // ShadowRoots are sometimes passed in; use their hosts' outerHTML.
+    if (element instanceof ShadowRoot) {
+      element = element.host;
+    }
 
-  ignoreAttrs.forEach(attribute =>{
-    clone.removeAttribute(attribute);
-  });
-
-  const reOpeningTag = /^[\s\S]*?>/;
-  const match = clone.outerHTML.match(reOpeningTag);
-
-  return (match && match[0]) || '';
+    const clone = element.cloneNode();
+    ignoreAttrs.forEach(attribute =>{
+      clone.removeAttribute(attribute);
+    });
+    const reOpeningTag = /^[\s\S]*?>/;
+    const match = clone.outerHTML.match(reOpeningTag);
+    return (match && match[0]) || '';
+  } catch (_) {
+    // As a last resort, fall back to localName.
+    return `<${element.localName}>`;
+  }
 }
+
 
 /**
  * Computes a memory/CPU performance benchmark index to determine rough device class.

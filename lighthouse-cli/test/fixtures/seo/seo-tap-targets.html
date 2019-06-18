@@ -159,6 +159,24 @@
 
     <br/><br/>
 
+    <!-- even if a tap target's size is 0x0px it can still fail if overflowing content is visible -->
+    <div>
+      <a
+        data-gathered-target="zero-width-tap-target-with-overflowing-child-content"
+        style="display: block; width: 0; white-space: nowrap">
+        <!-- TODO: having the span should not be necessary to cause a failure here, but
+             right now we don't try to get the client rects of children that are text nodes -->
+        <span style="display: inline-block; width: 110px; height: 18px">zero width target</span>
+      </a>
+      <a
+        data-gathered-target="passing-tap-target-next-to-zero-width-target"
+        style="display: block; width: 110px; height: 100px;background: #aaa;">
+        passing target
+      </a>
+    </div>
+
+    <br/><br/>
+
     <!-- Should not fail if the two links have the same link target -->
     <div>
       <a

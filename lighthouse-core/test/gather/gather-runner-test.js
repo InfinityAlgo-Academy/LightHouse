@@ -396,6 +396,8 @@ describe('GatherRunner', function() {
       endTrace: asyncFunc,
       endDevtoolsLog: () => [],
       getBrowserVersion: async () => ({userAgent: ''}),
+      getScrollPosition: async () => 1,
+      scrollTo: async () => {},
     };
     const passConfig = {
       passName: 'default',
@@ -677,6 +679,34 @@ describe('GatherRunner', function() {
     });
   });
 
+  it('resets scroll position between every gatherer', async () => {
+    class ScrollMcScrollyGatherer extends TestGatherer {
+      afterPass(context) {
+        context.driver.scrollTo({x: 1000, y: 1000});
+      }
+    }
+
+    const url = 'https://example.com';
+    const driver = Object.assign({}, fakeDriver);
+    const scrollToSpy = jest.spyOn(driver, 'scrollTo');
+
+    const passConfig = {
+      recordTrace: true,
+      gatherers: [
+        {instance: new ScrollMcScrollyGatherer()},
+        {instance: new TestGatherer()},
+      ],
+    };
+
+    await GatherRunner.afterPass({url, driver, passConfig}, {}, {TestGatherer: []});
+    // One time for the afterPass of ScrollMcScrolly, two times for the resets of the two gatherers.
+    expect(scrollToSpy.mock.calls).toEqual([
+      [{x: 1000, y: 1000}],
+      [{x: 0, y: 0}],
+      [{x: 0, y: 0}],
+    ]);
+  });
+
   it('does as many passes as are required', () => {
     const t1 = new TestGatherer();
     const t2 = new TestGatherer();
@@ -817,6 +847,135 @@ describe('GatherRunner', function() {
       assert.equal(error.message, 'DNS_FAILURE');
       assert.equal(error.code, 'DNS_FAILURE');
       expect(error.friendlyMessage).toBeDisplayString(/^DNS servers could not resolve/);
+    });
+  });
+
+  describe('#getInterstitialError', () => {
+    it('passes when the page is loaded', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      expect(GatherRunner.getInterstitialError([mainRecord])).toBeUndefined();
+    });
+
+    it('passes when page fails to load normally', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      mainRecord.failed = true;
+      mainRecord.localizedFailDescription = 'foobar';
+      expect(GatherRunner.getInterstitialError([mainRecord])).toBeUndefined();
+    });
+
+    it('passes when page gets a generic interstitial but somehow also loads everything', () => {
+      // This case, AFAIK, is impossible, but we'll err on the side of not tanking the run.
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      const interstitialRecord = new NetworkRequest();
+      interstitialRecord.url = 'data:text/html;base64,abcdef';
+      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
+      const records = [mainRecord, interstitialRecord];
+      expect(GatherRunner.getInterstitialError(records)).toBeUndefined();
+    });
+
+    it('fails when page gets a generic interstitial', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      mainRecord.failed = true;
+      mainRecord.localizedFailDescription = 'ERR_CONNECTION_RESET';
+      const interstitialRecord = new NetworkRequest();
+      interstitialRecord.url = 'data:text/html;base64,abcdef';
+      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
+      const records = [mainRecord, interstitialRecord];
+      const error = GatherRunner.getInterstitialError(records);
+      expect(error.message).toEqual('CHROME_INTERSTITIAL_ERROR');
+      expect(error.code).toEqual('CHROME_INTERSTITIAL_ERROR');
+      expect(error.friendlyMessage).toBeDisplayString(/^Chrome prevented/);
+    });
+
+    it('fails when page gets a security interstitial', () => {
+      const url = 'http://the-page.com';
+      const mainRecord = new NetworkRequest();
+      mainRecord.url = url;
+      mainRecord.failed = true;
+      mainRecord.localizedFailDescription = 'net::ERR_CERT_COMMON_NAME_INVALID';
+      const interstitialRecord = new NetworkRequest();
+      interstitialRecord.url = 'data:text/html;base64,abcdef';
+      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
+      const records = [mainRecord, interstitialRecord];
+      const error = GatherRunner.getInterstitialError(records);
+      expect(error.message).toEqual('INSECURE_DOCUMENT_REQUEST');
+      expect(error.code).toEqual('INSECURE_DOCUMENT_REQUEST');
+      expect(error.friendlyMessage).toBeDisplayString(/valid security certificate/);
+      expect(error.friendlyMessage).toBeDisplayString(/net::ERR_CERT_COMMON_NAME_INVALID/);
+    });
+  });
+
+  describe('#getPageLoadError', () => {
+    let navigationError;
+
+    beforeEach(() => {
+      navigationError = new Error('NAVIGATION_ERROR');
+    });
+
+    it('passes when the page is loaded', () => {
+      const passContext = {url: 'http://the-page.com', driver: {online: true}};
+      const mainRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+      mainRecord.url = passContext.url;
+      const error = GatherRunner.getPageLoadError(passContext, loadData, undefined);
+      expect(error).toBeUndefined();
+    });
+
+    it('passes when the page is offline', () => {
+      const passContext = {url: 'http://the-page.com', driver: {online: false}};
+      const mainRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+      mainRecord.url = passContext.url;
+      mainRecord.failed = true;
+
+      const error = GatherRunner.getPageLoadError(passContext, loadData, undefined);
+      expect(error).toBeUndefined();
+    });
+
+    it('fails with interstitial error first', () => {
+      const passContext = {url: 'http://the-page.com', driver: {online: true}};
+      const mainRecord = new NetworkRequest();
+      const interstitialRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord, interstitialRecord]};
+
+      mainRecord.url = passContext.url;
+      mainRecord.failed = true;
+      interstitialRecord.url = 'data:text/html;base64,abcdef';
+      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
+
+      const error = GatherRunner.getPageLoadError(passContext, loadData, navigationError);
+      expect(error.message).toEqual('CHROME_INTERSTITIAL_ERROR');
+    });
+
+    it('fails with network error next', () => {
+      const passContext = {url: 'http://the-page.com', driver: {online: true}};
+      const mainRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+
+      mainRecord.url = passContext.url;
+      mainRecord.failed = true;
+
+      const error = GatherRunner.getPageLoadError(passContext, loadData, navigationError);
+      expect(error.message).toEqual('FAILED_DOCUMENT_REQUEST');
+    });
+
+    it('fails with nav error last', () => {
+      const passContext = {url: 'http://the-page.com', driver: {online: true}};
+      const mainRecord = new NetworkRequest();
+      const loadData = {networkRecords: [mainRecord]};
+
+      mainRecord.url = passContext.url;
+
+      const error = GatherRunner.getPageLoadError(passContext, loadData, navigationError);
+      expect(error.message).toEqual('NAVIGATION_ERROR');
     });
   });
 

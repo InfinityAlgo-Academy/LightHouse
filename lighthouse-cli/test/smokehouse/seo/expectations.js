@@ -63,6 +63,13 @@ const expectedGatheredTapTargets = [
     snippet: /large-enough-tap-target-next-to-too-small-tap-target/,
   },
   {
+    snippet: /zero-width-tap-target-with-overflowing-child-content/,
+    shouldFail: true,
+  },
+  {
+    snippet: /passing-tap-target-next-to-zero-width-target/,
+  },
+  {
     snippet: /links-with-same-link-target-1/,
   },
   {
@@ -203,6 +210,10 @@ module.exports = [
       // Note: most scores are null (audit error) because the page 403ed.
       requestedUrl: BASE_URL + 'seo-failure-cases.html?status_code=403',
       finalUrl: BASE_URL + 'seo-failure-cases.html?status_code=403',
+      runtimeError: {
+        code: 'ERRORED_DOCUMENT_REQUEST',
+        message: /Status code: 403/,
+      },
       audits: {
         'http-status-code': {
           score: 0,
@@ -254,6 +265,30 @@ module.exports = [
               {
                 'tapTarget': {
                   'type': 'node',
+                  /* eslint-disable max-len */
+                  'snippet': '<a data-gathered-target="zero-width-tap-target-with-overflowing-child-content" style="display: block; width: 0; white-space: nowrap">\n        <!-- TODO: having the span should not be necessary to cause a failure here, but\n             right now we don\'t try to get the client rects of children that …',
+                  'path': '2,HTML,1,BODY,14,DIV,0,A',
+                  'selector': 'body > div > a',
+                  'nodeLabel': 'zero width target',
+                },
+                'overlappingTarget': {
+                  'type': 'node',
+                  /* eslint-disable max-len */
+                  'snippet': '<a data-gathered-target="passing-tap-target-next-to-zero-width-target" style="display: block; width: 110px; height: 100px;background: #aaa;">\n        passing target\n      </a>',
+                  'path': '2,HTML,1,BODY,14,DIV,1,A',
+                  'selector': 'body > div > a',
+                  'nodeLabel': 'passing target',
+                },
+                'tapTargetScore': 864,
+                'overlappingTargetScore': 720,
+                'overlapScoreRatio': 0.8333333333333334,
+                'size': '110x18',
+                'width': 110,
+                'height': 18,
+              },
+              {
+                'tapTarget': {
+                  'type': 'node',
                   'path': '2,HTML,1,BODY,10,DIV,0,DIV,1,A',
                   'selector': 'body > div > div > a',
                   'nodeLabel': 'too small target',
@@ -276,11 +311,13 @@ module.exports = [
                   'type': 'node',
                   'path': '2,HTML,1,BODY,3,DIV,24,A',
                   'selector': 'body > div > a',
+                  'nodeLabel': 'left',
                 },
                 'overlappingTarget': {
                   'type': 'node',
                   'path': '2,HTML,1,BODY,3,DIV,25,A',
                   'selector': 'body > div > a',
+                  'nodeLabel': 'right',
                 },
                 'tapTargetScore': 1920,
                 'overlappingTargetScore': 560,
