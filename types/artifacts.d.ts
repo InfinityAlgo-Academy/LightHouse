@@ -215,19 +215,21 @@ declare global {
         requestId: string | null
       }
 
+      export type RawSourceMap = {
+        version: number
+        sources: string[]
+        names: string[]
+        sourceRoot?: string
+        sourcesContent?: string[]
+        mappings: string
+        file: string
+      }
+
       export type SourceMap = {
-        url: string
-        map: {
-          version: number
-          sources: string[]
-          names: string[]
-          sourceRoot?: string
-          sourcesContent?: string[]
-          mappings: string
-          file: string
-        }
+        scriptUrl: string
+        map: RawSourceMap
       } | {
-        url: string
+        scriptUrl: string
         errorMessage: string
       }
 

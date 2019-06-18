@@ -41,7 +41,7 @@ class SourceMaps extends Gatherer {
   /**
    * @param {Driver} driver
    * @param {string} sourceMapUrl
-   * @return {Promise<{map: import('source-map').RawSourceMap} | {errorMessage: string}>}
+   * @return {Promise<{map: LH.Artifacts.RawSourceMap} | {errorMessage: string}>}
    */
   async fetchSourceMapInPage(driver, sourceMapUrl) {
     // TODO: change default protocol timeout?
@@ -90,18 +90,18 @@ class SourceMaps extends Gatherer {
     for (const event of this._scriptParsedEvents) {
       if (!event.sourceMapURL) continue;
 
-      const url = event.url;
+      const scriptUrl = event.url;
       try {
         if (event.sourceMapURL.startsWith('data:')) {
           const buffer = Buffer.from(event.sourceMapURL.split(',')[1], 'base64');
           sourceMaps.push({
-            url,
+            scriptUrl,
             map: JSON.parse(buffer.toString()),
           });
         } else {
           const fetchedSourceMap = await this.fetchSourceMapInPage(driver, event.sourceMapURL);
           sourceMaps.push({
-            url,
+            scriptUrl,
             ...fetchedSourceMap,
           });
         }
