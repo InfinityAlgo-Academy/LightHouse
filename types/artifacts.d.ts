@@ -226,6 +226,10 @@ declare global {
         file: string
       }
 
+      /**
+       * Source map for a given script found at scriptUrl. If there is an error in fetching the
+       * map, errorMessage will be defined instead of map.
+       */
       export type SourceMap = {
         scriptUrl: string
         map: RawSourceMap
