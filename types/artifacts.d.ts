@@ -215,6 +215,7 @@ declare global {
         requestId: string | null
       }
 
+      /** @see https://sourcemaps.info/spec.html#h.qz3o9nc69um5 */
       export type RawSourceMap = {
         version: number
         sources: string[]
