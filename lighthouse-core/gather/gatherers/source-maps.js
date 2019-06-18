@@ -17,6 +17,9 @@ const Gatherer = require('./gatherer.js');
  * @param {string} url
  */
 /* istanbul ignore next */
+/**
+ * @return {Promise<string|{errorMessage: string}>}
+ */
 async function fetchSourceMap(url) {
   try {
     // eslint-disable-next-line no-undef
