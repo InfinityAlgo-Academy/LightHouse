@@ -38,6 +38,7 @@ module.exports = [
     lhr: {
       requestedUrl: 'http://localhost:10200/source-maps/source-maps-tester.html',
       finalUrl: 'http://localhost:10200/source-maps/source-maps-tester.html',
+      audits: {},
     },
   },
 ];

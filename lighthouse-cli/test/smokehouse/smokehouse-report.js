@@ -149,17 +149,15 @@ function collateResults(actual, expected) {
 
   /** @type {Smokehouse.Comparison[]} */
   let auditAssertions = [];
-  if (expected.lhr.audits) {
-    auditAssertions = Object.keys(expected.lhr.audits).map(auditName => {
-      const actualResult = actual.lhr.audits[auditName];
-      if (!actualResult) {
-        throw new Error(`Config did not trigger run of expected audit ${auditName}`);
-      }
+  auditAssertions = Object.keys(expected.lhr.audits).map(auditName => {
+    const actualResult = actual.lhr.audits[auditName];
+    if (!actualResult) {
+      throw new Error(`Config did not trigger run of expected audit ${auditName}`);
+    }
 
-      const expectedResult = expected.lhr.audits[auditName];
-      return makeComparison(auditName + ' audit', actualResult, expectedResult);
-    });
-  }
+    const expectedResult = expected.lhr.audits[auditName];
+    return makeComparison(auditName + ' audit', actualResult, expectedResult);
+  });
 
   return [
     {
