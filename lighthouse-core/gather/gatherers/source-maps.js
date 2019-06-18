@@ -8,8 +8,6 @@
 const Gatherer = require('./gatherer.js');
 const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
 
-/* global fetch */
-
 /**
  * This function is careful not to parse the response as JSON, as it will
  * just need to be serialized again over the protocol, and source maps can
@@ -20,6 +18,7 @@ const Driver = require('../driver.js'); // eslint-disable-line no-unused-vars
 /* istanbul ignore next */
 async function fetchSourceMap(url) {
   try {
+    // eslint-disable-next-line no-undef
     const response = await fetch(url);
     return response.text();
   } catch (err) {
