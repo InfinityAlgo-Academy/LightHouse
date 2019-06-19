@@ -55,7 +55,11 @@ class SourceMaps extends Gatherer {
       return sourceMapJson;
     }
 
-    return {map: JSON.parse(sourceMapJson)};
+    try {
+      return {map: JSON.parse(sourceMapJson)};
+    } catch (err) {
+      return {errorMessage: err.toString()};
+    }
   }
 
   /**
