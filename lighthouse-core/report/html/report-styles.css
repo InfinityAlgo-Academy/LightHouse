@@ -21,7 +21,7 @@
   If a variable is used for a specific component: --{component}-{property name}-{modifier}
 
   Both {component} and {property name} should be kebab-case. If the target is the entire page,
-  use 'report' for the component. The property name should be not be abbreviated. Use the
+  use 'report' for the component. The property name should not be abbreviated. Use the
   property name the variable is intended for - if it's used for multiple, a common descriptor
   is fine (ex: 'size' for a variable applied to 'width' and 'height'). If a variable is shared
   across multiple components, either create more variables or just drop the "{component}-"
@@ -33,114 +33,115 @@
   color of that hue.
 */
 .lh-vars {
-  --report-font-family: Roboto, Helvetica, Arial, sans-serif;
-  --report-font-family-monospace: 'Roboto Mono', 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
-  --report-background-color: #fff;
-  --report-text-color: var(--color-gray-900);
-  --report-font-size: 16px;
-  --report-line-height: 24px;
-  --snippet-color: var(--color-gray-800);
-  --category-header-font-size: 20px;
-  --header-line-height: 24px;
-  --audit-explanation-line-height: 16px;
-  --default-padding: 12px;
-  --footer-padding-vertical: 16px;
-  --audit-margin-horizontal: 5px;
-  --stackpack-padding-horizontal: 10px;
-  --report-text-color-secondary: var(--color-gray-800);
-  --color-informative: var(--color-blue-900);
-  --snippet-background-color: var(--color-gray-50);
-  --report-border-color-secondary: #ebebeb;
-  --chevron-line-stroke: var(--color-gray-600);
-  --report-width: calc(60 * var(--report-font-size));
-  --report-min-width: 400px;
-  --score-icon-background-size: 24px;
-  --tools-icon-size: var(--score-icon-background-size);
-  --tools-icon-color: var(--color-gray-600);
-  --table-higlight-background-color: hsla(0, 0%, 75%, 0.1);
-  --sparkline-height: 5px;
-  --audit-padding-vertical: 8px;
-  --audit-group-padding-vertical: 8px;
-  --section-padding-vertical: 12px;
-  --chevron-size: 12px;
-  --audit-description-padding-left: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right));
-
   /* Palette using Material Design Colors
    * https://www.materialui.co/colors */
-  --color-gray-50: #FAFAFA;
+  --color-blue-200: #90CAF9;
+  --color-blue-900: #0D47A1;
+  --color-blue-A700: #2962FF;
+  --color-cyan-500: #00BCD4;
   --color-gray-100: #F5F5F5;
   --color-gray-200: #E0E0E0;
   --color-gray-400: #BDBDBD;
+  --color-gray-50: #FAFAFA;
   --color-gray-500: #9E9E9E;
   --color-gray-600: #757575;
   --color-gray-800: #424242;
   --color-gray-900: #212121;
   --color-gray: #000000;
-  --color-blue-A700: #2962FF;
   --color-green-700: #018642;
   --color-green: #0CCE6B;
   --color-orange-700: #D04900;
   --color-orange: #FFA400;
   --color-red-700: #EB0F00;
   --color-red: #FF4E42;
-  --color-white: #FFFFFF;
-  --color-blue-200: #90CAF9;
-  --color-blue-900: #0D47A1;
-  --color-cyan-500: #00BCD4;
   --color-teal-600: #00897B;
+  --color-white: #FFFFFF;
 
+  /* Context-specific colors */
+  --color-average-secondary: var(--color-orange-700);
+  --color-average: var(--color-orange);
+  --color-fail-secondary: var(--color-red-700);
+  --color-fail: var(--color-red);
+  --color-informative: var(--color-blue-900);
+  --color-pass-secondary: var(--color-green-700);
+  --color-pass: var(--color-green);
+  --color-hover: var(--color-gray-50);
+
+  /* Component variables */
+  --audit-description-padding-left: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right));
+  --audit-explanation-line-height: 16px;
   --audit-group-margin-bottom: 40px;
+  --audit-group-padding-vertical: 8px;
+  --audit-margin-horizontal: 5px;
+  --audit-padding-vertical: 8px;
+  --category-header-font-size: 20px;
+  --category-padding: 40px;
+  --chevron-line-stroke: var(--color-gray-600);
+  --chevron-size: 12px;
+  --default-padding: 12px;
   --env-item-background-color: var(--color-gray-100);
-  --env-name-min-width: 220px;
-  --env-item-padding: 10px 0px;
   --env-item-font-size: 28px;
   --env-item-line-height: 36px;
-  --metric-description-padding: 0 0 2px calc(var(--score-icon-margin-left) + var(--score-icon-size) + var(--score-icon-margin-right));
+  --env-item-padding: 10px 0px;
+  --env-name-min-width: 220px;
+  --footer-padding-vertical: 16px;
   --gauge-circle-size-big: 112px;
   --gauge-circle-size: 80px;
-  --scores-container-padding: 20px 0 20px 0;
+  --gauge-label-font-size-big: 28px;
+  --gauge-label-font-size: 20px;
+  --gauge-label-line-height-big: 36px;
+  --gauge-label-line-height: 26px;
+  --gauge-percentage-font-size-big: 38px;
+  --gauge-percentage-font-size: 28px;
+  --gauge-wrapper-width: 148px;
+  --header-line-height: 24px;
+  --highlighter-background-color: var(--report-text-color);
   --icon-square-size: calc(var(--score-icon-size) * 0.88);
+  --metric-description-padding: 0 0 2px calc(var(--score-icon-margin-left) + var(--score-icon-size) + var(--score-icon-margin-right));
+  --metric-toggle-lines-fill: #7F7F7F;
+  --metrics-toggle-background-color: var(--color-gray-200);
   --plugin-badge-background-color: var(--color-white);
   --plugin-badge-size-big: calc(var(--gauge-circle-size-big) / 2.7);
   --plugin-badge-size: calc(var(--gauge-circle-size) / 2.7);
   --plugin-icon-size: 65%;
   --pwa-icon-margin: 0 6px 0 -2px;
   --pwa-icon-size: var(--topbar-logo-size);
+  --report-background-color: #fff;
+  --report-border-color-secondary: #ebebeb;
+  --report-font-family-monospace: 'Roboto Mono', 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
+  --report-font-family: Roboto, Helvetica, Arial, sans-serif;
+  --report-font-size: 16px;
+  --report-line-height: 24px;
+  --report-min-width: 400px;
+  --report-text-color-secondary: var(--color-gray-800);
+  --report-text-color: var(--color-gray-900);
+  --report-width: calc(60 * var(--report-font-size));
   --score-container-padding: 8px;
-  --gauge-wrapper-width: 148px;
-  --gauge-percentage-font-size-big: 38px;
-  --gauge-percentage-font-size: 28px;
+  --score-icon-background-size: 24px;
   --score-icon-margin-left: 4px;
   --score-icon-margin-right: 12px;
   --score-icon-margin: 0 var(--score-icon-margin-right) 0 var(--score-icon-margin-left);
   --score-icon-size: 12px;
-  --gauge-label-font-size-big: 28px;
-  --gauge-label-font-size: 20px;
-  --gauge-label-line-height-big: 36px;
-  --gauge-label-line-height: 26px;
+  --scores-container-padding: 20px 0 20px 0;
   --scorescale-height: 6px;
   --scorescale-width: 18px;
-  --category-padding: 40px;
+  --section-padding-vertical: 12px;
+  --snippet-background-color: var(--color-gray-50);
+  --snippet-color: var(--color-gray-800);
+  --sparkline-height: 5px;
+  --stackpack-padding-horizontal: 10px;
+  --sticky-header-background-color: var(--report-background-color);
+  --table-higlight-background-color: hsla(0, 0%, 75%, 0.1);
+  --tools-icon-color: var(--color-gray-600);
+  --tools-icon-size: var(--score-icon-background-size);
   --topbar-background-color: var(--color-gray-100);
   --topbar-height: 32px;
   --topbar-logo-size: 24px;
   --topbar-padding: 0 8px;
-  --metrics-toggle-background-color: var(--color-gray-200);
 
-  --color-average-secondary: var(--color-orange-700);
-  --color-average: var(--color-orange);
-  --color-fail-secondary: var(--color-red-700);
-  --color-fail: var(--color-red);
-  --color-pass-secondary: var(--color-green-700);
-  --color-pass: var(--color-green);
-  --sticky-header-background-color: var(--report-background-color);
-  --highlighter-background-color: var(--report-text-color);
-
-  --color-hover: #FAFAFA;
-  --metric-toggle-lines-fill: #7F7F7F;
-
-  --plugin-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="%23757575"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>');
+  /* SVGs */
   --plugin-icon-url-dark: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="%23FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>');
+  --plugin-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="%23757575"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>');
 
   --pass-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>check</title><path fill="%23178239" d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/></svg>');
   --average-icon-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><title>info</title><path fill="%23E67700" d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm2 30h-4V22h4v12zm0-16h-4v-4h4v4z"/></svg>');
@@ -161,32 +162,31 @@
 
 @media not print {
   .lh-vars.dark {
-    --color-red-700: var(--color-red);
-    --color-green-700: var(--color-green);
-    --color-teal-600: var(--color-cyan-500);
-    --color-orange-700: var(--color-orange);
-
+    /* Pallete */
     --color-gray-200: var(--color-gray-800);
     --color-gray-400: var(--color-gray-600);
+    --color-gray-50: #757575;
     --color-gray-600: var(--color-gray-500);
+    --color-green-700: var(--color-green);
+    --color-orange-700: var(--color-orange);
+    --color-red-700: var(--color-red);
+    --color-teal-600: var(--color-cyan-500);
 
-    --topbar-background-color: var(--color-gray);
-    --plugin-badge-background-color: var(--color-gray-800);
-    --env-item-background-color: var(--color-gray);
-    --report-border-color-secondary: var(--color-gray-200);
-
-    --report-background-color: var(--color-gray-900);
-    --report-text-color: var(--color-gray-100);
-    --report-text-color-secondary: var(--color-gray-400);
-
-    --plugin-icon-url: var(--plugin-icon-url-dark);
-
+    /* Context-specific colors */
+    --color-hover: rgba(0, 0, 0, 0.2);
     --color-informative: var(--color-blue-200);
 
-    --color-gray-50: #757575;
+    /* Component variables */
+    --env-item-background-color: var(--color-gray);
+    --plugin-badge-background-color: var(--color-gray-800);
+    --report-background-color: var(--color-gray-900);
+    --report-border-color-secondary: var(--color-gray-200);
+    --report-text-color-secondary: var(--color-gray-400);
+    --report-text-color: var(--color-gray-100);
+    --topbar-background-color: var(--color-gray);
 
-    --color-hover: rgba(0, 0, 0, 0.2);
-
+    /* SVGs */
+    --plugin-icon-url: var(--plugin-icon-url-dark);
     --pwa-fast-reliable-gray-url: var(--pwa-fast-reliable-gray-url-dark);
     --pwa-installable-gray-url: var(--pwa-installable-gray-url-dark);
     --pwa-optimized-gray-url: var(--pwa-optimized-gray-url-dark);
@@ -196,24 +196,24 @@
 @media only screen and (max-width: 480px) {
   .lh-vars {
     --audit-group-margin-bottom: 20px;
-    --report-font-size: 14px;
-    --report-line-height: 20px;
+    --category-padding: 24px;
     --env-name-min-width: 120px;
     --gauge-circle-size-big: 96px;
     --gauge-circle-size: 72px;
-    --header-padding: 16px 0 16px 0;
-    --plugin-icon-size: 75%;
-    --pwa-icon-margin: 0 7px 0 -3px;
-    --gauge-wrapper-width: 112px;
-    --gauge-percentage-font-size-big: 34px;
-    --gauge-percentage-font-size: 26px;
-    --score-icon-margin-left: 2px;
-    --score-icon-size: 10px;
     --gauge-label-font-size-big: 22px;
     --gauge-label-font-size: 14px;
     --gauge-label-line-height-big: 26px;
     --gauge-label-line-height: 20px;
-    --category-padding: 24px;
+    --gauge-percentage-font-size-big: 34px;
+    --gauge-percentage-font-size: 26px;
+    --gauge-wrapper-width: 112px;
+    --header-padding: 16px 0 16px 0;
+    --plugin-icon-size: 75%;
+    --pwa-icon-margin: 0 7px 0 -3px;
+    --report-font-size: 14px;
+    --report-line-height: 20px;
+    --score-icon-margin-left: 2px;
+    --score-icon-size: 10px;
     --topbar-height: 28px;
     --topbar-logo-size: 20px;
   }
@@ -225,37 +225,34 @@
 }
 
 .lh-vars.lh-devtools {
-  --report-font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
-  --report-font-family-monospace: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
-  --report-font-size: 12px;
-  --report-line-height: 20px;
-  --category-header-font-size: 16px;
-  --header-line-height: 20px;
   --audit-explanation-line-height: 14px;
-  --default-padding: 12px;
+  --audit-group-margin-bottom: 20px;
+  --audit-group-padding-vertical: 12px;
+  --audit-padding-vertical: 4px;
+  --category-header-font-size: 16px;
   --category-padding: 12px;
+  --default-padding: 12px;
+  --env-name-min-width: 120px;
   --footer-padding-vertical: 8px;
-
   --gauge-circle-size-big: 72px;
   --gauge-circle-size: 64px;
-
-  --audit-group-margin-bottom: 20px;
-  --env-name-min-width: 120px;
-  --header-padding: 16px 0 16px 0;
-  --plugin-icon-size: 75%;
-  --pwa-icon-margin: 0 7px 0 -3px;
-  --gauge-wrapper-width: 97px;
-  --gauge-percentage-font-size-big: 34px;
-  --gauge-percentage-font-size: 26px;
-  --score-icon-margin-left: 2px;
-  --score-icon-size: 10px;
   --gauge-label-font-size-big: 22px;
   --gauge-label-font-size: 14px;
   --gauge-label-line-height-big: 26px;
   --gauge-label-line-height: 20px;
-
-  --audit-padding-vertical: 4px;
-  --audit-group-padding-vertical: 12px;
+  --gauge-percentage-font-size-big: 34px;
+  --gauge-percentage-font-size: 26px;
+  --gauge-wrapper-width: 97px;
+  --header-line-height: 20px;
+  --header-padding: 16px 0 16px 0;
+  --plugin-icon-size: 75%;
+  --pwa-icon-margin: 0 7px 0 -3px;
+  --report-font-family-monospace: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
+  --report-font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
+  --report-font-size: 12px;
+  --report-line-height: 20px;
+  --score-icon-margin-left: 2px;
+  --score-icon-size: 10px;
   --section-padding-vertical: 8px;
 }
 
