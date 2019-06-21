@@ -13,24 +13,44 @@ module.exports = [
     lhr: {
       requestedUrl: 'http://localhost:10200/infinite-loop.html',
       finalUrl: 'http://localhost:10200/infinite-loop.html',
-      audits: {},
-      // TODO: runtimeError only exists because of selection of audits.
       runtimeError: {code: 'PAGE_HUNG'},
+      audits: {
+        'first-contentful-paint': {
+          scoreDisplayMode: 'error',
+          errorMessage: 'Required traces gatherer did not run.',
+        },
+      },
     },
     artifacts: {
-      ViewportDimensions: {code: 'PAGE_HUNG'},
+      PageLoadError: {code: 'PAGE_HUNG'},
+      devtoolsLogs: {
+        'pageLoadError-defaultPass': [/* ... */],
+      },
+      traces: {
+        'pageLoadError-defaultPass': {traceEvents: [/* ... */]},
+      },
     },
   },
   {
     lhr: {
       requestedUrl: 'https://expired.badssl.com',
       finalUrl: 'https://expired.badssl.com/',
-      audits: {},
-      // TODO: runtimeError only exists because of selection of audits.
       runtimeError: {code: 'INSECURE_DOCUMENT_REQUEST'},
+      audits: {
+        'first-contentful-paint': {
+          scoreDisplayMode: 'error',
+          errorMessage: 'Required traces gatherer did not run.',
+        },
+      },
     },
     artifacts: {
-      ViewportDimensions: {code: 'INSECURE_DOCUMENT_REQUEST'},
+      PageLoadError: {code: 'INSECURE_DOCUMENT_REQUEST'},
+      devtoolsLogs: {
+        'pageLoadError-defaultPass': [/* ... */],
+      },
+      traces: {
+        'pageLoadError-defaultPass': {traceEvents: [/* ... */]},
+      },
     },
   },
 ];

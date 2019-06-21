@@ -424,9 +424,10 @@ describe('GatherRunner', function() {
     assert.equal(tests.calledCleanBrowserCaches, true);
   });
 
-  it('fails artifacts with network errors', async () => {
+  it('returns a pageLoadError and no artifacts with network errors', async () => {
     const requestedUrl = 'https://example.com';
-    // This page load error should be overriden by NO_DOCUMENT_REQUEST for being more specific
+    // This page load error should be overriden by NO_DOCUMENT_REQUEST (for being
+    // more specific) since requestedUrl does not match any network request in fixture.
     const navigationError = new LHError(LHError.errors.NO_FCP);
     const driver = Object.assign({}, fakeDriver, {
       online: true,
@@ -450,13 +451,14 @@ describe('GatherRunner', function() {
       baseArtifacts: await GatherRunner.initializeBaseArtifacts({driver, settings, requestedUrl}),
     };
 
-    const {artifacts} = await GatherRunner.runPass(passContext);
+    const {artifacts, pageLoadError} = await GatherRunner.runPass(passContext);
     expect(passContext.LighthouseRunWarnings).toHaveLength(1);
-    expect(artifacts.TestGatherer).toBeInstanceOf(Error);
-    expect(artifacts.TestGatherer.code).toEqual('NO_DOCUMENT_REQUEST');
+    expect(pageLoadError).toBeInstanceOf(Error);
+    expect(pageLoadError.code).toEqual('NO_DOCUMENT_REQUEST');
+    expect(artifacts).toEqual({});
   });
 
-  it('fails artifacts with navigation errors', async () => {
+  it('returns a pageLoadError and no artifacts with navigation errors', async () => {
     const requestedUrl = 'https://example.com';
     // This time, NO_FCP should win because it's the only error left.
     const navigationError = new LHError(LHError.errors.NO_FCP);
@@ -485,10 +487,11 @@ describe('GatherRunner', function() {
       baseArtifacts: await GatherRunner.initializeBaseArtifacts({driver, settings, requestedUrl}),
     };
 
-    const {artifacts} = await GatherRunner.runPass(passContext);
+    const {artifacts, pageLoadError} = await GatherRunner.runPass(passContext);
     expect(passContext.LighthouseRunWarnings).toHaveLength(1);
-    expect(artifacts.TestGatherer).toBeInstanceOf(Error);
-    expect(artifacts.TestGatherer.code).toEqual('NO_FCP');
+    expect(pageLoadError).toBeInstanceOf(Error);
+    expect(pageLoadError.code).toEqual('NO_FCP');
+    expect(artifacts).toEqual({});
   });
 
   it('does not clear origin storage with flag --disable-storage-reset', () => {
@@ -806,7 +809,8 @@ describe('GatherRunner', function() {
     const options = {driver, requestedUrl, settings: config.settings};
     const artifacts = await GatherRunner.run(config.passes, options);
 
-    expect(artifacts.TestGatherer.code).toEqual('NO_DOCUMENT_REQUEST');
+    expect(artifacts.PageLoadError.code).toEqual('NO_DOCUMENT_REQUEST');
+    expect(artifacts.TestGatherer).toBeUndefined();
 
     // The only loadData available should be prefixed with `pageLoadError-`.
     expect(Object.keys(artifacts.traces)).toEqual(['pageLoadError-firstPass']);
@@ -856,11 +860,14 @@ describe('GatherRunner', function() {
     expect(t2.called).toBe(true);
     expect(t3.called).toBe(false);
 
-    // But only t1 has a valid artifact, t2 has an error artifact, and t3 never ran.
+    // But only t1 has a valid artifact; t2 and t3 aren't defined.
     expect(artifacts.Test1).toBe('MyArtifact');
-    expect(artifacts.Test2).toBeInstanceOf(LHError);
-    expect(artifacts.Test2.code).toEqual('NO_FCP');
+    expect(artifacts.Test2).toBeUndefined();
     expect(artifacts.Test3).toBeUndefined();
+
+    // PageLoadError artifact has the error.
+    expect(artifacts.PageLoadError).toBeInstanceOf(LHError);
+    expect(artifacts.PageLoadError.code).toEqual('NO_FCP');
 
     // firstPass has a saved trace and devtoolsLog, secondPass has an error trace and log.
     expect(Object.keys(artifacts.traces)).toEqual(['firstPass', 'pageLoadError-secondPass']);

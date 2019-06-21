@@ -631,11 +631,16 @@ describe('Runner', () => {
     });
   });
 
-  it('includes a top-level runtimeError when a gatherer throws one', async () => {
+  describe('lhr.runtimeError', () => {
     const NO_FCP = LHError.errors.NO_FCP;
     class RuntimeErrorGatherer extends Gatherer {
       afterPass() {
         throw new LHError(NO_FCP);
+      }
+    }
+    class RuntimeError2Gatherer extends Gatherer {
+      afterPass() {
+        throw new LHError(LHError.errors.NO_SCREENSHOTS);
       }
     }
     class WarningAudit extends Audit {
@@ -652,19 +657,55 @@ describe('Runner', () => {
       }
     }
 
-    const config = new Config({
-      passes: [{gatherers: [RuntimeErrorGatherer]}],
+    const configJson = {
+      passes: [
+        {gatherers: [RuntimeErrorGatherer]},
+        {gatherers: [RuntimeError2Gatherer], passName: 'second'},
+      ],
       audits: [WarningAudit],
-    });
-    const {lhr} = await Runner.run(null, {url: 'https://example.com/', config, driverMock});
+    };
 
-    // Audit error included the runtimeError
-    assert.strictEqual(lhr.audits['test-audit'].scoreDisplayMode, 'error');
-    assert.ok(lhr.audits['test-audit'].errorMessage.includes(NO_FCP.code));
-    // And it bubbled up to the runtimeError.
-    assert.strictEqual(lhr.runtimeError.code, NO_FCP.code);
-    expect(lhr.runtimeError.message)
-      .toBeDisplayString(/Something .*\(NO_FCP\)/);
+    it('includes a top-level runtimeError when a gatherer throws one', async () => {
+      const config = new Config(configJson);
+      const {lhr} = await Runner.run(null, {url: 'https://example.com/', config, driverMock});
+
+      // Audit error included the runtimeError
+      expect(lhr.audits['test-audit'].scoreDisplayMode).toEqual('error');
+      expect(lhr.audits['test-audit'].errorMessage).toEqual(expect.stringContaining(NO_FCP.code));
+
+      // And it bubbled up to the runtimeError.
+      expect(lhr.runtimeError.code).toEqual(NO_FCP.code);
+      expect(lhr.runtimeError.message).toBeDisplayString(/Something .*\(NO_FCP\)/);
+    });
+
+    it('includes a pageLoadError runtimeError over any gatherer runtimeErrors', async () => {
+      const url = 'https://www.reddit.com/r/nba';
+      let firstLoad = true;
+      const errorDriverMock = Object.assign({}, driverMock, {
+        online: true,
+        // Loads the page successfully in the first pass, fails with PAGE_HUNG in the second.
+        async gotoURL(url) {
+          if (url.includes('blank')) return null;
+          if (firstLoad) {
+            firstLoad = false;
+            return url;
+          } else {
+            throw new LHError(LHError.errors.PAGE_HUNG);
+          }
+        },
+      });
+
+      const config = new Config(configJson);
+      const {lhr} = await Runner.run(null, {url, config, driverMock: errorDriverMock});
+
+      // Audit error still includes the gatherer runtimeError.
+      expect(lhr.audits['test-audit'].scoreDisplayMode).toEqual('error');
+      expect(lhr.audits['test-audit'].errorMessage).toEqual(expect.stringContaining(NO_FCP.code));
+
+      // But top-level runtimeError is the pageLoadError.
+      expect(lhr.runtimeError.code).toEqual(LHError.errors.PAGE_HUNG.code);
+      expect(lhr.runtimeError.message).toBeDisplayString(/because the page stopped responding/);
+    });
   });
 
   it('localized errors thrown from driver', async () => {

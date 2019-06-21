@@ -49,6 +49,8 @@ declare global {
       URL: {requestedUrl: string, finalUrl: string};
       /** The timing instrumentation of the gather portion of a run. */
       Timing: Artifacts.MeasureEntry[];
+      /** If loading the page failed, value is the error that caused it. Otherwise null. */
+      PageLoadError: LighthouseError | null;
     }
 
     /**
