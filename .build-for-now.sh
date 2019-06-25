@@ -9,7 +9,7 @@
 set -x
 
 # Install deps
-yarn install --prod
+npm install --production
 
 # Create dist if it's not already there
 mkdir -p dist
