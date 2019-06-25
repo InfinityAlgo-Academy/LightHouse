@@ -16,6 +16,8 @@ const swapLocale = require('../lib/i18n/swap-locale.js');
 const ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
 const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
 
+const DIST = path.join(__dirname, `../../dist`);
+
 // Add a plugin to demo plugin rendering.
 lhr.categories['lighthouse-plugin-someplugin'] = {
   id: 'lighthouse-plugin-someplugin',
@@ -31,6 +33,8 @@ lhr.categories['lighthouse-plugin-someplugin'] = {
     'arabic': swapLocale(lhr, 'ar').lhr,
   };
 
+  mkdirp(DIST);
+
   // Generate and write reports
   Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
     let html = ReportGenerator.generateReportHtml(lhr);
@@ -38,7 +42,7 @@ lhr.categories['lighthouse-plugin-someplugin'] = {
       if (variant === '-devtools') {
         html = html.replace(`"lh-root lh-vars"`, `"lh-root lh-vars lh-devtools"`)
       }
-      const filepath = path.join(__dirname, `../../dist/${filename}${variant}/index.html`);
+      const filepath = `${DIST}/${filename}${variant}/index.html`;
       mkdirp(path.dirname(filepath));
       fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
       console.log('✅', filepath, 'written.');
