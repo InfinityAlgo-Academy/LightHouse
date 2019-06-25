@@ -3,7 +3,7 @@
   "builds": [
     {
       "src": ".build-for-now.sh",
-      "use": "@now/static-build"
+      "use": "@now/static-build@canary"
     }
   ],
   "github": {
