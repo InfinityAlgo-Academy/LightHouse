@@ -45,8 +45,7 @@ class SourceMaps extends Gatherer {
    * @return {Promise<{map: LH.Artifacts.RawSourceMap} | {errorMessage: string}>}
    */
   async fetchSourceMapInPage(driver, sourceMapUrl) {
-    // TODO: change default protocol timeout?
-    // driver.setNextProtocolTimeout(250);
+    driver.setNextProtocolTimeout(250);
     /** @type {string|{errorMessage: string}} */
     const sourceMapJson =
       await driver.evaluateAsync(`(${fetchSourceMap})(${JSON.stringify(sourceMapUrl)})`);
