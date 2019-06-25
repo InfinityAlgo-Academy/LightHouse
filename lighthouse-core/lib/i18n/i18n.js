@@ -170,24 +170,26 @@ function _preprocessMessageValues(icuMessage, values) {
 /** @type {Map<string, IcuMessageInstance[]>} */
 const _icuMessageInstanceMap = new Map();
 
+const _ICUMsgNotFoundMsg = 'ICU message not found in destination locale';
 /**
  *
  * @param {LH.Locale} locale
  * @param {string} icuMessageId
- * @param {string} icuMessage
+ * @param {string=} fallbackMessage
  * @param {*} [values]
  * @return {{formattedString: string, icuMessage: string}}
  */
-function _formatIcuMessage(locale, icuMessageId, icuMessage, values) {
+function _formatIcuMessage(locale, icuMessageId, fallbackMessage, values) {
   const localeMessages = LOCALES[locale];
   const localeMessage = localeMessages[icuMessageId] && localeMessages[icuMessageId].message;
   // fallback to the original english message if we couldn't find a message in the specified locale
   // better to have an english message than no message at all, in some number cases it won't even matter
-  const messageForMessageFormat = localeMessage || icuMessage;
+  const messageForMessageFormat = localeMessage || fallbackMessage;
+  if (messageForMessageFormat === undefined) throw new Error(_ICUMsgNotFoundMsg);
   // when using accented english, force the use of a different locale for number formatting
   const localeForMessageFormat = locale === 'en-XA' ? 'de-DE' : locale;
   // pre-process values for the message format like KB and milliseconds
-  const valuesForMessageFormat = _preprocessMessageValues(icuMessage, values);
+  const valuesForMessageFormat = _preprocessMessageValues(messageForMessageFormat, values);
 
   const formatter = new MessageFormat(messageForMessageFormat, localeForMessageFormat, formats);
   const formattedString = formatter.format(valuesForMessageFormat);
@@ -284,6 +286,20 @@ function getFormatted(icuMessageIdOrRawString, locale) {
 }
 
 /**
+ * @param {LH.Locale} locale
+ * @param {string} icuMessageId
+ * @param {*} [values]
+ * @return {string}
+ */
+function getFormattedFromIdAndValues(locale, icuMessageId, values) {
+  const icuMessageIdRegex = /(.* \| .*)$/;
+  if (!icuMessageIdRegex.test(icuMessageId)) throw new Error('This is not an ICU message ID');
+
+  const {formattedString} = _formatIcuMessage(locale, icuMessageId, undefined, values);
+  return formattedString;
+}
+
+/**
  * @param {string} icuMessageInstanceId
  * @param {LH.Locale} locale
  * @return {{icuMessageInstance: IcuMessageInstance, formattedString: string}}
@@ -350,11 +366,13 @@ function replaceIcuMessageInstanceIds(inputObject, locale) {
 
 module.exports = {
   _formatPathAsString,
+  _ICUMsgNotFoundMsg,
   UIStrings,
   lookupLocale,
   getRendererFormattedStrings,
   createMessageInstanceIdFn,
   getFormatted,
+  getFormattedFromIdAndValues,
   replaceIcuMessageInstanceIds,
   isIcuMessage,
 };
