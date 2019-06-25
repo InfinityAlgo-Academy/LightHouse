@@ -78,6 +78,20 @@ class BootupTime extends Audit {
   }
 
   /**
+   * @param {LH.Artifacts.TaskNode} task
+   * @param {Set<string>} jsURLs
+   * @return {string}
+   */
+  static getAttributableURLForTask(task, jsURLs) {
+    const jsURL = task.attributableURLs.find(url => jsURLs.has(url));
+    const fallbackURL = task.attributableURLs[0];
+    let attributableURL = jsURL || fallbackURL;
+    // If we can't find what URL was responsible for this execution, just attribute it to the root page.
+    if (!attributableURL || attributableURL === 'about:blank') attributableURL = 'Other';
+    return attributableURL;
+  }
+
+  /**
    * @param {LH.Artifacts.TaskNode[]} tasks
    * @param {Set<string>} jsURLs
    * @return {Map<string, Object<string, number>>}
@@ -87,12 +101,7 @@ class BootupTime extends Audit {
     const result = new Map();
 
     for (const task of tasks) {
-      const jsURL = task.attributableURLs.find(url => jsURLs.has(url));
-      const fallbackURL = task.attributableURLs[0];
-      let attributableURL = jsURL || fallbackURL;
-      // If we can't find what URL was responsible for this execution, just attribute it to the root page.
-      if (!attributableURL || attributableURL === 'about:blank') attributableURL = 'Other';
-
+      const attributableURL = BootupTime.getAttributableURLForTask(task, jsURLs);
       const timingByGroupId = result.get(attributableURL) || {};
       const originalTime = timingByGroupId[task.group.id] || 0;
       timingByGroupId[task.group.id] = originalTime + task.selfTime;

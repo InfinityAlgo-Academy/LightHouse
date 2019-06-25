@@ -135,9 +135,13 @@ class DetailsRenderer {
    */
   _renderLink(details) {
     const allowedProtocols = ['https:', 'http:'];
-    const url = new URL(details.url);
-    if (!allowedProtocols.includes(url.protocol)) {
-      // Fall back to just the link text if protocol not allowed.
+    let url;
+    try {
+      url = new URL(details.url);
+    } catch (_) {}
+
+    if (!url || !allowedProtocols.includes(url.protocol)) {
+      // Fall back to just the link text if invalid or protocol not allowed.
       return this._renderText(details.text);
     }
 

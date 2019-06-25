@@ -138,7 +138,7 @@ describe('PerfCategoryRenderer', () => {
 
   it('renders the failing diagnostics', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
-    const diagnosticSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[2];
+    const diagnosticSection = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group')[3];
 
     const diagnosticAudits = category.auditRefs.filter(audit => audit.group === 'diagnostics' &&
         !Util.showAsPassed(audit.result));

@@ -133,6 +133,9 @@ Object {
       "path": "resource-summary",
     },
     Object {
+      "path": "third-party-summary",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -835,6 +838,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "resource-summary",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "third-party-summary",
           "weight": 0,
         },
         Object {

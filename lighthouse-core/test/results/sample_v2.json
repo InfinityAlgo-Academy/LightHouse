@@ -1479,6 +1479,51 @@
         ]
       }
     },
+    "third-party-summary": {
+      "id": "third-party-summary",
+      "title": "Third-Party Usage",
+      "description": "Third-party code can significantly impact load performance. Limit the number of redundant third-party providers and try to load third-party code after your page has primarily finished loading. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/).",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "displayValue": "1 Third-Party Found",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "entity",
+            "itemType": "link",
+            "text": "Third-Party"
+          },
+          {
+            "key": "transferSize",
+            "granularity": 1,
+            "itemType": "bytes",
+            "text": "Size"
+          },
+          {
+            "key": "mainThreadTime",
+            "granularity": 1,
+            "itemType": "ms",
+            "text": "Main Thread Time"
+          }
+        ],
+        "items": [
+          {
+            "entity": {
+              "type": "link",
+              "text": "Google CDN",
+              "url": "https://developers.google.com/speed/libraries/"
+            },
+            "transferSize": 30174,
+            "mainThreadTime": 82.74100000000001
+          }
+        ],
+        "summary": {
+          "wastedBytes": 30174,
+          "wastedMs": 82.74100000000001
+        }
+      }
+    },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
@@ -3496,6 +3541,11 @@
           "group": "diagnostics"
         },
         {
+          "id": "third-party-summary",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
           "id": "network-requests",
           "weight": 0
         },
@@ -4515,6 +4565,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:third-party-summary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:pwa-cross-browser",
         "duration": 100,
         "entryType": "measure"
@@ -5399,6 +5455,36 @@
           "path": "audits[resource-summary].displayValue"
         }
       ],
+      "lighthouse-core/audits/third-party-summary.js | title": [
+        "audits[third-party-summary].title"
+      ],
+      "lighthouse-core/audits/third-party-summary.js | description": [
+        "audits[third-party-summary].description"
+      ],
+      "lighthouse-core/audits/third-party-summary.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 1
+          },
+          "path": "audits[third-party-summary].displayValue"
+        }
+      ],
+      "lighthouse-core/audits/third-party-summary.js | columnThirdParty": [
+        "audits[third-party-summary].details.headings[0].text"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnSize": [
+        "audits[third-party-summary].details.headings[1].text",
+        "audits[uses-long-cache-ttl].details.headings[2].text",
+        "audits[total-byte-weight].details.headings[1].text",
+        "audits[render-blocking-resources].details.headings[1].label",
+        "audits[unminified-javascript].details.headings[1].label",
+        "audits[uses-webp-images].details.headings[2].label",
+        "audits[uses-text-compression].details.headings[1].label",
+        "audits[tap-targets].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": [
+        "audits[third-party-summary].details.headings[2].text"
+      ],
       "lighthouse-core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"
       ],
@@ -5633,15 +5719,6 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": [
         "audits[uses-long-cache-ttl].details.headings[1].text"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnSize": [
-        "audits[uses-long-cache-ttl].details.headings[2].text",
-        "audits[total-byte-weight].details.headings[1].text",
-        "audits[render-blocking-resources].details.headings[1].label",
-        "audits[unminified-javascript].details.headings[1].label",
-        "audits[uses-webp-images].details.headings[2].label",
-        "audits[uses-text-compression].details.headings[1].label",
-        "audits[tap-targets].details.headings[1].text"
       ],
       "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | title": [
         "audits[total-byte-weight].title"
