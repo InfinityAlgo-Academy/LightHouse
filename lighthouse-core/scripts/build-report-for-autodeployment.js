@@ -10,6 +10,8 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
+const mkdirp = require('mkdirp').sync;
+const swapLocale = require('../lib/i18n/swap-locale.js');
 
 const ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
 const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
@@ -22,8 +24,24 @@ lhr.categories['lighthouse-plugin-someplugin'] = {
   auditRefs: [],
 };
 
-console.log('🕒 Generating report for sample_v2.json...');
-const html = ReportGenerator.generateReport(lhr, 'html');
-const filename = path.join(__dirname, '../../dist/index.html');
-fs.writeFileSync(filename, html, {encoding: 'utf-8'});
-console.log('✅', filename, 'written.');
+(async function() {
+  const filenameToLhr = {
+    'english': lhr,
+    'espanol': swapLocale(lhr, 'es'),
+    'arabic': swapLocale(lhr, 'ar'),
+  };
+
+  // Generate and write reports
+  Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
+    let html = ReportGenerator.generateReportHtml(lhr);
+    for (const variant of ['', '-devtools']) {
+      if (variant === '-devtools') {
+        html = html.replace(`"lh-root lh-vars"`, `"lh-root lh-vars lh-devtools"`)
+      }
+      const filepath = path.join(__dirname, `../../dist/${filename}${variant}/index.html`);
+      mkdirp(path.dirname(filepath));
+      fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
+      console.log('✅', filepath, 'written.');
+    }
+  });
+})();
