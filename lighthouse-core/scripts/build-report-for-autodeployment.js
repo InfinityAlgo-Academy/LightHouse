@@ -27,8 +27,8 @@ lhr.categories['lighthouse-plugin-someplugin'] = {
 (async function() {
   const filenameToLhr = {
     'english': lhr,
-    'espanol': swapLocale(lhr, 'es'),
-    'arabic': swapLocale(lhr, 'ar'),
+    'espanol': swapLocale(lhr, 'es').lhr,
+    'arabic': swapLocale(lhr, 'ar').lhr,
   };
 
   // Generate and write reports
