@@ -37,7 +37,7 @@ describe('Avoids front-end JavaScript libraries with known vulnerabilities', () 
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
     assert.equal(auditResult.extendedInfo.jsLibs.length, 3);
-    assert.equal(auditResult.details.items[0].highestSeverity, 'High');
+    expect(auditResult.details.items[0].highestSeverity).toBeDisplayString('High');
     assert.equal(auditResult.details.items[0].detectedLib.type, 'link');
     assert.equal(auditResult.details.items[0].detectedLib.text, 'angular@1.1.4');
     assert.equal(auditResult.details.items[0].detectedLib.url, 'https://snyk.io/vuln/npm:angular?lh=1.1.4&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit');
@@ -58,16 +58,11 @@ describe('Avoids front-end JavaScript libraries with known vulnerabilities', () 
       Stacks[0],
       mockSnykDb
     );
-    expect(vulns).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "library": "Badlib@3.0.0",
-    "numericSeverity": 2,
-    "severity": "medium",
-    "url": "https://snyk.io/vuln/badlibvuln:12345",
-  },
-]
-`);
+
+    expect(vulns[0].severity).toBeDisplayString('Medium');
+    assert.equal(vulns[0].library, 'Badlib@3.0.0');
+    assert.equal(vulns[0].numericSeverity, 2);
+    assert.equal(vulns[0].url, 'https://snyk.io/vuln/badlibvuln:12345');
   });
 
   it('handles ill-specified versions', () => {

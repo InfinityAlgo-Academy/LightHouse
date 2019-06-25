@@ -492,7 +492,7 @@
             "title": "Definition list items are wrapped in `<dl>` elements"
         },
         "doctype": {
-            "description": "Specifying a doctype prevents the browser from switching to quirks-mode.Read more on the [MDN Web Docs page](https://developer.mozilla.org/en-US/docs/Glossary/Doctype)",
+            "description": "Specifying a doctype prevents the browser from switching to quirks-mode. Read more on the [MDN Web Docs page](https://developer.mozilla.org/en-US/docs/Glossary/Doctype)",
             "id": "doctype",
             "score": 1.0,
             "scoreDisplayMode": "binary",
@@ -810,7 +810,7 @@
             "title": "`<frame>` or `<iframe>` elements have a title"
         },
         "geolocation-on-start": {
-            "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to user gestures instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).",
+            "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).",
             "details": {
                 "headings": [
                     {

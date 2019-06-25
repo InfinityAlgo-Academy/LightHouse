@@ -44,23 +44,25 @@ const UIStrings = {
   displayValueByteSavings: 'Potential savings of {wastedBytes, number, bytes}\xa0KB',
   /** Label shown per-audit to show how many milliseconds faster the page load could be if the user implemented the suggestions. The `{wastedMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 140 ms) */
   displayValueMsSavings: 'Potential savings of {wastedMs, number, milliseconds}\xa0ms',
-  /** Label for the URL column in data tables, entries will be the URL of a web resource */
+  /** Label for a column in a data table; entries will be the URL of a web resource */
   columnURL: 'URL',
-  /** Label for the size column in data tables, entries will be the size of a web resource in kilobytes */
+  /** Label for a column in a data table; entries will be the size of a web resource in kilobytes. */
   columnSize: 'Size',
-  /** Label for the TTL column in data tables, entries will be the time to live value of the cache header on a web resource */
+  /** Label for a column in a data table; entries will be the time to live value of the cache header on a web resource. */
   columnCacheTTL: 'Cache TTL',
-  /** Label for the wasted bytes column in data tables, entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions */
+  /** Label for a column in a data table; entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions. */
   columnWastedBytes: 'Potential Savings',
-  /** Label for the wasted bytes column in data tables, entries will be the number of milliseconds the user could reduce page load by if they implemented the suggestions */
+  /** Label for a column in a data table; entries will be the number of milliseconds the user could reduce page load by if they implemented the suggestions. */
   columnWastedMs: 'Potential Savings',
-  /** Label for the time spent column in data tables, entries will be the number of milliseconds spent during a particular activity */
+  /** Label for a column in a data table; entries will be the number of milliseconds spent during a particular activity. */
   columnTimeSpent: 'Time Spent',
+  /** Label for a column in a data table; entries will be the location of a specific line of code in a file, in the format "line: 102". */
+  columnLocation: 'Location',
   /** Label for a column in a data table; entries will be types of resources loaded over the network, e.g. "Scripts", "Third-Party", "Stylesheet". */
   columnResourceType: 'Resource Type',
-  /** Label for a column in a data table; entries will be the number of network requests done by a webpage.*/
+  /** Label for a column in a data table; entries will be the number of network requests done by a webpage. */
   columnRequests: 'Requests',
-  /** Label for a column in a data table; entries will be the number of kilobytes transferred to load a set of files.*/
+  /** Label for a column in a data table; entries will be the number of kilobytes transferred to load a set of files. */
   columnTransferSize: 'Transfer Size',
   /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page. */
   totalResourceType: 'Total',
