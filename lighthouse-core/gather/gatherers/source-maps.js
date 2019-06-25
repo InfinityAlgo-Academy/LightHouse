@@ -54,26 +54,18 @@ class SourceMaps extends Gatherer {
       return sourceMapJson;
     }
 
-    try {
-      return {map: JSON.parse(sourceMapJson)};
-    } catch (err) {
-      return {errorMessage: err.toString()};
-    }
+    return {map: JSON.parse(sourceMapJson)};
   }
 
   /**
    * @param {string} sourceMapURL
-   * @return {{map: LH.Artifacts.RawSourceMap} | {errorMessage: string}}
+   * @return {{map: LH.Artifacts.RawSourceMap}}
    */
   parseSourceMapFromDataUrl(sourceMapURL) {
-    try {
-      const buffer = Buffer.from(sourceMapURL.split(',')[1], 'base64');
-      return {
-        map: JSON.parse(buffer.toString()),
-      };
-    } catch (err) {
-      return {errorMessage: err.toString()};
-    }
+    const buffer = Buffer.from(sourceMapURL.split(',')[1], 'base64');
+    return {
+      map: JSON.parse(buffer.toString()),
+    };
   }
 
   /**
@@ -109,11 +101,16 @@ class SourceMaps extends Gatherer {
     for (const event of this._scriptParsedEvents) {
       const sourceMapURL = event.sourceMapURL;
       if (!sourceMapURL) continue;
-      
-      const sourceMapOrError = sourceMapURL.startsWith('data:') ?
-      this.parseSourceMapFromDataUrl(sourceMapURL) :
-      await this.fetchSourceMapInPage(driver, sourceMapURL);
-      
+
+      let sourceMapOrError;
+      try {
+        sourceMapOrError = sourceMapURL.startsWith('data:') ?
+          this.parseSourceMapFromDataUrl(sourceMapURL) :
+          await this.fetchSourceMapInPage(driver, sourceMapURL);
+      } catch (err) {
+        sourceMapOrError = {errorMessage: err.toString()};
+      }
+
       const scriptUrl = event.url;
       sourceMaps.push({
         scriptUrl,
