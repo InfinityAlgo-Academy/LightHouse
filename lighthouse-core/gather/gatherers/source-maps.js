@@ -107,14 +107,14 @@ class SourceMaps extends Gatherer {
     /** @type {LH.Artifacts.SourceMap[]} */
     const sourceMaps = [];
     for (const event of this._scriptParsedEvents) {
-      const scriptUrl = event.url;
       const sourceMapURL = event.sourceMapURL;
       if (!sourceMapURL) continue;
-
+      
       const sourceMapOrError = sourceMapURL.startsWith('data:') ?
-        this.parseSourceMapFromDataUrl(sourceMapURL) :
-        await this.fetchSourceMapInPage(driver, sourceMapURL);
-
+      this.parseSourceMapFromDataUrl(sourceMapURL) :
+      await this.fetchSourceMapInPage(driver, sourceMapURL);
+      
+      const scriptUrl = event.url;
       sourceMaps.push({
         scriptUrl,
         ...sourceMapOrError,
