@@ -263,6 +263,11 @@
   overflow-y: scroll;
   height: calc(100% - var(--topbar-height));
 }
+@media print {
+  .lh-devtools .lh-container {
+    overflow: unset;
+  }
+}
 .lh-devtools .lh-sticky-header {
   /* This is normally the height of the topbar, but we want it to stick to the top of our scroll container .lh-container` */
   top: 0;
