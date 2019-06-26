@@ -189,7 +189,7 @@ function _formatIcuMessage(locale, icuMessageId, fallbackMessage, values) {
   const messageForMessageFormat = localeMessage || fallbackMessage;
   if (messageForMessageFormat === undefined) throw new Error(_ICUMsgNotFoundMsg);
   // when using accented english, force the use of a different locale for number formatting
-  const localeForMessageFormat = locale === 'en-XA' ? 'de-DE' : locale;
+  const localeForMessageFormat = (locale === 'en-XA' || locale === 'en-XL') ? 'de-DE' : locale;
   // pre-process values for the message format like KB and milliseconds
   const valuesForMessageFormat = _preprocessMessageValues(messageForMessageFormat, values);
 

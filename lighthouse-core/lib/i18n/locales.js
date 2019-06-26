@@ -39,6 +39,7 @@ const locales = {
   'de': require('./locales/de.json'), // de-AT, de-CH identical, so they fall back into de
   'el': require('./locales/el.json'),
   'en-XA': require('./locales/en-XA.json'), // psuedolocalization
+  'en-XL': require('./locales/en-XL.json'), // local psuedolocalization
   'es': require('./locales/es.json'),
   'es-419': require('./locales/es-419.json'),
   // Aliases of es-419: https://raw.githubusercontent.com/unicode-cldr/cldr-core/master/supplemental/parentLocales.json
