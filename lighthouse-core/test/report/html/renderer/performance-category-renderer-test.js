@@ -68,7 +68,17 @@ describe('PerfCategoryRenderer', () => {
   it('renders the sections', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const sections = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group');
-    assert.equal(sections.length, 5);
+    const sectionTitles = Array.from(sections).map(el => el.className);
+    expect(sectionTitles).toMatchInlineSnapshot(`
+Array [
+  "lh-audit-group lh-audit-group--metrics",
+  "lh-audit-group lh-audit-group--budgets",
+  "lh-audit-group lh-audit-group--load-opportunities",
+  "lh-audit-group lh-audit-group--diagnostics",
+  "lh-clump lh-audit-group lh-clump--passed",
+  "lh-clump lh-audit-group lh-clump--notapplicable",
+]
+`);
   });
 
   it('renders the metrics', () => {
@@ -150,11 +160,18 @@ describe('PerfCategoryRenderer', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const passedSection = categoryDOM.querySelector('.lh-category > .lh-clump--passed');
 
-    const passedAudits = category.auditRefs.filter(audit =>
-      audit.group && audit.group !== 'metrics' && audit.id !== 'performance-budget'
-        && Util.showAsPassed(audit.result));
+    const passedAudits = category.auditRefs.filter(
+      audit =>
+        audit.group &&
+        audit.group !== 'metrics' &&
+        audit.id !== 'performance-budget' &&
+        Util.showAsPassed(audit.result) &&
+        audit.result.scoreDisplayMode !== 'notApplicable'
+    ).map(ref => ref.id);
+
     const passedElements = passedSection.querySelectorAll('.lh-audit');
-    assert.equal(passedElements.length, passedAudits.length);
+    const passedElemIds = Array.from(passedElements).map(el => el.id);
+    expect(passedAudits).toEqual(passedElemIds);
   });
 
   // Unsupported by perf cat renderer right now.
