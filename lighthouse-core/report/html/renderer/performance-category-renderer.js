@@ -222,7 +222,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Everything else (passed, passed with warnings, n/a)
     const renderedAudits = [...metricAudits, thumbnailAudit, budgetAudit, ...opportunityAudits,
-        ...diagnosticAudits];
+      ...diagnosticAudits];
     const unrenderedAudits = category.auditRefs.filter(ref => !renderedAudits.includes(ref));
     const remainingAudits = unrenderedAudits.filter(ref => !!ref.group);
 

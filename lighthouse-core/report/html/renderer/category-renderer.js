@@ -413,7 +413,8 @@ class CategoryRenderer {
     this.createPermalinkSpan(element, category.id);
     element.appendChild(this.renderCategoryHeader(category, groupDefinitions));
 
-    const clumpElems = this._splitAndRenderClumps(category.auditRefs, groupDefinitions, category.manualDescription);
+    const clumpElems = this._splitAndRenderClumps(category.auditRefs, groupDefinitions,
+      category.manualDescription);
     element.append(...clumpElems);
     return element;
   }
