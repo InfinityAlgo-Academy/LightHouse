@@ -156,7 +156,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Filmstrip
     const timelineEl = this.dom.createChildOf(element, 'div', 'lh-filmstrip-container');
-    const thumbnailAudit = category.auditRefs.find(audit => audit.id === 'screenshot-thumbnails');
+    const thumbnailAudit = category.auditRefs.find(audit => audit.group === 'filmstrip');
     const thumbnailResult = thumbnailAudit && thumbnailAudit.result;
     if (thumbnailResult && thumbnailResult.details) {
       timelineEl.id = thumbnailResult.id;
@@ -165,7 +165,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Budgets
-    const budgetAudit = category.auditRefs.find(audit => audit.id === 'performance-budget');
+    const budgetAudit = category.auditRefs.find(audit => audit.group === 'budgets');
     if (budgetAudit && budgetAudit.result.details) {
       const table = this.detailsRenderer.render(budgetAudit.result.details);
       if (table) {
@@ -220,19 +220,14 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       element.appendChild(groupEl);
     }
 
-    // Passed audits
-    const passedAudits = category.auditRefs
-        .filter(audit => (audit.group === 'load-opportunities' || audit.group === 'diagnostics') &&
-            Util.showAsPassed(audit.result));
+    // Everything else (passed, passed with warnings, n/a)
+    const renderedAudits = [...metricAudits, thumbnailAudit, budgetAudit, ...opportunityAudits,
+        ...diagnosticAudits];
+    const unrenderedAudits = category.auditRefs.filter(ref => !renderedAudits.includes(ref));
+    const remainingAudits = unrenderedAudits.filter(ref => !!ref.group);
 
-    if (!passedAudits.length) return element;
-
-    const clumpOpts = {
-      auditRefs: passedAudits,
-      groupDefinitions: groups,
-    };
-    const passedElem = this.renderClump('passed', clumpOpts);
-    element.appendChild(passedElem);
+    const clumpElems = this._splitAndRenderClumps(remainingAudits, groups);
+    element.append(...clumpElems);
     return element;
   }
 }

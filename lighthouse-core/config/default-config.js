@@ -395,6 +395,7 @@ const defaultConfig = {
         {id: 'performance-budget', weight: 0, group: 'budgets'},
         {id: 'resource-summary', weight: 0, group: 'diagnostics'},
         {id: 'third-party-summary', weight: 0, group: 'diagnostics'},
+        {id: 'screenshot-thumbnails', weight: 0, group: 'filmstrip'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},
         {id: 'network-rtt', weight: 0},
@@ -402,7 +403,6 @@ const defaultConfig = {
         {id: 'main-thread-tasks', weight: 0},
         {id: 'diagnostics', weight: 0},
         {id: 'metrics', weight: 0},
-        {id: 'screenshot-thumbnails', weight: 0},
         {id: 'final-screenshot', weight: 0},
       ],
     },
