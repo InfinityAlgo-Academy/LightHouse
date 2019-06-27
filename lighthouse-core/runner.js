@@ -289,11 +289,13 @@ class Runner {
       for (const artifactName of audit.meta.requiredArtifacts) {
         const noArtifact = artifacts[artifactName] === undefined;
 
-        // If trace required, check that DEFAULT_PASS trace exists.
-        // TODO: need pass-specific check of networkRecords and traces.
-        const noTrace = artifactName === 'traces' && !artifacts.traces[Audit.DEFAULT_PASS];
+        // If trace/devtoolsLog required, check that DEFAULT_PASS trace/devtoolsLog exists.
+        // NOTE: for now, not a pass-specific check of traces or devtoolsLogs.
+        const noRequiredTrace = artifactName === 'traces' && !artifacts.traces[Audit.DEFAULT_PASS];
+        const noRequiredDevtoolsLog = artifactName === 'devtoolsLogs' &&
+            !artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
 
-        if (noArtifact || noTrace) {
+        if (noArtifact || noRequiredTrace || noRequiredDevtoolsLog) {
           log.warn('Runner',
               `${artifactName} gatherer, required by audit ${audit.meta.id}, did not run.`);
           throw new LHError(LHError.errors.MISSING_REQUIRED_ARTIFACT, {artifactName});

@@ -293,6 +293,24 @@ describe('Runner', () => {
       });
     });
 
+    it('outputs an error audit result when devtoolsLog required but not provided', async () => {
+      const config = new Config({
+        settings: {
+          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+        },
+        audits: [
+          // requires devtoolsLogs[Audit.DEFAULT_PASS]
+          'is-on-https',
+        ],
+      });
+
+      const results = await Runner.run({}, {config});
+      const auditResult = results.lhr.audits['is-on-https'];
+      assert.strictEqual(auditResult.score, null);
+      assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+      assert.strictEqual(auditResult.errorMessage, 'Required devtoolsLogs gatherer did not run.');
+    });
+
     it('outputs an error audit result when missing a required artifact', () => {
       const config = new Config({
         settings: {
