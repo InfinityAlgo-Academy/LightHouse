@@ -183,6 +183,8 @@ const _ICUMsgNotFoundMsg = 'ICU message not found in destination locale';
  */
 function _formatIcuMessage(locale, icuMessageId, fallbackMessage, values) {
   const localeMessages = LOCALES[locale];
+  if (!localeMessages) throw new Error(`Unsupported locale '${locale}'`);
+
   const localeMessage = localeMessages[icuMessageId] && localeMessages[icuMessageId].message;
   // fallback to the original english message if we couldn't find a message in the specified locale
   // better to have an english message than no message at all, in some number cases it won't even matter
@@ -220,13 +222,16 @@ function _formatPathAsString(pathInLHR) {
  * @return {LH.I18NRendererStrings}
  */
 function getRendererFormattedStrings(locale) {
-  const icuMessageIds = Object.keys(LOCALES[locale]).filter(f => f.includes('core/report/html/'));
+  const localeMessages = LOCALES[locale];
+  if (!localeMessages) throw new Error(`Unsupported locale '${locale}'`);
+
+  const icuMessageIds = Object.keys(localeMessages).filter(f => f.includes('core/report/html/'));
   /** @type {LH.I18NRendererStrings} */
   const strings = {};
   for (const icuMessageId of icuMessageIds) {
     const [filename, varName] = icuMessageId.split(' | ');
     if (!filename.endsWith('util.js')) throw new Error(`Unexpected message: ${icuMessageId}`);
-    strings[varName] = LOCALES[locale][icuMessageId].message;
+    strings[varName] = localeMessages[icuMessageId].message;
   }
 
   return strings;

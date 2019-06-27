@@ -61,6 +61,22 @@ describe('i18n', () => {
       expect(strings.passedAuditsGroupTitle).toEqual('[Þåššéð åûðîţš one two]');
       expect(strings.snippetCollapseButtonLabel).toEqual('[Çöļļåþšé šñîþþéţ one two]');
     });
+
+    it('throws an error for invalid locales', () => {
+      expect(_ => i18n.getRendererFormattedStrings('not-a-locale'))
+        .toThrow(`Unsupported locale 'not-a-locale'`);
+    });
+  });
+
+  describe('#getFormatted', () => {
+    it('throws an error for invalid locales', () => {
+      // Populate a string to try to localize to a bad locale.
+      const UIStrings = {testMessage: 'testy test'};
+      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+      expect(_ => i18n.getFormatted(str_(UIStrings.testMessage), 'still-not-a-locale'))
+        .toThrow(`Unsupported locale 'still-not-a-locale'`);
+    });
   });
 
   describe('#lookupLocale', () => {

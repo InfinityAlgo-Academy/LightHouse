@@ -424,7 +424,7 @@ describe('GatherRunner', function() {
     assert.equal(tests.calledCleanBrowserCaches, true);
   });
 
-  it('returns a pageLoadError and no artifacts with network errors', async () => {
+  it('returns a pageLoadError and no artifacts when there is a network error', async () => {
     const requestedUrl = 'https://example.com';
     // This page load error should be overriden by NO_DOCUMENT_REQUEST (for being
     // more specific) since requestedUrl does not match any network request in fixture.
@@ -434,31 +434,27 @@ describe('GatherRunner', function() {
       gotoURL: url => url.includes('blank') ? null : Promise.reject(navigationError),
     });
 
-    const passConfig = {
-      gatherers: [
-        {instance: new TestGatherer()},
-      ],
-    };
-
-    const settings = {};
-
-    const passContext = {
-      url: requestedUrl,
+    const config = new Config({
+      passes: [{
+        recordTrace: true,
+        passName: 'firstPass',
+        gatherers: [{instance: new TestGatherer()}],
+      }],
+    });
+    const options = {
       driver,
-      passConfig,
-      settings,
-      LighthouseRunWarnings: [],
-      baseArtifacts: await GatherRunner.initializeBaseArtifacts({driver, settings, requestedUrl}),
+      requestedUrl,
+      settings: config.settings,
     };
 
-    const {artifacts, pageLoadError} = await GatherRunner.runPass(passContext);
-    expect(passContext.LighthouseRunWarnings).toHaveLength(1);
-    expect(pageLoadError).toBeInstanceOf(Error);
-    expect(pageLoadError.code).toEqual('NO_DOCUMENT_REQUEST');
-    expect(artifacts).toEqual({});
+    const artifacts = await GatherRunner.run(config.passes, options);
+    expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
+    expect(artifacts.PageLoadError).toBeInstanceOf(Error);
+    expect(artifacts.PageLoadError.code).toEqual('NO_DOCUMENT_REQUEST');
+    expect(artifacts.TestGatherer).toBeUndefined();
   });
 
-  it('returns a pageLoadError and no artifacts with navigation errors', async () => {
+  it('returns a pageLoadError and no artifacts when there is a navigation error', async () => {
     const requestedUrl = 'https://example.com';
     // This time, NO_FCP should win because it's the only error left.
     const navigationError = new LHError(LHError.errors.NO_FCP);
@@ -470,28 +466,24 @@ describe('GatherRunner', function() {
       },
     });
 
-    const passConfig = {
-      gatherers: [
-        {instance: new TestGatherer()},
-      ],
-    };
-
-    const settings = {};
-
-    const passContext = {
-      url: requestedUrl,
+    const config = new Config({
+      passes: [{
+        recordTrace: true,
+        passName: 'firstPass',
+        gatherers: [{instance: new TestGatherer()}],
+      }],
+    });
+    const options = {
       driver,
-      passConfig,
-      settings,
-      LighthouseRunWarnings: [],
-      baseArtifacts: await GatherRunner.initializeBaseArtifacts({driver, settings, requestedUrl}),
+      requestedUrl,
+      settings: config.settings,
     };
 
-    const {artifacts, pageLoadError} = await GatherRunner.runPass(passContext);
-    expect(passContext.LighthouseRunWarnings).toHaveLength(1);
-    expect(pageLoadError).toBeInstanceOf(Error);
-    expect(pageLoadError.code).toEqual('NO_FCP');
-    expect(artifacts).toEqual({});
+    const artifacts = await GatherRunner.run(config.passes, options);
+    expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
+    expect(artifacts.PageLoadError).toBeInstanceOf(Error);
+    expect(artifacts.PageLoadError.code).toEqual('NO_FCP');
+    expect(artifacts.TestGatherer).toBeUndefined();
   });
 
   it('does not clear origin storage with flag --disable-storage-reset', () => {
