@@ -39,6 +39,10 @@ const UIStrings = {
   pageLoadFailedHung: 'Lighthouse was unable to reliably load the URL you requested because the page stopped responding.',
   /** Error message explaining that Lighthouse timed out while waiting for the initial connection to the Chrome Devtools protocol. */
   criTimeout: 'Timeout waiting for initial Debugger Protocol connection.',
+  /** Error message explaning that a resource that was required for testing was never collected. "artifactName" will be replaced with the name of the resource that wasn't collected. */
+  missingRequiredArtifact: 'Required {artifactName} gatherer did not run.',
+  /** Error message explaning that there was an error while trying to collect a resource that was required for testing. "artifactName" will be replaced with the name of the resource that wasn't collected; "errorMessage" will be replaced with a string description of the error that occurred. */
+  erroredRequiredArtifact: 'Required {artifactName} gatherer encountered an error: {errorMessage}',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -243,6 +247,24 @@ const ERRORS = {
     code: 'CRI_TIMEOUT',
     message: UIStrings.criTimeout,
     lhrRuntimeError: true,
+  },
+
+  /**
+   * Error internal to Runner used when an artifact required for an audit is missing.
+   * Requires an additional `artifactName` field for translation.
+  */
+  MISSING_REQUIRED_ARTIFACT: {
+    code: 'MISSING_REQUIRED_ARTIFACT',
+    message: UIStrings.missingRequiredArtifact,
+  },
+
+  /**
+   * Error internal to Runner used when an artifact required for an audit was an error.
+   * Requires additional `artifactName` and `errorMessage` fields for translation.
+  */
+  ERRORED_REQUIRED_ARTIFACT: {
+    code: 'ERRORED_REQUIRED_ARTIFACT',
+    message: UIStrings.erroredRequiredArtifact,
   },
 
   // Hey! When adding a new error type, update lighthouse-result.proto too.

@@ -296,7 +296,7 @@ class Runner {
         if (noArtifact || noTrace) {
           log.warn('Runner',
               `${artifactName} gatherer, required by audit ${audit.meta.id}, did not run.`);
-          throw new Error(`Required ${artifactName} gatherer did not run.`);
+          throw new LHError(LHError.errors.MISSING_REQUIRED_ARTIFACT, {artifactName});
         }
 
         // If artifact was an error, output error result on behalf of audit.
@@ -314,8 +314,8 @@ class Runner {
             ` encountered an error: ${artifactError.message}`);
 
           // Create a friendlier display error and mark it as expected to avoid duplicates in Sentry
-          const error = new Error(
-              `Required ${artifactName} gatherer encountered an error: ${artifactError.message}`);
+          const error = new LHError(LHError.errors.ERRORED_REQUIRED_ARTIFACT,
+              {artifactName, errorMessage: artifactError.message});
           // @ts-ignore Non-standard property added to Error
           error.expected = true;
           throw error;
@@ -340,7 +340,10 @@ class Runner {
       const product = await audit.audit(requiredArtifacts, auditContext);
       auditResult = Audit.generateAuditResult(audit, product);
     } catch (err) {
-      log.warn(audit.meta.id, `Caught exception: ${err.message}`);
+      // Log error if it hasn't already been logged above.
+      if (err.code !== 'MISSING_REQUIRED_ARTIFACT' && err.code !== 'ERRORED_REQUIRED_ARTIFACT') {
+        log.warn(audit.meta.id, `Caught exception: ${err.message}`);
+      }
 
       Sentry.captureException(err, {tags: {audit: audit.meta.id}, level: 'error'});
       // Errors become error audit result.

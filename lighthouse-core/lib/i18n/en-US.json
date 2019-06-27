@@ -1671,9 +1671,17 @@
     "message": "DNS servers could not resolve the provided domain.",
     "description": "Error message explaining that the requested page could not be resolved by the DNS server."
   },
+  "lighthouse-core/lib/lh-error.js | erroredRequiredArtifact": {
+    "message": "Required {artifactName} gatherer encountered an error: {errorMessage}",
+    "description": "Error message explaning that there was an error while trying to collect a resource that was required for testing. \"artifactName\" will be replaced with the name of the resource that wasn't collected; \"errorMessage\" will be replaced with a string description of the error that occurred."
+  },
   "lighthouse-core/lib/lh-error.js | internalChromeError": {
     "message": "An internal Chrome error occurred. Please restart Chrome and try re-running Lighthouse.",
     "description": "Error message explaining that Chrome has encountered an error during the Lighthouse run, and that Chrome should be restarted."
+  },
+  "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
+    "message": "Required {artifactName} gatherer did not run.",
+    "description": "Error message explaning that a resource that was required for testing was never collected. \"artifactName\" will be replaced with the name of the resource that wasn't collected."
   },
   "lighthouse-core/lib/lh-error.js | pageLoadFailed": {
     "message": "Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests.",
