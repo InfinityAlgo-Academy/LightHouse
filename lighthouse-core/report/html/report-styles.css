@@ -97,7 +97,6 @@
   --header-line-height: 24px;
   --highlighter-background-color: var(--report-text-color);
   --icon-square-size: calc(var(--score-icon-size) * 0.88);
-  --metric-description-padding: 0 0 2px calc(var(--score-icon-margin-left) + var(--score-icon-size) + var(--score-icon-margin-right));
   --metric-toggle-lines-fill: #7F7F7F;
   --metrics-toggle-background-color: var(--color-gray-200);
   --plugin-badge-background-color: var(--color-white);
@@ -434,7 +433,8 @@
 .lh-audit--fail .lh-audit__display-text {
   color: var(--color-fail-secondary);
 }
-.lh-audit--fail .lh-audit__score-icon {
+.lh-audit--fail .lh-audit__score-icon,
+.lh-audit--error .lh-audit__score-icon {
   border-left: calc(var(--score-icon-size) / 2) solid transparent;
   border-right: calc(var(--score-icon-size) / 2) solid transparent;
   border-bottom: var(--score-icon-size) solid var(--color-fail);
@@ -448,10 +448,6 @@
 .lh-audit--notapplicable .lh-audit__score-icon {
   border-radius: 100%;
   background: var(--color-gray-400);
-}
-
-.lh-audit--error .lh-audit__score-icon {
-  display: none;
 }
 
 .lh-audit--informative .lh-audit__display-text {
@@ -576,10 +572,9 @@
 }
 
 .lh-metric__innerwrap {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--audit-description-padding-left) 10fr 3fr;
   align-items: center;
-  flex-wrap: wrap;
-  justify-content: space-between;
   padding: 10px 0;
 }
 
@@ -599,13 +594,15 @@
 
 .lh-metric__description {
   display: none;
+  grid-column-start: 2;
+  grid-column-end: 3;
   color: var(--report-text-color-secondary);
-  padding: var(--metric-description-padding);
 }
 
 .lh-metric__value {
   white-space: nowrap; /* No wrapping between metric value and the icon */
   font-weight: 500;
+  justify-self: end;
 }
 
 /* No-JS toggle switch */
@@ -700,7 +697,8 @@
 .lh-metric--fail .lh-metric__value {
   color: var(--color-fail-secondary);
 }
-.lh-metric--fail .lh-metric__innerwrap::before {
+.lh-metric--fail .lh-metric__innerwrap::before,
+.lh-metric--error .lh-metric__innerwrap::before {
   border-left: calc(var(--score-icon-size) / 2) solid transparent;
   border-right: calc(var(--score-icon-size) / 2) solid transparent;
   border-bottom: var(--score-icon-size) solid var(--color-fail);
@@ -709,11 +707,6 @@
 .lh-metric--error .lh-metric__value,
 .lh-metric--error .lh-metric__description {
   color: var(--color-fail-secondary);
-}
-
-/* Hide icon if there was an error */
-.lh-metric--error .lh-metric__innerwrap::before {
-  display: none;
 }
 
 /* Perf load opportunity */
