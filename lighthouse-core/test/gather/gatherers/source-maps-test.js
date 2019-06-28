@@ -27,25 +27,25 @@ describe('SourceMaps gatherer', () => {
    */
   async function getResults(mapsAndEvents) {
     const onMock = createMockOnFn();
-    for (const mapAndEvent of mapsAndEvents) {
-      onMock.mockEvent('Debugger.scriptParsed', mapAndEvent.event);
+    for (const {event} of mapsAndEvents) {
+      onMock.mockEvent('Debugger.scriptParsed', event);
     }
 
     const sendCommandMock = createMockSendCommandFn()
       .mockResponse('Debugger.enable', {})
       .mockResponse('Debugger.disable', {});
 
-    // Only the source maps that need to be fetched use the `evaluateAsync` code path.
-    // (not 'sourceMappingURL=data:application/json;...')
-    const mapsAndEventsForFetching =
-      mapsAndEvents.filter(data => !data.event.sourceMapURL.startsWith('data:'));
-    for (const mapAndEvent of mapsAndEventsForFetching) {
-      if (mapAndEvent.map && mapAndEvent.fetchError) {
+    for (const {map, event, fetchError} of mapsAndEvents) {
+      if (event.sourceMapURL.startsWith('data:')) {
+        // Only the source maps that need to be fetched use the `evaluateAsync` code path.
+        continue;
+      }
+
+      if (map && fetchError) {
         throw new Error('should only define map or fetchError, not both.');
       }
-      const value = mapAndEvent.fetchError ?
-        {errorMessage: mapAndEvent.fetchError} :
-        mapAndEvent.map;
+
+      const value = fetchError ? {errorMessage: fetchError} : map;
       sendCommandMock.mockResponse('Runtime.evaluate', {result: {value}});
     }
     const connectionStub = new Connection();
