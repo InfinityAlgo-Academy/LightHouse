@@ -7,6 +7,10 @@
 
 /* eslint-env jest */
 
+jest.useFakeTimers();
+
+const Driver = require('../../../gather/driver.js');
+const Connection = require('../../../gather/connections/connection.js');
 const SourceMaps = require('../../../gather/gatherers/source-maps.js');
 const path = require('path');
 const fs = require('fs');
@@ -14,34 +18,107 @@ const pathToMap = path.join(__dirname,
   '../../../../lighthouse-cli/test/fixtures/source-maps/bundle.js.map');
 const map = fs.readFileSync(pathToMap, 'utf-8');
 
+// Copied ...
+function createMockSendCommandFn() {
+  const mockResponses = [];
+  const mockFn = jest.fn().mockImplementation(command => {
+    const indexOfResponse = mockResponses.findIndex(entry => entry.command === command);
+    if (indexOfResponse === -1) throw new Error(`${command} unimplemented`);
+    const {response, delay} = mockResponses[indexOfResponse];
+    mockResponses.splice(indexOfResponse, 1);
+    if (delay) return new Promise(resolve => setTimeout(() => resolve(response), delay));
+    return Promise.resolve(response);
+  });
+
+  mockFn.mockResponse = (command, response, delay) => {
+    mockResponses.push({command, response, delay});
+    return mockFn;
+  };
+
+  mockFn.findInvocation = command => {
+    expect(mockFn).toHaveBeenCalledWith(command, expect.anything());
+    return mockFn.mock.calls.find(call => call[0] === command)[1];
+  };
+
+  return mockFn;
+}
+
+// new ...
+function createMockOnFn() {
+  const mockEvents = [];
+  const mockFn = jest.fn().mockImplementation((eventName, listener) => {
+    const events = mockEvents.filter(entry => entry.event === eventName);
+    if (!events.length) return;
+    for (const event of events) {
+      const indexOfEvent = mockEvents.indexOf(event);
+      mockEvents.splice(indexOfEvent, 1);
+    }
+    // Wait a tick because real events never fire immediately
+    setTimeout(() => {
+      for (const event of events) {
+        listener(event.response);
+      }
+    }, 0);
+  });
+
+  mockFn.mockEvent = (event, response) => {
+    mockEvents.push({event, response});
+    return mockFn;
+  };
+
+  mockFn.findListener = event => {
+    expect(mockFn).toHaveBeenCalledWith(event, expect.anything());
+    return mockFn.mock.calls.find(call => call[0] === event)[1];
+  };
+
+  return mockFn;
+}
+
+// Copied ...
+async function flushAllTimersAndMicrotasks() {
+  for (let i = 0; i < 1000; i++) {
+    jest.advanceTimersByTime(1);
+    await Promise.resolve();
+  }
+}
+
 describe('SourceMaps gatherer', () => {
   /**
    * @param {{event: LH.Crdp.Debugger.ScriptParsedEvent, map: string, fetchError: string}} mapsAndEvents
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
-  function getResults(mapsAndEvents) {
-    // Only the source maps that need to be fetched
-    // (not 'sourceMappingURL=data:application/json;...') use the `evaluateAsync` code path.
+  async function getResults(mapsAndEvents) {
+    const onMock = createMockOnFn();
+    for (const mapAndEvent of mapsAndEvents) {
+      onMock.mockEvent('Debugger.scriptParsed', mapAndEvent.event);
+    }
+
+    const sendCommandMock = createMockSendCommandFn()
+      .mockResponse('Debugger.enable', {})
+      .mockResponse('Debugger.disable', {});
+
+    // Only the source maps that need to be fetched use the `evaluateAsync` code path.
+    // (not 'sourceMappingURL=data:application/json;...')
     const mapsAndEventsForFetching =
       mapsAndEvents.filter(data => !data.event.sourceMapURL.startsWith('data:'));
-    const driver = {
-      _nextSourceMap: 0,
-      evaluateAsync: () => {
-        const nextMapAndEvent = mapsAndEventsForFetching[driver._nextSourceMap++];
-        if (nextMapAndEvent.map && nextMapAndEvent.fetchError) {
-          throw new Error('should only define map or fetchError, not both.');
-        }
-        if (nextMapAndEvent.fetchError) {
-          return {errorMessage: nextMapAndEvent.fetchError};
-        } else {
-          return nextMapAndEvent.map;
-        }
-      },
-      sendCommand: jest.fn(),
-      off: jest.fn(),
-    };
+    for (const mapAndEvent of mapsAndEventsForFetching) {
+      if (mapAndEvent.map && mapAndEvent.fetchError) {
+        throw new Error('should only define map or fetchError, not both.');
+      }
+      const value = mapAndEvent.fetchError ?
+        {errorMessage: mapAndEvent.fetchError} :
+        mapAndEvent.map;
+      sendCommandMock.mockResponse('Runtime.evaluate', {result: {value}});
+    }
+    const connectionStub = new Connection();
+    connectionStub.sendCommand = sendCommandMock;
+
+    const driver = new Driver(connectionStub);
+    driver.on = onMock;
+
     const gatherer = new SourceMaps();
-    gatherer._scriptParsedEvents = mapsAndEvents.map(data => data.event);
+    await gatherer.beforePass({driver});
+    await flushAllTimersAndMicrotasks();
     return gatherer.afterPass({driver});
   }
 
