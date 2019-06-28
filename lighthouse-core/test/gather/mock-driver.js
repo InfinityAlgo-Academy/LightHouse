@@ -73,6 +73,10 @@ function createMockOnceFn() {
   return mockFn;
 }
 
+/**
+ * Very much like `createMockOnceFn`, but will fire all the events (not just one for every call).
+ * So it's good for .on w/ many events.
+ */
 function createMockOnFn() {
   const mockEvents = [];
   const mockFn = jest.fn().mockImplementation((eventName, listener) => {
