@@ -292,6 +292,8 @@
   background: var(--report-background-color);
   scroll-behavior: smooth;
   color: var(--report-text-color);
+
+  transition: color 0.4s ease, background-color 0.4s ease;
 }
 
 .lh-root :focus {
@@ -823,6 +825,11 @@
 
 .lh-audit {
   border-bottom: 1px solid var(--report-border-color-secondary);
+}
+
+/* Prevents a weird line under the budgets table. */
+.lh-audit-group--budgets .lh-audit {
+  border-bottom: none;
 }
 
 /* Apply border-top to just the first audit. */
