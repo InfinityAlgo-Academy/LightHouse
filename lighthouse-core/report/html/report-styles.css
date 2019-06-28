@@ -132,6 +132,7 @@
   --stackpack-padding-horizontal: 10px;
   --sticky-header-background-color: var(--report-background-color);
   --table-higlight-background-color: hsla(0, 0%, 75%, 0.1);
+  --theme-transition-duration: 0.4s;
   --tools-icon-color: var(--color-gray-600);
   --tools-icon-size: var(--score-icon-background-size);
   --topbar-background-color: var(--color-gray-100);
@@ -191,6 +192,10 @@
     --pwa-fast-reliable-gray-url: var(--pwa-fast-reliable-gray-url-dark);
     --pwa-installable-gray-url: var(--pwa-installable-gray-url-dark);
     --pwa-optimized-gray-url: var(--pwa-optimized-gray-url-dark);
+  }
+
+  .dark img {
+    opacity: 0.8;
   }
 }
 
@@ -292,8 +297,10 @@
   background: var(--report-background-color);
   scroll-behavior: smooth;
   color: var(--report-text-color);
-
-  transition: color 0.4s ease, background-color 0.4s ease;
+  transition: color var(--theme-transition-duration) ease,
+              background-color var(--theme-transition-duration) ease,
+              fill var(--theme-transition-duration) ease,
+              opacity var(--theme-transition-duration) ease;
 }
 
 .lh-root :focus {
