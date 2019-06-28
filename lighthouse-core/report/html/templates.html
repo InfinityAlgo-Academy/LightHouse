@@ -166,10 +166,10 @@ limitations under the License.
 
     .lh-sticky-header {
       --gauge-circle-size: 36px;
+      --gauge-percentage-font-size: 13px;
+      --gauge-wrapper-width: 60px;
       --plugin-badge-size: 18px;
       --plugin-icon-size: 75%;
-      --gauge-wrapper-width: 60px;
-      --gauge-percentage-font-size: 13px;
       position: sticky;
       left: 0;
       right: 0;
@@ -183,6 +183,7 @@ limitations under the License.
       padding-bottom: 4px;
       z-index: 1;
       pointer-events: none;
+      transition: var(--theme-transition);
     }
 
     .lh-sticky-header--visible {
@@ -585,6 +586,7 @@ limitations under the License.
 
     .lh-gauge--pwa__disc {
       fill: var(--color-gray-200);
+      transition: var(--theme-transition);
     }
 
     .lh-gauge--pwa__logo--primary-color {

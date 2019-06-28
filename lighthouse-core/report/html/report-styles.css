@@ -133,6 +133,7 @@
   --sticky-header-background-color: var(--report-background-color);
   --table-higlight-background-color: hsla(0, 0%, 75%, 0.1);
   --theme-transition-duration: 0.4s;
+  --theme-transition: color var(--theme-transition-duration) ease, background-color var(--theme-transition-duration) ease, fill var(--theme-transition-duration) ease, opacity var(--theme-transition-duration) ease, border var(--theme-transition-duration) ease;
   --tools-icon-color: var(--color-gray-600);
   --tools-icon-size: var(--score-icon-background-size);
   --topbar-background-color: var(--color-gray-100);
@@ -196,6 +197,7 @@
 
   .dark img {
     opacity: 0.8;
+    transition: var(--theme-transition);
   }
 }
 
@@ -297,10 +299,7 @@
   background: var(--report-background-color);
   scroll-behavior: smooth;
   color: var(--report-text-color);
-  transition: color var(--theme-transition-duration) ease,
-              background-color var(--theme-transition-duration) ease,
-              fill var(--theme-transition-duration) ease,
-              opacity var(--theme-transition-duration) ease;
+  transition: var(--theme-transition);
 }
 
 .lh-root :focus {
@@ -641,6 +640,7 @@
   right: 0;
   top: -3px;
   pointer-events: none;
+  transition: var(--theme-transition);
 }
 .lh-metrics-toggle__input:focus + label {
   outline: -webkit-focus-ring-color auto 3px;
@@ -1036,10 +1036,6 @@
   flex-wrap: wrap;
   justify-content: center;
 }
-.lh-scores-header__solo {
-  padding: 0;
-  border: 0;
-}
 
 /* Gauge */
 
@@ -1110,6 +1106,7 @@
   z-index: 100;
   box-shadow: 0 0 4px rgba(0,0,0,.2);
   border-radius: 25%;
+  transition: var(--theme-transition);
 }
 .lh-category .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
   width: var(--plugin-badge-size-big);
@@ -1158,6 +1155,7 @@
   margin-top: 10px;
   text-align: center;
   color: var(--report-text-color);
+  transition: var(--theme-transition);
 }
 
 /* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendant selector */
