@@ -1365,12 +1365,8 @@
   width: 12%;
 }
 
-.lh-text__url:hover {
-  text-decoration: underline dotted #999;
-  text-decoration-skip-ink: auto;
-}
 
-.lh-text__url > .lh-text, .lh-text__url-host {
+.lh-text__url-host {
   display: inline;
 }
 
@@ -1384,6 +1380,15 @@
   height: var(--image-preview-size);
   width: var(--image-preview-size);
   object-fit: contain;
+}
+
+.lh-text__url > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.lh-text__url > a:hover {
+  text-decoration: underline dotted #999;
 }
 
 /* Chevron

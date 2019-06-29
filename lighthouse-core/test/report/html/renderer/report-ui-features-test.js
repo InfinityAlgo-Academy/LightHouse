@@ -185,7 +185,7 @@ describe('ReportUIFeatures', () => {
 
         function getUrlsInTable() {
           return dom
-            .findAll('#uses-webp-images .lh-details .lh-text__url .lh-text:first-child', container)
+            .findAll('#uses-webp-images .lh-details .lh-text__url a:first-child', container)
             .map(el => el.textContent);
         }
 
