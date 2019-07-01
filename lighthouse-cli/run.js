@@ -24,8 +24,6 @@ const opn = require('opn');
 
 const _RUNTIME_ERROR_CODE = 1;
 const _PROTOCOL_TIMEOUT_EXIT_CODE = 67;
-const _PAGE_HUNG_EXIT_CODE = 68;
-const _INSECURE_DOCUMENT_REQUEST_EXIT_CODE = 69;
 
 /**
  * exported for testing
@@ -76,18 +74,6 @@ function printProtocolTimeoutErrorAndExit() {
   return process.exit(_PROTOCOL_TIMEOUT_EXIT_CODE);
 }
 
-/** @param {LighthouseError} err @return {never} */
-function printPageHungErrorAndExit(err) {
-  console.error('Page hung:', err.friendlyMessage);
-  return process.exit(_PAGE_HUNG_EXIT_CODE);
-}
-
-/** @param {LighthouseError} err @return {never} */
-function printInsecureDocumentRequestErrorAndExit(err) {
-  console.error('Insecure document request:', err.friendlyMessage);
-  return process.exit(_INSECURE_DOCUMENT_REQUEST_EXIT_CODE);
-}
-
 /**
  * @param {LighthouseError} err
  * @return {never}
@@ -109,10 +95,6 @@ function printErrorAndExit(err) {
     return printConnectionErrorAndExit();
   } else if (err.code === 'CRI_TIMEOUT') {
     return printProtocolTimeoutErrorAndExit();
-  } else if (err.code === 'PAGE_HUNG') {
-    return printPageHungErrorAndExit(err);
-  } else if (err.code === 'INSECURE_DOCUMENT_REQUEST') {
-    return printInsecureDocumentRequestErrorAndExit(err);
   } else {
     return printRuntimeErrorAndExit(err);
   }

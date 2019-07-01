@@ -86,6 +86,16 @@ class Driver {
       this._handleReceivedMessageFromTarget(event, []).catch(this._handleEventError);
     });
 
+    // We use isolated execution contexts for `evaluateAsync` that can be destroyed through navigation
+    // and other page actions. Cleanup our relevant bookkeeping as we see those events.
+    this.on('Runtime.executionContextDestroyed', event => {
+      if (event.executionContextId === this._isolatedExecutionContextId) {
+        this._clearIsolatedContextId();
+      }
+    });
+
+    this.on('Page.frameNavigated', () => this._clearIsolatedContextId());
+
     connection.on('protocolevent', this._handleProtocolEvent.bind(this));
 
     /**
@@ -464,7 +474,20 @@ class Driver {
    */
   async evaluateAsync(expression, options = {}) {
     const contextId = options.useIsolation ? await this._getOrCreateIsolatedContextId() : undefined;
-    return this._evaluateInContext(expression, contextId);
+
+    try {
+      // `await` is not redunant here because we want to `catch` the async errors
+      return await this._evaluateInContext(expression, contextId);
+    } catch (err) {
+      // If we were using isolation and the context disappeared on us, retry one more time.
+      if (contextId && err.message.includes('Cannot find context')) {
+        this._clearIsolatedContextId();
+        const freshContextId = await this._getOrCreateIsolatedContextId();
+        return this._evaluateInContext(expression, freshContextId);
+      }
+
+      throw err;
+    }
   }
 
   /**
@@ -904,53 +927,6 @@ class Driver {
   }
 
   /**
-   * Return a promise that resolves when an insecure security state is encountered
-   * and a method to cancel internal listeners.
-   * @return {{promise: Promise<string>, cancel: function(): void}}
-   * @private
-   */
-  _monitorForInsecureState() {
-    /** @type {(() => void)} */
-    let cancel = () => {
-      throw new Error('_monitorForInsecureState.cancel() called before it was defined');
-    };
-
-    const promise = new Promise((resolve, reject) => {
-      /**
-       * @param {LH.Crdp.Security.SecurityStateChangedEvent} event
-       */
-      const securityStateChangedListener = ({
-        securityState,
-        explanations,
-        schemeIsCryptographic,
-      }) => {
-        if (securityState === 'insecure' && schemeIsCryptographic) {
-          cancel();
-          const insecureDescriptions = explanations
-            .filter(exp => exp.securityState === 'insecure')
-            .map(exp => exp.description);
-          resolve(insecureDescriptions.join(' '));
-        }
-      };
-      let canceled = false;
-      cancel = () => {
-        if (canceled) return;
-        canceled = true;
-        this.off('Security.securityStateChanged', securityStateChangedListener);
-        // TODO(@patrickhulce): cancel() should really be a promise itself to handle things like this
-        this.sendCommand('Security.disable').catch(() => {});
-      };
-      this.on('Security.securityStateChanged', securityStateChangedListener);
-      this.sendCommand('Security.enable').catch(() => {});
-    });
-
-    return {
-      promise,
-      cancel,
-    };
-  }
-
-  /**
    * Returns whether the page appears to be hung.
    * @return {Promise<boolean>}
    */
@@ -1001,13 +977,6 @@ class Driver {
     // CPU listener. Resolves when the CPU has been idle for cpuQuietThresholdMs after network idle.
     let waitForCPUIdle = this._waitForNothing();
 
-    const monitorForInsecureState = this._monitorForInsecureState();
-    const securityCheckPromise = monitorForInsecureState.promise.then(securityMessages => {
-      return function() {
-        throw new LHError(LHError.errors.INSECURE_DOCUMENT_REQUEST, {securityMessages});
-      };
-    });
-
     // Wait for both load promises. Resolves on cleanup function the clears load
     // timeout timer.
     const loadPromise = Promise.all([
@@ -1044,9 +1013,8 @@ class Driver {
       };
     });
 
-    // Wait for security issue, load or timeout and run the cleanup function the winner returns.
+    // Wait for load or timeout and run the cleanup function the winner returns.
     const cleanupFn = await Promise.race([
-      securityCheckPromise,
       loadPromise,
       maxTimeoutPromise,
     ]);
@@ -1056,7 +1024,6 @@ class Driver {
     waitForLoadEvent.cancel();
     waitForNetworkIdle.cancel();
     waitForCPUIdle.cancel();
-    monitorForInsecureState.cancel();
 
     await cleanupFn();
   }
@@ -1325,6 +1292,22 @@ class Driver {
   }
 
   /**
+   * @param {{x: number, y: number}} position
+   * @return {Promise<void>}
+   */
+  scrollTo(position) {
+    const scrollExpression = `window.scrollTo(${position.x}, ${position.y})`;
+    return this.evaluateAsync(scrollExpression, {useIsolation: true});
+  }
+
+  /**
+   * @return {Promise<{x: number, y: number}>}
+   */
+  getScrollPosition() {
+    return this.evaluateAsync(`({x: window.scrollX, y: window.scrollY})`, {useIsolation: true});
+  }
+
+  /**
    * @param {{additionalTraceCategories?: string|null}=} settings
    * @return {Promise<void>}
    */
@@ -1508,7 +1491,7 @@ class Driver {
    * @param {string} url
    * @return {Promise<void>}
    */
-  clearDataForOrigin(url) {
+  async clearDataForOrigin(url) {
     const origin = new URL(url).origin;
 
     // Clear all types of storage except cookies, so the user isn't logged out.
@@ -1525,10 +1508,22 @@ class Driver {
       'cache_storage',
     ].join(',');
 
-    return this.sendCommand('Storage.clearDataForOrigin', {
-      origin: origin,
-      storageTypes: typesToClear,
-    });
+    // `Storage.clearDataForOrigin` is one of our PROTOCOL_TIMEOUT culprits and this command is also
+    // run in the context of PAGE_HUNG to cleanup. We'll keep the timeout low and just warn if it fails.
+    this.setNextProtocolTimeout(5000);
+
+    try {
+      await this.sendCommand('Storage.clearDataForOrigin', {
+        origin: origin,
+        storageTypes: typesToClear,
+      });
+    } catch (err) {
+      if (/** @type {LH.LighthouseError} */(err).code === 'PROTOCOL_TIMEOUT') {
+        log.warn('Driver', 'clearDataForOrigin timed out');
+      } else {
+        throw err;
+      }
+    }
   }
 
   /**

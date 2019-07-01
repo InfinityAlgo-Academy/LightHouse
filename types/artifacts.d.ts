@@ -9,7 +9,7 @@ import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simu
 import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
 import speedline = require('speedline-core');
 
-type _TaskNode = import('../lighthouse-core/computed/main-thread-tasks.js').TaskNode;
+type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
 
 type LanternSimulator = InstanceType<typeof _LanternSimulator>;
 
@@ -49,6 +49,8 @@ declare global {
       URL: {requestedUrl: string, finalUrl: string};
       /** The timing instrumentation of the gather portion of a run. */
       Timing: Artifacts.MeasureEntry[];
+      /** If loading the page failed, value is the error that caused it. Otherwise null. */
+      PageLoadError: LighthouseError | null;
     }
 
     /**

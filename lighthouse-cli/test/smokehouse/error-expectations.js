@@ -10,19 +10,47 @@
  */
 module.exports = [
   {
-    errorCode: 'PAGE_HUNG',
     lhr: {
       requestedUrl: 'http://localhost:10200/infinite-loop.html',
       finalUrl: 'http://localhost:10200/infinite-loop.html',
-      audits: {},
+      runtimeError: {code: 'PAGE_HUNG'},
+      audits: {
+        'first-contentful-paint': {
+          scoreDisplayMode: 'error',
+          errorMessage: 'Required traces gatherer did not run.',
+        },
+      },
+    },
+    artifacts: {
+      PageLoadError: {code: 'PAGE_HUNG'},
+      devtoolsLogs: {
+        'pageLoadError-defaultPass': [/* ... */],
+      },
+      traces: {
+        'pageLoadError-defaultPass': {traceEvents: [/* ... */]},
+      },
     },
   },
   {
-    errorCode: 'INSECURE_DOCUMENT_REQUEST',
     lhr: {
       requestedUrl: 'https://expired.badssl.com',
-      finalUrl: 'https://expired.badssl.com',
-      audits: {},
+      finalUrl: 'https://expired.badssl.com/',
+      runtimeError: {code: 'INSECURE_DOCUMENT_REQUEST'},
+      audits: {
+        'first-contentful-paint': {
+          scoreDisplayMode: 'error',
+          errorMessage: 'Required traces gatherer did not run.',
+        },
+      },
+    },
+    artifacts: {
+      PageLoadError: {code: 'INSECURE_DOCUMENT_REQUEST'},
+      devtoolsLogs: {
+        'pageLoadError-defaultPass': [/* ... */],
+      },
+      traces: {
+        'pageLoadError-defaultPass': {traceEvents: [/* ... */]},
+      },
     },
   },
 ];

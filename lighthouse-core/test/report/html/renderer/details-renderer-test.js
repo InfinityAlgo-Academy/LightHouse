@@ -346,6 +346,26 @@ describe('DetailsRenderer', () => {
       assert.equal(linkEl.textContent, linkText);
     });
 
+    it('renders link value as text if URL is invalid', () => {
+      const linkText = 'Invalid Link';
+      const linkUrl = 'link nonsense';
+      const link = {
+        type: 'link',
+        text: linkText,
+        url: linkUrl,
+      };
+      const details = {
+        type: 'table',
+        headings: [{key: 'content', itemType: 'link', text: 'Heading'}],
+        items: [{content: link}],
+      };
+
+      const el = renderer.render(details);
+      const linkEl = el.querySelector('td.lh-table-column--link > .lh-text');
+      assert.equal(linkEl.localName, 'div');
+      assert.equal(linkEl.textContent, linkText);
+    });
+
     it('renders node values', () => {
       const node = {
         type: 'node',
@@ -385,7 +405,10 @@ describe('DetailsRenderer', () => {
       assert.equal(urlEl.localName, 'div');
       assert.equal(urlEl.title, urlText);
       assert.equal(urlEl.dataset.url, urlText);
-      assert.ok(urlEl.firstChild.classList.contains('lh-text'));
+      assert.equal(urlEl.firstChild.nodeName, 'A');
+      assert.equal(urlEl.firstChild.href, urlText);
+      assert.equal(urlEl.firstChild.rel, 'noopener');
+      assert.equal(urlEl.firstChild.target, '_blank');
       assert.equal(urlEl.textContent, displayUrlText);
     });
 
@@ -410,7 +433,7 @@ describe('DetailsRenderer', () => {
       assert.equal(urlEl.localName, 'div');
       assert.equal(urlEl.title, urlText);
       assert.equal(urlEl.dataset.url, urlText);
-      assert.ok(urlEl.firstChild.classList.contains('lh-text'));
+      assert.equal(urlEl.firstChild.nodeName, 'A');
       assert.equal(urlEl.textContent, displayUrlText);
     });
 

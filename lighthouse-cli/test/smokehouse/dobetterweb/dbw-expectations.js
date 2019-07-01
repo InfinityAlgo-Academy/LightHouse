@@ -155,12 +155,16 @@ module.exports = [
         },
         'dom-size': {
           score: 1,
-          numericValue: 35,
+          numericValue: 137,
           details: {
             items: [
-              {statistic: 'Total DOM Elements', value: '35'},
+              {statistic: 'Total DOM Elements', value: '137'},
               {statistic: 'Maximum DOM Depth', value: '3'},
-              {statistic: 'Maximum Child Elements', value: '33'},
+              {
+                statistic: 'Maximum Child Elements',
+                value: '100',
+                element: {value: '<div id="shadow-root-container">'},
+              },
             ],
           },
         },

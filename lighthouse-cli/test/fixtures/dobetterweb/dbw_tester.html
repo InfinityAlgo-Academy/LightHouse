@@ -117,6 +117,18 @@
 <object id="5934a"></object>
 <object id="5934b"></object>
 
+<div id="shadow-root-container"></div>
+<script>
+  // DOM Size has had trouble with very specific shadow root traversal issues.
+  // Make sure it can handle reporting of the widest element being a shadow root.
+  const shadowRootContainer = document.getElementById('shadow-root-container');
+  const shadowRoot = shadowRootContainer.attachShadow({mode: 'open'});
+  for (let i = 0; i < 100; i++) {
+    const span = document.createElement('span');
+    shadowRoot.appendChild(span);
+  }
+</script>
+
 <script>
   // Ensure gatherers still work when individual elements override '.matches'
   document.getElementById("5934a").matches = "blahblah";

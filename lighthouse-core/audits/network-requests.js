@@ -72,7 +72,7 @@ class NetworkRequests extends Audit {
           itemType: 'bytes',
           displayUnit: 'kb',
           granularity: 1,
-          text: 'Transfer Size',
+          text: 'Transfer Size', // TODO(exterkamp): i18n this when i18n'ing this file
         },
         {
           key: 'resourceSize',

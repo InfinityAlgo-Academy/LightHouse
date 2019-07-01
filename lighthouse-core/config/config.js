@@ -23,6 +23,28 @@ const {requireAudits, mergeOptionsOfItems, resolveModule} = require('./config-he
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
 /**
+ * Define with object literal so that tsc will require it to stay updated.
+ * @type {Record<keyof LH.BaseArtifacts, ''>}
+ */
+const BASE_ARTIFACT_BLANKS = {
+  fetchTime: '',
+  LighthouseRunWarnings: '',
+  TestedAsMobileDevice: '',
+  HostUserAgent: '',
+  NetworkUserAgent: '',
+  BenchmarkIndex: '',
+  WebAppManifest: '',
+  Stacks: '',
+  traces: '',
+  devtoolsLogs: '',
+  settings: '',
+  URL: '',
+  Timing: '',
+  PageLoadError: '',
+};
+const BASE_ARTIFACT_NAMES = Object.keys(BASE_ARTIFACT_BLANKS);
+
+/**
  * @param {Config['passes']} passes
  * @param {Config['audits']} audits
  */
@@ -32,11 +54,14 @@ function assertValidPasses(passes, audits) {
   }
 
   const requiredGatherers = Config.getGatherersNeededByAudits(audits);
+  // Base artifacts are provided by GatherRunner, so start foundGatherers with them.
+  const foundGatherers = new Set(BASE_ARTIFACT_NAMES);
 
   // Log if we are running gathers that are not needed by the audits listed in the config
   passes.forEach(pass => {
     pass.gatherers.forEach(gathererDefn => {
       const gatherer = gathererDefn.instance;
+      foundGatherers.add(gatherer.name);
       const isGatherRequiredByAudits = requiredGatherers.has(gatherer.name);
       if (!isGatherRequiredByAudits) {
         const msg = `${gatherer.name} gatherer requested, however no audit requires it.`;
@@ -44,6 +69,17 @@ function assertValidPasses(passes, audits) {
       }
     });
   });
+
+  // All required gatherers must be found in the config. Throw otherwise.
+  for (const auditDefn of audits || []) {
+    const auditMeta = auditDefn.implementation.meta;
+    for (const requiredArtifact of auditMeta.requiredArtifacts) {
+      if (!foundGatherers.has(requiredArtifact)) {
+        throw new Error(`${requiredArtifact} gatherer, required by audit ${auditMeta.id}, ` +
+            'was not found in config.');
+      }
+    }
+  }
 
   // Passes must have unique `passName`s. Throw otherwise.
   const usedNames = new Set();

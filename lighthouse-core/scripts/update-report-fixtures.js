@@ -28,7 +28,7 @@ async function update(artifactName) {
     res(address.port);
   }));
 
-  const oldArtifacts = await assetSaver.loadArtifacts(artifactPath);
+  const oldArtifacts = assetSaver.loadArtifacts(artifactPath);
 
   const url = `http://localhost:${port}/dobetterweb/dbw_tester.html`;
   const rawFlags = [
@@ -41,7 +41,7 @@ async function update(artifactName) {
 
   if (artifactName) {
     // Revert everything except the one artifact
-    const newArtifacts = await assetSaver.loadArtifacts(artifactPath);
+    const newArtifacts = assetSaver.loadArtifacts(artifactPath);
     if (!(artifactName in newArtifacts) && !(artifactName in oldArtifacts)) {
       throw Error('Unknown artifact name: ' + artifactName);
     }

@@ -126,6 +126,11 @@ function makeComparison(name, actualResult, expectedResult) {
  * @return {Smokehouse.Comparison[]}
  */
 function collateResults(actual, expected) {
+  // If actual run had a runtimeError, expected *must* have a runtimeError.
+  // Relies on the fact that an `undefined` argument to makeComparison() can only match `undefined`.
+  const runtimeErrorAssertion = makeComparison('runtimeError', actual.lhr.runtimeError,
+      expected.lhr.runtimeError);
+
   /** @type {Smokehouse.Comparison[]} */
   let artifactAssertions = [];
   if (expected.artifacts) {
@@ -156,17 +161,12 @@ function collateResults(actual, expected) {
 
   return [
     {
-      name: 'error code',
-      actual: actual.errorCode,
-      expected: expected.errorCode,
-      equal: actual.errorCode === expected.errorCode,
-    },
-    {
       name: 'final url',
       actual: actual.lhr.finalUrl,
       expected: expected.lhr.finalUrl,
       equal: actual.lhr.finalUrl === expected.lhr.finalUrl,
     },
+    runtimeErrorAssertion,
     ...artifactAssertions,
     ...auditAssertions,
   ];
@@ -200,7 +200,8 @@ function reportAssertion(assertion) {
   } else {
     if (assertion.diff) {
       const diff = assertion.diff;
-      const fullActual = JSON.stringify(assertion.actual, null, 2).replace(/\n/g, '\n      ');
+      const fullActual = String(JSON.stringify(assertion.actual, null, 2))
+          .replace(/\n/g, '\n      ');
       const msg = `
   ${log.redify(log.cross)} difference at ${log.bold}${diff.path}${log.reset}
               expected: ${JSON.stringify(diff.expected)}

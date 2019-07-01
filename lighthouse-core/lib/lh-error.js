@@ -23,6 +23,8 @@ const UIStrings = {
   pageLoadFailedWithDetails: 'Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Details: {errorDetails})',
   /** Error message explaining that the security certificate of the page Lighthouse observed was invalid, so the URL cannot be accessed. securityMessages will be replaced with one or more strings from the browser explaining what was insecure about the page load. */
   pageLoadFailedInsecure: 'The URL you have provided does not have a valid security certificate. {securityMessages}',
+  /** Error message explaining that Chrome prevented the page from loading and displayed an interstitial screen instead, so the URL cannot be accessed. */
+  pageLoadFailedInterstitial: 'Chrome prevented page load with an interstitial. Make sure you are testing the correct URL and that the server is properly responding to all requests.',
   /** Error message explaining that Chrome has encountered an error during the Lighthouse run, and that Chrome should be restarted. */
   internalChromeError: 'An internal Chrome error occurred. Please restart Chrome and try re-running Lighthouse.',
   /** Error message explaining that fetching the resources of the webpage has taken longer than the maximum time. */
@@ -37,6 +39,10 @@ const UIStrings = {
   pageLoadFailedHung: 'Lighthouse was unable to reliably load the URL you requested because the page stopped responding.',
   /** Error message explaining that Lighthouse timed out while waiting for the initial connection to the Chrome Devtools protocol. */
   criTimeout: 'Timeout waiting for initial Debugger Protocol connection.',
+  /** Error message explaning that a resource that was required for testing was never collected. "artifactName" will be replaced with the name of the resource that wasn't collected. */
+  missingRequiredArtifact: 'Required {artifactName} gatherer did not run.',
+  /** Error message explaning that there was an error while trying to collect a resource that was required for testing. "artifactName" will be replaced with the name of the resource that wasn't collected; "errorMessage" will be replaced with a string description of the error that occurred. */
+  erroredRequiredArtifact: 'Required {artifactName} gatherer encountered an error: {errorMessage}',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -180,6 +186,13 @@ const ERRORS = {
     message: UIStrings.pageLoadFailedInsecure,
     lhrRuntimeError: true,
   },
+  /* Used when any Chrome interstitial error prevents page load.
+   */
+  CHROME_INTERSTITIAL_ERROR: {
+    code: 'CHROME_INTERSTITIAL_ERROR',
+    message: UIStrings.pageLoadFailedInterstitial,
+    lhrRuntimeError: true,
+  },
   /* Used when the page stopped responding and did not finish loading. */
   PAGE_HUNG: {
     code: 'PAGE_HUNG',
@@ -234,6 +247,24 @@ const ERRORS = {
     code: 'CRI_TIMEOUT',
     message: UIStrings.criTimeout,
     lhrRuntimeError: true,
+  },
+
+  /**
+   * Error internal to Runner used when an artifact required for an audit is missing.
+   * Requires an additional `artifactName` field for translation.
+  */
+  MISSING_REQUIRED_ARTIFACT: {
+    code: 'MISSING_REQUIRED_ARTIFACT',
+    message: UIStrings.missingRequiredArtifact,
+  },
+
+  /**
+   * Error internal to Runner used when an artifact required for an audit was an error.
+   * Requires additional `artifactName` and `errorMessage` fields for translation.
+  */
+  ERRORED_REQUIRED_ARTIFACT: {
+    code: 'ERRORED_REQUIRED_ARTIFACT',
+    message: UIStrings.erroredRequiredArtifact,
   },
 
   // Hey! When adding a new error type, update lighthouse-result.proto too.

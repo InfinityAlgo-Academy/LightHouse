@@ -62,6 +62,17 @@ function getFlags(manualArgv) {
           'lighthouse <url> --only-categories=performance,pwa',
           'Only run specific categories.')
 
+      /**
+       * Also accept a file for all of these flags. Yargs will merge in and override the file-based
+       * flags with the command-line flags.
+       *
+       * i.e. when command-line `--throttling-method=provided` and file `throttlingMethod: "devtools"`,
+       * throttlingMethod will be `provided`.
+       *
+       * @see https://github.com/yargs/yargs/blob/a6e67f15a61558d0ba28bfe53385332f0ce5d431/docs/api.md#config
+       */
+      .config('cli-flags-path')
+
       // List of options
       .group(['verbose', 'quiet'], 'Logging:')
       .describe({
@@ -78,6 +89,7 @@ function getFlags(manualArgv) {
         ],
         'Configuration:')
       .describe({
+        'cli-flags-path': 'The path to a JSON file that contains the desired CLI flags to apply. Flags specified at the command line will still override the file-based ones.',
         // We don't allowlist specific locales. Why? So we can support the user who requests 'es-MX' (unsupported) and we'll fall back to 'es' (supported)
         'locale': 'The locale/language the report should be formatted in',
         'enable-error-reporting':

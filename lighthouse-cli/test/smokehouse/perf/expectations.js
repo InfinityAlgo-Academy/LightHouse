@@ -110,7 +110,7 @@ module.exports = [
               {
                 resourceType: 'document',
                 countOverBudget: '1 request',
-                sizeOverBudget: '1100±50',
+                sizeOverBudget: '1150±50',
               },
               {
                 resourceType: 'stylesheet',

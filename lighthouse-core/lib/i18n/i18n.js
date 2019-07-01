@@ -44,18 +44,26 @@ const UIStrings = {
   displayValueByteSavings: 'Potential savings of {wastedBytes, number, bytes}\xa0KB',
   /** Label shown per-audit to show how many milliseconds faster the page load could be if the user implemented the suggestions. The `{wastedMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 140 ms) */
   displayValueMsSavings: 'Potential savings of {wastedMs, number, milliseconds}\xa0ms',
-  /** Label for the URL column in data tables, entries will be the URL of a web resource */
+  /** Label for a column in a data table; entries will be the URL of a web resource */
   columnURL: 'URL',
-  /** Label for the size column in data tables, entries will be the size of a web resource in kilobytes */
+  /** Label for a column in a data table; entries will be the size of a web resource in kilobytes. */
   columnSize: 'Size',
-  /** Label for the TTL column in data tables, entries will be the time to live value of the cache header on a web resource */
+  /** Label for a column in a data table; entries will be the time to live value of the cache header on a web resource. */
   columnCacheTTL: 'Cache TTL',
-  /** Label for the wasted bytes column in data tables, entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions */
+  /** Label for a column in a data table; entries will be the number of kilobytes the user could reduce their page by if they implemented the suggestions. */
   columnWastedBytes: 'Potential Savings',
-  /** Label for the wasted bytes column in data tables, entries will be the number of milliseconds the user could reduce page load by if they implemented the suggestions */
+  /** Label for a column in a data table; entries will be the number of milliseconds the user could reduce page load by if they implemented the suggestions. */
   columnWastedMs: 'Potential Savings',
-  /** Label for the time spent column in data tables, entries will be the number of milliseconds spent during a particular activity */
+  /** Label for a column in a data table; entries will be the number of milliseconds spent during a particular activity. */
   columnTimeSpent: 'Time Spent',
+  /** Label for a column in a data table; entries will be the location of a specific line of code in a file, in the format "line: 102". */
+  columnLocation: 'Location',
+  /** Label for a column in a data table; entries will be types of resources loaded over the network, e.g. "Scripts", "Third-Party", "Stylesheet". */
+  columnResourceType: 'Resource Type',
+  /** Label for a column in a data table; entries will be the number of network requests done by a webpage. */
+  columnRequests: 'Requests',
+  /** Label for a column in a data table; entries will be the number of kilobytes transferred to load a set of files. */
+  columnTransferSize: 'Transfer Size',
   /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page. */
   totalResourceType: 'Total',
   /** Label for a row in a data table; entries will be the total number and byte size of all 'Document' resources loaded by a web page. */
@@ -164,24 +172,28 @@ function _preprocessMessageValues(icuMessage, values) {
 /** @type {Map<string, IcuMessageInstance[]>} */
 const _icuMessageInstanceMap = new Map();
 
+const _ICUMsgNotFoundMsg = 'ICU message not found in destination locale';
 /**
  *
  * @param {LH.Locale} locale
  * @param {string} icuMessageId
- * @param {string} icuMessage
+ * @param {string=} fallbackMessage
  * @param {*} [values]
  * @return {{formattedString: string, icuMessage: string}}
  */
-function _formatIcuMessage(locale, icuMessageId, icuMessage, values) {
+function _formatIcuMessage(locale, icuMessageId, fallbackMessage, values) {
   const localeMessages = LOCALES[locale];
+  if (!localeMessages) throw new Error(`Unsupported locale '${locale}'`);
+
   const localeMessage = localeMessages[icuMessageId] && localeMessages[icuMessageId].message;
   // fallback to the original english message if we couldn't find a message in the specified locale
   // better to have an english message than no message at all, in some number cases it won't even matter
-  const messageForMessageFormat = localeMessage || icuMessage;
+  const messageForMessageFormat = localeMessage || fallbackMessage;
+  if (messageForMessageFormat === undefined) throw new Error(_ICUMsgNotFoundMsg);
   // when using accented english, force the use of a different locale for number formatting
-  const localeForMessageFormat = locale === 'en-XA' ? 'de-DE' : locale;
+  const localeForMessageFormat = (locale === 'en-XA' || locale === 'en-XL') ? 'de-DE' : locale;
   // pre-process values for the message format like KB and milliseconds
-  const valuesForMessageFormat = _preprocessMessageValues(icuMessage, values);
+  const valuesForMessageFormat = _preprocessMessageValues(messageForMessageFormat, values);
 
   const formatter = new MessageFormat(messageForMessageFormat, localeForMessageFormat, formats);
   const formattedString = formatter.format(valuesForMessageFormat);
@@ -210,13 +222,16 @@ function _formatPathAsString(pathInLHR) {
  * @return {LH.I18NRendererStrings}
  */
 function getRendererFormattedStrings(locale) {
-  const icuMessageIds = Object.keys(LOCALES[locale]).filter(f => f.includes('core/report/html/'));
+  const localeMessages = LOCALES[locale];
+  if (!localeMessages) throw new Error(`Unsupported locale '${locale}'`);
+
+  const icuMessageIds = Object.keys(localeMessages).filter(f => f.includes('core/report/html/'));
   /** @type {LH.I18NRendererStrings} */
   const strings = {};
   for (const icuMessageId of icuMessageIds) {
     const [filename, varName] = icuMessageId.split(' | ');
     if (!filename.endsWith('util.js')) throw new Error(`Unexpected message: ${icuMessageId}`);
-    strings[varName] = LOCALES[locale][icuMessageId].message;
+    strings[varName] = localeMessages[icuMessageId].message;
   }
 
   return strings;
@@ -275,6 +290,20 @@ function getFormatted(icuMessageIdOrRawString, locale) {
   }
 
   return icuMessageIdOrRawString;
+}
+
+/**
+ * @param {LH.Locale} locale
+ * @param {string} icuMessageId
+ * @param {*} [values]
+ * @return {string}
+ */
+function getFormattedFromIdAndValues(locale, icuMessageId, values) {
+  const icuMessageIdRegex = /(.* \| .*)$/;
+  if (!icuMessageIdRegex.test(icuMessageId)) throw new Error('This is not an ICU message ID');
+
+  const {formattedString} = _formatIcuMessage(locale, icuMessageId, undefined, values);
+  return formattedString;
 }
 
 /**
@@ -344,11 +373,13 @@ function replaceIcuMessageInstanceIds(inputObject, locale) {
 
 module.exports = {
   _formatPathAsString,
+  _ICUMsgNotFoundMsg,
   UIStrings,
   lookupLocale,
   getRendererFormattedStrings,
   createMessageInstanceIdFn,
   getFormatted,
+  getFormattedFromIdAndValues,
   replaceIcuMessageInstanceIds,
   isIcuMessage,
 };

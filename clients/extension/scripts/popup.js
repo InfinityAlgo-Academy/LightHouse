@@ -13,14 +13,7 @@
  * Lighthouse itself, mapped to more useful strings to report to the user.
  */
 const NON_BUG_ERROR_MESSAGES = {
-  // The user tries to review an error page or has network issues
-  'ERRORED_DOCUMENT_REQUEST': 'Unable to load the page. Please verify the url you ' +
-      'are trying to review.',
-  'FAILED_DOCUMENT_REQUEST': 'Unable to load the page. Please verify the url you ' +
-      'are trying to review.',
   'DNS_FAILURE': 'DNS servers could not resolve the provided domain.',
-  'INSECURE_DOCUMENT_REQUEST': 'The URL you have provided does not have a valid' +
-      ' SSL certificate.',
   'INVALID_URL': 'Lighthouse can only audit URLs that start' +
       ' with http:// or https://.',
 
