@@ -38,6 +38,18 @@ describe('Polyfills', () => {
         code: 'var message = "hello world"; console.log(message);',
         url: 'https://www.example.com/a.js',
       },
+      {
+        code: 'SomeGlobal = function() {}',
+        url: 'https://www.example.com/a.js',
+      },
+      {
+        code: 'SomeClass.prototype.someFn = function() {}',
+        url: 'https://www.example.com/a.js',
+      },
+      {
+        code: 'Object.defineProperty(SomeClass.prototype, "someFn", function() {})',
+        url: 'https://www.example.com/a.js',
+      },
     ]);
     const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 1);
