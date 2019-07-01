@@ -138,9 +138,13 @@ describe('Polyfills', () => {
         code: 'window.CustomEvent = function() {}',
         url: 'https://www.example.com/f.js',
       },
+      {
+        code: 'String.raw = function() {}',
+        url: 'https://www.example.com/f.js',
+      },
     ]);
     const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.extendedInfo.value, 8);
+    assert.equal(result.extendedInfo.value, 9);
   });
 });
