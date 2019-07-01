@@ -14,11 +14,15 @@ const Connection = require('../../../gather/connections/connection.js');
 const SourceMaps = require('../../../gather/gatherers/source-maps.js');
 const {createMockSendCommandFn, createMockOnFn,
   flushAllTimersAndMicrotasks} = require('../mock-driver.js');
-const path = require('path');
-const fs = require('fs');
-const pathToMap = path.join(__dirname,
-  '../../../../lighthouse-cli/test/fixtures/source-maps/bundle.js.map');
-const map = fs.readFileSync(pathToMap, 'utf-8');
+
+const mapJson = JSON.stringify({
+  version: 3,
+  file: 'out.js',
+  sourceRoot: '',
+  sources: ['foo.js', 'bar.js'],
+  names: ['src', 'maps', 'are', 'fun'],
+  mappings: 'AAgBC,SAAQ,CAAEA',
+});
 
 describe('SourceMaps gatherer', () => {
   /**
@@ -84,7 +88,7 @@ describe('SourceMaps gatherer', () => {
           url: 'http://www.example.com/bundle.js',
           sourceMapURL: 'http://www.example.com/bundle.js.map',
         },
-        map,
+        map: mapJson,
       },
     ];
     const result = await getResults(mapsAndEvents);
