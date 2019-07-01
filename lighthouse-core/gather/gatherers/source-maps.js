@@ -111,9 +111,8 @@ class SourceMaps extends Gatherer {
         sourceMapOrError = {errorMessage: err.toString()};
       }
 
-      const scriptUrl = event.url;
       sourceMaps.push({
-        scriptUrl,
+        scriptUrl: event.url,
         ...sourceMapOrError,
       });
     }
