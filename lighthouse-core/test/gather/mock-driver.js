@@ -5,6 +5,10 @@
  */
 'use strict';
 
+/**
+ * @fileoverview Refer to driver-test.js and source-maps-test.js for intended usage.
+ */
+
 /* eslint-env jest */
 
 /**
