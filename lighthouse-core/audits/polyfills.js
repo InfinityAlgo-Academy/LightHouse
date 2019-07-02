@@ -113,7 +113,7 @@ class Polyfills extends Audit {
     // If latest Chrome supports a feature natively, we should
     // complain about the existence of a polyfill.
     // list sourced from a couple places. not exhaustive.
-    // from babel-polyfill: https://gist.github.com/Hoten/1b019f7caf1c31b49596e7628145eb3f
+    // from babel-polyfill: https://gist.github.com/connorjclark/1b019f7caf1c31b49596e7628145eb3f
     // casual perusal of https://developer.mozilla.org/en-US/docs/Web/API
 
     return [
