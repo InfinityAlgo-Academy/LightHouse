@@ -70,15 +70,12 @@ class Runner {
           throw new Error('Cannot run audit mode on different URL');
         }
       } else {
-        if (typeof runOpts.url !== 'string' || runOpts.url.length === 0) {
-          throw new Error(`You must provide a url to the runner. '${runOpts.url}' provided.`);
-        }
-
-        try {
+        // verify the url is valid and that protocol is allowed
+        if (runOpts.url && URL.isValid(runOpts.url) && URL.isProtocolAllowed(runOpts.url)) {
           // Use canonicalized URL (with trailing slashes and such)
           requestedUrl = new URL(runOpts.url).href;
-        } catch (e) {
-          throw new Error('The url provided should have a proper protocol and hostname.');
+        } else {
+          throw new LHError(LHError.errors.INVALID_URL);
         }
 
         artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection);
