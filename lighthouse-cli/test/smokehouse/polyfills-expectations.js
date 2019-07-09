@@ -10,11 +10,20 @@
  */
 module.exports = [
   {
-    requestedUrl: 'http://localhost:10200/polyfills.html',
-    finalUrl: 'http://localhost:10200/polyfills.html',
-    audits: {
-      'polyfills': {
-        rawValue: 62, // 61 are from babel-polyfill
+    lhr: {
+      requestedUrl: 'http://localhost:10200/polyfills.html',
+      finalUrl: 'http://localhost:10200/polyfills.html',
+      audits: {
+        'polyfills': {
+          details: {
+            items: {
+              // 61 are from babel-polyfill
+              // 1 from fixtures/polyfills.js
+              // 1 inline from fixtures/polyfills.html
+              length: 63,
+            },
+          },
+        },
       },
     },
   },
