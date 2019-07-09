@@ -53,7 +53,7 @@ class Polyfills extends Audit {
       subpattern += `|${object || ''}\\[${qt(property)}\\]\\s*=`;
 
       // Object.defineProperty(String.prototype, 'startsWith'
-      subpattern += `|defineProperty\\(${object || qt('window')},\\s*${qt(property)}`;
+      subpattern += `|defineProperty\\(${object || 'window'},\\s*${qt(property)}`;
 
       if (object) {
         const objectWithoutPrototype = object.replace('.prototype', '');
