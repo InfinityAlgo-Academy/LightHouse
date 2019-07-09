@@ -127,9 +127,6 @@ Object {
       "path": "offline-start-url",
     },
     Object {
-      "path": "polyfills",
-    },
-    Object {
       "path": "performance-budget",
     },
     Object {
@@ -137,6 +134,9 @@ Object {
     },
     Object {
       "path": "third-party-summary",
+    },
+    Object {
+      "path": "polyfills",
     },
     Object {
       "path": "manual/pwa-cross-browser",
