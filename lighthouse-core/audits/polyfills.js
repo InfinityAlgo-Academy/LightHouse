@@ -60,7 +60,7 @@ class Polyfills extends Audit {
         // e(e.S,"Object",{values
         // minified pattern found in babel-polyfill
         // see https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js
-        subpattern += `|;e\\([^,]*,${qt(objectWithoutPrototype)},{${property}`;
+        subpattern += `|;e\\([^,]+,${qt(objectWithoutPrototype)},{${property}`;
       }
 
       return `(${subpattern})`;
