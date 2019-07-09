@@ -270,7 +270,6 @@ class Polyfills extends Audit {
         tableRows.push({
           url,
           description: `${polyStatement}${countText}`,
-          // TODO use sourcemaps
           location: `Ln: ${line}, Col: ${col}`,
         });
       }
@@ -280,7 +279,6 @@ class Polyfills extends Audit {
       {key: 'url', itemType: 'url', text: 'URL'},
       {key: 'description', itemType: 'code', text: 'Description'},
       {key: 'location', itemType: 'code', text: 'Location'},
-      // TODO include estimate for size based on https://www.npmjs.com/package/mdn-polyfills#supported-polyfills ?
     ];
     const details = Audit.makeTableDetails(headings, tableRows);
 
