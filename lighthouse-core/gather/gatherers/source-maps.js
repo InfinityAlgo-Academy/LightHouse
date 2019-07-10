@@ -47,14 +47,16 @@ class SourceMaps extends Gatherer {
   async fetchSourceMapInPage(driver, sourceMapUrl) {
     driver.setNextProtocolTimeout(250);
     /** @type {string|{errorMessage: string}} */
-    const sourceMapJson =
+    const sourceMapJsonOrError =
       await driver.evaluateAsync(`(${fetchSourceMap})(${JSON.stringify(sourceMapUrl)})`);
 
-    if (typeof sourceMapJson === 'object') {
-      return sourceMapJson;
+    // If object, then an error occurred.
+    if (typeof sourceMapJsonOrError === 'object') {
+      return sourceMapJsonOrError;
     }
 
-    return {map: JSON.parse(sourceMapJson)};
+    // Map was returned as JSON. See `fetchSourceMap` for why.
+    return {map: JSON.parse(sourceMapJsonOrError)};
   }
 
   /**

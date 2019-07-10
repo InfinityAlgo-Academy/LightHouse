@@ -238,10 +238,14 @@ declare global {
        * parsing the map, errorMessage will be defined instead of map.
        */
       export type SourceMap = {
+        /** URL of code that source map applies to. */
         scriptUrl: string
+        /** Source map data structure. */
         map: RawSourceMap
       } | {
+        /** URL of code that source map applies to. */
         scriptUrl: string
+        /** Error that occurred during fetching or parsing of source map. */
         errorMessage: string
       }
 
