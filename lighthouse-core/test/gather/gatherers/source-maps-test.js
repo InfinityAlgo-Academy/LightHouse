@@ -12,8 +12,7 @@ jest.useFakeTimers();
 const Driver = require('../../../gather/driver.js');
 const Connection = require('../../../gather/connections/connection.js');
 const SourceMaps = require('../../../gather/gatherers/source-maps.js');
-const {createMockSendCommandFn, createMockOnFn,
-  flushAllTimersAndMicrotasks} = require('../mock-driver.js');
+const {createMockSendCommandFn, createMockOnFn} = require('../mock-commands.js');
 
 const mapJson = JSON.stringify({
   version: 3,
@@ -58,10 +57,10 @@ describe('SourceMaps gatherer', () => {
     const driver = new Driver(connectionStub);
     driver.on = onMock;
 
-    const gatherer = new SourceMaps();
-    await gatherer.beforePass({driver});
-    await flushAllTimersAndMicrotasks();
-    return gatherer.afterPass({driver});
+    const sourceMaps = new SourceMaps();
+    await sourceMaps.beforePass({driver});
+    jest.advanceTimersByTime(1);
+    return sourceMaps.afterPass({driver});
   }
 
   function makeJsonDataUrl(data) {

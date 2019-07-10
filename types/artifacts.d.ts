@@ -69,8 +69,6 @@ declare global {
       RuntimeExceptions: Crdp.Runtime.ExceptionThrownEvent[];
       /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
       ScriptElements: Array<Artifacts.ScriptElement>;
-      /** Source maps of scripts executed in the page. */
-      SourceMaps: Array<Artifacts.SourceMap>;
       /** The dimensions and devicePixelRatio of the loaded viewport. */
       ViewportDimensions: Artifacts.ViewportDimensions;
     }
@@ -123,6 +121,8 @@ declare global {
       RobotsTxt: {status: number|null, content: string|null};
       /** Version information for all ServiceWorkers active after the first page load. */
       ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: Crdp.ServiceWorker.ServiceWorkerRegistration[]};
+      /** Source maps of scripts executed in the page. */
+      SourceMaps: Array<Artifacts.SourceMap>;
       /** The status of an offline fetch of the page's start_url. -1 and a explanation if missing or there was an error. */
       StartUrl: {statusCode: number, explanation?: string};
       /** Information on <script> and <link> tags blocking first paint. */

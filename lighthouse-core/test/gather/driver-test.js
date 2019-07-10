@@ -11,7 +11,7 @@ const Element = require('../../lib/element.js');
 const EventEmitter = require('events').EventEmitter;
 const {protocolGetVersionResponse} = require('./fake-driver.js');
 const {createMockSendCommandFn, createMockOnceFn,
-  flushAllTimersAndMicrotasks} = require('./mock-driver.js');
+  flushAllTimersAndMicrotasks} = require('./mock-commands.js');
 
 const redirectDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
 
