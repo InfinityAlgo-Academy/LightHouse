@@ -217,9 +217,9 @@ declare global {
 
       /** @see https://sourcemaps.info/spec.html#h.qz3o9nc69um5 */
       export type RawSourceMap = {
-        /** File version (always the first entry in the object) and must be a positive integer. */
+        /** File version and must be a positive integer. */
         version: number
-        /** A list of original sources used by the “mappings” entry. */
+        /** A list of original source files used by the “mappings” entry. */
         sources: string[]
         /** A list of symbol names used by the “mappings” entry. */
         names: string[]
