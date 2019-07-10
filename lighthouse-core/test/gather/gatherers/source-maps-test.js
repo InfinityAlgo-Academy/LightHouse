@@ -67,7 +67,7 @@ describe('SourceMaps gatherer', () => {
     return 'data:application/json;charset=utf-8;base64,' + Buffer.from(data).toString('base64');
   }
 
-  it('script with no source map url is ignored', async () => {
+  it('ignores script with no source map url', async () => {
     const result = await getResults([
       {
         event: {
@@ -80,7 +80,7 @@ describe('SourceMaps gatherer', () => {
     expect(result).toEqual([]);
   });
 
-  it('map is fetched for script with source map url', async () => {
+  it('fetches map for script with source map url', async () => {
     const mapsAndEvents = [
       {
         event: {
@@ -99,7 +99,7 @@ describe('SourceMaps gatherer', () => {
     ]);
   });
 
-  it('map that fails to fetch generates an error message', async () => {
+  it('fails to fetch map that generates an error message', async () => {
     const mapsAndEvents = [
       {
         event: {
@@ -119,7 +119,7 @@ describe('SourceMaps gatherer', () => {
     ]);
   });
 
-  it('map that fails to parse generates an error message', async () => {
+  it('fails to parse map that generates an error message', async () => {
     const mapsAndEvents = [
       {
         event: {
