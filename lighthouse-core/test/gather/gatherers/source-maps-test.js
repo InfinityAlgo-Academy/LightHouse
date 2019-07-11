@@ -25,20 +25,19 @@ const mapJson = JSON.stringify({
 
 describe('SourceMaps gatherer', () => {
   /**
-   * @param {{event: LH.Crdp.Debugger.ScriptParsedEvent, map: string, fetchError: string}} mapsAndEvents
+   * @param {Array<{event: LH.Crdp.Debugger.ScriptParsedEvent, map: string, fetchError: string}>} mapsAndEvents
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
-  async function getResults(mapsAndEvents) {
+  async function runSourceMaps(mapsAndEvents) {
     const onMock = createMockOnFn();
-    for (const {event} of mapsAndEvents) {
-      onMock.mockEvent('Debugger.scriptParsed', event);
-    }
 
     const sendCommandMock = createMockSendCommandFn()
       .mockResponse('Debugger.enable', {})
       .mockResponse('Debugger.disable', {});
 
     for (const {map, event, fetchError} of mapsAndEvents) {
+      onMock.mockEvent('protocolevent', {method: 'Debugger.scriptParsed', params: event});
+
       if (event.sourceMapURL.startsWith('data:')) {
         // Only the source maps that need to be fetched use the `evaluateAsync` code path.
         continue;
@@ -53,9 +52,9 @@ describe('SourceMaps gatherer', () => {
     }
     const connectionStub = new Connection();
     connectionStub.sendCommand = sendCommandMock;
+    connectionStub.on = onMock;
 
     const driver = new Driver(connectionStub);
-    driver.on = onMock;
 
     const sourceMaps = new SourceMaps();
     await sourceMaps.beforePass({driver});
@@ -68,7 +67,7 @@ describe('SourceMaps gatherer', () => {
   }
 
   it('ignores script with no source map url', async () => {
-    const result = await getResults([
+    const artifact = await runSourceMaps([
       {
         event: {
           url: 'http://www.example.com/script.js',
@@ -77,7 +76,7 @@ describe('SourceMaps gatherer', () => {
         map: null,
       },
     ]);
-    expect(result).toEqual([]);
+    expect(artifact).toEqual([]);
   });
 
   it('fetches map for script with source map url', async () => {
@@ -90,8 +89,8 @@ describe('SourceMaps gatherer', () => {
         map: mapJson,
       },
     ];
-    const result = await getResults(mapsAndEvents);
-    expect(result).toEqual([
+    const artifact = await runSourceMaps(mapsAndEvents);
+    expect(artifact).toEqual([
       {
         scriptUrl: mapsAndEvents[0].event.url,
         map: JSON.parse(mapsAndEvents[0].map),
@@ -109,8 +108,8 @@ describe('SourceMaps gatherer', () => {
         fetchError: 'TypeError: Failed to fetch',
       },
     ];
-    const result = await getResults(mapsAndEvents);
-    expect(result).toEqual([
+    const artifact = await runSourceMaps(mapsAndEvents);
+    expect(artifact).toEqual([
       {
         scriptUrl: mapsAndEvents[0].event.url,
         errorMessage: 'TypeError: Failed to fetch',
@@ -135,8 +134,8 @@ describe('SourceMaps gatherer', () => {
         },
       },
     ];
-    const result = await getResults(mapsAndEvents);
-    expect(result).toEqual([
+    const artifact = await runSourceMaps(mapsAndEvents);
+    expect(artifact).toEqual([
       {
         scriptUrl: mapsAndEvents[0].event.url,
         errorMessage: 'SyntaxError: Unexpected token { in JSON at position 1',
