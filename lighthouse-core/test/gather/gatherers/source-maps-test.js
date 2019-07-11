@@ -35,7 +35,7 @@ describe('SourceMaps gatherer', () => {
       .mockResponse('Debugger.enable', {})
       .mockResponse('Debugger.disable', {});
 
-    for (const {map, event, fetchError} of mapsAndEvents) {
+    for (const {map, event, fetchError, resolvedSourceMapUrl} of mapsAndEvents) {
       onMock.mockEvent('protocolevent', {method: 'Debugger.scriptParsed', params: event});
 
       if (event.sourceMapURL.startsWith('data:')) {
@@ -48,7 +48,14 @@ describe('SourceMaps gatherer', () => {
       }
 
       const value = fetchError ? {errorMessage: fetchError} : map;
-      sendCommandMock.mockResponse('Runtime.evaluate', {result: {value}});
+      sendCommandMock.mockResponse('Runtime.evaluate', {result: {value}}, undefined, ({expression}) => {
+        // Check that the source map url was resolved correctly.
+        // If the test did not define `resolvedSourceMapUrl` explicitly, then use `event.sourceMapURL`.
+        const expectedResolvedSourceMapUrl = resolvedSourceMapUrl || event.sourceMapURL;
+        if (!expression.includes(expectedResolvedSourceMapUrl)) {
+          throw new Error(`did not request expected url: ${expectedResolvedSourceMapUrl}`);
+        }
+      });
     }
     const connectionStub = new Connection();
     connectionStub.sendCommand = sendCommandMock;
@@ -94,6 +101,49 @@ describe('SourceMaps gatherer', () => {
       {
         scriptUrl: mapsAndEvents[0].event.url,
         map: JSON.parse(mapsAndEvents[0].map),
+      },
+    ]);
+  });
+
+  it('fetches map for script with relative source map url', async () => {
+    const mapsAndEvents = [
+      {
+        event: {
+          url: 'http://www.example.com/path/bundle.js',
+          sourceMapURL: 'bundle.js.map',
+        },
+        map: mapJson,
+        resolvedSourceMapUrl: 'http://www.example.com/path/bundle.js.map',
+      },
+      {
+        event: {
+          url: 'http://www.example.com/path/bundle.js',
+          sourceMapURL: '../bundle.js.map',
+        },
+        map: mapJson,
+        resolvedSourceMapUrl: 'http://www.example.com/bundle.js.map',
+      },
+      {
+        event: {
+          url: 'http://www.example.com/path/bundle.js',
+          sourceMapURL: 'http://www.example-2.com/path/bundle.js',
+        },
+        map: mapJson,
+      },
+    ];
+    const artifacts = await runSourceMaps(mapsAndEvents);
+    expect(artifacts).toEqual([
+      {
+        scriptUrl: mapsAndEvents[0].event.url,
+        map: JSON.parse(mapsAndEvents[0].map),
+      },
+      {
+        scriptUrl: mapsAndEvents[1].event.url,
+        map: JSON.parse(mapsAndEvents[1].map),
+      },
+      {
+        scriptUrl: mapsAndEvents[2].event.url,
+        map: JSON.parse(mapsAndEvents[2].map),
       },
     ]);
   });

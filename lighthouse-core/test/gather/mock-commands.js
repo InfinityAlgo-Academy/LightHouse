@@ -22,17 +22,18 @@
  */
 function createMockSendCommandFn() {
   const mockResponses = [];
-  const mockFn = jest.fn().mockImplementation(command => {
+  const mockFn = jest.fn().mockImplementation((command, ...args) => {
     const indexOfResponse = mockResponses.findIndex(entry => entry.command === command);
     if (indexOfResponse === -1) throw new Error(`${command} unimplemented`);
-    const {response, delay} = mockResponses[indexOfResponse];
+    const {response, delay, testArgs} = mockResponses[indexOfResponse];
     mockResponses.splice(indexOfResponse, 1);
+    testArgs && testArgs(...args);
     if (delay) return new Promise(resolve => setTimeout(() => resolve(response), delay));
     return Promise.resolve(response);
   });
 
-  mockFn.mockResponse = (command, response, delay) => {
-    mockResponses.push({command, response, delay});
+  mockFn.mockResponse = (command, response, delay, testArgs) => {
+    mockResponses.push({command, response, delay, testArgs});
     return mockFn;
   };
 
