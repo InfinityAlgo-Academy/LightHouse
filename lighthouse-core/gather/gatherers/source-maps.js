@@ -102,6 +102,8 @@ class SourceMaps extends Gatherer {
     /** @type {LH.Artifacts.SourceMap[]} */
     const sourceMaps = [];
     for (const event of this._scriptParsedEvents) {
+      // `sourceMapURL` is simply the URL found in either a magic comment or an x-sourcemap header.
+      // It has not been resolved to a base url.
       const sourceMapURL = event.sourceMapURL;
       if (!sourceMapURL) continue;
 
