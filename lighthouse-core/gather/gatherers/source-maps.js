@@ -7,6 +7,7 @@
 
 /** @typedef {import('../driver.js')} Driver */
 
+const log = require('lighthouse-logger');
 const Gatherer = require('./gatherer.js');
 
 /**
@@ -45,7 +46,7 @@ class SourceMaps extends Gatherer {
    * @return {Promise<{map: LH.Artifacts.RawSourceMap} | {errorMessage: string}>}
    */
   async fetchSourceMapInPage(driver, sourceMapUrl) {
-    driver.setNextProtocolTimeout(250);
+    driver.setNextProtocolTimeout(1000);
     /** @type {string|{errorMessage: string}} */
     const sourceMapJsonOrError =
       await driver.evaluateAsync(`(${fetchSourceMap})(${JSON.stringify(sourceMapUrl)})`);
@@ -104,12 +105,14 @@ class SourceMaps extends Gatherer {
       const sourceMapURL = event.sourceMapURL;
       if (!sourceMapURL) continue;
 
+      log.log('SourceMaps', event.url, sourceMapURL.startsWith('data:') ? 'data:...' : sourceMapURL);
       let sourceMapOrError;
       try {
         sourceMapOrError = sourceMapURL.startsWith('data:') ?
           this.parseSourceMapFromDataUrl(sourceMapURL) :
           await this.fetchSourceMapInPage(driver, sourceMapURL);
       } catch (err) {
+        log.log('SourceMaps', event.url, err.toString());
         sourceMapOrError = {errorMessage: err.toString()};
       }
 
