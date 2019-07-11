@@ -90,6 +90,18 @@ class SourceMaps extends Gatherer {
   }
 
   /**
+   * @param {string} url
+   * @param {string} base
+   */
+  _resolveUrl(url, base) {
+    try {
+      return new URL(url, base).href;
+    } catch (e) {
+      return url;
+    }
+  }
+
+  /**
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
@@ -102,10 +114,13 @@ class SourceMaps extends Gatherer {
     /** @type {LH.Artifacts.SourceMap[]} */
     const sourceMaps = [];
     for (const event of this._scriptParsedEvents) {
+      if (!event.sourceMapURL) continue;
+
       // `sourceMapURL` is simply the URL found in either a magic comment or an x-sourcemap header.
       // It has not been resolved to a base url.
-      const sourceMapURL = event.sourceMapURL;
-      if (!sourceMapURL) continue;
+      const sourceMapURL = event.sourceMapURL.startsWith('data:') ?
+        event.sourceMapURL :
+        this._resolveUrl(event.sourceMapURL, event.url);
 
       log.log('SourceMaps', event.url, sourceMapURL.startsWith('data:') ? 'data:...' : sourceMapURL);
       let sourceMapOrError;
