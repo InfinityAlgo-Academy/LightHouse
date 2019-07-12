@@ -24,7 +24,11 @@ async function fetchSourceMap(url) {
   try {
     // eslint-disable-next-line no-undef
     const response = await fetch(url);
-    return response.text();
+    if (response.ok) {
+      return response.text();
+    } else {
+      return {errorMessage: `Received status code ${response.status} for ${url}`};
+    }
   } catch (err) {
     return {errorMessage: err.toString()};
   }
