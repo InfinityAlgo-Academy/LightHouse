@@ -17,20 +17,16 @@ const URL = require('../../lib/url-shim.js');
  * be huge.
  *
  * @param {string} url
- * @return {Promise<string|{errorMessage: string}>}
+ * @return {Promise<string>}
  */
 /* istanbul ignore next */
 async function fetchSourceMap(url) {
-  try {
-    // eslint-disable-next-line no-undef
-    const response = await fetch(url);
-    if (response.ok) {
-      return response.text();
-    } else {
-      return {errorMessage: `Received status code ${response.status} for ${url}`};
-    }
-  } catch (err) {
-    return {errorMessage: err.toString()};
+  // eslint-disable-next-line no-undef
+  const response = await fetch(url);
+  if (response.ok) {
+    return response.text();
+  } else {
+    throw new Error(`Received status code ${response.status} for ${url}`);
   }
 }
 
@@ -52,17 +48,14 @@ class SourceMaps extends Gatherer {
    */
   async fetchSourceMapInPage(driver, sourceMapUrl) {
     driver.setNextProtocolTimeout(1000);
-    /** @type {string|{errorMessage: string}} */
-    const sourceMapJsonOrError =
-      await driver.evaluateAsync(`(${fetchSourceMap})(${JSON.stringify(sourceMapUrl)})`);
-
-    // If object, then an error occurred.
-    if (typeof sourceMapJsonOrError === 'object') {
-      return sourceMapJsonOrError;
+    try {
+      /** @type {string} */
+      const sourceMapJson =
+        await driver.evaluateAsync(`(${fetchSourceMap})(${JSON.stringify(sourceMapUrl)})`);
+      return {map: JSON.parse(sourceMapJson)};
+    } catch (err) {
+      return {errorMessage: err.toString()};
     }
-
-    // Map was returned as JSON. See `fetchSourceMap` for why.
-    return {map: JSON.parse(sourceMapJsonOrError)};
   }
 
   /**

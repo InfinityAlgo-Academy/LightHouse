@@ -47,11 +47,13 @@ describe('SourceMaps gatherer', () => {
         throw new Error('should only define map or fetchError, not both.');
       }
 
-      const value = fetchError ? {errorMessage: fetchError} : map;
+      const value = fetchError ?
+        Object.assign(new Error(), {message: fetchError, __failedInBrowser: true}) :
+        map;
       sendCommandMock.mockResponse('Runtime.evaluate', {result: {value}}, undefined,
         ({expression}) => {
-        // Check that the source map url was resolved correctly.
-        // If the test did not define `resolvedSourceMapUrl` explicitly, then use `event.sourceMapURL`.
+          // Check that the source map url was resolved correctly.
+          // If the test did not define `resolvedSourceMapUrl` explicitly, then use `event.sourceMapURL`.
           const expectedResolvedSourceMapUrl = resolvedSourceMapUrl || event.sourceMapURL;
           if (!expression.includes(expectedResolvedSourceMapUrl)) {
             throw new Error(`did not request expected url: ${expectedResolvedSourceMapUrl}`);
@@ -156,14 +158,14 @@ describe('SourceMaps gatherer', () => {
           url: 'http://www.example.com/bundle.js',
           sourceMapURL: 'http://www.example.com/bundle.js.map',
         },
-        fetchError: 'TypeError: Failed to fetch',
+        fetchError: 'Failed fetching source map',
       },
     ];
     const artifact = await runSourceMaps(mapsAndEvents);
     expect(artifact).toEqual([
       {
         scriptUrl: mapsAndEvents[0].event.url,
-        errorMessage: 'TypeError: Failed to fetch',
+        errorMessage: 'Error: Failed fetching source map',
         map: undefined,
       },
     ]);
