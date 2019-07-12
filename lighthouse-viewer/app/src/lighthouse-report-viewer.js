@@ -276,6 +276,7 @@ class LighthouseReportViewer {
    * @private
    */
   _onPaste(e) {
+    if (!e.clipboardData) return;
     e.preventDefault();
 
     // Try paste as gist URL.

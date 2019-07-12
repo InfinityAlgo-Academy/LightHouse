@@ -130,7 +130,7 @@
     "prettier": "^1.14.3",
     "pretty-json-stringify": "^0.0.2",
     "puppeteer": "^1.10.0",
-    "typescript": "3.2.2",
+    "typescript": "3.5.3",
     "uglify-es": "3.0.15",
     "url-search-params": "0.6.1",
     "whatwg-fetch": "2.0.1",
