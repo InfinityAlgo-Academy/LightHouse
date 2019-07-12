@@ -48,14 +48,15 @@ describe('SourceMaps gatherer', () => {
       }
 
       const value = fetchError ? {errorMessage: fetchError} : map;
-      sendCommandMock.mockResponse('Runtime.evaluate', {result: {value}}, undefined, ({expression}) => {
+      sendCommandMock.mockResponse('Runtime.evaluate', {result: {value}}, undefined,
+        ({expression}) => {
         // Check that the source map url was resolved correctly.
         // If the test did not define `resolvedSourceMapUrl` explicitly, then use `event.sourceMapURL`.
-        const expectedResolvedSourceMapUrl = resolvedSourceMapUrl || event.sourceMapURL;
-        if (!expression.includes(expectedResolvedSourceMapUrl)) {
-          throw new Error(`did not request expected url: ${expectedResolvedSourceMapUrl}`);
-        }
-      });
+          const expectedResolvedSourceMapUrl = resolvedSourceMapUrl || event.sourceMapURL;
+          if (!expression.includes(expectedResolvedSourceMapUrl)) {
+            throw new Error(`did not request expected url: ${expectedResolvedSourceMapUrl}`);
+          }
+        });
     }
     const connectionStub = new Connection();
     connectionStub.sendCommand = sendCommandMock;

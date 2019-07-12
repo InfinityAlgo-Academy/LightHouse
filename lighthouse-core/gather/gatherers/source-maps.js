@@ -123,7 +123,8 @@ class SourceMaps extends Gatherer {
         event.sourceMapURL :
         this._resolveUrl(event.sourceMapURL, event.url);
 
-      log.log('SourceMaps', event.url, sourceMapURL.startsWith('data:') ? 'data:...' : sourceMapURL);
+      log.log('SourceMaps',
+        event.url, sourceMapURL.startsWith('data:') ? 'data:...' : sourceMapURL);
       let sourceMapOrError;
       try {
         sourceMapOrError = sourceMapURL.startsWith('data:') ?
