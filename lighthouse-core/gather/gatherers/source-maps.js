@@ -9,6 +9,7 @@
 
 const log = require('lighthouse-logger');
 const Gatherer = require('./gatherer.js');
+const URL = require('../../lib/url-shim.js');
 
 /**
  * This function is careful not to parse the response as JSON, as it will
