@@ -47,7 +47,7 @@ class SourceMaps extends Gatherer {
    * @return {Promise<{map: LH.Artifacts.RawSourceMap} | {errorMessage: string}>}
    */
   async fetchSourceMapInPage(driver, sourceMapUrl) {
-    driver.setNextProtocolTimeout(1000);
+    driver.setNextProtocolTimeout(1500);
     try {
       /** @type {string} */
       const sourceMapJson =
@@ -100,6 +100,44 @@ class SourceMaps extends Gatherer {
   }
 
   /**
+   * @param {Driver} driver
+   * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
+   * @return {Promise<LH.Artifacts.SourceMap>}
+   */
+  async _processEvent(driver, event) {
+    if (!event.sourceMapURL) {
+      throw new Error('failed precondition: expected `event.sourceMapURL` to exist');
+    }
+
+
+    // `sourceMapURL` is simply the URL found in either a magic comment or an x-sourcemap header.
+    // It has not been resolved to a base url.
+    const sourceMapURL = event.sourceMapURL.startsWith('data:') ?
+        event.sourceMapURL :
+        this._resolveUrl(event.sourceMapURL, event.url);
+
+    log.log('SourceMaps',
+        event.url, sourceMapURL.startsWith('data:') ? 'data:...' : sourceMapURL);
+    let sourceMapOrError;
+    try {
+      sourceMapOrError = sourceMapURL.startsWith('data:') ?
+        this.parseSourceMapFromDataUrl(sourceMapURL) :
+        await this.fetchSourceMapInPage(driver, sourceMapURL);
+    } catch (err) {
+      sourceMapOrError = {errorMessage: err.toString()};
+    }
+
+    if ('errorMessage' in sourceMapOrError) {
+      log.log('SourceMaps', event.url, sourceMapOrError.errorMessage);
+    }
+
+    return {
+      scriptUrl: event.url,
+      ...sourceMapOrError,
+    };
+  }
+
+  /**
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
@@ -109,39 +147,11 @@ class SourceMaps extends Gatherer {
     driver.off('Debugger.scriptParsed', this.onScriptParsed);
     await driver.sendCommand('Debugger.disable');
 
-    /** @type {LH.Artifacts.SourceMap[]} */
-    const sourceMaps = [];
-    for (const event of this._scriptParsedEvents) {
-      if (!event.sourceMapURL) continue;
 
-      // `sourceMapURL` is simply the URL found in either a magic comment or an x-sourcemap header.
-      // It has not been resolved to a base url.
-      const sourceMapURL = event.sourceMapURL.startsWith('data:') ?
-        event.sourceMapURL :
-        this._resolveUrl(event.sourceMapURL, event.url);
-
-      log.log('SourceMaps',
-        event.url, sourceMapURL.startsWith('data:') ? 'data:...' : sourceMapURL);
-      let sourceMapOrError;
-      try {
-        sourceMapOrError = sourceMapURL.startsWith('data:') ?
-          this.parseSourceMapFromDataUrl(sourceMapURL) :
-          await this.fetchSourceMapInPage(driver, sourceMapURL);
-      } catch (err) {
-        sourceMapOrError = {errorMessage: err.toString()};
-      }
-
-      if ('errorMessage' in sourceMapOrError) {
-        log.log('SourceMaps', event.url, sourceMapOrError.errorMessage);
-      }
-
-      sourceMaps.push({
-        scriptUrl: event.url,
-        ...sourceMapOrError,
-      });
-    }
-
-    return sourceMaps;
+    const eventProcessPromises = this._scriptParsedEvents
+      .filter((event) => event.sourceMapURL)
+      .map((event) => this._processEvent(driver, event));
+    return [...await Promise.all(eventProcessPromises)];
   }
 }
 
