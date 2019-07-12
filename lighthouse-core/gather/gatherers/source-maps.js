@@ -128,8 +128,11 @@ class SourceMaps extends Gatherer {
           this.parseSourceMapFromDataUrl(sourceMapURL) :
           await this.fetchSourceMapInPage(driver, sourceMapURL);
       } catch (err) {
-        log.log('SourceMaps', event.url, err.toString());
         sourceMapOrError = {errorMessage: err.toString()};
+      }
+
+      if ('errorMessage' in sourceMapOrError) {
+        log.log('SourceMaps', event.url, sourceMapOrError.errorMessage);
       }
 
       sourceMaps.push({
