@@ -20,7 +20,7 @@ install:
   # with the latest puppeteer api so we probably need to run on chromimum
   # @see https://github.com/GoogleChrome/lighthouse/pull/4640/files#r171425004
   - export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
-  - yarn
+  - yarn --frozen-lockfile
 before_script:
   - export DISPLAY=:99.0
   # see comment above about puppeteer
