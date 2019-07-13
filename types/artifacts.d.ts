@@ -222,7 +222,7 @@ declare global {
         /** A list of original source files used by the `mappings` entry. */
         sources: string[]
         /** A list of symbol names used by the `mappings` entry. */
-        names: string[]
+        names?: string[]
         /** An optional source root, useful for relocating source files on a server or removing repeated values in the `sources` entry. This value is prepended to the individual entries in the `source` field. */
         sourceRoot?: string
         /** An optional list of source content, useful when the `source` can’t be hosted. The contents are listed in the same order as the sources in line 5. `null` may be used if some original sources should be retrieved by name. */
