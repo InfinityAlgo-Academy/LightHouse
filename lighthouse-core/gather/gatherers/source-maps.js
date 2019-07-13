@@ -44,29 +44,23 @@ class SourceMaps extends Gatherer {
   /**
    * @param {Driver} driver
    * @param {string} sourceMapUrl
-   * @return {Promise<{map: LH.Artifacts.RawSourceMap} | {errorMessage: string}>}
+   * @return {Promise<LH.Artifacts.RawSourceMap>}
    */
   async fetchSourceMapInPage(driver, sourceMapUrl) {
     driver.setNextProtocolTimeout(1500);
-    try {
-      /** @type {string} */
-      const sourceMapJson =
-        await driver.evaluateAsync(`(${fetchSourceMap})(${JSON.stringify(sourceMapUrl)})`);
-      return {map: JSON.parse(sourceMapJson)};
-    } catch (err) {
-      return {errorMessage: err.toString()};
-    }
+    /** @type {string} */
+    const sourceMapJson =
+      await driver.evaluateAsync(`(${fetchSourceMap})(${JSON.stringify(sourceMapUrl)})`);
+    return JSON.parse(sourceMapJson);
   }
 
   /**
    * @param {string} sourceMapURL
-   * @return {{map: LH.Artifacts.RawSourceMap}}
+   * @return {LH.Artifacts.RawSourceMap}
    */
   parseSourceMapFromDataUrl(sourceMapURL) {
     const buffer = Buffer.from(sourceMapURL.split(',')[1], 'base64');
-    return {
-      map: JSON.parse(buffer.toString()),
-    };
+    return JSON.parse(buffer.toString());
   }
 
   /**
@@ -120,9 +114,10 @@ class SourceMaps extends Gatherer {
         event.url, sourceMapUrl.startsWith('data:') ? 'data:...' : sourceMapUrl);
     let sourceMapOrError;
     try {
-      sourceMapOrError = sourceMapUrl.startsWith('data:') ?
+      const map = sourceMapUrl.startsWith('data:') ?
         this.parseSourceMapFromDataUrl(sourceMapUrl) :
         await this.fetchSourceMapInPage(driver, sourceMapUrl);
+      sourceMapOrError = {map};
     } catch (err) {
       sourceMapOrError = {errorMessage: err.toString()};
     }
