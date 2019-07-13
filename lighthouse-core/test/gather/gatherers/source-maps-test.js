@@ -103,6 +103,7 @@ describe('SourceMaps gatherer', () => {
     expect(artifact).toEqual([
       {
         scriptUrl: mapsAndEvents[0].event.url,
+        sourceMapUrl: mapsAndEvents[0].event.sourceMapURL,
         map: JSON.parse(mapsAndEvents[0].map),
       },
     ]);
@@ -138,14 +139,17 @@ describe('SourceMaps gatherer', () => {
     expect(artifacts).toEqual([
       {
         scriptUrl: mapsAndEvents[0].event.url,
+        sourceMapUrl: 'http://www.example.com/path/bundle.js.map',
         map: JSON.parse(mapsAndEvents[0].map),
       },
       {
         scriptUrl: mapsAndEvents[1].event.url,
+        sourceMapUrl: 'http://www.example.com/bundle.js.map',
         map: JSON.parse(mapsAndEvents[1].map),
       },
       {
         scriptUrl: mapsAndEvents[2].event.url,
+        sourceMapUrl: mapsAndEvents[2].event.sourceMapURL,
         map: JSON.parse(mapsAndEvents[2].map),
       },
     ]);
@@ -165,6 +169,7 @@ describe('SourceMaps gatherer', () => {
     expect(artifact).toEqual([
       {
         scriptUrl: mapsAndEvents[0].event.url,
+        sourceMapUrl: mapsAndEvents[0].event.sourceMapURL,
         errorMessage: 'Error: Failed fetching source map',
         map: undefined,
       },
@@ -191,11 +196,13 @@ describe('SourceMaps gatherer', () => {
     expect(artifact).toEqual([
       {
         scriptUrl: mapsAndEvents[0].event.url,
+        sourceMapUrl: mapsAndEvents[0].event.sourceMapURL,
         errorMessage: 'SyntaxError: Unexpected token { in JSON at position 1',
         map: undefined,
       },
       {
         scriptUrl: mapsAndEvents[1].event.url,
+        sourceMapUrl: 'data',
         errorMessage: 'SyntaxError: Unexpected token ; in JSON at position 2',
         map: undefined,
       },

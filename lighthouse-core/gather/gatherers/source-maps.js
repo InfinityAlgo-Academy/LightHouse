@@ -109,20 +109,20 @@ class SourceMaps extends Gatherer {
       throw new Error('failed precondition: expected `event.sourceMapURL` to exist');
     }
 
-
     // `sourceMapURL` is simply the URL found in either a magic comment or an x-sourcemap header.
     // It has not been resolved to a base url.
-    const sourceMapURL = event.sourceMapURL.startsWith('data:') ?
+    const isSourceMapADataUri = event.sourceMapURL.startsWith('data:');
+    const sourceMapUrl = isSourceMapADataUri ?
         event.sourceMapURL :
         this._resolveUrl(event.sourceMapURL, event.url);
 
-    log.log('SourceMaps',
-        event.url, sourceMapURL.startsWith('data:') ? 'data:...' : sourceMapURL);
+    log.verbose('SourceMaps',
+        event.url, sourceMapUrl.startsWith('data:') ? 'data:...' : sourceMapUrl);
     let sourceMapOrError;
     try {
-      sourceMapOrError = sourceMapURL.startsWith('data:') ?
-        this.parseSourceMapFromDataUrl(sourceMapURL) :
-        await this.fetchSourceMapInPage(driver, sourceMapURL);
+      sourceMapOrError = sourceMapUrl.startsWith('data:') ?
+        this.parseSourceMapFromDataUrl(sourceMapUrl) :
+        await this.fetchSourceMapInPage(driver, sourceMapUrl);
     } catch (err) {
       sourceMapOrError = {errorMessage: err.toString()};
     }
@@ -133,6 +133,7 @@ class SourceMaps extends Gatherer {
 
     return {
       scriptUrl: event.url,
+      sourceMapUrl: isSourceMapADataUri ? 'data' : sourceMapUrl,
       ...sourceMapOrError,
     };
   }
@@ -146,7 +147,6 @@ class SourceMaps extends Gatherer {
 
     driver.off('Debugger.scriptParsed', this.onScriptParsed);
     await driver.sendCommand('Debugger.disable');
-
 
     const eventProcessPromises = this._scriptParsedEvents
       .filter((event) => event.sourceMapURL)
