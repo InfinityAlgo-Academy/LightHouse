@@ -247,6 +247,8 @@ declare global {
       } | {
         /** URL of code that source map applies to. */
         scriptUrl: string
+        /** URL of the source map. `data` if from data URI. */
+        sourceMapUrl: string
         /** Error that occurred during fetching or parsing of source map. */
         errorMessage: string
       }
