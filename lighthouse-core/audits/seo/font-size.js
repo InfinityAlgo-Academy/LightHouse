@@ -176,6 +176,8 @@ function findStyleRuleSource(baseURL, styleDeclaration, node) {
     }
   }
 
+  // The responsible style declaration was not captured in the font-size gatherer due to
+  // the rate limiting we do in `fetchFailingNodeSourceRules`.
   return {
     selector: '',
     source: 'Unknown',
