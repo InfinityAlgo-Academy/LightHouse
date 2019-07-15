@@ -240,15 +240,15 @@ declare global {
       export type SourceMap = {
         /** URL of code that source map applies to. */
         scriptUrl: string
-        /** URL of the source map. `data` if from data URI. */
-        sourceMapUrl: string
+        /** URL of the source map. undefined if from data URI. */
+        sourceMapUrl?: string
         /** Source map data structure. */
         map: RawSourceMap
       } | {
         /** URL of code that source map applies to. */
         scriptUrl: string
-        /** URL of the source map. `data` if from data URI. */
-        sourceMapUrl: string
+        /** URL of the source map. undefined if from data URI. */
+        sourceMapUrl?: string
         /** Error that occurred during fetching or parsing of source map. */
         errorMessage: string
       }

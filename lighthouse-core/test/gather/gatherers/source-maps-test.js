@@ -202,7 +202,7 @@ describe('SourceMaps gatherer', () => {
       },
       {
         scriptUrl: mapsAndEvents[1].event.url,
-        sourceMapUrl: 'data',
+        sourceMapUrl: undefined,
         errorMessage: 'SyntaxError: Unexpected token ; in JSON at position 2',
         map: undefined,
       },
