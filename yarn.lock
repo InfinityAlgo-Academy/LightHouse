@@ -577,13 +577,6 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.0.tgz#1c297530428c6f4e0a0a3222f5b44745669aa9f7"
   integrity sha512-1UhSMMDix7bVdUeqtZERQQyJr3QuFoN5X5APtpIooGkumE3crPaeq7UgFeJNjGD8yCQ8od8PzRkgptR5+x327Q==
 
-"@types/opn@^3.0.28":
-  version "3.0.28"
-  resolved "https://registry.yarnpkg.com/@types/opn/-/opn-3.0.28.tgz#097d0d1c9b5749573a5d96df132387bb6d02118a"
-  integrity sha1-CX0NHJtXSVc6XZbfEyOHu20CEYo=
-  dependencies:
-    "@types/node" "*"
-
 "@types/raven@^2.5.1":
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/@types/raven/-/raven-2.5.1.tgz#62ef0a59e29691945e1f295b62ed199619cbd9b6"
@@ -5777,13 +5770,12 @@ onetime@^2.0.0:
   dependencies:
     mimic-fn "^1.0.0"
 
-opn@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/opn/-/opn-4.0.2.tgz#7abc22e644dff63b0a96d5ab7f2790c0f01abc95"
-  integrity sha1-erwi5kTf9jsKltWrfyeQwPAavJU=
+open@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/open/-/open-6.4.0.tgz#5c13e96d0dc894686164f18965ecfe889ecfc8a9"
+  integrity sha512-IFenVPgF70fSm1keSd2iDBIDIBZkroLeuffXq+wKTzTJlBpesFWojV9lb8mzOfaAzM1sr7HQHuO0vtV0zYekGg==
   dependencies:
-    object-assign "^4.0.1"
-    pinkie-promise "^2.0.0"
+    is-wsl "^1.1.0"
 
 optimist@^0.6.1:
   version "0.6.1"
