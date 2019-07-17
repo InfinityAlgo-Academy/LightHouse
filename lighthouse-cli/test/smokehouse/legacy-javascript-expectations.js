@@ -11,15 +11,15 @@
 module.exports = [
   {
     lhr: {
-      requestedUrl: 'http://localhost:10200/polyfills.html',
-      finalUrl: 'http://localhost:10200/polyfills.html',
+      requestedUrl: 'http://localhost:10200/legacy-javascript.html',
+      finalUrl: 'http://localhost:10200/legacy-javascript.html',
       audits: {
-        'polyfills': {
+        'legacy-javascript': {
           details: {
             items: {
               // 61 are from babel-polyfill
-              // 1 from fixtures/polyfills.js
-              // 1 inline from fixtures/polyfills.html
+              // 1 from fixtures/legacy-javascript.js
+              // 1 inline from fixtures/legacy-javascript.html
               length: 63,
             },
           },

@@ -202,7 +202,7 @@ const defaultConfig = {
     'performance-budget',
     'resource-summary',
     'third-party-summary',
-    'polyfills',
+    'legacy-javascript',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -484,7 +484,7 @@ const defaultConfig = {
         {id: 'errors-in-console', weight: 1},
         {id: 'image-aspect-ratio', weight: 1},
         // Manual audits
-        {id: 'polyfills', weight: 0},
+        {id: 'legacy-javascript', weight: 0},
       ],
     },
     'seo': {

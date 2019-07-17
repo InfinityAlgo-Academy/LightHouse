@@ -13,21 +13,21 @@ const NetworkRecords = require('../computed/network-records.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
-  /** Title of a Lighthouse audit that tells the user about all JavaScript polyfills loaded on the page. This is displayed in a list of audit titles that Lighthouse generates. */
-  title: 'Polyfills',
+  /** Title of a Lighthouse audit that tells the user about legacy polyfills and transforms used on the page. This is displayed in a list of audit titles that Lighthouse generates. */
+  title: 'Legacy JavaScript',
   // eslint-disable-next-line max-len
-  description: 'Polyfills enable older browsers to use new JavaScript language features. However, they aren\'t always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)',
+  description: 'Polyfills and transforms enable older browsers to use new JavaScript language features. However, many aren\'t necessary for modern browsers. Adopt a modern script deployment strategy using `module`/`nomodule` feature detection. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-class Polyfills extends Audit {
+class LegacyJavascript extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'polyfills',
+      id: 'legacy-javascript',
       scoreDisplayMode: Audit.SCORING_MODES.MANUAL,
       description: str_(UIStrings.description),
       title: str_(UIStrings.title),
@@ -252,7 +252,7 @@ class Polyfills extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Polyfills.DEFAULT_PASS];
+    const devtoolsLog = artifacts.devtoolsLogs[LegacyJavascript.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const {polyCounter, polyIssueCounter, urlToPolyIssues} =
       this.calculatePolyIssues(artifacts.ScriptElements, networkRecords);
@@ -292,5 +292,5 @@ class Polyfills extends Audit {
   }
 }
 
-module.exports = Polyfills;
+module.exports = LegacyJavascript;
 module.exports.UIStrings = UIStrings;

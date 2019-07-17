@@ -6,7 +6,7 @@
 'use strict';
 
 const assert = require('assert');
-const Pollyfills = require('../../audits/polyfills.js');
+const LegacyJavascript = require('../../audits/legacy-javascript.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /**
@@ -31,7 +31,7 @@ const createArtifacts = (scripts) => {
 };
 
 /* eslint-env jest */
-describe('Polyfills', () => {
+describe('LegacyJavaScript audit', () => {
   it('code with no polyfills passes', async () => {
     const artifacts = createArtifacts([
       {
@@ -51,7 +51,7 @@ describe('Polyfills', () => {
         url: 'https://www.example.com/a.js',
       },
     ]);
-    const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
+    const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 1);
     assert.equal(result.extendedInfo.value, 0);
   });
@@ -63,7 +63,7 @@ describe('Polyfills', () => {
         url: 'https://www.example.com/a.js',
       },
     ]);
-    const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
+    const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
     assert.equal(result.extendedInfo.value, 1);
     assert.equal(result.details.items[0].description, 'String.prototype.repeat');
@@ -76,7 +76,7 @@ describe('Polyfills', () => {
         url: 'https://www.example.com/a.js',
       },
     ]);
-    const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
+    const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
     assert.equal(result.extendedInfo.value, 2);
   });
@@ -93,7 +93,7 @@ describe('Polyfills', () => {
         url: 'https://www.example.com/a.js',
       },
     ]);
-    const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
+    const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
     assert.equal(result.extendedInfo.value, 1);
   });
@@ -109,7 +109,7 @@ describe('Polyfills', () => {
         url: 'https://www.example.com/b.js',
       },
     ]);
-    const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
+    const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
     assert.equal(result.extendedInfo.value, 2);
     assert.equal(result.details.items[0].description, 'String.prototype.repeat (1 / 2)');
@@ -159,7 +159,7 @@ describe('Polyfills', () => {
         url: 'https://www.example.com/f.js',
       },
     ]);
-    const result = await Pollyfills.audit(artifacts, {computedCache: new Map()});
+    const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
     assert.equal(result.extendedInfo.value, Object.keys(artifacts.ScriptElements).length);
   });

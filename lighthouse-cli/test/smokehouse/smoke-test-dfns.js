@@ -80,9 +80,9 @@ const SMOKE_TEST_DFNS = [{
   config: 'lighthouse-core/config/perf-config.js',
   batch: 'parallel-second',
 }, {
-  id: 'polyfills',
-  expectations: 'polyfills-expectations.js',
-  config: 'polyfills-config.js',
+  id: 'legacy-javascript',
+  expectations: 'legacy-javascript-expectations.js',
+  config: 'legacy-javascript-config.js',
   batch: 'parallel-first',
 }];
 
