@@ -267,11 +267,13 @@ class LegacyJavascript extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[LegacyJavascript.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const {polyCounter, polyIssueCounter, urlToPolyIssues} =
-      this.detectPolyfillsAcrossScripts(artifacts.ScriptElements, networkRecords);
-
+    
     /** @type {Array<{url: string, description: string, location: string}>} */
     const tableRows = [];
+
+    // Polyfills.
+    const {polyCounter, polyIssueCounter, urlToPolyIssues} =
+      this.detectPolyfillsAcrossScripts(artifacts.ScriptElements, networkRecords);
     urlToPolyIssues.forEach((polyIssues, url) => {
       for (const polyIssue of polyIssues) {
         const {poly, line, col} = polyIssue;
@@ -287,6 +289,43 @@ class LegacyJavascript extends Audit {
         });
       }
     });
+
+    // Transforms.
+    for (const {requestId, content} of Object.values(artifacts.ScriptElements)) {
+      if (!content) continue;
+      const networkRecord = networkRecords.find(record => record.requestId === requestId);
+      if (!networkRecord) continue;
+      
+      // WIP: this is just checking for `transform-classes`.
+      // todo: share the line/col matching stuff used by poly.
+      const pattern = 'Cannot call a class as a function';
+      const re = new RegExp(`(^\r\n|\r|\n)|(${pattern})`, 'g');
+      /** @type {RegExpExecArray | null} */
+      let result;
+      let line = 0;
+      let lineBeginsAtIndex = 0;
+      while ((result = re.exec(content)) !== null) {
+        // discard first (it's the whole matching pattern)
+        // index 1 is truthy if matching a newline, and is used to track the line number
+        // matches maps to each possible poly.
+        // only one of [isNewline, ...matches] is ever defined.
+        const [, isNewline, ...matches] = result;
+        if (isNewline) {
+          line++;
+          lineBeginsAtIndex = result.index + 1;
+          continue;
+        }
+        
+        const url = networkRecord.url;
+        const col = result.index - lineBeginsAtIndex;
+        tableRows.push({
+          url,
+          description: 'transform-classes',
+          location: `Ln: ${line}, Col: ${col}`,
+        });
+      }
+    }
+
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'url', itemType: 'url', text: 'URL'},
