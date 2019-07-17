@@ -7,6 +7,7 @@
 
 /** @typedef {{object: string | undefined, property: string}} Poly */
 /** @typedef {{line: number, col: number, poly: Poly}} PolyIssue */
+/** @typedef {{re: RegExp, polyfills: Poly[]}} PolyMatcher */
 
 const Audit = require('./audit.js');
 const NetworkRecords = require('../computed/network-records.js');
@@ -36,11 +37,55 @@ class LegacyJavascript extends Audit {
   }
 
   /**
-   * @param {Poly[]} polyfills
+   * @param {PolyMatcher} polyfillMatcher
    * @param {string} code
    * @return {PolyIssue[]}
    */
-  static detectPolyfills(polyfills, code) {
+  static detectPolyfills(polyfillMatcher, code) {
+    const polysSeen = new Set();
+    const polyMatches = [];
+    /** @type {RegExpExecArray | null} */
+    let result;
+    let line = 0;
+    let lineBeginsAtIndex = 0;
+    // each poly maps to one subgroup in the generated regex. for each iteration of the regex exec,
+    // only one subgroup will be defined. Exec until no more matches.
+    polyfillMatcher.re.lastIndex = 0;
+    while ((result = polyfillMatcher.re.exec(code)) !== null) {
+      // discard first (it's the whole matching pattern)
+      // index 1 is truthy if matching a newline, and is used to track the line number
+      // matches maps to each possible poly.
+      // only one of [isNewline, ...matches] is ever defined.
+      const [, isNewline, ...matches] = result;
+      if (isNewline) {
+        line++;
+        lineBeginsAtIndex = result.index + 1;
+        continue;
+      }
+      const poly = polyfillMatcher.polyfills[matches.findIndex(Boolean)];
+
+      // don't report more than one instance of a poly for this code.
+      // would be nice, but it also reports false positives if both '='
+      // and 'Object.defineProperty' are used conditionally based on feature detection.
+      if (polysSeen.has(poly)) {
+        continue;
+      }
+
+      polysSeen.add(poly);
+      polyMatches.push({
+        line,
+        col: result.index - lineBeginsAtIndex,
+        poly,
+      });
+    }
+
+    return polyMatches;
+  }
+
+  /**
+   * @param {Poly[]} polyfills
+   */
+  static buildPolyRegex(polyfills) {
     const qt = (/** @type {string} */ token) =>
       `['"]${token}['"]`; // don't worry about matching string delims
     const pattern = polyfills.map(({object, property}) => {
@@ -66,57 +111,20 @@ class LegacyJavascript extends Audit {
       return `(${subpattern})`;
     }).join('|');
 
-    const polysSeen = new Set();
-    const polyMatches = [];
-    const re = new RegExp(`(^\r\n|\r|\n)|${pattern}`, 'g');
-    /** @type {RegExpExecArray | null} */
-    let result;
-    let line = 0;
-    let lineBeginsAtIndex = 0;
-    // each poly maps to one subgroup in the generated regex. for each iteration of the regex exec,
-    // only one subgroup will be defined. Exec until no more matches.
-    while ((result = re.exec(code)) !== null) {
-      // discard first (it's the whole matching pattern)
-      // index 1 is truthy if matching a newline, and is used to track the line number
-      // matches maps to each possible poly.
-      // only one of [isNewline, ...matches] is ever defined.
-      const [, isNewline, ...matches] = result;
-      if (isNewline) {
-        line++;
-        lineBeginsAtIndex = result.index + 1;
-        continue;
-      }
-      const poly = polyfills[matches.findIndex(Boolean)];
-
-      // don't report more than one instance of a poly for this code.
-      // would be nice, but it also reports false positives if both '='
-      // and 'Object.defineProperty' are used conditionally based on feature detection.
-      if (polysSeen.has(poly)) {
-        continue;
-      }
-
-      polysSeen.add(poly);
-      polyMatches.push({
-        line,
-        col: result.index - lineBeginsAtIndex,
-        poly,
-      });
-    }
-
-    return polyMatches;
+    return new RegExp(`(^\r\n|\r|\n)|${pattern}`, 'g');
   }
 
   /**
-   * @return {Poly[]}
+   * @return {PolyMatcher}
    */
-  static getPolyDefinitions() {
+  static getPolyMatcher() {
     // If latest Chrome supports a feature natively, we should
     // complain about the existence of a polyfill.
     // list sourced from a couple places. not exhaustive.
     // from babel-polyfill: https://gist.github.com/connorjclark/1b019f7caf1c31b49596e7628145eb3f
     // casual perusal of https://developer.mozilla.org/en-US/docs/Web/API
 
-    return [
+    const polyfills = [
       'Array.from',
       'Array.isArray',
       'Array.of',
@@ -208,6 +216,11 @@ class LegacyJavascript extends Audit {
         property,
       };
     });
+
+    return {
+      re: this.buildPolyRegex(polyfills),
+      polyfills,
+    };
   }
 
   /**
@@ -220,7 +233,7 @@ class LegacyJavascript extends Audit {
    * }}
    */
   static calculatePolyIssues(scripts, networkRecords) {
-    const polyfills = this.getPolyDefinitions();
+    const polyfillMatcher = this.getPolyMatcher();
     /** @type {Map<Poly, number>} */
     const polyCounter = new Map();
     /** @type {Map<PolyIssue, number>} */
@@ -232,7 +245,7 @@ class LegacyJavascript extends Audit {
       if (!content) continue;
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
       if (!networkRecord) continue;
-      const extPolys = this.detectPolyfills(polyfills, content);
+      const extPolys = this.detectPolyfills(polyfillMatcher, content);
       if (extPolys.length) {
         urlToPolyIssues.set(networkRecord.url, extPolys);
         for (const polyIssue of extPolys) {
