@@ -114,7 +114,7 @@ class SourceMaps extends Gatherer {
         event.url, sourceMapUrl.startsWith('data:') ? 'data:...' : sourceMapUrl);
     let sourceMapOrError;
     try {
-      const map = sourceMapUrl.startsWith('data:') ?
+      const map = isSourceMapADataUri ?
         this.parseSourceMapFromDataUrl(sourceMapUrl) :
         await this.fetchSourceMapInPage(driver, sourceMapUrl);
       sourceMapOrError = {map};
