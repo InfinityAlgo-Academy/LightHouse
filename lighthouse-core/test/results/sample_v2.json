@@ -1127,7 +1127,7 @@
             "text": "URL"
           },
           {
-            "key": "serverReponseTime",
+            "key": "serverResponseTime",
             "itemType": "ms",
             "granularity": 1,
             "text": "Time Spent"
@@ -1136,11 +1136,11 @@
         "items": [
           {
             "origin": "http://localhost:10200",
-            "serverReponseTime": 572.829
+            "serverResponseTime": 572.829
           },
           {
             "origin": "http://ajax.googleapis.com",
-            "serverReponseTime": 562.398
+            "serverResponseTime": 562.398
           }
         ]
       }
