@@ -232,7 +232,7 @@ class LegacyJavascript extends Audit {
    *  urlToPolyIssues: Map<string, PolyIssue[]>,
    * }}
    */
-  static calculatePolyIssues(scripts, networkRecords) {
+  static detectPolyfillsAcrossScripts(scripts, networkRecords) {
     const polyfillMatcher = this.getPolyMatcher();
     /** @type {Map<Poly, number>} */
     const polyCounter = new Map();
@@ -245,14 +245,14 @@ class LegacyJavascript extends Audit {
       if (!content) continue;
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
       if (!networkRecord) continue;
-      const extPolys = this.detectPolyfills(polyfillMatcher, content);
-      if (extPolys.length) {
-        urlToPolyIssues.set(networkRecord.url, extPolys);
-        for (const polyIssue of extPolys) {
-          const val = polyCounter.get(polyIssue.poly) || 0;
-          polyIssueCounter.set(polyIssue, val);
-          polyCounter.set(polyIssue.poly, val + 1);
-        }
+      const detectedPolyfills = this.detectPolyfills(polyfillMatcher, content);
+      if (!detectedPolyfills.length) continue;
+
+      urlToPolyIssues.set(networkRecord.url, detectedPolyfills);
+      for (const polyIssue of detectedPolyfills) {
+        const val = polyCounter.get(polyIssue.poly) || 0;
+        polyIssueCounter.set(polyIssue, val);
+        polyCounter.set(polyIssue.poly, val + 1);
       }
     }
 
@@ -268,7 +268,7 @@ class LegacyJavascript extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[LegacyJavascript.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const {polyCounter, polyIssueCounter, urlToPolyIssues} =
-      this.calculatePolyIssues(artifacts.ScriptElements, networkRecords);
+      this.detectPolyfillsAcrossScripts(artifacts.ScriptElements, networkRecords);
 
     /** @type {Array<{url: string, description: string, location: string}>} */
     const tableRows = [];
