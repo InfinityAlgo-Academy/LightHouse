@@ -102,6 +102,7 @@ describe('i18n', () => {
       helloSecWorld: 'Hello {in, number, seconds} World',
       helloTimeInMsWorld: 'Hello {timeInMs, number, seconds} World',
       helloPercentWorld: 'Hello {in, number, extendedPercent} World',
+      helloWorldMultiReplace: '{hello} {world}',
     };
     const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
@@ -133,6 +134,17 @@ describe('i18n', () => {
     it('formats a message with extended percent', () => {
       const helloPercentStr = str_(UIStrings.helloPercentWorld, {in: 0.43078});
       expect(helloPercentStr).toBeDisplayString('Hello 43.08% World');
+    });
+
+    it('throws an error when values are needed but not provided', () => {
+      expect(_ => i18n.getFormatted(str_(UIStrings.helloBytesWorld), 'en-US'))
+      .toThrow(`ICU Message contains a value reference ("in") that wasn't provided`);
+    });
+
+    it('throws an error when a value is missing', () => {
+      expect(_ => i18n.getFormatted(str_(UIStrings.helloWorldMultiReplace,
+        {hello: 'hello'}), 'en-US'))
+      .toThrow(`ICU Message contains a value reference ("world") that wasn't provided`);
     });
   });
 });
