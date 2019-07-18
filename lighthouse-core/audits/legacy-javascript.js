@@ -16,7 +16,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that tells the user about legacy polyfills and transforms used on the page. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Legacy JavaScript',
   // eslint-disable-next-line max-len
-  description: 'Polyfills and transforms enable older browsers to use new JavaScript language features. However, many aren\'t necessary for modern browsers. Adopt a modern script deployment strategy using `module`/`nomodule` feature detection. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)',
+  description: 'Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren\'t necessary for modern browsers. Adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
