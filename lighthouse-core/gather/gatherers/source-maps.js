@@ -110,8 +110,8 @@ class SourceMaps extends Gatherer {
         event.sourceMapURL :
         this._resolveUrl(event.sourceMapURL, event.url);
 
-    log.verbose('SourceMaps',
-        event.url, sourceMapUrl.startsWith('data:') ? 'data:...' : sourceMapUrl);
+    log.verbose('SourceMaps', event.url, URL.elideDataURI(sourceMapUrl));
+    /** @type {{map: LH.Artifacts.RawSourceMap} | {errorMessage: string}} */
     let sourceMapOrError;
     try {
       const map = isSourceMapADataUri ?
@@ -123,7 +123,7 @@ class SourceMaps extends Gatherer {
     }
 
     if ('errorMessage' in sourceMapOrError) {
-      log.log('SourceMaps', event.url, sourceMapOrError.errorMessage);
+      log.error('SourceMaps', event.url, sourceMapOrError.errorMessage);
     }
 
     return {
