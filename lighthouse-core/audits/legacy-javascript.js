@@ -5,9 +5,8 @@
  */
 'use strict';
 
-/** @typedef {{object: string | undefined, property: string}} Poly */
-/** @typedef {{line: number, col: number, poly: Poly}} PolyIssue */
-/** @typedef {{re: RegExp, polyfills: Poly[]}} PolyMatcher */
+/** @typedef {{name: string, expression: string}} Pattern */
+/** @typedef {{name: string, line: number, column: number}} PatternMatchResult */
 
 const Audit = require('./audit.js');
 const NetworkRecords = require('../computed/network-records.js');
@@ -21,6 +20,64 @@ const UIStrings = {
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+class CodePatternMatcher {
+  /**
+   * @param {Pattern[]} patterns
+   */
+  constructor(patterns) {
+    const patternsExpression = patterns.map(pattern => `(${pattern.expression})`).join('|');
+    this.re = new RegExp(`(^\r\n|\r|\n)|${patternsExpression}`, 'g');
+    this.patterns = patterns;
+  }
+
+  /**
+   * @param {string} code
+   * @return {PatternMatchResult[]}
+   */
+  match(code) {
+    const seen = new Set();
+    /** @type {PatternMatchResult[]} */
+    const matches = [];
+    /** @type {RegExpExecArray | null} */
+    let result;
+    let line = 0;
+    let lineBeginsAtIndex = 0;
+    // Each pattern maps to one subgroup in the generated regex. For each iteration of RegExp.exec,
+    // only one subgroup will be defined. Exec until no more matches.
+    this.re.lastIndex = 0;
+    while ((result = this.re.exec(code)) !== null) {
+      // Discard first - it's the whole matching pattern.
+      // Index 1 is truthy if matching a newline, and is used to track the line number.
+      // `patternExpressionMatches` maps to each possible pattern.
+      // Only one of [isNewline, ...patternExpressionMatches] is ever defined.
+      const [, isNewline, ...patternExpressionMatches] = result;
+      if (isNewline) {
+        line++;
+        lineBeginsAtIndex = result.index + 1;
+        continue;
+      }
+      const pattern = this.patterns[patternExpressionMatches.findIndex(Boolean)];
+
+      // Don't report more than one instance of a pattern for this code.
+      // Would result in multiple matches for the same pattern, ex: if both '='
+      // and 'Object.defineProperty' are used conditionally based on feature detection.
+      // Would also result in many matches for transform patterns.
+      if (seen.has(pattern)) {
+        continue;
+      }
+      seen.add(pattern);
+
+      matches.push({
+        name: pattern.name,
+        line,
+        column: result.index - lineBeginsAtIndex,
+      });
+    }
+
+    return matches;
+  }
+}
 
 class LegacyJavascript extends Audit {
   /**
@@ -37,94 +94,42 @@ class LegacyJavascript extends Audit {
   }
 
   /**
-   * @param {PolyMatcher} polyfillMatcher
-   * @param {string} code
-   * @return {PolyIssue[]}
+   * @param {string?} object
+   * @param {string} property
    */
-  static detectPolyfills(polyfillMatcher, code) {
-    const polysSeen = new Set();
-    const polyMatches = [];
-    /** @type {RegExpExecArray | null} */
-    let result;
-    let line = 0;
-    let lineBeginsAtIndex = 0;
-    // each poly maps to one subgroup in the generated regex. for each iteration of the regex exec,
-    // only one subgroup will be defined. Exec until no more matches.
-    polyfillMatcher.re.lastIndex = 0;
-    while ((result = polyfillMatcher.re.exec(code)) !== null) {
-      // discard first (it's the whole matching pattern)
-      // index 1 is truthy if matching a newline, and is used to track the line number
-      // matches maps to each possible poly.
-      // only one of [isNewline, ...matches] is ever defined.
-      const [, isNewline, ...matches] = result;
-      if (isNewline) {
-        line++;
-        lineBeginsAtIndex = result.index + 1;
-        continue;
-      }
-      const poly = polyfillMatcher.polyfills[matches.findIndex(Boolean)];
-
-      // don't report more than one instance of a poly for this code.
-      // would be nice, but it also reports false positives if both '='
-      // and 'Object.defineProperty' are used conditionally based on feature detection.
-      if (polysSeen.has(poly)) {
-        continue;
-      }
-
-      polysSeen.add(poly);
-      polyMatches.push({
-        line,
-        col: result.index - lineBeginsAtIndex,
-        poly,
-      });
-    }
-
-    return polyMatches;
-  }
-
-  /**
-   * @param {Poly[]} polyfills
-   */
-  static buildPolyRegex(polyfills) {
+  static buildPolyfillExpression(object, property) {
     const qt = (/** @type {string} */ token) =>
       `['"]${token}['"]`; // don't worry about matching string delims
-    const pattern = polyfills.map(({object, property}) => {
-      let subpattern = '';
 
-      // String.prototype.startsWith =
-      subpattern += `${object || ''}\\.?${property}\\s*=`;
+    let expression = '';
 
-      // String.prototype['startsWith'] =
-      subpattern += `|${object || ''}\\[${qt(property)}\\]\\s*=`;
+    // String.prototype.startsWith =
+    expression += `${object || ''}\\.?${property}\\s*=`;
 
-      // Object.defineProperty(String.prototype, 'startsWith'
-      subpattern += `|defineProperty\\(${object || 'window'},\\s*${qt(property)}`;
+    // String.prototype['startsWith'] =
+    expression += `|${object || ''}\\[${qt(property)}\\]\\s*=`;
 
-      if (object) {
-        const objectWithoutPrototype = object.replace('.prototype', '');
-        // e(e.S,"Object",{values
-        // minified pattern found in babel-polyfill
-        // see https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js
-        subpattern += `|;e\\([^,]+,${qt(objectWithoutPrototype)},{${property}`;
-      }
+    // Object.defineProperty(String.prototype, 'startsWith'
+    expression += `|defineProperty\\(${object || 'window'},\\s*${qt(property)}`;
 
-      return `(${subpattern})`;
-    }).join('|');
+    if (object) {
+      const objectWithoutPrototype = object.replace('.prototype', '');
+      // e(e.S,"Object",{values
+      // minified pattern found in babel-polyfill
+      // see https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js
+      expression += `|;e\\([^,]+,${qt(objectWithoutPrototype)},{${property}`;
+    }
 
-    return new RegExp(`(^\r\n|\r|\n)|${pattern}`, 'g');
+    return expression;
   }
 
   /**
-   * @return {PolyMatcher}
+   * @return {Pattern[]}
    */
-  static getPolyMatcher() {
-    // If latest Chrome supports a feature natively, we should
-    // complain about the existence of a polyfill.
-    // list sourced from a couple places. not exhaustive.
-    // from babel-polyfill: https://gist.github.com/connorjclark/1b019f7caf1c31b49596e7628145eb3f
-    // casual perusal of https://developer.mozilla.org/en-US/docs/Web/API
+  static getPolyfillPatterns() {
+    // TODO: only do some of these.
 
-    const polyfills = [
+    return [
       'Array.from',
       'Array.isArray',
       'Array.of',
@@ -209,54 +214,61 @@ class LegacyJavascript extends Audit {
       'String.raw',
     ].map(str => {
       const parts = str.split('.');
-      const object = parts.length > 1 ? parts.slice(0, parts.length - 1).join('.') : undefined;
+      const object = parts.length > 1 ? parts.slice(0, parts.length - 1).join('.') : null;
       const property = parts[parts.length - 1];
       return {
-        object,
-        property,
+        name: `${object ? object + '.' : ''}${property}`,
+        expression: this.buildPolyfillExpression(object, property),
       };
     });
-
-    return {
-      re: this.buildPolyRegex(polyfills),
-      polyfills,
-    };
   }
 
   /**
+   * @return {Pattern[]}
+   */
+  static getTransformPatterns() {
+    return [
+      {
+        name: 'transform-classes',
+        expression: 'Cannot call a class as a function',
+      },
+    ];
+  }
+
+  /**
+   * @param {CodePatternMatcher} matcher
    * @param {LH.GathererArtifacts['ScriptElements']} scripts
    * @param {LH.Artifacts.NetworkRequest[]} networkRecords
    * @return {{
-   *  polyCounter: Map<Poly, number>,
-   *  polyIssueCounter: Map<PolyIssue, number>,
-   *  urlToPolyIssues: Map<string, PolyIssue[]>,
+   *  patternCounter: Map<string, number>,
+   *  patternMatchCounter: Map<PatternMatchResult, number>,
+   *  urlToMatchResults: Map<string, PatternMatchResult[]>,
    * }}
    */
-  static detectPolyfillsAcrossScripts(scripts, networkRecords) {
-    const polyfillMatcher = this.getPolyMatcher();
-    /** @type {Map<Poly, number>} */
-    const polyCounter = new Map();
-    /** @type {Map<PolyIssue, number>} */
-    const polyIssueCounter = new Map();
-    /** @type {Map<string, PolyIssue[]>} */
-    const urlToPolyIssues = new Map();
+  static detectCodePatternsAcrossScripts(matcher, scripts, networkRecords) {
+    /** @type {Map<string, number>} */
+    const patternCounter = new Map();
+    /** @type {Map<PatternMatchResult, number>} */
+    const patternMatchCounter = new Map();
+    /** @type {Map<string, PatternMatchResult[]>} */
+    const urlToMatchResults = new Map();
 
     for (const {requestId, content} of Object.values(scripts)) {
       if (!content) continue;
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
       if (!networkRecord) continue;
-      const detectedPolyfills = this.detectPolyfills(polyfillMatcher, content);
-      if (!detectedPolyfills.length) continue;
+      const matches = matcher.match(content);
+      if (!matches.length) continue;
 
-      urlToPolyIssues.set(networkRecord.url, detectedPolyfills);
-      for (const polyIssue of detectedPolyfills) {
-        const val = polyCounter.get(polyIssue.poly) || 0;
-        polyIssueCounter.set(polyIssue, val);
-        polyCounter.set(polyIssue.poly, val + 1);
+      urlToMatchResults.set(networkRecord.url, matches);
+      for (const match of matches) {
+        const val = patternCounter.get(match.name) || 0;
+        patternMatchCounter.set(match, val);
+        patternCounter.set(match.name, val + 1);
       }
     }
 
-    return {polyCounter, polyIssueCounter, urlToPolyIssues};
+    return {patternCounter, patternMatchCounter, urlToMatchResults};
   }
 
   /**
@@ -267,64 +279,31 @@ class LegacyJavascript extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[LegacyJavascript.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    
+
     /** @type {Array<{url: string, description: string, location: string}>} */
     const tableRows = [];
 
-    // Polyfills.
-    const {polyCounter, polyIssueCounter, urlToPolyIssues} =
-      this.detectPolyfillsAcrossScripts(artifacts.ScriptElements, networkRecords);
-    urlToPolyIssues.forEach((polyIssues, url) => {
-      for (const polyIssue of polyIssues) {
-        const {poly, line, col} = polyIssue;
-        const polyStatement = `${poly.object ? poly.object + '.' : ''}${poly.property}`;
-        const numOfThisPoly = polyCounter.get(poly) || 0;
-        const isMoreThanOne = numOfThisPoly > 1;
-        const polyIssueOccurrence = polyIssueCounter.get(polyIssue) || 0;
-        const countText = isMoreThanOne ? ` (${polyIssueOccurrence + 1} / ${numOfThisPoly})` : '';
+    const matcher = new CodePatternMatcher([
+      ...this.getPolyfillPatterns(),
+      ...this.getTransformPatterns(),
+    ]);
+    const {patternCounter, patternMatchCounter, urlToMatchResults} =
+      this.detectCodePatternsAcrossScripts(matcher, artifacts.ScriptElements, networkRecords);
+    urlToMatchResults.forEach((matches, url) => {
+      for (const match of matches) {
+        const {name, line, column} = match;
+        const patternOccurrences = patternCounter.get(name) || 0;
+        const isMoreThanOne = patternOccurrences > 1;
+        const matchOrdinal = patternMatchCounter.get(match) || 0;
+        // Only show ordinal if there is more than one occurrence across all scripts.
+        const countText = isMoreThanOne ? ` (${matchOrdinal + 1} / ${patternOccurrences})` : '';
         tableRows.push({
           url,
-          description: `${polyStatement}${countText}`,
-          location: `Ln: ${line}, Col: ${col}`,
+          description: `${name}${countText}`,
+          location: `Ln: ${line}, Col: ${column}`,
         });
       }
     });
-
-    // Transforms.
-    for (const {requestId, content} of Object.values(artifacts.ScriptElements)) {
-      if (!content) continue;
-      const networkRecord = networkRecords.find(record => record.requestId === requestId);
-      if (!networkRecord) continue;
-      
-      // WIP: this is just checking for `transform-classes`.
-      // todo: share the line/col matching stuff used by poly.
-      const pattern = 'Cannot call a class as a function';
-      const re = new RegExp(`(^\r\n|\r|\n)|(${pattern})`, 'g');
-      /** @type {RegExpExecArray | null} */
-      let result;
-      let line = 0;
-      let lineBeginsAtIndex = 0;
-      while ((result = re.exec(content)) !== null) {
-        // discard first (it's the whole matching pattern)
-        // index 1 is truthy if matching a newline, and is used to track the line number
-        // matches maps to each possible poly.
-        // only one of [isNewline, ...matches] is ever defined.
-        const [, isNewline, ...matches] = result;
-        if (isNewline) {
-          line++;
-          lineBeginsAtIndex = result.index + 1;
-          continue;
-        }
-        
-        const url = networkRecord.url;
-        const col = result.index - lineBeginsAtIndex;
-        tableRows.push({
-          url,
-          description: 'transform-classes',
-          location: `Ln: ${line}, Col: ${col}`,
-        });
-      }
-    }
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
@@ -335,9 +314,9 @@ class LegacyJavascript extends Audit {
     const details = Audit.makeTableDetails(headings, tableRows);
 
     return {
-      score: Number(polyIssueCounter.size === 0),
+      score: Number(patternMatchCounter.size === 0),
       extendedInfo: {
-        value: polyIssueCounter.size,
+        value: patternMatchCounter.size,
       },
       details,
     };
