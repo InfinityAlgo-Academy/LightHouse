@@ -12,7 +12,7 @@ const Gatherer = require('./gatherer.js');
 const URL = require('../../lib/url-shim.js');
 
 /**
- * This function is careful not to parse the response as JSON, as it will
+ * This function fetches source maps; it is careful not to parse the response as JSON, as it will
  * just need to be serialized again over the protocol, and source maps can
  * be huge.
  *
