@@ -229,8 +229,12 @@ class LegacyJavascript extends Audit {
   static getTransformPatterns() {
     return [
       {
-        name: 'transform-classes',
+        name: '@babel/plugin-transform-classes',
         expression: 'Cannot call a class as a function',
+      },
+      {
+        name: '@babel/plugin-transform-regenerator',
+        expression: 'regeneratorRuntime.wrap',
       },
     ];
   }
