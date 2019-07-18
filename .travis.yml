@@ -6,7 +6,7 @@ branches:
 matrix:
   include:
     - node_js: "10"
-    - node_js: "11"
+    - node_js: "12"
       if: head_branch IS blank AND branch = master
 dist: trusty
 cache:
