@@ -47,6 +47,8 @@ function runA11yChecks() {
       'server-side-image-map': {enabled: false},
       'aria-hidden-focus': {enabled: false},
       'form-field-multiple-labels': {enabled: false},
+      'aria-input-field-name': {enabled: false},
+      'aria-toggle-field-name': {enabled: false},
     },
     // @ts-ignore
   }).then(axeResult => {

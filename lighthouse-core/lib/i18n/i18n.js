@@ -127,9 +127,7 @@ function lookupLocale(locale) {
  * @param {string} icuMessage
  * @param {Record<string, *>} [values]
  */
-function _preprocessMessageValues(icuMessage, values) {
-  if (!values) return;
-
+function _preprocessMessageValues(icuMessage, values = {}) {
   const clonedValues = JSON.parse(JSON.stringify(values));
   const parsed = MessageParser.parse(icuMessage);
   // Throw an error if a message's value isn't provided
@@ -137,7 +135,7 @@ function _preprocessMessageValues(icuMessage, values) {
     .filter(el => el.type === 'argumentElement')
     .forEach(el => {
       if (el.id && (el.id in values) === false) {
-        throw new Error('ICU Message contains a value reference that wasn\'t provided');
+        throw new Error(`ICU Message contains a value reference ("${el.id}") that wasn't provided`);
       }
     });
 

@@ -16,9 +16,21 @@
 // @ts-ignore: Runtime exists in Devtools.
 const cachedResources = Runtime.cachedResources;
 
+// Getters are necessary because the DevTools bundling processes
+// resources after this module is resolved. These properties are not
+// read from immediately, so we can defer reading with getters and everything
+// is going to be OK.
 module.exports = {
-  REPORT_CSS: cachedResources['audits/lighthouse/report.css'],
-  REPORT_JAVASCRIPT: cachedResources['audits/lighthouse/report.js'],
-  REPORT_TEMPLATE: cachedResources['audits/lighthouse/template.html'],
-  REPORT_TEMPLATES: cachedResources['audits/lighthouse/templates.html'],
+  get REPORT_CSS() {
+    return cachedResources['audits/lighthouse/report.css'];
+  },
+  get REPORT_JAVASCRIPT() {
+    return cachedResources['audits/lighthouse/report.js'];
+  },
+  get REPORT_TEMPLATE() {
+    return cachedResources['audits/lighthouse/template.html'];
+  },
+  get REPORT_TEMPLATES() {
+    return cachedResources['audits/lighthouse/templates.html'];
+  },
 };

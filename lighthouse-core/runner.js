@@ -70,15 +70,12 @@ class Runner {
           throw new Error('Cannot run audit mode on different URL');
         }
       } else {
-        if (typeof runOpts.url !== 'string' || runOpts.url.length === 0) {
-          throw new Error(`You must provide a url to the runner. '${runOpts.url}' provided.`);
-        }
-
-        try {
+        // verify the url is valid and that protocol is allowed
+        if (runOpts.url && URL.isValid(runOpts.url) && URL.isProtocolAllowed(runOpts.url)) {
           // Use canonicalized URL (with trailing slashes and such)
           requestedUrl = new URL(runOpts.url).href;
-        } catch (e) {
-          throw new Error('The url provided should have a proper protocol and hostname.');
+        } else {
+          throw new LHError(LHError.errors.INVALID_URL);
         }
 
         artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection);
@@ -336,7 +333,9 @@ class Runner {
       // to prevent consumers from unnecessary type assertions.
       const requiredArtifacts = audit.meta.requiredArtifacts
         .reduce((requiredArtifacts, artifactName) => {
-          requiredArtifacts[artifactName] = artifacts[artifactName];
+          const requiredArtifact = artifacts[artifactName];
+          // @ts-ignore tsc can't yet express that artifactName is only a single type in each iteration, not a union of types.
+          requiredArtifacts[artifactName] = requiredArtifact;
           return requiredArtifacts;
         }, /** @type {LH.Artifacts} */ ({}));
       const product = await audit.audit(requiredArtifacts, auditContext);

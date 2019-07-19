@@ -11,6 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp').sync;
+const rimraf = require('rimraf').sync;
 const swapLocale = require('../lib/i18n/swap-locale.js');
 
 const ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
@@ -27,7 +28,7 @@ const DIST = path.join(__dirname, `../../dist`);
   const filenameToLhr = {
     'english': lhr,
     'espanol': swapLocale(lhr, 'es').lhr,
-    'arabic': swapLocale(lhr, 'ar').lhr,
+    'ɑrabic': swapLocale(lhr, 'ar').lhr,
     'xl-accented': swapLocale(lhr, 'en-XL').lhr,
     'error': errorLhr,
   };
@@ -36,14 +37,14 @@ const DIST = path.join(__dirname, `../../dist`);
   Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
     let html = ReportGenerator.generateReportHtml(lhr);
     // TODO: PSI is another variant to consider
-    for (const variant of ['', '-devtools']) {
-      if (variant === '-devtools') {
+    for (const variant of ['', '⌣.cdt.']) {
+      if (variant.includes('cdt')) {
         // TODO: Make the DevTools Audits panel "emulation" more comprehensive
         // - the parent widget/vbox container with overflow
         // - a more constrained/realistic default size
         html = html.replace(`"lh-root lh-vars"`, `"lh-root lh-vars lh-devtools"`);
       }
-      const filepath = `${DIST}/${filename}${variant}/index.html`;
+      const filepath = `${DIST}/${variant}${filename}/index.html`;
       mkdirp(path.dirname(filepath));
       fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
       console.log('✅', filepath, 'written.');
@@ -124,5 +125,6 @@ async function generateErrorLHR() {
   appleTouchIconAudit.scoreDisplayMode = 'binary';
   appleTouchIconAudit.score = 1;
 
+  rimraf(TMP);
   return errorLhr;
 }

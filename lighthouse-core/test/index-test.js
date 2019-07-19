@@ -87,22 +87,26 @@ describe('Module Tests', function() {
       });
   });
 
-  it('should throw an error when the url is invalid', function() {
-    return lighthouse('https:/i-am-not-valid', {}, {})
-      .then(() => {
-        throw new Error('Should not have resolved when url is invalid');
-      }, err => {
-        assert.ok(err);
-      });
+  it('should throw an error when the url is invalid', async () => {
+    expect.hasAssertions();
+    try {
+      await lighthouse('i-am-not-valid', {}, {});
+    } catch (err) {
+      expect(err.friendlyMessage)
+          .toBeDisplayString('The URL you have provided appears to be invalid.');
+      expect(err.code).toEqual('INVALID_URL');
+    }
   });
 
-  it('should throw an error when the url is invalid protocol (file:///)', function() {
-    return lighthouse('file:///a/fake/index.html', {}, {})
-      .then(() => {
-        throw new Error('Should not have resolved when url is file:///');
-      }, err => {
-        assert.ok(err);
-      });
+  it('should throw an error when the url is invalid protocol (file:///)', async () => {
+    expect.hasAssertions();
+    try {
+      await lighthouse('file:///a/fake/index.html', {}, {});
+    } catch (err) {
+      expect(err.friendlyMessage)
+          .toBeDisplayString('The URL you have provided appears to be invalid.');
+      expect(err.code).toEqual('INVALID_URL');
+    }
   });
 
   it('should return formatted LHR when given no categories', function() {

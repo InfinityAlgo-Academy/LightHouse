@@ -8,7 +8,10 @@
 const FontSizeAudit = require('../../../audits/seo/font-size.js');
 const assert = require('assert');
 
-const URL = 'https://example.com';
+const URL = {
+  requestedUrl: 'https://example.com',
+  finalUrl: 'https://example.com',
+};
 const validViewport = 'width=device-width';
 
 /* eslint-env jest */
@@ -233,5 +236,55 @@ describe('SEO: Font size audit', () => {
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     expect(auditResult.score).toBe(1);
     expect(auditResult.notApplicable).toBe(true);
+  });
+
+  describe('attributes source location', () => {
+    async function runFontSizeAuditWithSingleFailingStyle(style, nodeProperties) {
+      const artifacts = {
+        URL: {finalUrl: 'http://www.example.com'},
+        MetaElements: makeMetaElements(validViewport),
+        FontSize: {
+          analyzedFailingNodesData: [
+            {textLength: 1, fontSize: 1, node: {nodeId: 1, ...nodeProperties}, cssRule: style},
+          ],
+        },
+        TestedAsMobileDevice: true,
+      };
+      const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
+      expect(auditResult.details.items).toHaveLength(1);
+      return auditResult;
+    }
+
+    it('to inline node stylesheet', async () => {
+      const auditResult = await runFontSizeAuditWithSingleFailingStyle({
+        type: 'Inline',
+      }, {
+        parentNode: {attributes: ['id', 'my-parent']},
+        localName: 'p',
+        attributes: ['class', 'my-p'],
+      });
+
+      expect(auditResult.details.items[0].selector).toMatchObject({
+        type: 'node',
+        selector: '#my-parent',
+        snippet: '<p class="my-p">',
+      });
+    });
+
+    it('to attributes node stylesheet', async () => {
+      const auditResult = await runFontSizeAuditWithSingleFailingStyle({
+        type: 'Attributes',
+      }, {
+        parentNode: {attributes: ['id', 'my-parent']},
+        localName: 'font',
+        attributes: ['size', '10px'],
+      });
+
+      expect(auditResult.details.items[0].selector).toMatchObject({
+        type: 'node',
+        selector: '#my-parent',
+        snippet: '<font size="10px">',
+      });
+    });
   });
 });

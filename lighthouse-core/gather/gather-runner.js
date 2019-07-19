@@ -425,11 +425,11 @@ class GatherRunner {
     for (const [gathererName, phaseResultsPromises] of resultsEntries) {
       try {
         const phaseResults = await Promise.all(phaseResultsPromises);
-        // Take last defined pass result as artifact.
+        // Take the last defined pass result as artifact. If none are defined, the undefined check below handles it.
         const definedResults = phaseResults.filter(element => element !== undefined);
         const artifact = definedResults[definedResults.length - 1];
-        // Typecast pretends artifact always provided here, but checked below for top-level `throw`.
-        gathererArtifacts[gathererName] = /** @type {NonVoid<PhaseResult>} */ (artifact);
+        // @ts-ignore tsc can't yet express that gathererName is only a single type in each iteration, not a union of types.
+        gathererArtifacts[gathererName] = artifact;
       } catch (err) {
         // Return error to runner to handle turning it into an error audit.
         gathererArtifacts[gathererName] = err;
