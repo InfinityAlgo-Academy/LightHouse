@@ -136,7 +136,7 @@ Object {
       "path": "third-party-summary",
     },
     Object {
-      "path": "polyfills",
+      "path": "legacy-javascript",
     },
     Object {
       "path": "manual/pwa-cross-browser",
@@ -681,7 +681,7 @@ Object {
           "weight": 1,
         },
         Object {
-          "id": "polyfills",
+          "id": "legacy-javascript",
           "weight": 0,
         },
       ],
