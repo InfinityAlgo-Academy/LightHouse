@@ -17,10 +17,10 @@ module.exports = [
         'legacy-javascript': {
           details: {
             items: {
-              // 61 are from babel-polyfill
+              // 42 are from babel-polyfill
               // 1 from fixtures/legacy-javascript.js
               // 1 inline from fixtures/legacy-javascript.html
-              length: 63,
+              length: 44,
             },
           },
         },

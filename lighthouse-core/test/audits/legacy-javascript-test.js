@@ -139,7 +139,7 @@ describe('LegacyJavaScript audit', () => {
         url: 'https://www.example.com/e.js',
       },
       {
-        code: 'Object.defineProperty(window, \'CustomEvent\', function() {})',
+        code: 'Object.defineProperty(window, \'WeakMap\', function() {})',
         url: 'https://www.example.com/e.js',
       },
       {
@@ -147,11 +147,11 @@ describe('LegacyJavaScript audit', () => {
         url: 'https://www.example.com/f.js',
       },
       {
-        code: 'CustomEvent = function() {}',
+        code: 'WeakMap = function() {}',
         url: 'https://www.example.com/f.js',
       },
       {
-        code: 'window.CustomEvent = function() {}',
+        code: 'window.WeakMap = function() {}',
         url: 'https://www.example.com/f.js',
       },
       {
