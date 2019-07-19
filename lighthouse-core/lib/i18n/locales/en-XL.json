@@ -710,6 +710,12 @@
   "lighthouse-core/audits/is-on-https.js | title": {
     "message": "Ûśêś ĤT́T̂ṔŜ"
   },
+  "lighthouse-core/audits/legacy-javascript.js | description": {
+    "message": "P̂ól̂ýf̂íl̂ĺŝ án̂d́ t̂ŕâńŝf́ôŕm̂ś êńâb́l̂é l̂éĝáĉý b̂ŕôẃŝér̂ś t̂ó ûśê ńêẃ Ĵáv̂áŜćr̂íp̂t́ f̂éât́ûŕêś. Ĥóŵév̂ér̂, ḿâńŷ ár̂én̂'t́ n̂éĉéŝśâŕŷ f́ôŕ m̂ód̂ér̂ń b̂ŕôẃŝér̂ś. F̂ór̂ ýôúr̂ b́ûńd̂ĺêd́ Ĵáv̂áŜćr̂íp̂t́, âd́ôṕt̂ á m̂ód̂ér̂ń ŝćr̂íp̂t́ d̂ép̂ĺôým̂én̂t́ ŝt́r̂át̂éĝý ûśîńĝ ḿôd́ûĺê/ńôḿôd́ûĺê f́êát̂úr̂é d̂ét̂éĉt́îón̂ t́ô ŕêd́ûćê t́ĥé âḿôún̂t́ ôf́ ĉód̂é ŝh́îṕp̂éd̂ t́ô ḿôd́êŕn̂ b́r̂óŵśêŕŝ, ẃĥíl̂é r̂ét̂áîńîńĝ śûṕp̂ór̂t́ f̂ór̂ ĺêǵâćŷ b́r̂óŵśêŕŝ. [Ĺêár̂ń M̂ór̂é](ĥt́t̂ṕŝ://ṕĥíl̂íp̂ẃâĺt̂ón̂.ćôḿ/âŕt̂íĉĺêś/d̂ép̂ĺôýîńĝ-éŝ2015-ćôd́ê-ín̂-ṕr̂ód̂úĉt́îón̂-t́ôd́âý/)"
+  },
+  "lighthouse-core/audits/legacy-javascript.js | title": {
+    "message": "L̂éĝáĉý Ĵáv̂áŜćr̂íp̂t́"
+  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Â f́âśt̂ ṕâǵê ĺôád̂ óv̂ér̂ á ĉél̂ĺûĺâŕ n̂ét̂ẃôŕk̂ én̂śûŕêś â ǵôód̂ ḿôb́îĺê úŝér̂ éx̂ṕêŕîén̂ćê. [Ĺêár̂ń m̂ór̂é](ĥt́t̂ṕŝ://d́êv́êĺôṕêŕŝ.ǵôóĝĺê.ćôḿ/ŵéb̂/t́ôól̂ś/l̂íĝh́t̂h́ôúŝé/âúd̂ít̂ś/f̂áŝt́-3ĝ)."
   },
@@ -802,12 +808,6 @@
   },
   "lighthouse-core/audits/performance-budget.js | title": {
     "message": "P̂ér̂f́ôŕm̂án̂ćê b́ûd́ĝét̂"
-  },
-  "lighthouse-core/audits/polyfills.js | description": {
-    "message": "P̂ól̂ýf̂íl̂ĺŝ én̂áb̂ĺê ól̂d́êŕ b̂ŕôẃŝér̂ś t̂ó ûśê ńêẃ Ĵáv̂áŜćr̂íp̂t́ l̂án̂ǵûáĝé f̂éât́ûŕêś. Ĥóŵév̂ér̂, t́ĥéŷ ár̂én̂'t́ âĺŵáŷś n̂éĉéŝśâŕŷ. Ŕêśêár̂ćĥ ẃĥát̂ b́r̂óŵśêŕŝ ýôú m̂úŝt́ ŝúp̂ṕôŕt̂ án̂d́ ĉón̂śîd́êŕ ĉón̂d́ît́îón̂ál̂ĺŷ śêŕv̂ín̂ǵ p̂ól̂ýf̂íl̂ĺŝ b́âśêd́ ôń f̂éât́ûŕê áv̂áîĺâb́îĺît́ŷ. [Ĺêár̂ń M̂ór̂é](ĥt́t̂ṕŝ://ṕĥíl̂íp̂ẃâĺt̂ón̂.ćôḿ/âŕt̂íĉĺêś/d̂ép̂ĺôýîńĝ-éŝ2015-ćôd́ê-ín̂-ṕr̂ód̂úĉt́îón̂-t́ôd́âý/)"
-  },
-  "lighthouse-core/audits/polyfills.js | title": {
-    "message": "P̂ól̂ýf̂íl̂ĺŝ"
   },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "R̂éd̂ír̂éĉt́ŝ ín̂t́r̂ód̂úĉé âd́d̂ít̂íôńâĺ d̂él̂áŷś b̂éf̂ór̂é t̂h́ê ṕâǵê ćâń b̂é l̂óâd́êd́. [L̂éâŕn̂ ḿôŕê](h́t̂t́p̂ś://d̂év̂él̂óp̂ér̂ś.ĝóôǵl̂é.ĉóm̂/ẃêb́/t̂óôĺŝ/ĺîǵĥt́ĥóûśê/áûd́ît́ŝ/ŕêd́îŕêćt̂ś)."

@@ -1524,10 +1524,10 @@
         }
       }
     },
-    "polyfills": {
-      "id": "polyfills",
-      "title": "Polyfills",
-      "description": "Polyfills enable older browsers to use new JavaScript language features. However, they aren't always necessary. Research what browsers you must support and consider conditionally serving polyfills based on feature availability. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
+    "legacy-javascript": {
+      "id": "legacy-javascript",
+      "title": "Legacy JavaScript",
+      "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
       "score": null,
       "scoreDisplayMode": "manual",
       "details": {
@@ -1552,6 +1552,11 @@
         "items": [
           {
             "url": "http://localhost:10200/zone.js",
+            "description": "Promise",
+            "location": "Ln: 376, Col: 14"
+          },
+          {
+            "url": "http://localhost:10200/zone.js",
             "description": "Object.defineProperty",
             "location": "Ln: 1290, Col: 4"
           },
@@ -1564,6 +1569,11 @@
             "url": "http://localhost:10200/zone.js",
             "description": "Object.create",
             "location": "Ln: 1306, Col: 4"
+          },
+          {
+            "url": "http://localhost:10200/zone.js",
+            "description": "Object.getOwnPropertyDescriptor",
+            "location": "Ln: 1314, Col: 4"
           }
         ]
       }
@@ -3917,7 +3927,7 @@
           "weight": 1
         },
         {
-          "id": "polyfills",
+          "id": "legacy-javascript",
           "weight": 0
         }
       ],
@@ -4619,7 +4629,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:polyfills",
+        "name": "lh:audit:legacy-javascript",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5606,11 +5616,11 @@
       "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": [
         "audits[third-party-summary].details.headings[2].text"
       ],
-      "lighthouse-core/audits/polyfills.js | title": [
-        "audits.polyfills.title"
+      "lighthouse-core/audits/legacy-javascript.js | title": [
+        "audits[legacy-javascript].title"
       ],
-      "lighthouse-core/audits/polyfills.js | description": [
-        "audits.polyfills.description"
+      "lighthouse-core/audits/legacy-javascript.js | description": [
+        "audits[legacy-javascript].description"
       ],
       "lighthouse-core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"
