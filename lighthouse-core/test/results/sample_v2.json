@@ -1529,7 +1529,7 @@
       "title": "Legacy JavaScript",
       "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
       "score": null,
-      "scoreDisplayMode": "manual",
+      "scoreDisplayMode": "informative",
       "details": {
         "type": "table",
         "headings": [
@@ -3600,6 +3600,11 @@
           "group": "diagnostics"
         },
         {
+          "id": "legacy-javascript",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
           "id": "network-requests",
           "weight": 0
         },
@@ -3925,10 +3930,6 @@
         {
           "id": "image-aspect-ratio",
           "weight": 1
-        },
-        {
-          "id": "legacy-javascript",
-          "weight": 0
         }
       ],
       "id": "best-practices",

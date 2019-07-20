@@ -1252,7 +1252,7 @@
             },
             "id": "legacy-javascript",
             "score": null,
-            "scoreDisplayMode": "manual",
+            "scoreDisplayMode": "informative",
             "title": "Legacy JavaScript"
         },
         "link-name": {
@@ -3557,10 +3557,6 @@
                 {
                     "id": "image-aspect-ratio",
                     "weight": 1.0
-                },
-                {
-                    "id": "legacy-javascript",
-                    "weight": 0.0
                 }
             ],
             "id": "best-practices",
@@ -3730,6 +3726,11 @@
                 {
                     "group": "diagnostics",
                     "id": "third-party-summary",
+                    "weight": 0.0
+                },
+                {
+                    "group": "diagnostics",
+                    "id": "legacy-javascript",
                     "weight": 0.0
                 },
                 {
