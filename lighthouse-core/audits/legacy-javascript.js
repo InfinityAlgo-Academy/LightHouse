@@ -86,7 +86,7 @@ class LegacyJavascript extends Audit {
   static get meta() {
     return {
       id: 'legacy-javascript',
-      scoreDisplayMode: Audit.SCORING_MODES.MANUAL,
+      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       description: str_(UIStrings.description),
       title: str_(UIStrings.title),
       requiredArtifacts: ['devtoolsLogs', 'ScriptElements'],

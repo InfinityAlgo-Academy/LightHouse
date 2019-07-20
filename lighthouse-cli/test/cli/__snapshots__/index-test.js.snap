@@ -680,10 +680,6 @@ Object {
           "id": "image-aspect-ratio",
           "weight": 1,
         },
-        Object {
-          "id": "legacy-javascript",
-          "weight": 0,
-        },
       ],
       "title": "Best Practices",
     },
@@ -850,6 +846,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "third-party-summary",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "legacy-javascript",
           "weight": 0,
         },
         Object {
