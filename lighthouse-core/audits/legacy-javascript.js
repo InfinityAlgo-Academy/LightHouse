@@ -301,10 +301,12 @@ class LegacyJavascript extends Audit {
         const isMoreThanOne = patternOccurrences > 1;
         const matchOrdinal = patternMatchCounter.get(match) || 0;
         // Only show ordinal if there is more than one occurrence across all scripts.
-        const countText = isMoreThanOne ? ` (${matchOrdinal + 1} / ${patternOccurrences})` : '';
+        const description = isMoreThanOne ?
+          `${name} (${matchOrdinal + 1} / ${patternOccurrences})` :
+          name;
         tableRows.push({
           url,
-          description: `${name}${countText}`,
+          description,
           location: `Ln: ${line}, Col: ${column}`,
         });
       }
