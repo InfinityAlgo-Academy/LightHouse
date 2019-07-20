@@ -12,10 +12,10 @@ module.exports = {
   extends: 'lighthouse:default',
   settings: {
     onlyCategories: [
-      'best-practices',
+      'performance',
     ],
     onlyAudits: [
-      'polyfills',
+      'legacy-javascript',
     ],
   },
 };
