@@ -56,10 +56,17 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
  * @property {boolean} [lhrRuntimeError] True if it should appear in the top-level LHR.runtimeError property.
  */
 
+const LHERROR_SENTINEL = '__LighthouseErrorSentinel';
+const ERROR_SENTINEL = '__ErrorSentinel';
+/**
+ * @typedef {{sentinel: '__LighthouseErrorSentinel', code: string, stack?: string, [p: string]: string|undefined}} SerializedLighthouseError
+ * @typedef {{sentinel: '__ErrorSentinel', message: string, code?: string, stack?: string}} SerializedBaseError
+ */
+
 class LighthouseError extends Error {
   /**
    * @param {LighthouseErrorDefinition} errorDefinition
-   * @param {Record<string, string|boolean|undefined>=} properties
+   * @param {Record<string, string|undefined>=} properties
    */
   constructor(errorDefinition, properties) {
     super(errorDefinition.code);
@@ -95,6 +102,77 @@ class LighthouseError extends Error {
     if (protocolError.data) errMsg += ` (${protocolError.data})`;
     const error = new Error(`Protocol error ${errMsg}`);
     return Object.assign(error, {protocolMethod: method, protocolError: protocolError.message});
+  }
+
+  /**
+   * A JSON.stringify replacer to serialize LHErrors and (as a fallback) Errors.
+   * Returns a simplified version of the error object that can be reconstituted
+   * as a copy of the original error at parse time.
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#The_replacer_parameter
+   * @param {Error|LighthouseError} err
+   * @return {SerializedBaseError|SerializedLighthouseError}
+   */
+  static stringifyReplacer(err) {
+    if (err instanceof LighthouseError) {
+      // Remove class props so that remaining values were what was passed in as `properties`.
+      // eslint-disable-next-line no-unused-vars
+      const {name, code, message, friendlyMessage, lhrRuntimeError, stack, ...properties} = err;
+
+      return {
+        sentinel: LHERROR_SENTINEL,
+        code,
+        stack,
+        ...properties,
+      };
+    }
+
+    // Unexpected errors won't be LHErrors, but we want them serialized as well.
+    if (err instanceof Error) {
+      const {message, stack} = err;
+      // @ts-ignore - code can be helpful for e.g. node errors, so preserve it if it's present.
+      const code = err.code;
+      return {
+        sentinel: ERROR_SENTINEL,
+        message,
+        code,
+        stack,
+      };
+    }
+
+    throw new Error('Invalid value for LHError stringification');
+  }
+
+  /**
+   * A JSON.parse reviver. If any value passed in is a serialized Error or
+   * LHError, the error is recreated as the original object. Otherwise, the
+   * value is passed through unchanged.
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter
+   * @param {string} key
+   * @param {any} possibleError
+   * @return {any}
+   */
+  static parseReviver(key, possibleError) {
+    if (typeof possibleError === 'object' && possibleError !== null) {
+      if (possibleError.sentinel === LHERROR_SENTINEL) {
+        // Include sentinel in destructuring so it doesn't end up in `properties`.
+        // eslint-disable-next-line no-unused-vars
+        const {sentinel, code, stack, ...properties} = /** @type {SerializedLighthouseError} */ (possibleError);
+        const errorDefinition = LighthouseError.errors[/** @type {keyof typeof ERRORS} */ (code)];
+        const lhError = new LighthouseError(errorDefinition, properties);
+        lhError.stack = stack;
+
+        return lhError;
+      }
+
+      if (possibleError.sentinel === ERROR_SENTINEL) {
+        const {message, code, stack} = /** @type {SerializedBaseError} */ (possibleError);
+        const error = new Error(message);
+        Object.assign(error, {code, stack});
+        return error;
+      }
+    }
+
+    return possibleError;
   }
 }
 
@@ -227,7 +305,7 @@ const ERRORS = {
   },
 
   /* Protocol timeout failures
-   * Requires an additional `icuProtocolMethod` field for translation.
+   * Requires an additional `protocolMethod` field for translation.
    */
   PROTOCOL_TIMEOUT: {
     code: 'PROTOCOL_TIMEOUT',

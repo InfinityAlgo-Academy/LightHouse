@@ -16,6 +16,7 @@ const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 const LoadSimulatorComputed = require('../computed/load-simulator.js');
+const LHError = require('../lib/lh-error.js');
 
 const artifactsFilename = 'artifacts.json';
 const traceSuffix = '.trace.json';
@@ -42,9 +43,10 @@ function loadArtifacts(basePath) {
     throw new Error('No saved artifacts found at ' + basePath);
   }
 
-  // load artifacts.json
+  // load artifacts.json using a reviver to deserialize any LHErrors in artifacts.
+  const artifactsStr = fs.readFileSync(path.join(basePath, artifactsFilename), 'utf8');
   /** @type {LH.Artifacts} */
-  const artifacts = JSON.parse(fs.readFileSync(path.join(basePath, artifactsFilename), 'utf8'));
+  const artifacts = JSON.parse(artifactsStr, LHError.parseReviver);
 
   const filenames = fs.readdirSync(basePath);
 
@@ -74,6 +76,21 @@ function loadArtifacts(basePath) {
 }
 
 /**
+ * A replacer function for JSON.stingify of the artifacts. Used to serialize objects that
+ * JSON won't normally handle.
+ * @param {string} key
+ * @param {any} value
+ */
+function stringifyReplacer(key, value) {
+  // Currently only handle LHError and other Error types.
+  if (value instanceof Error) {
+    return LHError.stringifyReplacer(value);
+  }
+
+  return value;
+}
+
+/**
  * Save artifacts object mostly to single file located at basePath/artifacts.log.
  * Also save the traces & devtoolsLogs to their own files
  * @param {LH.Artifacts} artifacts
@@ -100,8 +117,8 @@ async function saveArtifacts(artifacts, basePath) {
     fs.writeFileSync(`${basePath}/${passName}${devtoolsLogSuffix}`, log, 'utf8');
   }
 
-  // save everything else
-  const restArtifactsString = JSON.stringify(restArtifacts, null, 2);
+  // save everything else, using a replacer to serialize LHErrors in the artifacts.
+  const restArtifactsString = JSON.stringify(restArtifacts, stringifyReplacer, 2);
   fs.writeFileSync(`${basePath}/${artifactsFilename}`, restArtifactsString, 'utf8');
   log.log('Artifacts saved to disk in folder:', basePath);
   log.timeEnd(status);
