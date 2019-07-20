@@ -45,6 +45,7 @@
   --color-gray-50: #FAFAFA;
   --color-gray-500: #9E9E9E;
   --color-gray-600: #757575;
+  --color-gray-700: #616161;
   --color-gray-800: #424242;
   --color-gray-900: #212121;
   --color-gray: #000000;
@@ -592,6 +593,9 @@
 .lh-metrics__disclaimer {
   color: var(--color-gray-600);
   margin: var(--section-padding-vertical) 0;
+}
+.lh-metrics__disclaimer a {
+  color: var(--color-gray-700);
 }
 
 .lh-metric__description {
