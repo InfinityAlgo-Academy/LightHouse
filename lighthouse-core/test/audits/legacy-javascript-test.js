@@ -56,7 +56,7 @@ describe('LegacyJavaScript audit', () => {
     assert.equal(result.extendedInfo.value, 0);
   });
 
-  it('code with a polyfill fails', async () => {
+  it('fails code with a legacy polyfill', async () => {
     const artifacts = createArtifacts([
       {
         code: 'String.prototype.repeat = function() {}',
@@ -69,7 +69,7 @@ describe('LegacyJavaScript audit', () => {
     assert.equal(result.details.items[0].description, 'String.prototype.repeat');
   });
 
-  it('code with multiple polyfills fail', async () => {
+  it('fails code with multiple legacy polyfills', async () => {
     const artifacts = createArtifacts([
       {
         code: 'String.prototype.repeat = function() {}; String.prototype.includes = function() {}',
@@ -81,7 +81,7 @@ describe('LegacyJavaScript audit', () => {
     assert.equal(result.extendedInfo.value, 2);
   });
 
-  it('multiple of the same polyfill from the same script are counted only once', async () => {
+  it('counts multiple of the same polyfill from the same script only once', async () => {
     const artifacts = createArtifacts([
       {
         code: (() => {
@@ -98,7 +98,7 @@ describe('LegacyJavaScript audit', () => {
     assert.equal(result.extendedInfo.value, 1);
   });
 
-  it('multiple of the same polyfill from different scripts display a counter', async () => {
+  it('displays a counter for multiple of the same polyfill from different scripts', async () => {
     const artifacts = createArtifacts([
       {
         code: 'String.prototype.repeat = function() {}',
