@@ -47,18 +47,20 @@ describe('SourceMaps gatherer', () => {
         throw new Error('should only define map or fetchError, not both.');
       }
 
-      const value = fetchError ?
-        Object.assign(new Error(), {message: fetchError, __failedInBrowser: true}) :
-        map;
-      sendCommandMock.mockResponse('Runtime.evaluate', {result: {value}}, undefined,
-        ({expression}) => {
-          // Check that the source map url was resolved correctly.
-          // If the test did not define `resolvedSourceMapUrl` explicitly, then use `event.sourceMapURL`.
-          const expectedResolvedSourceMapUrl = resolvedSourceMapUrl || event.sourceMapURL;
-          if (!expression.includes(expectedResolvedSourceMapUrl)) {
-            throw new Error(`did not request expected url: ${expectedResolvedSourceMapUrl}`);
-          }
-        });
+      sendCommandMock.mockResponse('Runtime.evaluate', ({expression}) => {
+        // Check that the source map url was resolved correctly.
+        // If the test did not define `resolvedSourceMapUrl` explicitly,
+        // then use `event.sourceMapURL`.
+        const expectedResolvedSourceMapUrl = resolvedSourceMapUrl || event.sourceMapURL;
+        if (!expression.includes(expectedResolvedSourceMapUrl)) {
+          throw new Error(`did not request expected url: ${expectedResolvedSourceMapUrl}`);
+        }
+
+        const value = fetchError ?
+          Object.assign(new Error(fetchError), {__failedInBrowser: true}) :
+          map;
+        return {result: {value}};
+      });
     }
     const connectionStub = new Connection();
     connectionStub.sendCommand = sendCommandMock;
