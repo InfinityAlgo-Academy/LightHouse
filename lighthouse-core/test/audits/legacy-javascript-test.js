@@ -53,7 +53,7 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 1);
-    assert.equal(result.extendedInfo.value, 0);
+    assert.equal(result.numericValue, 0);
   });
 
   it('fails code with a legacy polyfill', async () => {
@@ -65,7 +65,7 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.extendedInfo.value, 1);
+    assert.equal(result.numericValue, 1);
     assert.equal(result.details.items[0].description, 'String.prototype.repeat');
   });
 
@@ -78,7 +78,7 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.extendedInfo.value, 2);
+    assert.equal(result.numericValue, 2);
   });
 
   it('counts multiple of the same polyfill from the same script only once', async () => {
@@ -95,7 +95,7 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.extendedInfo.value, 1);
+    assert.equal(result.numericValue, 1);
   });
 
   it('displays a counter for multiple of the same polyfill from different scripts', async () => {
@@ -111,7 +111,7 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.extendedInfo.value, 2);
+    assert.equal(result.numericValue, 2);
     assert.equal(result.details.items[0].description, 'String.prototype.repeat (1 / 2)');
     assert.equal(result.details.items[1].description, 'String.prototype.repeat (2 / 2)');
   });
@@ -161,6 +161,6 @@ describe('LegacyJavaScript audit', () => {
     ]);
     const result = await LegacyJavascript.audit(artifacts, {computedCache: new Map()});
     assert.equal(result.score, 0);
-    assert.equal(result.extendedInfo.value, Object.keys(artifacts.ScriptElements).length);
+    assert.equal(result.numericValue, Object.keys(artifacts.ScriptElements).length);
   });
 });

@@ -334,9 +334,7 @@ class LegacyJavascript extends Audit {
 
     return {
       score: Number(patternMatchCounter.size === 0),
-      extendedInfo: {
-        value: patternMatchCounter.size,
-      },
+      numericValue: patternMatchCounter.size,
       details,
     };
   }
