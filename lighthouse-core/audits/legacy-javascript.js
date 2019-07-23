@@ -316,7 +316,7 @@ class LegacyJavascript extends Audit {
     const headings = [
       {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
       {key: 'description', itemType: 'code', text: 'Description'},
-      {key: 'location', itemType: 'code', text: 'Location'},
+      {key: 'location', itemType: 'code', text: str_(i18n.UIStrings.columnLocation)},
     ];
     const details = Audit.makeTableDetails(headings, tableRows);
 
