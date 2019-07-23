@@ -377,15 +377,6 @@
             "scoreDisplayMode": "informative",
             "title": "Minimize Critical Requests Depth"
         },
-        "cumulative-long-queuing-delay": {
-            "description": "[Experimental metric] Total time period between FCP and Time to Interactive during which queuing time for any input event would be higher than 50ms.",
-            "displayValue": "120\u00a0ms",
-            "id": "cumulative-long-queuing-delay",
-            "numericValue": 116.79800000000023,
-            "score": 1.0,
-            "scoreDisplayMode": "numeric",
-            "title": "Cumulative Long Queuing Delay"
-        },
         "custom-controls-labels": {
             "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).",
             "id": "custom-controls-labels",
@@ -1494,7 +1485,6 @@
             "details": {
                 "items": [
                     {
-                        "cumulativeLongQueuingDelay": 117.0,
                         "estimatedInputLatency": 16.0,
                         "firstCPUIdle": 4927.0,
                         "firstCPUIdleTs": 185608247190.0,
@@ -1525,7 +1515,8 @@
                         "observedTraceEnd": 10281.0,
                         "observedTraceEndTs": 185613601189.0,
                         "speedIndex": 4417.0,
-                        "speedIndexTs": 185607736912.0
+                        "speedIndexTs": 185607736912.0,
+                        "totalBlockingTime": 117.0
                     }
                 ],
                 "type": "debugdata"
@@ -2629,6 +2620,15 @@
             "scoreDisplayMode": "binary",
             "title": "Server response times are low (TTFB)"
         },
+        "total-blocking-time": {
+            "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds.",
+            "displayValue": "120\u00a0ms",
+            "id": "total-blocking-time",
+            "numericValue": 116.79800000000023,
+            "score": 1.0,
+            "scoreDisplayMode": "numeric",
+            "title": "Total Blocking Time"
+        },
         "total-byte-weight": {
             "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).",
             "details": {
@@ -3546,7 +3546,7 @@
                     "weight": 0.0
                 },
                 {
-                    "id": "cumulative-long-queuing-delay",
+                    "id": "total-blocking-time",
                     "weight": 0.0
                 },
                 {
@@ -4180,13 +4180,13 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
-                "name": "lh:audit:cumulative-long-queuing-delay",
+                "name": "lh:audit:total-blocking-time",
                 "startTime": 0.0
             },
             {
                 "duration": 100.0,
                 "entryType": "measure",
-                "name": "lh:computed:CumulativeLongQueuingDelay",
+                "name": "lh:computed:TotalBlockingTime",
                 "startTime": 0.0
             },
             {

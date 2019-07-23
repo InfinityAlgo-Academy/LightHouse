@@ -779,6 +779,12 @@
   "lighthouse-core/audits/metrics/speed-index.js | title": {
     "message": "Ŝṕêéd̂ Ín̂d́êx́"
   },
+  "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
+    "message": "Ŝúm̂ óf̂ ál̂ĺ t̂ím̂é p̂ér̂íôd́ŝ b́êt́ŵéêń F̂ĆP̂ án̂d́ T̂ím̂é t̂ó Îńt̂ér̂áĉt́îv́ê, ẃĥén̂ t́âśk̂ ĺêńĝt́ĥ éx̂ćêéd̂éd̂ 50ḿŝ, éx̂ṕr̂éŝśêd́ îń m̂íl̂ĺîśêćôńd̂ś."
+  },
+  "lighthouse-core/audits/metrics/total-blocking-time.js | title": {
+    "message": "T̂ót̂ál̂ B́l̂óĉḱîńĝ T́îḿê"
+  },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "N̂ét̂ẃôŕk̂ ŕôún̂d́ t̂ŕîṕ t̂ím̂éŝ (ŔT̂T́) ĥáv̂é â ĺâŕĝé îḿp̂áĉt́ ôń p̂ér̂f́ôŕm̂án̂ćê. Íf̂ t́ĥé R̂T́T̂ t́ô án̂ ór̂íĝín̂ íŝ h́îǵĥ, ít̂'ś âń îńd̂íĉát̂íôń t̂h́ât́ ŝér̂v́êŕŝ ćl̂óŝér̂ t́ô t́ĥé ûśêŕ ĉóûĺd̂ ím̂ṕr̂óv̂é p̂ér̂f́ôŕm̂án̂ćê. [Ĺêár̂ń m̂ór̂é](ĥt́t̂ṕŝ://h́p̂b́n̂.ćô/ṕr̂ím̂ér̂-ón̂-ĺât́êńĉý-âńd̂-b́âńd̂ẃîd́t̂h́/)."
   },

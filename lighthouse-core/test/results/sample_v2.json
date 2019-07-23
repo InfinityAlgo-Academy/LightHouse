@@ -191,10 +191,10 @@
       "numericValue": 16,
       "displayValue": "20 ms"
     },
-    "cumulative-long-queuing-delay": {
-      "id": "cumulative-long-queuing-delay",
-      "title": "Cumulative Long Queuing Delay",
-      "description": "[Experimental metric] Total time period between FCP and Time to Interactive during which queuing time for any input event would be higher than 50ms.",
+    "total-blocking-time": {
+      "id": "total-blocking-time",
+      "title": "Total Blocking Time",
+      "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds.",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 116.79800000000023,
@@ -1258,7 +1258,7 @@
             "speedIndex": 4417,
             "speedIndexTs": 185607736912,
             "estimatedInputLatency": 16,
-            "cumulativeLongQueuingDelay": 117,
+            "totalBlockingTime": 117,
             "observedNavigationStart": 0,
             "observedNavigationStartTs": 185603319912,
             "observedFirstPaint": 3969,
@@ -3417,7 +3417,7 @@
           "weight": 0
         },
         {
-          "id": "cumulative-long-queuing-delay",
+          "id": "total-blocking-time",
           "weight": 0
         },
         {
@@ -4283,13 +4283,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:cumulative-long-queuing-delay",
+        "name": "lh:audit:total-blocking-time",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:computed:CumulativeLongQueuingDelay",
+        "name": "lh:computed:TotalBlockingTime",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5217,6 +5217,12 @@
         },
         {
           "values": {
+            "timeInMs": 116.79800000000023
+          },
+          "path": "audits[total-blocking-time].displayValue"
+        },
+        {
+          "values": {
             "timeInMs": 122.537
           },
           "path": "audits[max-potential-fid].displayValue"
@@ -5233,6 +5239,12 @@
           },
           "path": "audits[network-server-latency].displayValue"
         }
+      ],
+      "lighthouse-core/audits/metrics/total-blocking-time.js | title": [
+        "audits[total-blocking-time].title"
+      ],
+      "lighthouse-core/audits/metrics/total-blocking-time.js | description": [
+        "audits[total-blocking-time].description"
       ],
       "lighthouse-core/audits/metrics/max-potential-fid.js | title": [
         "audits[max-potential-fid].title"

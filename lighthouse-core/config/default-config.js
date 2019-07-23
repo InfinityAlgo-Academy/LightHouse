@@ -171,7 +171,7 @@ const defaultConfig = {
     'screenshot-thumbnails',
     'final-screenshot',
     'metrics/estimated-input-latency',
-    'metrics/cumulative-long-queuing-delay',
+    'metrics/total-blocking-time',
     'metrics/max-potential-fid',
     'errors-in-console',
     'time-to-first-byte',
@@ -369,7 +369,7 @@ const defaultConfig = {
         {id: 'first-cpu-idle', weight: 2, group: 'metrics'},
         {id: 'max-potential-fid', weight: 0, group: 'metrics'},
         {id: 'estimated-input-latency', weight: 0}, // intentionally left out of metrics so it won't be displayed
-        {id: 'cumulative-long-queuing-delay', weight: 0}, // intentionally left out of metrics so it won't be displayed
+        {id: 'total-blocking-time', weight: 0}, // intentionally left out of metrics so it won't be displayed
         {id: 'render-blocking-resources', weight: 0, group: 'load-opportunities'},
         {id: 'uses-responsive-images', weight: 0, group: 'load-opportunities'},
         {id: 'offscreen-images', weight: 0, group: 'load-opportunities'},
