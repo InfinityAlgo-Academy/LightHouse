@@ -25,6 +25,11 @@ const mapJson = JSON.stringify({
 
 describe('SourceMaps gatherer', () => {
   /**
+   * `scriptParsedEvent` mocks the `sourceMapURL` and `url` seen from the protocol.
+   * `map` mocks the (JSON) of the source maps that `Runtime.evaluate` returns.
+   * `resolvedSourceMapUrl` is used to assert that the SourceMaps gatherer is using the expected
+   *                        url to fetch the source map.
+   * `fetchError` mocks an error that happens in the page. Only fetch error message make sense.
    * @param {Array<{scriptParsedEvent: LH.Crdp.Debugger.ScriptParsedEvent, map: string, resolvedSourceMapUrl?: string, fetchError: string}>} mapsAndEvents
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
@@ -35,11 +40,13 @@ describe('SourceMaps gatherer', () => {
       .mockResponse('Debugger.enable', {})
       .mockResponse('Debugger.disable', {});
 
-    for (const {map, scriptParsedEvent, fetchError, resolvedSourceMapUrl} of mapsAndEvents) {
-      const event = scriptParsedEvent;
-      onMock.mockEvent('protocolevent', {method: 'Debugger.scriptParsed', params: event});
+    for (const {scriptParsedEvent, map, resolvedSourceMapUrl, fetchError} of mapsAndEvents) {
+      onMock.mockEvent('protocolevent', {
+        method: 'Debugger.scriptParsed',
+        params: scriptParsedEvent,
+      });
 
-      if (event.sourceMapURL.startsWith('data:')) {
+      if (scriptParsedEvent.sourceMapURL.startsWith('data:')) {
         // Only the source maps that need to be fetched use the `evaluateAsync` code path.
         continue;
       }
