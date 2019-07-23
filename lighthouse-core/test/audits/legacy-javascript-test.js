@@ -32,7 +32,7 @@ const createArtifacts = (scripts) => {
 
 /* eslint-env jest */
 describe('LegacyJavaScript audit', () => {
-  it('code with no polyfills passes', async () => {
+  it('passes code with no polyfills', async () => {
     const artifacts = createArtifacts([
       {
         code: 'var message = "hello world"; console.log(message);',
