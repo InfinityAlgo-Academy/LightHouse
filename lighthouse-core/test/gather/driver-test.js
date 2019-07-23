@@ -19,17 +19,6 @@ const redirectDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.
 jest.useFakeTimers();
 
 /**
- * In some functions we have lots of promise follow ups that get queued by protocol messages.
- * This is a convenience method to easily advance all timers and flush all the queued microtasks.
- */
-async function flushAllTimersAndMicrotasks() {
-  for (let i = 0; i < 1000; i++) {
-    jest.advanceTimersByTime(1);
-    await Promise.resolve();
-  }
-}
-
-/**
  * Transparently augments the promise with inspectable functions to query its state.
  *
  * @template T
@@ -80,6 +69,17 @@ expect.extend({
     return {message, pass};
   },
 });
+
+/**
+ * In some functions we have lots of promise follow ups that get queued by protocol messages.
+ * This is a convenience method to easily advance all timers and flush all the queued microtasks.
+ */
+async function flushAllTimersAndMicrotasks() {
+  for (let i = 0; i < 1000; i++) {
+    jest.advanceTimersByTime(1);
+    await Promise.resolve();
+  }
+}
 
 let driver;
 let connectionStub;
