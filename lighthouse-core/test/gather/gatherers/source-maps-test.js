@@ -25,7 +25,7 @@ const mapJson = JSON.stringify({
 
 describe('SourceMaps gatherer', () => {
   /**
-   * @param {Array<{scriptParsedEvent: LH.Crdp.Debugger.ScriptParsedEvent, map: string, fetchError: string}>} mapsAndEvents
+   * @param {Array<{scriptParsedEvent: LH.Crdp.Debugger.ScriptParsedEvent, map: string, resolvedSourceMapUrl?: string, fetchError: string}>} mapsAndEvents
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
   async function runSourceMaps(mapsAndEvents) {
@@ -49,12 +49,10 @@ describe('SourceMaps gatherer', () => {
       }
 
       sendCommandMock.mockResponse('Runtime.evaluate', ({expression}) => {
-        // Check that the source map url was resolved correctly.
-        // If the test did not define `resolvedSourceMapUrl` explicitly,
-        // then use `event.sourceMapURL`.
-        const expectedResolvedSourceMapUrl = resolvedSourceMapUrl || event.sourceMapURL;
-        if (!expression.includes(expectedResolvedSourceMapUrl)) {
-          throw new Error(`did not request expected url: ${expectedResolvedSourceMapUrl}`);
+        // Check that the source map url was resolved correctly. It'll be somewhere
+        // in the code sent to Runtime.evaluate.
+        if (resolvedSourceMapUrl && !expression.includes(resolvedSourceMapUrl)) {
+          throw new Error(`did not request expected url: ${resolvedSourceMapUrl}`);
         }
 
         const value = fetchError ?
@@ -100,6 +98,7 @@ describe('SourceMaps gatherer', () => {
           sourceMapURL: 'http://www.example.com/bundle.js.map',
         },
         map: mapJson,
+        resolvedSourceMapUrl: 'http://www.example.com/bundle.js.map',
       },
     ];
     const artifact = await runSourceMaps(mapsAndEvents);
@@ -136,6 +135,7 @@ describe('SourceMaps gatherer', () => {
           sourceMapURL: 'http://www.example-2.com/path/bundle.js',
         },
         map: mapJson,
+        resolvedSourceMapUrl: 'http://www.example-2.com/path/bundle.js',
       },
     ];
     const artifacts = await runSourceMaps(mapsAndEvents);
