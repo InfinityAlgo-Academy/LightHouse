@@ -89,7 +89,7 @@ class SourceMaps extends Gatherer {
     try {
       return new URL(url, base).href;
     } catch (e) {
-      return url;
+      return;
     }
   }
 
@@ -110,16 +110,20 @@ class SourceMaps extends Gatherer {
         event.sourceMapURL :
         this._resolveUrl(event.sourceMapURL, event.url);
 
-    log.verbose('SourceMaps', event.url, URL.elideDataURI(sourceMapUrl));
     /** @type {{map: LH.Artifacts.RawSourceMap} | {errorMessage: string}} */
     let sourceMapOrError;
-    try {
-      const map = isSourceMapADataUri ?
-        this.parseSourceMapFromDataUrl(sourceMapUrl) :
-        await this.fetchSourceMapInPage(driver, sourceMapUrl);
-      sourceMapOrError = {map};
-    } catch (err) {
-      sourceMapOrError = {errorMessage: err.toString()};
+    if (sourceMapUrl) {
+      log.verbose('SourceMaps', event.url, URL.elideDataURI(sourceMapUrl));
+      try {
+        const map = isSourceMapADataUri ?
+          this.parseSourceMapFromDataUrl(sourceMapUrl) :
+          await this.fetchSourceMapInPage(driver, sourceMapUrl);
+        sourceMapOrError = {map};
+      } catch (err) {
+        sourceMapOrError = {errorMessage: err.toString()};
+      }
+    } else {
+      sourceMapOrError = {errorMessage: `Could not resolve map url: ${event.sourceMapURL}`};
     }
 
     if ('errorMessage' in sourceMapOrError) {

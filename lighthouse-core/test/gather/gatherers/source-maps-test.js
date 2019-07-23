@@ -155,7 +155,7 @@ describe('SourceMaps gatherer', () => {
     ]);
   });
 
-  it('fails to fetch map that generates an error message', async () => {
+  it('generates an error message when fetching map fails', async () => {
     const mapsAndEvents = [
       {
         event: {
@@ -176,7 +176,27 @@ describe('SourceMaps gatherer', () => {
     ]);
   });
 
-  it('fails to parse map that generates an error message', async () => {
+  it('generates an error message when map url cannot be resolved', async () => {
+    const mapsAndEvents = [
+      {
+        event: {
+          url: 'http://www.example.com/bundle.js',
+          sourceMapURL: 'http://',
+        },
+      },
+    ];
+    const artifact = await runSourceMaps(mapsAndEvents);
+    expect(artifact).toEqual([
+      {
+        scriptUrl: mapsAndEvents[0].event.url,
+        sourceMapUrl: undefined,
+        errorMessage: 'Could not resolve map url: http://',
+        map: undefined,
+      },
+    ]);
+  });
+
+  it('generates an error message when parsing map fails', async () => {
     const mapsAndEvents = [
       {
         event: {
