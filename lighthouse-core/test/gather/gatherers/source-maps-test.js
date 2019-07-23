@@ -25,7 +25,7 @@ const mapJson = JSON.stringify({
 
 describe('SourceMaps gatherer', () => {
   /**
-   * @param {Array<{event: LH.Crdp.Debugger.ScriptParsedEvent, map: string, fetchError: string}>} mapsAndEvents
+   * @param {Array<{scriptParsedEvent: LH.Crdp.Debugger.ScriptParsedEvent, map: string, fetchError: string}>} mapsAndEvents
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
   async function runSourceMaps(mapsAndEvents) {
@@ -35,7 +35,8 @@ describe('SourceMaps gatherer', () => {
       .mockResponse('Debugger.enable', {})
       .mockResponse('Debugger.disable', {});
 
-    for (const {map, event, fetchError, resolvedSourceMapUrl} of mapsAndEvents) {
+    for (const {map, scriptParsedEvent, fetchError, resolvedSourceMapUrl} of mapsAndEvents) {
+      const event = scriptParsedEvent;
       onMock.mockEvent('protocolevent', {method: 'Debugger.scriptParsed', params: event});
 
       if (event.sourceMapURL.startsWith('data:')) {
@@ -57,7 +58,7 @@ describe('SourceMaps gatherer', () => {
         }
 
         const value = fetchError ?
-          Object.assign(new Error(fetchError), {__failedInBrowser: true}) :
+          Object.assign(new Error(), {message: fetchError, __failedInBrowser: true}) :
           map;
         return {result: {value}};
       });
@@ -81,7 +82,7 @@ describe('SourceMaps gatherer', () => {
   it('ignores script with no source map url', async () => {
     const artifact = await runSourceMaps([
       {
-        event: {
+        scriptParsedEvent: {
           url: 'http://www.example.com/script.js',
           sourceMapURL: '',
         },
@@ -94,7 +95,7 @@ describe('SourceMaps gatherer', () => {
   it('fetches map for script with source map url', async () => {
     const mapsAndEvents = [
       {
-        event: {
+        scriptParsedEvent: {
           url: 'http://www.example.com/bundle.js',
           sourceMapURL: 'http://www.example.com/bundle.js.map',
         },
@@ -104,8 +105,8 @@ describe('SourceMaps gatherer', () => {
     const artifact = await runSourceMaps(mapsAndEvents);
     expect(artifact).toEqual([
       {
-        scriptUrl: mapsAndEvents[0].event.url,
-        sourceMapUrl: mapsAndEvents[0].event.sourceMapURL,
+        scriptUrl: mapsAndEvents[0].scriptParsedEvent.url,
+        sourceMapUrl: mapsAndEvents[0].scriptParsedEvent.sourceMapURL,
         map: JSON.parse(mapsAndEvents[0].map),
       },
     ]);
@@ -114,7 +115,7 @@ describe('SourceMaps gatherer', () => {
   it('fetches map for script with relative source map url', async () => {
     const mapsAndEvents = [
       {
-        event: {
+        scriptParsedEvent: {
           url: 'http://www.example.com/path/bundle.js',
           sourceMapURL: 'bundle.js.map',
         },
@@ -122,7 +123,7 @@ describe('SourceMaps gatherer', () => {
         resolvedSourceMapUrl: 'http://www.example.com/path/bundle.js.map',
       },
       {
-        event: {
+        scriptParsedEvent: {
           url: 'http://www.example.com/path/bundle.js',
           sourceMapURL: '../bundle.js.map',
         },
@@ -130,7 +131,7 @@ describe('SourceMaps gatherer', () => {
         resolvedSourceMapUrl: 'http://www.example.com/bundle.js.map',
       },
       {
-        event: {
+        scriptParsedEvent: {
           url: 'http://www.example.com/path/bundle.js',
           sourceMapURL: 'http://www.example-2.com/path/bundle.js',
         },
@@ -140,18 +141,18 @@ describe('SourceMaps gatherer', () => {
     const artifacts = await runSourceMaps(mapsAndEvents);
     expect(artifacts).toEqual([
       {
-        scriptUrl: mapsAndEvents[0].event.url,
+        scriptUrl: mapsAndEvents[0].scriptParsedEvent.url,
         sourceMapUrl: 'http://www.example.com/path/bundle.js.map',
         map: JSON.parse(mapsAndEvents[0].map),
       },
       {
-        scriptUrl: mapsAndEvents[1].event.url,
+        scriptUrl: mapsAndEvents[1].scriptParsedEvent.url,
         sourceMapUrl: 'http://www.example.com/bundle.js.map',
         map: JSON.parse(mapsAndEvents[1].map),
       },
       {
-        scriptUrl: mapsAndEvents[2].event.url,
-        sourceMapUrl: mapsAndEvents[2].event.sourceMapURL,
+        scriptUrl: mapsAndEvents[2].scriptParsedEvent.url,
+        sourceMapUrl: mapsAndEvents[2].scriptParsedEvent.sourceMapURL,
         map: JSON.parse(mapsAndEvents[2].map),
       },
     ]);
@@ -160,7 +161,7 @@ describe('SourceMaps gatherer', () => {
   it('generates an error message when fetching map fails', async () => {
     const mapsAndEvents = [
       {
-        event: {
+        scriptParsedEvent: {
           url: 'http://www.example.com/bundle.js',
           sourceMapURL: 'http://www.example.com/bundle.js.map',
         },
@@ -170,8 +171,8 @@ describe('SourceMaps gatherer', () => {
     const artifact = await runSourceMaps(mapsAndEvents);
     expect(artifact).toEqual([
       {
-        scriptUrl: mapsAndEvents[0].event.url,
-        sourceMapUrl: mapsAndEvents[0].event.sourceMapURL,
+        scriptUrl: mapsAndEvents[0].scriptParsedEvent.url,
+        sourceMapUrl: mapsAndEvents[0].scriptParsedEvent.sourceMapURL,
         errorMessage: 'Error: Failed fetching source map',
         map: undefined,
       },
@@ -181,7 +182,7 @@ describe('SourceMaps gatherer', () => {
   it('generates an error message when map url cannot be resolved', async () => {
     const mapsAndEvents = [
       {
-        event: {
+        scriptParsedEvent: {
           url: 'http://www.example.com/bundle.js',
           sourceMapURL: 'http://',
         },
@@ -190,7 +191,7 @@ describe('SourceMaps gatherer', () => {
     const artifact = await runSourceMaps(mapsAndEvents);
     expect(artifact).toEqual([
       {
-        scriptUrl: mapsAndEvents[0].event.url,
+        scriptUrl: mapsAndEvents[0].scriptParsedEvent.url,
         sourceMapUrl: undefined,
         errorMessage: 'Could not resolve map url: http://',
         map: undefined,
@@ -201,14 +202,14 @@ describe('SourceMaps gatherer', () => {
   it('generates an error message when parsing map fails', async () => {
     const mapsAndEvents = [
       {
-        event: {
+        scriptParsedEvent: {
           url: 'http://www.example.com/bundle.js',
           sourceMapURL: 'http://www.example.com/bundle.js.map',
         },
         map: '{{}',
       },
       {
-        event: {
+        scriptParsedEvent: {
           url: 'http://www.example.com/bundle-2.js',
           sourceMapURL: makeJsonDataUrl('{};'),
         },
@@ -217,13 +218,13 @@ describe('SourceMaps gatherer', () => {
     const artifact = await runSourceMaps(mapsAndEvents);
     expect(artifact).toEqual([
       {
-        scriptUrl: mapsAndEvents[0].event.url,
-        sourceMapUrl: mapsAndEvents[0].event.sourceMapURL,
+        scriptUrl: mapsAndEvents[0].scriptParsedEvent.url,
+        sourceMapUrl: mapsAndEvents[0].scriptParsedEvent.sourceMapURL,
         errorMessage: 'SyntaxError: Unexpected token { in JSON at position 1',
         map: undefined,
       },
       {
-        scriptUrl: mapsAndEvents[1].event.url,
+        scriptUrl: mapsAndEvents[1].scriptParsedEvent.url,
         sourceMapUrl: undefined,
         errorMessage: 'SyntaxError: Unexpected token ; in JSON at position 2',
         map: undefined,
