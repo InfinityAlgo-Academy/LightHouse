@@ -129,6 +129,8 @@ class SourceMaps extends Gatherer {
     return {
       scriptUrl: event.url,
       sourceMapUrl: isSourceMapADataUri ? undefined : sourceMapUrl,
+      // map is undefined, unless there wasn't an error.
+      map: undefined,
       ...sourceMapOrError,
     };
   }
