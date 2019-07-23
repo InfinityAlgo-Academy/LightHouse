@@ -96,11 +96,11 @@ class SourceMaps extends Gatherer {
   /**
    * @param {Driver} driver
    * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
-   * @return {Promise<LH.Artifacts.SourceMap | undefined>}
+   * @return {Promise<LH.Artifacts.SourceMap>}
    */
   async _retrieveMapFromScriptParsedEvent(driver, event) {
     if (!event.sourceMapURL) {
-      return;
+      throw new Error('precondition failed: event.sourceMapURL should exist');
     }
 
     // `sourceMapURL` is simply the URL found in either a magic comment or an x-sourcemap header.
@@ -126,10 +126,6 @@ class SourceMaps extends Gatherer {
       sourceMapOrError = {errorMessage: `Could not resolve map url: ${event.sourceMapURL}`};
     }
 
-    if ('errorMessage' in sourceMapOrError) {
-      log.error('SourceMaps', event.url, sourceMapOrError.errorMessage);
-    }
-
     return {
       scriptUrl: event.url,
       sourceMapUrl: isSourceMapADataUri ? undefined : sourceMapUrl,
@@ -148,11 +144,9 @@ class SourceMaps extends Gatherer {
     await driver.sendCommand('Debugger.disable');
 
     const eventProcessPromises = this._scriptParsedEvents
-      .filter((event) => event.sourceMapURL)
       .map((event) => this._retrieveMapFromScriptParsedEvent(driver, event));
 
-    return [...await Promise.all(eventProcessPromises)]
-      .filter(/** @type {(r: any) => r is LH.Artifacts.SourceMap} */ (r => r));
+    return Promise.all(eventProcessPromises);
   }
 }
 
