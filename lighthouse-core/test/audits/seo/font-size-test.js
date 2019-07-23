@@ -238,10 +238,10 @@ describe('SEO: Font size audit', () => {
     expect(auditResult.notApplicable).toBe(true);
   });
 
-  describe('attributes source location', () => {
+  describe('attributes source of style', () => {
     async function runFontSizeAuditWithSingleFailingStyle(style, nodeProperties) {
       const artifacts = {
-        URL: {finalUrl: 'http://www.example.com'},
+        URL,
         MetaElements: makeMetaElements(validViewport),
         FontSize: {
           analyzedFailingNodesData: [
@@ -264,10 +264,13 @@ describe('SEO: Font size audit', () => {
         attributes: ['class', 'my-p'],
       });
 
-      expect(auditResult.details.items[0].selector).toMatchObject({
-        type: 'node',
-        selector: '#my-parent',
-        snippet: '<p class="my-p">',
+      expect(auditResult.details.items[0]).toMatchObject({
+        source: URL.finalUrl,
+        selector: {
+          type: 'node',
+          selector: '#my-parent',
+          snippet: '<p class="my-p">',
+        },
       });
     });
 
@@ -280,10 +283,13 @@ describe('SEO: Font size audit', () => {
         attributes: ['size', '10px'],
       });
 
-      expect(auditResult.details.items[0].selector).toMatchObject({
-        type: 'node',
-        selector: '#my-parent',
-        snippet: '<font size="10px">',
+      expect(auditResult.details.items[0]).toMatchObject({
+        source: URL.finalUrl,
+        selector: {
+          type: 'node',
+          selector: '#my-parent',
+          snippet: '<font size="10px">',
+        },
       });
     });
   });
