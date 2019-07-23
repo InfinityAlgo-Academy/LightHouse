@@ -98,7 +98,7 @@ class SourceMaps extends Gatherer {
    * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
    * @return {Promise<LH.Artifacts.SourceMap | undefined>}
    */
-  async _processEvent(driver, event) {
+  async _retrieveMapFromScriptParsedEvent(driver, event) {
     if (!event.sourceMapURL) {
       return;
     }
@@ -149,7 +149,7 @@ class SourceMaps extends Gatherer {
 
     const eventProcessPromises = this._scriptParsedEvents
       .filter((event) => event.sourceMapURL)
-      .map((event) => this._processEvent(driver, event));
+      .map((event) => this._retrieveMapFromScriptParsedEvent(driver, event));
 
     return [...await Promise.all(eventProcessPromises)]
       .filter(/** @type {(r: any) => r is LH.Artifacts.SourceMap} */ (r => r));
