@@ -21,6 +21,10 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
+/**
+ * Takes a list of patterns (consisting of a name identifier and a RegExp expression string)
+ * and returns match results with line / column information for a given code input.
+ */
 class CodePatternMatcher {
   /**
    * @param {Pattern[]} patterns
@@ -79,6 +83,11 @@ class CodePatternMatcher {
   }
 }
 
+/**
+ * Identifies polyfills and transforms that should not be present if using @babel/preset-env with
+ * esmodules = true.
+ * @see https://docs.google.com/spreadsheets/d/1z28Au8wo8-c2UsM2lDVEOJcI3jOkb2c951xEBqzBKCc/edit?usp=sharing
+ */
 class LegacyJavascript extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -241,6 +250,9 @@ class LegacyJavascript extends Audit {
   }
 
   /**
+   * Returns a collection of match results grouped by script url and with a mapping
+   * to determine the order in which the matches were discovered.
+   * 
    * @param {CodePatternMatcher} matcher
    * @param {LH.GathererArtifacts['ScriptElements']} scripts
    * @param {LH.Artifacts.NetworkRequest[]} networkRecords
