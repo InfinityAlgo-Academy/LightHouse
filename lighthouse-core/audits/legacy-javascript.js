@@ -51,7 +51,7 @@ class CodePatternMatcher {
     // only one subgroup will be defined. Exec until no more matches.
     this.re.lastIndex = 0;
     while ((result = this.re.exec(code)) !== null) {
-      // Discard first - it's the whole matching pattern.
+      // Index 0 - the entire match, discard.
       // Index 1 is truthy if matching a newline, and is used to track the line number.
       // `patternExpressionMatches` maps to each possible pattern.
       // Only one of [isNewline, ...patternExpressionMatches] is ever defined.
