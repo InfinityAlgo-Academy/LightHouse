@@ -762,7 +762,7 @@
     "uses-rel-preload": {
       "id": "uses-rel-preload",
       "title": "Preload key requests",
-      "description": "Consider using <link rel=preload> to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
+      "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
@@ -6029,7 +6029,7 @@
       "lighthouse-core/audits/dobetterweb/js-libraries.js | description": [
         "audits[js-libraries].description"
       ],
-      "lighthouse-core/audits/dobetterweb/js-libraries.js | columnName": [
+      "lighthouse-core/lib/i18n/i18n.js | columnName": [
         "audits[js-libraries].details.headings[0].text"
       ],
       "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": [

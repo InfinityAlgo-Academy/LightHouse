@@ -21,7 +21,10 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why they should not use the Application Cache API. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Application Cache is deprecated. ' +
     '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/appcache).',
-  /** Label for the audit identifying uses of the Application Cache. */
+  /**
+   * @description Label for the audit identifying uses of the Application Cache.
+   * @example {clock.appcache} AppCacheManifest
+   */
   displayValue: 'Found "{AppCacheManifest}"',
 };
 

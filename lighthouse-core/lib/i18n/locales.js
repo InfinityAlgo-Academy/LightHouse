@@ -17,8 +17,8 @@
 // The keys within this const must exactly match the LH.Locale type in externs.d.ts
 /** @type {Record<LH.Locale, LocaleMessages>} */
 const locales = {
-  'en-US': require('./en-US.json'), // The 'source' strings, with descriptions
-  'en': require('./en-US.json'), // According to CLDR/ICU, 'en' == 'en-US' dates/numbers (Why?!)
+  'en-US': require('./locales/en-US.json'), // The 'source' strings, with descriptions
+  'en': require('./locales/en-US.json'), // According to CLDR/ICU, 'en' == 'en-US' dates/numbers (Why?!)
 
   // TODO: en-GB has just ~10 messages that are different from en-US. We should only ship those.
   'en-AU': require('./locales/en-GB.json'), // Alias of 'en-GB'

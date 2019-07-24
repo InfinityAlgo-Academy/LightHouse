@@ -3044,7 +3044,7 @@
             "warnings": []
         },
         "uses-rel-preload": {
-            "description": "Consider using <link rel=preload> to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
+            "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
             "details": {
                 "headings": [],
                 "items": [],
