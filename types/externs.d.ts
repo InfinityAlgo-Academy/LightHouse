@@ -103,6 +103,8 @@ declare global {
       disableStorageReset?: boolean;
       /** The form factor the emulation should use. */
       emulatedFormFactor?: 'mobile'|'desktop'|'none';
+      /** Set to `provided` if emulation already applied prior to Lighthouse run. */
+      deviceScreenEmulationMethod?: 'devtools'|'provided';
       /** The method used to throttle the network. */
       throttlingMethod?: 'devtools'|'simulate'|'provided';
       /** The throttling config settings. */
