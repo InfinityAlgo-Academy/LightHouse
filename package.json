@@ -195,7 +195,7 @@
     },
     {
       "path": "./dist/lighthouse-dt-bundle.js",
-      "maxSize": "400 kB"
+      "maxSize": "405 kB"
     }
   ],
   "nyc": {
