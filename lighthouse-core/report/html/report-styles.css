@@ -951,8 +951,9 @@
 }
 
 .lh-audit-explanation {
-  margin: var(--audit-padding-vertical) 0 calc(var(--audit-padding-vertical) / 2);
+  margin: var(--audit-padding-vertical) 0 calc(var(--audit-padding-vertical) / 2) var(--audit-margin-horizontal);
   line-height: var(--audit-explanation-line-height);
+  display: inline-block;
 }
 
 .lh-audit--fail .lh-audit-explanation {

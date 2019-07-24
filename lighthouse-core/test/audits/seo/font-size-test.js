@@ -54,7 +54,6 @@ describe('SEO: Font size audit', () => {
 
     const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
     assert.equal(auditResult.score, 0);
-    expect(auditResult.explanation).toBeDisplayString('41% of text is too small.');
     expect(auditResult.displayValue).toBeDisplayString('59% legible text');
   });
 

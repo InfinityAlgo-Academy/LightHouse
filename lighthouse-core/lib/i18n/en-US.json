@@ -1143,10 +1143,6 @@
     "message": "{decimalProportion, number, extendedPercent} legible text",
     "description": "Label for the audit identifying font sizes that are too small."
   },
-  "lighthouse-core/audits/seo/font-size.js | explanation": {
-    "message": "{decimalProportion, number, extendedPercent} of text is too small.",
-    "description": "Explanatory message stating that there was a failure in an audit caused by a certain percentage of the text on the page being too small. \"decimalProportion\" will be replaced by a percentage between 0 and 100%."
-  },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Text is illegible because there's no viewport meta tag optimized for mobile screens.",
     "description": "Explanatory message stating that there was a failure in an audit caused by a missing page viewport meta tag configuration. \"viewport\" and \"meta\" are HTML terms and should not be translated."
