@@ -191,10 +191,10 @@
       "numericValue": 16,
       "displayValue": "20 ms"
     },
-    "cumulative-long-queuing-delay": {
-      "id": "cumulative-long-queuing-delay",
-      "title": "Cumulative Long Queuing Delay",
-      "description": "[Experimental metric] Total time period between FCP and Time to Interactive during which queuing time for any input event would be higher than 50ms.",
+    "total-blocking-time": {
+      "id": "total-blocking-time",
+      "title": "Total Blocking Time",
+      "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds.",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 116.79800000000023,
@@ -1127,7 +1127,7 @@
             "text": "URL"
           },
           {
-            "key": "serverReponseTime",
+            "key": "serverResponseTime",
             "itemType": "ms",
             "granularity": 1,
             "text": "Time Spent"
@@ -1136,11 +1136,11 @@
         "items": [
           {
             "origin": "http://localhost:10200",
-            "serverReponseTime": 572.829
+            "serverResponseTime": 572.829
           },
           {
             "origin": "http://ajax.googleapis.com",
-            "serverReponseTime": 562.398
+            "serverResponseTime": 562.398
           }
         ]
       }
@@ -1258,7 +1258,7 @@
             "speedIndex": 4417,
             "speedIndexTs": 185607736912,
             "estimatedInputLatency": 16,
-            "cumulativeLongQueuingDelay": 117,
+            "totalBlockingTime": 117,
             "observedNavigationStart": 0,
             "observedNavigationStartTs": 185603319912,
             "observedFirstPaint": 3969,
@@ -1477,6 +1477,51 @@
             "size": 30174
           }
         ]
+      }
+    },
+    "third-party-summary": {
+      "id": "third-party-summary",
+      "title": "Third-Party Usage",
+      "description": "Third-party code can significantly impact load performance. Limit the number of redundant third-party providers and try to load third-party code after your page has primarily finished loading. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/).",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "displayValue": "1 Third-Party Found",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "entity",
+            "itemType": "link",
+            "text": "Third-Party"
+          },
+          {
+            "key": "transferSize",
+            "granularity": 1,
+            "itemType": "bytes",
+            "text": "Size"
+          },
+          {
+            "key": "mainThreadTime",
+            "granularity": 1,
+            "itemType": "ms",
+            "text": "Main Thread Time"
+          }
+        ],
+        "items": [
+          {
+            "entity": {
+              "type": "link",
+              "text": "Google CDN",
+              "url": "https://developers.google.com/speed/libraries/"
+            },
+            "transferSize": 30174,
+            "mainThreadTime": 82.74100000000001
+          }
+        ],
+        "summary": {
+          "wastedBytes": 30174,
+          "wastedMs": 82.74100000000001
+        }
       }
     },
     "pwa-cross-browser": {
@@ -2592,7 +2637,7 @@
     "doctype": {
       "id": "doctype",
       "title": "Page has the HTML doctype",
-      "description": "Specifying a doctype prevents the browser from switching to quirks-mode.Read more on the [MDN Web Docs page](https://developer.mozilla.org/en-US/docs/Glossary/Doctype)",
+      "description": "Specifying a doctype prevents the browser from switching to quirks-mode. Read more on the [MDN Web Docs page](https://developer.mozilla.org/en-US/docs/Glossary/Doctype)",
       "score": 1,
       "scoreDisplayMode": "binary"
     },
@@ -2701,7 +2746,7 @@
     "geolocation-on-start": {
       "id": "geolocation-on-start",
       "title": "Requests the geolocation permission on page load",
-      "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to user gestures instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).",
+      "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3372,7 +3417,7 @@
           "weight": 0
         },
         {
-          "id": "cumulative-long-queuing-delay",
+          "id": "total-blocking-time",
           "weight": 0
         },
         {
@@ -3492,6 +3537,11 @@
         },
         {
           "id": "resource-summary",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
+          "id": "third-party-summary",
           "weight": 0,
           "group": "diagnostics"
         },
@@ -3997,7 +4047,7 @@
     },
     "load-opportunities": {
       "title": "Opportunities",
-      "description": "These optimizations can speed up your page load."
+      "description": "These suggestions can help your page load faster. They don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score."
     },
     "budgets": {
       "title": "Budgets",
@@ -4005,7 +4055,7 @@
     },
     "diagnostics": {
       "title": "Diagnostics",
-      "description": "More information about the performance of your application."
+      "description": "More information about the performance of your application. These numbers don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score."
     },
     "pwa-fast-reliable": {
       "title": "Fast and reliable"
@@ -4233,13 +4283,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:cumulative-long-queuing-delay",
+        "name": "lh:audit:total-blocking-time",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:computed:CumulativeLongQueuingDelay",
+        "name": "lh:computed:TotalBlockingTime",
         "duration": 100,
         "entryType": "measure"
       },
@@ -4510,6 +4560,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:resource-summary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:third-party-summary",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5056,11 +5112,28 @@
       "snippetExpandButtonLabel": "Expand snippet",
       "thirdPartyResourcesLabel": "Show 3rd-party resources",
       "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
-      "varianceDisclaimer": "Values are estimated and may vary.",
+      "varianceDisclaimer": "Values are estimated and may vary. The performance score is [based only on these metrics](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted).",
       "warningAuditsGroupTitle": "Passed audits but with warnings",
       "warningHeader": "Warnings: "
     },
     "icuMessagePaths": {
+      "lighthouse-core/audits/is-on-https.js | failureTitle": [
+        "audits[is-on-https].title"
+      ],
+      "lighthouse-core/audits/is-on-https.js | description": [
+        "audits[is-on-https].description"
+      ],
+      "lighthouse-core/audits/is-on-https.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 1
+          },
+          "path": "audits[is-on-https].displayValue"
+        }
+      ],
+      "lighthouse-core/audits/is-on-https.js | columnInsecureURL": [
+        "audits[is-on-https].details.headings[0].text"
+      ],
       "lighthouse-core/audits/metrics/first-contentful-paint.js | title": [
         "audits[first-contentful-paint].title"
       ],
@@ -5144,6 +5217,12 @@
         },
         {
           "values": {
+            "timeInMs": 116.79800000000023
+          },
+          "path": "audits[total-blocking-time].displayValue"
+        },
+        {
+          "values": {
             "timeInMs": 122.537
           },
           "path": "audits[max-potential-fid].displayValue"
@@ -5161,11 +5240,46 @@
           "path": "audits[network-server-latency].displayValue"
         }
       ],
+      "lighthouse-core/audits/metrics/total-blocking-time.js | title": [
+        "audits[total-blocking-time].title"
+      ],
+      "lighthouse-core/audits/metrics/total-blocking-time.js | description": [
+        "audits[total-blocking-time].description"
+      ],
       "lighthouse-core/audits/metrics/max-potential-fid.js | title": [
         "audits[max-potential-fid].title"
       ],
       "lighthouse-core/audits/metrics/max-potential-fid.js | description": [
         "audits[max-potential-fid].description"
+      ],
+      "lighthouse-core/audits/errors-in-console.js | failureTitle": [
+        "audits[errors-in-console].title"
+      ],
+      "lighthouse-core/audits/errors-in-console.js | description": [
+        "audits[errors-in-console].description"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnURL": [
+        "audits[errors-in-console].details.headings[0].text",
+        "audits[image-aspect-ratio].details.headings[1].text",
+        "audits.deprecations.details.headings[1].text",
+        "audits[bootup-time].details.headings[0].text",
+        "audits[network-rtt].details.headings[0].text",
+        "audits[network-server-latency].details.headings[0].text",
+        "audits[uses-long-cache-ttl].details.headings[0].text",
+        "audits[total-byte-weight].details.headings[0].text",
+        "audits[render-blocking-resources].details.headings[0].label",
+        "audits[unminified-javascript].details.headings[0].label",
+        "audits[uses-webp-images].details.headings[1].label",
+        "audits[uses-text-compression].details.headings[0].label",
+        "audits[external-anchors-use-rel-noopener].details.headings[0].text",
+        "audits[geolocation-on-start].details.headings[0].text",
+        "audits[no-document-write].details.headings[0].text",
+        "audits[notification-on-start].details.headings[0].text",
+        "audits[uses-http2].details.headings[0].text",
+        "audits[uses-passive-event-listeners].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/errors-in-console.js | columnDesc": [
+        "audits[errors-in-console].details.headings[1].text"
       ],
       "lighthouse-core/audits/time-to-first-byte.js | title": [
         "audits[time-to-first-byte].title"
@@ -5225,6 +5339,38 @@
       "lighthouse-core/audits/apple-touch-icon.js | description": [
         "audits[apple-touch-icon].description"
       ],
+      "lighthouse-core/audits/image-aspect-ratio.js | failureTitle": [
+        "audits[image-aspect-ratio].title"
+      ],
+      "lighthouse-core/audits/image-aspect-ratio.js | description": [
+        "audits[image-aspect-ratio].description"
+      ],
+      "lighthouse-core/audits/image-aspect-ratio.js | columnDisplayed": [
+        "audits[image-aspect-ratio].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/image-aspect-ratio.js | columnActual": [
+        "audits[image-aspect-ratio].details.headings[3].text"
+      ],
+      "lighthouse-core/audits/deprecations.js | failureTitle": [
+        "audits.deprecations.title"
+      ],
+      "lighthouse-core/audits/deprecations.js | description": [
+        "audits.deprecations.description"
+      ],
+      "lighthouse-core/audits/deprecations.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 3
+          },
+          "path": "audits.deprecations.displayValue"
+        }
+      ],
+      "lighthouse-core/audits/deprecations.js | columnDeprecate": [
+        "audits.deprecations.details.headings[0].text"
+      ],
+      "lighthouse-core/audits/deprecations.js | columnLine": [
+        "audits.deprecations.details.headings[2].text"
+      ],
       "lighthouse-core/audits/mainthread-work-breakdown.js | title": [
         "audits[mainthread-work-breakdown].title"
       ],
@@ -5244,17 +5390,6 @@
       ],
       "lighthouse-core/audits/bootup-time.js | description": [
         "audits[bootup-time].description"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnURL": [
-        "audits[bootup-time].details.headings[0].text",
-        "audits[network-rtt].details.headings[0].text",
-        "audits[network-server-latency].details.headings[0].text",
-        "audits[uses-long-cache-ttl].details.headings[0].text",
-        "audits[total-byte-weight].details.headings[0].text",
-        "audits[render-blocking-resources].details.headings[0].label",
-        "audits[unminified-javascript].details.headings[0].label",
-        "audits[uses-webp-images].details.headings[1].label",
-        "audits[uses-text-compression].details.headings[0].label"
       ],
       "lighthouse-core/audits/bootup-time.js | columnTotal": [
         "audits[bootup-time].details.headings[1].text"
@@ -5398,6 +5533,36 @@
           },
           "path": "audits[resource-summary].displayValue"
         }
+      ],
+      "lighthouse-core/audits/third-party-summary.js | title": [
+        "audits[third-party-summary].title"
+      ],
+      "lighthouse-core/audits/third-party-summary.js | description": [
+        "audits[third-party-summary].description"
+      ],
+      "lighthouse-core/audits/third-party-summary.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 1
+          },
+          "path": "audits[third-party-summary].displayValue"
+        }
+      ],
+      "lighthouse-core/audits/third-party-summary.js | columnThirdParty": [
+        "audits[third-party-summary].details.headings[0].text"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnSize": [
+        "audits[third-party-summary].details.headings[1].text",
+        "audits[uses-long-cache-ttl].details.headings[2].text",
+        "audits[total-byte-weight].details.headings[1].text",
+        "audits[render-blocking-resources].details.headings[1].label",
+        "audits[unminified-javascript].details.headings[1].label",
+        "audits[uses-webp-images].details.headings[2].label",
+        "audits[uses-text-compression].details.headings[1].label",
+        "audits[tap-targets].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": [
+        "audits[third-party-summary].details.headings[2].text"
       ],
       "lighthouse-core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"
@@ -5634,15 +5799,6 @@
       "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": [
         "audits[uses-long-cache-ttl].details.headings[1].text"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | columnSize": [
-        "audits[uses-long-cache-ttl].details.headings[2].text",
-        "audits[total-byte-weight].details.headings[1].text",
-        "audits[render-blocking-resources].details.headings[1].label",
-        "audits[unminified-javascript].details.headings[1].label",
-        "audits[uses-webp-images].details.headings[2].label",
-        "audits[uses-text-compression].details.headings[1].label",
-        "audits[tap-targets].details.headings[1].text"
-      ],
       "lighthouse-core/audits/byte-efficiency/total-byte-weight.js | title": [
         "audits[total-byte-weight].title"
       ],
@@ -5751,6 +5907,26 @@
       "lighthouse-core/audits/byte-efficiency/efficient-animated-content.js | description": [
         "audits[efficient-animated-content].description"
       ],
+      "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": [
+        "audits[appcache-manifest].title"
+      ],
+      "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": [
+        "audits[appcache-manifest].description"
+      ],
+      "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": [
+        {
+          "values": {
+            "AppCacheManifest": "clock.appcache"
+          },
+          "path": "audits[appcache-manifest].displayValue"
+        }
+      ],
+      "lighthouse-core/audits/dobetterweb/doctype.js | title": [
+        "audits.doctype.title"
+      ],
+      "lighthouse-core/audits/dobetterweb/doctype.js | description": [
+        "audits.doctype.description"
+      ],
       "lighthouse-core/audits/dobetterweb/dom-size.js | title": [
         "audits[dom-size].title"
       ],
@@ -5782,6 +5958,120 @@
       ],
       "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": [
         "audits[dom-size].details.items[2].statistic"
+      ],
+      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": [
+        "audits[external-anchors-use-rel-noopener].title"
+      ],
+      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": [
+        "audits[external-anchors-use-rel-noopener].description"
+      ],
+      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": [
+        {
+          "values": {
+            "anchorHTML": "<a target=\"blank\">Hello</a>"
+          },
+          "path": "audits[external-anchors-use-rel-noopener].warnings[0]"
+        }
+      ],
+      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": [
+        "audits[external-anchors-use-rel-noopener].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": [
+        "audits[external-anchors-use-rel-noopener].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | failureTitle": [
+        "audits[geolocation-on-start].title"
+      ],
+      "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": [
+        "audits[geolocation-on-start].description"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnLocation": [
+        "audits[geolocation-on-start].details.headings[1].text",
+        "audits[no-document-write].details.headings[1].text",
+        "audits[notification-on-start].details.headings[1].text",
+        "audits[uses-passive-event-listeners].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": [
+        "audits[no-document-write].title"
+      ],
+      "lighthouse-core/audits/dobetterweb/no-document-write.js | description": [
+        "audits[no-document-write].description"
+      ],
+      "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": [
+        "audits[no-vulnerable-libraries].title"
+      ],
+      "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | description": [
+        "audits[no-vulnerable-libraries].description"
+      ],
+      "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 2
+          },
+          "path": "audits[no-vulnerable-libraries].displayValue"
+        }
+      ],
+      "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": [
+        "audits[no-vulnerable-libraries].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": [
+        "audits[no-vulnerable-libraries].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": [
+        "audits[no-vulnerable-libraries].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": [
+        "audits[no-vulnerable-libraries].details.items[0].highestSeverity"
+      ],
+      "lighthouse-core/audits/dobetterweb/js-libraries.js | title": [
+        "audits[js-libraries].title"
+      ],
+      "lighthouse-core/audits/dobetterweb/js-libraries.js | description": [
+        "audits[js-libraries].description"
+      ],
+      "lighthouse-core/audits/dobetterweb/js-libraries.js | columnName": [
+        "audits[js-libraries].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": [
+        "audits[js-libraries].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/dobetterweb/notification-on-start.js | failureTitle": [
+        "audits[notification-on-start].title"
+      ],
+      "lighthouse-core/audits/dobetterweb/notification-on-start.js | description": [
+        "audits[notification-on-start].description"
+      ],
+      "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": [
+        "audits[password-inputs-can-be-pasted-into].title"
+      ],
+      "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": [
+        "audits[password-inputs-can-be-pasted-into].description"
+      ],
+      "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": [
+        "audits[password-inputs-can-be-pasted-into].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": [
+        "audits[uses-http2].title"
+      ],
+      "lighthouse-core/audits/dobetterweb/uses-http2.js | description": [
+        "audits[uses-http2].description"
+      ],
+      "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 15
+          },
+          "path": "audits[uses-http2].displayValue"
+        }
+      ],
+      "lighthouse-core/audits/dobetterweb/uses-http2.js | columnProtocol": [
+        "audits[uses-http2].details.headings[1].text"
+      ],
+      "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": [
+        "audits[uses-passive-event-listeners].title"
+      ],
+      "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": [
+        "audits[uses-passive-event-listeners].description"
       ],
       "lighthouse-core/audits/seo/meta-description.js | failureTitle": [
         "audits[meta-description].title"
@@ -5882,6 +6172,9 @@
       ],
       "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": [
         "categories.accessibility.manualDescription"
+      ],
+      "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": [
+        "categories[best-practices].title"
       ],
       "lighthouse-core/config/default-config.js | seoCategoryTitle": [
         "categories.seo.title"

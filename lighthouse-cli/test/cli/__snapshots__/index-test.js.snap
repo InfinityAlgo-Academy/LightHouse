@@ -43,7 +43,7 @@ Object {
       "path": "metrics/estimated-input-latency",
     },
     Object {
-      "path": "metrics/cumulative-long-queuing-delay",
+      "path": "metrics/total-blocking-time",
     },
     Object {
       "path": "metrics/max-potential-fid",
@@ -131,6 +131,9 @@ Object {
     },
     Object {
       "path": "resource-summary",
+    },
+    Object {
+      "path": "third-party-summary",
     },
     Object {
       "path": "manual/pwa-cross-browser",
@@ -714,7 +717,7 @@ Object {
           "weight": 0,
         },
         Object {
-          "id": "cumulative-long-queuing-delay",
+          "id": "total-blocking-time",
           "weight": 0,
         },
         Object {
@@ -835,6 +838,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "resource-summary",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "third-party-summary",
           "weight": 0,
         },
         Object {
@@ -1071,11 +1079,11 @@ Object {
       "title": "Budgets",
     },
     "diagnostics": Object {
-      "description": "More information about the performance of your application.",
+      "description": "More information about the performance of your application. These numbers don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.",
       "title": "Diagnostics",
     },
     "load-opportunities": Object {
-      "description": "These optimizations can speed up your page load.",
+      "description": "These suggestions can help your page load faster. They don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.",
       "title": "Opportunities",
     },
     "metrics": Object {
@@ -1318,11 +1326,11 @@ Object {
       "title": "Budgets",
     },
     "diagnostics": Object {
-      "description": "More information about the performance of your application.",
+      "description": "More information about the performance of your application. These numbers don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.",
       "title": "Diagnostics",
     },
     "load-opportunities": Object {
-      "description": "These optimizations can speed up your page load.",
+      "description": "These suggestions can help your page load faster. They don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.",
       "title": "Opportunities",
     },
     "metrics": Object {

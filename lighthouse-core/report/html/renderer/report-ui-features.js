@@ -234,12 +234,11 @@ class ReportUIFeatures {
     tablesWithUrls.forEach((tableEl, index) => {
       const urlItems = this._getUrlItems(tableEl);
       const thirdPartyRows = this._getThirdPartyRows(tableEl, urlItems, this.json.finalUrl);
-      // If all or none of the rows are 3rd party, no checkbox!
-      if (thirdPartyRows.size === urlItems.length || !thirdPartyRows.size) return;
 
       // create input box
       const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._templateContext);
-      const filterInput = this._dom.find('input', filterTemplate);
+      const filterInput =
+        /** @type {HTMLInputElement} */ (this._dom.find('input', filterTemplate));
       const id = `lh-3p-filter-label--${index}`;
 
       filterInput.id = id;
@@ -264,6 +263,12 @@ class ReportUIFeatures {
           `${thirdPartyRows.size}`;
       this._dom.find('.lh-3p-ui-string', filterTemplate).textContent =
           Util.UIStrings.thirdPartyResourcesLabel;
+
+      // If all or none of the rows are 3rd party, disable the checkbox.
+      if (thirdPartyRows.size === urlItems.length || !thirdPartyRows.size) {
+        filterInput.disabled = true;
+        filterInput.checked = thirdPartyRows.size === urlItems.length;
+      }
 
       // Finally, add checkbox to the DOM.
       if (!tableEl.parentNode) return; // Keep tsc happy.
@@ -324,7 +329,7 @@ class ReportUIFeatures {
    */
   onCopy(e) {
     // Only handle copy button presses (e.g. ignore the user copying page text).
-    if (this._copyAttempt) {
+    if (this._copyAttempt && e.clipboardData) {
       // We want to write our own data to the clipboard, not the user's text selection.
       e.preventDefault();
       e.clipboardData.setData('text/plain', JSON.stringify(this.json, null, 2));

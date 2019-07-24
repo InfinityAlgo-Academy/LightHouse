@@ -211,7 +211,7 @@ async function fetchSourceRule(driver, node) {
 
 /**
  * @param {Driver} driver
- * @param {LH.Artifacts.FontSize.DomNodeWithParent} textNode text node
+ * @param {LH.Artifacts.FontSize.DomNodeWithParent} textNode
  * @returns {Promise<?NodeFontData>}
  */
 async function fetchComputedFontSize(driver, textNode) {

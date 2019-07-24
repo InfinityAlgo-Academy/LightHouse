@@ -61,6 +61,22 @@ describe('i18n', () => {
       expect(strings.passedAuditsGroupTitle).toEqual('[Þåššéð åûðîţš one two]');
       expect(strings.snippetCollapseButtonLabel).toEqual('[Çöļļåþšé šñîþþéţ one two]');
     });
+
+    it('throws an error for invalid locales', () => {
+      expect(_ => i18n.getRendererFormattedStrings('not-a-locale'))
+        .toThrow(`Unsupported locale 'not-a-locale'`);
+    });
+  });
+
+  describe('#getFormatted', () => {
+    it('throws an error for invalid locales', () => {
+      // Populate a string to try to localize to a bad locale.
+      const UIStrings = {testMessage: 'testy test'};
+      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+      expect(_ => i18n.getFormatted(str_(UIStrings.testMessage), 'still-not-a-locale'))
+        .toThrow(`Unsupported locale 'still-not-a-locale'`);
+    });
   });
 
   describe('#lookupLocale', () => {
@@ -86,6 +102,7 @@ describe('i18n', () => {
       helloSecWorld: 'Hello {in, number, seconds} World',
       helloTimeInMsWorld: 'Hello {timeInMs, number, seconds} World',
       helloPercentWorld: 'Hello {in, number, extendedPercent} World',
+      helloWorldMultiReplace: '{hello} {world}',
     };
     const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
@@ -117,6 +134,17 @@ describe('i18n', () => {
     it('formats a message with extended percent', () => {
       const helloPercentStr = str_(UIStrings.helloPercentWorld, {in: 0.43078});
       expect(helloPercentStr).toBeDisplayString('Hello 43.08% World');
+    });
+
+    it('throws an error when values are needed but not provided', () => {
+      expect(_ => i18n.getFormatted(str_(UIStrings.helloBytesWorld), 'en-US'))
+      .toThrow(`ICU Message contains a value reference ("in") that wasn't provided`);
+    });
+
+    it('throws an error when a value is missing', () => {
+      expect(_ => i18n.getFormatted(str_(UIStrings.helloWorldMultiReplace,
+        {hello: 'hello'}), 'en-US'))
+      .toThrow(`ICU Message contains a value reference ("world") that wasn't provided`);
     });
   });
 });

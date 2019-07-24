@@ -117,9 +117,65 @@ module.exports = [
         'font-size': {
           score: 1,
           details: {
-            items: {
-              length: 6,
-            },
+            items: [
+              {
+                source: /seo-tester\.html.+:24:12$/,
+                selector: '.small',
+                fontSize: '11px',
+              },
+              {
+                source: /seo-tester\.html.+:28:55$/,
+                selector: '.small-2',
+                fontSize: '11px',
+              },
+              {
+                source: /seo-tester-inline-magic\.css:3:14$/,
+                selector: '.small-3',
+                fontSize: '6px',
+              },
+              {
+                source: /seo-tester-styles-magic\.css:3:10$/,
+                selector: '.small-4',
+                fontSize: '6px',
+              },
+              {
+                source: 'User Agent Stylesheet',
+                selector: 'h6',
+                fontSize: '10px',
+              },
+              {
+                source: /seo-tester\.html.+$/,
+                selector: {
+                  type: 'node',
+                  selector: 'body',
+                  snippet: '<font size="1">',
+                },
+                fontSize: '10px',
+              },
+              {
+                source: /seo-tester\.html.+$/,
+                selector: {
+                  type: 'node',
+                  selector: 'font',
+                  snippet: '<b>',
+                },
+                fontSize: '10px',
+              },
+              {
+                source: /seo-tester\.html.+$/,
+                selector: {
+                  type: 'node',
+                  selector: 'body',
+                  snippet: '<p style="font-size:10px">',
+                },
+                fontSize: '10px',
+              },
+              {
+                source: 'Legible text',
+                selector: '',
+                fontSize: '≥ 12px',
+              },
+            ],
           },
         },
         'link-text': {
@@ -216,8 +272,7 @@ module.exports = [
       },
       audits: {
         'http-status-code': {
-          score: 0,
-          displayValue: '403',
+          score: null,
         },
         'viewport': {
           score: null,

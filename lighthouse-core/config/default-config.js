@@ -21,8 +21,8 @@ const UIStrings = {
   metricGroupTitle: 'Metrics',
   /** Title of the opportunity section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the loading performance of their web page. 'Suggestion'/'Optimization'/'Recommendation' are reasonable synonyms for 'opportunity' in this case. */
   loadOpportunitiesGroupTitle: 'Opportunities',
-  /** Description of the opportunity section of the Performance category. 'Optimizations' could also be 'recommendations' or 'suggestions'. Within this section are audits with imperative titles that suggest actions the user can take to improve the loading performance of their web page. */
-  loadOpportunitiesGroupDescription: 'These optimizations can speed up your page load.',
+  /** Description of the opportunity section of the Performance category. 'Suggestions' could also be 'recommendations'. Within this section are audits with imperative titles that suggest actions the user can take to improve the loading performance of their web page. */
+  loadOpportunitiesGroupDescription: 'These suggestions can help your page load faster. They don\'t [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.',
   /** Title of an opportunity sub-section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the time of the first initial render of the webpage. */
   firstPaintImprovementsGroupTitle: 'First Paint Improvements',
   /** Description of an opportunity sub-section of the Performance category. Within this section are audits with imperative titles that suggest actions the user can take to improve the time of the first initial render of the webpage. */
@@ -33,8 +33,8 @@ const UIStrings = {
   overallImprovementsGroupDescription: 'Enhance the overall loading experience, so the page is responsive and ready to use as soon as possible. Key metrics: Time to Interactive, Speed Index',
   /** Title of the diagnostics section of the Performance category. Within this section are audits with non-imperative titles that provide more detail on the page's page load performance characteristics. Whereas the 'Opportunities' suggest an action along with expected time savings, diagnostics do not. Within this section, the user may read the details and deduce additional actions they could take. */
   diagnosticsGroupTitle: 'Diagnostics',
-  /** Description of the diagnostics section of the Performance category. Within this section are audits with non-imperative titles that provide more detail on the page's page load performance characteristics. Whereas the 'Opportunities' suggest an action along with expected time savings, diagnostics do not. Within this section, the user may read the details and deduce additional actions they could take. */
-  diagnosticsGroupDescription: 'More information about the performance of your application.',
+  /** Description of the diagnostics section of the Performance category. Within this section are audits with non-imperative titles that provide more detail on a web page's load performance characteristics. Within this section, the user may read the details and deduce additional actions they could take to improve performance. */
+  diagnosticsGroupDescription: 'More information about the performance of your application. These numbers don\'t [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.',
   /** Title of the Accessibility category of audits. This section contains audits focused on making web content accessible to all users. Also used as a label of a score gauge; try to limit to 20 characters. */
   a11yCategoryTitle: 'Accessibility',
   /** Description of the Accessibility category. This is displayed at the top of a list of audits focused on making web content accessible to all users. No character length limits. 'improve the accessibility of your web app' becomes link text to additional documentation. */
@@ -94,6 +94,8 @@ const UIStrings = {
   seoCrawlingGroupTitle: 'Crawling and Indexing',
   /* Description of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight ways to make a website accessible to search engine crawlers. */
   seoCrawlingGroupDescription: 'To appear in search results, crawlers need access to your app.',
+  /** Title of the Best Practices category of audits. This is displayed at the top of a list of audits focused on topics related to following web development best practices and accepted guidelines. Also used as a label of a score gauge; try to limit to 20 characters. */
+  bestPracticesCategoryTitle: 'Best Practices',
   /** Title of the Fast and Reliable section of the web app category. Within this section are audits that check if the web site loaded quickly and can reliably load even if the internet connection is very slow or goes offline. */
   pwaFastReliableGroupTitle: 'Fast and reliable',
   /** Title of the Installable section of the web app category. Within this section are audits that check if Chrome supports installing the web site as an app on their device. */
@@ -169,7 +171,7 @@ const defaultConfig = {
     'screenshot-thumbnails',
     'final-screenshot',
     'metrics/estimated-input-latency',
-    'metrics/cumulative-long-queuing-delay',
+    'metrics/total-blocking-time',
     'metrics/max-potential-fid',
     'errors-in-console',
     'time-to-first-byte',
@@ -199,6 +201,7 @@ const defaultConfig = {
     'offline-start-url',
     'performance-budget',
     'resource-summary',
+    'third-party-summary',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',
     'manual/pwa-each-page-has-url',
@@ -366,7 +369,7 @@ const defaultConfig = {
         {id: 'first-cpu-idle', weight: 2, group: 'metrics'},
         {id: 'max-potential-fid', weight: 0, group: 'metrics'},
         {id: 'estimated-input-latency', weight: 0}, // intentionally left out of metrics so it won't be displayed
-        {id: 'cumulative-long-queuing-delay', weight: 0}, // intentionally left out of metrics so it won't be displayed
+        {id: 'total-blocking-time', weight: 0}, // intentionally left out of metrics so it won't be displayed
         {id: 'render-blocking-resources', weight: 0, group: 'load-opportunities'},
         {id: 'uses-responsive-images', weight: 0, group: 'load-opportunities'},
         {id: 'offscreen-images', weight: 0, group: 'load-opportunities'},
@@ -391,6 +394,7 @@ const defaultConfig = {
         {id: 'font-display', weight: 0, group: 'diagnostics'},
         {id: 'performance-budget', weight: 0, group: 'budgets'},
         {id: 'resource-summary', weight: 0, group: 'diagnostics'},
+        {id: 'third-party-summary', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},
         {id: 'network-rtt', weight: 0},
@@ -461,7 +465,7 @@ const defaultConfig = {
       ],
     },
     'best-practices': {
-      title: 'Best Practices',
+      title: str_(UIStrings.bestPracticesCategoryTitle),
       auditRefs: [
         {id: 'appcache-manifest', weight: 1},
         {id: 'is-on-https', weight: 1},

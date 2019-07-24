@@ -13,7 +13,7 @@ const LanternInteractive = require('./lantern-interactive.js');
 
 /** @typedef {BaseNode.Node} Node */
 
-class LanternCumulativeLongQueuingDelay extends LanternMetric {
+class LanternTotalBlockingTime extends LanternMetric {
   /**
    * @return {LH.Gatherer.Simulation.MetricCoefficients}
    */
@@ -48,32 +48,32 @@ class LanternCumulativeLongQueuingDelay extends LanternMetric {
    */
   static getEstimateFromSimulation(simulation, extras) {
     // Intentionally use the opposite FCP estimate. A pessimistic FCP is higher than equal to an
-    // optimistic FCP, which means potentially more tasks are excluded from the
-    // CumulativeLongQueuingDelay computation. So a more pessimistic FCP gives a more optimistic
-    // CumulativeLongQueuingDelay for the same work.
+    // optimistic FCP, which means potentially more tasks are excluded from the Total Blocking Time
+    // computation. So a more pessimistic FCP gives a more optimistic Total Blocking Time for the
+    // same work.
     const fcpTimeInMs = extras.optimistic
       ? extras.fcpResult.pessimisticEstimate.timeInMs
       : extras.fcpResult.optimisticEstimate.timeInMs;
 
     // Similarly, we always have pessimistic TTI >= optimistic TTI. Therefore, picking optimistic
     // TTI means our window of interest is smaller and thus potentially more tasks are excluded from
-    // CumulativeLongQueuingDelay computation, yielding a lower (more optimistic)
-    // CumulativeLongQueuingDelay value for the same work.
+    // Total Blocking Time computation, yielding a lower (more optimistic) Total Blocking Time value
+    // for the same work.
     const interactiveTimeMs = extras.optimistic
       ? extras.interactiveResult.optimisticEstimate.timeInMs
       : extras.interactiveResult.pessimisticEstimate.timeInMs;
 
     // Require here to resolve circular dependency.
-    const CumulativeLongQueuingDelay = require('./cumulative-long-queuing-delay.js');
-    const minDurationMs = CumulativeLongQueuingDelay.LONG_QUEUING_DELAY_THRESHOLD;
+    const TotalBlockingTime = require('./total-blocking-time.js');
+    const minDurationMs = TotalBlockingTime.BLOCKING_TIME_THRESHOLD;
 
-    const events = LanternCumulativeLongQueuingDelay.getTopLevelEvents(
+    const events = LanternTotalBlockingTime.getTopLevelEvents(
       simulation.nodeTimings,
       minDurationMs
     );
 
     return {
-      timeInMs: CumulativeLongQueuingDelay.calculateSumOfLongQueuingDelay(
+      timeInMs: TotalBlockingTime.calculateSumOfBlockingTime(
         events,
         fcpTimeInMs,
         interactiveTimeMs
@@ -118,4 +118,4 @@ class LanternCumulativeLongQueuingDelay extends LanternMetric {
   }
 }
 
-module.exports = makeComputedArtifact(LanternCumulativeLongQueuingDelay);
+module.exports = makeComputedArtifact(LanternTotalBlockingTime);

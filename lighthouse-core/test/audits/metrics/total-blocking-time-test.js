@@ -5,25 +5,25 @@
  */
 'use strict';
 
-const cLQDAudit = require('../../../audits/metrics/cumulative-long-queuing-delay.js');
-const options = cLQDAudit.defaultOptions;
+const TBTAudit = require('../../../audits/metrics/total-blocking-time.js');
+const options = TBTAudit.defaultOptions;
 
 const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
 
 function generateArtifactsWithTrace(trace) {
   return {
-    traces: {[cLQDAudit.DEFAULT_PASS]: trace},
-    devtoolsLogs: {[cLQDAudit.DEFAULT_PASS]: []},
+    traces: {[TBTAudit.DEFAULT_PASS]: trace},
+    devtoolsLogs: {[TBTAudit.DEFAULT_PASS]: []},
   };
 }
 /* eslint-env jest */
 
-describe('Performance: cumulative-long-queuing-delay audit', () => {
-  it('evaluates cumulative long queuing delay metric properly', async () => {
+describe('Performance: total-blocking-time audit', () => {
+  it('evaluates Total Blocking Time metric properly', async () => {
     const artifacts = generateArtifactsWithTrace(pwaTrace);
     const settings = {throttlingMethod: 'provided'};
     const context = {options, settings, computedCache: new Map()};
-    const output = await cLQDAudit.audit(artifacts, context);
+    const output = await TBTAudit.audit(artifacts, context);
 
     expect(output.numericValue).toBeCloseTo(48.3, 1);
     expect(output.score).toBe(1);

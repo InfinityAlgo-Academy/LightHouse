@@ -34,10 +34,10 @@ limitations under the License.
 
 <!-- Toggle arrow chevron -->
 <template id="tmpl-lh-chevron">
-  <svg class="lh-chevron" title="See audits" xmlns="http://www.w3.org/2000/svg"  viewbox="0 0 100 100">
+  <svg class="lh-chevron" title="See audits" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 100 100">
     <g class="lh-chevron__lines">
-      <path class="lh-chevron__line lh-chevron__line-left" d="M10 50h40" stroke="#707173"></path>
-      <path class="lh-chevron__line lh-chevron__line-right" d="M90 50H50" stroke="#707173"></path>
+      <path class="lh-chevron__line lh-chevron__line-left" d="M10 50h40"></path>
+      <path class="lh-chevron__line lh-chevron__line-right" d="M90 50H50"></path>
     </g>
   </svg>
 </template>
@@ -45,7 +45,7 @@ limitations under the License.
 <!-- Lighthouse category header -->
 <template id="tmpl-lh-category-header">
   <div class="lh-category-header">
-    <div class="lh-score__gauge"></div>
+    <div class="lh-score__gauge" role="heading" aria-level="2"></div>
     <div class="lh-category-header__description"></div>
   </div>
 </template>
@@ -159,7 +159,7 @@ limitations under the License.
     .lh-scores-container {
       display: flex;
       flex-direction: column;
-      padding: var(--header-padding);
+      padding: var(--scores-container-padding);
       position: relative;
       width: 100%;
     }
@@ -168,8 +168,8 @@ limitations under the License.
       --gauge-circle-size: 36px;
       --plugin-badge-size: 18px;
       --plugin-icon-size: 75%;
-      --score-container-width: 60px;
-      --score-number-font-size: 13px;
+      --gauge-wrapper-width: 60px;
+      --gauge-percentage-font-size: 13px;
       position: sticky;
       left: 0;
       right: 0;
@@ -177,8 +177,8 @@ limitations under the License.
       font-weight: 700;
       display: none;
       justify-content: center;
-      background-color: var(--color-sticky-header-bg);
-      border-bottom: 1px solid var(--color-black-200);
+      background-color: var(--sticky-header-background-color);
+      border-bottom: 1px solid var(--color-gray-200);
       padding-top: var(--score-container-padding);
       padding-bottom: 4px;
       z-index: 1;
@@ -202,9 +202,9 @@ limitations under the License.
     }
 
     .lh-highlighter {
-      width: var(--score-container-width);
+      width: var(--gauge-wrapper-width);
       height: 1px;
-      background: var(--color-highlighter-bg);
+      background-color: var(--highlighter-background-color);
       /* Position at bottom of first gauge in sticky header. */
       position: absolute;
       grid-column: 1;
@@ -237,23 +237,23 @@ limitations under the License.
       display: flex;
       align-items: center;
       height: var(--topbar-height);
-      background-color: var(--topbar-bg);
+      background-color: var(--topbar-background-color);
       padding: var(--topbar-padding);
     }
 
     .lh-topbar__logo {
-      width: var(--topbar-icon-size);
-      height: var(--topbar-icon-size);
+      width: var(--topbar-logo-size);
+      height: var(--topbar-logo-size);
       user-select: none;
     }
     .lh-topbar__logo .shape {
-      fill: var(--body-text-color);
+      fill: var(--report-text-color);
     }
 
     .lh-topbar__url {
       margin: var(--topbar-padding);
       text-decoration: none;
-      color: var(--body-text-color);
+      color: var(--report-text-color);
     }
 
     .lh-tools {
@@ -261,8 +261,8 @@ limitations under the License.
       will-change: transform;
     }
     .lh-tools__button {
-      width: var(--lh-tools-icon-size);
-      height: var(--lh-tools-icon-size);
+      width: var(--tools-icon-size);
+      height: var(--tools-icon-size);
       cursor: pointer;
       margin-right: 5px;
       /* This is actually a button element, but we want to style it like a transparent div. */
@@ -275,7 +275,7 @@ limitations under the License.
       outline: inherit;
     }
     .lh-tools__button svg {
-      fill: var(--lh-tools-icon-color);
+      fill: var(--tools-icon-color);
     }
     .dark .lh-tools__button svg {
       filter: invert(1);
@@ -287,7 +287,7 @@ limitations under the License.
     }
     .lh-tools__dropdown {
       position: absolute;
-      background-color: var(--body-background-color);
+      background-color: var(--report-background-color);
       border: 1px solid var(--report-border-color);
       border-radius: 3px;
       padding: calc(var(--default-padding) / 2) 0;
@@ -311,7 +311,7 @@ limitations under the License.
     }
     .lh-tools__dropdown a:hover,
     .lh-tools__dropdown a:focus {
-      background-color: var(--color-black-200);
+      background-color: var(--color-gray-200);
       outline: none;
     }
     .lh-tools__dropdown .report-icon {
@@ -323,7 +323,7 @@ limitations under the License.
       text-indent: 18px;
     }
     .dark .report-icon {
-      color: var(--color-black-900);
+      color: var(--color-gray-900);
       filter: invert(1);
     }
     .dark .lh-tools__dropdown a:hover,
@@ -494,7 +494,7 @@ limitations under the License.
 <template id="tmpl-lh-footer">
   <style>
     .lh-footer {
-      padding: var(--section-indent) calc(var(--default-padding) * 2);
+      padding: var(--footer-padding-vertical) calc(var(--default-padding) * 2);
       max-width: var(--report-width);
       margin: 0 auto;
     }
@@ -502,8 +502,8 @@ limitations under the License.
       text-align: center;
     }
     .lh-env__title {
-      font-size: var(--score-title-font-size-big);
-      line-height: var(--score-title-line-height-big);
+      font-size: var(--env-item-font-size-big);
+      line-height: var(--env-item-line-height-big);
       text-align: center;
       padding: var(--score-container-padding);
     }
@@ -516,11 +516,11 @@ limitations under the License.
       padding: 0;
     }
     .lh-env__items .lh-env__item:nth-child(2n) {
-      background: var(--env-item-bg);
+      background-color: var(--env-item-background-color);
     }
     .lh-env__item {
       display: flex;
-      padding: var(--env-tem-padding);
+      padding: var(--env-item-padding);
       position: relative;
     }
     span.lh-env__name {
@@ -584,7 +584,7 @@ limitations under the License.
     }
 
     .lh-gauge--pwa__disc {
-      fill: var(--color-black-200);
+      fill: var(--color-gray-200);
     }
 
     .lh-gauge--pwa__logo--primary-color {
@@ -741,11 +741,11 @@ limitations under the License.
       .lh-crc .crc-node__tree-value {
         margin-left: 10px;
       }
+      .lh-crc .crc-node__tree-value div {
+        display: inline;
+      }
       .lh-crc .crc-node__chain-duration {
         font-weight: 700;
-      }
-      .lh-crc .crc-node__tree-hostname {
-        color: #595959;
       }
       .lh-crc .crc-initial-nav {
         color: #595959;
@@ -769,8 +769,6 @@ limitations under the License.
 
           </span>
           <span class="crc-node__tree-value">
-            <span class="crc-node__tree-file"><!-- fill me: node.request.url.file --></span>
-            <span class="crc-node__tree-hostname">(<!-- fill me: node.request.url.host -->)</span>
 
           </span>
         </div>
@@ -782,15 +780,17 @@ limitations under the License.
 <template id="tmpl-lh-3p-filter">
   <style>
     .lh-3p-filter {
-      background: var(--lh-table-higlight-bg);
-      color: var(--medium-75-gray);
+      background-color: var(--table-higlight-background-color);
+      color: var(--color-gray-600);
       float: right;
       padding: 6px;
     }
     .lh-3p-filter-label, .lh-3p-filter-input {
-      cursor: pointer;
       vertical-align: middle;
       user-select: none;
+    }
+    .lh-3p-filter-input:disabled + .lh-3p-ui-string {
+      text-decoration: line-through;
     }
   </style>
   <div class="lh-3p-filter">
@@ -815,9 +815,9 @@ limitations under the License.
           overflow: hidden;
           padding: 10px;
           border-bottom: none;
-          color: var(--subheader-color);
-          background: var(--medium-50-gray);
-          border: 1px solid var(--report-secondary-border-color);
+          color: var(--snippet-color);
+          background-color: var(--snippet-background-color);
+          border: 1px solid var(--report-border-color-secondary);
         }
         .lh-snippet__title {
           font-weight: bold;
@@ -841,7 +841,7 @@ limitations under the License.
 
         .lh-snippet__snippet {
           overflow: auto;
-          border: 1px solid var(--report-secondary-border-color);
+          border: 1px solid var(--report-border-color-secondary);
         }
         /* Container needed so that all children grow to the width of the scroll container */
         .lh-snippet__snippet-inner {
@@ -881,7 +881,7 @@ limitations under the License.
           padding: 10px;
           padding-left: 5px;
           color: var(--color-fail);
-          font-family: var(--text-font-family);
+          font-family: var(--report-font-family);
         }
         .lh-snippet__line--message code {
           white-space: normal;
@@ -898,8 +898,8 @@ limitations under the License.
           display: inline-block;
           vertical-align: middle;
           margin-right: 4px;
-          width: var(--score-shape-size);
-          height: var(--score-shape-size);
+          width: var(--score-icon-size);
+          height: var(--score-icon-size);
           background-image: var(--fail-icon-url);
         }
         .lh-snippet__line-number {
@@ -909,7 +909,7 @@ limitations under the License.
           font-family: monospace;
           padding-right: 5px;
           margin-right: 5px;
-          color: var(--medium-75-gray);
+          color: var(--color-gray-600);
           user-select: none;
         }
       </style>

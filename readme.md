@@ -306,6 +306,7 @@ This section details services that have integrated Lighthouse data. If you're wo
 ## Related Projects
 Other awesome open source projects that use Lighthouse.
 
+* **[Exthouse](https://github.com/treosh/exthouse)** - Analyze the impact of a browser extension on web performance.
 * **[Garie](https://github.com/boyney123/garie)** — An open source tool for monitoring performance using Lighthouse,  PageSpeed Insights, [Prometheus](https://prometheus.io/), [Grafana](https://grafana.com/) and [Docker](https://www.docker.com/).
 * **[Gimbal](https://labs.moduscreate.com/gimbal-web-performance-audit-budgeting)** - An [open source (MIT licensed)](https://github.com/ModusCreateOrg/gimbal) tool used to measure, analyze, and budget aspects of a web application. Gimbal also integrates reports with GitHub pull requests.
 * **[lightcrawler](https://github.com/github/lightcrawler)** - Crawl a website and run each page found through Lighthouse.

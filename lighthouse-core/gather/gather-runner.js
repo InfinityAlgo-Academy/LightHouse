@@ -12,6 +12,7 @@ const LHError = require('../lib/lh-error.js');
 const URL = require('../lib/url-shim.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants.js');
+const i18n = require('../lib/i18n/i18n.js');
 
 /** @typedef {import('../gather/driver.js')} Driver */
 
@@ -409,28 +410,6 @@ class GatherRunner {
   }
 
   /**
-   * Generate a set of artfiacts for the given pass as if all the gatherers
-   * failed with the given pageLoadError.
-   * @param {LH.Gatherer.PassContext} passContext
-   * @param {LHError} pageLoadError
-   * @return {{pageLoadError: LHError, artifacts: Partial<LH.GathererArtifacts>}}
-   */
-  static generatePageLoadErrorArtifacts(passContext, pageLoadError) {
-    /** @type {Partial<Record<keyof LH.GathererArtifacts, LHError>>} */
-    const errorArtifacts = {};
-    for (const gathererDefn of passContext.passConfig.gatherers) {
-      const gatherer = gathererDefn.instance;
-      errorArtifacts[gatherer.name] = pageLoadError;
-    }
-
-    return {
-      pageLoadError,
-      // @ts-ignore - TODO(bckenny): figure out how to usefully type errored artifacts.
-      artifacts: errorArtifacts,
-    };
-  }
-
-  /**
    * Takes the results of each gatherer phase for each gatherer and uses the
    * last produced value (that's not undefined) as the artifact for that
    * gatherer. If an error was rejected from a gatherer phase,
@@ -446,11 +425,11 @@ class GatherRunner {
     for (const [gathererName, phaseResultsPromises] of resultsEntries) {
       try {
         const phaseResults = await Promise.all(phaseResultsPromises);
-        // Take last defined pass result as artifact.
+        // Take the last defined pass result as artifact. If none are defined, the undefined check below handles it.
         const definedResults = phaseResults.filter(element => element !== undefined);
         const artifact = definedResults[definedResults.length - 1];
-        // Typecast pretends artifact always provided here, but checked below for top-level `throw`.
-        gathererArtifacts[gathererName] = /** @type {NonVoid<PhaseResult>} */ (artifact);
+        // @ts-ignore tsc can't yet express that gathererName is only a single type in each iteration, not a union of types.
+        gathererArtifacts[gathererName] = artifact;
       } catch (err) {
         // Return error to runner to handle turning it into an error audit.
         gathererArtifacts[gathererName] = err;
@@ -495,6 +474,7 @@ class GatherRunner {
       settings: options.settings,
       URL: {requestedUrl: options.requestedUrl, finalUrl: options.requestedUrl},
       Timing: [],
+      PageLoadError: null,
     };
   }
 
@@ -594,7 +574,10 @@ class GatherRunner {
         Object.assign(artifacts, passResults.artifacts);
 
         // If we encountered a pageLoadError, don't try to keep loading the page in future passes.
-        if (passResults.pageLoadError) break;
+        if (passResults.pageLoadError) {
+          baseArtifacts.PageLoadError = passResults.pageLoadError;
+          break;
+        }
 
         if (isFirstPass) {
           await GatherRunner.populateBaseArtifacts(passContext);
@@ -606,8 +589,9 @@ class GatherRunner {
       GatherRunner.finalizeBaseArtifacts(baseArtifacts);
       return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>.
     } catch (err) {
-      // cleanup on error
+      // Clean up on error. Don't await so that the root error, not a disposal error, is shown.
       GatherRunner.disposeDriver(driver, options);
+
       throw err;
     }
   }
@@ -620,6 +604,18 @@ class GatherRunner {
   static isPerfPass(passContext) {
     const {settings, passConfig} = passContext;
     return !settings.disableStorageReset && passConfig.recordTrace && passConfig.useThrottling;
+  }
+
+  /**
+   * Save the devtoolsLog and trace (if applicable) to baseArtifacts.
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.LoadData} loadData
+   * @param {string} passName
+   */
+  static _addLoadDataToBaseArtifacts(passContext, loadData, passName) {
+    const baseArtifacts = passContext.baseArtifacts;
+    baseArtifacts.devtoolsLogs[passName] = loadData.devtoolsLog;
+    if (loadData.trace) baseArtifacts.traces[passName] = loadData.trace;
   }
 
   /**
@@ -648,20 +644,24 @@ class GatherRunner {
     // Disable throttling so the afterPass analysis isn't throttled
     await driver.setThrottling(passContext.settings, {useThrottling: false});
 
-    // Save devtoolsLog and trace.
-    const baseArtifacts = passContext.baseArtifacts;
-    baseArtifacts.devtoolsLogs[passConfig.passName] = loadData.devtoolsLog;
-    if (loadData.trace) baseArtifacts.traces[passConfig.passName] = loadData.trace;
-
-    // If there were any load errors, treat all gatherers as if they errored.
+    // In case of load error, save log and trace with an error prefix, return no artifacts for this pass.
     const pageLoadError = GatherRunner.getPageLoadError(passContext, loadData, possibleNavError);
     if (pageLoadError) {
-      log.error('GatherRunner', pageLoadError.friendlyMessage, passContext.url);
+      const localizedMessage = i18n.getFormatted(pageLoadError.friendlyMessage,
+          passContext.settings.locale);
+      log.error('GatherRunner', localizedMessage, passContext.url);
+
       passContext.LighthouseRunWarnings.push(pageLoadError.friendlyMessage);
-      return GatherRunner.generatePageLoadErrorArtifacts(passContext, pageLoadError);
+      GatherRunner._addLoadDataToBaseArtifacts(passContext, loadData,
+          `pageLoadError-${passConfig.passName}`);
+
+      return {artifacts: {}, pageLoadError};
     }
 
-    // If no error, run `afterPass()` on gatherers and return collected artifacts.
+    // If no error, save devtoolsLog and trace.
+    GatherRunner._addLoadDataToBaseArtifacts(passContext, loadData, passConfig.passName);
+
+    // Run `afterPass()` on gatherers and return collected artifacts.
     await GatherRunner.afterPass(passContext, loadData, gathererResults);
     return GatherRunner.collectArtifacts(gathererResults);
   }

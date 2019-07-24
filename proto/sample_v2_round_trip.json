@@ -377,15 +377,6 @@
             "scoreDisplayMode": "informative",
             "title": "Minimize Critical Requests Depth"
         },
-        "cumulative-long-queuing-delay": {
-            "description": "[Experimental metric] Total time period between FCP and Time to Interactive during which queuing time for any input event would be higher than 50ms.",
-            "displayValue": "120\u00a0ms",
-            "id": "cumulative-long-queuing-delay",
-            "numericValue": 116.79800000000023,
-            "score": 1.0,
-            "scoreDisplayMode": "numeric",
-            "title": "Cumulative Long Queuing Delay"
-        },
         "custom-controls-labels": {
             "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).",
             "id": "custom-controls-labels",
@@ -492,7 +483,7 @@
             "title": "Definition list items are wrapped in `<dl>` elements"
         },
         "doctype": {
-            "description": "Specifying a doctype prevents the browser from switching to quirks-mode.Read more on the [MDN Web Docs page](https://developer.mozilla.org/en-US/docs/Glossary/Doctype)",
+            "description": "Specifying a doctype prevents the browser from switching to quirks-mode. Read more on the [MDN Web Docs page](https://developer.mozilla.org/en-US/docs/Glossary/Doctype)",
             "id": "doctype",
             "score": 1.0,
             "scoreDisplayMode": "binary",
@@ -810,7 +801,7 @@
             "title": "`<frame>` or `<iframe>` elements have a title"
         },
         "geolocation-on-start": {
-            "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to user gestures instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).",
+            "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).",
             "details": {
                 "headings": [
                     {
@@ -1494,7 +1485,6 @@
             "details": {
                 "items": [
                     {
-                        "cumulativeLongQueuingDelay": 117.0,
                         "estimatedInputLatency": 16.0,
                         "firstCPUIdle": 4927.0,
                         "firstCPUIdleTs": 185608247190.0,
@@ -1525,7 +1515,8 @@
                         "observedTraceEnd": 10281.0,
                         "observedTraceEndTs": 185613601189.0,
                         "speedIndex": 4417.0,
-                        "speedIndexTs": 185607736912.0
+                        "speedIndexTs": 185607736912.0,
+                        "totalBlockingTime": 117.0
                     }
                 ],
                 "type": "debugdata"
@@ -1824,18 +1815,18 @@
                     {
                         "granularity": 1.0,
                         "itemType": "ms",
-                        "key": "serverReponseTime",
+                        "key": "serverResponseTime",
                         "text": "Time Spent"
                     }
                 ],
                 "items": [
                     {
                         "origin": "http://localhost:10200",
-                        "serverReponseTime": 572.829
+                        "serverResponseTime": 572.829
                     },
                     {
                         "origin": "http://ajax.googleapis.com",
-                        "serverReponseTime": 562.398
+                        "serverResponseTime": 562.398
                     }
                 ],
                 "type": "table"
@@ -2569,6 +2560,51 @@
             "scoreDisplayMode": "binary",
             "title": "Does not set an address-bar theme color"
         },
+        "third-party-summary": {
+            "description": "Third-party code can significantly impact load performance. Limit the number of redundant third-party providers and try to load third-party code after your page has primarily finished loading. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/).",
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "link",
+                        "key": "entity",
+                        "text": "Third-Party"
+                    },
+                    {
+                        "granularity": 1.0,
+                        "itemType": "bytes",
+                        "key": "transferSize",
+                        "text": "Size"
+                    },
+                    {
+                        "granularity": 1.0,
+                        "itemType": "ms",
+                        "key": "mainThreadTime",
+                        "text": "Main Thread Time"
+                    }
+                ],
+                "items": [
+                    {
+                        "entity": {
+                            "text": "Google CDN",
+                            "type": "link",
+                            "url": "https://developers.google.com/speed/libraries/"
+                        },
+                        "mainThreadTime": 82.74100000000001,
+                        "transferSize": 30174.0
+                    }
+                ],
+                "summary": {
+                    "wastedBytes": 30174.0,
+                    "wastedMs": 82.74100000000001
+                },
+                "type": "table"
+            },
+            "displayValue": "1 Third-Party Found",
+            "id": "third-party-summary",
+            "score": null,
+            "scoreDisplayMode": "informative",
+            "title": "Third-Party Usage"
+        },
         "time-to-first-byte": {
             "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).",
             "details": {
@@ -2583,6 +2619,15 @@
             "score": 1.0,
             "scoreDisplayMode": "binary",
             "title": "Server response times are low (TTFB)"
+        },
+        "total-blocking-time": {
+            "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds.",
+            "displayValue": "120\u00a0ms",
+            "id": "total-blocking-time",
+            "numericValue": 116.79800000000023,
+            "score": 1.0,
+            "scoreDisplayMode": "numeric",
+            "title": "Total Blocking Time"
         },
         "total-byte-weight": {
             "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).",
@@ -3501,7 +3546,7 @@
                     "weight": 0.0
                 },
                 {
-                    "id": "cumulative-long-queuing-delay",
+                    "id": "total-blocking-time",
                     "weight": 0.0
                 },
                 {
@@ -3622,6 +3667,11 @@
                 {
                     "group": "diagnostics",
                     "id": "resource-summary",
+                    "weight": 0.0
+                },
+                {
+                    "group": "diagnostics",
+                    "id": "third-party-summary",
                     "weight": 0.0
                 },
                 {
@@ -3864,11 +3914,11 @@
             "title": "Budgets"
         },
         "diagnostics": {
-            "description": "More information about the performance of your application.",
+            "description": "More information about the performance of your application. These numbers don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.",
             "title": "Diagnostics"
         },
         "load-opportunities": {
-            "description": "These optimizations can speed up your page load.",
+            "description": "These suggestions can help your page load faster. They don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.",
             "title": "Opportunities"
         },
         "metrics": {
@@ -3926,7 +3976,7 @@
             "snippetExpandButtonLabel": "Expand snippet",
             "thirdPartyResourcesLabel": "Show 3rd-party resources",
             "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
-            "varianceDisclaimer": "Values are estimated and may vary.",
+            "varianceDisclaimer": "Values are estimated and may vary. The performance score is [based only on these metrics](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted).",
             "warningAuditsGroupTitle": "Passed audits but with warnings",
             "warningHeader": "Warnings: "
         }
@@ -4130,13 +4180,13 @@
             {
                 "duration": 100.0,
                 "entryType": "measure",
-                "name": "lh:audit:cumulative-long-queuing-delay",
+                "name": "lh:audit:total-blocking-time",
                 "startTime": 0.0
             },
             {
                 "duration": 100.0,
                 "entryType": "measure",
-                "name": "lh:computed:CumulativeLongQueuingDelay",
+                "name": "lh:computed:TotalBlockingTime",
                 "startTime": 0.0
             },
             {
@@ -4407,6 +4457,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:resource-summary",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:third-party-summary",
                 "startTime": 0.0
             },
             {

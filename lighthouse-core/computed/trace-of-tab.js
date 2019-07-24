@@ -22,13 +22,6 @@ class LHTraceProcessor extends TraceProcessor {
   /**
    * @return {Error}
    */
-  static createNoFirstContentfulPaintError() {
-    return new LHError(LHError.errors.NO_FCP);
-  }
-
-  /**
-   * @return {Error}
-   */
   static createNoTracingStartedError() {
     return new LHError(LHError.errors.NO_TRACING_STARTED);
   }
@@ -43,7 +36,29 @@ class TraceOfTab {
    * @return {Promise<LH.Artifacts.TraceOfTab>}
   */
   static async compute_(trace) {
-    return LHTraceProcessor.computeTraceOfTab(trace);
+    // Trace of tab doesn't require FCP to exist, but all of LH requires it.
+    // We'll check that we got an FCP here and re-type accordingly so all of our consumers don't
+    // have to repeat this check.
+    const traceOfTab = await LHTraceProcessor.computeTraceOfTab(trace);
+    const {timings, timestamps, firstContentfulPaintEvt} = traceOfTab;
+    const {firstContentfulPaint: firstContentfulPaintTiming} = timings;
+    const {firstContentfulPaint: firstContentfulPaintTs} = timestamps;
+    if (
+      !firstContentfulPaintEvt ||
+      firstContentfulPaintTiming === undefined ||
+      firstContentfulPaintTs === undefined
+    ) {
+      throw new LHError(LHError.errors.NO_FCP);
+    }
+
+    // We already know that `traceOfTab` is good to go at this point, but tsc doesn't yet.
+    // Help tsc out by reconstructing the object manually with the known defined values.
+    return {
+      ...traceOfTab,
+      firstContentfulPaintEvt,
+      timings: {...timings, firstContentfulPaint: firstContentfulPaintTiming},
+      timestamps: {...timestamps, firstContentfulPaint: firstContentfulPaintTs},
+    };
   }
 }
 
