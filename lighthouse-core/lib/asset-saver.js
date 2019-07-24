@@ -288,4 +288,5 @@ module.exports = {
   prepareAssets,
   saveTrace,
   saveLanternNetworkData,
+  stringifyReplacer,
 };
