@@ -40,6 +40,9 @@ class CodePatternMatcher {
    * @return {PatternMatchResult[]}
    */
   match(code) {
+    // Reset RegExp state.
+    this.re.lastIndex = 0;
+
     const seen = new Set();
     /** @type {PatternMatchResult[]} */
     const matches = [];
@@ -49,7 +52,6 @@ class CodePatternMatcher {
     let lineBeginsAtIndex = 0;
     // Each pattern maps to one subgroup in the generated regex. For each iteration of RegExp.exec,
     // only one subgroup will be defined. Exec until no more matches.
-    this.re.lastIndex = 0;
     while ((result = this.re.exec(code)) !== null) {
       // Index 0 - the entire match, discard.
       // Index 1 - truthy if matching a newline, used to track the line number.
@@ -218,12 +220,12 @@ class LegacyJavascript extends Audit {
       'Object.values',
       'String.prototype.padEnd',
       'String.prototype.padStart',
-    ].map(str => {
-      const parts = str.split('.');
+    ].map(polyfillName => {
+      const parts = polyfillName.split('.');
       const object = parts.length > 1 ? parts.slice(0, parts.length - 1).join('.') : null;
       const property = parts[parts.length - 1];
       return {
-        name: `${object ? object + '.' : ''}${property}`,
+        name: polyfillName,
         expression: this.buildPolyfillExpression(object, property),
       };
     });
