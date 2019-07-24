@@ -1251,6 +1251,7 @@
                 "type": "table"
             },
             "id": "legacy-javascript",
+            "numericValue": 5,
             "score": null,
             "scoreDisplayMode": "informative",
             "title": "Legacy JavaScript"
