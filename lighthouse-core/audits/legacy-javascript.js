@@ -52,7 +52,7 @@ class CodePatternMatcher {
     this.re.lastIndex = 0;
     while ((result = this.re.exec(code)) !== null) {
       // Index 0 - the entire match, discard.
-      // Index 1 is truthy if matching a newline, and is used to track the line number.
+      // Index 1 - truthy if matching a newline, used to track the line number.
       // `patternExpressionMatches` maps to each possible pattern.
       // Only one of [isNewline, ...patternExpressionMatches] is ever defined.
       const [, isNewline, ...patternExpressionMatches] = result;
