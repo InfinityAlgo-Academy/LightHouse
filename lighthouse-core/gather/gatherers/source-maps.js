@@ -12,23 +12,25 @@ const Gatherer = require('./gatherer.js');
 const URL = require('../../lib/url-shim.js');
 
 /**
- * This function fetches source maps; it is careful not to parse the response as JSON, as it will
- * just need to be serialized again over the protocol, and source maps can
- * be huge.
- *
+ * @param {Driver} driver
  * @param {string} url
- * @return {Promise<string>}
  */
-/* istanbul ignore next */
-async function fetchSourceMap(url) {
-  // eslint-disable-next-line no-undef
-  const response = await fetch(url);
-  if (response.ok) {
-    return response.text();
-  } else {
-    throw new Error(`Received status code ${response.status} for ${url}`);
+async function corsFetch(driver, url) {
+  function injectIframe(url) {
+    const iframe = document.createElement('iframe');
+    iframe.href = url;
+    document.body.appendChild(iframe);
   }
+
+  await driver.sendCommand('Fetch.enable');
+
+  await driver.evaluateAsync(`${injectIframe}(${JSON.stringify(url)})`);
+
+  
+
+  await driver.sendCommand('Fetch.disable');
 }
+
 
 /**
  * @fileoverview Gets JavaScript source maps.
