@@ -1530,6 +1530,7 @@
       "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
       "score": null,
       "scoreDisplayMode": "informative",
+      "numericValue": 5,
       "details": {
         "type": "table",
         "headings": [
@@ -5318,6 +5319,7 @@
         "audits[bootup-time].details.headings[0].text",
         "audits[network-rtt].details.headings[0].text",
         "audits[network-server-latency].details.headings[0].text",
+        "audits[legacy-javascript].details.headings[0].text",
         "audits[uses-long-cache-ttl].details.headings[0].text",
         "audits[total-byte-weight].details.headings[0].text",
         "audits[render-blocking-resources].details.headings[0].label",
@@ -5622,6 +5624,13 @@
       ],
       "lighthouse-core/audits/legacy-javascript.js | description": [
         "audits[legacy-javascript].description"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnLocation": [
+        "audits[legacy-javascript].details.headings[2].text",
+        "audits[geolocation-on-start].details.headings[1].text",
+        "audits[no-document-write].details.headings[1].text",
+        "audits[notification-on-start].details.headings[1].text",
+        "audits[uses-passive-event-listeners].details.headings[1].text"
       ],
       "lighthouse-core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"
@@ -6043,12 +6052,6 @@
       ],
       "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": [
         "audits[geolocation-on-start].description"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnLocation": [
-        "audits[geolocation-on-start].details.headings[1].text",
-        "audits[no-document-write].details.headings[1].text",
-        "audits[notification-on-start].details.headings[1].text",
-        "audits[uses-passive-event-listeners].details.headings[1].text"
       ],
       "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": [
         "audits[no-document-write].title"

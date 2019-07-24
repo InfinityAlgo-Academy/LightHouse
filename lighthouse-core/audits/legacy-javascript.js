@@ -252,7 +252,7 @@ class LegacyJavascript extends Audit {
   /**
    * Returns a collection of match results grouped by script url and with a mapping
    * to determine the order in which the matches were discovered.
-   * 
+   *
    * @param {CodePatternMatcher} matcher
    * @param {LH.GathererArtifacts['ScriptElements']} scripts
    * @param {LH.Artifacts.NetworkRequest[]} networkRecords
