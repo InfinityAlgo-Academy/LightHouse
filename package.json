@@ -111,7 +111,7 @@
     "cpy": "^7.0.1",
     "csv-validator": "^0.0.3",
     "cz-customizable": "^5.2.0",
-    "devtools-protocol": "0.0.588129",
+    "devtools-protocol": "0.0.680180",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-local-rules": "0.1.0",

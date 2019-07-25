@@ -12,27 +12,6 @@ const Gatherer = require('./gatherer.js');
 const URL = require('../../lib/url-shim.js');
 
 /**
- * @param {Driver} driver
- * @param {string} url
- */
-async function corsFetch(driver, url) {
-  function injectIframe(url) {
-    const iframe = document.createElement('iframe');
-    iframe.href = url;
-    document.body.appendChild(iframe);
-  }
-
-  await driver.sendCommand('Fetch.enable');
-
-  await driver.evaluateAsync(`${injectIframe}(${JSON.stringify(url)})`);
-
-  
-
-  await driver.sendCommand('Fetch.disable');
-}
-
-
-/**
  * @fileoverview Gets JavaScript source maps.
  */
 class SourceMaps extends Gatherer {
@@ -48,11 +27,9 @@ class SourceMaps extends Gatherer {
    * @param {string} sourceMapUrl
    * @return {Promise<LH.Artifacts.RawSourceMap>}
    */
-  async fetchSourceMapInPage(driver, sourceMapUrl) {
-    driver.setNextProtocolTimeout(1500);
+  async fetchSourceMap(driver, sourceMapUrl) {
     /** @type {string} */
-    const sourceMapJson =
-      await driver.evaluateAsync(`(${fetchSourceMap})(${JSON.stringify(sourceMapUrl)})`);
+    const sourceMapJson = await driver.fetchArbitraryResource(sourceMapUrl, 1500);
     return JSON.parse(sourceMapJson);
   }
 
@@ -119,7 +96,7 @@ class SourceMaps extends Gatherer {
       try {
         const map = isSourceMapADataUri ?
           this.parseSourceMapFromDataUrl(sourceMapUrl) :
-          await this.fetchSourceMapInPage(driver, sourceMapUrl);
+          await this.fetchSourceMap(driver, sourceMapUrl);
         sourceMapOrError = {map};
       } catch (err) {
         sourceMapOrError = {errorMessage: err.toString()};
@@ -147,10 +124,10 @@ class SourceMaps extends Gatherer {
     driver.off('Debugger.scriptParsed', this.onScriptParsed);
     await driver.sendCommand('Debugger.disable');
 
+    await driver.enableRequestInterception();
     const eventProcessPromises = this._scriptParsedEvents
       .map((event) => this._retrieveMapFromScriptParsedEvent(driver, event));
-
-    return Promise.all(eventProcessPromises);
+    return Promise.all(eventProcessPromises).finally(() => driver.disableRequestInterception());
   }
 }
 
