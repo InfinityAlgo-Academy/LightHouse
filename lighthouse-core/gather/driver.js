@@ -1653,17 +1653,17 @@ class Driver {
     /** @type {Promise<string>} */
     const requestInterceptionPromise = new Promise((resolve, reject) => {
       this.setOnRequestPausedHandler(url, async (event) => {
-        const requestId = event.requestId;
+        const {requestId, responseStatusCode} = event;
 
         // The first requestPaused event is for the request stage. Continue it.
-        if (!event.responseStatusCode) {
+        if (!responseStatusCode) {
           this.sendCommand('Fetch.continueRequest', {requestId});
           return;
         }
 
         // Now in the response stage, but the request failed.
-        if (!(event.responseStatusCode >= 200 && event.responseStatusCode < 300)) {
-          reject(new Error(`Invalid response status code: ${event.responseStatusCode}`));
+        if (!(responseStatusCode >= 200 && responseStatusCode < 300)) {
+          reject(new Error(`Invalid response status code: ${responseStatusCode}`));
           return;
         }
 
