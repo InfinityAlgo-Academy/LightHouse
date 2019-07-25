@@ -136,10 +136,12 @@ class Fetcher {
       const iframe = document.createElement('iframe');
       // Try really hard not to affect the page.
       iframe.style.display = 'none';
+      iframe.style.visibility = 'hidden';
       iframe.style.position = 'absolute';
       iframe.style.top = '-1000px';
       iframe.style.left = '-1000px';
-      iframe.style.visibility = 'hidden';
+      iframe.style.width = '1px';
+      iframe.style.height = '1px';
       iframe.src = src;
       iframe.onload = iframe.onerror = () => {
         iframe.remove();
