@@ -18,7 +18,7 @@ colorText() {
   printf "\\n$2$1%b\\n" '\033[0m'
 }
 
-collectedstringsPath="$lhroot_path/lighthouse-core/lib/i18n/en-US.json";
+collectedstringsPath="$lhroot_path/lighthouse-core/lib/i18n/locales/en-US.json";
 currentstringsPath="$lh_tmp_path/current_strings.json";
 freshstringsPath="$lh_tmp_path/fresh_strings.json";
 

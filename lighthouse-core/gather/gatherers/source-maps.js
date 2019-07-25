@@ -7,7 +7,6 @@
 
 /** @typedef {import('../driver.js')} Driver */
 
-const log = require('lighthouse-logger');
 const Gatherer = require('./gatherer.js');
 const URL = require('../../lib/url-shim.js');
 
@@ -63,6 +62,7 @@ class SourceMaps extends Gatherer {
   /**
    * @param {string} url
    * @param {string} base
+   * @return {string|undefined}
    */
   _resolveUrl(url, base) {
     try {
@@ -85,33 +85,37 @@ class SourceMaps extends Gatherer {
     // `sourceMapURL` is simply the URL found in either a magic comment or an x-sourcemap header.
     // It has not been resolved to a base url.
     const isSourceMapADataUri = event.sourceMapURL.startsWith('data:');
-    const sourceMapUrl = isSourceMapADataUri ?
+    const scriptUrl = event.url;
+    const rawSourceMapUrl = isSourceMapADataUri ?
         event.sourceMapURL :
         this._resolveUrl(event.sourceMapURL, event.url);
 
-    /** @type {{map: LH.Artifacts.RawSourceMap} | {errorMessage: string}} */
-    let sourceMapOrError;
-    if (sourceMapUrl) {
-      log.verbose('SourceMaps', event.url, URL.elideDataURI(sourceMapUrl));
-      try {
-        const map = isSourceMapADataUri ?
-          this.parseSourceMapFromDataUrl(sourceMapUrl) :
-          await this.fetchSourceMap(driver, sourceMapUrl);
-        sourceMapOrError = {map};
-      } catch (err) {
-        sourceMapOrError = {errorMessage: err.toString()};
-      }
-    } else {
-      sourceMapOrError = {errorMessage: `Could not resolve map url: ${event.sourceMapURL}`};
+    if (!rawSourceMapUrl) {
+      return {
+        scriptUrl,
+        errorMessage: `Could not resolve map url: ${event.sourceMapURL}`,
+      };
     }
 
-    return {
-      scriptUrl: event.url,
-      sourceMapUrl: isSourceMapADataUri ? undefined : sourceMapUrl,
-      // map is undefined, unless there wasn't an error.
-      map: undefined,
-      ...sourceMapOrError,
-    };
+    // sourceMapUrl isn't included in the the artifact if it was a data URL.
+    const sourceMapUrl = isSourceMapADataUri ? undefined : rawSourceMapUrl;
+
+    try {
+      const map = isSourceMapADataUri ?
+          this.parseSourceMapFromDataUrl(rawSourceMapUrl) :
+          await this.fetchSourceMap(driver, rawSourceMapUrl);
+      return {
+        scriptUrl,
+        sourceMapUrl,
+        map,
+      };
+    } catch (err) {
+      return {
+        scriptUrl,
+        sourceMapUrl,
+        errorMessage: err.toString(),
+      };
+    }
   }
 
   /**

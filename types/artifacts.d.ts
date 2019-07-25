@@ -254,7 +254,7 @@ declare global {
         /** Error that occurred during fetching or parsing of source map. */
         errorMessage: string
         /** No map on account of error. */
-        map: undefined;
+        map?: undefined;
       }
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
