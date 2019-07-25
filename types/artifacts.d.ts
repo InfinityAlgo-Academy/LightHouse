@@ -123,6 +123,8 @@ declare global {
       RobotsTxt: {status: number|null, content: string|null};
       /** Version information for all ServiceWorkers active after the first page load. */
       ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: Crdp.ServiceWorker.ServiceWorkerRegistration[]};
+      /** Source maps of scripts executed in the page. */
+      SourceMaps: Array<Artifacts.SourceMap>;
       /** The status of an offline fetch of the page's start_url. -1 and a explanation if missing or there was an error. */
       StartUrl: {statusCode: number, explanation?: string};
       /** Information on <script> and <link> tags blocking first paint. */
@@ -213,6 +215,46 @@ declare global {
         content: string | null
         /** The ID of the network request that matched the URL of the src or the main document if inline, null if no request could be found. */
         requestId: string | null
+      }
+
+      /** @see https://sourcemaps.info/spec.html#h.qz3o9nc69um5 */
+      export type RawSourceMap = {
+        /** File version and must be a positive integer. */
+        version: number
+        /** A list of original source files used by the `mappings` entry. */
+        sources: string[]
+        /** A list of symbol names used by the `mappings` entry. */
+        names?: string[]
+        /** An optional source root, useful for relocating source files on a server or removing repeated values in the `sources` entry. This value is prepended to the individual entries in the `source` field. */
+        sourceRoot?: string
+        /** An optional list of source content, useful when the `source` can’t be hosted. The contents are listed in the same order as the sources. */
+        sourcesContent?: string[]
+        /** A string with the encoded mapping data. */
+        mappings: string
+        /** An optional name of the generated code (the bundled code that was the result of this build process) that this source map is associated with. */
+        file?: string
+      }
+
+      /**
+       * Source map for a given script found at scriptUrl. If there is an error in fetching or
+       * parsing the map, errorMessage will be defined instead of map.
+       */
+      export type SourceMap = {
+        /** URL of code that source map applies to. */
+        scriptUrl: string
+        /** URL of the source map. undefined if from data URL. */
+        sourceMapUrl?: string
+        /** Source map data structure. */
+        map: RawSourceMap
+      } | {
+        /** URL of code that source map applies to. */
+        scriptUrl: string
+        /** URL of the source map. undefined if from data URL. */
+        sourceMapUrl?: string
+        /** Error that occurred during fetching or parsing of source map. */
+        errorMessage: string
+        /** No map on account of error. */
+        map?: undefined;
       }
 
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
