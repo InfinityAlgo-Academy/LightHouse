@@ -28,7 +28,7 @@ class SourceMaps extends Gatherer {
    */
   async fetchSourceMap(driver, sourceMapUrl) {
     /** @type {string} */
-    const sourceMapJson = await driver.fetchArbitraryResource(sourceMapUrl, 1500);
+    const sourceMapJson = await driver.fetcher.fetchResource(sourceMapUrl, 1500);
     return JSON.parse(sourceMapJson);
   }
 
@@ -128,10 +128,10 @@ class SourceMaps extends Gatherer {
     driver.off('Debugger.scriptParsed', this.onScriptParsed);
     await driver.sendCommand('Debugger.disable');
 
-    await driver.enableRequestInterception();
+    await driver.fetcher.enableRequestInterception();
     const eventProcessPromises = this._scriptParsedEvents
       .map((event) => this._retrieveMapFromScriptParsedEvent(driver, event));
-    return Promise.all(eventProcessPromises).finally(() => driver.disableRequestInterception());
+    return Promise.all(eventProcessPromises).finally(() => driver.fetcher.disableRequestInterception());
   }
 }
 

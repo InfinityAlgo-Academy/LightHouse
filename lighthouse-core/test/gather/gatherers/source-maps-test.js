@@ -78,7 +78,7 @@ describe('SourceMaps gatherer', () => {
     connectionStub.on = onMock;
 
     const driver = new Driver(connectionStub);
-    driver.fetchArbitraryResource = fetchMock;
+    driver.fetcher.fetchResource = fetchMock;
 
     const sourceMaps = new SourceMaps();
     await sourceMaps.beforePass({driver});

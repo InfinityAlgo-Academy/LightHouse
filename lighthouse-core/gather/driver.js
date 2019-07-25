@@ -5,6 +5,7 @@
  */
 'use strict';
 
+const Fetcher = require('./fetcher.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
 const emulation = require('../lib/emulation.js');
 const Element = require('../lib/element.js');
@@ -104,10 +105,7 @@ class Driver {
      */
     this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
 
-    this._onRequestPaused = this._onRequestPaused.bind(this);
-
-    /** @type {Map<string, (event: LH.Crdp.Fetch.RequestPausedEvent) => void>} */
-    this._onRequestPausedHandlers = new Map();
+    this.fetcher = new Fetcher(this);
   }
 
   static get traceCategories() {
@@ -1585,150 +1583,6 @@ class Driver {
     });
 
     await this.sendCommand('Page.enable');
-  }
-
-  /**
-   * The Fetch domain accepts patterns for controlling what requests are intercepted, but we
-   * enable the domain for all patterns and filter events at a lower level to support multiple
-   * concurrent usages. Reasons for this:
-   *
-   * 1) only one set of patterns may be applied for the entire domain.
-   * 2) every request that matches the patterns are paused and only resumes when certain Fetch
-   *    commands are sent. So a listener of the `Fetch.requestPaused` event must either handle
-   *    the requests it cares about, or explicitly allow them to continue.
-   * 3) if multiple commands to continue the same request are sent, protocol errors occur.
-   *
-   * So instead we have one global `Fetch.enable` / `Fetch.requestPaused` pair, and allow specific
-   * urls to be intercepted via `driver.setOnRequestPausedHandler`.
-   */
-  async enableRequestInterception() {
-    await this.sendCommand('Fetch.enable', {
-      patterns: [{requestStage: 'Request'}, {requestStage: 'Response'}],
-    });
-    await this.on('Fetch.requestPaused', this._onRequestPaused);
-  }
-
-  /**
-   * @param {string} url
-   * @param {(event: LH.Crdp.Fetch.RequestPausedEvent) => void} handler
-   */
-  async setOnRequestPausedHandler(url, handler) {
-    this._onRequestPausedHandlers.set(url, handler);
-  }
-
-  /**
-   * @param {LH.Crdp.Fetch.RequestPausedEvent} event
-   */
-  async _onRequestPaused(event) {
-    const handler = this._onRequestPausedHandlers.get(event.request.url);
-    if (handler) {
-      await handler(event);
-    } else {
-      // Nothing cares about this URL, so continue.
-      await this.sendCommand('Fetch.continueRequest', {requestId: event.requestId});
-    }
-  }
-
-  async disableRequestInterception() {
-    await this.sendCommand('Fetch.disable');
-    await this.off('Fetch.requestPaused', this._onRequestPaused);
-    this._onRequestPausedHandlers.clear();
-  }
-
-  /**
-   * Requires that `driver.enableRequestInterception` has been called.
-   *
-   * Fetches any resource in a way that circumvents CORS.
-   *
-   * @param {string} url
-   * @param {number} timeoutInMs
-   * @return {Promise<string>}
-   */
-  async fetchArbitraryResource(url, timeoutInMs = 500) {
-    if (!this.isDomainEnabled('Fetch')) {
-      throw new Error('Fetch domain must be enabled to use fetchArbitraryResource');
-    }
-
-    /** @type {Promise<string>} */
-    const requestInterceptionPromise = new Promise((resolve, reject) => {
-      this.setOnRequestPausedHandler(url, async (event) => {
-        const {requestId, responseStatusCode} = event;
-
-        // The first requestPaused event is for the request stage. Continue it.
-        if (!responseStatusCode) {
-          // Remove same-site cookies so we aren't buying stuff on Amazon.
-          const sameSiteCookies = await this.sendCommand('Network.getCookies', {urls: [url]});
-          const sameSiteCookiesKeyValueSet = new Set();
-          for (const cookie of sameSiteCookies.cookies) {
-            sameSiteCookiesKeyValueSet.add(cookie.name + '=' + cookie.value);
-          }
-          const strippedCookies = event.request.headers['Cookie']
-            .split(';')
-            .filter(cookieKeyValue => {
-              return !sameSiteCookiesKeyValueSet.has(cookieKeyValue.trim());
-            })
-            .join('; ');
-
-          this.sendCommand('Fetch.continueRequest', {
-            requestId,
-            headers: [{name: 'Cookie', value: strippedCookies}],
-          });
-          return;
-        }
-
-        // Now in the response stage, but the request failed.
-        if (!(responseStatusCode >= 200 && responseStatusCode < 300)) {
-          reject(new Error(`Invalid response status code: ${responseStatusCode}`));
-          return;
-        }
-
-        const responseBody = await this.sendCommand('Fetch.getResponseBody', {requestId});
-        if (responseBody.base64Encoded) {
-          resolve(Buffer.from(responseBody.body, 'base64').toString());
-        } else {
-          resolve(responseBody.body);
-        }
-
-        // Fail the request (from the page's perspective) so that the iframe never loads.
-        this.sendCommand('Fetch.failRequest', {requestId, errorReason: 'Aborted'});
-      });
-    });
-
-    /**
-     * @param {string} src
-     */
-    /* istanbul ignore next */
-    function injectIframe(src) {
-      /** @type {HTMLIFrameElement} */
-      const iframe = document.createElement('iframe');
-      // Try really hard not to affect the page.
-      iframe.style.display = 'none';
-      iframe.style.position = 'absolute';
-      iframe.style.left = '10000px';
-      iframe.style.visibility = 'hidden';
-      iframe.src = src;
-      iframe.onload = iframe.onerror = () => {
-        iframe.remove();
-        delete iframe.onload;
-        delete iframe.onerror;
-      };
-      document.body.appendChild(iframe);
-    }
-
-    await this.evaluateAsync(`${injectIframe}(${JSON.stringify(url)})`);
-
-    /** @type {NodeJS.Timeout} */
-    let timeoutHandle;
-    /** @type {Promise<never>} */
-    const timeoutPromise = new Promise((_, reject) => {
-      const errorMessage = 'Timed out fetching resource.';
-      timeoutHandle = setTimeout(() => reject(new Error(errorMessage)), timeoutInMs);
-    });
-
-    return Promise.race([
-      timeoutPromise,
-      requestInterceptionPromise,
-    ]).finally(() => clearTimeout(timeoutHandle));
   }
 }
 
