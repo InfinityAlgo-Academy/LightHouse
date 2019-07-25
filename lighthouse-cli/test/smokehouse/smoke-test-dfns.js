@@ -79,6 +79,11 @@ const SMOKE_TEST_DFNS = [{
   expectations: 'tricky-metrics/expectations.js',
   config: 'lighthouse-core/config/perf-config.js',
   batch: 'parallel-second',
+}, {
+  id: 'source-maps',
+  expectations: 'source-map/expectations.js',
+  config: 'source-map/config.js',
+  batch: 'parallel-first',
 }];
 
 /**
