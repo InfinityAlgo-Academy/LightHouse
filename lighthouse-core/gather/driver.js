@@ -1642,6 +1642,7 @@ class Driver {
    *
    * @param {string} url
    * @param {number} timeoutInMs
+   * @return {Promise<string>}
    */
   async fetchArbitraryResource(url, timeoutInMs = 500) {
     if (!this.isDomainEnabled('Fetch')) {
