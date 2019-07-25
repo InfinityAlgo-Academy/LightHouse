@@ -34,11 +34,20 @@ describe('SourceMaps gatherer', () => {
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
   async function runSourceMaps(mapsAndEvents) {
-    const onMock = createMockOnFn();
+    // pre-condition: should only define map or fetchError, not both.
+    for (const {map, fetchError} of mapsAndEvents) {
+      if (map && fetchError) {
+        throw new Error('should only define map or fetchError, not both.');
+      }
+    }
 
+    const onMock = createMockOnFn();
     const sendCommandMock = createMockSendCommandFn()
       .mockResponse('Debugger.enable', {})
-      .mockResponse('Debugger.disable', {});
+      .mockResponse('Debugger.disable', {})
+      .mockResponse('Fetch.enable', {})
+      .mockResponse('Fetch.disable', {});
+    const fetchMock = jest.fn();
 
     for (const {scriptParsedEvent, map, resolvedSourceMapUrl, fetchError} of mapsAndEvents) {
       onMock.mockEvent('protocolevent', {
@@ -47,25 +56,21 @@ describe('SourceMaps gatherer', () => {
       });
 
       if (scriptParsedEvent.sourceMapURL.startsWith('data:')) {
-        // Only the source maps that need to be fetched use the `evaluateAsync` code path.
+        // Only the source maps that need to be fetched use the `fetchMock` code path.
         continue;
       }
 
-      if (map && fetchError) {
-        throw new Error('should only define map or fetchError, not both.');
-      }
-
-      sendCommandMock.mockResponse('Runtime.evaluate', ({expression}) => {
-        // Check that the source map url was resolved correctly. It'll be somewhere
-        // in the code sent to Runtime.evaluate.
-        if (resolvedSourceMapUrl && !expression.includes(resolvedSourceMapUrl)) {
-          throw new Error(`did not request expected url: ${resolvedSourceMapUrl}`);
+      fetchMock.mockImplementationOnce(async (sourceMapUrl) => {
+        // Check that the source map url was resolved correctly.
+        if (resolvedSourceMapUrl) {
+          expect(sourceMapUrl).toBe(resolvedSourceMapUrl);
         }
 
-        const value = fetchError ?
-          Object.assign(new Error(), {message: fetchError, __failedInBrowser: true}) :
-          map;
-        return {result: {value}};
+        if (fetchError) {
+          throw Object.assign(new Error(), {message: fetchError, __failedInBrowser: true});
+        }
+
+        return map;
       });
     }
     const connectionStub = new Connection();
@@ -73,6 +78,7 @@ describe('SourceMaps gatherer', () => {
     connectionStub.on = onMock;
 
     const driver = new Driver(connectionStub);
+    driver.fetchArbitraryResource = fetchMock;
 
     const sourceMaps = new SourceMaps();
     await sourceMaps.beforePass({driver});
