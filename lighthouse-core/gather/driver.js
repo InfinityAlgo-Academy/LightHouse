@@ -1640,8 +1640,6 @@ class Driver {
    *
    * Fetches any resource in a way that circumvents CORS.
    *
-   * TODO: remove same-site cookies.
-   *
    * @param {string} url
    * @param {number} timeoutInMs
    */
@@ -1657,7 +1655,23 @@ class Driver {
 
         // The first requestPaused event is for the request stage. Continue it.
         if (!responseStatusCode) {
-          this.sendCommand('Fetch.continueRequest', {requestId});
+          // Remove same-site cookies so we aren't buying stuff on Amazon.
+          const sameSiteCookies = await this.sendCommand('Network.getCookies', {urls: [url]});
+          const sameSiteCookiesKeyValueSet = new Set();
+          for (const cookie of sameSiteCookies.cookies) {
+            sameSiteCookiesKeyValueSet.add(cookie.name + '=' + cookie.value);
+          }
+          const strippedCookies = event.request.headers['Cookie']
+            .split(';')
+            .filter(cookieKeyValue => {
+              return !sameSiteCookiesKeyValueSet.has(cookieKeyValue.trim());
+            })
+            .join('; ');
+
+          this.sendCommand('Fetch.continueRequest', {
+            requestId,
+            headers: [{name: 'Cookie', value: strippedCookies}],
+          });
           return;
         }
 
