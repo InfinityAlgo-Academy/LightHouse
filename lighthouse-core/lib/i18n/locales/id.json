@@ -318,7 +318,7 @@
     "message": "Elemen`<video>` memuat elemen `<track>` dengan `[kind=\"description\"]`"
   },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Ekstensi Chrome berpengaruh negatif terhadap performa pemuatan halaman ini. Coba audit halaman dalam mode penyamaran atau dari profil Chrome tanpa ekstensi."
+    "message": "Ekstensi Chrome berpengaruh negatif terhadap performa pemuatan halaman ini. Coba audit halaman dalam mode samaran atau dari profil Chrome tanpa ekstensi."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Evaluasi Skrip"
@@ -696,16 +696,16 @@
     "message": "robots.txt valid"
   },
   "lighthouse-core/audits/seo/tap-targets.js | description": {
-    "message": "Elemen interaktif seperti tombol dan link harus cukup besar (48x48 piksel), dan memiliki cukup ruang di sekelilingnya, agar cukup mudah di-tap tanpa tumpang-tindih dengan elemen lain. [Pelajari lebih lanjut](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)."
+    "message": "Elemen interaktif seperti tombol dan link harus cukup besar (48x48 piksel), dan memiliki cukup ruang di sekelilingnya, agar cukup mudah diketuk tanpa tumpang-tindih dengan elemen lain. [Pelajari lebih lanjut](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)."
   },
   "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
-    "message": "{decimalProportion, number, percent} target tap memiliki ukuran yang tepat"
+    "message": "{decimalProportion, number, percent} target ketuk memiliki ukuran yang tepat"
   },
   "lighthouse-core/audits/seo/tap-targets.js | explanationViewportMetaNotOptimized": {
-    "message": "Target tap terlalu kecil karena tidak ada tag meta viewport yang dioptimalkan untuk layar seluler"
+    "message": "Target ketuk terlalu kecil karena tidak ada tag meta viewport yang dioptimalkan untuk layar seluler"
   },
   "lighthouse-core/audits/seo/tap-targets.js | failureTitle": {
-    "message": "Target tap tidak memiliki ukuran yang tepat"
+    "message": "Target ketuk tidak memiliki ukuran yang tepat"
   },
   "lighthouse-core/audits/seo/tap-targets.js | overlappingTargetHeader": {
     "message": "Target Tumpang-Tindih"
@@ -714,10 +714,10 @@
     "message": "Ukuran"
   },
   "lighthouse-core/audits/seo/tap-targets.js | tapTargetHeader": {
-    "message": "Target Tap"
+    "message": "Target Ketuk"
   },
   "lighthouse-core/audits/seo/tap-targets.js | title": {
-    "message": "Target tap memiliki ukuran yang tepat"
+    "message": "Target ketuk memiliki ukuran yang tepat"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Time To First Byte mengidentifikasi waktu saat server mengirim respons. [Pelajari lebih lanjut](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."
