@@ -88,10 +88,12 @@ class Fetcher {
           // Remove same-site cookies so we aren't buying stuff on Amazon.
           const headers = [];
           if (event.request.headers['Cookie']) {
-            const sameSiteCookies = await this.driver.sendCommand('Network.getCookies', {urls: [url]});
+            const {cookies} = await this.driver.sendCommand('Network.getCookies', {urls: [url]});
             const sameSiteCookiesKeyValueSet = new Set();
-            for (const cookie of sameSiteCookies.cookies) {
-              sameSiteCookiesKeyValueSet.add(cookie.name + '=' + cookie.value);
+            for (const cookie of cookies) {
+              if (cookie.sameSite !== 'None') {
+                sameSiteCookiesKeyValueSet.add(cookie.name + '=' + cookie.value);
+              }
             }
             const strippedCookies = event.request.headers['Cookie']
               .split(';')
