@@ -137,7 +137,8 @@ class Fetcher {
       // Try really hard not to affect the page.
       iframe.style.display = 'none';
       iframe.style.position = 'absolute';
-      iframe.style.left = '10000px';
+      iframe.style.top = '-1000px';
+      iframe.style.left = '-1000px';
       iframe.style.visibility = 'hidden';
       iframe.src = src;
       iframe.onload = iframe.onerror = () => {
@@ -148,7 +149,7 @@ class Fetcher {
       document.body.appendChild(iframe);
     }
 
-    await this.driver.evaluateAsync(`${injectIframe}(${JSON.stringify(url)})`);
+    await this.driver.evaluateAsync(`${injectIframe}(${JSON.stringify(url)})`, {useIsolation: true});
 
     /** @type {NodeJS.Timeout} */
     let timeoutHandle;
