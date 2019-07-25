@@ -165,7 +165,7 @@
     "message": "El elemento \"<html>\" tiene un atributo \"[lang]\""
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | description": {
-    "message": "Especificar un [idioma BCP 47] valido (https://www.w3.org/International/questions/qa-choosing-language-tags#question) permite a los lectores de pantalla leer el texto en voz alta correctamente. [Más información](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)"
+    "message": "Especificar un [idioma BCP 47] válido (https://www.w3.org/International/questions/qa-choosing-language-tags#question) permite a los lectores de pantalla leer el texto en voz alta correctamente. [Más información](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse)"
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | failureTitle": {
     "message": "El elemento \"<html>\" no tiene un valor válido para el atributo \"[lang]\"."
@@ -249,10 +249,10 @@
     "message": "Desactivar el zoom provoca problemas para los usuarios con visión reducida, ya que necesitan ampliar la pantalla para poder ver correctamente el contenido de las páginas web. [Más información](https://dequeuniversity.com/rules/axe/3.1/meta-viewport?application=lighthouse)"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | failureTitle": {
-    "message": "\"[user-scalable=\"no\"]\" se utiliza en el elemento \"<meta name=\"viewport\">\" o el atributo \"[maximum-scale]\" tiene un valor inferior a 5."
+    "message": "\"[user-scalable=\"no\"]\" se utiliza en el elemento \"<meta name=\"viewport\">\", o el atributo \"[maximum-scale]\" tiene un valor inferior a 5."
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | title": {
-    "message": "\"[user-scalable=\"no\"]\" no se utiliza en el elemento \"<meta name=\"viewport\">\" y el atributo \"[maximum-scale]\" no tiene un valor inferior a 5."
+    "message": "\"[user-scalable=\"no\"]\" no se utiliza en el elemento \"<meta name=\"viewport\">\", y el atributo \"[maximum-scale]\" no tiene un valor inferior a 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
     "message": "Los lectores de pantalla no pueden traducir contenido que no sea texto. Al añadir texto alternativo a los elementos \"<object>\", los lectores de pantalla podrán transmitir su significado a los usuarios. [Más información](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse)"
@@ -273,7 +273,7 @@
     "message": "No hay ningún elemento con un valor de \"[tabindex]\" superior a 0"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | description": {
-    "message": "Los lectores de pantalla incluyen funciones para facilitar la navegación por las tablas. Debes asegurarte de que las celdas \"<td>\" que usan el atributo \"[headers]\" solo hacen referencia a otras celdas de la misma tabla, a fin de mejorar la experiencia de los usuarios de lectores de pantalla. [Más información](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)"
+    "message": "Los lectores de pantalla incluyen funciones para facilitar la navegación por las tablas. Debes asegurarte de que las celdas \"<td>\" que usan el atributo \"[headers]\" solo hagan referencia a otras celdas de la misma tabla a fin de mejorar la experiencia de los usuarios de lectores de pantalla. [Más información](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse)"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
     "message": "Las celdas de los elementos \"<table>\" que usan el atributo \"[headers]\" hacen referencia a otras celdas de esa misma tabla."
@@ -282,7 +282,7 @@
     "message": "Las celdas de los elementos \"<table>\" que usan el atributo \"[headers]\" solo hacen referencia a otras celdas de esa misma tabla."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
-    "message": "Los lectores de pantalla incluyen funciones para facilitar la navegación por las tablas. Asegurarse de que los encabezados de las tablas siempre hagan referencia a un conjunto específico de celdas puede mejora la experiencia de los usuarios de lectores de pantalla. [Más información](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse)"
+    "message": "Los lectores de pantalla incluyen funciones para facilitar la navegación por las tablas. Asegurarse de que los encabezados de las tablas siempre hagan referencia a un conjunto específico de celdas puede mejorar la experiencia de los usuarios de lectores de pantalla. [Más información](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse)"
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | failureTitle": {
     "message": "Los elementos \"<th>\" y los elementos con \"[role=\"columnheader\"/\"rowheader\"]\" no contienen las celdas de datos que describen."
@@ -309,7 +309,7 @@
     "message": "Los elementos \"<video>\" contienen un elemento \"<track>\" con \"[kind=\"captions\"]\""
   },
   "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Las descripciones de audio proporcionan información relevante en videos cuyos diálogos no transmiten todo el contenido, como en el caso de las expresiones faciales y las escenas. [Más información](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)"
+    "message": "Las descripciones de audio proporcionan información relevante en videos, cuyos diálogos no transmiten todo el contenido, como en el caso de las expresiones faciales y las escenas. [Más información](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse)"
   },
   "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
     "message": "Los elementos \"<video>\" no contienen ningún elemento \"<track>\" con \"[kind=\"description\"]\"."
@@ -345,7 +345,7 @@
     "message": "Usa formatos de video para incluir contenido animado"
   },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
-    "message": "Te recomendamos que uses la carga diferida con imágenes ocultas y que no aparecen en pantalla una vez que todos los recursos críticos hayan terminado de cargarse para reducir el tiempo hasta que la página es interactiva. [Más información](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images)"
+    "message": "Te recomendamos que uses la carga diferida con imágenes ocultas y que no aparecen en pantalla una vez que todos los recursos críticos hayan terminado de cargarse para reducir el tiempo de carga. [Más información](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images)"
   },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | title": {
     "message": "Posterga la carga de imágenes que no aparecen en pantalla"
@@ -387,13 +387,13 @@
     "message": "Quita los recursos CSS que no se usen"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Quita el contenido JavaScript sin usar para reducir el número de bytes que consume la actividad de red."
+    "message": "Quita el contenido JavaScript sin usar para reducir la cantidad de bytes que consume la actividad de red."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Quita el código JavaScript sin usar"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
-    "message": "Una duración en caché más larga puede aumentar el número de visitas repetidas a tu página. [Más información](https://developers.google.com/web/tools/lighthouse/audits/cache-policy)"
+    "message": "Una duración en caché más larga puede aumentar la cantidad de visitas repetidas a tu página. [Más información](https://developers.google.com/web/tools/lighthouse/audits/cache-policy)"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | displayValue": {
     "message": "{itemCount,plural, =1{Se encontró 1 recurso}other{Se encontraron # recursos}}"
@@ -471,10 +471,10 @@
     "message": "Utiliza la función de CSS font-display para que los usuarios vean el texto mientras se carga la fuente web. [Más información](https://developers.google.com/web/updates/2016/02/font-display)"
   },
   "lighthouse-core/audits/font-display.js | failureTitle": {
-    "message": "Asegúrate de que el texto permanece visible mientras se carga la fuente web"
+    "message": "Asegúrate de que el texto permanezca visible mientras se carga la fuente web"
   },
   "lighthouse-core/audits/font-display.js | title": {
-    "message": "Todo el texto permanece visible mientras se carga la fuente web"
+    "message": "Todo el texto permanece visible mientras se carga la fuente para sitios web"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
     "message": "Si las páginas se cargan rápidamente en las redes móviles, el usuario disfrutará de una buena experiencia. [Más información](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)"
@@ -510,7 +510,7 @@
     "message": "Latencia de entrada estimada"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
-    "message": "El Primer procesamiento de imagen con contenido indica el momento en el que se procesa el primer texto o imagen. [Más información](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)"
+    "message": "El primer procesamiento de imagen con contenido indica el momento en el que se procesa el primer texto o imagen. [Más información](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)"
   },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | title": {
     "message": "Primer procesamiento de imagen con contenido"
@@ -522,7 +522,7 @@
     "message": "Primer tiempo inactivo de la CPU"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
-    "message": "La primera puntura significativa mide el momento en que se muestra el contenido principal de la página. [Más información](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)"
+    "message": "La primera pintura significativa mide el momento en que se muestra el contenido principal de la página. [Más información](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | title": {
     "message": "Primera pintura significativa"
@@ -600,7 +600,7 @@
     "message": "El {decimalProportion, number, extendedPercent} del texto es demasiado pequeño."
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
-    "message": "El texto es ilegible porque no hay metaetiquetas de de la vista del puerto optimizadas para pantallas de dispositivos móviles."
+    "message": "El texto es ilegible porque no hay metaetiquetas de la vista del puerto optimizadas para pantallas de dispositivos móviles."
   },
   "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
     "message": "El {decimalProportion, number, extendedPercent} del texto es demasiado pequeño (según la muestra {decimalProportionVisited, number, extendedPercent})."
@@ -702,7 +702,7 @@
     "message": "El {decimalProportion, number, percent} de los elementos táctiles tiene un tamaño adecuado"
   },
   "lighthouse-core/audits/seo/tap-targets.js | explanationViewportMetaNotOptimized": {
-    "message": "Los elementos táctiles son demasiado pequeños porque no hay metaetiquetas de viewport optimizadas para pantallas de dispositivos móviles"
+    "message": "Los elementos táctiles son demasiado pequeños porque no hay metaetiquetas de la vista del puerto optimizadas para pantallas de dispositivos móviles"
   },
   "lighthouse-core/audits/seo/tap-targets.js | failureTitle": {
     "message": "El tamaño de los elementos táctiles no es el adecuado"
@@ -723,7 +723,7 @@
     "message": "El tiempo hasta el primer byte indica el momento en el que el servidor envía una respuesta. [Más información](https://developers.google.com/web/tools/lighthouse/audits/ttfb)"
   },
   "lighthouse-core/audits/time-to-first-byte.js | displayValue": {
-    "message": "El documento raíz ha tardado {timeInMs, number, milliseconds} ms"
+    "message": "El documento raíz tardó {timeInMs, number, milliseconds} ms"
   },
   "lighthouse-core/audits/time-to-first-byte.js | failureTitle": {
     "message": "Reduce los tiempos de respuesta del servidor (TTFB)"
@@ -771,7 +771,7 @@
     "message": "Carga previamente las solicitudes clave"
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "A continuación se indican consejos para optimizar el uso de ARIA en tu app, lo que puede mejorar la experiencia de los usuarios de tecnologías de asistencia, como los lectores de pantalla."
+    "message": "A continuación, se indican consejos para optimizar el uso de ARIA en tu app, lo que puede mejorar la experiencia de los usuarios de tecnologías de asistencia, como los lectores de pantalla."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
     "message": "ARIA"
@@ -789,7 +789,7 @@
     "message": "Prácticas recomendadas"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
-    "message": "Estas comprobaciones incluyen consejos para [mejorar la accesibilidad de tu app web](https://developers.google.com/web/fundamentals/accessibility). Solo se pueden detectar un subconjunto de problemas de accesibilidad de forma automática. Por eso, te recomendamos realizar pruebas manuales."
+    "message": "Estas comprobaciones incluyen consejos para [mejorar la accesibilidad de tu app web](https://developers.google.com/web/fundamentals/accessibility). Solo se puede detectar un subconjunto de problemas de accesibilidad de forma automática. Por eso, te recomendamos realizar pruebas manuales."
   },
   "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
     "message": "Estos elementos se ocupan de áreas que las herramientas de prueba automáticas no pueden analizar. Obtén más información en nuestra guía sobre [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review)."
@@ -798,19 +798,19 @@
     "message": "Accesibilidad"
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "A continuación se indican consejos para facilitar la lectura del contenido."
+    "message": "A continuación, se indican consejos para facilitar la lectura del contenido."
   },
   "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
     "message": "Contraste"
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "A continuación se indican consejos para que los usuarios con diversas configuraciones regionales puedan interpretar mejor el contenido de las páginas."
+    "message": "A continuación, se indican consejos para que los usuarios con diversas configuraciones regionales puedan interpretar mejor el contenido de las páginas."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Internacionalización y localización"
   },
   "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "A continuación se indican consejos para mejorar la semántica de los controles de tu app. Estos consejos pueden mejorar la experiencia de los usuarios de tecnologías de asistencia, como los lectores de pantalla."
+    "message": "A continuación, se indican consejos para mejorar la semántica de los controles de tu app. Estos consejos pueden mejorar la experiencia de los usuarios de tecnologías de asistencia, como los lectores de pantalla."
   },
   "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
     "message": "Nombres y etiquetas"
@@ -834,7 +834,7 @@
     "message": "Diagnóstico"
   },
   "lighthouse-core/config/default-config.js | firstPaintImprovementsGroupDescription": {
-    "message": "El aspecto más importante del rendimiento es la rapidez con la que se renderizan los píxeles en la pantalla. Métricas clave: Primer procesamiento de imagen con contenido, Primera pintura significativa"
+    "message": "El aspecto más importante del rendimiento es la rapidez con la que se renderizan los píxeles en la pantalla. Métricas clave: primer procesamiento de imagen con contenido, primera pintura significativa"
   },
   "lighthouse-core/config/default-config.js | firstPaintImprovementsGroupTitle": {
     "message": "Mejoras del primer procesamiento de imagen"
@@ -888,7 +888,7 @@
     "message": "Rastreo e indexación"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Asegúrate de que tus páginas estén optimizadas para dispositivos móviles para que los usuarios no tengan que pellizcar ni hacer zoom para leer las páginas de contenido. [Más información](https://developers.google.com/search/mobile-sites/)"
+    "message": "Asegúrate de que tus páginas estén optimizadas para dispositivos móviles a fin de que los usuarios no tengan que pellizcar ni hacer zoom para leer las páginas de contenido. [Más información](https://developers.google.com/search/mobile-sites/)"
   },
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Optimizada para dispositivos móviles"
@@ -1023,10 +1023,10 @@
     "message": "Puedes subir tu GIF a un servicio que permita insertarlo como un video HTML5."
   },
   "stack-packs/packs/wordpress.js | offscreen_images": {
-    "message": "Instala un [complemento de carga diferida de WordPress](https://wordpress.org/plugins/search/lazy+load/) con la capacidad de postergar imágenes que no aparecen en la pantalla, o cambia a un tema con esa función. También puedes usar [el complemento AMP](https://wordpress.org/plugins/amp/)."
+    "message": "Instala un [complemento de carga diferida de WordPress](https://wordpress.org/plugins/search/lazy+load/) con la capacidad de postergar imágenes que no aparecen en la pantalla o cambia a un tema con esa función. También puedes usar [el complemento AMP](https://wordpress.org/plugins/amp/)."
   },
   "stack-packs/packs/wordpress.js | render_blocking_resources": {
-    "message": "Existen varios complementos de WordPress que pueden ayudarte a [insertar recursos fundamentales](https://wordpress.org/plugins/search/critical+css/) o a [postergar precursos menos importantes](https://wordpress.org/plugins/search/defer+css+javascript/). Ten en cuenta que las optimizaciones que ofrecen estos complementos pueden bloquear funciones de tu tema o tus complementos, así que seguramente tengas que hacer cambios en el código."
+    "message": "Existen varios complementos de WordPress que pueden ayudarte a [insertar recursos fundamentales](https://wordpress.org/plugins/search/critical+css/) o a [postergar recursos menos importantes](https://wordpress.org/plugins/search/defer+css+javascript/). Ten en cuenta que las optimizaciones que ofrecen estos complementos pueden bloquear funciones de tu tema o tus complementos, así que seguramente tengas que hacer cambios en el código."
   },
   "stack-packs/packs/wordpress.js | time_to_first_byte": {
     "message": "Los temas, los complementos y las especificaciones del servidor afectan al tiempo de respuesta. Puedes buscar un tema más optimizado, seleccionar un complemento de optimización o actualizar tu servidor."
@@ -1050,7 +1050,7 @@
     "message": "Consulta información sobre el [almacenamiento en la memoria caché del navegador en WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
-    "message": "Puedes utilizar un [complemento de optimización de imágenes de WordPress](https://wordpress.org/plugins/search/optimize+images/) que comprima tus imágenes conservando la calidad."
+    "message": "Puedes utilizar un [complemento de optimización de imágenes de WordPress](https://wordpress.org/plugins/search/optimize+images/) que comprima tus imágenes y conserve la calidad."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
     "message": "Carga imágenes directamente a través de [media library](https://codex.wordpress.org/Media_Library_Screen) para garantizar que estén disponibles los tamaños de imagen requeridos y, luego, insértalas desde la biblioteca multimedia o usa el widget de imágenes para asegurarte de que se utilicen los tamaños de imagen óptimos (incluidos los que se utilizan para interrupciones de respuestas). Evita usar imágenes \"completas\", a menos que las dimensiones sean adecuadas para su uso. [Más información](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
