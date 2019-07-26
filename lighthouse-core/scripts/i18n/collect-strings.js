@@ -9,6 +9,7 @@
 /* eslint-disable no-console, max-len */
 
 const fs = require('fs');
+const glob = require('glob');
 const path = require('path');
 const assert = require('assert');
 const esprima = require('esprima');
@@ -20,14 +21,13 @@ const UISTRINGS_REGEX = /UIStrings = (.|\s)*?\};\n/im;
 /** @typedef {import('./bake-ctc-to-lhl.js').ICUMessageDefn} ICUMessageDefn */
 
 const ignoredPathComponents = [
-  '/.git',
-  '/scripts',
-  '/node_modules',
-  '/test/',
-  '-test.js',
-  '-renderer.js',
+  '**/.git/**',
+  '**/scripts/**',
+  '**/node_modules/**',
+  '**/test/**',
+  '**/*-test.js',
+  '**/*-renderer.js',
 ];
-
 
 // @ts-ignore - @types/esprima lacks all of these
 function computeDescription(ast, property, value, startRange) {
@@ -328,6 +328,7 @@ function _ctcSanityChecks(icu) {
  * messages themselves while leaving placeholders untouched.
  *
  * @param {Record<string, ICUMessageDefn>} messages
+ * @return {Record<string, ICUMessageDefn>}
  */
 function createPsuedoLocaleStrings(messages) {
   /** @type {Record<string, ICUMessageDefn>} */
@@ -382,82 +383,79 @@ const seenStrings = new Map();
 let collisions = 0;
 
 /**
- * @param {string} dir
- * @param {Record<string, ICUMessageDefn>} strings
+ * Collects all LHL messsages defined in UIString from Javascript files in dir,
+ * and converts them into CTC.
+ * @param {string} dir absolute path
+ * @return {Record<string, ICUMessageDefn>}
  */
-function collectAllStringsInDir(dir, strings = {}) {
-  for (const name of fs.readdirSync(dir)) {
-    const fullPath = path.join(dir, name);
-    const relativePath = path.relative(LH_ROOT, fullPath);
-    if (ignoredPathComponents.some(p => fullPath.includes(p))) continue;
+function collectAllStringsInDir(dir) {
+  /** @type {Record<string, ICUMessageDefn>} */
+  const strings = {};
 
-    if (fs.statSync(fullPath).isDirectory()) {
-      collectAllStringsInDir(fullPath, strings);
-    } else {
-      if (name.endsWith('.js')) {
-        if (!process.env.CI) console.log('Collecting from', relativePath);
-        const content = fs.readFileSync(fullPath, 'utf8');
-        const exportVars = require(fullPath);
-        const regexMatches = !!UISTRINGS_REGEX.test(content);
-        const exportsUIStrings = !!exportVars.UIStrings;
-        if (!regexMatches && !exportsUIStrings) continue;
+  const globPattern = path.join(path.relative(LH_ROOT, dir), '/**/*.js');
+  const files = glob.sync(globPattern, {
+    cwd: LH_ROOT,
+    ignore: ignoredPathComponents,
+  });
+  for (const relativeToRootPath of files) {
+    const absolutePath = path.join(LH_ROOT, relativeToRootPath);
+    if (!process.env.CI) console.log('Collecting from', relativeToRootPath);
 
-        if (regexMatches && !exportsUIStrings) {
-          throw new Error('UIStrings defined but not exported');
-        }
+    const content = fs.readFileSync(absolutePath, 'utf8');
+    const exportVars = require(absolutePath);
+    const regexMatches = UISTRINGS_REGEX.test(content);
+    const exportsUIStrings = Boolean(exportVars.UIStrings);
+    if (!regexMatches && !exportsUIStrings) continue;
 
-        if (exportsUIStrings && !regexMatches) {
-          throw new Error('UIStrings exported but no definition found');
-        }
+    if (regexMatches && !exportsUIStrings) {
+      throw new Error('UIStrings defined but not exported');
+    }
 
-        // @ts-ignore regex just matched
-        const justUIStrings = 'const ' + content.match(UISTRINGS_REGEX)[0];
-        // just parse the UIStrings substring to avoid ES version issues, save time, etc
-        // @ts-ignore - esprima's type definition is supremely lacking
-        const ast = esprima.parse(justUIStrings, {comment: true, range: true});
+    if (exportsUIStrings && !regexMatches) {
+      throw new Error('UIStrings exported but no definition found');
+    }
 
-        for (const stmt of ast.body) {
-          if (stmt.type !== 'VariableDeclaration') continue;
-          if (stmt.declarations[0].id.name !== 'UIStrings') continue;
+    // @ts-ignore regex just matched
+    const justUIStrings = 'const ' + content.match(UISTRINGS_REGEX)[0];
+    // just parse the UIStrings substring to avoid ES version issues, save time, etc
+    // @ts-ignore - esprima's type definition is supremely lacking
+    const ast = esprima.parse(justUIStrings, {comment: true, range: true});
 
-          let lastPropertyEndIndex = 0;
-          for (const property of stmt.declarations[0].init.properties) {
-            const key = property.key.name;
-            const val = exportVars.UIStrings[key];
-            const {description, examples} = computeDescription(ast, property, val, lastPropertyEndIndex);
+    for (const stmt of ast.body) {
+      if (stmt.type !== 'VariableDeclaration') continue;
+      if (stmt.declarations[0].id.name !== 'UIStrings') continue;
 
-            const converted = convertMessageToCtc(val, examples);
+      let lastPropertyEndIndex = 0;
+      for (const property of stmt.declarations[0].init.properties) {
+        const key = property.key.name;
+        const val = exportVars.UIStrings[key];
+        const {description, examples} = computeDescription(ast, property, val, lastPropertyEndIndex);
+        const converted = convertMessageToCtc(val, examples);
+        const messageKey = `${relativeToRootPath} | ${key}`;
 
-            const messageKey = `${relativePath} | ${key}`;
+        /** @type {ICUMessageDefn} */
+        const icuDefn = {
+          message: converted.message,
+          description,
+          placeholders: converted.placeholders,
+        };
 
-            /** @type {ICUMessageDefn} */
-            const icuDefn = {
-              message: converted.message,
-              description,
-              placeholders: converted.placeholders,
-            };
-
-            // check for duplicates, if duplicate, add @description as @meaning to both
-            if (seenStrings.has(icuDefn.message)) {
-              icuDefn.meaning = icuDefn.description;
-              const seenId = seenStrings.get(icuDefn.message);
-              if (seenId) {
-                if (!strings[seenId].meaning) {
-                  strings[seenId].meaning = strings[seenId].description;
-                  collisions++;
-                }
-                collisions++;
-              }
+        // check for duplicates, if duplicate, add @description as @meaning to both
+        if (seenStrings.has(icuDefn.message)) {
+          icuDefn.meaning = icuDefn.description;
+          const seenId = seenStrings.get(icuDefn.message);
+          if (seenId) {
+            if (!strings[seenId].meaning) {
+              strings[seenId].meaning = strings[seenId].description;
+              collisions++;
             }
-
-            seenStrings.set(icuDefn.message, messageKey);
-
-
-            strings[messageKey] = icuDefn;
-
-            lastPropertyEndIndex = property.range[1];
+            collisions++;
           }
         }
+
+        seenStrings.set(icuDefn.message, messageKey);
+        strings[messageKey] = icuDefn;
+        lastPropertyEndIndex = property.range[1];
       }
     }
   }
@@ -483,10 +481,10 @@ function writeStringsToCtcFiles(locale, strings) {
 
 // @ts-ignore Test if called from the CLI or as a module.
 if (require.main === module) {
-  const strings = collectAllStringsInDir(path.join(LH_ROOT, 'lighthouse-core'));
+  const coreStrings = collectAllStringsInDir(path.join(LH_ROOT, 'lighthouse-core'));
   console.log('Collected from LH core!');
 
-  collectAllStringsInDir(path.join(LH_ROOT, 'stack-packs/packs'), strings);
+  const stackPackStrings = collectAllStringsInDir(path.join(LH_ROOT, 'stack-packs/packs'));
   console.log('Collected from Stack Packs!');
 
   if ((collisions) > 0) {
@@ -494,6 +492,7 @@ if (require.main === module) {
     console.log(`MEANING COLLISION: ${collisions} string(s) have the same content.`);
   }
 
+  const strings = {...coreStrings, ...stackPackStrings};
   writeStringsToCtcFiles('en-US', strings);
   console.log('Written to disk!', 'en-US.ctc.json');
   // Generate local pseudolocalized files for debugging while translating
