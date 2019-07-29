@@ -49,13 +49,16 @@ class AppCacheManifestAttr extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    const usingAppcache = artifacts.AppCacheManifest !== null;
-    const displayValue = usingAppcache ?
-      str_(UIStrings.displayValue, {AppCacheManifest: artifacts.AppCacheManifest}) : '';
+    // Fails if an AppCacheManifest was found.
+    if (artifacts.AppCacheManifest !== null) {
+      return {
+        score: 0,
+        displayValue: str_(UIStrings.displayValue, {AppCacheManifest: artifacts.AppCacheManifest}),
+      };
+    }
 
     return {
-      score: usingAppcache ? 0 : 1,
-      displayValue,
+      score: 1,
     };
   }
 }

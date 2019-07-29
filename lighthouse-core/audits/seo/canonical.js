@@ -178,7 +178,7 @@ class Canonical extends Audit {
     if (!URL.rootDomainsMatch(canonicalURL, baseURL)) {
       return {
         score: 0,
-        explanation: str_(UIStrings.explanationDifferentDomain, {url: canonicalURL}),
+        explanation: str_(UIStrings.explanationDifferentDomain, {url: canonicalURL.href}),
       };
     }
 

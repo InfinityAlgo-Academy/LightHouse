@@ -14,17 +14,22 @@ const path = require('path');
 const LH_ROOT = path.join(__dirname, '../../../');
 
 /**
- * @typedef ICUMessageDefn
+ * @typedef CtcMessage
  * @property {string} message the message that is being translated
- * @property {string} [description] a string used by translators to give context to the message
- * @property {string} [meaning] an arbitrary strings used by translators to differentiate messages that have the same message
- * @property {Record<string, ICUPlaceholderDefn>} [placeholders] a set of values that are to be replaced in a message
+ * @property {string} description a string used by translators to give context to the message
+ * @property {string} [meaning] an arbitrary string used by translators to differentiate messages that have the same message
+ * @property {Record<string, CtcPlaceholder>|undefined} [placeholders] a set of values that are to be replaced in a message
  */
 
 /**
- * @typedef ICUPlaceholderDefn
+ * @typedef CtcPlaceholder
  * @property {string} content the string that will be substituted into a message
  * @property {string} [example] an example (to assist translators) of what the content may be in the final string
+ */
+
+/**
+ * @typedef LhlMessage
+ * @property {string} message
  */
 
 /**
@@ -57,11 +62,11 @@ const LH_ROOT = path.join(__dirname, '../../../');
  * Throws if there is a $placeholder$ in the message that has no corresponding
  * value in the placeholders object, or vice versa.
  *
- * @param {Record<string, ICUMessageDefn>} messages
- * @return {Record<string, {message: string}>}
+ * @param {Record<string, CtcMessage>} messages
+ * @return {Record<string, LhlMessage>}
  */
 function bakePlaceholders(messages) {
-  /** @type {Record<string, {message: string}>} */
+  /** @type {Record<string, LhlMessage>} */
   const bakedMessages = {};
 
   for (const [key, defn] of Object.entries(messages)) {
@@ -91,8 +96,11 @@ function bakePlaceholders(messages) {
 
 /**
  * @param {string} file
+ * @return {Record<string, CtcMessage>}
  */
 function loadCtcStrings(file) {
+  if (!file.endsWith('.ctc.json')) throw new Error('Can only load ctc files');
+
   const rawdata = fs.readFileSync(file, 'utf8');
   const messages = JSON.parse(rawdata);
   return messages;
@@ -100,7 +108,7 @@ function loadCtcStrings(file) {
 
 /**
  * @param {string} path
- * @param {Record<string, {message: string}>} localeStrings
+ * @param {Record<string, LhlMessage>} localeStrings
  */
 function saveLhlStrings(path, localeStrings) {
   fs.writeFileSync(path, JSON.stringify(localeStrings, null, 2) + '\n');
@@ -112,7 +120,7 @@ function saveLhlStrings(path, localeStrings) {
  * @return {Array<string>}
  */
 function collectAndBakeCtcStrings(dir, outputDir) {
-  const lhl = [];
+  const lhlFilenames = [];
   for (const filename of fs.readdirSync(dir)) {
     const fullPath = path.join(dir, filename);
     const relativePath = path.relative(LH_ROOT, fullPath);
@@ -123,10 +131,10 @@ function collectAndBakeCtcStrings(dir, outputDir) {
       const strings = bakePlaceholders(ctcStrings);
       const outputFile = outputDir + path.basename(filename).replace('.ctc', '');
       saveLhlStrings(outputFile, strings);
-      lhl.push(path.basename(filename));
+      lhlFilenames.push(path.basename(filename));
     }
   }
-  return lhl;
+  return lhlFilenames;
 }
 
 module.exports = {

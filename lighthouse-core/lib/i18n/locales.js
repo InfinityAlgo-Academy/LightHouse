@@ -12,10 +12,10 @@
  * CLDR language aliases: https://www.unicode.org/cldr/charts/latest/supplemental/aliases.html
  */
 
-/** @typedef {Record<string, {message: string}>} LocaleMessages */
+/** @typedef {Record<string, {message: string}>} LhlMessages */
 
 // The keys within this const must exactly match the LH.Locale type in externs.d.ts
-/** @type {Record<LH.Locale, LocaleMessages>} */
+/** @type {Record<LH.Locale, LhlMessages>} */
 const locales = {
   'en-US': require('./locales/en-US.json'), // The 'source' strings, with descriptions
   'en': require('./locales/en-US.json'), // According to CLDR/ICU, 'en' == 'en-US' dates/numbers (Why?!)
