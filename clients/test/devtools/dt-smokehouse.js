@@ -21,7 +21,7 @@ const {server, serverForOffline} =
   require('../../../lighthouse-cli/test/fixtures/static-server.js');
 
 /* istanbul ignore next */
-async function runAuditsInDevTools() {
+async function runAuditsInDevTools(config) {
   while (!window.UI || !window.UI.viewManager) {
     await new Promise(requestAnimationFrame);
   }
@@ -41,9 +41,8 @@ async function runAuditsInDevTools() {
   btn.click();
 
   return new Promise(resolve => {
-    const originalStartLighthouse = Audits.ProtocolService.prototype.startLighthouse;
-    Audits.ProtocolService.prototype.startLighthouse = async function(...args) {
-      const result = await originalStartLighthouse.call(this, ...args);
+    Audits.ProtocolService.prototype.startLighthouse = async function(auditURL, _, flags) {
+      const result = await this._send('start', {url: auditURL, config, flags});
       if (result.fatal) {
         const runtimeError = {code: result.message};
         resolve({lhr: {runtimeError}, artifacts: result.artifacts});
@@ -54,7 +53,7 @@ async function runAuditsInDevTools() {
   });
 }
 
-async function runLighthouse(url) {
+async function runLighthouse(url, config) {
   const browser = await puppeteer.launch({
     headless: false,
     executablePath: process.env.CHROME_PATH,
@@ -82,7 +81,7 @@ async function runLighthouse(url) {
   });
   const session = await dtTarget.createCDPSession();
   const evalResult = await session.send('Runtime.evaluate', {
-    expression: `(${runAuditsInDevTools})()`,
+    expression: `(${runAuditsInDevTools})(${JSON.stringify(config)})`,
     awaitPromise: true,
     returnByValue: true,
   });
@@ -147,7 +146,7 @@ async function main() {
 
       modify(test, expected);
 
-      const results = await runLighthouse(expected.lhr.requestedUrl);
+      const results = await runLighthouse(expected.lhr.requestedUrl, test.config);
       console.log(`Asserting expected results match those found. (${expected.lhr.requestedUrl})`);
       const collated = collateResults(results, expected);
       const counts = report(collated);
