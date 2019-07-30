@@ -26,10 +26,21 @@ async function runAuditsInDevTools() {
     await new Promise(requestAnimationFrame);
   }
 
-  await window.UI.viewManager.showView(window.Audits ? 'audits' : 'audits2');
+  // Audits used to be Audits2.
+  try {
+    await window.UI.viewManager.showView('audits');
+  } catch (_) {
+    await window.UI.viewManager.showView('audits2');
+  }
+  // Audits/Audits2 is only loaded after the view is shown.
   const Audits = window.Audits || window.Audits2;
-  document.querySelector(
-    window.Audits ? '.audits-start-button' : '.audits2-start-button').click();
+
+  const btnSelector = window.Audits ? '.audits-start-button' : '.audits2-start-button';
+  let btn;
+  while (!(btn = document.querySelector(btnSelector))) {
+    await new Promise(requestAnimationFrame);
+  }
+  btn.click();
 
   return new Promise(resolve => {
     const originalStartLighthouse = Audits.ProtocolService.prototype.startLighthouse;
@@ -54,12 +65,15 @@ async function runLighthouse(url) {
       '--ignore-certificate-errors',
     ],
   });
+  browser.on('targetcreated', ({_targetInfo}) => console.log(_targetInfo.url));
 
   const page = (await browser.pages())[0];
   await page.goto(url);
 
-  const dtTarget = await browser.waitForTarget(
-    target => target.url().startsWith('chrome-devtools://'));
+  const dtTarget = await browser.waitForTarget(target => {
+    const url = target.url();
+    return url.startsWith('devtools://') || url.startsWith('chrome-devtools://');
+  });
   const session = await dtTarget.createCDPSession();
   const evalResult = await session.send('Runtime.evaluate', {
     expression: `(${runAuditsInDevTools.toString()})()`,
