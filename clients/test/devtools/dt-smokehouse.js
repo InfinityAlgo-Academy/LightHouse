@@ -22,7 +22,7 @@ const {server, serverForOffline} =
 
 /* istanbul ignore next */
 async function runAuditsInDevTools() {
-  while (!window.UI) {
+  while (!window.UI || !window.UI.viewManager) {
     await new Promise(requestAnimationFrame);
   }
 
@@ -59,10 +59,22 @@ async function runLighthouse(url) {
     headless: false,
     executablePath: process.env.CHROME_PATH,
     devtools: true,
+    args: [
+      '--ignore-certificate-errors',
+    ],
   });
 
+  // Finding the correct DevTools target is difficult with multiple pages, so just
+  // use the default page.
   const page = (await browser.pages())[0];
+
+  // Don't let the page do anything. Otherwise, would hang the test harness in cases like:
+  // dbw's alert prompt
+  // infinite-loop's busy main thread
+  await page.setJavaScriptEnabled(false);
   await page.goto(url);
+  // Re-enable for the next navigation (so Audits panel will work).
+  await page.setJavaScriptEnabled(true);
 
   const dtTarget = await browser.waitForTarget(target => {
     const url = target.url();
@@ -70,13 +82,14 @@ async function runLighthouse(url) {
   });
   const session = await dtTarget.createCDPSession();
   const evalResult = await session.send('Runtime.evaluate', {
-    expression: `(${runAuditsInDevTools.toString()})()`,
+    expression: `(${runAuditsInDevTools})()`,
     awaitPromise: true,
     returnByValue: true,
   });
   if (evalResult.exceptionDetails) {
     throw new Error(evalResult.exceptionDetails.text);
   }
+  // console.log(evalResult.result.value);
   const {lhr, artifacts} = evalResult.result.value;
 
   await browser.close();
@@ -89,22 +102,26 @@ async function runLighthouse(url) {
 
 function shouldSkip(test, expectation) {
   if (expectation.lhr.requestedUrl.includes('infinite-loop')) {
-    return "Can't open DevTools when main thread is busy.";
+    return 'Can\'t open DevTools when main thread is busy.';
   }
-
-  if (test.id === 'errors') {
-    return "Audits and artifacts don't survive the error case in DevTools.";
-  }
-
-  // if (!expectation.lhr.requestedUrl.includes('airh')) {
-  //   return true;
-  // }
 
   return false;
 }
 
 function modify(test, expectation) {
-  // Nothing yet.
+  if (expectation.lhr.requestedUrl === 'http://localhost:10200/dobetterweb/dbw_tester.html') {
+    // Audits panel doesn't connect to the page before a favicon.ico request is mades and fails,
+    // so remove one error from the expected error log.
+    // TODO: give the fixture server an actual favicon so we can ignore this edge case.
+    expectation.lhr.audits['errors-in-console'].details.items.length -= 1;
+  }
+
+  // Audits and artifacts don't survive the error case in DevTools.
+  // What remains is asserting that lhr.runtimeError is the expected error code.
+  if (test.id === 'errors') {
+    expectation.lhr.audits = {};
+    delete expectation.artifacts;
+  }
 }
 
 async function main() {
