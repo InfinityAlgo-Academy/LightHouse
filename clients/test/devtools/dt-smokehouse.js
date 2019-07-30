@@ -61,11 +61,7 @@ async function runLighthouse(url) {
     headless: false,
     executablePath: process.env.CHROME_PATH,
     devtools: true,
-    args: [
-      '--ignore-certificate-errors',
-    ],
   });
-  browser.on('targetcreated', ({_targetInfo}) => console.log(_targetInfo.url));
 
   const page = (await browser.pages())[0];
   await page.goto(url);
@@ -98,6 +94,11 @@ function shouldSkip(test, expectation) {
     return true;
   }
 
+  // Audits and artifacts don't survive the error case in DevTools.
+  if (test.id === 'errors') {
+    return true;
+  }
+
   // if (!expectation.lhr.requestedUrl.includes('airh')) {
   //   return true;
   // }
@@ -106,22 +107,23 @@ function shouldSkip(test, expectation) {
 }
 
 function modify(test, expectation) {
-  // Audits and artifacts don't survive the error case in DevTools.
-  if (test.id === 'errors') {
-    expectation.lhr.audits = [];
-    delete expectation.artifacts;
-  }
+  // Nothing yet.
 }
 
 async function main() {
   server.listen(10200, 'localhost');
   serverForOffline.listen(10503, 'localhost');
 
+  const smokeFilterRegExp = process.env.SMOKE_GREP ? new RegExp(process.env.SMOKE_GREP) : null;
   let passingCount = 0;
   let failingCount = 0;
 
   for (const test of Smokes.getSmokeTests()) {
     for (const expected of test.expectations) {
+      if (smokeFilterRegExp && !expected.lhr.requestedUrl.match(smokeFilterRegExp)) {
+        continue;
+      }
+
       console.log(`======  ${expected.lhr.requestedUrl} ======`);
       if (shouldSkip(test, expected)) {
         console.log('skipping');
@@ -147,8 +149,8 @@ async function main() {
   }
   if (failingCount) {
     console.log(log.redify(`${failingCount} failing`));
-    process.exit(1);
   }
+  process.exit(passingCount > 0 && failingCount === 0 ? 0 : 1);
 }
 
 main();
