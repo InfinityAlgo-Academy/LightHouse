@@ -27,11 +27,9 @@ async function runAuditsInDevTools() {
   }
 
   // Audits used to be Audits2.
-  try {
-    await window.UI.viewManager.showView('audits');
-  } catch (_) {
-    await window.UI.viewManager.showView('audits2');
-  }
+  // One of these will work. The other just logs to console.error
+  await window.UI.viewManager.showView('audits');
+  await window.UI.viewManager.showView('audits2');
   // Audits/Audits2 is only loaded after the view is shown.
   const Audits = window.Audits || window.Audits2;
 
@@ -91,12 +89,11 @@ async function runLighthouse(url) {
 
 function shouldSkip(test, expectation) {
   if (expectation.lhr.requestedUrl.includes('infinite-loop')) {
-    return true;
+    return "Can't open DevTools when main thread is busy.";
   }
 
-  // Audits and artifacts don't survive the error case in DevTools.
   if (test.id === 'errors') {
-    return true;
+    return "Audits and artifacts don't survive the error case in DevTools.";
   }
 
   // if (!expectation.lhr.requestedUrl.includes('airh')) {
@@ -124,9 +121,10 @@ async function main() {
         continue;
       }
 
-      console.log(`======  ${expected.lhr.requestedUrl} ======`);
-      if (shouldSkip(test, expected)) {
-        console.log('skipping');
+      console.log(`====== ${expected.lhr.requestedUrl} ======`);
+      const reasonToSkip = shouldSkip(test, expected);
+      if (reasonToSkip) {
+        console.log(`skipping: ${reasonToSkip}`);
         continue;
       }
 
