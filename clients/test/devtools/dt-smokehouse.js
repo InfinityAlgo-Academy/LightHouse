@@ -7,7 +7,7 @@
 
 /**
  * @fileoverview Script to run smoketests in DevTools. Not run in CI - meant to be run
- * during rolls to DevTools.
+ * during roll to DevTools.
  */
 
 /* eslint-disable no-console */
@@ -88,7 +88,6 @@ async function runLighthouse(url, config) {
   if (evalResult.exceptionDetails) {
     throw new Error(evalResult.exceptionDetails.text);
   }
-  // console.log(evalResult.result.value);
   const {lhr, artifacts} = evalResult.result.value;
 
   await browser.close();
