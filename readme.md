@@ -113,6 +113,8 @@ Examples:
   lighthouse <url> --quiet --chrome-flags="--headless"                      Launch Headless Chrome, turn off logging
   lighthouse <url> --extra-headers "{\"Cookie\":\"monster=blue\"}"          Stringify\'d JSON HTTP Header key/value pairs to send in requests
   lighthouse <url> --extra-headers=./path/to/file.json                      Path to JSON file of HTTP Header key/value pairs to send in requests
+  lighthouse <url> --only-categories=performance,pwa                        Only run the specified categories. Available categories: accessibility,
+                                                                            best-practices, performance, pwa, seo.
 
 For more information on Lighthouse, see https://developers.google.com/web/tools/lighthouse/.
 ```
