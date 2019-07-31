@@ -89,6 +89,11 @@ const SMOKE_TEST_DFNS = [{
  * @return {string}
  */
 function resolveLocalOrProjectRoot(payloadPath) {
+  // When browserified (Firehouse), path resolution is done during bundling.
+  if (!require.resolve) {
+    return './smokehouse/' + payloadPath;
+  }
+
   let resolved;
   try {
     resolved = require.resolve(__dirname + '/' + payloadPath);
@@ -116,6 +121,9 @@ function loadExpectations(expectationsPath) {
   return require(expectationsPath);
 }
 
+/**
+ * @return {Smokehouse.Test[]}
+ */
 function getSmokeTests() {
   return SMOKE_TEST_DFNS.map(smokeTestDfn => {
     return {
@@ -130,4 +138,5 @@ function getSmokeTests() {
 module.exports = {
   SMOKE_TEST_DFNS,
   getSmokeTests,
+  resolveLocalOrProjectRoot,
 };

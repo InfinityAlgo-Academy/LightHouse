@@ -32,4 +32,18 @@
     config: string;
     batch: string;
   }
+
+  export interface Test {
+    id: string;
+    expectations: ExpectedRunnerResult[];
+    config: LH.Config.Json;
+    batch: string;
+  }
+
+  export interface RunnerOptions {
+    runLighthouse: (url: string, config: LH.Config.Json) => Promise<LH.RunnerResult>;
+    filter?: RegExp;
+    skip?: (test: Test, expectation: ExpectedRunnerResult) => string | false;
+    modify?: (test: Test, expectation: ExpectedRunnerResult) => void;
+  }
 }

@@ -63,24 +63,28 @@ function requestHandler(request, response) {
   function sendResponse(statusCode, data) {
     const headers = {'Access-Control-Allow-Origin': '*'};
 
+    let contentType;
     if (filePath.endsWith('.js')) {
-      headers['Content-Type'] = 'text/javascript';
+      contentType = 'text/javascript';
     } else if (filePath.endsWith('.css')) {
-      headers['Content-Type'] = 'text/css';
+      contentType = 'text/css';
     } else if (filePath.endsWith('.svg')) {
-      headers['Content-Type'] = 'image/svg+xml';
+      contentType = 'image/svg+xml';
     } else if (filePath.endsWith('.png')) {
-      headers['Content-Type'] = 'image/png';
+      contentType = 'image/png';
     } else if (filePath.endsWith('.gif')) {
-      headers['Content-Type'] = 'image/gif';
+      contentType = 'image/gif';
     } else if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) {
-      headers['Content-Type'] = 'image/jpeg';
+      contentType = 'image/jpeg';
     } else if (filePath.endsWith('.webp')) {
-      headers['Content-Type'] = 'image/webp';
+      contentType = 'image/webp';
     } else if (filePath.endsWith('.json')) {
-      headers['Content-Type'] = 'application/json';
+      contentType = 'application/json';
     }
 
+    if (contentType) headers['Content-Type'] = contentType;
+
+    const encoding = contentType && contentType.startsWith('image/') ? 'binary' : 'utf-8';
     let delay = 0;
     let useGzip = false;
     if (queryString) {
@@ -127,7 +131,7 @@ function requestHandler(request, response) {
       return setTimeout(finishResponse, delay, data);
     }
 
-    finishResponse(data);
+    finishResponse(data, encoding);
   }
 
   function sendRedirect(url) {
@@ -138,8 +142,8 @@ function requestHandler(request, response) {
     response.end();
   }
 
-  function finishResponse(data) {
-    response.write(data, 'binary');
+  function finishResponse(data, encoding) {
+    response.write(data, encoding);
     response.end();
   }
 }
