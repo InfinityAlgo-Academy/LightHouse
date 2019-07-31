@@ -48,7 +48,7 @@ module.exports = [
         },
         'unused-css-rules': {
           details: {
-            overallSavingsBytes: '>35000',
+            overallSavingsBytes: '>40000',
             items: {
               length: 2,
             },
