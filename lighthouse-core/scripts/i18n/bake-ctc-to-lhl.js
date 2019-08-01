@@ -35,7 +35,7 @@ const LH_ROOT = path.join(__dirname, '../../../');
 /**
  * Take a series of CTC format ICU messages and converts them to LHL format by
  * replacing $placeholders$ with their {ICU} values. Functional opposite of
- * `convertMessageToPlaceholders`. This is commonly called as the last step in
+ * `convertMessageToCtc`. This is commonly called as the last step in
  * translation.
  *
  * Converts this:
