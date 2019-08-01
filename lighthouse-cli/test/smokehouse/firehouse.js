@@ -13,8 +13,11 @@
 /* eslint-disable no-console */
 
 const log = require('lighthouse-logger');
-const Smokes = require('./smoke-test-dfns.js');
-const {collateResults, report} = require('./smokehouse-report.js');
+const { collateResults, report } = require('./smokehouse-report.js');
+
+/** @type {Smokehouse.Test[]} */
+// @ts-ignore
+const smokeTests = require('./smoke-test-dfns-compiled.json');
 
 // function shouldSkip(test, expectation) {
 //   if (expectation.lhr.requestedUrl.includes('infinite-loop')) {
@@ -49,7 +52,7 @@ async function runSmokes(options) {
   let passingCount = 0;
   let failingCount = 0;
 
-  for (const test of Smokes.getSmokeTests()) {
+  for (const test of smokeTests) {
     for (const expected of test.expectations) {
       if (filter && !expected.lhr.requestedUrl.match(filter)) {
         continue;

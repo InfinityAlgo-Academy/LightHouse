@@ -11,11 +11,9 @@ const path = require('path');
 
 const distDir = path.join(__dirname, '..', 'dist');
 const bundleOutFile = `${distDir}/firehouse-bundle.js`;
-const firehouseFilename = `./lighthouse-cli/test/smokehouse/firehouse.js`;
+const firehouseFilename = './lighthouse-cli/test/smokehouse/firehouse.js';
 const Smokes = require('../lighthouse-cli/test/smokehouse/smoke-test-dfns.js');
 
-// TODO: bug in browserify ... standalone + bundle.require(... {expose: }) = bad news
-// https://github.com/browserify/browserify/issues/968
 let bundle = browserify(firehouseFilename, {standalone: 'Lighthouse.Firehouse'});
 
 /**
@@ -33,18 +31,23 @@ function stubSmokeResource(smokeResourcePath) {
   bundle = bundle.require(modulePath, {expose: './smokehouse/' + smokeResourcePath});
 }
 
-for (const smokeTestDfn of Smokes.SMOKE_TEST_DFNS) {
-  Smokes.resolveLocalOrProjectRoot(smokeTestDfn.config);
-  stubSmokeResource(smokeTestDfn.config);
-  stubSmokeResource(smokeTestDfn.expectations);
-}
+// TODO: bug in browserify ... standalone + bundle.require(... {expose: }) = bad news
+// As a workaround, don't use bundle.require. Instead write `Smokes.getSmokeTests()` to a temporary
+// file and import that.
+// see https://github.com/browserify/browserify/issues/968
+// for (const smokeTestDfn of Smokes.SMOKE_TEST_DFNS) {
+//   Smokes.resolveLocalOrProjectRoot(smokeTestDfn.config);
+//   stubSmokeResource(smokeTestDfn.config);
+//   stubSmokeResource(smokeTestDfn.expectations);
+// }
+fs.writeFileSync('./lighthouse-cli/test/smokehouse/smoke-test-dfns-compiled.json', JSON.stringify(Smokes.getSmokeTests(), null, 2));
 
 // TODO: copied from build-bundle ...
 // browerify's url shim doesn't work with .URL in node_modules,
 // and within robots-parser, it does `var URL = require('url').URL`, so we expose our own.
 // @see https://github.com/GoogleChrome/lighthouse/issues/5273
-const pathToURLShim = require.resolve('../lighthouse-core/lib/url-shim.js');
-bundle = bundle.require(pathToURLShim, {expose: 'url'});
+// const pathToURLShim = require.resolve('../lighthouse-core/lib/url-shim.js');
+// bundle = bundle.require(pathToURLShim, {expose: 'url'});
 
 bundle
   .bundle((err, src) => {
