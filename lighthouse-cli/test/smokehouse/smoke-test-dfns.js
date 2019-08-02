@@ -49,12 +49,12 @@ const SMOKE_TEST_DFNS = [{
   expectations: 'redirects/expectations.js',
   config: smokehouseDir + 'redirects-config.js',
   batch: 'parallel-first',
-}, {
+}, /*{
   id: 'seo',
   expectations: 'seo/expectations.js',
   config: smokehouseDir + 'seo-config.js',
   batch: 'parallel-first',
-}, {
+},*/ {
   id: 'offline',
   expectations: 'offline-local/offline-expectations.js',
   config: smokehouseDir + 'offline-config.js',

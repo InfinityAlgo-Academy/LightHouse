@@ -17,7 +17,7 @@ const { collateResults, report } = require('./smokehouse-report.js');
 
 /** @type {Smokehouse.Test[]} */
 // @ts-ignore
-const smokeTests = require('./smoke-test-dfns-compiled.js');
+const smokeTests = require('./smoke-test-dfns.js').getSmokeTests();
 
 /**
  * @param {Smokehouse.RunnerOptions} options
