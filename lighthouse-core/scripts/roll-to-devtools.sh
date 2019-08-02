@@ -59,4 +59,4 @@ sed -i '' -e "s/Version:.*/Version: $VERSION/g" "$tests_dir"/*-expected.txt
 
 echo "Done. To rebase the test expectations, run: yarn --cwd $chromium_dir/third_party/blink/renderer/devtools test 'http/tests/devtools/audits/*' --reset-results"
 
-echo "To run smoke tests: ninja -C $chromium_dir/out/Release devtools_frontend_resources && yarn --cwd $chromium_dir/third_party/blink/renderer/devtools test 'http/tests/devtools/audits/*'"
+echo "To run smoke tests: ninja -C $chromium_dir/out/Release devtools_frontend_resources && yarn --cwd $chromium_dir/third_party/blink/renderer/devtools test 'http/tests/devtools/audits/audits-smoke-run.js'"
