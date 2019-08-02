@@ -40,7 +40,23 @@ function stubSmokeResource(smokeResourcePath) {
 //   stubSmokeResource(smokeTestDfn.config);
 //   stubSmokeResource(smokeTestDfn.expectations);
 // }
-fs.writeFileSync('./lighthouse-cli/test/smokehouse/smoke-test-dfns-compiled.json', JSON.stringify(Smokes.getSmokeTests(), null, 2));
+
+// Regex doesn't serialize ... So let's save the smoke tests as proper JS.
+const smokeTests = Smokes.getSmokeTests();
+
+function replacer(key, value) {
+  if (value instanceof RegExp)
+    return '__REGEX__' + value.source + '___' + value.flags;
+  else
+    return value;
+}
+
+// Transform "__REGEX__something___i" into new RegExp('something', 'i')
+// Can't just output a literal regex b/c escaped slashes would be wrong.
+// Luckily `regex === new RegExp(regex.source, regex.flags)`.
+const smokeTestsAsJs = JSON.stringify(smokeTests, replacer, 2).replace(/"__REGEX__(.*)___(.*)"/g, 'new RegExp(`$1`, `$2`)');
+const smokeTestsCompiled = 'module.exports = ' + smokeTestsAsJs;
+fs.writeFileSync('./lighthouse-cli/test/smokehouse/smoke-test-dfns-compiled.js', smokeTestsCompiled);
 
 // TODO: copied from build-bundle ...
 // browerify's url shim doesn't work with .URL in node_modules,

@@ -17,31 +17,7 @@ const { collateResults, report } = require('./smokehouse-report.js');
 
 /** @type {Smokehouse.Test[]} */
 // @ts-ignore
-const smokeTests = require('./smoke-test-dfns-compiled.json');
-
-// function shouldSkip(test, expectation) {
-//   if (expectation.lhr.requestedUrl.includes('infinite-loop')) {
-//     return 'Can\'t open DevTools when main thread is busy.';
-//   }
-
-//   return false;
-// }
-
-// function modify(test, expectation) {
-//   if (expectation.lhr.requestedUrl === 'http://localhost:10200/dobetterweb/dbw_tester.html') {
-//     // Audits panel doesn't connect to the page before a favicon.ico request is mades and fails,
-//     // so remove one error from the expected error log.
-//     // TODO: give the fixture server an actual favicon so we can ignore this edge case.
-//     expectation.lhr.audits['errors-in-console'].details.items.length -= 1;
-//   }
-
-//   // Audits and artifacts don't survive the error case in DevTools.
-//   // What remains is asserting that lhr.runtimeError is the expected error code.
-//   if (test.id === 'errors') {
-//     expectation.lhr.audits = {};
-//     delete expectation.artifacts;
-//   }
-// }
+const smokeTests = require('./smoke-test-dfns-compiled.js');
 
 /**
  * @param {Smokehouse.RunnerOptions} options
