@@ -14,6 +14,7 @@ const path = require('path');
 const assert = require('assert');
 const tsc = require('typescript');
 const collectAndBakeCtcStrings = require('./bake-ctc-to-lhl.js');
+const Util = require('../../report/html/renderer/util.js');
 
 const LH_ROOT = path.join(__dirname, '../../../');
 const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
@@ -157,19 +158,17 @@ function convertMessageToCtc(message, examples = {}) {
  * @param {IncrementalCtc} icu
  */
 function _processPlaceholderMarkdownCode(icu) {
+  const message = icu.message;
+
   // Check that number of backticks is even.
-  const match = icu.message.match(/`/g);
+  const match = message.match(/`/g);
   if (match && match.length % 2 !== 0) {
-    throw Error(`Open backtick in message "${icu.message}"`);
+    throw Error(`Open backtick in message "${message}"`);
   }
 
-  // Split on backticked code spans
-  const parts = icu.message.split(/`(.*?)`/g);
   icu.message = '';
   let idx = 0;
-  while (parts.length) {
-    // Pop off the same number of elements as there are capture groups.
-    const [preambleText, codeText] = parts.splice(0, 2);
+  for (const {preambleText, codeText} of Util.splitMarkdownCodeSpans(message)) {
     icu.message += preambleText;
     if (codeText) {
       const placeholderName = `MARKDOWN_SNIPPET_${idx++}`;
@@ -189,20 +188,18 @@ function _processPlaceholderMarkdownCode(icu) {
  * @param {IncrementalCtc} icu
  */
 function _processPlaceholderMarkdownLink(icu) {
+  const message = icu.message;
+
   // Check for markdown link common errors, ex:
   // * [extra] (space between brackets and parens)
-  if (icu.message.match(/\[.*\] \(.*\)/)) {
-    throw Error(`Bad Link syntax in message "${icu.message}"`);
+  if (message.match(/\[.*\] \(.*\)/)) {
+    throw Error(`Bad Link syntax in message "${message}"`);
   }
 
-  // Split on markdown links (e.g. [some link](https://...)).
-  const parts = icu.message.split(/\[([^\]]*?)\]\((https?:\/\/.*?)\)/g);
   icu.message = '';
   let idx = 0;
 
-  while (parts.length) {
-    // Pop off the same number of elements as there are capture groups.
-    const [preambleText, linkText, linkHref] = parts.splice(0, 3);
+  for (const {preambleText, linkText, linkHref} of Util.splitMarkdownLink(message)) {
     icu.message += preambleText;
 
     // Append link if there are any.

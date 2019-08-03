@@ -281,6 +281,55 @@ class Util {
   }
 
   /**
+   * Split a string by markdown code spans (enclosed in backticks), splitting
+   * into segments with a `preambleText` that wasn't enclosed in markdown
+   * backticks and came before the `codeText` which was enclosed. The last
+   * `codeText` in the array will always be `undefined`, while empty
+   * `preambleText` (e.g. between two code spans with no characters between
+   * them) will be an empty string.
+   * @param {string} text
+   * @return {Array<{preambleText: string, codeText?: string}>}
+   */
+  static splitMarkdownCodeSpans(text) {
+    const segments = [];
+
+    // Split on backticked code spans.
+    const parts = text.split(/`(.*?)`/g);
+    for (let i = 0; i < parts.length; i += 2) {
+      segments.push({
+        preambleText: parts[i],
+        codeText: parts[i + 1],
+      });
+    }
+
+    return segments;
+  }
+
+  /**
+   * Split a string on markdown links (e.g. [some link](https://...)). Text will
+   * be split into segments with a starting `preambleText` that wasn't part of a
+   * link, followed by [`linkText`](`linkHref`) which were part of a link. Both
+   * `linkText` and `linkHref` will be undefined if there was no link in that
+   * segment.
+   * @param {string} text
+   * @return {Array<{preambleText: string, linkText?: string, linkHref?: string}>}
+   */
+  static splitMarkdownLink(text) {
+    const segments = [];
+
+    const parts = text.split(/\[([^\]]*?)\]\((https?:\/\/.*?)\)/g);
+    for (let i = 0; i < parts.length; i += 3) {
+      segments.push({
+        preambleText: parts[i],
+        linkText: parts[i + 1],
+        linkHref: parts[i + 2],
+      });
+    }
+
+    return segments;
+  }
+
+  /**
    * @param {URL} parsedUrl
    * @param {{numPathParts?: number, preserveQuery?: boolean, preserveHost?: boolean}=} options
    * @return {string}

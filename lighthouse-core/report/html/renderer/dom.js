@@ -16,7 +16,7 @@
  */
 'use strict';
 
-/* globals URL self */
+/* globals URL self Util */
 
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 
@@ -117,12 +117,7 @@ class DOM {
   convertMarkdownLinkSnippets(text) {
     const element = this.createElement('span');
 
-    // Split on markdown links (e.g. [some link](https://...)).
-    const parts = text.split(/\[([^\]]*?)\]\((https?:\/\/.*?)\)/g);
-
-    while (parts.length) {
-      // Pop off the same number of elements as there are capture groups.
-      const [preambleText, linkText, linkHref] = parts.splice(0, 3);
+    for (const {preambleText, linkText, linkHref} of Util.splitMarkdownLink(text)) {
       element.appendChild(this._document.createTextNode(preambleText));
 
       // Append link if there are any.
@@ -154,10 +149,7 @@ class DOM {
   convertMarkdownCodeSnippets(text) {
     const element = this.createElement('span');
 
-    const parts = text.split(/`(.*?)`/g); // Split on markdown code slashes
-    while (parts.length) {
-      // Pop off the same number of elements as there are capture groups.
-      const [preambleText, codeText] = parts.splice(0, 2);
+    for (const {preambleText, codeText} of Util.splitMarkdownCodeSpans(text)) {
       element.appendChild(this._document.createTextNode(preambleText));
       if (codeText) {
         const pre = this.createElement('code');
