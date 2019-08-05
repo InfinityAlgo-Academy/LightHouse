@@ -117,44 +117,47 @@ class DOM {
   convertMarkdownLinkSnippets(text) {
     const element = this.createElement('span');
 
-    for (const {preambleText, linkText, linkHref} of Util.splitMarkdownLink(text)) {
-      element.appendChild(this._document.createTextNode(preambleText));
-
-      // Append link if there are any.
-      if (linkText && linkHref) {
-        const url = new URL(linkHref);
-
-        const DEVELOPERS_GOOGLE_ORIGIN = 'https://developers.google.com';
-        if (url.origin === DEVELOPERS_GOOGLE_ORIGIN) {
-          url.searchParams.set('utm_source', 'lighthouse');
-          url.searchParams.set('utm_medium', this._lighthouseChannel);
-        }
-
-        const a = this.createElement('a');
-        a.rel = 'noopener';
-        a.target = '_blank';
-        a.textContent = linkText;
-        a.href = url.href;
-        element.appendChild(a);
+    for (const segment of Util.splitMarkdownLink(text)) {
+      if (!segment.isLink) {
+        // Plain text segment.
+        element.appendChild(this._document.createTextNode(segment.plainText));
+        continue;
       }
+
+      // Otherwise, append any links found.
+      const url = new URL(segment.linkHref);
+
+      const DEVELOPERS_GOOGLE_ORIGIN = 'https://developers.google.com';
+      if (url.origin === DEVELOPERS_GOOGLE_ORIGIN) {
+        url.searchParams.set('utm_source', 'lighthouse');
+        url.searchParams.set('utm_medium', this._lighthouseChannel);
+      }
+
+      const a = this.createElement('a');
+      a.rel = 'noopener';
+      a.target = '_blank';
+      a.textContent = segment.linkText;
+      a.href = url.href;
+      element.appendChild(a);
     }
 
     return element;
   }
 
   /**
-   * @param {string} text
+   * @param {string} markdownText
    * @return {Element}
    */
-  convertMarkdownCodeSnippets(text) {
+  convertMarkdownCodeSnippets(markdownText) {
     const element = this.createElement('span');
 
-    for (const {preambleText, codeText} of Util.splitMarkdownCodeSpans(text)) {
-      element.appendChild(this._document.createTextNode(preambleText));
-      if (codeText) {
+    for (const segment of Util.splitMarkdownCodeSpans(markdownText)) {
+      if (segment.isCode) {
         const pre = this.createElement('code');
-        pre.textContent = codeText;
+        pre.textContent = segment.codeText;
         element.appendChild(pre);
+      } else {
+        element.appendChild(this._document.createTextNode(segment.plainText));
       }
     }
 

@@ -269,66 +269,69 @@ describe('util helpers', () => {
   describe('#splitMarkdownCodeSpans', () => {
     it('handles strings with no backticks in them', () => {
       expect(Util.splitMarkdownCodeSpans('regular text')).toEqual([
-        {preambleText: 'regular text', codeText: undefined},
+        {isCode: false, plainText: 'regular text'},
       ]);
     });
 
     it('does not split on a single backtick', () => {
       expect(Util.splitMarkdownCodeSpans('regular `text')).toEqual([
-        {preambleText: 'regular `text', codeText: undefined},
+        {isCode: false, plainText: 'regular `text'},
       ]);
     });
 
     it('splits on backticked code', () => {
       expect(Util.splitMarkdownCodeSpans('regular `code` text')).toEqual([
-        {preambleText: 'regular ', codeText: 'code'},
-        {preambleText: ' text', codeText: undefined},
+        {isCode: false, plainText: 'regular '},
+        {isCode: true, codeText: 'code'},
+        {isCode: false, plainText: ' text'},
       ]);
     });
 
     it('splits on backticked code at the beginning of the string', () => {
       expect(Util.splitMarkdownCodeSpans('`start code` regular text')).toEqual([
-        {preambleText: '', codeText: 'start code'},
-        {preambleText: ' regular text', codeText: undefined},
+        {isCode: true, codeText: 'start code'},
+        {isCode: false, plainText: ' regular text'},
       ]);
     });
 
     it('splits on backticked code at the emd of the string', () => {
       expect(Util.splitMarkdownCodeSpans('regular text `end code`')).toEqual([
-        {preambleText: 'regular text ', codeText: 'end code'},
-        {preambleText: '', codeText: undefined},
+        {isCode: false, plainText: 'regular text '},
+        {isCode: true, codeText: 'end code'},
       ]);
     });
 
     it('does not split on a single backtick after split out backticked code', () => {
       expect(Util.splitMarkdownCodeSpans('regular text `code` and more `text')).toEqual([
-        {preambleText: 'regular text ', codeText: 'code'},
-        {preambleText: ' and more `text', codeText: undefined},
+        {isCode: false, plainText: 'regular text '},
+        {isCode: true, codeText: 'code'},
+        {isCode: false, plainText: ' and more `text'},
       ]);
     });
 
     it('splits on two instances of backticked code', () => {
       expect(Util.splitMarkdownCodeSpans('regular text `code` more text `and more code`')).toEqual([
-        {preambleText: 'regular text ', codeText: 'code'},
-        {preambleText: ' more text ', codeText: 'and more code'},
-        {preambleText: '', codeText: undefined},
+        {isCode: false, plainText: 'regular text '},
+        {isCode: true, codeText: 'code'},
+        {isCode: false, plainText: ' more text '},
+        {isCode: true, codeText: 'and more code'},
       ]);
     });
 
     it('splits on two directly adjacent instances of backticked code', () => {
       // eslint-disable-next-line max-len
       expect(Util.splitMarkdownCodeSpans('regular text `first code``second code` end text')).toEqual([
-        {preambleText: 'regular text ', codeText: 'first code'},
-        {preambleText: '', codeText: 'second code'},
-        {preambleText: ' end text', codeText: undefined},
+        {isCode: false, plainText: 'regular text '},
+        {isCode: true, codeText: 'first code'},
+        {isCode: true, codeText: 'second code'},
+        {isCode: false, plainText: ' end text'},
       ]);
     });
 
     it('handles text only within backticks', () => {
       expect(Util.splitMarkdownCodeSpans('`first code``second code`')).toEqual([
-        {preambleText: '', codeText: 'first code'},
-        {preambleText: '', codeText: 'second code'},
-        {preambleText: '', codeText: undefined},
+        {isCode: true, codeText: 'first code'},
+        {isCode: true, codeText: 'second code'},
       ]);
     });
   });
@@ -336,80 +339,82 @@ describe('util helpers', () => {
   describe('#splitMarkdownLink', () => {
     it('handles strings with no links in them', () => {
       expect(Util.splitMarkdownLink('some text')).toEqual([
-        {preambleText: 'some text', linkText: undefined, linkHref: undefined},
+        {isLink: false, plainText: 'some text'},
       ]);
     });
 
     it('does not split on an incomplete markdown link', () => {
       expect(Util.splitMarkdownLink('some [not link text](text')).toEqual([
-        {preambleText: 'some [not link text](text', linkText: undefined, linkHref: undefined},
+        {isLink: false, plainText: 'some [not link text](text'},
       ]);
     });
 
     it('splits on a markdown link', () => {
       expect(Util.splitMarkdownLink('some [link text](https://example.com) text')).toEqual([
-        {preambleText: 'some ', linkText: 'link text', linkHref: 'https://example.com'},
-        {preambleText: ' text', linkText: undefined, linkHref: undefined},
+        {isLink: false, plainText: 'some '},
+        {isLink: true, linkText: 'link text', linkHref: 'https://example.com'},
+        {isLink: false, plainText: ' text'},
       ]);
     });
 
     it('splits on an http markdown link', () => {
       expect(Util.splitMarkdownLink('you should [totally click here](http://never-mitm.com) now')).toEqual([
-        {preambleText: 'you should ', linkText: 'totally click here', linkHref: 'http://never-mitm.com'},
-        {preambleText: ' now', linkText: undefined, linkHref: undefined},
+        {isLink: false, plainText: 'you should '},
+        {isLink: true, linkText: 'totally click here', linkHref: 'http://never-mitm.com'},
+        {isLink: false, plainText: ' now'},
       ]);
     });
 
     it('does not split on a non-http/https link', () => {
       expect(Util.splitMarkdownLink('some [link text](ftp://example.com) text')).toEqual([
-        {preambleText: 'some [link text](ftp://example.com) text', linkText: undefined, linkHref: undefined},
+        {isLink: false, plainText: 'some [link text](ftp://example.com) text'},
       ]);
     });
 
     it('does not split on a malformed markdown link', () => {
       expect(Util.splitMarkdownLink('some [link ]text](https://example.com')).toEqual([
-        {preambleText: 'some [link ]text](https://example.com', linkText: undefined, linkHref: undefined},
+        {isLink: false, plainText: 'some [link ]text](https://example.com'},
       ]);
 
       expect(Util.splitMarkdownLink('some [link text] (https://example.com')).toEqual([
-        {preambleText: 'some [link text] (https://example.com', linkText: undefined, linkHref: undefined},
+        {isLink: false, plainText: 'some [link text] (https://example.com'},
       ]);
     });
 
     it('splits on a markdown link at the beginning of a string', () => {
       expect(Util.splitMarkdownLink('[link text](https://example.com) end text')).toEqual([
-        {preambleText: '', linkText: 'link text', linkHref: 'https://example.com'},
-        {preambleText: ' end text', linkText: undefined, linkHref: undefined},
+        {isLink: true, linkText: 'link text', linkHref: 'https://example.com'},
+        {isLink: false, plainText: ' end text'},
       ]);
     });
 
     it('splits on a markdown link at the end of a string', () => {
       expect(Util.splitMarkdownLink('start text [link text](https://example.com)')).toEqual([
-        {preambleText: 'start text ', linkText: 'link text', linkHref: 'https://example.com'},
-        {preambleText: '', linkText: undefined, linkHref: undefined},
+        {isLink: false, plainText: 'start text '},
+        {isLink: true, linkText: 'link text', linkHref: 'https://example.com'},
       ]);
     });
 
     it('handles a string consisting only of a markdown link', () => {
       expect(Util.splitMarkdownLink(`[I'm only a link](https://example.com)`)).toEqual([
-        {preambleText: '', linkText: `I'm only a link`, linkHref: 'https://example.com'},
-        {preambleText: '', linkText: undefined, linkHref: undefined},
+        {isLink: true, linkText: `I'm only a link`, linkHref: 'https://example.com'},
       ]);
     });
 
     it('handles a string starting and ending with a markdown link', () => {
       expect(Util.splitMarkdownLink('[first link](https://first.com) other text [second link](https://second.com)')).toEqual([
-        {preambleText: '', linkText: 'first link', linkHref: 'https://first.com'},
-        {preambleText: ' other text ', linkText: 'second link', linkHref: 'https://second.com'},
-        {preambleText: '', linkText: undefined, linkHref: undefined},
+        {isLink: true, linkText: 'first link', linkHref: 'https://first.com'},
+        {isLink: false, plainText: ' other text '},
+        {isLink: true, linkText: 'second link', linkHref: 'https://second.com'},
       ]);
     });
 
     it('handles a string with adjacent markdown links', () => {
       expect(Util.splitMarkdownLink('start text [first link](https://first.com)[second link](https://second.com) and scene')).toEqual([
-        {preambleText: 'start text ', linkText: 'first link', linkHref: 'https://first.com'},
-        {preambleText: '', linkText: 'second link', linkHref: 'https://second.com'},
-        {preambleText: ' and scene', linkText: undefined, linkHref: undefined},
+        {isLink: false, plainText: 'start text '},
+        {isLink: true, linkText: 'first link', linkHref: 'https://first.com'},
+        {isLink: true, linkText: 'second link', linkHref: 'https://second.com'},
+        {isLink: false, plainText: ' and scene'},
       ]);
     });
   });

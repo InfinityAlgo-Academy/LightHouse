@@ -168,16 +168,17 @@ function _processPlaceholderMarkdownCode(icu) {
 
   icu.message = '';
   let idx = 0;
-  for (const {preambleText, codeText} of Util.splitMarkdownCodeSpans(message)) {
-    icu.message += preambleText;
-    if (codeText) {
+  for (const segment of Util.splitMarkdownCodeSpans(message)) {
+    if (segment.isCode) {
       const placeholderName = `MARKDOWN_SNIPPET_${idx++}`;
       // Backtick replacement looks unreadable here, so .join() instead.
       icu.message += '$' + placeholderName + '$';
       icu.placeholders[placeholderName] = {
-        content: '`' + codeText + '`',
-        example: codeText,
+        content: '`' + segment.codeText + '`',
+        example: segment.codeText,
       };
+    } else {
+      icu.message += segment.plainText;
     }
   }
 }
@@ -199,22 +200,24 @@ function _processPlaceholderMarkdownLink(icu) {
   icu.message = '';
   let idx = 0;
 
-  for (const {preambleText, linkText, linkHref} of Util.splitMarkdownLink(message)) {
-    icu.message += preambleText;
-
-    // Append link if there are any.
-    if (linkText && linkHref) {
-      const startPlaceholder = `LINK_START_${idx}`;
-      const endPlaceholder = `LINK_END_${idx}`;
-      icu.message += '$' + startPlaceholder + '$' + linkText + '$' + endPlaceholder + '$';
-      idx++;
-      icu.placeholders[startPlaceholder] = {
-        content: '[',
-      };
-      icu.placeholders[endPlaceholder] = {
-        content: `](${linkHref})`,
-      };
+  for (const segment of Util.splitMarkdownLink(message)) {
+    if (!segment.isLink) {
+      // Plain text segment.
+      icu.message += segment.plainText;
+      continue;
     }
+
+    // Otherwise, append any links found.
+    const startPlaceholder = `LINK_START_${idx}`;
+    const endPlaceholder = `LINK_END_${idx}`;
+    icu.message += '$' + startPlaceholder + '$' + segment.linkText + '$' + endPlaceholder + '$';
+    idx++;
+    icu.placeholders[startPlaceholder] = {
+      content: '[',
+    };
+    icu.placeholders[endPlaceholder] = {
+      content: `](${segment.linkHref})`,
+    };
   }
 }
 

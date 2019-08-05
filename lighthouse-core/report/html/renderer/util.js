@@ -281,29 +281,78 @@ class Util {
   }
 
   /**
-   * Split a string by markdown code spans (enclosed in backticks), splitting
-   * into segments with a `preambleText` that wasn't enclosed in markdown
-   * backticks and came before the `codeText` which was enclosed. The last
-   * `codeText` in the array will always be `undefined`, while empty
-   * `preambleText` (e.g. between two code spans with no characters between
-   * them) will be an empty string.
+   * Split a string by markdown code spans (enclosed in `backticks`), splitting
+   * into segments that were enclosed in backticks (marked as `isCode === true`)
+   * and those that outside the backticks (`isCode === false`).
    * @param {string} text
-   * @return {Array<{preambleText: string, codeText?: string}>}
+   * @return {Array<{isCode: true, codeText: string}|{isCode: false, plainText: string}>}
    */
   static splitMarkdownCodeSpans(text) {
+    /** @type {Array<{isCode: true, codeText: string}|{isCode: false, plainText: string}>} */
     const segments = [];
 
     // Split on backticked code spans.
     const parts = text.split(/`(.*?)`/g);
-    for (let i = 0; i < parts.length; i += 2) {
-      segments.push({
-        preambleText: parts[i],
-        codeText: parts[i + 1],
-      });
+    for (let i = 0; i < parts.length; i ++) {
+      const text = parts[i];
+
+      // Empty strings are an artifact of splitting, not meaningful.
+      if (!text) continue;
+
+      // Alternates between plain text and code segments.
+      if (i % 2 === 0) {
+        segments.push({
+          isCode: false,
+          plainText: text,
+        });
+      } else {
+        segments.push({
+          isCode: true,
+          codeText: text,
+        });
+      }
     }
 
     return segments;
   }
+
+  /**
+   * Split a string on markdown links (e.g. [some link](https://...)) into
+   * segments of plain text that weren't part of a link (marked as
+   * `isLink === false`), and segments with text content and a URL that did make
+   * up a link (marked as `isLink === true`).
+   * @param {string} text
+   * @return {Array<{isLink: true, linkText: string, linkHref: string}|{isLink: false, plainText: string}>}
+   */
+  static splitMarkdownLink(text) {
+    /** @type {Array<{isLink: true, linkText: string, linkHref: string}|{isLink: false, plainText: string}>} */
+    const segments = [];
+
+    const parts = text.split(/\[([^\]]*?)\]\((https?:\/\/.*?)\)/g);
+    while (parts.length) {
+      // Pop off the same number of elements as there are capture groups.
+      const [preambleText, linkText, linkHref] = parts.splice(0, 3);
+
+      if (preambleText) { // Empty plain text is an artifact of splitting, not meaningful.
+        segments.push({
+          isLink: false,
+          plainText: preambleText,
+        });
+      }
+
+      // Append link if there are any.
+      if (linkText && linkHref) {
+        segments.push({
+          isLink: true,
+          linkText,
+          linkHref,
+        });
+      }
+    }
+
+    return segments;
+  }
+
 
   /**
    * Split a string on markdown links (e.g. [some link](https://...)). Text will
@@ -312,18 +361,34 @@ class Util {
    * `linkText` and `linkHref` will be undefined if there was no link in that
    * segment.
    * @param {string} text
-   * @return {Array<{preambleText: string, linkText?: string, linkHref?: string}>}
+   * @return {Array<{isLink: true, linkText: string, linkHref: string}|{isLink: false, plainText: string}>}
    */
-  static splitMarkdownLink(text) {
+  static splitMarkdownLink2(text) {
+    /** @type {Array<{isLink: true, linkText: string, linkHref: string}|{isLink: false, plainText: string}>} */
     const segments = [];
 
     const parts = text.split(/\[([^\]]*?)\]\((https?:\/\/.*?)\)/g);
-    for (let i = 0; i < parts.length; i += 3) {
-      segments.push({
-        preambleText: parts[i],
-        linkText: parts[i + 1],
-        linkHref: parts[i + 2],
-      });
+    for (let i = 0; i < parts.length; i++) {
+      const text = parts[i];
+
+      if (i % 3 === 0) {
+        // The first of three is always the plain text before the matched regex.
+        if (!text) continue; // Empty plain text isn't worth saving.
+
+        segments.push({
+          isLink: false,
+          plainText: parts[i],
+        });
+      } else if (i % 3 === 1) {
+        // There will always be a following linkHref if text was matched here.
+        const linkHref = parts[++i];
+
+        segments.push({
+          isLink: true,
+          linkText: text,
+          linkHref,
+        });
+      }
     }
 
     return segments;
