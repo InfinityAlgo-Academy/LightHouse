@@ -328,7 +328,7 @@ class Util {
     /** @type {Array<{isLink: true, linkText: string, linkHref: string}|{isLink: false, plainText: string}>} */
     const segments = [];
 
-    const parts = text.split(/\[([^\]]*?)\]\((https?:\/\/.*?)\)/g);
+    const parts = text.split(/\[([^\]]+?)\]\((https?:\/\/.*?)\)/g);
     while (parts.length) {
       // Pop off the same number of elements as there are capture groups.
       const [preambleText, linkText, linkHref] = parts.splice(0, 3);

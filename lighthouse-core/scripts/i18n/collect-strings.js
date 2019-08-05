@@ -194,7 +194,11 @@ function _processPlaceholderMarkdownLink(icu) {
   // Check for markdown link common errors, ex:
   // * [extra] (space between brackets and parens)
   if (message.match(/\[.*\] \(.*\)/)) {
-    throw Error(`Bad Link syntax in message "${message}"`);
+    throw Error(`Bad Link spacing in message "${message}"`);
+  }
+  // * [](empty link text)
+  if (message.match(/\[\]\(.*\)/)) {
+    throw Error(`markdown link text missing in message "${message}"`);
   }
 
   icu.message = '';

@@ -381,6 +381,12 @@ describe('util helpers', () => {
       ]);
     });
 
+    it('does not split on empty link text', () => {
+      expect(Util.splitMarkdownLink('some [](https://example.com) empty link')).toEqual([
+        {isLink: false, plainText: 'some [](https://example.com) empty link'},
+      ]);
+    });
+
     it('splits on a markdown link at the beginning of a string', () => {
       expect(Util.splitMarkdownLink('[link text](https://example.com) end text')).toEqual([
         {isLink: true, linkText: 'link text', linkHref: 'https://example.com'},
