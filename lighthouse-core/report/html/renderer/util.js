@@ -281,6 +281,73 @@ class Util {
   }
 
   /**
+   * Split a string by markdown code spans (enclosed in `backticks`), splitting
+   * into segments that were enclosed in backticks (marked as `isCode === true`)
+   * and those that outside the backticks (`isCode === false`).
+   * @param {string} text
+   * @return {Array<{isCode: true, text: string}|{isCode: false, text: string}>}
+   */
+  static splitMarkdownCodeSpans(text) {
+    /** @type {Array<{isCode: true, text: string}|{isCode: false, text: string}>} */
+    const segments = [];
+
+    // Split on backticked code spans.
+    const parts = text.split(/`(.*?)`/g);
+    for (let i = 0; i < parts.length; i ++) {
+      const text = parts[i];
+
+      // Empty strings are an artifact of splitting, not meaningful.
+      if (!text) continue;
+
+      // Alternates between plain text and code segments.
+      const isCode = i % 2 !== 0;
+      segments.push({
+        isCode,
+        text,
+      });
+    }
+
+    return segments;
+  }
+
+  /**
+   * Split a string on markdown links (e.g. [some link](https://...)) into
+   * segments of plain text that weren't part of a link (marked as
+   * `isLink === false`), and segments with text content and a URL that did make
+   * up a link (marked as `isLink === true`).
+   * @param {string} text
+   * @return {Array<{isLink: true, text: string, linkHref: string}|{isLink: false, text: string}>}
+   */
+  static splitMarkdownLink(text) {
+    /** @type {Array<{isLink: true, text: string, linkHref: string}|{isLink: false, text: string}>} */
+    const segments = [];
+
+    const parts = text.split(/\[([^\]]+?)\]\((https?:\/\/.*?)\)/g);
+    while (parts.length) {
+      // Shift off the same number of elements as the pre-split and capture groups.
+      const [preambleText, linkText, linkHref] = parts.splice(0, 3);
+
+      if (preambleText) { // Skip empty text as it's an artifact of splitting, not meaningful.
+        segments.push({
+          isLink: false,
+          text: preambleText,
+        });
+      }
+
+      // Append link if there are any.
+      if (linkText && linkHref) {
+        segments.push({
+          isLink: true,
+          text: linkText,
+          linkHref,
+        });
+      }
+    }
+
+    return segments;
+  }
+
+  /**
    * @param {URL} parsedUrl
    * @param {{numPathParts?: number, preserveQuery?: boolean, preserveHost?: boolean}=} options
    * @return {string}
