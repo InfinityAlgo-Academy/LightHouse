@@ -51,4 +51,4 @@ cp -r dist/dt-report-resources/* $fe_lh_dir
 VERSION=$(node -e "console.log(require('./package.json').version)")
 sed -i '' -e "s/Version:.*/Version: $VERSION/g" "$tests_dir"/*-expected.txt
 
-echo "Done. To rebase the test expectations, run: yarn --cwd ~/chromium/src/third_party/blink/renderer/devtools test 'http/tests/devtools/audits/*' --reset-results"
+echo "Done. To rebase the test expectations, run: yarn --cwd ~/chromium/src/third_party/blink/renderer/devtools test 'http/tests/devtools/audits/*.js' --reset-results"
