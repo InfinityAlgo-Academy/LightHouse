@@ -10,7 +10,7 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit');
+const AxeAudit = require('./axe-audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -24,7 +24,7 @@ const UIStrings = {
   description: 'Screen readers have features to make navigating tables easier. Ensuring ' +
       'table headers always refer to some set of cells may improve the experience for screen ' +
       'reader users. ' +
-      '[Learn more](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse).',
+      '[Learn more](https://web.dev/th-has-data-cells/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

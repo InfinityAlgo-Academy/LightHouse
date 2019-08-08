@@ -1,15 +1,10 @@
 {
     "audits": {
         "accesskeys": {
-            "description": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/3.1/accesskeys?application=lighthouse).",
-            "details": {
-                "headings": [],
-                "items": [],
-                "type": "table"
-            },
+            "description": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://web.dev/accesskeys/).",
             "id": "accesskeys",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
             "title": "`[accesskey]` values are unique"
         },
         "appcache-manifest": {
@@ -29,56 +24,56 @@
             "warnings": []
         },
         "aria-allowed-attr": {
-            "description": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://dequeuniversity.com/rules/axe/3.1/aria-allowed-attr?application=lighthouse).",
+            "description": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://web.dev/aria-allowed-attr/).",
             "id": "aria-allowed-attr",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "`[aria-*]` attributes match their roles"
         },
         "aria-required-attr": {
-            "description": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://dequeuniversity.com/rules/axe/3.1/aria-required-attr?application=lighthouse).",
+            "description": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://web.dev/aria-required-attr/).",
             "id": "aria-required-attr",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "`[role]`s have all required `[aria-*]` attributes"
         },
         "aria-required-children": {
-            "description": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=lighthouse).",
+            "description": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-children/).",
             "id": "aria-required-children",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "Elements with `[role]` that require specific children `[role]`s, are present"
         },
         "aria-required-parent": {
-            "description": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/3.1/aria-required-parent?application=lighthouse).",
+            "description": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-parent/).",
             "id": "aria-required-parent",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "`[role]`s are contained by their required parent element"
         },
         "aria-roles": {
-            "description": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/3.1/aria-roles?application=lighthouse).",
+            "description": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://web.dev/aria-roles/).",
             "id": "aria-roles",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "`[role]` values are valid"
         },
         "aria-valid-attr": {
-            "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid names. [Learn more](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr?application=lighthouse).",
+            "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid names. [Learn more](https://web.dev/aria-valid-attr/).",
             "id": "aria-valid-attr",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "`[aria-*]` attributes are valid and not misspelled"
         },
         "aria-valid-attr-value": {
-            "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=lighthouse).",
+            "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://web.dev/aria-valid-attr-value/).",
             "id": "aria-valid-attr-value",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "`[aria-*]` attributes have valid values"
         },
         "audio-caption": {
-            "description": "Captions make audio elements usable for deaf or hearing-impaired users, providing critical information such as who is talking, what they're saying, and other non-speech information. [Learn more](https://dequeuniversity.com/rules/axe/3.1/audio-caption?application=lighthouse).",
+            "description": "Captions make audio elements usable for deaf or hearing-impaired users, providing critical information such as who is talking, what they're saying, and other non-speech information. [Learn more](https://web.dev/audio-caption/).",
             "id": "audio-caption",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -151,14 +146,19 @@
             "title": "JavaScript execution time"
         },
         "button-name": {
-            "description": "When a button doesn't have an accessible name, screen readers announce it as \"button\", making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse).",
+            "description": "When a button doesn't have an accessible name, screen readers announce it as \"button\", making it unusable for users who rely on screen readers. [Learn more](https://web.dev/button-name/).",
+            "details": {
+                "headings": [],
+                "items": [],
+                "type": "table"
+            },
             "id": "button-name",
-            "score": null,
-            "scoreDisplayMode": "notApplicable",
+            "score": 1.0,
+            "scoreDisplayMode": "binary",
             "title": "Buttons have an accessible name"
         },
         "bypass": {
-            "description": "Adding ways to bypass repetitive content lets keyboard users navigate the page more efficiently. [Learn more](https://dequeuniversity.com/rules/axe/3.1/bypass?application=lighthouse).",
+            "description": "Adding ways to bypass repetitive content lets keyboard users navigate the page more efficiently. [Learn more](https://web.dev/bypass/).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -177,7 +177,7 @@
             "title": "Document has a valid `rel=canonical`"
         },
         "color-contrast": {
-            "description": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=lighthouse).",
+            "description": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://web.dev/color-contrast/).",
             "details": {
                 "debugData": {
                     "impact": "serious",
@@ -199,6 +199,7 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
+                            "nodeLabel": "Do better web tester page",
                             "path": "3,HTML,1,BODY,5,DIV,0,H2",
                             "selector": "h2",
                             "snippet": "<h2>Do better web tester page</h2>",
@@ -208,6 +209,7 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
+                            "nodeLabel": "Hi there!",
                             "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
                             "selector": "span",
                             "snippet": "<span>Hi there!</span>",
@@ -376,21 +378,21 @@
             "title": "Minimize Critical Requests Depth"
         },
         "custom-controls-labels": {
-            "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).",
+            "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://web.dev/custom-controls-labels/).",
             "id": "custom-controls-labels",
             "score": null,
             "scoreDisplayMode": "manual",
             "title": "Custom controls have associated labels"
         },
         "custom-controls-roles": {
-            "description": "Custom interactive controls have appropriate ARIA roles. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).",
+            "description": "Custom interactive controls have appropriate ARIA roles. [Learn more](https://web.dev/custom-control-roles/).",
             "id": "custom-controls-roles",
             "score": null,
             "scoreDisplayMode": "manual",
             "title": "Custom controls have ARIA roles"
         },
         "definition-list": {
-            "description": "When definition lists are not properly marked up, screen readers may produce confusing or inaccurate output. [Learn more](https://dequeuniversity.com/rules/axe/3.1/definition-list?application=lighthouse).",
+            "description": "When definition lists are not properly marked up, screen readers may produce confusing or inaccurate output. [Learn more](https://web.dev/definition-list/).",
             "id": "definition-list",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -474,21 +476,21 @@
             "title": "Diagnostics"
         },
         "dlitem": {
-            "description": "Definition list items (`<dt>` and `<dd>`) must be wrapped in a parent `<dl>` element to ensure that screen readers can properly announce them. [Learn more](https://dequeuniversity.com/rules/axe/3.1/dlitem?application=lighthouse).",
+            "description": "Definition list items (`<dt>` and `<dd>`) must be wrapped in a parent `<dl>` element to ensure that screen readers can properly announce them. [Learn more](https://web.dev/dlitem/).",
             "id": "dlitem",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "Definition list items are wrapped in `<dl>` elements"
         },
         "doctype": {
-            "description": "Specifying a doctype prevents the browser from switching to quirks-mode.Read more on the [MDN Web Docs page](https://developer.mozilla.org/en-US/docs/Glossary/Doctype)",
+            "description": "Specifying a doctype prevents the browser from switching to quirks-mode. Read more on the [MDN Web Docs page](https://developer.mozilla.org/en-US/docs/Glossary/Doctype)",
             "id": "doctype",
             "score": 1.0,
             "scoreDisplayMode": "binary",
             "title": "Page has the HTML doctype"
         },
         "document-title": {
-            "description": "The title gives screen reader users an overview of the page, and search engine users rely on it heavily to determine if a page is relevant to their search. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/title).",
+            "description": "The title gives screen reader users an overview of the page, and search engine users rely on it heavily to determine if a page is relevant to their search. [Learn more](https://web.dev/document-title/).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -551,7 +553,7 @@
             "title": "Avoids an excessive DOM size"
         },
         "duplicate-id": {
-            "description": "The value of an id attribute must be unique to prevent other instances from being overlooked by assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/3.1/duplicate-id?application=lighthouse).",
+            "description": "The value of an id attribute must be unique to prevent other instances from being overlooked by assistive technologies. [Learn more](https://web.dev/duplicate-id/).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -725,14 +727,14 @@
             "title": "First Meaningful Paint"
         },
         "focus-traps": {
-            "description": "A user can tab into and out of any control or region without accidentally trapping their focus. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#start_with_the_keyboard).",
+            "description": "A user can tab into and out of any control or region without accidentally trapping their focus. [Learn more](https://web.dev/focus-traps/).",
             "id": "focus-traps",
             "score": null,
             "scoreDisplayMode": "manual",
             "title": "User focus is not accidentally trapped in a region"
         },
         "focusable-controls": {
-            "description": "Custom interactive controls are keyboard focusable and display a focus indicator. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#start_with_the_keyboard).",
+            "description": "Custom interactive controls are keyboard focusable and display a focus indicator. [Learn more](https://web.dev/focusable-controls/).",
             "id": "focusable-controls",
             "score": null,
             "scoreDisplayMode": "manual",
@@ -748,7 +750,8 @@
             "id": "font-display",
             "score": 1.0,
             "scoreDisplayMode": "binary",
-            "title": "All text remains visible during webfont loads"
+            "title": "All text remains visible during webfont loads",
+            "warnings": []
         },
         "font-size": {
             "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to \u201cpinch to zoom\u201d in order to read. Strive to have >60% of page text \u226512px. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).",
@@ -791,14 +794,14 @@
             "title": "Document uses legible font sizes"
         },
         "frame-title": {
-            "description": "Screen reader users rely on frame titles to describe the contents of frames. [Learn more](https://dequeuniversity.com/rules/axe/3.1/frame-title?application=lighthouse).",
+            "description": "Screen reader users rely on frame titles to describe the contents of frames. [Learn more](https://web.dev/frame-title/).",
             "id": "frame-title",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "`<frame>` or `<iframe>` elements have a title"
         },
         "geolocation-on-start": {
-            "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to user gestures instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).",
+            "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).",
             "details": {
                 "headings": [
                     {
@@ -830,7 +833,7 @@
             "title": "Requests the geolocation permission on page load"
         },
         "heading-levels": {
-            "description": "Headings are used to create an outline for the page and heading levels are not skipped. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#take_advantage_of_headings_and_landmarks).",
+            "description": "Headings are used to create an outline for the page and heading levels are not skipped. [Learn more](https://web.dev/heading-levels/).",
             "id": "heading-levels",
             "score": null,
             "scoreDisplayMode": "manual",
@@ -849,7 +852,7 @@
             "title": "Document has a valid `hreflang`"
         },
         "html-has-lang": {
-            "description": "If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default language that the user chose when setting up the screen reader. If the page isn't actually in the default language, then the screen reader might not announce the page's text correctly. [Learn more](https://dequeuniversity.com/rules/axe/3.1/html-has-lang?application=lighthouse).",
+            "description": "If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default language that the user chose when setting up the screen reader. If the page isn't actually in the default language, then the screen reader might not announce the page's text correctly. [Learn more](https://web.dev/html-has-lang/).",
             "details": {
                 "debugData": {
                     "impact": "serious",
@@ -871,6 +874,7 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  The <html> element does not have a lang attribute",
+                            "nodeLabel": "html",
                             "path": "3,HTML",
                             "selector": "html",
                             "snippet": "<html manifest=\"clock.appcache\">",
@@ -886,7 +890,7 @@
             "title": "`<html>` element does not have a `[lang]` attribute"
         },
         "html-lang-valid": {
-            "description": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) helps screen readers announce text properly. [Learn more](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse).",
+            "description": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) helps screen readers announce text properly. [Learn more](https://web.dev/html-lang-valid/).",
             "id": "html-lang-valid",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -900,7 +904,7 @@
             "title": "Page has successful HTTP status code"
         },
         "image-alt": {
-            "description": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more](https://dequeuniversity.com/rules/axe/3.1/image-alt?application=lighthouse).",
+            "description": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more](https://web.dev/image-alt/).",
             "details": {
                 "debugData": {
                     "impact": "critical",
@@ -924,6 +928,7 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+                            "nodeLabel": "img",
                             "path": "3,HTML,1,BODY,10,IMG",
                             "selector": "img[height=\"\\35 7\"]",
                             "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
@@ -933,6 +938,7 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+                            "nodeLabel": "img",
                             "path": "3,HTML,1,BODY,12,IMG",
                             "selector": "img[height=\"\\33 18\"]",
                             "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
@@ -942,8 +948,9 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+                            "nodeLabel": "img",
                             "path": "3,HTML,1,BODY,14,IMG",
-                            "selector": "img[src$=\"lighthouse-rotating.gif\"]",
+                            "selector": "img[src$=\"lighthouse-rotating\\.gif\"]",
                             "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
                             "type": "node"
                         }
@@ -951,8 +958,9 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-                            "path": "3,HTML,1,BODY,49,IMG",
-                            "selector": "img:nth-child(27)",
+                            "nodeLabel": "img",
+                            "path": "3,HTML,1,BODY,53,IMG",
+                            "selector": "img:nth-child(30)",
                             "snippet": "<img src=\"blob:http://localhost:62824/289254fd-ef1d-4c1a-96a8-ba291caa2140\">",
                             "type": "node"
                         }
@@ -1006,7 +1014,7 @@
             "warnings": []
         },
         "input-image-alt": {
-            "description": "When an image is being used as an `<input>` button, providing alternative text can help screen reader users understand the purpose of the button. [Learn more](https://dequeuniversity.com/rules/axe/3.1/input-image-alt?application=lighthouse).",
+            "description": "When an image is being used as an `<input>` button, providing alternative text can help screen reader users understand the purpose of the button. [Learn more](https://web.dev/input-image-alt/).",
             "id": "input-image-alt",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -1042,7 +1050,7 @@
             "title": "Time to Interactive"
         },
         "interactive-element-affordance": {
-            "description": "Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#interactive_elements_like_links_and_buttons_should_indicate_their_purpose_and_state).",
+            "description": "Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn more](https://web.dev/interactive-element-affordance/).",
             "id": "interactive-element-affordance",
             "score": null,
             "scoreDisplayMode": "manual",
@@ -1169,7 +1177,7 @@
             "title": "JSON-LD structured data syntax is invalid"
         },
         "label": {
-            "description": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/3.1/label?application=lighthouse).",
+            "description": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://web.dev/label/).",
             "details": {
                 "debugData": {
                     "impact": "critical",
@@ -1194,7 +1202,8 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-                            "path": "3,HTML,1,BODY,44,INPUT",
+                            "nodeLabel": "input",
+                            "path": "3,HTML,1,BODY,48,INPUT",
                             "selector": "input[onpaste=\"event\\.preventDefault\\(\\)\\;\"]",
                             "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
                             "type": "node"
@@ -1203,8 +1212,9 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-                            "path": "3,HTML,1,BODY,46,INPUT",
-                            "selector": "input:nth-child(25)",
+                            "nodeLabel": "input",
+                            "path": "3,HTML,1,BODY,50,INPUT",
+                            "selector": "input:nth-child(28)",
                             "snippet": "<input type=\"password\">",
                             "type": "node"
                         }
@@ -1212,7 +1222,8 @@
                     {
                         "node": {
                             "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
-                            "path": "3,HTML,1,BODY,48,INPUT",
+                            "nodeLabel": "input",
+                            "path": "3,HTML,1,BODY,52,INPUT",
                             "selector": "input[onpaste=\"return\\ false\\;\"]",
                             "snippet": "<input type=\"password\" onpaste=\"return false;\">",
                             "type": "node"
@@ -1227,14 +1238,14 @@
             "title": "Form elements do not have associated labels"
         },
         "layout-table": {
-            "description": "A table being used for layout purposes should not include data elements, such as the th or caption elements or the summary attribute, because this can create a confusing experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/layout-table?application=lighthouse).",
+            "description": "A table being used for layout purposes should not include data elements, such as the th or caption elements or the summary attribute, because this can create a confusing experience for screen reader users. [Learn more](https://web.dev/layout-table/).",
             "id": "layout-table",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "Presentational `<table>` elements avoid using `<th>`, `<caption>` or the `[summary]` attribute."
         },
         "link-name": {
-            "description": "Link text (and alternate text for images, when used as links) that is discernible, unique, and focusable improves the navigation experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/link-name?application=lighthouse).",
+            "description": "Link text (and alternate text for images, when used as links) that is discernible, unique, and focusable improves the navigation experience for screen reader users. [Learn more](https://web.dev/link-name/).",
             "details": {
                 "debugData": {
                     "impact": "serious",
@@ -1259,8 +1270,9 @@
                     {
                         "node": {
                             "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-                            "path": "3,HTML,1,BODY,40,A",
-                            "selector": "a[href=\"javascript:void(0)\"]",
+                            "nodeLabel": "a",
+                            "path": "3,HTML,1,BODY,44,A",
+                            "selector": "a[href=\"javascript\\:void\\(0\\)\"]",
                             "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\"></a>",
                             "type": "node"
                         }
@@ -1268,8 +1280,9 @@
                     {
                         "node": {
                             "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
-                            "path": "3,HTML,1,BODY,42,A",
-                            "selector": "a[href$=\"mailto:inbox@email.com\"]",
+                            "nodeLabel": "a",
+                            "path": "3,HTML,1,BODY,46,A",
+                            "selector": "a[href$=\"mailto\\:inbox\\@email\\.com\"]",
                             "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\"></a>",
                             "type": "node"
                         }
@@ -1296,14 +1309,14 @@
             "title": "Links have descriptive text"
         },
         "list": {
-            "description": "Screen readers have a specific way of announcing lists. Ensuring proper list structure aids screen reader output. [Learn more](https://dequeuniversity.com/rules/axe/3.1/list?application=lighthouse).",
+            "description": "Screen readers have a specific way of announcing lists. Ensuring proper list structure aids screen reader output. [Learn more](https://web.dev/list/).",
             "id": "list",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "Lists contain only `<li>` elements and script supporting elements (`<script>` and `<template>`)."
         },
         "listitem": {
-            "description": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>` or `<ol>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/3.1/listitem?application=lighthouse).",
+            "description": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>` or `<ol>` to be announced properly. [Learn more](https://web.dev/listitem/).",
             "id": "listitem",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -1318,7 +1331,7 @@
             "title": "Page load is fast enough on mobile networks"
         },
         "logical-tab-order": {
-            "description": "Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#start_with_the_keyboard).",
+            "description": "Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more](https://web.dev/logical-tab-order/).",
             "id": "logical-tab-order",
             "score": null,
             "scoreDisplayMode": "manual",
@@ -1478,7 +1491,7 @@
             "title": "Minimizes main-thread work"
         },
         "managed-focus": {
-            "description": "If new content, such as a dialog, is added to the page, the user's focus is directed to it. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#start_with_the_keyboard).",
+            "description": "If new content, such as a dialog, is added to the page, the user's focus is directed to it. [Learn more](https://web.dev/managed-focus/).",
             "id": "managed-focus",
             "score": null,
             "scoreDisplayMode": "manual",
@@ -1501,14 +1514,14 @@
             "title": "Document does not have a meta description"
         },
         "meta-refresh": {
-            "description": "Users do not expect a page to refresh automatically, and doing so will move focus back to the top of the page. This may create a frustrating or confusing experience. [Learn more](https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=lighthouse).",
+            "description": "Users do not expect a page to refresh automatically, and doing so will move focus back to the top of the page. This may create a frustrating or confusing experience. [Learn more](https://web.dev/meta-refresh/).",
             "id": "meta-refresh",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "The document does not use `<meta http-equiv=\"refresh\">`"
         },
         "meta-viewport": {
-            "description": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more](https://dequeuniversity.com/rules/axe/3.1/meta-viewport?application=lighthouse).",
+            "description": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more](https://web.dev/meta-viewport/).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -1554,7 +1567,8 @@
                         "observedTraceEnd": 10281.0,
                         "observedTraceEndTs": 185613601189.0,
                         "speedIndex": 4417.0,
-                        "speedIndexTs": 185607736912.0
+                        "speedIndexTs": 185607736912.0,
+                        "totalBlockingTime": 117.0
                     }
                 ],
                 "type": "debugdata"
@@ -1853,18 +1867,18 @@
                     {
                         "granularity": 1.0,
                         "itemType": "ms",
-                        "key": "serverReponseTime",
+                        "key": "serverResponseTime",
                         "text": "Time Spent"
                     }
                 ],
                 "items": [
                     {
                         "origin": "http://localhost:10200",
-                        "serverReponseTime": 572.829
+                        "serverResponseTime": 572.829
                     },
                     {
                         "origin": "http://ajax.googleapis.com",
-                        "serverReponseTime": 562.398
+                        "serverResponseTime": 562.398
                     }
                 ],
                 "type": "table"
@@ -1981,7 +1995,7 @@
             "title": "Requests the notification permission on page load"
         },
         "object-alt": {
-            "description": "Screen readers cannot translate non-text content. Adding alt text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/object-alt?application=lighthouse).",
+            "description": "Screen readers cannot translate non-text content. Adding alt text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://web.dev/object-alt/).",
             "details": {
                 "debugData": {
                     "impact": "serious",
@@ -2004,7 +2018,8 @@
                 "items": [
                     {
                         "node": {
-                            "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty",
+                            "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+                            "nodeLabel": "object",
                             "path": "3,HTML,1,BODY,2,OBJECT",
                             "selector": "#\\35 934a",
                             "snippet": "<object id=\"5934a\"></object>",
@@ -2013,7 +2028,8 @@
                     },
                     {
                         "node": {
-                            "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty",
+                            "explanation": "Fix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
+                            "nodeLabel": "object",
                             "path": "3,HTML,1,BODY,3,OBJECT",
                             "selector": "#\\35 934b",
                             "snippet": "<object id=\"5934b\"></object>",
@@ -2038,7 +2054,7 @@
             "warnings": []
         },
         "offscreen-content-hidden": {
-            "description": "Offscreen content is hidden with display: none or aria-hidden=true. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).",
+            "description": "Offscreen content is hidden with display: none or aria-hidden=true. [Learn more](https://web.dev/offscreen-content-hidden/).",
             "id": "offscreen-content-hidden",
             "score": null,
             "scoreDisplayMode": "manual",
@@ -2502,7 +2518,7 @@
             "title": "Structured data is valid"
         },
         "tabindex": {
-            "description": "A value greater than 0 implies an explicit navigation ordering. Although technically valid, this often creates frustrating experiences for users who rely on assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/3.1/tabindex?application=lighthouse).",
+            "description": "A value greater than 0 implies an explicit navigation ordering. Although technically valid, this often creates frustrating experiences for users who rely on assistive technologies. [Learn more](https://web.dev/tabindex/).",
             "id": "tabindex",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -2533,6 +2549,7 @@
                         "height": 18.0,
                         "overlapScoreRatio": 0.8333333333333334,
                         "overlappingTarget": {
+                            "nodeLabel": "Do something else",
                             "path": "3,HTML,1,BODY,18,BUTTON",
                             "selector": "body > button.small-button",
                             "snippet": "<button class=\"small-button\">Do something else</button>",
@@ -2541,6 +2558,7 @@
                         "overlappingTargetScore": 720.0,
                         "size": "200x18",
                         "tapTarget": {
+                            "nodeLabel": "Do something",
                             "path": "3,HTML,1,BODY,17,BUTTON",
                             "selector": "body > button.small-button",
                             "snippet": "<button class=\"small-button\">Do something</button>",
@@ -2559,14 +2577,14 @@
             "title": "Tap targets are not sized appropriately"
         },
         "td-headers-attr": {
-            "description": "Screen readers have features to make navigating tables easier. Ensuring `<td>` cells using the `[headers]` attribute only refer to other cells in the same table may improve the experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr?application=lighthouse).",
+            "description": "Screen readers have features to make navigating tables easier. Ensuring `<td>` cells using the `[headers]` attribute only refer to other cells in the same table may improve the experience for screen reader users. [Learn more](https://web.dev/td-headers-attr/).",
             "id": "td-headers-attr",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "Cells in a `<table>` element that use the `[headers]` attribute only refer to other cells of that same table."
         },
         "th-has-data-cells": {
-            "description": "Screen readers have features to make navigating tables easier. Ensuring table headers always refer to some set of cells may improve the experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/3.1/th-has-data-cells?application=lighthouse).",
+            "description": "Screen readers have features to make navigating tables easier. Ensuring table headers always refer to some set of cells may improve the experience for screen reader users. [Learn more](https://web.dev/th-has-data-cells/).",
             "id": "th-has-data-cells",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -2594,6 +2612,51 @@
             "scoreDisplayMode": "binary",
             "title": "Does not set an address-bar theme color"
         },
+        "third-party-summary": {
+            "description": "Third-party code can significantly impact load performance. Limit the number of redundant third-party providers and try to load third-party code after your page has primarily finished loading. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/).",
+            "details": {
+                "headings": [
+                    {
+                        "itemType": "link",
+                        "key": "entity",
+                        "text": "Third-Party"
+                    },
+                    {
+                        "granularity": 1.0,
+                        "itemType": "bytes",
+                        "key": "transferSize",
+                        "text": "Size"
+                    },
+                    {
+                        "granularity": 1.0,
+                        "itemType": "ms",
+                        "key": "mainThreadTime",
+                        "text": "Main Thread Time"
+                    }
+                ],
+                "items": [
+                    {
+                        "entity": {
+                            "text": "Google CDN",
+                            "type": "link",
+                            "url": "https://developers.google.com/speed/libraries/"
+                        },
+                        "mainThreadTime": 82.74100000000001,
+                        "transferSize": 30174.0
+                    }
+                ],
+                "summary": {
+                    "wastedBytes": 30174.0,
+                    "wastedMs": 82.74100000000001
+                },
+                "type": "table"
+            },
+            "displayValue": "1 Third-Party Found",
+            "id": "third-party-summary",
+            "score": null,
+            "scoreDisplayMode": "informative",
+            "title": "Third-Party Usage"
+        },
         "time-to-first-byte": {
             "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).",
             "details": {
@@ -2608,6 +2671,15 @@
             "score": 1.0,
             "scoreDisplayMode": "binary",
             "title": "Server response times are low (TTFB)"
+        },
+        "total-blocking-time": {
+            "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds.",
+            "displayValue": "120\u00a0ms",
+            "id": "total-blocking-time",
+            "numericValue": 116.79800000000023,
+            "score": 1.0,
+            "scoreDisplayMode": "numeric",
+            "title": "Total Blocking Time"
         },
         "total-byte-weight": {
             "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/network-payloads).",
@@ -2746,7 +2818,7 @@
             "title": "Remove unused CSS"
         },
         "use-landmarks": {
-            "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#take_advantage_of_headings_and_landmarks).",
+            "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more](https://web.dev/use-landmarks/).",
             "id": "use-landmarks",
             "score": null,
             "scoreDisplayMode": "manual",
@@ -3024,7 +3096,7 @@
             "warnings": []
         },
         "uses-rel-preload": {
-            "description": "Consider using <link rel=preload> to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
+            "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/preload).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -3142,21 +3214,21 @@
             "warnings": []
         },
         "valid-lang": {
-            "description": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) on elements helps ensure that text is pronounced correctly by a screen reader. [Learn more](https://dequeuniversity.com/rules/axe/3.1/valid-lang?application=lighthouse).",
+            "description": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) on elements helps ensure that text is pronounced correctly by a screen reader. [Learn more](https://web.dev/valid-lang/).",
             "id": "valid-lang",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "`[lang]` attributes have a valid value"
         },
         "video-caption": {
-            "description": "When a video provides a caption it is easier for deaf and hearing impaired users to access its information. [Learn more](https://dequeuniversity.com/rules/axe/3.1/video-caption?application=lighthouse).",
+            "description": "When a video provides a caption it is easier for deaf and hearing impaired users to access its information. [Learn more](https://web.dev/video-caption/).",
             "id": "video-caption",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "title": "`<video>` elements contain a `<track>` element with `[kind=\"captions\"]`"
         },
         "video-description": {
-            "description": "Audio descriptions provide relevant information for videos that dialogue cannot, such as facial expressions and scenes. [Learn more](https://dequeuniversity.com/rules/axe/3.1/video-description?application=lighthouse).",
+            "description": "Audio descriptions provide relevant information for videos that dialogue cannot, such as facial expressions and scenes. [Learn more](https://web.dev/video-description/).",
             "id": "video-description",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -3171,7 +3243,7 @@
             "warnings": []
         },
         "visual-order-follows-dom": {
-            "description": "DOM order matches the visual order, improving navigation for assistive technology. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader).",
+            "description": "DOM order matches the visual order, improving navigation for assistive technology. [Learn more](https://web.dev/visual-order-follows-dom/).",
             "id": "visual-order-follows-dom",
             "score": null,
             "scoreDisplayMode": "manual",
@@ -3199,7 +3271,7 @@
                 {
                     "group": "a11y-navigation",
                     "id": "accesskeys",
-                    "weight": 3.0
+                    "weight": 0.0
                 },
                 {
                     "group": "a11y-aria",
@@ -3244,7 +3316,7 @@
                 {
                     "group": "a11y-names-labels",
                     "id": "button-name",
-                    "weight": 0.0
+                    "weight": 10.0
                 },
                 {
                     "group": "a11y-navigation",
@@ -3419,7 +3491,7 @@
             "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
             "id": "accessibility",
             "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
-            "score": 0.38,
+            "score": 0.46,
             "title": "Accessibility"
         },
         "best-practices": {
@@ -3523,6 +3595,10 @@
                 },
                 {
                     "id": "estimated-input-latency",
+                    "weight": 0.0
+                },
+                {
+                    "id": "total-blocking-time",
                     "weight": 0.0
                 },
                 {
@@ -3643,6 +3719,11 @@
                 {
                     "group": "diagnostics",
                     "id": "resource-summary",
+                    "weight": 0.0
+                },
+                {
+                    "group": "diagnostics",
+                    "id": "third-party-summary",
                     "weight": 0.0
                 },
                 {
@@ -3890,11 +3971,11 @@
             "title": "Budgets"
         },
         "diagnostics": {
-            "description": "More information about the performance of your application.",
+            "description": "More information about the performance of your application. These numbers don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.",
             "title": "Diagnostics"
         },
         "load-opportunities": {
-            "description": "These optimizations can speed up your page load.",
+            "description": "These suggestions can help your page load faster. They don't [directly affect](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted) the Performance score.",
             "title": "Opportunities"
         },
         "metrics": {
@@ -3952,12 +4033,12 @@
             "snippetExpandButtonLabel": "Expand snippet",
             "thirdPartyResourcesLabel": "Show 3rd-party resources",
             "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
-            "varianceDisclaimer": "Values are estimated and may vary.",
+            "varianceDisclaimer": "Values are estimated and may vary. The performance score is [based only on these metrics](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted).",
             "warningAuditsGroupTitle": "Passed audits but with warnings",
             "warningHeader": "Warnings: "
         }
     },
-    "lighthouseVersion": "5.0.0",
+    "lighthouseVersion": "5.2.0",
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
     "runWarnings": [],
     "stackPacks": [
@@ -4151,6 +4232,24 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:EstimatedInputLatency",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:total-blocking-time",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:TotalBlockingTime",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:Interactive",
                 "startTime": 0.0
             },
             {
@@ -4415,6 +4514,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:resource-summary",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:third-party-summary",
                 "startTime": 0.0
             },
             {

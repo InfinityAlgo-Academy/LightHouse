@@ -9,7 +9,7 @@
  * @fileoverview Checks that links, buttons, etc. are sufficiently large and that there's
  * no other tap target that's too close so that the user might accidentally tap on.
  */
-const Audit = require('../audit');
+const Audit = require('../audit.js');
 const ComputedViewportMeta = require('../../computed/viewport-meta.js');
 const {
   rectsTouchOrOverlap,
@@ -18,8 +18,8 @@ const {
   allRectsContainedWithinEachOther,
   getLargestRect,
   getBoundingRectWithPadding,
-} = require('../../lib/rect-helpers');
-const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects');
+} = require('../../lib/rect-helpers.js');
+const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -31,8 +31,6 @@ const UIStrings = {
   description: 'Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).',
   /** Label of a table column that identifies tap targets (like buttons and links) that have failed the audit and aren't easy to tap on. */
   tapTargetHeader: 'Tap Target',
-  /** Label of a table column that specifies the size of tap targets like buttons and links. */
-  sizeHeader: 'Size',
   /** Label of a table column that identifies a tap target (like a link or button) that overlaps with another tap target. */
   overlappingTargetHeader: 'Overlapping Target',
   /** Explanatory message stating that there was a failure in an audit caused by the viewport meta tag not being optimized for mobile screens, which caused tap targets like buttons and links to be too small to tap on. */
@@ -251,6 +249,7 @@ function targetToTableNode(target) {
     snippet: target.snippet,
     path: target.path,
     selector: target.selector,
+    nodeLabel: target.nodeLabel,
   };
 }
 
@@ -302,7 +301,7 @@ class TapTargets extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'tapTarget', itemType: 'node', text: str_(UIStrings.tapTargetHeader)},
-      {key: 'size', itemType: 'text', text: str_(UIStrings.sizeHeader)},
+      {key: 'size', itemType: 'text', text: str_(i18n.UIStrings.columnSize)},
       {key: 'overlappingTarget', itemType: 'node', text: str_(UIStrings.overlappingTargetHeader)},
     ];
 

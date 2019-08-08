@@ -13,7 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const LighthouseRunner = require('../lighthouse-core/runner');
+const LighthouseRunner = require('../lighthouse-core/runner.js');
 const babel = require('babel-core');
 const browserify = require('browserify');
 const makeDir = require('make-dir');
@@ -39,6 +39,7 @@ const isDevtools = file => path.basename(file).includes('devtools');
 const isExtension = file => path.basename(file).includes('extension');
 
 const BANNER = `// lighthouse, browserified. ${VERSION} (${COMMIT_HASH})\n`;
+const DEBUG = false; // true for sourcemaps
 
 /**
  * Browserify starting at the file at entryPath. Contains entry-point-specific
@@ -49,7 +50,7 @@ const BANNER = `// lighthouse, browserified. ${VERSION} (${COMMIT_HASH})\n`;
  * @return {Promise<void>}
  */
 async function browserifyFile(entryPath, distPath) {
-  let bundle = browserify(entryPath); // , {debug: true}); // for sourcemaps
+  let bundle = browserify(entryPath, {debug: DEBUG});
 
   bundle
     // Transform the fs.readFile etc into inline strings.
@@ -145,7 +146,9 @@ function minifyScript(filePath) {
  */
 async function build(entryPath, distPath) {
   await browserifyFile(entryPath, distPath);
-  minifyScript(distPath);
+  if (!DEBUG) {
+    minifyScript(distPath);
+  }
 }
 
 /**

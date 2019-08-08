@@ -8,9 +8,9 @@
 
 const fs = require('fs');
 const path = require('path');
-const PredictivePerf = require('../../../lighthouse-core/audits/predictive-perf');
-const Simulator = require('../../../lighthouse-core/lib/dependency-graph/simulator/simulator');
-const traceSaver = require('../../../lighthouse-core/lib/lantern-trace-saver');
+const PredictivePerf = require('../../audits/predictive-perf.js');
+const Simulator = require('../../lib/dependency-graph/simulator/simulator.js');
+const traceSaver = require('../../lib/lantern-trace-saver.js');
 
 if (process.argv.length !== 4) throw new Error('Usage $0 <trace file> <devtools file>');
 

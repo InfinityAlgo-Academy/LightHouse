@@ -10,7 +10,7 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit');
+const AxeAudit = require('./axe-audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -21,7 +21,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Assistive technologies, like screen readers, can\'t interpret ARIA ' +
       'attributes with invalid values. [Learn ' +
-      'more](https://dequeuniversity.com/rules/axe/3.1/aria-valid-attr-value?application=lighthouse).',
+      'more](https://web.dev/aria-valid-attr-value/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

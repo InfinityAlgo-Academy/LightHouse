@@ -98,6 +98,18 @@ function findDifference(path, actual, expected) {
     }
   }
 
+  // If the expected value is an array, assert the length as well.
+  // This still allows for asserting that the first n elements of an array are specified elements,
+  // but requires using an object literal (ex: {0: x, 1: y, 2: z} matches [x, y, z, q, w, e] and
+  // {0: x, 1: y, 2: z, length: 5} does not match [x, y, z].
+  if (Array.isArray(expected) && actual.length !== expected.length) {
+    return {
+      path: `${path}.length`,
+      actual,
+      expected,
+    };
+  }
+
   return null;
 }
 
@@ -126,6 +138,11 @@ function makeComparison(name, actualResult, expectedResult) {
  * @return {Smokehouse.Comparison[]}
  */
 function collateResults(actual, expected) {
+  // If actual run had a runtimeError, expected *must* have a runtimeError.
+  // Relies on the fact that an `undefined` argument to makeComparison() can only match `undefined`.
+  const runtimeErrorAssertion = makeComparison('runtimeError', actual.lhr.runtimeError,
+      expected.lhr.runtimeError);
+
   /** @type {Smokehouse.Comparison[]} */
   let artifactAssertions = [];
   if (expected.artifacts) {
@@ -156,17 +173,12 @@ function collateResults(actual, expected) {
 
   return [
     {
-      name: 'error code',
-      actual: actual.errorCode,
-      expected: expected.errorCode,
-      equal: actual.errorCode === expected.errorCode,
-    },
-    {
       name: 'final url',
       actual: actual.lhr.finalUrl,
       expected: expected.lhr.finalUrl,
       equal: actual.lhr.finalUrl === expected.lhr.finalUrl,
     },
+    runtimeErrorAssertion,
     ...artifactAssertions,
     ...auditAssertions,
   ];
@@ -200,7 +212,8 @@ function reportAssertion(assertion) {
   } else {
     if (assertion.diff) {
       const diff = assertion.diff;
-      const fullActual = JSON.stringify(assertion.actual, null, 2).replace(/\n/g, '\n      ');
+      const fullActual = String(JSON.stringify(assertion.actual, null, 2))
+          .replace(/\n/g, '\n      ');
       const msg = `
   ${log.redify(log.cross)} difference at ${log.bold}${diff.path}${log.reset}
               expected: ${JSON.stringify(diff.expected)}

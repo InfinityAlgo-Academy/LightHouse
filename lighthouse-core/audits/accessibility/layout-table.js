@@ -11,7 +11,7 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit');
+const AxeAudit = require('./axe-audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -25,7 +25,7 @@ const UIStrings = {
   description: 'A table being used for layout purposes should not include data elements, ' +
       'such as the th or caption elements or the summary attribute, because this can ' +
       'create a confusing experience for screen reader users. ' +
-      '[Learn more](https://dequeuniversity.com/rules/axe/3.1/layout-table?application=lighthouse).',
+      '[Learn more](https://web.dev/layout-table/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

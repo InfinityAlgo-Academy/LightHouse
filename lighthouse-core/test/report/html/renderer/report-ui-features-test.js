@@ -189,7 +189,7 @@ describe('ReportUIFeatures', () => {
 
         function getUrlsInTable() {
           return dom
-            .findAll('#uses-webp-images .lh-details .lh-text__url .lh-text:first-child', container)
+            .findAll('#uses-webp-images .lh-details .lh-text__url a:first-child', container)
             .map(el => el.textContent);
         }
 
@@ -210,18 +210,17 @@ describe('ReportUIFeatures', () => {
           .toThrowError('query #uses-rel-preconnect .lh-3p-filter-input not found');
       });
 
-      it('adds no filter for audits with tables containing only third party resources', () => {
-        const checkboxClassName = 'lh-3p-filter-input';
-
-        expect(() => dom.find(`#render-blocking-resources .${checkboxClassName}`, container))
-          .toThrowError('query #render-blocking-resources .lh-3p-filter-input not found');
+      it('filter is disabled and checked for when just third party resources', () => {
+        const filterCheckbox =
+          dom.find('#render-blocking-resources .lh-3p-filter-input', container);
+        expect(filterCheckbox.disabled).toEqual(true);
+        expect(filterCheckbox.checked).toEqual(true);
       });
 
-      it('adds no filter for audits with tables containing only first party resources', () => {
-        const checkboxClassName = 'lh-3p-filter-input';
-
-        expect(() => dom.find(`#uses-text-compression .${checkboxClassName}`, container))
-          .toThrowError('query #uses-text-compression .lh-3p-filter-input not found');
+      it('filter is disabled and not checked for just first party resources', () => {
+        const filterCheckbox = dom.find('#uses-text-compression .lh-3p-filter-input', container);
+        expect(filterCheckbox.disabled).toEqual(true);
+        expect(filterCheckbox.checked).toEqual(false);
       });
     });
   });
@@ -241,6 +240,32 @@ describe('ReportUIFeatures', () => {
       });
       const container = render(lhr);
       assert.ok(container.querySelector('.score100'), 'has fireworks treatment');
+    });
+
+    it('should not render fireworks if all core categories are not present', () => {
+      const lhr = JSON.parse(JSON.stringify(sampleResults));
+      delete lhr.categories.performance;
+      delete lhr.categoryGroups.performace;
+      Object.values(lhr.categories).forEach(element => {
+        element.score = 1;
+      });
+      const container = render(lhr);
+      assert.ok(container.querySelector('.score100') === null, 'has no fireworks treatment');
+    });
+  });
+
+  describe('metric descriptions', () => {
+    it('with no errors, hide by default', () => {
+      const lhr = JSON.parse(JSON.stringify(sampleResults));
+      const container = render(lhr);
+      assert.ok(!container.querySelector('.lh-metrics-toggle__input').checked);
+    });
+
+    it('with error, show by default', () => {
+      const lhr = JSON.parse(JSON.stringify(sampleResults));
+      lhr.audits['first-contentful-paint'].errorMessage = 'Error.';
+      const container = render(lhr);
+      assert.ok(container.querySelector('.lh-metrics-toggle__input').checked);
     });
   });
 });

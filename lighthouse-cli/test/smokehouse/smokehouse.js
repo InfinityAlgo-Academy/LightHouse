@@ -13,11 +13,12 @@ const path = require('path');
 const spawnSync = require('child_process').spawnSync;
 const yargs = require('yargs');
 const log = require('lighthouse-logger');
-const {collateResults, report} = require('./smokehouse-report');
+const rimraf = require('rimraf');
+
+const {collateResults, report} = require('./smokehouse-report.js');
+const assetSaver = require('../../../lighthouse-core/lib/asset-saver.js');
 
 const PROTOCOL_TIMEOUT_EXIT_CODE = 67;
-const PAGE_HUNG_EXIT_CODE = 68;
-const INSECURE_DOCUMENT_REQUEST_EXIT_CODE = 69;
 const RETRIES = 3;
 
 /**
@@ -85,45 +86,41 @@ function runLighthouse(url, configPath, isDebug) {
     runResults = spawnSync(command, args, {encoding: 'utf8', stdio: ['pipe', 'pipe', 'inherit']});
   } while (runResults.status === PROTOCOL_TIMEOUT_EXIT_CODE && runCount <= RETRIES);
 
-  if (runResults.status === PROTOCOL_TIMEOUT_EXIT_CODE) {
-    console.error(`Lighthouse debugger connection timed out ${RETRIES} times. Giving up.`);
-    process.exit(1);
-  } else if (runResults.status !== 0
-     && runResults.status !== PAGE_HUNG_EXIT_CODE
-     && runResults.status !== INSECURE_DOCUMENT_REQUEST_EXIT_CODE) {
-    console.error(`Lighthouse run failed with exit code ${runResults.status}. stderr to follow:`);
-    console.error(runResults.stderr);
-    process.exit(runResults.status);
-  }
-
   if (isDebug) {
     console.log(`STDOUT: ${runResults.stdout}`);
     console.error(`STDERR: ${runResults.stderr}`);
   }
 
-  let errorCode;
-  let lhr = {requestedUrl: url, finalUrl: url, audits: {}};
-  if (runResults.status === PAGE_HUNG_EXIT_CODE) {
-    errorCode = 'PAGE_HUNG';
-  } else if (runResults.status === INSECURE_DOCUMENT_REQUEST_EXIT_CODE) {
-    errorCode = 'INSECURE_DOCUMENT_REQUEST';
-  } else {
-    lhr = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
-    if (isDebug) {
-      console.log('LHR output available at: ', outputPath);
-    } else if (fs.existsSync(outputPath)) {
-      fs.unlinkSync(outputPath);
-    }
+  const exitCode = runResults.status;
+  if (exitCode === PROTOCOL_TIMEOUT_EXIT_CODE) {
+    console.error(`Lighthouse debugger connection timed out ${RETRIES} times. Giving up.`);
+    process.exit(1);
+  } else if (!fs.existsSync(outputPath)) {
+    console.error(`Lighthouse run failed to produce a report and exited with ${exitCode}. stderr to follow:`); // eslint-disable-line max-len
+    console.error(runResults.stderr);
+    process.exit(exitCode);
   }
 
-  // Artifacts are undefined if they weren't written to disk (e.g. if there was an error).
-  let artifacts;
-  try {
-    artifacts = JSON.parse(fs.readFileSync(`${artifactsDirectory}/artifacts.json`, 'utf8'));
-  } catch (e) {}
+  /** @type {LH.Result} */
+  const lhr = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+  const artifacts = assetSaver.loadArtifacts(artifactsDirectory);
+
+  if (isDebug) {
+    console.log('LHR output available at: ', outputPath);
+    console.log('Artifacts avaiable in: ', artifactsDirectory);
+  } else {
+    fs.unlinkSync(outputPath);
+    rimraf.sync(artifactsDirectory);
+  }
+
+  // There should either be both an error exitCode and a lhr.runtimeError or neither.
+  if (Boolean(exitCode) !== Boolean(lhr.runtimeError)) {
+    const runtimeErrorCode = lhr.runtimeError && lhr.runtimeError.code;
+    console.error(`Lighthouse did not exit with an error correctly, exiting with ${exitCode} but with runtimeError '${runtimeErrorCode}'`); // eslint-disable-line max-len
+    process.exit(1);
+  }
 
   return {
-    errorCode,
     lhr,
     artifacts,
   };

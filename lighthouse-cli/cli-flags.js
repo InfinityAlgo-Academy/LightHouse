@@ -9,16 +9,28 @@
 
 const yargs = require('yargs');
 const pkg = require('../package.json');
-const printer = require('./printer');
+const printer = require('./printer.js');
+
+/**
+ * Remove in Node 11 - [].flatMap
+ * @param {Array<Array<string>>} arr
+ * @return {string[]}
+ */
+function flatten(arr) {
+  /** @type {string[]} */
+  const result = [];
+  return result.concat(...arr);
+}
 
 /**
  * @param {string=} manualArgv
  * @return {LH.CliFlags}
  */
 function getFlags(manualArgv) {
-  // @ts-ignore yargs() is incorrectly typed as not returning itself
+  // @ts-ignore yargs() is incorrectly typed as not accepting a single string.
   const y = manualArgv ? yargs(manualArgv) : yargs;
-  return y.help('help')
+  // Intentionally left as type `any` because @types/yargs doesn't chain correctly.
+  const argv = y.help('help')
       .version(() => pkg.version)
       .showHelpOnFail(false, 'Specify --help for available options')
 
@@ -46,6 +58,19 @@ function getFlags(manualArgv) {
       .example(
           'lighthouse <url> --extra-headers=./path/to/file.json',
           'Path to JSON file of HTTP Header key/value pairs to send in requests')
+      .example(
+          'lighthouse <url> --only-categories=performance,pwa',
+          'Only run the specified categories. Available categories: accessibility, best-practices, performance, pwa, seo')
+      /**
+       * Also accept a file for all of these flags. Yargs will merge in and override the file-based
+       * flags with the command-line flags.
+       *
+       * i.e. when command-line `--throttling-method=provided` and file `throttlingMethod: "devtools"`,
+       * throttlingMethod will be `provided`.
+       *
+       * @see https://github.com/yargs/yargs/blob/a6e67f15a61558d0ba28bfe53385332f0ce5d431/docs/api.md#config
+       */
+      .config('cli-flags-path')
 
       // List of options
       .group(['verbose', 'quiet'], 'Logging:')
@@ -63,6 +88,7 @@ function getFlags(manualArgv) {
         ],
         'Configuration:')
       .describe({
+        'cli-flags-path': 'The path to a JSON file that contains the desired CLI flags to apply. Flags specified at the command line will still override the file-based ones.',
         // We don't allowlist specific locales. Why? So we can support the user who requests 'es-MX' (unsupported) and we'll fall back to 'es' (supported)
         'locale': 'The locale/language the report should be formatted in',
         'enable-error-reporting':
@@ -102,7 +128,7 @@ function getFlags(manualArgv) {
         'precomputed-lantern-data-path': 'Path to the file where lantern simulation data should be read from, overwriting the lantern observed estimates for RTT and server latency.',
         'lantern-data-output-path': 'Path to the file where lantern simulation data should be written to, can be used in a future run with the `precomputed-lantern-data-path` flag.',
         'only-audits': 'Only run the specified audits',
-        'only-categories': 'Only run the specified categories',
+        'only-categories': 'Only run the specified categories. Available categories: accessibility, best-practices, performance, pwa, seo',
         'skip-audits': 'Run everything except these audits',
         'plugins': 'Run the specified plugins',
         'print-config': 'Print the normalized config for the given config and options, then exit.',
@@ -171,6 +197,29 @@ function getFlags(manualArgv) {
           'For more information on Lighthouse, see https://developers.google.com/web/tools/lighthouse/.')
       .wrap(yargs.terminalWidth())
       .argv;
+
+  // Support comma-separated values for some array flags by splitting on any ',' found.
+  /** @type {Array<keyof LH.CliFlags>} */
+  const arrayKeysThatSupportCsv = [
+    'onlyAudits',
+    'onlyCategories',
+    'output',
+    'plugins',
+    'skipAudits',
+  ];
+  arrayKeysThatSupportCsv.forEach(key => {
+    // If a key is defined as an array in yargs, the value (if provided)
+    // will always be a string array. However, we keep argv and input as any,
+    // since assigning back to argv as string[] would be unsound for enums,
+    // for example: output is LH.OutputMode[].
+    const input = argv[key];
+    // Truthy check is necessary. isArray convinces TS that this is an array.
+    if (Array.isArray(input)) {
+      argv[key] = flatten(input.map(value => value.split(',')));
+    }
+  });
+
+  return argv;
 }
 
 module.exports = {

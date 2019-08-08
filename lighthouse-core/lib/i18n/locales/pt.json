@@ -534,7 +534,7 @@
     "message": "Tempo até ficar interativa"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "O primeiro atraso de entrada em potencial que seus usuários notariam seria a duração, em milésimos de segundo, da tarefa mais longa."
+    "message": "A potencial latência de entrada que seus usuários notariam seria a duração, em milésimos de segundo, da tarefa mais longa."
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | title": {
     "message": "Potencial máx. de 1º atraso de entrada"

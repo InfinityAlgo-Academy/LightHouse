@@ -29,11 +29,6 @@ function rectContains(rect1, rect2) {
     rect2.left >= rect1.left;
 }
 
-
-const rectContainsString = `
-  ${rectContains.toString()};
-`;
-
 /**
  * @param {LH.Artifacts.Rect[]} rects
  * @returns {LH.Artifacts.Rect[]}
@@ -68,6 +63,7 @@ function filterOutRectsContainedByOthers(rects) {
 /**
  * @param {LH.Artifacts.Rect} rect
  */
+/* istanbul ignore next */
 function getRectCenterPoint(rect) {
   return {
     x: rect.left + rect.width / 2,
@@ -198,6 +194,7 @@ function getRectAtCenter(rect, centerRectSize) {
 /**
  * @param {LH.Artifacts.Rect} rect
  */
+/* istanbul ignore next */
 function getRectArea(rect) {
   return rect.width * rect.height;
 }
@@ -205,6 +202,7 @@ function getRectArea(rect) {
 /**
  * @param {LH.Artifacts.Rect[]} rects
  */
+/* istanbul ignore next */
 function getLargestRect(rects) {
   let largestRect = rects[0];
   for (const rect of rects) {
@@ -234,12 +232,12 @@ function allRectsContainedWithinEachOther(rectListA, rectListB) {
 module.exports = {
   rectContainsPoint,
   rectContains,
-  rectContainsString,
   addRectWidthAndHeight,
   addRectTopAndBottom,
   getRectOverlapArea,
   getRectAtCenter,
   getLargestRect,
+  getRectArea,
   getRectCenterPoint,
   getBoundingRect,
   getBoundingRectWithPadding,

@@ -16,6 +16,63 @@ module.exports = [
       }, {
         id: 'wordpress',
       }],
+      TagsBlockingFirstPaint: [
+        {
+          tag: {
+            tagName: 'LINK',
+            url: 'http://localhost:10200/dobetterweb/dobetterweb/dbw_tester.css?delay=100',
+          },
+        },
+        {
+          tag: {
+            tagName: 'LINK',
+            url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
+          },
+        },
+        {
+          tag: {
+            tagName: 'LINK',
+            url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
+          },
+
+        },
+        {
+          tag: {
+            tagName: 'LINK',
+            url: 'http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200',
+          },
+        },
+        {
+          tag: {
+            tagName: 'LINK',
+            url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
+            mediaChanges: [
+              {
+                href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
+                media: 'not-matching',
+                matches: false,
+              },
+              {
+                href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
+                media: 'screen',
+                matches: true,
+              },
+            ],
+          },
+        },
+        {
+          tag: {
+            tagName: 'SCRIPT',
+            url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
+          },
+        },
+        {
+          tag: {
+            tagName: 'SCRIPT',
+            url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
+          },
+        },
+      ],
     },
     lhr: {
       requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
@@ -84,9 +141,29 @@ module.exports = [
           score: '<1',
           numericValue: '>100',
           details: {
-            items: {
-              length: 7,
-            },
+            items: [
+              {
+                url: 'http://localhost:10200/dobetterweb/dobetterweb/dbw_tester.css?delay=100',
+              },
+              {
+                url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
+              },
+              {
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
+              },
+              {
+                url: 'http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200',
+              },
+              {
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
+              },
+              {
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
+              },
+              {
+                url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
+              },
+            ],
           },
         },
         'uses-passive-event-listeners': {
@@ -155,12 +232,16 @@ module.exports = [
         },
         'dom-size': {
           score: 1,
-          numericValue: 34,
+          numericValue: 137,
           details: {
             items: [
-              {statistic: 'Total DOM Elements', value: '34'},
+              {statistic: 'Total DOM Elements', value: '137'},
               {statistic: 'Maximum DOM Depth', value: '3'},
-              {statistic: 'Maximum Child Elements', value: '32'},
+              {
+                statistic: 'Maximum Child Elements',
+                value: '100',
+                element: {value: '<div id="shadow-root-container">'},
+              },
             ],
           },
         },

@@ -16,11 +16,13 @@ const fs = require('fs');
  */
 
 /**
-  * @param {string} result
+  * Transform an LHR into a proto-friendly, mostly-compatible LHR.
+  * @param {LH.Result} lhr
+  * @return {LH.Result}
   */
-function processForProto(result) {
+function processForProto(lhr) {
   /** @type {LH.Result} */
-  const reportJson = JSON.parse(result);
+  const reportJson = JSON.parse(JSON.stringify(lhr));
 
   // Clean up the configSettings
   // Note: This is not strictly required for conversion if protobuf parsing is set to
@@ -95,7 +97,7 @@ function processForProto(result) {
 
   removeStrings(reportJson);
 
-  return JSON.stringify(reportJson);
+  return reportJson;
 }
 
 // @ts-ignore claims always false, but this checks if cli or module
@@ -113,9 +115,9 @@ if (require.main === module) {
 
   if (input && output) {
     // process the file
-    const report = processForProto(fs.readFileSync(input, 'utf-8'));
+    const report = processForProto(JSON.parse(fs.readFileSync(input, 'utf-8')));
     // write to output from argv
-    fs.writeFileSync(output, report, 'utf-8');
+    fs.writeFileSync(output, JSON.stringify(report), 'utf-8');
   }
 } else {
   module.exports = {

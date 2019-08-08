@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit');
+const ManualAudit = require('../../manual/manual-audit.js');
 
 /**
  * @fileoverview Manual A11y audit for focusable controls.
@@ -19,7 +19,7 @@ class FocusableControls extends ManualAudit {
   static get meta() {
     return Object.assign({
       id: 'focusable-controls',
-      description: 'Custom interactive controls are keyboard focusable and display a focus indicator. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#start_with_the_keyboard).',
+      description: 'Custom interactive controls are keyboard focusable and display a focus indicator. [Learn more](https://web.dev/focusable-controls/).',
       title: 'Interactive controls are keyboard focusable',
     }, super.partialMeta);
   }

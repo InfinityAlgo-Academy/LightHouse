@@ -28,7 +28,7 @@ async function update(artifactName) {
     res(address.port);
   }));
 
-  const oldArtifacts = await assetSaver.loadArtifacts(artifactPath);
+  const oldArtifacts = assetSaver.loadArtifacts(artifactPath);
 
   const url = `http://localhost:${port}/dobetterweb/dbw_tester.html`;
   const rawFlags = [
@@ -41,12 +41,14 @@ async function update(artifactName) {
 
   if (artifactName) {
     // Revert everything except the one artifact
-    const newArtifacts = await assetSaver.loadArtifacts(artifactPath);
+    const newArtifacts = assetSaver.loadArtifacts(artifactPath);
     if (!(artifactName in newArtifacts) && !(artifactName in oldArtifacts)) {
       throw Error('Unknown artifact name: ' + artifactName);
     }
     const finalArtifacts = oldArtifacts;
-    finalArtifacts[artifactName] = newArtifacts[artifactName];
+    const newArtifact = newArtifacts[artifactName];
+    // @ts-ignore tsc can't yet express that artifactName is only a single type in each iteration, not a union of types.
+    finalArtifacts[artifactName] = newArtifact;
     await assetSaver.saveArtifacts(finalArtifacts, artifactPath);
   }
 }

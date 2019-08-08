@@ -30,7 +30,7 @@
         // Load file as 'other' resource.
         const response = await fetch('http://localhost:10503/preload.html');
         const ab = await response.arrayBuffer();
-        document.querySelector('#corsfont').textContent = ab.length;
+        document.querySelector('.fetch-length').textContent = ab.byteLength;
       }
       yah();
     </script>
@@ -40,7 +40,7 @@
     <img style="width: 100px; height: 100px;" src="../../byte-efficiency/large.svg">
     <p class="webfont">Ripping off some webfont smoke tests</p>
     <p><strong class="webfont">Do we need such text</strong></p>
-    <p id="corsfont"></p>
+    <p class="fetch-length"></p>
     <script src="../level-2.js"></script>
   </body>
 </html>

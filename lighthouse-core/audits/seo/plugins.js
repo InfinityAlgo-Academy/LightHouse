@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../audit');
-const URL = require('../../lib/url-shim');
+const Audit = require('../audit.js');
+const URL = require('../../lib/url-shim.js');
 
 const JAVA_APPLET_TYPE = 'application/x-java-applet';
 const JAVA_BEAN_TYPE = 'application/x-java-bean';

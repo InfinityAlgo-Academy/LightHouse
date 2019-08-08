@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const MixedContentGather = require('../../../gather/gatherers/mixed-content');
+const MixedContentGather = require('../../../gather/gatherers/mixed-content.js');
 const assert = require('assert');
 let mixedContentGather;
 let driver;

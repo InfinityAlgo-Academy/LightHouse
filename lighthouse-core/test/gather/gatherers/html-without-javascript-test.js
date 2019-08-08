@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const HTMLWithoutJavaScriptGather = require('../../../gather/gatherers/html-without-javascript');
+const HTMLWithoutJavaScriptGather = require('../../../gather/gatherers/html-without-javascript.js');
 const assert = require('assert');
 let htmlWithoutJavaScriptGather;
 

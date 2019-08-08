@@ -10,7 +10,7 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit');
+const AxeAudit = require('./axe-audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -22,7 +22,7 @@ const UIStrings = {
   description: 'Users do not expect a page to refresh automatically, and doing so will move ' +
       'focus back to the top of the page. This may create a frustrating or ' +
       'confusing experience. ' +
-      '[Learn more](https://dequeuniversity.com/rules/axe/3.1/meta-refresh?application=lighthouse).',
+      '[Learn more](https://web.dev/meta-refresh/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

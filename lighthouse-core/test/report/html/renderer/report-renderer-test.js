@@ -11,7 +11,7 @@ const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
-const URL = require('../../../../lib/url-shim');
+const URL = require('../../../../lib/url-shim.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-features.js');
@@ -80,11 +80,11 @@ describe('ReportRenderer', () => {
     it('should render a report', () => {
       const container = renderer._dom._document.body;
       const output = renderer.renderReport(sampleResults, container);
-      assert.ok(output.querySelector('.lh-header-sticky'), 'has a header');
+      assert.ok(output.querySelector('.lh-header-container'), 'has a header');
       assert.ok(output.querySelector('.lh-report'), 'has report body');
       // 3 sets of gauges - one in sticky header, one in scores header, and one in each section.
       assert.equal(output.querySelectorAll('.lh-gauge__wrapper, .lh-gauge--pwa__wrapper').length,
-          sampleResults.reportCategories.length * 3, 'renders category gauges');
+          Object.keys(sampleResults.categories).length * 3, 'renders category gauges');
     });
 
     it('renders additional reports by replacing the existing one', () => {
@@ -253,5 +253,52 @@ describe('ReportRenderer', () => {
     const notApplicableElementCount = reportElement
       .querySelectorAll('.lh-audit--notapplicable').length;
     assert.strictEqual(notApplicableCount, notApplicableElementCount);
+  });
+
+  describe('axe-core', () => {
+    let axe;
+
+    beforeAll(() =>{
+      // Needed by axe-core
+      // https://github.com/dequelabs/axe-core/blob/581c441c/doc/examples/jsdom/test/a11y.js#L24
+      global.window = global.self;
+      global.Node = global.self.Node;
+      global.Element = global.self.Element;
+
+      // axe-core must be required after the global polyfills
+      axe = require('axe-core');
+    });
+
+    afterAll(() => {
+      global.window = undefined;
+      global.Node = undefined;
+      global.Element = undefined;
+    });
+
+    it('renders without axe violations', (done) => {
+      const container = renderer._dom._document.body;
+      const output = renderer.renderReport(sampleResults, container);
+
+      const config = {
+        rules: {
+          // Reports may have duplicate ids
+          // https://github.com/GoogleChrome/lighthouse/issues/9432
+          'duplicate-id': {enabled: false},
+          // The following rules are disable for axe-core + jsdom compatibility
+          // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#to-run-the-example
+          'color-contrast': {enabled: false},
+          'link-in-text-block': {enabled: false},
+        },
+      };
+
+      axe.run(output, config, (error, {violations}) => {
+        assert.ifError(error);
+        assert.ok(violations.length === 0, JSON.stringify(violations, null, 1));
+        done();
+      });
+
+    // Set timeout to 10s to give axe-core enough time to complete
+    // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#timeout-issues
+    }, /* timeout= */ 10 * 1000);
   });
 });

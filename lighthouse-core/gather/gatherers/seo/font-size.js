@@ -16,7 +16,7 @@
  * This gatherer collects stylesheet metadata by itself, instead of relying on the styles gatherer which is slow (because it parses the stylesheet content).
  */
 
-const Gatherer = require('../gatherer');
+const Gatherer = require('../gatherer.js');
 const Sentry = require('../../../lib/sentry.js');
 const FONT_SIZE_PROPERTY_NAME = 'font-size';
 const TEXT_NODE_BLOCK_LIST = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT']);
@@ -162,13 +162,16 @@ function findInheritedCSSRule(inheritedEntries = []) {
  * @param {LH.Crdp.CSS.GetMatchedStylesForNodeResponse} matched CSS rules
  * @returns {NodeFontData['cssRule']|undefined}
  */
-function getEffectiveFontRule({inlineStyle, matchedCSSRules, inherited}) {
+function getEffectiveFontRule({attributesStyle, inlineStyle, matchedCSSRules, inherited}) {
   // Inline styles have highest priority
   if (hasFontSizeDeclaration(inlineStyle)) return {type: 'Inline', ...inlineStyle};
 
   // Rules directly referencing the node come next
   const matchedRule = findMostSpecificMatchedCSSRule(matchedCSSRules);
   if (matchedRule) return matchedRule;
+
+  // Then comes attributes styles (<font size="1">)
+  if (hasFontSizeDeclaration(attributesStyle)) return {type: 'Attributes', ...attributesStyle};
 
   // Finally, find an inherited property if there is one
   const inheritedRule = findInheritedCSSRule(inherited);
@@ -211,7 +214,7 @@ async function fetchSourceRule(driver, node) {
 
 /**
  * @param {Driver} driver
- * @param {LH.Artifacts.FontSize.DomNodeWithParent} textNode text node
+ * @param {LH.Artifacts.FontSize.DomNodeWithParent} textNode
  * @returns {Promise<?NodeFontData>}
  */
 async function fetchComputedFontSize(driver, textNode) {

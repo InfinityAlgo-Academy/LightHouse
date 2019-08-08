@@ -10,8 +10,8 @@ const assert = require('assert');
 const path = require('path');
 const fs = require('fs');
 
-const run = require('../../run');
-const parseChromeFlags = require('../../run').parseChromeFlags;
+const run = require('../../run.js');
+const parseChromeFlags = require('../../run.js').parseChromeFlags;
 const fastConfig = {
   'extends': 'lighthouse:default',
   'settings': {
@@ -21,10 +21,11 @@ const fastConfig = {
 
 // Map plugin name to fixture since not actually installed in node_modules/.
 jest.mock('lighthouse-plugin-simple', () => {
-  return require('../../../lighthouse-core/test/fixtures/config-plugins/lighthouse-plugin-simple/');
+  // eslint-disable-next-line max-len
+  return require('../../../lighthouse-core/test/fixtures/config-plugins/lighthouse-plugin-simple/plugin-simple.js');
 }, {virtual: true});
 
-const getFlags = require('../../cli-flags').getFlags;
+const getFlags = require('../../cli-flags.js').getFlags;
 
 describe('CLI run', function() {
   describe('LH round trip', () => {

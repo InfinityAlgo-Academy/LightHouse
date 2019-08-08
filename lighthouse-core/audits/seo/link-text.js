@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../audit');
-const URL = require('../../lib/url-shim');
+const Audit = require('../audit.js');
+const URL = require('../../lib/url-shim.js');
 const BLOCKLIST = new Set([
   // English
   'click here',
@@ -44,6 +44,15 @@ const BLOCKLIST = new Set([
   'enlace',
   'este enlace',
   'empezar',
+  // Portuguese
+  'clique aqui',
+  'inicio',
+  'início',
+  'ir',
+  'mais informação',
+  'mais informações',
+  'mais',
+  'veja mais',
 ]);
 const i18n = require('../../lib/i18n/i18n.js');
 

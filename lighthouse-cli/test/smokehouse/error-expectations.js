@@ -5,24 +5,58 @@
  */
 'use strict';
 
+// Just using `[]` actually asserts for an empty array.
+// Use this expectation object to assert an array with at least one element.
+const NONEMPTY_ARRAY = {
+  length: '>0',
+};
+
 /**
  * Expected Lighthouse audit values for sites with various errors.
  */
 module.exports = [
   {
-    errorCode: 'PAGE_HUNG',
     lhr: {
       requestedUrl: 'http://localhost:10200/infinite-loop.html',
       finalUrl: 'http://localhost:10200/infinite-loop.html',
-      audits: {},
+      runtimeError: {code: 'PAGE_HUNG'},
+      audits: {
+        'first-contentful-paint': {
+          scoreDisplayMode: 'error',
+          errorMessage: 'Required traces gatherer did not run.',
+        },
+      },
+    },
+    artifacts: {
+      PageLoadError: {code: 'PAGE_HUNG'},
+      devtoolsLogs: {
+        'pageLoadError-defaultPass': NONEMPTY_ARRAY,
+      },
+      traces: {
+        'pageLoadError-defaultPass': {traceEvents: NONEMPTY_ARRAY},
+      },
     },
   },
   {
-    errorCode: 'INSECURE_DOCUMENT_REQUEST',
     lhr: {
       requestedUrl: 'https://expired.badssl.com',
-      finalUrl: 'https://expired.badssl.com',
-      audits: {},
+      finalUrl: 'https://expired.badssl.com/',
+      runtimeError: {code: 'INSECURE_DOCUMENT_REQUEST'},
+      audits: {
+        'first-contentful-paint': {
+          scoreDisplayMode: 'error',
+          errorMessage: 'Required traces gatherer did not run.',
+        },
+      },
+    },
+    artifacts: {
+      PageLoadError: {code: 'INSECURE_DOCUMENT_REQUEST'},
+      devtoolsLogs: {
+        'pageLoadError-defaultPass': NONEMPTY_ARRAY,
+      },
+      traces: {
+        'pageLoadError-defaultPass': {traceEvents: NONEMPTY_ARRAY},
+      },
     },
   },
 ];

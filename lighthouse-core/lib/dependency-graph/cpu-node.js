@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const BaseNode = require('./base-node');
+const BaseNode = require('./base-node.js');
 
 class CPUNode extends BaseNode {
   /**

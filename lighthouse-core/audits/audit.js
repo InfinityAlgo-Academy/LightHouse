@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const statistics = require('../lib/statistics');
-const Util = require('../report/html/renderer/util');
+const statistics = require('../lib/statistics.js');
+const Util = require('../report/html/renderer/util.js');
 
 const DEFAULT_PASS = 'defaultPass';
 

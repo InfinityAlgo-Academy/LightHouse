@@ -145,6 +145,7 @@ declare global {
       /**
        * A value used within a details object, intended to be displayed as a
        * link with text, regardless of the controlling heading's valueType.
+       * If URL is the empty string, fallsback to a basic `TextValue`.
        */
       export interface LinkValue {
         type: 'link',
@@ -160,7 +161,10 @@ declare global {
         type: 'node';
         path?: string;
         selector?: string;
+        /** An HTML snippet used to identify the node. */
         snippet?: string;
+        /** A human-friendly text descriptor that's used to identify the node more quickly. */
+        nodeLabel?: string;
       }
 
       /**

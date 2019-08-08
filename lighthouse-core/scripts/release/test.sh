@@ -24,7 +24,7 @@ echo "Running the standard test suite..."
 yarn test
 
 echo "Running the smoke tests...."
-yarn smoke
+yarn smoke || yarn smoke || yarn smoke
 
 echo "Testing the CLI..."
 yarn start "https://example.com" --view

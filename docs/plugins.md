@@ -350,5 +350,6 @@ Most artifacts will try to represent as truthfully as possible what was observed
 
 ## Examples
 
+- [Field Performance](https://github.com/treosh/lighthouse-plugin-field-performance) - A plugin to gather and display Chrome UX Report field data
 - [Publisher Ads Audits](https://github.com/googleads/pub-ads-lighthouse-plugin) - a well-written, but complex, plugin
 - [Lighthouse Plugin Recipe](./recipes/lighthouse-plugin-example)

@@ -10,9 +10,10 @@
 const assert = require('assert');
 const fs = require('fs');
 const jsdom = require('jsdom');
-const URL = require('../../../../lib/url-shim');
+const URL = require('../../../../lib/url-shim.js');
 const Util = require('../../../../report/html/renderer/util.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
+const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const CriticalRequestChainRenderer =
     require('../../../../report/html/renderer/crc-details-renderer.js');
 
@@ -75,12 +76,14 @@ const DETAILS = {
 
 describe('DetailsRenderer', () => {
   let dom;
+  let detailsRenderer;
 
   beforeAll(() => {
     global.URL = URL;
     global.Util = Util;
     const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
     dom = new DOM(document);
+    detailsRenderer = new DetailsRenderer(dom);
   });
 
   afterAll(() => {
@@ -89,18 +92,25 @@ describe('DetailsRenderer', () => {
   });
 
   it('renders tree structure', () => {
-    const el = CriticalRequestChainRenderer.render(dom, dom.document(), DETAILS);
+    const el = CriticalRequestChainRenderer.render(dom, dom.document(), DETAILS, detailsRenderer);
     const chains = el.querySelectorAll('.crc-node');
 
     // Main request
     assert.equal(chains.length, 4, 'generates correct number of chain nodes');
-    assert.equal(chains[0].querySelector('.crc-node__tree-hostname').textContent, '(example.com)');
+    assert.ok(!chains[0].querySelector('.lh-text__url-host'), 'should be no origin for root url');
+    assert.equal(chains[0].querySelector('.lh-text__url a').textContent, 'https://example.com');
+    assert.equal(chains[0].querySelector('.lh-text__url a').href, 'https://example.com/');
+    assert.equal(chains[0].querySelector('.lh-text__url a').rel, 'noopener');
+    assert.equal(chains[0].querySelector('.lh-text__url a').target, '_blank');
 
     // Children
     assert.ok(chains[1].querySelector('.crc-node__tree-marker .vert-right'));
     assert.equal(chains[1].querySelectorAll('.crc-node__tree-marker .right').length, 2);
-    assert.equal(chains[1].querySelector('.crc-node__tree-file').textContent, '/b.js');
-    assert.equal(chains[1].querySelector('.crc-node__tree-hostname').textContent, '(example.com)');
+    assert.equal(chains[1].querySelector('.lh-text__url a').textContent, '/b.js');
+    assert.equal(chains[1].querySelector('.lh-text__url a').href, 'https://example.com/b.js');
+    assert.equal(chains[1].querySelector('.lh-text__url a').rel, 'noopener');
+    assert.equal(chains[1].querySelector('.lh-text__url a').target, '_blank');
+    assert.equal(chains[1].querySelector('.lh-text__url-host').textContent, '(example.com)');
     const durationNodes = chains[1].querySelectorAll('.crc-node__chain-duration');
     assert.equal(durationNodes[0].textContent, ' - 5,000\xa0ms, ');
     // Note: actual transferSize is 2000 bytes but formatter formats to KBs.

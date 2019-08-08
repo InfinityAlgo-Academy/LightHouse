@@ -10,7 +10,7 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit');
+const AxeAudit = require('./axe-audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -21,7 +21,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'When a button doesn\'t have an accessible name, screen readers announce it ' +
       'as "button", making it unusable for users who rely on screen readers. ' +
-      '[Learn more](https://dequeuniversity.com/rules/axe/3.1/button-name?application=lighthouse).',
+      '[Learn more](https://web.dev/button-name/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

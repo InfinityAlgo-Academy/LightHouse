@@ -9,6 +9,7 @@ module.exports = {
   // start with google standard style
   //     https://github.com/google/eslint-config-google/blob/master/index.js
   extends: ['eslint:recommended', 'google'],
+  plugins: ['eslint-plugin-local-rules'], // include custom rules
   env: {
     node: true,
     es6: true,
@@ -63,6 +64,9 @@ module.exports = {
       exports: 'never',
       functions: 'never',
     }],
+
+    // Custom lighthouse rules
+    'local-rules/require-file-extension': 2,
 
     // Disabled rules
     'require-jsdoc': 0,
