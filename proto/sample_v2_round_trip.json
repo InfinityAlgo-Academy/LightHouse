@@ -1123,9 +1123,9 @@
             "score": 1.0,
             "scoreDisplayMode": "binary",
             "title": "Detected JavaScript libraries"
-        }, 
+        },
         "json-ld": {
-            "description": "Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit currently validates a subset of JSON-LD rules. See also the manual audit below to learn how to validate other types of structured data.",
+            "description": "Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit currently validates a subset of JSON-LD rules. See also the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) to validate other types of structured data.",
             "details": {
                 "items": [
                     {
@@ -2511,7 +2511,7 @@
             "title": "Is not configured for a custom splash screen"
         },
         "structured-data": {
-            "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://developers.google.com/search/docs/guides/mark-up-content).",
+            "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) to validate structured data. [Learn more](https://developers.google.com/search/docs/guides/mark-up-content).",
             "id": "structured-data",
             "score": null,
             "scoreDisplayMode": "manual",
@@ -3902,13 +3902,13 @@
                     "weight": 0.0
                 },
                 {
-                    "group": "seo-content", 
+                    "group": "seo-content",
                     "id": "json-ld",
                     "weight": 1.0
-                }, 
+                },
                 {
-                    "group": "seo-mobile", 
-                    "id": "font-size", 
+                    "group": "seo-mobile",
+                    "id": "font-size",
                     "weight": 1.0
                 },
                 {
@@ -5039,9 +5039,9 @@
                 "startTime": 0.0
             },
             {
-                "duration": 100.0, 
-                "entryType": "measure", 
-                "name": "lh:audit:structured-data", 
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:audit:structured-data",
                 "startTime": 0.0
             },
             {

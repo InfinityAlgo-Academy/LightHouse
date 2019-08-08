@@ -893,6 +893,18 @@
   "lighthouse-core/audits/seo/is-crawlable.js | title": {
     "message": "Page isn’t blocked from indexing"
   },
+  "lighthouse-core/audits/seo/json-ld.js | description": {
+    "message": "Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit currently validates a subset of JSON-LD rules. See also the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) to validate other types of structured data."
+  },
+  "lighthouse-core/audits/seo/json-ld.js | displayValue": {
+    "message": "{invalidSnippetCount, plural,\n    =1 {# invalid snippet}\n    other {# invalid snippets}\n    }"
+  },
+  "lighthouse-core/audits/seo/json-ld.js | failureTitle": {
+    "message": "JSON-LD structured data syntax is invalid"
+  },
+  "lighthouse-core/audits/seo/json-ld.js | title": {
+    "message": "JSON-LD structured data syntax is valid"
+  },
   "lighthouse-core/audits/seo/link-text.js | description": {
     "message": "Descriptive link text helps search engines understand your content. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)."
   },
@@ -906,7 +918,7 @@
     "message": "Links have descriptive text"
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | description": {
-    "message": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://developers.google.com/search/docs/guides/mark-up-content)."
+    "message": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) to validate structured data. [Learn more](https://developers.google.com/search/docs/guides/mark-up-content)."
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | title": {
     "message": "Structured data is valid"
