@@ -37,13 +37,13 @@
     "redirects-http": {
       "id": "redirects-http",
       "title": "Does not redirect HTTP traffic to HTTPS",
-      "description": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https).",
+      "description": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS in order to enable secure web features for all your users. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https).",
       "score": 0,
       "scoreDisplayMode": "binary"
     },
     "service-worker": {
       "id": "service-worker",
-      "title": "Does not register a service worker that controls page and start_url",
+      "title": "Does not register a service worker that controls page and `start_url`",
       "description": "The service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker).",
       "score": 0,
       "scoreDisplayMode": "binary"
@@ -59,7 +59,7 @@
     "viewport": {
       "id": "viewport",
       "title": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`",
-      "description": "Add a viewport meta tag to optimize your app for mobile screens. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/has-viewport-meta-tag).",
+      "description": "Add a `<meta name=\"viewport\">` tag to optimize your app for mobile screens. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/has-viewport-meta-tag).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "warnings": []
@@ -488,7 +488,7 @@
     "apple-touch-icon": {
       "id": "apple-touch-icon",
       "title": "Does not provide a valid `apple-touch-icon`",
-      "description": "For ideal appearance on iOS when users add to the home screen, define an apple-touch-icon. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/).",
+      "description": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "warnings": []
@@ -515,7 +515,7 @@
     },
     "themed-omnibox": {
       "id": "themed-omnibox",
-      "title": "Does not set an address-bar theme color",
+      "title": "Does not set a theme color for the address bar.",
       "description": "The browser address bar can be themed to match your site. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/address-bar).",
       "score": 0,
       "scoreDisplayMode": "binary",
@@ -1285,7 +1285,7 @@
     },
     "offline-start-url": {
       "id": "offline-start-url",
-      "title": "start_url does not respond with a 200 when offline",
+      "title": "`start_url` does not respond with a 200 when offline",
       "description": "A service worker enables your web app to be reliable in unpredictable network conditions. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).",
       "score": 0,
       "scoreDisplayMode": "binary",
@@ -1541,7 +1541,7 @@
     "pwa-each-page-has-url": {
       "id": "pwa-each-page-has-url",
       "title": "Each page has a URL",
-      "description": "Ensure individual pages are deep linkable via the URLs and that URLs are unique for the purpose of shareability on social media. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url).",
+      "description": "Ensure individual pages are deep linkable via URL and that URLs are unique for the purpose of shareability on social media. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
@@ -5134,6 +5134,36 @@
       "lighthouse-core/audits/is-on-https.js | columnInsecureURL": [
         "audits[is-on-https].details.headings[0].text"
       ],
+      "lighthouse-core/audits/redirects-http.js | failureTitle": [
+        "audits[redirects-http].title"
+      ],
+      "lighthouse-core/audits/redirects-http.js | description": [
+        "audits[redirects-http].description"
+      ],
+      "lighthouse-core/audits/service-worker.js | failureTitle": [
+        "audits[service-worker].title"
+      ],
+      "lighthouse-core/audits/service-worker.js | description": [
+        "audits[service-worker].description"
+      ],
+      "lighthouse-core/audits/works-offline.js | failureTitle": [
+        "audits[works-offline].title"
+      ],
+      "lighthouse-core/audits/works-offline.js | description": [
+        "audits[works-offline].description"
+      ],
+      "lighthouse-core/audits/viewport.js | title": [
+        "audits.viewport.title"
+      ],
+      "lighthouse-core/audits/viewport.js | description": [
+        "audits.viewport.description"
+      ],
+      "lighthouse-core/audits/without-javascript.js | title": [
+        "audits[without-javascript].title"
+      ],
+      "lighthouse-core/audits/without-javascript.js | description": [
+        "audits[without-javascript].description"
+      ],
       "lighthouse-core/audits/metrics/first-contentful-paint.js | title": [
         "audits[first-contentful-paint].title"
       ],
@@ -5333,11 +5363,35 @@
       "lighthouse-core/audits/redirects.js | description": [
         "audits.redirects.description"
       ],
+      "lighthouse-core/audits/installable-manifest.js | failureTitle": [
+        "audits[installable-manifest].title"
+      ],
+      "lighthouse-core/audits/installable-manifest.js | description": [
+        "audits[installable-manifest].description"
+      ],
       "lighthouse-core/audits/apple-touch-icon.js | failureTitle": [
         "audits[apple-touch-icon].title"
       ],
       "lighthouse-core/audits/apple-touch-icon.js | description": [
         "audits[apple-touch-icon].description"
+      ],
+      "lighthouse-core/audits/splash-screen.js | failureTitle": [
+        "audits[splash-screen].title"
+      ],
+      "lighthouse-core/audits/splash-screen.js | description": [
+        "audits[splash-screen].description"
+      ],
+      "lighthouse-core/audits/themed-omnibox.js | failureTitle": [
+        "audits[themed-omnibox].title"
+      ],
+      "lighthouse-core/audits/themed-omnibox.js | description": [
+        "audits[themed-omnibox].description"
+      ],
+      "lighthouse-core/audits/content-width.js | title": [
+        "audits[content-width].title"
+      ],
+      "lighthouse-core/audits/content-width.js | description": [
+        "audits[content-width].description"
       ],
       "lighthouse-core/audits/image-aspect-ratio.js | failureTitle": [
         "audits[image-aspect-ratio].title"
@@ -5429,6 +5483,12 @@
       ],
       "lighthouse-core/audits/network-server-latency.js | description": [
         "audits[network-server-latency].description"
+      ],
+      "lighthouse-core/audits/offline-start-url.js | failureTitle": [
+        "audits[offline-start-url].title"
+      ],
+      "lighthouse-core/audits/offline-start-url.js | description": [
+        "audits[offline-start-url].description"
       ],
       "lighthouse-core/audits/performance-budget.js | title": [
         "audits[performance-budget].title"
@@ -5563,6 +5623,24 @@
       ],
       "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": [
         "audits[third-party-summary].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
+        "audits[pwa-cross-browser].title"
+      ],
+      "lighthouse-core/audits/manual/pwa-cross-browser.js | description": [
+        "audits[pwa-cross-browser].description"
+      ],
+      "lighthouse-core/audits/manual/pwa-page-transitions.js | title": [
+        "audits[pwa-page-transitions].title"
+      ],
+      "lighthouse-core/audits/manual/pwa-page-transitions.js | description": [
+        "audits[pwa-page-transitions].description"
+      ],
+      "lighthouse-core/audits/manual/pwa-each-page-has-url.js | title": [
+        "audits[pwa-each-page-has-url].title"
+      ],
+      "lighthouse-core/audits/manual/pwa-each-page-has-url.js | description": [
+        "audits[pwa-each-page-has-url].description"
       ],
       "lighthouse-core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"
@@ -6184,6 +6262,15 @@
       ],
       "lighthouse-core/config/default-config.js | seoCategoryManualDescription": [
         "categories.seo.manualDescription"
+      ],
+      "lighthouse-core/config/default-config.js | pwaCategoryTitle": [
+        "categories.pwa.title"
+      ],
+      "lighthouse-core/config/default-config.js | pwaCategoryDescription": [
+        "categories.pwa.description"
+      ],
+      "lighthouse-core/config/default-config.js | pwaCategoryManualDescription": [
+        "categories.pwa.manualDescription"
       ],
       "lighthouse-core/config/default-config.js | metricGroupTitle": [
         "categoryGroups.metrics.title"

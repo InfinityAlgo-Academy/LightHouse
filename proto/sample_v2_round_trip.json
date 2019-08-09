@@ -16,7 +16,7 @@
             "title": "Uses Application Cache"
         },
         "apple-touch-icon": {
-            "description": "For ideal appearance on iOS when users add to the home screen, define an apple-touch-icon. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/).",
+            "description": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/).",
             "id": "apple-touch-icon",
             "score": 0.0,
             "scoreDisplayMode": "binary",
@@ -1998,7 +1998,7 @@
             "id": "offline-start-url",
             "score": 0.0,
             "scoreDisplayMode": "binary",
-            "title": "start_url does not respond with a 200 when offline",
+            "title": "`start_url` does not respond with a 200 when offline",
             "warnings": []
         },
         "offscreen-content-hidden": {
@@ -2177,7 +2177,7 @@
             "title": "Site works cross-browser"
         },
         "pwa-each-page-has-url": {
-            "description": "Ensure individual pages are deep linkable via the URLs and that URLs are unique for the purpose of shareability on social media. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url).",
+            "description": "Ensure individual pages are deep linkable via URL and that URLs are unique for the purpose of shareability on social media. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url).",
             "id": "pwa-each-page-has-url",
             "score": null,
             "scoreDisplayMode": "manual",
@@ -2205,7 +2205,7 @@
             "title": "Avoid multiple page redirects"
         },
         "redirects-http": {
-            "description": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https).",
+            "description": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS in order to enable secure web features for all your users. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https).",
             "id": "redirects-http",
             "score": 0.0,
             "scoreDisplayMode": "binary",
@@ -2427,7 +2427,7 @@
             "id": "service-worker",
             "score": 0.0,
             "scoreDisplayMode": "binary",
-            "title": "Does not register a service worker that controls page and start_url"
+            "title": "Does not register a service worker that controls page and `start_url`"
         },
         "speed-index": {
             "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index).",
@@ -2558,7 +2558,7 @@
             "id": "themed-omnibox",
             "score": 0.0,
             "scoreDisplayMode": "binary",
-            "title": "Does not set an address-bar theme color"
+            "title": "Does not set a theme color for the address bar."
         },
         "third-party-summary": {
             "description": "Third-party code can significantly impact load performance. Limit the number of redundant third-party providers and try to load third-party code after your page has primarily finished loading. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/).",
@@ -3183,7 +3183,7 @@
             "title": "`<video>` elements contain a `<track>` element with `[kind=\"description\"]`"
         },
         "viewport": {
-            "description": "Add a viewport meta tag to optimize your app for mobile screens. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/has-viewport-meta-tag).",
+            "description": "Add a `<meta name=\"viewport\">` tag to optimize your app for mobile screens. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/has-viewport-meta-tag).",
             "id": "viewport",
             "score": 1.0,
             "scoreDisplayMode": "binary",
