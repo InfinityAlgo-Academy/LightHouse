@@ -12,6 +12,7 @@ const http = require('http');
 const zlib = require('zlib');
 const path = require('path');
 const fs = require('fs');
+const mime = require('mime-types');
 const parseQueryString = require('querystring').parse;
 const parseURL = require('url').parse;
 const URLSearchParams = require('url').URLSearchParams;
@@ -63,23 +64,13 @@ function requestHandler(request, response) {
   function sendResponse(statusCode, data) {
     const headers = {'Access-Control-Allow-Origin': '*'};
 
-    if (filePath.endsWith('.js')) {
-      headers['Content-Type'] = 'text/javascript';
-    } else if (filePath.endsWith('.css')) {
-      headers['Content-Type'] = 'text/css';
-    } else if (filePath.endsWith('.svg')) {
-      headers['Content-Type'] = 'image/svg+xml';
-    } else if (filePath.endsWith('.png')) {
-      headers['Content-Type'] = 'image/png';
-    } else if (filePath.endsWith('.gif')) {
-      headers['Content-Type'] = 'image/gif';
-    } else if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) {
-      headers['Content-Type'] = 'image/jpeg';
-    } else if (filePath.endsWith('.webp')) {
-      headers['Content-Type'] = 'image/webp';
-    } else if (filePath.endsWith('.json')) {
-      headers['Content-Type'] = 'application/json';
-    }
+    const contentType = mime.lookup(filePath);
+    const charset = mime.lookup(contentType);
+    // `mime.contentType` appends the correct charset too.
+    // Note: it seems to miss just one case, svg. Doesn't matter much, we'll just allow
+    // svgs to be sent without the proper encoding.
+    // see https://github.com/jshttp/mime-types/issues/66
+    if (contentType) headers['Content-Type'] = mime.contentType(contentType);
 
     let delay = 0;
     let useGzip = false;
@@ -127,7 +118,8 @@ function requestHandler(request, response) {
       return setTimeout(finishResponse, delay, data);
     }
 
-    finishResponse(data);
+    const encoding = charset === 'UTF-8' ? 'utf-8' : 'binary';
+    finishResponse(data, encoding);
   }
 
   function sendRedirect(url) {
@@ -138,8 +130,8 @@ function requestHandler(request, response) {
     response.end();
   }
 
-  function finishResponse(data) {
-    response.write(data, 'binary');
+  function finishResponse(data, encoding) {
+    response.write(data, encoding);
     response.end();
   }
 }
