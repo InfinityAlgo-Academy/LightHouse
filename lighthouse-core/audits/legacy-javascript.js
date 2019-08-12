@@ -54,11 +54,12 @@ class CodePatternMatcher {
     // Each pattern maps to one subgroup in the generated regex. For each iteration of RegExp.exec,
     // only one subgroup will be defined. Exec until no more matches.
     while ((result = this.re.exec(code)) !== null) {
-      // Index 0 - the entire match, discard.
-      // Index 1 - truthy if matching a newline, used to track the line number.
-      // `patternExpressionMatches` maps to each possible pattern.
-      // Only one of [isNewline, ...patternExpressionMatches] is ever defined.
-      const [, isNewline, ...patternExpressionMatches] = result;
+      // Discard first value in `result` - it's just the entire match.
+      const captureGroups = result.slice(1);
+      // isNewline - truthy if matching a newline, used to track the line number.
+      // `patternExpressionMatches` maps to each possible pattern in `this.patterns`.
+      // Only one of [isNewline, ...patternExpressionMatches] is ever truthy.
+      const [isNewline, ...patternExpressionMatches] = captureGroups;
       if (isNewline) {
         line++;
         lineBeginsAtIndex = result.index + 1;
