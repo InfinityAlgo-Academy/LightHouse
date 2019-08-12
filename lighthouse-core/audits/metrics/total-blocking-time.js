@@ -6,24 +6,28 @@
 'use strict';
 
 const Audit = require('../audit.js');
-const CumulativeLQD = require('../../computed/metrics/cumulative-long-queuing-delay.js');
+const ComputedTBT = require('../../computed/metrics/total-blocking-time.js');
+const i18n = require('../../lib/i18n/i18n.js');
 
-// TODO(deepanjanroy): i18n strings once metric is final.
-const UIStringsNotExported = {
-  title: 'Cumulative Long Queuing Delay',
-  description: '[Experimental metric] Total time period between FCP and Time to Interactive ' +
-      'during which queuing time for any input event would be higher than 50ms.',
+const UIStrings = {
+  /** The name of a metric that calculates the total duration of blocking time for a web page. Blocking times are time periods when the page would be blocked (prevented) from responding to user input (clicks, taps, and keypresses will feel slow to respond). Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  title: 'Total Blocking Time',
+  /** Description of the Total Blocking Time (TBT) metric, which calculates the total duration of blocking time for a web page. Blocking times are time periods when the page would be blocked (prevented) from responding to user input (clicks, taps, and keypresses will feel slow to respond). This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits.*/
+  description: 'Sum of all time periods between FCP and Time to Interactive, ' +
+      'when task length exceeded 50ms, expressed in milliseconds.',
 };
 
-class CumulativeLongQueuingDelay extends Audit {
+const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+class TotalBlockingTime extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'cumulative-long-queuing-delay',
-      title: UIStringsNotExported.title,
-      description: UIStringsNotExported.description,
+      id: 'total-blocking-time',
+      title: str_(UIStrings.title),
+      description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
@@ -46,13 +50,12 @@ class CumulativeLongQueuingDelay extends Audit {
   }
 
   /**
-   * Audits the page to calculate Cumulative Long Queuing Delay.
+   * Audits the page to calculate Total Blocking Time.
    *
-   * We define Long Queuing Delay Region as any time interval in the loading timeline where queuing
-   * time for an input event would be longer than 50ms. For example, if there is a 110ms main thread
-   * task, the first 60ms of it is Long Queuing Delay Region, because any input event occuring in
-   * that region has to wait more than 50ms. Cumulative Long Queuing Delay is the sum of all Long
-   * Queuing Delay Regions between First Contentful Paint and Interactive Time (TTI).
+   * We define Blocking Time as any time interval in the loading timeline where task length exceeds
+   * 50ms. For example, if there is a 110ms main thread task, the last 60ms of it is blocking time.
+   * Total Blocking Time is the sum of all Blocking Time between First Contentful Paint and
+   * Interactive Time (TTI).
    *
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
@@ -62,7 +65,7 @@ class CumulativeLongQueuingDelay extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
-    const metricResult = await CumulativeLQD.request(metricComputationData, context);
+    const metricResult = await ComputedTBT.request(metricComputationData, context);
 
     return {
       score: Audit.computeLogNormalScore(
@@ -71,9 +74,10 @@ class CumulativeLongQueuingDelay extends Audit {
         context.options.scoreMedian
       ),
       numericValue: metricResult.timing,
-      displayValue: 10 * Math.round(metricResult.timing / 10) + '\xa0ms',
+      displayValue: str_(i18n.UIStrings.ms, {timeInMs: metricResult.timing}),
     };
   }
 }
 
-module.exports = CumulativeLongQueuingDelay;
+module.exports = TotalBlockingTime;
+module.exports.UIStrings = UIStrings;

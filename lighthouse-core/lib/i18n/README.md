@@ -19,8 +19,8 @@ The collection and translation pipeline:
  +----------------------------|                 |     | lighthouse-core/lib/i18n/locales/*.json     |-<+
   +---------------------------+                 |     |                                             || |
                            |                    |     +----------------------------------------------| |
-                           |                    |      +---------------------------------------------+ |
-              $ yarn i18n  +--------------------+                                                      |
+  $ yarn                   |                    |      +---------------------------------------------+ |
+      i18n:collect-strings +--------------------+                                                      |
                            |                                                                           |
                            v                          ▐                       ▐    +---------------+   |
               +------------+------+                   ▐   Google TC Pipeline  ▐ +->|  *.ctc.json   |---+
@@ -36,7 +36,7 @@ To a typical developer, the pipeline looks like this:
 
 ```shell
 # collect UIStrings and bake the en-US & en-XL locales
-$ yarn i18n
+$ yarn i18n:collect-strings
 
 # Test to see that the new translations are valid and apply to all strings
 $ node lighthouse-core/scripts/build-report-for-autodeployment.js && open dist/xl-accented/index.html
@@ -50,7 +50,7 @@ Note: Why do `en-US` and `en-XL` get baked early?  We write all our strings in `
 
 ```shell
 # collect UIStrings (to make sure everything is up to date)
-$ yarn i18n
+$ yarn i18n:collect-strings
 
 # Extract the CTC format files to translation console
 $ sh import-source-from-github.sh
@@ -68,10 +68,6 @@ See [Appendix A: How runtime string replacement works](#appendix)
 
 
 # Writing UIStrings with LHL
-
-❗TODO(exterkamp): explain all the comments and where they go/what they become.
-
-❗TODO(exterkamp): explain why we can't use some ICU like number formatting.
 
 We want to keep strings close to the code in which they are used so that developers can easily understand their context. We use `i18n.js` to extract the `UIStrings` strings from individual js files.
 
@@ -107,13 +103,13 @@ ICU replacements must use a JSDoc-like syntax to specify an example for direct I
 *   To specify the description, use `@description …`:
     * `@description Label string used to…`
 *   To specify an example for an ICU replacement, use `@example {…} …`:
-    * `@example {variableName} This is an example ICU replacement`
+    * `@example {This is an example ICU replacement} variableName`
 
 ```javascript
 const UIStrings = {
     /**
       * @description Error message explaining ...
-      * @example {errorCode} NO_SPEEDLINE_FRAMES
+      * @example {NO_SPEEDLINE_FRAMES} errorCode
       */
     didntCollectScreenshots: `Chrome didn't .... ({errorCode})`,
 };
@@ -123,7 +119,7 @@ const UIStrings = {
 
 `{timeInMs, number, milliseconds}` is called _Complex ICU_ since the replacement is for numbers and other complex replacements that use the custom formatters in Lighthouse. The supported complex ICU formats are: `milliseconds`, `seconds`, `bytes`, `percent`, and `extendedPercent`.
 
-These complex ICU formats are automatically given @example values during `yarn i18n`.  Therefore, a normal description string can be used:
+These complex ICU formats are automatically given @example values during `yarn i18n:collect-strings`.  Therefore, a normal description string can be used:
 
 ```javascript
 const UIStrings = {
@@ -142,6 +138,8 @@ displayValue: `{itemCount, plural,
   other {# links found}
   }`,
 ```
+
+Note: Why are direct ICU and complex ICU placeholdered out, but Ordinals are not?  Direct and complex ICU should not contain elements that need to be translated (Direct ICU replaces universal proper nouns, and Complex ICU replaces number formatting), while ordinals do need to be translated.  Ordinals and selects are therefore handled specially, and do not need to be placeholdered out.
 
 ### Selects
 
@@ -280,4 +278,3 @@ CTC is a name that is distinct and identifies this as the Chrome translation for
     ```javascript
     message = "Total size was 10 KB"
     ```
-

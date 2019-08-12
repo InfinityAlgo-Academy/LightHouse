@@ -33,6 +33,10 @@ const UIStrings = {
   /** Label for the audit identifying the time it took for the page to become interactive on a mobile network. */
   displayValueTextWithOverride: 'Interactive on simulated mobile network at ' +
   '{timeInMs, number, seconds}\xa0s',
+  /** Explanatory message displayed when a web page loads too slowly to be considered quickly interactive. This references another Lighthouse auditing category, "Performance", that can give additional details on performance debugging.  */
+  explanationLoadSlow: 'Your page loads too slowly and is not interactive within 10 seconds. ' +
+    'Look at the opportunities and diagnostics in the "Performance" section to learn how to ' +
+    'improve.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -86,9 +90,7 @@ class LoadFastEnough4Pwa extends Audit {
     let explanation;
     if (!score) {
       displayValue = str_(displayValueTemplate, {timeInMs: tti.timing});
-      explanation = 'Your page loads too slowly and is not interactive within 10 seconds. ' +
-        'Look at the opportunities and diagnostics in the "Performance" section to learn how to ' +
-        'improve.';
+      explanation = str_(UIStrings.explanationLoadSlow);
     }
 
     return {

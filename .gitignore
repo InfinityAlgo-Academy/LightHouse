@@ -23,6 +23,7 @@ last-run-results.html
 *.report.csv
 *.report.pretty
 *.artifacts.log
+*.ctc.json
 
 !lighthouse-core/test/results/artifacts/*.trace.json
 !lighthouse-core/test/results/artifacts/*.devtoolslog.json

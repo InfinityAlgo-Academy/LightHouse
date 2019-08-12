@@ -2,7 +2,6 @@
 
 exports[`Performance: metrics evaluates valid input correctly 1`] = `
 Object {
-  "cumulativeLongQueuingDelay": 748,
   "estimatedInputLatency": 78,
   "estimatedInputLatencyTs": undefined,
   "firstCPUIdle": 3351,
@@ -35,5 +34,6 @@ Object {
   "observedTraceEndTs": 225426711887,
   "speedIndex": 1657,
   "speedIndexTs": undefined,
+  "totalBlockingTime": 726,
 }
 `;

@@ -477,7 +477,7 @@
     "message": "載入網站字型時沒有任何文字消失"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "如果網頁在行動網路中能快速載入，可為行動裝置使用者提供良好的使用體驗。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)。"
+    "message": "如果網頁在行動數據網路中能快速載入，可為行動裝置使用者提供良好的使用體驗。[瞭解詳情](https://developers.google.com/web/tools/lighthouse/audits/fast-3g)。"
   },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
     "message": "在 {timeInMs, number, seconds} 秒開始互動"

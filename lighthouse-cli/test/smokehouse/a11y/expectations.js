@@ -153,7 +153,8 @@ module.exports = [
                   'type': 'node',
                   'selector': '#color-contrast',
                   'snippet': '<div id="color-contrast" style="background-color: red; color: pink;">\n          Hello\n      </div>',
-                  'explanation': 'Fix any of the following:\n  Element has insufficient color contrast of 2.59 (foreground color: #ffc0cb, background color: #ff0000, font size: 28.5pt, font weight: normal). Expected contrast ratio of 3:1',
+                  // Default font size is different depending on the platform (e.g. 28.5 on travis, 30.0 on Mac), so use \d\d\.\d.
+                  'explanation': /^Fix any of the following:\n {2}Element has insufficient color contrast of 2\.59 \(foreground color: #ffc0cb, background color: #ff0000, font size: \d\d\.\dpt, font weight: normal\). Expected contrast ratio of 3:1$/,
                   'nodeLabel': 'Hello',
                 },
               },

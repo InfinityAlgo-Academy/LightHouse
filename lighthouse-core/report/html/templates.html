@@ -45,7 +45,7 @@ limitations under the License.
 <!-- Lighthouse category header -->
 <template id="tmpl-lh-category-header">
   <div class="lh-category-header">
-    <div class="lh-score__gauge"></div>
+    <div class="lh-score__gauge" role="heading" aria-level="2"></div>
     <div class="lh-category-header__description"></div>
   </div>
 </template>
@@ -245,6 +245,7 @@ limitations under the License.
       width: var(--topbar-logo-size);
       height: var(--topbar-logo-size);
       user-select: none;
+      flex: none;
     }
     .lh-topbar__logo .shape {
       fill: var(--report-text-color);
@@ -254,6 +255,9 @@ limitations under the License.
       margin: var(--topbar-padding);
       text-decoration: none;
       color: var(--report-text-color);
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
     .lh-tools {

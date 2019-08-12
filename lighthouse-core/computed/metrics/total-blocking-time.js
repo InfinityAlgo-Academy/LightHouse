@@ -9,28 +9,27 @@ const makeComputedArtifact = require('../computed-artifact.js');
 const ComputedMetric = require('./metric.js');
 const LHError = require('../../lib/lh-error.js');
 const TracingProcessor = require('../../lib/tracehouse/trace-processor.js');
-const LanternCumulativeLongQueuingDelay = require('./lantern-cumulative-long-queuing-delay.js');
+const LanternTotalBlockingTime = require('./lantern-total-blocking-time.js');
 const TimetoInteractive = require('./interactive.js');
 
 /**
- * @fileoverview This audit determines Cumulative Long Queuing Delay between FCP and TTI.
+ * @fileoverview This audit determines Total Blocking Time.
 
- * We define Long Queuing Delay Region as any time interval in the loading timeline where queuing
- * time for an input event would be longer than 50ms. For example, if there is a 110ms main thread
- * task, the first 60ms of it is Long Queuing Delay Region, because any input event occuring in
- * that region has to wait more than 50ms. Cumulative Long Queuing Delay is the sum of all Long
- * Queuing Delay Regions between First Contentful Paint and Interactive Time (TTI).
+ * We define Blocking Time as any time interval in the loading timeline where task length exceeds
+ * 50ms. For example, if there is a 110ms main thread task, the last 60ms of it is blocking time.
+ * Total Blocking Time is the sum of all Blocking Time between First Contentful Paint and
+ * Interactive Time (TTI).
  *
  * This is a new metric designed to accompany Time to Interactive. TTI is strict and does not
  * reflect incremental improvements to the site performance unless the improvement concerns the last
- * long task. Cumulative Long Queuing Delay on the other hand is designed to be much more responsive
+ * long task. Total Blocking Time on the other hand is designed to be much more responsive
  * to smaller improvements to main thread responsiveness.
  */
-class CumulativeLongQueuingDelay extends ComputedMetric {
+class TotalBlockingTime extends ComputedMetric {
   /**
    * @return {number}
    */
-  static get LONG_QUEUING_DELAY_THRESHOLD() {
+  static get BLOCKING_TIME_THRESHOLD() {
     return 50;
   }
   /**
@@ -39,50 +38,43 @@ class CumulativeLongQueuingDelay extends ComputedMetric {
    * @param {number} interactiveTimeMs
    * @return {number}
    */
-  static calculateSumOfLongQueuingDelay(topLevelEvents, fcpTimeInMs, interactiveTimeMs) {
+  static calculateSumOfBlockingTime(topLevelEvents, fcpTimeInMs, interactiveTimeMs) {
     if (interactiveTimeMs <= fcpTimeInMs) return 0;
 
-    const threshold = CumulativeLongQueuingDelay.LONG_QUEUING_DELAY_THRESHOLD;
-    const longQueuingDelayRegions = [];
-    // First identifying the long queuing delay regions.
+    const threshold = TotalBlockingTime.BLOCKING_TIME_THRESHOLD;
+    let sumBlockingTime = 0;
     for (const event of topLevelEvents) {
-      // If the task is less than the delay threshold, it contains no Long Queuing Delay Region.
+      // Early exit for small tasks, which should far outnumber long tasks.
       if (event.duration < threshold) continue;
-      // Otherwise, the duration of the task before the delay-threshold-sized interval at the end is
-      // considered Long Queuing Delay Region. Example assuming the threshold is 50ms:
-      //   [              250ms Task                   ]
-      //   |  Long Queuing Delay Region  |   Last 50ms |
-      //               200 ms
-      longQueuingDelayRegions.push({
-        start: event.start,
-        end: event.end - threshold,
-        duration: event.duration - threshold,
-      });
-    }
 
-    let sumLongQueuingDelay = 0;
-    for (const region of longQueuingDelayRegions) {
-      // We only want to add up the Long Queuing Delay regions that fall between FCP and TTI.
-      //
+      // We only want to consider tasks that fall between FCP and TTI.
       // FCP is picked as the lower bound because there is little risk of user input happening
       // before FCP so Long Queuing Qelay regions do not harm user experience. Developers should be
       // optimizing to reach FCP as fast as possible without having to worry about task lengths.
-      //
+      if (event.end < fcpTimeInMs) continue;
+
       // TTI is picked as the upper bound because we want a well defined end point so that the
       // metric does not rely on how long we trace.
-      if (region.end < fcpTimeInMs) continue;
-      if (region.start > interactiveTimeMs) continue;
+      if (event.start > interactiveTimeMs) continue;
 
-      // If a Long Queuing Delay Region spans the edges of our region of interest, we clip it to
-      // only include the part of the region that falls inside.
-      const clippedStart = Math.max(region.start, fcpTimeInMs);
-      const clippedEnd = Math.min(region.end, interactiveTimeMs);
-      const queuingDelayAfterClipping = clippedEnd - clippedStart;
+      // We first perform the clipping, and then calculate Blocking Region. So if we have a 150ms
+      // task [0, 150] and FCP happens midway at 50ms, we first clip the task to [50, 150], and then
+      // calculate the Blocking Region to be [100, 150]. The rational here is that tasks before FCP
+      // are unimportant, so we care whether the main thread is busy more than 50ms at a time only
+      // after FCP.
+      const clippedStart = Math.max(event.start, fcpTimeInMs);
+      const clippedEnd = Math.min(event.end, interactiveTimeMs);
+      const clippedDuration = clippedEnd - clippedStart;
+      if (clippedDuration < threshold) continue;
 
-      sumLongQueuingDelay += queuingDelayAfterClipping;
+      // The duration of the task beyond 50ms at the beginning is considered the Blocking Region.
+      // Example:
+      //   [              250ms Task                   ]
+      //   | First 50ms |   Blocking Region (200ms)    |
+      sumBlockingTime += (clippedDuration - threshold);
     }
 
-    return sumLongQueuingDelay;
+    return sumBlockingTime;
   }
 
   /**
@@ -91,7 +83,7 @@ class CumulativeLongQueuingDelay extends ComputedMetric {
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static computeSimulatedMetric(data, context) {
-    return LanternCumulativeLongQueuingDelay.request(data, context);
+    return LanternTotalBlockingTime.request(data, context);
   }
 
   /**
@@ -107,12 +99,10 @@ class CumulativeLongQueuingDelay extends ComputedMetric {
 
     const interactiveTimeMs = (await TimetoInteractive.request(data, context)).timing;
 
-    // Not using the start time argument of getMainThreadTopLevelEvents, because
-    // we need to clip the part of the task before the last 50ms properly.
     const events = TracingProcessor.getMainThreadTopLevelEvents(data.traceOfTab);
 
     return {
-      timing: CumulativeLongQueuingDelay.calculateSumOfLongQueuingDelay(
+      timing: TotalBlockingTime.calculateSumOfBlockingTime(
         events,
         firstContentfulPaint,
         interactiveTimeMs
@@ -121,4 +111,4 @@ class CumulativeLongQueuingDelay extends ComputedMetric {
   }
 }
 
-module.exports = makeComputedArtifact(CumulativeLongQueuingDelay);
+module.exports = makeComputedArtifact(TotalBlockingTime);
