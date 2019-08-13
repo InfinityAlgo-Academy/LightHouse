@@ -819,7 +819,7 @@ limitations under the License.
           overflow: hidden;
           padding: 10px;
           border-bottom: none;
-          color: var(--snippet-color);
+          color: var(--snippet-text-color);
           background-color: var(--snippet-background-color);
           border: 1px solid var(--report-border-color-secondary);
         }
@@ -861,7 +861,7 @@ limitations under the License.
         }
 
         .lh-snippet__line {
-          background: white;
+          background: var(--snippet-background-color, white);
           white-space: pre;
           display: flex;
         }

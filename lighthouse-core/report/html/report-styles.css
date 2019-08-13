@@ -186,6 +186,9 @@
     --report-text-color-secondary: var(--color-gray-400);
     --report-text-color: var(--color-gray-100);
     --topbar-background-color: var(--color-gray);
+    --snippet-background-color: var(--color-gray-900);
+    --snippet-text-color-secondary: var(--color-gray-400);
+    --snippet-text-color: var(--color-gray-100);
 
     /* SVGs */
     --plugin-icon-url: var(--plugin-icon-url-dark);
