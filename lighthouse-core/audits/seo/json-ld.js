@@ -16,7 +16,7 @@ const UIStrings = {
   failureTitle: 'JSON-LD structured data syntax is invalid',
   /** Description of a Lighthouse audit that tells the user whether JSON-LD snippets on the page are invalid. This is displayed after a user expands the section to see more. No character length limits. */
   /* eslint-disable-next-line max-len */
-  description: 'Structured data contains rich metadata about a web page. The data is used in search results and social sharing. Invalid metadata will affect how the page appears in these contexts. This audit currently validates a subset of JSON-LD rules. See also the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) to validate other types of structured data.',
+  description: 'This audit currently validates a subset of JSON-LD rules used in search engines. See also the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) to validate other types of structured data.',
   /** Explanatory message stating how many JSON-LD structured data snippets are invalid */
   displayValue: `{invalidSnippetCount, plural,
     =1 {# invalid snippet}
@@ -55,8 +55,9 @@ class StructuredDataAutomatic extends Audit {
       };
     }
 
-    const validatedSnippets = await Promise.all(jsonLDElements.map(async (element) => {
+    const snippets = await Promise.all(jsonLDElements.map(async (element) => {
       // We don't want to show empty lines around the snippet
+      // We can do this cast, because we know element.content to not be null
       const content = /** @type string */ (element.content).trim();
 
       return {
@@ -66,16 +67,14 @@ class StructuredDataAutomatic extends Audit {
       };
     }));
     // Show invalid snippets at the top
-    validatedSnippets.sort((a, b) => {
+    snippets.sort((a, b) => {
       return b.errors.length - a.errors.length;
     });
 
-    const renderedSnippets = validatedSnippets.map(
-      snippetWithErrors => renderValidatedSnippet(snippetWithErrors)
-    );
+    const renderedSnippets = snippets.map(renderValidatedSnippet);
     const details = Audit.makeListDetails(renderedSnippets);
 
-    const invalidSnippets = validatedSnippets.filter(vs => vs.errors.length > 0);
+    const invalidSnippets = snippets.filter(vs => vs.errors.length > 0);
     const displayValue = str_(UIStrings.displayValue, {
       invalidSnippetCount: invalidSnippets.length,
     });
