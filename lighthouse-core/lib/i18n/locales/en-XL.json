@@ -885,7 +885,7 @@
     "message": "K̂éêṕ r̂éq̂úêśt̂ ćôún̂t́ŝ ĺôẃ âńd̂ t́r̂án̂śf̂ér̂ śîźêś ŝḿâĺl̂"
   },
   "lighthouse-core/audits/seo/canonical.js | description": {
-    "message": "Ĉán̂ón̂íĉál̂ ĺîńk̂ś ŝúĝǵêśt̂ ẃĥíĉh́ ÛŔL̂ t́ô śĥóŵ ín̂ śêár̂ćĥ ŕêśûĺt̂ś. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/canonical)."
+    "message": "Ĉán̂ón̂íĉál̂ ĺîńk̂ś ŝúĝǵêśt̂ ẃĥíĉh́ ÛŔL̂ t́ô śĥóŵ ín̂ śêár̂ćĥ ŕêśûĺt̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/canonical)."
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "M̂úl̂t́îṕl̂é ĉón̂f́l̂íĉt́îńĝ ÚR̂Ĺŝ ({urlList})"
@@ -912,7 +912,7 @@
     "message": "D̂óĉúm̂én̂t́ ĥáŝ á v̂ál̂íd̂ `rel=canonical`"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
-    "message": "F̂ón̂t́ ŝíẑéŝ ĺêśŝ t́ĥán̂ 12ṕx̂ ár̂é t̂óô śm̂ál̂ĺ t̂ó b̂é l̂éĝíb̂ĺê án̂d́ r̂éq̂úîŕê ḿôb́îĺê v́îśît́ôŕŝ t́ô “ṕîńĉh́ t̂ó ẑóôḿ” îń ôŕd̂ér̂ t́ô ŕêád̂. Śt̂ŕîv́ê t́ô h́âv́ê >60% óf̂ ṕâǵê t́êx́t̂ ≥12ṕx̂. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/font-sizes)."
+    "message": "F̂ón̂t́ ŝíẑéŝ ĺêśŝ t́ĥán̂ 12ṕx̂ ár̂é t̂óô śm̂ál̂ĺ t̂ó b̂é l̂éĝíb̂ĺê án̂d́ r̂éq̂úîŕê ḿôb́îĺê v́îśît́ôŕŝ t́ô “ṕîńĉh́ t̂ó ẑóôḿ” îń ôŕd̂ér̂ t́ô ŕêád̂. Śt̂ŕîv́ê t́ô h́âv́ê >60% óf̂ ṕâǵê t́êx́t̂ ≥12ṕx̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/font-size)."
   },
   "lighthouse-core/audits/seo/font-size.js | displayValue": {
     "message": "{decimalProportion, number, extendedPercent} l̂éĝíb̂ĺê t́êx́t̂"
@@ -930,7 +930,7 @@
     "message": "D̂óĉúm̂én̂t́ ûśêś l̂éĝíb̂ĺê f́ôńt̂ śîźêś"
   },
   "lighthouse-core/audits/seo/hreflang.js | description": {
-    "message": "ĥŕêf́l̂án̂ǵ l̂ín̂ḱŝ t́êĺl̂ śêár̂ćĥ én̂ǵîńêś ŵh́ât́ v̂ér̂śîón̂ óf̂ á p̂áĝé t̂h́êý ŝh́ôúl̂d́ l̂íŝt́ îń ŝéâŕĉh́ r̂éŝúl̂t́ŝ f́ôŕ â ǵîv́êń l̂án̂ǵûáĝé ôŕ r̂éĝíôń. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/hreflang)."
+    "message": "ĥŕêf́l̂án̂ǵ l̂ín̂ḱŝ t́êĺl̂ śêár̂ćĥ én̂ǵîńêś ŵh́ât́ v̂ér̂śîón̂ óf̂ á p̂áĝé t̂h́êý ŝh́ôúl̂d́ l̂íŝt́ îń ŝéâŕĉh́ r̂éŝúl̂t́ŝ f́ôŕ â ǵîv́êń l̂án̂ǵûáĝé ôŕ r̂éĝíôń. [L̂éâŕn̂ ḿôŕê](https://web.dev/hreflang)."
   },
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "D̂óĉúm̂én̂t́ d̂óêśn̂'t́ ĥáv̂é â v́âĺîd́ `hreflang`"
@@ -939,7 +939,7 @@
     "message": "D̂óĉúm̂én̂t́ ĥáŝ á v̂ál̂íd̂ `hreflang`"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
-    "message": "P̂áĝéŝ ẃît́ĥ ún̂śûćĉéŝśf̂úl̂ H́T̂T́P̂ śt̂át̂úŝ ćôd́êś m̂áŷ ńôt́ b̂é îńd̂éx̂éd̂ ṕr̂óp̂ér̂ĺŷ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code)."
+    "message": "P̂áĝéŝ ẃît́ĥ ún̂śûćĉéŝśf̂úl̂ H́T̂T́P̂ śt̂át̂úŝ ćôd́êś m̂áŷ ńôt́ b̂é îńd̂éx̂éd̂ ṕr̂óp̂ér̂ĺŷ. [Ĺêár̂ń m̂ór̂é](https://web.dev/http-status-code)."
   },
   "lighthouse-core/audits/seo/http-status-code.js | failureTitle": {
     "message": "P̂áĝé ĥáŝ ún̂śûćĉéŝśf̂úl̂ H́T̂T́P̂ śt̂át̂úŝ ćôd́ê"
@@ -948,7 +948,7 @@
     "message": "P̂áĝé ĥáŝ śûćĉéŝśf̂úl̂ H́T̂T́P̂ śt̂át̂úŝ ćôd́ê"
   },
   "lighthouse-core/audits/seo/is-crawlable.js | description": {
-    "message": "Ŝéâŕĉh́ êńĝín̂éŝ ár̂é ûńâb́l̂é t̂ó îńĉĺûd́ê ýôúr̂ ṕâǵêś îń ŝéâŕĉh́ r̂éŝúl̂t́ŝ íf̂ t́ĥéŷ d́ôń't̂ h́âv́ê ṕêŕm̂íŝśîón̂ t́ô ćr̂áŵĺ t̂h́êḿ. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/indexing)."
+    "message": "Ŝéâŕĉh́ êńĝín̂éŝ ár̂é ûńâb́l̂é t̂ó îńĉĺûd́ê ýôúr̂ ṕâǵêś îń ŝéâŕĉh́ r̂éŝúl̂t́ŝ íf̂ t́ĥéŷ d́ôń't̂ h́âv́ê ṕêŕm̂íŝśîón̂ t́ô ćr̂áŵĺ t̂h́êḿ. [L̂éâŕn̂ ḿôŕê](https://web.dev/is-crawable)."
   },
   "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": {
     "message": "P̂áĝé îś b̂ĺôćk̂éd̂ f́r̂óm̂ ín̂d́êx́îńĝ"
@@ -957,7 +957,7 @@
     "message": "P̂áĝé îśn̂’t́ b̂ĺôćk̂éd̂ f́r̂óm̂ ín̂d́êx́îńĝ"
   },
   "lighthouse-core/audits/seo/link-text.js | description": {
-    "message": "D̂éŝćr̂íp̂t́îv́ê ĺîńk̂ t́êx́t̂ h́êĺp̂ś ŝéâŕĉh́ êńĝín̂éŝ ún̂d́êŕŝt́âńd̂ ýôúr̂ ćôńt̂én̂t́. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)."
+    "message": "D̂éŝćr̂íp̂t́îv́ê ĺîńk̂ t́êx́t̂ h́êĺp̂ś ŝéâŕĉh́ êńĝín̂éŝ ún̂d́êŕŝt́âńd̂ ýôúr̂ ćôńt̂én̂t́. [L̂éâŕn̂ ḿôŕê](https://web.dev/link-text)."
   },
   "lighthouse-core/audits/seo/link-text.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 l̂ín̂ḱ f̂óûńd̂}\n    other {# ĺîńk̂ś f̂óûńd̂}\n    }"
@@ -969,13 +969,13 @@
     "message": "L̂ín̂ḱŝ h́âv́ê d́êśĉŕîṕt̂ív̂é t̂éx̂t́"
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | description": {
-    "message": "R̂ún̂ t́ĥé [Ŝt́r̂úĉt́ûŕêd́ D̂át̂á T̂éŝt́îńĝ T́ôól̂](https://search.google.com/structured-data/testing-tool/) án̂d́ t̂h́ê [Śt̂ŕûćt̂úr̂éd̂ D́ât́â Ĺîńt̂ér̂](http://linter.structured-data.org/) t́ô v́âĺîd́ât́ê śt̂ŕûćt̂úr̂éd̂ d́ât́â. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/search/docs/guides/mark-up-content)."
+    "message": "R̂ún̂ t́ĥé [Ŝt́r̂úĉt́ûŕêd́ D̂át̂á T̂éŝt́îńĝ T́ôól̂](https://search.google.com/structured-data/testing-tool/) án̂d́ t̂h́ê [Śt̂ŕûćt̂úr̂éd̂ D́ât́â Ĺîńt̂ér̂](http://linter.structured-data.org/) t́ô v́âĺîd́ât́ê śt̂ŕûćt̂úr̂éd̂ d́ât́â. [Ĺêár̂ń m̂ór̂é](https://web.dev/structured-data)."
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | title": {
     "message": "Ŝt́r̂úĉt́ûŕêd́ d̂át̂á îś v̂ál̂íd̂"
   },
   "lighthouse-core/audits/seo/meta-description.js | description": {
-    "message": "M̂ét̂á d̂éŝćr̂íp̂t́îón̂ś m̂áŷ b́ê ín̂ćl̂úd̂éd̂ ín̂ śêár̂ćĥ ŕêśûĺt̂ś t̂ó ĉón̂ćîśêĺŷ śûḿm̂ár̂íẑé p̂áĝé ĉón̂t́êńt̂. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/description)."
+    "message": "M̂ét̂á d̂éŝćr̂íp̂t́îón̂ś m̂áŷ b́ê ín̂ćl̂úd̂éd̂ ín̂ śêár̂ćĥ ŕêśûĺt̂ś t̂ó ĉón̂ćîśêĺŷ śûḿm̂ár̂íẑé p̂áĝé ĉón̂t́êńt̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/meta-description)."
   },
   "lighthouse-core/audits/seo/meta-description.js | explanation": {
     "message": "D̂éŝćr̂íp̂t́îón̂ t́êx́t̂ íŝ ém̂ṕt̂ý."
@@ -987,7 +987,7 @@
     "message": "D̂óĉúm̂én̂t́ ĥáŝ á m̂ét̂á d̂éŝćr̂íp̂t́îón̂"
   },
   "lighthouse-core/audits/seo/plugins.js | description": {
-    "message": "Ŝéâŕĉh́ êńĝín̂éŝ ćâń't̂ ín̂d́êx́ p̂ĺûǵîń ĉón̂t́êńt̂, án̂d́ m̂án̂ý d̂év̂íĉéŝ ŕêśt̂ŕîćt̂ ṕl̂úĝín̂ś ôŕ d̂ón̂'t́ ŝúp̂ṕôŕt̂ t́ĥém̂. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/plugins)."
+    "message": "Ŝéâŕĉh́ êńĝín̂éŝ ćâń't̂ ín̂d́êx́ p̂ĺûǵîń ĉón̂t́êńt̂, án̂d́ m̂án̂ý d̂év̂íĉéŝ ŕêśt̂ŕîćt̂ ṕl̂úĝín̂ś ôŕ d̂ón̂'t́ ŝúp̂ṕôŕt̂ t́ĥém̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/plugins)."
   },
   "lighthouse-core/audits/seo/plugins.js | failureTitle": {
     "message": "D̂óĉúm̂én̂t́ ûśêś p̂ĺûǵîńŝ"
@@ -996,7 +996,7 @@
     "message": "D̂óĉúm̂én̂t́ âv́ôíd̂ś p̂ĺûǵîńŝ"
   },
   "lighthouse-core/audits/seo/robots-txt.js | description": {
-    "message": "Îf́ ŷóûŕ r̂ób̂ót̂ś.t̂x́t̂ f́îĺê íŝ ḿâĺf̂ór̂ḿêd́, ĉŕâẃl̂ér̂ś m̂áŷ ńôt́ b̂é âb́l̂é t̂ó ûńd̂ér̂śt̂án̂d́ ĥóŵ ýôú ŵán̂t́ ŷóûŕ ŵéb̂śît́ê t́ô b́ê ćr̂áŵĺêd́ ôŕ îńd̂éx̂éd̂."
+    "message": "Îf́ ŷóûŕ r̂ób̂ót̂ś.t̂x́t̂ f́îĺê íŝ ḿâĺf̂ór̂ḿêd́, ĉŕâẃl̂ér̂ś m̂áŷ ńôt́ b̂é âb́l̂é t̂ó ûńd̂ér̂śt̂án̂d́ ĥóŵ ýôú ŵán̂t́ ŷóûŕ ŵéb̂śît́ê t́ô b́ê ćr̂áŵĺêd́ ôŕ îńd̂éx̂éd̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/robots-txt)."
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
     "message": "r̂éq̂úêśt̂ f́ôŕ r̂ób̂ót̂ś.t̂x́t̂ ŕêt́ûŕn̂éd̂ H́T̂T́P̂ śt̂át̂úŝ: {statusCode}"
@@ -1014,7 +1014,7 @@
     "message": "r̂ób̂ót̂ś.t̂x́t̂ íŝ v́âĺîd́"
   },
   "lighthouse-core/audits/seo/tap-targets.js | description": {
-    "message": "Îńt̂ér̂áĉt́îv́ê él̂ém̂én̂t́ŝ ĺîḱê b́ût́t̂ón̂ś âńd̂ ĺîńk̂ś ŝh́ôúl̂d́ b̂é l̂ár̂ǵê én̂óûǵĥ (48x́48p̂x́), âńd̂ h́âv́ê én̂óûǵĥ śp̂áĉé âŕôún̂d́ t̂h́êḿ, t̂ó b̂é êáŝý êńôúĝh́ t̂ó t̂áp̂ ẃît́ĥóût́ ôv́êŕl̂áp̂ṕîńĝ ón̂t́ô ót̂h́êŕ êĺêḿêńt̂ś. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)."
+    "message": "Îńt̂ér̂áĉt́îv́ê él̂ém̂én̂t́ŝ ĺîḱê b́ût́t̂ón̂ś âńd̂ ĺîńk̂ś ŝh́ôúl̂d́ b̂é l̂ár̂ǵê én̂óûǵĥ (48x́48p̂x́), âńd̂ h́âv́ê én̂óûǵĥ śp̂áĉé âŕôún̂d́ t̂h́êḿ, t̂ó b̂é êáŝý êńôúĝh́ t̂ó t̂áp̂ ẃît́ĥóût́ ôv́êŕl̂áp̂ṕîńĝ ón̂t́ô ót̂h́êŕ êĺêḿêńt̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/tap-targets)."
   },
   "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
     "message": "{decimalProportion, number, percent} âṕp̂ŕôṕr̂íât́êĺŷ śîźêd́ t̂áp̂ t́âŕĝét̂ś"

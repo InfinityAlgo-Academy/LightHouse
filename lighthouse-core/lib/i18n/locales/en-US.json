@@ -885,7 +885,7 @@
     "message": "Keep request counts low and transfer sizes small"
   },
   "lighthouse-core/audits/seo/canonical.js | description": {
-    "message": "Canonical links suggest which URL to show in search results. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/canonical)."
+    "message": "Canonical links suggest which URL to show in search results. [Learn more](https://web.dev/canonical)."
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "Multiple conflicting URLs ({urlList})"
@@ -912,7 +912,7 @@
     "message": "Document has a valid `rel=canonical`"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
-    "message": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes)."
+    "message": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more](https://web.dev/font-size)."
   },
   "lighthouse-core/audits/seo/font-size.js | displayValue": {
     "message": "{decimalProportion, number, extendedPercent} legible text"
@@ -930,7 +930,7 @@
     "message": "Document uses legible font sizes"
   },
   "lighthouse-core/audits/seo/hreflang.js | description": {
-    "message": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/hreflang)."
+    "message": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more](https://web.dev/hreflang)."
   },
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "Document doesn't have a valid `hreflang`"
@@ -939,7 +939,7 @@
     "message": "Document has a valid `hreflang`"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
-    "message": "Pages with unsuccessful HTTP status codes may not be indexed properly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code)."
+    "message": "Pages with unsuccessful HTTP status codes may not be indexed properly. [Learn more](https://web.dev/http-status-code)."
   },
   "lighthouse-core/audits/seo/http-status-code.js | failureTitle": {
     "message": "Page has unsuccessful HTTP status code"
@@ -948,7 +948,7 @@
     "message": "Page has successful HTTP status code"
   },
   "lighthouse-core/audits/seo/is-crawlable.js | description": {
-    "message": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/indexing)."
+    "message": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more](https://web.dev/is-crawable)."
   },
   "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": {
     "message": "Page is blocked from indexing"
@@ -957,7 +957,7 @@
     "message": "Page isn’t blocked from indexing"
   },
   "lighthouse-core/audits/seo/link-text.js | description": {
-    "message": "Descriptive link text helps search engines understand your content. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)."
+    "message": "Descriptive link text helps search engines understand your content. [Learn more](https://web.dev/link-text)."
   },
   "lighthouse-core/audits/seo/link-text.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 link found}\n    other {# links found}\n    }"
@@ -969,13 +969,13 @@
     "message": "Links have descriptive text"
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | description": {
-    "message": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://developers.google.com/search/docs/guides/mark-up-content)."
+    "message": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://web.dev/structured-data)."
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | title": {
     "message": "Structured data is valid"
   },
   "lighthouse-core/audits/seo/meta-description.js | description": {
-    "message": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/description)."
+    "message": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more](https://web.dev/meta-description)."
   },
   "lighthouse-core/audits/seo/meta-description.js | explanation": {
     "message": "Description text is empty."
@@ -987,7 +987,7 @@
     "message": "Document has a meta description"
   },
   "lighthouse-core/audits/seo/plugins.js | description": {
-    "message": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/plugins)."
+    "message": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more](https://web.dev/plugins)."
   },
   "lighthouse-core/audits/seo/plugins.js | failureTitle": {
     "message": "Document uses plugins"
@@ -996,7 +996,7 @@
     "message": "Document avoids plugins"
   },
   "lighthouse-core/audits/seo/robots-txt.js | description": {
-    "message": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed."
+    "message": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more](https://web.dev/robots-txt)."
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
     "message": "request for robots.txt returned HTTP status: {statusCode}"
@@ -1014,7 +1014,7 @@
     "message": "robots.txt is valid"
   },
   "lighthouse-core/audits/seo/tap-targets.js | description": {
-    "message": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)."
+    "message": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://web.dev/tap-targets)."
   },
   "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
     "message": "{decimalProportion, number, percent} appropriately sized tap targets"

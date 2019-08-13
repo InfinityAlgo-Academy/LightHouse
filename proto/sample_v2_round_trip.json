@@ -170,7 +170,7 @@
             "title": "The page contains a heading, skip link, or landmark region"
         },
         "canonical": {
-            "description": "Canonical links suggest which URL to show in search results. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/canonical).",
+            "description": "Canonical links suggest which URL to show in search results. [Learn more](https://web.dev/canonical).",
             "id": "canonical",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -754,7 +754,7 @@
             "warnings": []
         },
         "font-size": {
-            "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to \u201cpinch to zoom\u201d in order to read. Strive to have >60% of page text \u226512px. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).",
+            "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to \u201cpinch to zoom\u201d in order to read. Strive to have >60% of page text \u226512px. [Learn more](https://web.dev/font-size).",
             "details": {
                 "headings": [
                     {
@@ -840,7 +840,7 @@
             "title": "Headings don't skip levels"
         },
         "hreflang": {
-            "description": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/hreflang).",
+            "description": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more](https://web.dev/hreflang).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -897,7 +897,7 @@
             "title": "`<html>` element has a valid value for its `[lang]` attribute"
         },
         "http-status-code": {
-            "description": "Pages with unsuccessful HTTP status codes may not be indexed properly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code).",
+            "description": "Pages with unsuccessful HTTP status codes may not be indexed properly. [Learn more](https://web.dev/http-status-code).",
             "id": "http-status-code",
             "score": 1.0,
             "scoreDisplayMode": "binary",
@@ -1057,7 +1057,7 @@
             "title": "Interactive elements indicate their purpose and state"
         },
         "is-crawlable": {
-            "description": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/indexing).",
+            "description": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more](https://web.dev/is-crawable).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -1244,7 +1244,7 @@
             "title": "Links do not have a discernible name"
         },
         "link-text": {
-            "description": "Descriptive link text helps search engines understand your content. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text).",
+            "description": "Descriptive link text helps search engines understand your content. [Learn more](https://web.dev/link-text).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -1455,7 +1455,7 @@
             "title": "Max Potential First Input Delay"
         },
         "meta-description": {
-            "description": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/description).",
+            "description": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more](https://web.dev/meta-description).",
             "id": "meta-description",
             "score": 0.0,
             "scoreDisplayMode": "binary",
@@ -2158,7 +2158,7 @@
             "title": "Performance budget"
         },
         "plugins": {
-            "description": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/plugins).",
+            "description": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more](https://web.dev/plugins).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -2353,7 +2353,7 @@
             "title": "Keep request counts low and transfer sizes small"
         },
         "robots-txt": {
-            "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed.",
+            "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more](https://web.dev/robots-txt).",
             "id": "robots-txt",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -2459,7 +2459,7 @@
             "title": "Is not configured for a custom splash screen"
         },
         "structured-data": {
-            "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://developers.google.com/search/docs/guides/mark-up-content).",
+            "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://web.dev/structured-data).",
             "id": "structured-data",
             "score": null,
             "scoreDisplayMode": "manual",
@@ -2473,7 +2473,7 @@
             "title": "No element has a `[tabindex]` value greater than 0"
         },
         "tap-targets": {
-            "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).",
+            "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://web.dev/tap-targets).",
             "details": {
                 "headings": [
                     {
