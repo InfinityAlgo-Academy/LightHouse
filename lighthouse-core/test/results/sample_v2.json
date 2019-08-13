@@ -14,7 +14,7 @@
     "is-on-https": {
       "id": "is-on-https",
       "title": "Does not use HTTPS",
-      "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/https).",
+      "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "displayValue": "1 insecure request found",
@@ -212,7 +212,7 @@
     "errors-in-console": {
       "id": "errors-in-console",
       "title": "Browser errors were logged to the console",
-      "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns.",
+      "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more](https://web.dev/errors-in-console)",
       "score": 0,
       "scoreDisplayMode": "binary",
       "numericValue": 5,
@@ -546,7 +546,7 @@
     "image-aspect-ratio": {
       "id": "image-aspect-ratio",
       "title": "Displays images with incorrect aspect ratio",
-      "description": "Image display dimensions should match natural aspect ratio. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/aspect-ratio).",
+      "description": "Image display dimensions should match natural aspect ratio. [Learn more](https://web.dev/image-aspect-ratio).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "warnings": [],
@@ -587,7 +587,7 @@
     "deprecations": {
       "id": "deprecations",
       "title": "Uses deprecated APIs",
-      "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://www.chromestatus.com/features#deprecated).",
+      "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://web.dev/deprecations).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "displayValue": "3 warnings found",
@@ -2629,7 +2629,7 @@
     "appcache-manifest": {
       "id": "appcache-manifest",
       "title": "Uses Application Cache",
-      "description": "Application Cache is deprecated. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/appcache).",
+      "description": "Application Cache is deprecated. [Learn more](https://web.dev/appcache-manifest).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "displayValue": "Found \"clock.appcache\""
@@ -2637,14 +2637,14 @@
     "doctype": {
       "id": "doctype",
       "title": "Page has the HTML doctype",
-      "description": "Specifying a doctype prevents the browser from switching to quirks-mode. Read more on the [MDN Web Docs page](https://developer.mozilla.org/en-US/docs/Glossary/Doctype)",
+      "description": "Specifying a doctype prevents the browser from switching to quirks-mode. [Learn more](https://web.dev/doctype).",
       "score": 1,
       "scoreDisplayMode": "binary"
     },
     "dom-size": {
       "id": "dom-size",
       "title": "Avoids an excessive DOM size",
-      "description": "Browser engineers recommend pages contain fewer than ~1,500 DOM elements. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/tools/lighthouse/audits/dom-size).",
+      "description": "Browser engineers recommend pages contain fewer than ~1,500 DOM elements. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 31,
@@ -2696,7 +2696,7 @@
     "external-anchors-use-rel-noopener": {
       "id": "external-anchors-use-rel-noopener",
       "title": "Links to cross-origin destinations are unsafe",
-      "description": "Add `rel=\"noopener\"` or `rel=\"noreferrer\"` to any external links to improve performance and prevent security vulnerabilities. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/noopener).",
+      "description": "Add `rel=\"noopener\"` or `rel=\"noreferrer\"` to any external links to improve performance and prevent security vulnerabilities. [Learn more](https://web.dev/external-anchors-use-rel-noopener).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "warnings": [
@@ -2746,7 +2746,7 @@
     "geolocation-on-start": {
       "id": "geolocation-on-start",
       "title": "Requests the geolocation permission on page load",
-      "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).",
+      "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more](https://web.dev/geolocation-on-start).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -2778,7 +2778,7 @@
     "no-document-write": {
       "id": "no-document-write",
       "title": "Uses `document.write()`",
-      "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/document-write).",
+      "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn more](https://web.dev/no-document-write).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -2814,7 +2814,7 @@
     "no-vulnerable-libraries": {
       "id": "no-vulnerable-libraries",
       "title": "Includes front-end JavaScript libraries with known security vulnerabilities",
-      "description": "Some third-party scripts may contain known security vulnerabilities that are easily identified and exploited by attackers. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities).",
+      "description": "Some third-party scripts may contain known security vulnerabilities that are easily identified and exploited by attackers. [Learn more](https://web.dev/no-vulnerable-libraries).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "displayValue": "2 vulnerabilities detected",
@@ -2854,7 +2854,7 @@
     "js-libraries": {
       "id": "js-libraries",
       "title": "Detected JavaScript libraries",
-      "description": "All front-end JavaScript libraries detected on the page.",
+      "description": "All front-end JavaScript libraries detected on the page. [Learn more](https://web.dev/js-libraries).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -2887,7 +2887,7 @@
     "notification-on-start": {
       "id": "notification-on-start",
       "title": "Requests the notification permission on page load",
-      "description": "Users are mistrustful of or confused by sites that request to send notifications without context. Consider tying the request to user gestures instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/notifications-on-load).",
+      "description": "Users are mistrustful of or confused by sites that request to send notifications without context. Consider tying the request to user gestures instead. [Learn more](https://web.dev/notification-on-start).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -2915,7 +2915,7 @@
     "password-inputs-can-be-pasted-into": {
       "id": "password-inputs-can-be-pasted-into",
       "title": "Prevents users to paste into password fields",
-      "description": "Preventing password pasting undermines good security policy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/password-pasting).",
+      "description": "Preventing password pasting undermines good security policy. [Learn more](https://web.dev/password-inputs-can-be-pasted-into).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -2946,7 +2946,7 @@
     "uses-http2": {
       "id": "uses-http2",
       "title": "Does not use HTTP/2 for all of its resources",
-      "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers, multiplexing, and server push. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http2).",
+      "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers, multiplexing, and server push. [Learn more](https://web.dev/uses-http2).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "displayValue": "15 requests not served via HTTP/2",
@@ -3031,7 +3031,7 @@
     "uses-passive-event-listeners": {
       "id": "uses-passive-event-listeners",
       "title": "Does not use passive listeners to improve scrolling performance",
-      "description": "Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/passive-event-listeners).",
+      "description": "Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. [Learn more](https://web.dev/uses-passive-event-listeners).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
