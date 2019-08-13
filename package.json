@@ -138,7 +138,7 @@
     "chrome-launcher": "^0.11.2",
     "configstore": "^3.1.1",
     "cssstyle": "1.2.1",
-    "details-element-polyfill": "2.2.0",
+    "details-element-polyfill": "^2.4.0",
     "http-link-header": "^0.8.0",
     "inquirer": "^3.3.0",
     "intl": "^1.2.5",
