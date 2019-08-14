@@ -66,8 +66,8 @@ async function safeWriteFileAsync(filePath, data) {
  * Copy static assets.
  * @return {Promise<void>}
  */
-async function copyAssets() {
-  await cpy([
+function copyAssets() {
+  return cpy([
     'images/**/*',
     'sw.js',
     'manifest.json',
@@ -75,12 +75,6 @@ async function copyAssets() {
     cwd: `${sourceDir}/app/`,
     parents: true,
   });
-
-  // Copy polyfills.
-  return cpy([
-    '../node_modules/url-search-params/build/url-search-params.js',
-    '../node_modules/whatwg-fetch/fetch.js',
-  ], `${distDir}/src/polyfills`, {cwd: sourceDir});
 }
 
 /**
