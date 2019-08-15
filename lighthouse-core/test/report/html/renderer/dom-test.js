@@ -127,7 +127,14 @@ describe('DOM', () => {
       assert.equal(result.innerHTML, '<a rel="noopener" target="_blank" href="https://developers.google.com/web/tools/lighthouse/audits/description?utm_source=lighthouse&amp;utm_medium=someChannel">Learn more</a>.');
     });
 
-    it('doesn\'t append utm params to non https://developers.google.com origins', () => {
+    it('appends utm params to the URLs with https://web.dev origin', () => {
+      const text = '[Learn more](https://web.dev/tap-targets/).';
+
+      const result = dom.convertMarkdownLinkSnippets(text);
+      assert.equal(result.innerHTML, '<a rel="noopener" target="_blank" href="https://web.dev/tap-targets/?utm_source=lighthouse&amp;utm_medium=someChannel">Learn more</a>.');
+    });
+
+    it('doesn\'t append utm params to other (non-docs) origins', () => {
       const text = '[Learn more](https://example.com/info).';
 
       const result = dom.convertMarkdownLinkSnippets(text);

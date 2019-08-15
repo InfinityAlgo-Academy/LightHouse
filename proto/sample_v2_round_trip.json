@@ -8,7 +8,7 @@
             "title": "`[accesskey]` values are unique"
         },
         "appcache-manifest": {
-            "description": "Application Cache is deprecated. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/appcache).",
+            "description": "Application Cache is deprecated. [Learn more](https://web.dev/appcache-manifest).",
             "displayValue": "Found \"clock.appcache\"",
             "id": "appcache-manifest",
             "score": 0.0,
@@ -170,7 +170,7 @@
             "title": "The page contains a heading, skip link, or landmark region"
         },
         "canonical": {
-            "description": "Canonical links suggest which URL to show in search results. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/canonical).",
+            "description": "Canonical links suggest which URL to show in search results. [Learn more](https://web.dev/canonical).",
             "id": "canonical",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -399,7 +399,7 @@
             "title": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>` or `<template>` elements."
         },
         "deprecations": {
-            "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://www.chromestatus.com/features#deprecated).",
+            "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://web.dev/deprecations).",
             "details": {
                 "headings": [
                     {
@@ -483,7 +483,7 @@
             "title": "Definition list items are wrapped in `<dl>` elements"
         },
         "doctype": {
-            "description": "Specifying a doctype prevents the browser from switching to quirks-mode. Read more on the [MDN Web Docs page](https://developer.mozilla.org/en-US/docs/Glossary/Doctype)",
+            "description": "Specifying a doctype prevents the browser from switching to quirks-mode. [Learn more](https://web.dev/doctype).",
             "id": "doctype",
             "score": 1.0,
             "scoreDisplayMode": "binary",
@@ -502,7 +502,7 @@
             "title": "Document has a `<title>` element"
         },
         "dom-size": {
-            "description": "Browser engineers recommend pages contain fewer than ~1,500 DOM elements. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/tools/lighthouse/audits/dom-size).",
+            "description": "Browser engineers recommend pages contain fewer than ~1,500 DOM elements. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size).",
             "details": {
                 "headings": [
                     {
@@ -580,7 +580,7 @@
             "title": "Use video formats for animated content"
         },
         "errors-in-console": {
-            "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns.",
+            "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more](https://web.dev/errors-in-console)",
             "details": {
                 "headings": [
                     {
@@ -639,7 +639,7 @@
             "title": "Estimated Input Latency"
         },
         "external-anchors-use-rel-noopener": {
-            "description": "Add `rel=\"noopener\"` or `rel=\"noreferrer\"` to any external links to improve performance and prevent security vulnerabilities. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/noopener).",
+            "description": "Add `rel=\"noopener\"` or `rel=\"noreferrer\"` to any external links to improve performance and prevent security vulnerabilities. [Learn more](https://web.dev/external-anchors-use-rel-noopener).",
             "details": {
                 "headings": [
                     {
@@ -754,7 +754,7 @@
             "warnings": []
         },
         "font-size": {
-            "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to \u201cpinch to zoom\u201d in order to read. Strive to have >60% of page text \u226512px. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).",
+            "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to \u201cpinch to zoom\u201d in order to read. Strive to have >60% of page text \u226512px. [Learn more](https://web.dev/font-size).",
             "details": {
                 "headings": [
                     {
@@ -801,7 +801,7 @@
             "title": "`<frame>` or `<iframe>` elements have a title"
         },
         "geolocation-on-start": {
-            "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load).",
+            "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more](https://web.dev/geolocation-on-start).",
             "details": {
                 "headings": [
                     {
@@ -840,7 +840,7 @@
             "title": "Headings don't skip levels"
         },
         "hreflang": {
-            "description": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/hreflang).",
+            "description": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more](https://web.dev/hreflang).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -897,7 +897,7 @@
             "title": "`<html>` element has a valid value for its `[lang]` attribute"
         },
         "http-status-code": {
-            "description": "Pages with unsuccessful HTTP status codes may not be indexed properly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code).",
+            "description": "Pages with unsuccessful HTTP status codes may not be indexed properly. [Learn more](https://web.dev/http-status-code).",
             "id": "http-status-code",
             "score": 1.0,
             "scoreDisplayMode": "binary",
@@ -974,7 +974,7 @@
             "title": "Image elements do not have `[alt]` attributes"
         },
         "image-aspect-ratio": {
-            "description": "Image display dimensions should match natural aspect ratio. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/aspect-ratio).",
+            "description": "Image display dimensions should match natural aspect ratio. [Learn more](https://web.dev/image-aspect-ratio).",
             "details": {
                 "headings": [
                     {
@@ -1057,7 +1057,7 @@
             "title": "Interactive elements indicate their purpose and state"
         },
         "is-crawlable": {
-            "description": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/indexing).",
+            "description": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more](https://web.dev/is-crawable).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -1069,7 +1069,7 @@
             "title": "Page isn\u2019t blocked from indexing"
         },
         "is-on-https": {
-            "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/https).",
+            "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more](https://web.dev/is-on-https).",
             "details": {
                 "headings": [
                     {
@@ -1092,7 +1092,7 @@
             "title": "Does not use HTTPS"
         },
         "js-libraries": {
-            "description": "All front-end JavaScript libraries detected on the page.",
+            "description": "All front-end JavaScript libraries detected on the page. [Learn more](https://web.dev/js-libraries).",
             "details": {
                 "headings": [
                     {
@@ -1299,7 +1299,7 @@
             "title": "Links do not have a discernible name"
         },
         "link-text": {
-            "description": "Descriptive link text helps search engines understand your content. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text).",
+            "description": "Descriptive link text helps search engines understand your content. [Learn more](https://web.dev/link-text).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -1510,7 +1510,7 @@
             "title": "Max Potential First Input Delay"
         },
         "meta-description": {
-            "description": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/description).",
+            "description": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more](https://web.dev/meta-description).",
             "id": "meta-description",
             "score": 0.0,
             "scoreDisplayMode": "binary",
@@ -1894,7 +1894,7 @@
             "title": "Server Backend Latencies"
         },
         "no-document-write": {
-            "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/document-write).",
+            "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn more](https://web.dev/no-document-write).",
             "details": {
                 "headings": [
                     {
@@ -1930,7 +1930,7 @@
             "title": "Uses `document.write()`"
         },
         "no-vulnerable-libraries": {
-            "description": "Some third-party scripts may contain known security vulnerabilities that are easily identified and exploited by attackers. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities).",
+            "description": "Some third-party scripts may contain known security vulnerabilities that are easily identified and exploited by attackers. [Learn more](https://web.dev/no-vulnerable-libraries).",
             "details": {
                 "headings": [
                     {
@@ -1970,7 +1970,7 @@
             "title": "Includes front-end JavaScript libraries with known security vulnerabilities"
         },
         "notification-on-start": {
-            "description": "Users are mistrustful of or confused by sites that request to send notifications without context. Consider tying the request to user gestures instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/notifications-on-load).",
+            "description": "Users are mistrustful of or confused by sites that request to send notifications without context. Consider tying the request to user gestures instead. [Learn more](https://web.dev/notification-on-start).",
             "details": {
                 "headings": [
                     {
@@ -2080,7 +2080,7 @@
             "warnings": []
         },
         "password-inputs-can-be-pasted-into": {
-            "description": "Preventing password pasting undermines good security policy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/password-pasting).",
+            "description": "Preventing password pasting undermines good security policy. [Learn more](https://web.dev/password-inputs-can-be-pasted-into).",
             "details": {
                 "headings": [
                     {
@@ -2213,7 +2213,7 @@
             "title": "Performance budget"
         },
         "plugins": {
-            "description": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/plugins).",
+            "description": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more](https://web.dev/plugins).",
             "details": {
                 "headings": [],
                 "items": [],
@@ -2408,7 +2408,7 @@
             "title": "Keep request counts low and transfer sizes small"
         },
         "robots-txt": {
-            "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed.",
+            "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more](https://web.dev/robots-txt).",
             "id": "robots-txt",
             "score": null,
             "scoreDisplayMode": "notApplicable",
@@ -2514,7 +2514,7 @@
             "title": "Is not configured for a custom splash screen"
         },
         "structured-data": {
-            "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://developers.google.com/search/docs/guides/mark-up-content).",
+            "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://web.dev/structured-data).",
             "id": "structured-data",
             "score": null,
             "scoreDisplayMode": "manual",
@@ -2528,7 +2528,7 @@
             "title": "No element has a `[tabindex]` value greater than 0"
         },
         "tap-targets": {
-            "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design).",
+            "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more](https://web.dev/tap-targets).",
             "details": {
                 "headings": [
                     {
@@ -2840,7 +2840,7 @@
             "title": "User Timing marks and measures"
         },
         "uses-http2": {
-            "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers, multiplexing, and server push. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http2).",
+            "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers, multiplexing, and server push. [Learn more](https://web.dev/uses-http2).",
             "details": {
                 "headings": [
                     {
@@ -3048,7 +3048,7 @@
             "warnings": []
         },
         "uses-passive-event-listeners": {
-            "description": "Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/passive-event-listeners).",
+            "description": "Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. [Learn more](https://web.dev/uses-passive-event-listeners).",
             "details": {
                 "headings": [
                     {
