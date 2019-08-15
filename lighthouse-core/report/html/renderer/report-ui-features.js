@@ -51,6 +51,8 @@ class ReportUIFeatures {
     /** @type {HTMLElement} */
     this.toolsButton; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement} */
+    this.toolsDropDown; // eslint-disable-line no-unused-expressions
+    /** @type {HTMLElement} */
     this.topbarEl; // eslint-disable-line no-unused-expressions
     /** @type {HTMLElement} */
     this.scoreScaleEl; // eslint-disable-line no-unused-expressions
@@ -62,6 +64,8 @@ class ReportUIFeatures {
     this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     this.onCopy = this.onCopy.bind(this);
     this.onToolsButtonClick = this.onToolsButtonClick.bind(this);
+    this.onToolsButtonKeydown = this.onToolsButtonKeydown.bind(this);
+    this.onToolsDropDownKeydown = this.onToolsDropDownKeydown.bind(this);
     this.onToolAction = this.onToolAction.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
@@ -70,6 +74,9 @@ class ReportUIFeatures {
     this.expandAllDetails = this.expandAllDetails.bind(this);
     this._toggleDarkTheme = this._toggleDarkTheme.bind(this);
     this._updateStickyHeaderOnScroll = this._updateStickyHeaderOnScroll.bind(this);
+    this._getNextDropDownItem = this._getNextDropDownItem.bind(this);
+    this._getNextSelectableNode = this._getNextSelectableNode.bind(this);
+    this._getPreviousDropDownItem = this._getPreviousDropDownItem.bind(this);
   }
 
   /**
@@ -208,9 +215,11 @@ class ReportUIFeatures {
   _setupToolsButton() {
     this.toolsButton = this._dom.find('.lh-tools__button', this._document);
     this.toolsButton.addEventListener('click', this.onToolsButtonClick);
+    this.toolsButton.addEventListener('keydown', this.onToolsButtonKeydown);
 
-    const dropdown = this._dom.find('.lh-tools__dropdown', this._document);
-    dropdown.addEventListener('click', this.onToolAction);
+    this.toolsDropDown = this._dom.find('.lh-tools__dropdown', this._document);
+    this.toolsDropDown.addEventListener('click', this.onToolAction);
+    this.toolsDropDown.addEventListener('keydown', this.onToolsDropDownKeydown);
   }
 
   _setupThirdPartyFilter() {
@@ -383,6 +392,31 @@ class ReportUIFeatures {
 
   closeToolsDropdown() {
     this.toolsButton.classList.remove('active');
+    this.toolsButton.setAttribute('aria-expanded', 'false');
+    this._document.removeEventListener('keydown', this.onKeyDown);
+    if (this.toolsDropDown.contains(this._document.activeElement)) {
+      // Refocus on the tools button if the drop down last had focus
+      this.toolsButton.focus();
+    }
+  }
+
+  /**
+   * @param {HTMLElement} firstFocusElement
+   */
+  openToolsDropDown(firstFocusElement) {
+    if (this.toolsButton.classList.contains('active')) {
+      // If the drop down is already open focus on the element
+      firstFocusElement.focus();
+    } else {
+      // Wait for drop down transition to complete so options are focusable.
+      this.toolsDropDown.addEventListener('transitionend', () => {
+        firstFocusElement.focus();
+      }, {once: true});
+    }
+
+    this.toolsButton.classList.add('active');
+    this.toolsButton.setAttribute('aria-expanded', 'true');
+    this._document.addEventListener('keydown', this.onKeyDown);
   }
 
   /**
@@ -391,8 +425,113 @@ class ReportUIFeatures {
    */
   onToolsButtonClick(e) {
     e.preventDefault();
-    this.toolsButton.classList.toggle('active');
-    this._document.addEventListener('keydown', this.onKeyDown);
+    e.stopImmediatePropagation();
+
+    if (this.toolsButton.classList.contains('active')) {
+      this.closeToolsDropdown();
+    } else {
+      this.openToolsDropDown(this._getNextDropDownItem());
+    }
+  }
+
+  /**
+   * Handler for tool button.
+   * @param {KeyboardEvent} e
+   */
+  onToolsButtonKeydown(e) {
+    switch (e.code) {
+      case 'ArrowUp':
+        e.preventDefault();
+        this.openToolsDropDown(this._getPreviousDropDownItem());
+        break;
+      case 'ArrowDown':
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        this.openToolsDropDown(this._getNextDropDownItem());
+        break;
+      default:
+       // no op
+    }
+  }
+
+  /**
+   * Handler for tool DropDown.
+   * @param {KeyboardEvent} e
+   */
+  onToolsDropDownKeydown(e) {
+    const el = /** @type {?HTMLElement} */ (e.target);
+
+    switch (e.code) {
+      case 'ArrowUp':
+        e.preventDefault();
+        this._getPreviousDropDownItem(el).focus();
+        break;
+      case 'ArrowDown':
+        e.preventDefault();
+        this._getNextDropDownItem(el).focus();
+        break;
+      case 'Home':
+        e.preventDefault();
+        this._getNextDropDownItem().focus();
+        break;
+      case 'End':
+        e.preventDefault();
+        this._getPreviousDropDownItem().focus();
+        break;
+      default:
+       // no op
+    }
+  }
+
+  /**
+   * @param {Array<Node>} allNodes
+   * @param {?Node=} startNode
+   * @returns {Node}
+   */
+  _getNextSelectableNode(allNodes, startNode) {
+    const nodes = allNodes.filter((node) => {
+      if (!(node instanceof HTMLElement)) {
+        return false;
+      }
+
+      // 'Save as Gist' option may be disabled.
+      if (node.hasAttribute('disabled')) {
+        return false;
+      }
+
+      // 'Save as Gist' option may have display none.
+      if (window.getComputedStyle(node).display === 'none') {
+        return false;
+      }
+
+      return true;
+    });
+
+    let nextIndex = startNode ? (nodes.indexOf(startNode) + 1) : 0;
+    if (nextIndex >= nodes.length) {
+      nextIndex = 0;
+    }
+
+    return nodes[nextIndex];
+  }
+
+  /**
+   * @param {?Element=} startEl
+   * @returns {HTMLElement}
+   */
+  _getNextDropDownItem(startEl) {
+    const nodes = Array.from(this.toolsDropDown.childNodes);
+    return /** @type {HTMLElement} */ (this._getNextSelectableNode(nodes, startEl));
+  }
+
+  /**
+   * @param {?Element=} startEl
+   * @returns {HTMLElement}
+   */
+  _getPreviousDropDownItem(startEl) {
+    const nodes = Array.from(this.toolsDropDown.childNodes).reverse();
+    return /** @type {HTMLElement} */ (this._getNextSelectableNode(nodes, startEl));
   }
 
   /**
@@ -424,12 +563,10 @@ class ReportUIFeatures {
         break;
       case 'print-summary':
         this.collapseAllDetails();
-        this.closeToolsDropdown();
         this._print();
         break;
       case 'print-expanded':
         this.expandAllDetails();
-        this.closeToolsDropdown();
         this._print();
         break;
       case 'save-json': {
@@ -464,7 +601,6 @@ class ReportUIFeatures {
     }
 
     this.closeToolsDropdown();
-    this._document.removeEventListener('keydown', this.onKeyDown);
   }
 
   _print() {
