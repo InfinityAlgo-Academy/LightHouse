@@ -999,7 +999,7 @@
     "message": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more](https://web.dev/robots-txt)."
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
-    "message": "request for robots.txt returned HTTP status: {statusCode}"
+    "message": "Request for robots.txt returned HTTP status: {statusCode}"
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
     "message": "{itemCount, plural,\n    =1 {1 error found}\n    other {# errors found}\n    }"

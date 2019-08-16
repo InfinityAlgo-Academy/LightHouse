@@ -999,7 +999,7 @@
     "message": "Îf́ ŷóûŕ r̂ób̂ót̂ś.t̂x́t̂ f́îĺê íŝ ḿâĺf̂ór̂ḿêd́, ĉŕâẃl̂ér̂ś m̂áŷ ńôt́ b̂é âb́l̂é t̂ó ûńd̂ér̂śt̂án̂d́ ĥóŵ ýôú ŵán̂t́ ŷóûŕ ŵéb̂śît́ê t́ô b́ê ćr̂áŵĺêd́ ôŕ îńd̂éx̂éd̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/robots-txt)."
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
-    "message": "r̂éq̂úêśt̂ f́ôŕ r̂ób̂ót̂ś.t̂x́t̂ ŕêt́ûŕn̂éd̂ H́T̂T́P̂ śt̂át̂úŝ: {statusCode}"
+    "message": "R̂éq̂úêśt̂ f́ôŕ r̂ób̂ót̂ś.t̂x́t̂ ŕêt́ûŕn̂éd̂ H́T̂T́P̂ śt̂át̂úŝ: {statusCode}"
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueValidationError": {
     "message": "{itemCount, plural,\n    =1 {1 êŕr̂ór̂ f́ôún̂d́}\n    other {# êŕr̂ór̂ś f̂óûńd̂}\n    }"
