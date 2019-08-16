@@ -1073,8 +1073,8 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Ŝét̂ś â t́ĥém̂é ĉól̂ór̂ f́ôŕ t̂h́ê ád̂d́r̂éŝś b̂ár̂."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "M̂áîń T̂h́r̂éâd́ T̂ím̂é"
+  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
+    "message": "M̂áîń-T̂h́r̂éâd́ B̂ĺôćk̂ín̂ǵ T̂ím̂é"
   },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "T̂h́îŕd̂-Ṕâŕt̂ý"
@@ -1083,10 +1083,13 @@
     "message": "T̂h́îŕd̂-ṕâŕt̂ý ĉód̂é ĉán̂ śîǵn̂íf̂íĉán̂t́l̂ý îḿp̂áĉt́ l̂óâd́ p̂ér̂f́ôŕm̂án̂ćê. Ĺîḿît́ t̂h́ê ńûḿb̂ér̂ óf̂ ŕêd́ûńd̂án̂t́ t̂h́îŕd̂-ṕâŕt̂ý p̂ŕôv́îd́êŕŝ án̂d́ t̂ŕŷ t́ô ĺôád̂ t́ĥír̂d́-p̂ár̂t́ŷ ćôd́ê áf̂t́êŕ ŷóûŕ p̂áĝé ĥáŝ ṕr̂ím̂ár̂íl̂ý f̂ín̂íŝh́êd́ l̂óâd́îńĝ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
   },
   "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 T̂h́îŕd̂-Ṕâŕt̂ý F̂óûńd̂}\n    other {# T́ĥír̂d́-P̂ár̂t́îéŝ F́ôún̂d́}\n  }"
+    "message": "T̂h́îŕd̂-ṕâŕt̂ý ĉód̂é b̂ĺôćk̂éd̂ t́ĥé m̂áîń t̂h́r̂éâd́ f̂ór̂ {timeInMs, number, milliseconds} ḿŝ"
+  },
+  "lighthouse-core/audits/third-party-summary.js | failureTitle": {
+    "message": "R̂éd̂úĉé t̂h́ê ím̂ṕâćt̂ óf̂ t́ĥír̂d́-p̂ár̂t́ŷ ćôd́ê"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "T̂h́îŕd̂-Ṕâŕt̂ý Ûśâǵê"
+    "message": "T̂h́îŕd̂-Ṕâŕt̂ý ûśâǵê"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "T̂ím̂é T̂ó F̂ír̂śt̂ B́ŷt́ê íd̂én̂t́îf́îéŝ t́ĥé t̂ím̂é ât́ ŵh́îćĥ ýôúr̂ śêŕv̂ér̂ śêńd̂ś â ŕêśp̂ón̂śê. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."

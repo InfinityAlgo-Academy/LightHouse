@@ -1481,11 +1481,11 @@
     },
     "third-party-summary": {
       "id": "third-party-summary",
-      "title": "Third-Party Usage",
+      "title": "Third-Party usage",
       "description": "Third-party code can significantly impact load performance. Limit the number of redundant third-party providers and try to load third-party code after your page has primarily finished loading. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/).",
-      "score": null,
-      "scoreDisplayMode": "informative",
-      "displayValue": "1 Third-Party Found",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "displayValue": "Third-party code blocked the main thread for 20 ms",
       "details": {
         "type": "table",
         "headings": [
@@ -1501,10 +1501,10 @@
             "text": "Size"
           },
           {
-            "key": "mainThreadTime",
+            "key": "blockingTime",
             "granularity": 1,
             "itemType": "ms",
-            "text": "Main Thread Time"
+            "text": "Main-Thread Blocking Time"
           }
         ],
         "items": [
@@ -1515,12 +1515,13 @@
               "url": "https://developers.google.com/speed/libraries/"
             },
             "transferSize": 30174,
-            "mainThreadTime": 82.74100000000001
+            "mainThreadTime": 82.74100000000001,
+            "blockingTime": 22.918000000000006
           }
         ],
         "summary": {
           "wastedBytes": 30174,
-          "wastedMs": 82.74100000000001
+          "wastedMs": 22.918000000000006
         }
       }
     },
@@ -5603,7 +5604,8 @@
       "lighthouse-core/audits/third-party-summary.js | displayValue": [
         {
           "values": {
-            "itemCount": 1
+            "itemCount": 1,
+            "timeInMs": 22.918000000000006
           },
           "path": "audits[third-party-summary].displayValue"
         }
@@ -5621,7 +5623,7 @@
         "audits[uses-text-compression].details.headings[1].label",
         "audits[tap-targets].details.headings[1].text"
       ],
-      "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": [
+      "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": [
         "audits[third-party-summary].details.headings[2].text"
       ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [

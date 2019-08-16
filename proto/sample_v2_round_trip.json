@@ -2578,12 +2578,13 @@
                     {
                         "granularity": 1.0,
                         "itemType": "ms",
-                        "key": "mainThreadTime",
-                        "text": "Main Thread Time"
+                        "key": "blockingTime",
+                        "text": "Main-Thread Blocking Time"
                     }
                 ],
                 "items": [
                     {
+                        "blockingTime": 22.918000000000006,
                         "entity": {
                             "text": "Google CDN",
                             "type": "link",
@@ -2595,15 +2596,15 @@
                 ],
                 "summary": {
                     "wastedBytes": 30174.0,
-                    "wastedMs": 82.74100000000001
+                    "wastedMs": 22.918000000000006
                 },
                 "type": "table"
             },
-            "displayValue": "1 Third-Party Found",
+            "displayValue": "Third-party code blocked the main thread for 20\u00a0ms",
             "id": "third-party-summary",
-            "score": null,
-            "scoreDisplayMode": "informative",
-            "title": "Third-Party Usage"
+            "score": 1.0,
+            "scoreDisplayMode": "binary",
+            "title": "Third-Party usage"
         },
         "time-to-first-byte": {
             "description": "Time To First Byte identifies the time at which your server sends a response. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/ttfb).",
