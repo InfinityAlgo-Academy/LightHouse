@@ -269,75 +269,76 @@ describe('ReportUIFeatures', () => {
 
   describe('tools button', () => {
     let window;
-    let features;
+    let dropDown;
 
     beforeEach(() => {
       window = dom.document().defaultView;
-      features = new ReportUIFeatures(dom);
+      const features = new ReportUIFeatures(dom);
       features.initFeatures(sampleResults);
+      dropDown = features._dropDown;
     });
 
     it('click should toggle active class', () => {
-      features.toolsButton.click();
-      assert.ok(features.toolsButton.classList.contains('active'));
+      dropDown._toggleEl.click();
+      assert.ok(dropDown._toggleEl.classList.contains('active'));
 
-      features.toolsButton.click();
-      assert.ok(!features.toolsButton.classList.contains('active'));
+      dropDown._toggleEl.click();
+      assert.ok(!dropDown._toggleEl.classList.contains('active'));
     });
 
 
     it('Escape key removes active class', () => {
-      features.toolsButton.click();
-      assert.ok(features.toolsButton.classList.contains('active'));
+      dropDown._toggleEl.click();
+      assert.ok(dropDown._toggleEl.classList.contains('active'));
 
       const escape = new window.KeyboardEvent('keydown', {keyCode: /* ESC */ 27});
       dom.document().dispatchEvent(escape);
-      assert.ok(!features.toolsButton.classList.contains('active'));
+      assert.ok(!dropDown._toggleEl.classList.contains('active'));
     });
 
     ['ArrowUp', 'ArrowDown', 'Enter', ' '].forEach((code) => {
       it(`'${code}' adds active class`, () => {
         const event = new window.KeyboardEvent('keydown', {code});
-        features.toolsButton.dispatchEvent(event);
-        assert.ok(features.toolsButton.classList.contains('active'));
+        dropDown._toggleEl.dispatchEvent(event);
+        assert.ok(dropDown._toggleEl.classList.contains('active'));
       });
     });
 
     it('ArrowUp on the first menu element should focus the last element', () => {
-      features.toolsButton.click();
+      dropDown._toggleEl.click();
 
       const arrowUp = new window.KeyboardEvent('keydown', {bubbles: true, code: 'ArrowUp'});
-      features.toolsDropDown.firstElementChild.dispatchEvent(arrowUp);
+      dropDown._menuEl.firstElementChild.dispatchEvent(arrowUp);
 
-      assert.strictEqual(dom.document().activeElement, features.toolsDropDown.lastElementChild);
+      assert.strictEqual(dom.document().activeElement, dropDown._menuEl.lastElementChild);
     });
 
     it('ArrowDown on the first menu element should focus the second element', () => {
-      features.toolsButton.click();
+      dropDown._toggleEl.click();
 
-      const {nextElementSibling} = features.toolsDropDown.firstElementChild;
+      const {nextElementSibling} = dropDown._menuEl.firstElementChild;
       const arrowDown = new window.KeyboardEvent('keydown', {bubbles: true, code: 'ArrowDown'});
-      features.toolsDropDown.firstElementChild.dispatchEvent(arrowDown);
+      dropDown._menuEl.firstElementChild.dispatchEvent(arrowDown);
 
       assert.strictEqual(dom.document().activeElement, nextElementSibling);
     });
 
     it('Home on the last menu element should focus the first element', () => {
-      features.toolsButton.click();
+      dropDown._toggleEl.click();
 
-      const {firstElementChild} = features.toolsDropDown;
+      const {firstElementChild} = dropDown._menuEl;
       const home = new window.KeyboardEvent('keydown', {bubbles: true, code: 'Home'});
-      features.toolsDropDown.lastElementChild.dispatchEvent(home);
+      dropDown._menuEl.lastElementChild.dispatchEvent(home);
 
       assert.strictEqual(dom.document().activeElement, firstElementChild);
     });
 
     it('End on the first menu element should focus the last element', () => {
-      features.toolsButton.click();
+      dropDown._toggleEl.click();
 
-      const {lastElementChild} = features.toolsDropDown;
+      const {lastElementChild} = dropDown._menuEl;
       const end = new window.KeyboardEvent('keydown', {bubbles: true, code: 'End'});
-      features.toolsDropDown.firstElementChild.dispatchEvent(end);
+      dropDown._menuEl.firstElementChild.dispatchEvent(end);
 
       assert.strictEqual(dom.document().activeElement, lastElementChild);
     });
@@ -352,7 +353,7 @@ describe('ReportUIFeatures', () => {
       it('should return first node when start is undefined', () => {
         const nodes = [createDiv(), createDiv()];
 
-        const nextNode = features._getNextSelectableNode(nodes);
+        const nextNode = dropDown._getNextSelectableNode(nodes);
 
         assert.strictEqual(nextNode, nodes[0]);
       });
@@ -360,7 +361,7 @@ describe('ReportUIFeatures', () => {
       it('should return second node when start is first node', () => {
         const nodes = [createDiv(), createDiv()];
 
-        const nextNode = features._getNextSelectableNode(nodes, nodes[0]);
+        const nextNode = dropDown._getNextSelectableNode(nodes, nodes[0]);
 
         assert.strictEqual(nextNode, nodes[1]);
       });
@@ -368,7 +369,7 @@ describe('ReportUIFeatures', () => {
       it('should return first node when start is second node', () => {
         const nodes = [createDiv(), createDiv()];
 
-        const nextNode = features._getNextSelectableNode(nodes, nodes[1]);
+        const nextNode = dropDown._getNextSelectableNode(nodes, nodes[1]);
 
         assert.strictEqual(nextNode, nodes[0]);
       });
@@ -376,7 +377,7 @@ describe('ReportUIFeatures', () => {
       it('should skip the undefined node', () => {
         const nodes = [createDiv(), undefined, createDiv()];
 
-        const nextNode = features._getNextSelectableNode(nodes, nodes[0]);
+        const nextNode = dropDown._getNextSelectableNode(nodes, nodes[0]);
 
         assert.strictEqual(nextNode, nodes[2]);
       });
@@ -386,7 +387,7 @@ describe('ReportUIFeatures', () => {
         disabledNode.setAttribute('disabled', true);
         const nodes = [createDiv(), disabledNode, createDiv()];
 
-        const nextNode = features._getNextSelectableNode(nodes, nodes[0]);
+        const nextNode = dropDown._getNextSelectableNode(nodes, nodes[0]);
 
         assert.strictEqual(nextNode, nodes[2]);
       });
