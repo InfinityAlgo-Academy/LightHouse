@@ -103,6 +103,17 @@ describe('i18n', () => {
       helloTimeInMsWorld: 'Hello {timeInMs, number, seconds} World',
       helloPercentWorld: 'Hello {in, number, extendedPercent} World',
       helloWorldMultiReplace: '{hello} {world}',
+      helloPlural: '{itemCount, plural, =1{1 hello} other{hellos}}',
+      helloPluralNestedICU: '{itemCount, plural, ' +
+        '=1{1 hello {in, number, bytes}} ' +
+        'other{hellos {in, number, bytes}}}',
+      helloPluralNestedPluralAndICU: '{itemCount, plural, ' +
+        '=1{{innerItemCount, plural, ' +
+          '=1{1 hello 1 goodbye {in, number, bytes}} ' +
+          'other{1 hello, goodbyes {in, number, bytes}}}} ' +
+        'other{{innerItemCount, plural, ' +
+          '=1{hellos 1 goodbye {in, number, bytes}} ' +
+          'other{hellos, goodbyes {in, number, bytes}}}}}',
     };
     const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
@@ -145,6 +156,28 @@ describe('i18n', () => {
       expect(_ => i18n.getFormatted(str_(UIStrings.helloWorldMultiReplace,
         {hello: 'hello'}), 'en-US'))
       .toThrow(`ICU Message contains a value reference ("world") that wasn't provided`);
+    });
+
+    it('formats a message with plurals', () => {
+      const helloStr = str_(UIStrings.helloPlural, {itemCount: 3});
+      expect(helloStr).toBeDisplayString('hellos');
+    });
+
+    it('throws an error when a plural control value is missing', () => {
+      expect(_ => i18n.getFormatted(str_(UIStrings.helloPlural), 'en-US'))
+      .toThrow(`ICU Message contains a value reference ("itemCount") that wasn't provided`);
+    });
+
+    it('formats a message with plurals and nested custom ICU', () => {
+      const helloStr = str_(UIStrings.helloPluralNestedICU, {itemCount: 3, in: 1875});
+      expect(helloStr).toBeDisplayString('hellos 2');
+    });
+
+    it('formats a message with plurals and nested custom ICU and nested plural', () => {
+      const helloStr = str_(UIStrings.helloPluralNestedPluralAndICU, {itemCount: 3,
+        innerItemCount: 1,
+        in: 1875});
+      expect(helloStr).toBeDisplayString('hellos 1 goodbye 2');
     });
   });
 });

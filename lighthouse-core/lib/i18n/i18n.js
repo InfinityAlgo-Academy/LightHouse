@@ -132,8 +132,60 @@ function lookupLocale(locale) {
 function _preprocessMessageValues(icuMessage, values = {}) {
   const clonedValues = JSON.parse(JSON.stringify(values));
   const parsed = MessageParser.parse(icuMessage);
+
+  const elements = _collectAllCustomElementsFromICU(parsed.elements);
+
+  return _processParsedElements(Array.from(elements.values()), clonedValues);
+}
+
+/**
+ * Function to retrieve all 'argumentElement's from an ICU message. An argumentElement
+ * is an ICU element with an argument in it, like '{varName}' or '{varName, number, bytes}'. This
+ * differs from 'messageElement's which are just arbitrary text in a message.
+ *
+ * Notes:
+ *  This function will recursively inspect plural elements for nested argumentElements.
+ *
+ *  We need to find all the elements from the plural format sections, but
+ *  they need to be deduplicated. I.e. "=1{hello {icu}} =other{hello {icu}}"
+ *  the variable "icu" would appear twice if it wasn't de duplicated. And they cannot
+ *  be stored in a set because they are not equal since their locations are different,
+ *  thus they are stored via a Map keyed on the "id" which is the ICU varName.
+ *
+ * @param {Array<import('intl-messageformat-parser').Element>} icuElements
+ * @param {Map<string, import('intl-messageformat-parser').Element>} seenElementsById
+ */
+function _collectAllCustomElementsFromICU(icuElements, seenElementsById = new Map()) {
+  for (const el of icuElements) {
+    // We are only interested in elements that need ICU formatting (argumentElements)
+    if (el.type !== 'argumentElement') continue;
+    // @ts-ignore - el.id is always defined when el.format is defined
+    seenElementsById.set(el.id, el);
+
+    // Plurals need to be inspected recursively
+    if (!el.format || el.format.type !== 'pluralFormat') continue;
+    // Look at all options of the plural (=1{} =other{}...)
+    for (const option of el.format.options) {
+      // Run collections on each option's elements
+      _collectAllCustomElementsFromICU(option.value.elements,
+        seenElementsById);
+    }
+  }
+
+  return seenElementsById;
+}
+
+/**
+ * This function takes a list of ICU argumentElements and a map of values and
+ * will apply Lighthouse custom formatting to the values based on the argumentElement
+ * format style.
+ *
+ * @param {Array<import('intl-messageformat-parser').Element>} argumentElements
+ * @param {Record<string, string | number>} [values]
+ */
+function _processParsedElements(argumentElements, values = {}) {
   // Throw an error if a message's value isn't provided
-  parsed.elements
+  argumentElements
     .filter(el => el.type === 'argumentElement')
     .forEach(el => {
       if (el.id && (el.id in values) === false) {
@@ -142,24 +194,24 @@ function _preprocessMessageValues(icuMessage, values = {}) {
     });
 
   // Round all milliseconds to the nearest 10
-  parsed.elements
+  argumentElements
     .filter(el => el.format && el.format.style === 'milliseconds')
     // @ts-ignore - el.id is always defined when el.format is defined
-    .forEach(el => (clonedValues[el.id] = Math.round(clonedValues[el.id] / 10) * 10));
+    .forEach(el => (values[el.id] = Math.round(values[el.id] / 10) * 10));
 
   // Convert all seconds to the correct unit
-  parsed.elements
+  argumentElements
     .filter(el => el.format && el.format.style === 'seconds' && el.id === 'timeInMs')
     // @ts-ignore - el.id is always defined when el.format is defined
-    .forEach(el => (clonedValues[el.id] = Math.round(clonedValues[el.id] / 100) / 10));
+    .forEach(el => (values[el.id] = Math.round(values[el.id] / 100) / 10));
 
   // Replace all the bytes with KB
-  parsed.elements
+  argumentElements
     .filter(el => el.format && el.format.style === 'bytes')
     // @ts-ignore - el.id is always defined when el.format is defined
-    .forEach(el => (clonedValues[el.id] = clonedValues[el.id] / 1024));
+    .forEach(el => (values[el.id] = values[el.id] / 1024));
 
-  return clonedValues;
+  return values;
 }
 
 /**
