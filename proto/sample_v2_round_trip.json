@@ -3030,7 +3030,7 @@
             "title": "Does not use passive listeners to improve scrolling performance"
         },
         "uses-rel-preconnect": {
-            "description": "Consider adding preconnect or dns-prefetch resource hints to establish early connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).",
+            "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn more](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect).",
             "details": {
                 "headings": [],
                 "items": [],

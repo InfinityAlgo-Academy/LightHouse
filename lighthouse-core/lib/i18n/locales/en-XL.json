@@ -1125,7 +1125,7 @@
     "message": "Â ṕr̂éĉón̂ńêćt̂ <ĺîńk̂> ẃâś f̂óûńd̂ f́ôŕ \"{securityOrigin}\" b̂út̂ ẃâś n̂ót̂ úŝéd̂ b́ŷ t́ĥé b̂ŕôẃŝér̂. Ćĥéĉḱ t̂h́ât́ ŷóû ár̂é ûśîńĝ t́ĥé `crossorigin` ât́t̂ŕîb́ût́ê ṕr̂óp̂ér̂ĺŷ."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
-    "message": "Ĉón̂śîd́êŕ âd́d̂ín̂ǵ p̂ŕêćôńn̂éĉt́ ôŕ d̂ńŝ-ṕr̂éf̂ét̂ćĥ ŕêśôúr̂ćê h́îńt̂ś t̂ó êśt̂áb̂ĺîśĥ éâŕl̂ý ĉón̂ńêćt̂íôńŝ t́ô ím̂ṕôŕt̂án̂t́ t̂h́îŕd̂-ṕâŕt̂ý ôŕîǵîńŝ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
+    "message": "Ĉón̂śîd́êŕ âd́d̂ín̂ǵ `preconnect` ôŕ `dns-prefetch` r̂éŝóûŕĉé ĥín̂t́ŝ t́ô éŝt́âb́l̂íŝh́ êár̂ĺŷ ćôńn̂éĉt́îón̂ś t̂ó îḿp̂ór̂t́âńt̂ t́ĥír̂d́-p̂ár̂t́ŷ ór̂íĝín̂ś. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "P̂ŕêćôńn̂éĉt́ t̂ó r̂éq̂úîŕêd́ ôŕîǵîńŝ"
