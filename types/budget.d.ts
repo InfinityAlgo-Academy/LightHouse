@@ -8,7 +8,7 @@ declare global {
   module LH {
     /**
      * The performance budget interface.
-     * More info: https://github.com/GoogleChrome/lighthouse/issues/6053#issuecomment-428385930
+     * More info: https://github.com/GoogleChrome/budget.json
      */
     export interface Budget {
       /**
