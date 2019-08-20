@@ -149,13 +149,15 @@ describe('i18n', () => {
 
     it('throws an error when values are needed but not provided', () => {
       expect(_ => i18n.getFormatted(str_(UIStrings.helloBytesWorld), 'en-US'))
-      .toThrow(`ICU Message contains a value reference ("in") that wasn't provided`);
+        // eslint-disable-next-line max-len
+        .toThrow(`ICU Message "Hello {in, number, bytes} World" contains a value reference ("in") that wasn't provided`);
     });
 
     it('throws an error when a value is missing', () => {
       expect(_ => i18n.getFormatted(str_(UIStrings.helloWorldMultiReplace,
         {hello: 'hello'}), 'en-US'))
-      .toThrow(`ICU Message contains a value reference ("world") that wasn't provided`);
+        // eslint-disable-next-line max-len
+        .toThrow(`ICU Message "{hello} {world}" contains a value reference ("world") that wasn't provided`);
     });
 
     it('formats a message with plurals', () => {
@@ -165,7 +167,8 @@ describe('i18n', () => {
 
     it('throws an error when a plural control value is missing', () => {
       expect(_ => i18n.getFormatted(str_(UIStrings.helloPlural), 'en-US'))
-      .toThrow(`ICU Message contains a value reference ("itemCount") that wasn't provided`);
+        // eslint-disable-next-line max-len
+        .toThrow(`ICU Message "{itemCount, plural, =1{1 hello} other{hellos}}" contains a value reference ("itemCount") that wasn't provided`);
     });
 
     it('formats a message with plurals and nested custom ICU', () => {
@@ -178,6 +181,15 @@ describe('i18n', () => {
         innerItemCount: 1,
         in: 1875});
       expect(helloStr).toBeDisplayString('hellos 1 goodbye 2');
+    });
+
+    it('throws an error if a string value is used for a numeric placeholder', () => {
+      const helloStr = str_(UIStrings.helloTimeInMsWorld, {
+        timeInMs: 'string not a number',
+      });
+      expect(_ => i18n.getFormatted(helloStr, 'en-US'))
+        // eslint-disable-next-line max-len
+        .toThrow(`ICU Message "Hello {timeInMs, number, seconds} World" contains a numeric reference ("timeInMs") but provided value was not a number`);
     });
   });
 });
