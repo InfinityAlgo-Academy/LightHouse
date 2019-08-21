@@ -125,7 +125,7 @@
     "package-json-versionify": "^1.0.4",
     "prettier": "^1.14.3",
     "pretty-json-stringify": "^0.0.2",
-    "puppeteer": "^1.10.0",
+    "puppeteer": "^1.19.0",
     "typescript": "3.5.3",
     "uglify-es": "3.0.15",
     "zone.js": "^0.7.3"

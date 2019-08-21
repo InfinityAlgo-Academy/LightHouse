@@ -7,6 +7,7 @@
 
 /* global LighthouseReportViewer, Logger */
 
+// eslint-disable-next-line no-unused-vars
 function main() {
   const logEl = document.querySelector('#lh-log');
   if (!logEl) {
@@ -46,10 +47,4 @@ function main() {
   });
 
   window.viewer = new LighthouseReportViewer();
-}
-
-main();
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
 }
