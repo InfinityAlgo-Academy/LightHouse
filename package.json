@@ -186,7 +186,7 @@
     },
     {
       "path": "./dist/viewer/src/viewer.js",
-      "maxSize": "75 kB"
+      "maxSize": "76 kB"
     },
     {
       "path": "./dist/lighthouse-dt-bundle.js",
