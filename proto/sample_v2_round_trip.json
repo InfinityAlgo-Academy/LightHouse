@@ -2529,7 +2529,7 @@
             "id": "td-headers-attr",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "title": "Cells in a `<table>` element that use the `[headers]` attribute only refer to other cells of that same table."
+            "title": "Cells in a `<table>` element that use the `[headers]` attribute refer to table cells within the same table."
         },
         "th-has-data-cells": {
             "description": "Screen readers have features to make navigating tables easier. Ensuring table headers always refer to some set of cells may improve the experience for screen reader users. [Learn more](https://web.dev/th-has-data-cells/).",

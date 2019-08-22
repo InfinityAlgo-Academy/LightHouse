@@ -276,10 +276,10 @@
     "message": "Ŝćr̂éêń r̂éâd́êŕŝ h́âv́ê f́êát̂úr̂éŝ t́ô ḿâḱê ńâv́îǵât́îńĝ t́âb́l̂éŝ éâśîér̂. Én̂śûŕîńĝ `<td>` ćêĺl̂ś ûśîńĝ t́ĥé `[headers]` ât́t̂ŕîb́ût́ê ón̂ĺŷ ŕêf́êŕ t̂ó ôt́ĥér̂ ćêĺl̂ś îń t̂h́ê śâḿê t́âb́l̂é m̂áŷ ím̂ṕr̂óv̂é t̂h́ê éx̂ṕêŕîén̂ćê f́ôŕ ŝćr̂éêń r̂éâd́êŕ ûśêŕŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/td-headers-attr/)."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
-    "message": "Ĉél̂ĺŝ ín̂ á `<table>` êĺêḿêńt̂ t́ĥát̂ úŝé t̂h́ê `[headers]` át̂t́r̂íb̂út̂é r̂éf̂ér̂ś t̂ó ôt́ĥér̂ ćêĺl̂ś ôf́ t̂h́ât́ ŝám̂é t̂áb̂ĺê."
+    "message": "Ĉél̂ĺŝ ín̂ á `<table>` êĺêḿêńt̂ t́ĥát̂ úŝé t̂h́ê `[headers]` át̂t́r̂íb̂út̂é r̂éf̂ér̂ t́ô án̂ él̂ém̂én̂t́ `id` n̂ót̂ f́ôún̂d́ ŵít̂h́îń t̂h́ê śâḿê t́âb́l̂é."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | title": {
-    "message": "Ĉél̂ĺŝ ín̂ á `<table>` êĺêḿêńt̂ t́ĥát̂ úŝé t̂h́ê `[headers]` át̂t́r̂íb̂út̂é ôńl̂ý r̂éf̂ér̂ t́ô ót̂h́êŕ ĉél̂ĺŝ óf̂ t́ĥát̂ śâḿê t́âb́l̂é."
+    "message": "Ĉél̂ĺŝ ín̂ á `<table>` êĺêḿêńt̂ t́ĥát̂ úŝé t̂h́ê `[headers]` át̂t́r̂íb̂út̂é r̂éf̂ér̂ t́ô t́âb́l̂é ĉél̂ĺŝ ẃît́ĥín̂ t́ĥé ŝám̂é t̂áb̂ĺê."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
     "message": "Ŝćr̂éêń r̂éâd́êŕŝ h́âv́ê f́êát̂úr̂éŝ t́ô ḿâḱê ńâv́îǵât́îńĝ t́âb́l̂éŝ éâśîér̂. Én̂śûŕîńĝ t́âb́l̂é ĥéâd́êŕŝ ál̂ẃâýŝ ŕêf́êŕ t̂ó ŝóm̂é ŝét̂ óf̂ ćêĺl̂ś m̂áŷ ím̂ṕr̂óv̂é t̂h́ê éx̂ṕêŕîén̂ćê f́ôŕ ŝćr̂éêń r̂éâd́êŕ ûśêŕŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/th-has-data-cells/)."
