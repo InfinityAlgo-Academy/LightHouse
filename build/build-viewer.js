@@ -10,6 +10,7 @@ const path = require('path');
 const {promisify} = require('util');
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
+const stream = require('stream');
 
 const browserify = require('browserify');
 const cpy = require('cpy');
@@ -106,7 +107,29 @@ async function compileJs() {
   // JS bundle from browserified ReportGenerator.
   const generatorFilename = `${sourceDir}/../lighthouse-core/report/report-generator.js`;
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
-    .transform('brfs');
+    .transform('@wardpeet/brfs', {
+      /**
+       * @param {string} file
+       */
+      readFileSyncTransform: file => {
+        return new stream.Transform({
+          transform(chunk, enc, next) {
+            if (file.endsWith('.js')) {
+              const result = terser.minify(chunk.toString());
+              if (result.error) {
+                throw result.error;
+              }
+
+              this.push(result.code);
+            } else {
+              this.push(chunk);
+            }
+
+            next();
+          }
+        });
+      },
+    });
 
   /** @type {Promise<string>} */
   const generatorJsPromise = new Promise((resolve, reject) => {
