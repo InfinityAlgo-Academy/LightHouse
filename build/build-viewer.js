@@ -126,7 +126,7 @@ async function compileJs() {
             }
 
             next();
-          }
+          },
         });
       },
     });
