@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "தட்டுவதற்கான இலக்குகள் சரியாக அளவிடப்பட்டுள்ளன"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "முக்கியத் தொடரிழைக்கான நேரம்"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "மூன்றாம் தரப்பு"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "மூன்றாம் தரப்பு குறியீடானது ஏற்றுதல் செயல்திறனைக் குறிப்பிடத்தக்க வகையில் பாதிக்கக்கூடும். தேவையற்ற மூன்றாம் தரப்பு சேவை வழங்குநர்களின் எண்ணிக்கையைக் குறைத்துக் கொள்ளவும். மேலும் உங்கள் பக்கத்தின் முதன்மை விவரங்களை ஏற்றியபிறகு மூன்றாம் தரப்பு குறியீட்டை ஏற்ற முயலவும். [மேலும் அறிக](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 மூன்றாம் தரப்பு கண்டறியப்பட்டது}other{# மூன்றாம் தரப்புகள் கண்டறியப்பட்டுள்ளன}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "மூன்றாம் தரப்பு உபயோகம்"

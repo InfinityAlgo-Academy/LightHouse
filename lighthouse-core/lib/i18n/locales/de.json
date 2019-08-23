@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Größe von Tippzielen ist richtig eingestellt"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Dauer des Hauptthreads"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Drittanbieter"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Code von Drittanbietern kann die Ladegeschwindigkeit erheblich beeinträchtigen. Beschränken Sie die Zahl redundanter Drittanbieter und versuchen Sie, solchen Code erst nachträglich zu laden. [Weitere Informationen.](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 Drittanbieter gefunden}other{# Drittanbieter gefunden}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Nutzung von Drittanbieter-Code"

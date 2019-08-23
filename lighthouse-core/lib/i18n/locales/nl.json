@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Tikdoelen hebben het juiste formaat"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Tijd van primaire thread"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Derden"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Code van derden kan van grote invloed zijn op de laadprestaties. Beperkt het aantal overbodige externe providers en probeer code van derden te laden nadat je pagina primair is geladen. [Meer informatie](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 derde gevonden}other{# derden gevonden}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Gebruik door derden"

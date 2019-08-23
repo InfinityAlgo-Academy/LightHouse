@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Pieskārienu mērķi ir pietiekami liela izmēra"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Galvenā pavediena laiks"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Trešā puse"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Trešās puses kods var ievērojami ietekmēt ielādes veiktspēju. Ierobežojiet lieko trešo pušu pakalpojumu sniedzēju skaitu un mēģiniet ielādēt trešās puses kodu pēc tam, kad jūsu lapa būs ielādēta. [Uzziniet vairāk](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Atrasta 1 trešā puse}zero{Atrastas # trešās puses}one{Atrasta # trešā puse}other{Atrastas # trešās puses}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Trešo pušu lietojums"

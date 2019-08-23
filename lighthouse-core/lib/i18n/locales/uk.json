@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Елементи для натискання мають правильний розмір"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Час основного ланцюжка"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Сторонні розробники"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Сторонній код може значно погіршити швидкість завантаження. Не використовуйте зайвий раз елементи коду сторонніх розробників та налаштуйте сторінку так, щоб сторонній код завантажувався після її основної частини. [Докладніше](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Знайдено 1 сторонній код}one{Знайдено # сторонній код}few{Знайдено # сторонні коди}many{Знайдено # сторонніх кодів}other{Знайдено # стороннього коду}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Використання стороннього коду"

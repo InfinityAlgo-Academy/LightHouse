@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "A koppintási célok mérete megfelelő"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Főszálon töltött idő"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Harmadik fél"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "A harmadik felektől származó kódok jelentős hatással lehetnek a betöltés teljesítményére. Minél kevesebb harmadik féltől származó kódot használjon, és lehetőleg azután töltse be őket, hogy az oldal nagyrészt már betöltődött. [További információ](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 harmadik fél}other{# harmadik fél}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Harmadik féltől származó kód"

@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Les éléments tactiles sont dimensionnés correctement"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Temps d'exécution sur le thread principal"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Tiers"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Le code tiers peut affecter considérablement les performances de chargement des pages. Limitez le nombre de fournisseurs tiers redondants, et essayez de charger du code tiers une fois le chargement de votre page terminé. [En savoir plus](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 entité tierce trouvée}one{# entité tierce trouvée}other{# entités tierces trouvées}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Utilisation tierce"

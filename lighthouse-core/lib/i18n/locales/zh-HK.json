@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "輕按目標已設定成適當大小"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "在主要執行緒的執行時間"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "第三方"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "第三方程式碼可能會嚴重影響載入效能。請盡量減少不必要的第三方供應商，並在網頁的主要內容載入完成後，再載入第三方程式碼。[瞭解詳情](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)。"
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{發現 1 個第三方程式碼}other{發現 # 個第三方程式碼}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "第三方使用情況"

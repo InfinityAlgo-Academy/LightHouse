@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "ట్యాప్‌టార్గెట్‌ల పరిమాణం సముచితంగా ఉంది"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "ప్రధాన థ్రెడ్ సమయం"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "మూడవ పక్షం"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "మూడవ పక్షం కోడ్ గణనీయ స్థాయిలో లోడ్ పనితీరుపై ప్రభావం చూపవచ్చు. అవసరం లేని మూడవ పక్ష ప్రదాతల సంఖ్యను పరిమితం చేసి, మీ పేజీ ప్రాథమికంగా లోడ్ కావడం పూర్తయిన తర్వాత మూడవ పక్ష కోడ్‌ను లోడ్ చేయడానికి ప్రయత్నించండి. [మరింత తెలుసుకోండి](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 మూడవ పక్షం కనుగొనబడింది}other{# మూడవ పక్షాలు కనుగొనబడ్డాయి}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "మూడవ పక్షం వినియోగం"

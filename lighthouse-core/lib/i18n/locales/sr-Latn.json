@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Ciljevi dodirivanja imaju odgovarajuću veličinu"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Vreme glavne niti"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Nezavisni dobavljač"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Kôd nezavisnog dobavljača može značajno da utiče na učinak učitavanja. Ograničite broj suvišnih nezavisnih dobavljača usluge i probajte da učitate kôd nezavisnog dobavljača kada stranica primarno završi sa učitavanjem. [Saznajte više](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Pronađen je 1 nezavisni}one{Pronađen je # nezavisni}few{Pronađena su # nezavisna}other{Pronađeno je # nezavisnih}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Nezavisna upotreba"

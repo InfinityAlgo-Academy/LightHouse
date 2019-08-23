@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Trykkbare elementer er store nok"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Tid i hovedtråden"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Tredjepart"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Tredjepartskode kan ha betydelig innvirkning på hvor lang tid det tar å laste inn siden. Begrens antallet overflødige tredjepartsleverandører, og prøv å laste inn tredjepartskode etter at siden for det meste er ferdig innlastet. [Finn ut mer](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 tredjepart er funnet}other{# tredjeparter er funnet}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Tredjepartsbruk"

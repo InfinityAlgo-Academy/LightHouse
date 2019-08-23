@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "El tamaño de los elementos táctiles es el adecuado"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Tiempo del subproceso principal"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Terceros"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "El código de terceros puede reducir en gran medida el rendimiento de carga. Limita la cantidad de proveedores externos redundantes y prueba cargar el código de terceros después de que haya finalizado la carga principal de tu página. [Obtén más información](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Se encontró 1 código de terceros}other{Se encontraron # códigos de terceros}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Uso por parte de terceros"

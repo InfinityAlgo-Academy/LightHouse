@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "टैप की जाने वाली जगहें सही आकार में हैं"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "मुख्य थ्रेड में लगने वाला समय"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "तीसरा पक्ष"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "तीसरे पक्ष के कोड आपके पेज की लोड परफ़ॉर्मेंस पर गहरा असर कर सकते हैं. ऐसी तीसरे-पक्ष की सेवा देने वाली कंपनियों का इस्तेमाल ज़्यादा न करें जिनके कोड अब आपके काम के नहीं हैं. साथ ही, तीसरे पक्ष का कोड तब लोड करें जब आपके पेज पर मुख्य लोडिंग का काम पूरा हो गया हो. [ज़्यादा जानें](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 तीसरा पक्ष मिला}one{# तीसरे पक्ष मिले}other{# तीसरे पक्ष मिले}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "इसका इस्तेमाल तीसरा पक्ष करता है"

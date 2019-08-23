@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "הרכיבים להקשה הוגדרו בגודל המתאים"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "משך הזמן של התהליכון הראשי"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "צד שלישי"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "קוד של צד שלישי עשוי להשפיע בצורה משמעותית על ביצועי הטעינה. מומלץ להגביל את הכמות של ספקי צד שלישי שאינם הכרחיים ולהשתדל לטעון קודים של צד שלישי רק אחרי שמסתיימת הטעינה של הדף. [מידע נוסף](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{נמצא צד שלישי אחד}two{נמצאו # צדדים שלישיים}many{נמצאו # צדדים שלישיים}other{נמצאו # צדדים שלישיים}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "שימוש של צד שלישי"

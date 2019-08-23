@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "‏‮Tap‬‏ ‏‮targets‬‏ ‏‮are‬‏ ‏‮sized‬‏ ‏‮appropriately‬‏"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "‏‮Main‬‏ ‏‮Thread‬‏ ‏‮Time‬‏"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "‏‮Third‬‏-‏‮Party‬‏"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "‏‮Third‬‏-‏‮party‬‏ ‏‮code‬‏ ‏‮can‬‏ ‏‮significantly‬‏ ‏‮impact‬‏ ‏‮load‬‏ ‏‮performance‬‏. ‏‮Limit‬‏ ‏‮the‬‏ ‏‮number‬‏ ‏‮of‬‏ ‏‮redundant‬‏ ‏‮third‬‏-‏‮party‬‏ ‏‮providers‬‏ ‏‮and‬‏ ‏‮try‬‏ ‏‮to‬‏ ‏‮load‬‏ ‏‮third‬‏-‏‮party‬‏ ‏‮code‬‏ ‏‮after‬‏ ‏‮your‬‏ ‏‮page‬‏ ‏‮has‬‏ ‏‮primarily‬‏ ‏‮finished‬‏ ‏‮loading‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 ‏‮Third‬‏-‏‮Party‬‏ ‏‮Found‬‏}zero{# ‏‮Third‬‏-‏‮Parties‬‏ ‏‮Found‬‏}two{# ‏‮Third‬‏-‏‮Parties‬‏ ‏‮Found‬‏}few{# ‏‮Third‬‏-‏‮Parties‬‏ ‏‮Found‬‏}many{# ‏‮Third‬‏-‏‮Parties‬‏ ‏‮Found‬‏}other{# ‏‮Third‬‏-‏‮Parties‬‏ ‏‮Found‬‏}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "‏‮Third‬‏-‏‮Party‬‏ ‏‮Usage‬‏"

@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Cilji za dotikanje so ustrezne velikosti"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Čas glavne niti"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Drugi ponudniki"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Koda drugega ponudnika lahko znatno vpliva na učinkovitost nalaganja. Omejite število odvečnih drugih ponudnikov in poskusite naložiti kodo drugega ponudnika, ko je stran prvenstveno končala nalaganje. [Več o tem](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Najden je bil 1 drug ponudnik}one{Najden je bil # drug ponudnik}two{Najdena sta bila # druga ponudnika}few{Najdeni so bili # drugi ponudniki}other{Najdenih je bilo # drugih ponudnikov}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Uporaba drugih ponudnikov"

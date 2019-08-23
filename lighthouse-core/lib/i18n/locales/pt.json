@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "As áreas de toque estão dimensionadas corretamente"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Tempo na linha de execução principal"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Terceiros"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Código de terceiros pode afetar significativamente o desempenho de carregamento. Limite o número de provedores terceiros redundantes e carregue o código de terceiros depois que a página tiver sido carregada. [Saiba mais](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 terceiro encontrado}one{# terceiro encontrado}other{# terceiros encontrados}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Uso de terceiros"

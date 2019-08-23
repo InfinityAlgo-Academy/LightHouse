@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Liečiami objektai tinkamo dydžio"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Pagrindinės grupės laikas"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Trečioji šalis"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Trečiosios šalies kodas gali smarkiai paveikti įkėlimo našumą. Apribokite trečiosios šalies teikėjų skaičių ir pabandykite įkelti trečiosios šalies kodą, kai puslapis bus įkeltas. [Sužinokite daugiau](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Rasta 1 trečioji šalis}one{Rasta # trečioji šalis}few{Rastos # trečiosios šalys}many{Rasta # trečiosios šalies}other{Rasta # trečiųjų šalių}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Trečiosios šalies naudojimas"

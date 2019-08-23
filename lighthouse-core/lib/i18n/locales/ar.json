@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "يتم تحديد حجم أهداف النقر بشكل مناسب"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "وقت سلسلة المحادثات الأساسية"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "الجهة الخارجية"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "يمكن أن يؤثر رمز الجهة الخارجية بشكل كبير في أداء التحميل. يمكنك تحديد عدد مقدِّمي الخدمة للجهات الخارجية المتكرّرين ومحاولة تحميل رمز الجهة الخارجية بعد انتهاء تحميل صفحتك بشكل أساسي. [مزيد من المعلومات](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{تم العثور على جهة خارجية واحدة}zero{تم العثور على # جهة خارجية}two{تم العثور على جهتين خارجيتين (#)}few{تم العثور على # جهات خارجية}many{تم العثور على # جهة خارجية}other{تم العثور على # جهة خارجية}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "استخدام الجهات الخارجية"

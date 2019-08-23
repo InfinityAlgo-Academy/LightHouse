@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Dokunma hedefleri uygun boyutta"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Ana İş Parçacığı Süresi"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Üçüncü Taraf"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Üçüncü taraf kodu, yükleme performansını önemli ölçüde etkileyebilir. Yedekli üçüncü taraf sağlayıcıların sayısını sınırlayın ve öncelikle sayfanızın yüklenmesi tamamlandıktan sonra üçüncü taraf kodunu yükleyin. [Daha fazla bilgi](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 Adet Üçüncü Taraf Bulundu}other{# Adet Üçüncü Taraf Bulundu}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Üçüncü Taraf Kullanımı"

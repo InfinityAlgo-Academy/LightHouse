@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Tryckmål har lämplig storlek"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Tid för huvudtråd"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Tredje part"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Kod från tredje part kan påverka inläsningsprestandan betydligt. Begränsa antalet överflödiga tredjepartsleverantörer och testa att låta tredjepartskod läsas in efter att sidans huvudinnehåll har lästs in helt. [Läs mer](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 tredje part hittades}other{# tredje parter hittades}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Tredjepartsanvändning"

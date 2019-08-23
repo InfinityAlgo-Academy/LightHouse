@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "La mida dels elements tàctils és correcta"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Durada del fil principal"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Tercers"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "El codi de tercers pot afectar significativament el rendiment de la càrrega. Limita el nombre de proveïdors externs redundants i prova de carregar codi de tercers quan la càrrega principal de la pàgina ha finalitzat. [Obtén més informació](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{S'ha trobat 1 tercer}other{S'han trobat # tercers}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Ús de tercers"
