@@ -16,6 +16,8 @@ const path = require('path');
 const LighthouseRunner = require('../lighthouse-core/runner.js');
 const babel = require('babel-core');
 const browserify = require('browserify');
+const exorcist = require('exorcist');
+const sourcemapValidator = require('sourcemap-validator');
 const makeDir = require('make-dir');
 const pkg = require('../package.json');
 
@@ -38,7 +40,7 @@ const isDevtools = file => path.basename(file).includes('devtools');
 /** @param {string} file */
 const isExtension = file => path.basename(file).includes('extension');
 
-const BANNER = `// lighthouse, browserified. ${VERSION} (${COMMIT_HASH})\n`;
+const BANNER = `lighthouse, browserified. ${VERSION} (${COMMIT_HASH})`;
 const DEBUG = false; // true for sourcemaps
 
 /**
@@ -50,7 +52,7 @@ const DEBUG = false; // true for sourcemaps
  * @return {Promise<void>}
  */
 async function browserifyFile(entryPath, distPath) {
-  let bundle = browserify(entryPath, {debug: DEBUG});
+  let bundle = browserify(entryPath, {debug: true});
 
   bundle
     // Transform the fs.readFile etc into inline strings.
@@ -107,7 +109,9 @@ async function browserifyFile(entryPath, distPath) {
     writeStream.on('finish', resolve);
     writeStream.on('error', reject);
 
-    bundleStream.pipe(writeStream);
+    bundleStream
+      .pipe(exorcist(`${distPath}.map`))
+      .pipe(writeStream);
   });
 }
 
@@ -120,16 +124,23 @@ function minifyScript(filePath) {
     compact: true, // Do not include superfluous whitespace characters and line terminators.
     retainLines: true, // Keep things on the same line (looks wonky but helps with stacktraces)
     comments: false, // Don't output comments
-    shouldPrintComment: () => false, // Don't include @license or @preserve comments either
+    /** @param {string} comment */
+    shouldPrintComment: (comment) => comment.includes(BANNER), // Don't include @license or @preserve comments either
     plugins: [
+      // ['add-header-comment', {
+      //   header: [BANNER],
+      // }],
       'syntax-object-rest-spread',
       'syntax-async-generators',
     ],
-    // sourceMaps: 'both'
+    inputSourceMap: JSON.parse(fs.readFileSync(`${filePath}.map`, 'utf-8')),
+    sourceMaps: /** @type {'both'} */('both'),
   };
 
-  const minified = BANNER + babel.transformFileSync(filePath, opts).code;
-  fs.writeFileSync(filePath, minified);
+  const result = babel.transformFileSync(filePath, opts);
+  // fs.writeFileSync(filePath, `// ${BANNER}\n\n\n\n\n` + result.code);
+  fs.writeFileSync(filePath, result.code);
+  fs.writeFileSync(`${filePath}.map`, JSON.stringify(result.map, null, 2));
 }
 
 /**
@@ -142,6 +153,7 @@ async function build(entryPath, distPath) {
   await browserifyFile(entryPath, distPath);
   if (!DEBUG) {
     minifyScript(distPath);
+    // sourcemapValidator(fs.readFileSync(distPath, 'utf-8'), fs.readFileSync(`${distPath}.map`, 'utf-8'));
   }
 }
 
