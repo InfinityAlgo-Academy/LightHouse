@@ -1,0 +1,1216 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20190823.150107.233462.0.001.json",
+    "dumpEventTime": "2019-08-23T15:01:07Z",
+    "dumpEventTimeStamp": "1566597667975",
+    "processId": 233462,
+    "cwd": "/usr/local/google/home/cjamcl/code/lighthouse",
+    "commandLine": [
+      "/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node",
+      "./build/build-lightrider-bundles.js"
+    ],
+    "nodejsVersion": "v12.9.0",
+    "glibcVersionRuntime": "2.28",
+    "glibcVersionCompiler": "2.17",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "linux",
+    "componentVersions": {
+      "node": "12.9.0",
+      "v8": "7.6.303.29-node.15",
+      "uv": "1.31.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.39.2",
+      "napi": "4",
+      "llhttp": "1.1.4",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1c",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019a",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "headersUrl": "https://nodejs.org/download/release/v12.9.0/node-v12.9.0-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.9.0/node-v12.9.0.tar.gz"
+    },
+    "osName": "Linux",
+    "osRelease": "4.19.37-5rodete2-amd64",
+    "osVersion": "#1 SMP Debian 4.19.37-5rodete2 (2019-07-05 > 2018)",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 2786,
+        "user": 134191400,
+        "nice": 6466800,
+        "sys": 47015500,
+        "idle": 23735768700,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 131485300,
+        "nice": 7876000,
+        "sys": 47617000,
+        "idle": 24090972300,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 129457100,
+        "nice": 8835000,
+        "sys": 46725800,
+        "idle": 24106861000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 128740400,
+        "nice": 5594600,
+        "sys": 46629600,
+        "idle": 24112223000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 127168900,
+        "nice": 5313000,
+        "sys": 46495600,
+        "idle": 24114299900,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 119680300,
+        "nice": 6048600,
+        "sys": 55857600,
+        "idle": 24106727500,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 127444600,
+        "nice": 5059600,
+        "sys": 45939400,
+        "idle": 24117455100,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 126946800,
+        "nice": 6457000,
+        "sys": 46172400,
+        "idle": 24113005200,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 127243000,
+        "nice": 12931300,
+        "sys": 46850700,
+        "idle": 24108169900,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 3563,
+        "user": 127956200,
+        "nice": 6246000,
+        "sys": 47107600,
+        "idle": 24091929700,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 129144200,
+        "nice": 16876300,
+        "sys": 47491000,
+        "idle": 24099501500,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1199,
+        "user": 121272500,
+        "nice": 5748200,
+        "sys": 43650600,
+        "idle": 24088513700,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1597,
+        "user": 126397400,
+        "nice": 6379800,
+        "sys": 46563800,
+        "idle": 24113168900,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 125740200,
+        "nice": 6593700,
+        "sys": 46593600,
+        "idle": 24113897500,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 126351200,
+        "nice": 5666400,
+        "sys": 45957100,
+        "idle": 24115724900,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 128759000,
+        "nice": 5699000,
+        "sys": 45952900,
+        "idle": 24113957800,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1201,
+        "user": 125544900,
+        "nice": 5455500,
+        "sys": 45693900,
+        "idle": 24118512000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1665,
+        "user": 125534200,
+        "nice": 5467100,
+        "sys": 46155500,
+        "idle": 24116740800,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1400,
+        "user": 146083600,
+        "nice": 6778200,
+        "sys": 47617000,
+        "idle": 24100362800,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1401,
+        "user": 138636700,
+        "nice": 4043200,
+        "sys": 46465700,
+        "idle": 24112843000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1343,
+        "user": 131025300,
+        "nice": 3881000,
+        "sys": 45515900,
+        "idle": 24122613900,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1201,
+        "user": 130776800,
+        "nice": 3368600,
+        "sys": 45109700,
+        "idle": 24123321900,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1201,
+        "user": 129914600,
+        "nice": 2749600,
+        "sys": 44540700,
+        "idle": 24125939200,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 130141500,
+        "nice": 2746000,
+        "sys": 44412600,
+        "idle": 24126120700,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 125805900,
+        "nice": 2176800,
+        "sys": 41331000,
+        "idle": 24121863800,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 125362100,
+        "nice": 2133600,
+        "sys": 41553200,
+        "idle": 24130952000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 125005100,
+        "nice": 2207500,
+        "sys": 41849900,
+        "idle": 24133593800,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 127956300,
+        "nice": 2147600,
+        "sys": 42603000,
+        "idle": 24130787600,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 127808900,
+        "nice": 5209600,
+        "sys": 42450400,
+        "idle": 24127957800,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 120516000,
+        "nice": 2106700,
+        "sys": 38495500,
+        "idle": 24138076200,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 129187300,
+        "nice": 1929300,
+        "sys": 41849900,
+        "idle": 24130757000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 125800300,
+        "nice": 1954400,
+        "sys": 41797100,
+        "idle": 24134326500,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 125881800,
+        "nice": 2101400,
+        "sys": 41645500,
+        "idle": 24134611300,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 125906300,
+        "nice": 1957000,
+        "sys": 41075100,
+        "idle": 24135668300,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1201,
+        "user": 124767300,
+        "nice": 2002000,
+        "sys": 40968400,
+        "idle": 24136770000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 125162000,
+        "nice": 1952400,
+        "sys": 41459600,
+        "idle": 24135636600,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 2473,
+        "user": 127548100,
+        "nice": 8163700,
+        "sys": 46524300,
+        "idle": 24110436500,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 126344000,
+        "nice": 8754400,
+        "sys": 46089700,
+        "idle": 24113415500,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 125120600,
+        "nice": 5408500,
+        "sys": 45261200,
+        "idle": 24119816500,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 121441800,
+        "nice": 4154500,
+        "sys": 41630800,
+        "idle": 24111219800,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 125351700,
+        "nice": 5687900,
+        "sys": 45683800,
+        "idle": 24117346200,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1201,
+        "user": 125371900,
+        "nice": 5513600,
+        "sys": 45233200,
+        "idle": 24120136400,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 124240400,
+        "nice": 5151800,
+        "sys": 44442500,
+        "idle": 24123728500,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 124769700,
+        "nice": 4736200,
+        "sys": 44313000,
+        "idle": 24124285600,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 123639900,
+        "nice": 4594400,
+        "sys": 44363400,
+        "idle": 24121491900,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 2895,
+        "user": 124849700,
+        "nice": 4855800,
+        "sys": 44950600,
+        "idle": 24122399800,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 125410400,
+        "nice": 8518400,
+        "sys": 44431800,
+        "idle": 24117381500,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1199,
+        "user": 124502800,
+        "nice": 4909000,
+        "sys": 43636200,
+        "idle": 24120596900,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 2007,
+        "user": 124770300,
+        "nice": 5482800,
+        "sys": 44497300,
+        "idle": 24102156900,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 123911900,
+        "nice": 5980500,
+        "sys": 45012800,
+        "idle": 24117116700,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 124810500,
+        "nice": 6785400,
+        "sys": 44431000,
+        "idle": 24120288100,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 123791800,
+        "nice": 7055200,
+        "sys": 44308800,
+        "idle": 24122448800,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 127265900,
+        "nice": 8557000,
+        "sys": 44179000,
+        "idle": 24118224800,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1992,
+        "user": 143898000,
+        "nice": 19647800,
+        "sys": 49213100,
+        "idle": 24076405600,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1418,
+        "user": 130021700,
+        "nice": 5875600,
+        "sys": 41937200,
+        "idle": 24126484000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1511,
+        "user": 125541800,
+        "nice": 2522200,
+        "sys": 41307600,
+        "idle": 24136128800,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1242,
+        "user": 125448000,
+        "nice": 5583100,
+        "sys": 40714700,
+        "idle": 24134063200,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1201,
+        "user": 124040600,
+        "nice": 2242000,
+        "sys": 40785200,
+        "idle": 24135765000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 122994900,
+        "nice": 2329800,
+        "sys": 39989800,
+        "idle": 24137735000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1201,
+        "user": 124292300,
+        "nice": 2139500,
+        "sys": 41092200,
+        "idle": 24138170000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 123468700,
+        "nice": 2233300,
+        "sys": 40260500,
+        "idle": 24140065700,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1202,
+        "user": 124466500,
+        "nice": 1864100,
+        "sys": 40026100,
+        "idle": 24140044000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 123294200,
+        "nice": 2072200,
+        "sys": 40205200,
+        "idle": 24138566200,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 123630200,
+        "nice": 2010200,
+        "sys": 40012400,
+        "idle": 24140257300,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 120912600,
+        "nice": 1653200,
+        "sys": 38070100,
+        "idle": 24140236000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1201,
+        "user": 124771600,
+        "nice": 5171400,
+        "sys": 40312400,
+        "idle": 24135608700,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 112828000,
+        "nice": 5156000,
+        "sys": 50509800,
+        "idle": 24125581600,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 125408100,
+        "nice": 1926200,
+        "sys": 41443600,
+        "idle": 24135189100,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 124875900,
+        "nice": 5362200,
+        "sys": 40739000,
+        "idle": 24115182800,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 123797400,
+        "nice": 4147400,
+        "sys": 40487500,
+        "idle": 24136326700,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1200,
+        "user": 124123400,
+        "nice": 3603900,
+        "sys": 40720800,
+        "idle": 24132490500,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Xeon(R) Gold 6154 CPU @ 3.00GHz",
+        "speed": 1201,
+        "user": 132544600,
+        "nice": 13642800,
+        "sys": 47185000,
+        "idle": 24106166600,
+        "irq": 0
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "lo",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "eno1",
+        "internal": false,
+        "mac": "70:20:84:09:7a:86",
+        "address": "100.99.16.254",
+        "netmask": "255.255.252.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "lo",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "eno1",
+        "internal": false,
+        "mac": "70:20:84:09:7a:86",
+        "address": "2620:0:1000:2511:1e03:cead:83c:44a8",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "eno1",
+        "internal": false,
+        "mac": "70:20:84:09:7a:86",
+        "address": "fe80::aaee:bb19:f17b:aabb",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 2
+      }
+    ],
+    "host": "cjamcl.mtv.corp.google.com"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x0000000000ae38f5",
+      "symbol": "report::TriggerNodeReport(v8::Isolate*, node::Environment*, char const*, char const*, std::string const&, v8::Local<v8::String>) [/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node]"
+    },
+    {
+      "pc": "0x00000000009bdcc3",
+      "symbol": "node::OnFatalError(char const*, char const*) [/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node]"
+    },
+    {
+      "pc": "0x0000000000b18ede",
+      "symbol": "v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node]"
+    },
+    {
+      "pc": "0x0000000000b19259",
+      "symbol": "v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node]"
+    },
+    {
+      "pc": "0x0000000000ccab35",
+      "symbol": " [/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node]"
+    },
+    {
+      "pc": "0x0000000000ccb1a6",
+      "symbol": "v8::internal::Heap::RecomputeLimits(v8::internal::GarbageCollector) [/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node]"
+    },
+    {
+      "pc": "0x0000000000cd69da",
+      "symbol": "v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags) [/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node]"
+    },
+    {
+      "pc": "0x0000000000cd78e5",
+      "symbol": "v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node]"
+    },
+    {
+      "pc": "0x0000000000cda3a8",
+      "symbol": "v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationType, v8::internal::AllocationAlignment) [/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node]"
+    },
+    {
+      "pc": "0x0000000000ca1ed7",
+      "symbol": "v8::internal::Factory::NewFillerObject(int, bool, v8::internal::AllocationType) [/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node]"
+    },
+    {
+      "pc": "0x0000000000fc9f28",
+      "symbol": "v8::internal::Runtime_AllocateInYoungGeneration(int, unsigned long*, v8::internal::Isolate*) [/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node]"
+    },
+    {
+      "pc": "0x000000000134f099",
+      "symbol": " [/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node]"
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 2151260160,
+    "totalCommittedMemory": 2149533720,
+    "usedMemory": 2129143464,
+    "availableMemory": 48885272,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 31744,
+        "capacity": 261832,
+        "used": 31432,
+        "available": 230400
+      },
+      "new_space": {
+        "memorySize": 2097152,
+        "committedMemory": 1182248,
+        "capacity": 1047328,
+        "used": 202704,
+        "available": 844624
+      },
+      "old_space": {
+        "memorySize": 2057678848,
+        "committedMemory": 2057272584,
+        "capacity": 2038768528,
+        "used": 2038560744,
+        "available": 207784
+      },
+      "code_space": {
+        "memorySize": 688128,
+        "committedMemory": 631232,
+        "capacity": 606656,
+        "used": 606656,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 1576960,
+        "committedMemory": 1458984,
+        "capacity": 1103360,
+        "used": 1103360,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 88907776,
+        "committedMemory": 88907776,
+        "capacity": 88635112,
+        "used": 88635112,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 3456,
+        "used": 3456,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 1047328,
+        "used": 0,
+        "available": 1047328
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 120.938,
+    "kernelCpuSeconds": 12.1908,
+    "cpuConsumptionPercent": 277.351,
+    "maxRss": 2285019136,
+    "pageFaults": {
+      "IORequired": 0,
+      "IONotRequired": 2496773
+    },
+    "fsActivity": {
+      "reads": 0,
+      "writes": 31936
+    }
+  },
+  "uvthreadResourceUsage": {
+    "userCpuSeconds": 43.5371,
+    "kernelCpuSeconds": 3.54637,
+    "cpuConsumptionPercent": 98.0907,
+    "fsActivity": {
+      "reads": 0,
+      "writes": 512
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "npm_package_scripts_now_build": "node lighthouse-core/scripts/build-report-for-autodeployment.js",
+    "npm_config_init_license": "MIT",
+    "npm_package_dependencies_lookup_closest_locale": "6.0.4",
+    "NVM_DIR": "/usr/local/google/home/cjamcl/.nvm",
+    "LS_COLORS": "rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:",
+    "npm_package_devDependencies__babel_plugin_syntax_object_rest_spread": "^7.2.0",
+    "npm_package_devDependencies__types_google_analytics": "0.0.39",
+    "npm_package_scripts_type_check": "tsc -p . && tsc -p lighthouse-viewer/",
+    "npm_package_dependencies_cssstyle": "1.2.1",
+    "npm_package_devDependencies_make_dir": "^1.3.0",
+    "npm_package_dependencies_details_element_polyfill": "^2.4.0",
+    "npm_package_devDependencies_jsdom": "^12.2.0",
+    "npm_package_dependencies_http_link_header": "^0.8.0",
+    "npm_package_dependencies_ws": "3.3.2",
+    "npm_package_devDependencies_isomorphic_fetch": "^2.2.1",
+    "npm_package_scripts_unit_ci": "npm run unit-core -- --runInBand --ci --coverage && npm run unit-cli -- --runInBand --ci --coverage && npm run unit-viewer -- --runInBand --ci --coverage",
+    "npm_package_dependencies_lodash_isequal": "^4.5.0",
+    "LESSCLOSE": "/usr/bin/lesspipe %s %s",
+    "npm_execpath": "/usr/local/google/home/cjamcl/.yarn_install/node_modules/yarn/bin/yarn.js",
+    "npm_package_scripts_update_sample_json": "yarn i18n:collect-strings && node ./lighthouse-cli -A=./lighthouse-core/test/results/artifacts --config-path=./lighthouse-core/test/results/sample-config.js --output=json --output-path=./lighthouse-core/test/results/sample_v2.json && node lighthouse-core/scripts/cleanup-LHR-for-diff.js ./lighthouse-core/test/results/sample_v2.json --only-remove-timing && yarn compile-proto && yarn build-proto-roundtrip",
+    "_": "/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node",
+    "LANG": "en_US.UTF-8",
+    "GDM_LANG": "en_US.utf8",
+    "npm_package_dependencies_jsonld": "^1.5.0",
+    "npm_config_bin_links": "true",
+    "HISTCONTROL": "ignoredups",
+    "npm_package_scripts_codecov": "codecov -f unit-coverage.lcov -F unit && codecov -f smoke-coverage.lcov -F smoke",
+    "P4MERGE": "/google/src/files/head/depot/eng/perforce/mergep4.tcl",
+    "npm_package_scripts_unit_viewer": "jest \"lighthouse-viewer/.*-test.js\"",
+    "npm_package_devDependencies_gh_pages": "^2.0.1",
+    "npm_package_devDependencies_brfs": "^2.0.2",
+    "DISPLAY": ":0",
+    "AUTO_PROXY": "https://proxyconfig.corp.google.com/proxy.pac",
+    "OLDPWD": "/usr/local/google/home/cjamcl",
+    "npm_package_bundlesize_0_maxSize": "520 kB",
+    "npm_package_devDependencies__types_gh_pages": "^2.0.0",
+    "npm_package_devDependencies_codecov": "^3.2.0",
+    "npm_package_devDependencies__babel_plugin_syntax_async_generators": "^7.2.0",
+    "npm_package_devDependencies__babel_core": "^7.5.5",
+    "npm_package_dependencies_robots_parser": "^2.0.1",
+    "npm_package_dependencies_jsonlint_mod": "^1.7.5",
+    "npm_package_nyc_reporter_0": "text-summary",
+    "npm_package_devDependencies__types_rimraf": "^2.0.2",
+    "npm_package_devDependencies__types_mkdirp": "^0.5.2",
+    "npm_package_dependencies_lighthouse_logger": "^1.2.0",
+    "GTK_OVERLAY_SCROLLING": "0",
+    "npm_package_devDependencies__types_inquirer": "^0.0.35",
+    "COLORTERM": "truecolor",
+    "npm_package_devDependencies_archiver": "^3.0.0",
+    "npm_package_dependencies_semver": "^5.3.0",
+    "npm_package_scripts_smoke_cicoverage": "nyc npm run smoke && nyc report --reporter text-lcov > smoke-coverage.lcov",
+    "NVM_CD_FLAGS": "",
+    "npm_package_homepage": "https://github.com/GoogleChrome/lighthouse#readme",
+    "npm_package_bundlesize_3_path": "./dist/lighthouse-dt-bundle.js",
+    "npm_package_repository_url": "https://github.com/GoogleChrome/lighthouse.git",
+    "npm_package_dependencies_yargs_parser": "7.0.0",
+    "npm_package_devDependencies_eslint": "^4.19.1",
+    "npm_package_devDependencies_pretty_json_stringify": "^0.0.2",
+    "npm_package_devDependencies__types_update_notifier": "^1.0.2",
+    "npm_package_scripts_start": "node ./lighthouse-cli/index.js",
+    "npm_package_devDependencies__types_ws": "^4.0.1",
+    "npm_package_dependencies_third_party_web": "^0.8.2",
+    "npm_config_version_git_message": "v%s",
+    "npm_package_devDependencies_eslint_config_google": "^0.9.1",
+    "npm_config_user_agent": "yarn/1.12.3 npm/? node/v12.9.0 linux x64",
+    "npm_package_contributors_0_name": "Google Inc.",
+    "npm_config_init_version": "1.0.0",
+    "XDG_VTNR": "7",
+    "npm_package_scripts_build_viewer": "node ./build/build-viewer.js",
+    "npm_package_scripts_test_lantern": "bash lighthouse-core/scripts/test-lantern.sh",
+    "npm_config_registry": "https://registry.yarnpkg.com",
+    "npm_package_dependencies_configstore": "^3.1.1",
+    "SSH_AUTH_SOCK": "/tmp/ssh-cOJe8IQpd5Et/agent.11464",
+    "npm_package_nyc_tempDirectory": "./coverage",
+    "npm_package_devDependencies_npm_run_posix_or_windows": "^2.0.2",
+    "npm_package_devDependencies_coveralls": "^3.0.3",
+    "npm_package_devDependencies__types_babel_core": "^6.25.6",
+    "npm_package_keywords_0": "google",
+    "npm_package_keywords_1": "chrome",
+    "npm_package_keywords_2": "devtools",
+    "npm_package_main": "./lighthouse-core/index.js",
+    "npm_config_strict_ssl": "true",
+    "npm_package_scripts_mixed_content": "./lighthouse-cli/index.js --chrome-flags='--headless' --preset=mixed-content",
+    "npm_package_devDependencies__types_chrome": "^0.0.60",
+    "npm_package_devDependencies_chalk": "^2.4.1",
+    "npm_package_devDependencies__types_eslint": "^4.16.6",
+    "npm_package_bundlesize_0_path": "./dist/extension/scripts/lighthouse-ext-bundle.js",
+    "npm_package_scripts_i18n_collect_strings": "node lighthouse-core/scripts/i18n/collect-strings.js",
+    "XDG_SESSION_ID": "c2",
+    "npm_package_devDependencies_package_json_versionify": "^1.0.4",
+    "XDG_GREETER_DATA_DIR": "/var/lib/lightdm/data/cjamcl",
+    "npm_package_scripts_unit_cicoverage": "nyc --all --hook-run-in-context npm run unit:ci && nyc report --reporter text-lcov > unit-coverage.lcov",
+    "npm_package_scripts_minify_latest_run": "./lighthouse-core/scripts/lantern/minify-trace.js ./latest-run/defaultPass.trace.json ./latest-run/defaultPass.trace.min.json && ./lighthouse-core/scripts/lantern/minify-devtoolslog.js ./latest-run/defaultPass.devtoolslog.json ./latest-run/defaultPass.devtoolslog.min.json",
+    "USER": "cjamcl",
+    "npm_package_scripts_smoke": "node lighthouse-cli/test/smokehouse/run-smoke.js",
+    "npm_package_license": "Apache-2.0",
+    "DESKTOP_SESSION": "cinnamon",
+    "npm_lifecycle_event": "build-lr",
+    "npm_package_dependencies_speedline_core": "1.4.2",
+    "npm_package_devDependencies_puppeteer": "^1.19.0",
+    "npm_package_devDependencies__firebase_app_types": "0.3.1",
+    "npm_package_scripts_compile_proto": "protoc --python_out=./ ./proto/lighthouse-result.proto && mv ./proto/*_pb2.py ./proto/scripts || (echo \"❌ Install protobuf ≥ 3.7.1 to compile the proto file.\" && false)",
+    "YARN_WRAP_OUTPUT": "false",
+    "npm_package_devDependencies__types_node": "*",
+    "npm_package_scripts_update_sample_artifacts": "node lighthouse-core/scripts/update-report-fixtures.js",
+    "npm_package_devDependencies_babel_plugin_syntax_async_generators": "^6.13.0",
+    "npm_package_dependencies_axe_core": "3.3.0",
+    "GNOME_TERMINAL_SCREEN": "/org/gnome/Terminal/screen/55fb68f0_1267_45f1_b5ff_437678befaea",
+    "npm_package_bin_lighthouse": "./lighthouse-cli/index.js",
+    "npm_package_description": "Lighthouse",
+    "npm_package_bundlesize_1_path": "./dist/lightrider/lighthouse-lr-bundle.js",
+    "npm_package_devDependencies__types_yargs": "^8.0.2",
+    "npm_package_bundlesize_1_maxSize": "1.3 MB",
+    "npm_package_dependencies_chrome_launcher": "^0.11.2",
+    "QT_QPA_PLATFORMTHEME": "gtk2",
+    "PWD": "/usr/local/google/home/cjamcl/code/lighthouse",
+    "npm_package_config_cz_customizable_config": "./.cz-config.js",
+    "npm_package_dependencies_intl_messageformat": "^4.4.0",
+    "HOME": "/usr/local/google/home/cjamcl",
+    "npm_package_scripts_i18n_checks": "./lighthouse-core/scripts/i18n/assert-strings-collected.sh",
+    "npm_package_scripts_cli_unit": "yarn unit-cli",
+    "npm_package_scripts_devtools": "bash lighthouse-core/scripts/roll-to-devtools.sh",
+    "npm_package_devDependencies__types_archiver": "^2.1.2",
+    "npm_package_scripts_ultradumbBenchmark": "./lighthouse-core/scripts/benchmark.js",
+    "SSH_AGENT_PID": "11522",
+    "npm_package_nyc_exclude_2": "**/scripts/",
+    "npm_package_devDependencies__types_semver": "^5.5.0",
+    "npm_package_nyc_exclude_1": "**/test/",
+    "npm_package_devDependencies_jest": "^24.3.0",
+    "npm_package_nyc_exclude_0": "**/third_party/**",
+    "npm_package_scripts_bundlesize": "bundlesize",
+    "npm_package_dependencies_rimraf": "^2.6.1",
+    "npm_package_devDependencies_conventional_changelog_cli": "^1.3.4",
+    "QT_ACCESSIBILITY": "1",
+    "npm_package_scripts_test_clients": "jest \"clients/\"",
+    "npm_config_argv": "{\"remain\":[],\"cooked\":[\"run\",\"build-lr\"],\"original\":[\"build-lr\"]}",
+    "XDG_SESSION_TYPE": "x11",
+    "npm_package_scripts_watch": "yarn unit-core --watch",
+    "npm_package_devDependencies_exorcist": "^1.0.1",
+    "npm_package_devDependencies_cpy": "^7.0.1",
+    "npm_package_scripts_coverage_smoke": "yarn smoke:cicoverage && nyc report --reporter html",
+    "npm_package_scripts_coveralls": "cat unit-coverage.lcov | coveralls",
+    "XDG_DATA_DIRS": "/usr/share/gnome:/usr/local/share/:/usr/share/",
+    "npm_package_scripts_viewer_unit": "yarn unit-viewer",
+    "npm_config_version_git_sign": "",
+    "npm_package_dependencies_update_notifier": "^2.5.0",
+    "npm_package_devDependencies_babel_plugin_syntax_object_rest_spread": "^6.13.0",
+    "npm_package_scripts_changelog": "conventional-changelog --config ./build/changelog-generator/index.js --infile changelog.md --same-file",
+    "npm_package_dependencies_yargs": "3.32.0",
+    "npm_package_devDependencies_terser": "^4.2.0",
+    "npm_package_devDependencies__types_exorcist": "^0.4.5",
+    "npm_package_scripts_unit": "yarn unit-core && yarn unit-cli && yarn unit-viewer",
+    "npm_package_scripts_timing_trace": "node lighthouse-core/scripts/generate-timing-trace.js",
+    "npm_package_scripts_test": "yarn diff:sample-json && yarn lint --quiet && yarn unit && yarn type-check",
+    "npm_package_scripts_chrome": "node lighthouse-core/scripts/manual-chrome-launcher.js",
+    "XDG_SESSION_DESKTOP": "cinnamon",
+    "npm_package_dependencies_metaviewport_parser": "0.2.0",
+    "npm_config_version_tag_prefix": "v",
+    "npm_package_devDependencies_typescript": "3.5.3",
+    "GJS_DEBUG_OUTPUT": "stderr",
+    "npm_package_dependencies_lodash_set": "^4.3.2",
+    "npm_package_scripts_coverage": "yarn unit:cicoverage && nyc report --reporter html",
+    "npm_package_devDependencies__types_css_font_loading_module": "^0.0.2",
+    "npm_package_scripts_build_proto_roundtrip": "cd proto/scripts && PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=cpp PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION_VERSION=2 python json_roundtrip_via_proto.py",
+    "npm_package_scripts_build_extension": "node ./build/build-extension.js",
+    "npm_package_bugs_url": "https://github.com/GoogleChrome/lighthouse/issues",
+    "npm_package_devDependencies__types_lodash_isequal": "^4.5.2",
+    "npm_package_dependencies_intl_pluralrules": "^1.0.3",
+    "npm_package_devDependencies_nyc": "^13.3.0",
+    "npm_package_devDependencies_babel_plugin_add_header_comment": "^1.0.3",
+    "npm_package_dependencies_mkdirp": "0.5.1",
+    "npm_config_ignore_scripts": "",
+    "npm_package_devDependencies_sourcemap_validator": "^1.1.1",
+    "npm_package_devDependencies__types_make_dir": "^1.0.3",
+    "npm_package_devDependencies__firebase_auth_types": "0.3.2",
+    "npm_package_scripts_build_all_task": "yarn build-extension & yarn build-devtools & yarn build-lr & yarn build-viewer & wait",
+    "npm_package_config_commitizen_path": "./node_modules/cz-customizable",
+    "GTK_MODULES": "gail:atk-bridge",
+    "npm_package_devDependencies_bundlesize": "^0.17.2",
+    "npm_package_scripts_build_all_task_windows": "yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer",
+    "npm_package_devDependencies_devtools_protocol": "0.0.588129",
+    "npm_package_bundlesize_3_maxSize": "400 kB",
+    "npm_package_scripts_fast": "yarn start --emulated-form-factor=none --throttlingMethod=provided",
+    "npm_package_devDependencies__types_browserify": "^12.0.36",
+    "npm_lifecycle_script": "node ./build/build-lightrider-bundles.js",
+    "NVM_RC_VERSION": "",
+    "npm_package_devDependencies__types_cpy": "^5.1.0",
+    "INIT_CWD": "/usr/local/google/home/cjamcl/code/lighthouse",
+    "TERM": "xterm-256color",
+    "SHELL": "/bin/bash",
+    "VTE_VERSION": "5402",
+    "XDG_SESSION_CLASS": "user",
+    "npm_package_devDependencies__types_lodash_set": "^4.3.6",
+    "XDG_SEAT_PATH": "/org/freedesktop/DisplayManager/Seat0",
+    "npm_package_devDependencies__types_raven": "^2.5.1",
+    "SK_SIGNING_PLUGIN": "gnubbyagent",
+    "npm_package_dependencies_intl": "^1.2.5",
+    "npm_package_scripts_unit_cli": "jest \"lighthouse-cli/\"",
+    "npm_package_scripts_core_unit": "yarn unit-core",
+    "npm_package_scripts_unit_core": "jest \"lighthouse-core/\"",
+    "npm_package_devDependencies_cz_customizable": "^5.2.0",
+    "NVM_BIN": "/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin",
+    "XDG_CURRENT_DESKTOP": "X-Cinnamon",
+    "npm_package_scripts_clean": "rimraf dist proto/scripts/*.json proto/scripts/*_pb2.* proto/scripts/*_pb.* proto/scripts/__pycache__ proto/scripts/*.pyc *.report.html *.report.dom.html *.report.json *.devtoolslog.json *.trace.json lighthouse-core/lib/i18n/locales/*.ctc.json || true",
+    "GPG_AGENT_INFO": "/run/user/612699/gnupg/S.gpg-agent:0:1",
+    "npm_package_bin_chrome_debug": "./lighthouse-core/scripts/manual-chrome-launcher.js",
+    "npm_package_scripts_debug": "node --inspect-brk ./lighthouse-cli/index.js",
+    "npm_package_dependencies_open": "^6.4.0",
+    "GNOME_TERMINAL_SERVICE": ":1.2160",
+    "npm_package_devDependencies_angular": "^1.7.4",
+    "npm_package_scripts_static_server": "node lighthouse-cli/test/fixtures/static-server.js",
+    "npm_package_engines_node": ">=10.13",
+    "npm_package_devDependencies_browserify": "^16.2.3",
+    "XDG_SEAT": "seat0",
+    "SHLVL": "3",
+    "PYTHONPATH": "/usr/local/buildtools/current/sitecustomize",
+    "npm_package_scripts_build_lr": "node ./build/build-lightrider-bundles.js",
+    "npm_package_dependencies_raven": "^2.2.1",
+    "P4CONFIG": ".p4config",
+    "npm_node_execpath": "/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node",
+    "npm_package_scripts_test_viewer": "yarn unit-viewer && jest lighthouse-viewer/test/viewer-test-pptr.js",
+    "npm_package_devDependencies_prettier": "^1.14.3",
+    "npm_package_dependencies_inquirer": "^3.3.0",
+    "npm_package_devDependencies_csv_validator": "^0.0.3",
+    "npm_package_devDependencies_idb_keyval": "2.2.0",
+    "npm_package_author_name": "The Chromium Authors",
+    "npm_package_devDependencies_glob": "^7.1.3",
+    "npm_package_repository_type": "git",
+    "npm_package_devDependencies__types_configstore": "^2.1.1",
+    "npm_package_scripts_compile_devtools": "bash lighthouse-core/scripts/compile-against-devtools.sh",
+    "npm_package_scripts_build_all": "npm-run-posix-or-windows build-all:task",
+    "npm_package_bundlesize_2_maxSize": "76 kB",
+    "GDMSESSION": "cinnamon",
+    "npm_package_version": "5.2.0",
+    "GNOME_DESKTOP_SESSION_ID": "this-is-deprecated",
+    "LOGNAME": "cjamcl",
+    "DBUS_SESSION_BUS_ADDRESS": "unix:abstract=/tmp/dbus-MuJmbxL2SE,guid=9ef301ada711ae5d967337ba5d3b3fc4",
+    "npm_package_scripts_diff_sample_json": "yarn i18n:checks && bash lighthouse-core/scripts/assert-golden-lhr-unchanged.sh",
+    "XDG_RUNTIME_DIR": "/run/user/612699",
+    "XAUTHORITY": "/usr/local/google/home/cjamcl/.Xauthority",
+    "npm_config_version_git_tag": "true",
+    "npm_package_dependencies_parse_cache_control": "1.0.1",
+    "XDG_SESSION_PATH": "/org/freedesktop/DisplayManager/Session0",
+    "npm_package_devDependencies__firebase_util": "0.2.1",
+    "npm_package_devDependencies_zone_js": "^0.7.3",
+    "PATH": "/tmp/yarn--1566597619113-0.22455221292425276:/usr/local/google/home/cjamcl/code/lighthouse/node_modules/.bin:/usr/local/google/home/cjamcl/.config/yarn/link/node_modules/.bin:/usr/local/google/home/cjamcl/code/lighthouse/node_modules/.bin:/usr/local/google/home/cjamcl/.config/yarn/link/node_modules/.bin:/usr/local/google/home/cjamcl/.yarn/bin:/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node_modules/npm/bin/node-gyp-bin:/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin:/usr/lib/google-golang/bin:/usr/local/buildtools/java/jdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/google/home/cjamcl/tools/depot_tools:/usr/local/google/home/cjamcl/bin",
+    "npm_package_nyc_include_1": "**/lighthouse-cli/**/*.js",
+    "npm_package_nyc_include_0": "**/lighthouse-core/**/*.js",
+    "npm_package_nyc_include_2": "**/lighthouse-viewer/**/*.js",
+    "CINNAMON_VERSION": "3.6.7",
+    "npm_config_save_prefix": "^",
+    "npm_package_scripts_deploy_viewer": "yarn build-viewer --deploy",
+    "npm_config_ignore_optional": "",
+    "npm_package_devDependencies__types_resize_observer_browser": "^0.1.1",
+    "NODE": "/usr/local/google/home/cjamcl/.nvm/versions/node/v12.9.0/bin/node",
+    "npm_package_scripts_lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
+    "npm_package_devDependencies__types_jpeg_js": "^0.3.0",
+    "GJS_DEBUG_TOPICS": "JS ERROR;JS LOG",
+    "npm_package_readmeFilename": "readme.md",
+    "npm_package_bundlesize_2_path": "./dist/viewer/src/viewer.js",
+    "npm_package_devDependencies__types_jest": "^24.0.9",
+    "SESSION_MANAGER": "local/cjamcl.mtv.corp.google.com:@/tmp/.ICE-unix/11464,unix/cjamcl.mtv.corp.google.com:/tmp/.ICE-unix/11464",
+    "npm_package_name": "lighthouse",
+    "npm_config_version_commit_hooks": "true",
+    "npm_package_dependencies_jpeg_js": "0.1.2",
+    "npm_package_devDependencies_eslint_plugin_local_rules": "0.1.0",
+    "npm_package_dependencies_js_library_detector": "^5.4.0",
+    "npm_package_scripts_build_devtools": "node ./build/build-bundle.js clients/devtools-entry.js dist/lighthouse-dt-bundle.js && node ./build/build-dt-report-resources.js",
+    "LESSOPEN": "| /usr/bin/lesspipe %s"
+  },
+  "userLimits": {
+    "core_file_size_blocks": {
+      "soft": 0,
+      "hard": "unlimited"
+    },
+    "data_seg_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_locked_memory_bytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_memory_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "open_files": {
+      "soft": 32768,
+      "hard": 32768
+    },
+    "stack_size_bytes": {
+      "soft": 8388608,
+      "hard": "unlimited"
+    },
+    "cpu_time_seconds": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_user_processes": {
+      "soft": 32768,
+      "hard": 32768
+    },
+    "virtual_memory_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    }
+  },
+  "sharedObjects": [
+    "linux-vdso.so.1",
+    "/lib/x86_64-linux-gnu/libdl.so.2",
+    "/lib/x86_64-linux-gnu/librt.so.1",
+    "/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
+    "/lib/x86_64-linux-gnu/libm.so.6",
+    "/lib/x86_64-linux-gnu/libgcc_s.so.1",
+    "/lib/x86_64-linux-gnu/libpthread.so.0",
+    "/lib/x86_64-linux-gnu/libc.so.6",
+    "/lib64/ld-linux-x86-64.so.2"
+  ]
+}

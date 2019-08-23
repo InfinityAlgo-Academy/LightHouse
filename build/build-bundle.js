@@ -14,10 +14,9 @@ const fs = require('fs');
 const path = require('path');
 
 const LighthouseRunner = require('../lighthouse-core/runner.js');
-const babel = require('babel-core');
 const browserify = require('browserify');
 const exorcist = require('exorcist');
-const sourcemapValidator = require('sourcemap-validator');
+// const sourcemapValidator = require('sourcemap-validator');
 const makeDir = require('make-dir');
 const pkg = require('../package.json');
 
@@ -41,7 +40,6 @@ const isDevtools = file => path.basename(file).includes('devtools');
 const isExtension = file => path.basename(file).includes('extension');
 
 const BANNER = `lighthouse, browserified. ${VERSION} (${COMMIT_HASH})`;
-const DEBUG = false; // true for sourcemaps
 
 /**
  * Browserify starting at the file at entryPath. Contains entry-point-specific
@@ -55,6 +53,18 @@ async function browserifyFile(entryPath, distPath) {
   let bundle = browserify(entryPath, {debug: true});
 
   bundle
+    .transform('babelify', {
+      compact: true, // Do not include superfluous whitespace characters and line terminators.
+      retainLines: true, // Keep things on the same line (looks wonky but helps with stacktraces)
+      comments: false, // Don't output comments
+      /** @param {string} comment */
+      shouldPrintComment: (comment) => comment.includes(BANNER), // Don't include @license or @preserve comments either
+      plugins: [
+        ['add-header-comment', {
+          header: [BANNER],
+        }],
+      ],
+    })
     // Transform the fs.readFile etc into inline strings.
     .transform('brfs', {global: true, parserOpts: {ecmaVersion: 10}})
     // Strip everything out of package.json includes except for the version.
@@ -116,34 +126,6 @@ async function browserifyFile(entryPath, distPath) {
 }
 
 /**
- * Minimally minify a javascript file, in place.
- * @param {string} filePath
- */
-function minifyScript(filePath) {
-  const opts = {
-    compact: true, // Do not include superfluous whitespace characters and line terminators.
-    retainLines: true, // Keep things on the same line (looks wonky but helps with stacktraces)
-    comments: false, // Don't output comments
-    /** @param {string} comment */
-    shouldPrintComment: (comment) => comment.includes(BANNER), // Don't include @license or @preserve comments either
-    plugins: [
-      // ['add-header-comment', {
-      //   header: [BANNER],
-      // }],
-      'syntax-object-rest-spread',
-      'syntax-async-generators',
-    ],
-    inputSourceMap: JSON.parse(fs.readFileSync(`${filePath}.map`, 'utf-8')),
-    sourceMaps: /** @type {'both'} */('both'),
-  };
-
-  const result = babel.transformFileSync(filePath, opts);
-  // fs.writeFileSync(filePath, `// ${BANNER}\n\n\n\n\n` + result.code);
-  fs.writeFileSync(filePath, result.code);
-  fs.writeFileSync(`${filePath}.map`, JSON.stringify(result.map, null, 2));
-}
-
-/**
  * Browserify starting at entryPath, writing the minified result to distPath.
  * @param {string} entryPath
  * @param {string} distPath
@@ -151,10 +133,7 @@ function minifyScript(filePath) {
  */
 async function build(entryPath, distPath) {
   await browserifyFile(entryPath, distPath);
-  if (!DEBUG) {
-    minifyScript(distPath);
-    // sourcemapValidator(fs.readFileSync(distPath, 'utf-8'), fs.readFileSync(`${distPath}.map`, 'utf-8'));
-  }
+  // sourcemapValidator(fs.readFileSync(distPath, 'utf-8'), fs.readFileSync(`${distPath}.map`, 'utf-8'));
 }
 
 /**
