@@ -9,7 +9,7 @@ Run the following in the root folder of a Lighthouse checkout:
 * `yarn`
 * `yarn build-viewer`
 
-This compiles and minifies `app/src/main.js` using uglify-es. Results are written to `dist/viewer/`.
+This compiles and minifies `app/src/main.js`. Results are written to `dist/viewer/`.
 
 ## Deploy
 

@@ -90,7 +90,6 @@
     "@types/resize-observer-browser": "^0.1.1",
     "@types/rimraf": "^2.0.2",
     "@types/semver": "^5.5.0",
-    "@types/uglify-es": "^3.0.0",
     "@types/update-notifier": "^1.0.2",
     "@types/ws": "^4.0.1",
     "@types/yargs": "^8.0.2",
@@ -126,8 +125,8 @@
     "prettier": "^1.14.3",
     "pretty-json-stringify": "^0.0.2",
     "puppeteer": "^1.19.0",
+    "terser": "^4.2.0",
     "typescript": "3.5.3",
-    "uglify-es": "3.0.15",
     "zone.js": "^0.7.3"
   },
   "dependencies": {
