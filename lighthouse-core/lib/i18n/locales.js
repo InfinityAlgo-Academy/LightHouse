@@ -88,8 +88,8 @@ const locales = {
   'lv': require('./locales/lv.json'),
   'mo': require('./locales/ro.json'), // Alias of 'ro'
   'nl': require('./locales/nl.json'),
-  'nb': require('./locales/no.json'), // Alias of 'no'
-  'no': require('./locales/no.json'),
+  'nb': require('./locales/nb.json'), // Alias of 'no'
+  'no': require('./locales/nb.json'),
   'pl': require('./locales/pl.json'),
   'pt': require('./locales/pt.json'), // pt-BR identical, so it falls back into pt
   'pt-PT': require('./locales/pt-PT.json'),
