@@ -227,6 +227,17 @@ function _processParsedElements(icuMessage, argumentElements, values = {}) {
     }
   }
 
+  // Throw an error if a value is provided but has no placeholder in the message.
+  for (const valueId of Object.keys(values)) {
+    // errorCode is a special case always allowed to help ease of LHError use.
+    if (valueId === 'errorCode') continue;
+
+    if (!argumentElements.find(el => el.id === valueId)) {
+      throw new Error(`Provided value "${valueId}" does not match any placeholder in ` +
+        `ICU message "${icuMessage}"`);
+    }
+  }
+
   return values;
 }
 

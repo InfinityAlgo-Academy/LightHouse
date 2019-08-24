@@ -165,7 +165,6 @@ class ThirdPartySummary extends Audit {
     return {
       score: Number(summary.wastedMs <= PASS_THRESHOLD_IN_MS),
       displayValue: str_(UIStrings.displayValue, {
-        itemCount: results.length,
         timeInMs: summary.wastedMs,
       }),
       details: Audit.makeTableDetails(headings, results, summary),

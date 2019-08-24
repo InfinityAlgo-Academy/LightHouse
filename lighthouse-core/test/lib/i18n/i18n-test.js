@@ -44,14 +44,19 @@ describe('i18n', () => {
 
   describe('#replaceIcuMessageInstanceIds', () => {
     it('replaces the references in the LHR', () => {
-      const templateID = 'lighthouse-core/test/lib/i18n/fake-file.js | daString';
-      const reference = templateID + ' # 0';
-      const lhr = {audits: {'fake-audit': {title: reference}}};
+      const fakeFile = path.join(__dirname, 'fake-file-number-2.js');
+      const UIStrings = {aString: 'different {x}!'};
+      const formatter = i18n.createMessageInstanceIdFn(fakeFile, UIStrings);
+
+      const title = formatter(UIStrings.aString, {x: 1});
+      const lhr = {audits: {'fake-audit': {title}}};
 
       const icuMessagePaths = i18n.replaceIcuMessageInstanceIds(lhr, 'en-US');
-      expect(lhr.audits['fake-audit'].title).toBe('use me!');
+      expect(lhr.audits['fake-audit'].title).toBe('different 1!');
+
+      const expectedPathId = 'lighthouse-core/test/lib/i18n/fake-file-number-2.js | aString';
       expect(icuMessagePaths).toEqual({
-        [templateID]: [{path: 'audits[fake-audit].title', values: {x: 1}}]});
+        [expectedPathId]: [{path: 'audits[fake-audit].title', values: {x: 1}}]});
     });
   });
 
@@ -190,6 +195,16 @@ describe('i18n', () => {
       expect(_ => i18n.getFormatted(helloStr, 'en-US'))
         // eslint-disable-next-line max-len
         .toThrow(`ICU Message "Hello {timeInMs, number, seconds} World" contains a numeric reference ("timeInMs") but provided value was not a number`);
+    });
+
+    it('throws an error if a value is provided that has no placeholder in the message', () => {
+      const helloStr = str_(UIStrings.helloTimeInMsWorld, {
+        timeInMs: 55,
+        sirNotAppearingInThisString: 66,
+      });
+      expect(_ => i18n.getFormatted(helloStr, 'en-US'))
+        // eslint-disable-next-line max-len
+        .toThrow(`Provided value "sirNotAppearingInThisString" does not match any placeholder in ICU message "Hello {timeInMs, number, seconds} World"`);
     });
   });
 });
