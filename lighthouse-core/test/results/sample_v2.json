@@ -37,21 +37,21 @@
     "redirects-http": {
       "id": "redirects-http",
       "title": "Does not redirect HTTP traffic to HTTPS",
-      "description": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS in order to enable secure web features for all your users. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https).",
+      "description": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS in order to enable secure web features for all your users. [Learn more](https://web.dev/redirects-http).",
       "score": 0,
       "scoreDisplayMode": "binary"
     },
     "service-worker": {
       "id": "service-worker",
       "title": "Does not register a service worker that controls page and `start_url`",
-      "description": "The service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker).",
+      "description": "The service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. [Learn more](https://web.dev/service-worker).",
       "score": 0,
       "scoreDisplayMode": "binary"
     },
     "works-offline": {
       "id": "works-offline",
       "title": "Current page does not respond with a 200 when offline",
-      "description": "If you're building a Progressive Web App, consider using a service worker so that your app can work offline. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).",
+      "description": "If you're building a Progressive Web App, consider using a service worker so that your app can work offline. [Learn more](https://web.dev/works-offline).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "warnings": []
@@ -59,7 +59,7 @@
     "viewport": {
       "id": "viewport",
       "title": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`",
-      "description": "Add a `<meta name=\"viewport\">` tag to optimize your app for mobile screens. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/has-viewport-meta-tag).",
+      "description": "Add a `<meta name=\"viewport\">` tag to optimize your app for mobile screens. [Learn more](https://web.dev/viewport).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "warnings": []
@@ -67,7 +67,7 @@
     "without-javascript": {
       "id": "without-javascript",
       "title": "Contains some content when JavaScript is not available",
-      "description": "Your app should display some content when JavaScript is disabled, even if it's just a warning to the user that JavaScript is required to use the app. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/no-js).",
+      "description": "Your app should display some content when JavaScript is disabled, even if it's just a warning to the user that JavaScript is required to use the app. [Learn more](https://web.dev/without-javascript).",
       "score": 1,
       "scoreDisplayMode": "binary"
     },
@@ -92,7 +92,7 @@
     "load-fast-enough-for-pwa": {
       "id": "load-fast-enough-for-pwa",
       "title": "Page load is fast enough on mobile networks",
-      "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/fast-3g).",
+      "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "numericValue": 4927.278
@@ -468,7 +468,7 @@
     "installable-manifest": {
       "id": "installable-manifest",
       "title": "Web app manifest does not meet the installability requirements",
-      "description": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/install-prompt).",
+      "description": "Browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "explanation": "Failures: No manifest was fetched.",
@@ -496,7 +496,7 @@
     "splash-screen": {
       "id": "splash-screen",
       "title": "Is not configured for a custom splash screen",
-      "description": "A themed splash screen ensures a high-quality experience when users launch your app from their homescreens. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/custom-splash-screen).",
+      "description": "A themed splash screen ensures a high-quality experience when users launch your app from their homescreens. [Learn more](https://web.dev/splash-screen).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "explanation": "Failures: No manifest was fetched.",
@@ -516,7 +516,7 @@
     "themed-omnibox": {
       "id": "themed-omnibox",
       "title": "Does not set a theme color for the address bar.",
-      "description": "The browser address bar can be themed to match your site. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/address-bar).",
+      "description": "The browser address bar can be themed to match your site. [Learn more](https://web.dev/themed-omnibox).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "explanation": "Failures: No manifest was fetched,\nNo `<meta name=\"theme-color\">` tag found.",
@@ -538,7 +538,7 @@
     "content-width": {
       "id": "content-width",
       "title": "Content is sized correctly for the viewport",
-      "description": "If the width of your app's content doesn't match the width of the viewport, your app might not be optimized for mobile screens. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/content-sized-correctly-for-viewport).",
+      "description": "If the width of your app's content doesn't match the width of the viewport, your app might not be optimized for mobile screens. [Learn more](https://web.dev/content-width).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "explanation": ""
@@ -1286,7 +1286,7 @@
     "offline-start-url": {
       "id": "offline-start-url",
       "title": "`start_url` does not respond with a 200 when offline",
-      "description": "A service worker enables your web app to be reliable in unpredictable network conditions. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline).",
+      "description": "A service worker enables your web app to be reliable in unpredictable network conditions. [Learn more](https://web.dev/offline-start-url).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "explanation": "No usable web app manifest found on page.",
@@ -1528,21 +1528,21 @@
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
-      "description": "To reach the most number of users, sites should work across every major browser. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#site-works-cross-browser).",
+      "description": "To reach the most number of users, sites should work across every major browser. [Learn more](https://web.dev/pwa-cross-browser).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
     "pwa-page-transitions": {
       "id": "pwa-page-transitions",
       "title": "Page transitions don't feel like they block on the network",
-      "description": "Transitions should feel snappy as you tap around, even on a slow network, a key to perceived performance. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network).",
+      "description": "Transitions should feel snappy as you tap around, even on a slow network, a key to perceived performance. [Learn more](https://web.dev/pwa-page-transitions).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
     "pwa-each-page-has-url": {
       "id": "pwa-each-page-has-url",
       "title": "Each page has a URL",
-      "description": "Ensure individual pages are deep linkable via URL and that URLs are unique for the purpose of shareability on social media. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url).",
+      "description": "Ensure individual pages are deep linkable via URL and that URLs are unique for the purpose of shareability on social media. [Learn more](https://web.dev/pwa-each-page-has-url).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
