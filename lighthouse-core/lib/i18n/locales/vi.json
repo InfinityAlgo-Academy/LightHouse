@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Mục tiêu nhấn có kích thước phù hợp"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Thời gian thực thi trên chuỗi chính"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Bên thứ ba"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Mã của bên thứ ba có thể tác động đáng kể đến hiệu suất tải. Hãy hạn chế số nhà cung cấp bên thứ ba dư thừa và cố gắng tải mã của bên thứ ba sau khi trang của bạn hoàn thành phần lớn quá trình tải. [Tìm hiểu thêm](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Tìm thấy 1 bên thứ ba}other{Tìm thấy # bên thứ ba}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Mức sử dụng dịch vụ bên thứ ba"

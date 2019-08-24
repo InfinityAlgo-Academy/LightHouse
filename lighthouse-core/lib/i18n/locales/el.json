@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Τα στοιχεία που επιλέγονται με πάτημα έχουν το κατάλληλο μέγεθος"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Χρόνος κύριου νήματος"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Τρίτο μέρος"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Ο κώδικας τρίτων παρόχων μπορεί να επηρεάσει σημαντικά την απόδοση φόρτωσης. Περιορίστε τον αριθμό των περιττών τρίτων παρόχων και προσπαθήστε η φόρτωση του κώδικα τρίτων παρόχων να γίνεται αφού πρώτα έχει ολοκληρωθεί η φόρτωση της σελίδας σας. [Μάθετε περισσότερα](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Βρέθηκε 1 τρίτο μέρος}other{Βρέθηκαν # τρίτα μέρη}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Χρήση κώδικα τρίτου"

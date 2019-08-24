@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "[Ţåþ ţåŕĝéţš åŕé šîžéð åþþŕöþŕîåţéļý one two three four five six seven eight]"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "[Måîñ Ţĥŕéåð Ţîmé one two]"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "[Ţĥîŕð-Þåŕţý one two]"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "[Ţĥîŕð-þåŕţý çöðé çåñ šîĝñîƒîçåñţļý îmþåçţ ļöåð þéŕƒöŕmåñçé. Ļîmîţ ţĥé ñûmбéŕ öƒ ŕéðûñðåñţ ţĥîŕð-þåŕţý þŕövîðéŕš åñð ţŕý ţö ļöåð ţĥîŕð-þåŕţý çöðé åƒţéŕ ýöûŕ þåĝé ĥåš þŕîmåŕîļý ƒîñîšĥéð ļöåðîñĝ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight]"
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{[1 Ţĥîŕð-Þåŕţý Föûñð one two three]}other{[# Ţĥîŕð-Þåŕţîéš Föûñð one two three]}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "[Ţĥîŕð-Þåŕţý Ûšåĝé one two three]"

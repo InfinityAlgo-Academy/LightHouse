@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "เป้าหมายการแตะมีขนาดที่เหมาะสม"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "เวลาของเธรดหลัก"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "บุคคลที่สาม"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "โค้ดของบุคคลที่สามอาจส่งผลกระทบที่สำคัญต่อประสิทธิภาพการโหลด จำกัดจำนวนผู้ให้บริการบุคคลที่สามที่มากเกินไปและพยายามโหลดโค้ดของบุคคลที่สามหลังจากที่หน้าเว็บโหลดเบื้องต้นเสร็จเรียบร้อยแล้ว [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{พบบุคคลที่สาม 1 ราย}other{พบบุคคลที่สาม # ราย}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "การใช้งานของบุคคลที่สาม"

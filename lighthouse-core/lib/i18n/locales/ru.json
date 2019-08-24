@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Размер интерактивных элементов оптимален"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Время выполнения в основном потоке"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Сторонний поставщик"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Сторонний код может сильно замедлить загрузку страниц сайта. Рекомендуем использовать только самые необходимые сторонние ресурсы и сделать так, чтобы они загружались в последнюю очередь. [Подробнее…](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Обнаружен 1 сторонний фрагмент кода}one{Обнаружен # сторонний фрагмент кода}few{Обнаружено # сторонних фрагмента кода}many{Обнаружено # сторонних фрагментов кода}other{Обнаружено # стороннего фрагмента кода}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Сторонний код"

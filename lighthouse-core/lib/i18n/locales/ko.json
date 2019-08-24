@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "탭 타겟의 크기가 적절함"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "기본 스레드 시간"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "타사"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "타사 코드는 로드 성능에 크게 영향을 미칠 수 있습니다. 페이지에서 먼저 로딩을 끝낸 후 중복되는 타사 공급업체의 수를 제한하고 타사 코드를 로드해 보세요. [자세히 알아보기](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{타사 항목 1개 검색됨}other{타사 항목 #개 검색됨}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "타사 사용"

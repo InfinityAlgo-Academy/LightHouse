@@ -145,7 +145,7 @@ function lookupLocale(locale) {
 function _preformatValues(icuMessage, messageFormatter, values = {}) {
   const clonedValues = JSON.parse(JSON.stringify(values));
 
-  const elements = _collectAllCustomElementsFromICU(messageFormatter.getAst().elements);
+  const elements = collectAllCustomElementsFromICU(messageFormatter.getAst().elements);
 
   return _processParsedElements(icuMessage, Array.from(elements.values()), clonedValues);
 }
@@ -165,10 +165,10 @@ function _preformatValues(icuMessage, messageFormatter, values = {}) {
  *  thus they are stored via a Map keyed on the "id" which is the ICU varName.
  *
  * @param {Array<MessageElement>} icuElements
- * @param {Map<string, ArgumentElement>} seenElementsById
+ * @param {Map<string, ArgumentElement>} [seenElementsById]
  * @return {Map<string, ArgumentElement>}
  */
-function _collectAllCustomElementsFromICU(icuElements, seenElementsById = new Map()) {
+function collectAllCustomElementsFromICU(icuElements, seenElementsById = new Map()) {
   for (const el of icuElements) {
     // We are only interested in elements that need ICU formatting (argumentElements)
     if (el.type !== 'argumentElement') continue;
@@ -180,7 +180,7 @@ function _collectAllCustomElementsFromICU(icuElements, seenElementsById = new Ma
     // Look at all options of the plural (=1{} =other{}...)
     for (const option of el.format.options) {
       // Run collections on each option's elements
-      _collectAllCustomElementsFromICU(option.value.elements, seenElementsById);
+      collectAllCustomElementsFromICU(option.value.elements, seenElementsById);
     }
   }
 
@@ -473,4 +473,5 @@ module.exports = {
   getFormattedFromIdAndValues,
   replaceIcuMessageInstanceIds,
   isIcuMessage,
+  collectAllCustomElementsFromICU,
 };

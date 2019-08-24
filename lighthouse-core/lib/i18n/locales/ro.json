@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Direcționările atingerilor sunt dimensionate corect"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Durata pentru firul principal"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Terță parte"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Codul terță parte poate influența semnificativ performanța de încărcare. Limitează numărul de furnizori terță parte redundanți și încearcă să încarce cod terță parte după ce pagina a terminat încărcarea de bază. [Află mai multe](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{S-a găsit o terță parte}few{S-au găsit # terțe părți}other{S-au găsit # de terțe părți}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Utilizarea terță parte"

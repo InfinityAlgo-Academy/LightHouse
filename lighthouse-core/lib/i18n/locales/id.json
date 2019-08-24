@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Target ketuk memiliki ukuran yang tepat"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Waktu Thread Utama"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Pihak Ketiga"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Kode pihak ketiga dapat memberikan dampak signifikan terhadap performa muatan. Batasi jumlah penyedia pihak ketiga yang berlebihan dan coba muat kode pihak ketiga terutama setelah halaman selesai memuat. [Pelajari lebih lanjut](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 Pihak Ketiga Ditemukan}other{# Pihak Ketiga Ditemukan}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Penggunaan oleh Pihak Ketiga"

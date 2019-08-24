@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Cieľové oblasti klepnutia majú vhodnú veľkosť"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Čas hlavného vlákna"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Tretia strana"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Kód tretích strán môže výrazne ovplyvniť výkonnosť načítavania. Obmedzte počet nadbytočných poskytovateľov tretích strán a skúste načítavať kód tretích strán po dokončení načítavania stránky. [Ďalšie informácie](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Bola zistená 1 tretia strana}few{Boli zistené # tretie strany}many{# Third-Parties Found}other{Bolo zistených # tretích strán}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Využívanie tretích strán"

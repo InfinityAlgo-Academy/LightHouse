@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Ciljevi dodira odgovarajuće su veličine"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Vrijeme glavne niti"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Treća strana"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Kôd treće strane može znatno utjecati na uspješnost učitavanja. Ograničite broj suvišnih pružatelja treće strane i pokušajte učitati kôd treće strane nakon primarnog zavšetka učitavanja vaše stranice. [Saznajte više](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Pronađena je jedna treća strana}one{Broj pronađenih trećih strana: #}few{Broj pronađenih trećih strana: #}other{Broj pronađenih trećih strana: #}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Upotreba trećih strana"

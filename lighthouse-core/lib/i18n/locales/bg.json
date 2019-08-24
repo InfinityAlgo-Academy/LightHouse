@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Целевите зони за докосване са оразмерени правилно"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Време на основната нишка"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Трета страна"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Кодът от трети страни може сериозно да повлияе върху скоростта на зареждане. Ограничете броя на излишните доставчици трети страни и опитайте да зареждате кода от трети страни, след като основното зареждане на страницата ви е приключило. [Научете повече](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Открит е 1 фрагмент с код от трета страна}other{Открити са # фрагмента с код от трета страна}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Използване на код от трети страни"

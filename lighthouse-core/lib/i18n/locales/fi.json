@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Napautuskohteet ovat sopivan kokoisia"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Pääsäikeen aika"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Kolmas osapuoli"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Kolmannen osapuolen koodi voi vaikuttaa lataustehokkuuteen merkittävästi. Rajoita tarpeettomien kolmannen osapuolen palveluntarjoajien määrää ja yritä ladata kolmannen osapuolen koodi sen jälkeen, kun sivun ensisijainen lataus on valmis. [Lue lisää](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 kolmas osapuoli löytyi}other{# kolmatta osapuolta löytyi}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Kolmannen osapuolen käyttö"

@@ -971,17 +971,11 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "Elementy dotykowe mają odpowiednią wielkość"
   },
-  "lighthouse-core/audits/third-party-summary.js | columnMainThreadTime": {
-    "message": "Czas w wątku głównym"
-  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Dostawca zewnętrzny"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "Kod spoza witryny może znacznie spowalniać wczytywanie stron. Ogranicz liczbę zewnętrznych dostawców kodu i spróbuj wczytywać kod spoza witryny dopiero po zakończeniu wczytywania podstawowej strony. [Więcej informacji](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)"
-  },
-  "lighthouse-core/audits/third-party-summary.js | displayValue": {
-    "message": "{itemCount,plural, =1{Znaleziono 1 zasób kodu spoza witryny}few{Znaleziono # zasoby kodu spoza witryny}many{Znaleziono # zasobów kodu spoza witryny}other{Znaleziono # zasobu kodu spoza witryny}}"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Używanie kodu spoza witryny"
