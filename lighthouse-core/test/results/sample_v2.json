@@ -1535,7 +1535,7 @@
     "pwa-page-transitions": {
       "id": "pwa-page-transitions",
       "title": "Page transitions don't feel like they block on the network",
-      "description": "Transitions should feel snappy as you tap around, even on a slow network, a key to perceived performance. [Learn more](https://web.dev/pwa-page-transitions).",
+      "description": "Transitions should feel snappy as you tap around, even on a slow network. This experience is key to a user's perception of performance. [Learn more](https://web.dev/pwa-page-transitions).",
       "score": null,
       "scoreDisplayMode": "manual"
     },

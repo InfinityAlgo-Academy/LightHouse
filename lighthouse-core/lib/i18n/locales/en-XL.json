@@ -771,7 +771,7 @@
     "message": "Êáĉh́ p̂áĝé ĥáŝ á ÛŔL̂"
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
-    "message": "T̂ŕâńŝít̂íôńŝ śĥóûĺd̂ f́êél̂ śn̂áp̂ṕŷ áŝ ýôú t̂áp̂ ár̂óûńd̂, év̂én̂ ón̂ á ŝĺôẃ n̂ét̂ẃôŕk̂, á k̂éŷ t́ô ṕêŕĉéîv́êd́ p̂ér̂f́ôŕm̂án̂ćê. [Ĺêár̂ń m̂ór̂é](https://web.dev/pwa-page-transitions)."
+    "message": "T̂ŕâńŝít̂íôńŝ śĥóûĺd̂ f́êél̂ śn̂áp̂ṕŷ áŝ ýôú t̂áp̂ ár̂óûńd̂, év̂én̂ ón̂ á ŝĺôẃ n̂ét̂ẃôŕk̂. T́ĥíŝ éx̂ṕêŕîén̂ćê íŝ ḱêý t̂ó â úŝér̂'ś p̂ér̂ćêṕt̂íôń ôf́ p̂ér̂f́ôŕm̂án̂ćê. [Ĺêár̂ń m̂ór̂é](https://web.dev/pwa-page-transitions)."
   },
   "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
     "message": "P̂áĝé t̂ŕâńŝít̂íôńŝ d́ôń't̂ f́êél̂ ĺîḱê t́ĥéŷ b́l̂óĉḱ ôń t̂h́ê ńêt́ŵór̂ḱ"
