@@ -262,6 +262,10 @@
 .lh-devtools.lh-root {
   height: 100%;
 }
+.lh-devtools.lh-root img {
+  /* Override devtools default 'min-width: 0' so svg without size in a flexbox isn't collapsed. */
+  min-width: auto;
+}
 .lh-devtools .lh-container {
   overflow-y: scroll;
   height: calc(100% - var(--topbar-height));
