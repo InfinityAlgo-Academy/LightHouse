@@ -536,6 +536,17 @@ describe('Manifest Parser', function() {
       assert.strictEqual(parsedManifest.theme_color.warning, undefined);
     });
 
+    it('correctly parses partially specified RGB/RGBA colors', () => {
+      const bgColor = 'rgb(255, 255, 255, 0.5)';
+      const themeColor = 'rgba(0, 0, 0, 0)';
+      const parsedManifest = getParsedManifest(bgColor, themeColor).value;
+
+      assert.strictEqual(parsedManifest.background_color.value, bgColor);
+      assert.strictEqual(parsedManifest.background_color.warning, undefined);
+      assert.strictEqual(parsedManifest.theme_color.value, themeColor);
+      assert.strictEqual(parsedManifest.theme_color.warning, undefined);
+    });
+
     it('correctly parses HSL/HSLA colors', () => {
       const bgColor = 'hsl(120, 100%, 50%)';
       const themeColor = 'hsla(120, 20%, 56%, 0.4)';
