@@ -1275,7 +1275,7 @@ describe('GatherRunner', function() {
       });
     });
 
-    it.only('passes a restricted driver to restricted gatherers', () => {
+    it('passes a restricted driver to restricted gatherers', () => {
       function getAllMethodNames(obj) {
         const methods = [];
         for (const key in obj) {
