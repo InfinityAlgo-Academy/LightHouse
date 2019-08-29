@@ -1311,6 +1311,7 @@ describe('GatherRunner', function() {
           blockedCalls.pass.push(...attemptToCallMethods(context.driver, driverMethods));
         }
         afterPass(context) {
+          expect(context.driver.thisDoesntExistButShouldError).toBeUndefined();
           blockedCalls.afterPass.push(...attemptToCallMethods(context.driver, driverMethods));
           return '';
         }

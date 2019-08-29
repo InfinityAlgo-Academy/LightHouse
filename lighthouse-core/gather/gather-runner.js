@@ -326,7 +326,11 @@ class GatherRunner {
             return obj.evaluateAsync.bind(obj);
           }
 
-          throw new Error(`cannot use ${prop.toString()} in a restricted gatherer.`);
+          // Only throw if the property actually exists.
+          const objPropDesc = Object.getOwnPropertyDescriptor(obj, prop);
+          if (objPropDesc) {
+            throw new Error(`cannot use ${prop.toString()} in a restricted gatherer.`);
+          }
         },
       }),
     };
