@@ -278,6 +278,60 @@ describe('ConfigPlugin', () => {
     });
   });
 
+  describe.only('`gatherers`', () => {
+    it('accepts a plugin with no gatherers', () => {
+      const pluginClone = deepClone(nicePlugin);
+      delete pluginClone.gatherers;
+      const pluginJson = ConfigPlugin.parsePlugin(pluginClone, nicePluginName);
+      assert.ok(pluginJson);
+    });
+
+    it('throws if gatherers is not an array', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.gatherers = 'blah';
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin has invalid gatherers/);
+      pluginClone.gatherers = {};
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin has invalid gatherers/);
+    });
+
+    it('throws if gatherers contains arrays', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.gatherers[0] = [];
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin has an invalid gatherer path/);
+    });
+
+    it('throws if path is invalid', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.gatherers[0] = 55;
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin has an invalid gatherer path/);
+    });
+
+    it('throws if options is invalid', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.gatherers[0] = {path: 'path', options: false};
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin has an invalid gatherer options/);
+    });
+
+    it('throws if options.restricted is set', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.gatherers[0] = {path: 'path', options: {restricted: false}};
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin cannot set a .*restricted.* option/);
+    });
+
+    it('throws if it contains gatherers with excess properties', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.gatherers[0] = {path: 'path', options: {}, bad: true};
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin has unrecognized gatherer properties:.*bad.*/);
+    });
+  });
+
   describe('`groups`', () => {
     it('accepts a plugin with no groups', () => {
       const pluginClone = deepClone(nicePlugin);

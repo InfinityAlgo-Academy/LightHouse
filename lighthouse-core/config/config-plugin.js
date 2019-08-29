@@ -172,6 +172,10 @@ class ConfigPlugin {
         throw new Error(`${pluginName} has an invalid gatherer options.`);
       }
 
+      if (options && 'restricted' in options) {
+        throw new Error(`${pluginName} cannot set a [restricted] option.`);
+      }
+
       return {
         path,
         options: options ? {...options, restricted: true} : {restricted: true},
