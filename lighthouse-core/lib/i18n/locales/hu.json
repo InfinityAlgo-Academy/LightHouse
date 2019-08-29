@@ -318,7 +318,7 @@
     "message": "A(z) `<video>` elemekhez `[kind=\"description\"]` tartalmú `<track>` elem tartozik"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Az apple-touch-icon meghatározásával ideális megjelenést nyújthat iOS-en, mikor a felhasználók ikont helyeznek a főképernyőre. Az ikonnak 192 képpont (vagy 180 képpont) méretű, nem átlátszó, négyzetes PNG-re kell mutatnia. [További információ](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/)."
+    "message": "Ha azt szeretné, hogy a megjelenés ideális legyen iOS rendszeren, amikor a felhasználók progresszív webes alkalmazást adnak hozzá a kezdőképernyőhöz, határozzon meg egy `apple-touch-icon` elemet. Az ikonnak 192 képpont (vagy 180 képpont) méretű, nem átlátszó, négyzetes PNG-re kell mutatnia. [További információ](https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/)."
   },
   "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
     "message": "Nincs érvényes `apple-touch-icon`"
@@ -440,6 +440,18 @@
   "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
     "message": "Jelenítse meg a képeket következő generációs formátumokban"
   },
+  "lighthouse-core/audits/content-width.js | description": {
+    "message": "Ha az alkalmazás tartalmának szélessége nem egyezik a megjelenítési terület szélességével, akkor lehet, hogy alkalmazása nincs optimalizálva a mobilok képernyőjére. [További információ](https://developers.google.com/web/tools/lighthouse/audits/content-sized-correctly-for-viewport)."
+  },
+  "lighthouse-core/audits/content-width.js | explanation": {
+    "message": "A megjelenítési terület mérete ({innerWidth} képpont) nem egyezik az ablak méretével ({outerWidth} képpont)."
+  },
+  "lighthouse-core/audits/content-width.js | failureTitle": {
+    "message": "A tartalom nincs megfelelően méretezve a megjelenítési területhez"
+  },
+  "lighthouse-core/audits/content-width.js | title": {
+    "message": "A tartalom megfelelően van méretezve a megjelenítési területhez"
+  },
   "lighthouse-core/audits/critical-request-chains.js | description": {
     "message": "Az alábbi kritikus kérésláncok megjelenítik, hogy milyen források töltődnek be magas prioritással. Az oldalbetöltés javítása érdekében fontolja meg a láncok hosszának csökkentését, a letöltött források méretének csökkentését, vagy a felesleges források letöltésének késleltetését. [További információ](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains)."
   },
@@ -456,7 +468,7 @@
     "message": "Sor"
   },
   "lighthouse-core/audits/deprecations.js | description": {
-    "message": "Az elavult API-k előbb-utóbb kikerülnek a böngészőből. [További információ](https://www.chromestatus.com/features#deprecated)."
+    "message": "Az elavult API-k előbb-utóbb kikerülnek a böngészőből. [További információ](https://web.dev/deprecations)."
   },
   "lighthouse-core/audits/deprecations.js | displayValue": {
     "message": "{itemCount,plural, =1{1 figyelmeztetés}other{# figyelmeztetés}}"
@@ -468,7 +480,7 @@
     "message": "Kerüli az elavult API-kat"
   },
   "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Az alkalmazás-gyorsítótár elavult. [További információ](https://developers.google.com/web/tools/lighthouse/audits/appcache)."
+    "message": "Az alkalmazás-gyorsítótár elavult. [További információ](https://web.dev/appcache-manifest)."
   },
   "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
     "message": "A(z) „{AppCacheManifest}” van használatban"
@@ -480,7 +492,7 @@
     "message": "Kerüli az alkalmazás-gyorsítótárat"
   },
   "lighthouse-core/audits/dobetterweb/doctype.js | description": {
-    "message": "A doctype meghatározásával elkerülhető, hogy a böngésző visszafelé kompatibilis módra váltson. További információ az [MDN Web Docs oldalon](https://developer.mozilla.org/en-US/docs/Glossary/Doctype)"
+    "message": "A doctype meghatározásával elkerülhető, hogy a böngésző visszafelé kompatibilis módra váltson. [További információ](https://web.dev/doctype)."
   },
   "lighthouse-core/audits/dobetterweb/doctype.js | explanationBadDoctype": {
     "message": "A doctype nevének a kisbetűs `html` szövegnek kell lennie"
@@ -510,7 +522,7 @@
     "message": "Érték"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "A böngészők fejlesztői azt javasolják, hogy az oldalak legfeljebb kb. 1500 DOM-elemet tartalmazzanak. Ideális esetben 32-nél kisebb mélységű fa és 60-nál kevesebb gyermek/szülő elem van. A nagy méretű DOM megnöveli a memóriahasználatot, hosszabb ideig tartó [stílusszámítást](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) igényel, valamint költséges [elrendezés-áttördeléssel](https://developers.google.com/speed/articles/reflow) jár. [További információ](https://developers.google.com/web/tools/lighthouse/audits/dom-size)."
+    "message": "A böngészők fejlesztői azt javasolják, hogy az oldalak legfeljebb kb. 1500 DOM-elemet tartalmazzanak. Ideális esetben 32-nél kisebb mélységű fa és 60-nál kevesebb gyermek/szülő elem van. A nagy méretű DOM megnöveli a memóriahasználatot, hosszabb ideig tartó [stílusszámítást](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) igényel, valamint költséges [elrendezés-áttördeléssel](https://developers.google.com/speed/articles/reflow) jár. [További információ](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 elem}other{# elem}}"
@@ -537,7 +549,7 @@
     "message": "Cél"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "Adjon `rel=\"noopener\"` vagy `rel=\"noreferrer\"` címkét a külső linkekhez, hogy javíthassa a teljesítményt és elkerülhesse a sebezhetőségeket. [További információ](https://developers.google.com/web/tools/lighthouse/audits/noopener)."
+    "message": "Adjon `rel=\"noopener\"` vagy `rel=\"noreferrer\"` címkét a külső linkekhez, hogy javíthassa a teljesítményt és elkerülhesse a sebezhetőségeket. [További információ](https://web.dev/external-anchors-use-rel-noopener)."
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
     "message": "Az eredetközi célokra mutató linkek nem biztonságosak"
@@ -549,7 +561,7 @@
     "message": "A horgony célpontja nem meghatározható ({anchorHTML}). Ha nem hiperlinkről van szó, érdemes eltávolítania a target=_blank részt."
   },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
-    "message": "A tartózkodási helyre vonatkozó engedély váratlan kérése bizalmatlanságra adhat okot, valamint összezavarhatja a felhasználókat. Érdemes inkább felhasználói műveletekhez kötni a kérést. [További információ](https://developers.google.com/web/tools/lighthouse/audits/geolocation-on-load)."
+    "message": "A tartózkodási helyre vonatkozó engedély váratlan kérése bizalmatlanságra adhat okot, valamint összezavarhatja a felhasználókat. Érdemes inkább felhasználói műveletekhez kötni a kérést. [További információ](https://web.dev/geolocation-on-start)."
   },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | failureTitle": {
     "message": "Oldalbetöltéskor a földrajzi helyre vonatkozó engedélyt kéri"
@@ -561,13 +573,13 @@
     "message": "Verzió"
   },
   "lighthouse-core/audits/dobetterweb/js-libraries.js | description": {
-    "message": "Az oldalon észlelt minden front-end JavaScript-függvénytár."
+    "message": "Az oldalon észlelt minden front-end JavaScript-függvénytár. [További információ](https://web.dev/js-libraries)."
   },
   "lighthouse-core/audits/dobetterweb/js-libraries.js | title": {
     "message": "Észlelt JavaScript-függvénytárak"
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | description": {
-    "message": "A külső szkriptek `document.write()` segítségével történő dinamikus beillesztése több tíz másodperccel lassíthatja az oldalbetöltést a lassú kapcsolaton csatlakozó felhasználók esetében. [További információ](https://developers.google.com/web/tools/lighthouse/audits/document-write)."
+    "message": "A külső szkriptek `document.write()` segítségével történő dinamikus beillesztése több tíz másodperccel lassíthatja az oldalbetöltést a lassú kapcsolaton csatlakozó felhasználók esetében. [További információ](https://web.dev/no-document-write)."
   },
   "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": {
     "message": "A(z) `document.write()` metódust használja"
@@ -585,7 +597,7 @@
     "message": "Sebezhetőségek száma"
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "A harmadik felektől származó szkriptek ismert sebezhetőségeket tartalmazhatnak, melyeket a támadók könnyedén felismerhetnek és kihasználhatnak. [További információ](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities)."
+    "message": "A harmadik felektől származó szkriptek ismert sebezhetőségeket tartalmazhatnak, melyeket a támadók könnyedén felismerhetnek és kihasználhatnak. [További információ](https://web.dev/no-vulnerable-libraries)."
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
     "message": "{itemCount,plural, =1{1 észlelt sebezhetőség}other{# észlelt sebezhetőség}}"
@@ -606,7 +618,7 @@
     "message": "Kerüli az ismert sebezhetőségeket tartalmazó front-end JavaScript-függvénytárakat"
   },
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | description": {
-    "message": "Az értesítésekre vonatkozó engedély váratlan kérése bizalmatlanságra adhat okot, valamint összezavarhatja a felhasználókat. Érdemes inkább felhasználói műveletekhez kötni a kérést. [További információ](https://developers.google.com/web/tools/lighthouse/audits/notifications-on-load)."
+    "message": "Az értesítésekre vonatkozó engedély váratlan kérése bizalmatlanságra adhat okot, valamint összezavarhatja a felhasználókat. Érdemes inkább felhasználói műveletekhez kötni a kérést. [További információ](https://web.dev/notification-on-start)."
   },
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | failureTitle": {
     "message": "Oldalbetöltéskor az értesítésekre vonatkozó engedélyt kéri"
@@ -618,7 +630,7 @@
     "message": "Hibás elemek"
   },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "A jelszóbeillesztés megakadályozása rossz biztonsági gyakorlat. [További információ](https://developers.google.com/web/tools/lighthouse/audits/password-pasting)."
+    "message": "A jelszóbeillesztés megakadályozása rossz biztonsági gyakorlat. [További információ](https://web.dev/password-inputs-can-be-pasted-into)."
   },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
     "message": "Megakadályozza, hogy a felhasználók szöveget illesszenek be a jelszómezőkbe"
@@ -630,7 +642,7 @@
     "message": "Protokoll"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "A HTTP/2 számos előnyt nyújt a HTTP/1.1-hez képest, például bináris fejléceket, multiplexelést és előzetes adatküldést (server push). [További információ](https://developers.google.com/web/tools/lighthouse/audits/http2)."
+    "message": "A HTTP/2 számos előnyt nyújt a HTTP/1.1-hez képest, például bináris fejléceket, multiplexelést és előzetes adatküldést (server push). [További információ](https://web.dev/uses-http2)."
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 nem HTTP/2-t használó kérés}other{# nem HTTP/2-t használó kérés}}"
@@ -642,7 +654,7 @@
     "message": "HTTP/2-t használ a saját forrásokhoz"
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": {
-    "message": "Fontolja meg az érintési és görgetési eseményfigyelők megjelölését mint `passive`, hogy javuljon az oldal görgetést érintő teljesítménye. [További információ](https://developers.google.com/web/tools/lighthouse/audits/passive-event-listeners)."
+    "message": "Fontolja meg az érintési és görgetési eseményfigyelők megjelölését mint `passive`, hogy javuljon az oldal görgetést érintő teljesítménye. [További információ](https://web.dev/uses-passive-event-listeners)."
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": {
     "message": "Nem használ passzív figyelőket a görgetés teljesítményének javításához"
@@ -654,7 +666,7 @@
     "message": "Leírás"
   },
   "lighthouse-core/audits/errors-in-console.js | description": {
-    "message": "A konzolon megjelenő hibák megoldatlan problémákat jeleznek. Okaik lehetnek sikertelen hálózati kérések, valamint más böngészős tényezők is."
+    "message": "A konzolon megjelenő hibák megoldatlan problémákat jeleznek. Okaik lehetnek sikertelen hálózati kérések, valamint más böngészős tényezők is. [További információ](https://web.dev/errors-in-console)"
   },
   "lighthouse-core/audits/errors-in-console.js | failureTitle": {
     "message": "A böngészőhibák a konzolon láthatók"
@@ -681,7 +693,7 @@
     "message": "Képarány (megjelenített)"
   },
   "lighthouse-core/audits/image-aspect-ratio.js | description": {
-    "message": "A képmegjelenítési méretek ideális esetben természetes képarányt alkalmaznak. [További információ](https://developers.google.com/web/tools/lighthouse/audits/aspect-ratio)."
+    "message": "A képmegjelenítési méretek ideális esetben természetes képarányt alkalmaznak. [További információ](https://web.dev/image-aspect-ratio)."
   },
   "lighthouse-core/audits/image-aspect-ratio.js | failureTitle": {
     "message": "Hibás képaránnyal jeleníti meg a képeket"
@@ -692,11 +704,20 @@
   "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
     "message": "Érvénytelen képméretezési információ {url}"
   },
+  "lighthouse-core/audits/installable-manifest.js | description": {
+    "message": "A böngészők proaktív módon kérhetik a felhasználókat, hogy adják hozzá az Ön alkalmazását a kezdőképernyőjükhöz, ami erősebb elköteleződéshez vezethet. [További információ](https://developers.google.com/web/tools/lighthouse/audits/install-prompt)."
+  },
+  "lighthouse-core/audits/installable-manifest.js | failureTitle": {
+    "message": "Az internetes alkalmazás manifestje nem felel meg a telepíthetőségi követelményeknek"
+  },
+  "lighthouse-core/audits/installable-manifest.js | title": {
+    "message": "Az internetes alkalmazás manifestje megfelel a telepíthetőségi követelményeknek"
+  },
   "lighthouse-core/audits/is-on-https.js | columnInsecureURL": {
     "message": "Nem biztonságos URL"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "Minden webhelyet HTTPS-sel kell védeni, még akkor is, ha nem kezelnek bizalmas adatokat A HTTPS megakadályozza, hogy behatolók módosítsák vagy megfigyeljék az alkalmazás és a felhasználók közötti kommunikációt. Ezt a protokollt megköveteli a HTTP/2, valamint számos új webes API is. [További információ](https://developers.google.com/web/tools/lighthouse/audits/https)."
+    "message": "Minden webhelyet HTTPS-sel kell védeni, még akkor is, ha nem kezelnek bizalmas adatokat A HTTPS megakadályozza, hogy behatolók módosítsák vagy megfigyeljék az alkalmazás és a felhasználók közötti kommunikációt. Ezt a protokollt megköveteli a HTTP/2, valamint számos új webes API is. [További információ](https://web.dev/is-on-https)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{1 nem biztonságos kérés}other{# nem biztonságos kérés}}"
@@ -716,6 +737,9 @@
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
     "message": "Interaktívvá válás szimulált mobilhálózaton: {timeInMs, number, seconds} mp"
   },
+  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
+    "message": "Az oldal túl lassan töltődik be, és nem válik interaktívvá tíz másodpercen belül. A probléma elhárításához tekintse meg a „Teljesítmény” szakaszban lévő lehetőségeket és diagnosztikákat."
+  },
   "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
     "message": "Az oldalbetöltés nem elég gyors mobilhálózatokon"
   },
@@ -733,6 +757,24 @@
   },
   "lighthouse-core/audits/mainthread-work-breakdown.js | title": {
     "message": "Minimalizálja a fő szál terhelését"
+  },
+  "lighthouse-core/audits/manual/pwa-cross-browser.js | description": {
+    "message": "A lehető legtöbb felhasználó elérése érdekében a webhelyeknek minden elterjedtebb böngészőben működniük kell. [További információ](https://developers.google.com/web/progressive-web-apps/checklist#site-works-cross-browser)."
+  },
+  "lighthouse-core/audits/manual/pwa-cross-browser.js | title": {
+    "message": "A webhely többféle böngészőben is működik"
+  },
+  "lighthouse-core/audits/manual/pwa-each-page-has-url.js | description": {
+    "message": "Lássa el az egyes oldalakat mélylinkként használható URL-ekkel, és ügyeljen arra, hogy ezek az URL-ek egyediek legyenek a közösségi médiában való megosztás céljából. [További információ](https://developers.google.com/web/progressive-web-apps/checklist#each-page-has-a-url)."
+  },
+  "lighthouse-core/audits/manual/pwa-each-page-has-url.js | title": {
+    "message": "Minden oldal rendelkezik URL-címmel"
+  },
+  "lighthouse-core/audits/manual/pwa-page-transitions.js | description": {
+    "message": "A koppintgatás során az átmeneteknek még lassú hálózaton is gyorsnak kell lenniük – ez az egyik legfontosabb tényező az észlelt teljesítmény tekintetében. [További információ](https://developers.google.com/web/progressive-web-apps/checklist#page-transitions-dont-feel-like-they-block-on-the-network)."
+  },
+  "lighthouse-core/audits/manual/pwa-page-transitions.js | title": {
+    "message": "Az oldalak közti váltásnak nem szabadna akadályozni a hálózati forgalmat"
   },
   "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
     "message": "A becsült bemeneti késés annak a becsült értéke, hogy az alkalmazás mennyi idő alatt reagál – ezredmásodpercben (ms) megadva – a felhasználói interakciókra az oldalbetöltés legforgalmasabb 5 másodperces időkeretében. Ha a várakozási idő meghaladja az 50 ms-ot, a felhasználók lassúnak érezhetik az alkalmazást. [További információ](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
@@ -794,6 +836,18 @@
   "lighthouse-core/audits/network-server-latency.js | title": {
     "message": "Várakozási idő a háttérszervereknél"
   },
+  "lighthouse-core/audits/offline-start-url.js | description": {
+    "message": "A szolgáltató munkatársnak köszönhetően internetes alkalmazása előre nem látható hálózati körülmények mellett is megbízhatóan fog működni. [További információ](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
+    "message": "A(z) `start_url` nem 200-as állapotkódot küld vissza, amikor offline állapotban van"
+  },
+  "lighthouse-core/audits/offline-start-url.js | title": {
+    "message": "A(z) `start_url` 200-as állapotkódot küld vissza, amikor offline állapotban van"
+  },
+  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
+    "message": "A Lighthouse nem tudta olvasni a manifest `start_url` elemét. Ennek következtében azt feltételezi, hogy a(z) `start_url` a dokumentum URL-címe. Hibaüzenet: „{manifestWarning}”."
+  },
   "lighthouse-core/audits/performance-budget.js | columnOverBudget": {
     "message": "Büdzsén kívül"
   },
@@ -806,6 +860,15 @@
   "lighthouse-core/audits/performance-budget.js | title": {
     "message": "Teljesítménybüdzsé"
   },
+  "lighthouse-core/audits/redirects-http.js | description": {
+    "message": "Ha már beállította a HTTPS protokollt, gondoskodjon a teljes HTTP-forgalom HTTPS-re történő átirányításáról, hogy a biztonságos webes funkciók az összes felhasználó számára rendelkezésre álljanak. [További információ](https://developers.google.com/web/tools/lighthouse/audits/http-redirects-to-https)."
+  },
+  "lighthouse-core/audits/redirects-http.js | failureTitle": {
+    "message": "Nem irányítja át a HTTP-forgalmat HTTPS-re"
+  },
+  "lighthouse-core/audits/redirects-http.js | title": {
+    "message": "Átirányítja a HTTP-forgalmat HTTPS-re"
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Az átirányítások további késlekedéssel hosszabbítják meg az oldalbetöltéshez szükséges időt. [További információ](https://developers.google.com/web/tools/lighthouse/audits/redirects)."
   },
@@ -816,13 +879,13 @@
     "message": "Az oldal forrásainak mennyiségére és méretére vonatkozó büdzséket budget.json fájl hozzáadásával határozhatja meg. [További információ](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
   "lighthouse-core/audits/resource-summary.js | displayValue": {
-    "message": "{requestCount,plural, =1{1 kérés}other{# kérés}} • {byteCount, number, bytes} KB"
+    "message": "{requestCount,plural, =1{1 kérelem • {byteCount, number, bytes} KB}other{# kérelem • {byteCount, number, bytes} KB}}"
   },
   "lighthouse-core/audits/resource-summary.js | title": {
     "message": "A kérések száma legyen kevés, az átvitelek pedig kis méretűek"
   },
   "lighthouse-core/audits/seo/canonical.js | description": {
-    "message": "A gyűjtőlinkek a keresési eredményként megjelenítendő URL-re tesznek javaslatot. [További információ](https://developers.google.com/web/tools/lighthouse/audits/canonical)."
+    "message": "A gyűjtőlinkek a keresési eredményként megjelenítendő URL-re tesznek javaslatot. [További információ](https://web.dev/canonical)."
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "Több ütköző URL ({urlList})"
@@ -849,7 +912,7 @@
     "message": "A dokumentum érvényes `rel=canonical` attribútumot tartalmaz"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
-    "message": "A 12 képpontnál kisebb betűméretek nehezen láthatók, ezért a mobilhasználóknak a szöveget elolvasásához fel kell nagyítaniuk a képernyő tartalmát. Törekedjen arra, hogy az oldal szövegének legalább 60%-a minimum 12 képpontos betűmérettel jelenjen meg. [További információ](https://developers.google.com/web/tools/lighthouse/audits/font-sizes)."
+    "message": "A 12 képpontnál kisebb betűméretek nehezen láthatók, ezért a mobilhasználóknak a szöveget elolvasásához fel kell nagyítaniuk a képernyő tartalmát. Törekedjen arra, hogy az oldal szövegének legalább 60%-a minimum 12 képpontos betűmérettel jelenjen meg. [További információ](https://web.dev/font-size)."
   },
   "lighthouse-core/audits/seo/font-size.js | displayValue": {
     "message": "{decimalProportion, number, extendedPercent}-nyi olvasható szöveg"
@@ -867,7 +930,7 @@
     "message": "A dokumentum olvasható betűméreteket tartalmaz"
   },
   "lighthouse-core/audits/seo/hreflang.js | description": {
-    "message": "A hreflang linkek azt mondják meg a keresőmotoroknak, hogy nyelvtől vagy régiótól függően az oldal melyik változatát kell megjeleníteniük a keresési találatokban. [További információ](https://developers.google.com/web/tools/lighthouse/audits/hreflang)."
+    "message": "A hreflang linkek azt mondják meg a keresőmotoroknak, hogy nyelvtől vagy régiótól függően az oldal melyik változatát kell megjeleníteniük a keresési találatokban. [További információ](https://web.dev/hreflang)."
   },
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
     "message": "A dokumentum nem rendelkezik érvényes `hreflang` attribútummal"
@@ -876,7 +939,7 @@
     "message": "A dokumentum érvényes `hreflang` attribútumot tartalmaz"
   },
   "lighthouse-core/audits/seo/http-status-code.js | description": {
-    "message": "A sikertelenséget jelző HTTP-állapotkóddal rendelkező oldalak indexelése eredménytelen lehet. [További információ](https://developers.google.com/web/tools/lighthouse/audits/successful-http-code)."
+    "message": "A sikertelenséget jelző HTTP-állapotkóddal rendelkező oldalak indexelése eredménytelen lehet. [További információ](https://web.dev/http-status-code)."
   },
   "lighthouse-core/audits/seo/http-status-code.js | failureTitle": {
     "message": "Az oldal sikertelenséget jelző HTTP-állapotkóddal rendelkezik"
@@ -885,7 +948,7 @@
     "message": "Az oldal sikerességet jelző HTTP-állapotkóddal rendelkezik"
   },
   "lighthouse-core/audits/seo/is-crawlable.js | description": {
-    "message": "A keresőmotorok azokat az oldalakat nem tudják keresési eredményként megjeleníteni, amelyek feltérképezésére nincs engedélyük. [További információ](https://developers.google.com/web/tools/lighthouse/audits/indexing)."
+    "message": "A keresőmotorok azokat az oldalakat nem tudják keresési eredményként megjeleníteni, amelyek feltérképezésére nincs engedélyük. [További információ](https://web.dev/is-crawable)."
   },
   "lighthouse-core/audits/seo/is-crawlable.js | failureTitle": {
     "message": "Az oldal indexelését letiltották"
@@ -894,7 +957,7 @@
     "message": "Az oldalnál nincs letiltva az indexelés"
   },
   "lighthouse-core/audits/seo/link-text.js | description": {
-    "message": "A leíró jellegű linkszövegek segítenek a keresőmotoroknak a tartalmak értelmezésében. [További információ](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text)."
+    "message": "A leíró jellegű linkszövegek segítenek a keresőmotoroknak a tartalmak értelmezésében. [További információ](https://web.dev/link-text)."
   },
   "lighthouse-core/audits/seo/link-text.js | displayValue": {
     "message": "{itemCount,plural, =1{1 link található}other{# link található}}"
@@ -906,13 +969,13 @@
     "message": "A linkek leíró jellegű szöveggel rendelkeznek"
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | description": {
-    "message": "Ellenőrizze a strukturált adatok érvényességét a [Strukturált adatok tesztelőeszköz](https://search.google.com/structured-data/testing-tool/) és a [Structured Data Linter](http://linter.structured-data.org/) segítségével. [További információ](https://developers.google.com/search/docs/guides/mark-up-content)."
+    "message": "Ellenőrizze a strukturált adatok érvényességét a [Strukturált adatok tesztelőeszköz](https://search.google.com/structured-data/testing-tool/) és a [Structured Data Linter](http://linter.structured-data.org/) segítségével. [További információ](https://web.dev/structured-data)."
   },
   "lighthouse-core/audits/seo/manual/structured-data.js | title": {
     "message": "A strukturált adatok érvényesek"
   },
   "lighthouse-core/audits/seo/meta-description.js | description": {
-    "message": "Az oldaltartalom tömör összefoglalásának érdekében metaleírások szerepelhetnek a keresési eredményekben. [További információ](https://developers.google.com/web/tools/lighthouse/audits/description)."
+    "message": "Az oldaltartalom tömör összefoglalásának érdekében metaleírások szerepelhetnek a keresési eredményekben. [További információ](https://web.dev/meta-description)."
   },
   "lighthouse-core/audits/seo/meta-description.js | explanation": {
     "message": "A Leírás mező üres."
@@ -924,7 +987,7 @@
     "message": "A dokumentum rendelkezik metaleírással"
   },
   "lighthouse-core/audits/seo/plugins.js | description": {
-    "message": "Sok eszköz korlátozza vagy nem támogatja a beépülő modulokat, a keresőmotorok pedig nem tudják indexelni a modulok által megjelenített tartalmakat. [További információ](https://developers.google.com/web/tools/lighthouse/audits/plugins)."
+    "message": "Sok eszköz korlátozza vagy nem támogatja a beépülő modulokat, a keresőmotorok pedig nem tudják indexelni a modulok által megjelenített tartalmakat. [További információ](https://web.dev/plugins)."
   },
   "lighthouse-core/audits/seo/plugins.js | failureTitle": {
     "message": "A dokumentum beépülő modulokat használ"
@@ -933,7 +996,7 @@
     "message": "A dokumentum nem használ beépülő modulokat"
   },
   "lighthouse-core/audits/seo/robots-txt.js | description": {
-    "message": "Ha a robots.txt fájl formázása rossz, előfordulhat, hogy a feltérképező robotok nem tudják értelmezni, hogy Ön hogyan szeretné feltérképeztetni vagy indexeltetni a webhelyét."
+    "message": "Ha a robots.txt fájl formázása rossz, előfordulhat, hogy a feltérképező robotok nem tudják értelmezni, hogy Ön hogyan szeretné feltérképeztetni vagy indexeltetni a webhelyét. [További információ](https://web.dev/robots-txt)."
   },
   "lighthouse-core/audits/seo/robots-txt.js | displayValueHttpBadCode": {
     "message": "A robots.txt fájlra irányuló kérés a következő HTTP-állapotkóddal tért vissza: {statusCode}"
@@ -951,7 +1014,7 @@
     "message": "A robots.txt fájl érvényes"
   },
   "lighthouse-core/audits/seo/tap-targets.js | description": {
-    "message": "Az interaktív elemeknek (például a gomboknak és a linkeknek) elég nagynak kell lenniük (48 × 48 képpont), és elég helynek kell lennie közöttük, hogy könnyen rájuk lehessen koppintani a szomszédos elemek megérintése nélkül. [További információ](https://developers.google.com/web/fundamentals/accessibility/accessible-styles#multi-device_responsive_design)."
+    "message": "Az interaktív elemeknek (például a gomboknak és a linkeknek) elég nagynak kell lenniük (48 × 48 képpont), és elég helynek kell lennie közöttük, hogy könnyen rájuk lehessen koppintani a szomszédos elemek megérintése nélkül. [További információ](https://web.dev/tap-targets)."
   },
   "lighthouse-core/audits/seo/tap-targets.js | displayValue": {
     "message": "{decimalProportion, number, percent}-nyi megfelelően méretezett koppintható elem"
@@ -971,14 +1034,62 @@
   "lighthouse-core/audits/seo/tap-targets.js | title": {
     "message": "A koppintási célok mérete megfelelő"
   },
+  "lighthouse-core/audits/service-worker.js | description": {
+    "message": "A szolgáltató munkatárs elnevezésű technológia lehető teszi az alkalmazás számára a progresszív webes alkalmazások funkcióinak használatát. Ilyen funkció például az offline működés, a kezdőképernyőhöz való hozzáadás és a leküldött (push) értesítések. [További információ](https://developers.google.com/web/tools/lighthouse/audits/registered-service-worker)."
+  },
+  "lighthouse-core/audits/service-worker.js | explanationBadManifest": {
+    "message": "Az oldalt szolgáltató munkatárs vezérli, azonban a(z) `start_url` nem található, ugyanis nem sikerült a manifest érvényes JSON-ként való elemzése"
+  },
+  "lighthouse-core/audits/service-worker.js | explanationBadStartUrl": {
+    "message": "Az oldalt szolgáltató munkatárs vezérli, azonban a(z) `start_url` ({startUrl}) nincs a szolgáltató munkatárs hatókörében ({scopeUrl})"
+  },
+  "lighthouse-core/audits/service-worker.js | explanationNoManifest": {
+    "message": "Az oldalt szolgáltató munkatárs vezérli, azonban a(z) `start_url` nem található, mert nem sikerült lekérni a manifestfájlt."
+  },
+  "lighthouse-core/audits/service-worker.js | explanationOutOfScope": {
+    "message": "Ez a forrás rendelkezik legalább egy szolgáltató munkatárssal, azonban az oldal ({pageUrl}) nincs a hatókörükben."
+  },
+  "lighthouse-core/audits/service-worker.js | failureTitle": {
+    "message": "Nem regisztrál szolgáltató munkatársat, amely vezérli az oldalt és a(z) `start_url` URL-t"
+  },
+  "lighthouse-core/audits/service-worker.js | title": {
+    "message": "Olyan szolgáltató munkatársat regisztrál, amely vezérli az oldalt és a(z) `start_url` URL-t"
+  },
+  "lighthouse-core/audits/splash-screen.js | description": {
+    "message": "A saját témájú betöltési képernyő jó felhasználói élményt eredményez, amikor a kezdőképernyőről indítják el az alkalmazást. [További információ](https://developers.google.com/web/tools/lighthouse/audits/custom-splash-screen)."
+  },
+  "lighthouse-core/audits/splash-screen.js | failureTitle": {
+    "message": "Nincs beállítva egyéni betöltési képernyő"
+  },
+  "lighthouse-core/audits/splash-screen.js | title": {
+    "message": "Be van állítva egyéni betöltési képernyő"
+  },
+  "lighthouse-core/audits/themed-omnibox.js | description": {
+    "message": "A böngésző címsávjához megadható a webhelyhez illő téma. [További információ](https://developers.google.com/web/tools/lighthouse/audits/address-bar)."
+  },
+  "lighthouse-core/audits/themed-omnibox.js | failureTitle": {
+    "message": "Nem állítja be a téma színét a címsávon."
+  },
+  "lighthouse-core/audits/themed-omnibox.js | title": {
+    "message": "A téma színét állítja be a címsávon."
+  },
+  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
+    "message": "Fő szál akadályozásának időtartama"
+  },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Harmadik fél"
   },
   "lighthouse-core/audits/third-party-summary.js | description": {
     "message": "A harmadik felektől származó kódok jelentős hatással lehetnek a betöltés teljesítményére. Minél kevesebb harmadik féltől származó kódot használjon, és lehetőleg azután töltse be őket, hogy az oldal nagyrészt már betöltődött. [További információ](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/)."
   },
+  "lighthouse-core/audits/third-party-summary.js | displayValue": {
+    "message": "Harmadik féltől származó kód {timeInMs, number, milliseconds} ms-ig akadályozta a fő szál végrehajtását"
+  },
+  "lighthouse-core/audits/third-party-summary.js | failureTitle": {
+    "message": "Csökkentse a harmadik felek kódjai által kiváltott hatást"
+  },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Harmadik féltől származó kód"
+    "message": "Harmadik féltől származó kód használata"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Az első bájtig eltelt idő azt mutatja, hogy a szerver mikor küldött választ. [További információ](https://developers.google.com/web/tools/lighthouse/audits/ttfb)."
@@ -1014,7 +1125,7 @@
     "message": "Előcsatlakozási <link> található a(z) {securityOrigin} címre vonatkozóan, de a böngésző nem használta. Ellenőrizze, hogy megfelelően használja-e a(z) `crossorigin` attribútumot."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
-    "message": "Vegye fontolóra előcsatlakozási vagy előzetes DNS-lehívási erőforrástippek hozzáadását, hogy korai kapcsolatokat hozhasson létre a harmadik felekhez tartozó fontos forrásokkal. [További információ](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
+    "message": "Vegye fontolóra `preconnect` vagy `dns-prefetch` erőforrástipp hozzáadását, hogy korai kapcsolatokat hozhasson létre harmadik felekhez tartozó fontos forrásokkal. [További információ](https://developers.google.com/web/fundamentals/performance/resource-prioritization#preconnect)."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | title": {
     "message": "Csatlakozzon előre a szükséges forrásokhoz"
@@ -1027,6 +1138,42 @@
   },
   "lighthouse-core/audits/uses-rel-preload.js | title": {
     "message": "Töltse be előre a kulcsfontosságú kéréseket"
+  },
+  "lighthouse-core/audits/viewport.js | description": {
+    "message": "Adjon hozzá `<meta name=\"viewport\">` címkét, amellyel mobilképernyőkre optimalizálhatja az alkalmazást. [További információ](https://developers.google.com/web/tools/lighthouse/audits/has-viewport-meta-tag)."
+  },
+  "lighthouse-core/audits/viewport.js | explanationNoTag": {
+    "message": "Nem található `<meta name=\"viewport\">` címke"
+  },
+  "lighthouse-core/audits/viewport.js | failureTitle": {
+    "message": "Nincs `width` vagy `initial-scale` beállítással rendelkező `<meta name=\"viewport\">` címkéje"
+  },
+  "lighthouse-core/audits/viewport.js | title": {
+    "message": "Van `width` vagy `initial-scale` beállítással rendelkező `<meta name=\"viewport\">` címkéje"
+  },
+  "lighthouse-core/audits/without-javascript.js | description": {
+    "message": "Az alkalmazásnak akkor is meg kellene jelenítenie valamilyen tartalmat, ha a JavaScript le van tiltva. Ez akár egy figyelmeztetés is lehet, mely szerint JavaScript szükséges az alkalmazás használatához. [További információ](https://developers.google.com/web/tools/lighthouse/audits/no-js)."
+  },
+  "lighthouse-core/audits/without-javascript.js | explanation": {
+    "message": "Az oldal törzsében meg kellene jelennie valamilyen tartalomnak, ha a szkriptek nem használhatók."
+  },
+  "lighthouse-core/audits/without-javascript.js | failureTitle": {
+    "message": "Nem biztosít tartalék tartalmat, ha a JavaScript nem használható"
+  },
+  "lighthouse-core/audits/without-javascript.js | title": {
+    "message": "Vannak benne tartalmak akkor is, amikor a JavaScript nem használható"
+  },
+  "lighthouse-core/audits/works-offline.js | description": {
+    "message": "Ha progresszív webes alkalmazást készít, fontolja meg szolgáltató munkatárs használatát, így alkalmazása offline állapotban is működni fog. [További információ](https://developers.google.com/web/tools/lighthouse/audits/http-200-when-offline)."
+  },
+  "lighthouse-core/audits/works-offline.js | failureTitle": {
+    "message": "A jelenlegi oldal nem 200-as állapotkódot küld vissza, amikor offline állapotban van"
+  },
+  "lighthouse-core/audits/works-offline.js | title": {
+    "message": "A jelenlegi oldal 200-as állapotkódot küld vissza, amikor offline állapotban van"
+  },
+  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
+    "message": "Előfordulhat, hogy az oldal offline állapotban nem töltődik be, mert a teszt-URL-t ({requested}) a rendszer a következő címre irányította át: „{final}”. Próbálkozzon a második URL közvetlen ellenőrzésével."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Ezek a lehetőségek segíthetnek az ARIA alkalmazásban való használatának javításában, ami jobb felhasználói élményt biztosíthat a kisegítő technológiákat (például képernyőolvasót) használó személyeknek."
@@ -1123,6 +1270,15 @@
   },
   "lighthouse-core/config/default-config.js | performanceCategoryTitle": {
     "message": "Teljesítmény"
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryDescription": {
+    "message": "Ezek az ellenőrzések különböző szempontokból érvényesítik a progresszív webes alkalmazásokat. [További információ](https://developers.google.com/web/progressive-web-apps/checklist)."
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryManualDescription": {
+    "message": "Ezek az ellenőrzések kötelezők a [progresszív webes alkalmazások alapvető ellenőrzőlistáján](https://developers.google.com/web/progressive-web-apps/checklist), de a Lighthouse nem végzi el őket automatikusan. Az ellenőrzések a kapott pontszámot nem befolyásolják, de fontos a manuális végrehajtásuk."
+  },
+  "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
+    "message": "Progresszív webes alkalmazás"
   },
   "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
     "message": "Gyors és megbízható"
