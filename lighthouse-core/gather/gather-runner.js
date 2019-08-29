@@ -308,6 +308,34 @@ class GatherRunner {
   }
 
   /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {{restricted: boolean}} opts
+   * @return {LH.Gatherer.PassContext}
+   */
+  static _makeGathererPassContext(passContext, opts) {
+    if (!opts.restricted) {
+      return passContext;
+    }
+
+    return {
+      ...passContext,
+      driver: new Proxy(passContext.driver, {
+        get(obj, prop) {
+          if (prop === 'evaluateAsync') {
+            return passContext.driver.evaluateAsync.bind(passContext.driver);
+          }
+
+          const objPropDesc = Object.getOwnPropertyDescriptor(obj, prop);
+          if (!objPropDesc || typeof objPropDesc.value !== 'function') return;
+          return function() {
+            throw new Error(`cannot use ${prop.toString()} in a restricted gatherer.`);
+          };
+        },
+      }),
+    };
+  }
+
+  /**
    * Run beforePass() on gatherers.
    * @param {LH.Gatherer.PassContext} passContext
    * @param {Partial<GathererResults>} gathererResults
@@ -326,7 +354,12 @@ class GatherRunner {
         id: `lh:gather:beforePass:${gatherer.name}`,
       };
       log.time(status, 'verbose');
-      const artifactPromise = Promise.resolve().then(_ => gatherer.beforePass(passContext));
+      const gathererPassContext = this._makeGathererPassContext(passContext, {
+        // @ts-ignore
+        restricted: gathererDefn.options ? gathererDefn.options.restricted : false,
+      });
+      const artifactPromise =
+        Promise.resolve().then(_ => gatherer.beforePass(gathererPassContext));
       gathererResults[gatherer.name] = [artifactPromise];
       await artifactPromise.catch(() => {});
       log.timeEnd(status);
@@ -356,7 +389,12 @@ class GatherRunner {
         id: `lh:gather:pass:${gatherer.name}`,
       };
       log.time(status);
-      const artifactPromise = Promise.resolve().then(_ => gatherer.pass(passContext));
+
+      const gathererPassContext = this._makeGathererPassContext(passContext, {
+        // @ts-ignore
+        restricted: gathererDefn.options ? gathererDefn.options.restricted : false,
+      });
+      const artifactPromise = Promise.resolve().then(_ => gatherer.pass(gathererPassContext));
 
       const gathererResult = gathererResults[gatherer.name] || [];
       gathererResult.push(artifactPromise);
@@ -396,8 +434,12 @@ class GatherRunner {
 
       // Add gatherer options to the passContext.
       passContext.options = gathererDefn.options || {};
+      const gathererPassContext = this._makeGathererPassContext(passContext, {
+        // @ts-ignore
+        restricted: gathererDefn.options ? gathererDefn.options.restricted : false,
+      });
       const artifactPromise = Promise.resolve()
-        .then(_ => gatherer.afterPass(passContext, loadData));
+        .then(_ => gatherer.afterPass(gathererPassContext, loadData));
 
       const gathererResult = gathererResults[gatherer.name] || [];
       gathererResult.push(artifactPromise);

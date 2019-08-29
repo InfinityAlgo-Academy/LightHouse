@@ -36,5 +36,24 @@ Object {
       "title": "Group B",
     },
   },
+  "passes": Array [
+    Object {
+      "gatherers": Array [
+        Object {
+          "options": Object {
+            "restricted": true,
+          },
+          "path": "some-gatherer",
+        },
+        Object {
+          "options": Object {
+            "restricted": true,
+          },
+          "path": "some-gatherer",
+        },
+      ],
+      "passName": "",
+    },
+  ],
 }
 `;

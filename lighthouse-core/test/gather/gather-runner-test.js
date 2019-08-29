@@ -1275,6 +1275,67 @@ describe('GatherRunner', function() {
       });
     });
 
+    it.only('passes a restricted driver to restricted gatherers', () => {
+      function getAllMethodNames(obj) {
+        const methods = [];
+        for (const key in obj) {
+          if (typeof obj[key] === 'function') {
+            methods.push(key);
+          }
+        }
+        return methods;
+      }
+      function attemptToCallMethods(obj, methods) {
+        const blockedMethods = [];
+        for (const method of methods) {
+          try {
+            obj[method]();
+          } catch (err) {
+            if (err.message.includes('cannot use')) {
+              blockedMethods.push(method);
+              continue;
+            }
+            blockedMethods.push({method, err});
+          }
+        }
+        return blockedMethods;
+      }
+
+      const driverMethods = getAllMethodNames(fakeDriver);
+      const blockedCalls = {beforePass: [], pass: [], afterPass: []};
+      class RestrictedGatherer extends Gatherer {
+        beforePass(context) {
+          blockedCalls.beforePass.push(...attemptToCallMethods(context.driver, driverMethods));
+        }
+        pass(context) {
+          blockedCalls.pass.push(...attemptToCallMethods(context.driver, driverMethods));
+        }
+        afterPass(context) {
+          blockedCalls.afterPass.push(...attemptToCallMethods(context.driver, driverMethods));
+          return '';
+        }
+      }
+
+      const gatherers = [
+        {instance: new RestrictedGatherer(), options: {restricted: true}},
+      ];
+
+      const config = new Config({
+        passes: [{gatherers}],
+      });
+
+      return GatherRunner.run(config.passes, {
+        driver: fakeDriver,
+        requestedUrl: 'https://example.com',
+        settings: config.settings,
+      }).then(() => {
+        expect(blockedCalls.beforePass).not.toContain('evaluateAsync');
+        expect(blockedCalls.beforePass).toHaveLength(driverMethods.length - 1);
+        expect(blockedCalls.beforePass).toStrictEqual(blockedCalls.pass);
+        expect(blockedCalls.beforePass).toStrictEqual(blockedCalls.afterPass);
+      });
+    });
+
     it('uses the last not-undefined phase result as artifact', () => {
       const recoverableError = new Error('My recoverable error');
       const someOtherError = new Error('Bad, bad error.');

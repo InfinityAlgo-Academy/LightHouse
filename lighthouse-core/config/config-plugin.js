@@ -146,6 +146,38 @@ class ConfigPlugin {
     };
   }
 
+  /**
+   * Extract and validate the gatherers added by the plugin.
+   * @param {unknown} gatherersJson
+   * @param {string} pluginName
+   * @return {LH.Config.GathererJson[]}
+   */
+  static _parseGatherers(gatherersJson, pluginName) {
+    if (!Array.isArray(gatherersJson)) {
+      throw new Error(`${pluginName} has invalid gatherers.`);
+    }
+
+    return gatherersJson.map(gathererJson => {
+      if (typeof gathererJson === 'string') {
+        return {path: gathererJson, options: {restricted: true}};
+      }
+
+      const {path, options, ...invalidRest} = gathererJson;
+      assertNoExcessProperties(invalidRest, pluginName, 'gatherer');
+
+      if (typeof path !== 'string') {
+        throw new Error(`${pluginName} has an invalid gatherer path.`);
+      }
+      if (typeof options !== 'undefined' && !isObjectOfUnknownProperties(options)) {
+        throw new Error(`${pluginName} has an invalid gatherer options.`);
+      }
+
+      return {
+        path,
+        options: options ? {...options, restricted: true} : {restricted: true},
+      };
+    });
+  }
 
   /**
    * Extract and validate groups JSON added by the plugin.
@@ -204,17 +236,22 @@ class ConfigPlugin {
     const {
       audits: pluginAuditsJson,
       category: pluginCategoryJson,
+      gatherers: pluginGatherersJson,
       groups: pluginGroupsJson,
       ...invalidRest
     } = pluginJson;
 
     assertNoExcessProperties(invalidRest, pluginName);
 
+    const gatherers = pluginGatherersJson ?
+      ConfigPlugin._parseGatherers(pluginGatherersJson, pluginName) :
+      undefined;
     return {
       audits: ConfigPlugin._parseAuditsList(pluginAuditsJson, pluginName),
       categories: {
         [pluginName]: ConfigPlugin._parseCategory(pluginCategoryJson, pluginName),
       },
+      passes: gatherers ? [{passName: '', gatherers}] : undefined,
       groups: ConfigPlugin._parseGroups(pluginGroupsJson, pluginName),
     };
   }

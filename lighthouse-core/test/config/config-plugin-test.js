@@ -38,6 +38,10 @@ const nicePlugin = {
       {id: 'installable-manifest', weight: 220},
     ],
   },
+  gatherers: [
+    'some-gatherer',
+    {path: 'some-gatherer', options: {}},
+  ],
 };
 
 describe('ConfigPlugin', () => {
@@ -94,6 +98,7 @@ describe('ConfigPlugin', () => {
         'lighthouse-plugin-evil': evilCategory,
       },
       groups: undefined,
+      passes: undefined,
     });
     assert.strictEqual(Object.getOwnPropertyDescriptor(pluginJson, 'audits').get, undefined);
   });
