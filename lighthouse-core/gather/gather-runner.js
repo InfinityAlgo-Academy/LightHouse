@@ -321,12 +321,17 @@ class GatherRunner {
       ...passContext,
       driver: new Proxy(passContext.driver, {
         get(obj, prop) {
+          // The only driver property allowed is `evaluateAsync`.
           if (prop === 'evaluateAsync') {
-            return passContext.driver.evaluateAsync.bind(passContext.driver);
+            return obj.evaluateAsync.bind(obj);
           }
 
+          // If original property is not a function, just return `undefined` and allow
+          // the callee to error.
           const objPropDesc = Object.getOwnPropertyDescriptor(obj, prop);
           if (!objPropDesc || typeof objPropDesc.value !== 'function') return;
+
+          // Otherwise, return a function that will error on call, providing a nice error message.
           return function() {
             throw new Error(`cannot use ${prop.toString()} in a restricted gatherer.`);
           };
