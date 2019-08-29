@@ -1330,6 +1330,7 @@ describe('GatherRunner', function() {
         requestedUrl: 'https://example.com',
         settings: config.settings,
       }).then(() => {
+        expect(blockedCalls.beforePass).toMatchSnapshot();
         expect(blockedCalls.beforePass).not.toContain('evaluateAsync');
         expect(blockedCalls.beforePass).toHaveLength(driverMethods.length - 1);
         expect(blockedCalls.beforePass).toStrictEqual(blockedCalls.pass);

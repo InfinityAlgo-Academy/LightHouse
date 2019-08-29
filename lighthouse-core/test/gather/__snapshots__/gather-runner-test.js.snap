@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GatherRunner artifact collection passes a restricted driver to restricted gatherers 1`] = `
+Array [
+  "getBrowserVersion",
+  "getBenchmarkIndex",
+  "getAppManifest",
+  "connect",
+  "disconnect",
+  "gotoURL",
+  "beginEmulation",
+  "setThrottling",
+  "dismissJavaScriptDialogs",
+  "assertNoSameOriginServiceWorkerClients",
+  "reloadForCleanStateIfNeeded",
+  "enableRuntimeEvents",
+  "enableAsyncStacks",
+  "evaluateScriptOnLoad",
+  "cleanBrowserCaches",
+  "clearDataForOrigin",
+  "cacheNatives",
+  "scrollTo",
+  "getScrollPosition",
+  "registerPerformanceObserver",
+  "beginTrace",
+  "endTrace",
+  "beginDevtoolsLog",
+  "endDevtoolsLog",
+  "blockUrlPatterns",
+  "setExtraHTTPHeaders",
+]
+`;
