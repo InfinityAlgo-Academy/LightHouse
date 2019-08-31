@@ -42,7 +42,7 @@
             "id": "aria-required-children",
             "score": null,
             "scoreDisplayMode": "notApplicable",
-            "title": "Elements with `[role]` that require specific children `[role]`s, are present"
+            "title": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children."
         },
         "aria-required-parent": {
             "description": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-parent/).",

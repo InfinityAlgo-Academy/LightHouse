@@ -30,10 +30,10 @@
     "message": "Ŝóm̂é ÂŔÎÁ p̂ár̂én̂t́ r̂ól̂éŝ ḿûśt̂ ćôńt̂áîń ŝṕêćîf́îć ĉh́îĺd̂ ŕôĺêś t̂ó p̂ér̂f́ôŕm̂ t́ĥéîŕ îńt̂én̂d́êd́ âćĉéŝśîb́îĺît́ŷ f́ûńĉt́îón̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/aria-required-children/)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
-    "message": "Êĺêḿêńt̂ś ŵít̂h́ `[role]` t̂h́ât́ r̂éq̂úîŕê śp̂éĉíf̂íĉ ćĥíl̂d́r̂én̂ `[role]`ś, âŕê ḿîśŝín̂ǵ."
+    "message": "Êĺêḿêńt̂ś ŵít̂h́ âń ÂŔÎÁ `[role]` t̂h́ât́ r̂éq̂úîŕê ćĥíl̂d́r̂én̂ t́ô ćôńt̂áîń â śp̂éĉíf̂íĉ `[role]` ár̂é m̂íŝśîńĝ śôḿê ór̂ ál̂ĺ ôf́ t̂h́ôśê ŕêq́ûír̂éd̂ ćĥíl̂d́r̂én̂."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | title": {
-    "message": "Êĺêḿêńt̂ś ŵít̂h́ `[role]` t̂h́ât́ r̂éq̂úîŕê śp̂éĉíf̂íĉ ćĥíl̂d́r̂én̂ `[role]`ś, âŕê ṕr̂éŝén̂t́"
+    "message": "Êĺêḿêńt̂ś ŵít̂h́ âń ÂŔÎÁ `[role]` t̂h́ât́ r̂éq̂úîŕê ćĥíl̂d́r̂én̂ t́ô ćôńt̂áîń â śp̂éĉíf̂íĉ `[role]` h́âv́ê ál̂ĺ r̂éq̂úîŕêd́ ĉh́îĺd̂ŕêń."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
     "message": "Ŝóm̂é ÂŔÎÁ ĉh́îĺd̂ ŕôĺêś m̂úŝt́ b̂é ĉón̂t́âín̂éd̂ b́ŷ śp̂éĉíf̂íĉ ṕâŕêńt̂ ŕôĺêś t̂ó p̂ŕôṕêŕl̂ý p̂ér̂f́ôŕm̂ t́ĥéîŕ îńt̂én̂d́êd́ âćĉéŝśîb́îĺît́ŷ f́ûńĉt́îón̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/aria-required-parent/)."
