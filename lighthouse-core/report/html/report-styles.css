@@ -1165,11 +1165,6 @@
   width: var(--gauge-wrapper-width);
 }
 
-.lh-scores-header .lh-gauge--pwa__wrapper {
-  /* Can remove when this bug is resolved: https://bugs.chromium.org/p/chromium/issues/detail?id=942097 */
-  will-change: transform;
-}
-
 .lh-scorescale {
   display: inline-flex;
   margin: 12px auto 0 auto;
