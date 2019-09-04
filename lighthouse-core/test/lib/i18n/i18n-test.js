@@ -74,6 +74,21 @@ describe('i18n', () => {
   });
 
   describe('#getFormatted', () => {
+    it('returns the formatted string', () => {
+      const UIStrings = {testMessage: 'happy test'};
+      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+      const formattedStr = i18n.getFormatted(str_(UIStrings.testMessage), 'en');
+      expect(formattedStr).toEqual('happy test');
+    });
+
+
+    it('returns the formatted string with replacements', () => {
+      const UIStrings = {testMessage: 'replacement test ({errorCode})'};
+      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+      const formattedStr = i18n.getFormatted(str_(UIStrings.testMessage, {errorCode: 'BOO'}), 'en');
+      expect(formattedStr).toEqual('replacement test (BOO)');
+    });
+
     it('throws an error for invalid locales', () => {
       // Populate a string to try to localize to a bad locale.
       const UIStrings = {testMessage: 'testy test'};
@@ -95,6 +110,50 @@ describe('i18n', () => {
 
     it('falls back to en if no match is available', () => {
       expect(i18n.lookupLocale('jk-Latn-DE-1996-a-ext-x-phonebk-i-klingon')).toEqual('en');
+    });
+  });
+
+  describe('#registerLocaleData', () => {
+    it('installs new locale strings', () => {
+      const localeData = {
+        'lighthouse-core/test/lib/i18n/i18n-test.js | testString': {
+          'message': 'en-XZ cuerda!',
+        },
+      };
+      i18n.registerLocaleData('en-XZ', localeData);
+
+      const UIStrings = {testString: 'en-US string!'};
+      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+      const formattedStr = i18n.getFormatted(str_(UIStrings.testString), 'en-XZ');
+      expect(formattedStr).toEqual('en-XZ cuerda!');
+    });
+
+    it('overwrites existing locale strings', () => {
+      const filename = 'lighthouse-core/audits/is-on-https.js';
+      const UIStrings = require('../../../../lighthouse-core/audits/is-on-https.js').UIStrings;
+      const str_ = i18n.createMessageInstanceIdFn(filename, UIStrings);
+
+      // To start with, we get back the intended string..
+      const origTitle = i18n.getFormatted(str_(UIStrings.title), 'es-419');
+      expect(origTitle).toEqual('Usa HTTPS');
+      const origFailureTitle = i18n.getFormatted(str_(UIStrings.failureTitle), 'es-419');
+      expect(origFailureTitle).toEqual('No usa HTTPS');
+
+      // Now we declare and register the new string...
+      const localeData = {
+        'lighthouse-core/audits/is-on-https.js | title': {
+          'message': 'es-419 uses https!',
+        },
+      };
+      i18n.registerLocaleData('es-419', localeData);
+
+      // And confirm that's what is returned
+      const newTitle = i18n.getFormatted(str_(UIStrings.title), 'es-419');
+      expect(newTitle).toEqual('es-419 uses https!');
+
+      // Meanwhile another string that wasn't set in registerLocaleData just falls back to english
+      const newFailureTitle = i18n.getFormatted(str_(UIStrings.failureTitle), 'es-419');
+      expect(newFailureTitle).toEqual('Does not use HTTPS');
     });
   });
 
