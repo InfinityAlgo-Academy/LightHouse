@@ -403,7 +403,7 @@
             "details": {
                 "headings": [
                     {
-                        "itemType": "code",
+                        "itemType": "text",
                         "key": "value",
                         "text": "Deprecation / Warning"
                     },

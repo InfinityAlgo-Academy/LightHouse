@@ -596,7 +596,7 @@
         "headings": [
           {
             "key": "value",
-            "itemType": "code",
+            "itemType": "text",
             "text": "Deprecation / Warning"
           },
           {
