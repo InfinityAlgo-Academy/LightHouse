@@ -39,7 +39,7 @@ class Visibility extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
    */
-  async beforePass(passContext) {
+  async pass(passContext) {
     const driver = passContext.driver;
 
     await driver.evaluateAsync(`(function(){
@@ -58,7 +58,6 @@ class Visibility extends Gatherer {
 
     /** @type {LH.Artifacts['Visibility']|void} */
     const Visibility = await driver.evaluateAsync('window.___LH_VISIBILITY');
-    console.log(Visibility);
     if (!Visibility || !Array.isArray(Visibility)) {
       throw new Error('Unable to retrieve visibility events');
     }

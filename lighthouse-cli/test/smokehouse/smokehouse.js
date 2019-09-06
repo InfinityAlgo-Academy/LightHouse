@@ -63,7 +63,7 @@ function runLighthouse(url, configPath, isDebug) {
     `-A=${artifactsDirectory}`,
     '--quiet',
     '--port=0',
-    '--chrome-flags=--disable-popup-blocking --window-position=0,100 --window-size=10,10',
+    '--chrome-flags=--disable-popup-blocking --window-position=10,10 --window-size=100,100',
   ];
 
   if (process.env.APPVEYOR) {
