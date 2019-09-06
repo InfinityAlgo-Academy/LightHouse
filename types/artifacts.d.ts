@@ -51,6 +51,8 @@ declare global {
       Timing: Artifacts.MeasureEntry[];
       /** If loading the page failed, value is the error that caused it. Otherwise null. */
       PageLoadError: LighthouseError | null;
+      /** .... */
+      Visibility: Array<{state: 'hidden'|'visible', ts: number}>;
     }
 
     /**

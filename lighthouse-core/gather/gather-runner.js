@@ -460,6 +460,32 @@ class GatherRunner {
     const TestedAsMobileDevice = emulatedFormFactor === 'mobile' ||
       (emulatedFormFactor !== 'desktop' && IsMobileHost);
 
+    /* istanbul ignore next */
+    function captureInitialVisibility() {
+      // @ts-ignore
+      window.___LH_VISIBILITY.push({
+        state: document.visibilityState,
+        ts: performance.now(),
+      });
+    }
+
+    /* istanbul ignore next */
+    function listenForVisibilityChangeEvents() {
+      window.addEventListener('visibilitychange', () => {
+        // @ts-ignore
+        window.___LH_VISIBILITY.push({
+          state: document.visibilityState,
+          ts: performance.now(),
+        });
+      });
+    }
+
+    const Visibility = await options.driver.evaluateAsync([
+      'window.___LH_VISIBILITY = []',
+      `(${captureInitialVisibility})()`,
+      `(${listenForVisibilityChangeEvents})()`,
+    ].join(';'));
+
     return {
       fetchTime: (new Date()).toJSON(),
       LighthouseRunWarnings: [],
@@ -475,6 +501,7 @@ class GatherRunner {
       URL: {requestedUrl: options.requestedUrl, finalUrl: options.requestedUrl},
       Timing: [],
       PageLoadError: null,
+      Visibility: [],
     };
   }
 
@@ -509,14 +536,19 @@ class GatherRunner {
 
   /**
    * Finalize baseArtifacts after gathering is fully complete.
-   * @param {LH.BaseArtifacts} baseArtifacts
+   * @param {LH.Gatherer.PassContext} passContext
    */
-  static finalizeBaseArtifacts(baseArtifacts) {
+  static async finalizeBaseArtifacts(passContext) {
+    const {baseArtifacts, driver} = passContext;
+
     // Take only unique LighthouseRunWarnings.
     baseArtifacts.LighthouseRunWarnings = Array.from(new Set(baseArtifacts.LighthouseRunWarnings));
 
     // Take the timing entries we've gathered so far.
     baseArtifacts.Timing = log.getTimeEntries();
+
+    // Collect Visibility artifact.
+    await driver.evaluateAsync('window.___LH_VISIBILITY');
   }
 
   /**
