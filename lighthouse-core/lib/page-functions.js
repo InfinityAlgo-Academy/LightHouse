@@ -6,7 +6,7 @@
 // @ts-nocheck
 'use strict';
 
-/* global window document Node ShadowRoot */
+/* global window document performance Node ShadowRoot */
 
 /**
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
@@ -266,6 +266,26 @@ function getNodeLabel(node) {
   return tagName;
 }
 
+/* istanbul ignore next */
+function captureInitialVisibility() {
+  // @ts-ignore
+  window.___LH_VISIBILITY.push({
+    state: document.visibilityState,
+    ts: performance.now(),
+  });
+}
+
+/* istanbul ignore next */
+function listenForVisibilityChangeEvents() {
+  window.addEventListener('visibilitychange', () => {
+    // @ts-ignore
+    window.___LH_VISIBILITY.push({
+      state: document.visibilityState,
+      ts: performance.now(),
+    });
+  });
+}
+
 module.exports = {
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   registerPerformanceObserverInPageString: registerPerformanceObserverInPage.toString(),
@@ -280,4 +300,6 @@ module.exports = {
   getNodeSelector: getNodeSelector,
   getNodeLabel: getNodeLabel,
   getNodeLabelString: getNodeLabel.toString(),
+  captureInitialVisibilityString: captureInitialVisibility.toString(),
+  listenForVisibilityChangeEventsString: listenForVisibilityChangeEvents.toString(),
 };

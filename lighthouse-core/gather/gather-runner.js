@@ -13,6 +13,7 @@ const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analy
 const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants.js');
 const i18n = require('../lib/i18n/i18n.js');
+const pageFunctions = require('../lib/page-functions.js');
 
 /** @typedef {import('../gather/driver.js')} Driver */
 
@@ -460,32 +461,6 @@ class GatherRunner {
     const TestedAsMobileDevice = emulatedFormFactor === 'mobile' ||
       (emulatedFormFactor !== 'desktop' && IsMobileHost);
 
-    /* istanbul ignore next */
-    function captureInitialVisibility() {
-      // @ts-ignore
-      window.___LH_VISIBILITY.push({
-        state: document.visibilityState,
-        ts: performance.now(),
-      });
-    }
-
-    /* istanbul ignore next */
-    function listenForVisibilityChangeEvents() {
-      window.addEventListener('visibilitychange', () => {
-        // @ts-ignore
-        window.___LH_VISIBILITY.push({
-          state: document.visibilityState,
-          ts: performance.now(),
-        });
-      });
-    }
-
-    const Visibility = await options.driver.evaluateAsync([
-      'window.___LH_VISIBILITY = []',
-      `(${captureInitialVisibility})()`,
-      `(${listenForVisibilityChangeEvents})()`,
-    ].join(';'));
-
     return {
       fetchTime: (new Date()).toJSON(),
       LighthouseRunWarnings: [],
@@ -503,6 +478,24 @@ class GatherRunner {
       PageLoadError: null,
       Visibility: [],
     };
+  }
+
+  /**
+   * @param {Driver} driver
+   */
+  static async setupVisibilityArtifact(driver) {
+    await driver.evaluateAsync([
+      'window.___LH_VISIBILITY = []',
+      `(${pageFunctions.captureInitialVisibilityString})()`,
+      `(${pageFunctions.listenForVisibilityChangeEventsString})()`,
+    ].join(';'));
+  }
+
+  /**
+   * @param {Driver} driver
+   */
+  static collectVisibilityArtifact(driver) {
+    return driver.evaluateAsync('window.___LH_VISIBILITY');
   }
 
   /**
@@ -536,11 +529,10 @@ class GatherRunner {
 
   /**
    * Finalize baseArtifacts after gathering is fully complete.
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.BaseArtifacts} baseArtifacts
+   * @param {Driver} driver
    */
-  static async finalizeBaseArtifacts(passContext) {
-    const {baseArtifacts, driver} = passContext;
-
+  static async finalizeBaseArtifacts(baseArtifacts, driver) {
     // Take only unique LighthouseRunWarnings.
     baseArtifacts.LighthouseRunWarnings = Array.from(new Set(baseArtifacts.LighthouseRunWarnings));
 
@@ -548,7 +540,7 @@ class GatherRunner {
     baseArtifacts.Timing = log.getTimeEntries();
 
     // Collect Visibility artifact.
-    await driver.evaluateAsync('window.___LH_VISIBILITY');
+    baseArtifacts.Visibility = await GatherRunner.collectVisibilityArtifact(driver);
   }
 
   /**
@@ -618,7 +610,7 @@ class GatherRunner {
       }
 
       await GatherRunner.disposeDriver(driver, options);
-      GatherRunner.finalizeBaseArtifacts(baseArtifacts);
+      await GatherRunner.finalizeBaseArtifacts(baseArtifacts, driver);
       return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>.
     } catch (err) {
       // Clean up on error. Don't await so that the root error, not a disposal error, is shown.
