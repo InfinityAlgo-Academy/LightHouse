@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <title>Visibility</title>
+  </head>
+  <body>
+    now you see me
+    <script>
+      window.addEventListener('visibilitychange', console.log);
+      if (document.location.search.includes('open')) {
+        const coverWindow = window.open("", "", "width=10,height=10");
+        coverWindow.moveTo(0, 0);
+
+        let isCovering = false;
+        const handle = setInterval(() => {
+          if (isCovering) {
+            coverWindow.resizeTo(10, 10);
+          } else {
+            // coverWindow.resizeTo(screen.width, screen.height);
+            coverWindow.resizeTo(500, 500);
+          }
+          isCovering = !isCovering;
+        }, 200);
+        setTimeout(() =>  {
+          clearInterval(handle);
+          coverWindow.close();
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

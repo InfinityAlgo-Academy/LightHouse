@@ -505,7 +505,7 @@ class GatherRunner {
    * @param {LH.Gatherer.PassContext} passContext
    */
   static async populateBaseArtifacts(passContext) {
-    const baseArtifacts = passContext.baseArtifacts;
+    const {baseArtifacts, driver} = passContext;
 
     // Copy redirected URL to artifact.
     baseArtifacts.URL.finalUrl = passContext.url;
@@ -525,22 +525,22 @@ class GatherRunner {
       // @ts-ignore - guaranteed to exist by the find above
       baseArtifacts.NetworkUserAgent = userAgentEntry.params.request.headers['User-Agent'];
     }
+
+    // Collect Visibility artifact.
+    baseArtifacts.Visibility = await GatherRunner.collectVisibilityArtifact(driver);
+    console.trace(baseArtifacts.Visibility);
   }
 
   /**
    * Finalize baseArtifacts after gathering is fully complete.
    * @param {LH.BaseArtifacts} baseArtifacts
-   * @param {Driver} driver
    */
-  static async finalizeBaseArtifacts(baseArtifacts, driver) {
+  static async finalizeBaseArtifacts(baseArtifacts) {
     // Take only unique LighthouseRunWarnings.
     baseArtifacts.LighthouseRunWarnings = Array.from(new Set(baseArtifacts.LighthouseRunWarnings));
 
     // Take the timing entries we've gathered so far.
     baseArtifacts.Timing = log.getTimeEntries();
-
-    // Collect Visibility artifact.
-    baseArtifacts.Visibility = await GatherRunner.collectVisibilityArtifact(driver);
   }
 
   /**
@@ -610,7 +610,7 @@ class GatherRunner {
       }
 
       await GatherRunner.disposeDriver(driver, options);
-      await GatherRunner.finalizeBaseArtifacts(baseArtifacts, driver);
+      await GatherRunner.finalizeBaseArtifacts(baseArtifacts);
       return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>.
     } catch (err) {
       // Clean up on error. Don't await so that the root error, not a disposal error, is shown.
@@ -657,6 +657,7 @@ class GatherRunner {
     await GatherRunner.setupPassNetwork(passContext);
     const isPerfPass = GatherRunner.isPerfPass(passContext);
     if (isPerfPass) await driver.cleanBrowserCaches(); // Clear disk & memory cache if it's a perf run
+    if (isPerfPass) await GatherRunner.setupVisibilityArtifact(driver);
     await GatherRunner.beforePass(passContext, gathererResults);
 
     // Navigate, start recording, and run `pass()` on gatherers.
