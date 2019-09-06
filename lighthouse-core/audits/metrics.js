@@ -26,7 +26,7 @@ class Metrics extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Metrics',
       description: 'Collects all available metrics.',
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'Visibility'],
     };
   }
 
@@ -118,10 +118,16 @@ class Metrics extends Audit {
       items: [metrics],
     };
 
+    const warnings = [];
+    if (artifacts.Visibility.some(event => event.state === 'hidden')) {
+      warnings.push('Window was hidden for part of all of the audit. Metrics may be inaccurate.');
+    }
+
     return {
       score: 1,
       numericValue: (interactive && interactive.timing) || 0,
       details,
+      warnings,
     };
   }
 }

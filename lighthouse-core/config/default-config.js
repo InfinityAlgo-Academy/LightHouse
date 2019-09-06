@@ -147,6 +147,7 @@ const defaultConfig = {
       'seo/robots-txt',
       'seo/tap-targets',
       'accessibility',
+      'visibility',
     ],
   },
   {

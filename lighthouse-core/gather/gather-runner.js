@@ -13,7 +13,6 @@ const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analy
 const NetworkRecorder = require('../lib/network-recorder.js');
 const constants = require('../config/constants.js');
 const i18n = require('../lib/i18n/i18n.js');
-const pageFunctions = require('../lib/page-functions.js');
 
 /** @typedef {import('../gather/driver.js')} Driver */
 
@@ -476,26 +475,7 @@ class GatherRunner {
       URL: {requestedUrl: options.requestedUrl, finalUrl: options.requestedUrl},
       Timing: [],
       PageLoadError: null,
-      Visibility: [],
     };
-  }
-
-  /**
-   * @param {Driver} driver
-   */
-  static async setupVisibilityArtifact(driver) {
-    await driver.evaluateAsync([
-      'window.___LH_VISIBILITY = []',
-      `(${pageFunctions.captureInitialVisibilityString})()`,
-      `(${pageFunctions.listenForVisibilityChangeEventsString})()`,
-    ].join(';'));
-  }
-
-  /**
-   * @param {Driver} driver
-   */
-  static collectVisibilityArtifact(driver) {
-    return driver.evaluateAsync('window.___LH_VISIBILITY');
   }
 
   /**
@@ -505,7 +485,7 @@ class GatherRunner {
    * @param {LH.Gatherer.PassContext} passContext
    */
   static async populateBaseArtifacts(passContext) {
-    const {baseArtifacts, driver} = passContext;
+    const baseArtifacts = passContext.baseArtifacts;
 
     // Copy redirected URL to artifact.
     baseArtifacts.URL.finalUrl = passContext.url;
@@ -525,17 +505,13 @@ class GatherRunner {
       // @ts-ignore - guaranteed to exist by the find above
       baseArtifacts.NetworkUserAgent = userAgentEntry.params.request.headers['User-Agent'];
     }
-
-    // Collect Visibility artifact.
-    baseArtifacts.Visibility = await GatherRunner.collectVisibilityArtifact(driver);
-    console.trace(baseArtifacts.Visibility);
   }
 
   /**
    * Finalize baseArtifacts after gathering is fully complete.
    * @param {LH.BaseArtifacts} baseArtifacts
    */
-  static async finalizeBaseArtifacts(baseArtifacts) {
+  static finalizeBaseArtifacts(baseArtifacts) {
     // Take only unique LighthouseRunWarnings.
     baseArtifacts.LighthouseRunWarnings = Array.from(new Set(baseArtifacts.LighthouseRunWarnings));
 
@@ -610,7 +586,7 @@ class GatherRunner {
       }
 
       await GatherRunner.disposeDriver(driver, options);
-      await GatherRunner.finalizeBaseArtifacts(baseArtifacts);
+      GatherRunner.finalizeBaseArtifacts(baseArtifacts);
       return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>.
     } catch (err) {
       // Clean up on error. Don't await so that the root error, not a disposal error, is shown.
@@ -657,7 +633,6 @@ class GatherRunner {
     await GatherRunner.setupPassNetwork(passContext);
     const isPerfPass = GatherRunner.isPerfPass(passContext);
     if (isPerfPass) await driver.cleanBrowserCaches(); // Clear disk & memory cache if it's a perf run
-    if (isPerfPass) await GatherRunner.setupVisibilityArtifact(driver);
     await GatherRunner.beforePass(passContext, gathererResults);
 
     // Navigate, start recording, and run `pass()` on gatherers.
