@@ -529,8 +529,6 @@ class Driver {
     const response = await this.sendCommand('Runtime.evaluate', evaluationParams);
     if (response.exceptionDetails) {
       // An error occurred before we could even create a Promise, should be *very* rare
-      console.log(response.exceptionDetails);
-      console.log(expression);
       const errorMessage = response.exceptionDetails.exception ?
         response.exceptionDetails.exception.description :
         response.exceptionDetails.text;

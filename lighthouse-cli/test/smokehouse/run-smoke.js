@@ -14,7 +14,9 @@ const log = require('lighthouse-logger');
 
 /** @param {string} str */
 const purpleify = str => `${log.purple}${str}${log.reset}`;
-const SMOKETESTS = require('./smoke-test-dfns.js').SMOKE_TEST_DFNS;
+const SmokeTests = require('./smoke-test-dfns.js');
+
+const SMOKETESTS = SmokeTests.SMOKE_TEST_DFNS;
 
 /**
  * Display smokehouse output from child process
@@ -40,12 +42,13 @@ function displaySmokehouseOutput(result) {
  */
 async function runSmokehouse(smokes) {
   const cmdPromises = [];
-  for (const {id, expectations, config} of smokes) {
+  for (const {id, expectations, config, flags} of smokes) {
     console.log(`${purpleify(id)} smoketest starting…`);
     console.time(`smoketest-${id}`);
     const cmd = [
       'node lighthouse-cli/test/smokehouse/smokehouse.js',
       `--config-path=${config}`,
+      flags ? `--cli-flags-path=${flags}` : '',
       `--expectations-path=${expectations}`,
     ].join(' ');
 

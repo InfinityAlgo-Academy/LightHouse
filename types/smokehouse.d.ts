@@ -30,6 +30,10 @@
     id: string;
     expectations: string;
     config: string;
+    flags?: string;
     batch: string;
+  }
+
+  export interface BatchOptions {
   }
 }
