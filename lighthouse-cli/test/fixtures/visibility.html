@@ -6,26 +6,32 @@
   <body>
     now you see me
     <script>
-      window.addEventListener('visibilitychange', console.log);
-      if (document.location.search.includes('open')) {
-        const coverWindow = window.open("", "", "width=10,height=10");
-        coverWindow.moveTo(0, 0);
+      // window.addEventListener('visibilitychange', e => console.log(document.visibilityState));
+      function waitForVisibilityChange() {
+        return new Promise(resolve => window.addEventListener('visibilitychange', function() {
+          window.removeEventListener('visibilitychange', this);
+          resolve();
+        }));
+      }
 
-        let isCovering = false;
-        const handle = setInterval(() => {
-          if (isCovering) {
-            coverWindow.resizeTo(100, 100);
-          } else {
-            // coverWindow.resizeTo(screen.width, screen.height);
-            coverWindow.resizeTo(500, 500);
-          }
-          isCovering = !isCovering;
-        }, 200);
-        setTimeout(() =>  {
-          clearInterval(handle);
+      async function main(openNumTimes) {
+        for (let i = 0; i < openNumTimes; i++) {
+          const coverWindow = window.open();
+          await waitForVisibilityChange();
           coverWindow.close();
-        }, 3000);
+          await waitForVisibilityChange();
+        }
+      }
+
+      if (document.location.search.includes('open')) {
+        const openNumTimes = parseInt(new URL(document.location.href).searchParams.get('open'));
+        main(openNumTimes);
       }
     </script>
+    <script src="visibility-blocker.js?delay=1000"></script>
+    <script src="visibility-blocker.js?delay=1001"></script>
+    <script src="visibility-blocker.js?delay=1002"></script>
+    <script src="visibility-blocker.js?delay=1003"></script>
+    <script src="visibility-blocker.js?delay=1004"></script>
   </body>
 </html>

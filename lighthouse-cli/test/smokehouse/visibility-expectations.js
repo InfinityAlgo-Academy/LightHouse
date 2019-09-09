@@ -11,8 +11,8 @@
 module.exports = [
   {
     lhr: {
-      requestedUrl: 'http://localhost:10200/visibility.html?open',
-      finalUrl: 'http://localhost:10200/visibility.html?open',
+      requestedUrl: 'http://localhost:10200/visibility.html?open=3',
+      finalUrl: 'http://localhost:10200/visibility.html?open=3',
       audits: {
         'first-contentful-paint': {
           score: 0,
