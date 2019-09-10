@@ -1482,49 +1482,10 @@
         },
         "metrics": {
             "description": "Collects all available metrics.",
-            "details": {
-                "items": [
-                    {
-                        "estimatedInputLatency": 16.0,
-                        "firstCPUIdle": 4927.0,
-                        "firstCPUIdleTs": 185608247190.0,
-                        "firstContentfulPaint": 3969.0,
-                        "firstContentfulPaintTs": 185607289047.0,
-                        "firstMeaningfulPaint": 3969.0,
-                        "firstMeaningfulPaintTs": 185607289048.0,
-                        "interactive": 4927.0,
-                        "interactiveTs": 185608247190.0,
-                        "observedDomContentLoaded": 4901.0,
-                        "observedDomContentLoadedTs": 185608220734.0,
-                        "observedFirstContentfulPaint": 3969.0,
-                        "observedFirstContentfulPaintTs": 185607289047.0,
-                        "observedFirstMeaningfulPaint": 3969.0,
-                        "observedFirstMeaningfulPaintTs": 185607289048.0,
-                        "observedFirstPaint": 3969.0,
-                        "observedFirstPaintTs": 185607289043.0,
-                        "observedFirstVisualChange": 3969.0,
-                        "observedFirstVisualChangeTs": 185607288912.0,
-                        "observedLastVisualChange": 4791.0,
-                        "observedLastVisualChangeTs": 185608110912.0,
-                        "observedLoad": 4924.0,
-                        "observedLoadTs": 185608244374.0,
-                        "observedNavigationStart": 0.0,
-                        "observedNavigationStartTs": 185603319912.0,
-                        "observedSpeedIndex": 4417.0,
-                        "observedSpeedIndexTs": 185607736763.0,
-                        "observedTraceEnd": 10281.0,
-                        "observedTraceEndTs": 185613601189.0,
-                        "speedIndex": 4417.0,
-                        "speedIndexTs": 185607736912.0,
-                        "totalBlockingTime": 117.0
-                    }
-                ],
-                "type": "debugdata"
-            },
+            "errorMessage": "Required Visibility gatherer did not run.",
             "id": "metrics",
-            "numericValue": 4927.278,
             "score": null,
-            "scoreDisplayMode": "informative",
+            "scoreDisplayMode": "error",
             "title": "Metrics"
         },
         "network-requests": {
