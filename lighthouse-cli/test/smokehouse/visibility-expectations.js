@@ -13,11 +13,8 @@ module.exports = [
     lhr: {
       requestedUrl: 'http://localhost:10200/visibility.html',
       finalUrl: 'http://localhost:10200/visibility.html',
-      audits: {
-        'metrics': {
-          warnings: [],
-        },
-      },
+      audits: {},
+      runWarnings: [],
     },
     artifacts: {
       Visibility: [{state: 'visible'}],
@@ -27,11 +24,8 @@ module.exports = [
     lhr: {
       requestedUrl: 'http://localhost:10200/visibility.html?hidden',
       finalUrl: 'http://localhost:10200/visibility.html?hidden',
-      audits: {
-        'metrics': {
-          warnings: ['Window was hidden for part of all of the audit. Metrics may be inaccurate.'],
-        },
-      },
+      audits: {},
+      runWarnings: ['Window was hidden for part of all of the audit. Metrics may be inaccurate.'],
     },
     artifacts: {
       Visibility: [
@@ -44,11 +38,8 @@ module.exports = [
     lhr: {
       requestedUrl: 'http://localhost:10200/visibility.html?toggle=3',
       finalUrl: 'http://localhost:10200/visibility.html?toggle=3',
-      audits: {
-        'metrics': {
-          warnings: ['Window was hidden for part of all of the audit. Metrics may be inaccurate.'],
-        },
-      },
+      audits: {},
+      runWarnings: ['Window was hidden for part of all of the audit. Metrics may be inaccurate.'],
     },
     artifacts: {
       Visibility: [
