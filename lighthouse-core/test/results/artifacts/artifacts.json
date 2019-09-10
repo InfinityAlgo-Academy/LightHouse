@@ -2078,6 +2078,12 @@
       "href": ""
     }
   ],
+  "Visibility": [
+    {
+      "state": "visible",
+      "ts": 598.2200000435114
+    }
+  ],
   "ServiceWorker": {
     "versions": [],
     "registrations": []
@@ -2097,8 +2103,5 @@
     "name": "html",
     "systemId": "",
     "publicId": ""
-  },
-  "Visibility": [
-    {"state": "visibile"}
-  ]
+  }
 }
