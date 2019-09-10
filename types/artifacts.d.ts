@@ -131,7 +131,7 @@ declare global {
       TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
       /** Information about tap targets including their position and size. */
       TapTargets: Artifacts.TapTarget[];
-      /** .... */
+      /** Log of `document.visibilityState` over time. */
       Visibility: Array<{state: 'hidden'|'visible', ts: number}>;
     }
 
