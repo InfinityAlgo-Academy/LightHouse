@@ -33,7 +33,4 @@
     flags?: string;
     batch: string;
   }
-
-  export interface BatchOptions {
-  }
 }
