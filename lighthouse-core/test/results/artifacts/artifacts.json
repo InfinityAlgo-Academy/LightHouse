@@ -2097,5 +2097,8 @@
     "name": "html",
     "systemId": "",
     "publicId": ""
-  }
+  },
+  "Visibility": [
+    {"state": "visibile"}
+  ]
 }
