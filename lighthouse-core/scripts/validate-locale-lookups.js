@@ -36,20 +36,28 @@ for (const localeCode of lhLocales) {
 // 2. generate subsetted list of aliases
 //
 const aliasesSubset = {};
+const aliasesSubsetMacroLanguage = {};
 Object.entries(cldrAliases).forEach(([alias, entry]) => {
   if (lhLocales.includes(entry._replacement)) {
-    aliasesSubset[alias] = entry._replacement;
+    if (entry._reason == 'macrolanguage') {
+      aliasesSubsetMacroLanguage[alias] = entry._replacement;
+    } else {
+      aliasesSubset[alias] = entry._replacement;
+    }
   }
 });
-console.log({aliasesSubset});
+console.log({aliasesSubset, aliasesSubsetMacroLanguage});
 fs.writeFileSync(__dirname + '/../lib/i18n/cldrdata/aliases.json', JSON.stringify(aliasesSubset, null, 2));
+fs.writeFileSync(__dirname + '/../lib/i18n/cldrdata/aliases-macrolanguage.json', JSON.stringify(aliasesSubsetMacroLanguage, null, 2));
 
 //
 // 3. generate subsetted list of parentLocales
 //
 const parentsSubset = {};
 Object.entries(cldrParentLocales).forEach(([locale, parentLocale]) => {
-//  debugger;
+
+  if (parentLocale === 'root') return;
+
   const availableLocales = Object.fromEntries(lhLocales.map(loc => ([loc, 1])));
   const matchingLocale = lookupClosestLocale(parentLocale, availableLocales);
   if (matchingLocale) {
