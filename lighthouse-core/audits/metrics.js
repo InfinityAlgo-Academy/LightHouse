@@ -177,3 +177,4 @@ class Metrics extends Audit {
  */
 
 module.exports = Metrics;
+module.exports.UIStrings = UIStrings;

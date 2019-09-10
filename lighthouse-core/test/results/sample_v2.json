@@ -1241,47 +1241,8 @@
       "title": "Metrics",
       "description": "Collects all available metrics.",
       "score": null,
-      "scoreDisplayMode": "informative",
-      "numericValue": 4927.278,
-      "details": {
-        "type": "debugdata",
-        "items": [
-          {
-            "firstContentfulPaint": 3969,
-            "firstContentfulPaintTs": 185607289047,
-            "firstMeaningfulPaint": 3969,
-            "firstMeaningfulPaintTs": 185607289048,
-            "firstCPUIdle": 4927,
-            "firstCPUIdleTs": 185608247190,
-            "interactive": 4927,
-            "interactiveTs": 185608247190,
-            "speedIndex": 4417,
-            "speedIndexTs": 185607736912,
-            "estimatedInputLatency": 16,
-            "totalBlockingTime": 117,
-            "observedNavigationStart": 0,
-            "observedNavigationStartTs": 185603319912,
-            "observedFirstPaint": 3969,
-            "observedFirstPaintTs": 185607289043,
-            "observedFirstContentfulPaint": 3969,
-            "observedFirstContentfulPaintTs": 185607289047,
-            "observedFirstMeaningfulPaint": 3969,
-            "observedFirstMeaningfulPaintTs": 185607289048,
-            "observedTraceEnd": 10281,
-            "observedTraceEndTs": 185613601189,
-            "observedLoad": 4924,
-            "observedLoadTs": 185608244374,
-            "observedDomContentLoaded": 4901,
-            "observedDomContentLoadedTs": 185608220734,
-            "observedFirstVisualChange": 3969,
-            "observedFirstVisualChangeTs": 185607288912,
-            "observedLastVisualChange": 4791,
-            "observedLastVisualChangeTs": 185608110912,
-            "observedSpeedIndex": 4417,
-            "observedSpeedIndexTs": 185607736763
-          }
-        ]
-      }
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Visibility gatherer did not run."
     },
     "offline-start-url": {
       "id": "offline-start-url",
@@ -5485,6 +5446,15 @@
       ],
       "lighthouse-core/audits/network-server-latency.js | description": [
         "audits[network-server-latency].description"
+      ],
+      "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": [
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Visibility"
+          },
+          "path": "audits.metrics.errorMessage"
+        }
       ],
       "lighthouse-core/audits/offline-start-url.js | failureTitle": [
         "audits[offline-start-url].title"
