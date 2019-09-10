@@ -8,6 +8,10 @@
 /** @type {LH.Config.Json} */
 const perfConfig = {
   extends: 'lighthouse:default',
+  settings: {
+    onlyCategories: ['performance'],
+    maxWaitForLoad: 1000,
+  },
 };
 
 module.exports = perfConfig;

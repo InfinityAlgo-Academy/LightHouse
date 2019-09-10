@@ -6,7 +6,8 @@
   <body>
     now you see me
     <script>
-      // window.addEventListener('visibilitychange', e => console.log(document.visibilityState));
+      window.addEventListener('visibilitychange', e => console.log(document.visibilityState));
+
       function waitForVisibilityChange() {
         return new Promise(resolve => window.addEventListener('visibilitychange', function() {
           window.removeEventListener('visibilitychange', this);
@@ -14,7 +15,18 @@
         }));
       }
 
-      async function main(openNumTimes) {
+      function waitForFirstPaint() {
+        return new Promise((resolve) => {
+          const observer = new PerformanceObserver((list) => {
+            if (!list.getEntries().length) return;
+            observer.disconnect();
+            resolve();
+          });
+          observer.observe({entryTypes: ['paint']});
+        });
+      }
+
+      async function toggle(openNumTimes) {
         for (let i = 0; i < openNumTimes; i++) {
           const coverWindow = window.open();
           await waitForVisibilityChange();
@@ -23,15 +35,21 @@
         }
       }
 
-      if (document.location.search.includes('open')) {
-        const openNumTimes = parseInt(new URL(document.location.href).searchParams.get('open'));
-        main(openNumTimes);
+      async function main() {
+        // Avoid NO_FCP, which can happen when tabs are created and steal focus at all the wrong times.
+        await waitForFirstPaint();
+
+        const searchParams = new URL(document.location.href).searchParams;
+        if (searchParams.has('toggle')) {
+          const openNumTimes = parseInt(new URL(document.location.href).searchParams.get('toggle'));
+          // await new Promise((resolve) => setTimeout(resolve, 5000));
+          await toggle(openNumTimes);
+        } else if (searchParams.has('hidden')) {
+          window.open();
+        }
       }
+
+      main();
     </script>
-    <script src="visibility-blocker.js?delay=1000"></script>
-    <script src="visibility-blocker.js?delay=1001"></script>
-    <script src="visibility-blocker.js?delay=1002"></script>
-    <script src="visibility-blocker.js?delay=1003"></script>
-    <script src="visibility-blocker.js?delay=1004"></script>
   </body>
 </html>

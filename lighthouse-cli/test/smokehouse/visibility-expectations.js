@@ -11,16 +11,55 @@
 module.exports = [
   {
     lhr: {
-      requestedUrl: 'http://localhost:10200/visibility.html?open=3',
-      finalUrl: 'http://localhost:10200/visibility.html?open=3',
+      requestedUrl: 'http://localhost:10200/visibility.html',
+      finalUrl: 'http://localhost:10200/visibility.html',
       audits: {
-        'first-contentful-paint': {
-          score: 0,
+        'metrics': {
+          warnings: [],
         },
       },
     },
     artifacts: {
-      Visibility: [],
+      Visibility: [{state: 'visible'}],
+    },
+  },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/visibility.html?hidden',
+      finalUrl: 'http://localhost:10200/visibility.html?hidden',
+      audits: {
+        'metrics': {
+          warnings: ['Window was hidden for part of all of the audit. Metrics may be inaccurate.'],
+        },
+      },
+    },
+    artifacts: {
+      Visibility: [
+        {state: 'visible'},
+        {state: 'hidden'},
+      ],
+    },
+  },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/visibility.html?toggle=3',
+      finalUrl: 'http://localhost:10200/visibility.html?toggle=3',
+      audits: {
+        'metrics': {
+          warnings: ['Window was hidden for part of all of the audit. Metrics may be inaccurate.'],
+        },
+      },
+    },
+    artifacts: {
+      Visibility: [
+        {state: 'visible'},
+        {state: 'hidden'},
+        {state: 'visible'},
+        {state: 'hidden'},
+        {state: 'visible'},
+        {state: 'hidden'},
+        {state: 'visible'},
+      ],
     },
   },
 ];

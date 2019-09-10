@@ -7,7 +7,7 @@
 
 const Gatherer = require('./gatherer.js');
 
-/* global window */
+/* global window document performance */
 
 /* istanbul ignore next */
 function initializeVisibility() {
@@ -39,10 +39,10 @@ class Visibility extends Gatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
    */
-  async pass(passContext) {
+  async beforePass(passContext) {
     const driver = passContext.driver;
 
-    await driver.evaluateAsync(`(function(){
+    await driver.evaluateScriptOnNewDocument(`(function(){
       (${initializeVisibility})();
       (${captureInitialVisibility})();
       (${listenForVisibilityChangeEvents})();
