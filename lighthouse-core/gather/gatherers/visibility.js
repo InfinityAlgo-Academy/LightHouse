@@ -42,7 +42,7 @@ class Visibility extends Gatherer {
 
     /** @type {LH.Artifacts['Visibility']|void} */
     const Visibility = await driver.evaluateAsync('window.___LH_VISIBILITY');
-    if (!Visibility || !Array.isArray(Visibility)) {
+    if (!Array.isArray(Visibility)) {
       throw new Error('Unable to retrieve visibility events');
     }
     return Visibility;
