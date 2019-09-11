@@ -13,26 +13,16 @@ const Gatherer = require('./gatherer.js');
 function initializeVisibility() {
   // @ts-ignore
   window.___LH_VISIBILITY = [];
-}
-
-/* istanbul ignore next */
-function captureInitialVisibility() {
-  // @ts-ignore
-  window.___LH_VISIBILITY.push({
-    state: document.visibilityState,
-    ts: performance.now(),
-  });
-}
-
-/* istanbul ignore next */
-function listenForVisibilityChangeEvents() {
-  window.addEventListener('visibilitychange', () => {
+  const capture = () => {
     // @ts-ignore
     window.___LH_VISIBILITY.push({
       state: document.visibilityState,
       ts: performance.now(),
     });
-  });
+  };
+
+  capture();
+  window.addEventListener('visibilitychange', capture);
 }
 
 class Visibility extends Gatherer {
@@ -40,13 +30,7 @@ class Visibility extends Gatherer {
    * @param {LH.Gatherer.PassContext} passContext
    */
   async beforePass(passContext) {
-    const driver = passContext.driver;
-
-    await driver.evaluateScriptOnNewDocument(`(function(){
-      (${initializeVisibility})();
-      (${captureInitialVisibility})();
-      (${listenForVisibilityChangeEvents})();
-    })()`);
+    await passContext.driver.evaluateScriptOnNewDocument(`(${initializeVisibility})()`);
   }
 
   /**
