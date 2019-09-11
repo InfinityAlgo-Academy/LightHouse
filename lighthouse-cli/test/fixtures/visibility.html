@@ -47,7 +47,7 @@
 
         const searchParams = new URL(document.location.href).searchParams;
         if (searchParams.has('toggle')) {
-          const openNumTimes = parseInt(new URL(document.location.href).searchParams.get('toggle'));
+          const openNumTimes = parseInt(searchParams.get('toggle'));
           await toggle(openNumTimes);
         } else if (searchParams.has('hidden')) {
           window.open();
